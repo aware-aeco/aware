@@ -9,10 +9,12 @@
 //! - `20-agents/_core/aware-skill-builder/manifest.yaml`
 //! - `20-agents/_core/html-report/manifest.yaml`
 //!
-//! `#![allow(dead_code)]` is intentional here: the types are forward-declared
-//! together (the whole manifest shape at once) but are not yet consumed by any
-//! command dispatcher. Remove once `loader.rs` (Task 5) and `agent list`
-//! (Task 9) are wired in.
+//! `#![allow(dead_code)]` covers fields used by `agent describe` (Task 10+):
+//! `homepage`, `keywords`, `provenance`, `requires`, `transport` details,
+//! and nested structs (`Provenance`, `Requires`, `TransportCli`, `Command`,
+//! `Lifecycle`). The `agent`, `version`, `skills`, `commands`, `kind()`,
+//! `skill_count()`, and `command_count()` members are consumed by Task 9
+//! (`agent list`). Keep the file-level allow until all describe/run tasks land.
 #![allow(dead_code)]
 
 use std::collections::BTreeMap;

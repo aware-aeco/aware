@@ -23,7 +23,6 @@ impl Paths {
         Ok(Self { aware_home })
     }
 
-    #[allow(dead_code)] // consumed by Task 9 (agent list)
     pub fn agents_dir(&self) -> PathBuf {
         self.aware_home.join("agents")
     }

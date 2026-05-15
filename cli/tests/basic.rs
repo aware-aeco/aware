@@ -65,11 +65,11 @@ fn app_subcommand_help_works() {
 fn unimplemented_subcommand_exits_nonzero_with_message() {
     Command::cargo_bin("aware")
         .unwrap()
-        .args(["agent", "list"])
+        .args(["agent", "describe", "tekla"])
         .assert()
         .failure()
         .stderr(predicate::str::contains("not yet implemented"))
-        .stderr(predicate::str::contains("agent list"));
+        .stderr(predicate::str::contains("agent describe"));
 }
 
 #[test]
@@ -79,6 +79,6 @@ fn missing_subcommand_shows_help() {
     Command::cargo_bin("aware")
         .unwrap()
         .assert()
-        .failure()  // clap exits 2 on missing required arg
+        .failure() // clap exits 2 on missing required arg
         .stderr(predicate::str::contains("Usage:"));
 }

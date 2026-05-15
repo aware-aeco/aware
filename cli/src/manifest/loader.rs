@@ -1,9 +1,8 @@
 //! Discovery and loading of installed agents and apps from `~/.aware/`.
 //!
-//! `#![allow(dead_code)]` is intentional: the public API here is consumed by
-//! Tasks 9 (agent list/describe), 12 (app list/describe), 13 (app run), and
-//! 14 (doctor). Remove the allow once those callers exist.
-#![allow(dead_code)]
+//! `discover_agents` / `load_agent` are consumed by Task 9 (agent list).
+//! `discover_apps` / `load_app` / `find_app_manifest` are consumed by
+//! Tasks 12 (app list/describe) and 13 (app run).
 
 use std::path::{Path, PathBuf};
 
@@ -15,6 +14,7 @@ use crate::paths::Paths;
 #[derive(Debug)]
 pub struct DiscoveredAgent {
     pub manifest: Agent,
+    #[allow(dead_code)] // consumed by Task 10 (agent describe / skill)
     pub root: PathBuf,
 }
 
@@ -22,7 +22,9 @@ pub struct DiscoveredAgent {
 #[derive(Debug)]
 pub struct DiscoveredApp {
     pub manifest: App,
+    #[allow(dead_code)] // consumed by Task 12 (app list / describe)
     pub root: PathBuf,
+    #[allow(dead_code)] // consumed by Task 12 (app list / describe)
     pub manifest_path: PathBuf,
 }
 
@@ -54,6 +56,7 @@ pub fn discover_agents(paths: &Paths) -> Result<Vec<DiscoveredAgent>, AwareError
 
 /// Walk `<aware_home>/apps/` one level deep. Each subdir containing a
 /// `.flo` or `.app` file is an installed app.
+#[allow(dead_code)] // consumed by Task 12 (app list)
 pub fn discover_apps(paths: &Paths) -> Result<Vec<DiscoveredApp>, AwareError> {
     let apps_dir = paths.apps_dir();
     if !apps_dir.exists() {
@@ -106,6 +109,7 @@ pub fn load_agent(manifest_path: &Path) -> Result<Agent, AwareError> {
     Ok(parsed)
 }
 
+#[allow(dead_code)] // consumed by Task 12 (app list)
 pub fn load_app(manifest_path: &Path) -> Result<App, AwareError> {
     let text = std::fs::read_to_string(manifest_path)?;
     let parsed: App = serde_yaml::from_str(&text)
