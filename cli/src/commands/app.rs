@@ -4,10 +4,16 @@
 //! Phase v0.2 (install + validate): `install`, `uninstall`, `validate`, `export`.
 //! Phase v0.3 (runtime):  `run`, `stop`, `logs`.
 
+use std::time::Instant;
+
 use clap::Subcommand;
+use serde::Serialize;
 
 use crate::context::Context;
+use crate::envelope;
 use crate::error::AwareError;
+use crate::manifest::loader::discover_apps;
+use crate::render::table::Table;
 
 #[derive(Subcommand, Debug)]
 pub enum AppCommand {
@@ -53,9 +59,9 @@ pub enum AppCommand {
     },
 }
 
-pub fn dispatch(cmd: AppCommand, _ctx: &Context) -> Result<(), AwareError> {
+pub fn dispatch(cmd: AppCommand, ctx: &Context) -> Result<(), AwareError> {
     match cmd {
-        AppCommand::List => Err(AwareError::NotYetImplemented("app list")),
+        AppCommand::List => list(ctx),
         AppCommand::Show { .. } => Err(AwareError::NotYetImplemented("app show")),
         AppCommand::Install { .. } => Err(AwareError::NotYetImplemented("app install")),
         AppCommand::Uninstall { .. } => Err(AwareError::NotYetImplemented("app uninstall")),
@@ -65,4 +71,53 @@ pub fn dispatch(cmd: AppCommand, _ctx: &Context) -> Result<(), AwareError> {
         AppCommand::Stop { .. } => Err(AwareError::NotYetImplemented("app stop")),
         AppCommand::Logs { .. } => Err(AwareError::NotYetImplemented("app logs")),
     }
+}
+
+#[derive(Serialize)]
+struct AppListRow {
+    id: String,
+    version: String,
+    nodes: usize,
+    connections: usize,
+    layout: String,
+}
+
+#[derive(Serialize)]
+struct AppListData {
+    apps: Vec<AppListRow>,
+}
+
+fn list(ctx: &Context) -> Result<(), AwareError> {
+    let started = Instant::now();
+    let discovered = discover_apps(&ctx.paths)?;
+
+    if ctx.json {
+        let data = AppListData {
+            apps: discovered
+                .iter()
+                .map(|d| AppListRow {
+                    id: d.manifest.app.clone(),
+                    version: d.manifest.version.clone(),
+                    nodes: d.manifest.node_count(),
+                    connections: d.manifest.connection_count(),
+                    layout: format!("{:?}", d.manifest.layout).to_lowercase(),
+                })
+                .collect(),
+        };
+        envelope::print_ok("app list", data, started).ok();
+        return Ok(());
+    }
+
+    let mut t = Table::new(["ID", "VERSION", "NODES", "CONNS", "LAYOUT"]);
+    for d in &discovered {
+        t.row([
+            d.manifest.app.clone(),
+            d.manifest.version.clone(),
+            d.manifest.node_count().to_string(),
+            d.manifest.connection_count().to_string(),
+            format!("{:?}", d.manifest.layout).to_lowercase(),
+        ]);
+    }
+    print!("{}", t.render());
+    Ok(())
 }

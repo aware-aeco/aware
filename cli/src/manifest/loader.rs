@@ -55,7 +55,6 @@ pub fn discover_agents(paths: &Paths) -> Result<Vec<DiscoveredAgent>, AwareError
 
 /// Walk `<aware_home>/apps/` one level deep. Each subdir containing a
 /// `.flo` or `.app` file is an installed app.
-#[allow(dead_code)] // consumed by Task 12 (app list)
 pub fn discover_apps(paths: &Paths) -> Result<Vec<DiscoveredApp>, AwareError> {
     let apps_dir = paths.apps_dir();
     if !apps_dir.exists() {
@@ -108,7 +107,6 @@ pub fn load_agent(manifest_path: &Path) -> Result<Agent, AwareError> {
     Ok(parsed)
 }
 
-#[allow(dead_code)] // consumed by Task 12 (app list)
 pub fn load_app(manifest_path: &Path) -> Result<App, AwareError> {
     let text = std::fs::read_to_string(manifest_path)?;
     let parsed: App = serde_yaml::from_str(&text)
