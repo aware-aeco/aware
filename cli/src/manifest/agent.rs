@@ -9,13 +9,18 @@
 //! - `20-agents/_core/aware-skill-builder/manifest.yaml`
 //! - `20-agents/_core/html-report/manifest.yaml`
 //!
-//! `#![allow(dead_code)]` covers fields used by `agent describe` (Task 10+):
-//! `homepage`, `keywords`, `provenance`, `requires`, `transport` details,
-//! and nested structs (`Provenance`, `Requires`, `TransportCli`, `Command`,
-//! `Lifecycle`). The `agent`, `version`, `skills`, `commands`, `kind()`,
-//! `skill_count()`, and `command_count()` members are consumed by Task 9
-//! (`agent list`). Keep the file-level allow until all describe/run tasks land.
-#![allow(dead_code)]
+//! Fields consumed so far:
+//!
+//! - Task 9 (`agent list`): `agent`, `version`, `skills`, `commands`,
+//!   `kind()`, `skill_count()`, `command_count()`.
+//! - Task 10 (`agent describe`): `display_name`, `description`, `stateful`,
+//!   `vendor`, `license`, `transport.cli.binary`, `Command::lifecycle`,
+//!   `Command::description`.
+//!
+//! Remaining unused until later tasks: `homepage`, `keywords`, `provenance`,
+//! `requires`, `Command::inputs`, `Command::outputs`, `Transport::mcp`,
+//! `Transport::rest`, and all `Provenance`/`Requires` fields.
+//! Each gets a targeted `#[allow(dead_code)]`.
 
 use std::collections::BTreeMap;
 
@@ -32,10 +37,14 @@ pub struct Agent {
     pub stateful: bool,
     pub vendor: Option<String>,
     pub license: String,
+    #[allow(dead_code)]
     pub homepage: Option<String>,
     #[serde(default)]
+    #[allow(dead_code)]
     pub keywords: Vec<String>,
+    #[allow(dead_code)]
     pub provenance: Option<Provenance>,
+    #[allow(dead_code)]
     pub requires: Option<Requires>,
     pub transport: Transport,
     #[serde(default)]
@@ -44,6 +53,7 @@ pub struct Agent {
     pub skills: Vec<String>,
 }
 
+#[allow(dead_code)]
 #[derive(Debug, Deserialize)]
 pub struct Provenance {
     #[serde(rename = "generated-by")]
@@ -61,6 +71,7 @@ pub struct Provenance {
     pub ported_from: Option<String>,
 }
 
+#[allow(dead_code)]
 #[derive(Debug, Deserialize, Default)]
 pub struct Requires {
     #[serde(default)]
@@ -80,7 +91,9 @@ pub struct Requires {
 #[derive(Debug, Deserialize)]
 pub struct Transport {
     pub cli: Option<TransportCli>,
+    #[allow(dead_code)]
     pub mcp: Option<Value>,
+    #[allow(dead_code)]
     pub rest: Option<Value>,
 }
 
@@ -94,7 +107,9 @@ pub struct Command {
     pub lifecycle: Lifecycle,
     pub description: String,
     #[serde(default)]
+    #[allow(dead_code)]
     pub inputs: Value,
+    #[allow(dead_code)]
     pub outputs: Option<Value>,
 }
 

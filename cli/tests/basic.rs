@@ -65,11 +65,11 @@ fn app_subcommand_help_works() {
 fn unimplemented_subcommand_exits_nonzero_with_message() {
     Command::cargo_bin("aware")
         .unwrap()
-        .args(["agent", "describe", "tekla"])
+        .args(["agent", "install", "tekla"])
         .assert()
         .failure()
         .stderr(predicate::str::contains("not yet implemented"))
-        .stderr(predicate::str::contains("agent describe"));
+        .stderr(predicate::str::contains("agent install"));
 }
 
 #[test]

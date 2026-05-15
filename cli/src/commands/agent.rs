@@ -52,7 +52,7 @@ pub enum AgentCommand {
 pub fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError> {
     match cmd {
         AgentCommand::List => list(ctx),
-        AgentCommand::Describe { .. } => Err(AwareError::NotYetImplemented("agent describe")),
+        AgentCommand::Describe { agent } => describe(ctx, &agent),
         AgentCommand::Skill { .. } => Err(AwareError::NotYetImplemented("agent skill")),
         AgentCommand::Install { .. } => Err(AwareError::NotYetImplemented("agent install")),
         AgentCommand::Uninstall { .. } => Err(AwareError::NotYetImplemented("agent uninstall")),
@@ -74,6 +74,97 @@ struct AgentListRow {
 #[derive(Serialize)]
 struct AgentListData {
     agents: Vec<AgentListRow>,
+}
+
+fn describe(ctx: &Context, agent_id: &str) -> Result<(), AwareError> {
+    let started = Instant::now();
+    let discovered = discover_agents(&ctx.paths)?;
+    let d = discovered
+        .into_iter()
+        .find(|d| d.manifest.agent == agent_id)
+        .ok_or_else(|| AwareError::NotFound(format!("agent: {agent_id}")))?;
+
+    if ctx.json {
+        #[derive(Serialize)]
+        struct CommandRow {
+            name: String,
+            lifecycle: String,
+            description: String,
+        }
+        #[derive(Serialize)]
+        struct DescribeData<'a> {
+            agent: &'a str,
+            version: &'a str,
+            display_name: Option<&'a str>,
+            description: &'a str,
+            stateful: bool,
+            license: &'a str,
+            vendor: Option<&'a str>,
+            commands: Vec<CommandRow>,
+            skills: &'a [String],
+            skill_count: usize,
+            command_count: usize,
+        }
+
+        let cmds: Vec<CommandRow> = d
+            .manifest
+            .commands
+            .iter()
+            .map(|(n, c)| CommandRow {
+                name: n.clone(),
+                lifecycle: format!("{:?}", c.lifecycle).to_lowercase(),
+                description: c.description.clone(),
+            })
+            .collect();
+
+        let data = DescribeData {
+            agent: &d.manifest.agent,
+            version: &d.manifest.version,
+            display_name: d.manifest.display_name.as_deref(),
+            description: &d.manifest.description,
+            stateful: d.manifest.stateful,
+            license: &d.manifest.license,
+            vendor: d.manifest.vendor.as_deref(),
+            command_count: d.manifest.command_count(),
+            skill_count: d.manifest.skill_count(),
+            commands: cmds,
+            skills: &d.manifest.skills,
+        };
+        envelope::print_ok("agent describe", data, started).ok();
+        return Ok(());
+    }
+
+    let m = &d.manifest;
+    println!("agent:        {}", m.agent);
+    println!("version:      {}", m.version);
+    if let Some(dn) = &m.display_name {
+        println!("display-name: {dn}");
+    }
+    println!(
+        "description:  {}",
+        m.description.lines().next().unwrap_or("").trim()
+    );
+    println!("stateful:     {}", m.stateful);
+    if let Some(v) = &m.vendor {
+        println!("vendor:       {v}");
+    }
+    println!("license:      {}", m.license);
+    if let Some(t) = &m.transport.cli {
+        println!("transport:    cli ({})", t.binary);
+    }
+    println!();
+    println!("commands:");
+    for (name, c) in &m.commands {
+        let lc = format!("{:?}", c.lifecycle).to_lowercase();
+        let desc = c.description.lines().next().unwrap_or("").trim();
+        println!("  {name:<18} {lc:<8} {desc}");
+    }
+    println!();
+    println!("skills ({}):", m.skill_count());
+    for s in &m.skills {
+        println!("  - {s}");
+    }
+    Ok(())
 }
 
 fn list(ctx: &Context) -> Result<(), AwareError> {
