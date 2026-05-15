@@ -9,6 +9,7 @@
 
 mod commands;
 mod error;
+mod paths;
 
 use clap::{Parser, Subcommand};
 
