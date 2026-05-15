@@ -1,4 +1,9 @@
-# Trimble Connect Skill · Idempotency
+---
+name: trimble-connect-idempotency
+description: This skill should be used when authoring AWARE compositions that upload files to Trimble Connect — drawings from Tekla, BIM exports, reports, any artifact that may be re-uploaded across runs. Encodes the pattern that prevents duplicate files: include a stable key (typically the drawing `mark`) as a custom property so the agent replaces rather than duplicates on re-upload. Apply when wiring Tekla → TC, when designing long-running watch loops, when implementing TC backfills, or whenever the same logical artifact may be uploaded more than once.
+---
+
+# Trimble Connect — idempotency
 
 **Always include a stable key (typically the drawing `mark`) as a custom property when uploading. The agent uses this to replace-not-duplicate on re-uploads.**
 
@@ -6,10 +11,10 @@
 
 A long-running app fires `tekla.watch → tc.upload` many times across a session. Without idempotency:
 
-- The same drawing gets uploaded 10 times (10 file IDs)
-- The fab team sees A-104, A-104 (v2), A-104 (v3), … in the folder
-- Disk and bandwidth wasted
-- Re-runs produce drift, not stability
+- The same drawing gets uploaded 10 times (10 file IDs).
+- The fab team sees A-104, A-104 (v2), A-104 (v3), … in the folder.
+- Disk and bandwidth wasted.
+- Re-runs produce drift, not stability.
 
 ## The pattern
 
@@ -43,8 +48,8 @@ properties={"mark":"A-104","source":"aware-fab-pipeline"}
 
 Before the upload, the agent does a quick lookup: *"Is there already a file in this folder with `properties.mark == 'A-104'`?"*
 
-- If **yes**: PUT the new bytes to the existing file ID (Trimble preserves the URL + comments + history)
-- If **no**: POST as new and record the mark
+- If **yes**: PUT the new bytes to the existing file ID (Trimble preserves the URL + comments + history).
+- If **no**: POST as new and record the mark.
 
 The caller sees `replaced: true` in the response when an existing file was updated.
 
@@ -54,14 +59,14 @@ In AECO, the drawing mark is the stable, human-readable identifier that survives
 
 ## Idempotency vs. revision history
 
-Don't conflate them. Idempotency means "same mark = same file slot." Revision history is **part of** that single file slot — Trimble keeps every previous version under "Revisions" on the file, and your replacement just adds another revision. You get both: a stable URL and a full history.
+Do not conflate them. Idempotency means "same mark = same file slot." Revision history is **part of** that single file slot — Trimble keeps every previous version under "Revisions" on the file, and a replacement just adds another revision. Both are preserved: a stable URL and a full history.
 
-If you actually want to fork — *"this is a new drawing that happens to share the same mark"* — use a different idempotency key (e.g. `mark + revision-letter`).
+To intentionally fork — *"this is a new drawing that happens to share the same mark"* — use a different idempotency key (e.g. `mark + revision-letter`).
 
 ## What goes wrong without this
 
-A team I know ran a Tekla → TC pipeline for 4 months. Their fab folder ended up with 19,000 duplicate drawings. They had to manually script the cleanup. **Set the property on the first upload; never look back.**
+A real team ran a Tekla → TC pipeline for 4 months. Their fab folder ended up with 19,000 duplicate drawings. Manual scripting cleanup followed. **Set the property on the first upload; never look back.**
 
 ## Source
 
-Trimble Connect API allows custom properties on file uploads (`properties` field in the multipart form). The X-AWARE-Idempotency-Key header is AWARE's convention, not Trimble's — it triggers the agent's internal de-dup before the actual REST call.
+Trimble Connect API allows custom properties on file uploads (`properties` field in the multipart form). The `X-AWARE-Idempotency-Key` header is AWARE's convention, not Trimble's — it triggers the agent's internal de-dup before the actual REST call.

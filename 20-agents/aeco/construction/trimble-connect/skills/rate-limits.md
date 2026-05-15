@@ -1,6 +1,11 @@
-# Trimble Connect Skill · Rate limits + retry
+---
+name: trimble-connect-rate-limits
+description: This skill should be used when authoring AWARE compositions that hit Trimble Connect at scale — backfilling drawings, syncing folders, batch uploads, or long-running watch pipelines. Encodes the rate-limit policy (per-project budgets), the agent's exponential-backoff retry behavior on 5xx and 429, and the throttling pattern for compositions that would otherwise burst above the limit. Apply when designing TC backfills, when concurrent apps share a TC project, or when troubleshooting `error.rate-limit-exceeded`.
+---
 
-**Trimble Connect rate-limits at the project level. Exponential backoff on `5xx` and `429`. Max 3 attempts. The agent handles this automatically — your composition rarely needs to think about it.**
+# Trimble Connect — rate limits + retry
+
+**Trimble Connect rate-limits at the project level. Exponential backoff on `5xx` and `429`. Max 3 attempts. The agent handles this automatically — compositions rarely need to think about it.**
 
 ## The limits (as published)
 
@@ -26,13 +31,13 @@ attempt 3 → wait 2s, retry
 fail      → emit error.rate-limit-exceeded with `retry-after` from the response header
 ```
 
-If Trimble returns `Retry-After`, the agent honors that value instead of its own backoff.
+When Trimble returns `Retry-After`, the agent honors that value instead of its own backoff.
 
-After 3 attempts the error surfaces to your composition. **Don't catch it and retry yourself** — the agent already did the right thing. If you're hitting this, you need to throttle upstream.
+After 3 attempts the error surfaces to the composition. Do **not** catch it and retry from the app — the agent already did the right thing. A composition that hits this needs upstream throttling, not downstream retry.
 
 ## Throttling pattern for backfills
 
-If you know you're going to upload thousands of files, use an inline `throttle` glue node:
+For thousands of uploads, use an inline `throttle` glue node:
 
 ```yaml
 - id: tekla-list

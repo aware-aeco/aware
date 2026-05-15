@@ -1,10 +1,16 @@
-# Tekla Skill · Event threading
+---
+name: tekla-event-threading
+description: This skill should be used when subscribing to Tekla events, registering event handlers, or designing reactive flows that respond to Tekla model changes. Encodes the threading-model gotcha — `ModelUnloadingSync` runs on the main Tekla thread while most other events run async on a worker thread. Apply when wiring `ModelObjectChanged`, `ConnectionInserted`, `DrawingChanged`, `SelectionChanged`, or any event handler that may touch UI, cross-process resources, or shared state, and when handling burst event streams.
+---
+
+# Tekla event threading
 
 **`ModelUnloadingSync` runs on the main Tekla thread. Most other events run async on a worker thread. Marshal back to the UI dispatcher when downstream nodes need UI access.**
 
-The threading model is not consistent across Tekla event handlers. The Open API surface gives you no hint. Get this wrong and you get either:
-- Deadlocks (calling sync UI work from a worker thread that's blocking on the main thread), or
-- Silent failures (trying to touch UI from a non-UI thread)
+The threading model is not consistent across Tekla event handlers. The Open API surface gives no hint. Getting this wrong produces either:
+
+- Deadlocks (sync UI work from a worker thread that's blocking on the main thread), or
+- Silent failures (touching UI from a non-UI thread).
 
 ## The two thread classes
 
@@ -16,7 +22,7 @@ The threading model is not consistent across Tekla event handlers. The Open API 
 | `DrawingChanged` | Worker thread (async) | Same. |
 | `SelectionChanged` | UI thread | Mostly safe but can fire in bursts. |
 
-When in doubt, **read the per-event note on `developer.tekla.com`** — the threading is documented per event, and it has been wrong in places. Don't trust IntelliSense alone.
+When in doubt, read the per-event note on `developer.tekla.com` — the threading is documented per event, and it has been wrong in places. Do not trust IntelliSense alone.
 
 ## Marshaling pattern
 
@@ -32,22 +38,27 @@ events.ModelObjectChanged += (changes) =>
 };
 ```
 
-`Dispatcher.Invoke` marshals to the UI thread. Use `BeginInvoke` (fire-and-forget) when you don't need a return value and want to avoid blocking the worker.
+Use `Dispatcher.Invoke` to marshal to the UI thread. Use `BeginInvoke` (fire-and-forget) when no return value is needed and blocking the worker is undesirable.
 
 ## What goes wrong without marshaling
 
-- WPF/WinForms throws `InvalidOperationException` when touching UI controls from a non-UI thread
-- COM-marshaled UI objects throw `RPC_E_WRONG_THREAD`
-- Some Tekla operations silently fail when called from the wrong thread (no exception, no log — just nothing happens)
+- WPF/WinForms throws `InvalidOperationException` when touching UI controls from a non-UI thread.
+- COM-marshaled UI objects throw `RPC_E_WRONG_THREAD`.
+- Some Tekla operations silently fail when called from the wrong thread (no exception, no log — just nothing happens).
 
 ## Burst handling
 
-Worker-thread events can fire in rapid bursts (e.g. a bulk paste of 500 assemblies). Either:
-- Debounce 100–250ms before emitting downstream
-- Batch into a single emit with an array payload
+Worker-thread events can fire in rapid bursts (e.g. a bulk paste of 500 assemblies). Two options:
 
-The agent's `watch` command does debounce by default. If you bypass `watch` and subscribe directly, debounce yourself.
+- Debounce 100–250ms before emitting downstream.
+- Batch into a single emit with an array payload.
+
+The agent's `watch` command debounces by default. When subscribing directly without going through `watch`, apply debounce manually.
 
 ## Cross-process variant
 
-`TCM_GETITEMW` and other Win32 messages sent cross-process from the Tekla event handlers need `VirtualAllocEx` + `WriteProcessMemory` — they cannot share a heap with the target process. See `feedback_tekla_walker_lessons.md` in the FloLess memory for the proven settle timings (300ms minimum after `SwitchTab`).
+`TCM_GETITEMW` and other Win32 messages sent cross-process from Tekla event handlers need `VirtualAllocEx` + `WriteProcessMemory` — they cannot share a heap with the target process. Settle ≥ 300ms after `SwitchTab` for reliable reads.
+
+## Source
+
+Verified per release against `developer.tekla.com`. Specific timings (300ms settle) from production observation.
