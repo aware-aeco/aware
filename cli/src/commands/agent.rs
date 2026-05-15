@@ -6,6 +6,7 @@
 
 use clap::Subcommand;
 
+use crate::context::Context;
 use crate::error::AwareError;
 
 #[derive(Subcommand, Debug)]
@@ -30,25 +31,19 @@ pub enum AgentCommand {
         spec: String,
     },
     /// Uninstall an agent. (v0.2)
-    Uninstall {
-        agent: String,
-    },
+    Uninstall { agent: String },
     /// Re-pull the latest matching version of an agent. (v0.2)
-    Update {
-        agent: String,
-    },
+    Update { agent: String },
     /// Validate an agent folder against the agent-spec. (v0.2)
     Validate {
         /// Path to an agent folder containing manifest.yaml.
         path: std::path::PathBuf,
     },
     /// Open a PR to the GitHub registry. (v0.2+)
-    Publish {
-        path: std::path::PathBuf,
-    },
+    Publish { path: std::path::PathBuf },
 }
 
-pub fn dispatch(cmd: AgentCommand) -> Result<(), AwareError> {
+pub fn dispatch(cmd: AgentCommand, _ctx: &Context) -> Result<(), AwareError> {
     match cmd {
         AgentCommand::List => Err(AwareError::NotYetImplemented("agent list")),
         AgentCommand::Describe { .. } => Err(AwareError::NotYetImplemented("agent describe")),

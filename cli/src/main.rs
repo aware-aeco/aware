@@ -8,6 +8,7 @@
 //! implements them per the roadmap, one phase at a time.
 
 mod commands;
+mod context;
 mod error;
 mod paths;
 
@@ -74,14 +75,26 @@ enum Command {
 fn main() -> anyhow::Result<()> {
     let cli = Cli::parse();
 
+    let paths = match crate::paths::Paths::from_env() {
+        Ok(p) => p,
+        Err(err) => {
+            eprintln!("error: {err}");
+            std::process::exit(err.exit_code());
+        }
+    };
+    let ctx = crate::context::Context {
+        paths,
+        json: cli.json,
+    };
+
     let result: Result<(), AwareError> = match cli.command {
-        Command::Agent { action } => commands::agent::dispatch(action),
-        Command::App { action } => commands::app::dispatch(action),
-        Command::Connect(args) => commands::connect::run_connect(args),
-        Command::Disconnect(args) => commands::connect::run_disconnect(args),
-        Command::Skill { action } => commands::skill::dispatch(action),
-        Command::Build { action } => commands::build::dispatch(action),
-        Command::Doctor => commands::doctor::run(),
+        Command::Agent { action } => commands::agent::dispatch(action, &ctx),
+        Command::App { action } => commands::app::dispatch(action, &ctx),
+        Command::Connect(args) => commands::connect::run_connect(args, &ctx),
+        Command::Disconnect(args) => commands::connect::run_disconnect(args, &ctx),
+        Command::Skill { action } => commands::skill::dispatch(action, &ctx),
+        Command::Build { action } => commands::build::dispatch(action, &ctx),
+        Command::Doctor => commands::doctor::run(&ctx),
     };
 
     match result {

@@ -5,6 +5,7 @@
 
 use clap::Subcommand;
 
+use crate::context::Context;
 use crate::error::AwareError;
 
 #[derive(Subcommand, Debug)]
@@ -56,7 +57,7 @@ pub enum SkillCommand {
     },
 }
 
-pub fn dispatch(cmd: SkillCommand) -> Result<(), AwareError> {
+pub fn dispatch(cmd: SkillCommand, _ctx: &Context) -> Result<(), AwareError> {
     match cmd {
         SkillCommand::Create { .. } => Err(AwareError::NotYetImplemented("skill create")),
         SkillCommand::Port { .. } => Err(AwareError::NotYetImplemented("skill port")),

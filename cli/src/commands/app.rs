@@ -6,6 +6,7 @@
 
 use clap::Subcommand;
 
+use crate::context::Context;
 use crate::error::AwareError;
 
 #[derive(Subcommand, Debug)]
@@ -13,21 +14,13 @@ pub enum AppCommand {
     /// Print a table of installed apps.
     List,
     /// Print an app's topology (ASCII) + provenance.
-    Show {
-        app: String,
-    },
+    Show { app: String },
     /// Install an app from a local path or registry name. (v0.2)
-    Install {
-        path_or_name: String,
-    },
+    Install { path_or_name: String },
     /// Uninstall an app. (v0.2)
-    Uninstall {
-        app: String,
-    },
+    Uninstall { app: String },
     /// Validate an app file against the app-spec. (v0.2)
-    Validate {
-        path: std::path::PathBuf,
-    },
+    Validate { path: std::path::PathBuf },
     /// Export an installed app's .flo file to a path. (v0.2)
     Export {
         app: String,
@@ -60,7 +53,7 @@ pub enum AppCommand {
     },
 }
 
-pub fn dispatch(cmd: AppCommand) -> Result<(), AwareError> {
+pub fn dispatch(cmd: AppCommand, _ctx: &Context) -> Result<(), AwareError> {
     match cmd {
         AppCommand::List => Err(AwareError::NotYetImplemented("app list")),
         AppCommand::Show { .. } => Err(AwareError::NotYetImplemented("app show")),

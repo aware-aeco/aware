@@ -13,7 +13,6 @@ pub struct Paths {
 }
 
 impl Paths {
-    #[allow(dead_code)] // consumed by Task 2 (main wires Paths::from_env)
     pub fn from_env() -> Result<Self, AwareError> {
         let aware_home = match std::env::var_os("AWARE_HOME") {
             Some(p) => PathBuf::from(p),

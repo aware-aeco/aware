@@ -4,6 +4,7 @@
 
 use clap::Args;
 
+use crate::context::Context;
 use crate::error::AwareError;
 
 #[derive(Args, Debug)]
@@ -32,10 +33,10 @@ pub struct DisconnectArgs {
     pub r#as: Option<String>,
 }
 
-pub fn run_connect(_args: ConnectArgs) -> Result<(), AwareError> {
+pub fn run_connect(_args: ConnectArgs, _ctx: &Context) -> Result<(), AwareError> {
     Err(AwareError::NotYetImplemented("connect"))
 }
 
-pub fn run_disconnect(_args: DisconnectArgs) -> Result<(), AwareError> {
+pub fn run_disconnect(_args: DisconnectArgs, _ctx: &Context) -> Result<(), AwareError> {
     Err(AwareError::NotYetImplemented("disconnect"))
 }
