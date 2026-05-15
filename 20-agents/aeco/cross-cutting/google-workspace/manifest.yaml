@@ -1,0 +1,123 @@
+agent:        google-workspace
+version:      1.0.0
+display-name: Google Workspace
+description: |
+  Read and write across Google Drive, Sheets, Calendar, and Gmail. Auto-generated
+  from the public Google API Discovery documents + refined to capture auth,
+  throttling, and Drive/Sheets-specific conventions the discovery surface alone
+  doesn't encode.
+
+  Cross-cutting in AECO (project file shares, schedule sheets, RFI emails) —
+  parallel to microsoft-365 for teams that prefer the Google stack.
+
+stateful: false
+
+vendor:   google
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/cross-cutting/google-workspace
+keywords: [aware, google, gworkspace, drive, sheets, calendar, gmail, cross-cutting]
+
+provenance:
+  generated-by:     aware-agent-builder
+  generator-version: 0.1.0
+  source:
+    type: openapi
+    url:  https://www.googleapis.com/discovery/v1/apis/drive/v3/rest
+  refined-by:       [pawellisowski]
+  generated-at:     2026-04-01T00:00:00Z
+  ported-from:      D:/Repos/floless-app/src/FloLess/Core/Skills/Resources/Google/
+
+requires:
+  network:
+    - https://www.googleapis.com
+    - https://sheets.googleapis.com
+    - https://accounts.google.com
+  secrets:
+    - google-workspace      # cross-references ~/.aware/credentials/google-workspace.json
+
+transport:
+  cli:
+    binary: aware-google
+  rest:
+    drive:    https://www.googleapis.com/drive/v3/
+    sheets:   https://sheets.googleapis.com/v4/spreadsheets/
+
+commands:
+  list-files:
+    lifecycle: single
+    description: List files in Drive matching an optional query.
+    inputs:
+      query:
+        type: string
+        description: Google Drive search query (e.g., `"mimeType='application/pdf'"`).
+      page-size:
+        type: int
+        default: 100
+    outputs:
+      type: single
+      schema:
+        files:
+          type: array
+          items:
+            id:        string
+            name:      string
+            mime-type: string
+            size:      number
+
+  download-file:
+    lifecycle: single
+    description: Download a Drive file's bytes by id.
+    inputs:
+      file-id: string
+    outputs:
+      type: single
+      schema:
+        bytes:    bytes
+        filename: string
+
+  upload-file:
+    lifecycle: single
+    description: Upload bytes to Drive. Uses simple (≤ 5MB) or resumable (large) upload.
+    inputs:
+      filename:  string
+      bytes:     bytes
+      parent-folder-id:
+        type: string
+        description: Optional. If omitted, file lands at My Drive root.
+    outputs:
+      type: single
+      schema:
+        file-id: string
+        web-url: string
+
+  read-sheet:
+    lifecycle: single
+    description: Read a range of cells from a Google Sheet.
+    inputs:
+      spreadsheet-id: string
+      range:
+        type: string
+        description: A1 notation (e.g., `"Sheet1!A1:D100"`).
+    outputs:
+      type: single
+      schema:
+        values:
+          type: array
+          items: array
+
+  write-sheet:
+    lifecycle: single
+    description: Write values to a range in a Google Sheet.
+    inputs:
+      spreadsheet-id: string
+      range:          string
+      values:
+        type: array
+        items: array
+    outputs:
+      type: single
+      schema:
+        updated-cells: int
+
+skills:
+  - auth.md

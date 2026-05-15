@@ -1,0 +1,111 @@
+agent:        microsoft-365
+version:      1.0.0
+display-name: Microsoft 365 (Graph API)
+description: |
+  Read and write across the Microsoft 365 surface — OneDrive, SharePoint,
+  Outlook, Teams, Calendar — via the Microsoft Graph REST API. Auto-generated
+  from the public Graph OpenAPI spec + refined to capture auth, throttling,
+  and sharing-URL conventions the spec alone doesn't encode.
+
+  Cross-cutting in AECO (used by architecture, engineering, construction,
+  and operations alike — file sharing, RFI emails, drawing index sheets in
+  SharePoint, Teams channels for project comms).
+
+stateful: false
+
+vendor:   microsoft
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/cross-cutting/microsoft-365
+keywords: [aware, m365, microsoft-365, graph, sharepoint, onedrive, teams, outlook, cross-cutting]
+
+provenance:
+  generated-by:     aware-agent-builder
+  generator-version: 0.1.0
+  source:
+    type: openapi
+    url:  https://github.com/microsoftgraph/msgraph-metadata/blob/master/openapi/v1.0/openapi.yaml
+  refined-by:       [pawellisowski]
+  generated-at:     2026-04-01T00:00:00Z
+  ported-from:      D:/Repos/floless-app/src/FloLess/Core/Skills/Resources/M365/
+
+requires:
+  network:
+    - https://graph.microsoft.com
+    - https://login.microsoftonline.com
+  secrets:
+    - microsoft-365       # cross-references ~/.aware/credentials/microsoft-365.json
+
+transport:
+  cli:
+    binary: aware-m365
+  rest:
+    base: https://graph.microsoft.com/v1.0/
+
+commands:
+  get-drive-item:
+    lifecycle: single
+    description: Resolve a file or folder by id, path, or sharing URL.
+    inputs:
+      drive-id:
+        type: string
+        description: Optional. If omitted, uses the user's default drive.
+      item-id:    string
+      sharing-url:
+        type: string
+        description: Optional alternative to item-id. Encoded automatically.
+    outputs:
+      type: single
+      schema:
+        id:          string
+        name:        string
+        size:        number
+        is-folder:   bool
+        web-url:     string
+        download-url: string
+
+  download-file:
+    lifecycle: single
+    description: Download a OneDrive / SharePoint file's bytes.
+    inputs:
+      drive-id: string
+      item-id:  string
+    outputs:
+      type: single
+      schema:
+        bytes:    bytes
+        filename: string
+        size-kb:  number
+
+  upload-file:
+    lifecycle: single
+    description: Upload bytes as a new file. Uses simple (≤ 4MB) or resumable (large file) upload depending on size.
+    inputs:
+      drive-id:  string
+      folder-id: string
+      filename:  string
+      bytes:     bytes
+    outputs:
+      type: single
+      schema:
+        item-id: string
+        web-url: string
+
+  list-folder:
+    lifecycle: single
+    description: List children of a folder.
+    inputs:
+      drive-id:  string
+      folder-id: string
+    outputs:
+      type: single
+      schema:
+        items:
+          type: array
+          items:
+            id:        string
+            name:      string
+            size:      number
+            is-folder: bool
+
+skills:
+  - auth.md
