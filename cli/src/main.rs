@@ -13,6 +13,7 @@ mod envelope;
 mod error;
 mod manifest;
 mod paths;
+mod render;
 
 use clap::{Parser, Subcommand};
 
