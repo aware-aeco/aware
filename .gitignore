@@ -1,0 +1,42 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Obsidian (when this repo is opened as a vault)
+.obsidian/workspace*
+.obsidian/cache
+.obsidian/graph.json
+
+# Claude Code session noise
+tmpclaude-*
+.claude/worktrees/
+.claude/scheduled_tasks.lock
+
+# Build / dist (when CLI source lands)
+dist/
+build/
+out/
+target/
+node_modules/
+*.log
+*.tmp
+
+# Secrets — never check these in
+.env
+.env.*
+*.pem
+*.key
+**/credentials/
+**/*.credentials.json
+
+# Local-only generated artifacts
+*.local.md
+.aware-cache/
