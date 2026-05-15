@@ -121,3 +121,6 @@ commands:
 
 skills:
   - auth.md
+  - api-snippets.md
+  - drive.md
+  - sheets.md

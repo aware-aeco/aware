@@ -88,3 +88,30 @@ skills:
   - event-threading.md
   - coordinate-systems.md
   - events-and-clashes.md
+  - application-library.md
+  - bent-plates-and-custom-shapes.md
+  - connections-bolts-welds.md
+  - drawing-workflows.md
+  - macro-execution.md
+  - model-operations-snippets.md
+  - model-operations.md
+  - reference-models.md
+  - reinforcement-patterns.md
+  - structures-catalogs-api-reference.md
+  - structures-catalogs.md
+  - structures-datatype.md
+  - structures-dialog.md
+  - structures-drawing-api-reference.md
+  - structures-drawing-snippets.md
+  - structures-drawing.md
+  - structures-filtering.md
+  - structures-geometry3d-api-reference.md
+  - structures-geometry3d.md
+  - structures-model-api-reference.md
+  - structures-model-internal.md
+  - structures-model-snippets.md
+  - structures-model.md
+  - structures-plugins.md
+  - structures-root.md
+  - structures-solid.md
+  - rpt-report-templates.md

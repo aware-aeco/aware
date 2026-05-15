@@ -25,7 +25,8 @@ The file lands at `<model-folder>/attributes/<filename>.j<joint-id>`. Tekla writ
 
 ```csharp
 // Tekla Akit pattern — must call Connect() before any macro work,
-// otherwise the macro silent-no-ops (see floless memory: feedback_tekla_connect_before_macro)
+// otherwise the macro silent-no-ops. This is a hard-won gotcha — TeklaStructures.Connect()
+// returning true is a precondition for every macro call, not a one-time check.
 if (!TeklaStructures.Connect())
     return Error("tekla.not-connected");
 
@@ -81,4 +82,4 @@ nodes:
 ## See also
 
 - The Connection X-Ray reference app — uses this command + the dialog walker for full variable discovery
-- Tekla MFC dialog walker pattern (see `feedback_tekla_dialog_uses_win32.md` in floless memory) — for going deeper than this command exposes
+- Tekla MFC dialog walker pattern — Tekla connection dialogs are MFC, not UIA-friendly. `EnumChildWindows` + Win32 `SendMessage` (WM_GETTEXT, GetWindowRect, TCM_SETCURSEL) is the path to programmatic field discovery, not UIA. The dialog is a child of the Tekla main window, not top-level. Useful when this command's scope is insufficient.

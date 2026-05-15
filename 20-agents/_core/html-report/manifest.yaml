@@ -1,0 +1,51 @@
+agent:        html-report
+version:      1.0.0
+display-name: HTML Report
+description: |
+  Utility agent for generating self-contained HTML reports — single-file
+  documents with inlined CSS, runnable in any browser. Used as the sink of
+  many AECO compositions (Tekla Connection X-Ray, BCF reports, fab pipelines,
+  QC dashboards) that need a portable, sharable artifact.
+
+  Lives under `_core/` because it's not tied to any AECO vertical — it's
+  general output formatting that any agent's command may compose with.
+
+stateful: false
+
+vendor:   aware
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/_core/html-report
+keywords: [aware, html, report, output, viewer, dashboard]
+
+requires:
+  filesystem:
+    - write: any                 # caller's chosen path
+
+transport:
+  cli:
+    binary: aware-html-report
+
+commands:
+  render:
+    lifecycle: single
+    description: Render an HTML report from a template + data payload to a target path.
+    inputs:
+      template:
+        type: enum
+        values: [tekla-connection-xray, bcf-summary, fab-pipeline-log, qc-dashboard, blank]
+        description: Built-in template name, or `blank` for a custom HTML body.
+      data:
+        type: object
+        description: Template-specific data payload.
+      output-path: string
+      title:
+        type: string
+        description: Optional page title; defaults to template name.
+    outputs:
+      type: single
+      schema:
+        path:   string
+        bytes:  int
+
+skills:
+  - styling.md

@@ -109,3 +109,6 @@ commands:
 
 skills:
   - auth.md
+  - graph-excel.md
+  - graph-files.md
+  - graph-snippets.md
