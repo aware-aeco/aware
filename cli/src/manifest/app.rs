@@ -3,11 +3,6 @@
 //! Shapes verified against the 2 reference apps:
 //! - `30-apps/_examples/welded-to-tc.flo`   — linear layout, 3 nodes, 2 connections
 //! - `30-apps/_examples/qa-drawings-to-tekla.flo` — DAG layout, 7 nodes, 6 connections
-//!
-//! `#![allow(dead_code)]` is intentional: the types are forward-declared
-//! together but are not yet consumed by any command dispatcher. Remove once
-//! `loader.rs` (Task 5) and `app list` (Task 12) are wired in.
-#![allow(dead_code)]
 
 use serde::Deserialize;
 use serde_yaml::Value;
@@ -21,10 +16,12 @@ pub struct App {
     pub description: String,
     #[serde(rename = "exposes-as-agent", default)]
     pub exposes_as_agent: bool,
+    #[allow(dead_code)]
     #[serde(rename = "exposed-commands", default)]
     pub exposed_commands: Option<Value>,
     #[serde(default)]
     pub requires: Vec<String>,
+    #[allow(dead_code)]
     #[serde(rename = "requires-permissions")]
     pub requires_permissions: Option<Value>,
     #[serde(default = "default_layout")]
@@ -33,6 +30,7 @@ pub struct App {
     pub nodes: Vec<Node>,
     #[serde(default)]
     pub connections: Vec<Connection>,
+    #[allow(dead_code)]
     #[serde(default)]
     pub skills: Vec<String>,
 }
@@ -56,8 +54,10 @@ pub struct Node {
     pub inline: Option<Inline>,
     pub row: Option<u32>,
     pub col: Option<u32>,
+    #[allow(dead_code)]
     #[serde(default)]
     pub config: Value,
+    #[allow(dead_code)]
     #[serde(default)]
     pub inputs: Value,
 }
@@ -65,7 +65,9 @@ pub struct Node {
 #[derive(Debug, Deserialize)]
 pub struct Inline {
     pub kind: String,
+    #[allow(dead_code)]
     pub description: String,
+    #[allow(dead_code)]
     pub code: Option<String>,
 }
 
@@ -78,6 +80,7 @@ pub struct Connection {
 }
 
 impl App {
+    #[allow(dead_code)]
     pub fn is_dag(&self) -> bool {
         self.layout == Layout::Dag
     }

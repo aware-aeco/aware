@@ -2,7 +2,6 @@
 //!
 //! Consumed by Task 13 (`app show`). The helpers below are intentionally
 //! internal — only `format_topology` is public API.
-#![allow(dead_code)]
 
 use crate::manifest::App;
 use crate::manifest::app::{Layout, Node};

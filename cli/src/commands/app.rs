@@ -62,7 +62,7 @@ pub enum AppCommand {
 pub fn dispatch(cmd: AppCommand, ctx: &Context) -> Result<(), AwareError> {
     match cmd {
         AppCommand::List => list(ctx),
-        AppCommand::Show { .. } => Err(AwareError::NotYetImplemented("app show")),
+        AppCommand::Show { app } => show(ctx, &app),
         AppCommand::Install { .. } => Err(AwareError::NotYetImplemented("app install")),
         AppCommand::Uninstall { .. } => Err(AwareError::NotYetImplemented("app uninstall")),
         AppCommand::Validate { .. } => Err(AwareError::NotYetImplemented("app validate")),
@@ -85,6 +85,42 @@ struct AppListRow {
 #[derive(Serialize)]
 struct AppListData {
     apps: Vec<AppListRow>,
+}
+
+fn show(ctx: &Context, app_id: &str) -> Result<(), AwareError> {
+    use crate::render::topology::format_topology;
+
+    let discovered = discover_apps(&ctx.paths)?;
+    let d = discovered
+        .into_iter()
+        .find(|d| d.manifest.app == app_id)
+        .ok_or_else(|| AwareError::NotFound(format!("app: {app_id}")))?;
+
+    let m = &d.manifest;
+    println!("app:           {}", m.app);
+    println!("version:       {}", m.version);
+    if let Some(dn) = &m.display_name {
+        println!("display-name:  {dn}");
+    }
+    println!(
+        "description:   {}",
+        m.description.lines().next().unwrap_or("").trim()
+    );
+    println!("exposes-as-agent: {}", m.exposes_as_agent);
+    println!(
+        "layout:        {}",
+        format!("{:?}", m.layout).to_lowercase()
+    );
+    println!();
+
+    println!("Requires:");
+    for r in &m.requires {
+        println!("  - {r}");
+    }
+    println!();
+
+    print!("{}", format_topology(m));
+    Ok(())
 }
 
 fn list(ctx: &Context) -> Result<(), AwareError> {
