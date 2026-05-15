@@ -3,9 +3,6 @@
 //! `AWARE_HOME` env var overrides the default `~/.aware/` location.
 //! Tests rely on this override to avoid polluting the real home dir.
 
-// Public API is forward-declared; callers are wired in later CLI phases.
-#![allow(dead_code)]
-
 use std::path::PathBuf;
 
 use crate::error::AwareError;
@@ -16,6 +13,7 @@ pub struct Paths {
 }
 
 impl Paths {
+    #[allow(dead_code)] // consumed by Task 2 (main wires Paths::from_env)
     pub fn from_env() -> Result<Self, AwareError> {
         let aware_home = match std::env::var_os("AWARE_HOME") {
             Some(p) => PathBuf::from(p),
@@ -26,18 +24,22 @@ impl Paths {
         Ok(Self { aware_home })
     }
 
+    #[allow(dead_code)] // consumed by Task 9 (agent list)
     pub fn agents_dir(&self) -> PathBuf {
         self.aware_home.join("agents")
     }
 
+    #[allow(dead_code)] // consumed by Task 12 (app list)
     pub fn apps_dir(&self) -> PathBuf {
         self.aware_home.join("apps")
     }
 
+    #[allow(dead_code)] // consumed by Task 14 (doctor)
     pub fn config_path(&self) -> PathBuf {
         self.aware_home.join("config.yaml")
     }
 
+    #[allow(dead_code)] // consumed by v0.4 (aware connect)
     pub fn credentials_dir(&self) -> PathBuf {
         self.aware_home.join("credentials")
     }
