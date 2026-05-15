@@ -1,0 +1,89 @@
+agent:        tekla
+version:      2025.0.1
+display-name: Tekla Structures
+description: |
+  Watches the active Tekla model, reads its state, and writes back via the
+  Tekla Open API. Auto-generated from Tekla Structures 2025.0 DLLs and
+  refined by hand to capture Tekla-specific gotchas the API surface alone
+  doesn't expose (Mark vs Name, event threading, coordinate systems).
+
+stateful: true
+
+vendor:   trimble
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/engineering/tekla
+keywords: [aeco, engineering, structural, bim, tekla, trimble]
+
+provenance:
+  generated-by:     aware-agent-builder
+  generator-version: 0.1.0
+  source:
+    type: dlls
+    path: "C:/Program Files/Tekla Structures/2025.0/bin/Tekla.*.dll"
+    docs: "https://www.nuget.org/packages/Tekla.Structures.Model/2025.0.0"
+  refined-by:       [pawellisowski, wojciechmleczek]
+  generated-at:     2026-04-01T00:00:00Z
+
+requires:
+  network:
+    - localhost:9999       # Tekla COM bridge
+  software:
+    - tekla-structures@2025.x
+
+transport:
+  cli:
+    binary: aware-tekla
+
+commands:
+  watch:
+    lifecycle: start
+    description: Subscribe to ModelObjectChanged events on the active Tekla model.
+    inputs:
+      filter:
+        type: enum
+        values: [all, welded, bolted, assembly, drawing]
+        default: all
+    outputs:
+      type: stream
+      schema:
+        guid:     string
+        mark:     string             # NOTE: identity is Mark, never Name
+        type:     string             # AssemblyType (Welded, Bolted, …)
+        geometry: object
+
+  insert:
+    lifecycle: single
+    description: Create a ConnectionPart at a world-space location.
+    inputs:
+      type:
+        type: string
+        description: Tekla connection catalog name (e.g. "End plate 144")
+      position:
+        type: object
+        schema:
+          x: number
+          y: number
+          z: number
+      beams:
+        type: array
+        items: string                # GUIDs of beams to attach
+    outputs:
+      type: single
+      schema:
+        guid: string
+
+  save-attributes:
+    lifecycle: single
+    description: Persist the active dialog's values via the Akit save-as pattern.
+    inputs:
+      joint-id: string               # e.g. "144" for End plate 144
+      filename: string               # name (no extension); written to <model>/attributes/<name>.j<id>
+    outputs:
+      type: single
+      schema:
+        path: string
+
+skills:
+  - drawing-identity.md
+  - event-threading.md
+  - coordinate-systems.md

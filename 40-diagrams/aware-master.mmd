@@ -1,0 +1,96 @@
+%%{init: {'theme':'neutral'}}%%
+graph TB
+
+  %% =========================================================
+  %% Style classes
+  %% =========================================================
+  classDef poc        fill:#4ade80,stroke:#16a34a,color:#0f172a,stroke-width:2px
+  classDef future     fill:#f1f5f9,stroke:#94a3b8,color:#475569
+  classDef substrate  fill:#dbeafe,stroke:#2563eb,color:#0f172a,stroke-width:2px
+  classDef meta       fill:#fef3c7,stroke:#d97706,color:#0f172a,stroke-width:2px
+  classDef app        fill:#e0e7ff,stroke:#6366f1,color:#0f172a
+  classDef commercial fill:#fce7f3,stroke:#be185d,color:#0f172a
+
+  %% =========================================================
+  %% Substrate · Apache 2.0
+  %% =========================================================
+  subgraph SUB["AWARE Substrate · Apache 2.0"]
+    direction TB
+    Decalog["Decalog<br/>5 structural truths"]:::substrate
+    AgentSpec["Agent Spec"]:::substrate
+    AppSpec["App Spec"]:::substrate
+    CLI["aware CLI<br/>install · run · publish"]:::substrate
+    Registry["Registry<br/>GitHub-hosted"]:::substrate
+
+    Decalog --> AgentSpec
+    Decalog --> AppSpec
+    AgentSpec --> CLI
+    AppSpec --> CLI
+    CLI --> Registry
+  end
+
+  %% =========================================================
+  %% Meta primitive · agent builder
+  %% =========================================================
+  Builder["aware-agent-builder ★<br/>any software becomes an agent<br/>--from-dlls / nuget / openapi / com / cli / headers / python"]:::meta
+
+  %% =========================================================
+  %% Agents · AECO (the wedge)
+  %% =========================================================
+  subgraph AGENTS["Agents · AECO is the wedge, not the limit"]
+    direction TB
+
+    Eng["Engineering ★<br/>Tekla ★ · ETABS · STAAD · IDEA · Robot · Civil 3D"]:::poc
+    Cons["Construction ★<br/>Trimble Connect ★ · Slack ★ · Procore · ACC · Navisworks"]:::poc
+    Arch["Architecture<br/>Revit · ArchiCAD · Rhino+GH · SketchUp · Allplan"]:::future
+    Ops["Operations<br/>IBM Maximo · Autodesk Tandem · Planon · ServiceNow"]:::future
+    Cross["Cross-cutting<br/>file · email · excel · sharepoint · think-node"]:::poc
+  end
+
+  Other["Other verticals · the substrate doesn't care<br/>(legal · finance · healthcare · …)"]:::future
+
+  %% =========================================================
+  %% Apps · plain-text compositions
+  %% =========================================================
+  subgraph APPS["Apps · plain-text · open source by construction"]
+    direction TB
+    Refs["Reference apps ★<br/>welded-to-tc · qa-drawings-to-tekla"]:::poc
+    Community["Community apps<br/>(exposes-as-agent ecosystem)"]:::future
+  end
+
+  %% =========================================================
+  %% Commercial layer
+  %% =========================================================
+  FloLess["FloLess<br/>(commercial visual canvas · separate license)"]:::commercial
+
+  %% =========================================================
+  %% Wiring
+  %% =========================================================
+  Registry --> Builder
+  Registry --> AGENTS
+
+  Builder -. generates .-> Eng
+  Builder -. generates .-> Cons
+  Builder -. generates .-> Arch
+  Builder -. generates .-> Ops
+  Builder -. generates .-> Cross
+  Builder -. also applies .-> Other
+
+  AGENTS --> Refs
+  AGENTS --> Community
+
+  Refs -.-> FloLess
+  Community -.-> FloLess
+
+  %% =========================================================
+  %% Legend (forced via invisible edges)
+  %% =========================================================
+  subgraph LEGEND["Legend"]
+    direction LR
+    LegPoc["★ v0 POC scope"]:::poc
+    LegFut["future"]:::future
+    LegSub["substrate (free)"]:::substrate
+    LegMeta["meta primitive"]:::meta
+    LegApp["app"]:::app
+    LegComm["commercial"]:::commercial
+  end

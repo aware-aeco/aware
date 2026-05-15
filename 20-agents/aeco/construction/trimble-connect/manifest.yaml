@@ -1,0 +1,92 @@
+agent:        trimble-connect
+version:      2.4.0
+display-name: Trimble Connect
+description: |
+  Read and write files in a Trimble Connect project. Auto-generated from
+  Trimble Connect's public OpenAPI spec + refined to capture idempotency,
+  rate-limit, and auth-refresh patterns the REST surface alone doesn't
+  encode.
+
+stateful: false
+
+vendor:   trimble
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/construction/trimble-connect
+keywords: [aeco, construction, cde, bim, trimble, collaboration]
+
+provenance:
+  generated-by:     aware-agent-builder
+  generator-version: 0.1.0
+  source:
+    type: openapi
+    url:  https://app.connect.trimble.com/tc/api/2.0/openapi.json
+  refined-by:       [pawellisowski]
+  generated-at:     2026-04-01T00:00:00Z
+
+requires:
+  network:
+    - https://app.connect.trimble.com
+  secrets:
+    - trimble-connect       # cross-references ~/.aware/credentials/trimble-connect.json
+
+transport:
+  cli:
+    binary: aware-trimble-connect
+  rest:                     # convenience — TC is already REST
+    base: https://app.connect.trimble.com/tc/api/2.0/
+
+commands:
+  upload:
+    lifecycle: single
+    description: Upload a file to a folder. Idempotent by drawing mark.
+    inputs:
+      project-id: string
+      folder-id:  string
+      filename:   string
+      bytes:      bytes
+      properties:
+        type: object
+        description: Custom properties stored on the file (must include `mark` for idempotency).
+    outputs:
+      type: single
+      schema:
+        file-id: string
+        url:     string
+        replaced: bool       # true if an existing file with same mark was replaced
+
+  download:
+    lifecycle: single
+    description: Download a file by ID.
+    inputs:
+      project-id: string
+      file-id:    string
+    outputs:
+      type: single
+      schema:
+        filename: string
+        bytes:    bytes
+        size-kb:  number
+
+  list-folders:
+    lifecycle: single
+    description: List folders in a project (one level deep).
+    inputs:
+      project-id: string
+      parent-folder-id:
+        type: string
+        default: null         # null = root
+    outputs:
+      type: single
+      schema:
+        folders:
+          type: array
+          items:
+            id:        string
+            name:      string
+            parent-id: string
+            file-count: int
+
+skills:
+  - auth-flow.md
+  - idempotency.md
+  - rate-limits.md

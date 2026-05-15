@@ -1,0 +1,84 @@
+agent:        aware-agent-builder
+version:      0.1.0
+display-name: AWARE Agent Builder
+description: |
+  Generate AWARE agents from existing software's API surface. Reflects DLLs,
+  parses OpenAPI specs, decompiles NuGet packages, introspects COM type
+  libraries, scrapes CLI --help output, parses C++ headers, inspects Python
+  modules. Emits a full AWARE agent folder: manifest + skills + commands.
+
+  This is the meta-agent — the one that turns any software into an AWARE
+  agent. Without it, AWARE grows linearly (one agent per contributor-week).
+  With it, one engineer can wire up the entire AECO toolchain in a week.
+
+stateful: false
+
+vendor:   aware
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/_core/aware-agent-builder
+keywords: [aware, meta, agent, builder, codegen, reflection, extraction]
+
+requires:
+  filesystem:
+    - read:  any                # extraction sources can be anywhere
+    - write: ~/.aware/agents/   # outputs land here
+  network:
+    - https://api.nuget.org     # for --from-nuget
+    - https://*                 # for --from-openapi (any host)
+  software:
+    - powershell                # for --from-dlls
+    - dotnet                    # for --from-nuget decompile pass
+    - ilspycmd                  # optional, for decompile-when-no-docs
+
+transport:
+  cli:
+    binary: aware-agent-build
+
+commands:
+  build:
+    lifecycle: single
+    description: Generate an AWARE agent from a source API surface.
+    inputs:
+      from:
+        type: enum
+        values: [dlls, nuget, openapi, com, cli, headers, python]
+        description: The kind of source to extract from.
+      source:
+        type: string
+        description: |
+          The source itself. Shape depends on `from`:
+          - dlls:    a glob path to .dll files
+          - nuget:   "package-name[@version]"
+          - openapi: a URL or file path to an OpenAPI spec
+          - com:     a COM ProgID (e.g. "AutoCAD.Application")
+          - cli:     the binary name (extractor will run `<bin> --help`)
+          - headers: a glob path to .h files
+          - python:  a module name on the local Python path
+      output-name:
+        type: string
+        description: Agent id to use (kebab-case). Default = derived from source.
+      decompile:
+        type: bool
+        default: false
+        description: Run ILSpy on DLLs that lack XML docs. License-checked.
+      tier-strategy:
+        type: enum
+        values: [auto, all-tier-1, all-tier-2]
+        default: auto
+        description: How to organize the generated skills (see tier-strategy.md).
+    outputs:
+      type: single
+      schema:
+        agent-id:    string
+        output-dir:  string        # absolute path under ~/.aware/agents/
+        files:       array         # list of files written
+        skill-count: int
+        command-count: int
+        warnings:    array
+
+skills:
+  - extract-from-dlls.md
+  - extract-from-nuget.md
+  - extract-from-openapi.md
+  - tier-strategy.md
+  - license-aware-extraction.md
