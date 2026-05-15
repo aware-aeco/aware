@@ -1,0 +1,38 @@
+[package]
+name        = "aware"
+version     = "0.1.0-dev"
+edition     = "2024"
+authors     = ["AWARE contributors"]
+license     = "Apache-2.0"
+description = "Open-source agentic substrate for AECO — CLI"
+homepage    = "https://github.com/aware-aeco/aware"
+repository  = "https://github.com/aware-aeco/aware"
+readme      = "README.md"
+
+[[bin]]
+name = "aware"
+path = "src/main.rs"
+
+[dependencies]
+clap          = { version = "4.5",  features = ["derive", "wrap_help"] }
+serde         = { version = "1.0",  features = ["derive"] }
+serde_yaml    = "0.9"
+serde_json    = "1.0"
+thiserror     = "2.0"
+anyhow        = "1.0"
+dirs          = "6.0"
+
+# v0.3+ runtime additions (commented until needed; uncomment in phase):
+# tokio       = { version = "1.43", features = ["full"] }
+# reqwest     = { version = "0.12", features = ["json", "rustls-tls"] }
+# minijinja   = "2.6"
+
+[dev-dependencies]
+assert_cmd  = "2.0"
+predicates  = "3.1"
+tempfile    = "3.14"
+
+[profile.release]
+lto           = "thin"
+codegen-units = 1
+strip         = true
