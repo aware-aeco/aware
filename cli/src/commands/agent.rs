@@ -53,7 +53,7 @@ pub fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError> {
     match cmd {
         AgentCommand::List => list(ctx),
         AgentCommand::Describe { agent } => describe(ctx, &agent),
-        AgentCommand::Skill { .. } => Err(AwareError::NotYetImplemented("agent skill")),
+        AgentCommand::Skill { agent, skill } => skill_cmd(ctx, &agent, &skill),
         AgentCommand::Install { .. } => Err(AwareError::NotYetImplemented("agent install")),
         AgentCommand::Uninstall { .. } => Err(AwareError::NotYetImplemented("agent uninstall")),
         AgentCommand::Update { .. } => Err(AwareError::NotYetImplemented("agent update")),
@@ -164,6 +164,30 @@ fn describe(ctx: &Context, agent_id: &str) -> Result<(), AwareError> {
     for s in &m.skills {
         println!("  - {s}");
     }
+    Ok(())
+}
+
+fn skill_cmd(ctx: &Context, agent_id: &str, skill_name: &str) -> Result<(), AwareError> {
+    let discovered = discover_agents(&ctx.paths)?;
+    let d = discovered
+        .into_iter()
+        .find(|d| d.manifest.agent == agent_id)
+        .ok_or_else(|| AwareError::NotFound(format!("agent: {agent_id}")))?;
+
+    let filename = if skill_name.ends_with(".md") {
+        skill_name.to_string()
+    } else {
+        format!("{skill_name}.md")
+    };
+    let path = d.root.join("skills").join(&filename);
+    if !path.is_file() {
+        return Err(AwareError::NotFound(format!(
+            "skill: {agent_id}/{filename}"
+        )));
+    }
+    let body = std::fs::read_to_string(&path)?;
+    // Raw print — markdown is human-readable and AI-readable as-is.
+    print!("{body}");
     Ok(())
 }
 

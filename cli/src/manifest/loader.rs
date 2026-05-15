@@ -14,7 +14,6 @@ use crate::paths::Paths;
 #[derive(Debug)]
 pub struct DiscoveredAgent {
     pub manifest: Agent,
-    #[allow(dead_code)] // consumed by Task 10 (agent describe / skill)
     pub root: PathBuf,
 }
 
