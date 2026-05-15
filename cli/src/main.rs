@@ -10,6 +10,7 @@
 mod commands;
 mod context;
 mod error;
+mod manifest;
 mod paths;
 
 use clap::{Parser, Subcommand};
