@@ -9,6 +9,7 @@
 
 mod commands;
 mod context;
+mod envelope;
 mod error;
 mod manifest;
 mod paths;
