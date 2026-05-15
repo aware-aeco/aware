@@ -30,9 +30,14 @@ graph TB
   end
 
   %% =========================================================
-  %% Meta primitive · agent builder
+  %% Meta primitives — under _core/
   %% =========================================================
-  Builder["aware-agent-builder ★<br/>any software becomes an agent<br/>--from-dlls / nuget / openapi / com / cli / headers / python"]:::meta
+  subgraph META["Meta primitives · _core/"]
+    direction TB
+    Builder["aware-agent-builder ★<br/>any software becomes an agent<br/>--from-dlls / nuget / openapi / com / cli / headers / python"]:::meta
+    SkillBuilder["aware-skill-builder ★<br/>author / port / modify / eval skills<br/>wraps Anthropic skill-creator + AWARE conventions"]:::meta
+    HtmlReport["html-report ★<br/>render self-contained HTML output"]:::meta
+  end
 
   %% =========================================================
   %% Agents · AECO (the wedge)
@@ -40,11 +45,11 @@ graph TB
   subgraph AGENTS["Agents · AECO is the wedge, not the limit"]
     direction TB
 
-    Eng["Engineering ★<br/>Tekla ★ · ETABS · STAAD · IDEA · Robot · Civil 3D"]:::poc
-    Cons["Construction ★<br/>Trimble Connect ★ · Slack ★ · Procore · ACC · Navisworks"]:::poc
+    Eng["Engineering ★<br/>Tekla ★ (31 skills) · ETABS · STAAD · IDEA · Robot · Civil 3D"]:::poc
+    Cons["Construction ★<br/>Trimble Connect ★ (7 skills) · Slack · Procore · ACC · Navisworks"]:::poc
     Arch["Architecture<br/>Revit · ArchiCAD · Rhino+GH · SketchUp · Allplan"]:::future
     Ops["Operations<br/>IBM Maximo · Autodesk Tandem · Planon · ServiceNow"]:::future
-    Cross["Cross-cutting<br/>file · email · excel · sharepoint · think-node"]:::poc
+    Cross["Cross-cutting ★<br/>Microsoft 365 ★ (4 skills) · Google Workspace ★ (4 skills) · file · email · excel · think-node"]:::poc
   end
 
   Other["Other verticals · the substrate doesn't care<br/>(legal · finance · healthcare · …)"]:::future
@@ -54,7 +59,7 @@ graph TB
   %% =========================================================
   subgraph APPS["Apps · plain-text · open source by construction"]
     direction TB
-    Refs["Reference apps ★<br/>welded-to-tc · qa-drawings-to-tekla"]:::poc
+    Refs["Reference apps ★<br/>welded-to-tc.flo (linear · 3 nodes)<br/>qa-drawings-to-tekla.flo (DAG · 7 nodes · fan-in + fan-out)"]:::poc
     Community["Community apps<br/>(exposes-as-agent ecosystem)"]:::future
   end
 
@@ -66,31 +71,35 @@ graph TB
   %% =========================================================
   %% Wiring
   %% =========================================================
-  Registry --> Builder
+  Registry --> META
   Registry --> AGENTS
 
   Builder -. generates .-> Eng
   Builder -. generates .-> Cons
+  Builder -. generates .-> Cross
   Builder -. generates .-> Arch
   Builder -. generates .-> Ops
-  Builder -. generates .-> Cross
   Builder -. also applies .-> Other
+
+  SkillBuilder -. authors / ports skills for .-> Eng
+  SkillBuilder -. authors / ports skills for .-> Cons
+  SkillBuilder -. authors / ports skills for .-> Cross
 
   AGENTS --> Refs
   AGENTS --> Community
+  HtmlReport -. consumed by .-> Refs
 
   Refs -.-> FloLess
   Community -.-> FloLess
 
   %% =========================================================
-  %% Legend (forced via invisible edges)
+  %% Legend
   %% =========================================================
   subgraph LEGEND["Legend"]
     direction LR
-    LegPoc["★ v0 POC scope"]:::poc
+    LegPoc["★ v0 POC scope (shipping)"]:::poc
     LegFut["future"]:::future
     LegSub["substrate (free)"]:::substrate
     LegMeta["meta primitive"]:::meta
-    LegApp["app"]:::app
     LegComm["commercial"]:::commercial
   end

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: General discussion
+    url: https://github.com/aware-aeco/aware/discussions
+    about: For questions, ideas, and conversations that aren't issues yet.
+  - name: Decalog (read first)
+    url: https://github.com/aware-aeco/aware/blob/main/00-vision/decalog.md
+    about: The five structural truths AWARE is built on. Most issue questions resolve against the decalog.

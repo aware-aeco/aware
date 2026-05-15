@@ -1,0 +1,76 @@
+name: Agent request
+description: Propose a new AWARE agent for a piece of software not yet wrapped.
+title: "[agent] "
+labels: ["agent-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for proposing a new agent. AWARE agents wrap external software so AECO professionals can compose against it.
+
+        Before filing: skim [the existing agents](https://github.com/aware-aeco/aware/tree/main/20-agents) to confirm yours isn't covered. Read [the decalog](https://github.com/aware-aeco/aware/blob/main/00-vision/decalog.md) and [agent-spec](https://github.com/aware-aeco/aware/blob/main/10-core/agent-spec.md) so the proposal aligns.
+
+  - type: input
+    id: target-software
+    attributes:
+      label: Target software
+      description: What software should this agent wrap?
+      placeholder: e.g. Bentley OpenRoads, IDEA StatiCa Connection, Autodesk Forma
+    validations:
+      required: true
+
+  - type: dropdown
+    id: api-surface
+    attributes:
+      label: Primary API surface
+      description: How does the software expose itself for automation?
+      options:
+        - .NET DLLs (e.g. ObjectARX, Tekla.Structures.*)
+        - NuGet package (publicly available)
+        - REST API / OpenAPI spec
+        - COM type library (legacy)
+        - CLI tool (--help-derivable)
+        - C++ headers / SDK
+        - Python module
+        - Unsure / multiple
+    validations:
+      required: true
+
+  - type: input
+    id: source-url
+    attributes:
+      label: Source URL or package id
+      description: Link to the API docs, NuGet package, OpenAPI spec, or repo
+      placeholder: e.g. https://api.nuget.org/v3/index.json#Bentley.OpenBridge.Modeler
+    validations:
+      required: false
+
+  - type: textarea
+    id: use-case
+    attributes:
+      label: One concrete app you'd build with this agent
+      description: A short paragraph describing what real AECO workflow this unlocks. *"Compose an app that watches my Bentley model and exports BCF reports when a clash is detected."* — that kind of thing.
+      placeholder: |
+        Example: "When a Bentley OpenBridge model is committed, run a clash check
+        against the linked architectural model and push any new clashes as BCF
+        topics to Trimble Connect."
+    validations:
+      required: true
+
+  - type: textarea
+    id: skills-needed
+    attributes:
+      label: Skills you anticipate the agent needs
+      description: Foundational topics — auth, key gotchas, common operations. Even rough is fine.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: ack
+    attributes:
+      label: Acknowledgement
+      options:
+        - label: I've checked the existing agents and this isn't a duplicate
+          required: true
+        - label: I've read the decalog and the proposal is consistent with it
+          required: true

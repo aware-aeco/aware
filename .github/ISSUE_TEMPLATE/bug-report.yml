@@ -1,0 +1,60 @@
+name: Bug report
+description: Something in the substrate is broken — spec, manifest, validator, generated output.
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this for substrate-level bugs: spec inconsistencies, manifest validation errors, broken examples, generation pipeline mistakes.
+
+        For skill content issues, use the **Skill issue** template instead.
+        For "this agent should exist," use the **Agent request** template.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected area
+      options:
+        - Decalog / manifesto / vision docs
+        - Agent spec / app spec
+        - A specific agent (specify in next field)
+        - A specific app (specify in next field)
+        - aware-agent-builder pipeline
+        - aware-skill-builder pipeline
+        - Master diagram
+        - README / CONTRIBUTING
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: path
+    attributes:
+      label: File / path that's affected
+      placeholder: e.g. 20-agents/aeco/engineering/tekla/manifest.yaml
+    validations:
+      required: false
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: Concrete reproduction. Include the exact command, file content, or step that triggered the issue.
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-expected
+    attributes:
+      label: What you expected to happen
+    validations:
+      required: true
+
+  - type: input
+    id: agent-version
+    attributes:
+      label: Agent / app version (if relevant)
+      placeholder: e.g. tekla@2025.0.1
+    validations:
+      required: false

@@ -1,0 +1,59 @@
+name: Skill issue
+description: A skill doesn't trigger correctly, is missing a gotcha, or has wrong / outdated content.
+title: "[skill] "
+labels: ["skill-issue"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Skills are the highest-leverage place to contribute. If a skill bit you, the fix usually fits in a paragraph.
+
+        **Fastest path:** open a PR adding the fix directly. This issue template is for cases where you've spotted the problem but don't have time to write the fix.
+
+  - type: input
+    id: skill-path
+    attributes:
+      label: Skill path
+      description: Full path of the skill file (or its `name:` frontmatter value)
+      placeholder: e.g. 20-agents/aeco/engineering/tekla/skills/drawing-identity.md
+    validations:
+      required: true
+
+  - type: dropdown
+    id: issue-kind
+    attributes:
+      label: Issue kind
+      options:
+        - Skill didn't trigger when it should have
+        - Skill triggered when it shouldn't have
+        - Skill has wrong / outdated content
+        - Skill is missing a key gotcha or pattern
+        - Skill content is misleading the AI
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: prompt
+    attributes:
+      label: Prompt that revealed the issue
+      description: What did you (or another contributor) ask Claude / Codex that exposed the problem?
+      placeholder: e.g. "Watch the Bentley model for new beam additions and push to TC"
+    validations:
+      required: false
+
+  - type: textarea
+    id: expected-vs-actual
+    attributes:
+      label: Expected vs. actual
+      description: What did you expect the AI to do (or know), and what did it actually do (or not know)?
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggested-fix
+    attributes:
+      label: Suggested fix (if any)
+      description: A paragraph, a code snippet, a vendor-doc link — anything that helps the next contributor write the patch.
+    validations:
+      required: false

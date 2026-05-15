@@ -14,7 +14,7 @@ $ brew install aware-aeco        # Mac
 $ curl -fsSL https://aware-aeco.dev/install | sh   # Linux / WSL
 
 $ claude-code                    # or codex, or opencode
-  ✓ plugin: aware-aeco v0.1 · 12 agents available
+  ✓ plugin: aware-aeco v0.1 · 7 agents · 58 skills
 
 > Watch this Tekla model. When a welded assembly appears,
 > upload its drawing to my Trimble Connect fab folder.
@@ -29,38 +29,80 @@ That's the whole thing. One sentence in your terminal, one plain-text file, one 
 
 ---
 
-## Read these in order
-
-1. [`00-vision/decalog.md`](./00-vision/decalog.md) — the five structural truths
-2. [`00-vision/manifesto.md`](./00-vision/manifesto.md) — what AWARE is, why now, how it ships
-3. [`10-core/agent-spec.md`](./10-core/agent-spec.md) — how to write an agent
-4. [`10-core/app-spec.md`](./10-core/app-spec.md) — how to write an app
-5. [`CONTRIBUTING.md`](./CONTRIBUTING.md) — three ways to contribute, all markdown PRs
-
----
-
-## Layout
+## What's in the repo (v0 snapshot)
 
 ```
 aware-aeco/
-├── 00-vision/      # decalog · manifesto · positioning
-├── 10-core/        # agent-spec · app-spec · runtime contract
-├── 20-agents/      # first-party AECO agents + the agent builder
-├── 30-apps/        # reference apps + community examples
-├── 40-diagrams/    # framework diagrams (excalidraw + mermaid)
-└── 50-research/    # design notes, prior art, competitive analysis
+├── 00-vision/              # decalog · manifesto · positioning
+├── 10-core/                # agent-spec · app-spec · runtime contract
+├── 20-agents/              # 7 agents · 58 skills · all Apache 2.0
+│   ├── _core/              #   meta-primitives
+│   │   ├── aware-agent-builder/      # any software → an agent
+│   │   ├── aware-skill-builder/      # author / port / modify / eval skills
+│   │   └── html-report/              # utility: render self-contained HTML output
+│   └── aeco/
+│       ├── engineering/
+│       │   └── tekla/                # 31 skills · stateful · .NET-mandated
+│       ├── construction/
+│       │   └── trimble-connect/      # 7 skills · stateless · REST
+│       └── cross-cutting/
+│           ├── microsoft-365/        # 4 skills · Graph REST
+│           └── google-workspace/     # 4 skills · Drive/Sheets/Calendar/Gmail
+├── 30-apps/                # reference apps
+│   └── _examples/
+│       ├── welded-to-tc.flo          # 3-node linear · canonical demo
+│       └── qa-drawings-to-tekla.flo  # 7-node DAG · fan-in + fan-out
+├── 40-diagrams/            # Mermaid + Excalidraw views of the substrate
+└── 50-research/            # design notes, prior art, competitive analysis
 ```
+
+### Stats
+
+| | Count |
+|---|---|
+| Reference agents | **7** |
+| Total skills | **58** |
+| Reference apps | **2** |
+| Meta-primitives | **3** (agent-builder, skill-builder, html-report) |
+| AECO verticals covered | **engineering · construction · cross-cutting** |
 
 ---
 
-## License
+## Read these in order
 
-[Apache 2.0](./LICENSE) — permissive, patent grant, no walled garden. The license is consistent with the decalog: AWARE's substrate is open by construction.
-
-Commercial apps built on top of AWARE choose their own license. The substrate does not impose one.
+1. [`00-vision/decalog.md`](./00-vision/decalog.md) — the five structural truths (5 min read)
+2. [`00-vision/manifesto.md`](./00-vision/manifesto.md) — what AWARE is, why now, how it ships (10 min)
+3. [`10-core/agent-spec.md`](./10-core/agent-spec.md) — how to write an agent
+4. [`10-core/app-spec.md`](./10-core/app-spec.md) — how to write an app
+5. [`30-apps/_examples/`](./30-apps/_examples/) — two worked apps showing the format end-to-end
+6. [`20-agents/_core/aware-skill-builder/`](./20-agents/_core/aware-skill-builder/) — how to write or port a skill
+7. [`CONTRIBUTING.md`](./CONTRIBUTING.md) — three ways to contribute, all markdown PRs
 
 ---
 
 ## Status
 
-Pre-v0. Manifesto and specs locked. Reference agents in progress. CLI binary coming. Watch this repo if you want to be in early.
+**Substrate v0: content-complete.** Decalog, manifesto, specs, 7 reference agents, 58 production skills, 2 reference apps, two meta-primitives, all hosted under Apache 2.0.
+
+**What's still owed for v0.1:**
+- The `aware` CLI binary (the runtime that executes the spec). Spec is detailed enough that the implementation is straightforward — but a real engineering project.
+- Host-plugin generators for claude-code / codex / opencode.
+- Issue tracker, PR review process, contribution badges.
+
+Until the CLI ships, the repo is usable as **documentation + reference content**: contributors can read the substrate, port their own skills via the documented pipeline, write new agents, and compose apps in `.flo` format. The first agentic-CLI user who installs this gets a real productivity boost from the skills alone — the AI consults them when composing AECO code.
+
+---
+
+## License
+
+[Apache 2.0](./LICENSE) — permissive, patent grant, no walled garden. Consistent with the decalog: AWARE's substrate is open by construction.
+
+Commercial apps built on top of AWARE choose their own license. The substrate does not impose one.
+
+[FloLess](https://floless.io) is one such commercial app — a visual canvas for AWARE apps. It is a separate project under its own license.
+
+---
+
+## Watch this repo
+
+The substrate's content is in. The runtime is next. Star the repo to be notified when the CLI ships.

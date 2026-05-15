@@ -1,0 +1,142 @@
+app:           qa-drawings-to-tekla
+version:       0.2.0
+display-name:  QA Drawings to Tekla
+description: |
+  Two-trigger DAG: watches a PDF inbox AND an Excel spec sheet. When a drawing
+  AND a matching spec arrive (paired by drawing mark), validates them, creates
+  the connection in Tekla, and notifies the fab team on Slack.
+
+  Demonstrates the AWARE DAG features: fan-in (drawing + spec → validated job)
+  and fan-out (validated job → both Tekla insert AND Slack notify).
+
+  This is the worked example used in the FloLess canvas demo. Realistic AECO
+  QA workflow shape — software composed from a paragraph.
+
+exposes-as-agent: false      # internal pipeline, not meant to be wrapped
+
+requires:
+  - file@1.x
+  - excel@1.x
+  - think-node@1.x
+  - tekla@2025.x
+  - slack@1.x
+
+requires-permissions:
+  filesystem:
+    - read: "{{ config.pdf-inbox }}"
+  network:
+    - https://slack.com
+  software:
+    - tekla-structures@2025.x
+
+layout: dag
+
+nodes:
+  # ── Triggers (column 1) ──
+  - id: file-watch
+    agent: file
+    command: watch
+    row: 1
+    col: 1
+    config:
+      folder:  "{{ config.pdf-inbox }}"
+      pattern: "*.pdf"
+
+  - id: excel-watch
+    agent: excel
+    command: watch-cells
+    row: 3
+    col: 1
+    config:
+      sheet:        "{{ config.specs-sheet }}"
+      key-column:   "DrawingMark"
+
+  # ── Per-stream preprocessing (column 2) ──
+  - id: pdf-extract
+    agent: think-node
+    command: extract
+    row: 1
+    col: 2
+    config:
+      schema: ./schemas/connection.json
+      prompt: |
+        Read this PDF page. Identify any steel connection callouts.
+        Return their type, position (drawing coords), and beam references
+        as JSON matching the provided schema.
+
+  - id: excel-lookup
+    agent: excel
+    command: find-row
+    row: 3
+    col: 2
+    config:
+      key:        "{{ excel-watch.changed-key }}"
+      key-column: "DrawingMark"
+
+  # ── Fan-in: pair drawing + spec, validate (column 3) ──
+  - id: match-build
+    agent: think-node      # could be smart-node for deterministic match
+    command: pair-and-validate
+    row: 2
+    col: 3
+    inputs:
+      drawing: { from: pdf-extract.drawing,   keyed-by: mark }
+      spec:    { from: excel-lookup.row,      keyed-by: DrawingMark }
+    config:
+      tolerance-percent: 5
+
+  # ── Fan-out: validated jobs go to BOTH sinks (column 4) ──
+  - id: tekla-insert
+    agent: tekla
+    command: insert
+    row: 1
+    col: 4
+    config:
+      type:     "{{ match-build.connection-type }}"
+      position: "{{ match-build.world-position }}"
+      beams:    "{{ match-build.beams }}"
+
+  - id: slack-notify
+    agent: slack
+    command: post-message
+    row: 3
+    col: 4
+    config:
+      channel: "#fab-team"
+      text:    |
+        ✓ Connection {{ match-build.connection-type }} created on {{ match-build.drawing-mark }}.
+        Deviation: {{ match-build.deviation-percent }}%.
+
+connections:
+  # Trigger → preprocess
+  - from: file-watch
+    to:   pdf-extract
+    label: PdfFile
+
+  - from: excel-watch
+    to:   excel-lookup
+    label: RowChange
+
+  # Fan-in at match-build
+  - from: pdf-extract
+    to:   match-build
+    label: Drawing
+    input: drawing
+
+  - from: excel-lookup
+    to:   match-build
+    label: Spec
+    input: spec
+
+  # Fan-out from match-build
+  - from: match-build
+    to:   tekla-insert
+    label: ValidatedJob
+
+  - from: match-build
+    to:   slack-notify
+    label: ValidatedJob
+
+skills:
+  - configuring.md
+  - tolerance-policy.md
