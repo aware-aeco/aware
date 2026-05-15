@@ -1,0 +1,118 @@
+agent:        aware-skill-builder
+version:      0.1.0
+display-name: AWARE Skill Builder
+description: |
+  Author, modify, port, and eval AWARE agent skills using Anthropic's
+  built-in skill-creator as the engine, with AWARE-specific layering on top.
+  Skills produced this way satisfy both Anthropic's authoring conventions
+  (frontmatter, imperative voice, description trigger phrasing, progressive
+  disclosure) AND AWARE's agent-spec conventions (folder placement,
+  manifest update, runtime-scoping, FloLess-runtime decoupling).
+
+  This is the second meta-agent in AWARE (alongside aware-agent-builder).
+  Where the agent-builder produces a whole agent from a code/doc source,
+  the skill-builder operates at the single-skill granularity — for refining
+  an existing agent, porting external skills, or generating one new skill
+  from a contributor's notes.
+
+stateful: false
+
+vendor:   aware
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/_core/aware-skill-builder
+keywords: [aware, meta, skill, authoring, skill-creator, port, eval]
+
+requires:
+  filesystem:
+    - read:  any                  # source skills can be anywhere
+    - write: ~/.aware/agents/     # target skills land in agent folders
+  skills:
+    - anthropic:skill-creator     # the underlying engine
+
+transport:
+  cli:
+    binary: aware-skill
+
+commands:
+  create:
+    lifecycle: single
+    description: Create a new skill in a target agent from a topic + initial notes.
+    inputs:
+      agent: string                  # e.g. tekla, trimble-connect
+      skill-name: string             # short id; agent prefix is added in frontmatter automatically
+      topic: string                  # one-paragraph subject of the skill
+      notes:
+        type: string
+        description: |
+          Initial knowledge to encode. Can be a rough paragraph, a list of gotchas,
+          a vendor doc excerpt, a code snippet — whatever the contributor has.
+    outputs:
+      type: single
+      schema:
+        path: string                 # where the skill was written
+        manifest-updated: bool
+        eval-passed: bool
+
+  port:
+    lifecycle: single
+    description: Port an existing skill from an external source (FloLess production skills, vendor doc, etc.).
+    inputs:
+      source: string                 # path to the source markdown file
+      target-agent: string           # which AWARE agent gets the skill
+      target-name:
+        type: string
+        description: Optional override for the skill filename. Default = derived from source.
+    outputs:
+      type: single
+      schema:
+        path: string
+        manifest-updated: bool
+        decouplings-applied: array   # list of FloLess-isms / runtime-isms cleaned up
+        eval-passed: bool
+
+  modify:
+    lifecycle: single
+    description: Refine an existing skill — re-run skill-creator in modify mode.
+    inputs:
+      agent: string
+      skill-name: string
+      issue:
+        type: string
+        description: |
+          What's wrong? "Doesn't trigger on these prompts", "description too vague",
+          "missing example for X", etc.
+    outputs:
+      type: single
+      schema:
+        path: string
+        changes: array
+
+  eval:
+    lifecycle: single
+    description: Run skill-creator's eval pass on an existing skill.
+    inputs:
+      agent: string
+      skill-name: string
+      test-prompts:
+        type: array
+        description: |
+          List of test prompts. Each should either trigger the skill ("positive")
+          or NOT trigger it ("negative"). The eval scores trigger accuracy.
+        items:
+          prompt: string
+          should-trigger: bool
+    outputs:
+      type: single
+      schema:
+        accuracy: number             # 0.0 to 1.0
+        false-positives: array
+        false-negatives: array
+        suggested-fixes: array
+
+skills:
+  - pipeline.md
+  - skill-creator-invocation.md
+  - frontmatter-conventions.md
+  - decouple-floless-isms.md
+  - runtime-scoping.md
+  - folder-placement-and-manifest.md

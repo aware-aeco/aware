@@ -90,3 +90,4 @@ skills:
   - auth-flow.md
   - idempotency.md
   - rate-limits.md
+  - files.md
