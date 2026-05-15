@@ -31,7 +31,6 @@ impl Paths {
         self.aware_home.join("apps")
     }
 
-    #[allow(dead_code)] // consumed by Task 14 (doctor)
     pub fn config_path(&self) -> PathBuf {
         self.aware_home.join("config.yaml")
     }
