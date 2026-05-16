@@ -58,6 +58,12 @@ path = "tests/agent_uninstall.rs"
 name = "agent_upd_test"
 path = "tests/agent_update.rs"
 
+[[test]]
+# Source is tests/agent_validate.rs.
+# "validate" is safe on Windows AppCompat but we use a short alias for consistency.
+name = "agent_val_test"
+path = "tests/agent_validate.rs"
+
 [profile.release]
 lto           = "thin"
 codegen-units = 1
