@@ -89,11 +89,35 @@ jobs:
           Get-ChildItem *.zip
           "ARTIFACT=${{ env.STAGE_DIR }}.zip" | Out-File -FilePath $env:GITHUB_ENV -Append
 
-      - name: Upload artifact
+      - name: Build MSI installer (Windows)
+        if: matrix.os == 'windows-latest'
+        shell: pwsh
+        run: |
+          # Pin WiX 6 — WiX 7+ added an Open Source Maintenance Fee EULA that
+          # requires per-invocation acceptance, awkward in CI. WiX 6 is stable
+          # and license-clean.
+          dotnet tool install -g wix --version 6.0.0
+          $msi = "${{ env.STAGE_DIR }}.msi"
+          wix build packaging/wix/aware.wxs `
+            -d Version=${{ env.VERSION }} `
+            -d StageDir=${{ env.STAGE_DIR }} `
+            -arch x64 `
+            -o $msi
+          Get-ChildItem $msi
+          "MSI_ARTIFACT=$msi" | Out-File -FilePath $env:GITHUB_ENV -Append
+
+      - name: Upload archive artifact
         uses: actions/upload-artifact@v4
         with:
           name: aware-${{ env.VERSION }}-${{ matrix.rid }}
           path: ${{ env.ARTIFACT }}
+
+      - name: Upload MSI artifact (Windows)
+        if: matrix.os == 'windows-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: aware-${{ env.VERSION }}-win-x64-msi
+          path: ${{ env.MSI_ARTIFACT }}
 
   release:
     needs: build

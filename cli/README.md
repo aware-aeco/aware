@@ -21,6 +21,16 @@ All four read from the same npm registry and run the same `postinstall` script (
 
 The package itself is ~2 KB; the `postinstall` fetches the platform binary (~10 MB) from the [GitHub Release](https://github.com/aware-aeco/aware/releases) matching the version.
 
+**MSI installer (Windows, no Node required):**
+
+Download `aware-<version>-win-x64.msi` from the [latest GitHub Release](https://github.com/aware-aeco/aware/releases/latest) and run it. Installs to `C:\Program Files\AWARE\` and adds itself to the system PATH. SmartScreen will warn "unknown publisher" on first run (the MSI is currently unsigned) — click *More info → Run anyway*. Uninstall via Apps & Features or `msiexec /x aware-<version>-win-x64.msi`.
+
+Silent install for IT departments:
+
+```pwsh
+msiexec /i aware-<version>-win-x64.msi /qn
+```
+
 **Curl-pipe (Linux / macOS, no Node required):**
 
 ```bash
@@ -49,10 +59,9 @@ dotnet publish cli-sidecar -c Release -r <rid> -p:PublishAot=true
 ```
 
 **Tracked as follow-up phases:**
-- MSI installer — prerequisite for `winget install aware-aeco`
+- Submit winget manifest to [`microsoft/winget-pkgs`](https://github.com/microsoft/winget-pkgs) (the MSI above now exists, so this is unblocked once we have a code-signed build)
 - Homebrew formula — `brew install aware-aeco/tap/aware`
-- Submit winget manifest to [`microsoft/winget-pkgs`](https://github.com/microsoft/winget-pkgs) (needs the MSI above + a code-signing cert)
-- Code-signed binaries (Microsoft Authenticode + Apple Developer ID)
+- Code-signed binaries (Microsoft Authenticode for MSI + Apple Developer ID for macOS)
 - ARM Linux (linux-arm64) + Intel macOS (osx-x64)
 
 ## Status
