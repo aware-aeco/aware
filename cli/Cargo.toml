@@ -105,6 +105,12 @@ path = "tests/doctor_integrity.rs"
 name = "app_run_test"
 path = "tests/app_run.rs"
 
+[[test]]
+# Source is tests/app_stop.rs.
+# "stop" is safe on Windows AppCompat — no UAC heuristic applies.
+name = "app_stop_test"
+path = "tests/app_stop.rs"
+
 [profile.release]
 lto           = "thin"
 codegen-units = 1

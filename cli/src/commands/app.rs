@@ -76,7 +76,7 @@ pub async fn dispatch(cmd: AppCommand, ctx: &Context) -> Result<(), AwareError> 
             instance,
             config,
         } => run(ctx, &app, instance.as_deref(), &config).await,
-        AppCommand::Stop { .. } => Err(AwareError::NotYetImplemented("app stop")),
+        AppCommand::Stop { app, instance } => stop(ctx, &app, instance.as_deref()),
         AppCommand::Logs { .. } => Err(AwareError::NotYetImplemented("app logs")),
     }
 }
@@ -249,6 +249,34 @@ async fn run(
     println!("\u{25b6} run {app_id} (instance {instance}, run-id {run_id})");
     orch.run_one_shot().await?;
     println!("\u{2713} run complete; trace at {}", log_path.display());
+    Ok(())
+}
+
+fn stop(ctx: &Context, app_id: &str, instance: Option<&str>) -> Result<(), AwareError> {
+    let instance = instance.unwrap_or("default");
+    let instance_dir = ctx.paths.app_instance_dir(app_id, instance);
+    let pid = crate::runtime::pidfile::read(&instance_dir)?;
+    println!(
+        "Stopping {} instance {} (pid {})",
+        app_id, instance, pid.pid
+    );
+    #[cfg(unix)]
+    {
+        use std::process::Command;
+        // SIGTERM via `kill -TERM` (no libc dep needed)
+        let _ = Command::new("kill")
+            .args(["-TERM", &pid.pid.to_string()])
+            .status();
+    }
+    #[cfg(windows)]
+    {
+        use std::process::Command;
+        let _ = Command::new("taskkill")
+            .args(["/PID", &pid.pid.to_string(), "/T", "/F"])
+            .status();
+    }
+    crate::runtime::pidfile::remove(&instance_dir);
+    println!("\u{2713} stopped {app_id} (instance {instance})");
     Ok(())
 }
 
