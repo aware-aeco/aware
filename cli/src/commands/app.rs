@@ -64,9 +64,13 @@ pub fn dispatch(cmd: AppCommand, ctx: &Context) -> Result<(), AwareError> {
         AppCommand::List => list(ctx),
         AppCommand::Show { app } => show(ctx, &app),
         AppCommand::Install { path_or_name } => install(ctx, &path_or_name),
-        AppCommand::Uninstall { .. } => Err(AwareError::NotYetImplemented("app uninstall")),
-        AppCommand::Validate { .. } => Err(AwareError::NotYetImplemented("app validate")),
-        AppCommand::Export { .. } => Err(AwareError::NotYetImplemented("app export")),
+        AppCommand::Uninstall { app } => {
+            crate::install::uninstall_app(&app, &ctx.paths)?;
+            println!("\u{2713} uninstalled {app}");
+            Ok(())
+        }
+        AppCommand::Validate { path } => validate_cmd(ctx, &path),
+        AppCommand::Export { app, output } => export(ctx, &app, &output),
         AppCommand::Run { .. } => Err(AwareError::NotYetImplemented("app run")),
         AppCommand::Stop { .. } => Err(AwareError::NotYetImplemented("app stop")),
         AppCommand::Logs { .. } => Err(AwareError::NotYetImplemented("app logs")),
@@ -120,6 +124,63 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
     crate::lockfile::write(&app_id, &app.version, resolved, &lockfile_path)?;
 
     println!("\u{2713} installed {app_id} (lockfile written)");
+    Ok(())
+}
+
+fn validate_cmd(_ctx: &Context, path: &std::path::Path) -> Result<(), AwareError> {
+    // Find .flo/.app in the dir
+    let manifest_path = std::fs::read_dir(path)?
+        .flatten()
+        .map(|e| e.path())
+        .find(|p| {
+            matches!(
+                p.extension().and_then(|e| e.to_str()),
+                Some("flo") | Some("app")
+            )
+        })
+        .ok_or_else(|| {
+            AwareError::Validation(format!("no .flo or .app file in {}", path.display()))
+        })?;
+
+    let app = crate::manifest::loader::load_app(&manifest_path)?;
+    let issues = crate::validate::validate_app(&app);
+    if issues.is_empty() {
+        println!("\u{2713} {} is valid", manifest_path.display());
+        return Ok(());
+    }
+    for i in &issues {
+        let tag = match i.severity {
+            crate::validate::Severity::Error => "\u{2717}",
+            crate::validate::Severity::Warning => "\u{26a0}",
+        };
+        println!("{tag} [{}] {}", i.code, i.message);
+    }
+    if crate::validate::has_errors(&issues) {
+        return Err(AwareError::Validation("app failed validation".into()));
+    }
+    Ok(())
+}
+
+fn export(ctx: &Context, app_id: &str, output: &std::path::Path) -> Result<(), AwareError> {
+    let app_dir = ctx.paths.apps_dir().join(app_id);
+    if !app_dir.is_dir() {
+        return Err(AwareError::NotFound(format!("app: {app_id}")));
+    }
+    let manifest_path = std::fs::read_dir(&app_dir)?
+        .flatten()
+        .map(|e| e.path())
+        .find(|p| {
+            matches!(
+                p.extension().and_then(|e| e.to_str()),
+                Some("flo") | Some("app")
+            )
+        })
+        .ok_or_else(|| {
+            AwareError::Internal(format!("installed app {app_id} missing .flo/.app file"))
+        })?;
+
+    std::fs::copy(&manifest_path, output)?;
+    println!("\u{2713} exported {app_id} \u{2192} {}", output.display());
     Ok(())
 }
 

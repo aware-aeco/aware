@@ -71,6 +71,23 @@ path = "tests/agent_validate.rs"
 name = "app_inst_test"
 path = "tests/app_install.rs"
 
+[[test]]
+# Source is tests/app_uninstall.rs.
+# "uninstall" contains "install" — same Windows AppCompat UAC heuristic applies.
+name = "app_rm_test"
+path = "tests/app_uninstall.rs"
+
+[[test]]
+# Source is tests/app_validate.rs.
+# "validate" is safe on Windows AppCompat but we use a short alias for consistency.
+name = "app_val_test"
+path = "tests/app_validate.rs"
+
+[[test]]
+# Source is tests/app_export.rs.
+name = "app_exp_test"
+path = "tests/app_export.rs"
+
 [profile.release]
 lto           = "thin"
 codegen-units = 1
