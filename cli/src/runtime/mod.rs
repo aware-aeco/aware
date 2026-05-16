@@ -5,6 +5,7 @@
 
 #![allow(dead_code)]
 
+pub mod context;
 pub mod inline;
 pub mod invoker;
 pub mod lifecycle;
