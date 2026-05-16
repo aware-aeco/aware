@@ -1,0 +1,27 @@
+{
+  "name": "@aware-aeco/cli",
+  "version": "0.7.0",
+  "description": "AWARE CLI — open-source agentic substrate for AECO",
+  "homepage": "https://github.com/aware-aeco/aware",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aware-aeco/aware.git",
+    "directory": "cli-npm"
+  },
+  "license": "Apache-2.0",
+  "bin": {
+    "aware": "scripts/bin/aware.js"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js",
+    "uninstall": "node scripts/uninstall.js"
+  },
+  "os": ["win32", "linux", "darwin"],
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "scripts",
+    "README.md"
+  ]
+}
