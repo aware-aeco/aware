@@ -1,0 +1,5 @@
+# sketchup-material-roughness-texture
+
+Lifecycle: single
+
+Copies another texture to this texture.
