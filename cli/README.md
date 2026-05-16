@@ -45,9 +45,9 @@ iex (irm https://raw.githubusercontent.com/aware-aeco/aware/main/scripts/install
 
 **Pinned version:**
 
-- npm / pnpm / yarn / bun: append `@0.8.0` to the package name (e.g. `pnpm add -g @aware-aeco/cli@0.8.0`)
-- curl: `... | bash -s -- --version 0.8.0`
-- PowerShell: `$env:AWARE_VERSION = "0.8.0"; iex (...)`
+- npm / pnpm / yarn / bun: append `@0.8.1` to the package name (e.g. `pnpm add -g @aware-aeco/cli@0.8.1`)
+- curl: `... | bash -s -- --version 0.8.1`
+- PowerShell: `$env:AWARE_VERSION = "0.8.1"; iex (...)`
 
 **From source:**
 
