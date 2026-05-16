@@ -41,3 +41,9 @@ node_modules/
 *.local.md
 .aware-cache/
 .tmp/
+
+# cli-sidecar build output
+cli-sidecar/bin/
+cli-sidecar/obj/
+cli-sidecar/Tests/bin/
+cli-sidecar/Tests/obj/
