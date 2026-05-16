@@ -21,6 +21,10 @@ serde_json    = "1.0"
 thiserror     = "2.0"
 anyhow        = "1.0"
 dirs          = "6.0"
+ureq          = { version = "2", default-features = false, features = ["tls"] }
+flate2        = "1"
+tar           = "0.4"
+chrono        = { version = "0.4", default-features = false, features = ["clock", "serde"] }
 
 # v0.3+ runtime additions (commented until needed; uncomment in phase):
 # tokio       = { version = "1.43", features = ["full"] }
