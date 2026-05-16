@@ -7,6 +7,7 @@
 //! `Err(AwareError::NotYetImplemented(<command>))`. The fresh session
 //! implements them per the roadmap, one phase at a time.
 
+mod auth;
 mod commands;
 mod context;
 mod envelope;
@@ -15,6 +16,7 @@ mod install;
 mod lockfile;
 mod manifest;
 mod paths;
+mod plugins;
 mod registry;
 mod render;
 mod runtime;
@@ -78,6 +80,12 @@ enum Command {
 
     /// Health check — config, filesystem, credentials, registry.
     Doctor,
+
+    /// Manage host-side plugin folders for claude-code / codex / opencode.
+    Plugins {
+        #[command(subcommand)]
+        action: commands::plugins::PluginsCommand,
+    },
 }
 
 #[tokio::main]
@@ -104,6 +112,7 @@ async fn main() -> anyhow::Result<()> {
         Command::Skill { action } => commands::skill::dispatch(action, &ctx),
         Command::Build { action } => commands::build::dispatch(action, &ctx),
         Command::Doctor => commands::doctor::run(&ctx),
+        Command::Plugins { action } => commands::plugins::dispatch(action, &ctx),
     };
 
     match result {

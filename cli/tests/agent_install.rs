@@ -199,3 +199,28 @@ fn installs_one_agent_bundle() {
 
     assert!(aware.join("agents/tekla/manifest.yaml").is_file());
 }
+
+#[test]
+fn install_auto_regenerates_claude_plugin_when_target_exists() {
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let claude_dir = tmp.path().join("claude_plugins");
+    std::fs::create_dir_all(&claude_dir).unwrap();
+
+    let tekla_src = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .parent()
+        .unwrap()
+        .join("20-agents/aeco/engineering/tekla");
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .env("AWARE_PLUGINS_CLAUDE", &claude_dir)
+        .args(["agent", "install"])
+        .arg(&tekla_src)
+        .assert()
+        .success();
+
+    // Plugin should have been auto-regenerated after install
+    assert!(claude_dir.join("aware-aeco/plugin.json").is_file());
+}

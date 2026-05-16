@@ -36,6 +36,16 @@ async-trait = "0.1"
 # v0.4+ (commented until needed):
 # reqwest     = { version = "0.12", features = ["json", "rustls-tls"] }
 
+# v0.4 auth + host-plugin deps
+oauth2     = "4"
+keyring    = { version = "3", default-features = false, features = ["windows-native", "apple-native", "sync-secret-service", "crypto-rust"] }
+tiny_http  = "0.12"
+webbrowser = "1"
+url        = "2"
+rand       = "0.8"
+base64     = "0.22"
+sha2       = "0.10"
+
 [dev-dependencies]
 assert_cmd  = "2.0"
 predicates  = "3.1"
@@ -116,6 +126,13 @@ path = "tests/app_stop.rs"
 # Covers both the default print path (Task 16) and the --replay flag (Task 17).
 name = "app_logs_test"
 path = "tests/app_logs.rs"
+
+[[test]]
+# Source is tests/plugins_cmd.rs.
+# "plugin" alone is unlikely to trigger the Windows AppCompat UAC heuristic,
+# but we use a descriptive alias for consistency with the naming convention above.
+name = "plugins_cmd_test"
+path = "tests/plugins_cmd.rs"
 
 [profile.release]
 lto           = "thin"

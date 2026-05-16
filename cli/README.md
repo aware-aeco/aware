@@ -6,19 +6,114 @@ This folder houses the Rust implementation. The contract it satisfies is in [`10
 
 ## Status
 
-**v0.3 — runtime.** Nineteen surfaces shipped (sixteen from v0.1+v0.2 plus three new):
+**v0.4 — auth + host plugins.** Twenty-three surfaces shipped (nineteen from v0.1-v0.3 plus four new):
 
 - `aware --version` / `aware --help`
-- `aware doctor` (now includes Integrity + Running checks)
+- `aware doctor` (now includes Integrity, Running, **and Credentials** checks)
 - `aware agent list` / `agent describe <id>` / `agent skill <id> <skill>`
-- `aware agent install <path|id[@version]|bundle>` / `agent uninstall <id>` / `agent update <id>` / `agent validate <path>`
+- `aware agent install <path|id[@version]|bundle>` / `agent uninstall <id>` / `agent update <id>` / `agent validate <path>` (auto-regenerates host plugins on install/uninstall)
 - `aware app list` / `app show <id>`
 - `aware app install <path>` / `app uninstall <id>` / `app validate <path>` / `app export <id> <output>`
-- `aware app run <app>` — execute the topology (one-shot or long-running) ← v0.3
-- `aware app stop <app>` — terminate a running long-running app ← v0.3
-- `aware app logs <app> [--tail | --replay [--run-id <id>]]` — read execution traces ← v0.3
+- `aware app run <app>` / `app stop <app>` / `app logs <app> [--tail | --replay]`
+- `aware connect <integration>` — PKCE OAuth flow + encrypted token storage ← v0.4
+- `aware connect <integration> --refresh` — force refresh ← v0.4
+- `aware disconnect <integration>` ← v0.4
+- `aware plugins regenerate` — rebuild host plugin folders from installed agents ← v0.4
 
-Still stubbed: `agent publish` (v0.2+), `connect / disconnect` (v0.4), `build agent`, `skill ...` (v0.5).
+Still stubbed: `agent publish` (registry-write), `build agent` (v0.5), `skill ...` (v0.5).
+
+### Connect to an integration (v0.4)
+
+**Default: browser-based token paste.** No OAuth-app registration required.
+
+```bash
+aware connect trimble-connect
+```
+
+This opens a tab in your browser with a password-style form. Get a token from the
+provider's website (Trimble Connect / Microsoft 365 / Google Workspace), paste it
+into the form, click Save. The token is encrypted to your OS keychain.
+
+**Why a browser form?** When you're using `aware` from inside Claude Code / Codex /
+other AI chat tools, pasting a token directly into the chat would leak it into the
+conversation. The browser form is a side-channel — the token only ever exists
+in your browser tab and the local keychain. It never flows through any AI session.
+
+**Non-interactive paths** (CI, scripts, headless environments):
+
+```bash
+# Read from a file you prepared outside the chat
+aware connect trimble-connect --from-file ./trimble-token.txt
+
+# Read from an env var (set in your shell or CI secrets)
+$env:AWARE_TOKEN_TRIMBLE_CONNECT = "tk_xyz"
+aware connect trimble-connect --from-env
+```
+
+The `--from-file` path accepts either a plain bearer token (one line) or a JSON
+blob with at least an `access_token` field.
+
+**OAuth flow** (advanced — requires AWARE-AECO or you to have registered an
+OAuth app at the provider's developer console):
+
+```bash
+$env:AWARE_OAUTH_TRIMBLE_CLIENT_ID = "your-registered-client-id"
+aware connect trimble-connect --oauth
+```
+
+This opens the provider's sign-in page (the `gh auth login` / `az login` UX) and
+exchanges the result for a token automatically.
+
+**Multi-account support:**
+
+```bash
+aware connect google-workspace --as personal
+aware connect google-workspace --as work
+```
+
+**Refresh and remove:**
+
+```bash
+aware connect trimble-connect --refresh   # OAuth tokens only
+aware disconnect trimble-connect
+```
+
+**Doctor displays the source:**
+
+```
+Credentials:
+  ✓ trimble-connect       valid    paste token (user-managed)
+  ✓ google-workspace      valid    OAuth, expires in 41m
+  ✗ microsoft-365         missing  run: aware connect microsoft-365
+```
+
+**Encryption.** Tokens are encrypted at rest by the OS keychain (Windows DPAPI / macOS Keychain / Linux libsecret) under service `aware-aeco`. Never written to logs.
+
+**Refresh.** When the runtime reads a credential, it lazily refreshes if the token expires within 60 seconds. Transparent.
+
+### Host plugins (v0.4)
+
+The `aware-aeco` plugin bundle is auto-generated from installed agents whenever you run `agent install` or `agent uninstall`. It lands under:
+
+- `~/.claude/plugins/aware-aeco/` (first-class — full plugin manifest + per-command markdown)
+- `~/.codex/plugins/aware-aeco/` (scaffold — format pending)
+- `~/.opencode/plugins/aware-aeco/` (scaffold — format pending)
+
+Force a rebuild anytime:
+
+```bash
+aware plugins regenerate
+```
+
+Regeneration is idempotent — re-running produces byte-identical output, so you can safely version-control the plugin directories.
+
+For non-default plugin locations (CI, test fixtures, custom setups), override:
+
+```
+$env:AWARE_PLUGINS_CLAUDE   = "C:\test\.claude\plugins"
+$env:AWARE_PLUGINS_CODEX    = "C:\test\.codex\plugins"
+$env:AWARE_PLUGINS_OPENCODE = "C:\test\.opencode\plugins"
+```
 
 ## Build
 
