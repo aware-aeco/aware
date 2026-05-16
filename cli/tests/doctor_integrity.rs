@@ -94,3 +94,31 @@ fn doctor_reports_no_running_instances_when_empty() {
         .stdout(predicate::str::contains("Running:"))
         .stdout(predicate::str::contains("no running instances"));
 }
+
+#[test]
+fn doctor_credentials_block_appears() {
+    let tmp = tempfile::tempdir().unwrap();
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", tmp.path())
+        .arg("doctor")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("Credentials:"));
+}
+
+#[test]
+fn doctor_lists_known_integrations() {
+    let tmp = tempfile::tempdir().unwrap();
+    let assert = Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", tmp.path())
+        .arg("doctor")
+        .assert()
+        .success();
+    // The three known integrations should appear in the Credentials block
+    assert
+        .stdout(predicate::str::contains("trimble-connect"))
+        .stdout(predicate::str::contains("microsoft-365"))
+        .stdout(predicate::str::contains("google-workspace"));
+}

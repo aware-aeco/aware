@@ -108,5 +108,35 @@ pub fn run(ctx: &Context) -> Result<(), AwareError> {
     if !found_any {
         println!("  \u{00b7} no running instances");
     }
+
+    println!();
+    println!("Credentials:");
+    let integrations = ["trimble-connect", "microsoft-365", "google-workspace"];
+    for integration in &integrations {
+        match crate::auth::keychain::load_token(integration, None) {
+            Ok(Some(token)) => {
+                let now = std::time::SystemTime::now()
+                    .duration_since(std::time::UNIX_EPOCH)
+                    .unwrap()
+                    .as_secs() as i64;
+                let remaining = token.expires_at - now;
+                if remaining > 0 {
+                    let mins = remaining / 60;
+                    println!("  \u{2713} {integration:<22} valid    expires in {mins}m");
+                } else {
+                    println!(
+                        "  \u{00b7} {integration:<22} expired  run: aware connect {integration} --refresh"
+                    );
+                }
+            }
+            Ok(None) => {
+                println!("  \u{2717} {integration:<22} missing  run: aware connect {integration}");
+            }
+            Err(_) => {
+                println!("  ? {integration:<22} (keyring unavailable)");
+            }
+        }
+    }
+
     Ok(())
 }
