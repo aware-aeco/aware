@@ -1,0 +1,1237 @@
+agent:        xeokit
+version:      2.6.109
+display-name: xeokit SDK (BIM/IFC web viewer)
+description: |
+  Auto-generated agent from `@xeokit/xeokit-sdk@2.6.109` on npm via
+  `aware build agent --from-npm`. Reflects the package's TypeScript
+  declarations (`.d.ts` files — the vendor-published API contract).
+
+  xeokit is the open-source 3D BIM/IFC viewer SDK from Creoox/xeoLabs.
+  Pure WebGL, double-precision world coordinates, used to embed
+  interactive 3D model viewers in web applications. Common AECO
+  workflows: BIM model preview in browser dashboards, IFC viewer
+  panels in construction document review, in-context navigation of
+  large federated models, take-screenshot snapshots from automated
+  pipelines.
+
+  Covers 98 classes × 361 methods reflected from the public .d.ts
+  surface: Viewer, Scene, Camera, CameraControl, plugins (Annotations,
+  XKTLoader, IFCLoader, GLTFLoader, BCFViewpoints, SectionPlanes,
+  ContextMenu, etc.), and the math/geometry utilities.
+
+  Note: the **xeokit-sdk JS library itself is AGPL-3.0** (commercial
+  license available from Creoox for non-AGPL use). This AWARE agent
+  contains *generated documentation* of the public API (method names
+  + parameter types), which is original work licensed Apache-2.0. The
+  vendor library is **not** redistributed; users install it themselves
+  via `npm install @xeokit/xeokit-sdk` and AWARE composes against it.
+
+  Marked `stateful: false` — typical xeokit usage is request/response
+  (load model → query → snapshot). A curator could later flag the
+  `new Viewer(cfg)` constructor path as a `start` command for stateful
+  long-running viewer apps.
+
+stateful: false
+
+vendor:   creoox
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/visualization/xeokit
+keywords: [aeco, visualization, viewer, bim, ifc, 3d, webgl, xeokit, creoox, generated, raw, npm, typescript]
+
+provenance:
+  generated-by: aware-agent-builder
+  generator-version: 0.8.0
+  source:
+    dts_files: 183
+    homepage: https://xeokit.io
+    license: AGPL-3.0
+    package: '@xeokit/xeokit-sdk'
+    type: npm
+    version: 2.6.109
+  generated-at: 2026-05-16T20:53:09.666270200+00:00
+transport:
+  cli:
+    binary: aware-xeokit-sdk
+commands:
+  add-mouse-press-listener:
+    lifecycle: single
+    description: "addMousePressListener(element: HTMLElement, onChange: (canvasPos: Vec2 | null) => void)"
+  add-touch-press-listener:
+    lifecycle: single
+    description: "addTouchPressListener(element: HTMLElement, cameraControl: CameraControl, pointerCircle: PointerCircle, onChange: (canvasPos: Vec2 | null) => void)"
+  ambient-light-destroy:
+    lifecycle: single
+    description: AmbientLight.destroy()
+  angle-measurements-control-activate:
+    lifecycle: single
+    description: AngleMeasurementsControl.activate()
+  angle-measurements-control-deactivate:
+    lifecycle: single
+    description: AngleMeasurementsControl.deactivate()
+  angle-measurements-control-on:
+    lifecycle: single
+    description: "AngleMeasurementsControl.on(event: \"activated\", callback: (activated: boolean) => void, scope?: any)"
+  angle-measurements-control-reset:
+    lifecycle: single
+    description: AngleMeasurementsControl.reset()
+  angle-measurements-mouse-control-activate:
+    lifecycle: single
+    description: AngleMeasurementsMouseControl.activate()
+  angle-measurements-mouse-control-deactivate:
+    lifecycle: single
+    description: AngleMeasurementsMouseControl.deactivate()
+  angle-measurements-mouse-control-destroy:
+    lifecycle: single
+    description: AngleMeasurementsMouseControl.destroy()
+  angle-measurements-mouse-control-reset:
+    lifecycle: single
+    description: AngleMeasurementsMouseControl.reset()
+  angle-measurements-plugin-clear:
+    lifecycle: single
+    description: AngleMeasurementsPlugin.clear()
+  angle-measurements-plugin-create-measurement:
+    lifecycle: single
+    description: AngleMeasurementsPlugin.createMeasurement()
+  angle-measurements-plugin-destroy-measurement:
+    lifecycle: single
+    description: "AngleMeasurementsPlugin.destroyMeasurement(id: string)"
+  angle-measurements-plugin-on:
+    lifecycle: single
+    description: "AngleMeasurementsPlugin.on(event: \"measurementDestroyed\", callback: (measurement: AngleMeasurement)=> void)"
+  angle-measurements-touch-control-activate:
+    lifecycle: single
+    description: AngleMeasurementsTouchControl.activate()
+  angle-measurements-touch-control-deactivate:
+    lifecycle: single
+    description: AngleMeasurementsTouchControl.deactivate()
+  angle-measurements-touch-control-destroy:
+    lifecycle: single
+    description: AngleMeasurementsTouchControl.destroy()
+  angle-measurements-touch-control-reset:
+    lifecycle: single
+    description: AngleMeasurementsTouchControl.reset()
+  annotation-get-field:
+    lifecycle: single
+    description: "Annotation.getField(key: string)"
+  annotation-get-label-shown:
+    lifecycle: single
+    description: Annotation.getLabelShown()
+  annotation-get-marker-shown:
+    lifecycle: single
+    description: Annotation.getMarkerShown()
+  annotation-get-values:
+    lifecycle: single
+    description: Annotation.getValues()
+  annotation-set-field:
+    lifecycle: single
+    description: "Annotation.setField(key: string, value: string)"
+  annotation-set-label-shown:
+    lifecycle: single
+    description: "Annotation.setLabelShown(shown: boolean)"
+  annotation-set-marker-shown:
+    lifecycle: single
+    description: "Annotation.setMarkerShown(shown: boolean)"
+  annotation-set-values:
+    lifecycle: single
+    description: "Annotation.setValues(values: { [key:string] : string | number })"
+  annotations-plugin-clear:
+    lifecycle: single
+    description: AnnotationsPlugin.clear()
+  annotations-plugin-create-annotation:
+    lifecycle: single
+    description: AnnotationsPlugin.createAnnotation()
+  annotations-plugin-destroy-annotation:
+    lifecycle: single
+    description: "AnnotationsPlugin.destroyAnnotation(id: string)"
+  annotations-plugin-on:
+    lifecycle: single
+    description: "AnnotationsPlugin.on(event: \"markerClicked\", callback: (annotation: Annotation)=> void)"
+  axis-gizmo-plugin-set-visible:
+    lifecycle: single
+    description: "AxisGizmoPlugin.setVisible(visible: boolean)"
+  b-c-f-viewpoints-plugin-get-viewpoint:
+    lifecycle: single
+    description: "BCFViewpointsPlugin.getViewpoint(options?: any)"
+  b-c-f-viewpoints-plugin-set-viewpoint:
+    lifecycle: single
+    description: "BCFViewpointsPlugin.setViewpoint(bcfViewpoint: any, options?: any)"
+  bitmap-destroy:
+    lifecycle: single
+    description: Bitmap.destroy()
+  build-box-geometry:
+    lifecycle: single
+    description: "buildBoxGeometry(cfg: buildBoxGeometryConfiguration)"
+  build-box-lines-geometry:
+    lifecycle: single
+    description: "buildBoxLinesGeometry(cfg: buildBoxLinesGeometryConfiguration)"
+  build-box-lines-geometry-from-a-a-b-b:
+    lifecycle: single
+    description: "buildBoxLinesGeometryFromAABB(cfg: buildBoxLinesGeometryFromAABBConfiguration)"
+  build-cylinder-geometry:
+    lifecycle: single
+    description: "buildCylinderGeometry(cfg: buildCylinderGeometryConfiguration)"
+  build-grid-geometry:
+    lifecycle: single
+    description: "buildGridGeometry(cfg: buildGridGeometryConfiguration)"
+  build-line-geometry:
+    lifecycle: single
+    description: "buildLineGeometry(cfg: buildLineGeometryConfiguration)"
+  build-plane-geometry:
+    lifecycle: single
+    description: "buildPlaneGeometry(cfg: buildPlaneGeometryConfiguration)"
+  build-polyline-geometry:
+    lifecycle: single
+    description: "buildPolylineGeometry(cfg: buildPolylineGeometryConfiguration)"
+  build-polyline-geometry-from-curve:
+    lifecycle: single
+    description: "buildPolylineGeometryFromCurve(cfg: buildPolylineGeometryFromCurveConfiguration)"
+  build-sphere-geometry:
+    lifecycle: single
+    description: "buildSphereGeometry(cfg: buildSphereGeometryConfiguration)"
+  build-torus-geometry:
+    lifecycle: single
+    description: "buildTorusGeometry(cfg: buildTorusGeometryConfiguration)"
+  build-vector-text-geometry:
+    lifecycle: single
+    description: "buildVectorTextGeometry(cfg: buildVectorTextGeometryConfiguration)"
+  camera-control-disable-pivot-sphere:
+    lifecycle: single
+    description: CameraControl.disablePivotSphere()
+  camera-control-enable-pivot-sphere:
+    lifecycle: single
+    description: "CameraControl.enablePivotSphere(cfg: {size: number, material: Material})"
+  camera-control-get-cursor-style:
+    lifecycle: single
+    description: "CameraControl.getCursorStyle(action: string)"
+  camera-control-on:
+    lifecycle: single
+    description: "CameraControl.on(event: \"doublePickedNothing\", callback: (e?: {canvasPos: number[]; }) => void, scope?: any)"
+  camera-control-set-cursor-style:
+    lifecycle: single
+    description: "CameraControl.setCursorStyle(action: string, style: string)"
+  camera-flight-animation-cancel:
+    lifecycle: single
+    description: CameraFlightAnimation.cancel()
+  camera-flight-animation-fly-to:
+    lifecycle: single
+    description: CameraFlightAnimation.flyTo()
+  camera-flight-animation-jump-to:
+    lifecycle: single
+    description: CameraFlightAnimation.jumpTo()
+  camera-flight-animation-stop:
+    lifecycle: single
+    description: CameraFlightAnimation.stop()
+  camera-memento-restore-camera:
+    lifecycle: single
+    description: "CameraMemento.restoreCamera(scene: Scene, done?: ()=> void)"
+  camera-memento-save-camera:
+    lifecycle: single
+    description: "CameraMemento.saveCamera(scene: Scene)"
+  camera-orbit-pitch:
+    lifecycle: single
+    description: "Camera.orbitPitch(angleInc: number)"
+  camera-orbit-yaw:
+    lifecycle: single
+    description: "Camera.orbitYaw(angleInc: number)"
+  camera-pan:
+    lifecycle: single
+    description: "Camera.pan(pan: number[])"
+  camera-path-add-frame:
+    lifecycle: single
+    description: "CameraPath.addFrame(t: number, eye: number, look: number[], up: number[])"
+  camera-path-add-frames:
+    lifecycle: single
+    description: "CameraPath.addFrames(frames: Frame[])"
+  camera-path-animation-destroy:
+    lifecycle: single
+    description: CameraPathAnimation.destroy()
+  camera-path-animation-fly-to-frame:
+    lifecycle: single
+    description: "CameraPathAnimation.flyToFrame(frameIdx: number, ok?: ()=> void)"
+  camera-path-animation-play:
+    lifecycle: single
+    description: CameraPathAnimation.play()
+  camera-path-animation-play-to-frame:
+    lifecycle: single
+    description: "CameraPathAnimation.playToFrame(frameIdx: number)"
+  camera-path-animation-play-to-t:
+    lifecycle: single
+    description: "CameraPathAnimation.playToT(t: number)"
+  camera-path-animation-scrub-to-frame:
+    lifecycle: single
+    description: "CameraPathAnimation.scrubToFrame(frameIdx: number)"
+  camera-path-animation-scrub-to-t:
+    lifecycle: single
+    description: "CameraPathAnimation.scrubToT(t: number)"
+  camera-path-animation-stop:
+    lifecycle: single
+    description: CameraPathAnimation.stop()
+  camera-path-clear-frames:
+    lifecycle: single
+    description: CameraPath.clearFrames()
+  camera-path-load-frame:
+    lifecycle: single
+    description: "CameraPath.loadFrame(t: number)"
+  camera-path-sample-frame:
+    lifecycle: single
+    description: "CameraPath.sampleFrame(t: number, eye: number[], look: number[], up: number[])"
+  camera-path-save-frame:
+    lifecycle: single
+    description: "CameraPath.saveFrame(t: number)"
+  camera-path-smooth-frame-times:
+    lifecycle: single
+    description: "CameraPath.smoothFrameTimes(duration: number)"
+  camera-pitch:
+    lifecycle: single
+    description: "Camera.pitch(angleInc: number)"
+  camera-yaw:
+    lifecycle: single
+    description: "Camera.yaw(angleInc: number)"
+  camera-zoom:
+    lifecycle: single
+    description: "Camera.zoom(delta: number)"
+  city-j-s-o-n-loader-plugin-load:
+    lifecycle: single
+    description: "CityJSONLoaderPlugin.load(params: LoadCityJSONModel)"
+  component-clear:
+    lifecycle: single
+    description: Component.clear()
+  component-destroy:
+    lifecycle: single
+    description: Component.destroy()
+  component-error:
+    lifecycle: single
+    description: "Component.error(message: string)"
+  component-fire:
+    lifecycle: single
+    description: "Component.fire(event: string, value: any, forget?: boolean)"
+  component-has-subs:
+    lifecycle: single
+    description: "Component.hasSubs(event: string)"
+  component-is-type:
+    lifecycle: single
+    description: "Component.isType(type: any)"
+  component-log:
+    lifecycle: single
+    description: "Component.log(message: string)"
+  component-off:
+    lifecycle: single
+    description: "Component.off(subId: string)"
+  component-on:
+    lifecycle: single
+    description: "Component.on(event: string, callback: Function, scope?: any)"
+  component-once:
+    lifecycle: single
+    description: "Component.once(event: string, callback: Function, scope?: any)"
+  component-warn:
+    lifecycle: single
+    description: "Component.warn(message: string)"
+  context-menu-destroy:
+    lifecycle: single
+    description: ContextMenu.destroy()
+  context-menu-fire:
+    lifecycle: single
+    description: "ContextMenu.fire(event: string, value: any)"
+  context-menu-hide:
+    lifecycle: single
+    description: ContextMenu.hide()
+  context-menu-on:
+    lifecycle: single
+    description: "ContextMenu.on(event: string, callback: Function)"
+  context-menu-show:
+    lifecycle: single
+    description: "ContextMenu.show(pageX: number, pageY: number)"
+  cube-texture-destroy:
+    lifecycle: single
+    description: CubeTexture.destroy()
+  cubic-bezier-curve-get-j-s-o-n:
+    lifecycle: single
+    description: CubicBezierCurve.getJSON()
+  cubic-bezier-curve-get-point:
+    lifecycle: single
+    description: "CubicBezierCurve.getPoint(t: number)"
+  curve-get-point-at:
+    lifecycle: single
+    description: "Curve.getPointAt(u: number)"
+  curve-get-points:
+    lifecycle: single
+    description: "Curve.getPoints(divisions: number)"
+  curve-get-tangent:
+    lifecycle: single
+    description: "Curve.getTangent(t: number)"
+  curve-get-u-to-t-mapping:
+    lifecycle: single
+    description: "Curve.getUToTMapping(u: number, distance: number)"
+  custom-projection-unproject:
+    lifecycle: single
+    description: "CustomProjection.unproject(canvasPos: number[], screenZ: number, screenPos: number[], viewPos: number[], worldPos: number[])"
+  cx-converter-i-f-c-loader-plugin-load:
+    lifecycle: single
+    description: CxConverterIFCLoaderPlugin.load()
+  dir-light-destroy:
+    lifecycle: single
+    description: DirLight.destroy()
+  distance-measurement-edit-control-deactivate:
+    lifecycle: single
+    description: DistanceMeasurementEditControl.deactivate()
+  distance-measurement-set-highlighted:
+    lifecycle: single
+    description: "DistanceMeasurement.setHighlighted(highlighted: boolean)"
+  distance-measurements-control-activate:
+    lifecycle: single
+    description: DistanceMeasurementsControl.activate()
+  distance-measurements-control-deactivate:
+    lifecycle: single
+    description: DistanceMeasurementsControl.deactivate()
+  distance-measurements-control-on:
+    lifecycle: single
+    description: "DistanceMeasurementsControl.on(event: \"activated\", callback: (activated: boolean) => void, scope?: any)"
+  distance-measurements-control-reset:
+    lifecycle: single
+    description: DistanceMeasurementsControl.reset()
+  distance-measurements-mouse-control-activate:
+    lifecycle: single
+    description: DistanceMeasurementsMouseControl.activate()
+  distance-measurements-mouse-control-deactivate:
+    lifecycle: single
+    description: DistanceMeasurementsMouseControl.deactivate()
+  distance-measurements-mouse-control-destroy:
+    lifecycle: single
+    description: DistanceMeasurementsMouseControl.destroy()
+  distance-measurements-mouse-control-reset:
+    lifecycle: single
+    description: DistanceMeasurementsMouseControl.reset()
+  distance-measurements-plugin-clear:
+    lifecycle: single
+    description: DistanceMeasurementsPlugin.clear()
+  distance-measurements-plugin-create-measurement:
+    lifecycle: single
+    description: DistanceMeasurementsPlugin.createMeasurement()
+  distance-measurements-plugin-destroy-measurement:
+    lifecycle: single
+    description: "DistanceMeasurementsPlugin.destroyMeasurement(id: string)"
+  distance-measurements-plugin-get-axis-visible:
+    lifecycle: single
+    description: DistanceMeasurementsPlugin.getAxisVisible()
+  distance-measurements-plugin-on:
+    lifecycle: single
+    description: "DistanceMeasurementsPlugin.on(event: \"measurementDestroyed\", callback: (measurement: DistanceMeasurement)=> void)"
+  distance-measurements-plugin-set-axis-visible:
+    lifecycle: single
+    description: "DistanceMeasurementsPlugin.setAxisVisible(axisVisible: boolean)"
+  distance-measurements-touch-control-activate:
+    lifecycle: single
+    description: DistanceMeasurementsTouchControl.activate()
+  distance-measurements-touch-control-deactivate:
+    lifecycle: single
+    description: DistanceMeasurementsTouchControl.deactivate()
+  distance-measurements-touch-control-destroy:
+    lifecycle: single
+    description: DistanceMeasurementsTouchControl.destroy()
+  distance-measurements-touch-control-reset:
+    lifecycle: single
+    description: DistanceMeasurementsTouchControl.reset()
+  dot-b-i-m-loader-plugin-load:
+    lifecycle: single
+    description: "DotBIMLoaderPlugin.load(params: LoadDotBIMModel)"
+  emphasis-material-destroy:
+    lifecycle: single
+    description: EmphasisMaterial.destroy()
+  entity-destroy:
+    lifecycle: single
+    description: Entity.destroy()
+  entity-get-each-vertex:
+    lifecycle: single
+    description: "Entity.getEachVertex(callback: any)"
+  entity-get-geometry-data:
+    lifecycle: single
+    description: Entity.getGeometryData()
+  fresnel-destroy:
+    lifecycle: single
+    description: Fresnel.destroy()
+  frustum-unproject:
+    lifecycle: single
+    description: "Frustum.unproject(canvasPos: number[], screenZ: number, screenPos: number[], viewPos: number[], worldPos: number[])"
+  g-l-t-f-loader-plugin-load:
+    lifecycle: single
+    description: "GLTFLoaderPlugin.load(params: LoadGLTFModel)"
+  i-city-j-s-o-n-default-data-source-get-city-j-s-o-n:
+    lifecycle: single
+    description: "ICityJSONDefaultDataSource.getCityJSON(src: string | number, ok: (json: any)=> void, error: (e: Error)=> void)"
+  i-dot-b-i-m-default-data-source-get-dot-b-i-m:
+    lifecycle: single
+    description: "IDotBIMDefaultDataSource.getDotBIM(dotBIMSrc: string | number, ok: (buffer: ArrayBuffer) => void, error: (e: Error) => void)"
+  i-f-c-open-shell-default-data-source-get-i-f-c:
+    lifecycle: single
+    description: "IFCOpenShellDefaultDataSource.getIFC(src: string | number, ok: (buffer: ArrayBuffer) => void, error: (e: Error) => void)"
+  i-f-c-open-shell-loader-plugin-load:
+    lifecycle: single
+    description: "IFCOpenShellLoaderPlugin.load(params?: LoadIFCOpenShellModel)"
+  i-g-l-t-f-default-data-source-get-array-buffer:
+    lifecycle: single
+    description: "IGLTFDefaultDataSource.getArrayBuffer(glTFSrc: string | number, binarySrc: string | number, ok: Function, error: Function)"
+  i-g-l-t-f-default-data-source-get-g-l-t-f:
+    lifecycle: single
+    description: "IGLTFDefaultDataSource.getGLTF(glTFSrc: string | number, ok: Function, error: Function)"
+  i-g-l-t-f-default-data-source-get-meta-model:
+    lifecycle: single
+    description: "IGLTFDefaultDataSource.getMetaModel(metaModelSrc: string | number, ok: Function, error: Function)"
+  i-l-a-s-default-data-source-get-l-a-s:
+    lifecycle: single
+    description: "ILASDefaultDataSource.getLAS(src: string | number, ok: (LAS: ArrayBuffer) => void, error: (e: Error) => void)"
+  i-s-t-l-default-data-source-get-s-t-l:
+    lifecycle: single
+    description: "ISTLDefaultDataSource.getSTL(src: string | number, ok: Function, error: Function)"
+  i-tree-view-render-service-add-children:
+    lifecycle: single
+    description: "ITreeViewRenderService.addChildren(element: HTMLElement, nodes: Array<HTMLElement>)"
+  i-tree-view-render-service-collapse:
+    lifecycle: single
+    description: "ITreeViewRenderService.collapse(element: HTMLElement, expandHandler: genericHandler, collapseHandler: genericHandler)"
+  i-tree-view-render-service-create-disabled-node-element:
+    lifecycle: single
+    description: "ITreeViewRenderService.createDisabledNodeElement(rootName: string)"
+  i-tree-view-render-service-create-node-element:
+    lifecycle: single
+    description: "ITreeViewRenderService.createNodeElement(node: TreeViewNode, expandHandler: genericHandler, checkHandler: genericHandler, contextmenuHandler: genericHandler, titleClickHandler: genericHandler)"
+  i-tree-view-render-service-create-root-node:
+    lifecycle: single
+    description: ITreeViewRenderService.createRootNode()
+  i-tree-view-render-service-expand:
+    lifecycle: single
+    description: "ITreeViewRenderService.expand(element: HTMLElement, expandHandler: genericHandler, collapseHandler: genericHandler)"
+  i-tree-view-render-service-get-id:
+    lifecycle: single
+    description: "ITreeViewRenderService.getId(element: HTMLElement)"
+  i-tree-view-render-service-get-id-from-checkbox:
+    lifecycle: single
+    description: "ITreeViewRenderService.getIdFromCheckbox(element: HTMLElement)"
+  i-tree-view-render-service-get-switch-element:
+    lifecycle: single
+    description: "ITreeViewRenderService.getSwitchElement(nodeId: string)"
+  i-tree-view-render-service-is-checked:
+    lifecycle: single
+    description: "ITreeViewRenderService.isChecked(element: HTMLElement)"
+  i-tree-view-render-service-is-expanded:
+    lifecycle: single
+    description: "ITreeViewRenderService.isExpanded(element: HTMLElement)"
+  i-tree-view-render-service-set-checkbox:
+    lifecycle: single
+    description: "ITreeViewRenderService.setCheckbox(nodeId: string, checked: boolean, indeterminate?: boolean)"
+  i-tree-view-render-service-set-highlighted:
+    lifecycle: single
+    description: "ITreeViewRenderService.setHighlighted(nodeId: string, highlighted: boolean)"
+  i-tree-view-render-service-set-x-rayed:
+    lifecycle: single
+    description: "ITreeViewRenderService.setXRayed(nodeId: string, xrayed: boolean)"
+  i-web-i-f-c-default-data-source-get-i-f-c:
+    lifecycle: single
+    description: "IWebIFCDefaultDataSource.getIFC(src: string | number, ok: (buffer: ArrayBuffer)=> void, error: (e: Error)=> void)"
+  i-x-k-t-default-data-source-get-meta-model:
+    lifecycle: single
+    description: "IXKTDefaultDataSource.getMetaModel(metaModelSrc: string | number, ok: (json: any) => void, error: (e: Error) => void)"
+  i-x-k-t-default-data-source-get-x-k-t:
+    lifecycle: single
+    description: "IXKTDefaultDataSource.getXKT(src: string | number, ok: (buffer: ArrayBuffer) => void, error: (e: Error) => void)"
+  image-plane-destroy:
+    lifecycle: single
+    description: ImagePlane.destroy()
+  image-plane-update-plane-size-from-image:
+    lifecycle: single
+    description: ImagePlane._updatePlaneSizeFromImage()
+  input-get-enabled:
+    lifecycle: single
+    description: Input.getEnabled()
+  input-get-keyboard-enabled:
+    lifecycle: single
+    description: Input.getKeyboardEnabled()
+  input-on:
+    lifecycle: single
+    description: "Input.on(event: \"keydown\" | \"keyup\", callback: (keyCode: number) => void, scope?: any)"
+  input-set-enabled:
+    lifecycle: single
+    description: "Input.setEnabled(enable: boolean)"
+  input-set-keyboard-enabled:
+    lifecycle: single
+    description: "Input.setKeyboardEnabled(enable: boolean)"
+  l-a-s-loader-plugin-load:
+    lifecycle: single
+    description: "LASLoaderPlugin.load(params?: LoadLASModel)"
+  lambert-material-destroy:
+    lifecycle: single
+    description: LambertMaterial.destroy()
+  light-map-destroy:
+    lifecycle: single
+    description: LightMap.destroy()
+  line-set-destroy:
+    lifecycle: single
+    description: LineSet.destroy()
+  load-o-b-j-geometry:
+    lifecycle: single
+    description: "loadOBJGeometry(scene: Scene, cfg?: LoadObjGeometryConfiguration)"
+  load3-d-s-geometry:
+    lifecycle: single
+    description: "load3DSGeometry(scene: Scene, cfg?: load3DSGeometryConfiguration)"
+  locale-service-clear-messages:
+    lifecycle: single
+    description: LocaleService.clearMessages()
+  locale-service-fire:
+    lifecycle: single
+    description: "LocaleService.fire(event: string, value: any, forget?: boolean)"
+  locale-service-load-messages:
+    lifecycle: single
+    description: "LocaleService.loadMessages(messages?: any)"
+  locale-service-off:
+    lifecycle: single
+    description: "LocaleService.off(subId: string)"
+  locale-service-on:
+    lifecycle: single
+    description: "LocaleService.on(event: \"updated\", callback: (e: LocaleService | string) => void)"
+  locale-service-translate:
+    lifecycle: single
+    description: "LocaleService.translate(msg: string, args?: any)"
+  locale-service-translate-plurals:
+    lifecycle: single
+    description: "LocaleService.translatePlurals(msg: string, count: number, args?: any)"
+  marker-destroy:
+    lifecycle: single
+    description: Marker.destroy()
+  marquee-picker-clear:
+    lifecycle: single
+    description: MarqueePicker.clear()
+  marquee-picker-destroy:
+    lifecycle: single
+    description: MarqueePicker.destroy()
+  marquee-picker-get-marquee-visible:
+    lifecycle: single
+    description: MarqueePicker.getMarqueeVisible()
+  marquee-picker-get-pick-mode:
+    lifecycle: single
+    description: MarqueePicker.getPickMode()
+  marquee-picker-mouse-control-destroy:
+    lifecycle: single
+    description: MarqueePickerMouseControl.destroy()
+  marquee-picker-mouse-control-get-active:
+    lifecycle: single
+    description: MarqueePickerMouseControl.getActive()
+  marquee-picker-mouse-control-set-active:
+    lifecycle: single
+    description: "MarqueePickerMouseControl.setActive(active: boolean)"
+  marquee-picker-pick:
+    lifecycle: single
+    description: MarqueePicker.pick()
+  marquee-picker-set-marquee:
+    lifecycle: single
+    description: "MarqueePicker.setMarquee(corner1: number[], corner2: number[])"
+  marquee-picker-set-marquee-corner1:
+    lifecycle: single
+    description: "MarqueePicker.setMarqueeCorner1(corner1:  number[])"
+  marquee-picker-set-marquee-corner2:
+    lifecycle: single
+    description: "MarqueePicker.setMarqueeCorner2(corner2: number[])"
+  marquee-picker-set-marquee-visible:
+    lifecycle: single
+    description: "MarqueePicker.setMarqueeVisible(visible:boolean)"
+  marquee-picker-set-pick-mode:
+    lifecycle: single
+    description: "MarqueePicker.setPickMode(pickMode: number)"
+  mesh-get-each-vertex:
+    lifecycle: single
+    description: "Mesh.getEachVertex(callback: any)"
+  mesh-rotate:
+    lifecycle: single
+    description: "Mesh.rotate(axis: number[], angle: number)"
+  mesh-rotate-on-world-axis:
+    lifecycle: single
+    description: "Mesh.rotateOnWorldAxis(axis: number[], angle: number)"
+  mesh-rotate-x:
+    lifecycle: single
+    description: "Mesh.rotateX(angle: number)"
+  mesh-rotate-y:
+    lifecycle: single
+    description: "Mesh.rotateY(angle: number)"
+  mesh-rotate-z:
+    lifecycle: single
+    description: "Mesh.rotateZ(angle: number)"
+  mesh-state-sort-compare:
+    lifecycle: single
+    description: "Mesh.stateSortCompare(mesh1: Mesh, mesh2: Mesh)"
+  mesh-translate:
+    lifecycle: single
+    description: "Mesh.translate(axis: number[], distance: number)"
+  mesh-translate-x:
+    lifecycle: single
+    description: "Mesh.translateX(distance: number)"
+  mesh-translate-y:
+    lifecycle: single
+    description: "Mesh.translateY(distance: number)"
+  mesh-translate-z:
+    lifecycle: single
+    description: "Mesh.translateZ(distance: number)"
+  meta-model-finalize:
+    lifecycle: single
+    description: MetaModel.finalize()
+  meta-model-load-data:
+    lifecycle: single
+    description: "MetaModel.loadData(metaModelData: any, options: { includeTypes: String[]; excludeTypes: String[]; globalizeObjectIds: any })"
+  meta-object-get-object-i-ds-in-subtree:
+    lifecycle: single
+    description: MetaObject.getObjectIDsInSubtree()
+  meta-object-get-object-i-ds-in-subtree-by-type:
+    lifecycle: single
+    description: "MetaObject.getObjectIDsInSubtreeByType(types: string[])"
+  meta-object-with-meta-objects-in-subtree:
+    lifecycle: single
+    description: "MetaObject.withMetaObjectsInSubtree(callback: (metaobect: MetaObject)=> void)"
+  meta-scene-create-meta-model:
+    lifecycle: single
+    description: MetaScene.createMetaModel()
+  meta-scene-destroy-meta-model:
+    lifecycle: single
+    description: "MetaScene.destroyMetaModel(id: string)"
+  meta-scene-fire:
+    lifecycle: single
+    description: "MetaScene.fire(event: string, value: any)"
+  meta-scene-get-object-i-ds-by-type:
+    lifecycle: single
+    description: "MetaScene.getObjectIDsByType(type: string)"
+  meta-scene-get-object-i-ds-in-subtree:
+    lifecycle: single
+    description: "MetaScene.getObjectIDsInSubtree(id: string, includeTypes?: string[], excludeTypes?: string[])"
+  meta-scene-off:
+    lifecycle: single
+    description: "MetaScene.off(event: any)"
+  meta-scene-on:
+    lifecycle: single
+    description: "MetaScene.on(event: string, callback: ()=> void)"
+  meta-scene-with-meta-objects-in-subtree:
+    lifecycle: single
+    description: "MetaScene.withMetaObjectsInSubtree(id: string, callback: ()=> void)"
+  metallic-material-destroy:
+    lifecycle: single
+    description: MetallicMaterial.destroy()
+  model-memento-restore-objects:
+    lifecycle: single
+    description: "ModelMemento.restoreObjects(scene: Scene, metaModel: MetaModel)"
+  model-memento-save-objects:
+    lifecycle: single
+    description: ModelMemento.saveObjects()
+  nav-cube-plugin-get-camera-fit-f-o-v:
+    lifecycle: single
+    description: NavCubePlugin.getCameraFitFOV()
+  nav-cube-plugin-get-camera-fly:
+    lifecycle: single
+    description: NavCubePlugin.getCameraFly()
+  nav-cube-plugin-get-camera-fly-duration:
+    lifecycle: single
+    description: NavCubePlugin.getCameraFlyDuration()
+  nav-cube-plugin-get-fit-visible:
+    lifecycle: single
+    description: NavCubePlugin.getFitVisible()
+  nav-cube-plugin-get-synch-projection:
+    lifecycle: single
+    description: NavCubePlugin.getSynchProjection()
+  nav-cube-plugin-get-visible:
+    lifecycle: single
+    description: NavCubePlugin.getVisible()
+  nav-cube-plugin-set-camera-fit-f-o-v:
+    lifecycle: single
+    description: "NavCubePlugin.setCameraFitFOV(value: number)"
+  nav-cube-plugin-set-camera-fly:
+    lifecycle: single
+    description: "NavCubePlugin.setCameraFly(value: boolean)"
+  nav-cube-plugin-set-camera-fly-duration:
+    lifecycle: single
+    description: "NavCubePlugin.setCameraFlyDuration(value: number)"
+  nav-cube-plugin-set-fit-visible:
+    lifecycle: single
+    description: "NavCubePlugin.setFitVisible(value: boolean)"
+  nav-cube-plugin-set-synch-projection:
+    lifecycle: single
+    description: "NavCubePlugin.setSynchProjection(value: boolean)"
+  nav-cube-plugin-set-visible:
+    lifecycle: single
+    description: "NavCubePlugin.setVisible(value?: boolean)"
+  o-b-j-loader-plugin-load:
+    lifecycle: single
+    description: "OBJLoaderPlugin.load(params: LoadOBJModel)"
+  objects-kd-tree3-destroy:
+    lifecycle: single
+    description: ObjectsKdTree3.destroy()
+  objects-memento-restore-objects:
+    lifecycle: single
+    description: "ObjectsMemento.restoreObjects(scene: Scene)"
+  objects-memento-save-objects:
+    lifecycle: single
+    description: ObjectsMemento.saveObjects()
+  ortho-unproject:
+    lifecycle: single
+    description: "Ortho.unproject(canvasPos: number[], screenZ: number, screenPos: number[], viewPos: number[], worldPos: number[])"
+  path-get-j-s-o-n:
+    lifecycle: single
+    description: Path.getJSON()
+  path-get-point:
+    lifecycle: single
+    description: "Path.getPoint(t: number)"
+  perspective-unproject:
+    lifecycle: single
+    description: "Perspective.unproject(canvasPos: number[], screenZ: number, screenPos: number[], viewPos: number[], worldPos: number[])"
+  plugin-destroy:
+    lifecycle: single
+    description: Plugin.destroy()
+  plugin-error:
+    lifecycle: single
+    description: "Plugin.error(msg: string)"
+  plugin-fire:
+    lifecycle: single
+    description: "Plugin.fire(event: string, value: any)"
+  plugin-log:
+    lifecycle: single
+    description: "Plugin.log(msg: string)"
+  plugin-off:
+    lifecycle: single
+    description: "Plugin.off(subId: string)"
+  plugin-on:
+    lifecycle: single
+    description: "Plugin.on(event: string, callback: ()=> void)"
+  plugin-warn:
+    lifecycle: single
+    description: "Plugin.warn(msg: string)"
+  point-light-destroy:
+    lifecycle: single
+    description: PointLight.destroy()
+  pointer-circle-destroy:
+    lifecycle: single
+    description: PointerCircle.destroy()
+  pointer-circle-start:
+    lifecycle: single
+    description: "PointerCircle.start(circlePos: number[])"
+  pointer-circle-stop:
+    lifecycle: single
+    description: PointerCircle.stop()
+  pointer-lens-destroy:
+    lifecycle: single
+    description: PointerLens.destroy()
+  points-material-destroy:
+    lifecycle: single
+    description: PointsMaterial.destroy()
+  quadratic-bezier-curve-get-j-s-o-n:
+    lifecycle: single
+    description: QuadraticBezierCurve.getJSON()
+  quadratic-bezier-curve-get-point:
+    lifecycle: single
+    description: "QuadraticBezierCurve.getPoint(t: number)"
+  readable-geometry-destroy:
+    lifecycle: single
+    description: ReadableGeometry.destroy()
+  reflection-map-destroy:
+    lifecycle: single
+    description: ReflectionMap.destroy()
+  s-t-l-loader-plugin-load:
+    lifecycle: single
+    description: "STLLoaderPlugin.load(params: LoadSTLModel)"
+  scene-clear:
+    lifecycle: single
+    description: Scene.clear()
+  scene-clear-bitmaps:
+    lifecycle: single
+    description: Scene.clearBitmaps()
+  scene-clear-lights:
+    lifecycle: single
+    description: Scene.clearLights()
+  scene-clear-lines:
+    lifecycle: single
+    description: Scene.clearLines()
+  scene-clear-section-planes:
+    lifecycle: single
+    description: Scene.clearSectionPlanes()
+  scene-destroy:
+    lifecycle: single
+    description: Scene.destroy()
+  scene-do-occlusion-test:
+    lifecycle: single
+    description: Scene.doOcclusionTest()
+  scene-get-a-a-b-b:
+    lifecycle: single
+    description: "Scene.getAABB(ids: string[])"
+  scene-model-create-entity:
+    lifecycle: single
+    description: SceneModel.createEntity()
+  scene-model-create-geometry:
+    lifecycle: single
+    description: SceneModel.createGeometry()
+  scene-model-create-mesh:
+    lifecycle: single
+    description: SceneModel.createMesh()
+  scene-model-create-quantization-range:
+    lifecycle: single
+    description: "SceneModel.createQuantizationRange(arg: {id: string | number, aabb: number[]})"
+  scene-model-create-texture:
+    lifecycle: single
+    description: SceneModel.createTexture()
+  scene-model-create-texture-set:
+    lifecycle: single
+    description: SceneModel.createTextureSet()
+  scene-model-create-transform:
+    lifecycle: single
+    description: SceneModel.createTransform()
+  scene-model-destroy:
+    lifecycle: single
+    description: SceneModel.destroy()
+  scene-model-entity-destroy:
+    lifecycle: single
+    description: SceneModelEntity.destroy()
+  scene-model-entity-get-each-index:
+    lifecycle: single
+    description: "SceneModelEntity.getEachIndex(callback: any)"
+  scene-model-entity-get-each-vertex:
+    lifecycle: single
+    description: "SceneModelEntity.getEachVertex(callback: any)"
+  scene-model-entity-get-geometry-data:
+    lifecycle: single
+    description: SceneModelEntity.getGeometryData()
+  scene-model-finalize:
+    lifecycle: single
+    description: SceneModel.finalize()
+  scene-model-mesh-is-solid:
+    lifecycle: single
+    description: SceneModelMesh.isSolid()
+  scene-model-on:
+    lifecycle: single
+    description: "SceneModel.on(event: \"error\", callback: (msg: string) => void, scope?: any)"
+  scene-model-pre-finalize:
+    lifecycle: single
+    description: SceneModel.preFinalize()
+  scene-model-transform-rotate:
+    lifecycle: single
+    description: "SceneModelTransform.rotate(axis: number[], angle: number)"
+  scene-model-transform-rotate-on-world-axis:
+    lifecycle: single
+    description: "SceneModelTransform.rotateOnWorldAxis(axis: number[], angle: number)"
+  scene-model-transform-rotate-x:
+    lifecycle: single
+    description: "SceneModelTransform.rotateX(angle: number)"
+  scene-model-transform-rotate-y:
+    lifecycle: single
+    description: "SceneModelTransform.rotateY(angle: number)"
+  scene-model-transform-rotate-z:
+    lifecycle: single
+    description: "SceneModelTransform.rotateZ(angle: number)"
+  scene-model-transform-translate:
+    lifecycle: single
+    description: "SceneModelTransform.translate(axis: number[])"
+  scene-model-transform-translate-x:
+    lifecycle: single
+    description: "SceneModelTransform.translateX(distance: number)"
+  scene-model-transform-translate-y:
+    lifecycle: single
+    description: "SceneModelTransform.translateY(distance: number)"
+  scene-model-transform-translate-z:
+    lifecycle: single
+    description: "SceneModelTransform.translateZ(distance: number)"
+  scene-on:
+    lifecycle: single
+    description: "Scene.on(event: \"sectionPlaneDestroyed\", callback: (measurement: SectionPlane) => void)"
+  scene-pick:
+    lifecycle: single
+    description: Scene.pick()
+  scene-render:
+    lifecycle: single
+    description: "Scene.render(forceRender?: boolean)"
+  scene-set-objects-collidable:
+    lifecycle: single
+    description: "Scene.setObjectsCollidable(ids: string[], collidable: boolean)"
+  scene-set-objects-colorized:
+    lifecycle: single
+    description: "Scene.setObjectsColorized(ids: string[], colorize: number[])"
+  scene-set-objects-culled:
+    lifecycle: single
+    description: "Scene.setObjectsCulled(ids: string[], culled: boolean)"
+  scene-set-objects-edges:
+    lifecycle: single
+    description: "Scene.setObjectsEdges(ids: string[], edges: boolean)"
+  scene-set-objects-highlighted:
+    lifecycle: single
+    description: "Scene.setObjectsHighlighted(ids: string[], highlighted: boolean)"
+  scene-set-objects-offset:
+    lifecycle: single
+    description: "Scene.setObjectsOffset(ids: string[], offset: number[])"
+  scene-set-objects-opacity:
+    lifecycle: single
+    description: "Scene.setObjectsOpacity(ids: string[], opacity: number)"
+  scene-set-objects-pickable:
+    lifecycle: single
+    description: "Scene.setObjectsPickable(ids: string[], pickable: boolean)"
+  scene-set-objects-selected:
+    lifecycle: single
+    description: "Scene.setObjectsSelected(ids: string[], selected: boolean)"
+  scene-set-objects-visible:
+    lifecycle: single
+    description: "Scene.setObjectsVisible(ids: string[], visible: boolean)"
+  scene-set-objects-x-rayed:
+    lifecycle: single
+    description: "Scene.setObjectsXRayed(ids: string[], xrayed: boolean)"
+  scene-with-objects:
+    lifecycle: single
+    description: "Scene.withObjects(ids: string[], callback: Function)"
+  section-plane-destroy:
+    lifecycle: single
+    description: SectionPlane.destroy()
+  section-plane-flip-dir:
+    lifecycle: single
+    description: SectionPlane.flipDir()
+  section-planes-plugin-clear:
+    lifecycle: single
+    description: SectionPlanesPlugin.clear()
+  section-planes-plugin-create-section-plane:
+    lifecycle: single
+    description: SectionPlanesPlugin.createSectionPlane()
+  section-planes-plugin-destroy-section-plane:
+    lifecycle: single
+    description: "SectionPlanesPlugin.destroySectionPlane(id: string)"
+  section-planes-plugin-flip-section-planes:
+    lifecycle: single
+    description: SectionPlanesPlugin.flipSectionPlanes()
+  section-planes-plugin-get-overview-visible:
+    lifecycle: single
+    description: SectionPlanesPlugin.getOverviewVisible()
+  section-planes-plugin-get-shown-control:
+    lifecycle: single
+    description: SectionPlanesPlugin.getShownControl()
+  section-planes-plugin-hide-control:
+    lifecycle: single
+    description: SectionPlanesPlugin.hideControl()
+  section-planes-plugin-set-overview-visible:
+    lifecycle: single
+    description: "SectionPlanesPlugin.setOverviewVisible(visible: boolean)"
+  section-planes-plugin-show-control:
+    lifecycle: single
+    description: "SectionPlanesPlugin.showControl(id: string)"
+  specular-material-destroy:
+    lifecycle: single
+    description: SpecularMaterial.destroy()
+  spline-curve-get-j-s-o-n:
+    lifecycle: single
+    description: SplineCurve.getJSON()
+  spline-curve-get-point:
+    lifecycle: single
+    description: "SplineCurve.getPoint(t: number)"
+  storey-views-plugin-create-storey-map:
+    lifecycle: single
+    description: StoreyViewsPlugin.createStoreyMap()
+  storey-views-plugin-get-storey-containing-world-pos:
+    lifecycle: single
+    description: "StoreyViewsPlugin.getStoreyContainingWorldPos(worldPos: number[], modelId: null | string)"
+  storey-views-plugin-get-storey-in-vertical-range:
+    lifecycle: single
+    description: "StoreyViewsPlugin.getStoreyInVerticalRange(worldPos: number[], modelId: null | string)"
+  storey-views-plugin-goto-storey-camera:
+    lifecycle: single
+    description: StoreyViewsPlugin.gotoStoreyCamera()
+  storey-views-plugin-is-position-above-or-below-building:
+    lifecycle: single
+    description: "StoreyViewsPlugin.isPositionAboveOrBelowBuilding(worldPos: number[], modelId: null | string)"
+  storey-views-plugin-on:
+    lifecycle: single
+    description: "StoreyViewsPlugin.on(event: \"storeys\", callback: (storyes: {[key: string]: Storey })=> void)"
+  storey-views-plugin-pick-storey-map:
+    lifecycle: single
+    description: StoreyViewsPlugin.pickStoreyMap()
+  storey-views-plugin-show-storey-objects:
+    lifecycle: single
+    description: StoreyViewsPlugin.showStoreyObjects()
+  storey-views-plugin-with-storey-objects:
+    lifecycle: single
+    description: "StoreyViewsPlugin.withStoreyObjects(storeyId: string, callback: Function)"
+  storey-views-plugin-world-dir-to-storey-map:
+    lifecycle: single
+    description: "StoreyViewsPlugin.worldDirToStoreyMap(storeyMap: StoreyMap, worldDir: number[], imageDir: number[])"
+  storey-views-plugin-world-pos-to-storey-map:
+    lifecycle: single
+    description: "StoreyViewsPlugin.worldPosToStoreyMap(storeyMap: StoreyMap, worldPos: number[], imagePos: number[])"
+  texture-destroy:
+    lifecycle: single
+    description: Texture.destroy()
+  touch-point-selector:
+    lifecycle: single
+    description: "touchPointSelector(viewer: Viewer, pointerCircle: PointerCircle, ray2WorldPos: Ray2WorldPos<T>)"
+  transform-control-destroy:
+    lifecycle: single
+    description: TransformControl.destroy()
+  transform-control-set-handlers:
+    lifecycle: single
+    description: "TransformControl.setHandlers(handlers?: TransformControlHandlers)"
+  transform-control-set-position:
+    lifecycle: single
+    description: "TransformControl.setPosition(position: number[])"
+  transform-control-set-quaternion:
+    lifecycle: single
+    description: "TransformControl.setQuaternion(quaternion: number[])"
+  tree-view-plugin-add-model:
+    lifecycle: single
+    description: TreeViewPlugin.addModel()
+  tree-view-plugin-collapse:
+    lifecycle: single
+    description: TreeViewPlugin.collapse()
+  tree-view-plugin-destroy:
+    lifecycle: single
+    description: TreeViewPlugin.destroy()
+  tree-view-plugin-expand-to-depth:
+    lifecycle: single
+    description: "TreeViewPlugin.expandToDepth(depth: number)"
+  tree-view-plugin-on:
+    lifecycle: single
+    description: "TreeViewPlugin.on(event: \"nodeTitleClicked\", callback: (data: { event: MouseEvent, viewer: Viewer, treeViewPlugin: TreeViewPlugin, treeViewNode: TreeViewNode }) => void)"
+  tree-view-plugin-remove-model:
+    lifecycle: single
+    description: "TreeViewPlugin.removeModel(modelId: string)"
+  tree-view-plugin-show-node:
+    lifecycle: single
+    description: "TreeViewPlugin.showNode(objectId: string)"
+  tree-view-plugin-un-show-node:
+    lifecycle: single
+    description: TreeViewPlugin.unShowNode()
+  tree-view-plugin-with-node-tree:
+    lifecycle: single
+    description: "TreeViewPlugin.withNodeTree(node: TreeViewNode, callback: (node: TreeViewNode) => void)"
+  v-b-o-geometry-destroy:
+    lifecycle: single
+    description: VBOGeometry.destroy()
+  viewer-add-plugin:
+    lifecycle: single
+    description: "Viewer.addPlugin(plugin: Plugin)"
+  viewer-begin-snapshot:
+    lifecycle: single
+    description: Viewer.beginSnapshot()
+  viewer-destroy:
+    lifecycle: single
+    description: Viewer.destroy()
+  viewer-end-snapshot:
+    lifecycle: single
+    description: Viewer.endSnapshot()
+  viewer-error:
+    lifecycle: single
+    description: "Viewer.error(msg: string)"
+  viewer-fire:
+    lifecycle: single
+    description: "Viewer.fire(event: string, value: any)"
+  viewer-get-snapshot:
+    lifecycle: single
+    description: "Viewer.getSnapshot(params: { width?: number, height?: number, format?: \"jpeg\" | \"png\" | \"bmp\", includeGizmos?: boolean })"
+  viewer-get-snapshot-with-plugins:
+    lifecycle: single
+    description: "Viewer.getSnapshotWithPlugins(params: { width?: number, height?: number, format?: \"jpeg\" | \"png\" | \"bmp\", includeGizmos?: boolean })"
+  viewer-log:
+    lifecycle: single
+    description: "Viewer.log(msg: string)"
+  viewer-on:
+    lifecycle: single
+    description: "Viewer.on(event: string, callback: Function)"
+  web-i-f-c-loader-plugin-load:
+    lifecycle: single
+    description: "WebIFCLoaderPlugin.load(params?: LoadWebIFCModel)"
+  x-k-t-loader-plugin-load:
+    lifecycle: single
+    description: "XKTLoaderPlugin.load(params: LoadXKTModel)"
+  x-m-l3-d-loader-plugin-load:
+    lifecycle: single
+    description: "XML3DLoaderPlugin.load(params: LoadXML3DModel)"
+skills:
+  - ambient-light.md
+  - angle-measurements-control.md
+  - angle-measurements-mouse-control.md
+  - angle-measurements-plugin.md
+  - angle-measurements-touch-control.md
+  - annotation.md
+  - annotations-plugin.md
+  - axis-gizmo-plugin.md
+  - b-c-f-viewpoints-plugin.md
+  - bitmap.md
+  - camera-control.md
+  - camera-flight-animation.md
+  - camera-memento.md
+  - camera-path-animation.md
+  - camera-path.md
+  - camera.md
+  - city-j-s-o-n-loader-plugin.md
+  - component.md
+  - context-menu.md
+  - cube-texture.md
+  - cubic-bezier-curve.md
+  - curve.md
+  - custom-projection.md
+  - cx-converter-i-f-c-loader-plugin.md
+  - dir-light.md
+  - distance-measurement-edit-control.md
+  - distance-measurement.md
+  - distance-measurements-control.md
+  - distance-measurements-mouse-control.md
+  - distance-measurements-plugin.md
+  - distance-measurements-touch-control.md
+  - dot-b-i-m-loader-plugin.md
+  - emphasis-material.md
+  - entity.md
+  - fresnel.md
+  - frustum.md
+  - g-l-t-f-loader-plugin.md
+  - i-city-j-s-o-n-default-data-source.md
+  - i-dot-b-i-m-default-data-source.md
+  - i-f-c-open-shell-default-data-source.md
+  - i-f-c-open-shell-loader-plugin.md
+  - i-g-l-t-f-default-data-source.md
+  - i-l-a-s-default-data-source.md
+  - i-s-t-l-default-data-source.md
+  - i-tree-view-render-service.md
+  - i-web-i-f-c-default-data-source.md
+  - i-x-k-t-default-data-source.md
+  - image-plane.md
+  - input.md
+  - l-a-s-loader-plugin.md
+  - lambert-material.md
+  - light-map.md
+  - line-set.md
+  - locale-service.md
+  - marker.md
+  - marquee-picker-mouse-control.md
+  - marquee-picker.md
+  - mesh.md
+  - meta-model.md
+  - meta-object.md
+  - meta-scene.md
+  - metallic-material.md
+  - model-memento.md
+  - nav-cube-plugin.md
+  - o-b-j-loader-plugin.md
+  - objects-kd-tree3.md
+  - objects-memento.md
+  - ortho.md
+  - path.md
+  - perspective.md
+  - plugin.md
+  - point-light.md
+  - pointer-circle.md
+  - pointer-lens.md
+  - points-material.md
+  - quadratic-bezier-curve.md
+  - readable-geometry.md
+  - reflection-map.md
+  - s-t-l-loader-plugin.md
+  - scene-model-entity.md
+  - scene-model-mesh.md
+  - scene-model-transform.md
+  - scene-model.md
+  - scene.md
+  - section-plane.md
+  - section-planes-plugin.md
+  - specular-material.md
+  - spline-curve.md
+  - storey-views-plugin.md
+  - texture.md
+  - top-level.md
+  - transform-control.md
+  - tree-view-plugin.md
+  - v-b-o-geometry.md
+  - viewer.md
+  - web-i-f-c-loader-plugin.md
+  - x-k-t-loader-plugin.md
+  - x-m-l3-d-loader-plugin.md

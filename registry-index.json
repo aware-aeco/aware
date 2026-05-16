@@ -90,6 +90,14 @@
         }
       }
     },
+    "xeokit": {
+      "versions": {
+        "2.6.109": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/visualization/xeokit"
+        }
+      }
+    },
     "trimble-connect": {
       "versions": {
         "2.4.0": {
@@ -154,6 +162,7 @@
         "grasshopper-8@8.31.26126.13431",
         "sketchup-2025@2025.0.3",
         "sketchup-2026@2026.0.0",
+        "xeokit@2.6.109",
         "trimble-connect@2.4.0",
         "microsoft-365@1.0.0",
         "google-workspace@1.0.0",
