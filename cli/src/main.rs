@@ -14,6 +14,7 @@ mod error;
 mod lockfile;
 mod manifest;
 mod paths;
+mod registry;
 mod render;
 mod validate;
 
