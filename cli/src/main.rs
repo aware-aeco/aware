@@ -79,7 +79,8 @@ enum Command {
     Doctor,
 }
 
-fn main() -> anyhow::Result<()> {
+#[tokio::main]
+async fn main() -> anyhow::Result<()> {
     let cli = Cli::parse();
 
     let paths = match crate::paths::Paths::from_env() {
