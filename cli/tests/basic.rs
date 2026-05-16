@@ -40,7 +40,7 @@ fn version_prints_version() {
         .assert()
         .success()
         .stdout(predicate::str::contains("aware"))
-        .stdout(predicate::str::contains("0.8.0"));
+        .stdout(predicate::str::contains("0.8.1"));
 }
 
 #[test]
