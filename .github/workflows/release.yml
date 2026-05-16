@@ -121,3 +121,30 @@ jobs:
           fail_on_unmatched_files: false
           draft: false
           prerelease: ${{ contains(github.ref_name, '-') }}
+
+  publish-npm:
+    needs: release
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+      - name: Sync package.json version from tag
+        working-directory: cli-npm
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          echo "Syncing cli-npm/package.json to version $version"
+          # Use Node to update version (avoids jq dependency)
+          node -e "const pkg=require('./package.json'); pkg.version='$version'; require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n')"
+          cat package.json
+      - name: Publish to npm
+        working-directory: cli-npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --access public --provenance
