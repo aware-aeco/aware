@@ -5,7 +5,10 @@
 #![allow(dead_code)]
 
 pub mod cli_help;
+pub mod nuget;
 pub mod openapi;
+pub mod python;
+pub mod stubs;
 
 use std::collections::BTreeMap;
 use std::path::Path;
@@ -14,6 +17,7 @@ use serde::Serialize;
 
 use crate::error::AwareError;
 
+#[derive(Debug)]
 pub struct GeneratedAgent {
     pub id: String,
     pub version: String,
@@ -25,6 +29,7 @@ pub struct GeneratedAgent {
     pub license: String,
 }
 
+#[derive(Debug)]
 pub struct GeneratedCommand {
     pub lifecycle: String,
     pub description: String,
@@ -32,12 +37,13 @@ pub struct GeneratedCommand {
     pub outputs_yaml: String,
 }
 
+#[derive(Debug)]
 pub struct GeneratedSkill {
     pub filename: String,
     pub body: String,
 }
 
-#[derive(Serialize)]
+#[derive(Debug, Serialize)]
 pub struct Provenance {
     #[serde(rename = "generated-by")]
     pub generated_by: String,
