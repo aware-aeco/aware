@@ -1,12 +1,44 @@
 {
   "version": "1.0",
-  "updated-at": "2026-05-16T00:00:00Z",
+  "updated-at": "2026-05-16T16:40:00Z",
   "agents": {
     "tekla": {
       "versions": {
         "2025.0.1": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
           "subdir": "aware-main/20-agents/aeco/engineering/tekla"
+        }
+      }
+    },
+    "tekla-2025": {
+      "versions": {
+        "2025.0.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/engineering/tekla-2025"
+        }
+      }
+    },
+    "tekla-2026": {
+      "versions": {
+        "2026.0.3": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/engineering/tekla-2026"
+        }
+      }
+    },
+    "revit-2025": {
+      "versions": {
+        "2025.0.2.419": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/architecture/revit-2025"
+        }
+      }
+    },
+    "revit-2026": {
+      "versions": {
+        "2026.0.0.9999": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/architecture/revit-2026"
         }
       }
     },
@@ -64,6 +96,10 @@
       "description": "All first-party AECO agents (engineering, construction, cross-cutting, utilities, meta).",
       "agents": [
         "tekla@2025.0.1",
+        "tekla-2025@2025.0.0",
+        "tekla-2026@2026.0.3",
+        "revit-2025@2025.0.2.419",
+        "revit-2026@2026.0.0.9999",
         "trimble-connect@2.4.0",
         "microsoft-365@1.0.0",
         "google-workspace@1.0.0",

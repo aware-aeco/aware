@@ -1,0 +1,5 @@
+# fabrication-configuration-get-insulation-specification-abbreviation
+
+Lifecycle: single
+
+FabricationConfiguration.GetInsulationSpecificationAbbreviation

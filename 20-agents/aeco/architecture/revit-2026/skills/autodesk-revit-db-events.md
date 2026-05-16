@@ -1,0 +1,66 @@
+---
+name: ad-windows-autodesk-revit-db-events
+description: API reference for namespace Autodesk.Revit.DB.Events from RevitAPI.dll
+---
+
+# Autodesk.Revit.DB.Events
+
+- **ApplicationInitializedEventArgs**
+- **CreateRelatedFileProgressChangedEventArgs**
+- **DataTransferMode**
+- **DataTransferProgressChangedEventArgs**
+- **DocumentChangedEventArgs**
+- **DocumentClosedEventArgs**
+- **DocumentClosingEventArgs**
+- **DocumentCreatedEventArgs**
+- **DocumentCreatingEventArgs**
+- **DocumentOpenedEventArgs**
+- **DocumentOpeningEventArgs**
+- **DocumentPrintedEventArgs**
+- **DocumentPrintingEventArgs**
+- **DocumentReloadLatestProgressChangedEventArgs**
+- **DocumentReloadedLatestEventArgs**
+- **DocumentReloadingLatestEventArgs**
+- **DocumentSaveToCentralProgressChangedEventArgs**
+- **DocumentSaveToLocalProgressChangedEventArgs**
+- **DocumentSavedAsEventArgs**
+- **DocumentSavedEventArgs**
+- **DocumentSavingAsEventArgs**
+- **DocumentSavingEventArgs**
+- **DocumentSynchronizedWithCentralEventArgs**
+- **DocumentSynchronizingWithCentralEventArgs**
+- **DocumentWorksharingEnabledEventArgs**
+- **ElementTypeDuplicatedEventArgs**
+- **ElementTypeDuplicatingEventArgs**
+- **EventStatus**
+- **FailuresProcessingEventArgs**
+- **FamilyLoadedIntoDocumentEventArgs**
+- **FamilyLoadingIntoDocumentEventArgs**
+- **FileExportedEventArgs**
+- **FileExportingEventArgs**
+- **FileImportedEventArgs**
+- **FileImportingEventArgs**
+- **LinkedResourceOpenedEventArgs**
+- **LinkedResourceOpeningEventArgs**
+- **PostDocEventArgs**
+- **PostEventArgs**
+- **PreDocEventArgs**
+- **PreEventArgs**
+- **ProgressChangedEventArgs**
+- **ProgressStage**
+- **RevitAPIEventArgs**
+- **RevitAPIEventStatus**
+- **RevitAPIPostDocEventArgs**
+- **RevitAPIPostEventArgs**
+- **RevitAPIPreDocEventArgs**
+- **RevitAPIPreEventArgs**
+- **RevitAPISingleEventArgs**
+- **RevitEventArgs**
+- **UndoOperation**
+- **ViewExportedEventArgs**
+- **ViewExportingEventArgs**
+- **ViewPrintedEventArgs**
+- **ViewPrintingEventArgs**
+- **ViewsExportedByContextEventArgs**
+- **ViewsExportingByContextEventArgs**
+- **WorksharedOperationProgressChangedEventArgs**

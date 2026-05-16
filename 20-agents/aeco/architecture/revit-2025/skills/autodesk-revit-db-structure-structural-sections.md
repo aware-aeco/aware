@@ -1,0 +1,62 @@
+---
+name: ad-windows-autodesk-revit-db-structure-structural-sections
+description: API reference for namespace Autodesk.Revit.DB.Structure.StructuralSections from RevitAPI.dll
+---
+
+# Autodesk.Revit.DB.Structure.StructuralSections
+
+- **StructuralElementDefinitionData**
+- **StructuralSection**
+- **StructuralSectionAnalysisParams**
+- **StructuralSectionCParallelFlange**
+- **StructuralSectionCProfile**
+- **StructuralSectionCProfileWithFold**
+- **StructuralSectionCProfileWithLips**
+- **StructuralSectionCSlopedFlange**
+- **StructuralSectionColdFormed**
+- **StructuralSectionConcreteCross**
+- **StructuralSectionConcreteRectangle**
+- **StructuralSectionConcreteRectangleCut**
+- **StructuralSectionConcreteRound**
+- **StructuralSectionConcreteT**
+- **StructuralSectionErrorCode**
+- **StructuralSectionGeneralC**
+- **StructuralSectionGeneralCEx**
+- **StructuralSectionGeneralF**
+- **StructuralSectionGeneralH**
+- **StructuralSectionGeneralI**
+- **StructuralSectionGeneralLA**
+- **StructuralSectionGeneralLZ**
+- **StructuralSectionGeneralR**
+- **StructuralSectionGeneralS**
+- **StructuralSectionGeneralShape**
+- **StructuralSectionGeneralT**
+- **StructuralSectionGeneralU**
+- **StructuralSectionGeneralW**
+- **StructuralSectionHotRolled**
+- **StructuralSectionIParallelFlange**
+- **StructuralSectionISlopedFlange**
+- **StructuralSectionISplitParallelFlange**
+- **StructuralSectionISplitSlopedFlange**
+- **StructuralSectionIWelded**
+- **StructuralSectionIWideFlange**
+- **StructuralSectionLAngle**
+- **StructuralSectionLProfile**
+- **StructuralSectionLProfileWithLips**
+- **StructuralSectionPipeStandard**
+- **StructuralSectionRectangleHSS**
+- **StructuralSectionRectangleParameterized**
+- **StructuralSectionRectangular**
+- **StructuralSectionRectangularBar**
+- **StructuralSectionRound**
+- **StructuralSectionRoundBar**
+- **StructuralSectionRoundHSS**
+- **StructuralSectionShape**
+- **StructuralSectionSigmaProfile**
+- **StructuralSectionSigmaProfileWithFold**
+- **StructuralSectionSigmaProfileWithLips**
+- **StructuralSectionStructuralTees**
+- **StructuralSectionUserDefined**
+- **StructuralSectionUtils**
+- **StructuralSectionZProfile**
+- **StructuralSectionZProfileWithLips**

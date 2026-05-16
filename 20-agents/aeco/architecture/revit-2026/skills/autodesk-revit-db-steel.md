@@ -1,0 +1,8 @@
+---
+name: ad-windows-autodesk-revit-db-steel
+description: API reference for namespace Autodesk.Revit.DB.Steel from RevitAPI.dll
+---
+
+# Autodesk.Revit.DB.Steel
+
+- **SteelElementProperties**

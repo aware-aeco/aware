@@ -109,11 +109,7 @@ fn normalize_agent_id(raw: &str) -> Result<String, AwareError> {
         return Err(AwareError::Validation("--output cannot be empty".into()));
     }
 
-    let basename = trimmed
-        .rsplit(['/', '\\'])
-        .next()
-        .unwrap_or(trimmed)
-        .trim();
+    let basename = trimmed.rsplit(['/', '\\']).next().unwrap_or(trimmed).trim();
 
     if basename.is_empty() {
         return Err(AwareError::Validation(format!(
