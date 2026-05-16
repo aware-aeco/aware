@@ -88,6 +88,12 @@ path = "tests/app_validate.rs"
 name = "app_exp_test"
 path = "tests/app_export.rs"
 
+[[test]]
+# Source is tests/doctor_integrity.rs.
+# "doctor" is safe on Windows AppCompat — no UAC heuristic applies.
+name = "doctor_integrity"
+path = "tests/doctor_integrity.rs"
+
 [profile.release]
 lto           = "thin"
 codegen-units = 1
