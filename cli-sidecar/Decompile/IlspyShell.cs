@@ -59,7 +59,7 @@ public static class IlspyShell
                 if (string.IsNullOrWhiteSpace(decompiled)) continue;
                 var stem = Path.GetFileNameWithoutExtension(dll).ToLowerInvariant();
                 var skillName = $"{stem}-decompiled.md";
-                var body = $"---\nname: {pkgId?.ToLowerInvariant() ?? "decompiled"}-{stem}\ndescription: Decompiled API surface from {Path.GetFileName(dll)} (license: {license})\n---\n\n# {stem} (decompiled)\n\n```csharp\n{decompiled}\n```\n";
+                var body = BuildDecompileSkillBody(pkgId?.ToLowerInvariant() ?? "decompiled", stem, Path.GetFileName(dll), license, decompiled);
                 skills.Add(new GeneratedSkill { Filename = skillName, Body = body });
             }
 
@@ -79,6 +79,30 @@ public static class IlspyShell
         {
             try { Directory.Delete(scratch, recursive: true); } catch { /* best effort */ }
         }
+    }
+
+    internal static string BuildDecompileSkillBody(string pkgId, string stem, string filename, string license, string decompiled)
+    {
+        return
+            $"---\n" +
+            $"name: {pkgId}-{stem}\n" +
+            $"description: Decompiled API surface from {filename} (license: {license})\n" +
+            $"next-action: aware skill modify {pkgId} {stem}-decompiled\n" +
+            $"---\n" +
+            "\n" +
+            $"# {stem} (decompiled)\n" +
+            "\n" +
+            "> ℹ️ This skill contains raw decompiled C#. To summarize it into\n" +
+            $"> structured AWARE-style notes, run `aware skill modify {pkgId} {stem}-decompiled`\n" +
+            "> from your agentic CLI (Claude Code / Codex). Ask your AI to read the raw\n" +
+            "> decompiled output below and rewrite this skill as a normal AWARE skill\n" +
+            "> (rule first, then explain) following the `agent-spec.md` conventions.\n" +
+            "\n" +
+            "## Raw decompiled output\n" +
+            "\n" +
+            "```csharp\n" +
+            $"{decompiled}\n" +
+            "```\n";
     }
 
     private static bool IsIlspyAvailable()
