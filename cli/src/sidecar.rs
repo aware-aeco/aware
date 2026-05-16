@@ -126,6 +126,12 @@ pub struct DecompileArgs {
     pub accept_license: bool,
 }
 
+#[derive(Serialize)]
+pub struct FromComArgs {
+    pub progid: String,
+    pub agent_id: Option<String>,
+}
+
 /// Spawn the sidecar, send a reflect-dlls request, return the parsed agent.
 pub fn reflect_dlls(args: ReflectDllsArgs) -> Result<GeneratedAgent, AwareError> {
     let agent = invoke("reflect-dlls", &args)?;
@@ -136,6 +142,12 @@ pub fn reflect_dlls(args: ReflectDllsArgs) -> Result<GeneratedAgent, AwareError>
 pub fn decompile(args: DecompileArgs) -> Result<GeneratedAgent, AwareError> {
     let agent = invoke("decompile", &args)?;
     Ok(to_local_agent(agent, "decompile"))
+}
+
+/// Spawn the sidecar, send a from-com request, return the parsed agent.
+pub fn from_com(args: FromComArgs) -> Result<GeneratedAgent, AwareError> {
+    let agent = invoke("from-com", &args)?;
+    Ok(to_local_agent(agent, "com"))
 }
 
 fn invoke<T: Serialize>(op: &str, args: &T) -> Result<SidecarAgent, AwareError> {
