@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  AWARE CLI — Windows MSI installer.
+
+  Built with WiX 4 (https://wixtoolset.org/) on the windows-latest GitHub
+  Actions runner. Output: aware-<version>-win-x64.msi, attached to each
+  GitHub Release alongside the .zip / .tar.gz binary archives.
+
+  Install layout: C:\Program Files\AWARE\
+    aware.exe
+    aware-sidecar.exe
+    LICENSE
+    README.md
+    VERSION
+
+  Adds the install dir to system PATH so `aware` is invokable from any
+  shell after install. Add/Remove Programs entry points at the repo +
+  issues URL.
+
+  UpgradeCode is permanent — re-installing a newer version cleanly
+  replaces the old one. Do NOT change this GUID without coordinating a
+  full migration plan.
+
+  Unsigned for now (v0.8). SmartScreen will show a "publisher unknown"
+  warning on first run; users can click "More info > Run anyway".
+  Code-signing tracked as a separate operational step.
+-->
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package
+      Name="AWARE CLI"
+      Manufacturer="aware-aeco"
+      Version="$(var.Version)"
+      UpgradeCode="FEDFDE94-1035-4AAE-900F-BD3DE69B1F10"
+      Scope="perMachine"
+      InstallerVersion="500">
+
+    <SummaryInformation
+        Description="AWARE CLI — open-source agentic substrate for AECO" />
+
+    <MajorUpgrade
+        DowngradeErrorMessage="A newer version of AWARE CLI is already installed." />
+
+    <MediaTemplate EmbedCab="yes" />
+
+    <Feature Id="Main" Title="AWARE CLI" Level="1">
+      <ComponentGroupRef Id="MainGroup" />
+    </Feature>
+
+    <StandardDirectory Id="ProgramFiles64Folder">
+      <Directory Id="INSTALLFOLDER" Name="AWARE" />
+    </StandardDirectory>
+
+    <ComponentGroup Id="MainGroup" Directory="INSTALLFOLDER">
+      <Component Id="AwareExe" Bitness="always64">
+        <File Source="$(var.StageDir)\aware.exe" KeyPath="yes" />
+      </Component>
+      <Component Id="AwareSidecarExe" Bitness="always64">
+        <File Source="$(var.StageDir)\aware-sidecar.exe" KeyPath="yes" />
+      </Component>
+      <Component Id="ReadmeFile" Bitness="always64">
+        <File Source="$(var.StageDir)\README.md" KeyPath="yes" />
+      </Component>
+      <Component Id="LicenseFile" Bitness="always64">
+        <File Source="$(var.StageDir)\LICENSE" KeyPath="yes" />
+      </Component>
+      <Component Id="VersionFile" Bitness="always64">
+        <File Source="$(var.StageDir)\VERSION" KeyPath="yes" />
+      </Component>
+      <Component Id="PathEntry" Bitness="always64" Guid="A5C3B742-9D6F-4E1B-8C7A-2F4E6B8C0A5D">
+        <Environment
+            Id="SystemPath"
+            Name="PATH"
+            Value="[INSTALLFOLDER]"
+            Action="set"
+            Part="last"
+            Permanent="no"
+            System="yes" />
+        <RegistryValue
+            Root="HKLM"
+            Key="Software\aware-aeco\AWARE"
+            Name="installed"
+            Type="integer"
+            Value="1"
+            KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+
+    <!-- Add/Remove Programs metadata -->
+    <Property Id="ARPHELPLINK"     Value="https://github.com/aware-aeco/aware" />
+    <Property Id="ARPURLINFOABOUT" Value="https://github.com/aware-aeco/aware" />
+    <Property Id="ARPCONTACT"      Value="https://github.com/aware-aeco/aware/issues" />
+    <Property Id="ARPNOREPAIR"     Value="1" />
+    <Property Id="ARPNOMODIFY"     Value="1" />
+  </Package>
+</Wix>
