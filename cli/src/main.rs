@@ -16,6 +16,7 @@ mod install;
 mod lockfile;
 mod manifest;
 mod paths;
+mod plugins;
 mod registry;
 mod render;
 mod runtime;
