@@ -2,6 +2,8 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using AwareSidecar.Protocol;
 
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("cli-sidecar.Tests")]
+
 namespace AwareSidecar;
 
 internal static class Program

@@ -3,6 +3,7 @@ using Xunit;
 
 namespace AwareSidecar.Tests;
 
+
 public class IlspyShellTests
 {
     [Fact]
@@ -11,6 +12,16 @@ public class IlspyShellTests
         var ex = Assert.Throws<InvalidOperationException>(() =>
             IlspyShell.Decompile("C:/this-does-not-exist-12345.nupkg", "1.0", null, false));
         Assert.Contains("nupkg not found", ex.Message);
+    }
+
+    [Fact]
+    public void BuildDecompileSkillBodyIncludesNextActionLine()
+    {
+        var body = IlspyShell.BuildDecompileSkillBody(
+            "fakepkg", "foo", "Foo.dll", "MIT", "namespace X { public class Foo {} }");
+        Assert.Contains("next-action: aware skill modify fakepkg foo-decompiled", body);
+        Assert.Contains("## Raw decompiled output", body);
+        Assert.Contains("namespace X", body);
     }
 
     [Fact]
