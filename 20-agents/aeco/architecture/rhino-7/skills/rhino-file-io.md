@@ -1,0 +1,61 @@
+---
+name: rhino-common-rhino-file-io
+description: API reference for namespace Rhino.FileIO from RhinoCommon.dll
+---
+
+# Rhino.FileIO
+
+- **BinaryArchiveException**
+- **BinaryArchiveFile**
+- **BinaryArchiveMode**
+- **BinaryArchiveReader**
+- **BinaryArchiveWriter**
+- **CommonComponentTable`1**
+- **ContentHash**
+- **DracoColorFormat**
+- **DracoCompression**
+- **DracoCompressionOptions**
+- **File3dm**
+- **File3dmCommonComponentTable`1**
+- **File3dmDimStyleTable**
+- **File3dmGroupTable**
+- **File3dmHatchPatternTable**
+- **File3dmInstanceDefinitionTable**
+- **File3dmLayerTable**
+- **File3dmLinetypeTable**
+- **File3dmMaterialTable**
+- **File3dmNamedConstructionPlanes**
+- **File3dmNotes**
+- **File3dmObject**
+- **File3dmObjectTable**
+- **File3dmPlugInData**
+- **File3dmPlugInDataTable**
+- **File3dmSettings**
+- **File3dmStringTable**
+- **File3dmTypeCodes**
+- **File3dmViewTable**
+- **File3dmWriteOptions**
+- **FileFindPreference**
+- **FileObj**
+- **FileObjReadOptions**
+- **FileObjWriteOptions**
+- **FilePdf**
+- **FilePdfEventArgs**
+- **FilePly**
+- **FilePlyWriteOptions**
+- **FileReadOptions**
+- **FileReference**
+- **FileReferenceStatus**
+- **FileSlc**
+- **FileSlcWriteOptions**
+- **FileStp**
+- **FileStpWriteOptions**
+- **FileType**
+- **FileWriteOptions**
+- **ICommonComponentTable`1**
+- **ImageFile**
+- **ManifestTable**
+- **NameHash**
+- **SHA1OpenNURBS**
+- **SerializationOptions**
+- **TextLog**

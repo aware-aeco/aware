@@ -1,0 +1,61 @@
+---
+name: grasshopper-grasshopper-kernel-components
+description: API reference for namespace Grasshopper.Kernel.Components from Grasshopper.dll
+---
+
+# Grasshopper.Kernel.Components
+
+- **GH_CleanComponentUpgrader**
+- **GH_CleanTreeComponent**
+- **GH_CleanTreeComponent_OBSOLETE**
+- **GH_CleanTreeComponent_OSBOLETE_AS_WELL**
+- **GH_CurvatureGraphComponent**
+- **GH_CustomPreviewComponent**
+- **GH_CustomPreviewItem**
+- **GH_DataDamAttributes**
+- **GH_DataDamComponent**
+- **GH_DocExampleComponent**
+- **GH_ExplodeTreeComponent**
+- **GH_ExplodeTreeComponent_OBSOLETE**
+- **GH_FlattenComponentUpgrader**
+- **GH_FlattenTreeComponent**
+- **GH_FlattenTreeComponent_OBSOLETE**
+- **GH_FlipDataMatrixComponent**
+- **GH_GraftTreeComponent**
+- **GH_GraftTreeComponent_OBSOLETE**
+- **GH_GrasshopperLibraryInfo**
+- **GH_GroupGeometryComponent**
+- **GH_IsNullDataComponent_OBSOLETE**
+- **GH_MatchTreeComponent**
+- **GH_MergeGroupComponent**
+- **GH_MetaBallComponent**
+- **GH_MetaBallComponentThreshold**
+- **GH_MetaBallComponentThresholdEx**
+- **GH_PathCompareComponent**
+- **GH_PointListComponent**
+- **GH_PruneTreeComponent**
+- **GH_ReadFileComponent**
+- **GH_ReadFileComponentAttributes**
+- **GH_ReplacePathComponent**
+- **GH_ShiftDataPathComponent**
+- **GH_SimplifyComponentUpgrader**
+- **GH_SimplifyTreeComponent**
+- **GH_SimplifyTreeComponent_OBSOLETE**
+- **GH_SmoothNumbersComponent**
+- **GH_SplitGroupComponent**
+- **GH_StreamFilterComponent**
+- **GH_StreamFilterComponent_OBSOLETE**
+- **GH_StreamGateComponent**
+- **GH_StreamGateComponent_OBSOLETE**
+- **GH_TextTag3DComponent**
+- **GH_TextTag3DComponent_OBSOLETE**
+- **GH_TextTag3DComponent_OBSOLETE_AS_WELL**
+- **GH_TextTag3DUpgrader**
+- **GH_TextTagComponent**
+- **GH_TextTagComponent_OBSOLETE**
+- **GH_TreeSplitComponent**
+- **GH_TrimTreeComponent**
+- **GH_UnflattenTreeComponent**
+- **GH_UngroupGeometryComponent**
+- **GH_UpgradeExplodeComponent**
+- **Upgrade_StreamGateComponent**

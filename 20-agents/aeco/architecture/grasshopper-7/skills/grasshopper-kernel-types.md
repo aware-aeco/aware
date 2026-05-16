@@ -1,0 +1,63 @@
+---
+name: grasshopper-grasshopper-kernel-types
+description: API reference for namespace Grasshopper.Kernel.Types from Grasshopper.dll
+---
+
+# Grasshopper.Kernel.Types
+
+- **Complex**
+- **GH_Arc**
+- **GH_Boolean**
+- **GH_Box**
+- **GH_Brep**
+- **GH_Circle**
+- **GH_Colour**
+- **GH_ComplexNumber**
+- **GH_Culture**
+- **GH_Curve**
+- **GH_DifferentialSolver**
+- **GH_Field**
+- **GH_FieldElement**
+- **GH_GeometricGooWrapper**
+- **GH_GeometricGoo`1**
+- **GH_GeometryGroup**
+- **GH_GooProxy`1**
+- **GH_Goo`1**
+- **GH_Guid**
+- **GH_Integer**
+- **GH_Interval**
+- **GH_Interval2D**
+- **GH_Line**
+- **GH_LineCharge**
+- **GH_LonLatCoordinate**
+- **GH_Material**
+- **GH_Matrix**
+- **GH_Mesh**
+- **GH_MeshFace**
+- **GH_MeshingParameters**
+- **GH_Number**
+- **GH_ObjectWrapper**
+- **GH_Plane**
+- **GH_Point**
+- **GH_PointCharge**
+- **GH_PointRefData**
+- **GH_PointRefType**
+- **GH_PointUtil**
+- **GH_QuickCastType**
+- **GH_Rectangle**
+- **GH_SpinForce**
+- **GH_String**
+- **GH_StructurePath**
+- **GH_SubD**
+- **GH_Surface**
+- **GH_Time**
+- **GH_Transform**
+- **GH_Vector**
+- **GH_VectorForce**
+- **GH_WrapperType`1**
+- **IGH_FieldElement**
+- **IGH_GeometricGoo**
+- **IGH_Goo**
+- **IGH_GooProxy**
+- **IGH_QuickCast**
+- **UVInterval**

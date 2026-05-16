@@ -1,0 +1,53 @@
+---
+name: grasshopper-grasshopper-kernel-parameters
+description: API reference for namespace Grasshopper.Kernel.Parameters from Grasshopper.dll
+---
+
+# Grasshopper.Kernel.Parameters
+
+- **GH_ExpressionParam`1**
+- **GH_ExpressionUndoAction**
+- **GH_ProxyParameter**
+- **GH_ProxyParameterAttributes**
+- **GH_Receiver**
+- **GH_ReceiverAttributes**
+- **IGH_ExpressionParameter**
+- **IGH_TypeHint**
+- **Param_Arc**
+- **Param_Boolean**
+- **Param_Box**
+- **Param_Brep**
+- **Param_Circle**
+- **Param_Colour**
+- **Param_Complex**
+- **Param_Culture**
+- **Param_Curve**
+- **Param_Field**
+- **Param_FilePath**
+- **Param_GenericObject**
+- **Param_Geometry**
+- **Param_Group**
+- **Param_Guid**
+- **Param_Integer**
+- **Param_Interval**
+- **Param_Interval2D**
+- **Param_Interval2D_OBSOLETE**
+- **Param_LatLonLocation**
+- **Param_Line**
+- **Param_Matrix**
+- **Param_Mesh**
+- **Param_MeshFace**
+- **Param_MeshParameters**
+- **Param_Number**
+- **Param_OGLShader**
+- **Param_Plane**
+- **Param_Point**
+- **Param_Rectangle**
+- **Param_ScriptVariable**
+- **Param_String**
+- **Param_StructurePath**
+- **Param_SubD**
+- **Param_Surface**
+- **Param_Time**
+- **Param_Transform**
+- **Param_Vector**
