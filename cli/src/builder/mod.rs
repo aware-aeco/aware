@@ -8,7 +8,9 @@ pub mod cli_help;
 pub mod nuget;
 pub mod openapi;
 pub mod python;
+pub mod ruby;
 pub mod stubs;
+pub mod yard;
 
 use std::collections::BTreeMap;
 use std::path::Path;

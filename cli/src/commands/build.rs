@@ -34,6 +34,12 @@ pub struct BuildAgentArgs {
     /// (tier C — v0.5.1) C++ header glob path.
     #[arg(long = "from-headers")]
     pub from_headers: Option<String>,
+    /// (v0.7.2) Rubygems package spec: <gem>@<version>.
+    #[arg(long = "from-ruby")]
+    pub from_ruby: Option<String>,
+    /// (v0.7.2) YARD-rendered docs URL or local directory.
+    #[arg(long = "from-yard")]
+    pub from_yard: Option<String>,
     /// (tier C — v0.5.1) Run decompile pass on DLLs / NuGet.
     #[arg(long)]
     pub decompile: bool,
@@ -74,9 +80,13 @@ fn build_agent(ctx: &Context, args: &BuildAgentArgs) -> Result<(), AwareError> {
         builder::stubs::build_from_com(s, id_override)?
     } else if let Some(s) = &args.from_headers {
         builder::stubs::build_from_headers(s, id_override)?
+    } else if let Some(s) = &args.from_ruby {
+        builder::ruby::build_from_ruby(s, id_override)?
+    } else if let Some(s) = &args.from_yard {
+        builder::yard::build_from_url_or_dir(s, id_override)?
     } else {
         return Err(AwareError::Validation(
-            "aware build agent: must specify one of --from-openapi, --from-cli, --from-nuget, --from-python, --from-dlls, --from-com, --from-headers".into()
+            "aware build agent: must specify one of --from-openapi, --from-cli, --from-nuget, --from-python, --from-dlls, --from-com, --from-headers, --from-ruby, --from-yard".into()
         ));
     };
 
