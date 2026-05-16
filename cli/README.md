@@ -6,21 +6,30 @@ This folder houses the Rust implementation. The contract it satisfies is in [`10
 
 ## Status
 
-**v0.4 — auth + host plugins.** Twenty-three surfaces shipped (nineteen from v0.1-v0.3 plus four new):
+**v0.5 — builders (the substrate becomes self-growing).** Twenty-seven user-facing surfaces shipped; four tier-C builder sources stubbed for v0.5.1.
 
 - `aware --version` / `aware --help`
-- `aware doctor` (now includes Integrity, Running, **and Credentials** checks)
+- `aware doctor` (CLI / Filesystem / Agents / Apps / Integrity / Running / Credentials)
 - `aware agent list` / `agent describe <id>` / `agent skill <id> <skill>`
-- `aware agent install <path|id[@version]|bundle>` / `agent uninstall <id>` / `agent update <id>` / `agent validate <path>` (auto-regenerates host plugins on install/uninstall)
+- `aware agent install <path|id[@version]|bundle>` / `agent uninstall <id>` / `agent update <id>` / `agent validate <path>`
 - `aware app list` / `app show <id>`
 - `aware app install <path>` / `app uninstall <id>` / `app validate <path>` / `app export <id> <output>`
 - `aware app run <app>` / `app stop <app>` / `app logs <app> [--tail | --replay]`
-- `aware connect <integration>` — PKCE OAuth flow + encrypted token storage ← v0.4
-- `aware connect <integration> --refresh` — force refresh ← v0.4
-- `aware disconnect <integration>` ← v0.4
-- `aware plugins regenerate` — rebuild host plugin folders from installed agents ← v0.4
+- `aware connect <integration>` (browser-paste default, OAuth via `--oauth`) / `disconnect <integration>` / `plugins regenerate`
+- `aware build agent --from-openapi <url-or-path>` ← v0.5 tier A
+- `aware build agent --from-cli <binary>` ← v0.5 tier A
+- `aware build agent --from-nuget <pkg>@<version>` ← v0.5 tier B (docs-only, no decompile yet)
+- `aware build agent --from-python <module>` ← v0.5 tier B
+- `aware build agent --from-dlls <path>` ← v0.5.1 stub (needs C# NativeAOT sidecar)
+- `aware build agent --from-com <progid>` ← v0.5.1 stub
+- `aware build agent --from-headers <path>` ← v0.5.1 stub
+- `aware build agent --decompile` ← v0.5.1 stub
+- `aware skill create <agent> <skill>` ← v0.5
+- `aware skill port <source> <target-agent>` ← v0.5
+- `aware skill modify <agent> <skill>` ← v0.5
+- `aware skill eval <agent> <skill>` ← v0.5
 
-Still stubbed: `agent publish` (registry-write), `build agent` (v0.5), `skill ...` (v0.5).
+All phases of `cli-roadmap.md` v0.1–v0.5 are shipped. The remaining work for **v0.5.1** is the C# NativeAOT sidecar binary that the four stubbed sources will delegate to (for DLL / COM / C++ header reflection that's awkward in pure Rust).
 
 ### Connect to an integration (v0.4)
 
@@ -115,6 +124,70 @@ $env:AWARE_PLUGINS_CODEX    = "C:\test\.codex\plugins"
 $env:AWARE_PLUGINS_OPENCODE = "C:\test\.opencode\plugins"
 ```
 
+### Build an agent (v0.5)
+
+`aware build agent` generates an AWARE agent folder under `~/.aware/agents/<id>/`
+by reading an existing software product's API surface. Four sources are fully
+implemented in v0.5; four more are stubbed pending the v0.5.1 C# NativeAOT
+sidecar (which handles .NET reflection cleaner than Rust subprocess shims).
+
+**Tier A — full implementations:**
+
+```bash
+# OpenAPI spec (JSON or YAML; URL or local file)
+aware build agent --from-openapi https://petstore.swagger.io/v2/swagger.json
+
+# CLI binary (parses `<binary> --help` for subcommands)
+aware build agent --from-cli git --output git-agent
+```
+
+**Tier B — partial implementations:**
+
+```bash
+# NuGet package (fetches the .nupkg, extracts XML docs as skills;
+# license-checked — non-permissive licenses need --accept-license)
+aware build agent --from-nuget Tekla.Structures.Model@2025.0.0
+
+# Python module (introspects via `python -c`)
+aware build agent --from-python requests
+```
+
+**Tier C — stubbed for v0.5.1** (will return a clear "needs sidecar" error):
+
+```bash
+aware build agent --from-dlls "C:/Program Files/Tekla/bin/*.dll"
+aware build agent --from-com AutoCAD.Application
+aware build agent --from-headers "/usr/include/foo/*.h"
+aware build agent --decompile --from-nuget Some.Closed.Pkg@1.0.0
+```
+
+The four tier-C sources need the v0.5.1 C# NativeAOT sidecar binary that
+handles .NET reflection / COM type libraries / C++ header parsing more cleanly
+than pure-Rust subprocess shims. Tracked separately.
+
+### Skill commands (v0.5)
+
+Skill scaffolding + porting + a trigger-corpus eval matcher. AI-driven content
+generation is delegated to your own agentic CLI (Claude Code, Codex, etc.) —
+AWARE provides templates, file moves, and a lightweight eval; it doesn't bundle
+an Anthropic SDK.
+
+```bash
+# Scaffold a new skill template (frontmatter + TODOs)
+aware skill create tekla my-new-skill
+
+# Port a skill between agents (adapts frontmatter name: field)
+aware skill port tekla/drawing-identity trimble-connect
+
+# Open a skill in $EDITOR (falls back to notepad on Windows / vi elsewhere)
+aware skill modify tekla drawing-identity
+
+# Run a trigger-match eval
+#   creates a <skill>.eval.md template on first run; edit it with trigger
+#   phrases, then re-run to see match rate
+aware skill eval tekla drawing-identity
+```
+
 ## Build
 
 ```bash
@@ -175,8 +248,8 @@ aware app logs welded-to-tc --replay --run-id r_abc123   # specific run
 ```
 
 The runtime invokes each agent's CLI transport binary by name (from `transport.cli.binary`).
-Until v0.5 builds those binaries, expect "binary not found" errors at run-time — the orchestrator
-logic itself is tested with in-process mocks under the hood.
+Agents generated by `aware build agent` produce runnable transport binaries; hand-authored agents
+need their own binary on PATH. The orchestrator logic is tested with in-process mocks under the hood.
 
 ### Templating
 
@@ -233,18 +306,6 @@ cli/
 └── tests/
     └── basic.rs                     # CLI smoke tests via assert_cmd
 ```
-
-## Implementation order
-
-Follow [`10-core/cli-roadmap.md`](../10-core/cli-roadmap.md). Don't ship a half-implemented phase and call it v0.x.
-
-| Phase | Surface |
-|---|---|
-| v0.1 | read-only — `agent list/describe/skill`, `app list/show`, partial `doctor` |
-| v0.2 | install + validate |
-| v0.3 | runtime — `app run/stop/logs` (the hard one) |
-| v0.4 | auth + host plugins |
-| v0.5 | builders — `aware build agent`, `aware skill ...` |
 
 ## Engineering rules
 
