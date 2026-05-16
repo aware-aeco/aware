@@ -6,9 +6,12 @@ This folder houses the Rust implementation. The contract it satisfies is in [`10
 
 ## Status
 
-**v0.5.1 — C# NativeAOT sidecar** lifts v0.5's tier-C stubs. Twenty-seven user-facing
-surfaces; `--from-dlls` and `--decompile` now work via the `aware-sidecar` companion
-binary (`--from-com` and `--from-headers` still stubbed for v0.5.2+).
+**v0.5.2 — all eight `aware build agent` sources work.** v0.5.1's tier-C stubs
+(`--from-com` and `--from-headers`) are lifted to working commands via the C#
+sidecar. Sidecar binaries now build for Windows x64 + Linux x64 in CI (macOS
+deferred to v0.5.3).
+
+[Full surface list — see prior v0.5 status; nothing new added at the CLI level.]
 
 - `aware --version` / `aware --help`
 - `aware doctor` (CLI / Filesystem / Agents / Apps / Integrity / Running / Credentials)
@@ -24,14 +27,14 @@ binary (`--from-com` and `--from-headers` still stubbed for v0.5.2+).
 - `aware build agent --from-python <module>` ← v0.5 tier B
 - `aware build agent --from-dlls <path>` ← v0.5.1 (via C# sidecar)
 - `aware build agent --decompile --from-nuget <pkg>@<version>` ← v0.5.1 (via C# sidecar)
-- `aware build agent --from-com <progid>` ← v0.5.2 stub
-- `aware build agent --from-headers <path>` ← v0.5.2 stub
+- `aware build agent --from-com <progid>` ← v0.5.2 (via C# sidecar)
+- `aware build agent --from-headers <path>` ← v0.5.2 (via C# sidecar)
 - `aware skill create <agent> <skill>` ← v0.5
 - `aware skill port <source> <target-agent>` ← v0.5
 - `aware skill modify <agent> <skill>` ← v0.5
 - `aware skill eval <agent> <skill>` ← v0.5
 
-All phases of `cli-roadmap.md` v0.1–v0.5.1 are shipped.
+All phases of `cli-roadmap.md` v0.1–v0.5.2 are shipped.
 
 ### Connect to an integration (v0.4)
 
@@ -154,48 +157,67 @@ aware build agent --from-nuget Tekla.Structures.Model@2025.0.0
 aware build agent --from-python requests
 ```
 
-**Tier C — stubbed for v0.5.1** (will return a clear "needs sidecar" error):
+**Tier C — fully implemented via C# sidecar (v0.5.1 + v0.5.2):**
 
 ```bash
+# .NET DLL reflection (v0.5.1)
 aware build agent --from-dlls "C:/Program Files/Tekla/bin/*.dll"
+
+# COM TypeLib introspection — Windows only (v0.5.2)
 aware build agent --from-com AutoCAD.Application
+
+# C++ header parsing via clang (v0.5.2; free functions only)
 aware build agent --from-headers "/usr/include/foo/*.h"
+
+# Decompile + reflect NuGet package (v0.5.1; needs ilspycmd)
 aware build agent --decompile --from-nuget Some.Closed.Pkg@1.0.0
 ```
 
-The four tier-C sources need the v0.5.1 C# NativeAOT sidecar binary that
-handles .NET reflection / COM type libraries / C++ header parsing more cleanly
-than pure-Rust subprocess shims. Tracked separately.
+All four tier-C sources invoke the `aware-sidecar` companion binary. See the
+sidecar section below for install and build instructions.
 
-### The C# sidecar (v0.5.1)
+### The C# sidecar (v0.5.1 — v0.5.2)
 
-For `--from-dlls` and `--decompile`, the Rust CLI invokes a companion binary
-called `aware-sidecar.exe`. The sidecar is a self-contained C# NativeAOT binary
-(~8 MB) that handles .NET-heavy work (reflection via `MetadataLoadContext`,
-decompilation via `ilspycmd`) which is awkward to do cleanly in pure Rust.
+For `--from-dlls`, `--from-com`, `--from-headers`, and `--decompile`, the Rust
+CLI invokes a companion binary called `aware-sidecar.exe` (Windows) /
+`aware-sidecar` (Linux). The sidecar is a self-contained C# NativeAOT binary
+(~8 MB) that handles .NET reflection (via `MetadataLoadContext`), COM TypeLib
+introspection (via Win32 P/Invoke), and C++ header parsing (via shelling to
+`clang`).
 
-**Install:** drop `aware-sidecar.exe` alongside `aware.exe` in any release tarball,
-or set `AWARE_SIDECAR=<path>` to point at it explicitly.
+**Install:** drop the binary alongside `aware.exe` in any release tarball,
+or set `AWARE_SIDECAR=<path>`.
 
 **Build from source:**
 
 ```bash
 cd cli-sidecar
+# Windows
 dotnet publish -c Release -r win-x64 -p:PublishAot=true
-# → bin/Release/net9.0/win-x64/publish/aware-sidecar.exe
+# Linux
+dotnet publish -c Release -r linux-x64 -p:PublishAot=true
 ```
 
-**For `--decompile`:** the sidecar also needs `ilspycmd` on PATH:
+**Per-source extras:**
 
-```bash
-dotnet tool install -g ilspycmd
-```
+- `--decompile` needs `ilspycmd`: `dotnet tool install -g ilspycmd`
+- `--from-headers` needs `clang` on PATH:
+  - Linux: `apt install clang` / `dnf install clang`
+  - macOS: included with Xcode CLT
+  - Windows: install LLVM from https://releases.llvm.org/
 
-**Tracked for v0.5.2:**
+**Platform caveats:**
 
-- `--from-com` (Windows COM TypeLib interop in the sidecar)
-- `--from-headers` (libclang via P/Invoke or `clang.exe` shell)
-- Linux + macOS sidecar binaries (`dotnet publish -r linux-x64` / `osx-arm64`)
+- `--from-com` is Windows-only (uses Win32 COM APIs). On other platforms, the
+  CLI errors clearly.
+- `--from-headers` v0.5.2 covers free functions only. Class methods, templates,
+  and macros are out of scope.
+
+**Tracked for v0.5.3:**
+
+- macOS NativeAOT sidecar builds (CI matrix expansion)
+- AI-driven summarization for `--decompile` (currently emits raw decompiled C#)
+- Class methods + templates for `--from-headers`
 
 **IPC protocol** for sidecar contributors: see [cli-sidecar/README.md](../cli-sidecar/README.md).
 
