@@ -5,6 +5,8 @@ on:
     tags:
       - 'v0.6.*'
       - 'v0.7.*'
+      - 'v0.8.*'
+      - 'v0.9.*'
       - 'v1.*'
   workflow_dispatch: {}
 
