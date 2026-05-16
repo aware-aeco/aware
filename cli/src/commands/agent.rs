@@ -55,7 +55,11 @@ pub fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError> {
         AgentCommand::Describe { agent } => describe(ctx, &agent),
         AgentCommand::Skill { agent, skill } => skill_cmd(ctx, &agent, &skill),
         AgentCommand::Install { spec } => install(ctx, &spec),
-        AgentCommand::Uninstall { .. } => Err(AwareError::NotYetImplemented("agent uninstall")),
+        AgentCommand::Uninstall { agent } => {
+            crate::install::uninstall_agent(&agent, &ctx.paths)?;
+            println!("✓ uninstalled {agent}");
+            Ok(())
+        }
         AgentCommand::Update { .. } => Err(AwareError::NotYetImplemented("agent update")),
         AgentCommand::Validate { .. } => Err(AwareError::NotYetImplemented("agent validate")),
         AgentCommand::Publish { .. } => Err(AwareError::NotYetImplemented("agent publish")),

@@ -44,6 +44,13 @@ tempfile    = "3.14"
 name = "agent_inst_test"
 path = "tests/agent_install.rs"
 
+[[test]]
+# Source is tests/agent_uninstall.rs.
+# "uninstall" contains "install" — same Windows AppCompat UAC heuristic applies.
+# Avoid "uninst" too since it may also trigger the heuristic; use "rm_agent" instead.
+name = "agent_rm_test"
+path = "tests/agent_uninstall.rs"
+
 [profile.release]
 lto           = "thin"
 codegen-units = 1
