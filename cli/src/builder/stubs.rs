@@ -28,12 +28,14 @@ pub fn build_from_com(progid: &str, agent_id: Option<&str>) -> Result<GeneratedA
 }
 
 pub fn build_from_headers(
-    _path: &str,
-    _agent_id: Option<&str>,
+    path: &str,
+    agent_id: Option<&str>,
 ) -> Result<GeneratedAgent, AwareError> {
-    Err(AwareError::NotYetImplemented(
-        "--from-headers is deferred to v0.5.3 (separate phase: libclang via P/Invoke or clang.exe shell)",
-    ))
+    let args = crate::sidecar::FromHeadersArgs {
+        files: vec![path.to_string()],
+        agent_id: agent_id.map(String::from),
+    };
+    crate::sidecar::from_headers(args)
 }
 
 pub fn build_with_decompile(pkg: &str) -> Result<GeneratedAgent, AwareError> {
@@ -97,9 +99,17 @@ mod tests {
     }
 
     #[test]
-    fn headers_returns_not_yet_implemented() {
-        let err = build_from_headers("path", None).unwrap_err();
-        assert!(matches!(err, AwareError::NotYetImplemented(_)));
+    fn headers_no_sidecar_returns_not_found() {
+        // build_from_headers now routes to the sidecar; without a sidecar binary it returns NotFound.
+        // SAFETY: single-threaded test; env var is restored immediately after.
+        unsafe {
+            std::env::set_var("AWARE_SIDECAR", "C:/aware-sidecar-does-not-exist-test.exe");
+        }
+        let err = build_from_headers("path/to/header.h", None).unwrap_err();
+        unsafe {
+            std::env::remove_var("AWARE_SIDECAR");
+        }
+        assert!(matches!(err, AwareError::NotFound(_)));
     }
 
     #[test]

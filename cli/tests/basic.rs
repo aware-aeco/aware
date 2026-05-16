@@ -9,8 +9,9 @@
 //! NOTE: All v0.2 commands are now implemented, and all v0.3 runtime commands
 //! (`app run`, `app stop`, `app logs`) are wired. All v0.4 commands (`connect`,
 //! `disconnect`) are wired. All v0.5 tier-A and tier-B build sources and all
-//! skill commands are wired. The unimplemented-smoke test uses `build agent
-//! --from-dlls` which is a tier-C stub pending the v0.5.1 C# NativeAOT sidecar.
+//! skill commands are wired. All v0.5.2 tier-C build sources (--from-dlls,
+//! --from-com, --from-headers) are now wired through the C# sidecar.
+//! The unimplemented-smoke test uses `agent publish` which is deferred to v0.6+.
 
 use assert_cmd::Command;
 use predicates::prelude::*;
@@ -70,11 +71,13 @@ fn app_subcommand_help_works() {
 
 #[test]
 fn unimplemented_subcommand_exits_nonzero_with_message() {
-    // `--from-com` is a tier-C stub deferred to v0.5.2 (COM TypeLib interop).
-    // --from-dlls now routes to the sidecar, so it is no longer a sentinel.
+    // `agent publish` is a genuine NotYetImplemented stub (v0.6+).
+    // All tier-C build sources (--from-dlls, --from-com, --from-headers) now
+    // route through the C# sidecar and return NotFound when the sidecar is absent,
+    // not NotYetImplemented — so they are no longer usable as sentinels here.
     Command::cargo_bin("aware")
         .unwrap()
-        .args(["build", "agent", "--from-com", "Some.ProgId"])
+        .args(["agent", "publish", "some-agent"])
         .assert()
         .failure()
         .stderr(predicate::str::contains("not yet implemented"));
