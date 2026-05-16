@@ -6,11 +6,11 @@ namespace AwareSidecar.Headers;
 
 /// <summary>
 /// Parses C/C++ headers via `clang -Xclang -ast-dump=json -fsyntax-only`.
-/// Emits one command per top-level FunctionDecl whose source location matches
-/// the requested header (transitive includes are skipped).
+/// Emits one command per top-level FunctionDecl or public CXXMethodDecl whose
+/// source location matches the requested header (transitive includes are skipped).
 ///
-/// v0.5.2 scope: free functions only. Class methods, templates, macros are
-/// out of scope.
+/// v0.5.3 scope: free functions + public C++ class methods.
+/// Class templates emit a warning and are skipped (v0.5.4+).
 /// </summary>
 public static class HeaderParser
 {
@@ -152,11 +152,19 @@ public static class HeaderParser
         if (node.TryGetProperty("kind", out var kindEl))
         {
             var kind = kindEl.GetString();
-            if (kind == "FunctionDecl")
+            switch (kind)
             {
-                ExtractFunctionDecl(node, headerAbs, output);
-                // Don't recurse into FunctionDecl bodies; we only want free functions at this level
-                return;
+                case "FunctionDecl":
+                    ExtractFunctionDecl(node, headerAbs, output);
+                    // Don't recurse into FunctionDecl bodies; we only want free functions at this level
+                    return;
+                case "CXXRecordDecl":
+                    ExtractClassMethods(node, headerAbs, output);
+                    return;
+                case "ClassTemplateDecl":
+                    var tplName = node.TryGetProperty("name", out var tn) ? tn.GetString() : "<anon>";
+                    Console.Error.WriteLine($"[skip] class template '{tplName}' (templates are v0.5.4+)");
+                    return;
             }
         }
 
@@ -167,6 +175,58 @@ public static class HeaderParser
             {
                 WalkNode(child, headerAbs, output);
             }
+        }
+    }
+
+    private static void ExtractClassMethods(JsonElement classNode, string headerAbs, Dictionary<string, GeneratedCommand> output)
+    {
+        if (!classNode.TryGetProperty("name", out var nameEl)) return;
+        var className = nameEl.GetString();
+        if (string.IsNullOrEmpty(className)) return;
+        if (!IsInTargetFile(classNode, headerAbs)) return;
+
+        if (!classNode.TryGetProperty("inner", out var inner) || inner.ValueKind != JsonValueKind.Array) return;
+
+        // C++ classes default to private; struct defaults to public. Read tagUsed.
+        string currentAccess = "private";
+        if (classNode.TryGetProperty("tagUsed", out var tagEl) && tagEl.GetString() == "struct")
+        {
+            currentAccess = "public";
+        }
+
+        foreach (var member in inner.EnumerateArray())
+        {
+            if (member.ValueKind != JsonValueKind.Object) continue;
+            if (!member.TryGetProperty("kind", out var mKindEl)) continue;
+            var mKind = mKindEl.GetString();
+
+            if (mKind == "AccessSpecDecl")
+            {
+                if (member.TryGetProperty("access", out var accEl))
+                    currentAccess = accEl.GetString() ?? currentAccess;
+                continue;
+            }
+            if (mKind != "CXXMethodDecl") continue;
+            if (currentAccess != "public") continue;
+            if (!member.TryGetProperty("name", out var methodNameEl)) continue;
+            var methodName = methodNameEl.GetString();
+            if (string.IsNullOrEmpty(methodName)) continue;
+
+            // Filter constructors / destructors / operators
+            if (methodName == className) continue;
+            if (methodName.StartsWith("~", StringComparison.Ordinal)) continue;
+            if (methodName.StartsWith("operator", StringComparison.Ordinal)) continue;
+            // Filter static methods
+            if (member.TryGetProperty("storageClass", out var scEl) && scEl.GetString() == "static") continue;
+
+            var commandName = ToKebab($"{className}-{methodName}");
+            if (output.ContainsKey(commandName)) continue;
+            output[commandName] = new GeneratedCommand
+            {
+                Name = commandName,
+                Lifecycle = "single",
+                Description = $"C++ method {className}::{methodName}",
+            };
         }
     }
 
