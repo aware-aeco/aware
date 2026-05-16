@@ -16,6 +16,15 @@
     <!-- Single-file friendly diagnostics -->
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Version>0.5.1</Version>
+
+    <!--
+      IL2026: RoAssembly.GetTypes() inside MetadataLoadContext calls Assembly.GetTypes() /
+      Module.GetTypes() which carry RequiresUnreferencedCodeAttribute. This is inside the
+      package binary, not our code. MLC never executes managed code; it reads metadata only.
+      IL2104, IL3053: roll-up codes the ILC emits when a package produces AOT/trim warnings.
+      All three codes are passed to the ILC via NoWarn (fed to ilc nowarn by the native targets).
+    -->
+    <NoWarn>$(NoWarn);IL2026;IL2104;IL3053</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
