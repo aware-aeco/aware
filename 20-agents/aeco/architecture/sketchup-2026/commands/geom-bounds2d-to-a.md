@@ -1,0 +1,5 @@
+# geom-bounds2d-to-a
+
+Lifecycle: single
+
+The #to_a method returns an array which contains the Point2ds that define the Geom::Bounds2d.

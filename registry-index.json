@@ -74,6 +74,22 @@
         }
       }
     },
+    "sketchup-2025": {
+      "versions": {
+        "2025.0.3": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/architecture/sketchup-2025"
+        }
+      }
+    },
+    "sketchup-2026": {
+      "versions": {
+        "2026.0.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/architecture/sketchup-2026"
+        }
+      }
+    },
     "trimble-connect": {
       "versions": {
         "2.4.0": {
@@ -136,6 +152,8 @@
         "rhino-8@8.31.26126.13431",
         "grasshopper-7@7.38.24338.17001",
         "grasshopper-8@8.31.26126.13431",
+        "sketchup-2025@2025.0.3",
+        "sketchup-2026@2026.0.0",
         "trimble-connect@2.4.0",
         "microsoft-365@1.0.0",
         "google-workspace@1.0.0",

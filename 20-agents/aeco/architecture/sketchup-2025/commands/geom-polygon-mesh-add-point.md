@@ -1,0 +1,5 @@
+# geom-polygon-mesh-add-point
+
+Lifecycle: single
+
+In SketchUp 2021.1 this method was improved to be faster. See #initialize for details.
