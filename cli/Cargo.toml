@@ -127,6 +127,13 @@ path = "tests/app_stop.rs"
 name = "app_logs_test"
 path = "tests/app_logs.rs"
 
+[[test]]
+# Source is tests/plugins_cmd.rs.
+# "plugin" alone is unlikely to trigger the Windows AppCompat UAC heuristic,
+# but we use a descriptive alias for consistency with the naming convention above.
+name = "plugins_cmd_test"
+path = "tests/plugins_cmd.rs"
+
 [profile.release]
 lto           = "thin"
 codegen-units = 1

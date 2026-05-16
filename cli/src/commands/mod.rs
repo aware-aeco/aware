@@ -9,4 +9,5 @@ pub mod app;
 pub mod build;
 pub mod connect;
 pub mod doctor;
+pub mod plugins;
 pub mod skill;

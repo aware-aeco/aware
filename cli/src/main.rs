@@ -80,6 +80,12 @@ enum Command {
 
     /// Health check — config, filesystem, credentials, registry.
     Doctor,
+
+    /// Manage host-side plugin folders for claude-code / codex / opencode.
+    Plugins {
+        #[command(subcommand)]
+        action: commands::plugins::PluginsCommand,
+    },
 }
 
 #[tokio::main]
@@ -106,6 +112,7 @@ async fn main() -> anyhow::Result<()> {
         Command::Skill { action } => commands::skill::dispatch(action, &ctx),
         Command::Build { action } => commands::build::dispatch(action, &ctx),
         Command::Doctor => commands::doctor::run(&ctx),
+        Command::Plugins { action } => commands::plugins::dispatch(action, &ctx),
     };
 
     match result {
