@@ -55,5 +55,27 @@ pub fn run(ctx: &Context) -> Result<(), AwareError> {
     for a in &apps {
         println!("    - {}@{}", a.manifest.app, a.manifest.version);
     }
+
+    println!();
+    println!("Integrity:");
+    let mut total_issues = 0usize;
+    for d in &agents {
+        let issues = crate::validate::validate_agent_on_disk(&d.manifest, &d.root);
+        if issues.is_empty() {
+            continue;
+        }
+        total_issues += issues.len();
+        println!("  Agent {}:", d.manifest.agent);
+        for i in &issues {
+            let tag = match i.severity {
+                crate::validate::Severity::Error => "\u{2717}",
+                crate::validate::Severity::Warning => "\u{26a0}",
+            };
+            println!("    {tag} [{}] {}", i.code, i.message);
+        }
+    }
+    if total_issues == 0 {
+        println!("  \u{2713} all installed agents pass validation");
+    }
     Ok(())
 }

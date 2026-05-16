@@ -63,14 +63,125 @@ pub fn dispatch(cmd: AppCommand, ctx: &Context) -> Result<(), AwareError> {
     match cmd {
         AppCommand::List => list(ctx),
         AppCommand::Show { app } => show(ctx, &app),
-        AppCommand::Install { .. } => Err(AwareError::NotYetImplemented("app install")),
-        AppCommand::Uninstall { .. } => Err(AwareError::NotYetImplemented("app uninstall")),
-        AppCommand::Validate { .. } => Err(AwareError::NotYetImplemented("app validate")),
-        AppCommand::Export { .. } => Err(AwareError::NotYetImplemented("app export")),
+        AppCommand::Install { path_or_name } => install(ctx, &path_or_name),
+        AppCommand::Uninstall { app } => {
+            crate::install::uninstall_app(&app, &ctx.paths)?;
+            println!("\u{2713} uninstalled {app}");
+            Ok(())
+        }
+        AppCommand::Validate { path } => validate_cmd(ctx, &path),
+        AppCommand::Export { app, output } => export(ctx, &app, &output),
         AppCommand::Run { .. } => Err(AwareError::NotYetImplemented("app run")),
         AppCommand::Stop { .. } => Err(AwareError::NotYetImplemented("app stop")),
         AppCommand::Logs { .. } => Err(AwareError::NotYetImplemented("app logs")),
     }
+}
+
+fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
+    use std::path::PathBuf;
+    let path = PathBuf::from(spec);
+    if !path.is_dir() {
+        return Err(AwareError::Validation(format!(
+            "app install: {} is not a directory (registry-hosted apps are not yet supported)",
+            path.display()
+        )));
+    }
+    let app_id = crate::install::install_app_from_path(&path, &ctx.paths)?;
+
+    // Locate the installed .flo / .app file
+    let app_dir = ctx.paths.apps_dir().join(&app_id);
+    let manifest_path = std::fs::read_dir(&app_dir)?
+        .flatten()
+        .map(|e| e.path())
+        .find(|p| {
+            matches!(
+                p.extension().and_then(|e| e.to_str()),
+                Some("flo") | Some("app")
+            )
+        })
+        .ok_or_else(|| {
+            AwareError::Internal(format!("installed app {app_id} missing .flo/.app file"))
+        })?;
+
+    let app = crate::manifest::loader::load_app(&manifest_path)?;
+
+    // Resolve each `requires` entry to an installed agent's exact version.
+    let mut resolved = std::collections::BTreeMap::new();
+    for req in &app.requires {
+        let (id, _version_spec) = match req.split_once('@') {
+            Some((i, v)) => (i, v),
+            None => (req.as_str(), "*"),
+        };
+        let agent_manifest_path = ctx.paths.agents_dir().join(id).join("manifest.yaml");
+        if let Ok(agent_manifest) = crate::manifest::loader::load_agent(&agent_manifest_path) {
+            resolved.insert(id.to_string(), agent_manifest.version);
+        }
+        // If the agent isn't installed, silently skip — install proceeds; lockfile
+        // simply omits it. v0.2 doesn't enforce that all requires must already be present.
+    }
+
+    let lockfile_path = app_dir.join("lockfile.yaml");
+    crate::lockfile::write(&app_id, &app.version, resolved, &lockfile_path)?;
+
+    println!("\u{2713} installed {app_id} (lockfile written)");
+    Ok(())
+}
+
+fn validate_cmd(_ctx: &Context, path: &std::path::Path) -> Result<(), AwareError> {
+    // Find .flo/.app in the dir
+    let manifest_path = std::fs::read_dir(path)?
+        .flatten()
+        .map(|e| e.path())
+        .find(|p| {
+            matches!(
+                p.extension().and_then(|e| e.to_str()),
+                Some("flo") | Some("app")
+            )
+        })
+        .ok_or_else(|| {
+            AwareError::Validation(format!("no .flo or .app file in {}", path.display()))
+        })?;
+
+    let app = crate::manifest::loader::load_app(&manifest_path)?;
+    let issues = crate::validate::validate_app(&app);
+    if issues.is_empty() {
+        println!("\u{2713} {} is valid", manifest_path.display());
+        return Ok(());
+    }
+    for i in &issues {
+        let tag = match i.severity {
+            crate::validate::Severity::Error => "\u{2717}",
+            crate::validate::Severity::Warning => "\u{26a0}",
+        };
+        println!("{tag} [{}] {}", i.code, i.message);
+    }
+    if crate::validate::has_errors(&issues) {
+        return Err(AwareError::Validation("app failed validation".into()));
+    }
+    Ok(())
+}
+
+fn export(ctx: &Context, app_id: &str, output: &std::path::Path) -> Result<(), AwareError> {
+    let app_dir = ctx.paths.apps_dir().join(app_id);
+    if !app_dir.is_dir() {
+        return Err(AwareError::NotFound(format!("app: {app_id}")));
+    }
+    let manifest_path = std::fs::read_dir(&app_dir)?
+        .flatten()
+        .map(|e| e.path())
+        .find(|p| {
+            matches!(
+                p.extension().and_then(|e| e.to_str()),
+                Some("flo") | Some("app")
+            )
+        })
+        .ok_or_else(|| {
+            AwareError::Internal(format!("installed app {app_id} missing .flo/.app file"))
+        })?;
+
+    std::fs::copy(&manifest_path, output)?;
+    println!("\u{2713} exported {app_id} \u{2192} {}", output.display());
+    Ok(())
 }
 
 #[derive(Serialize)]

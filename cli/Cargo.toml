@@ -21,6 +21,11 @@ serde_json    = "1.0"
 thiserror     = "2.0"
 anyhow        = "1.0"
 dirs          = "6.0"
+ureq          = { version = "2", default-features = false, features = ["tls"] }
+flate2        = "1"
+tar           = "0.4"
+chrono        = { version = "0.4", default-features = false, features = ["clock", "serde"] }
+tempfile      = "3.14"
 
 # v0.3+ runtime additions (commented until needed; uncomment in phase):
 # tokio       = { version = "1.43", features = ["full"] }
@@ -31,6 +36,63 @@ dirs          = "6.0"
 assert_cmd  = "2.0"
 predicates  = "3.1"
 tempfile    = "3.14"
+
+[[test]]
+# Source is tests/agent_install.rs.
+# Windows auto-elevates any exe whose name contains "install" (AppCompat heuristic);
+# giving the binary a different name avoids the UAC prompt in CI / local runs.
+name = "agent_inst_test"
+path = "tests/agent_install.rs"
+
+[[test]]
+# Source is tests/agent_uninstall.rs.
+# "uninstall" contains "install" — same Windows AppCompat UAC heuristic applies.
+# Avoid "uninst" too since it may also trigger the heuristic; use "rm_agent" instead.
+name = "agent_rm_test"
+path = "tests/agent_uninstall.rs"
+
+[[test]]
+# Source is tests/agent_update.rs.
+# "update" alone is unlikely to trigger the Windows AppCompat heuristic, but we use
+# a short alias anyway to stay consistent with the naming convention above.
+name = "agent_upd_test"
+path = "tests/agent_update.rs"
+
+[[test]]
+# Source is tests/agent_validate.rs.
+# "validate" is safe on Windows AppCompat but we use a short alias for consistency.
+name = "agent_val_test"
+path = "tests/agent_validate.rs"
+
+[[test]]
+# Source is tests/app_install.rs.
+# "install" in the binary name triggers the Windows AppCompat UAC heuristic;
+# use a different name so CI / local runs don't require elevation.
+name = "app_inst_test"
+path = "tests/app_install.rs"
+
+[[test]]
+# Source is tests/app_uninstall.rs.
+# "uninstall" contains "install" — same Windows AppCompat UAC heuristic applies.
+name = "app_rm_test"
+path = "tests/app_uninstall.rs"
+
+[[test]]
+# Source is tests/app_validate.rs.
+# "validate" is safe on Windows AppCompat but we use a short alias for consistency.
+name = "app_val_test"
+path = "tests/app_validate.rs"
+
+[[test]]
+# Source is tests/app_export.rs.
+name = "app_exp_test"
+path = "tests/app_export.rs"
+
+[[test]]
+# Source is tests/doctor_integrity.rs.
+# "doctor" is safe on Windows AppCompat — no UAC heuristic applies.
+name = "doctor_integrity"
+path = "tests/doctor_integrity.rs"
 
 [profile.release]
 lto           = "thin"

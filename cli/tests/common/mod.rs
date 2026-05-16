@@ -6,6 +6,9 @@
 //!
 //! Tests set AWARE_HOME=<that tmp dir> and run the binary read-only.
 
+// `common` is compiled once per test binary; not every binary uses every item.
+#![allow(dead_code)]
+
 use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
