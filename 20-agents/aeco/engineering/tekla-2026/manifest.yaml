@@ -29,7 +29,7 @@ provenance:
     package: Tekla.Structures.Model
     type: nuget
     version: 2026.0.3
-  generated-at: 2026-05-16T21:45:56.655485800+00:00
+  generated-at: 2026-05-16T21:53:55.987489500+00:00
 transport:
   cli:
     binary: aware-tekla-2026
