@@ -6,13 +6,15 @@ This folder houses the Rust implementation. The contract it satisfies is in [`10
 
 ## Status
 
-**v0.1-dev scaffold.** Every subcommand returns `NotYetImplemented` and exits non-zero. Compiles. Routes args correctly. Ready for v0.1 (read-only) implementation in a fresh session.
+**v0.1 — read-only foundation.** Eight surfaces shipped:
 
-```
-aware --version    → "aware 0.1.0-dev"
-aware --help       → top-level help (works)
-aware agent list   → error: "not yet implemented: agent list ..."
-```
+- `aware --version` / `aware --help`
+- `aware doctor`
+- `aware agent list` / `agent describe <id>` / `agent skill <id> <skill>`
+- `aware app list` / `app show <id>`
+
+Everything else (`install`, `validate`, `run`, `connect`, `build`, `skill ...`)
+remains `NotYetImplemented` until its phase per [cli-roadmap.md](../10-core/cli-roadmap.md).
 
 ## Build
 
@@ -27,10 +29,21 @@ First build pulls ~30 crates (clap, serde, tokio, etc.). Subsequent builds are i
 ## Run
 
 ```bash
-cargo run -- --help                  # top-level help
-cargo run -- agent list              # any subcommand
-cargo run -- --version               # print version
+# Default reads ~/.aware/. Override via AWARE_HOME for testing:
+export AWARE_HOME=$(pwd)/test-fixtures/aware
+
+aware doctor                    # filesystem health check
+aware agent list                # table of installed agents
+aware agent describe tekla      # manifest summary + commands + skills
+aware agent skill tekla drawing-identity   # raw skill .md content
+aware app list                  # installed apps
+aware app show welded-to-tc     # ASCII topology + provenance
+aware --json agent list         # JSON envelope for piping
 ```
+
+The `AWARE_HOME` env var overrides the default `~/.aware/` location for the
+session — useful for testing against repo fixtures without polluting your
+home directory.
 
 ## Test
 

@@ -4,6 +4,7 @@
 
 use clap::Subcommand;
 
+use crate::context::Context;
 use crate::error::AwareError;
 
 #[derive(Subcommand, Debug)]
@@ -50,7 +51,7 @@ pub enum BuildCommand {
     },
 }
 
-pub fn dispatch(cmd: BuildCommand) -> Result<(), AwareError> {
+pub fn dispatch(cmd: BuildCommand, _ctx: &Context) -> Result<(), AwareError> {
     match cmd {
         BuildCommand::Agent { .. } => Err(AwareError::NotYetImplemented("build agent")),
     }
