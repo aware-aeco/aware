@@ -19,6 +19,7 @@ type CmdKey = (String, String);
 
 /// Handle returned by `invoke_stream`. Drop the handle (or call `stop`) to
 /// signal cancellation; outputs arrive on `rx` until the stream ends.
+#[derive(Debug)]
 pub struct StreamingHandle {
     pub rx: mpsc::Receiver<Result<Value, AwareError>>,
     pub stop: oneshot::Sender<()>,
@@ -126,6 +127,166 @@ impl AgentInvoker for MockInvoker {
             }
         });
         Ok(StreamingHandle { rx, stop: stop_tx })
+    }
+}
+
+/// Production invoker: spawn the agent's CLI transport binary,
+/// talk JSON over stdin/stdout.
+pub struct CliInvoker {
+    pub agents_dir: std::path::PathBuf,
+}
+
+#[async_trait]
+impl AgentInvoker for CliInvoker {
+    async fn invoke_single(
+        &self,
+        agent: &str,
+        command: &str,
+        args: Value,
+    ) -> Result<Value, AwareError> {
+        let manifest_path = self.agents_dir.join(agent).join("manifest.yaml");
+        let m = crate::manifest::loader::load_agent(&manifest_path)?;
+        let cli =
+            m.transport.cli.as_ref().ok_or_else(|| {
+                AwareError::Validation(format!("agent {agent} has no cli transport"))
+            })?;
+        let binary = &cli.binary;
+
+        let mut child = tokio::process::Command::new(binary)
+            .arg(command)
+            .arg("--json-stdin")
+            .stdin(std::process::Stdio::piped())
+            .stdout(std::process::Stdio::piped())
+            .stderr(std::process::Stdio::piped())
+            .spawn()
+            .map_err(|e| AwareError::Network(format!("spawn {binary}: {e}")))?;
+
+        if let Some(mut stdin) = child.stdin.take() {
+            use tokio::io::AsyncWriteExt;
+            let args_text = serde_json::to_string(&args).unwrap();
+            stdin
+                .write_all(args_text.as_bytes())
+                .await
+                .map_err(|e| AwareError::Network(format!("stdin write: {e}")))?;
+            stdin
+                .shutdown()
+                .await
+                .map_err(|e| AwareError::Network(format!("stdin close: {e}")))?;
+        }
+
+        let output = child
+            .wait_with_output()
+            .await
+            .map_err(|e| AwareError::Network(format!("wait: {e}")))?;
+        if !output.status.success() {
+            return Err(AwareError::Network(format!(
+                "agent {agent}/{command} failed (exit {:?}): {}",
+                output.status.code(),
+                String::from_utf8_lossy(&output.stderr).trim()
+            )));
+        }
+        let body: Value = serde_json::from_slice(&output.stdout).map_err(|e| {
+            AwareError::Validation(format!("agent {agent}/{command} stdout not JSON: {e}"))
+        })?;
+        Ok(body)
+    }
+
+    async fn invoke_stream(
+        &self,
+        _agent: &str,
+        _command: &str,
+        _args: Value,
+    ) -> Result<StreamingHandle, AwareError> {
+        // v0.5 lands real agent binaries with streaming support. Until then,
+        // streaming via CLI transport is stubbed.
+        Err(AwareError::NotYetImplemented(
+            "CliInvoker::invoke_stream (waiting on agent binaries in v0.5)",
+        ))
+    }
+}
+
+#[cfg(test)]
+mod cli_invoker_tests {
+    use super::*;
+
+    #[tokio::test]
+    async fn missing_binary_returns_clear_network_error() {
+        let tmp = tempfile::tempdir().unwrap();
+        // Build a minimal agent dir with a manifest pointing at a binary that doesn't exist.
+        let agent_dir = tmp.path().join("phantom");
+        std::fs::create_dir_all(&agent_dir).unwrap();
+        std::fs::write(
+            agent_dir.join("manifest.yaml"),
+            r#"agent: phantom
+version: 0.1.0
+description: a non-existent agent
+stateful: false
+license: MIT
+transport:
+  cli:
+    binary: this-binary-definitely-does-not-exist-12345
+commands:
+  do:
+    lifecycle: single
+    description: nope
+"#,
+        )
+        .unwrap();
+
+        let inv = CliInvoker {
+            agents_dir: tmp.path().to_path_buf(),
+        };
+        let err = inv
+            .invoke_single("phantom", "do", serde_json::json!({}))
+            .await
+            .unwrap_err();
+        assert!(matches!(err, AwareError::Network(_)), "got: {err:?}");
+    }
+
+    #[tokio::test]
+    async fn missing_transport_cli_returns_validation_error() {
+        let tmp = tempfile::tempdir().unwrap();
+        let agent_dir = tmp.path().join("only-mcp");
+        std::fs::create_dir_all(&agent_dir).unwrap();
+        // Transport has neither cli nor any other field — invalid but parseable
+        // (transport.cli is Option<TransportCli>).
+        std::fs::write(
+            agent_dir.join("manifest.yaml"),
+            r#"agent: only-mcp
+version: 0.1.0
+description: x
+stateful: false
+license: MIT
+transport: {}
+commands:
+  do:
+    lifecycle: single
+    description: nope
+"#,
+        )
+        .unwrap();
+
+        let inv = CliInvoker {
+            agents_dir: tmp.path().to_path_buf(),
+        };
+        let err = inv
+            .invoke_single("only-mcp", "do", serde_json::json!({}))
+            .await
+            .unwrap_err();
+        assert!(matches!(err, AwareError::Validation(_)), "got: {err:?}");
+    }
+
+    #[tokio::test]
+    async fn stream_is_not_yet_implemented() {
+        let tmp = tempfile::tempdir().unwrap();
+        let inv = CliInvoker {
+            agents_dir: tmp.path().to_path_buf(),
+        };
+        let err = inv
+            .invoke_stream("anything", "anything", serde_json::json!({}))
+            .await
+            .unwrap_err();
+        assert!(matches!(err, AwareError::NotYetImplemented(_)));
     }
 }
 
