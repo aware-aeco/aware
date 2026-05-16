@@ -48,11 +48,11 @@ The endpoint of composition is **an app that is an agent.** Every app should be 
 
 This is what makes AWARE compositional all the way down: agents compose into apps, apps expose as agents, those agents compose into bigger apps. There is no terminal layer where composition stops and "the product" begins.
 
-## 8. Apps that wrap an LLM are training their replacements
+## 8. Closed apps that wrap an LLM are training their replacements
 
-Apps that wrap an LLM and gate it behind a UI are **training their replacements.** Every prompt the user types into the wrapper is a prompt they could have typed into the model directly. The UI is the moat that disappears the moment users realize the model underneath is the product.
+Closed-source apps that wrap an LLM and gate it behind a UI are **training their replacements.** Every prompt the user types into the wrapper is a prompt they could have typed into the model directly. The UI is the moat that disappears the moment users realize the model underneath is the product.
 
-AWARE skips that phase: there is no UI to gate, no wrapper to defend, no replacement to train. The composition itself is the artifact, and it is plain text — the user can already see the model underneath.
+AWARE apps don't have this problem by construction: the composition is plain text, the model is visible, the wrapper is the file. There is nothing hidden to defend, so there is no replacement to train.
 
 ---
 
