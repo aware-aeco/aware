@@ -49,3 +49,4 @@ cli-sidecar/Tests/bin/
 cli-sidecar/Tests/obj/
 cli-sidecar/Tests/FixtureAssembly/bin/
 cli-sidecar/Tests/FixtureAssembly/obj/
+*.binlog
