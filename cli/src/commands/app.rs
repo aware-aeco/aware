@@ -77,7 +77,11 @@ pub async fn dispatch(cmd: AppCommand, ctx: &Context) -> Result<(), AwareError> 
             config,
         } => run(ctx, &app, instance.as_deref(), &config).await,
         AppCommand::Stop { app, instance } => stop(ctx, &app, instance.as_deref()),
-        AppCommand::Logs { .. } => Err(AwareError::NotYetImplemented("app logs")),
+        AppCommand::Logs {
+            app,
+            instance,
+            tail,
+        } => logs(ctx, &app, instance.as_deref(), tail, false, None).await,
     }
 }
 
@@ -250,6 +254,50 @@ async fn run(
     orch.run_one_shot().await?;
     println!("\u{2713} run complete; trace at {}", log_path.display());
     Ok(())
+}
+
+async fn logs(
+    ctx: &Context,
+    app_id: &str,
+    instance: Option<&str>,
+    tail: bool,
+    _replay: bool,
+    _run_id_override: Option<&str>,
+) -> Result<(), AwareError> {
+    let instance = instance.unwrap_or("default");
+    let run_id =
+        crate::runtime::provenance::most_recent_run_id(&ctx.paths.logs_dir(), app_id, instance)
+            .ok_or_else(|| AwareError::NotFound(format!("no runs for {app_id}/{instance}")))?;
+    let log_path =
+        crate::runtime::provenance::log_path_for(&ctx.paths.logs_dir(), app_id, instance, &run_id);
+
+    if !tail {
+        // Read and print raw JSONL
+        let body = tokio::fs::read_to_string(&log_path).await?;
+        print!("{body}");
+        return Ok(());
+    }
+
+    // Tail: open, seek to end, poll for new lines every 200ms
+    use tokio::io::{AsyncBufReadExt, AsyncSeekExt, BufReader, SeekFrom};
+    let mut file = tokio::fs::File::open(&log_path).await?;
+    let mut pos = file.seek(SeekFrom::End(0)).await?;
+    loop {
+        let _ = file.seek(SeekFrom::Start(pos)).await?;
+        let mut reader = BufReader::new(file);
+        let mut line = String::new();
+        loop {
+            line.clear();
+            let n = reader.read_line(&mut line).await?;
+            if n == 0 {
+                break;
+            } // EOF
+            print!("{line}");
+            pos += n as u64;
+        }
+        file = reader.into_inner();
+        tokio::time::sleep(std::time::Duration::from_millis(200)).await;
+    }
 }
 
 fn stop(ctx: &Context, app_id: &str, instance: Option<&str>) -> Result<(), AwareError> {

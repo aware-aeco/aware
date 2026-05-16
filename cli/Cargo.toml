@@ -111,6 +111,12 @@ path = "tests/app_run.rs"
 name = "app_stop_test"
 path = "tests/app_stop.rs"
 
+[[test]]
+# Source is tests/app_logs.rs.
+# Covers both the default print path (Task 16) and the --replay flag (Task 17).
+name = "app_logs_test"
+path = "tests/app_logs.rs"
+
 [profile.release]
 lto           = "thin"
 codegen-units = 1
