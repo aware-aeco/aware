@@ -5,7 +5,7 @@
 pub mod bundle;
 pub mod local;
 pub mod registry;
-// pub mod uninstall;    // added in Task 9
+pub mod uninstall;
 
 #[allow(unused_imports)]
 pub use bundle::install_bundle;
@@ -13,3 +13,5 @@ pub use bundle::install_bundle;
 pub use local::{install_agent_from_path, install_app_from_path};
 #[allow(unused_imports)]
 pub use registry::install_agent_from_registry;
+#[allow(unused_imports)]
+pub use uninstall::{uninstall_agent, uninstall_app};
