@@ -71,6 +71,8 @@ pub fn run_connect(args: ConnectArgs, _ctx: &Context) -> Result<(), AwareError> 
     Ok(())
 }
 
-pub fn run_disconnect(_args: DisconnectArgs, _ctx: &Context) -> Result<(), AwareError> {
-    Err(AwareError::NotYetImplemented("disconnect"))
+pub fn run_disconnect(args: DisconnectArgs, _ctx: &Context) -> Result<(), AwareError> {
+    crate::auth::keychain::delete_token(&args.integration, args.r#as.as_deref())?;
+    println!("\u{2713} Removed credential for {}", args.integration);
+    Ok(())
 }

@@ -7,8 +7,9 @@
 //! mapping.
 //!
 //! NOTE: All v0.2 commands are now implemented, and all v0.3 runtime commands
-//! (`app run`, `app stop`, `app logs`) are wired. The unimplemented-smoke test
-//! now uses `connect` which is stubbed until v0.4.
+//! (`app run`, `app stop`, `app logs`) are wired. All v0.4 commands (`connect`,
+//! `disconnect`) are wired. The unimplemented-smoke test uses `build agent`
+//! which is stubbed until v0.5.
 
 use assert_cmd::Command;
 use predicates::prelude::*;
@@ -68,14 +69,13 @@ fn app_subcommand_help_works() {
 
 #[test]
 fn unimplemented_subcommand_exits_nonzero_with_message() {
-    // `connect` is stubbed until v0.4. Use it as the "not yet implemented" sentinel.
+    // `build agent` is stubbed until v0.5. Use it as the "not yet implemented" sentinel.
     Command::cargo_bin("aware")
         .unwrap()
-        .args(["connect", "some-agent"])
+        .args(["build", "agent", "--from-cli", "something"])
         .assert()
         .failure()
-        .stderr(predicate::str::contains("not yet implemented"))
-        .stderr(predicate::str::contains("connect"));
+        .stderr(predicate::str::contains("not yet implemented"));
 }
 
 #[test]
