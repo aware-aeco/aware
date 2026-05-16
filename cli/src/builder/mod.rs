@@ -4,6 +4,7 @@
 
 #![allow(dead_code)]
 
+pub mod cli_help;
 pub mod openapi;
 
 use std::collections::BTreeMap;
