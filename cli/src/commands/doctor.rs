@@ -119,14 +119,25 @@ pub fn run(ctx: &Context) -> Result<(), AwareError> {
                     .duration_since(std::time::UNIX_EPOCH)
                     .unwrap()
                     .as_secs() as i64;
-                let remaining = token.expires_at - now;
-                if remaining > 0 {
-                    let mins = remaining / 60;
-                    println!("  \u{2713} {integration:<22} valid    expires in {mins}m");
-                } else {
-                    println!(
-                        "  \u{00b7} {integration:<22} expired  run: aware connect {integration} --refresh"
-                    );
+                match token.source {
+                    crate::auth::keychain::TokenSource::Paste => {
+                        println!(
+                            "  \u{2713} {integration:<22} valid    paste token (user-managed)"
+                        );
+                    }
+                    crate::auth::keychain::TokenSource::Oauth => {
+                        let remaining = token.expires_at - now;
+                        if remaining > 0 {
+                            let mins = remaining / 60;
+                            println!(
+                                "  \u{2713} {integration:<22} valid    OAuth, expires in {mins}m"
+                            );
+                        } else {
+                            println!(
+                                "  \u{00b7} {integration:<22} expired  run: aware connect {integration} --refresh"
+                            );
+                        }
+                    }
                 }
             }
             Ok(None) => {

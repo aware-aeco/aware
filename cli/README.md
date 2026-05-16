@@ -24,36 +24,72 @@ Still stubbed: `agent publish` (registry-write), `build agent` (v0.5), `skill ..
 
 ### Connect to an integration (v0.4)
 
-```bash
-# PKCE OAuth flow — opens your browser, listens on localhost:7421, stores the token encrypted
-aware connect trimble-connect
+**Default: browser-based token paste.** No OAuth-app registration required.
 
-# Multiple accounts of the same integration
+```bash
+aware connect trimble-connect
+```
+
+This opens a tab in your browser with a password-style form. Get a token from the
+provider's website (Trimble Connect / Microsoft 365 / Google Workspace), paste it
+into the form, click Save. The token is encrypted to your OS keychain.
+
+**Why a browser form?** When you're using `aware` from inside Claude Code / Codex /
+other AI chat tools, pasting a token directly into the chat would leak it into the
+conversation. The browser form is a side-channel — the token only ever exists
+in your browser tab and the local keychain. It never flows through any AI session.
+
+**Non-interactive paths** (CI, scripts, headless environments):
+
+```bash
+# Read from a file you prepared outside the chat
+aware connect trimble-connect --from-file ./trimble-token.txt
+
+# Read from an env var (set in your shell or CI secrets)
+$env:AWARE_TOKEN_TRIMBLE_CONNECT = "tk_xyz"
+aware connect trimble-connect --from-env
+```
+
+The `--from-file` path accepts either a plain bearer token (one line) or a JSON
+blob with at least an `access_token` field.
+
+**OAuth flow** (advanced — requires AWARE-AECO or you to have registered an
+OAuth app at the provider's developer console):
+
+```bash
+$env:AWARE_OAUTH_TRIMBLE_CLIENT_ID = "your-registered-client-id"
+aware connect trimble-connect --oauth
+```
+
+This opens the provider's sign-in page (the `gh auth login` / `az login` UX) and
+exchanges the result for a token automatically.
+
+**Multi-account support:**
+
+```bash
 aware connect google-workspace --as personal
 aware connect google-workspace --as work
+```
 
-# Force refresh (refresh_token must exist)
-aware connect trimble-connect --refresh
+**Refresh and remove:**
 
-# Add extra scopes beyond the defaults
-aware connect microsoft-365 --scopes Calendars.Read,Mail.Send
-
-# Remove credentials
+```bash
+aware connect trimble-connect --refresh   # OAuth tokens only
 aware disconnect trimble-connect
-aware disconnect google-workspace --as personal
+```
+
+**Doctor displays the source:**
+
+```
+Credentials:
+  ✓ trimble-connect       valid    paste token (user-managed)
+  ✓ google-workspace      valid    OAuth, expires in 41m
+  ✗ microsoft-365         missing  run: aware connect microsoft-365
 ```
 
 **Encryption.** Tokens are encrypted at rest by the OS keychain (Windows DPAPI / macOS Keychain / Linux libsecret) under service `aware-aeco`. Never written to logs.
 
 **Refresh.** When the runtime reads a credential, it lazily refreshes if the token expires within 60 seconds. Transparent.
-
-**Client IDs.** v0.4 ships with placeholder client IDs. To run a real OAuth flow against Trimble/Microsoft/Google, set:
-
-```
-$env:AWARE_OAUTH_TRIMBLE_CLIENT_ID = "your-registered-client-id"
-$env:AWARE_OAUTH_M365_CLIENT_ID    = "your-registered-client-id"
-$env:AWARE_OAUTH_GOOGLE_CLIENT_ID  = "your-registered-client-id"
-```
 
 ### Host plugins (v0.4)
 

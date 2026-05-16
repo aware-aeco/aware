@@ -49,8 +49,7 @@ pub fn run_connect(args: ConnectArgs, _ctx: &Context) -> Result<(), AwareError> 
     let cfg = crate::auth::config::for_integration(&args.integration)?;
 
     if args.refresh {
-        let token =
-            crate::auth::refresh::ensure_fresh(&args.integration, args.r#as.as_deref())?;
+        let token = crate::auth::refresh::ensure_fresh(&args.integration, args.r#as.as_deref())?;
         println!(
             "\u{2713} refreshed {} (expires at unix-{})",
             args.integration, token.expires_at
@@ -140,9 +139,7 @@ fn load_token_from_file(
             .and_then(|x| x.as_str())
             .or_else(|| v.get("token").and_then(|x| x.as_str()))
             .ok_or_else(|| {
-                AwareError::Validation(
-                    "token JSON has neither access_token nor token field".into(),
-                )
+                AwareError::Validation("token JSON has neither access_token nor token field".into())
             })?
             .to_string();
         Ok(StoredToken {
@@ -151,10 +148,7 @@ fn load_token_from_file(
                 .get("refresh_token")
                 .and_then(|x| x.as_str())
                 .map(String::from),
-            expires_at: v
-                .get("expires_at")
-                .and_then(|x| x.as_i64())
-                .unwrap_or(0),
+            expires_at: v.get("expires_at").and_then(|x| x.as_i64()).unwrap_or(0),
             scope: v
                 .get("scope")
                 .and_then(|x| x.as_str())
@@ -232,10 +226,7 @@ mod tests {
         std::fs::write(&path, "tk_abc123\n").unwrap();
         let token = load_token_from_file(&path, "trimble-connect").unwrap();
         assert_eq!(token.access_token, "tk_abc123");
-        assert_eq!(
-            token.source,
-            crate::auth::keychain::TokenSource::Paste
-        );
+        assert_eq!(token.source, crate::auth::keychain::TokenSource::Paste);
         assert_eq!(token.expires_at, 0);
     }
 

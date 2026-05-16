@@ -139,9 +139,7 @@ fn extract_token_from_form(body: &str) -> Result<String, AwareError> {
             return Ok(token.trim().to_string());
         }
     }
-    Err(AwareError::Validation(
-        "no token field in form body".into(),
-    ))
+    Err(AwareError::Validation("no token field in form body".into()))
 }
 
 fn bind_paste_server() -> Result<(tiny_http::Server, u16), AwareError> {
