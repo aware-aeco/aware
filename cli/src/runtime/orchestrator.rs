@@ -6,7 +6,7 @@
 
 #![allow(dead_code)]
 
-use std::collections::{HashMap, HashSet};
+use std::collections::{HashMap, HashSet, VecDeque};
 use std::path::PathBuf;
 use std::sync::Arc;
 
@@ -24,6 +24,17 @@ use crate::runtime::lifecycle::StopReceiver;
 use crate::runtime::provenance::{ProvenanceWriter, RunEvent, now_iso};
 use crate::runtime::template;
 
+/// Per-slot input queues for fan-in nodes.
+/// Outer key: node-id of the fan-in node.
+/// Inner key: slot name (from `connection.input`, or the source node-id as fallback).
+/// Value: FIFO queue of pending events.
+type SlotMap = HashMap<String, HashMap<String, VecDeque<Value>>>;
+
+#[derive(Default)]
+pub struct FanInState {
+    slots: SlotMap,
+}
+
 pub struct Orchestrator {
     pub app: App,
     pub agents_dir: PathBuf,
@@ -33,6 +44,7 @@ pub struct Orchestrator {
     pub provenance: ProvenanceWriter,
     pub ctx: RuntimeContext,
     pub inputs: Value,
+    pub fan_in: FanInState,
 }
 
 impl Orchestrator {
@@ -260,89 +272,169 @@ impl Orchestrator {
     }
 
     /// Propagate one event through downstream nodes starting from `source_id`.
-    /// Follows the connection chain linearly (BFS fan-in added in Task 12).
+    ///
+    /// Uses a frontier queue (BFS-style) so a single source event can fan out
+    /// to multiple downstream branches. Fan-in nodes (>1 incoming connection)
+    /// buffer per-slot and only fire once every declared slot has at least one
+    /// pending value; the oldest entry from each slot is merged into a single
+    /// `{ slot: value, … }` object and passed to the fan-in node.
     async fn propagate_from(&mut self, source_id: &str, event: &Value) -> Result<(), AwareError> {
-        let mut current_id = source_id.to_string();
-        let mut current_event = event.clone();
+        let mut frontier: Vec<(String, Value)> = vec![(source_id.to_string(), event.clone())];
 
-        loop {
-            let next_id = self
+        while let Some((from_id, current_event)) = frontier.pop() {
+            // All outgoing connections from this frontier node.
+            let outgoing: Vec<(String, Option<String>)> = self
                 .app
                 .connections
                 .iter()
-                .find(|c| c.from == current_id)
-                .map(|c| c.to.clone());
+                .filter(|c| c.from == from_id)
+                .map(|c| (c.to.clone(), c.input.clone()))
+                .collect();
 
-            let Some(next_id) = next_id else {
-                return Ok(());
-            };
+            for (next_id, input_slot) in outgoing {
+                let incoming_count = self
+                    .app
+                    .connections
+                    .iter()
+                    .filter(|c| c.to == next_id)
+                    .count();
+                let next_node = self
+                    .app
+                    .nodes
+                    .iter()
+                    .find(|n| n.id == next_id)
+                    .unwrap()
+                    .clone();
 
-            let next_node = self
-                .app
-                .nodes
-                .iter()
-                .find(|n| n.id == next_id)
-                .unwrap()
-                .clone();
+                // ── Fan-in case ──────────────────────────────────────────────
+                if incoming_count > 1 {
+                    let slot_name = input_slot.unwrap_or_else(|| from_id.clone());
 
-            self.emit(RunEvent::NodeStart {
-                ts: now_iso(),
-                run_id: self.run_id.clone(),
-                node: next_node.id.clone(),
-                agent: next_node.agent.clone(),
-                command: next_node.command.clone(),
-            })
-            .await?;
+                    // Enqueue into the appropriate slot.
+                    self.fan_in
+                        .slots
+                        .entry(next_id.clone())
+                        .or_default()
+                        .entry(slot_name)
+                        .or_default()
+                        .push_back(current_event.clone());
 
-            if let Some(inline) = &next_node.inline {
-                if inline.kind == "predicate" {
-                    let code = inline.code.as_deref().unwrap_or("true");
-                    let pass = eval_predicate(code, &current_event)?;
-                    self.emit(RunEvent::NodeOutput {
-                        ts: now_iso(),
-                        run_id: self.run_id.clone(),
-                        node: next_node.id.clone(),
-                        data: serde_json::json!({ "pass": pass }),
-                    })
-                    .await?;
-                    if !pass {
-                        return Ok(()); // event dropped by gate
+                    // Collect every expected slot name (one per incoming connection).
+                    let expected_slots: Vec<String> = self
+                        .app
+                        .connections
+                        .iter()
+                        .filter(|c| c.to == next_id)
+                        .map(|c| c.input.clone().unwrap_or_else(|| c.from.clone()))
+                        .collect();
+
+                    // Check whether every slot has at least one pending value.
+                    let slots_for_node =
+                        self.fan_in.slots.get(&next_id).cloned().unwrap_or_default();
+                    let all_filled = expected_slots
+                        .iter()
+                        .all(|s| slots_for_node.get(s).is_some_and(|q| !q.is_empty()));
+
+                    if !all_filled {
+                        continue; // Still waiting for other slots — buffer and move on.
                     }
-                    current_id = next_id;
+
+                    // Pop the oldest entry from each slot and merge into one event.
+                    let mut merged = serde_json::Map::new();
+                    let node_slots = self.fan_in.slots.get_mut(&next_id).unwrap();
+                    for s in &expected_slots {
+                        if let Some(q) = node_slots.get_mut(s)
+                            && let Some(v) = q.pop_front()
+                        {
+                            merged.insert(s.clone(), v);
+                        }
+                    }
+                    let merged_event = Value::Object(merged);
+
+                    self.execute_and_chain(&next_node, &merged_event, &mut frontier)
+                        .await?;
                     continue;
                 }
-                return Err(AwareError::Validation(format!(
-                    "inline kind {:?} not supported in propagate_from",
-                    inline.kind
-                )));
+
+                // ── Linear case (single incoming connection) ─────────────────
+                self.execute_and_chain(&next_node, &current_event, &mut frontier)
+                    .await?;
             }
-
-            // Agent invocation.
-            let agent_id = next_node.agent.as_ref().ok_or_else(|| {
-                AwareError::Validation(format!(
-                    "node {} has neither agent nor inline block",
-                    next_node.id
-                ))
-            })?;
-            let command = next_node.command.as_deref().unwrap_or("");
-
-            // Make the current event available for template resolution.
-            self.ctx.record_output(&current_id, current_event.clone());
-            let args = render_config(&yaml_to_json(next_node.config.clone())?, &self.ctx)?;
-            let out = self.invoker.invoke_single(agent_id, command, args).await?;
-
-            self.emit(RunEvent::NodeOutput {
-                ts: now_iso(),
-                run_id: self.run_id.clone(),
-                node: next_node.id.clone(),
-                data: out.clone(),
-            })
-            .await?;
-
-            self.ctx.record_output(&next_node.id, out.clone());
-            current_id = next_id;
-            current_event = out;
         }
+        Ok(())
+    }
+
+    /// Emit NodeStart, run the node (inline predicate or agent call), emit NodeOutput,
+    /// and push the result onto `frontier` for further downstream propagation.
+    async fn execute_and_chain(
+        &mut self,
+        node: &Node,
+        current_event: &Value,
+        frontier: &mut Vec<(String, Value)>,
+    ) -> Result<(), AwareError> {
+        self.emit(RunEvent::NodeStart {
+            ts: now_iso(),
+            run_id: self.run_id.clone(),
+            node: node.id.clone(),
+            agent: node.agent.clone(),
+            command: node.command.clone(),
+        })
+        .await?;
+
+        // ── Inline predicate ─────────────────────────────────────────────────
+        if let Some(inline) = &node.inline {
+            if inline.kind == "predicate" {
+                let code = inline.code.as_deref().unwrap_or("true");
+                let pass = eval_predicate(code, current_event)?;
+                self.emit(RunEvent::NodeOutput {
+                    ts: now_iso(),
+                    run_id: self.run_id.clone(),
+                    node: node.id.clone(),
+                    data: serde_json::json!({ "pass": pass }),
+                })
+                .await?;
+                if pass {
+                    frontier.push((node.id.clone(), current_event.clone()));
+                }
+                return Ok(());
+            }
+            return Err(AwareError::Validation(format!(
+                "inline kind {:?} not supported in propagate_from",
+                inline.kind
+            )));
+        }
+
+        // ── Agent invocation ──────────────────────────────────────────────────
+        let agent_id = node.agent.as_ref().ok_or_else(|| {
+            AwareError::Validation(format!(
+                "node {} has neither agent nor inline block",
+                node.id
+            ))
+        })?;
+        let command = node.command.as_deref().unwrap_or("");
+
+        // Record the incoming event so templates can access it via `{{ inputs.<slot> }}`.
+        if let Value::Object(_) = current_event {
+            self.ctx
+                .upstream
+                .insert("inputs".into(), current_event.clone());
+        }
+        self.ctx.record_output(&node.id, current_event.clone());
+
+        let args = render_config(&yaml_to_json(node.config.clone())?, &self.ctx)?;
+        let out = self.invoker.invoke_single(agent_id, command, args).await?;
+
+        self.emit(RunEvent::NodeOutput {
+            ts: now_iso(),
+            run_id: self.run_id.clone(),
+            node: node.id.clone(),
+            data: out.clone(),
+        })
+        .await?;
+
+        self.ctx.record_output(&node.id, out.clone());
+        frontier.push((node.id.clone(), out));
+        Ok(())
     }
 
     /// Returns true when the node's agent manifest declares `stateful: true` and
@@ -557,6 +649,7 @@ mod tests {
             provenance: prov,
             ctx: RuntimeContext::default(),
             inputs: serde_json::json!({}),
+            fan_in: FanInState::default(),
         };
         (orch, tmp, log_path)
     }
@@ -803,5 +896,84 @@ requires: []
             .iter()
             .any(|e| matches!(e, RunEvent::NodeOutput { node, .. } if node == "b"));
         assert!(saw_b_output);
+    }
+
+    #[tokio::test]
+    async fn dag_fan_in_pairs_oldest_entries() {
+        // pdf-watch + excel-watch → match-build → sink
+        // match-build is a fan-in node: it needs one value from each upstream.
+        // pdf-watch emits 2 events; excel-watch emits 1.
+        // match-build should fire exactly once (paired with the first pdf event).
+        let app: App = serde_yaml::from_str(
+            r#"
+app: fan-in-test
+version: 0.1.0
+description: x
+nodes:
+  - id: pdf-watch
+    agent: ag-pdf
+    command: watch
+  - id: excel-watch
+    agent: ag-excel
+    command: watch
+  - id: match-build
+    agent: ag-match
+    command: pair
+  - id: sink
+    agent: ag-sink
+    command: store
+connections:
+  - from: pdf-watch
+    to: match-build
+    input: drawing
+  - from: excel-watch
+    to: match-build
+    input: spec
+  - from: match-build
+    to: sink
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let inv = Arc::new(
+            MockInvoker::new()
+                .with_stream(
+                    "ag-pdf",
+                    "watch",
+                    vec![
+                        serde_json::json!({"mark": "A", "kind": "pdf"}),
+                        serde_json::json!({"mark": "B", "kind": "pdf"}),
+                    ],
+                )
+                .with_stream(
+                    "ag-excel",
+                    "watch",
+                    vec![serde_json::json!({"mark": "A", "kind": "spec"})],
+                )
+                .with_single("ag-match", "pair", serde_json::json!({"paired": "ok"}))
+                .with_single("ag-sink", "store", serde_json::json!({"stored": "ok"})),
+        );
+
+        let (orch, _tmp, log_path) = make_orchestrator(app, inv).await;
+        let (stop_tx, stop_rx) = stop_channel();
+
+        let run_handle = tokio::spawn(orch.run_long_running(stop_rx));
+        // Give streams time to drain (each mock event has a 5 ms delay; 2+1 events = ~30 ms).
+        // The run may end naturally before 200 ms; ignore send error if the receiver is gone.
+        tokio::time::sleep(std::time::Duration::from_millis(200)).await;
+        let _ = stop_tx.send(true);
+        let _ = run_handle.await.unwrap();
+
+        let events = read_run_events(&log_path).await.unwrap();
+        // match-build should fire exactly once (only 1 spec available; pairs with first pdf).
+        let match_outputs = events
+            .iter()
+            .filter(|e| matches!(e, RunEvent::NodeOutput { node, .. } if node == "match-build"))
+            .count();
+        assert_eq!(
+            match_outputs, 1,
+            "expected 1 match-build output; events: {events:?}"
+        );
     }
 }
