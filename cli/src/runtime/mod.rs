@@ -9,6 +9,7 @@ pub mod context;
 pub mod inline;
 pub mod invoker;
 pub mod lifecycle;
+pub mod orchestrator;
 pub mod pidfile;
 pub mod provenance;
 pub mod template;
