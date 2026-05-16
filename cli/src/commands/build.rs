@@ -54,22 +54,26 @@ pub fn dispatch(cmd: BuildCommand, ctx: &Context) -> Result<(), AwareError> {
 fn build_agent(ctx: &Context, args: &BuildAgentArgs) -> Result<(), AwareError> {
     use crate::builder;
 
+    let normalized_output: Option<String> =
+        args.output.as_deref().map(normalize_agent_id).transpose()?;
+    let id_override = normalized_output.as_deref();
+
     let generated = if args.decompile {
         builder::stubs::build_with_decompile(args.from_nuget.as_deref().unwrap_or(""))?
     } else if let Some(s) = &args.from_openapi {
-        builder::openapi::build_from_url_or_path(s, args.output.as_deref())?
+        builder::openapi::build_from_url_or_path(s, id_override)?
     } else if let Some(s) = &args.from_cli {
-        builder::cli_help::build_from_cli(s, args.output.as_deref())?
+        builder::cli_help::build_from_cli(s, id_override)?
     } else if let Some(s) = &args.from_nuget {
-        builder::nuget::build_from_nuget(s, args.output.as_deref(), args.accept_license)?
+        builder::nuget::build_from_nuget(s, id_override, args.accept_license)?
     } else if let Some(s) = &args.from_python {
-        builder::python::build_from_python(s, args.output.as_deref())?
+        builder::python::build_from_python(s, id_override)?
     } else if let Some(s) = &args.from_dlls {
-        builder::stubs::build_from_dlls(s, args.output.as_deref())?
+        builder::stubs::build_from_dlls(s, id_override)?
     } else if let Some(s) = &args.from_com {
-        builder::stubs::build_from_com(s, args.output.as_deref())?
+        builder::stubs::build_from_com(s, id_override)?
     } else if let Some(s) = &args.from_headers {
-        builder::stubs::build_from_headers(s, args.output.as_deref())?
+        builder::stubs::build_from_headers(s, id_override)?
     } else {
         return Err(AwareError::Validation(
             "aware build agent: must specify one of --from-openapi, --from-cli, --from-nuget, --from-python, --from-dlls, --from-com, --from-headers".into()
@@ -87,4 +91,104 @@ fn build_agent(ctx: &Context, args: &BuildAgentArgs) -> Result<(), AwareError> {
         dst.display()
     );
     Ok(())
+}
+
+/// Normalize the user-supplied `--output` into a clean agent id.
+///
+/// `--output` is documented as an "agent id override" but users naturally pass
+/// path-like strings (e.g. `/tmp/scratch/tekla-2025`). Without sanitization,
+/// the raw path is baked into the manifest's `agent:` field and the
+/// `transport.cli.binary:` field, producing unusable agents.
+///
+/// Cross-platform basename: splits on both `/` and `\` since `Path::file_name`
+/// only recognizes the host OS's separator (so a Windows path on a Linux
+/// runner would otherwise pass through unchanged).
+fn normalize_agent_id(raw: &str) -> Result<String, AwareError> {
+    let trimmed = raw.trim();
+    if trimmed.is_empty() {
+        return Err(AwareError::Validation("--output cannot be empty".into()));
+    }
+
+    let basename = trimmed
+        .rsplit(['/', '\\'])
+        .next()
+        .unwrap_or(trimmed)
+        .trim();
+
+    if basename.is_empty() {
+        return Err(AwareError::Validation(format!(
+            "--output '{raw}' yields empty agent id"
+        )));
+    }
+
+    if !basename
+        .chars()
+        .all(|c| c.is_ascii_alphanumeric() || matches!(c, '-' | '_' | '.'))
+    {
+        return Err(AwareError::Validation(format!(
+            "--output '{raw}' (resolved id: '{basename}') contains characters outside [a-z0-9-_.]"
+        )));
+    }
+
+    Ok(basename.to_string())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn normalize_simple_id_passes_through() {
+        assert_eq!(normalize_agent_id("tekla-2025").unwrap(), "tekla-2025");
+    }
+
+    #[test]
+    fn normalize_unix_path_extracts_basename() {
+        assert_eq!(
+            normalize_agent_id("/tmp/scratch/tekla-2025").unwrap(),
+            "tekla-2025"
+        );
+    }
+
+    #[test]
+    fn normalize_windows_path_extracts_basename() {
+        assert_eq!(
+            normalize_agent_id("C:\\Users\\foo\\tekla-2025").unwrap(),
+            "tekla-2025"
+        );
+    }
+
+    #[test]
+    fn normalize_mixed_separators_extracts_basename() {
+        assert_eq!(
+            normalize_agent_id("C:/Users/foo/tekla-2025").unwrap(),
+            "tekla-2025"
+        );
+    }
+
+    #[test]
+    fn normalize_rejects_empty() {
+        assert!(normalize_agent_id("").is_err());
+        assert!(normalize_agent_id("   ").is_err());
+    }
+
+    #[test]
+    fn normalize_rejects_trailing_separator() {
+        assert!(normalize_agent_id("/tmp/scratch/").is_err());
+        assert!(normalize_agent_id("C:\\Users\\foo\\").is_err());
+    }
+
+    #[test]
+    fn normalize_rejects_invalid_chars() {
+        assert!(normalize_agent_id("tekla@2025").is_err());
+        assert!(normalize_agent_id("tekla 2025").is_err());
+        assert!(normalize_agent_id("tekla$2025").is_err());
+    }
+
+    #[test]
+    fn normalize_allows_dot_underscore_dash() {
+        assert_eq!(normalize_agent_id("tekla_2025").unwrap(), "tekla_2025");
+        assert_eq!(normalize_agent_id("tekla.2025").unwrap(), "tekla.2025");
+        assert_eq!(normalize_agent_id("Tekla-2025.0").unwrap(), "Tekla-2025.0");
+    }
 }
