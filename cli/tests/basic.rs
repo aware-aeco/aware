@@ -70,11 +70,11 @@ fn app_subcommand_help_works() {
 
 #[test]
 fn unimplemented_subcommand_exits_nonzero_with_message() {
-    // `--from-dlls` is a tier-C stub (needs C# NativeAOT sidecar). Use it as
-    // the "not yet implemented" sentinel now that --from-cli is fully wired in v0.5.
+    // `--from-com` is a tier-C stub deferred to v0.5.2 (COM TypeLib interop).
+    // --from-dlls now routes to the sidecar, so it is no longer a sentinel.
     Command::cargo_bin("aware")
         .unwrap()
-        .args(["build", "agent", "--from-dlls", "C:/nonexistent"])
+        .args(["build", "agent", "--from-com", "Some.ProgId"])
         .assert()
         .failure()
         .stderr(predicate::str::contains("not yet implemented"));
