@@ -1,5 +1,6 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using System.Reflection.Metadata;
+using System.Reflection.PortableExecutable;
 using System.Runtime.InteropServices;
 using System.Xml.Linq;
 using AwareSidecar.Protocol;
@@ -7,20 +8,19 @@ using AwareSidecar.Protocol;
 namespace AwareSidecar.Reflection;
 
 /// <summary>
-/// Reflects .NET assemblies via MetadataLoadContext — loads metadata without executing code.
+/// Reflects .NET assemblies via System.Reflection.Metadata.PEReader and MetadataReader —
+/// reads PE metadata directly from the file without loading or executing any managed code.
 /// Emits a GeneratedAgent: one command per public method on each public type.
 /// XML doc summaries are picked up from sibling .xml files when present.
 /// </summary>
+/// <remarks>
+/// Using MetadataReader (instead of MetadataLoadContext) eliminates StackOverflowException
+/// on large type graphs (e.g. DevExpress WPF assemblies in Tekla 2025, Revit 2026) because
+/// MetadataReader is a purely iterative PE token table reader — it never resolves types
+/// across assembly boundaries and therefore never recurses into the CLR type loader.
+/// </remarks>
 public static class DllReflector
 {
-    // IL2026 / IL2065 / IL2075 / IL3000: GetTypes() and GetMethods() are called on assemblies
-    // loaded via MetadataLoadContext, which only loads metadata and never executes managed code.
-    // Assembly.Location is guarded by a null/empty check with RuntimeEnvironment fallback.
-    // The trimmer / AOT warnings are not applicable — no live types are reflected.
-    [UnconditionalSuppressMessage("AOT", "IL2026", Justification = "MLC loads metadata only — no live code is reflected")]
-    [UnconditionalSuppressMessage("AOT", "IL2065", Justification = "MLC loads metadata only — no live code is reflected")]
-    [UnconditionalSuppressMessage("AOT", "IL2075", Justification = "MLC loads metadata only — no live code is reflected")]
-    [UnconditionalSuppressMessage("AOT", "IL3000", Justification = "Assembly.Location guarded by empty-check + RuntimeEnvironment fallback")]
     public static GeneratedAgent Reflect(string[] globs, string? agentIdOverride)
     {
         var dllPaths = ResolveGlobs(globs);
@@ -29,129 +29,134 @@ public static class DllReflector
             throw new InvalidOperationException($"no dlls matched globs: {string.Join(", ", globs)}");
         }
 
-        // Build a comprehensive resolver search path so that MetadataLoadContext can
-        // resolve cross-assembly references without executing any managed code.
-        //
-        // Three categories of assemblies are needed:
-        //   1. The input DLLs themselves.
-        //   2. Sibling DLLs in the same directory as each input (e.g. Tekla.Structures.dll
-        //      lives next to Tekla.Structures.Model.dll).
-        //   3. .NET runtime DLLs and reference-pack DLLs for any installed SDK version
-        //      (covers System.Drawing.Common and other assemblies that differ between
-        //      .NET versions and are absent from the current runtime's directory).
-        //
-        // IMPORTANT: PathAssemblyResolver uses file name (without extension) as the assembly
-        // identity key. Having two paths with the same filename causes a FileLoadException
-        // ("already loaded") when the resolver tries to load both.  We therefore deduplicate
-        // by filename, keeping the first (highest-priority) path seen for each name.  Priority
-        // order: input DLLs → sibling DLLs → current runtime dir → ref packs.
-        var seenNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        var resolverPaths = new List<string>();
+        // Run on a dedicated thread with a large stack as a defence-in-depth measure.
+        // MetadataReader is non-recursive by design, but reading and processing thousands
+        // of type/method tokens from 473 DLLs still benefits from extra stack headroom.
+        GeneratedAgent result = default!;
+        Exception? threadEx = null;
 
-        void AddIfNew(string path)
-        {
-            var name = Path.GetFileName(path);
-            if (seenNames.Add(name))
-                resolverPaths.Add(path);
-        }
-
-        // 1. Input DLLs themselves (highest priority — override everything).
-        foreach (var p in dllPaths)
-            AddIfNew(p);
-
-        // 2. Sibling DLLs in each input's directory (e.g. Tekla.Structures.dll next to
-        //    Tekla.Structures.Model.dll).
-        foreach (var dir in dllPaths
-                     .Select(Path.GetDirectoryName)
-                     .Distinct(StringComparer.OrdinalIgnoreCase))
-        {
-            if (dir == null) continue;
-            try
+        var workerThread = new System.Threading.Thread(
+            () =>
             {
-                foreach (var sibling in Directory.EnumerateFiles(dir, "*.dll"))
-                    AddIfNew(sibling);
-            }
-            catch { /* skip directories we cannot read */ }
-        }
+                try { result = ReflectCore(dllPaths, agentIdOverride); }
+                catch (Exception ex) { threadEx = ex; }
+            },
+            64 * 1024 * 1024); // 64 MB — defence in depth for large product directories
 
-        // 3. Current runtime directory (covers System.Runtime, mscorlib compat stub, etc.).
-        var runtimeDir = FindReferenceAssemblyDir();
-        foreach (var f in Directory.EnumerateFiles(runtimeDir, "*.dll"))
-            AddIfNew(f);
+        workerThread.Start();
+        workerThread.Join();
 
-        // 4. All installed .NET reference packs (covers assemblies absent from the current
-        //    runtime, e.g. System.Drawing.Common 7.0 when running on net9.0).
-        //    We walk newest version first so that a higher SDK version's ref DLL wins over
-        //    an older one — OrderByDescending(Ordinal) approximates semantic ordering for the
-        //    dotnet packs naming convention.
-        foreach (var packsRoot in GetRefPackRoots())
-        {
-            if (!Directory.Exists(packsRoot)) continue;
-            try
-            {
-                // Layout: <packsRoot>/<PackName>/<Version>/ref/<tfm>/*.dll
-                foreach (var packName in Directory.EnumerateDirectories(packsRoot))
-                foreach (var versionDir in Directory.EnumerateDirectories(packName)
-                             .OrderByDescending(d => d, StringComparer.Ordinal))
-                {
-                    var refDir = Path.Combine(versionDir, "ref");
-                    if (!Directory.Exists(refDir)) continue;
-                    foreach (var tfmDir in Directory.EnumerateDirectories(refDir)
-                                 .OrderByDescending(d => d, StringComparer.Ordinal))
-                    foreach (var f in Directory.EnumerateFiles(tfmDir, "*.dll"))
-                        AddIfNew(f);
-                }
-            }
-            catch { /* skip packs we cannot read (permission errors, broken layouts) */ }
-        }
+        if (threadEx != null)
+            System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(threadEx).Throw();
 
-        var resolver = new PathAssemblyResolver(resolverPaths);
+        return result;
+    }
 
+    /// <summary>
+    /// Inner reflection loop.  Uses System.Reflection.Metadata.PEReader + MetadataReader to
+    /// enumerate types and methods directly from PE token tables — no type resolution, no SOE.
+    /// </summary>
+    private static GeneratedAgent ReflectCore(List<string> dllPaths, string? agentIdOverride)
+    {
         var commands = new List<GeneratedCommand>();
         var skills = new List<GeneratedSkill>();
         string? assemblyName = null;
         string? assemblyDescription = null;
 
-        using (var mlc = new MetadataLoadContext(resolver))
+        foreach (var dllPath in dllPaths)
         {
-            foreach (var dllPath in dllPaths)
+            using var fileStream = TryOpenFile(dllPath);
+            if (fileStream == null) continue;
+
+            PEReader peReader;
+            try { peReader = new PEReader(fileStream); }
+            catch (Exception ex)
             {
-                Assembly asm;
-                try { asm = mlc.LoadFromAssemblyPath(dllPath); }
+                Console.Error.WriteLine($"skip {dllPath}: {ex.Message}");
+                continue;
+            }
+
+            using (peReader)
+            {
+                if (!peReader.HasMetadata)
+                {
+                    Console.Error.WriteLine($"skip {dllPath}: This PE image is not a managed executable.");
+                    continue;
+                }
+
+                MetadataReader mr;
+                try { mr = peReader.GetMetadataReader(); }
                 catch (Exception ex)
                 {
-                    // Skip dlls that fail to load (native DLLs, non-managed PE files, etc.)
                     Console.Error.WriteLine($"skip {dllPath}: {ex.Message}");
                     continue;
                 }
 
-                assemblyName ??= asm.GetName().Name;
-                assemblyDescription ??= GetAssemblyDescription(asm);
+                // Read assembly identity and description from the Assembly table.
+                if (assemblyName == null && mr.IsAssembly)
+                {
+                    var asmDef = mr.GetAssemblyDefinition();
+                    assemblyName = mr.GetString(asmDef.Name);
+                    assemblyDescription = ReadAssemblyDescription(mr, asmDef);
+                }
 
-                // Load sibling XML doc file if present
+                // Load sibling XML doc file if present.
                 var xmlDocPath = Path.ChangeExtension(dllPath, ".xml");
                 var xmlDoc = File.Exists(xmlDocPath) ? LoadXmlDoc(xmlDocPath) : new Dictionary<string, string>();
 
-                // Per-namespace skill aggregating types
-                var typesByNamespace = new SortedDictionary<string, List<Type>>(StringComparer.Ordinal);
+                // Per-namespace skill aggregating type names (string, not Type — no resolution).
+                var typesByNamespace = new SortedDictionary<string, List<string>>(StringComparer.Ordinal);
 
-                foreach (var t in asm.GetTypes())
+                foreach (var typeHandle in mr.TypeDefinitions)
                 {
-                    if (!t.IsPublic || !t.IsClass && !t.IsInterface) continue;
-                    var ns = t.Namespace ?? "(global)";
-                    if (!typesByNamespace.ContainsKey(ns))
-                        typesByNamespace[ns] = new List<Type>();
-                    typesByNamespace[ns].Add(t);
+                    TypeDefinition typeDef;
+                    try { typeDef = mr.GetTypeDefinition(typeHandle); }
+                    catch { continue; }
 
-                    // Emit one command per declared public instance/static method
-                    foreach (var m in t.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly))
+                    // Only public types: TypeAttributes.Public or TypeAttributes.NestedPublic.
+                    // We skip nested types for simplicity (same as MLC DeclaredOnly behaviour).
+                    var attrs = typeDef.Attributes;
+                    var visibility = attrs & TypeAttributes.VisibilityMask;
+                    if (visibility != TypeAttributes.Public) continue;
+
+                    // Only classes and interfaces (mirrors the old IsClass/IsInterface filter).
+                    var isClass = (attrs & TypeAttributes.ClassSemanticsMask) == TypeAttributes.Class
+                                  && (attrs & TypeAttributes.Interface) == 0;
+                    var isInterface = (attrs & TypeAttributes.Interface) != 0;
+                    if (!isClass && !isInterface) continue;
+
+                    var typeName = mr.GetString(typeDef.Name);
+                    var ns = typeDef.Namespace.IsNil ? "(global)" : mr.GetString(typeDef.Namespace);
+
+                    if (!typesByNamespace.ContainsKey(ns))
+                        typesByNamespace[ns] = new List<string>();
+                    typesByNamespace[ns].Add(typeName);
+
+                    // Emit one command per declared public instance/static method.
+                    foreach (var methodHandle in typeDef.GetMethods())
                     {
-                        if (m.IsSpecialName) continue; // skip property/event accessors
-                        var memberKey = $"M:{t.FullName}.{m.Name}({string.Join(",", m.GetParameters().Select(p => p.ParameterType.FullName ?? p.ParameterType.Name))})";
+                        MethodDefinition methodDef;
+                        try { methodDef = mr.GetMethodDefinition(methodHandle); }
+                        catch { continue; }
+
+                        var methodAttrs = methodDef.Attributes;
+
+                        // Public only.
+                        if ((methodAttrs & MethodAttributes.MemberAccessMask) != MethodAttributes.Public)
+                            continue;
+
+                        // Skip special names (property getters/setters, event add/remove, etc.).
+                        if ((methodAttrs & MethodAttributes.SpecialName) != 0) continue;
+
+                        var methodName = mr.GetString(methodDef.Name);
+
+                        // Best-effort XML doc lookup — match on "TypeFullName.MethodName".
+                        var typeFullName = ns == "(global)" ? typeName : $"{ns}.{typeName}";
+                        var memberKey = $"M:{typeFullName}.{methodName}";
                         var summary = xmlDoc.GetValueOrDefault(memberKey)
-                                      ?? xmlDoc.GetValueOrDefault($"M:{t.FullName}.{m.Name}")
-                                      ?? $"{t.Name}.{m.Name}";
-                        var cmdName = ToKebab($"{t.Name}-{m.Name}");
+                                      ?? $"{typeName}.{methodName}";
+
+                        var cmdName = ToKebab($"{typeName}-{methodName}");
                         commands.Add(new GeneratedCommand
                         {
                             Name = cmdName,
@@ -161,24 +166,26 @@ public static class DllReflector
                     }
                 }
 
-                // One skill per namespace summarizing the types
-                foreach (var (ns, types) in typesByNamespace)
+                // One skill per namespace summarizing the types.
+                foreach (var (ns, typeNames) in typesByNamespace)
                 {
                     var safeNs = ToKebab(ns);
                     var skillFilename = $"{safeNs}.md";
                     if (skills.Any(s => s.Filename == skillFilename)) continue; // dedupe
+
                     var body = new System.Text.StringBuilder();
-                    body.AppendLine($"---");
+                    body.AppendLine("---");
                     body.AppendLine($"name: {ToKebab(assemblyName ?? "assembly")}-{safeNs}");
                     body.AppendLine($"description: API reference for namespace {ns} from {Path.GetFileName(dllPath)}");
-                    body.AppendLine($"---");
+                    body.AppendLine("---");
                     body.AppendLine();
                     body.AppendLine($"# {ns}");
                     body.AppendLine();
-                    foreach (var t in types.OrderBy(t => t.Name, StringComparer.Ordinal))
+                    foreach (var typeName in typeNames.OrderBy(n => n, StringComparer.Ordinal))
                     {
-                        body.AppendLine($"- **{t.Name}** ({(t.IsInterface ? "interface" : "class")})");
-                        var typeSummary = xmlDoc.GetValueOrDefault($"T:{t.FullName}");
+                        body.AppendLine($"- **{typeName}**");
+                        var typeFullName = ns == "(global)" ? typeName : $"{ns}.{typeName}";
+                        var typeSummary = xmlDoc.GetValueOrDefault($"T:{typeFullName}");
                         if (!string.IsNullOrWhiteSpace(typeSummary))
                             body.AppendLine($"  - {typeSummary}");
                     }
@@ -204,117 +211,57 @@ public static class DllReflector
     }
 
     /// <summary>
-    /// Finds a directory containing .NET reference/runtime DLLs suitable for
-    /// MetadataLoadContext. Works under both regular .NET and NativeAOT.
+    /// Opens a file for reading; returns null and prints a skip message on failure.
     /// </summary>
-    // IL3000 on typeof(object).Assembly.Location: we explicitly guard the empty-string case.
-    [UnconditionalSuppressMessage("AOT", "IL3000", Justification = "Assembly.Location guarded by empty-check; NativeAOT falls through to dotnet path probing")]
-    private static string FindReferenceAssemblyDir()
+    private static FileStream? TryOpenFile(string path)
     {
-        // 1. Assembly.Location — works in regular .NET, empty in NativeAOT.
-        var loc = typeof(object).Assembly.Location;
-        if (!string.IsNullOrEmpty(loc))
+        try { return new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read); }
+        catch (Exception ex)
         {
-            var dir = Path.GetDirectoryName(loc);
-            if (!string.IsNullOrEmpty(dir) && HasDotNetDlls(dir))
-                return dir;
+            Console.Error.WriteLine($"skip {path}: {ex.Message}");
+            return null;
         }
-
-        // 2. RuntimeEnvironment.GetRuntimeDirectory() — may work in NativeAOT on some hosts.
-        var rtDir = RuntimeEnvironment.GetRuntimeDirectory();
-        if (!string.IsNullOrEmpty(rtDir) && HasDotNetDlls(rtDir))
-            return rtDir;
-
-        // 3. Dotnet shared runtime directory (e.g. C:\Program Files\dotnet\shared\Microsoft.NETCore.App\X.Y.Z\).
-        //    Preferred over reference packs: shared contains implementation DLLs that MLC
-        //    can actually resolve cross-assembly dependencies against.
-        var sharedDir = FindDotnetSharedDir();
-        if (sharedDir != null)
-            return sharedDir;
-
-        // 4. Dotnet reference pack (C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\X.Y.Z\ref\netX.Y\).
-        var refPackDir = FindDotnetRefPackDir();
-        if (refPackDir != null)
-            return refPackDir;
-
-        // 5. Fall back to AppContext.BaseDirectory (the binary's directory in NativeAOT).
-        return AppContext.BaseDirectory;
-    }
-
-    private static bool HasDotNetDlls(string dir) =>
-        Directory.Exists(dir) && Directory.EnumerateFiles(dir, "System.Runtime.dll").Any();
-
-    private static string? FindDotnetSharedDir()
-    {
-        // Try to discover via DOTNET_ROOT env var or the standard program files path.
-        var dotnetRoot = Environment.GetEnvironmentVariable("DOTNET_ROOT")
-                         ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "dotnet");
-        var sharedBase = Path.Combine(dotnetRoot, "shared", "Microsoft.NETCore.App");
-        if (!Directory.Exists(sharedBase)) return null;
-        // Pick the highest version that exists.
-        var best = Directory.EnumerateDirectories(sharedBase)
-            .Where(d => HasDotNetDlls(d))
-            .OrderByDescending(d => d, StringComparer.Ordinal)
-            .FirstOrDefault();
-        return best;
-    }
-
-    private static string? FindDotnetRefPackDir()
-    {
-        var dotnetRoot = Environment.GetEnvironmentVariable("DOTNET_ROOT")
-                         ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "dotnet");
-        var packsBase = Path.Combine(dotnetRoot, "packs", "Microsoft.NETCore.App.Ref");
-        if (!Directory.Exists(packsBase)) return null;
-        // Each subdir is a version; each has ref/netX.Y/ inside.
-        foreach (var versionDir in Directory.EnumerateDirectories(packsBase)
-                     .OrderByDescending(d => d, StringComparer.Ordinal))
-        {
-            var refBase = Path.Combine(versionDir, "ref");
-            if (!Directory.Exists(refBase)) continue;
-            var tfm = Directory.EnumerateDirectories(refBase)
-                .OrderByDescending(d => d, StringComparer.Ordinal)
-                .FirstOrDefault();
-            if (tfm != null && HasDotNetDlls(tfm))
-                return tfm;
-        }
-        return null;
     }
 
     /// <summary>
-    /// Returns candidate root directories that may contain .NET reference pack subdirectories.
-    /// Each root, when it exists, has the layout:
-    ///   <root>/<PackName>/<Version>/ref/<tfm>/*.dll
+    /// Reads the AssemblyDescriptionAttribute value from assembly-level custom attributes
+    /// using MetadataReader (no type loading, no recursion).
     /// </summary>
-    private static IEnumerable<string> GetRefPackRoots()
+    private static string? ReadAssemblyDescription(MetadataReader mr, AssemblyDefinition asmDef)
     {
-        // Try DOTNET_ROOT first so non-standard installs are respected.
-        var dotnetRoot = Environment.GetEnvironmentVariable("DOTNET_ROOT");
-
-        if (OperatingSystem.IsWindows())
+        foreach (var caHandle in asmDef.GetCustomAttributes())
         {
-            // Custom DOTNET_ROOT takes priority.
-            if (!string.IsNullOrEmpty(dotnetRoot))
-                yield return Path.Combine(dotnetRoot, "packs");
+            try
+            {
+                var ca = mr.GetCustomAttribute(caHandle);
+                // Resolve the constructor to its declaring type name.
+                string? ctorTypeName = null;
+                if (ca.Constructor.Kind == HandleKind.MemberReference)
+                {
+                    var memberRef = mr.GetMemberReference((MemberReferenceHandle)ca.Constructor);
+                    if (memberRef.Parent.Kind == HandleKind.TypeReference)
+                    {
+                        var typeRef = mr.GetTypeReference((TypeReferenceHandle)memberRef.Parent);
+                        ctorTypeName = mr.GetString(typeRef.Name);
+                    }
+                }
+                else if (ca.Constructor.Kind == HandleKind.MethodDefinition)
+                {
+                    var methodDef = mr.GetMethodDefinition((MethodDefinitionHandle)ca.Constructor);
+                    var typeDef = mr.GetTypeDefinition(methodDef.GetDeclaringType());
+                    ctorTypeName = mr.GetString(typeDef.Name);
+                }
 
-            // Standard 64-bit and 32-bit program-files locations.
-            yield return @"C:\Program Files\dotnet\packs";
-            yield return @"C:\Program Files (x86)\dotnet\packs";
-        }
-        else if (OperatingSystem.IsLinux())
-        {
-            if (!string.IsNullOrEmpty(dotnetRoot))
-                yield return Path.Combine(dotnetRoot, "packs");
+                if (ctorTypeName != "AssemblyDescriptionAttribute") continue;
 
-            yield return "/usr/share/dotnet/packs";
-            yield return "/usr/lib/dotnet/packs";
+                // The attribute blob: prolog (2 bytes 0x01 0x00) + UTF-8 length-prefixed string.
+                var value = ca.DecodeValue(new SimpleAttributeDecoder());
+                if (value.FixedArguments.Length > 0 && value.FixedArguments[0].Value is string s)
+                    return s;
+            }
+            catch { /* skip unreadable attribute */ }
         }
-        else if (OperatingSystem.IsMacOS())
-        {
-            if (!string.IsNullOrEmpty(dotnetRoot))
-                yield return Path.Combine(dotnetRoot, "packs");
-
-            yield return "/usr/local/share/dotnet/packs";
-        }
+        return null;
     }
 
     private static List<string> ResolveGlobs(string[] globs)
@@ -341,24 +288,19 @@ public static class DllReflector
     private static Dictionary<string, string> LoadXmlDoc(string path)
     {
         var dict = new Dictionary<string, string>(StringComparer.Ordinal);
-        var doc = XDocument.Load(path);
-        foreach (var member in doc.Descendants("member"))
+        try
         {
-            var name = (string?)member.Attribute("name");
-            if (string.IsNullOrEmpty(name)) continue;
-            var summary = member.Element("summary")?.Value.Trim().Replace('\n', ' ').Replace('\r', ' ');
-            if (!string.IsNullOrEmpty(summary)) dict[name] = summary;
+            var doc = XDocument.Load(path);
+            foreach (var member in doc.Descendants("member"))
+            {
+                var name = (string?)member.Attribute("name");
+                if (string.IsNullOrEmpty(name)) continue;
+                var summary = member.Element("summary")?.Value.Trim().Replace('\n', ' ').Replace('\r', ' ');
+                if (!string.IsNullOrEmpty(summary)) dict[name] = summary;
+            }
         }
+        catch { /* skip malformed XML docs */ }
         return dict;
-    }
-
-    private static string? GetAssemblyDescription(Assembly asm)
-    {
-        var attrs = asm.GetCustomAttributesData()
-            .FirstOrDefault(a => a.AttributeType.FullName == "System.Reflection.AssemblyDescriptionAttribute");
-        if (attrs != null && attrs.ConstructorArguments.Count > 0)
-            return attrs.ConstructorArguments[0].Value as string;
-        return null;
     }
 
     private static string ToKebab(string s)
@@ -385,5 +327,21 @@ public static class DllReflector
             }
         }
         return sb.ToString().Trim('-');
+    }
+
+    /// <summary>
+    /// Minimal ICustomAttributeTypeProvider implementation required by
+    /// MetadataReader.CustomAttribute.DecodeValue() to decode fixed string arguments.
+    /// </summary>
+    private sealed class SimpleAttributeDecoder : ICustomAttributeTypeProvider<object>
+    {
+        public object GetPrimitiveType(PrimitiveTypeCode typeCode) => typeCode;
+        public object GetSystemType() => typeof(Type);
+        public object GetSZArrayType(object elementType) => Array.Empty<object>();
+        public object GetTypeFromDefinition(MetadataReader reader, TypeDefinitionHandle handle, byte rawTypeKind) => handle;
+        public object GetTypeFromReference(MetadataReader reader, TypeReferenceHandle handle, byte rawTypeKind) => handle;
+        public object GetTypeFromSerializedName(string name) => name;
+        public PrimitiveTypeCode GetUnderlyingEnumType(object type) => PrimitiveTypeCode.Int32;
+        public bool IsSystemType(object type) => type is Type;
     }
 }
