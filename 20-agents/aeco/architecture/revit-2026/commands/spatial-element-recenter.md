@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Moves the spatial element to its default location.
+SpatialElement.Recenter

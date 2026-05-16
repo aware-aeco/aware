@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Returns the document's active edit mode. Returns None if no edit mode is currently active.
+Document.GetActiveEditMode

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Checks whether the Material Library is available in the installed Revit.
+OptionalFunctionalityUtils.IsMaterialLibraryAvailable

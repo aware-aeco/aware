@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Get the number of knots in the u-direction.
+NurbsSurfaceData.GetNumberOfKnotsU

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Get the number of weights.
+NurbsSurfaceData.GetNumberOfWeights

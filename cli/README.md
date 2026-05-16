@@ -211,7 +211,7 @@ aware build agent --from-python requests
 **Tier C — fully implemented via C# sidecar (v0.5.1 + v0.5.2):**
 
 ```bash
-# .NET DLL reflection (v0.5.1)
+# .NET DLL reflection (v0.5.1) — local install, escape hatch
 aware build agent --from-dlls "C:/Program Files/Tekla/bin/*.dll"
 
 # COM TypeLib introspection — Windows only (v0.5.2)
@@ -223,6 +223,16 @@ aware build agent --from-headers "/usr/include/foo/*.h"
 # Decompile + reflect NuGet package (v0.5.1; needs ilspycmd)
 aware build agent --decompile --from-nuget Some.Closed.Pkg@1.0.0
 ```
+
+**Prefer NuGet `--from-nuget` over `--from-dlls` when both are an option.**
+NuGet packages with `ref/<tfm>/` ship vendor-curated **reference
+assemblies** — metadata-only DLLs that contain only the published
+public-API contract, no internals, no method bodies. The aware builder
+prefers `ref/` over `lib/` automatically. Local install DLLs work too
+(`--from-dlls`) but reflect from the runtime DLLs, which include
+internal types the vendor never intended as a contract. Use
+`--from-dlls` when the product isn't on NuGet, when the NuGet version
+lags the installed one, or when you need a specific local build.
 
 All four tier-C sources invoke the `aware-sidecar` companion binary. See the
 sidecar section below for install and build instructions.

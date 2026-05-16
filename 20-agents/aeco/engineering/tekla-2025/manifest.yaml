@@ -2,42 +2,39 @@ agent:        tekla-2025
 version:      2025.0.0
 display-name: Tekla Structures 2025 (raw)
 description: |
-  Auto-generated agent from Tekla Structures 2025.0's
-  `Tekla.Structures.Model.dll` via `aware build agent --from-dlls`. Pure
-  API-surface reflection — method names, parameter types, and lifecycle
-  markers only. No vendor XML doc summaries (queued for v0.6.2).
+  Auto-generated agent from `Tekla.Structures.Model@2025.0.0` on NuGet
+  via `aware build agent --from-nuget`. Reflects the vendor-curated
+  reference assemblies (the public-API contract — `ref/` DLLs) of
+  Trimble's Tekla Open API.
 
   Sibling to the hand-curated `tekla` agent. The curated one has 31
-  hand-written skills covering Tekla-specific gotchas. This one is 18
-  skills × 3,004 commands covering the entire public API surface — no
-  judgment about which APIs matter, no Tekla-specific lore.
+  hand-written skills covering Tekla-specific gotchas. This one is the
+  full reflected public API surface — no judgment, no Tekla-specific
+  lore, just every public method/type the SDK exposes.
 
-  Trimble's Tekla Open API is documented at https://developer.tekla.com/.
-  The proprietary `.dll` is not redistributed; only its public reflection
-  metadata is.
-
-  Marked `stateful: false` because raw reflection has no way to identify
-  the session-start method; whoever curates this into a workflow-ready
-  agent will flip one command's lifecycle to `start` and the rest to
-  `single` / `child` / `stop` as appropriate.
+  Marked `stateful: false` because raw reflection has no way to
+  identify the session-start method; curators flip lifecycles when
+  refining.
 
 stateful: false
 
 vendor:   trimble
 license:  Apache-2.0
 homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/engineering/tekla-2025
-keywords: [aeco, engineering, structural, bim, tekla, trimble, generated, raw, 2025]
+keywords: [aeco, engineering, structural, bim, tekla, trimble, generated, raw, 2025, nuget]
 
 provenance:
   generated-by: aware-agent-builder
   generator-version: 0.7.0
   source:
-    type: dlls
-    via: aware-sidecar
-  generated-at: 2026-05-16T16:37:45.162238400+00:00
+    license: eula.txt
+    package: Tekla.Structures.Model
+    type: nuget
+    version: 2025.0.0
+  generated-at: 2026-05-16T17:19:12.281297800+00:00
 transport:
   cli:
-    binary: aware-tekla-2025
+    binary: aware-tekla-2025-nuget
 commands:
   assembly-add:
     lifecycle: single
@@ -47,49 +44,49 @@ commands:
     description: Assembly.CompareTo
   assembly-delete:
     lifecycle: single
-    description: Explodes the assembly instance.
+    description: Assembly.Delete
   assembly-delete-user-defined-coord-sys:
     lifecycle: single
-    description: Deletes the assembly's user defined coordinate system, if it has one.
+    description: Assembly.DeleteUserDefinedCoordSys
   assembly-get-assembly:
     lifecycle: single
-    description: Returns the assembly instance the assembly belongs to (null if none).
+    description: Assembly.GetAssembly
   assembly-get-assembly-type:
     lifecycle: single
-    description: Returns the type of the assembly.
+    description: Assembly.GetAssemblyType
   assembly-get-father-pour:
     lifecycle: single
-    description: Returns the pour that the assembly is directly associated to.
+    description: Assembly.GetFatherPour
   assembly-get-father-pour-unit:
     lifecycle: single
-    description: Returns the pour unit that the bolt group is associated to.
+    description: Assembly.GetFatherPourUnit
   assembly-get-main-object:
     lifecycle: single
-    description: Selects and returns the main object of the assembly or null if none.
+    description: Assembly.GetMainObject
   assembly-get-main-part:
     lifecycle: single
-    description: Selects and returns the main part of the assembly or null if none.
+    description: Assembly.GetMainPart
   assembly-get-secondaries:
     lifecycle: single
-    description: Selects and returns all the secondary assemblables belonging to the assembly. The method replaces the             old GetObjects() method. Notice that the number of secondaries is limited to 2048.
+    description: Assembly.GetSecondaries
   assembly-get-sub-assemblies:
     lifecycle: single
-    description: Selects and returns a list of subassemblies belonging to the assembly.
+    description: Assembly.GetSubAssemblies
   assembly-has-user-defined-coord-sys:
     lifecycle: single
-    description: Returns whether the assembly has a user defined coordinate system.
+    description: Assembly.HasUserDefinedCoordSys
   assembly-insert:
     lifecycle: single
-    description: Inserts the  instance in the model.             At the moment only rebar assemblies can be inserted.             The main object of the assembly must be a  or .             If the main rebar is not set (null), the main rebar will be automatically set to the secondary rebar with the biggest weight.
+    description: Assembly.Insert
   assembly-modify:
     lifecycle: single
-    description: Modifies the assembly instance in the model.
+    description: Assembly.Modify
   assembly-remove:
     lifecycle: single
     description: Assembly.Remove
   assembly-select:
     lifecycle: single
-    description: Selects the assembly instance from the model. The identifier of the instance must be set.
+    description: Assembly.Select
   assembly-set-main-object:
     lifecycle: single
     description: Assembly.SetMainObject
@@ -125,43 +122,43 @@ commands:
     description: BasePoint.ConvertToBasePoint
   base-point-delete:
     lifecycle: single
-    description: Deletes the base point from the model database.
+    description: BasePoint.Delete
   base-point-get-compound-plane-angle-latitude:
     lifecycle: single
-    description: Gets the Latitude as a compound plane angle.
+    description: BasePoint.GetCompoundPlaneAngleLatitude
   base-point-get-compound-plane-angle-longitude:
     lifecycle: single
-    description: Gets the Longitude as a compound plane angle.
+    description: BasePoint.GetCompoundPlaneAngleLongitude
   base-point-get-coordinate-system:
     lifecycle: single
     description: BasePoint.GetCoordinateSystem
   base-point-insert:
     lifecycle: single
-    description: Inserts the base point into the model database.
+    description: BasePoint.Insert
   base-point-modify:
     lifecycle: single
-    description: Modifies the base point in the model database.
+    description: BasePoint.Modify
   base-point-set-as-current:
     lifecycle: single
-    description: Sets this base point as current base point point until the token is disposed of.             Can be used for example when retrieving report values according to this base point.
+    description: BasePoint.SetAsCurrent
   base-rebar-modifier-delete:
     lifecycle: single
-    description: Deletes the rebar modifier from the model database.
+    description: BaseRebarModifier.Delete
   base-rebar-modifier-insert:
     lifecycle: single
-    description: Inserts the rebar modifier into the model database.
+    description: BaseRebarModifier.Insert
   base-rebar-modifier-modify:
     lifecycle: single
-    description: Modifies the existing rebar modifier in the model database to match the current one.
+    description: BaseRebarModifier.Modify
   base-rebar-modifier-select:
     lifecycle: single
-    description: Selects the rebar modifier from the model database. The identifier must be set.
+    description: BaseRebarModifier.Select
   base-weld-get-solid:
     lifecycle: single
-    description: Method for getting the weld solid.
+    description: BaseWeld.GetSolid
   base-weld-get-weld-geometries:
     lifecycle: single
-    description: Method for getting weld seam geometries.             Every result represents one individual seam geometry in current weld.
+    description: BaseWeld.GetWeldGeometries
   batch-editor-handler-db-operation:
     lifecycle: single
     description: BatchEditorHandler.DbOperation
@@ -170,25 +167,25 @@ commands:
     description: BatchEditorHandler.RunCommand
   beam-delete:
     lifecycle: single
-    description: Deletes the beam instance with the given identifier from the model database.
+    description: Beam.Delete
   beam-insert:
     lifecycle: single
-    description: Inserts the beam into the model database. All the attributes must be set.
+    description: Beam.Insert
   beam-modify:
     lifecycle: single
-    description: Modifies the existing beam in the model database to match the current one.
+    description: Beam.Modify
   beam-select:
     lifecycle: single
-    description: Selects a beam from the model database. The beam identifier must be set.
+    description: Beam.Select
   bend-surface-node-accept-visitor:
     lifecycle: single
     description: BendSurfaceNode.AcceptVisitor
   bend-surface-node-clone:
     lifecycle: single
-    description: Creates a new object that is a copy of the current instance.
+    description: BendSurfaceNode.Clone
   bent-plate-delete:
     lifecycle: single
-    description: Deletes the bent plate with this instance identifier from the model database.
+    description: BentPlate.Delete
   bent-plate-geometry-solver-add-leg:
     lifecycle: single
     description: BentPlateGeometrySolver.AddLeg
@@ -224,13 +221,13 @@ commands:
     description: BentPlateGeometrySolver.Split
   bent-plate-insert:
     lifecycle: single
-    description: Inserts the bent plate into the model database. All the attributes must be set and geometry should have at least one bend.
+    description: BentPlate.Insert
   bent-plate-modify:
     lifecycle: single
-    description: Modifies the bent plate object values in the database.
+    description: BentPlate.Modify
   bent-plate-select:
     lifecycle: single
-    description: Selects a bent plate object from the database.
+    description: BentPlate.Select
   bent-plate-testing-tool-create-by-faces:
     lifecycle: single
     description: BentPlateTestingTool.CreateByFaces
@@ -254,25 +251,25 @@ commands:
     description: BoltArray.AddBoltDistY
   bolt-array-delete:
     lifecycle: single
-    description: Deletes the bolt array instance with the given ID from the model database.
+    description: BoltArray.Delete
   bolt-array-get-bolt-dist-x:
     lifecycle: single
     description: BoltArray.GetBoltDistX
   bolt-array-get-bolt-dist-xcount:
     lifecycle: single
-    description: Returns the amount of X distances in the bolt array.
+    description: BoltArray.GetBoltDistXCount
   bolt-array-get-bolt-dist-y:
     lifecycle: single
     description: BoltArray.GetBoltDistY
   bolt-array-get-bolt-dist-ycount:
     lifecycle: single
-    description: Returns the amount of Y distances in the bolt array.
+    description: BoltArray.GetBoltDistYCount
   bolt-array-insert:
     lifecycle: single
-    description: Inserts the bolt array into the model database.
+    description: BoltArray.Insert
   bolt-array-modify:
     lifecycle: single
-    description: Modifies the existing bolt array in the model database to match the current one.             Note, the IDs of Part To Bolt To, Part To Be Bolted and OtherParts cannot be modified.
+    description: BoltArray.Modify
   bolt-array-remove-bolt-dist-x:
     lifecycle: single
     description: BoltArray.RemoveBoltDistX
@@ -281,7 +278,7 @@ commands:
     description: BoltArray.RemoveBoltDistY
   bolt-array-select:
     lifecycle: single
-    description: Selects a bolt array from the model database. The ID must be set.
+    description: BoltArray.Select
   bolt-array-set-bolt-dist-x:
     lifecycle: single
     description: BoltArray.SetBoltDistX
@@ -290,31 +287,31 @@ commands:
     description: BoltArray.SetBoltDistY
   bolt-circle-delete:
     lifecycle: single
-    description: Deletes the bolt circle instance with the given ID from the model database.
+    description: BoltCircle.Delete
   bolt-circle-insert:
     lifecycle: single
-    description: Inserts the bolt circle into the model database. All the attributes must be set.
+    description: BoltCircle.Insert
   bolt-circle-modify:
     lifecycle: single
-    description: Modifies the existing bolt circle in the model database to match the current one.             Note, the IDs of Part To Bolt To, Part To Be Bolted and OtherParts cannot be modified.
+    description: BoltCircle.Modify
   bolt-circle-select:
     lifecycle: single
-    description: Selects a bolt circle from the model database. The ID must be set.
+    description: BoltCircle.Select
   bolt-group-add-other-part-to-bolt:
     lifecycle: single
     description: BoltGroup.AddOtherPartToBolt
   bolt-group-get-father-pour:
     lifecycle: single
-    description: Returns the pour that the bolt group is associated to.
+    description: BoltGroup.GetFatherPour
   bolt-group-get-father-pour-unit:
     lifecycle: single
-    description: Returns the pour unit that the bolt group is associated to.
+    description: BoltGroup.GetFatherPourUnit
   bolt-group-get-other-parts-to-bolt:
     lifecycle: single
-    description: Returns an array list containing all the other parts that are bolted.
+    description: BoltGroup.GetOtherPartsToBolt
   bolt-group-get-solid:
     lifecycle: single
-    description: Method for getting the solid information of the bolt group.
+    description: BoltGroup.GetSolid
   bolt-group-remove-other-part-to-bolt:
     lifecycle: single
     description: BoltGroup.RemoveOtherPartToBolt
@@ -326,97 +323,97 @@ commands:
     description: BoltXYList.AddBoltDistY
   bolt-xylist-delete:
     lifecycle: single
-    description: Deletes the bolt XY list instance with the given ID from the model database.
+    description: BoltXYList.Delete
   bolt-xylist-get-bolt-dist-x:
     lifecycle: single
     description: BoltXYList.GetBoltDistX
   bolt-xylist-get-bolt-dist-xcount:
     lifecycle: single
-    description: Returns the amount of X distances in the bolt XY list.
+    description: BoltXYList.GetBoltDistXCount
   bolt-xylist-get-bolt-dist-y:
     lifecycle: single
     description: BoltXYList.GetBoltDistY
   bolt-xylist-get-bolt-dist-ycount:
     lifecycle: single
-    description: Returns the amount of Y distances in the bolt XY list.
+    description: BoltXYList.GetBoltDistYCount
   bolt-xylist-insert:
     lifecycle: single
-    description: Inserts the bolt XY list into the model database. All the attributes must be set.
+    description: BoltXYList.Insert
   bolt-xylist-modify:
     lifecycle: single
-    description: Modifies the existing bolt XY list in the model database to match the current one.             Note, the IDs of Part To Bolt To, Part To Be Bolted and OtherParts cannot be modified.
+    description: BoltXYList.Modify
   bolt-xylist-select:
     lifecycle: single
-    description: Selects a bolt XY list from the model database. The ID must be set.
+    description: BoltXYList.Select
   boolean-part-delete:
     lifecycle: single
-    description: Deletes the boolean part instance with the given ID from the model database.
+    description: BooleanPart.Delete
   boolean-part-insert:
     lifecycle: single
-    description: Inserts the boolean part into the model database. All the attributes must be set.             The operative part is overwritten by a copy of the original part.
+    description: BooleanPart.Insert
   boolean-part-modify:
     lifecycle: single
-    description: Currently it is not possible to modify the boolean part as there is nothing             that can be modified for it. Calling this function will actually call modify for              the operative part member.
+    description: BooleanPart.Modify
   boolean-part-select:
     lifecycle: single
-    description: Selects a boolean part from the model database. The part ID must be set.
+    description: BooleanPart.Select
   boolean-part-set-operative-part:
     lifecycle: single
     description: BooleanPart.SetOperativePart
   brep-delete:
     lifecycle: single
-    description: Deletes the brep instance with the given identifier from the model database.
+    description: Brep.Delete
   brep-insert:
     lifecycle: single
-    description: Inserts the brep into the model database. All the attributes must be set.
+    description: Brep.Insert
   brep-modify:
     lifecycle: single
-    description: Modifies the existing brep in the model database to match the current one.
+    description: Brep.Modify
   brep-select:
     lifecycle: single
-    description: Selects a brep from the model database. The brep identifier must be set.
+    description: Brep.Select
   building-delete:
     lifecycle: single
-    description: Deletes the Building Hierarchy object instance with the given identifier from the model database.
+    description: Building.Delete
   building-get-buildings:
     lifecycle: single
-    description: Gets child buildings (building sections) belonging to this building.
+    description: Building.GetBuildings
   building-get-solid:
     lifecycle: single
-    description: Returns the solid of the pour object.
+    description: Building.GetSolid
   building-get-spaces:
     lifecycle: single
-    description: Gets all spaces belonging to this building.
+    description: Building.GetSpaces
   building-get-storeys:
     lifecycle: single
-    description: Gets all storeys belonging to this building.
+    description: Building.GetStoreys
   building-hierarchy-item-get-guid:
     lifecycle: single
-    description: Gets Guid of Building Hierarchy object.
+    description: BuildingHierarchyItem.GetGuid
   building-hierarchy-item-hide-assigned-objects:
     lifecycle: single
-    description: Hide assigned objects in 3d view.
+    description: BuildingHierarchyItem.HideAssignedObjects
   building-hierarchy-item-select-assigned-objects:
     lifecycle: single
-    description: Select assigned objects in 3d view.
+    description: BuildingHierarchyItem.SelectAssignedObjects
   building-hierarchy-item-set-guid:
     lifecycle: single
     description: BuildingHierarchyItem.SetGuid
   building-hierarchy-item-show-assigned-objects:
     lifecycle: single
-    description: Show previously hidden assigned objects in 3d view.
+    description: BuildingHierarchyItem.ShowAssignedObjects
   building-hierarchy-item-show-only-assigned-objects:
     lifecycle: single
-    description: Show only assigned objects in 3d view.
+    description: BuildingHierarchyItem.ShowOnlyAssignedObjects
   building-insert:
     lifecycle: single
-    description: Inserts this Building Hierarchy object into model database. All the attributes must be set.
+    description: Building.Insert
   building-modify:
     lifecycle: single
-    description: Modifies the existing Building Hierarchy object in the model database to match the current one.
+    description: Building.Modify
   building-select:
     lifecycle: single
-    description: Selects the Building Hierarchy object from model database. The object identifier must be set.
+    description: Building.Select
   byte-buffer-get:
     lifecycle: single
     description: ByteBuffer.Get
@@ -488,7 +485,7 @@ commands:
     description: ByteBuffer.ReverseBytes
   cdelegate-setter-reset-instance:
     lifecycle: single
-    description: Resets  instance.
+    description: CDelegateSetter.ResetInstance
   cdelegate-setter-set-instance-for-unit-testing:
     lifecycle: single
     description: CDelegateSetter.SetInstanceForUnitTesting
@@ -512,10 +509,10 @@ commands:
     description: CDelegateWrapper.AutomatedTesting_BroadcastMessage
   cdelegate-wrapper-cancel-change-detection-init:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: CDelegateWrapper.CancelChangeDetectionInit
   cdelegate-wrapper-change-detection-init-in-progress:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: CDelegateWrapper.ChangeDetectionInitInProgress
   cdelegate-wrapper-check-abmnumbering:
     lifecycle: single
     description: CDelegateWrapper.CheckABMNumbering
@@ -533,7 +530,7 @@ commands:
     description: CDelegateWrapper.ConvertIFC4toSemantic
   cdelegate-wrapper-convert-reference-models:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: CDelegateWrapper.ConvertReferenceModels
   cdelegate-wrapper-convert-ts-guid-to-ifc-guid:
     lifecycle: single
     description: CDelegateWrapper.ConvertTsGuidToIfcGuid
@@ -614,7 +611,7 @@ commands:
     description: CDelegateWrapper.ExportCalculateContourPolygon
   cdelegate-wrapper-export-calculate-pour-units:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: CDelegateWrapper.ExportCalculatePourUnits
   cdelegate-wrapper-export-change-manager-allow-numbering:
     lifecycle: single
     description: CDelegateWrapper.ExportChangeManagerAllowNumbering
@@ -629,13 +626,13 @@ commands:
     description: CDelegateWrapper.ExportCleanDrawingFiles
   cdelegate-wrapper-export-clear-all-temporary-states:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: CDelegateWrapper.ExportClearAllTemporaryStates
   cdelegate-wrapper-export-clear-attribute-file-cache:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: CDelegateWrapper.ExportClearAttributeFileCache
   cdelegate-wrapper-export-clear-filter-cache:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: CDelegateWrapper.ExportClearFilterCache
   cdelegate-wrapper-export-clear-temporary-color:
     lifecycle: single
     description: CDelegateWrapper.ExportClearTemporaryColor
@@ -1067,7 +1064,7 @@ commands:
     description: CDelegateWrapper.ExportGetIntersectionSolid
   cdelegate-wrapper-export-get-is-numbering-allowed:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: CDelegateWrapper.ExportGetIsNumberingAllowed
   cdelegate-wrapper-export-get-modification-stamp:
     lifecycle: single
     description: CDelegateWrapper.ExportGetModificationStamp
@@ -1241,10 +1238,10 @@ commands:
     description: CDelegateWrapper.ExportHierarchicObjectChildrenOperation
   cdelegate-wrapper-export-init-filter-cache:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: CDelegateWrapper.ExportInitFilterCache
   cdelegate-wrapper-export-initialize-component-stacks:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: CDelegateWrapper.ExportInitializeComponentStacks
   cdelegate-wrapper-export-insert-view:
     lifecycle: single
     description: CDelegateWrapper.ExportInsertView
@@ -1685,7 +1682,7 @@ commands:
     description: CDelegateWrapper.ExportSetTemporaryVisibility
   cdelegate-wrapper-export-set-transform-plane-as-work-floor:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: CDelegateWrapper.ExportSetTransformPlaneAsWorkFloor
   cdelegate-wrapper-export-set-transformation-plane:
     lifecycle: single
     description: CDelegateWrapper.ExportSetTransformationPlane
@@ -1746,9 +1743,6 @@ commands:
   cdelegate-wrapper-export-undo-operation:
     lifecycle: single
     description: CDelegateWrapper.ExportUndoOperation
-  cdelegate-wrapper-export-unhide-parts:
-    lifecycle: single
-    description: DO NOT USE! For internal usage only!
   cdelegate-wrapper-export-update-shape-metadata:
     lifecycle: single
     description: CDelegateWrapper.ExportUpdateShapeMetadata
@@ -1901,7 +1895,7 @@ commands:
     description: CDelegateWrapper.IsFinishAccepted
   cdelegate-wrapper-is-macro-running:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: CDelegateWrapper.IsMacroRunning
   cdelegate-wrapper-is-material-accepted:
     lifecycle: single
     description: CDelegateWrapper.IsMaterialAccepted
@@ -1922,10 +1916,10 @@ commands:
     description: CDelegateWrapper.IsValidProfile
   cdelegate-wrapper-launch-external-reference-model-comparison-sets-dialog:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: CDelegateWrapper.LaunchExternalReferenceModelComparisonSetsDialog
   cdelegate-wrapper-launch-external-reference-model-comparison-tolerances-dialog:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: CDelegateWrapper.LaunchExternalReferenceModelComparisonTolerancesDialog
   cdelegate-wrapper-process-abmnumbering:
     lifecycle: single
     description: CDelegateWrapper.ProcessABMNumbering
@@ -1959,6 +1953,9 @@ commands:
   cdelegate-wrapper-select-objects-in-external-reference-model:
     lifecycle: single
     description: CDelegateWrapper.SelectObjectsInExternalReferenceModel
+  cdelegate-wrapper-send-abmnumbering:
+    lifecycle: single
+    description: CDelegateWrapper.SendABMNumbering
   cdelegate-wrapper-send-custom-parts-to-abmnumbering:
     lifecycle: single
     description: CDelegateWrapper.SendCustomPartsToABMNumbering
@@ -1988,7 +1985,7 @@ commands:
     description: CDelegateWrapper.StartLiveSharing
   cdelegate-wrapper-stop-external-reference-model-change-detection:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: CDelegateWrapper.StopExternalReferenceModelChangeDetection
   cdelegate-wrapper-stop-live-sharing:
     lifecycle: single
     description: CDelegateWrapper.StopLiveSharing
@@ -2003,7 +2000,7 @@ commands:
     description: CDelegateWrapper.WriteEventToDatabase
   cdelegate-wrapper-write-trb-created-event:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: CDelegateWrapper.WriteTrbCreatedEvent
   cdelegate-wrapper-zoom-to-external-reference-model:
     lifecycle: single
     description: CDelegateWrapper.ZoomToExternalReferenceModel
@@ -2018,52 +2015,52 @@ commands:
     description: ChangeManager.AllowSave
   circle-rebar-group-delete:
     lifecycle: single
-    description: Deletes the circle rebar group instance with the given identifier from the model database.
+    description: CircleRebarGroup.Delete
   circle-rebar-group-insert:
     lifecycle: single
-    description: Inserts the circle rebar group into the model database. All the attributes must be set.
+    description: CircleRebarGroup.Insert
   circle-rebar-group-modify:
     lifecycle: single
-    description: Modifies the existing circle rebar group in the model database to match the current one.
+    description: CircleRebarGroup.Modify
   circle-rebar-group-select:
     lifecycle: single
-    description: Selects a circle rebar group from the model database. The identifier of the circle rebar group must be set.
+    description: CircleRebarGroup.Select
   clash-check-handler-get-intersection-bounding-boxes:
     lifecycle: single
     description: ClashCheckHandler.GetIntersectionBoundingBoxes
   clash-check-handler-run-clash-check:
     lifecycle: single
-    description: Starts the clash checking. Uses advanced options sa option values.
+    description: ClashCheckHandler.RunClashCheck
   clash-check-handler-run-clash-check-with-options:
     lifecycle: single
     description: ClashCheckHandler.RunClashCheckWithOptions
   clash-check-handler-stop-clash-check:
     lifecycle: single
-    description: Stops the clash checking.
+    description: ClashCheckHandler.StopClashCheck
   clash-cheker-event-get-clash-check-handler:
     lifecycle: single
-    description: Returns a new clash check handler.
+    description: ClashChekerEvent.GetClashCheckHandler
   clip-plane-collection-copy-to:
     lifecycle: single
     description: ClipPlaneCollection.CopyTo
   clip-plane-collection-get-enumerator:
     lifecycle: single
-    description: Returns an enumerator that iterates through a collection.
+    description: ClipPlaneCollection.GetEnumerator
   clip-plane-delete:
     lifecycle: single
-    description: Deletes the clip plane from the application view.             The application view must be visible.
+    description: ClipPlane.Delete
   clip-plane-insert:
     lifecycle: single
-    description: Creates a new clip plane to the application view.             The application view must be visible.
+    description: ClipPlane.Insert
   clip-plane-modify:
     lifecycle: single
-    description: Modifies the clip plane position in the application view.             The application view must be visible.
+    description: ClipPlane.Modify
   co-task-mem1-dispose:
     lifecycle: single
-    description: Disposes the object
+    description: CoTaskMem`1.Dispose
   co-task-mem1-get-pointer:
     lifecycle: single
-    description: Gets an unsafe pointer to the allocated memory.
+    description: CoTaskMem`1.GetPointer
   color-add-alpha:
     lifecycle: single
     description: Color.AddAlpha
@@ -2126,19 +2123,19 @@ commands:
     description: Command.StartCommand
   component-delete:
     lifecycle: single
-    description: Deletes the component instance with the given ID from the model database.
+    description: Component.Delete
   component-get-assembly:
     lifecycle: single
-    description: Returns the assembly that the component belongs to.
+    description: Component.GetAssembly
   component-get-booleans:
     lifecycle: single
-    description: Returns an enumerator of all the connected boolean objects.
+    description: Component.GetBooleans
   component-get-component-input:
     lifecycle: single
-    description: Returns the component input object.
+    description: Component.GetComponentInput
   component-get-components:
     lifecycle: single
-    description: Returns an enumerator of all the connected components.
+    description: Component.GetComponents
   component-input-add-input-object:
     lifecycle: single
     description: ComponentInput.AddInputObject
@@ -2159,16 +2156,16 @@ commands:
     description: ComponentInput.CopyTo
   component-input-get-enumerator:
     lifecycle: single
-    description: Returns an enumerator that iterates through a collection.
+    description: ComponentInput.GetEnumerator
   component-insert:
     lifecycle: single
-    description: Inserts the component into the model database. The component input needs to be set.
+    description: Component.Insert
   component-modify:
     lifecycle: single
-    description: Modifies the existing component in the model database to match the current one.
+    description: Component.Modify
   component-select:
     lifecycle: single
-    description: Selects a component from the model database. The component ID must be set.
+    description: Component.Select
   component-set-component-input:
     lifecycle: single
     description: Component.SetComponentInput
@@ -2177,7 +2174,7 @@ commands:
     description: ConicalSurfaceNode.AcceptVisitor
   conical-surface-node-clone:
     lifecycle: single
-    description: Creates a new object that is a copy of the current instance.
+    description: ConicalSurfaceNode.Clone
   connect-get-project-id:
     lifecycle: single
     description: Connect.GetProjectId
@@ -2186,22 +2183,22 @@ commands:
     description: Connect.GetUploads
   connection-delete:
     lifecycle: single
-    description: Deletes the connection instance with the given ID from the model database.
+    description: Connection.Delete
   connection-get-primary-object:
     lifecycle: single
-    description: Returns the primary object of the connection.
+    description: Connection.GetPrimaryObject
   connection-get-secondary-objects:
     lifecycle: single
-    description: Returns the secondary objects.
+    description: Connection.GetSecondaryObjects
   connection-insert:
     lifecycle: single
-    description: Inserts the connection into the model database. All the attributes must be set.
+    description: Connection.Insert
   connection-modify:
     lifecycle: single
-    description: Modifies the existing connection in the model database to match the current one.
+    description: Connection.Modify
   connection-select:
     lifecycle: single
-    description: Selects a connection from the model database. The connection ID must be set.
+    description: Connection.Select
   connection-set-primary-object:
     lifecycle: single
     description: Connection.SetPrimaryObject
@@ -2216,16 +2213,16 @@ commands:
     description: ConnectiveGeometry.GetConnection
   connective-geometry-get-geometry-enumerator:
     lifecycle: single
-    description: Gets a new geometry sections enumerator for enumerating through the geometry sections.
+    description: ConnectiveGeometry.GetGeometryEnumerator
   connective-geometry-get-geometry-leg-sections:
     lifecycle: single
-    description: Gets geometry end GeometrySections which are possible to remove.
+    description: ConnectiveGeometry.GetGeometryLegSections
   connective-geometry-get-neighbor-sections:
     lifecycle: single
     description: ConnectiveGeometry.GetNeighborSections
   connective-geometry-is-empty:
     lifecycle: single
-    description: Checks whether the geometry is degenerate
+    description: ConnectiveGeometry.IsEmpty
   contour-add-contour-point:
     lifecycle: single
     description: Contour.AddContourPoint
@@ -2234,7 +2231,7 @@ commands:
     description: Contour.CalculatePolygon
   contour-get-polycurve:
     lifecycle: single
-    description: Gets the contour geometry as Polycurve
+    description: Contour.GetPolycurve
   contour-operation-get-part-contour:
     lifecycle: single
     description: ContourOperation.GetPartContour
@@ -2246,175 +2243,175 @@ commands:
     description: ContourPlate.AddContourPoint
   contour-plate-delete:
     lifecycle: single
-    description: Deletes the contour plate instance with the given identifier from the model database.
+    description: ContourPlate.Delete
   contour-plate-get-contour-polycurve:
     lifecycle: single
-    description: Get contour as polycurve
+    description: ContourPlate.GetContourPolycurve
   contour-plate-insert:
     lifecycle: single
-    description: Inserts the contour plate into the model database. All the attributes must be set.
+    description: ContourPlate.Insert
   contour-plate-modify:
     lifecycle: single
-    description: Modifies the existing contour plate in the model database to match the current one. The identifier must             be set.
+    description: ContourPlate.Modify
   contour-plate-select:
     lifecycle: single
-    description: Selects a contour plate from the model database. The identifier of the contour plate must be set.
+    description: ContourPlate.Select
   contour-point-set-point:
     lifecycle: single
     description: ContourPoint.SetPoint
   control-arc-delete:
     lifecycle: single
-    description: Deletes the control arc with the given Identifier.
+    description: ControlArc.Delete
   control-arc-insert:
     lifecycle: single
-    description: Inserts the control arc into the model.
+    description: ControlArc.Insert
   control-arc-modify:
     lifecycle: single
-    description: Modifies the control arc with the given Identifier.
+    description: ControlArc.Modify
   control-arc-select:
     lifecycle: single
-    description: Selects the control arc with the given Identifier.
+    description: ControlArc.Select
   control-circle-delete:
     lifecycle: single
-    description: Deletes the control circle with the given Identifier.
+    description: ControlCircle.Delete
   control-circle-insert:
     lifecycle: single
-    description: Inserts the control circle into the model.
+    description: ControlCircle.Insert
   control-circle-modify:
     lifecycle: single
-    description: Modifies the control circle with the given Identifier.
+    description: ControlCircle.Modify
   control-circle-select:
     lifecycle: single
-    description: Selects the control circle with the given Identifier.
+    description: ControlCircle.Select
   control-line-delete:
     lifecycle: single
-    description: Deletes the control line with the given Identifier.
+    description: ControlLine.Delete
   control-line-insert:
     lifecycle: single
-    description: Inserts the control line into the model.
+    description: ControlLine.Insert
   control-line-modify:
     lifecycle: single
-    description: Modifies the control line with the given Identifier.
+    description: ControlLine.Modify
   control-line-select:
     lifecycle: single
-    description: Selects the control line with the given Identifier.
+    description: ControlLine.Select
   control-plane-delete:
     lifecycle: single
-    description: Deletes the control plane with the given ID.
+    description: ControlPlane.Delete
   control-plane-insert:
     lifecycle: single
-    description: Inserts the control plane into the model.
+    description: ControlPlane.Insert
   control-plane-modify:
     lifecycle: single
-    description: Modifies the control plane with the given ID.
+    description: ControlPlane.Modify
   control-plane-select:
     lifecycle: single
-    description: Selects the control plane with the given ID.
+    description: ControlPlane.Select
   control-point-delete:
     lifecycle: single
-    description: Deletes the control point with the given Identifier.
+    description: ControlPoint.Delete
   control-point-insert:
     lifecycle: single
-    description: Inserts the control point into the model.
+    description: ControlPoint.Insert
   control-point-modify:
     lifecycle: single
-    description: Modifies the control point with the given Identifier.
+    description: ControlPoint.Modify
   control-point-select:
     lifecycle: single
-    description: Selects the control point with the given Identifier.
+    description: ControlPoint.Select
   control-polycurve-delete:
     lifecycle: single
-    description: Deletes a polycurve with given Identifier.
+    description: ControlPolycurve.Delete
   control-polycurve-insert:
     lifecycle: single
-    description: Inserts a polycurve into the model.
+    description: ControlPolycurve.Insert
   control-polycurve-modify:
     lifecycle: single
-    description: Modifies a polycurve with the given Identifier.
+    description: ControlPolycurve.Modify
   control-polycurve-select:
     lifecycle: single
-    description: Selects a polycurve with the given Identifier.
+    description: ControlPolycurve.Select
   control-spline-delete:
     lifecycle: single
-    description: Deletes the control spline with the given Identifier.
+    description: ControlSpline.Delete
   control-spline-insert:
     lifecycle: single
-    description: Inserts the control spline into the model.
+    description: ControlSpline.Insert
   control-spline-modify:
     lifecycle: single
-    description: Modifies the control spline with the given Identifier.
+    description: ControlSpline.Modify
   control-spline-select:
     lifecycle: single
-    description: Selects the control spline with the given Identifier.
+    description: ControlSpline.Select
   conversion-link-delete:
     lifecycle: single
-    description: Deletes the conversion link instance from the model. The identifier must be set.
+    description: ConversionLink.Delete
   conversion-link-insert:
     lifecycle: single
-    description: Inserts the conversion link instance in the model.
+    description: ConversionLink.Insert
   conversion-link-modify:
     lifecycle: single
-    description: Modifies the existing conversion link in the model database to match the current one.
+    description: ConversionLink.Modify
   conversion-link-select:
     lifecycle: single
-    description: Selects the conversion link instance from the model. The identifier must be set.
+    description: ConversionLink.Select
   curved-rebar-group-delete:
     lifecycle: single
-    description: Deletes the curved rebar group instance with the given identifier from the model database.
+    description: CurvedRebarGroup.Delete
   curved-rebar-group-insert:
     lifecycle: single
-    description: Inserts the curved rebar group into the model database. All the attributes must be set.
+    description: CurvedRebarGroup.Insert
   curved-rebar-group-modify:
     lifecycle: single
-    description: Modifies the existing curved rebar group in the model database to match the current one.
+    description: CurvedRebarGroup.Modify
   curved-rebar-group-select:
     lifecycle: single
-    description: Selects a curved rebar group from the model database. The identifier of the curved rebar group must be set.
+    description: CurvedRebarGroup.Select
   custom-part-delete:
     lifecycle: single
-    description: Deletes the custom part instance with the given identifier from the model database.
+    description: CustomPart.Delete
   custom-part-get-assembly:
     lifecycle: single
-    description: Returns the assembly that the custom part belongs to.
+    description: CustomPart.GetAssembly
   custom-part-get-booleans:
     lifecycle: single
-    description: Returns an enumerator of all the connected boolean objects.
+    description: CustomPart.GetBooleans
   custom-part-get-components:
     lifecycle: single
-    description: Returns an enumerator of all the connected components.
+    description: CustomPart.GetComponents
   custom-part-get-start-and-end-positions:
     lifecycle: single
     description: CustomPart.GetStartAndEndPositions
   custom-part-insert:
     lifecycle: single
-    description: Inserts the custom part into the model database.
+    description: CustomPart.Insert
   custom-part-modify:
     lifecycle: single
-    description: Modifies the existing custom part in the model database to match the current one.
+    description: CustomPart.Modify
   custom-part-select:
     lifecycle: single
-    description: Selects a custom part from the model database. The custom part identifier must be set.
+    description: CustomPart.Select
   custom-part-set-input-positions:
     lifecycle: single
     description: CustomPart.SetInputPositions
   cut-plane-delete:
     lifecycle: single
-    description: Deletes the cut plane instance with the given ID from the model database.
+    description: CutPlane.Delete
   cut-plane-insert:
     lifecycle: single
-    description: Inserts the cut plane into the model database. All the attributes must be set.
+    description: CutPlane.Insert
   cut-plane-modify:
     lifecycle: single
-    description: Modifies the existing cut plane in the model database to match the current one.
+    description: CutPlane.Modify
   cut-plane-select:
     lifecycle: single
-    description: Selects a cut plane from the model database. The part ID must be set.
+    description: CutPlane.Select
   cylindrical-surface-node-accept-visitor:
     lifecycle: single
     description: CylindricalSurfaceNode.AcceptVisitor
   cylindrical-surface-node-clone:
     lifecycle: single
-    description: Creates a new object that is a copy of the current instance.
+    description: CylindricalSurfaceNode.Clone
   data-add-colors:
     lifecycle: single
     description: Data.AddColors
@@ -2564,22 +2561,22 @@ commands:
     description: Delete.StartDelete
   detail-delete:
     lifecycle: single
-    description: Deletes the detail instance with the given ID from the model database.
+    description: Detail.Delete
   detail-get-primary-object:
     lifecycle: single
-    description: Returns the primary object.
+    description: Detail.GetPrimaryObject
   detail-get-reference-point:
     lifecycle: single
-    description: Returns the reference point.
+    description: Detail.GetReferencePoint
   detail-insert:
     lifecycle: single
-    description: Inserts the detail into the model database. All the attributes must be set.
+    description: Detail.Insert
   detail-modify:
     lifecycle: single
-    description: Modifies the existing detail in the model database to match the current one.
+    description: Detail.Modify
   detail-select:
     lifecycle: single
-    description: Selects a detail from the model database. The detail ID must be set.
+    description: Detail.Select
   detail-set-primary-object:
     lifecycle: single
     description: Detail.SetPrimaryObject
@@ -2588,13 +2585,13 @@ commands:
     description: Detail.SetReferencePoint
   disposable-token-dispose:
     lifecycle: single
-    description: Invokes the callback.
+    description: DisposableToken.Dispose
   dot-area-polygons-t-to-struct:
     lifecycle: single
     description: dotAreaPolygons_t.ToStruct
   dot-edges-t-get-edges:
     lifecycle: single
-    description: Get edges in ArrayList.
+    description: dotEdges_t.GetEdges
   dot-forming-states-t-from-struct:
     lifecycle: single
     description: dotFormingStates_t.FromStruct
@@ -2612,7 +2609,7 @@ commands:
     description: DotNetModelProxy.Run
   dot-polygon-t-get-points:
     lifecycle: single
-    description: Get polygon points in ArrayList.
+    description: dotPolygon_t.GetPoints
   dot-temporary-state-clear-all-states:
     lifecycle: single
     description: dotTemporaryState.ClearAllStates
@@ -2624,7 +2621,7 @@ commands:
     description: dotTemporaryState.ClearState
   dot-temporary-state-get-all-temporary-colored:
     lifecycle: single
-    description: Get all temporary colored objects and their color
+    description: dotTemporaryState.GetAllTemporaryColored
   dot-temporary-state-get-temporary-color:
     lifecycle: single
     description: dotTemporaryState.GetTemporaryColor
@@ -2643,18 +2640,15 @@ commands:
   dot-temporary-state-set-visibiliy:
     lifecycle: single
     description: dotTemporaryState.SetVisibiliy
-  dot-temporary-state-unhide-parts:
-    lifecycle: single
-    description: dotTemporaryState.UnhideParts
   dot-uipicker-t-construct:
     lifecycle: single
-    description: Constructs a new instance of the  struct.
+    description: dotUIPicker_t.Construct
   dot-uipicker-wrapper-t-construct:
     lifecycle: single
-    description: Constructs a new instance of the  struct.
+    description: dotUIPickerWrapper_t.Construct
   dot-weld-geometry-t-copy-and-initialize:
     lifecycle: single
-    description: Makes a copy of another  struct and initializes the weld geometry polygon.
+    description: dotWeldGeometry_t.CopyAndInitialize
   dotnet-double-list-t-from-struct:
     lifecycle: single
     description: dotnetDoubleList_t.FromStruct
@@ -2708,22 +2702,22 @@ commands:
     description: DoubleList.RemoveRange
   double-list-to-array:
     lifecycle: single
-    description: Copies the doubles to an double array.
+    description: DoubleList.ToArray
   dstv-structure-write-output:
     lifecycle: single
-    description: Used to write the DstvStructure to the NC file.
+    description: DstvStructure.WriteOutput
   edge-chamfer-delete:
     lifecycle: single
-    description: Deletes the edge chamfer instance with the given ID from the model database.
+    description: EdgeChamfer.Delete
   edge-chamfer-insert:
     lifecycle: single
-    description: Inserts the edge chamfer into the model database. All the attributes must be set.
+    description: EdgeChamfer.Insert
   edge-chamfer-modify:
     lifecycle: single
-    description: Modifies the existing edge chamfer in the model database to match the current one.
+    description: EdgeChamfer.Modify
   edge-chamfer-select:
     lifecycle: single
-    description: Selects an edge chamfer from the model database. The edge chamfer ID must be set.
+    description: EdgeChamfer.Select
   event-handler-wrapper-add-listener:
     lifecycle: single
     description: EventHandlerWrapper.AddListener
@@ -2744,10 +2738,10 @@ commands:
     description: EventHandlerWrapper.UnsubscribeEvent
   events-dispose:
     lifecycle: single
-    description: Disposes the instance.
+    description: Events.Dispose
   events-initialize-lifetime-service:
     lifecycle: single
-    description: Initializes the lifetime service.
+    description: Events.InitializeLifetimeService
   events-on-annotation-selection-change:
     lifecycle: single
     description: Events.OnAnnotationSelectionChange
@@ -2771,7 +2765,7 @@ commands:
     description: Events.OnHiddenObjectsChanged
   events-on-interrupted:
     lifecycle: single
-    description: Called when uesr interrupts.
+    description: Events.OnInterrupted
   events-on-model-load:
     lifecycle: single
     description: Events.OnModelLoad
@@ -2822,7 +2816,7 @@ commands:
     description: Events.OnTrackEvent
   events-on-undo-clicked:
     lifecycle: single
-    description: Called when user clicks undo.
+    description: Events.OnUndoClicked
   events-on-view-camera-changed-event:
     lifecycle: single
     description: Events.OnViewCameraChangedEvent
@@ -2831,10 +2825,10 @@ commands:
     description: Events.OnViewClosed
   events-register:
     lifecycle: single
-    description: Registers the instance to listen to the specified events.             More event delegates should not be added without calling UnRegister             first.
+    description: Events.Register
   events-un-register:
     lifecycle: single
-    description: Unregisters the instance from listening to events.
+    description: Events.UnRegister
   external-draw-draw-object:
     lifecycle: single
     description: ExternalDraw.DrawObject
@@ -2852,7 +2846,7 @@ commands:
     description: ExternalDraw.UiSelect
   fabrication-drawings-service-extractor-clean-up-for-zip:
     lifecycle: single
-    description: Delete any intermediate and configuration files that are not meant to be in the result zip of the root folder.
+    description: FabricationDrawingsServiceExtractor.CleanUpForZip
   fabrication-drawings-service-extractor-extract-assemblies-data:
     lifecycle: single
     description: FabricationDrawingsServiceExtractor.ExtractAssembliesData
@@ -2861,19 +2855,19 @@ commands:
     description: FabricationDrawingsServiceExtractor.ExtractDrawingData
   fabrication-drawings-service-extractor-get-configuration-files-folder:
     lifecycle: single
-    description: Get the folder where the configuration files for extraction are stored.
+    description: FabricationDrawingsServiceExtractor.GetConfigurationFilesFolder
   fabrication-drawings-service-extractor-get-drawings-description-json-file:
     lifecycle: single
-    description: Get the filename where the drawings description is stored.
+    description: FabricationDrawingsServiceExtractor.GetDrawingsDescriptionJsonFile
   fabrication-drawings-service-extractor-get-raw-tokens-folder:
     lifecycle: single
-    description: Get the folder where the assembly objects report properties are stored.
+    description: FabricationDrawingsServiceExtractor.GetRawTokensFolder
   fabrication-drawings-service-extractor-get-root-folder:
     lifecycle: single
-    description: Get the root folder for the storage of the export files.
+    description: FabricationDrawingsServiceExtractor.GetRootFolder
   fabrication-drawings-service-extractor-get-temporary-files-folder:
     lifecycle: single
-    description: Get the folder where the intermediate files for extraction are stored.
+    description: FabricationDrawingsServiceExtractor.GetTemporaryFilesFolder
   fabrication-handler-create-drawing:
     lifecycle: single
     description: FabricationHandler.CreateDrawing
@@ -2891,13 +2885,13 @@ commands:
     description: FabricatorProject.Equals
   fabricator-project-get-fabricator-project:
     lifecycle: single
-    description: Returns information about the current model's project.
+    description: FabricatorProject.GetFabricatorProject
   fabricator-project-get-hash-code:
     lifecycle: single
-    description: Returns the hash code for the current instance.              The hash code should be such that if two instances are equal, their hash codes are equal.
+    description: FabricatorProject.GetHashCode
   fabricator-project-modify:
     lifecycle: single
-    description: Modifies the current fabricator project information.
+    description: FabricatorProject.Modify
   face-add:
     lifecycle: single
     description: Face.Add
@@ -2939,16 +2933,16 @@ commands:
     description: FarmiHelper.CopyDirectory
   fitting-delete:
     lifecycle: single
-    description: Deletes the fitting instance with the given ID from the model database.
+    description: Fitting.Delete
   fitting-insert:
     lifecycle: single
-    description: Inserts the fitting into the model database. All the attributes must be set.
+    description: Fitting.Insert
   fitting-modify:
     lifecycle: single
-    description: Modifies the existing fitting in the model database to match the current one.
+    description: Fitting.Modify
   fitting-select:
     lifecycle: single
-    description: Selects a fitting from the model database. The fitting ID must be set.
+    description: Fitting.Select
   flat-buffer-builder-add-bool:
     lifecycle: single
     description: FlatBufferBuilder.AddBool
@@ -2990,7 +2984,7 @@ commands:
     description: FlatBufferBuilder.AddUshort
   flat-buffer-builder-clear:
     lifecycle: single
-    description: Reset the FlatBufferBuilder by purging all data that it holds.
+    description: FlatBufferBuilder.Clear
   flat-buffer-builder-create-string:
     lifecycle: single
     description: FlatBufferBuilder.CreateString
@@ -3002,7 +2996,7 @@ commands:
     description: FlatBufferBuilder.EndObject
   flat-buffer-builder-end-vector:
     lifecycle: single
-    description: Writes data necessary to finish a vector construction.
+    description: FlatBufferBuilder.EndVector
   flat-buffer-builder-finish:
     lifecycle: single
     description: FlatBufferBuilder.Finish
@@ -3056,7 +3050,7 @@ commands:
     description: FlatBufferBuilder.Required
   flat-buffer-builder-sized-byte-array:
     lifecycle: single
-    description: A utility function to copy and return the ByteBuffer data as a             `byte[]`.
+    description: FlatBufferBuilder.SizedByteArray
   flat-buffer-builder-slot:
     lifecycle: single
     description: FlatBufferBuilder.Slot
@@ -4332,9 +4326,6 @@ commands:
   generic-delegate-fake1-export-undo-operation:
     lifecycle: single
     description: GenericDelegateFake`1.ExportUndoOperation
-  generic-delegate-fake1-export-unhide-parts:
-    lifecycle: single
-    description: GenericDelegateFake`1.ExportUnhideParts
   generic-delegate-fake1-export-update-shape-metadata:
     lifecycle: single
     description: GenericDelegateFake`1.ExportUpdateShapeMetadata
@@ -4487,7 +4478,7 @@ commands:
     description: GenericDelegateFake`1.IsFinishAccepted
   generic-delegate-fake1-is-macro-recording:
     lifecycle: single
-    description: The IsMacroRecording
+    description: GenericDelegateFake`1.IsMacroRecording
   generic-delegate-fake1-is-macro-running:
     lifecycle: single
     description: GenericDelegateFake`1.IsMacroRunning
@@ -4520,7 +4511,7 @@ commands:
     description: GenericDelegateFake`1.ProcessABMNumbering
   generic-delegate-fake1-refresh-macro-list:
     lifecycle: single
-    description: The RefreshMacroList
+    description: GenericDelegateFake`1.RefreshMacroList
   generic-delegate-fake1-register-assert-callback:
     lifecycle: single
     description: GenericDelegateFake`1.RegisterAssertCallback
@@ -4551,6 +4542,9 @@ commands:
   generic-delegate-fake1-select-objects-in-external-reference-model:
     lifecycle: single
     description: GenericDelegateFake`1.SelectObjectsInExternalReferenceModel
+  generic-delegate-fake1-send-abmnumbering:
+    lifecycle: single
+    description: GenericDelegateFake`1.SendABMNumbering
   generic-delegate-fake1-send-custom-parts-to-abmnumbering:
     lifecycle: single
     description: GenericDelegateFake`1.SendCustomPartsToABMNumbering
@@ -4589,7 +4583,7 @@ commands:
     description: GenericDelegateFake`1.StopLiveSharing
   generic-delegate-fake1-stop-macro-recording:
     lifecycle: single
-    description: The StopMacroRecording
+    description: GenericDelegateFake`1.StopMacroRecording
   generic-delegate-fake1-unhighlight-connected-objects:
     lifecycle: single
     description: GenericDelegateFake`1.UnhighlightConnectedObjects
@@ -4613,10 +4607,10 @@ commands:
     description: GeometryImporter.ImportGeometry
   geometry-section-enumerator-move-next:
     lifecycle: single
-    description: Moves to the next item in the enumerator.
+    description: GeometrySectionEnumerator.MoveNext
   geometry-section-enumerator-reset:
     lifecycle: single
-    description: Resets the enumerator to the beginning.
+    description: GeometrySectionEnumerator.Reset
   geometry-tree-add-branch:
     lifecycle: single
     description: GeometryTree.AddBranch
@@ -4628,7 +4622,7 @@ commands:
     description: GeometryTree.AddNode
   geometry-tree-clone:
     lifecycle: single
-    description: Creates a copy of this GeometryTree. Edges are new objects but Nodes are shared with the initial GeometryTree.
+    description: GeometryTree.Clone
   geometry-tree-get-branch:
     lifecycle: single
     description: GeometryTree.GetBranch
@@ -4640,7 +4634,7 @@ commands:
     description: GeometryTree.GetConnection
   geometry-tree-get-geometry-tree-leaf-sections:
     lifecycle: single
-    description: Gets end GeometrySections of the geometry which are possible to remove.
+    description: GeometryTree.GetGeometryTreeLeafSections
   geometry-tree-get-neighbor-sections:
     lifecycle: single
     description: GeometryTree.GetNeighborSections
@@ -4709,49 +4703,49 @@ commands:
     description: GraphicsRenderer.RemoveGraphicObjectContainers
   grid-base-delete:
     lifecycle: single
-    description: Deletes the grid with the given ID.
+    description: GridBase.Delete
   grid-base-insert:
     lifecycle: single
-    description: Inserts the grid into the model.
+    description: GridBase.Insert
   grid-base-modify:
     lifecycle: single
-    description: Modifies the grid with the given ID.
+    description: GridBase.Modify
   grid-base-select:
     lifecycle: single
-    description: Selects the grid with the given ID.
+    description: GridBase.Select
   grid-cylindrical-surface-modify:
     lifecycle: single
-    description: Modifies the grid plane with the given ID.
+    description: GridCylindricalSurface.Modify
   grid-plane-delete:
     lifecycle: single
-    description: Deletes the grid surface with the given ID.
+    description: GridPlane.Delete
   grid-plane-insert:
     lifecycle: single
-    description: Inserts the grid surface into the model.
+    description: GridPlane.Insert
   grid-plane-modify:
     lifecycle: single
-    description: Modifies the grid plane with the given ID.
+    description: GridPlane.Modify
   grid-plane-select:
     lifecycle: single
-    description: Selects the grid surface with the given ID.
+    description: GridPlane.Select
   grid-surface-delete:
     lifecycle: single
-    description: Deletes the grid surface with the given ID.
+    description: GridSurface.Delete
   grid-surface-extensions-set-is-manual:
     lifecycle: single
     description: GridSurfaceExtensions.SetIsManual
   grid-surface-insert:
     lifecycle: single
-    description: Inserts the grid surface into the model.
+    description: GridSurface.Insert
   grid-surface-modify:
     lifecycle: single
-    description: Modifies the grid surface with the given ID.
+    description: GridSurface.Modify
   grid-surface-select:
     lifecycle: single
-    description: Selects the grid surface with the given ID.
+    description: GridSurface.Select
   guid-conversion-get-guid-mapping:
     lifecycle: single
-    description: Gets the GUID mapping.
+    description: GuidConversion.GetGuidMapping
   guid-conversion-get-new-guid:
     lifecycle: single
     description: GuidConversion.GetNewGuid
@@ -4772,7 +4766,7 @@ commands:
     description: HeaderOrder.DeleteRow
   header-order-get-rows:
     lifecycle: single
-    description: Returns the header order list.
+    description: HeaderOrder.GetRows
   header-row-add:
     lifecycle: single
     description: HeaderRow.Add
@@ -4781,46 +4775,46 @@ commands:
     description: HeaderRow.AddItem
   header-row-get-row-items:
     lifecycle: single
-    description: Returns the list of items from the header row.
+    description: HeaderRow.GetRowItems
   hierarchic-definition-add-objects:
     lifecycle: single
     description: HierarchicDefinition.AddObjects
   hierarchic-definition-delete:
     lifecycle: single
-    description: Deletes the hierarchical definition instance from the model. The ID must be set.
+    description: HierarchicDefinition.Delete
   hierarchic-definition-insert:
     lifecycle: single
-    description: Inserts the hierarchical definition instance in the model.
+    description: HierarchicDefinition.Insert
   hierarchic-definition-modify:
     lifecycle: single
-    description: Modifies the hierarchical definition instance in the model. The ID must be set.
+    description: HierarchicDefinition.Modify
   hierarchic-definition-remove-objects:
     lifecycle: single
     description: HierarchicDefinition.RemoveObjects
   hierarchic-definition-select:
     lifecycle: single
-    description: Selects the hierarchical definition instance from the model. The ID must be set.
+    description: HierarchicDefinition.Select
   hierarchic-object-add-objects:
     lifecycle: single
     description: HierarchicObject.AddObjects
   hierarchic-object-delete:
     lifecycle: single
-    description: Deletes the hierarchical object instance from the model. The ID must be set.
+    description: HierarchicObject.Delete
   hierarchic-object-insert:
     lifecycle: single
-    description: Inserts the hierarchical object instance in the model.
+    description: HierarchicObject.Insert
   hierarchic-object-modify:
     lifecycle: single
-    description: Modifies the hierarchical object instance in the model. The ID must be set.
+    description: HierarchicObject.Modify
   hierarchic-object-remove-objects:
     lifecycle: single
     description: HierarchicObject.RemoveObjects
   hierarchic-object-select:
     lifecycle: single
-    description: Selects the hierarchical object instance from the model. The ID must be set.
+    description: HierarchicObject.Select
   iassemblable-get-assembly:
     lifecycle: single
-    description: Returns the assembly that the assemblable belongs to.
+    description: IAssemblable.GetAssembly
   iassert-event-callback-on-assert-occured:
     lifecycle: single
     description: IAssertEventCallback.OnAssertOccured
@@ -4844,10 +4838,10 @@ commands:
     description: ICDelegate.AutomatedTesting_BroadcastMessage
   icdelegate-cancel-change-detection-init:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: ICDelegate.CancelChangeDetectionInit
   icdelegate-change-detection-init-in-progress:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: ICDelegate.ChangeDetectionInitInProgress
   icdelegate-check-abmnumbering:
     lifecycle: single
     description: ICDelegate.CheckABMNumbering
@@ -4865,7 +4859,7 @@ commands:
     description: ICDelegate.ConvertIFC4toSemantic
   icdelegate-convert-reference-models:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: ICDelegate.ConvertReferenceModels
   icdelegate-convert-ts-guid-to-ifc-guid:
     lifecycle: single
     description: ICDelegate.ConvertTsGuidToIfcGuid
@@ -4946,7 +4940,7 @@ commands:
     description: ICDelegate.ExportCalculateContourPolygon
   icdelegate-export-calculate-pour-units:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: ICDelegate.ExportCalculatePourUnits
   icdelegate-export-change-manager-allow-numbering:
     lifecycle: single
     description: ICDelegate.ExportChangeManagerAllowNumbering
@@ -4961,13 +4955,13 @@ commands:
     description: ICDelegate.ExportCleanDrawingFiles
   icdelegate-export-clear-all-temporary-states:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: ICDelegate.ExportClearAllTemporaryStates
   icdelegate-export-clear-attribute-file-cache:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: ICDelegate.ExportClearAttributeFileCache
   icdelegate-export-clear-filter-cache:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: ICDelegate.ExportClearFilterCache
   icdelegate-export-clear-temporary-color:
     lifecycle: single
     description: ICDelegate.ExportClearTemporaryColor
@@ -5399,7 +5393,7 @@ commands:
     description: ICDelegate.ExportGetIntersectionSolid
   icdelegate-export-get-is-numbering-allowed:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: ICDelegate.ExportGetIsNumberingAllowed
   icdelegate-export-get-modification-stamp:
     lifecycle: single
     description: ICDelegate.ExportGetModificationStamp
@@ -5573,10 +5567,10 @@ commands:
     description: ICDelegate.ExportHierarchicObjectChildrenOperation
   icdelegate-export-init-filter-cache:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: ICDelegate.ExportInitFilterCache
   icdelegate-export-initialize-component-stacks:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: ICDelegate.ExportInitializeComponentStacks
   icdelegate-export-insert-view:
     lifecycle: single
     description: ICDelegate.ExportInsertView
@@ -6017,7 +6011,7 @@ commands:
     description: ICDelegate.ExportSetTemporaryVisibility
   icdelegate-export-set-transform-plane-as-work-floor:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: ICDelegate.ExportSetTransformPlaneAsWorkFloor
   icdelegate-export-set-transformation-plane:
     lifecycle: single
     description: ICDelegate.ExportSetTransformationPlane
@@ -6078,9 +6072,6 @@ commands:
   icdelegate-export-undo-operation:
     lifecycle: single
     description: ICDelegate.ExportUndoOperation
-  icdelegate-export-unhide-parts:
-    lifecycle: single
-    description: DO NOT USE! For internal usage only!
   icdelegate-export-update-shape-metadata:
     lifecycle: single
     description: ICDelegate.ExportUpdateShapeMetadata
@@ -6233,7 +6224,7 @@ commands:
     description: ICDelegate.IsFinishAccepted
   icdelegate-is-macro-running:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: ICDelegate.IsMacroRunning
   icdelegate-is-material-accepted:
     lifecycle: single
     description: ICDelegate.IsMaterialAccepted
@@ -6254,10 +6245,10 @@ commands:
     description: ICDelegate.IsValidProfile
   icdelegate-launch-external-reference-model-comparison-sets-dialog:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: ICDelegate.LaunchExternalReferenceModelComparisonSetsDialog
   icdelegate-launch-external-reference-model-comparison-tolerances-dialog:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: ICDelegate.LaunchExternalReferenceModelComparisonTolerancesDialog
   icdelegate-process-abmnumbering:
     lifecycle: single
     description: ICDelegate.ProcessABMNumbering
@@ -6291,6 +6282,9 @@ commands:
   icdelegate-select-objects-in-external-reference-model:
     lifecycle: single
     description: ICDelegate.SelectObjectsInExternalReferenceModel
+  icdelegate-send-abmnumbering:
+    lifecycle: single
+    description: ICDelegate.SendABMNumbering
   icdelegate-send-custom-parts-to-abmnumbering:
     lifecycle: single
     description: ICDelegate.SendCustomPartsToABMNumbering
@@ -6320,7 +6314,7 @@ commands:
     description: ICDelegate.StartLiveSharing
   icdelegate-stop-external-reference-model-change-detection:
     lifecycle: single
-    description: DO NOT USE! For internal usage only!
+    description: ICDelegate.StopExternalReferenceModelChangeDetection
   icdelegate-stop-live-sharing:
     lifecycle: single
     description: ICDelegate.StopLiveSharing
@@ -6383,10 +6377,10 @@ commands:
     description: IEvents.OnDbCommit
   ievents-on-hidden-objects-changed:
     lifecycle: single
-    description: Called when objects are set to hidden or view is redrawn
+    description: IEvents.OnHiddenObjectsChanged
   ievents-on-interrupted:
     lifecycle: single
-    description: Called when user interrupts.
+    description: IEvents.OnInterrupted
   ievents-on-model-load:
     lifecycle: single
     description: IEvents.OnModelLoad
@@ -6431,13 +6425,13 @@ commands:
     description: IEvents.OnTeklaStructuresExit
   ievents-on-temporary-states-changed:
     lifecycle: single
-    description: Called when the temporary states are changed.
+    description: IEvents.OnTemporaryStatesChanged
   ievents-on-track-event:
     lifecycle: single
     description: IEvents.OnTrackEvent
   ievents-on-undo-clicked:
     lifecycle: single
-    description: Called when user clicks undo.
+    description: IEvents.OnUndoClicked
   ievents-on-view-camera-changed-event:
     lifecycle: single
     description: IEvents.OnViewCameraChangedEvent
@@ -6446,10 +6440,10 @@ commands:
     description: IEvents.OnViewClosed
   ievents-register:
     lifecycle: single
-    description: Registers the instance to listen to the specified events.             More event delegates should not be added without calling UnRegister             first.
+    description: IEvents.Register
   ievents-un-register:
     lifecycle: single
-    description: Unregisters the instance from listening to events.
+    description: IEvents.UnRegister
   iflatbuffer-object-init:
     lifecycle: single
     description: IFlatbufferObject.__init
@@ -6458,7 +6452,7 @@ commands:
     description: IGeometryNode.AcceptVisitor
   igeometry-node-clone:
     lifecycle: single
-    description: Creates a new object that is a copy of the current instance.
+    description: IGeometryNode.Clone
   igeometry-node-visitor-visit:
     lifecycle: single
     description: IGeometryNodeVisitor.Visit
@@ -6467,34 +6461,34 @@ commands:
     description: IInputGeometryEvents.OnPointInputChangedEvent
   iinput-geometry-events-register:
     lifecycle: single
-    description: Registers the instance to listen to the specified events.             More event delegates should not be added without calling UnRegister             first.
+    description: IInputGeometryEvents.Register
   iinput-geometry-events-un-register:
     lifecycle: single
-    description: Unregisters the instance from listening to events.
+    description: IInputGeometryEvents.UnRegister
   input-geometry-draw-object:
     lifecycle: single
     description: InputGeometry.DrawObject
   input-geometry-events-initialize-lifetime-service:
     lifecycle: single
-    description: Initializes the lifetime service.
+    description: InputGeometryEvents.InitializeLifetimeService
   input-geometry-events-on-point-input-changed-event:
     lifecycle: single
     description: InputGeometryEvents.OnPointInputChangedEvent
   input-geometry-events-register:
     lifecycle: single
-    description: Registers the instance to listen to the specified events.             More event delegates should not be added without calling UnRegister             first.
+    description: InputGeometryEvents.Register
   input-geometry-events-un-register:
     lifecycle: single
-    description: Unregisters the instance from listening to events.
+    description: InputGeometryEvents.UnRegister
   input-geometry-remove-object:
     lifecycle: single
     description: InputGeometry.RemoveObject
   input-item-get-data:
     lifecycle: single
-    description: "Returns the data of the input item.             See also: ."
+    description: InputItem.GetData
   input-item-get-input-type:
     lifecycle: single
-    description: Returns the type of the input item.
+    description: InputItem.GetInputType
   int-list-add:
     lifecycle: single
     description: IntList.Add
@@ -6524,13 +6518,10 @@ commands:
     description: IntList.RemoveRange
   int-list-to-array:
     lifecycle: single
-    description: Copies the integers to an integer array.
+    description: IntList.ToArray
   iprinting-controller-print-report-to-pdf:
     lifecycle: single
     description: IPrintingController.PrintReportToPdf
-  iprogress-report-callback-on-progress-changed:
-    lifecycle: single
-    description: IProgressReportCallback.OnProgressChanged
   iproperty-set-dialog-feature-open-dialog:
     lifecycle: single
     description: IPropertySetDialogFeature.OpenDialog
@@ -6587,112 +6578,112 @@ commands:
     description: LiveSharingChangeSetDelegate.Invoke
   load-area-delete:
     lifecycle: single
-    description: Deletes the load area instance with the given ID from the model database.
+    description: LoadArea.Delete
   load-area-insert:
     lifecycle: single
-    description: Inserts the load area into the model database.
+    description: LoadArea.Insert
   load-area-modify:
     lifecycle: single
-    description: Modifies the existing load area in the model database to match the current one.             At the moment it is not possible to change the load attachment or the father.
+    description: LoadArea.Modify
   load-area-select:
     lifecycle: single
-    description: Selects a load area from the model database. The ID must be set.
+    description: LoadArea.Select
   load-group-delete:
     lifecycle: single
-    description: Deletes the load group instance with the given ID from the model database.
+    description: LoadGroup.Delete
   load-group-insert:
     lifecycle: single
-    description: Inserts the load group into the model database.
+    description: LoadGroup.Insert
   load-group-modify:
     lifecycle: single
-    description: Modifies the existing load group in the model database to match the current one.             At the moment it is not possible to change the load attachment or the father.
+    description: LoadGroup.Modify
   load-group-select:
     lifecycle: single
-    description: Selects a load group from the model database. The ID must be set.
+    description: LoadGroup.Select
   load-line-delete:
     lifecycle: single
-    description: Deletes the load line instance with the given ID from the model database.
+    description: LoadLine.Delete
   load-line-insert:
     lifecycle: single
-    description: Inserts the load line into the model database.
+    description: LoadLine.Insert
   load-line-modify:
     lifecycle: single
-    description: Modifies the existing load line in the model database to match the current one.             At the moment it is not possible to change the load attachment or the father.
+    description: LoadLine.Modify
   load-line-select:
     lifecycle: single
-    description: Selects a load line from the model database. The ID must be set.
+    description: LoadLine.Select
   load-point-delete:
     lifecycle: single
-    description: Deletes the load point instance with the given ID from the model database.
+    description: LoadPoint.Delete
   load-point-insert:
     lifecycle: single
-    description: Inserts the load point into the model database.
+    description: LoadPoint.Insert
   load-point-modify:
     lifecycle: single
-    description: Modifies the existing load point in the model database to match the current one.             At the moment it is not possible to change the load attachment or the father.
+    description: LoadPoint.Modify
   load-point-select:
     lifecycle: single
-    description: Selects a load point from the model database. The ID must be set.
+    description: LoadPoint.Select
   load-temperature-delete:
     lifecycle: single
-    description: Deletes the load temperature instance with the given ID from the model database.
+    description: LoadTemperature.Delete
   load-temperature-insert:
     lifecycle: single
-    description: Inserts the load temperature into the model database.
+    description: LoadTemperature.Insert
   load-temperature-modify:
     lifecycle: single
-    description: Modifies the existing load temperature in the model database to match the current one.             At the moment it is not possible to change the load attachment or the father.
+    description: LoadTemperature.Modify
   load-temperature-select:
     lifecycle: single
-    description: Selects a load temperature from the model database. The ID must be set.
+    description: LoadTemperature.Select
   load-uniform-delete:
     lifecycle: single
-    description: Deletes the load uniform instance with the given ID from the model database.
+    description: LoadUniform.Delete
   load-uniform-insert:
     lifecycle: single
-    description: Inserts the load uniform into the model database.
+    description: LoadUniform.Insert
   load-uniform-modify:
     lifecycle: single
-    description: Modifies the existing load uniform in the model database to match the current one.             At the moment it is not possible to change the load attachment or the father.
+    description: LoadUniform.Modify
   load-uniform-select:
     lifecycle: single
-    description: Selects a load uniform from the model database. The ID must be set.
+    description: LoadUniform.Select
   lofted-plate-delete:
     lifecycle: single
-    description: Deletes the lofted plate with this instance identifier from the model database.
+    description: LoftedPlate.Delete
   lofted-plate-insert:
     lifecycle: single
-    description: Inserts the lofted plate into the model database. All the attributes must be set and there must be at             minimum 2 base curves.
+    description: LoftedPlate.Insert
   lofted-plate-modify:
     lifecycle: single
-    description: Modifies the lofted plate object values in the database.
+    description: LoftedPlate.Modify
   lofted-plate-select:
     lifecycle: single
-    description: Selects a lofted plate object from the database.
+    description: LoftedPlate.Select
   logical-weld-add-weld:
     lifecycle: single
     description: LogicalWeld.AddWeld
   logical-weld-delete:
     lifecycle: single
-    description: Deletes the logical weld instance with the given identifier             from the model database and also the children welds.
+    description: LogicalWeld.Delete
   logical-weld-explode:
     lifecycle: single
-    description: Removes the logical weld from the model but not the children welds.
+    description: LogicalWeld.Explode
   logical-weld-get-main-weld:
     lifecycle: single
-    description: Returns the main weld of the logical weld.
+    description: LogicalWeld.GetMainWeld
   logical-weld-insert:
     lifecycle: single
-    description: Inserts the logical weld into the model database. All the attributes must be set.
+    description: LogicalWeld.Insert
   logical-weld-modify:
     lifecycle: single
-    description: Modifies the existing logical weld in the model database to match the current one.
+    description: LogicalWeld.Modify
   logical-weld-remove-weld:
     lifecycle: single
     description: LogicalWeld.RemoveWeld
   logical-weld-select:
     lifecycle: single
-    description: Selects a logical weld from the model database. The logical weld identifier must be set.
+    description: LogicalWeld.Select
   logical-weld-set-main-weld:
     lifecycle: single
     description: LogicalWeld.SetMainWeld
@@ -6707,7 +6698,7 @@ commands:
     description: Mesh.AddTriangle
   model-commit-changes:
     lifecycle: single
-    description: Commits the changes made to the model database so far. One commit is something that a             user can later on undo with the undo command. A commit also launches the drawing of the             changed product model to the visible views. A dependent plug-in should never call CommitChanges,              since this would make undo very difficult for the user to do. However, non-dependent plug-ins              require a separate commit if new objects are created.
+    description: Model.CommitChanges
   model-extensions-get-model-object-type:
     lifecycle: single
     description: ModelExtensions.GetModelObjectType
@@ -6719,10 +6710,10 @@ commands:
     description: Model.FetchModelObjects
   model-get-clash-check-handler:
     lifecycle: single
-    description: Returns a new clash check handler.
+    description: Model.GetClashCheckHandler
   model-get-connection-status:
     lifecycle: single
-    description: Returns true if a proper connection to the Tekla Structures process has been established.              Currently, there's no way to re-establish the connection.
+    description: Model.GetConnectionStatus
   model-get-guidby-identifier:
     lifecycle: single
     description: Model.GetGUIDByIdentifier
@@ -6731,16 +6722,16 @@ commands:
     description: Model.GetIdentifierByGUID
   model-get-info:
     lifecycle: single
-    description: Returns information about the currently open model.
+    description: Model.GetInfo
   model-get-model-object-selector:
     lifecycle: single
-    description: Returns a ModelObjectSelector instance from which different kind of selections             can be made.
+    description: Model.GetModelObjectSelector
   model-get-phases:
     lifecycle: single
-    description: Returns information about the current model's phases.
+    description: Model.GetPhases
   model-get-project-info:
     lifecycle: single
-    description: Returns information about the current model's project.
+    description: Model.GetProjectInfo
   model-get-report-property-double:
     lifecycle: single
     description: Model.GetReportPropertyDouble
@@ -6752,10 +6743,10 @@ commands:
     description: Model.GetReportPropertyStr
   model-get-work-plane-handler:
     lifecycle: single
-    description: Returns a new work plane handler for the model. The work plane handler             can be used to manipulate the current work plane in the model.
+    description: Model.GetWorkPlaneHandler
   model-handler-close:
     lifecycle: single
-    description: Closes current model.
+    description: ModelHandler.Close
   model-handler-create-new-multi-user-model:
     lifecycle: single
     description: ModelHandler.CreateNewMultiUserModel
@@ -6767,7 +6758,7 @@ commands:
     description: ModelHandler.IsModelAutoSaved
   model-handler-is-model-saved:
     lifecycle: single
-    description: Tells whether current model has been saved.
+    description: ModelHandler.IsModelSaved
   model-handler-open:
     lifecycle: single
     description: ModelHandler.Open
@@ -6776,7 +6767,7 @@ commands:
     description: ModelHandler.Save
   model-history-get-current-modification-stamp:
     lifecycle: single
-    description: Gets the current modification stamp from the model.
+    description: ModelHistory.GetCurrentModificationStamp
   model-history-get-deleted-objects:
     lifecycle: single
     description: ModelHistory.GetDeletedObjects
@@ -6785,7 +6776,7 @@ commands:
     description: ModelHistory.GetDeletedObjectsWithType
   model-history-get-local-changes:
     lifecycle: single
-    description: Get changes which are not written out.
+    description: ModelHistory.GetLocalChanges
   model-history-get-modifications:
     lifecycle: single
     description: ModelHistory.GetModifications
@@ -6797,7 +6788,7 @@ commands:
     description: ModelHistory.GetModifiedObjectsWithType
   model-history-get-not-shared-objects:
     lifecycle: single
-    description: Get object which are was created or modified since last ModelSharing WriteOut.
+    description: ModelHistory.GetNotSharedObjects
   model-history-take-modifications:
     lifecycle: single
     description: ModelHistory.TakeModifications
@@ -6809,19 +6800,19 @@ commands:
     description: ModelObject.CompareTo
   model-object-delete:
     lifecycle: single
-    description: Deletes the instance from the model database.
+    description: ModelObject.Delete
   model-object-enumerator-get-enumerator:
     lifecycle: single
-    description: Gets the enumerator.
+    description: ModelObjectEnumerator.GetEnumerator
   model-object-enumerator-get-size:
     lifecycle: single
-    description: Returns the total amount of items.
+    description: ModelObjectEnumerator.GetSize
   model-object-enumerator-move-next:
     lifecycle: single
-    description: Moves to the next item in the enumerator.
+    description: ModelObjectEnumerator.MoveNext
   model-object-enumerator-reset:
     lifecycle: single
-    description: Resets the enumerator to the beginning.
+    description: ModelObjectEnumerator.Reset
   model-object-equals:
     lifecycle: single
     description: ModelObject.Equals
@@ -6836,13 +6827,13 @@ commands:
     description: ModelObject.GetAllUserProperties
   model-object-get-children:
     lifecycle: single
-    description: Returns an enumerator of all the children model objects.
+    description: ModelObject.GetChildren
   model-object-get-coordinate-system:
     lifecycle: single
-    description: Returns the coordinate system for the given model object.
+    description: ModelObject.GetCoordinateSystem
   model-object-get-custom-object-type:
     lifecycle: single
-    description: Gets custom object type name from an existing object.
+    description: ModelObject.GetCustomObjectType
   model-object-get-double-report-properties:
     lifecycle: single
     description: ModelObject.GetDoubleReportProperties
@@ -6854,10 +6845,10 @@ commands:
     description: ModelObject.GetDynamicStringProperty
   model-object-get-father-component:
     lifecycle: single
-    description: Returns the father component of the model object.
+    description: ModelObject.GetFatherComponent
   model-object-get-hierarchic-objects:
     lifecycle: single
-    description: Returns an enumerator of all the connected hierarchic objects.
+    description: ModelObject.GetHierarchicObjects
   model-object-get-integer-report-properties:
     lifecycle: single
     description: ModelObject.GetIntegerReportProperties
@@ -6881,22 +6872,22 @@ commands:
     description: ModelObject.GetUserProperty
   model-object-insert:
     lifecycle: single
-    description: Inserts the model object instance into the model database.
+    description: ModelObject.Insert
   model-object-modify:
     lifecycle: single
-    description: Modifies the model instance in the model database.
+    description: ModelObject.Modify
   model-object-select:
     lifecycle: single
-    description: Selects the model object instance from the model database.
+    description: ModelObject.Select
   model-object-selector-get-all-objects:
     lifecycle: single
-    description: Returns an enumerator of all the model objects in the current model.
+    description: ModelObjectSelector.GetAllObjects
   model-object-selector-get-all-objects-with-type:
     lifecycle: single
     description: ModelObjectSelector.GetAllObjectsWithType
   model-object-selector-get-enumerator:
     lifecycle: single
-    description: Returns an enumerator of all the model objects in the current model.
+    description: ModelObjectSelector.GetEnumerator
   model-object-selector-get-filtered-objects-with-type:
     lifecycle: single
     description: ModelObjectSelector.GetFilteredObjectsWithType
@@ -6911,7 +6902,7 @@ commands:
     description: ModelObjectSelector.GetObjectsByFilterName
   model-object-selector-get-selected-objects:
     lifecycle: single
-    description: Returns an enumerator of all the selected model objects in the model view.
+    description: ModelObjectSelector.GetSelectedObjects
   model-object-selector-select:
     lifecycle: single
     description: ModelObjectSelector.Select
@@ -6935,13 +6926,13 @@ commands:
     description: ModelObject.SetUserProperty
   model-object-visualization-clear-all-temporary-states:
     lifecycle: single
-    description: Clears temporary visualization from all model objects and restores permanent representation.
+    description: ModelObjectVisualization.ClearAllTemporaryStates
   model-object-visualization-clear-temporary-states:
     lifecycle: single
     description: ModelObjectVisualization.ClearTemporaryStates
   model-object-visualization-get-all-temporary-colored:
     lifecycle: single
-    description: Gets all temporary colored objects and their color
+    description: ModelObjectVisualization.GetAllTemporaryColored
   model-object-visualization-get-representation:
     lifecycle: single
     description: ModelObjectVisualization.GetRepresentation
@@ -6963,9 +6954,6 @@ commands:
   model-object-visualization-set-visibility:
     lifecycle: single
     description: ModelObjectVisualization.SetVisibility
-  model-object-visualization-unhide-parts:
-    lifecycle: single
-    description: Unide all parts in the model.
   model-select-model-object:
     lifecycle: single
     description: Model.SelectModelObject
@@ -6980,13 +6968,13 @@ commands:
     description: ModelTestingFeaturesHandler.IsAvailable
   model-view-enumerator-move-next:
     lifecycle: single
-    description: Moves to the next view in the enumerator.
+    description: ModelViewEnumerator.MoveNext
   model-view-enumerator-reset:
     lifecycle: single
-    description: Resets the enumerator.
+    description: ModelViewEnumerator.Reset
   operation-accept-numbering-results:
     lifecycle: single
-    description: Accept the numbering results.
+    description: Operation.AcceptNumberingResults
   operation-add-accepted-finish:
     lifecycle: single
     description: Operation.AddAcceptedFinish
@@ -7016,13 +7004,13 @@ commands:
     description: Operation.AutomatedTesting_BroadcastMessage
   operation-calculate-pour-units:
     lifecycle: single
-    description: Calculate and assign objects to pour unit             Model object types that are associated with pour unit are assembly types except cast in situ,             reinforcements of different kind, components and screws
+    description: Operation.CalculatePourUnits
   operation-cancel-change-detection-init:
     lifecycle: single
-    description: Cancels the change detection initialization, if in progress.
+    description: Operation.CancelChangeDetectionInit
   operation-change-detection-init-in-progress:
     lifecycle: single
-    description: Checks if change detection initialization is still in progress.
+    description: Operation.ChangeDetectionInitInProgress
   operation-check-abmnumbering:
     lifecycle: single
     description: Operation.CheckABMNumbering
@@ -7031,13 +7019,13 @@ commands:
     description: Operation.CheckObject1ModifiedAfterObject2
   operation-clear-old-fabricator-settings:
     lifecycle: single
-    description: Clears stored fabricator settings. This should be called when fabricator settings change.
+    description: Operation.ClearOldFabricatorSettings
   operation-clear-temporary-color:
     lifecycle: single
     description: Operation.ClearTemporaryColor
   operation-clear-virtual-bar-cache:
     lifecycle: single
-    description: Clear all virtual rebar cache.
+    description: Operation.ClearVirtualBarCache
   operation-combine:
     lifecycle: single
     description: Operation.Combine
@@ -7070,7 +7058,7 @@ commands:
     description: Operation.ConvertPartToItem
   operation-convert-reference-models:
     lifecycle: single
-    description: Converts Reference models as TS native objects.
+    description: Operation.ConvertReferenceModels
   operation-convert-ts-guid-to-ifc-guid:
     lifecycle: single
     description: Operation.ConvertTsGuidToIfcGuid
@@ -7154,7 +7142,7 @@ commands:
     description: Operation.DeleteShapeMetadata
   operation-disable-filtering-cache:
     lifecycle: single
-    description: Disable caching of filters from files.
+    description: Operation.DisableFilteringCache
   operation-display-prompt:
     lifecycle: single
     description: Operation.DisplayPrompt
@@ -7235,7 +7223,7 @@ commands:
     description: Operation.dotExcludeFromSharingAndOpen
   operation-dot-export-clear-attribute-file-cache:
     lifecycle: single
-    description: "Clears cached file system for the subfolder \"attributes\" to take recent changes into account when files are requested next time."
+    description: Operation.dotExportClearAttributeFileCache
   operation-dot-export-get-attribute-files:
     lifecycle: single
     description: Operation.dotExportGetAttributeFiles
@@ -7256,7 +7244,7 @@ commands:
     description: Operation.dotExportShadowRegionComplement
   operation-dot-get-allowed-reference-model-file-extensions:
     lifecycle: single
-    description: Gets list of allowed reference model extensions.
+    description: Operation.dotGetAllowedReferenceModelFileExtensions
   operation-dot-get-assembly-id:
     lifecycle: single
     description: Operation.dotGetAssemblyId
@@ -7265,7 +7253,7 @@ commands:
     description: Operation.dotGetBeamPositioningBox
   operation-dot-get-current-modification-stamp-guid:
     lifecycle: single
-    description: Gets the current modification stamp from the model, in form of Guid.
+    description: Operation.dotGetCurrentModificationStampGuid
   operation-dot-get-data-base-version-info-from-model:
     lifecycle: single
     description: Operation.dotGetDataBaseVersionInfoFromModel
@@ -7373,7 +7361,7 @@ commands:
     description: Operation.dotSharingIsEnabled
   operation-dot-sharing-is-privileges-inp-owner:
     lifecycle: single
-    description: Check if user is privileges.inp owner.
+    description: Operation.dotSharingIsPrivilegesInpOwner
   operation-dot-sharing-join-finished:
     lifecycle: single
     description: Operation.dotSharingJoinFinished
@@ -7400,7 +7388,7 @@ commands:
     description: Operation.dotSharingRegisterPlugin
   operation-dot-sharing-restore-privileges-inp:
     lifecycle: single
-    description: Restore privileges.inp file.
+    description: Operation.dotSharingRestorePrivilegesInp
   operation-dot-sharing-restore-start-sharing-backup:
     lifecycle: single
     description: Operation.dotSharingRestoreStartSharingBackup
@@ -7451,7 +7439,7 @@ commands:
     description: Operation.dotUndo
   operation-dot-unload-model2:
     lifecycle: single
-    description: Unload model2 manager.
+    description: Operation.dotUnloadModel2
   operation-dot-write-error-to-session-log:
     lifecycle: single
     description: Operation.dotWriteErrorToSessionLog
@@ -7460,7 +7448,7 @@ commands:
     description: Operation.dotWriteToSessionLog
   operation-enable-filtering-cache:
     lifecycle: single
-    description: Enable caching of filters from files.
+    description: Operation.EnableFilteringCache
   operation-events-db-time-ordered:
     lifecycle: single
     description: Operation.EventsDbTimeOrdered
@@ -7520,16 +7508,16 @@ commands:
     description: Operation.GetAvailableMaterials
   operation-get-available-profiles:
     lifecycle: single
-    description: Gets the available profiles by category to profiles and their materials.
+    description: Operation.GetAvailableProfiles
   operation-get-bolted-parts-hole-elevations:
     lifecycle: single
     description: Operation.GetBoltedPartsHoleElevations
   operation-get-current-undo-log-info:
     lifecycle: single
-    description: Gets the current info messsage from undo log
+    description: Operation.GetCurrentUndoLogInfo
   operation-get-current-view:
     lifecycle: single
-    description: Returns the view over that the mouse was hovering last
+    description: Operation.GetCurrentView
   operation-get-deleted-submitted-parts-count:
     lifecycle: single
     description: Operation.GetDeletedSubmittedPartsCount
@@ -7538,10 +7526,10 @@ commands:
     description: Operation.GetEventTimeGuid
   operation-get-external-reference-model-comparison-sets:
     lifecycle: single
-    description: Gets the available comparison sets titles.
+    description: Operation.GetExternalReferenceModelComparisonSets
   operation-get-external-reference-model-comparison-tolerances:
     lifecycle: single
-    description: Gets the available comparison tolerance items titles.
+    description: Operation.GetExternalReferenceModelComparisonTolerances
   operation-get-external-reference-model-entities-count:
     lifecycle: single
     description: Operation.GetExternalReferenceModelEntitiesCount
@@ -7553,25 +7541,25 @@ commands:
     description: Operation.GetExternalReferenceModelPath
   operation-get-external-reference-model-selections:
     lifecycle: single
-    description: Gets the external reference model selections.
+    description: Operation.GetExternalReferenceModelSelections
   operation-get-handle-points:
     lifecycle: single
     description: Operation.GetHandlePoints
   operation-get-hidden-external-objects:
     lifecycle: single
-    description: Gets the hidden objects of the external reference models.
+    description: Operation.GetHiddenExternalObjects
   operation-get-hidden-objects:
     lifecycle: single
-    description: Retrieves a list of hidden objects in the model.
+    description: Operation.GetHiddenObjects
   operation-get-imported-external-reference-models:
     lifecycle: single
-    description: Gets the paths of the imported external reference models. The paths match with the paths             given when model was imported using ImportExternalReferenceModel().
+    description: Operation.GetImportedExternalReferenceModels
   operation-get-latest-undo-log-info:
     lifecycle: single
-    description: Gets the latest info messsage from undo log
+    description: Operation.GetLatestUndoLogInfo
   operation-get-mepifcexport:
     lifecycle: single
-    description: Get MEP IFC export component name
+    description: Operation.GetMEPIFCExport
   operation-get-normalized-plate-profile-name:
     lifecycle: single
     description: Operation.GetNormalizedPlateProfileName
@@ -7580,7 +7568,7 @@ commands:
     description: Operation.GetNumberingSettings
   operation-get-numbering-temporary-record-list:
     lifecycle: single
-    description: Get a list of numbering temporary records in byte[] format for protobuf usage.
+    description: Operation.GetNumberingTemporaryRecordList
   operation-get-object-assembly-primary:
     lifecycle: single
     description: Operation.GetObjectAssemblyPrimary
@@ -7607,7 +7595,7 @@ commands:
     description: Operation.GetPendingChangeSets
   operation-get-printing-controller:
     lifecycle: single
-    description: Get printing controller object on the TS side.
+    description: Operation.GetPrintingController
   operation-get-property-set-dialog-feature:
     lifecycle: single
     description: Operation.GetPropertySetDialogFeature
@@ -7643,7 +7631,7 @@ commands:
     description: Operation.GetTemporaryColor
   operation-get-tslanguage-culture-string:
     lifecycle: single
-    description: "Get the Tekla Structures culture language format (ex:en-US)."
+    description: Operation.GetTSLanguageCultureString
   operation-get-view-rotation-point-from-current-view:
     lifecycle: single
     description: Operation.GetViewRotationPointFromCurrentView
@@ -7694,7 +7682,7 @@ commands:
     description: Operation.IsFinishAccepted
   operation-is-macro-running:
     lifecycle: single
-    description: Returns true if a macro is running, false otherwise.             Macros are saved as *.cs files in the folder defined with the             XS_MACRO_DIRECTORY variable.See Tekla Structures Help for more information about macros.
+    description: Operation.IsMacroRunning
   operation-is-material-accepted:
     lifecycle: single
     description: Operation.IsMaterialAccepted
@@ -7703,13 +7691,13 @@ commands:
     description: Operation.IsModelAutoSaved
   operation-is-numbering-allowed:
     lifecycle: single
-    description: Checks whether the numbering is allowed or not in the current configuration.
+    description: Operation.IsNumberingAllowed
   operation-is-numbering-up-to-date:
     lifecycle: single
     description: Operation.IsNumberingUpToDate
   operation-is-numbering-up-to-date-all:
     lifecycle: single
-    description: Checks whether the numbering is up-to-date for every assembly, part and rebar on the model.                          Using this method is much faster than checking each object individually.
+    description: Operation.IsNumberingUpToDateAll
   operation-is-profile-accepted:
     lifecycle: single
     description: Operation.IsProfileAccepted
@@ -7727,10 +7715,10 @@ commands:
     description: Operation.IsValidProfile
   operation-launch-external-reference-model-comparison-sets-dialog:
     lifecycle: single
-    description: Launches the comparison sets dialog.
+    description: Operation.LaunchExternalReferenceModelComparisonSetsDialog
   operation-launch-external-reference-model-comparison-tolerances-dialog:
     lifecycle: single
-    description: Launches the comparison tolerances dialog.
+    description: Operation.LaunchExternalReferenceModelComparisonTolerancesDialog
   operation-move-object:
     lifecycle: single
     description: Operation.MoveObject
@@ -7742,7 +7730,7 @@ commands:
     description: Operation.ObjectMatchesToFilter
   operation-objects-included-to-copy-or-move-operation:
     lifecycle: single
-    description: Check if model object is included in to the copy or move operation.
+    description: Operation.ObjectsIncludedToCopyOrMoveOperation
   operation-objects-match-to-filter:
     lifecycle: single
     description: Operation.ObjectsMatchToFilter
@@ -7757,7 +7745,7 @@ commands:
     description: Operation.RegisterAssertCallback
   operation-reject-numbering-results:
     lifecycle: single
-    description: Reject the numbering results (cancel previous executed numbering).
+    description: Operation.RejectNumberingResults
   operation-remove-change-set:
     lifecycle: single
     description: Operation.RemoveChangeSet
@@ -7797,6 +7785,9 @@ commands:
   operation-select-objects-in-external-reference-model:
     lifecycle: single
     description: Operation.SelectObjectsInExternalReferenceModel
+  operation-send-abmnumbering:
+    lifecycle: single
+    description: Operation.SendABMNumbering
   operation-send-custom-parts-to-abmnumbering:
     lifecycle: single
     description: Operation.SendCustomPartsToABMNumbering
@@ -7850,10 +7841,10 @@ commands:
     description: Operation.StartLiveSharing
   operation-stop-external-reference-model-change-detection:
     lifecycle: single
-    description: Stops any external reference model change detection operation.
+    description: Operation.StopExternalReferenceModelChangeDetection
   operation-stop-live-sharing:
     lifecycle: single
-    description: Stop LiveSharing
+    description: Operation.StopLiveSharing
   operation-swap-construction-object-order:
     lifecycle: single
     description: Operation.SwapConstructionObjectOrder
@@ -7865,7 +7856,7 @@ commands:
     description: Operation.Ungrouping
   operation-unhighlight-connected-objects:
     lifecycle: single
-    description: Highlight the list of picked objects.             Only the list of objects will be highlighted and have the status of the selected objects.
+    description: Operation.UnhighlightConnectedObjects
   operation-unnumber-procurement-parts:
     lifecycle: single
     description: Operation.UnnumberProcurementParts
@@ -7880,7 +7871,7 @@ commands:
     description: Operation.WriteEventToDatabase
   operation-write-trb-created-event:
     lifecycle: single
-    description: Writes a TrbCreated event to the dbvirtual
+    description: Operation.WriteTrbCreatedEvent
   operation-zoom-to-external-reference-model:
     lifecycle: single
     description: Operation.ZoomToExternalReferenceModel
@@ -7895,67 +7886,67 @@ commands:
     description: Part.CompareTo
   part-get-assembly:
     lifecycle: single
-    description: Returns the assembly that the part belongs to.
+    description: Part.GetAssembly
   part-get-bolts:
     lifecycle: single
-    description: Returns an enumerator of all the connected bolts.
+    description: Part.GetBolts
   part-get-booleans:
     lifecycle: single
-    description: Returns an enumerator of all the connected boolean objects.
+    description: Part.GetBooleans
   part-get-center-line:
     lifecycle: single
     description: Part.GetCenterLine
   part-get-components:
     lifecycle: single
-    description: Returns an enumerator of all the connected components, connections,             seams and details inherited from the base component.
+    description: Part.GetComponents
   part-get-dstvcoordinate-system:
     lifecycle: single
-    description: Get DSTV coordinate system.
+    description: Part.GetDSTVCoordinateSystem
   part-get-part-mark:
     lifecycle: single
-    description: Returns the part mark.
+    description: Part.GetPartMark
   part-get-pours:
     lifecycle: single
-    description: Returns an enumerator of all the pours that the part belongs to.
+    description: Part.GetPours
   part-get-reference-line:
     lifecycle: single
     description: Part.GetReferenceLine
   part-get-reinforcements:
     lifecycle: single
-    description: Returns an enumerator of all the connected reinforcements.
+    description: Part.GetReinforcements
   part-get-solid:
     lifecycle: single
-    description: Returns the solid of the part.
+    description: Part.GetSolid
   part-get-surface-objects:
     lifecycle: single
-    description: Returns an enumerator of all the connected surface objects.
+    description: Part.GetSurfaceObjects
   part-get-surface-treatments:
     lifecycle: single
-    description: Returns an enumerator of all the connected surface treatments.
+    description: Part.GetSurfaceTreatments
   part-get-welds:
     lifecycle: single
-    description: Returns an enumerator of all the connected welds.
+    description: Part.GetWelds
   phase-collection-copy-to:
     lifecycle: single
     description: PhaseCollection.CopyTo
   phase-collection-get-enumerator:
     lifecycle: single
-    description: Returns an enumerator that iterates through a collection.
+    description: PhaseCollection.GetEnumerator
   phase-delete:
     lifecycle: single
-    description: Deletes a phase. The current phase cannot be deleted.
+    description: Phase.Delete
   phase-get-user-property:
     lifecycle: single
     description: Phase.GetUserProperty
   phase-insert:
     lifecycle: single
-    description: Creates a new phase.
+    description: Phase.Insert
   phase-modify:
     lifecycle: single
-    description: Modifies a phase.
+    description: Phase.Modify
   phase-select:
     lifecycle: single
-    description: Selects a phase.
+    description: Phase.Select
   phase-set-user-property:
     lifecycle: single
     description: Phase.SetUserProperty
@@ -7964,7 +7955,7 @@ commands:
     description: PickInput.CopyTo
   pick-input-get-enumerator:
     lifecycle: single
-    description: Returns an enumerator that iterates through a collection.
+    description: PickInput.GetEnumerator
   picker-internal-pick-object:
     lifecycle: single
     description: PickerInternal.PickObject
@@ -7973,10 +7964,10 @@ commands:
     description: PickerInternal.PickObjects
   picker-pick-face:
     lifecycle: single
-    description: Queries the user to pick a face from the model.
+    description: Picker.PickFace
   picker-pick-line:
     lifecycle: single
-    description: Queries the user to pick a line from the model.
+    description: Picker.PickLine
   picker-pick-object:
     lifecycle: single
     description: Picker.PickObject
@@ -7985,7 +7976,7 @@ commands:
     description: Picker.PickObjects
   picker-pick-point:
     lifecycle: single
-    description: Queries the user to pick a point from the model.
+    description: Picker.PickPoint
   picker-pick-points:
     lifecycle: single
     description: Picker.PickPoints
@@ -7997,22 +7988,22 @@ commands:
     description: Point.__assign
   point-cloud-attach:
     lifecycle: single
-    description: Attach this point cloud to model. Can select only Potree type point clouds immediately after attach.             Others need to be selected manually after attach has been completed. Use AttachComplete() to find out, if             attach process has completed.
+    description: PointCloud.Attach
   point-cloud-attach-complete:
     lifecycle: single
-    description: Checks if the point cloud attach is complete. Needed when attaching non-Potree point cloud file, which             needs conversion.
+    description: PointCloud.AttachComplete
   point-cloud-detach:
     lifecycle: single
-    description: Detach this point cloud from model.
+    description: PointCloud.Detach
   point-cloud-get-point-clouds:
     lifecycle: single
-    description: "Utility function: Gets available point clouds."
+    description: PointCloud.GetPointClouds
   point-cloud-get-visible-in-views:
     lifecycle: single
-    description: Gets the views in which this point cloud is visible.
+    description: PointCloud.GetVisibleInViews
   point-cloud-select:
     lifecycle: single
-    description: Select point cloud by Guid, by Name, by OriginalPath or by Url.
+    description: PointCloud.Select
   point-cloud-set-visibility:
     lifecycle: single
     description: PointCloud.SetVisibility
@@ -8054,7 +8045,7 @@ commands:
     description: PointList.RemoveRange
   point-list-to-array:
     lifecycle: single
-    description: Copies the points to a point array.
+    description: PointList.ToArray
   point-start-point:
     lifecycle: single
     description: Point.StartPoint
@@ -8063,22 +8054,22 @@ commands:
     description: PolyBeam.AddContourPoint
   poly-beam-delete:
     lifecycle: single
-    description: Deletes the polybeam instance with the given identifier from the model database.
+    description: PolyBeam.Delete
   poly-beam-get-center-line-polycurve:
     lifecycle: single
-    description: Get centerline as polycurve
+    description: PolyBeam.GetCenterLinePolycurve
   poly-beam-get-polybeam-coordinate-systems:
     lifecycle: single
-    description: Returns a list of coordinate systems for the polybeam segments.
+    description: PolyBeam.GetPolybeamCoordinateSystems
   poly-beam-insert:
     lifecycle: single
-    description: Inserts the polybeam into the model database. All the attributes must be set.
+    description: PolyBeam.Insert
   poly-beam-modify:
     lifecycle: single
-    description: Modifies the existing polybeam in the model database to match the current one.
+    description: PolyBeam.Modify
   poly-beam-select:
     lifecycle: single
-    description: Selects a polybeam from the model database. The identifier of the polybeam must be set.
+    description: PolyBeam.Select
   poly-line-add-colorindex:
     lifecycle: single
     description: PolyLine.AddColorindex
@@ -8129,22 +8120,22 @@ commands:
     description: PolygonNode.AcceptVisitor
   polygon-node-clone:
     lifecycle: single
-    description: Creates a new object that is a copy of the current instance.
+    description: PolygonNode.Clone
   polygon-weld-delete:
     lifecycle: single
-    description: Deletes the polygon weld instance with the given identifier from the model database.
+    description: PolygonWeld.Delete
   polygon-weld-get-logical-weld:
     lifecycle: single
     description: PolygonWeld.GetLogicalWeld
   polygon-weld-insert:
     lifecycle: single
-    description: Inserts the polygon weld into the model database. All the attributes must be set.
+    description: PolygonWeld.Insert
   polygon-weld-modify:
     lifecycle: single
-    description: Modifies the existing polygon weld in the model database to match the current one.             The modification cannot be done if the polygon weld is a part of a logical weld.
+    description: PolygonWeld.Modify
   polygon-weld-select:
     lifecycle: single
-    description: Selects a polygon weld from the model database. The polygon weld identifier must be set.
+    description: PolygonWeld.Select
   polyline-add:
     lifecycle: single
     description: Polyline.Add
@@ -8162,10 +8153,10 @@ commands:
     description: Polymesh.ConvertToStruct
   polymesh-enumerator-move-next:
     lifecycle: single
-    description: Moves to the next item in the enumerator.
+    description: PolymeshEnumerator.MoveNext
   polymesh-enumerator-reset:
     lifecycle: single
-    description: Resets the enumerator to the beginning.
+    description: PolymeshEnumerator.Reset
   polymesh-fingerprint:
     lifecycle: single
     description: Polymesh.Fingerprint
@@ -8183,67 +8174,67 @@ commands:
     description: Polymesh.Validate
   pour-break-delete:
     lifecycle: single
-    description: Deletes the model object from the model database.
+    description: PourBreak.Delete
   pour-break-insert:
     lifecycle: single
-    description: Inserts a new model object. The geometry of the object             needs to be set by using the public Polymesh             function, before calling insert.
+    description: PourBreak.Insert
   pour-break-modify:
     lifecycle: single
-    description: Modifies the existing model object in the model database to match the current one.
+    description: PourBreak.Modify
   pour-break-select:
     lifecycle: single
-    description: Selects the model object from the model by the identifier of this instance.
+    description: PourBreak.Select
   pour-object-delete:
     lifecycle: single
-    description: At the moment pour objects cannot be deleted.
+    description: PourObject.Delete
   pour-object-get-assembly:
     lifecycle: single
-    description: Returns the assembly that the pour object belongs to.
+    description: PourObject.GetAssembly
   pour-object-get-father-pour-unit:
     lifecycle: single
-    description: Returns the pour unit that the pour object belongs to.
+    description: PourObject.GetFatherPourUnit
   pour-object-get-objects:
     lifecycle: single
-    description: Returns an enumerator of all objects related to pour.
+    description: PourObject.GetObjects
   pour-object-get-parts:
     lifecycle: single
-    description: Returns an enumerator of all parts related to pour.
+    description: PourObject.GetParts
   pour-object-get-pour-polymeshes:
     lifecycle: single
-    description: Returns a new polymesh enumerator based on merged faces of the pour object in the current plane.
+    description: PourObject.GetPourPolymeshes
   pour-object-get-solid:
     lifecycle: single
-    description: Returns the solid of the pour object.
+    description: PourObject.GetSolid
   pour-object-get-surface-objects:
     lifecycle: single
-    description: Returns an enumerator of all the connected surface objects.
+    description: PourObject.GetSurfaceObjects
   pour-object-insert:
     lifecycle: single
-    description: At the moment pour objects cannot be inserted.
+    description: PourObject.Insert
   pour-object-modify:
     lifecycle: single
-    description: Modifies the pour object with the given identifier.
+    description: PourObject.Modify
   pour-object-select:
     lifecycle: single
-    description: Selects the pour object instance from the model. The identifier of the instance must be set.
+    description: PourObject.Select
   pour-unit-delete:
     lifecycle: single
-    description: At the moment pour units cannot be deleted.
+    description: PourUnit.Delete
   pour-unit-get-objects:
     lifecycle: single
-    description: Returns all objects related to pour unit, pour object not included.
+    description: PourUnit.GetObjects
   pour-unit-get-pour-object:
     lifecycle: single
-    description: Returns the pour object in pour unit.
+    description: PourUnit.GetPourObject
   pour-unit-insert:
     lifecycle: single
-    description: At the moment pour units cannot be inserted.
+    description: PourUnit.Insert
   pour-unit-modify:
     lifecycle: single
-    description: Modifies the pour unit with the given identifier.
+    description: PourUnit.Modify
   pour-unit-select:
     lifecycle: single
-    description: Selects the pour unit instance from the model. The identifier of the instance must be set.
+    description: PourUnit.Select
   printing-controller-print-report-to-pdf:
     lifecycle: single
     description: PrintingController.PrintReportToPdf
@@ -8253,15 +8244,6 @@ commands:
   profile-parse-profile-string:
     lifecycle: single
     description: Profile.ParseProfileString
-  progress-report-delegate-begin-invoke:
-    lifecycle: single
-    description: ProgressReportDelegate.BeginInvoke
-  progress-report-delegate-end-invoke:
-    lifecycle: single
-    description: ProgressReportDelegate.EndInvoke
-  progress-report-delegate-invoke:
-    lifecycle: single
-    description: ProgressReportDelegate.Invoke
   project-info-get-base-point-by-guid:
     lifecycle: single
     description: ProjectInfo.GetBasePointByGuid
@@ -8270,10 +8252,10 @@ commands:
     description: ProjectInfo.GetBasePointByName
   project-info-get-base-points:
     lifecycle: single
-    description: Gets all available base points as a list.
+    description: ProjectInfo.GetBasePoints
   project-info-get-current-coordsys-base-point:
     lifecycle: single
-    description: Gets the current base point, if set.
+    description: ProjectInfo.GetCurrentCoordsysBasePoint
   project-info-get-double-user-properties:
     lifecycle: single
     description: ProjectInfo.GetDoubleUserProperties
@@ -8285,7 +8267,7 @@ commands:
     description: ProjectInfo.GetIntegerUserProperties
   project-info-get-project-base-point:
     lifecycle: single
-    description: Gets the project base point, if any set.
+    description: ProjectInfo.GetProjectBasePoint
   project-info-get-string-user-properties:
     lifecycle: single
     description: ProjectInfo.GetStringUserProperties
@@ -8294,7 +8276,7 @@ commands:
     description: ProjectInfo.GetUserProperty
   project-info-modify:
     lifecycle: single
-    description: Modifies the current project information.
+    description: ProjectInfo.Modify
   project-info-set-current-coordsys-to-base-point:
     lifecycle: single
     description: ProjectInfo.SetCurrentCoordsysToBasePoint
@@ -8309,82 +8291,82 @@ commands:
     description: RebarEndDetailModifier.GetAffectedBars
   rebar-group-delete:
     lifecycle: single
-    description: Deletes the rebar group instance with the given identifier from the model database.
+    description: RebarGroup.Delete
   rebar-group-insert:
     lifecycle: single
-    description: Inserts the rebar group into the model database. All the attributes must be set.
+    description: RebarGroup.Insert
   rebar-group-modify:
     lifecycle: single
-    description: Modifies the existing rebar group in the model database to match the current one.
+    description: RebarGroup.Modify
   rebar-group-select:
     lifecycle: single
-    description: Selects a rebar group from the model database. The reinforcement identifier must be set.
+    description: RebarGroup.Select
   rebar-leg-surface-object-insert:
     lifecycle: single
-    description: Inserts the leg surface object into the model database.
+    description: RebarLegSurfaceObject.Insert
   rebar-leg-surface-object-modify:
     lifecycle: single
-    description: Modifies the existing leg surface object in the model database to match the current one.
+    description: RebarLegSurfaceObject.Modify
   rebar-leg-surface-object-select:
     lifecycle: single
-    description: Selects the leg surface object from the model database. The identifier must be set.
+    description: RebarLegSurfaceObject.Select
   rebar-mesh-delete:
     lifecycle: single
-    description: Deletes the reinforcement mesh instance with the given identifier from the model database.
+    description: RebarMesh.Delete
   rebar-mesh-insert:
     lifecycle: single
-    description: Inserts the reinforcement mesh into the model database. All the attributes must be set.
+    description: RebarMesh.Insert
   rebar-mesh-modify:
     lifecycle: single
-    description: Modifies the existing reinforcement mesh in the model database to match the current one.
+    description: RebarMesh.Modify
   rebar-mesh-select:
     lifecycle: single
-    description: Selects a reinforcement mesh from the model database. The reinforcement identifier must be set.
+    description: RebarMesh.Select
   rebar-property-modifier-get-affected-bars:
     lifecycle: single
-    description: Gets the virtual bars affected by this modifier.
+    description: RebarPropertyModifier.GetAffectedBars
   rebar-set-addition-delete:
     lifecycle: single
-    description: Deletes the rebar set addition with the given identifier from the model database.
+    description: RebarSetAddition.Delete
   rebar-set-addition-insert:
     lifecycle: single
-    description: Inserts the rebar set addition into the model database.
+    description: RebarSetAddition.Insert
   rebar-set-addition-modify:
     lifecycle: single
-    description: Modifies the rebar set addition in the model database to match the current one.
+    description: RebarSetAddition.Modify
   rebar-set-addition-select:
     lifecycle: single
-    description: Selects the rebar set addition from the model database. The rebar set addition identifier must be set.
+    description: RebarSetAddition.Select
   rebar-set-delete:
     lifecycle: single
-    description: Deletes the rebar set instance with the given identifier from the model database.
+    description: RebarSet.Delete
   rebar-set-get-assembly:
     lifecycle: single
-    description: Returns the assembly that the rebar set belongs to.
+    description: RebarSet.GetAssembly
   rebar-set-get-rebar-leg-surfaces:
     lifecycle: single
-    description: Returns an enumerator of all child  objects.
+    description: RebarSet.GetRebarLegSurfaces
   rebar-set-get-rebar-modifiers:
     lifecycle: single
-    description: Returns an enumerator of all child  objects.
+    description: RebarSet.GetRebarModifiers
   rebar-set-get-rebar-set-additions:
     lifecycle: single
-    description: Returns an enumerator of all child  objects.
+    description: RebarSet.GetRebarSetAdditions
   rebar-set-get-reinforcements:
     lifecycle: single
-    description: Returns an enumerator of all the connected  objects.
+    description: RebarSet.GetReinforcements
   rebar-set-insert:
     lifecycle: single
-    description: Inserts the rebar set into the model database.
+    description: RebarSet.Insert
   rebar-set-modify:
     lifecycle: single
-    description: Modifies the rebar set in the model database to match the current one.
+    description: RebarSet.Modify
   rebar-set-select:
     lifecycle: single
-    description: Selects the rebar set from the model database. The rebar set identifier must be set.
+    description: RebarSet.Select
   rebar-spacing-clone:
     lifecycle: single
-    description: Makes a copy of this object.
+    description: RebarSpacing.Clone
   rebar-spacing-create:
     lifecycle: single
     description: RebarSpacing.Create
@@ -8393,43 +8375,43 @@ commands:
     description: RebarSpacing.IsExactFlexibleType
   rebar-splice-delete:
     lifecycle: single
-    description: Deletes the rebar splice instance with the given identifier from the model database.
+    description: RebarSplice.Delete
   rebar-splice-insert:
     lifecycle: single
-    description: Inserts the rebar splice into the model database. All the attributes must be set.
+    description: RebarSplice.Insert
   rebar-splice-modify:
     lifecycle: single
-    description: Modifies the existing rebar splice in the model database to match the current one.
+    description: RebarSplice.Modify
   rebar-splice-select:
     lifecycle: single
-    description: Selects a rebar splice from the model database. The splice identifier must be set.
+    description: RebarSplice.Select
   rebar-splitter-get-affected-bars:
     lifecycle: single
     description: RebarSplitter.GetAffectedBars
   rebar-strand-delete:
     lifecycle: single
-    description: Deletes the strand instance with the given identifier from the model database.
+    description: RebarStrand.Delete
   rebar-strand-insert:
     lifecycle: single
-    description: Inserts the strand into the model database. All the attributes must be set.
+    description: RebarStrand.Insert
   rebar-strand-modify:
     lifecycle: single
-    description: Modifies the existing strand in the model database to match the current one.
+    description: RebarStrand.Modify
   rebar-strand-select:
     lifecycle: single
-    description: Selects the strand from the model database. The reinforcement identifier must be set.
+    description: RebarStrand.Select
   reference-model-delete:
     lifecycle: single
-    description: Deletes the reference model with the given identifier.
+    description: ReferenceModel.Delete
   reference-model-get-children:
     lifecycle: single
-    description: Returns an enumerator of all the children reference model objects.
+    description: ReferenceModel.GetChildren
   reference-model-get-converted-objects:
     lifecycle: single
-    description: Returns an enumerator of model object converted from the reference model.
+    description: ReferenceModel.GetConvertedObjects
   reference-model-get-current-revision:
     lifecycle: single
-    description: Gets the current revision.
+    description: ReferenceModel.GetCurrentRevision
   reference-model-get-reference-model-object-by-external-guid:
     lifecycle: single
     description: ReferenceModel.GetReferenceModelObjectByExternalGuid
@@ -8438,61 +8420,61 @@ commands:
     description: ReferenceModel.GetReferenceModelObjectGuidsByExternalGuids
   reference-model-get-revisions:
     lifecycle: single
-    description: Gets the reference models available revisions.
+    description: ReferenceModel.GetRevisions
   reference-model-insert:
     lifecycle: single
-    description: Inserts the reference model into the model.
+    description: ReferenceModel.Insert
   reference-model-modify:
     lifecycle: single
-    description: Modifies the reference model with the given identifier.
+    description: ReferenceModel.Modify
   reference-model-object-attribute-enumerator-move-next:
     lifecycle: single
-    description: Moves to the next reference model object attribute.
+    description: ReferenceModelObjectAttributeEnumerator.MoveNext
   reference-model-object-attribute-enumerator-reset:
     lifecycle: single
-    description: Resets the enumerator.
+    description: ReferenceModelObjectAttributeEnumerator.Reset
   reference-model-object-delete:
     lifecycle: single
-    description: At the moment reference objects cannot be deleted.
+    description: ReferenceModelObject.Delete
   reference-model-object-get-father:
     lifecycle: single
-    description: Returns the reference hierarchy father.
+    description: ReferenceModelObject.GetFather
   reference-model-object-get-reference-model:
     lifecycle: single
-    description: Gets the reference model that the reference object belongs to.
+    description: ReferenceModelObject.GetReferenceModel
   reference-model-object-insert:
     lifecycle: single
-    description: At the moment reference objects cannot be inserted.
+    description: ReferenceModelObject.Insert
   reference-model-object-modify:
     lifecycle: single
-    description: At the moment reference objects cannot be modified.
+    description: ReferenceModelObject.Modify
   reference-model-object-select:
     lifecycle: single
-    description: Selects the reference model with the given identifier.
+    description: ReferenceModelObject.Select
   reference-model-refresh-file:
     lifecycle: single
-    description: Reload the reference file from the location specified by Filename.             If the file has changed, a new revision will be created and taken into use.             Note that if a new revision was successfully created, the ActiveFilePath is changed.
+    description: ReferenceModel.RefreshFile
   reference-model-remove-revision:
     lifecycle: single
     description: ReferenceModel.RemoveRevision
   reference-model-select:
     lifecycle: single
-    description: Selects the reference model with the given identifier.
+    description: ReferenceModel.Select
   reference-model-set-as-current-revision:
     lifecycle: single
     description: ReferenceModel.SetAsCurrentRevision
   reinforcement-get-assembly:
     lifecycle: single
-    description: Returns the assembly that the reinforcement belongs to.
+    description: Reinforcement.GetAssembly
   reinforcement-get-father-pour:
     lifecycle: single
-    description: Returns the pour that the rebar is associated to.
+    description: Reinforcement.GetFatherPour
   reinforcement-get-father-pour-unit:
     lifecycle: single
-    description: Returns the pour unit that the rebar is associated to.
+    description: Reinforcement.GetFatherPourUnit
   reinforcement-get-number-of-rebars:
     lifecycle: single
-    description: Returns the number of rebars in the reinforcing group.
+    description: Reinforcement.GetNumberOfRebars
   reinforcement-get-rebar-complex-geometries:
     lifecycle: single
     description: Reinforcement.GetRebarComplexGeometries
@@ -8510,16 +8492,16 @@ commands:
     description: Reinforcement.GetSingleRebarWithoutClash
   reinforcement-get-solid:
     lifecycle: single
-    description: Method for getting the solid information of the reinforcement.
+    description: Reinforcement.GetSolid
   reinforcement-is-geometry-valid:
     lifecycle: single
-    description: Tells whether the geometry of a reinforcement object is valid or not.
+    description: Reinforcement.IsGeometryValid
   remoter-dispose:
     lifecycle: single
     description: Remoter.Dispose
   remoter-dispose-service:
     lifecycle: single
-    description: Dispose Remoting services
+    description: Remoter.DisposeService
   remoter-initialize-sand-box:
     lifecycle: single
     description: Remoter.InitializeSandBox
@@ -8597,31 +8579,31 @@ commands:
     description: Rotation3DDataConversion.To
   scoped-cdelegate-setter-dispose:
     lifecycle: single
-    description: Restores the DelegateProxy.Delegate to what it was before this class was constructed.
+    description: ScopedCDelegateSetter.Dispose
   seam-delete:
     lifecycle: single
-    description: Deletes the seam instance with the given ID from the model database.
+    description: Seam.Delete
   seam-get-input-polygon:
     lifecycle: single
-    description: Returns the input polygon of the seam.
+    description: Seam.GetInputPolygon
   seam-get-primary-object:
     lifecycle: single
-    description: Returns the primary object.
+    description: Seam.GetPrimaryObject
   seam-get-secondary-objects:
     lifecycle: single
-    description: Returns an array list containing all the secondary objects.
+    description: Seam.GetSecondaryObjects
   seam-get-start-and-end-positions:
     lifecycle: single
     description: Seam.GetStartAndEndPositions
   seam-insert:
     lifecycle: single
-    description: Inserts the seam into the model database. All the attributes must be set.
+    description: Seam.Insert
   seam-modify:
     lifecycle: single
-    description: Modifies the existing seam in the model database to match the current one.
+    description: Seam.Modify
   seam-select:
     lifecycle: single
-    description: Selects a seam from the model database. The seam ID must be set.
+    description: Seam.Select
   seam-set-input-polygon:
     lifecycle: single
     description: Seam.SetInputPolygon
@@ -8645,37 +8627,37 @@ commands:
     description: Serializer.JsonToUDAs
   single-rebar-delete:
     lifecycle: single
-    description: Deletes the single rebar instance with the given identifier from the model database.
+    description: SingleRebar.Delete
   single-rebar-get-rebar-set:
     lifecycle: single
-    description: Gets the parent  of the single rebar.
+    description: SingleRebar.GetRebarSet
   single-rebar-insert:
     lifecycle: single
-    description: Inserts the single rebar into the model database. All the attributes must be set.
+    description: SingleRebar.Insert
   single-rebar-modify:
     lifecycle: single
-    description: Modifies the existing single rebar in the model database to match the current one.
+    description: SingleRebar.Modify
   single-rebar-select:
     lifecycle: single
-    description: Selects a single rebar from the model database. The reinforcement identifier must be set.
+    description: SingleRebar.Select
   site-delete:
     lifecycle: single
-    description: Deletes the Building Hierarchy object instance with the given identifier from the model database.
+    description: Site.Delete
   site-get-buildings:
     lifecycle: single
-    description: Gets all buildings belonging to this site.
+    description: Site.GetBuildings
   site-get-spaces:
     lifecycle: single
-    description: Gets all spaces belonging to this site.
+    description: Site.GetSpaces
   site-insert:
     lifecycle: single
-    description: Inserts this Building Hierarchy object into model database. All the attributes must be set.
+    description: Site.Insert
   site-modify:
     lifecycle: single
-    description: Modifies the existing Building Hierarchy object in the model database to match the current one.
+    description: Site.Modify
   site-select:
     lifecycle: single
-    description: Selects the Building Hierarchy object from model database. The object identifier must be set.
+    description: Site.Select
   solid-get-all-intersection-points:
     lifecycle: single
     description: Solid.GetAllIntersectionPoints
@@ -8684,10 +8666,10 @@ commands:
     description: Solid.GetCutPart
   solid-get-edge-enumerator:
     lifecycle: single
-    description: Returns a new edge enumerator in the current plane.
+    description: Solid.GetEdgeEnumerator
   solid-get-face-enumerator:
     lifecycle: single
-    description: Returns a new face enumerator in the current plane.
+    description: Solid.GetFaceEnumerator
   solid-intersect:
     lifecycle: single
     description: Solid.Intersect
@@ -8696,16 +8678,16 @@ commands:
     description: Solid.IntersectAllFaces
   solid-is-valid:
     lifecycle: single
-    description: Returns if the solid is valid.
+    description: Solid.IsValid
   space-delete:
     lifecycle: single
     description: Space.Delete
   space-get-solid:
     lifecycle: single
-    description: Returns the solid of the space.
+    description: Space.GetSolid
   space-hide-assigned-objects:
     lifecycle: single
-    description: Hide assigned objects in 3d view.
+    description: Space.HideAssignedObjects
   space-insert:
     lifecycle: single
     description: Space.Insert
@@ -8717,55 +8699,55 @@ commands:
     description: Space.Select
   space-select-assigned-objects:
     lifecycle: single
-    description: Select assigned objects in 3d view.
+    description: Space.SelectAssignedObjects
   space-show-assigned-objects:
     lifecycle: single
-    description: Show previously hidden assigned objects in 3d view.
+    description: Space.ShowAssignedObjects
   space-show-only-assigned-objects:
     lifecycle: single
-    description: Show only assigned objects in 3d view.
+    description: Space.ShowOnlyAssignedObjects
   spiral-beam-delete:
     lifecycle: single
-    description: Deletes the spiral beam with this instance identifier from the model database.
+    description: SpiralBeam.Delete
   spiral-beam-insert:
     lifecycle: single
-    description: Inserts the spiral beam into the model database. All the attributes must be set.
+    description: SpiralBeam.Insert
   spiral-beam-modify:
     lifecycle: single
-    description: Modifies the spiral beam object values in the database.
+    description: SpiralBeam.Modify
   spiral-beam-select:
     lifecycle: single
-    description: Selects a spiral beam object from the database.
+    description: SpiralBeam.Select
   spiral-node-accept-visitor:
     lifecycle: single
     description: SpiralNode.AcceptVisitor
   spiral-node-clone:
     lifecycle: single
-    description: Creates a new object that is a copy of the current instance.
+    description: SpiralNode.Clone
   storey-delete:
     lifecycle: single
-    description: "Deletes the Building Hierarchy object instance with the given identifier from the model database.             TODO: TTSD-37779 Delete won't work with TeklaModel implementation because dotPluginInterface_ci::DeleteObject fails to find id."
+    description: Storey.Delete
   storey-get-manual-object-overrides:
     lifecycle: single
-    description: Gets all manually overridden objects from this Building Hierarchy item.
+    description: Storey.GetManualObjectOverrides
   storey-get-objects:
     lifecycle: single
-    description: Gets all ModelObjects that belong to this Storey. The objects still need to be selected separately after calling this method.
+    description: Storey.GetObjects
   storey-get-spaces:
     lifecycle: single
-    description: Gets all spaces belonging to this storey.
+    description: Storey.GetSpaces
   storey-insert:
     lifecycle: single
-    description: Inserts this Building Hierarchy object into model database. All the attributes must be set.
+    description: Storey.Insert
   storey-modify:
     lifecycle: single
-    description: Modifies the existing Building Hierarchy object in the model database to match the current one.
+    description: Storey.Modify
   storey-remove-manual-object-overrides:
     lifecycle: single
     description: Storey.RemoveManualObjectOverrides
   storey-select:
     lifecycle: single
-    description: Selects the Building Hierarchy object from model database. The object identifier must be set.
+    description: Storey.Select
   storey-set-manual-object-overrides:
     lifecycle: single
     description: Storey.SetManualObjectOverrides
@@ -8798,7 +8780,7 @@ commands:
     description: StringList.RemoveRange
   string-list-to-array:
     lifecycle: single
-    description: Copies the strings to a string array.
+    description: StringList.ToArray
   surface-object-creator-create-by-face:
     lifecycle: single
     description: SurfaceObjectCreator.CreateByFace
@@ -8807,28 +8789,28 @@ commands:
     description: SurfaceObjectCreator.CreateRebarLegSurfaceObjectByFace
   surface-object-delete:
     lifecycle: single
-    description: Deletes the model object from the model database.
+    description: SurfaceObject.Delete
   surface-object-insert:
     lifecycle: single
-    description: Inserts a new model object. The geometry of the object             needs to be set by using the public Polymesh             function, before calling insert.
+    description: SurfaceObject.Insert
   surface-object-modify:
     lifecycle: single
-    description: Modifies the existing model object in the model database to match the current one.
+    description: SurfaceObject.Modify
   surface-object-select:
     lifecycle: single
-    description: Selects the model object from the model by the identifier of this instance.
+    description: SurfaceObject.Select
   surface-treatment-delete:
     lifecycle: single
-    description: Deletes the surface treatment with the given identifier from the database.
+    description: SurfaceTreatment.Delete
   surface-treatment-insert:
     lifecycle: single
-    description: Inserts the surface treatment to the database.
+    description: SurfaceTreatment.Insert
   surface-treatment-modify:
     lifecycle: single
-    description: Modifies the surface treatment with the given identifier in the database to match             the current one.
+    description: SurfaceTreatment.Modify
   surface-treatment-select:
     lifecycle: single
-    description: Selects the surface treatment with the given identifier.
+    description: SurfaceTreatment.Select
   sync-handler-begin-invoke:
     lifecycle: single
     description: SyncHandler.BeginInvoke
@@ -8873,52 +8855,52 @@ commands:
     description: Task.AddObjectsToTask
   task-delete:
     lifecycle: single
-    description: Deletes the task instance from the model. The identifier must be set.
+    description: Task.Delete
   task-dependency-delete:
     lifecycle: single
-    description: Deletes the task dependency instance from the model.
+    description: TaskDependency.Delete
   task-dependency-insert:
     lifecycle: single
-    description: Inserts the task dependency instance in the model.
+    description: TaskDependency.Insert
   task-dependency-modify:
     lifecycle: single
-    description: Modifies the task dependency instance in the model. The identifier must be set.
+    description: TaskDependency.Modify
   task-dependency-select:
     lifecycle: single
-    description: Selects the task dependency instance from the model. The identifier must be set.
+    description: TaskDependency.Select
   task-get-all-tasks-of-selected-objects:
     lifecycle: single
-    description: Returns an enumerator of all the tasks related to the selected objects.
+    description: Task.GetAllTasksOfSelectedObjects
   task-get-dependencies:
     lifecycle: single
-    description: Returns an enumerator of all the task dependency objects where the task is involved.
+    description: Task.GetDependencies
   task-get-fathers:
     lifecycle: single
-    description: Returns an enumerator of all the task type fathers for the task object.
+    description: Task.GetFathers
   task-insert:
     lifecycle: single
-    description: Inserts the task instance in the model.
+    description: Task.Insert
   task-modify:
     lifecycle: single
-    description: Modifies the task instance in the model. The identifier must be set.
+    description: Task.Modify
   task-remove-objects-from-task:
     lifecycle: single
     description: Task.RemoveObjectsFromTask
   task-select:
     lifecycle: single
-    description: Selects the task instance from the model. The identifier must be set.
+    description: Task.Select
   task-worktype-delete:
     lifecycle: single
-    description: Deletes the task worktype instance from the model. The identifier must be set.
+    description: TaskWorktype.Delete
   task-worktype-insert:
     lifecycle: single
-    description: Inserts the task worktype instance in the model.
+    description: TaskWorktype.Insert
   task-worktype-modify:
     lifecycle: single
-    description: Modifies the task worktype instance in the model. The identifier must be set.
+    description: TaskWorktype.Modify
   task-worktype-select:
     lifecycle: single
-    description: Selects the task worktype instance from the model. The identifier must be set.
+    description: TaskWorktype.Select
   text-add-colorindex:
     lifecycle: single
     description: Text.AddColorindex
@@ -8951,7 +8933,7 @@ commands:
     description: Text.StartText
   transformation-plane-to-string:
     lifecycle: single
-    description: Returns a string representation of the matrices that transform to local and global coordinates.
+    description: TransformationPlane.ToString
   vec3-assign:
     lifecycle: single
     description: Vec3.__assign
@@ -8963,37 +8945,37 @@ commands:
     description: Vec3.__init
   view-camera-modify:
     lifecycle: single
-    description: Updates the camera to the application view.
+    description: ViewCamera.Modify
   view-camera-select:
     lifecycle: single
-    description: Updates the camera parameters from the application view.
+    description: ViewCamera.Select
   view-create-snapshot:
     lifecycle: single
     description: View.CreateSnapshot
   view-delete:
     lifecycle: single
-    description: Deletes the view.
+    description: View.Delete
   view-get-clip-planes:
     lifecycle: single
-    description: Returns all the clip planes of the view.
+    description: View.GetClipPlanes
   view-handler-get-active-view:
     lifecycle: single
-    description: Get the current active MDI child window view
+    description: ViewHandler.GetActiveView
   view-handler-get-all-views:
     lifecycle: single
-    description: Fetches all the views from the model.
+    description: ViewHandler.GetAllViews
   view-handler-get-permanent-views:
     lifecycle: single
-    description: Returns the permanent views.
+    description: ViewHandler.GetPermanentViews
   view-handler-get-selected-views:
     lifecycle: single
-    description: Returns the views the user has selected.
+    description: ViewHandler.GetSelectedViews
   view-handler-get-temporary-views:
     lifecycle: single
-    description: Returns the temporary views.
+    description: ViewHandler.GetTemporaryViews
   view-handler-get-visible-views:
     lifecycle: single
-    description: Returns the visible views.
+    description: ViewHandler.GetVisibleViews
   view-handler-hide-view:
     lifecycle: single
     description: ViewHandler.HideView
@@ -9002,7 +8984,7 @@ commands:
     description: ViewHandler.RedrawView
   view-handler-redraw-workplane:
     lifecycle: single
-    description: Sets the workplane to current transformation plane and redraws it.
+    description: ViewHandler.RedrawWorkplane
   view-handler-set-representation:
     lifecycle: single
     description: ViewHandler.SetRepresentation
@@ -9014,40 +8996,40 @@ commands:
     description: ViewHandler.ZoomToBoundingBox
   view-insert:
     lifecycle: single
-    description: Inserts a new view to the model.
+    description: View.Insert
   view-is-perspective-view-projection:
     lifecycle: single
-    description: Tells whether the view projection is a perspective projection.
+    description: View.IsPerspectiveViewProjection
   view-is-visible:
     lifecycle: single
-    description: Tells whether the view is currently visible.
+    description: View.IsVisible
   view-modify:
     lifecycle: single
-    description: Modifies the view parameters.
+    description: View.Modify
   view-select:
     lifecycle: single
-    description: Selects the view.
+    description: View.Select
   weld-delete:
     lifecycle: single
-    description: Deletes the weld instance with the given identifier from the model database.
+    description: Weld.Delete
   weld-get-logical-weld:
     lifecycle: single
     description: Weld.GetLogicalWeld
   weld-insert:
     lifecycle: single
-    description: Inserts the weld into the model database. All the attributes must be set.
+    description: Weld.Insert
   weld-modify:
     lifecycle: single
-    description: Modifies the existing weld in the model database to match the current one.             The modification cannot be done if the weld is a part of a logical weld.
+    description: Weld.Modify
   weld-select:
     lifecycle: single
-    description: Selects a weld from the model database. The weld identifier must be set.
+    description: Weld.Select
   work-plane-changer-dispose:
     lifecycle: single
-    description: Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+    description: WorkPlaneChanger.Dispose
   work-plane-handler-get-current-transformation-plane:
     lifecycle: single
-    description: Gets the current transformation plane.
+    description: WorkPlaneHandler.GetCurrentTransformationPlane
   work-plane-handler-set-current-transformation-plane:
     lifecycle: single
     description: WorkPlaneHandler.SetCurrentTransformationPlane

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Creates a new instance of RebarShapeTerminationsData from this.
+BarTerminationsData.AsRebarShapeTerminationsData

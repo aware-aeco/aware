@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-The parameter Id path used to determine the folder items in the browser.
+FolderItemInfo.GetGroupingParameterIdPath

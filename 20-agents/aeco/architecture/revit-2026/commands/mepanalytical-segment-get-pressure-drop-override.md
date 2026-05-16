@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Gets the overidden value of pressuer drop, in kg/(ft*s^2).
+MEPAnalyticalSegment.GetPressureDropOverride

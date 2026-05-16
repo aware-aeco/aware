@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Indicates if the document is in an edit mode.
+Document.IsInEditMode

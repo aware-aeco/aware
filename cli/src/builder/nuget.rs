@@ -1,8 +1,12 @@
-//! NuGet package → AWARE agent (docs-only).
+//! NuGet package → AWARE agent.
 //!
 //! Fetches a `.nupkg`, extracts the `.nuspec` (for metadata + license) and
-//! any `lib/*/*.xml` XML doc files (emitted as skills). No DLL decompilation —
-//! that's tier C (deferred to v0.5.1 sidecar).
+//! the contained DLLs. Prefers `ref/<tfm>/*.dll` (reference assemblies —
+//! the vendor's curated public-API contract, metadata-only) and falls back
+//! to `lib/<tfm>/*.dll` (runtime DLLs which may include internal types).
+//! Picks the best TFM (highest .NET version) and reflects via the C#
+//! sidecar — same code path as `--from-dlls`. Packages that ship no DLLs
+//! fall back to XML-doc-only skills.
 
 #![allow(dead_code)]
 
@@ -54,22 +58,49 @@ pub(crate) fn build_from_bytes(
 
     let mut nuspec_text = String::new();
     let mut xml_docs: BTreeMap<String, String> = BTreeMap::new();
+    // Reference assemblies (vendor's curated public-API contract — preferred).
+    let mut ref_tfm_dlls: BTreeMap<String, Vec<(String, Vec<u8>)>> = BTreeMap::new();
+    // Runtime DLLs (fallback — may include internal types).
+    let mut lib_tfm_dlls: BTreeMap<String, Vec<(String, Vec<u8>)>> = BTreeMap::new();
     for i in 0..zip.len() {
         let mut entry = zip
             .by_index(i)
             .map_err(|e| AwareError::Validation(format!("zip entry: {e}")))?;
         let name = entry.name().to_string();
+        let lower = name.to_lowercase();
         if name.ends_with(".nuspec") && !name.contains('/') {
             entry
                 .read_to_string(&mut nuspec_text)
                 .map_err(|e| AwareError::Validation(format!("nuspec read: {e}")))?;
-        } else if name.starts_with("lib/") && name.to_lowercase().ends_with(".xml") {
+        } else if (lower.starts_with("lib/") || lower.starts_with("ref/"))
+            && lower.ends_with(".xml")
+        {
             let mut body = String::new();
             entry
                 .read_to_string(&mut body)
                 .map_err(|e| AwareError::Validation(format!("xml read: {e}")))?;
             let basename = name.rsplit('/').next().unwrap_or(&name).to_string();
             xml_docs.entry(basename).or_insert(body);
+        } else if (lower.starts_with("lib/") || lower.starts_with("ref/"))
+            && lower.ends_with(".dll")
+        {
+            // <root>/<tfm>/<file>.dll  — bucket by (root, tfm) so we pick one consistent set
+            let parts: Vec<&str> = name.splitn(3, '/').collect();
+            if parts.len() == 3 {
+                let root = parts[0].to_lowercase();
+                let tfm = parts[1].to_lowercase();
+                let file = parts[2].to_string();
+                let mut bytes_buf = Vec::new();
+                entry
+                    .read_to_end(&mut bytes_buf)
+                    .map_err(|e| AwareError::Validation(format!("dll read: {e}")))?;
+                let target = if root == "ref" {
+                    &mut ref_tfm_dlls
+                } else {
+                    &mut lib_tfm_dlls
+                };
+                target.entry(tfm).or_default().push((file, bytes_buf));
+            }
         }
     }
 
@@ -92,15 +123,27 @@ pub(crate) fn build_from_bytes(
     let description = extract_nuspec_description(&nuspec_text).unwrap_or_else(|| pkg.to_string());
 
     let pkg_lower = pkg.to_lowercase();
-    let mut skills: Vec<GeneratedSkill> = xml_docs.iter().map(|(name, body)| {
-        let stem = name.trim_end_matches(".xml").to_lowercase();
-        let skill_name = format!("{stem}.md");
-        let skill_body = format!(
-            "---\nname: {pkg_lower}-{stem}\ndescription: API reference extracted from {name}\n---\n\n# {stem} API reference\n\n```xml\n{body}\n```\n"
-        );
-        GeneratedSkill { filename: skill_name, body: skill_body }
-    }).collect();
-    skills.sort_by(|a, b| a.filename.cmp(&b.filename));
+
+    // Prefer ref/ DLLs (vendor public-API contract, metadata-only) over
+    // lib/ DLLs (runtime, may include internals). Both go through the same
+    // PEReader reflection path in the sidecar — but ref/ is the cleaner
+    // source. Fall back to XML-doc dumps when no DLLs at all.
+    let (commands, skills) = if let Some(best_tfm) = pick_best_tfm(&ref_tfm_dlls) {
+        reflect_tfm_dlls("ref", &best_tfm, &ref_tfm_dlls[&best_tfm], pkg, version)?
+    } else if let Some(best_tfm) = pick_best_tfm(&lib_tfm_dlls) {
+        reflect_tfm_dlls("lib", &best_tfm, &lib_tfm_dlls[&best_tfm], pkg, version)?
+    } else {
+        let mut xs: Vec<GeneratedSkill> = xml_docs.iter().map(|(name, body)| {
+            let stem = name.trim_end_matches(".xml").to_lowercase();
+            let skill_name = format!("{stem}.md");
+            let skill_body = format!(
+                "---\nname: {pkg_lower}-{stem}\ndescription: API reference extracted from {name}\n---\n\n# {stem} API reference\n\n```xml\n{body}\n```\n"
+            );
+            GeneratedSkill { filename: skill_name, body: skill_body }
+        }).collect();
+        xs.sort_by(|a, b| a.filename.cmp(&b.filename));
+        (BTreeMap::new(), xs)
+    };
 
     let id = agent_id
         .map(String::from)
@@ -116,12 +159,116 @@ pub(crate) fn build_from_bytes(
         id,
         version: version.to_string(),
         description,
-        commands: BTreeMap::new(),
+        commands,
         skills,
         provenance,
         stateful: false,
         license,
     })
+}
+
+/// Write the chosen TFM's DLLs to a temp dir and route them through the C# sidecar's
+/// reflection path — the same code that powers `--from-dlls`.
+fn reflect_tfm_dlls(
+    root: &str,
+    tfm: &str,
+    dlls: &[(String, Vec<u8>)],
+    pkg: &str,
+    version: &str,
+) -> Result<
+    (
+        BTreeMap<String, crate::builder::GeneratedCommand>,
+        Vec<GeneratedSkill>,
+    ),
+    AwareError,
+> {
+    let tmp = tempfile::Builder::new()
+        .prefix(&format!("aware-nuget-{pkg}-{version}-{root}-{tfm}-"))
+        .tempdir()
+        .map_err(|e| AwareError::Internal(format!("temp dir: {e}")))?;
+    let mut dll_paths: Vec<String> = Vec::with_capacity(dlls.len());
+    for (filename, dll_bytes) in dlls {
+        let path = tmp.path().join(filename);
+        std::fs::write(&path, dll_bytes)
+            .map_err(|e| AwareError::Internal(format!("write {filename}: {e}")))?;
+        dll_paths.push(path.to_string_lossy().to_string());
+    }
+
+    let args = crate::sidecar::ReflectDllsArgs {
+        globs: dll_paths,
+        agent_id: None,
+    };
+    let reflected = crate::sidecar::reflect_dlls(args)?;
+    // tmp is dropped here — auto-cleans on Drop.
+    Ok((reflected.commands, reflected.skills))
+}
+
+/// Pick the "best" TFM directory from those that ship DLLs.
+///
+/// Preference: highest `net{N}.0` (net9.0 > net8.0 > …) > netstandard
+/// (2.1 > 2.0) > netcoreapp > net4xy. Returns the chosen TFM key.
+fn pick_best_tfm(tfm_dlls: &BTreeMap<String, Vec<(String, Vec<u8>)>>) -> Option<String> {
+    tfm_dlls
+        .iter()
+        .filter(|(_, v)| !v.is_empty())
+        .max_by_key(|(tfm, _)| tfm_rank(tfm))
+        .map(|(tfm, _)| tfm.clone())
+}
+
+fn tfm_rank(tfm: &str) -> i32 {
+    let lower = tfm.to_lowercase();
+    // net{N}.0 — the modern .NET family. net9.0 = 100090, net5.0 = 100050.
+    if let Some(rest) = lower.strip_prefix("net")
+        && let Some(idx) = rest.find('.')
+        && let Ok(n) = rest[..idx].parse::<i32>()
+        && rest[idx..].starts_with(".0")
+        && n >= 5
+    {
+        return 100000 + n * 10;
+    }
+    // netstandard{X}.{Y} — cross-platform layer. 2.1 = 50021.
+    if let Some(rest) = lower.strip_prefix("netstandard")
+        && let Some((m, n)) = rest.split_once('.')
+        && let (Ok(mi), Ok(ni)) = (m.parse::<i32>(), n.parse::<i32>())
+    {
+        return 50000 + mi * 10 + ni;
+    }
+    // netcoreapp{X}.{Y} — pre-net5. 3.1 = 40031.
+    if let Some(rest) = lower.strip_prefix("netcoreapp")
+        && let Some((m, n)) = rest.split_once('.')
+        && let (Ok(mi), Ok(ni)) = (m.parse::<i32>(), n.parse::<i32>())
+    {
+        return 40000 + mi * 10 + ni;
+    }
+    // net4XY (.NET Framework). Digit-by-digit: net48 = 4.8 = 34080,
+    // net472 = 4.7.2 = 34072 (so net48 > net472 holds semantically).
+    if let Some(rest) = lower.strip_prefix("net")
+        && rest.starts_with('4')
+        && rest.chars().all(|c| c.is_ascii_digit())
+    {
+        let digits: Vec<i32> = rest
+            .chars()
+            .map(|c| c.to_digit(10).unwrap() as i32)
+            .collect();
+        let major = digits.first().copied().unwrap_or(0);
+        let minor = digits.get(1).copied().unwrap_or(0);
+        let patch = digits.get(2).copied().unwrap_or(0);
+        return 30000 + major * 1000 + minor * 10 + patch;
+    }
+    // net2x/net3x — very old. net20 = 22000, net35 = 23050.
+    if let Some(rest) = lower.strip_prefix("net")
+        && (rest.starts_with('2') || rest.starts_with('3'))
+        && rest.chars().all(|c| c.is_ascii_digit())
+    {
+        let digits: Vec<i32> = rest
+            .chars()
+            .map(|c| c.to_digit(10).unwrap() as i32)
+            .collect();
+        let major = digits.first().copied().unwrap_or(0);
+        let minor = digits.get(1).copied().unwrap_or(0);
+        return 20000 + major * 1000 + minor * 10;
+    }
+    0
 }
 
 fn extract_nuspec_license(nuspec: &str) -> String {
@@ -221,5 +368,41 @@ mod tests {
     fn unknown_license_treated_as_non_permissive() {
         let nuspec = "<package><metadata><description>x</description></metadata></package>";
         assert_eq!(extract_nuspec_license(nuspec), "UNKNOWN");
+    }
+
+    #[test]
+    fn tfm_rank_prefers_modern_net_over_framework() {
+        assert!(tfm_rank("net9.0") > tfm_rank("net8.0"));
+        assert!(tfm_rank("net8.0") > tfm_rank("net6.0"));
+        assert!(tfm_rank("net6.0") > tfm_rank("netstandard2.1"));
+        assert!(tfm_rank("netstandard2.1") > tfm_rank("netstandard2.0"));
+        assert!(tfm_rank("netstandard2.0") > tfm_rank("netcoreapp3.1"));
+        assert!(tfm_rank("netcoreapp3.1") > tfm_rank("net48"));
+        assert!(tfm_rank("net48") > tfm_rank("net472"));
+        assert!(tfm_rank("net472") > tfm_rank("net45"));
+        assert!(tfm_rank("net45") > tfm_rank("garbage"));
+    }
+
+    #[test]
+    fn pick_best_tfm_chooses_highest_net() {
+        let mut tfms: BTreeMap<String, Vec<(String, Vec<u8>)>> = BTreeMap::new();
+        tfms.insert("net48".into(), vec![("a.dll".into(), vec![1])]);
+        tfms.insert("netstandard2.0".into(), vec![("a.dll".into(), vec![1])]);
+        tfms.insert("net8.0".into(), vec![("a.dll".into(), vec![1])]);
+        assert_eq!(pick_best_tfm(&tfms).as_deref(), Some("net8.0"));
+    }
+
+    #[test]
+    fn pick_best_tfm_skips_empty_buckets() {
+        let mut tfms: BTreeMap<String, Vec<(String, Vec<u8>)>> = BTreeMap::new();
+        tfms.insert("net9.0".into(), vec![]); // empty
+        tfms.insert("net48".into(), vec![("a.dll".into(), vec![1])]);
+        assert_eq!(pick_best_tfm(&tfms).as_deref(), Some("net48"));
+    }
+
+    #[test]
+    fn pick_best_tfm_returns_none_for_empty_map() {
+        let tfms: BTreeMap<String, Vec<(String, Vec<u8>)>> = BTreeMap::new();
+        assert!(pick_best_tfm(&tfms).is_none());
     }
 }
