@@ -57,11 +57,15 @@ pub(crate) fn build_from_bytes(
         .map_err(|e| AwareError::Validation(format!("nupkg parse: {e}")))?;
 
     let mut nuspec_text = String::new();
+    // XML doc files paired with DLLs for the sidecar to pick up as siblings.
+    // Also kept as a flat-map fallback for content-only packages with no DLLs.
     let mut xml_docs: BTreeMap<String, String> = BTreeMap::new();
     // Reference assemblies (vendor's curated public-API contract — preferred).
-    let mut ref_tfm_dlls: BTreeMap<String, Vec<(String, Vec<u8>)>> = BTreeMap::new();
+    // Each tfm bucket holds .dll AND .xml files so the sidecar can find the
+    // matching XML doc for every DLL via Path.ChangeExtension(".xml").
+    let mut ref_tfm_files: BTreeMap<String, Vec<(String, Vec<u8>)>> = BTreeMap::new();
     // Runtime DLLs (fallback — may include internal types).
-    let mut lib_tfm_dlls: BTreeMap<String, Vec<(String, Vec<u8>)>> = BTreeMap::new();
+    let mut lib_tfm_files: BTreeMap<String, Vec<(String, Vec<u8>)>> = BTreeMap::new();
     for i in 0..zip.len() {
         let mut entry = zip
             .by_index(i)
@@ -73,18 +77,10 @@ pub(crate) fn build_from_bytes(
                 .read_to_string(&mut nuspec_text)
                 .map_err(|e| AwareError::Validation(format!("nuspec read: {e}")))?;
         } else if (lower.starts_with("lib/") || lower.starts_with("ref/"))
-            && lower.ends_with(".xml")
+            && (lower.ends_with(".dll") || lower.ends_with(".xml"))
         {
-            let mut body = String::new();
-            entry
-                .read_to_string(&mut body)
-                .map_err(|e| AwareError::Validation(format!("xml read: {e}")))?;
-            let basename = name.rsplit('/').next().unwrap_or(&name).to_string();
-            xml_docs.entry(basename).or_insert(body);
-        } else if (lower.starts_with("lib/") || lower.starts_with("ref/"))
-            && lower.ends_with(".dll")
-        {
-            // <root>/<tfm>/<file>.dll  — bucket by (root, tfm) so we pick one consistent set
+            // <root>/<tfm>/<file>.{dll,xml} — bucket by (root, tfm) so DLLs and
+            // their sibling XML doc files travel together to the sidecar.
             let parts: Vec<&str> = name.splitn(3, '/').collect();
             if parts.len() == 3 {
                 let root = parts[0].to_lowercase();
@@ -93,11 +89,19 @@ pub(crate) fn build_from_bytes(
                 let mut bytes_buf = Vec::new();
                 entry
                     .read_to_end(&mut bytes_buf)
-                    .map_err(|e| AwareError::Validation(format!("dll read: {e}")))?;
+                    .map_err(|e| AwareError::Validation(format!("read {name}: {e}")))?;
+                if lower.ends_with(".xml") {
+                    // Also remember XML docs in the flat map for the
+                    // DLL-less content-only fallback below.
+                    if let Ok(text) = std::str::from_utf8(&bytes_buf) {
+                        let basename = name.rsplit('/').next().unwrap_or(&name).to_string();
+                        xml_docs.entry(basename).or_insert_with(|| text.to_string());
+                    }
+                }
                 let target = if root == "ref" {
-                    &mut ref_tfm_dlls
+                    &mut ref_tfm_files
                 } else {
-                    &mut lib_tfm_dlls
+                    &mut lib_tfm_files
                 };
                 target.entry(tfm).or_default().push((file, bytes_buf));
             }
@@ -128,10 +132,10 @@ pub(crate) fn build_from_bytes(
     // lib/ DLLs (runtime, may include internals). Both go through the same
     // PEReader reflection path in the sidecar — but ref/ is the cleaner
     // source. Fall back to XML-doc dumps when no DLLs at all.
-    let (commands, skills) = if let Some(best_tfm) = pick_best_tfm(&ref_tfm_dlls) {
-        reflect_tfm_dlls("ref", &best_tfm, &ref_tfm_dlls[&best_tfm], pkg, version)?
-    } else if let Some(best_tfm) = pick_best_tfm(&lib_tfm_dlls) {
-        reflect_tfm_dlls("lib", &best_tfm, &lib_tfm_dlls[&best_tfm], pkg, version)?
+    let (commands, skills) = if let Some(best_tfm) = pick_best_tfm(&ref_tfm_files) {
+        reflect_tfm_files("ref", &best_tfm, &ref_tfm_files[&best_tfm], pkg, version)?
+    } else if let Some(best_tfm) = pick_best_tfm(&lib_tfm_files) {
+        reflect_tfm_files("lib", &best_tfm, &lib_tfm_files[&best_tfm], pkg, version)?
     } else {
         let mut xs: Vec<GeneratedSkill> = xml_docs.iter().map(|(name, body)| {
             let stem = name.trim_end_matches(".xml").to_lowercase();
@@ -167,12 +171,14 @@ pub(crate) fn build_from_bytes(
     })
 }
 
-/// Write the chosen TFM's DLLs to a temp dir and route them through the C# sidecar's
-/// reflection path — the same code that powers `--from-dlls`.
-fn reflect_tfm_dlls(
+/// Write the chosen TFM's files (DLLs + sibling XML doc files) to a temp dir
+/// and route the DLLs through the C# sidecar's reflection path. Writes both
+/// DLL and XML files so the sidecar can pair `Foo.dll` with its sibling
+/// `Foo.xml` for vendor docstring extraction.
+fn reflect_tfm_files(
     root: &str,
     tfm: &str,
-    dlls: &[(String, Vec<u8>)],
+    files: &[(String, Vec<u8>)],
     pkg: &str,
     version: &str,
 ) -> Result<
@@ -186,12 +192,15 @@ fn reflect_tfm_dlls(
         .prefix(&format!("aware-nuget-{pkg}-{version}-{root}-{tfm}-"))
         .tempdir()
         .map_err(|e| AwareError::Internal(format!("temp dir: {e}")))?;
-    let mut dll_paths: Vec<String> = Vec::with_capacity(dlls.len());
-    for (filename, dll_bytes) in dlls {
+
+    let mut dll_paths: Vec<String> = Vec::new();
+    for (filename, bytes) in files {
         let path = tmp.path().join(filename);
-        std::fs::write(&path, dll_bytes)
+        std::fs::write(&path, bytes)
             .map_err(|e| AwareError::Internal(format!("write {filename}: {e}")))?;
-        dll_paths.push(path.to_string_lossy().to_string());
+        if filename.to_lowercase().ends_with(".dll") {
+            dll_paths.push(path.to_string_lossy().to_string());
+        }
     }
 
     let args = crate::sidecar::ReflectDllsArgs {
@@ -207,10 +216,16 @@ fn reflect_tfm_dlls(
 ///
 /// Preference: highest `net{N}.0` (net9.0 > net8.0 > …) > netstandard
 /// (2.1 > 2.0) > netcoreapp > net4xy. Returns the chosen TFM key.
-fn pick_best_tfm(tfm_dlls: &BTreeMap<String, Vec<(String, Vec<u8>)>>) -> Option<String> {
-    tfm_dlls
+fn pick_best_tfm(tfm_files: &BTreeMap<String, Vec<(String, Vec<u8>)>>) -> Option<String> {
+    tfm_files
         .iter()
-        .filter(|(_, v)| !v.is_empty())
+        // A bucket without any .dll is a content-only entry (e.g. just .xml
+        // doc files) — skip it so we don't ship the sidecar an empty file
+        // list. The XML-doc-only fallback in build_from_bytes handles those.
+        .filter(|(_, v)| {
+            v.iter()
+                .any(|(name, _)| name.to_lowercase().ends_with(".dll"))
+        })
         .max_by_key(|(tfm, _)| tfm_rank(tfm))
         .map(|(tfm, _)| tfm.clone())
 }

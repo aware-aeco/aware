@@ -150,10 +150,16 @@ public static class DllReflector
 
                         var methodName = mr.GetString(methodDef.Name);
 
-                        // Best-effort XML doc lookup — match on "TypeFullName.MethodName".
+                        // XML doc lookup. The XML doc format uses
+                        //   M:Type.Method                      (no-args methods)
+                        //   M:Type.Method(Param1,Param2,…)     (methods with parameters)
+                        // So we first try the exact no-args key, then fall back to a prefix
+                        // scan for any signature variant — picking the first match for
+                        // overloaded methods.
                         var typeFullName = ns == "(global)" ? typeName : $"{ns}.{typeName}";
                         var memberKey = $"M:{typeFullName}.{methodName}";
                         var summary = xmlDoc.GetValueOrDefault(memberKey)
+                                      ?? FindXmlSummaryByPrefix(xmlDoc, memberKey)
                                       ?? $"{typeName}.{methodName}";
 
                         var cmdName = ToKebab($"{typeName}-{methodName}");
@@ -292,6 +298,24 @@ public static class DllReflector
                 out_.Add(Path.GetFullPath(hit));
         }
         return out_.Distinct(StringComparer.OrdinalIgnoreCase).ToList();
+    }
+
+    /// <summary>
+    /// Scan the XML doc dictionary for any key starting with `{prefix}(` —
+    /// matches overloaded methods or methods with parameters where the
+    /// XML doc key includes the typed parameter list. Returns the first
+    /// match (overload selection is arbitrary; future enhancement could
+    /// match arity).
+    /// </summary>
+    private static string? FindXmlSummaryByPrefix(Dictionary<string, string> xmlDoc, string prefix)
+    {
+        var paren = prefix + "(";
+        foreach (var (key, value) in xmlDoc)
+        {
+            if (key.StartsWith(paren, StringComparison.Ordinal))
+                return value;
+        }
+        return null;
     }
 
     private static Dictionary<string, string> LoadXmlDoc(string path)
