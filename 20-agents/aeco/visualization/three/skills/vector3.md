@@ -1,0 +1,83 @@
+---
+name: three-vector3
+description: Vector3 declarations from three
+---
+
+# Vector3
+
+## Methods
+
+- `setScalar(scalar: number)`
+- `setX(x: number)`
+- `setY(y: number)`
+- `setZ(z: number)`
+- `setComponent(index: number, value: number)`
+- `getComponent(index: number)`
+- `clone()`
+- `copy(v: Vector3Like)`
+- `add(v: Vector3Like)`
+- `addScalar(s: number)`
+- `addVectors(a: Vector3Like, b: Vector3Like)`
+- `addScaledVector(v: Vector3Like, s: number)`
+- `sub(v: Vector3Like)`
+- `subScalar(s: number)`
+- `subVectors(a: Vector3Like, b: Vector3Like)`
+- `multiply(v: Vector3Like)`
+- `multiplyScalar(s: number)`
+- `multiplyVectors(a: Vector3Like, b: Vector3Like)`
+- `applyEuler(euler: Euler)`
+- `applyAxisAngle(axis: Vector3Like, angle: number)`
+- `applyMatrix3(m: Matrix3)`
+- `applyNormalMatrix(m: Matrix3)`
+- `applyMatrix4(m: Matrix4)`
+- `applyQuaternion(q: QuaternionLike)`
+- `project(camera: Camera)`
+- `unproject(camera: Camera)`
+- `transformDirection(m: Matrix4)`
+- `divide(v: Vector3Like)`
+- `divideScalar(s: number)`
+- `min(v: Vector3Like)`
+- `max(v: Vector3Like)`
+- `clamp(min: Vector3Like, max: Vector3Like)`
+- `clampScalar(min: number, max: number)`
+- `clampLength(min: number, max: number)`
+- `floor()`
+- `ceil()`
+- `round()`
+- `roundToZero()`
+- `negate()`
+- `dot(v: Vector3Like)`
+- `lengthSq()`
+- `length()`
+- `manhattanLength()`
+- `normalize()`
+- `setLength(l: number)`
+- `lerp(v: Vector3Like, alpha: number)`
+- `lerpVectors(v1: Vector3Like, v2: Vector3Like, alpha: number)`
+- `cross(v: Vector3Like)`
+- `crossVectors(a: Vector3Like, b: Vector3Like)`
+- `projectOnVector(v: Vector3)`
+- `projectOnPlane(planeNormal: Vector3)`
+- `reflect(vector: Vector3Like)`
+- `angleTo(v: Vector3)`
+- `distanceTo(v: Vector3Like)`
+- `distanceToSquared(v: Vector3Like)`
+- `manhattanDistanceTo(v: Vector3Like)`
+- `setFromSpherical(s: Spherical)`
+- `setFromSphericalCoords(r: number, phi: number, theta: number)`
+- `setFromCylindrical(s: Cylindrical)`
+- `setFromCylindricalCoords(radius: number, theta: number, y: number)`
+- `setFromMatrixPosition(m: Matrix4)`
+- `setFromMatrixScale(m: Matrix4)`
+- `setFromMatrixColumn(matrix: Matrix4, index: number)`
+- `setFromMatrix3Column(matrix: Matrix3, index: number)`
+- `setFromEuler(e: Euler)`
+- `setFromColor(color: RGB)`
+- `equals(v: Vector3Like)`
+- `fromArray(array: number[] | ArrayLike<number>, offset?: number)`
+- `toArray(array?: number[], offset?: number)`
+- `toArray(array?: Vector3Tuple, offset?: 0)`
+- `toArray(array: ArrayLike<number>, offset?: number)`
+- `fromBufferAttribute(attribute: BufferAttribute | InterleavedBufferAttribute, index: number)`
+- `random()`
+- `randomDirection()`
