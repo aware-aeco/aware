@@ -25,4 +25,10 @@
     <ProjectReference Include="..\cli-sidecar.csproj" />
     <ProjectReference Include="FixtureAssembly\FixtureAssembly.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Include="fixtures\sample.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
