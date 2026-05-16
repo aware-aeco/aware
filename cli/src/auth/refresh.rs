@@ -81,6 +81,7 @@ pub fn ensure_fresh(integration: &str, alias: Option<&str>) -> Result<StoredToke
         token_type: token.token_type.clone(),
         integration: integration.to_string(),
         obtained_at: now,
+        source: token.source.clone(),
     };
     keychain::store_token(&new_token, alias)?;
     Ok(new_token)

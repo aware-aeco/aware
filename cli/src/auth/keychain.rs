@@ -10,6 +10,17 @@ use crate::error::AwareError;
 
 const SERVICE_NAME: &str = "aware-aeco";
 
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "lowercase")]
+pub enum TokenSource {
+    Oauth,
+    Paste,
+}
+
+fn default_source() -> TokenSource {
+    TokenSource::Oauth
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct StoredToken {
     pub access_token: String,
@@ -19,6 +30,8 @@ pub struct StoredToken {
     pub token_type: String,
     pub integration: String,
     pub obtained_at: i64,
+    #[serde(default = "default_source")]
+    pub source: TokenSource,
 }
 
 fn account_name(integration: &str, alias: Option<&str>) -> String {
@@ -96,6 +109,7 @@ mod tests {
             token_type: "Bearer".into(),
             integration: "test-integration-keyring".into(),
             obtained_at: 1_735_686_000,
+            source: TokenSource::Oauth,
         };
         store_token(&token, None).unwrap();
         let loaded = load_token("test-integration-keyring", None)
@@ -105,5 +119,29 @@ mod tests {
         delete_token("test-integration-keyring", None).unwrap();
         let after = load_token("test-integration-keyring", None).unwrap();
         assert!(after.is_none());
+    }
+
+    #[test]
+    fn token_source_serializes_as_lowercase() {
+        let t = StoredToken {
+            access_token: "x".into(),
+            refresh_token: None,
+            expires_at: 0,
+            scope: "".into(),
+            token_type: "Bearer".into(),
+            integration: "test".into(),
+            obtained_at: 0,
+            source: TokenSource::Paste,
+        };
+        let s = serde_json::to_string(&t).unwrap();
+        assert!(s.contains(r#""source":"paste""#));
+    }
+
+    #[test]
+    fn legacy_token_defaults_to_oauth_source() {
+        // Old token JSON without `source` field deserializes as Oauth
+        let json = r#"{"access_token":"x","refresh_token":null,"expires_at":0,"scope":"","token_type":"Bearer","integration":"test","obtained_at":0}"#;
+        let t: StoredToken = serde_json::from_str(json).unwrap();
+        assert_eq!(t.source, TokenSource::Oauth);
     }
 }

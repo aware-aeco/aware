@@ -9,7 +9,7 @@ use rand::RngCore;
 use sha2::Digest;
 
 use crate::auth::config::IntegrationConfig;
-use crate::auth::keychain::StoredToken;
+use crate::auth::keychain::{StoredToken, TokenSource};
 use crate::error::AwareError;
 
 pub fn run_pkce_flow(
@@ -158,6 +158,7 @@ pub fn run_pkce_flow(
         token_type,
         integration: config.id.to_string(),
         obtained_at: now,
+        source: TokenSource::Oauth,
     };
     Ok(token)
 }
