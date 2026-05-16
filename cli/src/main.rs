@@ -21,6 +21,7 @@ mod plugins;
 mod registry;
 mod render;
 mod runtime;
+mod skill_builder;
 mod validate;
 
 use clap::{Parser, Subcommand};
