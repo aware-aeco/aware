@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalSurfaceBase.IsCurveLoopValid
+Checks if curve loop is valid for Analytical Surface.

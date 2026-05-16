@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCExtrusionData.RemoveLoopAt
+Removes the loop at the specified index.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.GetFilterCount
+Gets the number of filters in this ScheduleDefinition.

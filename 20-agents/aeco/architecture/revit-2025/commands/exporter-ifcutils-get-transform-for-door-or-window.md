@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.GetTransformForDoorOrWindow
+Obtains the transform for the door or window instance.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralConnectionApprovalType.Create
+Creates a new StructuralConnectionApprovalType.

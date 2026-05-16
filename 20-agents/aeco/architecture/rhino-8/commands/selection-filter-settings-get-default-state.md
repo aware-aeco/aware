@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SelectionFilterSettings.GetDefaultState
+Gets the factory settings of the application.

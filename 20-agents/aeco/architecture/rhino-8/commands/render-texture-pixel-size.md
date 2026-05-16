@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderTexture.PixelSize
+Get the texture dimensions for the RenderTexture.

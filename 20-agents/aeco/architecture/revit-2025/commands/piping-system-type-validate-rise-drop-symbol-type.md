@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PipingSystemType.ValidateRiseDropSymbolType
+Confirms if the parameter is a valid piping rise/drop symbol type.

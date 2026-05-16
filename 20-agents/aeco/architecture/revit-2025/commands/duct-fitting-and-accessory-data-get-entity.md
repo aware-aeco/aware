@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DuctFittingAndAccessoryData.GetEntity
+Returns an Entity of the Schema of the serverGUID.    or an invalid entity otherwise.

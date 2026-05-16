@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConversionLink.Insert
+Inserts the conversion link instance in the model.

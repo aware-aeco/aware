@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IntList.ToArray
+Copies the integers to an integer array.

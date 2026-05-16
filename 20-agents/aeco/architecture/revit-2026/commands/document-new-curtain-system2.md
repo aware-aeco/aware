@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.NewCurtainSystem2
+Creates a new CurtainSystem element from a set of face references.

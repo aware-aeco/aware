@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCData.HasSimpleType
+Determines if there is one corresponding IFC type.

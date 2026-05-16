@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IUploads.RemoveUpload
+Removes an upload.

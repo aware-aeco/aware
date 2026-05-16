@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCParameterTemplate.FindPropertyMappingInfo
+Finds the property mapping info in the property set by id.

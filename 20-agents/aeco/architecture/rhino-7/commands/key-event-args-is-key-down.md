@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-KeyEventArgs.IsKeyDown
+Determines whether the specified key and modifier was pressed

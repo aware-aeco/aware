@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CitySet.Insert
+Insert the specified city into the set.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SliderSnapRange.SnapValue
+Gets the snapped value of another value.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Wall.DisallowWrappingAtLocation
+Disallow end wrapping at the location.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalAnalyticalNode.ConnectToUpstreamNode
+Connects to upstream node.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateChamferSurface
+Creates a ruled surface as a bevel between two input surface edges.

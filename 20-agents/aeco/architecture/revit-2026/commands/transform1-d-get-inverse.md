@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform1D.GetInverse
+Gets the inverse transformation of this transformation.

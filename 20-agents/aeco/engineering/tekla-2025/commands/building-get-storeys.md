@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Building.GetStoreys
+Gets all storeys belonging to this building.

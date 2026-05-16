@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Attributes`1.IsTooltipRegion
+Determines whether a point is available for tooltip popups.  By default, IsMenuRegion calls IsTooltipRegion(PointF).

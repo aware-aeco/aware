@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpatialFieldManager.GetMaximum
+Calculates the maximum value for all primitives

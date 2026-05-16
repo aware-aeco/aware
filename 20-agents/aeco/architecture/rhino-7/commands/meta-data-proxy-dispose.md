@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MetaDataProxy.Dispose
+Dispose for MetaDataProxy

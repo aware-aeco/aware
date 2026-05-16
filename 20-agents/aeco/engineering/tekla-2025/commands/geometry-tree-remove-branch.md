@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryTree.RemoveBranch
+Removes the branch whose root is branchRoot.

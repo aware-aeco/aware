@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.AddAngularDimension
+Adds a angular dimension object to the document.

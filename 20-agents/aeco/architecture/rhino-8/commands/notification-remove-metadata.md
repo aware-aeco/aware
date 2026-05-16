@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Notification.RemoveMetadata
+Removes metadata from this instance.

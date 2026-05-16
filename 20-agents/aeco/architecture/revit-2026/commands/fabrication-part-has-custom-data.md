@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.HasCustomData
+Check if fabrication part contains custom data already.

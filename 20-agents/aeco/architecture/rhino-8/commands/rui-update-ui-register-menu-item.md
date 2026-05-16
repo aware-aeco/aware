@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RuiUpdateUi.RegisterMenuItem
+Register menu item update delegate

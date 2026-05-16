@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.CreateNoteBlock
+Creates a note block.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetEllipsoid.GetMesh
+Prompt for the getting of a mesh ellipsoid.

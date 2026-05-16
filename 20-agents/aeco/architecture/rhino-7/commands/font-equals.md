@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Font.Equals
+Determines whether the specified  is equal to the current .

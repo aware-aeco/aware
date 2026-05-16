@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceDefinitionTable.RefreshLinkedBlock
+Reload linked block definitions and update the Rhino display.

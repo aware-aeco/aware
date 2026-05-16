@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.DuplicateDocument
+Attempt to duplicate a document.

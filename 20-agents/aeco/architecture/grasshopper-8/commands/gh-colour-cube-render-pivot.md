@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourCube.RenderPivot
+Render the colour pivot on the current slice.

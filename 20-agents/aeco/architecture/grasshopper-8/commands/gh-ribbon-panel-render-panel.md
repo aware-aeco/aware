@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RibbonPanel.RenderPanel
+Renders the panel and all the items to the graphics context

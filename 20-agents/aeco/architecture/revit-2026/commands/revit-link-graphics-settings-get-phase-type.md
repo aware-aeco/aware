@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitLinkGraphicsSettings.GetPhaseType
+The phase type of RevitLinkGraphicsSettings.

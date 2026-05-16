@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AddInManifestUtility.GetRevitAddInBundleManifests
+Reads all AddInManifests in bundle folders which are matched with revit version and os.

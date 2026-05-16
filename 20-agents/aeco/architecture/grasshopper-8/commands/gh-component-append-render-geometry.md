@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Component.AppendRenderGeometry
+Append all geometry associated with this component to a render queue.

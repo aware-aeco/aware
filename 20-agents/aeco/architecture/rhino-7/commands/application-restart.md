@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.Restart
+Restarts the application

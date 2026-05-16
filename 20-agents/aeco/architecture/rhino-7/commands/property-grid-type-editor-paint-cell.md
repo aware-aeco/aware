@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PropertyGridTypeEditor.PaintCell
+Paints the cell when viewing for platforms that don't support custom controls for non-editing cells (E.g. Gtk, WinForms).

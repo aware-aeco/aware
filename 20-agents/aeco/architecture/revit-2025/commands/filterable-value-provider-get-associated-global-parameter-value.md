@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterableValueProvider.GetAssociatedGlobalParameterValue
+Gets a global parameter value associated with a parameter from the given element.

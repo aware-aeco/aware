@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportDetachPointCloud
+DO NOT USE! For internal usage only!

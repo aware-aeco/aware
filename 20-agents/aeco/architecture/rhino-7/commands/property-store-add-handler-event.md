@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PropertyStore.AddHandlerEvent
+Adds a handler-based event delegate with the specified key

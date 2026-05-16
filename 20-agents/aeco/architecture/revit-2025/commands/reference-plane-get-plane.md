@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferencePlane.GetPlane
+Returns the geometry plane to which the reference plane is assigned.

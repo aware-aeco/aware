@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Archive.Serialize_Xml
+Serializes the data tree into an Xml string.

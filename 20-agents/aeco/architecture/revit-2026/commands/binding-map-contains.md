@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BindingMap.Contains
+The Contains method is used to check if the parameter binding exists for one definition.

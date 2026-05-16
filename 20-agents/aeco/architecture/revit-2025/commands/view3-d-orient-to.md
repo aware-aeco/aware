@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View3D.OrientTo
+Reorients the view to align with the forward direction.

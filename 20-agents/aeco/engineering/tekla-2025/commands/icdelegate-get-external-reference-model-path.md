@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.GetExternalReferenceModelPath
+DO NOT USE! For internal testing usage only!

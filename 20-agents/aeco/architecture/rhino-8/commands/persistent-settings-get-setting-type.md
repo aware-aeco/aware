@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PersistentSettings.GetSettingType
+Gets the type of the last value passed to Set... or Get... for the             specified setting.

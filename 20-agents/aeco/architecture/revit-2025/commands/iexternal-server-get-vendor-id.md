@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExternalServer.GetVendorId
+Implement this method to return the id of the vendor of the server.

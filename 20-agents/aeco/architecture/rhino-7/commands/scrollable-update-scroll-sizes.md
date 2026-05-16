@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Scrollable.UpdateScrollSizes
+Manually updates the scroll sizes based on the content

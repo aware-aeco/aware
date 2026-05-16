@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedFilePickerHandler.AttachEvent
+Attaches control events.

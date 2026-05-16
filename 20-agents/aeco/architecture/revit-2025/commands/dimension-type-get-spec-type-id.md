@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DimensionType.GetSpecTypeId
+Gets the spec of this dimension style.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ITextBuffer.SetFont
+Sets the font for the specified text range.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GlobalParametersManager.GetGlobalParametersOrdered
+Returns all global paramters in an ordered array.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_OrdinateDimension.DuplicateAnnotation
+Create a duplicate of this annotation.

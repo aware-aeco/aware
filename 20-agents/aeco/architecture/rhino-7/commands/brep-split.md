@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.Split
+Splits a Brep into pieces using a Brep as a cutter.

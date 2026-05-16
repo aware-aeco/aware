@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainerParameterManager.SetOverriddenParameterModifiable
+Sets this overridden parameter to be modifiable.

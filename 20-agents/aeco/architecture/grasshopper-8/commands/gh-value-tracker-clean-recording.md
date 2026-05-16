@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ValueTracker.CleanRecording
+Remove all recorded frames that are too old to be shown.

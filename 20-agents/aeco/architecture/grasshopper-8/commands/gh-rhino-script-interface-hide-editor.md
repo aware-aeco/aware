@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RhinoScriptInterface.HideEditor
+Hide the main Grasshopper Editor.   If the editor hasn't been loaded or if the Editor is already hidden, nothing will happen.

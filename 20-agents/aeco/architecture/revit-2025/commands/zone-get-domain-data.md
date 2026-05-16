@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Zone.GetDomainData
+Gets the domain data for the zone.

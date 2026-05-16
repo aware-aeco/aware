@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPBuildingConstructionSet.Contains
+Tests for the existence of a MEPBuildingConstruction within the set.

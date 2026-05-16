@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ImageTypeOptions.SetExternalResourceReference
+Update the external resource reference to an image.

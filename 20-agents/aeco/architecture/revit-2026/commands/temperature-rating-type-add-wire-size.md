@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TemperatureRatingType.AddWireSize
+Add a new kind of wire size type into this temperature rating type.

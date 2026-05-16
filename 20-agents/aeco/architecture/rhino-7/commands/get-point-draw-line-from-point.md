@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetPoint.DrawLineFromPoint
+Use DrawLineFromPoint() if you want a dynamic line drawn from a point to the point being picked.

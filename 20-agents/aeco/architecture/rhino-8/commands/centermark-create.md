@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Centermark.Create
+Creates a new center mark dimension.

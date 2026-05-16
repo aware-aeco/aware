@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Control.DoDragDrop
+Starts drag operation using this control as drag source.

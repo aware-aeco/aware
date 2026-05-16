@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interval.IncludesParameter
+Tests a parameter for Interval inclusion.

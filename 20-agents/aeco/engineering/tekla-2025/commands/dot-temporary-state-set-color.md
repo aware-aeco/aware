@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-dotTemporaryState.SetColor
+Set color for one object.

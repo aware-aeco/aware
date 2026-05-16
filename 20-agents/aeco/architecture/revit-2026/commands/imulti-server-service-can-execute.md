@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IMultiServerService.CanExecute
+Implement this to test whether a particular server should be executed.

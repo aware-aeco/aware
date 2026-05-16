@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelTypeSet.Erase
+Removes a specified panel type from the set.

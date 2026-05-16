@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HeaderOrder.DeleteAt
+Deletes a row from the header order list at a specified index.

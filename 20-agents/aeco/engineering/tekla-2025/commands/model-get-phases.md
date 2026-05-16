@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Model.GetPhases
+Returns information about the current model's phases.

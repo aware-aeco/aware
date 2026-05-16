@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AddInsManagerSettings.GetAllAddInItemSettings
+Gets all .

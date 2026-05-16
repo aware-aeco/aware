@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDefinitionBySegments.AddBendVariableRadius
+Specify a variable-radius bend.

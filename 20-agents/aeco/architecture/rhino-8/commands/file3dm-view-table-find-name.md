@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmViewTable.FindName
+Finds a ViewInfo given its name.

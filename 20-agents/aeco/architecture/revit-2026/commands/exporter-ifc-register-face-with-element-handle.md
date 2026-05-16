@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFC.RegisterFaceWithElementHandle
+Register face with element handle to make sure the openings created are related to the right element.

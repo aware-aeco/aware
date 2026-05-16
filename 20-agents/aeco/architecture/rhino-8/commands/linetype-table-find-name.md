@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinetypeTable.FindName
+Finds the linetype with a given name.

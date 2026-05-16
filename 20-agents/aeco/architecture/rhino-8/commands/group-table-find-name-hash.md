@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroupTable.FindNameHash
+Finds a group given its name hash.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetFabricationConnectorGroup
+Gets the fabrication connector group from its identifier.

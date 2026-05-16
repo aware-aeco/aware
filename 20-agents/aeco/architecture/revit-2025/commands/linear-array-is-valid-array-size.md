@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinearArray.IsValidArraySize
+This indicates whether the input count is valid in the project environment.

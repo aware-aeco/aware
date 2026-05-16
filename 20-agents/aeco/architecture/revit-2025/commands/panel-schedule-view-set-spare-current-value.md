@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.SetSpareCurrentValue
+Sets the value of the apparent current parameter for a spare

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLinetypeTable.Add
+Inserts a (key, info) pair into Export line type table.

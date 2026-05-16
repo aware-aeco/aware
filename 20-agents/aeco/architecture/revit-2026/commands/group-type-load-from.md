@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroupType.LoadFrom
+Replaces the group with the contents of the input file.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Panel.GetMappingList
+Get a list of all defined mapping combos for the 'special codes' option in panels.

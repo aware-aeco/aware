@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportModifyLoftedPlate
+DO NOT USE! For internal usage only!

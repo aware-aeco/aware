@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextArea.ScrollToStart
+Scrolls to the start of the text aligned on the same horizontal side as .

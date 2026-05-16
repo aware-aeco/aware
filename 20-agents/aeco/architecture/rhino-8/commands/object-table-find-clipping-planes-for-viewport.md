@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.FindClippingPlanesForViewport
+Finds all of the clipping plane objects that actively clip a viewport.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevisionSettings.IsAcceptableRevisionCloudSpacing
+Rounds the given raw value and checks whether it is an acceptable cloud spacing value after it is rounded.

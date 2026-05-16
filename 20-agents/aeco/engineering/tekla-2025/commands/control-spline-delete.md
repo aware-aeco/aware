@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlSpline.Delete
+Deletes the control spline with the given Identifier.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PropertyCellTypeDropDown.OnCreate
+Creates the content control for the cell.

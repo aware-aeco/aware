@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WireSizeSet.Contains
+Tests for the existence of a wire size within the set.

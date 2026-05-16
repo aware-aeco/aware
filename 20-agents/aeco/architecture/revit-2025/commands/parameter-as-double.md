@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Parameter.AsDouble
+Provides access to the double precision number within the parameter.

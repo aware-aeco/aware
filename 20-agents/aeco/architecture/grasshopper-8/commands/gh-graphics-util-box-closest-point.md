@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.BoxClosestPoint
+Find the closest point on or in a box given a test point.

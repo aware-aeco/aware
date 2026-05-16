@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportSetTemporaryColors_FAST
+DO NOT USE! For internal usage only!

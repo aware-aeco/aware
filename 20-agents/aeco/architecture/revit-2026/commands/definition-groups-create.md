@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DefinitionGroups.Create
+Create a new parameter definition group using the name provided.

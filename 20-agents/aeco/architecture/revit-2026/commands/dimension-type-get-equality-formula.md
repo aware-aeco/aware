@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DimensionType.GetEqualityFormula
+Gets an ordered list of the entries in the equality formula definition.

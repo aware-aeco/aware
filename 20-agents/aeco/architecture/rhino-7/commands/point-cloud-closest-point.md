@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.ClosestPoint
+Returns index of the closest point in the point cloud to a given test point.

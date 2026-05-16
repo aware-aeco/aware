@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Utility.InvokeGetter
+Call a getter property via its name.

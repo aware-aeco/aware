@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.DeleteAcceptedProfile
+Unaccept profile that is against fabricator settings.

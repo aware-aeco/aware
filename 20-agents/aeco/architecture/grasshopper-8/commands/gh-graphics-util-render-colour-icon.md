@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.RenderColourIcon
+Render a colour icon into a graphics context. A colour icon contains a black outer and white inner edge.

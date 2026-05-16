@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform.ScaleBasisAndOrigin
+Scales the basis vectors and the origin of this transformation and returns the result.

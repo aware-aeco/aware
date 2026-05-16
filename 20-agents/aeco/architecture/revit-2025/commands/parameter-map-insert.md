@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterMap.Insert
+Insert the specified item with the specified key into the map.

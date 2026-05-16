@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MassInstanceUtils.GetJoinedElementIds
+Get the ElementIds of Elements that are joined to a mass instance.

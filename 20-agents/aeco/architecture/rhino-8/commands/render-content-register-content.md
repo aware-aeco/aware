@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContent.RegisterContent
+Call RegisterContent in your plug-in's OnLoad function in order to register all of the             custom RenderContent classes in your assembly.

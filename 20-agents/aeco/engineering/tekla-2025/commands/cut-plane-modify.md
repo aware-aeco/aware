@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CutPlane.Modify
+Modifies the existing cut plane in the model database to match the current one.

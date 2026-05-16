@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Events.OnUndoClicked
+Called when user clicks undo.

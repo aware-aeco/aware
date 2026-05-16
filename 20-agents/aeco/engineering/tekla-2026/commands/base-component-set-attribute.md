@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BaseComponent.SetAttribute
+Sets the attribute's value to the given value.

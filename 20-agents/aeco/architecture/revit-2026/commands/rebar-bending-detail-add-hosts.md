@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBendingDetail.AddHosts
+Adds the reinforcement elements that will be represented by the input bending detail.

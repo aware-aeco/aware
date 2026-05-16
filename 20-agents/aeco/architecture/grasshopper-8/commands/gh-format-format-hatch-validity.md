@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Format.FormatHatchValidity
+If the hatch is invalid, return a string describing why.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TopographySurface.IsValidRegion
+Identify whether the points can construct a valid region for a topography surface.

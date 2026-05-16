@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmStringTable.SetString
+Adds or sets a document string in the 3dm file.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToString_Secondary
+Creates a String representation of an object by calling the ToString() function.

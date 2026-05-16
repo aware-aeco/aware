@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayPoint3d.Add
+Adds a point to the list

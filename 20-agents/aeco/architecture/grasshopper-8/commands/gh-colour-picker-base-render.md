@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourPickerBase.Render
+Render this slider into a Graphics context.

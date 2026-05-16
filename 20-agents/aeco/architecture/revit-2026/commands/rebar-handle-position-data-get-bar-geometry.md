@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarHandlePositionData.GetBarGeometry
+Returns the geometry for a bar at the specified index currently in the Rebar.

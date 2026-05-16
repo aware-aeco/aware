@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DrawingUtilities.SvgToRhinoDibIntPtr
+Create bitmap of a given size from an svg string

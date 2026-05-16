@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_WindowsControlUtil.FixTextRenderingDefault
+Sets the UseCompatibleTextRendering value to False on the control.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PipeSettings.GetPipeSettings
+Get the pipe settings of the project.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoList`1.Reverse
+Reverses the order of the elements in the entire List.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interpolator.InterpolateCatmullRom
+Sample the list of numbers with Catmull-Rom interpolation.

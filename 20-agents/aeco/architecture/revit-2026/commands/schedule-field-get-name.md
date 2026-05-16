@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleField.GetName
+Gets the name of the field.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Node3d`1.CollapseNodes
+Collapse the (sub)tree rooted at this node. Collapsing happens when a node only has a single child,   in which case the child usurps the position previously held by the parent.  Do not collapse a (sub)tree if you still plan to add items later.

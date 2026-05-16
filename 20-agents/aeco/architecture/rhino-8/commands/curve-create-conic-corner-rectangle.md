@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.CreateConicCornerRectangle
+Creates a conic-corned (rounded) rectangular curve.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GenericDelegateFake`1.EditMacro
+The EditMacro

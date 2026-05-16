@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHAngularDimension
+Convert data into GH_AngularDimension.

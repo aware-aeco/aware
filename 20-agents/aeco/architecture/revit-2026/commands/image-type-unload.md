@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ImageType.Unload
+Unload the linked image.

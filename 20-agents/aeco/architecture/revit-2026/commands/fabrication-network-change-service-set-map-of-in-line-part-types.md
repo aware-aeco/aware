@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationNetworkChangeService.SetMapOfInLinePartTypes
+Set the mapping of fabrication part types for in-line parts for the service and palette to change to.

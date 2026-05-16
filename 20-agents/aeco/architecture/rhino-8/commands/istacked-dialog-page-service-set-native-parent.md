@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IStackedDialogPageService.SetNativeParent
+Sets the parent on a host returned from GetNativePageWindow

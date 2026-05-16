@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.GetDeckEmbeddingType
+Retrieves the deck embedding type used for the specified structural deck.

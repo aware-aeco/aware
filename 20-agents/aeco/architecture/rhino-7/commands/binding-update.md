@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Binding.Update
+Updates the bound target object's value

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.CurvePlane
+Intersects a curve with an (infinite) plane.

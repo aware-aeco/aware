@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Animator.InterpolateSingle
+Utility interpolation delegate for System.Single values.

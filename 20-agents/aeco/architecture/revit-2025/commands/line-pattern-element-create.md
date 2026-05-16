@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinePatternElement.Create
+Creates a new LinePatternElement.

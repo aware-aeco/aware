@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EffectInstance.SetEmissiveColor
+Sets the emissive color parameter of the effect instance.

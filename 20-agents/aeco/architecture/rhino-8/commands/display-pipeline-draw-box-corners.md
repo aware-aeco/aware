@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawBoxCorners
+Draws corner widgets of a world aligned bounding box.              Widget size will be 5% of the Box diagonal.

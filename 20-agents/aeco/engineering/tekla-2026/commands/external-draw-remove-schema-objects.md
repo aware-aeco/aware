@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalDraw.RemoveSchemaObjects
+Removes all schema objects from all views.

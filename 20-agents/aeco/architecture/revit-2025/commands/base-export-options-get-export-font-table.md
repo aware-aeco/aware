@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BaseExportOptions.GetExportFontTable
+Gets font table.

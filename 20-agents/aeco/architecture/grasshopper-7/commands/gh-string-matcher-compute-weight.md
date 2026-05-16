@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_StringMatcher.ComputeWeight
+Compute the weight of the match. Utility function that performs all match types until a match is found.

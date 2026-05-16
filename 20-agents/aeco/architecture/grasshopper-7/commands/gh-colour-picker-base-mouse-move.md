@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourPickerBase.MouseMove
+Respond to mouse-move events.

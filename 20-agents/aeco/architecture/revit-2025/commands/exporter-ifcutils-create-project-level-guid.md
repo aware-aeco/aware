@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.CreateProjectLevelGUID
+Creates a GUID from Revit project for given GUIDType.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Arc.TangentAt
+Gets the tangent at the given parameter.

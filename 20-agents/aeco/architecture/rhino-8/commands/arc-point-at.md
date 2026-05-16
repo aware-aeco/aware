@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Arc.PointAt
+Gets the point at the given arc parameter.

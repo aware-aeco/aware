@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CriticalPathCollector.GetCriticalPathCollectorIterator
+Gets the critical path iterator to traverse individual segment.

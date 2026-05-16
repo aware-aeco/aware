@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Utility.SetDefaultUnits
+Utility function to set model unit fields

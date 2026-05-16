@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.FindWireAt
+Find the wire at or near the given coordinate.

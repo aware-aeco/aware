@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaLoad.GetRefPoint
+Returns the physical location of the reference point.

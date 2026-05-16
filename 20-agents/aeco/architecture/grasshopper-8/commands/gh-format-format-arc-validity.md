@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Format.FormatArcValidity
+If the arc is invalid, return a string describing why.

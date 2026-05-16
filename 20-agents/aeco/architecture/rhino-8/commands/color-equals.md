@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Color.Equals
+Tests if the specified object has the same value as this Color

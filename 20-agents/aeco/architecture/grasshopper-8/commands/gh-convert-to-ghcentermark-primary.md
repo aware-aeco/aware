@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHCentermark_Primary
+Converts similar data into a GH_Centermark instance.  Data is not guaranteed to be duplicated.

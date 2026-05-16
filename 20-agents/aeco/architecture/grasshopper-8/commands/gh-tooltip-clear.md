@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Tooltip.Clear
+Hides the tooltip and clears all references and caches.

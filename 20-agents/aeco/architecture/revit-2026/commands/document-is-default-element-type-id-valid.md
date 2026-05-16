@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.IsDefaultElementTypeIdValid
+Checks whether the element type id is valid for the give DefaultElmentType id.

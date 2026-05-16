@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FlexDuct.IsHVACSystemTypeId
+Checks if given type is valid HVAC system type.

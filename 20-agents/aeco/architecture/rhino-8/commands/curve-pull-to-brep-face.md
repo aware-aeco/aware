@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.PullToBrepFace
+Pull a curve to a BrepFace using closest point projection.

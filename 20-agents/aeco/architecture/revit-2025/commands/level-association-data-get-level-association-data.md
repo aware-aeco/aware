@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LevelAssociationData.GetLevelAssociationData
+Returns LevelAssociationData associated with this element, if it exists.

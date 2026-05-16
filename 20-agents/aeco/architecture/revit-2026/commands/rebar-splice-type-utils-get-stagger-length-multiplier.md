@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSpliceTypeUtils.GetStaggerLengthMultiplier
+Gets the stagger multiplier value.

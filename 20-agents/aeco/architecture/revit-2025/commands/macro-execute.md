@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Macro.Execute
+Executes the macro.

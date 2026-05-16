@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoGet.GetPlane
+Gets an oriented infinite plane.

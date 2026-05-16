@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourCube.RenderBackEdges
+Render the edges of the back face creases.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementId.ToString
+Gets a String representation of the value of the id.

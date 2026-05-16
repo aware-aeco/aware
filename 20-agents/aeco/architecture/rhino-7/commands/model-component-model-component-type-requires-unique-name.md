@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelComponent.ModelComponentTypeRequiresUniqueName
+Informs the developer if a particular model component type will require uniqueness within a document.             This is currently true with render materials and model geometry; false otherwise.

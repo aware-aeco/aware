@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalSystem.SetCircuitPath
+Sets the electrical system circuit path by the list of node position.

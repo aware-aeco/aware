@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Solver.Solve_Connectivity
+Solve the voronoi diagram using a minimal connectivity map.

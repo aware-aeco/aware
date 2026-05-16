@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.IsVisible
+Tells whether the view is currently visible.

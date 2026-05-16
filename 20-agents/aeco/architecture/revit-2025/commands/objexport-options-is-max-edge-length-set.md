@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OBJExportOptions.IsMaxEdgeLengthSet
+Checks whether the MaxEdgeLength tessellation parameter is explicitly set.

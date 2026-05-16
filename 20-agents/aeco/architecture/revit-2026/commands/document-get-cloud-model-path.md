@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.GetCloudModelPath
+Gets the cloud model path of the cloud model.

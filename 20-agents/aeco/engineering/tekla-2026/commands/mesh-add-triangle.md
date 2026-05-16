@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.AddTriangle
+Adds a new triangle in the mesh.

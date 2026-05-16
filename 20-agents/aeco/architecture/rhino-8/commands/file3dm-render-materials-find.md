@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmRenderMaterials.Find
+Finds a material by its id, if possible. Returns null on failure.

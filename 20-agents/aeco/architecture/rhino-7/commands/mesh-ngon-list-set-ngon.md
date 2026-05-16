@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshNgonList.SetNgon
+Set an ngon in this list.

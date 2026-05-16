@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportModifyBendSurfaceNode
+DO NOT USE! For internal usage only!

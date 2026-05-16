@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Layout.FindTab
+Find the first tab which matches the given name.

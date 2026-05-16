@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarLegSurfaceObject.Insert
+Inserts the leg surface object into the model database.

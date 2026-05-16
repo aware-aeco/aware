@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilySymbol.GetThermalProperties
+Gets the thermal properties for the given FamilySymbol.

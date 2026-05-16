@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.Detach
+Detach this point cloud from model.

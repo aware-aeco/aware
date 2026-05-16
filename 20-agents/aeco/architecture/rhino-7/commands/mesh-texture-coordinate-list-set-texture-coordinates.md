@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshTextureCoordinateList.SetTextureCoordinates
+Sets all texture coordinates in one go.

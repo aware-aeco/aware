@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.SetLayer
+Sets a single layer for this CompoundStructure.

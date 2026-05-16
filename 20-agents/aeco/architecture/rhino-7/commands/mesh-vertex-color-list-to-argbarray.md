@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexColorList.ToARGBArray
+Return colors as an array of integers with packed ARGB values

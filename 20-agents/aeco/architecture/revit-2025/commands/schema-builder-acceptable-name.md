@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SchemaBuilder.AcceptableName
+Checks whether a string is an acceptable name for a Schema or a Field.

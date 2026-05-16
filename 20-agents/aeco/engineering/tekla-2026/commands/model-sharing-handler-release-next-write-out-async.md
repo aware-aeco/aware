@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelSharingHandler.ReleaseNextWriteOutAsync
+Releases a previously reserved next write-out for the current user with the specified comment.

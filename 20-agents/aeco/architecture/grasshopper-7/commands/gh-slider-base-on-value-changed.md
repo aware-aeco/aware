@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_SliderBase.OnValueChanged
+Raise the ValueChanged event.

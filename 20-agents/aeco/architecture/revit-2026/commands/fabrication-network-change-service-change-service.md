@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationNetworkChangeService.ChangeService
+Changes the service of the selection of fabrication parts.

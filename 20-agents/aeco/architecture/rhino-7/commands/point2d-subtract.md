@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point2d.Subtract
+Subtracts a vector from a point.             (Provided for languages that do not support operator overloading. You can use the - operator otherwise)

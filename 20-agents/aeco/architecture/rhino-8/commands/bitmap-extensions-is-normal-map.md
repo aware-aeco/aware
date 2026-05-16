@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BitmapExtensions.IsNormalMap
+Call this method to see if the DIB appears to be a normal map.

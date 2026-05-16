@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorXYZ.CreateFromCMYK
+Create the nearest XYZ equivalent of a CMYK color.

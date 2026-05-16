@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DatumPlane.CanBeVisibleInView
+Checks if the datum plane can be visible in the view.

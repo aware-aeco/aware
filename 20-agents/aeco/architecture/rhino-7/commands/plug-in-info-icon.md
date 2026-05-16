@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlugInInfo.Icon
+Returns the plug-in's icon in bitmap form.

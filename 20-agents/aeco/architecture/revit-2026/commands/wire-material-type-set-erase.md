@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WireMaterialTypeSet.Erase
+Removes a specified wire material type from the set.

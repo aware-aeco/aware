@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralConnectionType.Create
+Create a new StructuralConnectionType, allowing the specified    annotation FamilySymbol to be applied to structural members.

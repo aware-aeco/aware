@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudEngineRegistry.RegisterPointCloudEngine
+Registers a new point cloud engine and associates it to a particular file extension.

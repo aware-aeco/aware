@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateThickPipe
+Creates a double-walled pipe.

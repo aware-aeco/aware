@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DetailCurveArray.Append
+Add the item to the end of the array.

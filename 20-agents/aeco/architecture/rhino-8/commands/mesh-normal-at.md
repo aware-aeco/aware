@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.NormalAt
+Evaluate a mesh normal at a set of barycentric coordinates.

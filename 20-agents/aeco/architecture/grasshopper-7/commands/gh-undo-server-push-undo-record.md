@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_UndoServer.PushUndoRecord
+Add a new undo record to the undo stack, this function clears the Redo stack.

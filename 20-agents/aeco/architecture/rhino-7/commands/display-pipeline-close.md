@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.Close
+Closes the pipeline.

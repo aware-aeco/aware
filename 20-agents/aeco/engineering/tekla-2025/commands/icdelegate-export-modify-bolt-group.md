@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportModifyBoltGroup
+DO NOT USE! For internal usage only!

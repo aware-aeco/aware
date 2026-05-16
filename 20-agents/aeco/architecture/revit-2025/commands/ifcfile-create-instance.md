@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCFile.CreateInstance
+Creates an IFC instance in the file model.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointF.LengthTo
+Gets the length between this point and the  point.

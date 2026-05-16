@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MassInstanceUtils.GetMassLevelDataIds
+Get the ElementIds of the MassLevelDatas (Mass Floors) associated with a mass instance.

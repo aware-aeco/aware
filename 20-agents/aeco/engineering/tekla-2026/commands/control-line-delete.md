@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlLine.Delete
+Deletes the control line with the given Identifier.

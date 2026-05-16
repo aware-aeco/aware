@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IUserInterfaceSection.OnUserInterfaceSectionExpanding
+The UserInterfaceSection object that called this interface method.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Cluster.IsPasswordValid
+Tests whether a given password is valid. If there is no password defined for this cluster every password is considered valid.

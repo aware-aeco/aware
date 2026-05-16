@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelHandler.IsModelAutoSaved
+Tells whether a model has auto saved information.

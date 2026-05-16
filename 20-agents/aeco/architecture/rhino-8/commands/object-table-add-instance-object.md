@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.AddInstanceObject
+Adds an instance object to the document.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentServer.IsObjectCached
+Tests the caches for an existing object type ID.

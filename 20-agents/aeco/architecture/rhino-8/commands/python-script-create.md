@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PythonScript.Create
+Constructs a new Python script context.

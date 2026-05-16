@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PathReinforcement.GetRebarInSystemIds
+Returns the ids of the RebarInSystem elements owned by the PathReinforcement    element.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColumnAttachment.SetJustification
+Setter of ColumnAttachmentJustification

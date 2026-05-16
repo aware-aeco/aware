@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.IsPointInEllipse
+Test whether a point is inside or outside an ellipse.

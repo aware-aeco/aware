@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyAnalysisDetailModel.GetAnalyticalSpaces
+The collection of analytical spaces.

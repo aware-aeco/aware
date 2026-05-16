@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Material.GetUserString
+Gets a user string.

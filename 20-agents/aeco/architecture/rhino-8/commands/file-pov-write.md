@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilePov.Write
+Write a POV file based on the contents of a RhinoDoc

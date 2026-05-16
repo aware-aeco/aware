@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelHandler.Save
+Saves current model with comment and user information.

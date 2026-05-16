@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Box.ClosestPoint
+Finds the closest point on or in the Box. The box should be Valid for this to work.

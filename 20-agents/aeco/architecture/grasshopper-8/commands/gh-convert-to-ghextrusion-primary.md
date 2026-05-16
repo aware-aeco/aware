@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHExtrusion_Primary
+Converts similar data into a GH_Extrusion instance.  Data is not quaranteed to be duplicated.

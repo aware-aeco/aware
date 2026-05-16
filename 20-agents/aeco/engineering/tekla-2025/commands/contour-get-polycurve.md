@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Contour.GetPolycurve
+Gets the contour geometry as Polycurve

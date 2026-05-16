@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.GetLoadClassificationConnectedLoad
+Gets the Total Load for given Load Classification

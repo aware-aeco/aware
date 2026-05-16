@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Group.HideAttachedDetailGroups
+Hides the element group's attached detail groups of the input group type that    are compatible with the input view.

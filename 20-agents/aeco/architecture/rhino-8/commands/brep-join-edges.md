@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.JoinEdges
+Joins two naked edges, or edges that are coincident or close together.

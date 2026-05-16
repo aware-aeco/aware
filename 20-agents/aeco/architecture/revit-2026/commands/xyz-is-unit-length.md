@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-XYZ.IsUnitLength
+The boolean value that indicates whether this vector is of unit length.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Dialogs.KillSplash
+Destroy the splash screen if it is being displayed.

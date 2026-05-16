@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GraphicsPath.MoveTo
+Moves the current position to the specified location without adding anything to the path

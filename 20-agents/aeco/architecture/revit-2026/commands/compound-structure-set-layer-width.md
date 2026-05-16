@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.SetLayerWidth
+Sets the width of a specified layer.

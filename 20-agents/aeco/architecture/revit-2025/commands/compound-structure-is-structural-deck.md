@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.IsStructuralDeck
+Determines whether a specified layer is a structural deck.

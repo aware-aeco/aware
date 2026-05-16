@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolyLine.GetTransformed
+Gets the copy of the polyline which is applied the specified transformation.

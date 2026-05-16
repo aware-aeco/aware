@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.CreateIFC4ExportFromSelectedAndTheirAssemblies
+Creates IFC4 export from the selected parts and their assemblies using the given file name.              See Tekla Structures Help for more information about IFC4 export files.

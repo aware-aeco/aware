@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurve.ConvertSpanToBezier
+Converts a span of the NURBS curve into a Bezier.

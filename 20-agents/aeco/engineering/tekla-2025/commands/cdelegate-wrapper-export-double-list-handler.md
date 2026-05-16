@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportDoubleListHandler
+DO NOT USE! For internal usage only!

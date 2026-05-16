@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBarType.GetLapLength
+Gets the lap length taking into account the specified Rebar Splice Type.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementArray.Clear
+Removes every element from the array, rendering it empty.

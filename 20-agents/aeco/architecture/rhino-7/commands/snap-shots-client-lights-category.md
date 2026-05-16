@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SnapShotsClient.LightsCategory
+Predefined lights category

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportPatternTableIterator.IsDone
+Identifies if the iteration has completed.

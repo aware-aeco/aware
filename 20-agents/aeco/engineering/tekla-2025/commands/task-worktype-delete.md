@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TaskWorktype.Delete
+Deletes the task worktype instance from the model. The identifier must be set.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetBaseClass.StringResult
+Gets a string if GetPoint.Get(), GetObject.GetObjects(), etc., returns GetResult.String.

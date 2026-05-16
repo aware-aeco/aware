@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.RemoveSortGroupField
+Removes a sorting/grouping field.

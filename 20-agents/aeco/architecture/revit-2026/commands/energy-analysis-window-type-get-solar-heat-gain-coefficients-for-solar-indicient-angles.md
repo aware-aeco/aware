@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyAnalysisWindowType.GetSolarHeatGainCoefficientsForSolarIndicientAngles
+Returns a map with solar heat gain coefficients (SHGC-values) for specific incident angles for the window type.

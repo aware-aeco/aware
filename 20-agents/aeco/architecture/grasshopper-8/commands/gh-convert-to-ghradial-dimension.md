@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHRadialDimension
+Convert data into GH_RadialDimension.

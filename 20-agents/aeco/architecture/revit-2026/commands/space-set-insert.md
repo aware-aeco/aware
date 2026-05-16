@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpaceSet.Insert
+Insert the specified item into the set.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Commands.Run_GrasshopperDeveloperSettings
+Run the _GrasshopperDeveloperSettings command logic.

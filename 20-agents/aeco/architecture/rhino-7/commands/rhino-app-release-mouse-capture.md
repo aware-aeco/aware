@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoApp.ReleaseMouseCapture
+Releases the mouse capture.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BasePoint.GetCoordinateSystem
+Gets the coordinate system of the base point.

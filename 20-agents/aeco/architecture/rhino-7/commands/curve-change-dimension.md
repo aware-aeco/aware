@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.ChangeDimension
+Changes the dimension of a curve.

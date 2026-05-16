@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.SetExternalReferenceModelLayerVisibility
+Sets the external reference model layers visibility.

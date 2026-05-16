@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentParamServer.IndexOfOutputParam
+Finds the index of the output parameter that matches the specified search mask.

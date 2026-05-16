@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointFConverter.ConvertFrom
+Converts the specified value to a

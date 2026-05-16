@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-KeyBasedTreeEntryTable.LoadFrom
+Loads KeyBasedTreeEntries from the specified external resource into this KeyBasedTreeEntryTable.

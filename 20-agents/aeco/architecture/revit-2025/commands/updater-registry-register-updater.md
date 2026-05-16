@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UpdaterRegistry.RegisterUpdater
+Registers the updater for a specified document, which means    the updater can only be triggered by changes made in that document.

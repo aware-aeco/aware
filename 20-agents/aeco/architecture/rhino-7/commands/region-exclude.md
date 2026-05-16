@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Region.Exclude
+Excludes the specified  from the region

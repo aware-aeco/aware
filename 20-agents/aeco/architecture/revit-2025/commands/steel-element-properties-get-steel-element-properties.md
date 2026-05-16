@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SteelElementProperties.GetSteelElementProperties
+Get SteelElementProperties for the input element if they exist.

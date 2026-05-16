@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Path.GetHashCode
+Specialized Hash code pattern.

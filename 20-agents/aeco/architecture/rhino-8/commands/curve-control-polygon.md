@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.ControlPolygon
+Gets the curve's control polygon.

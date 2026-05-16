@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BRepBuilder.IsResultAvailable
+A validator function that checks the state of this BRepBuilder object. Returns true if this BRepBuilder object has successfully built a b-rep.

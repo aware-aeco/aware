@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileVda.Write
+Write a Vda file based on the contents of a RhinoDoc

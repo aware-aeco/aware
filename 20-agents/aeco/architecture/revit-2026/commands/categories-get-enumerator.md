@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Categories.GetEnumerator
+Retrieves a forward moving iterator to the map.

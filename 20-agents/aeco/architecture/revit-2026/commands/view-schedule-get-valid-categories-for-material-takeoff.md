@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.GetValidCategoriesForMaterialTakeoff
+Gets a list of categories that can be used for a material takeoff.

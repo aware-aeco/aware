@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.CanInsertRow
+Verifies if a new row can be inserted at the given index.

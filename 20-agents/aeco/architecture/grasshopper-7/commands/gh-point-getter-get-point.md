@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PointGetter.GetPoint
+Utility function for getting single points. This function properly  Handles Nothing results.

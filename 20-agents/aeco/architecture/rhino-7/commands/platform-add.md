@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Platform.Add
+Add the specified type and instantiator.

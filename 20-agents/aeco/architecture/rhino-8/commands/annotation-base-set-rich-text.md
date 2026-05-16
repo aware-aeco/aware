@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnnotationBase.SetRichText
+Sets the annotation's text as rich text (RTF), optionally using a specified dimension style for formatting overrides.

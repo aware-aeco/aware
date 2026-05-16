@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.FileToHash
+Create a hash of a file.

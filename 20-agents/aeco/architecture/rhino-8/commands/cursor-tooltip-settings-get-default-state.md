@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CursorTooltipSettings.GetDefaultState
+Gets the cursor tooltip factory settings.

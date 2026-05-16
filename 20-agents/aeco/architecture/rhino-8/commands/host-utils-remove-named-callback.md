@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostUtils.RemoveNamedCallback
+Remove a named callback from the dictionary of callbacks

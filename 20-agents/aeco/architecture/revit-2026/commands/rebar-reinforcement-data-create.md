@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarReinforcementData.Create
+Creates a new instance of RebarReinforcementData, or  if the operation fails.

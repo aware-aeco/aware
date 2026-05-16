@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.ExtendByArc
+Extends a curve by an Arc until it intersects a collection of objects.

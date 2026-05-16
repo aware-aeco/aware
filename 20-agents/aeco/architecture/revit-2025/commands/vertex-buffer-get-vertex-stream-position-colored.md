@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-VertexBuffer.GetVertexStreamPositionColored
+Gets a stream that can be used to write vertices of type  into the buffer.

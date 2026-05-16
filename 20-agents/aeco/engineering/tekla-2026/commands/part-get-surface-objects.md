@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Part.GetSurfaceObjects
+Returns an enumerator of all the connected surface objects.

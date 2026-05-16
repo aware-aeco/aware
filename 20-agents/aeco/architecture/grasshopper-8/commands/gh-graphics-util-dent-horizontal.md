@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.DentHorizontal
+Draws a horizontal dent. A horizontal dent had dark lines along the top and bottom edges.

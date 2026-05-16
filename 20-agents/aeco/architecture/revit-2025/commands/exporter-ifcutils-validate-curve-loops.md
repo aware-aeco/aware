@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.ValidateCurveLoops
+Does validity checks on a list of curve loops to ensure that they are all co-planar, closed, and properly oriented.

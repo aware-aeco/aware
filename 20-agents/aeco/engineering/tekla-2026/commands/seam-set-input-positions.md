@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Seam.SetInputPositions
+Sets the start and end point of the seam.

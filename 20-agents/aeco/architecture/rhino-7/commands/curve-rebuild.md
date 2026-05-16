@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.Rebuild
+Rebuild a curve with a specific point count.

@@ -6,10 +6,14 @@ description: API reference for namespace Grasshopper.GUI.Ribbon from Grasshopper
 # Grasshopper.GUI.Ribbon
 
 - **GH_Layout**
+  - Represents a complete ribbon layout.
 - **GH_LayoutItem**
+  - Represents an item on a ribbon layout.
 - **GH_LayoutMenuItem**
 - **GH_LayoutPanel**
+  - Represents a panel on a ribbon layout.
 - **GH_LayoutTab**
+  - Represents a tab on a ribbon layout.
 - **GH_Ribbon**
 - **GH_RibbonContentBase**
 - **GH_RibbonDropdown**
@@ -20,4 +24,5 @@ description: API reference for namespace Grasshopper.GUI.Ribbon from Grasshopper
 - **GH_RibbonPanel**
 - **GH_RibbonTab**
 - **GH_TabDisplay**
+  - Enumerates the possible display modes a tab can have.
 - **IGH_RibbonInteractiveObject**

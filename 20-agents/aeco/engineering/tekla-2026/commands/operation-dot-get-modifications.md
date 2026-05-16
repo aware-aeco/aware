@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotGetModifications
+Get modifications by selected object types.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshNgonList.GetEnumerator
+Gets an enumerator that yields all ngons in this collection.

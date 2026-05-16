@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewHandler.GetSelectedViews
+Returns the views the user has selected.

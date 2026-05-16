@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorFillScheme.IsEntryConsistentWithScheme
+Checks whether an entry can be added to the scheme or not.

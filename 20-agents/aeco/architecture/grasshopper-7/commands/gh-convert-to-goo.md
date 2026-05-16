@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGoo
+Converts an object into Goo. Does not duplicate the data if a lossless conversion is possible.

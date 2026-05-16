@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Material.Create
+Creates a new material.

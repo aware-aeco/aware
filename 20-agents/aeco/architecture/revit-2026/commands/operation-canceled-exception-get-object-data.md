@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OperationCanceledException.GetObjectData
+Retrieves data needed to serialize the target object.

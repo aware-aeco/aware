@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalPowerDistributableNodeData.GetConnectedPhasesOnDownstream
+Get the electrical connected phases of the downstream node.

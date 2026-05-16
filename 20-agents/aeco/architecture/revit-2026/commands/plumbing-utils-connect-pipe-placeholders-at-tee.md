@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlumbingUtils.ConnectPipePlaceholdersAtTee
+Connects three placeholders that looks like Tee connection.

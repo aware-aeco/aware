@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetPoint.AddConstructionPoints
+Adds points to the list of construction points.

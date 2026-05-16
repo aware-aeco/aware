@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SnapShotsClient.PrepareForObjectAnimation
+Called once at the start of an animation.

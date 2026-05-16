@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Railing.SetMultistoryStairsPlacementLevels
+Sets the ids of the base levels of the stairs upon which this railing is placed.

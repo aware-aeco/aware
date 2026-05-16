@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationHostedInfo.DisconnectFromHost
+Disconnects the part from the host.

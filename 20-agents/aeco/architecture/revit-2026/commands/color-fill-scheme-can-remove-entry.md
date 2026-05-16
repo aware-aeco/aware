@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorFillScheme.CanRemoveEntry
+Checks whether entry can be removed from the scheme.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DragInfo.Drag
+Call this method to adjust the drag data. Results will be automatically constrained and limited.

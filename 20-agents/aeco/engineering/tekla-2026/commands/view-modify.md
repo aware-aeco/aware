@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.Modify
+Modifies the view parameters.

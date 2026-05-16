@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentObject.OnAttributesChanged
+Raises the AttributesChanged event on the toplevel object.

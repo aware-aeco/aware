@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipelineAttributes.GetSurfaceNakedEdgeThicknessUsage
+This is a helper function that combines getting SurfaceNakeEdgeUseNormalThickness and SurfaceNakedEdgeThicknessUsageFlags settings to correspond             to the behavor of the Settings page.

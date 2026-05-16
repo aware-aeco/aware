@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureHandlingOptions.GetFailuresPreprocessor
+Gets the callback to be invoked in the beginning of failure processing.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawDot
+Draws a text dot in screen coordinates.

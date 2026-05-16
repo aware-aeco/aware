@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ISelectable`1.SelectRow
+Selects the specified .

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalSurfaceBase.SetOuterContour
+Sets the Curve Loop that defines the geometry of the Analytical Surface element.

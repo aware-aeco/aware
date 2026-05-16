@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ComboBox.AddItems
+Adds a new items to the ComboBox.

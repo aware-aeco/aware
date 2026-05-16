@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.RestoreCalloutParent
+Restores callout parent ID to the original view ID if that view is still available.

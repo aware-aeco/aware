@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DualBinding`1.Unbind
+Unbinds both the source and destination bindings

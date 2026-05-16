@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.Export
+Exports the view specified in the export options to an FDX cloud data exchange.

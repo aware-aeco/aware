@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BuildingPadType.CreateDefault
+Creates a BuildingPadType element and adds it to the document.

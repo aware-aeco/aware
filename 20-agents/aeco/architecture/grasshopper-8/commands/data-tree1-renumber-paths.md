@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataTree`1.RenumberPaths
+Renumber all paths in this data tree, using a single incrementing path index.

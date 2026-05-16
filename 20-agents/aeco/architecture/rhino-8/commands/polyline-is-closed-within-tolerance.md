@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Polyline.IsClosedWithinTolerance
+Test a polyline to see if it is closed.

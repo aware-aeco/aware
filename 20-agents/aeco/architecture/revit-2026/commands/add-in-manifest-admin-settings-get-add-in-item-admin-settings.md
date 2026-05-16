@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AddInManifestAdminSettings.GetAddInItemAdminSettings
+Returns  if there are settings for the Add-in identified by the Guid,  otherwise.

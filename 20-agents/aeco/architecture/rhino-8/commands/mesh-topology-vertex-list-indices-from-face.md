@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshTopologyVertexList.IndicesFromFace
+Returns TopologyVertexIndices for a given mesh face index.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileGHS.Read
+Read a Ghs file into a RhinoDoc

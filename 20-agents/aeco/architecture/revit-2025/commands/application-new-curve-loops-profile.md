@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewCurveLoopsProfile
+Creates a new CurveLoopsProfile object.

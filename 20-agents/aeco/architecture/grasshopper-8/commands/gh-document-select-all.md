@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.SelectAll
+Select all top-level attributes.

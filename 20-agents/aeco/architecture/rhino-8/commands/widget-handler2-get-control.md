@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WidgetHandler`2.GetControl
+Gets the platform-specific control object of the specified widget using this handler

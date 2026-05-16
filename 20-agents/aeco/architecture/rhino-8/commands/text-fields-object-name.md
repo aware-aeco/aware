@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextFields.ObjectName
+Returns an attached Text objects attribute name.

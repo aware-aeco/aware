@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HeaderFields.ApplyPrecision
+Check if the header field needs precision when is formatted.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DracoCompression.ToByteArray
+Gets the Draco compressed data as a byte array

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Dialogs.ShowEditBox
+Displays Rhino's string edit box.

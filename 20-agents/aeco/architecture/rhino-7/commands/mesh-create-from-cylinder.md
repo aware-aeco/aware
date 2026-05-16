@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CreateFromCylinder
+Constructs a capped mesh cylinder.

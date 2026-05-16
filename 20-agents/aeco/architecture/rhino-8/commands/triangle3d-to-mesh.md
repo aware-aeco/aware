@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Triangle3d.ToMesh
+Create a mesh from this triangle.

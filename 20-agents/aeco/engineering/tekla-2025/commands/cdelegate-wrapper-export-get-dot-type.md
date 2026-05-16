@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetDotType
+DO NOT USE! For internal usage only!

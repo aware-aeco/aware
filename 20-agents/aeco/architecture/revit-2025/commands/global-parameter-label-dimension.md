@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GlobalParameter.LabelDimension
+Labels a dimension with this global parameter.

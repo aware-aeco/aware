@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IStyleProvider.ApplyDefault
+Applies default styling to the specified widget after creation.

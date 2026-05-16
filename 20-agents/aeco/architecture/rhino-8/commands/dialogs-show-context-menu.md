@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Dialogs.ShowContextMenu
+Creates an ETO ContextMenu from an array of strings. Use the modes array to enable/disable menu items

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSystemsAnalysisReport.Create
+Creates a new view for the systems analysis report.

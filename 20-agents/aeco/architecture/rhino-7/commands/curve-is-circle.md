@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.IsCircle
+Test a curve to see if it can be represented by a circle within RhinoMath.ZeroTolerance.

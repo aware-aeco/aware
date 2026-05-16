@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.CreatePeriodicSurface
+Constructs a periodic surface from a base surface and a direction.

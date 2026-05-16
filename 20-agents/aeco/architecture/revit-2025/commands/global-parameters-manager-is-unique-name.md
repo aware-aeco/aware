@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GlobalParametersManager.IsUniqueName
+Tests whether a name is unique among existing global parameters of a given document.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObject.SetPhase
+Sets the phase of the model object.

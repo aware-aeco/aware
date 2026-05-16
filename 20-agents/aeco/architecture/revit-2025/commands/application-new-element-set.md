@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewElementSet
+Creates a new instance of a set specifically for holding elements.

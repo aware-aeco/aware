@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.DeselectAll
+Deselect all top-level attributes.

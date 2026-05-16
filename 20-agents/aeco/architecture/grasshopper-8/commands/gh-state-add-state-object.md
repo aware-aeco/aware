@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_State.AddStateObject
+Append a new object to the database.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Item.Write
+Serialize this item into a binary stream.

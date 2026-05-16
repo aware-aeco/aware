@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetClipPlanes
+Returns all the clip planes of the view.

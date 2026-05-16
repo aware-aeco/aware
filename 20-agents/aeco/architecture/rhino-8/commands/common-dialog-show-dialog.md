@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CommonDialog.ShowDialog
+Shows the dialog with the specified parent, blocking until a result is returned.

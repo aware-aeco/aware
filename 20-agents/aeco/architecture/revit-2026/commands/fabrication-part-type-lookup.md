@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPartType.Lookup
+Looks up an existing fabrication part type based on a specfic fabrication service button and condition.

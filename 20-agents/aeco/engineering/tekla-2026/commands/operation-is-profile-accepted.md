@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.IsProfileAccepted
+Check if detailer has accepted a profile that is against fabricator settings.

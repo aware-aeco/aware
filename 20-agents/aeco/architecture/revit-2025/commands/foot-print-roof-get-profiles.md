@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FootPrintRoof.GetProfiles
+Retrieve all the curveLoops of FootPrintRoof.

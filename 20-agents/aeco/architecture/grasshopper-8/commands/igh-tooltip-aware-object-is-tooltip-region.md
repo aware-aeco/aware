@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_TooltipAwareObject.IsTooltipRegion
+Determine whether the specified pixel should result in a tooltip when the cursor hovers over it.

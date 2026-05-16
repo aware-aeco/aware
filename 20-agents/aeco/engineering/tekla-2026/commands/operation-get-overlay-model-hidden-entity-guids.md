@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetOverlayModelHiddenEntityGuids
+Gets the external reference model hidden entities.

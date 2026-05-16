@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayVectorSettings.IsEqual
+Compares two vector settings objects.

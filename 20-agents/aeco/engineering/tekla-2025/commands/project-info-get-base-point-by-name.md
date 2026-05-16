@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ProjectInfo.GetBasePointByName
+Gets a base point by given name.

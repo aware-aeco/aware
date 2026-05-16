@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssetProperty.GetTypeName
+Get the name of the AssetProperty

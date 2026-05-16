@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObjectTable.AddSubD
+Adds a SubD to the document

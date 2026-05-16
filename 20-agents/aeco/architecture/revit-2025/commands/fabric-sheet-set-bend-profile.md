@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricSheet.SetBendProfile
+Sets new profile that defines the shape of the Fabric Sheet bending.

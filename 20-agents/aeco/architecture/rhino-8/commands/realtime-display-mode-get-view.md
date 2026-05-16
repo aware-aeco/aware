@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RealtimeDisplayMode.GetView
+Get ViewInfo that has been registered with this RealtimeDisplayMode instance.

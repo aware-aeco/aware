@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetPoint.PermitConstraintOptions
+Control the availability of the built-in linear, planar, curve, and surface             constraint options like "Along", "AlongPerp", "AlongTan", "AlongParallel",             "Between", "OnCrv", "OnSrf", ".x", ".y", ".z", ".xy", etc.

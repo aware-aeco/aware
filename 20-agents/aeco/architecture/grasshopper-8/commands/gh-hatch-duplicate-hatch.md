@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Hatch.DuplicateHatch
+Create a duplicate of this hatch.

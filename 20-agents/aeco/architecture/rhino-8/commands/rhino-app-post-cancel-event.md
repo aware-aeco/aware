@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoApp.PostCancelEvent
+Post a cancel event to the command line

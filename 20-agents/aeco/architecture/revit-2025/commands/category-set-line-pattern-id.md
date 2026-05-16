@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Category.SetLinePatternId
+Sets the line pattern id associated with this category for the given graphics style type.

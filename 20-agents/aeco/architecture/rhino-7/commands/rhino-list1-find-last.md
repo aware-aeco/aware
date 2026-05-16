@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoList`1.FindLast
+Searches for an element that matches the conditions defined by the              specified predicate, and returns the last occurrence within the entire List.

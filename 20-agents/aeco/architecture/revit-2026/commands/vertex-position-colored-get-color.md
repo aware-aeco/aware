@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-VertexPositionColored.GetColor
+Gets the vertex's color.

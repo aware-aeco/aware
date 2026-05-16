@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLinetypeTable.GetKeys
+Gets all the keys stored in the map.

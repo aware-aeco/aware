@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentServer.EmitObjectProxy
+Get the proxy that is associated with the given Object ID.

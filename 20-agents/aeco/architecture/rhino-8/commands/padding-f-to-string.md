@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PaddingF.ToString
+Converts this object to a string

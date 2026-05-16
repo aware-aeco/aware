@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveByPointsUtils.GetHostFace
+Gets the host face to which the CurveElement is added.

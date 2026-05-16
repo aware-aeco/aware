@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-VoltageTypeSet.Contains
+Tests for the existence of a voltage type within the set.

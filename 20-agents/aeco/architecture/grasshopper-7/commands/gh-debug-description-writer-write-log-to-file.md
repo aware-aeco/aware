@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DebugDescriptionWriter.WriteLogToFile
+Write the log to a text file.

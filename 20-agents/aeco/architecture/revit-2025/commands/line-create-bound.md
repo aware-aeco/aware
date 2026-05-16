@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Line.CreateBound
+Creates a new instance of a bound linear curve.

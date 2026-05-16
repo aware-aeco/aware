@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.GetCombinedParamValue
+Returns the combined parameter text for instance view

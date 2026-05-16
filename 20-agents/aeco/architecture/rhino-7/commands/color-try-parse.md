@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Color.TryParse
+Converts the specified string to a color

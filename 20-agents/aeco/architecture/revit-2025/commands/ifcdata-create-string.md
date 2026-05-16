@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCData.CreateString
+Creates a string data object.

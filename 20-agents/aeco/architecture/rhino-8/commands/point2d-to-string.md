@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point2d.ToString
+Constructs the string representation for the current point.

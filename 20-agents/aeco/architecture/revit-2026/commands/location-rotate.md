@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Location.Rotate
+Rotate the element within the project by a specified angle around a given axis.

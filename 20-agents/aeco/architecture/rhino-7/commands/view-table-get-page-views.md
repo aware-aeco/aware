@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewTable.GetPageViews
+Gets all page views in the document.

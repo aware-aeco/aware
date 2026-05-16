@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Form.IsEndFace
+Given a face, tell if it is an end cap face.

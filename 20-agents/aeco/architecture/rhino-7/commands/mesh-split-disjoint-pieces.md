@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.SplitDisjointPieces
+Splits up the mesh into its unconnected pieces.

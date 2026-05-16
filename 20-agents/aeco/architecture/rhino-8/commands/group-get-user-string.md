@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Group.GetUserString
+Gets user string from this geometry.

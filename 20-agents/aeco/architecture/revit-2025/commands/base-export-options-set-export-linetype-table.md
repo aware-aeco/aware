@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BaseExportOptions.SetExportLinetypeTable
+Sets the line type table to use during export.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PartUtils.HasAssociatedParts
+Checks if an element has associated parts.

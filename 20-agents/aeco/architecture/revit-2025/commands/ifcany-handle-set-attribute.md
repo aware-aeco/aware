@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCAnyHandle.SetAttribute
+Sets the attribute value.

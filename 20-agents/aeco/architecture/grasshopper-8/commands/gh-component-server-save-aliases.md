@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentServer.SaveAliases
+Save the alias table to the settings directory.   Use this function if you change the alias table while   ignoring usual channels.

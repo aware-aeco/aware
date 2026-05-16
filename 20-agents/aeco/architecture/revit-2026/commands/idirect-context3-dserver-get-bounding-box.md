@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IDirectContext3DServer.GetBoundingBox
+Reports a bounding box of the geometry that this server submits for drawing.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLayerTableIterator.MoveNext
+Increments the iterator to the next item.

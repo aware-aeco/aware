@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform2D.AlmostEqual
+Determines whether this transformation and the specified transformation are the same within the tolerance (1.0e-09).

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalResourceReference.GetResourceShortDisplayName
+Gets the short display name of the external resource.

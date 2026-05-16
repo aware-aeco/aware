@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Canvas.CreatePreview
+Render this canvas to a thumbnail preview.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedParametersEventArgs.Set
+Set a string value for a given key name

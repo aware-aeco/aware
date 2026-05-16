@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-KeyBasedTreeEntriesLoadContent.Reset
+Clears KeyBasedTreeEntriesLoadContent object, including KeyBasedTreeEntries and KeyBasedTreeEntriesLoadResults, owned by this KeyBasedTreeEntriesLoadContent object.

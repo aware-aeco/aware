@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DialKnob.RepairValue
+Apply rounding and limits to the value field.

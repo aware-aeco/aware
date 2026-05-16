@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EventHandlerWrapper.UnsubscribeEvent
+Unregisters an event listener to the event

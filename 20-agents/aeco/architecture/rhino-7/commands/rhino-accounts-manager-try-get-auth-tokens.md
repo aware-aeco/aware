@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoAccountsManager.TryGetAuthTokens
+Attempts to return cached auth tokens that match the given criteria if any have been stored in cache.

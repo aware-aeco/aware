@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectAttributes.AddHideInDetailOverride
+Make this object hidden in a given detail

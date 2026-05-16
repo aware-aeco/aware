@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_TextDot.ToString
+Format the text dot using default grasshopper formatting logic.

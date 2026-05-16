@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Floor.GetSpanDirectionSymbolIds
+Retrieves span direction symbol ElementIds.

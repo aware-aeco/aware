@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.Export
+Exports the document to the gbXML format.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.CanBeLocked
+Identifies if the element can be locked.

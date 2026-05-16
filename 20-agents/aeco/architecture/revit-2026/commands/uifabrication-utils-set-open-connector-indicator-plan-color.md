@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIFabricationUtils.SetOpenConnectorIndicatorPlanColor
+Sets the color of the open connector indicator in plan view.

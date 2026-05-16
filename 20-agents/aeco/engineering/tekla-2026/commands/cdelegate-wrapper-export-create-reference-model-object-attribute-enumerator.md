@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportCreateReferenceModelObjectAttributeEnumerator
+DO NOT USE! For internal usage only!

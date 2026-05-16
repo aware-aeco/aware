@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurve.CreateNonRationalArcBezier
+Creates a non-rational approximation of a rational arc as a single bezier segment

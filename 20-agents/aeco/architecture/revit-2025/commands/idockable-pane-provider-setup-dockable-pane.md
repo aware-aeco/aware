@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IDockablePaneProvider.SetupDockablePane
+Method called during initialization of the user interface to gather information about a dockable pane window.

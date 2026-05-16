@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WireframeBuilder.ValidatePoint
+Validates the point object to be added to the wireframe shape being constructed. Used by AddPoint() to validate input.

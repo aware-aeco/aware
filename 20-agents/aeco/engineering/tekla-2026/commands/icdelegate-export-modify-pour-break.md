@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportModifyPourBreak
+DO NOT USE! For internal usage only!

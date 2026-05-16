@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GripObject.UndoMove
+Undoes any grip moves made by calling Move.

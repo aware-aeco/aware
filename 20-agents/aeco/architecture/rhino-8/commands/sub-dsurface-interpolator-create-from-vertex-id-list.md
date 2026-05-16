@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDSurfaceInterpolator.CreateFromVertexIdList
+Create an interpolator where all the listed vertices in the SubD are free             vertices in the linear system used for interpolation, and the unselected are fixed             to their initial positions. Free vertices are can move as a result of the             interpolation, and can receive an interpolation target location.

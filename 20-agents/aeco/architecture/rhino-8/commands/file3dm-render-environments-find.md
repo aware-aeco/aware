@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmRenderEnvironments.Find
+Finds an environment by its id, if possible. Returns null on failure.

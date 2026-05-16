@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NumberingSchema.MergeSequences
+Merges all elements from given numbering sequences to a new sequence.

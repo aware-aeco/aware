@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LayerTable.Add
+Adds a new layer with default definition to the layer table.

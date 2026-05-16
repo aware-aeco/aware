@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.CurveCurve
+Finds the intersections between two curves.

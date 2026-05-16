@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewCropRegionShapeManager.RemoveSplitRegion
+Removes one region in split crop.

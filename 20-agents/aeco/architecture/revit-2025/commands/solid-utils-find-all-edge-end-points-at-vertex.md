@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SolidUtils.FindAllEdgeEndPointsAtVertex
+Find all EdgeEndPoints at a vertex identified by the input EdgeEndPoint.

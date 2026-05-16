@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ScrollBarVerticalBase.ScrollBar
+Compute the size and position of the scroll bar in the scroll rail.

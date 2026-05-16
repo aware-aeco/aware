@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TessellatedShapeBuilderResult.GetGeometricalObjects
+When called the first time, returns geometrical objects which were built.    Later calls will throw exceptions.

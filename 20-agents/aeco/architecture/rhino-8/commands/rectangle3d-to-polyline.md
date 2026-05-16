@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rectangle3d.ToPolyline
+Constructs a polyline from this rectangle.

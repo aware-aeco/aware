@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Solid.ComputeCentroid
+Returns the Centroid of this solid.

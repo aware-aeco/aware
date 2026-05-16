@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawBitmap
+Draws a bitmap in screen coordinates

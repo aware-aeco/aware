@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPAnalyticalSegment.GetFlowCharacteristics
+Gets all flow characteristics of the segment.

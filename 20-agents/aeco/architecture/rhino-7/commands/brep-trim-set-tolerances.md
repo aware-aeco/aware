@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepTrim.SetTolerances
+The values in tolerance[] record the accuracy of the parameter space              trimming curves.

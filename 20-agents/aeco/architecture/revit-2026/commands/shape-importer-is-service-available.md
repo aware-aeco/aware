@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ShapeImporter.IsServiceAvailable
+Checks whether the data conversion service and Material Library are available.

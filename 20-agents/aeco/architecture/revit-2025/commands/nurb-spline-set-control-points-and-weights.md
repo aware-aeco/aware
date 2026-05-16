@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbSpline.SetControlPointsAndWeights
+Set the control points, weights simultaneously.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RcpLayoutControl.LayoutGroups
+Layout all groups from top to bottom.

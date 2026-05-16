@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentEditor.EnableUI
+Enable all modifier UI.

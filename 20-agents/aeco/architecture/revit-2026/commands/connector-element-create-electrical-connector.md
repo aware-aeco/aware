@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConnectorElement.CreateElectricalConnector
+Create a new electrical ConnectorElement.

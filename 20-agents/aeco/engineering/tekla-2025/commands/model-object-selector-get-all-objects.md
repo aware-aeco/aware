@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObjectSelector.GetAllObjects
+Returns an enumerator of all the model objects in the current model.

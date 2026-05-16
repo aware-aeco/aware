@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.ReleaseUnsafeLock
+Updates the PointCloud data with the information that was stored via the .

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayStyle.GetColoredSurfaceSettings
+Get colored surface settings object from the style.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurve.SetGrevillePoints
+Sets all Greville edit points for this curve.

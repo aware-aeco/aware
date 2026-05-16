@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleData.GetNumberOfCircuitRows
+Gets the number of rows in the circuit table

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SnapShotsClient.RenderingCategory
+Predefined rendering category

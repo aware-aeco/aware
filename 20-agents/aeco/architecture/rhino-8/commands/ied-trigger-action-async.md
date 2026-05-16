@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.TriggerActionAsync
+Run an action.             Call GetSupportedActionsAsync to get a list

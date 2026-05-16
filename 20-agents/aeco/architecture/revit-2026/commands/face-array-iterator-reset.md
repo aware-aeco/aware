@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FaceArrayIterator.Reset
+Bring the iterator back to the start of the array.

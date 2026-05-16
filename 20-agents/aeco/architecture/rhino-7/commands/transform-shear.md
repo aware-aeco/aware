@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform.Shear
+Constructs a Shear transformation.

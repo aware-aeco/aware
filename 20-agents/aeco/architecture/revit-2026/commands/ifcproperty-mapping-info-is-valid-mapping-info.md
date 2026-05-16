@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCPropertyMappingInfo.IsValidMappingInfo
+Defines whether the mapping info contains meaningful data.

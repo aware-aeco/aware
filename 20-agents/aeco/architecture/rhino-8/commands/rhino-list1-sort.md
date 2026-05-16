@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoList`1.Sort
+Sorts the elements in the entire List using the default comparer.

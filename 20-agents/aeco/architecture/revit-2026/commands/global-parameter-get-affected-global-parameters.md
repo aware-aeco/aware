@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GlobalParameter.GetAffectedGlobalParameters
+Returns all other global parameters which refer to this global parameter in their formulas.

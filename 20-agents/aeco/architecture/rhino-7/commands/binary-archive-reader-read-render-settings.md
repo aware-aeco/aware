@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BinaryArchiveReader.ReadRenderSettings
+Reads a -derived object from the archive.

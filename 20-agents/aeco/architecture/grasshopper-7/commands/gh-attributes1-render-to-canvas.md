@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Attributes`1.RenderToCanvas
+Render these attributes into a Canvas control. This function places calls to   PrepareForRender() and Render(), you should override those.

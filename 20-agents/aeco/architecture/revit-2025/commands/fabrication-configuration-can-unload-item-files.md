@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.CanUnloadItemFiles
+Checks if the fabrication item files are already in use and should not be unloaded.

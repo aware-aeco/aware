@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.CanEnableWorksharing
+Checks if worksharing can be enabled in the document.

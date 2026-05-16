@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateFilletSurface
+Creates a constant-radius round surface between two surfaces.

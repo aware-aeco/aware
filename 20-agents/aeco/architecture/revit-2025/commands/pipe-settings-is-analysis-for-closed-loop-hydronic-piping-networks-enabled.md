@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PipeSettings.IsAnalysisForClosedLoopHydronicPipingNetworksEnabled
+Indicates whether analysis for closed loop hydronic piping networks is enabled in the specified document.

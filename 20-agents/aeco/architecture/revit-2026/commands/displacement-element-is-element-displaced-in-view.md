@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplacementElement.IsElementDisplacedInView
+Indicates if the specified element displaced in the specified View.

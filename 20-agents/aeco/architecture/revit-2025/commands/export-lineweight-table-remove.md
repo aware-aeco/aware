@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLineweightTable.Remove
+Removes the pair (key, info) corresponding to the given ExportLineweightKey.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObject.Insert
+Inserts the model object instance into the model database.

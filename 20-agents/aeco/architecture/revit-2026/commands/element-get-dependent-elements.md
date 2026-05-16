@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.GetDependentElements
+Get all elements that, from a logical point of view, are the children of this Element.

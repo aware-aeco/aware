@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeomCombinationSet.Insert
+Insert the specified element into the set.

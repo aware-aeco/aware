@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Plane.GetHashCode
+Gets a non-unique hashing code for this entity.

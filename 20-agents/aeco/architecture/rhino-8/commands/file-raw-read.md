@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileRaw.Read
+Read a raw file into a RhinoDoc

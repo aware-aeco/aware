@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Cylinder.LineAt
+Compute the line at the given angle parameter. This line will be degenerate if the cylinder is infinite.

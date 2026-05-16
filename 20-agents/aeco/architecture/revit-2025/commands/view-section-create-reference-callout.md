@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSection.CreateReferenceCallout
+Creates a new reference callout.

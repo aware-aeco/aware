@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetTemporaryViewPropertiesName
+When Temporary View Properties mode is in progress, name of applied template is returned.    Outside Temporary View Properties mode, empty string will be returned.

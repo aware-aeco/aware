@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyItemFactory.NewLinearDimension
+Creates a new linear dimension object using the specified dimension type.

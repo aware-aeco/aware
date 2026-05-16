@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CursorTooltipSettings.GetCurrentState
+Gets the current settings.

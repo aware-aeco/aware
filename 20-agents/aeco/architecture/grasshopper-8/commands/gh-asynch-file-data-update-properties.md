@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_AsynchFileData.UpdateProperties
+Updates all file properties on the thread on which this method is called.

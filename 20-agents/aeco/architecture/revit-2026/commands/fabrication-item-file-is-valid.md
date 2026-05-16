@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationItemFile.IsValid
+Checks to see if the item file is valid.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.HasViewTransforms
+Returns true if the view reports model space to view projection space transforms.

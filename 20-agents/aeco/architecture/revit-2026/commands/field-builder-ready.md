@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FieldBuilder.Ready
+Checks whether the builder may be used.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightFamily.GetNumberOfLightTypes
+Return the number of light types contained in this light family

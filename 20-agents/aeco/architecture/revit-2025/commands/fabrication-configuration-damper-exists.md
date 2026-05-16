@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.DamperExists
+Checks to see if the specified damper exists.

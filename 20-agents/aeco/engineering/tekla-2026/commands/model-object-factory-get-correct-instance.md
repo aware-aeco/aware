@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObjectFactory.GetCorrectInstance
+Returns a default  of correct type for the given id and type without calling Select.

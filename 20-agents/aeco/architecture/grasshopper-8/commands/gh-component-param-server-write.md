@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentParamServer.Write
+Write all parameter data to an IO archive.

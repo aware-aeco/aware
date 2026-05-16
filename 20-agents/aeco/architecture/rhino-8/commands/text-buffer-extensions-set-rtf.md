@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextBufferExtensions.SetRtf
+Sets the content of the buffer to the specified  string. Note that some platforms don't support RTF (e.g. Gtk).

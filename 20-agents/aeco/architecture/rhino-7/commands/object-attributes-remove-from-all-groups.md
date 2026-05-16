@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectAttributes.RemoveFromAllGroups
+Removes object from all groups.

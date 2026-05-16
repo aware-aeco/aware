@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExternalService.GetServiceId
+Implement this method to return the unique Id of the service.

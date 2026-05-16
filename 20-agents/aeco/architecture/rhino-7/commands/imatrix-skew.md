@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IMatrix.Skew
+Prepend a skew to the matrix

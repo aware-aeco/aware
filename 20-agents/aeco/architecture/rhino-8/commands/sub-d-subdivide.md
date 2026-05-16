@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubD.Subdivide
+Apply the Catmull-Clark subdivision algorithm and save the results in this SubD.

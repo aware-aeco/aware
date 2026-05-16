@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Painter.ConnectionVisible
+Test whether a wire ought to be drawn at all.

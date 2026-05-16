@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AccessDeniedException.GetObjectData
+Retrieves data needed to serialize the target object.

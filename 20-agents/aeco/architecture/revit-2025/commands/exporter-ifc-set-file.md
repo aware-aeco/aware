@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFC.SetFile
+Sets the handle to the IFC file being created during this export operation.

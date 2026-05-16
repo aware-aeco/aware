@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshNgonList.AddPlanarNgons
+Add an ngon for each group of connected coplanar faces.

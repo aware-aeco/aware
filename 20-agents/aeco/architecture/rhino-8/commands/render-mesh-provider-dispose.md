@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderMeshProvider.Dispose
+Dispose method

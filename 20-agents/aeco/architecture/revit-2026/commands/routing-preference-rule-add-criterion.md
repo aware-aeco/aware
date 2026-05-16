@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RoutingPreferenceRule.AddCriterion
+Adds a new routing criterion.

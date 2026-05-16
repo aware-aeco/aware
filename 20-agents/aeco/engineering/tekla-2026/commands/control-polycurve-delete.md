@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlPolycurve.Delete
+Deletes a polycurve with given Identifier.

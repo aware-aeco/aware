@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WireMaterialType.AddTemperatureRatingType
+Add a new temperature rating type into material type.

@@ -6,1279 +6,2555 @@ description: API reference for namespace Autodesk.Revit.DB from RevitAPI.dll
 # Autodesk.Revit.DB
 
 - **ACADExportOptions**
+  - The base class for options used to export DWG and DXF format files.
 - **ACADVersion**
+  - An enumerated type listing available AutoCAD versions, into which a file may be exported.
 - **ACAObjectPreference**
+  - An enumerated type listing possible ways to generate geometry of an ACA object    Revit object parameters used to generate geometry of the exported ACA object.    Revit object geometry is used to generate geometry of the exported ACA object. That may produce better geometric fidelity in some cases.
 - **APIObject**
+  - Supports all objects in the Autodesk Revit API hierarchy.
 - **AXMImportOptions**
+  - The import options used to import AXM format files.
 - **AdaptiveComponentFamilyUtils**
+  - An interface for Adaptive Component Instances.
 - **AdaptiveComponentInstanceUtils**
+  - An interface for Adaptive Component Instances.
 - **AdaptivePointConstraintType**
+  - An enumerated type containing possible constraint types for Adaptive Points.
 - **AdaptivePointOrientationType**
+  - An enumerated type containing possible orientation types for Adaptive Points.
 - **AdaptivePointType**
+  - An enumerated type containing possible types for Adaptive Points.
 - **AddInId**
+  - Identifies an AddIn registered with Revit
 - **AllowedValues**
+  - A range of allowed values.
 - **AlphanumericRevisionSettings**
+  - Contains settings that apply to Revisions with the Alphanumeric RevisionNumberType.
 - **AlternateUnits**
+  - An enumerated type listing the locations where Alternate units may be displayed in dimensions.
 - **AnalyzesAsType**
+  - This enum class is used for the BuiltInParameter STRUCTURAL_ANALYZES_AS.
 - **AngularDimension**
+  - An object that represents an Angular Dimension within the Revit project.
 - **AnnotationMultipleAlignmentUtils**
+  - A helper providing functionality related to elements that can be aligned to one another.    An element that wants to be able to align to other alignable elements using the Multiple Alignment buttons    should implement this helper class.
 - **AnnotationSymbol**
+  - This object represents a symbol of the Generic Annotation.
 - **AnnotationSymbolType**
+  - An object that represents an annotation style.
 - **AppearanceAssetElement**
+  - An element that contains a rendering asset used as a portion of a material definition.
 - **Arc**
+  - A circular arc.
 - **ArcLengthDimension**
+  - An object that represents an ArcLengthDimension within the Revit Project.
 - **Area**
+  - Provides access to the area topology in Autodesk Revit.
 - **AreaElemType**
+  - An enumerated type to store type of AreaElement.
 - **AreaFilter**
+  - A filter used to match areas.
 - **AreaScheme**
+  - The area scheme associated with a particular area plan.
 - **AreaTag**
+  - Provides access to the area topology in Autodesk Revit.
 - **AreaTagFilter**
+  - A filter used to match area tags.
 - **AreaTagType**
+  - An object that represents an Area Tag style.
 - **AreaVolumeSettings**
+  - This class provides access to settings related to volume and area computations.
 - **ArrayAnchorMember**
+  - Represents the possible choices for how the translation or rotation is used to place each member of the array.
 - **AssemblyCodeTable**
+  - AssemblyCodeTable represents the collection of ClassificationEntries for a document.
 - **AssemblyDetailViewOrientation**
+  - Orientation of the Assembly Detail View.
 - **AssemblyDifference**
+  - Class that describes difference between two assemblies.
 - **AssemblyDifferenceConfiguration**
+  - The two assemblies being compared have different spatial configuration
 - **AssemblyDifferenceMemberCount**
+  - The two assemblies being compared have different number of members
 - **AssemblyDifferenceMemberDifference**
+  - The two assemblies being compared have different members
 - **AssemblyDifferenceNamingCategory**
+  - The two assemblies being compared have different naming categories
 - **AssemblyDifferenceNone**
+  - The two assemblies being compared are identical
 - **AssemblyInstance**
+  - Combines multiple elements for tagging, filtering, scheduling and creating isolated assembly views.
 - **AssemblyMemberDifference**
+  - Class that describes difference between two assembly members
 - **AssemblyMemberDifferentCategory**
+  - The two assembly members being compared have different category
 - **AssemblyMemberDifferentGeometry**
+  - The two assembly members being compared have different geometry
 - **AssemblyMemberDifferentParameters**
+  - The two assembly members being compared have different parameters
 - **AssemblyMemberDifferentType**
+  - The two assembly members being compared have different type
 - **AssemblyType**
+  - Type for construction assembly elements.
 - **AssemblyViewUtils**
+  - Utilities that provide capabilities related to assembly view creation and validation.
 - **AttachmentType**
+  - Enum determining whether a link is an attachment or an overlay
 - **AutomaticConnectionBehaviorType**
+  - Defines behavior of connector with respect to automatic creation of connections
 - **BIMExportOptions**
+  - The base class for options used to export using ATF.
 - **BRepBuilder**
+  - A class that allows direct construction of geometry objects (solids, open shells, etc.).
 - **BRepBuilderEdgeGeometry**
+  - An abstract class used by BRepBuilder to represent the geometry of an edge. Specific edge-geometry representations are represented by subclasses.
 - **BRepBuilderGeometryId**
+  - This class is used by the BRepBuilder class to identify objects it creates (faces, edges, etc.).
 - **BRepBuilderOutcome**
+  - This class defines possible outcomes returned by BRepBuilder functions that need to report outcome via a return value.
 - **BRepBuilderPersistentIds**
+  - This class stores a map from ExternalGeometryIds to BRepBuilderGeometryIds.
 - **BRepBuilderState**
+  - This class defines an enumerative type used to specify the state of a BRepBuilder object.
 - **BRepBuilderSurfaceGeometry**
+  - An abstract class used by BRepBuilder to represent the geometry of a surface. Specific surface-geometry representations are represented by subclasses.
 - **BRepType**
+  - This class defines an enumerative type used to specify the type of output geometry expected from a BRepBuilder.
 - **BackClippingParam**
+  - The allowed values for the VIEW_BACK_CLIPPING and VIEWER_BOUND_FAR_CLIPPING parameters.
 - **BackgroundImageFit**
+  - Indicates the background image fit type in rendering settings.
 - **BackgroundSettings**
+  - Represents the rendering background settings.
 - **BackgroundStyle**
+  - Indicates the background style in rendering settings.
 - **BarTypeDiameterOptions**
+  - This class stores the diameter information from the RebarBarType.
 - **BaseArray**
+  - An abstract base class that represents an array within the Revit project.
 - **BaseExportOptions**
+  - The base class for options used to export DWG, DXF and DGN format files.
 - **BaseImportOptions**
+  - A base class containing import options used during import of several formats.
 - **BaseLoadOn**
+  - An enumerated type listing all the possible power load use types for a space object.
 - **BasePoint**
+  - A class representing the Project Base Point and Survey Point. Each Revit project    contains one project base point and one survey point. The project base point represents the    origin of the project coordinate system. The survey point represents the origin of    the shared coordinate system.
 - **BasicFileInfo**
+  - Encapsulates basic information about a Revit file, including worksharing status, Revit version, username and central path.
 - **BeamSystem**
+  - An object that represents a BeamSystem within the Autodesk Revit project.
 - **BeamSystemJustifyType**
+  - Describes the justify method of beamsystem.
 - **BeamSystemType**
+  - An object that specifies the type of a beam system in Autodesk Revit.
 - **BehaviorType**
+  - An enumerated type listing all the behavior type for MEP Components.
 - **BendingDetailPositionOptions**
+  - An enumerated type listing the bending detail position options supported by the Bending Detail.
 - **Binding**
+  - Binding objects are used to take a parameter definition and bind it to one or more categories.
 - **BindingMap**
+  - The parameters BindingMap contains all the parameter bindings that exist in the Autodesk Revit project.
 - **Blend**
+  - A blend solid or void form.
 - **BooleanOperationsType**
+  - An enumerated type listing boolean types that are supported for boolean operation.
 - **BooleanOperationsUtils**
+  - These utilities are applicable for the geometry created by GeometryCreationUtilities and the geometry of Revit model.
 - **BorderTile**
+  - Options for controlling tiles that overlap the face boundary. See .
 - **BoundarySegment**
+  - An object that represents a segment of an area boundary.
 - **BoundaryValidation**
+  - Curve loop validators.
 - **BoundingBoxContainsPointFilter**
+  - A filter used to match elements with a bounding box that contains the given point.
 - **BoundingBoxIntersectsFilter**
+  - A filter used to match elements with a bounding box that intersects the given Outline.
 - **BoundingBoxIsInsideFilter**
+  - A filter used to match elements with a bounding box that is contained by the given Outline.
 - **BoundingBoxUV**
+  - A two-dimensional rectangle, parallel to the coordinate axes.
 - **BoundingBoxXYZ**
+  - A three-dimensional rectangular box at an arbitrary location and orientation within the Revit model.
 - **BoxPlacement**
+  - An enumerated type containing possible constraint types for Adaptive Points.
 - **BrowserOrganization**
+  - The organization settings for grouping, sorting, and filtering of items in the project browser.
 - **BrowserOrganizationType**
+  - Enumerated type representing the type of browser organization.
 - **BuildingPadType**
+  - Represents a specific type of Building Pad.
 - **BuildingType**
+  - This enumeration is used for specifying the most predominant building use type.
 - **BuiltInCategory**
+  - A list of all the built in categories within Revit.
 - **BuiltInFailures**
+  - Provides a container of all Revit built-in FailureDefinitionId instances.
 - **BuiltInParameter**
+  - An enumerated type listing all of the built-in parameter IDs supported by Autodesk Revit.
 - **CADExportOptions**
+  - Generic CAD Export options.
 - **CADLinkOperations**
+  - This class is used to extend the IExternalResourceServer interface with methods to support operations    specifically related to DWG links.
 - **CADLinkOptions**
+  - This class contains the options in use when    or reloading a CAD link type (DWG, DXF, etc.)
 - **CADLinkType**
+  - CADLinkType represents both CAD links and CAD imports. The    function IsLink can be used to distinguish between the two.    CAD imports are not ExternalFileReferences; they are brought    completely into the document and maintain no connection to    their original file.
 - **CameraInfo**
+  - An object holding information about the projection mapping of a 3D view.
 - **CancellationListener**
+  - Allows clients to poll the cancellation status of a background operation. Revit instantiates    CancellationListener objects for internal background operation implementations only. As such,    third-party developers are not expected to instantiate or handle CancellationListener objects.
 - **Categories**
+  - The Categories object is a map that contains all the top-level Category objects within the Document.
 - **Category**
+  - Represents the category or subcategory to which an element belongs.
 - **CategoryNameMap**
+  - A map that contains a mapping of category name to its category object.
 - **CategoryNameMapIterator**
+  - An iterator to a category name map.
 - **CategorySet**
+  - A set that can contains Category objects.
 - **CategorySetIterator**
+  - An iterator to a category set.
 - **CategoryType**
+  - The type of category.
 - **Ceiling**
+  - Represents a ceiling in Autodesk Revit.
 - **CeilingAndFloor**
+  - A base class that provides support for all ceiling and floor objects.
 - **CeilingType**
+  - Represents a ceiling type in Autodesk Revit.
 - **CellType**
+  - Declares the cell data type.
 - **ChangePriority**
+  - Enum used to specify the priority of an Updater during execution.
 - **ChangeType**
+  - A class representing a change that can be detected and tracked during Dynamic Update.
 - **CheckoutStatus**
+  - Indicates the ownership status of an element
 - **City**
+  - An object that contains geographical location information for a known city.
 - **CitySet**
+  - An set that contains cities.
 - **CitySetIterator**
+  - An iterator to a city set.
 - **ClassificationEntries**
+  - A collection of ClassificationEntry objects that make up the classification table.
 - **ClassificationEntry**
+  - Represents an entry in the classification table.
 - **ClosestPointsPairBetweenTwoCurves**
+  - This class captures results of computation of closest points between two generic curves.
 - **Color**
+  - Represents a color in Autodesk Revit.
 - **ColorBackgroundSettings**
+  - Represents the rendering color background settings.
 - **ColorDepthType**
+  - An enumerated type listing all Color Depth types of Print Setting.
 - **ColorFillLegend**
+  - Represents color fill legend.
 - **ColorFillScheme**
+  - Represents a color scheme could be used to colorfy elements in floor plan views and section views.
 - **ColorFillSchemeEntry**
+  - Represents an entry of a .
 - **ColorOptions**
+  - A class providing access to color settings which affect the colors applied to specific views.
 - **ColorWithTransparency**
+  - Color with transparency
 - **ColumnAttachment**
+  - An object representing the attachment of the top or bottom of a column to some target:    a floor, roof, ceiling, beam, or brace.
 - **ColumnAttachmentCutStyle**
+  - Control the handling of columns that intersect their targets.
 - **ColumnAttachmentJustification**
+  - Control the column extent in cases where the target is not a uniform height.
 - **CombinableElement**
+  - An element that can be added to a geometry combination.
 - **CombinableElementArray**
+  - An array that contains CombinableElement objects.
 - **CombinableElementArrayIterator**
+  - An iterator to an CombinableElement array.
 - **ComponentRepeater**
+  - An element that contains and manages a set of repeated components.
 - **ComponentRepeaterIterator**
+  - A slot iterator for ComponentRepeater.
 - **ComponentRepeaterSlot**
+  - Represents a slot that holds one repeated component in a component repeater.
 - **ComponentRotation**
+  - ComponentRotation property of DividedSurface. See .
 - **CompoundStructure**
+  - Describes the internal structure of a wall, floor, roof or ceiling.
 - **CompoundStructureError**
+  - When CompoundStructure::isValid() returns false, it uses these values to indicate precise nature of defect.
 - **CompoundStructureLayer**
+  - Describes a single layer in a CompoundStructure.
 - **ConfigurationReloadInfo**
+  - This object contains information returned by a reload of the fabrication configuration.
 - **ConicalFace**
+  - A conical face of a 3d solid or open shell.
 - **ConicalSurface**
+  - A Conical Surface.
 - **ConnectionResolution**
+  - An enumerated type listing all the possible resolutions for connectivity validation.
 - **ConnectionValidationInfo**
+  - This object contains information about fabrication connection validations.
 - **ConnectionValidationWarning**
+  - Contains information about a specific connection validation problem.
 - **ConnectionWarning**
+  - An enumerated type listing all the reasons for connectivity failure.
 - **Connector**
+  - A connector in an Autodesk Revit MEP project document.
 - **ConnectorDomainType**
+  - Type of connector domain.
 - **ConnectorElement**
+  - A base class that provides support for all connector elements occurring in families.
 - **ConnectorGenderType**
+  - Connector gender type enum
 - **ConnectorJointType**
+  - Connector joint type enum
 - **ConnectorManager**
+  - Provides access to the Connector Manager
 - **ConnectorProfileType**
+  - An enumerated type listing all connector profile types
 - **ConnectorSet**
+  - A set that can contain any type of object.
 - **ConnectorSetIterator**
+  - An iterator to a set.
 - **ConnectorType**
+  - An enumerated type listing all connector types for a connection
 - **Construction**
+  - Construction definition for Project Information.
 - **ContentNode**
+  - This class represents a generic content node in a model-exporting process.
 - **ContourSetting**
+  - Contour setting object that handles the contour information used to draw contours on elements.
 - **ContourSettingItem**
+  - Contour setting item that stores the information of a single contour or a set of contours.
 - **ContourSettingItemType**
+  - The type of a ContourSettingItem
 - **Control**
+  - A control in Autodesk Revit family document.
 - **ControlShape**
+  - An enumerated type listing four shapes of control that Autodesk Revit supports.
 - **CoordinatePlaneVisibility**
+  - Visibility settings for ReferencePoint element's coordinate reference planes.
 - **CopyPasteOptions**
+  - Settings to control the behavior of a copy-paste operation.
 - **CurtainCell**
+  - Represents a CurtainCell within Autodesk Revit.
 - **CurtainGrid**
+  - Represents a curtain grid element within Autodesk Revit.
 - **CurtainGridAlignType**
+  - An enumerated to list CurtainGrid patterns.
 - **CurtainGridLine**
+  - Represents a CurtainGridLine within Autodesk Revit.
 - **CurtainGridSet**
+  - A set that can contain any type of object.
 - **CurtainGridSetIterator**
+  - An iterator to a set.
 - **CurtainSystem**
+  - Provides access to the CurtainSystem object in Autodesk Revit.
 - **CurtainSystemBase**
+  - Provides access to the CurtainSystemBase object in Autodesk Revit.
 - **CurtainSystemType**
+  - An object that represents CurtainSystem type.
 - **Curve**
+  - A parametric curve.
 - **CurveArrArray**
+  - An array that can contain any type of object.
 - **CurveArrArrayIterator**
+  - An iterator to a array.
 - **CurveArray**
+  - An array that can contain curves.
 - **CurveArrayIterator**
+  - An iterator to a curve array.
 - **CurveByPoints**
+  - A curve interpolating two or more points.
 - **CurveByPointsArray**
+  - An array that can contain CurveByPoints elements.
 - **CurveByPointsArrayIterator**
+  - An iterator to a CurveByPoints array.
 - **CurveByPointsUtils**
+  - A static class that contains methods for processing curves driven by points.
 - **CurveElement**
+  - Class representing curve elements.
 - **CurveElementFilter**
+  - A filter used to pass curve elements which are of a specific type.
 - **CurveElementType**
+  - An enumerated type listing the curve element types that can be used when filtering elements    (via CurveElementFilter).
 - **CurveExtents**
+  - Represents the start and end parameters for a curve segment.
 - **CurveLoop**
+  - A class that represents a chain of curves.
 - **CurveLoopIterator**
+  - An iterator to a curve loop.
 - **CurveLoopsProfile**
+  - Represents a curve loop based profile for sweep or swept blend elements.
 - **CurveNode**
+  - An output node that represents a model curve.
 - **CurveProjectionType**
+  - This attribute indicates how the curve will be projected to the surface if the curve is sketched on the surface.
 - **CurveUV**
+  - A class that encapsulates the notion of a curve in the 2D parameter space of a surface in 3D space.
 - **CurvedEdgeConditionParam**
+  - The allowed values for the HOST_SSE_CURVED_EDGE_CONDITION_PARAM parameter.
 - **CustomExporter**
+  - A class that allows exporting 3D or 2D views via an export context.
 - **CustomFieldData**
+  - A class that offer access to the information about a custom field.
 - **CustomSubCategoryId**
+  - An enumerated type listing pseudo sub-categories that can appear in a mapping template.    These types do not represent an independent category in Revit, but can be mapped to specific IFC    entity.
 - **CutFailureReason**
+  - The reason why a solid-solid cut cannot be created.
 - **CylindricalFace**
+  - A cylindrical face of a 3d solid or open shell.
 - **CylindricalHelix**
+  - A cylindrical helix.
 - **CylindricalSurface**
+  - A cylindrical surface.
 - **DGNExportOptions**
+  - The export options used by exporting DGN format file.
 - **DGNFileFormat**
+  - An enumerated type listing available Microstation versions into which a file may be exported.
 - **DGNImportOptions**
+  - The import options used to import DGN format files.
 - **DWFExportOptions**
+  - DWF Export options.
 - **DWFImageFormat**
+  - An enumerated type listing possible image format for DWF Export.
 - **DWFImageQuality**
+  - An enumerated type listing possible image quality for DWF Export.
 - **DWFImportOptions**
+  - The import options used by importing DWF or DWFx format file.
 - **DWFXExportOptions**
+  - DWFX Export options.
 - **DWGExportOptions**
+  - The export options used by exporting DWG format file.
 - **DWGImportOptions**
+  - The import options used by importing DWG or DXF format file.
 - **DXFExportOptions**
+  - The export options used by exporting DXF format file.
 - **DataConversionMonitorScope**
+  - This class is used to regsiter an application-supplied object that implements IDataConversionMonitor.    Creating the object registers an implementation of IDataConversionMonitor supplied as constructor argument.    When the scope object is destroyed, that object is unregistered.
 - **DataExchangeMessageId**
+  - Predefined message ids for DataExchangeLog.
 - **DataExchangeMessageSeverity**
+  - Error levels for DataExchangeLog
 - **DataExchangeMessageVerbosity**
+  - Predefined verbosity levels for DataExchangeLog
 - **DatumEnds**
+  - An enumerated type representing ends of a datum plane.
 - **DatumExtentType**
+  - Represents the type of datum extent that is displayed in a particular view.
 - **DatumPlane**
+  - A base class representing a datum surface (level, grid or reference plane) in Autodesk Revit.
 - **DecimalSymbol**
+  - The symbol used to separate the integer and fractional parts of a number.
 - **DefaultDivideSettings**
+  - Provides access to project-wide divide settings.
 - **DefaultOpenFromCloudCallback**
+  - A default callback that may be used to control Revit's behavior when opening a model.
 - **Definition**
+  - The Definition object is a base object for all type of parameter definitions within the Autodesk Revit API.
 - **DefinitionBindingMap**
+  - A map that contains mappings of parameter definitions to parameter bindings.
 - **DefinitionBindingMapIterator**
+  - An iterator to a parameter definition to parameter bindings map.
 - **DefinitionFile**
+  - The DefinitionFile object represents a shared parameters file on disk.
 - **DefinitionGroup**
+  - The DefinitionGroup is a container that is used to hold shared parameter definitions on disk.
 - **DefinitionGroups**
+  - A specialized set of definition groups that allows creation of new groups.
 - **Definitions**
+  - A base class that supports the addition of new parameter definitions.
 - **DeleteElements**
+  - Deletes element(s) related to the failure.
 - **DeleteWorksetOption**
+  - This class defines an enumerative type used to specify the option to delete a workset.
 - **DeleteWorksetSettings**
+  - This class represents the settings used to delete a workset.
 - **DesignOption**
+  - An element that represents a design alternative.
 - **DetachFromCentralOption**
+  - Options for workset detachment behavior.
 - **DetailArc**
+  - Represents a DetailArc within Autodesk Revit.
 - **DetailCurve**
+  - A curve that is used to create a detail drawing.  A detail curve is visible only in the view in which it is drawn.
 - **DetailCurveArray**
+  - An array that can contain any type of object.
 - **DetailCurveArrayIterator**
+  - An iterator to a array.
 - **DetailElementOrderUtils**
+  - A utility class that arranges the draw order of the detail elements.
 - **DetailEllipse**
+  - Represents a DetailEllipse within Autodesk Revit.
 - **DetailLine**
+  - Represents a DetailLine within Autodesk Revit.
 - **DetailNurbSpline**
+  - Represents a DetailNurbSpline within Autodesk Revit.
 - **DigitGroupingAmount**
+  - The number of digits in each group when numbers are formatted with digit grouping.
 - **DigitGroupingSymbol**
+  - The symbol used to separate groups of digits when numbers are formatted with digit grouping.
 - **Dimension**
+  - An object that represents a dimension within the Revit project.
 - **DimensionEqualityLabelFormatting**
+  - Instances of this class represent individual parameters used to make up a dimension equality formula for continuous linear or angular dimensions.
 - **DimensionSegment**
+  - A segment of a dimension within the Autodesk Revit project.
 - **DimensionSegmentArray**
+  - An array that can contain any number of DimensionSegment objects.
 - **DimensionSegmentArrayIterator**
+  - An iterator to an array of DimensionSegment objects..
 - **DimensionShape**
+  - An enumerated type to list dimension type.
 - **DimensionStyleType**
+  - An enumerated type containing possible style types of dimensions.
 - **DimensionType**
+  - An object that represents a dimension style.
 - **DirectShape**
+  - This class is used to store externally created geometric shapes. Primary intended use is for importing shapes from other data formats such as IFC or STEP.    A DirectShape object may be assigned a category. That will affect how that object is displayed in Revit.
 - **DirectShapeLibrary**
+  - DirectShapeLibrary is used to store pre-created geometry for further referencing via the definition/instance mechanism.    It is not persistent: the scope of a library object is usually a single data creation session.    DirectShape::createGeometryInstance and DirectShape::CreateElementInstance will use the current DirectShapeLibrary to    look up the definitions.    store a collection of GNodes as definition    end class DirectShapeDefinition
 - **DirectShapeOptions**
+  - This class is used to control behavior of a DirectShape object.
 - **DirectShapeReferenceOptions**
+  - This class is used to control the behavior of DirectShape and DirectShapeType reference objects.
 - **DirectShapeReferencingOption**
+  - An enumerated type containing possible referencing options for DirectShapes.
 - **DirectShapeRoomBoundingOption**
+  - An enumerated type containing possible room bounding settings for DirectShapes.
 - **DirectShapeTargetViewType**
+  - View types for which DirectShape objects are allowed to have alternative shape representations
 - **DirectShapeType**
+  - The type element associated with a DirectShape element. This element includes data reused by DirectShape elements of the same type.
 - **DirectShapeTypeOptions**
+  - This class is used to control behavior of a DirectShapeType object.
 - **DirectShapeTypeUserAssignability**
+  - Options for a DirectShapeType which affect whether or not it can be assigned as the type of a DirectShape.
 - **DisableAnalyticalModelCB**
+  - Disable the analytical model for a structural wall.
 - **DisciplineTypeId**
+  - This class contains constants identifying disciplines.
 - **DisplacementElement**
+  - A view-specific element that causes other elements to appear to be displaced from their    actual locations.
 - **DisplacementPath**
+  - A view-specific annotation related to a DisplacementElement.
 - **DisplacementPathStyle**
+  - Used to control the graphical representation of a  DisplacementPath element.
 - **DisplayStyle**
+  - Display type of the view.
 - **DisplayUnit**
+  - Describes the type of Revit display unit, metric or imperial.
 - **DistanceMeasuredFrom**
+  - Indicates if the distance is measured from the top or bottom of the wall.
 - **DistributionOfNormals**
+  - An enumeration containing the choices of how normal vectors are assigned    and distributed along the surface of a polymesh. Planar faces would typically    have only normal vector associated, but curved faces can have a different    normal either for each facet (triangle) or each point of the tessellated polymesh.
 - **DividedPath**
+  - An element that consists of a set of points distributed along a path which consists of a connected set of curves and edges.
 - **DividedPathMeasurementType**
+  - DividedPath measurement type.
 - **DividedSurface**
+  - An element that represents a mesh on the surface of another element, a family instance, an import instance or a geometry combination,    and a tile pattern built on that mesh.
 - **Document**
+  - An object that represents an open Autodesk Revit project.
 - **DocumentDifference**
+  - DocumentDifference represents the difference (including added elements, modified elements and deleted elements) of a Revit model between different DocumentVersion of the model.
 - **DocumentPreviewSettings**
+  - Contains the settings related to the saving of preview images for a given document.
 - **DocumentSet**
+  - A set that can contain any documents.
 - **DocumentSetIterator**
+  - An iterator to a set of documents.
 - **DocumentType**
+  - Types of Revit documents.
 - **DocumentValidation**
+  - Utility functions with document validation
 - **DocumentVersion**
+  - This class uniquely identifies an edition of a given document.
 - **Domain**
+  - Type of connector domain.
 - **DoorEvacuationExitType**
+  - An enumerated type listing the possible door evacuation types
 - **DoubleArray**
+  - An array that contains doubles.
 - **DoubleArrayIterator**
+  - An iterator to an array of doubles.
 - **DoubleParameterValue**
+  - A class that holds a Double value of a parameter element.
 - **DrawLayer**
+  - An enumerated type containing possible DrawLayer options.
 - **DuplicateTypeAction**
+  - This enumerated type defines the action to be taken when there are types with the same name being pasted.
 - **DuplicateTypeNamesHandlerArgs**
+  - A structure that provides information about an attempt to copy types with names that already exist in the destination document.
 - **EaveCutterType**
+  - An enumerated type to store type of EaveCutter.
 - **Edge**
+  - An edge of a 3d solid.
 - **EdgeArray**
+  - An array that contains edges.
 - **EdgeArrayArray**
+  - An array of edge arrays.
 - **EdgeArrayArrayIterator**
+  - An iterator to an array or edge arrays.
 - **EdgeArrayIterator**
+  - An iterator to an edge array.
 - **EdgeEndPoint**
+  - Represents the start or the end point of an Edge.
 - **EditScope**
+  - The base class for a scope object that provides special access and limitations related to editing certain elements.
 - **Element**
+  - Base class for most persistent data within a Revit document.
 - **ElementArray**
+  - An array that contains element objects.
 - **ElementArrayIterator**
+  - An iterator to an element array.
 - **ElementBinding**
+  - A base class for all types of binding that attach to an element.
 - **ElementCategoryFilter**
+  - A filter used to match elements by their category.
 - **ElementClassFilter**
+  - A filter used to match elements by their class.
 - **ElementDesignOptionFilter**
+  - A filter used to find elements contained within a particular design option.
 - **ElementFilter**
+  - A base class for a type of filter that accepts or rejects elements based upon criteria.
 - **ElementId**
+  - The ElementId object is used as a unique identification for an element within a single project.
 - **ElementIdParameterValue**
+  - A class that holds a ElementId value of a parameter element.
 - **ElementIdSetFilter**
+  - A filter wrapping a set of elements.
 - **ElementIntersectsElementFilter**
+  - A filter to find elements that intersect the solid geometry of a given element.
 - **ElementIntersectsFilter**
+  - A base class for filters used to match elements which intersect with geometry.
 - **ElementIntersectsSolidFilter**
+  - A filter to find elements that intersect the given solid geometry.
 - **ElementIsCurveDrivenFilter**
+  - A filter used to match elements which are curve driven.
 - **ElementIsElementTypeFilter**
+  - A filter used to match elements which are ElementTypes.
 - **ElementLevelFilter**
+  - A filter used to match elements by their associated level.
 - **ElementLogicalFilter**
+  - A filter used to logically combine two or more filters.
 - **ElementMulticategoryFilter**
+  - A filter used to find elements whose category matches any of a given set of categories.
 - **ElementMulticlassFilter**
+  - A filter used to match elements by their class, where more than one class of element may be passed.
 - **ElementNode**
+  - A render node that represents an element, including the host document containing the element.
 - **ElementOnPhaseStatus**
+  - The statuses that an element can have with respect to a given phase.
 - **ElementOwnerViewFilter**
+  - A filter used to match elements which are owned by a particular view.
 - **ElementParameterFilter**
+  - A filter used to match elements by one or more parameter filter rules.
 - **ElementPhaseStatusFilter**
+  - A filter used to match elements that have a given phase status on a given phase.
 - **ElementQuickFilter**
+  - A base class for a type of filter that operates on element records.
 - **ElementRecord**
+  - A record in the Revit database representing an element.
 - **ElementReferenceType**
+  - Element reference types.
 - **ElementSet**
+  - A set that contains element objects.
 - **ElementSetIterator**
+  - An iterator to an element set.
 - **ElementSlowFilter**
+  - A base class for a type of filter that operates on expanded elements.
 - **ElementStructuralTypeFilter**
+  - A filter used to find elements matching a structural type.
 - **ElementTransformUtils**
+  - A collection of utilities allowing transformation of elements (e.g. move, rotate, mirror and copy).
 - **ElementType**
+  - Base class for all Types within Autodesk Revit.
 - **ElementTypeGroup**
+  - The element type group.
 - **ElementWorksetFilter**
+  - A filter used to match elements which reside in a given workset.
 - **ElevationMarker**
+  - ElevationMarkers either host elevation ViewSection views or view references.
 - **Ellipse**
+  - A whole or partial ellipse.
 - **EndCapCondition**
+  - Used by CompoundStructure to describe which shell layers participate in end wrapping.
 - **EntryAndSchemeConsistency**
+  - Enumeration used to specify why an entry is inconsistent with a scheme or another entry.
 - **EvaluatedParameter**
+  - Hold the evaluated  and  of a parameter.
 - **ExclusionFilter**
+  - A filter used to exclude a set of elements automatically.
 - **ExportColorMode**
+  - An enumerated type listing export color mode.
 - **ExportColumnHeaders**
+  - Options for exporting column headers in schedule view export.
 - **ExportDGNSettings**
+  - This element contains DGN export settings which are saved in a Revit document.
 - **ExportDWGSettings**
+  - This element contains DWG/DXF export settings which are saved in a Revit document.
 - **ExportEnergyModelType**
+  - This enum is used to define if energy model used for gbXML export should be based on rooms/spaces, building elements or analysis mode in EnergyDataSettings.
 - **ExportFontInfo**
+  - A value used to represent the info stored in an .
 - **ExportFontKey**
+  - A key used to represent an item stored in an .
 - **ExportFontTable**
+  - A table supporting a mapping of Revit font names to font names that will be set    in the target export format.
 - **ExportFontTableIterator**
+  - An iterator to a set of font table.
 - **ExportIFCCategoryInfo**
+  - Represents the mapped IFC information stored in the template.
 - **ExportIFCCategoryKey**
+  - Represents a Revit category item stored in a template.
 - **ExportLayerInfo**
+  - A value used to represent the info stored in the .
 - **ExportLayerKey**
+  - A key used to represent an item stored in an .
 - **ExportLayerTable**
+  - A table supporting a mapping of category and subcategory to layer name and other layer properties that will be set    in the target export format.
 - **ExportLayerTableIterator**
+  - An iterator to a set of Layer table.
 - **ExportLinetypeInfo**
+  - A value used to represent the info stored in the .
 - **ExportLinetypeKey**
+  - A key used to represent an item stored in an .
 - **ExportLinetypeTable**
+  - A table supporting a mapping of linetypes in Revit to linetype names that will be set    in the target export format.
 - **ExportLinetypeTableIterator**
+  - An iterator to a set of line type table.
 - **ExportLineweightInfo**
+  - A value used to represent the info stored in the .
 - **ExportLineweightKey**
+  - A key used to represent an item stored in an .
 - **ExportLineweightTable**
+  - A table supporting a mapping of line weights in Revit to line weight names that will be set    in the target export format.
 - **ExportLineweightTableIterator**
+  - An iterator to a set of line weight table.
 - **ExportPDFSettings**
+  - Settings for PDF export
 - **ExportPaperFormat**
+  - Paper formats supported by export
 - **ExportPatternInfo**
+  - A value used to represent the info stored in the .
 - **ExportPatternKey**
+  - A key used to represent an item stored in an .
 - **ExportPatternTable**
+  - A table supporting a mapping of FillPatterns in Revit to pattern names that will be set    in the target export format.
 - **ExportPatternTableIterator**
+  - An iterator to a set of Pattern table.
 - **ExportRange**
+  - This enum is used to define what view, part of the view, or list of views will be exported.
 - **ExportResolution**
+  - An enumerated type listing possible options to control the tessellation quality.
 - **ExportSheetType**
+  - An enumerated type listing possible Sheet type.
 - **ExportTextQualifier**
+  - Options for the text qualifier character in schedule view export.
 - **ExportUnit**
+  - An enumerated type listing possible target units for CAD Export.
 - **ExportUtils**
+  - This class provides utilities related to document export.
 - **ExternalDBApplicationResult**
+  - Informs Autodesk Revit of the status of your external db application after execution.
 - **ExternalDefinition**
+  - The ExternalDefinition object adds properties specific to Autodesk Revit shared parameter definitions.
 - **ExternalDefinitionCreationOptions**
+  - An option class used for creating a new shared parameter definition, including options such as name, type, visibility,    Guid description and modifiable flag.
 - **ExternalDefinitions**
+  - Supports the creation of new shared parameters definitions.
 - **ExternalFileReference**
+  - A class that contains the details of a reference to a file outside of a given document.
 - **ExternalFileReferenceType**
+  - Enum class indicating kinds of external file references
 - **ExternalFileUtils**
+  - A utility class containing functions related to external file references.
 - **ExternalGeometryId**
+  - This class represents an identifier for geometry from external sources.
 - **ExternalResourceBrowserData**
+  - Represents a collection of external resources and external resource folders to be presented as    the content of a folder in the file browser in Revit.
 - **ExternalResourceLoadContent**
+  - This class contains the actual content data and other results of an external resource load operation that are    returned by an IExternalResourceServer to Revit.
 - **ExternalResourceLoadContext**
+  - This class contains data describing the context related    to an external resource load operation.
 - **ExternalResourceLoadData**
+  - This class contains the input and output data resulting from invoking an IExternalResourceServer's LoadResource method.After the call to LoadResource, the resulting ExternalResourceLoadData will be passed into    IExternalResourceServer.HandleLoadResourceResults() so that appropriate UI can be displayed. Server providers can inspect the ExternalResourceLoadData to get an ExternalResourceLoadContent    object of the subclass appropriate to the external resource. The class also contains a copy of the    ExternalResourceReference, and information about the context of the load operation.
 - **ExternalResourceLoadStatus**
+  - A flag to indicate the status of an ExternalResource load request.
 - **ExternalResourceMatchOptions**
+  - Represents match options used to filter external resources when listing them from external resource server.
 - **ExternalResourceReference**
+  - This class identifies an external resource provided by an IExternalResourceServer.
 - **ExternalResourceServerExtensions**
+  - An object that contains overrides for external resource-specific methods.
 - **ExternalResourceServerUtils**
+  - Contains utilities related to external resource server.
 - **ExternalResourceServiceUtils**
+  - Contains utilities related to external resource service.
 - **ExternalResourceSubFolder**
+  - Data that describes a remote folder to be shown in the file browser dialog
 - **ExternalResourceType**
+  - A type class used to distinguish between different kinds of external resource.
 - **ExternalResourceTypes**
+  - Provides a container of all Revit built-in ExternalResourceType instances.
 - **ExternalResourceUIBrowseResultType**
+  - Describes the type of external resource browsing result.
 - **ExternalResourceUtils**
+  - A utility class containing functions related to external resource references.
 - **ExternallyTaggedBRep**
+  - An ExternallyTaggedSolid can hold any shape created by BRepBuilder.
 - **ExternallyTaggedGeometryObject**
+  - Base class for ExternallyTaggedGeometryObject and ExternallyTaggedSolid.
 - **ExternallyTaggedGeometryValidation**
+  - Provides validation for geometry to be stored in an ExternallyTaggedGeometry.
 - **ExternallyTaggedNonBRep**
+  - This class is used to create an externally tagged geometry object.
 - **ExternallyTaggedNonBRepUsage**
+  - The ways in which an ExternallyTaggedNonBRep can be used in Revit.
 - **ExternallyTaggedNonBReps**
+  - Holds a collection of ExternallyTaggedNonBRep instances.
 - **Extrusion**
+  - A extrusion solid or void form.
 - **ExtrusionAnalyzer**
+  - This geometry utility allows you to attempt to "fit" a given piece of geometry into    the shape of an extrusion.
 - **ExtrusionAnalyzerFaceAlignment**
+  - Indicates whether a face of the solid analyzed by ExtrusionAnalyzer is fully aligned, partially aligned, or unaligned with faces of the extrusion.
 - **ExtrusionRoof**
+  - Represents some kinds of Extrusion Roofs.
 - **FBXExportOptions**
+  - 3D-Studio Max (FBX) Export options.
 - **FabricationAncillaryUsage**
+  - Structure that holds information about the usage of a fabrication ancillary
 - **FabricationConfiguration**
+  - This element contains the information about the fabrication configuration settings used by the project.
 - **FabricationConfigurationInfo**
+  - Represents an MEP object that holds the properties of an MEP fabrication configuration.
 - **FabricationConnectorInfo**
+  - Fabrication connector information.
 - **FabricationDimensionDefinition**
+  - Represents the definition of a single fabrication pattern dimension. Together all dimensions represent the parametric definition of the fabrication part.
 - **FabricationDimensionType**
+  - Fabrication dimension type.
 - **FabricationDimensionUnitType**
+  - Fabrication dimension unit type.
 - **FabricationHostedInfo**
+  - The fabrication hosted element information.
 - **FabricationItemFile**
+  - This class holds information about the item file, including whether it is already loaded from disk into Revit.
 - **FabricationItemFolder**
+  - A fabrication item folder that can contain sub folders and access to the s contained within.
 - **FabricationMaterialType**
+  - An enumerated type listing all fabrication material types.
 - **FabricationPart**
+  - Represents a fabrication component in the Autodesk Revit MEP product.
 - **FabricationPartType**
+  - Represents a fabrication component type in the Autodesk Revit MEP product.
 - **FabricationRodInfo**
+  - The rod information of the fabrication part.
 - **FabricationService**
+  - This object contains information about a fabrication service.
 - **FabricationServiceButton**
+  - The object contains information about a fabricaton button.
 - **FabricationServiceSettings**
+  - Represents the settings related to the fabrication services.
 - **FabricationVersionInfo**
+  - The object contains versioning information about fabrication data.
 - **Face**
+  - A bounded face of a 3d solid or open shell.
 - **FaceArray**
+  - An array that contains faces.
 - **FaceArrayIterator**
+  - An iterator to a face array.
 - **FaceDetailNode**
+  - A base class of output nodes that represent face edges and face silhouettes.
 - **FaceEdgeNode**
+  - An output node that represents a Face edge.
 - **FaceIntersectionFaceResult**
+  - An enumerated type listing the possible results of a face-face intersection calculation.
 - **FaceNode**
+  - An output node that represents a Face.
 - **FaceSecondDerivatives**
+  - Contains second partial derivatives of a face at a specified point.
 - **FaceSilhouetteNode**
+  - An output node that represents a Face edge.
 - **FaceSplitter**
+  - Represents an element that splits a face.
 - **FaceToposolid**
+  - An object that represents a face-based Toposolid within the Autodesk Revit project.
 - **FaceWall**
+  - A wall attached to a non-vertical massing face.
 - **FacetingUtils**
+  - This class is used to convertTrianglesToQuads a triangulated structure into a structure in which some of the triangles    have been consolidated into quadrilaterals.
 - **FailureDefinition**
+  - Defines persistent information about a failure.
 - **FailureDefinitionAccessor**
+  - A class that provides access to the details of a FailureDefinition after the definition has been defined.
 - **FailureDefinitionId**
+  - The unique identifier of a FailureDefinition.
 - **FailureDefinitionRegistry**
+  - The global registry for all FailureDefinitions in the Revit session.
 - **FailureHandlingOptions**
+  - Options to control how failures (if any occurred during the transaction)    should be handled at the time the transaction is being ended.
 - **FailureMessage**
+  - Represents a message describing a failure of an operation in Revit.
 - **FailureMessageAccessor**
+  - Restricted accessor for FailureMessage.
 - **FailureMessageKey**
+  - A unique key assigned to each posted failure message
 - **FailureProcessingResult**
+  - An enumerated type representing the result achieved by any of the available types of failure handlers:    FailuresPreprocessor, the handler of FailuresProcessing event or a FailuresProcessor.
 - **FailureResolution**
+  - Defines a resolution for a failure.
 - **FailureResolutionType**
+  - Enumeration to classify FailureResolutions by nature of operation they perform on failing Elements.
 - **FailureSeverity**
+  - Enum represents severity of a failure.
 - **FailuresAccessor**
+  - An interface class that provides access to failure information posted in a document and methods to resolve these failures.
 - **Family**
+  - An element that represents a custom family (not a system family) in Autodesk Revit.
 - **FamilyElementVisibility**
+  - Provides access to the visibility parameters of family elements in family document.
 - **FamilyElementVisibilityType**
+  - Indicates the Visibility type of generic forms.
 - **FamilyHostingBehavior**
+  - Types of hosts into/onto which a family can be hosted.    For informative purposes only. Does not affect anything in Revit!
 - **FamilyInstance**
+  - This object represents a single instance of a family type, such as a single I beam.
 - **FamilyInstanceFilter**
+  - A filter used to find elements that are family instances of the given family symbol.
 - **FamilyInstanceReferenceType**
+  - Corresponds to the possible values of parameter "Is Reference" of reference planes and parameter "Reference" of reference lines in families.    This enum is used to identify references of family instances corresponding to reference planes and reference lines in the family.
 - **FamilyManager**
+  - The family manager object to manage the family types and parameters in family document.
 - **FamilyNestingBehavior**
+  - This attribute describes the family nesting behavior.
 - **FamilyParameter**
+  - The family parameter object.
 - **FamilyParameterSet**
+  - A set that contains FamilyParameter objects.
 - **FamilyParameterSetIterator**
+  - An iterator to a FamilyParameter set.
 - **FamilyPlacementType**
+  - The type of placement required for a given family.
 - **FamilyPointLocation**
+  - Data corresponding to the point locations in certain types of Family Symbols.
 - **FamilyPointPlacementReference**
+  - This object represents data corresponding to the placement references in a certain types of Family Instances (see examples listed below).
 - **FamilySizeTable**
+  - Contains size information for a family.
 - **FamilySizeTableColumn**
+  - Contains column information for a FamilySizeTable.
 - **FamilySizeTableErrorInfo**
+  - Error information generated from the CSV file import of a FamilySizeTable.
 - **FamilySizeTableErrorType**
+  - The set of errors that can be returned when importing a FamilySizeTable from a CSV file.
 - **FamilySizeTableManager**
+  - Manages importing, exporting, and querying size data through the FamilySizeTable class.
 - **FamilySource**
+  - Describes which version of the family to be loaded.
 - **FamilySymbol**
+  - An element that represents a single type with a Family.
 - **FamilySymbolFilter**
+  - A filter used to find all family symbols of the given family.
 - **FamilySymbolProfile**
+  - Represents a family symbol based profile for sweep or swept blend elements.
 - **FamilyThermalProperties**
+  - A class that contains thermal properties for specific types of families    (doors, windows, and curtain wall panels).
 - **FamilyType**
+  - The family type object provides read access to the values of family parameters for this type.
 - **FamilyTypeSet**
+  - A set that contains FamilyType objects.
 - **FamilyTypeSetIterator**
+  - An iterator to a FamilyType set.
 - **FamilyUtils**
+  - Contains utilities related to family operations.
 - **FilePath**
+  - This class represents a path on a disk or network location, but    not a path to a Revit server location.
 - **FillGrid**
+  - Represents a grid line in a fill pattern.
 - **FillPattern**
+  - Represents a fill pattern object.
 - **FillPatternElement**
+  - An element that represents a fill pattern.
 - **FillPatternHostOrientation**
+  - The types of orientations for fill patterns.
 - **FillPatternTarget**
+  - The type of the fill pattern.
 - **FilledRegion**
+  - A filled region element.
 - **FilledRegionType**
+  - A filled region attributes element.    Note, the forground pattern color is stored in the parent class
 - **FilterCategoryRule**
+  - A filter rule that matches elements of a set of categories.
 - **FilterDoubleRule**
+  - A filter rule that operates on double-precision numeric values in a Revit project.
 - **FilterElement**
+  - The base class for filter elements in the document.
 - **FilterElementIdRule**
+  - A filter rule that operates on ElementId values in a Revit project.
 - **FilterGlobalParameterAssociationRule**
+  - A filter rule that operates on global parameters ElementId values in a Revit project.
 - **FilterIntegerRule**
+  - A filter rule that operates on integer values in a Revit project.
 - **FilterInverseRule**
+  - A filter rule that inverts the boolean values returned by the rule it contains.
 - **FilterNumericEquals**
+  - Tests whether numeric values from the document are equal to a certain value
 - **FilterNumericGreater**
+  - Tests whether numeric values from the document are greater than a certain value
 - **FilterNumericGreaterOrEqual**
+  - Tests whether numeric values from the document are greater than or equal to a certain value
 - **FilterNumericLess**
+  - Tests whether numeric values from the document are less than a certain value
 - **FilterNumericLessOrEqual**
+  - Tests whether numeric values from the document are less than or equal to a certain value
 - **FilterNumericRuleEvaluator**
+  - Base for all classes that compare numeric values from Revit to a user-supplied filter value.
 - **FilterNumericValueRule**
+  - Base for all classes that use a FilterNumericRuleEvaluator to perform their comparisons
 - **FilterOperatorAndTextString**
+  - An instance of this class holds a filter operator and a text string that denotes    the operator in a particular context. For example, the text string for ScheduleFilterType::LessThan    may be "is less than" for a filter rule based on a parameter with numerical values    or "is below" for a filter rule based on a parameter representing a Level.
 - **FilterRule**
+  - Defines a boolean operation that can be used to cull elements from a document.
 - **FilterStringBeginsWith**
+  - Tests whether string values from the document begin with a certain string.
 - **FilterStringContains**
+  - Tests whether string values from the document contain a certain string.
 - **FilterStringEndsWith**
+  - Tests whether string values from the document end with a certain string.
 - **FilterStringEquals**
+  - Tests whether string values from the document match a certain string.
 - **FilterStringGreater**
+  - Tests whether string values from the document would sort after a certain string.
 - **FilterStringGreaterOrEqual**
+  - Tests whether string values from the document would sort after or match a certain string.
 - **FilterStringLess**
+  - Tests whether string values from the document would sort before a certain string.
 - **FilterStringLessOrEqual**
+  - Tests whether string values from the document would sort before or match a certain string.
 - **FilterStringRule**
+  - A filter rule that operates on string values in a Revit project.
 - **FilterStringRuleEvaluator**
+  - Base for all classes that compare string values from Revit to a user-supplied filter value
 - **FilterValueRule**
+  - A rule that filters on a particular value of an element.
 - **FilterableValueProvider**
+  - Defines the interface for classes that extract values from elements    in a Revit project for testing against filter rules.
 - **FilteredElementCollector**
+  - This class is used to search, filter and iterate through a set of elements.
 - **FilteredElementIdIterator**
+  - An iterator to a set of element ids filtered by the settings of a FilteredElementCollector.
 - **FilteredElementIterator**
+  - An iterator to a set of elements filtered by the settings of a FilteredElementCollector.
 - **FilteredWorksetCollector**
+  - This class is used to search, filter and iterate through a set of worksets.
 - **FilteredWorksetIdIterator**
+  - An iterator to a set of workset ids filtered by the settings of a FilteredWorksetCollector.
 - **FilteredWorksetIterator**
+  - An iterator to a set of worksets filtered by the settings of a FilteredWorksetCollector.
 - **FindReferenceTarget**
+  - The type of reference to find from a ReferenceIntersector.
 - **FitDirectionType**
+  - This enum is used to define the direction to fit the number of pixels defined by PixelSize.
 - **FittingAndAccessoryCalculationType**
+  - The MEP fitting and accessory pressure drop calculation type.
 - **FittingAngleUsage**
+  - An enumerated type representing the options for how to limit the angle values applicable to fitting content.
 - **Floor**
+  - An object that represents a Floor within the Autodesk Revit project.
 - **FloorFace**
+  - An enumerated type listing floor face types (top or bottom)
 - **FloorType**
+  - An object that specifies the type of a floor in Autodesk Revit.
 - **FlowDirectionType**
+  - An enumerated type listing direction types for a connector.
 - **FolderItemInfo**
+  - Contains data for each folder item in the organization settings of the project browser including folder parameter Id and folder name.
 - **FootPrintRoof**
+  - Represents kinds of FootPrintRoofs.
 - **ForgeTypeId**
+  - This class holds a string that uniquely identifies a Forge schema.
 - **Form**
+  - An object that represents a Form within the Autodesk Revit Massing Family.
 - **FormArray**
+  - An array that contains form objects.
 - **FormArrayIterator**
+  - An iterator to a form array.
 - **FormUtils**
+  - Define Form utility functions
 - **FormatOptions**
+  - Options for formatting numbers with units.
 - **FormatStatus**
+  - An enumerated type indicating the formatting status of a range of characters    in
 - **FormatValueOptions**
+  - Options for formatting numbers with units into strings.
 - **FormattedText**
+  - FormattedText is used to create, edit and format text in a     or to query the text and format properties of a
 - **FormulaManager**
+  - A class to access and query information about formula engine in Revit models.
 - **Frame**
+  - A Frame comprises three vectors at a base point in 3D space.
 - **FramingShapeClassification**
+  - This enumeration is used to classify MEP Ancillary Framing shape.
 - **FreeFormElement**
+  - A Free Form Element that contains non-parametric geometry created from an input solid outline.
 - **GBXMLExportOptions**
+  - Green-Building XML Export options.
 - **GBXMLImportOptions**
+  - Import options for Green-Building XML format.
 - **GenericForm**
+  - Provides access to the Generic Form model in Autodesk Revit.
 - **GenericImportOptions**
+  - Generic Import options.
 - **GeomCombination**
+  - An element created by Join and Cut operations applied to combinable elements in an Autodesk Revit family document.
 - **GeomCombinationSet**
+  - A set that contains GeomCombination objects.
 - **GeomCombinationSetIterator**
+  - An iterator to a GeomCombination set.
 - **GeometryCreationUtilities**
+  - A utility that allows construction of basic solid shapes.
 - **GeometryElement**
+  - Geometric representation of an element.
 - **GeometryInstance**
+  - An instance of another element (symbol), specially positioned by this element.
 - **GeometryObject**
+  - The common base class for all geometric primitives.
 - **GlobalParameter**
+  - This class represents a GlobalParameter element in Revit.
 - **GlobalParametersManager**
+  - A class to access and query information about global parameters in Revit models.
 - **GradientBackgroundSettings**
+  - Represents the view gradient background settings.
 - **GraphicsStyle**
+  - The graphics style instance in Autodesk Revit document.
 - **GraphicsStyleType**
+  - Describes the type of graphics style.
 - **Grid**
+  - Represents a single grid line within Autodesk Revit.
 - **GridNode**
+  - A structure that represents a particular location in (U,V) from a grid.
 - **GridNodeLocation**
+  - Location of a grid node relative to the face boundary. See .
 - **GridSegmentDirection**
+  - Specify one of the four adjacent segments to a GridNode. See .
 - **GridType**
+  - An object that represents a grid type.
 - **Group**
+  - An element representing a single instance of a group of elements that may be placed many times in a project or family.
 - **GroupLoadOptions**
+  - A class containing options for loading a group from a file.
 - **GroupNode**
+  - A node that represents set of individual elements grouped together    in some form, such as an instance of a family or linked Revit file, or an instance of a part of symbol's geometry.
 - **GroupSet**
+  - An set that contains groups.
 - **GroupSetIterator**
+  - An iterator to a group set.
 - **GroupType**
+  - An element representing a group of elements that may be placed many times in a project or family.
 - **GroupTypeId**
+  - This class contains constants identifying parameter groups.
 - **GuidEnum**
+  - Base class of all GUID-based enum classes.
 - **HasNoValueFilterRule**
+  - Tests whether an element's parameter doesn't have a value.
 - **HasValueFilterRule**
+  - Tests whether an element's parameter has a value.
 - **HermiteFace**
+  - A cubic hermite spline face of a 3d solid or open shell.
 - **HermiteSpline**
+  - A Hermite spline.
 - **HermiteSplineTangents**
+  - This class indicates tangency at the start, the end, or both ends of the curve.
 - **HermiteSurface**
+  - A Hermite Surface.
 - **HiddenLineViewsType**
+  - An enumerated type listing all Hidden Line Views types of Print Setting.
 - **HomeCamera**
+  - A structure that contains information about the camera and view for the Home view orientation stored in the model.
 - **HorizontalAlign**
+  - Horizontal alignment of model text.
 - **HorizontalAlignmentStyle**
+  - Declares the horizontal alignment style of font.
 - **HorizontalTextAlignment**
+  - Supported types of horizontal alignment of a text element and text justification within the text containing box.
 - **HostObjAttributes**
+  - An object that represents characteristics of several kinds of type.
 - **HostObject**
+  - A base class that provides support for all objects that can host other objects, such as walls roofs, and floors.
 - **HostObjectUtils**
+  - These are generic host object utilities.
 - **HostedSweep**
+  - An object that represents an object hosted by an edge of a roof or floor within the Autodesk Revit project.
 - **HostedSweepType**
+  - An object that represents the attributes for sweep host objects in Autodesk Revit.
 - **ICentralLockedCallback**
+  - An interface that may be used to control Revit's behavior when it tries to lock central    and is blocked because another user already has locked central.
 - **IConnector**
+  - An interface which provides access to connector in Autodesk Revit MEP document.
 - **ICustomFieldProperties**
+  - Represents the base class for the properties of a custom field.
 - **IDataConversionMonitor**
+  - A base class for an application-specific logger. It should be used to track errors during conversion and/or , track conversion progress, cancel a conversion process if necessary.    Implementing a logger class is optional, but highly recommended for all but most basic data converters.    The base class is UI- and language-independent. It is up to the using app to implement UI. Language-specifc data may be used to communicate information to application users.    English should be used to communicate data of interest to Revit development.
 - **IDuplicateTypeNamesHandler**
+  - An interface for custom handlers of duplicate type names encountered during a paste operation. When the destination document    contains types that have the same names as the types being copied, but different internals, a decision must be made on how to proceed - whether to    cancel the operation or continue, but only copy types with unique names.
 - **IExportContext**
+  - An interface that is used in custom export to process a Revit model.
 - **IExportContext2D**
+  - An interface that is used in custom export to export 2D views of a Revit model.
 - **IExportContextBase**
+  - An interface that as common base for IModelExportContext and IExportContext2D.
 - **IExtension**
+  - An interface that supports the additional operation for Extension Status
 - **IExternalDBApplication**
+  - An interface that supports addition of DB-level external applications to Revit, to subscribe to DB-level events and updaters.
 - **IExternalResourceServer**
+  - The interface used to provide custom implementation to provide access to external resources (such as linked files) from arbitrary locations.
 - **IFCBuiltInCategoryKey**
+  - A key used to represent an item stored in a template.
 - **IFCCategoryTemplate**
+  - Represents an element that contains an IFC category mapping template stored in a Revit document.
 - **IFCExportElement**
+  - An enumerated type defining if an element is exported to IFC or not.
 - **IFCExportElementType**
+  - An enumerated type defining if an element type is exported to IFC or not.
 - **IFCExportOptions**
+  - IFC Export options.
 - **IFCVersion**
+  - An enumerated type listing available IFC file versions into which a file may be exported.
 - **IFailuresPreprocessor**
+  - An interface that may be used to perform a preprocessing step to either filter out anticipated transaction failures    or to mark certain failures as non-continuable.
 - **IFailuresProcessor**
+  - To create your own UI or fully automated tool to process Revit Failures, derive a class from this interface.
 - **IFamilyLoadOptions**
+  - An interface class which provide the callback for family load options.
 - **IGetLocalPathForOpenCallback**
+  - The interface used to provide custom support for the "Open (and Unload)" command for Revit Links obtained as external resources.
 - **IModelExportContext**
+  - An interface that is used in custom export to export 3D views of a Revit model.
 - **INavisworksExporter**
+  - The interface used to implement a Navisworks exporter.
 - **IOnLocalLinkSharedCoordinatesSavedCallback**
+  - A callback for notifying an IExternalResourceServer that    shared coordinates changes have been saved back to one    of the Revit or DWG links provided by that server.
 - **IOpenFromCloudCallback**
+  - An interface that may be used to control Revit's behavior when opening a cloud model.
 - **IPerformanceAdviserRule**
+  - Base class to derive specific performance adviser rules from.
 - **IPhotoRenderContext**
+  - An interface that is used in custom export to render 3D views of a Revit model.
 - **IPrintSetting**
+  - An interface which represents the Print Setup (Application Menu->Print->Print Setup) within Autodesk Revit.
 - **ISaveSharedCoordinatesCallback**
+  - An interface that may be used to control Revit when trying to unload    or reload a Revit link with changes in shared coordinates.
 - **ISaveSharedCoordinatesCallbackForUnloadLocally**
+  - An interface that is used to control Revit when trying to unload    locally a Revit link with changes in shared coordinates.
 - **ITransactionFinalizer**
+  - An interface that may be used to perform a custom action at the end of a transaction.    A method of the interface will be called when a transaction is either committed or rolled back.
 - **ITransientElementMaker**
+  - The interface to be implemented by an application that creates transient element(s) in Revit.
 - **IUpdater**
+  - The interface used to create an updater capable of reacting to changes in the Revit model.
 - **IViewSheetSet**
+  - This interface represents a selected set of views/sheets which will be used for printing.
 - **ImageBackgroundSettings**
+  - Represents the rendering image background settings.
 - **ImageExportOptions**
+  - This class defines options for exporting views and sheets as an image.
 - **ImageFileType**
+  - This enum is used to define exported file type.
 - **ImageInstance**
+  - An element that represents an instance of an image placed in a view
 - **ImagePlacementOptions**
+  - ImagePlacementOptions are used to describe where an  should be placed in a view
 - **ImageResolution**
+  - This enum is used to define image resolution in order to calculate the image size.
 - **ImageType**
+  - Represents a type containing a raster based image. ImageInstances of this type can be placed in 2D views, sheets, and schedules.
 - **ImageTypeOptions**
+  - Represents the options used in ImageType::Create(Document, ImageTypeOptions)    and ImageType.ReloadFrom(ImageTypeOptions) methods.
 - **ImageTypeSource**
+  - The source of the data used to generate the image.
 - **ImageTypeStatus**
+  - Indicates the current state of the contents of the ImageType.
 - **ImageView**
+  - Class for ImageView views
 - **ImportColorMode**
+  - An enumerated type listing how colors are handled in an import process.
 - **ImportExportFileFormat**
+  - Describes formats supported by import / export.
 - **ImportIFCOptions**
+  - Provides access to settings that control linking and opening IFC files.
 - **ImportInstance**
+  - An element created during either import or link operation.    It is an instance of CADLinkType.
 - **ImportOptions3DM**
+  - The import options used to import 3DM format files.
 - **ImportPlacement**
+  - An enumerated type listing possible placement modes for imported drawings.
 - **ImportUnit**
+  - An enumerated type listing possible target units for CAD Import.
 - **InCanvasControlData**
+  - Represents a collection of data which is used by  to create and update an in-canvas control.
 - **InSessionPrintSetting**
+  - Represents the in-session Print Setup (Application Menu->Print->Print Setup) within Autodesk Revit.
 - **InSessionViewSheetSet**
+  - Represents the in-session ViewSheetSet.
 - **IndependentTag**
+  - Represents tag annotations in Revit.    getBBoxCorers in MultipleAlignmentHelper needs access to some protected members.
 - **InsertOrientation**
+  - The allowed values for the INSERT_ORIENTATION parameter.
 - **InsertableObject**
+  - A base class you all types that are insertable.
 - **Instance**
+  - The base class for all instance objects.
 - **InstanceBinding**
+  - The InstanceBinding object is used to signify a binding between a parameter definition and a parameter on each instance of an element, such as a wall.
 - **InstanceNode**
+  - An output node that represents an instance of a geometry. It can be an instance of FamilyInstance, or it can be and instance of a part of symbol's geometry.
 - **InstanceVoidCutUtils**
+  - Utilities for cutting elements by unattached voids in family instances.
 - **InsulationLiningBase**
+  - Acts as the base class for duct insulation, pipe insulation and duct lining elements.
 - **IntegerParameterValue**
+  - A class that holds an Integer value of a parameter element.
 - **IntegerRange**
+  - A class to define a range of a sequence of consecutive integer numbers
 - **InternalDefinition**
+  - This object represents a parameter definition in an Autodesk Revit model.
 - **InternalDefinitions**
+  - This object blocks attempts to create new internal definitions as they are not permitted.
 - **InternalOrigin**
+  - A class representing the origin of internal coordinate system.    Each Revit project contains one InternalOrigin.
 - **IntersectingElementData**
+  - Stores information of an element that intersects with another element
 - **IntersectionResult**
+  - This class captures results of intersecting geometric entities. "Intersecting" is meant  in generalized sense, so the same class will be used for projection, containment, etc. Refer to the documentation of the method providing the result for the precise meaning of properties.
 - **IntersectionResultArray**
+  - An array that can contain any type of object.
 - **IntersectionResultArrayIterator**
+  - An iterator to a array.
 - **IntersectionType**
+  - Intersection type.
 - **JoinGeometryUtils**
+  - Utilities for joining and unjoining elements, and for managing the order in which elements are joined.
 - **JoinType**
+  - The type of join at the end of an element. The join type affects only the graphic treatment, i.e. cleaning of the end, not the physical join behavior.
 - **JunctionType**
+  - An enumerated type listing all the junction types for MEP curve types.
 - **KeyBasedTreeEntries**
+  - A collection of KeyBasedTreeEntry objects that make up the key-based tree.
 - **KeyBasedTreeEntriesIterator**
+  - An iterator to a set of KeyBasedTreeEntry objects.
 - **KeyBasedTreeEntriesLoadContent**
+  - This class is used by IExternalResourceServers to return KeyBasedTreeEntries data to Revit when their    LoadResource method is invoked.
 - **KeyBasedTreeEntriesLoadResults**
+  - This class contains the results and status information regarding an attempt to load the KeyBasedTreeEntries from an External Resource.
 - **KeyBasedTreeEntry**
+  - A key-based tree entry, containing the key, parent key, and children keys (if applicable).
 - **KeyBasedTreeEntryError**
+  - This class contains information about a problem encountered while creating a KeyBasedTreeEntries object.
 - **KeyBasedTreeEntryErrorType**
+  - An Enum indicating the type of error associated with a KeyBasedTreeEntry.
 - **KeyBasedTreeEntryTable**
+  - KeyBasedTreeEntryTable represents the collection of key-based tree entries for a document.
 - **KeynoteEntries**
+  - A collection of KeynoteEntry objects that make up the keynote table.
 - **KeynoteEntry**
+  - Represents an entry in the keynote table, containing the key value, keynote text, and parent key (if applicable).
 - **KeynoteTable**
+  - KeynoteTable represents the collection of keynotes (KeynoteEntries) for a document.
 - **LabelType**
+  - The label type in dimension equality formats.
 - **LabelUtils**
+  - Used to obtain user-visible names for enums.
 - **LayerCategoryType**
+  - An enumerated type listing category types supported in an ExportLayerTable.
 - **LayerModifier**
+  - A modifier used to designate extra strings to appear in the exported layer name.
 - **LayoutRule**
+  - The LayoutRule object is a base object for all type of layout rules for  Beam System within the Autodesk Revit API.
 - **LayoutRuleClearSpacing**
+  - This class indicate the layout rule of a Beam System is Clear-Spacing.
 - **LayoutRuleFixedDistance**
+  - This class indicate the layout rule of a Beam System is Fixed-Distance.
 - **LayoutRuleFixedNumber**
+  - This class indicate the layout rule of a Beam System is Fixed-Number.
 - **LayoutRuleMaximumSpacing**
+  - This class indicate the layout rule of a Beam System is Max-Spacing.
 - **Leader**
+  - A leader object that can be attached to annotation elements such as text notes.
 - **LeaderArray**
+  - An array that can contain any number of leaders.
 - **LeaderArrayIterator**
+  - An iterator to an array of leaders.
 - **LeaderAtachement**
+  - Supported types of vertical attachments of a leader to a text note.
 - **LeaderEndCondition**
+  - An enumerated type listing Leader end conditions that are supported for IndependentTags.
 - **LeaderShape**
+  - Supported geometric shapes of annotation leaders.
 - **LeadersPresentationMode**
+  - Leaders Presentation Mode.
 - **Level**
+  - Represents a Level within Autodesk Revit.
 - **LevelAssociationData**
+  - This class holds information related to Level.
 - **LevelType**
+  - An object that represents a Level type.
 - **LightAndMaterialAccuracyMode**
+  - An enumerated type containing possible Light and Material Accuracy modes for Raytracer render.
 - **LightNode**
+  - This class represents a Light element in a model-exporting process.
 - **LightingSource**
+  - Indicates the lighting scheme type in rendering settings.
 - **Line**
+  - A line in space.
 - **LineAndTextAttrSymbol**
+  - An object that represents a dimension style.
 - **LinePattern**
+  - Represents a line pattern definition.
 - **LinePatternElement**
+  - An element that represents a line pattern.
 - **LinePatternSegment**
+  - Represents a segment in a line pattern.
 - **LinePatternSegmentType**
+  - Represents the type of a line pattern segment.
 - **LineProperties**
+  - A structure that has access to the pen properties of lines/curves    that are currently being drawn/exported via an export context    during a custom export process.
 - **LineScaling**
+  - An enumerated type listing possible LineType scaling modes.
 - **LineSegment**
+  - An output node that represents a tessellated line segment.
 - **LinearArray**
+  - An object that represents an Array created linearly within the Revit project.
 - **LinearDimension**
+  - LinearDimString
 - **LinkConversionData**
+  - This class contains the information necessary to re-create a Revit document    from an external source.
 - **LinkElementId**
+  - LinkElementId represents an element in a linked document.
 - **LinkLoadContent**
+  - This class is used by IExternalResourceServers to return Link data to Revit when their    LoadResource method is invoked.  It also contains additional information used by    IExternalResourceUIServers to display link load status results to the user.
 - **LinkLoadResult**
+  - This class stores the results of trying to load a single linked model.
 - **LinkLoadResultType**
+  - Enum listing the possible results after loading a linked model.
 - **LinkNode**
+  - An output node that represents a linked Revit document.
 - **LinkOperations**
+  - This class is used to extend the IExternalResourceServer interface with methods to support operations    for elements that are LinkTypes.
 - **LinkOriginFileType**
+  - Enum determining whether the source type of a temporary rvt link is an ifc.
 - **LinkVisibility**
+  - Link visibility types.
 - **LinkedFileStatus**
+  - Enum displaying the loaded status of a linked file
 - **ListType**
+  - An enumerated type indicating the style of list item    for paragraphs that are part of ordered or unordered lists    in .
 - **LoadOperationType**
+  - An enum indicating whether a resource load operation was triggered by    a user action or an automatic process.
 - **LoadedFamilyIntegrityCheck**
+  - Functions for checking the integrity of loaded families.
 - **Location**
+  - Provides location functionality for all elements.
 - **LocationCurve**
+  - Provides location functionality for all elements that are based upon a curve.
 - **LocationPoint**
+  - Provides location functionality for all elements that have a single insertion point.
 - **LogicalAndFilter**
+  - A filter that contains a set of filters. The filter passes when all filters in the set pass.
 - **LogicalOrFilter**
+  - A filter that contains a set of filters. The filter passes when any filter in the set passes.
 - **MEPAnalyticalConnection**
+  - Represents an analytical element that connects mechanical equipment to piping network.
 - **MEPAnalyticalConnectionType**
+  - Represents an analytical connection type between mechanical equipment and piping network.
 - **MEPCalculationServerInfo**
+  - a struct to hold the information about a MEP calucation servers
 - **MEPConnectorInfo**
+  - MEP connector information.
 - **MEPCurve**
+  - A curve object for duct or pipe blend elements.
 - **MEPCurveType**
+  - The base type class for MEP curves, such as ducts, pipes, cable trays and conduits.
 - **MEPFamilyConnectorInfo**
+  - MEP family connector information.
 - **MEPModel**
+  - Supports all MEP models that are persistent within the Autodesk Revit project.
 - **MEPSize**
+  - Stores the basic size information for an MEP duct, pipe, cable tray, or conduit.
 - **MEPSupportUtils**
+  - General utility methods for the Autodesk Revit MEP Supporting components.
 - **MEPSystem**
+  - A system in the Autodesk Revit MEP product.
 - **MEPSystemClassification**
+  - This enumeration is used to classify MEP connectors and systems    and drives certain behavior for a particular system type
 - **MEPSystemType**
+  - A system type in the Autodesk Revit MEP product.
 - **MarginType**
+  - An enumerated type listing all Margin types of Print Setting.
 - **MassDisplayTemporaryOverrideType**
+  - This enum identifies the mass display overrides.
 - **MassInstanceUtils**
+  - A static class that contains methods for processing curves driven by points.
 - **Material**
+  - Represents a material element within an Autodesk Revit project.
 - **MaterialAspect**
+  - A list of all material aspects that a material can store PropertySetElements for.
 - **MaterialFunctionAssignment**
+  - Used in class CompoundStructure to specify the function of a layer.
 - **MaterialNode**
+  - This class represents a change of material during a model-exporting process.
 - **MaterialPropertyPathType**
+  - Enum class indicating kinds of paths which ExternalFileReferenceType.Material    references can have.
 - **MathComparisonUtils**
+  - This class contains a set of mathematical utilities to compare doubles, using the internal tolerance.
 - **Mesh**
+  - A triangular mesh.
 - **MeshFromGeometryOperationIssue**
+  - Issues encountered while constructing meshes as fallbacks    for geometrical operations.
 - **MeshFromGeometryOperationResult**
+  - Describes what  has    built.
 - **MeshTriangle**
+  - One triangle of a mesh.
 - **ModelArc**
+  - Represents a ModelArc within Autodesk Revit.
 - **ModelCurve**
+  - A model element that exists in 3D space and is visible in all views of a Revit project.
 - **ModelCurveArrArray**
+  - An array that can contain any type of object.
 - **ModelCurveArrArrayIterator**
+  - An iterator to a array.
 - **ModelCurveArray**
+  - An array that contains model curves.
 - **ModelCurveArrayIterator**
+  - An iterator to a model curve array.
 - **ModelCurveNode**
+  - A base class of output nodes that represent various model curves.
 - **ModelEllipse**
+  - Represents a ModelEllipse within Autodesk Revit.
 - **ModelHermiteSpline**
+  - Represents a ModelHermiteSpline within Autodesk Revit.
 - **ModelLine**
+  - Represents a ModelLine within Autodesk Revit.
 - **ModelNurbSpline**
+  - Represents a ModelNurbSpline within Autodesk Revit.
 - **ModelPath**
+  - A path to a file stored on a disk or on a server.
 - **ModelPathUtils**
+  - Utility functions using ModelPaths
 - **ModelText**
+  - A model text element in an Autodesk Revit family document.
 - **ModelTextType**
+  - A model text type symbol in the Autodesk Revit Family document.
 - **ModelUpdatesStatus**
+  - Indicates whether an element in the current model has additional user changes in the central model.
 - **ModifierType**
+  - An enumerated type listing options to appear in the exported layer name.
 - **Mullion**
+  - Represents a CurtainGrid within Autodesk Revit.
 - **MullionType**
+  - An object that represents a mullion type.
 - **MullionTypeSet**
+  - A set that contains mullion types.
 - **MullionTypeSetIterator**
+  - An iterator to a mullion type set.
 - **MultiReferenceAnnotation**
+  - Multi-reference annotations are annotations pointing to more than one reference, consisting of a dimension and associated tag.
 - **MultiReferenceAnnotationOptions**
+  - Options which control the creation of MultiReferenceAnnotations.
 - **MultiReferenceAnnotationType**
+  - The type for MultiReferenceAnnotation.
 - **MultiSegmentGrid**
+  - This element acts as a multi-segmented Grid. The individual grids associated to    the MultiSegmentGrid behave as a single unit and all share the same text. They inherit    their type (GridType) from the MultiSegmentGrid.
 - **MultipleValuesIndicationSettings**
+  - MultipleValuesIndicationSettings is an element which contains project-wide settings for multiple values indication in Properties Palette and schedules.
 - **NamingUtils**
+  - A collection of utilities related to element naming.
 - **NavisworksCoordinates**
+  - An enumerated type listing possible Coordinates of Navisworks Exporter.
 - **NavisworksExportOptions**
+  - Options which controls the Navisworks export.
 - **NavisworksExportScope**
+  - An enumerated type listing possible "Element Scopes" of Navisworks Exporter.
 - **NavisworksParameters**
+  - An enumerated type listing possible "Parameter conversions" of Navisworks Exporter.
 - **NestedFamilyTypeReference**
+  - A proxy element representing a nested family type.
 - **NullParameterValue**
+  - A class that represent an empty (null) value of a parameter element.
 - **NumberSystem**
+  - An annotation that consists of a series of numeric tags attached to and describing a host element.
 - **NumberSystemDisplayRule**
+  - The available options for display of numeric values in the number system.
 - **NumberSystemJustifyOption**
+  - The available options for justification of the numbers in a number system.
 - **NumberingSchema**
+  - A class to support assigning numbers to elements of a particular kind for the purpose of tagging and scheduling them.
 - **NumberingSchemaType**
+  - A type for identifying a  of a particular kind.
 - **NumberingSchemaTypes**
+  - Provides a container of all Revit built-in NumberingSchemaType instances.
 - **NumericRevisionSettings**
+  - Contains settings that apply to Revisions with the Numeric RevisionNumberType.
 - **NurbSpline**
+  - A nurb spline.
 - **NurbsSurfaceData**
+  - A class used to represent the definition of a NURBS surface.
 - **OBJExportOptions**
+  - The export options used by exporting to OBJ file format.
 - **OBJImportOptions**
+  - The import options used to import OBJ format files.
 - **OffsetSurface**
+  - A mathematical representation of an offset surface.     Definition of offset surface, quoted from the STEP manual ISO 10303-42:2000(E):    This is a procedural definition of a simple offset surface at a normal distance from the originating surface.    Distance may be positive, negative, or zero to indicate the preferred side of the surface.    The offset surface takes its parametrization directly from that of its basis surface, corresponding points having    identical parameter values. The offset surface is parametrized as O(u, v) = S(u, v) + d*N(u, v),    where N(u, v) is the oriented unit normal vector of the basis surface S at parameter value (u, v), and d is the signed offset distance.  In Revit, we restrict the types of basis surfaces for which an OffsetSurf can be created for the following reasons: The offsets of Plane, CylindricalSurface, ConicalSurface and RevolvedSurface are of the same type as the original surface and they have closed form solutions.    So those surfaces are not taken as basis surfaces of the OffsetSurface class. That leaves HermiteSurface and RuledSurface.  As a Revit surface, we require the OffsetSurface to be C2 continuous. That implies that the basis surface should be C3 continuous.    That is because the OffsetSurface evaluation involves the normal of the basis surface and the order of continuity of the normal    is one less than that of the surface. HermiteSurfaces in general are not C3 continuous, even though some of them can be.    A RuledSurface will be C3 continuous if its parametric curves are C3 continuous.    So we don't allow a HermiteSurface to be a basis surface and allow only RuledSurfaces whose parametric curves are C3 continuous    as basis surfaces of the OffsetSurface class.  The OffsetSurface class will own a copy of the basis surface and use it for many of its methods, which may implicitly assume that    the OffsetSurface and the basis surface have the same envelope. So we keep the envelopes of the OffsetSurf and its basis surface in sync.
 - **OpenConflictResult**
+  - The result of the open conflict.
 - **OpenConflictScenario**
+  - The kinds of conflicts happened during open.
 - **OpenForeignOption**
+  - Options for opening files saved by an application that was not developed or licensed by Autodesk.
 - **OpenOptions**
+  - This class contains options available for opening a document from disk.
 - **Opening**
+  - An opening in an Autodesk Revit project or family document.
 - **OpeningWrappingCondition**
+  - Used by CompoundStructure to describe which shell layers participate in wrapping at openings.
 - **OptionalFunctionalityUtils**
+  - A collection of utilities that can be used to determine if a particular set of functionality is installed and available.
 - **Options**
+  - User preferences for parsing of geometry.
 - **OrdinateDimensionLineStyle**
+  - The ordinate dimension line style.
 - **OrdinateDimensionSetting**
+  - Represents a collection of Ordinate Dimension settings that can be associated to an ordinate DimensionType.
 - **OrdinateOriginVisibility**
+  - The ordinate origin visibility.
 - **OrdinateTextOrientation**
+  - The ordinate dimension text orientation.
 - **OrdinateTextPosition**
+  - The ordinate dimension text position.
 - **Outline**
+  - Outline is a generic object that provides a bounding box/bounding outline. It supports    operations to scale and transform. It also supports intersections and contains operations.
 - **OverrideGraphicSettings**
+  - Settings to override display of elements in a view.
 - **OverridePermissions**
+  - Types of overrides that can be applied to a category.
 - **PDFExportOptions**
+  - Options for PDF export
 - **PDFExportQualityType**
+  - An enumerated type listing the options for PDF export quality.
 - **PageOrientationType**
+  - An enumerated type listing all Page Orientation types of Print Setting
 - **Panel**
+  - This object represents a curtain panel.
 - **PanelType**
+  - An object that represents a curtain panel type.
 - **PanelTypeSet**
+  - A set that contains panel types.
 - **PanelTypeSetIterator**
+  - An iterator to a panel type set.
 - **PaperPlacementType**
+  - An enumerated type listing all Paper Placement types of Print Setting.
 - **PaperSize**
+  - An object that represents a Paper Size of Print Setup within the Autodesk Revit project.
 - **PaperSizeSet**
+  - A set that can contain any number of paper size objects.
 - **PaperSizeSetIterator**
+  - An iterator to a set of paper size objects.
 - **PaperSource**
+  - An object that represents a Paper Source of Print Setup within the Autodesk Revit project.
 - **PaperSourceSet**
+  - A set that can contain any number of paper source objects.
 - **PaperSourceSetIterator**
+  - An iterator to a set of paper source objects.
 - **Parameter**
+  - The parameter object contains the value data assigned to that parameter.
 - **ParameterDownloadOptions**
+  - An option class used for downloading parameters from the Parameters Service.
 - **ParameterElement**
+  - An Element that stores a user-defined parameter.
 - **ParameterFilterElement**
+  - Admits elements that satisfy two conditions:    The element's category must be one of a certain set of allowed categories.The element must pass a series of filter rules.
 - **ParameterFilterRuleFactory**
+  - Contains functions that create appropriate FilterRule objects based on the parameters given.
 - **ParameterFilterUtilities**
+  - Contains static utility functions for enumerating the categories and parameters that    are available for use by ParameterFilterElement objects.
 - **ParameterMap**
+  - A map that can contain a mapping of a parameter name (a String) to a parameter.
 - **ParameterMapIterator**
+  - An iterator to a map relating a parameter name (the key, a String) to a parameter.
 - **ParameterSet**
+  - A set that contains parameters.
 - **ParameterSetIterator**
+  - An iterator to a parameter set.
 - **ParameterTypeId**
 - **ParameterUtils**
+  - A utility class of functions related to parameters.
 - **ParameterValue**
+  - A class that holds a value of a parameter element.
 - **ParameterValuePresenceRule**
+  - Tests whether an element's parameter has a value or not.
 - **ParameterValueProvider**
+  - Gets the value of a parameter from any element passed to GetStringValue,    GetDoubleValue, GetIntegerValue, or GetElementIdValue.
 - **ParametersOrder**
+  - The order of the parameters.
 - **Part**
+  - This element represents a part of another element.
 - **PartEdgeConditionOrientation**
+  - Relative orientation of the right/lower and left/upper edge condition profiles.
 - **PartMaker**
+  - PartMaker is an element which takes some source elements (e.g., a wall    with all its layers) and creates one or more Parts out of it. The logic    according to which these Parts are created is non-trivial and PartMaker    uses various PartMakerMethods which represents these logics.    This element manages the strategy to make Part elements for one or more original elements.
 - **PartMakerMethodToDivideVolumes**
+  - By-References dividing strategy used by PartMaker element.    TODO_REFACTOR("LegacyMechanismOfMovingElements")    returns true if    - the Host Elements are not floors or walls    - OR    - the Host Elements that are referenced by this PartMaker are floors or walls    - transformation has already been applied on those Host Elements
 - **PartType**
+  - An enumerated type listing all MEP family part types. A part type typically provides one unique set of type parameters that defines this part.
 - **PartUtils**
+  - General Part utility methods
 - **PartsVisibility**
+  - Indicates the visibility of parts for the view.
 - **Path3d**
+  - Provides access to the Generic 3D path object in Autodesk Revit.
 - **PathType**
+  - Enum determining what kind of path a given external file    reference path is.    Paths are valid for all types of external file references    unless otherwise specified.
 - **PerformanceAdviser**
+  - The tool to report performance problems in a given document.
 - **PerformanceAdviserRuleId**
+  - The unique identifier of a PerformanceAdviserRule
 - **PerformanceAdviserRules**
+  - Provides a container of all Revit built-in PerformanceAdviserRuleId instances.
 - **Phase**
+  - Represents a phase in the life of a building.
 - **PhaseArray**
+  - An array that contains phase objects.
 - **PhaseArrayIterator**
+  - An iterator to a phase array.
 - **PhaseFilter**
+  - Represents an phase filter within Autodesk Revit.
 - **PhaseStatusPresentation**
+  - An enumerated type listing the options for element display in a phase filter.
 - **PlanCircuit**
+  - An object that represents an enclosed area in a plan view within the Autodesk Revit project.
 - **PlanCircuitSet**
+  - A set that can contain any number of plan circuit objects.
 - **PlanCircuitSetIterator**
+  - An iterator to a set of plan circuit objects.
 - **PlanTopology**
+  - An object that represents a Plan Topology within the Autodesk Revit project.
 - **PlanTopologySet**
+  - A set that can contain any number of plan topology objects.
 - **PlanTopologySetIterator**
+  - An iterator to a set of plan topology objects.
 - **PlanViewDirection**
+  - This enumerated type represents the possible directions for a plan view.
 - **PlanViewPlane**
+  - Locations where view range offsets can be specified.
 - **PlanViewRange**
+  - This class represents the view range of a plan view or a plan region.    It records the element ids of the levels which a plane is relative to    and the offset of each plane from that level.
 - **PlanViewRangeError**
+  - Describes errors in the location of planes in a PlanViewRange object.
 - **PlanViewRangeLevel**
+  - An enumerated type representing the options for setting the range for a plan view.
 - **PlanarFace**
+  - A bounded face of a 3d solid or open shell.
 - **Plane**
+  - A Planar surface.
 - **Point**
+  - A 3D point.
 - **PointCloudColorMode**
+  - Color mode of a point cloud or part of a point cloud
 - **PointCloudFoundStatus**
+  - Enumerated type representing the possible states related to searching for a point cloud file.
 - **PointCloudInstance**
+  - Represents a single instance of a point cloud in the Revit document.
 - **PointCloudType**
+  - Represents a type of point cloud loaded into a Revit document.  Each PointCloudType maps to    a single file or identifier (depending upon the type of Point Cloud Engine which governs it).
 - **PointElementReference**
+  - Base class for objects defining a way to constrain a ReferencePoint to one or more other objects in a document.
 - **PointLocationOnCurve**
+  - Defines the measurement parameters necessary to create a point at a specific location on a curve.
 - **PointNode**
+  - An output node that represents a 3D point.
 - **PointOnCurveMeasureFrom**
+  - Point on curve MeasureFrom - It tells from which end of the host curve the point location is measured.
 - **PointOnCurveMeasurementType**
+  - Point on curve measurement type    Defines the types of measurements that may be used when placing a point at a designated distance along a curve.
 - **PointOnEdge**
+  - Define a ReferencePoint relative to a referenceable edge or curve on another element.
 - **PointOnEdgeEdgeIntersection**
+  - Define a ReferencePoint at the intersection of two referenceable lines.
 - **PointOnEdgeFaceIntersection**
+  - Define a ReferencePoint at the intersection of a referenceable edge or curve and a referenceable face.
 - **PointOnFace**
+  - Define a ReferencePoint relative to a Face.
 - **PointOnPlane**
+  - Define a ReferencePoint relative to a planar reference.
 - **PointRelativeToPoint**
+  - Represents a point placed relative to another point.
 - **PolyLine**
+  - A polyline.
 - **PolylineNode**
+  - An output node that represents a 3D polyline.
 - **PolylineSegments**
+  - An output node that represents a tessellated polyline segments.
 - **PolymeshFacet**
+  - A class representing one triangular piece - a facet - in a polymesh topology.
 - **PolymeshTopology**
+  - A class representing topology of a polymesh.
 - **PreferredJunctionType**
+  - Enumerated type representing the possible options for the preferred junction for a routine preference rule.
 - **PreviewFamilyVisibilityMode**
+  - Modes that control visibility of family elements depending on    the currently applied Element Visibility Settings of a view.
 - **PrimaryDesignOptionMemberFilter**
+  - A filter used to find elements contained in any primary design option of any design option set.
 - **PrimarySizeCriterion**
+  - This class contains a size criterion for a RoutingPreferenceRule.
 - **PrintManager**
+  - The PrintManager object is used to configure the global print settings.
 - **PrintParameters**
+  - An object that contains settings used for printing the document.
 - **PrintRange**
+  - An enumerated type listing all Print Range types of Print.
 - **PrintSetting**
+  - Represents the Print Setup (Application Menu->Print->Print Setup) within Autodesk Revit.
 - **PrintSetup**
+  - Represents the Print Setup (Application Menu->Print->Print Setup) within Autodesk Revit.
 - **PrinterResolution**
+  - Controls the resolution level in rendering settings.
 - **Profile**
+  - A geometric profile consisting of a loop of curves.
 - **ProfileFamilyUsage**
+  - An enumerated type listing all types of profile families.
 - **ProfilePlaneLocation**
+  - Indicates the location of Sweep profile plane on the path curve.
 - **ProjectInfo**
+  - An object that represents a Project Information within the Autodesk Revit project.
 - **ProjectLocation**
+  - A representation of a specific instance and location of the current project.
 - **ProjectLocationSet**
+  - An set that contains project locations.
 - **ProjectLocationSetIterator**
+  - An iterator to a project location set.
 - **ProjectPosition**
+  - ProjectPosition is a class used to represent a geographical offset and rotation. It can be used to represent the    position of a project.
 - **PropOverrideMode**
+  - An enumerated type listing ways how overridden object styles get exported.
 - **PropertyLine**
+  - Represents kinds of PropertyLines.
 - **PropertySetElement**
+  - An element that groups together a set of related parameters.
 - **RPCNode**
+  - This class represents an RPC content in a model-exporting process.
 - **RadialArray**
+  - An object that represents an Array created along a circle arc within the Revit project.
 - **RadialDimension**
+  - An object that represents an Radial Dimension within the Revit project.
 - **RasterQualityType**
+  - An enumerated type listing the options for raster quality.
 - **Rectangle**
+  - Stores a set of four integers that represent the left, top, right and bottom of a rectangle.
 - **RectangularGridSegmentOrientation**
+  - The orientation type of rectangular grid segment.
 - **Reference**
+  - A stable reference to a geometric object in a Revit model.
 - **ReferenceArray**
+  - An array that contains reference objects.
 - **ReferenceArrayArray**
+  - An array that contains ReferenceArray objects.
 - **ReferenceArrayArrayIterator**
+  - An iterator to a ReferenceArray array.
 - **ReferenceArrayIterator**
+  - An iterator to a reference array.
 - **ReferenceBaseOnHostType**
+  - This enumeration is used to classify the Reference Base on Host type .
 - **ReferenceIntersector**
+  - A class used to find and return elements that intersect a ray created from an origin point and direction.
 - **ReferencePlane**
+  - Represents a reference plane of Autodesk Revit.
 - **ReferencePoint**
+  - A reference point in an Autodesk Revit family.
 - **ReferencePointArray**
+  - An array that contains reference objects.
 - **ReferencePointArrayIterator**
+  - An iterator to a reference array.
 - **ReferenceType**
+  - Reference types of curve element.
 - **ReferenceWithContext**
+  - An object including a reference to a geometric object and related context, as instance transform etc.
 - **ReferenceableViewUtils**
+  - Utilities related to reference views such as reference sections and reference callouts.
 - **RelinquishOptions**
+  - Options to control behavior of relinquishing ownership of elements and worksets.
 - **RelinquishedItems**
+  - List of elements and worksets that were relinquished by the current user.
 - **ReloadLatestOptions**
+  - Options to control behavior of pure reload latest (not part of synchronize with central).
 - **ReloadSwapOutInfo**
+  - This object contains information about fabrication parts swapped out during reload.
 - **RenderDuration**
+  - An enumerated type containing possible duration types to do Raytracer render.
 - **RenderNode**
+  - This is the base class of all render nodes in a model-exporting process.
 - **RenderNodeAction**
+  - Enumerated actions for processing a render node during custom export.
 - **RenderingImageExposureSettings**
+  - Represents the exposure settings of rendering.
 - **RenderingQuality**
+  - Indicates the rendering quality in rendering settings.
 - **RenderingQualitySettings**
+  - Represents the quality settings of rendering.
 - **RenderingSettings**
+  - Represents the rendering settings for a 3d view.
 - **RepeaterBounds**
+  - Represents bounds of the array of repeating references in 0, 1, or 2 dimensions.    (See ).
 - **RepeaterCoordinates**
+  - Represents coordinates in the array of repeating references in 0, 1, or 2 dimensions.
 - **RepeatingReferenceSource**
+  - Represents a collection of repeating references.
 - **ResolutionTarget**
+  - Indicates the resolution target(Screen or Printer) used for rendering settings.
 - **ResourceVersionStatus**
+  - An enum indicating whether a resource is current or out of date.
 - **Revision**
+  - Represents a single revision in the project.
 - **RevisionCloud**
+  - A RevisionCloud is a graphical "cloud" that can be displayed on a view or sheet to indicate where revisions in the model have occurred.
 - **RevisionNumberType**
+  - Determines how a particular revision will be numbered.
 - **RevisionNumbering**
+  - The options for how revision numbers should be displayed on sheets within a project.
 - **RevisionNumberingSequence**
+  - Defines the sequences by which numbers are assigned to Revisions.
 - **RevisionSettings**
+  - Provides access to project-wide settings related to revisions.
 - **RevisionVisibility**
+  - Determines whether Revision Clouds and Revision Tags will be visible in the project.
 - **RevitLinkGraphicsSettings**
+  - Settings to override display of Revit link in a view.
 - **RevitLinkInstance**
+  - Represents an instance of a RevitLinkType.
 - **RevitLinkOperations**
+  - This class is used to extend the IExternalResourceServer interface with methods to support operations    specifically related to Revit links.
 - **RevitLinkOptions**
+  - This class contains the options in use when creating    or loading a Revit link.
 - **RevitLinkType**
+  - This class represents another Revit Document ("link") brought into    the current one ("host").
 - **Revolution**
+  - A revolution solid or void form.
 - **RevolvedFace**
+  - A revolved face of a 3d solid or open shell.
 - **RevolvedSurface**
+  - A surface of revolution defined by a profile curve and a local coordinate system.    The surface is obtained by rotating the curve around Z axis of the local coordinate system.
 - **RoofBase**
+  - Represents all kinds of Roofs.
 - **RoofType**
+  - Represents a specific type of roof.
 - **RoundingMethod**
+  - Rounding methods
 - **RoutingCondition**
+  - RoutingCondition represents routing information that is used as input when determining if a routing criterion,    such as minimum or maximum diameter, is met.
 - **RoutingConditions**
+  - RoutingConditions contain routing information that is used as input when determining if a routing criterion,    such as minimum or maximum diameter, is met.
 - **RoutingCriterionBase**
+  - RoutingCriteriaBase is the base class for all routing criteria.
 - **RoutingPreferenceErrorLevel**
+  - An enumerated type listing the options for posting errors or warnings when routing preferences are not satisfied.
 - **RoutingPreferenceManager**
+  - Manages default pipe segments, fittings, and selection criteria for a given MEPCurveType
 - **RoutingPreferenceRule**
+  - A class representing a rule set in MEP routing preferences.
 - **RoutingPreferenceRuleGroupType**
+  - Add more rule group type here.
 - **RowHeightOverrideOptions**
+  - Describes the options for overriding schedule body row heights (applied when viewed as a ScheduleSheetInstance on a ViewSheet).
 - **RuledFace**
+  - A ruled face of a 3d solid or open shell.
 - **RuledSurface**
+  - A ruled surface is created by sweeping a line between two profile curves or between a curve and a point (a point and a curve).    Input curve(s) must be bounded or have natural bounds.
 - **SATExportOptions**
+  - The export options used by exporting SAT format file. So far, there is no option in it.
 - **SATImportOptions**
+  - The import options used to import SAT format files.
 - **SKPImportOptions**
+  - The import options used to import SKP format files.
 - **SSEPointVisibilitySettings**
+  - Represents the settings contained in the document associated to the point display of Floor, Roof and Toposolid.    for serialization    public api methods
 - **STEPApplicationProtocol**
+  - An enumeration for STEP Application Protocols.
 - **STEPExportOptions**
+  - The export options used by exporting STEP format file.
 - **STEPImportOptions**
+  - The import options used to import STEP format files.
 - **STLExportOptions**
+  - The export options used by exporting STL format file.
 - **STLImportOptions**
+  - The import options used to import STL format files.
 - **SaveAsOptions**
+  - This class contains options available for saving a document to disk with a new filename.
 - **SaveModifiedLinksOptions**
+  - Class giving options when saving linked files which have been modified    in-memory by shared coordinates operations.
 - **SaveModifiedLinksOptionsForUnloadLocally**
+  - Class giving options when saving linked files which are unloaded locally and have been modified    in-memory by shared coordinates operations.
 - **SaveOptions**
+  - This class contains options available for saving a document to disk.
 - **SchedulableField**
+  - A non-calculated field eligible to be included in a schedule.
 - **ScheduleDefinition**
+  - Settings that define the contents of a schedule.
 - **ScheduleField**
+  - A field in a schedule.
 - **ScheduleFieldDisplayType**
+  - Display type of schedule field.
 - **ScheduleFieldId**
+  - The ScheduleFieldId object is used as a unique identification for a field in a schedule.
 - **ScheduleFieldMultipleValuesDisplayType**
+  - Define how the schedule field's multiple value is displayed.
 - **ScheduleFieldType**
+  - The type of data displayed in a schedule field.
 - **ScheduleFilter**
+  - A filter in a schedule.
 - **ScheduleFilterType**
+  - Type of schedule filter.
 - **ScheduleHeadingOrientation**
+  - Orientation of schedule heading.
 - **ScheduleHeightsOnSheet**
+  - Heights information of a schedule on sheet.
 - **ScheduleHorizontalAlignment**
+  - Horizontal alignment of data in a schedule.
 - **ScheduleSheetInstance**
+  - An element that represents a particular placement of a schedule on a sheet.
 - **ScheduleSortGroupField**
+  - A field that is used for sorting and/or grouping in a schedule.
 - **ScheduleSortOrder**
+  - Options for sort order of rows in a schedule.
 - **ScheduleVerticalAlignment**
+  - Vertical alignment of data in a schedule.
 - **SectionType**
+  - Declares the section data type.
 - **Segment**
+  - This element represents a segment of an MEP curve object.
 - **SelectionFilterAction**
+  - An enumerated type containing the type of actions that may be taken with a selection filter applied to a point cloud.
 - **SelectionFilterElement**
+  - A filter element that stores an explicit list of ElementIds.    Only elements whose ElementIds are in this list will pass the filter.
 - **ServerPath**
+  - This class represents a path to a Revit Server location, rather than a    location on disk or a network drive.
 - **ServiceType**
+  - This enumeration is used for specifying the most predominant service for the building or space.
 - **SetComparisonResult**
+  - An enumerated type listing all the relationship types between two sets of arbitrary nature.
 - **Settings**
+  - The settings object provides access to general components of the Autodesk Revit application, such as Categories.
 - **ShapeBuilder**
+  - The base class for geometry builder classes.
 - **ShapeImporter**
+  - A utility class that supports conversion of geometry stored in an external format into a Revit geometry objects.
 - **ShapeImporterSourceFormat**
+  - An enumerated type listing the possible formats supported by the Shapeimporter.
 - **SharedParameterApplicableRule**
+  - Tests whether an element supports a shared parameter.
 - **SharedParameterElement**
+  - An element that stores the definition of a shared parameter which is loaded into the document.
 - **SheetCollection**
+  - This class represents a sheet collection in Autodesk Revit.
 - **SheetDuplicateOption**
+  - Options for duplicating sheets
 - **ShellLayerType**
+  - Used to distinguish exterior and interior shell layers.
 - **ShowHiddenLinesValues**
+  - Provides options for display of hidden lines in a given view.
 - **SimpleWorksetConfiguration**
+  - Indicates the set of user-created worksets to open in memory
 - **SiteLocation**
+  - Contains the geographical location information for the project's site.
 - **Sketch**
+  - Provides access to the Sketch in Autodesk Revit.
 - **SketchBase**
+  - Provides access to the SketchBase in Autodesk Revit.
 - **SketchEditScope**
+  - A SketchEditScope allows an application to create and maintain an editing session for a Sketch.
 - **SketchPlane**
+  - Represents a sketch plane or work plane.
 - **SketchedStairsCurveData**
+  - Sketched run/landing curves overrides with height and slope
 - **SkyBackgroundSettings**
+  - Represents the rendering sky background settings.
 - **SlabEdge**
+  - An object that represents a slab edge within the Autodesk Revit project.
 - **SlabEdgeType**
+  - An object that represents the slab edge type in Autodesk Revit.
 - **SlabShapeCrease**
+  - Represents a crease of a slab shape edited element.
 - **SlabShapeCreaseArray**
+  - An array that can contain any number of creases used in Slab Shape Editing.
 - **SlabShapeCreaseArrayIterator**
+  - An iterator to an array of creases used for Slab Shape Editing.
 - **SlabShapeCreaseType**
+  - The type of a SlabShapeCrease
 - **SlabShapeEditor**
+  - An object used for Slab Shape Editing.
 - **SlabShapeVertex**
+  - Represents a vertex of a slab shape edited element.
 - **SlabShapeVertexArray**
+  - An array that can contain any number of vertices used in Slab Shape Editing.
 - **SlabShapeVertexArrayIterator**
+  - An iterator to an array of vertices used for Slab Shape Editing.
 - **SlabShapeVertexType**
+  - The type of a SlabShapeVertex
 - **SlantedOrVerticalColumnType**
+  - This enum class is used for the BuiltInParameter SLANTED_COLUMN_TYPE_PARAM.
 - **Solid**
+  - A 3d solid.
 - **SolidCurveIntersection**
+  - This class represents the results of a calculation of intersection between a solid volume and a curve.
 - **SolidCurveIntersectionMode**
+  - Represents the types of results available for calculating the intersection between a solid and a curve.
 - **SolidCurveIntersectionOptions**
+  - This class contains the options used to calculate the intersection between a solid and a curve.
 - **SolidGeometry**
+  - An enumerated type listing possible ways of exporting solids in 3D views.
 - **SolidGeometryOptions**
+  - A class containing optional information to control the geometry generation of the Solid by the SolidUtils routines.
 - **SolidOptions**
+  - A class containing optional information to control the properties of the Solid generated by the GeometryCreationUtilities routines.
 - **SolidOrShellTessellationControls**
+  - Controls various aspects of the triangulation produced by  method.
 - **SolidSolidCutUtils**
+  - Exposes utilities which can cause one solid to cut another.
 - **SolidUtils**
+  - Contains utility functions for solid operations.
 - **SortingOrder**
+  - Enumerated type representing the sorting order of a collection of objects.
 - **SpacingRule**
+  - A rule for specifying a set of equidistant, parallel gridlines within a region.
 - **SpacingRuleJustification**
+  - Justification property of spacing rule
 - **SpacingRuleLayout**
+  - Rules for laying out a series of equidistant points or parallel lines
 - **SpanDirectionSymbol**
+  - Represents an instance of a Span Direction Symbol in Autodesk Revit.
 - **SpatialElement**
+  - Represents an enclosed area or volume in the Revit model.
 - **SpatialElementBoundaryLocation**
+  - An enumerated type listing boundary options of spatial element geometry calculation.
 - **SpatialElementBoundaryOptions**
+  - Options that can be passed to a SpatialElementBoundaryCalculator to influence the results of the calculation.
 - **SpatialElementBoundarySubface**
+  - SpatialElementBoundarySubface represents the geometry boundary information of spatial element.
 - **SpatialElementCalculationLocation**
+  - The Spatial Element Calculation Location is used to specify the room/space where an    element should be considered as placed.
 - **SpatialElementCalculationPoint**
+  - SpatialElementCalculationPoint is used as the search point for family instances    placement inside rooms and spaces.
 - **SpatialElementDomainData**
+  - A base class for specific domain requirements for a spatial element.
 - **SpatialElementFromToCalculationPoints**
+  - SpatialElementFromToCalculationPoints is used to specify the search points for a family instance which connects    two rooms or spaces, such as a door or window. The points determine which room or space is considered the "from"    and which is considered the "to".
 - **SpatialElementGeometryCalculator**
+  - Use this class to calculate the geometry of a spatial element and obtain the relationships between the geometry and    the element's boundary elements.
 - **SpatialElementGeometryResults**
+  - The results of spatial element geometry calculation.
 - **SpatialElementTag**
+  - A tag attached to a SpatialElement (room, space or area) in Autodesk Revit.
 - **SpatialElementTagOrientation**
+  - An enumerated type listing tag orientation options that are supported by SpatialElementTags.
 - **SpatialElementType**
+  - An enumerated type listing types of spaces.
 - **SpecTypeId**
+  - This class contains constants identifying specs.
 - **SpecUtils**
+  - A utility class of functions related to specs. A spec describes a data type that parameters can hold.
 - **SpecialType**
+  - An enumerated type listing special types that can appear in an .    These types do not represent an independent category in Revit, but can be mapped to specific layers on export.
 - **SpotDimension**
+  - Object representing various types of SpotDimension
 - **SpotDimensionType**
+  - A type element containing the properties of a spot elevation.
 - **StairsEditScope**
+  - StairsEditScope allows user to maintain a stairs-editing session.
 - **StartingViewSettings**
+  - The initial view settings for a document dictate which view will initially be open when this model    is opened.  These settings are available for all Revit project documents.
 - **StdPostedWarning**
+  - Support for Reviewable Warnings sent from AddOn.
 - **StickSymbolLocation**
+  - Indicates the stick symbol location on the UI, which is used for the BuiltInParameter STRUCTURAL_STICK_SYMBOL_LOCATION.
 - **StiffenerClassification**
+  - This enumeration is used to classify the stiffener.
 - **StorageType**
+  - An enumerated type listing all of the internal parameter data storage types that Autodesk Revit supports.
 - **StringParameterValue**
+  - A class that holds a String value of a parameter element.
 - **StripedRowPattern**
+  - An enumerated type representing the possible sets of rows of a striped row schedule.
 - **StructDeckEmbeddingType**
+  - Used in class CompoundStructure to specify the usage of a layer whose function is StructuralDeck.
 - **StructuralAsset**
+  - Represents the properties of a material pertinent to structural analysis.
 - **StructuralAssetClass**
+  - Represents the type of material described by a structural asset.  This enum value is returned by Autodesk::Revit::DB::StructuralAsset::StructuralAssetClass.
 - **StructuralBehavior**
+  - Specifies whether structural elements behave orthotropically, isotropically, or transverse-isotropically.
 - **StructuralReleaseType**
+  - Type of structural release, which is used for the BuiltIn parameter STRUCTURAL_END_RELEASE_TYPE.
 - **SubTransaction**
+  - Sub-transactions are objects that provide control over a subset of changes in a document.
 - **Subelement**
+  - An object that represents an element or a subelement within the Autodesk Revit project.
 - **SubfaceType**
+  - Meaning of a subface's type.
 - **SunAndShadowSettings**
+  - The SunAndShadowSettings class represents the sun control.
 - **SunAndShadowType**
+  - Sun study type enum of SunAndShadowSettings.
 - **SunStudyTimeInterval**
+  - Time interval enum for a single or multi-day sun study.
 - **Surface**
+  - A mathematical representation of a surface.
 - **Sweep**
+  - A sweep solid or void form.
 - **SweepProfile**
+  - Represents a profile for sweep or swept blend elements.
 - **SweptBlend**
+  - A swept blend solid or void form.
 - **SweptProfile**
+  - Represents an extruded profile swept along a driving curve.
 - **SymbolGeometryId**
+  - This class is used to identify a piece of geometry managed by a symbol element.
 - **SymbolTypeId**
+  - This class contains constants identifying symbols.
 - **SymbolicCurve**
+  - A curve that provides information but is not intended to represent actual geometry in an element.
 - **SymbolicCurveArray**
+  - An array that contains model curves.
 - **SymbolicCurveArrayIterator**
+  - An iterator to a model curve array.
 - **SynchronizeWithCentralOptions**
+  - Options to control behavior of synchronization with central.
 - **TableCellCalculatedValueData**
+  - The TableCellCalculatedValueData stores the data for calculated value
 - **TableCellCombinedParameterData**
+  - The TableCellCombinedParameterData stores the data for combined parameters
 - **TableCellStyle**
+  - The TableCellStyle class contains the appearance settings for a given table cell, column, or table.
 - **TableCellStyleOverrideOptions**
+  - This helper class represents the overridden characteristics of the associated cell.
 - **TableData**
+  - The TableData class is implemented to hold most of the data that describe    the style of the rows, columns, and cells in a table.
 - **TableMergedCell**
+  - The TableMergedCell class defines a merged area of the upper-left and lower-right of a table grid.
 - **TableSectionData**
+  - The TableSectionData class represents a serialized version of an instance of    section table data. The class holds row, column and cell data.
 - **TableView**
+  - This represents a view that shows a table.    Most of the layout data for the table is contained in the TableData class.
 - **TagHeadAlignment**
+  - An enumerated type listing the tag-head alignment options supported by the Bending Detail.
 - **TagHeadPositionOptions**
+  - An enumerated type listing the tag-head position options supported by the Bending Detail.
 - **TagMode**
+  - The modes of tag creation that are supported for IndependentTags.
 - **TagOrientation**
+  - An enumerated type listing tag orientation options that are supported by IndependentTags.
 - **TagOrientationBehavior**
+  - This attribute describes the family orientation behavior.
 - **TemporaryGraphicsManager**
+  - A class that provides functionality to create temporary graphics in a Revit model.
 - **TemporaryViewMode**
+  - Enumeration to represent the various temporary view modes a view can be in.
 - **TemporaryViewModes**
+  - A data structure containing data related to temporary view modes.
 - **TessellatedBuildIssue**
+  - Types of issues encountered while constructing geometrical objects    from the tessellated face sets.
 - **TessellatedBuildIssueType**
+  - Types of issues encountered while constructing geometrical objects    from the tessellatted face sets.
 - **TessellatedFace**
+  - Defines a planar face bounded by a polyline in 3d space. A face    consists of a single connected component and can have holes.
 - **TessellatedShapeBuilder**
+  - A class that permits structured building of geometry or    a mesh from a collection of connected faces.    Contains all closed face sets and custom precisions.
 - **TessellatedShapeBuilderFallback**
+  - Describes what   function    should do, if it cannot build a requested .
 - **TessellatedShapeBuilderOutcome**
+  - Describes the outcome of  attempt    to build geometrical objects.
 - **TessellatedShapeBuilderResult**
+  - Describes what  has    construct.
 - **TessellatedShapeBuilderTarget**
+  - Describes what     should generate, if possible.
 - **TextAlignFlags**
+  - An enumerated type listing all the Text align flags.
 - **TextAlignMask**
+  - An enumerated type listing all the Text align mask.
 - **TextBaselineStyle**
+  - Supported styles of text position relative to the normal baseline.
 - **TextElement**
+  - Base class representing text elements in Revit.
 - **TextElementBackground**
+  - An enumerated type listing all the background mode for the built-in parameter TEXT_BACKGROUND.
 - **TextElementType**
+  - An object that represents a text style.
 - **TextListStyle**
+  - Supported styles of text list paragraphs.
 - **TextNode**
+  - This class represents a text annotation object in a model-exporting process.
 - **TextNote**
+  - A class representing text note annotations in Revit.
 - **TextNoteLeaderStyles**
+  - An enumerated type listing all the Leader styles.
 - **TextNoteLeaderTypes**
+  - Types of text-note leaders
 - **TextNoteOptions**
+  - Options to use when creating a new text note element.
 - **TextNoteType**
+  - An object that represents a text note style.
 - **TextRange**
+  - An object that is used to identify a range of characters in a    .
 - **TextTreatment**
+  - An enumerated type listing possible text treatment modes.
 - **ThermalAsset**
+  - Represents the properties of a material pertinent to energy analysis.
 - **ThermalMaterialType**
+  - Represents the thermal material type.
 - **ThermalProperties**
+  - Class specific to thermal properties for assembly types, such as Wall,    Floor, Ceiling, Roof and Building Pad.
 - **TilePattern**
+  - An object representing a tile pattern that may be applied to a DividedSurface.
 - **TilePatterns**
+  - The TilePatterns object is an interface for retrieving the TilePattern objects within the Document.
 - **TilePatternsBuiltIn**
+  - Revit's built-in tile patterns. See .
 - **Toposolid**
+  - An object that represents a Toposolid within the Autodesk Revit project.
 - **ToposolidType**
+  - An object that specifies the type of a Toposolid in Autodesk Revit.
 - **TransactWithCentralOptions**
+  - Options to customize Revit behavior when accessing the central model.
 - **Transaction**
+  - Transactions are context-like objects that guard any changes made to a Revit model
 - **TransactionGroup**
+  - Transaction groups aggregate a number of transactions.
 - **TransactionStatus**
+  - An enumerated type listing the possible statuses associated with a Transaction, TransactionGroup, or SubTransaction,    or the result of a particular method call on one of those objects.
 - **Transform**
+  - A transformation of the affine 3-space.
 - **Transform1D**
+  - An affine transform of 1D Euclidean space.
 - **Transform2D**
+  - An affine transform of 2D Euclidean space.
 - **TransformWithBoundary**
+  - This class contains the transform from model space to projection space for a view and the    boundary in model space in which the transform is valid.
 - **TransmissionData**
+  - A class representing information on all external file references    in a document.
 - **TransmittedModelOptions**
+  - Enum giving desired behavior when opening or saving a transmitted    workshared model.
 - **TriOrQuadFacet**
+  - This class represents a triangle or quadrilateral in a faceted structure.
 - **TriangleInShellComponent**
+  - This class represents a triangle in a TriangulatedShellComponent object. The triangle is    defined by its vertices, which are specified by their indices in the    TriangulatedShellComponent's array of vertices.
 - **TriangulatedShellComponent**
+  - This class represents a triangulated boundary component of a solid or a    triangulated connected component of a shell.
 - **TriangulatedSolidOrShell**
+  - This class represents a triangulated solid or shell.
 - **TriangulationInterface**
+  - This abstract class provides an interface for querying a triangulation structure (vertices and triangles).
 - **TriangulationInterfaceForTriangulatedShellComponent**
+  - This class is used to call FacetingUtils::convertTrianglesToQuads with a triangulation defined    by a TriangulatedShellComponent.
 - **TriangulationInterfaceForTriangulatedSolidOrShell**
+  - This class is used to call FacetingUtils::convertTrianglesToQuads with a triangulation defined    by a TriangulatedSolidOrShell.
 - **TypeBinding**
+  - TypeBinding objects are used to bind a property to a Revit type, such as a wall type.
 - **UV**
+  - Object representing coordinates in 2-dimensional space.
 - **UVGridlineType**
+  - A choice between U-gridlines or V-gridlines of a divided surface    U Gridlines    V Gridlines
 - **UnderlayOrientation**
+  - Indicates how elements in the underlay are viewed.
 - **UnitFormatUtils**
+  - A utility class for formatting and parsing numbers with units.
 - **UnitSystem**
+  - A system of measurement: Metric or Imperial units.
 - **UnitTypeId**
+  - This class contains constants identifying units of measurement.
 - **UnitUtils**
+  - A utility class of functions related to units.
 - **Units**
+  - A document's default settings for formatting numbers with units.
 - **UpdaterData**
+  - Service class that is passed to an Updater to prove access to update execution context
 - **UpdaterId**
+  - A unique identifier of an Updater
 - **UpdaterInfo**
+  - Information of an updater, such as: Name, AdditionalInformation, name of the application that owns the updater, etc.
 - **UpdaterRegistry**
+  - An object that stores and manages all updaters registered in the current session.
 - **ValidateCurveLoopsOptions**
+  - Options for array of curve loops validation.
 - **ValueAtPointBase**
+  - A base class representing storage of values at a given point.
 - **ValueAtPointFlags**
+  - Enumerated type containing flags related to the display on particular points.    Enumerated type that stores bit values of flags that can be set at any domain point.
 - **ValueParsingOptions**
+  - Options for parsing strings into numbers with units.
 - **VertexIndexPair**
+  - Represents a connection between vertices in the top and bottom profile of a blend.
 - **VertexIndexPairArray**
+  - An array that contains VertexIndex pairs.
 - **VertexIndexPairArrayIterator**
+  - An iterator to an array of VertexIndex pairs.
 - **VertexPair**
+  - Indices of a pair of vertices in two CurveLoops(one vertex in each loop).
 - **VerticalAlignmentStyle**
+  - Declares the vertical alignment style of font.
 - **VerticalTextAlignment**
+  - Supported types of vertical alignment of a text element.
 - **View**
+  - Base class for all types of views in Autodesk Revit.
 - **View3D**
+  - Class for 3D views
 - **ViewCropRegionShapeManager**
+  - A class that provides access to settings related to the crop assigned to a view or a reference callout.
 - **ViewDetailLevel**
+  - Detail level of the view
 - **ViewDiscipline**
+  - Discipline of the view
 - **ViewDisplayBackground**
+  - Set of values that control how background is drawn in a view.    Background can only be set for a 3d view or for a section or elevation view.
 - **ViewDisplayBackgroundImageFlags**
+  - A collection of bit flags that control how the background image is positioned    in relation to the crop region (or the view boundary).
 - **ViewDisplayBackgroundType**
+  - A collection of settings defining the type of the view background
 - **ViewDisplayDepthCueing**
+  - Represents the settings for depth cueing.
 - **ViewDisplayEdges**
+  - A collection of settings defining how visible edges are displayed
 - **ViewDisplayModel**
+  - Represents the settings for displaying model graphics.    version 2: m_showHiddenLines type changed bool -> ShowHiddenLinesValues::Enum
 - **ViewDisplaySketchyLines**
+  - Represents the settings for sketchy lines.
 - **ViewDrafting**
+  - ViewDrafting represents a drafting view within the model.
 - **ViewDuplicateOption**
+  - Options for duplicating views
 - **ViewFamily**
+  - An enumerated type that corresponds to the type of a Revit view.
 - **ViewFamilyType**
+  - Represents a type of a Revit view.
 - **ViewNavigationToolSettings**
+  - Represents the settings contained in the document associated to the View Navigation tools (such as the View Cube).
 - **ViewNode**
+  - A render node that represents a view.
 - **ViewOrientation3D**
+  - Container for the point and vectors which define View3D's orientation.
 - **ViewPlacementOnSheetStatus**
+  - Indicates whether the View is placed on a Sheet.
 - **ViewPlan**
+  - Represents floor plan, area plan, ceiling plan, and structural plan views in Revit.
 - **ViewPlanType**
+  - An enumerated type listing plan view types.
 - **ViewSchedule**
+  - A schedule view.
 - **ViewScheduleExportOptions**
+  - The export options used to export schedule views.
 - **ViewSection**
+  - ViewSection covers sections, details, elevations, and callouts, all in their reference and non-reference variations.
 - **ViewSet**
+  - A set that contains views.
 - **ViewSetIterator**
+  - An iterator to a view set.
 - **ViewShapeBuilder**
+  - Builds and verifies a view-specific shape representation that would typically be stored in a DirectShape object.    Currently limited to curve-based representations for plan and elevation views.
 - **ViewSheet**
+  - Class for ViewSheet
 - **ViewSheetSet**
+  - Represents ViewSheetSets stored in a document. ViewSheetSets can be stored so that the same printing task can be executed multiple times.
 - **ViewSheetSetting**
+  - Represents the View/Sheet Set (Application Menu->Print) within Autodesk Revit.
 - **ViewTemplateApplicationOption**
+  - Options for applying view templates
 - **ViewType**
+  - An enumerated type listing available view types.
 - **Viewport**
+  - An element that establishes the placement of a view on a sheet.
 - **ViewportPositioning**
+  - An enumerated type listing of viewport positioning options on the sheet when swapped to another view.
 - **ViewportRotation**
+  - Rotation of the viewport
 - **VirtualPrinterType**
+  - An enumerated to list Virtual Printer Types in Revit.
 - **Visibility**
+  - Describes the visibility of a particular geometry object.
 - **VisibleInViewFilter**
+  - A quick filter that passes elements that are most likely visible in the given view.
 - **Wall**
+  - Represents a wall in Autodesk Revit.
 - **WallCrossSection**
+  - The allowed values for the WALL_CROSS_SECTION parameter.
 - **WallFoundation**
+  - An object that represents a wall foundation element.
 - **WallFoundationType**
+  - An object that represents the type of a wall foundation in Autodesk Revit.
 - **WallFunction**
+  - Indicates the function of a specified WallType, as specified in the parameter FUNCTION_PARAM on the WallType.
 - **WallKind**
+  - Describes the fundamental type of wall, such as curtain wall or stacked wall.
 - **WallLocationLine**
+  - This enumerated type represents the options for alignment of a wall's location line.
 - **WallSide**
+  - Represents the possible sides of a wall where a sweep or reveal may be attached.
 - **WallSweep**
+  - Represents a wall sweep or reveal.
 - **WallSweepInfo**
+  - Represents a wall sweep or reveal of a vertically compound structure.
 - **WallSweepOrientation**
+  - Represents the orientation of horizonally placed sweep's profile relative to the wall side face.
 - **WallSweepType**
+  - Represents the possible types for methods affecting wall sweeps or reveals.
 - **WallType**
+  - Represents a specific type of wall, such as 'Generic - 8"'.
 - **WallUtils**
+  - General Wall utility methods
 - **WidthMeasuredAt**
+  - The allowed values for the WALL_TYPE_WIDTH_MEASURED_AT parameter.
 - **WireframeBuilder**
+  - Constructs a shape representation consisting of points and curves. That shape would typically be stored in a DirectShape or a DirectShapeType object.
 - **Workset**
+  - Represents a workset in the document.
 - **WorksetConfiguration**
+  - A configuration class that is passed in to methods that open Revit documents to specify which user-created worksets are opened/closed.
 - **WorksetConfigurationOption**
+  - A collection of options used to initialize a WorksetConfiguration.
 - **WorksetDefaultVisibilitySettings**
+  - An object that manages default visibility of worksets in a document.
 - **WorksetFilter**
+  - A base class for a type of filter that accepts or rejects worksets based upon criteria.
 - **WorksetId**
+  - WorksetId identifies a workset within a single document.
 - **WorksetKind**
+  - Indicates one of the standard kinds of workset (as available in the UI).
 - **WorksetKindFilter**
+  - A filter used to match worksets of the given WorksetKind.
 - **WorksetPreview**
+  - Represents an accessor for workset data which can be obtained from an unopened document.
 - **WorksetTable**
+  - A table containing references to all the worksets contained in a document.
 - **WorksetVisibility**
+  - Indicates the visibility settings of a workset in a particular view.
 - **WorksharingDisplayGraphicSettings**
+  - Represents the graphical settings that can be assigned to elements in the worksharing    display modes.
 - **WorksharingDisplayMode**
+  - Indicates which worksharing display mode a view is in.
 - **WorksharingDisplaySettings**
+  - WorksharingDisplaySettings controls how elements will appear when they are    displayed in any of the worksharing display modes.
 - **WorksharingSaveAsOptions**
+  - This class contains options specific to worksharing SaveAs.
 - **WorksharingTooltipInfo**
+  - Worksharing information about a single element suitable for display in an in-canvas tooltip.
 - **WorksharingUtils**
+  - A static class that contains utility functions related to worksharing.
 - **XYZ**
+  - Object representing coordinates in 3-dimensional space.
 - **ZoomFitType**
+  - This enum is used to define type of zoom.
 - **ZoomType**
+  - An enumerated type listing all Zoom types of Print Setting.

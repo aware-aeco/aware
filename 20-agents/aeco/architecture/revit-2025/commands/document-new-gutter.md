@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.NewGutter
+Creates a gutter along a reference.

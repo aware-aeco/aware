@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Pens.ClearCache
+Clears the pen cache

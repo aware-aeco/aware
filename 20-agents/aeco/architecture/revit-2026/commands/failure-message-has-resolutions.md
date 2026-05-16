@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureMessage.HasResolutions
+Checks if the failure has any resolutions.

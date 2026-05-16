@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudOverrides.ArePointCloudOverrideSettingsValid
+Checks if PointCloudOverrideSettings are valid

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.ColorAt
+Evaluate a mesh color at a set of barycentric coordinates.

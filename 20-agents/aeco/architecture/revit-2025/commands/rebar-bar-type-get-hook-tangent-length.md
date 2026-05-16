@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBarType.GetHookTangentLength
+Identifies the hook tangent length for a hook type

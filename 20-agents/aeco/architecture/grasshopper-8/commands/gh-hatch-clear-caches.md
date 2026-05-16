@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Hatch.ClearCaches
+Clears all volatile caches for this instance. The boundingbox is cleared, and if the hatch is referenced,   the local instance of the hatch is erased.

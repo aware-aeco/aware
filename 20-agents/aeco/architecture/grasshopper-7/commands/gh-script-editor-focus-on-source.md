@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ScriptEditor.FocusOnSource
+Collapses all code blocks except the one containing the mutable sections.

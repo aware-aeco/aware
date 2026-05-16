@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Color.FromRgb
+Creates a Color from a 24-bit RGB value

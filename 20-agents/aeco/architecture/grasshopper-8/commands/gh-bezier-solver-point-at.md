@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_BezierSolver.PointAt
+Evaluate a Bezier span.

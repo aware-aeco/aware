@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportUIObjectsPick
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.AddPoint
+Adds a new point in the mesh.

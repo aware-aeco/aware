@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ArchivableDictionary.AddContentsFrom
+Add the contents from the source dictionary.

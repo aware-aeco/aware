@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ProjectLocation.IsProjectLocationNameUnique
+Verifies that there is no existing ProjectLocation with the given name belonging to the given SiteLocation.

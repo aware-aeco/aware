@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBarType.GetCrankAngledLength
+Gets the crank angled length taking into account the specified Rebar Crank Type.

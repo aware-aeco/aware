@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewDisplayDepthCueing.SetStartEndPercentages
+Sets start and end percentages.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TreeGridView.GetCellAt
+Gets the cell information at a specified location from the origin of the control

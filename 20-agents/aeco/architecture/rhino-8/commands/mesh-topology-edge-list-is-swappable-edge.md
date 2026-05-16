@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshTopologyEdgeList.IsSwappableEdge
+Determines if a mesh edge index is valid input for .

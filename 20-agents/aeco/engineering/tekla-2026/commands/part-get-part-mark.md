@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Part.GetPartMark
+Returns the part mark.

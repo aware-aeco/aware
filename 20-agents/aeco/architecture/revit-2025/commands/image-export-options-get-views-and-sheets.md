@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ImageExportOptions.GetViewsAndSheets
+Gets a list of views and sheets to be exported.  Used only when ExportRange is SetOfViews.

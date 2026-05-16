@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportSetHandlePoints
+Set the Shape Item Handle Points

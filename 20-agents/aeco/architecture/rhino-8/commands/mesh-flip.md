@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.Flip
+Reverses the direction of the mesh.

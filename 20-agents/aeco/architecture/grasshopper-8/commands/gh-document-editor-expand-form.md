@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentEditor.ExpandForm
+Expands the form if it is currenly collapsed.

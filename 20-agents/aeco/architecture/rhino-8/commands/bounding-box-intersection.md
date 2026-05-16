@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoundingBox.Intersection
+Computes the intersection of two bounding boxes.

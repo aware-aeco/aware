@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Dialog`1.ShowModalAsync
+Shows the dialog modally asynchronously

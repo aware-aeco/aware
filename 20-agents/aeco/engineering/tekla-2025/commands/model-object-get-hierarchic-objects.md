@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObject.GetHierarchicObjects
+Returns an enumerator of all the connected hierarchic objects.

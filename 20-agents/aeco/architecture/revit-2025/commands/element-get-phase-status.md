@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.GetPhaseStatus
+Gets the status of a given element in the input phase

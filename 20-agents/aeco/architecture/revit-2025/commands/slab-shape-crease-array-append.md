@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SlabShapeCreaseArray.Append
+Add the item to the end of the array.

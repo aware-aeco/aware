@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.InsertCombinedParameterField
+Adds a combined parameter field at the specified position in the list.

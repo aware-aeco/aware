@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepFaceList.SplitFacesAtTangents
+Splits all of the faces of a Brep at tangent locations.

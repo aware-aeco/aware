@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UserDataList.GetEnumerator
+Get enumerator for UserDataList

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StdVectorFloat.Memory
+Return the raw data.

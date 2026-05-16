@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostUtils.InitializeRhinoCommon
+Makes sure all static RhinoCommon components is set up correctly.             This happens automatically when a plug-in is loaded, so you probably won't             have to call this method.

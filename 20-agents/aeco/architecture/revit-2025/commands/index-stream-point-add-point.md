@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndexStreamPoint.AddPoint
+Inserts a  into the stream and associated buffer.

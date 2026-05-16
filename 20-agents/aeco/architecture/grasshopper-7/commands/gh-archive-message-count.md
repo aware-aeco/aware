@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Archive.MessageCount
+Gets the number of messages recorded since the most recent IO operation began.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Category.GetCategory
+Retrieves a category object corresponding to the category id.

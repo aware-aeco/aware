@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CssProperty.FormatCss
+Format the property as CSS code.

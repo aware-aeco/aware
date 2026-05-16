@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DynamicLayout.Clear
+Clears the layout so it can be recreated

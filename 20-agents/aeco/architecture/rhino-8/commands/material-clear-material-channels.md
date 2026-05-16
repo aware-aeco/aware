@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Material.ClearMaterialChannels
+Removes all material channels

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.ClosestSide
+Gets the side that is closest, in terms of 3D-distance, to a U and V parameter.

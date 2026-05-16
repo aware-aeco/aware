@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IDuctFittingAndAccessoryPressureDropServer.Calculate
+Calculate the duct fitting and duct accessory coefficient.

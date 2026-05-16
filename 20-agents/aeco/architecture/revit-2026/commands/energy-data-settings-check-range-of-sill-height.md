@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyDataSettings.CheckRangeOfSillHeight
+Checks that the sill height is greater than or equal to zero.

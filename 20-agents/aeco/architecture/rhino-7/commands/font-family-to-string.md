@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FontFamily.ToString
+Gets a string representation of this font family

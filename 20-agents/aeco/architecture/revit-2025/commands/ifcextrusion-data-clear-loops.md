@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCExtrusionData.ClearLoops
+Clears the curve loops stored in the extrusion data.

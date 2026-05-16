@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_DocumentObject.OnDisplayExpired
+Raises the DisplayExpired event on the toplevel object.

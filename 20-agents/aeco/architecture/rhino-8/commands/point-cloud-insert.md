@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.Insert
+Inserts a new point into the point list.

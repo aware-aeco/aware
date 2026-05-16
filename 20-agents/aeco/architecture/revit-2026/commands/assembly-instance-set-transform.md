@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssemblyInstance.SetTransform
+Sets the origin of the assembly instance.

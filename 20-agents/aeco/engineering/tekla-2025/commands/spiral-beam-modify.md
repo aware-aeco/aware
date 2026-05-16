@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpiralBeam.Modify
+Modifies the spiral beam object values in the database.

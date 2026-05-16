@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContent.NewPreviewSceneServer
+Gets the PreviewSceneServer of the content

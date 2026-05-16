@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyItemFactory.NewDiameterDimension
+Creates a new diameter dimension object using the default dimension type.

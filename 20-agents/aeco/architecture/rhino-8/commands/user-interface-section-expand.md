@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UserInterfaceSection.Expand
+Expand or collapse this content section.

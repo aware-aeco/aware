@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StringList.Add
+Adds a new string to the end of the string list.

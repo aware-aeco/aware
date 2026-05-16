@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolymeshTopology.GetUV
+Returns one UV coordinate at the given index.

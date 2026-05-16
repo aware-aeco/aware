@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InternalOrigin.Get
+Gets the internal origin for the document.

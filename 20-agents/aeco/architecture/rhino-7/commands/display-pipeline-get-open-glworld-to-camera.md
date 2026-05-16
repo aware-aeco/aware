@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.GetOpenGLWorldToCamera
+Get an array of 16 floats that represents the "world" to "camera" coordinate             transformation in OpenGL's right handed coordinate system

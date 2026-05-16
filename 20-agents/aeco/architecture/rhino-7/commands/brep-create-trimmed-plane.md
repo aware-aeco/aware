@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateTrimmedPlane
+Create a Brep trimmed plane.

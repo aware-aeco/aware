@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetCylinder.Dispose
+Actively reclaims unmanaged resources that this instance uses.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.HighlightSubObject
+Highlights a sub-object.

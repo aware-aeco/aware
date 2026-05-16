@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ClassArrayObjRef.ConstPointer
+Gets the constant (immutable) pointer of this array.

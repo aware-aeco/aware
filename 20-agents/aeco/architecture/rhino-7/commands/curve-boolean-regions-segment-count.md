@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveBooleanRegions.SegmentCount
+Returns the number of segments in a boundary curve in a curve region.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RcpGroup.ItemAt
+Gets the item at the given point.

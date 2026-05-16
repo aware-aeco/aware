@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlArc.Select
+Selects the control arc with the given Identifier.

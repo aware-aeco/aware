@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayBinaryArchiveReader.NonConstPointer
+Gets the non-constant pointer (for modification) of this array.

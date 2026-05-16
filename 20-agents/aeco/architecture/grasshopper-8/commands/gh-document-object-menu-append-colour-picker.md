@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentObject.Menu_AppendColourPicker
+Add a colour picker to a menu.

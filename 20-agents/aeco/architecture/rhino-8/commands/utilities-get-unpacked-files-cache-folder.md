@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Utilities.GetUnpackedFilesCacheFolder
+Gets a folder associated with the document for unpacking textures to

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayModeDescription.DeleteDisplayMode
+Deletes an existing display mode.

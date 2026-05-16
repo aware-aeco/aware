@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementId.Equals
+Determines whether the specified  is equal to the current .

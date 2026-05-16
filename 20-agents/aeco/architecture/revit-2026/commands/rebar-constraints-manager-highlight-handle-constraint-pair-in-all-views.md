@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraintsManager.HighlightHandleConstraintPairInAllViews
+Highlights the specified RebarConstrainedHandle and RebarConstraint in all views.

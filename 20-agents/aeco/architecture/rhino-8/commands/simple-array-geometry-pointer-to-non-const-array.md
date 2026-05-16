@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayGeometryPointer.ToNonConstArray
+Copies the unmanaged array to a managed counterpart.

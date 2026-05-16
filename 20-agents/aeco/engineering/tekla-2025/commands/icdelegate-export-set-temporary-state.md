@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportSetTemporaryState
+DO NOT USE! For internal usage only!

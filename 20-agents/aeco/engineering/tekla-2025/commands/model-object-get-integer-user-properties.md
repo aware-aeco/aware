@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObject.GetIntegerUserProperties
+Retrieves all integer properties for the model object.

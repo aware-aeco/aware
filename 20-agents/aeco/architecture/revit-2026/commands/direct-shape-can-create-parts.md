@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShape.CanCreateParts
+Indicates if it is possible to create parts from this DirectShape element.

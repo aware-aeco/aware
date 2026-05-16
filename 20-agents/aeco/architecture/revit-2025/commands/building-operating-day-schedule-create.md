@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BuildingOperatingDaySchedule.Create
+Creates a new instance of a BuildingOperatingDaySchedule.

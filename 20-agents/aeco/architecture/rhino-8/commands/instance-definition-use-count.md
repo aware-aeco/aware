@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceDefinition.UseCount
+Returns the number of references of this instance definition in the model.              Both top-level references and nested instances are included in the count.

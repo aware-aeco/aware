@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Cursors.Cached
+Gets a cached cursor with the specified

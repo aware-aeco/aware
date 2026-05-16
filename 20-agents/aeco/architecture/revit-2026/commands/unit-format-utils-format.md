@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UnitFormatUtils.Format
+Formats a number with units into a string.

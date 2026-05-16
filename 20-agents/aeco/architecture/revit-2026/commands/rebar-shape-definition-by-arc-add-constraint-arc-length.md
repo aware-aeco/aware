@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDefinitionByArc.AddConstraintArcLength
+Specify a parameter to drive the arc length of the shape.

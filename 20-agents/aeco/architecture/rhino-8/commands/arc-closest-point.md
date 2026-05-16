@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Arc.ClosestPoint
+Computes the point on an arc that is closest to a test point.

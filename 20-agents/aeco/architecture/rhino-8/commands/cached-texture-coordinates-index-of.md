@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CachedTextureCoordinates.IndexOf
+Determines the index of a specific point in this collection.

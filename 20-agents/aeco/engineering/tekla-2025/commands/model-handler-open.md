@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelHandler.Open
+Opens a new model to Tekla Structures without saving changes to current model.

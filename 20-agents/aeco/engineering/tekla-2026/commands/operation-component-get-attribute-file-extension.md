@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.ComponentGetAttributeFileExtension
+Saves the applied attributes of given component type to file.

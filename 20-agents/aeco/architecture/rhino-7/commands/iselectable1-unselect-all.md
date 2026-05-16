@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ISelectable`1.UnselectAll
+Unselects all rows.

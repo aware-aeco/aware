@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.CanFlipPart
+Validates if the fabrication part is one of the supported fabrication part types that can be flipped.

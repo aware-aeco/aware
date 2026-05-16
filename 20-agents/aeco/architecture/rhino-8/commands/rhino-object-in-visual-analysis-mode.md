@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.InVisualAnalysisMode
+Reports if any visual analysis mode is currently active for an object.

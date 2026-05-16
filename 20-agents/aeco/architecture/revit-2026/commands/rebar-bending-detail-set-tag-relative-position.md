@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBendingDetail.SetTagRelativePosition
+Sets the embedded tag position w.r.t. the realistic bending detail element in model coordinates.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RibbonMouseEventArgs.ReleaseActiveObject
+Disabled the active object, whatever it is.

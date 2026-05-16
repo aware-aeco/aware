@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HermiteSurface.PointAt
+Gets the interpolation point at the u,v parameter location.

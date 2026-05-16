@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileSettings.DefaultTemplateFolderForLanguageID
+Returns the default template folder for a given language id.

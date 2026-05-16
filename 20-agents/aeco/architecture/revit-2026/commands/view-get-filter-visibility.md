@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetFilterVisibility
+Gets the visibility of the elements associated with a filter.

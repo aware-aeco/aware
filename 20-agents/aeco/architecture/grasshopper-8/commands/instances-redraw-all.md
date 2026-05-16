@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Instances.RedrawAll
+Forces a redraw of both the active canvas and the Rhino viewports on the active document.

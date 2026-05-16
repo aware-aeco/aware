@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.GetTableData
+Gets table data that can be written to

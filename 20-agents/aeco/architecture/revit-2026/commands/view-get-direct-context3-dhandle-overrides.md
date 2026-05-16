@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetDirectContext3DHandleOverrides
+Returns DirectContext3D handle overrides object for the view.

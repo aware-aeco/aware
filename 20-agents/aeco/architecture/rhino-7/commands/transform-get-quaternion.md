@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform.GetQuaternion
+If this transform is a proper rotation, then find the eqivalent quaternion.

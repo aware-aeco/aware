@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PluginUtil.FocusOnRhino
+Set the focus to the Rhino command line.

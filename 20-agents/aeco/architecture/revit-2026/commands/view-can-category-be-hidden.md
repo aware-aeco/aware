@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.CanCategoryBeHidden
+Checks whether the category can be hidden in the view.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShape.AddReferencePlane
+Adds a reference plane to the DirectShape. The reference plane can either be bounded or unbounded.

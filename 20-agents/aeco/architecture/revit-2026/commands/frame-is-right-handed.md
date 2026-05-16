@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Frame.IsRightHanded
+Determine if this frame's basis is right-handed.

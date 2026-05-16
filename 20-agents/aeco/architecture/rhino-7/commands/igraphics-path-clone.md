@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGraphicsPath.Clone
+Creates a clone of the graphics path

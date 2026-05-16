@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCTransformSetter.InitializeFromBoundingBox
+Initializes the transformation in the transform setter.

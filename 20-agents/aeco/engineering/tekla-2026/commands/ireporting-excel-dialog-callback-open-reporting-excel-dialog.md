@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IReportingExcelDialogCallback.OpenReportingExcelDialog
+Called when an xlsx report was selected by the user.

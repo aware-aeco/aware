@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetPoint.ClearConstructionPoints
+Remove all construction points.

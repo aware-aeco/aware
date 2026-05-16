@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentParamServer.IsOutputParam
+Returns True if this parameter is an output child of the component

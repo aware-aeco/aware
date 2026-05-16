@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexList.Add
+Adds a new vertex to the end of the Vertex list.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.SimplifyEnd
+Same as SimplifyCurve, but simplifies only the last two segments at "side" end.

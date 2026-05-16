@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.NullFilter
+This delegate can be used in the FindAllDownstreamObjects(...) methods. Includes all objects.

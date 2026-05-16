@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarFreeFormAccessor.SetLayoutAsNumberWithSpacing
+Sets the Layout Rule property of rebar set to Number With Spacing.

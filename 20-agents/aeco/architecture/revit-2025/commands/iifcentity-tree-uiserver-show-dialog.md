@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IIFCEntityTreeUIServer.ShowDialog
+Shows dialog on managing IFCEntityTreeUI.

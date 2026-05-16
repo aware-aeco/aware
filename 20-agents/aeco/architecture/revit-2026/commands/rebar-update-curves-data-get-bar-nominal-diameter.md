@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarUpdateCurvesData.GetBarNominalDiameter
+Gets the nominal diameter of the Rebar.

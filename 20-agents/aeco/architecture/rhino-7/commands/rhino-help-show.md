@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoHelp.Show
+Call this method to display standard Rhino help

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WallSweepInfo.IsEqual
+Determines if the input object is equivalent to this WallSweepInfo.

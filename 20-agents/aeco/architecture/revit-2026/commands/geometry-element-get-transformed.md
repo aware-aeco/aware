@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryElement.GetTransformed
+Returns a transformed copy of the geometry in this element.

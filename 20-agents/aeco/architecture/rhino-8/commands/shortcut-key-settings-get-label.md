@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ShortcutKeySettings.GetLabel
+Get the macro label associated with a given keyboard shortcut

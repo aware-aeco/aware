@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralSettings.GetStructuralSettings
+Obtains the StructuralSettings object for the specified project document.

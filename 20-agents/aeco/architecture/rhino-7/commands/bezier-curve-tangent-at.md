@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BezierCurve.TangentAt
+Evaluates the unit tangent vector at a curve parameter.

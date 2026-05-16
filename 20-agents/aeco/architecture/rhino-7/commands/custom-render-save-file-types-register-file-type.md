@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CustomRenderSaveFileTypes.RegisterFileType
+Call this method to register a custom file save type with the render             output window save dialog.

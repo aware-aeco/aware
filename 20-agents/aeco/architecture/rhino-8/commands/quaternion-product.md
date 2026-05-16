@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Quaternion.Product
+The quaternion product of p and q.  This is the same value as p*q.

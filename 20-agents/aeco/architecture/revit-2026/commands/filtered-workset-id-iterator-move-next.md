@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilteredWorksetIdIterator.MoveNext
+Increments the iterator to the next workset id passing the filter.

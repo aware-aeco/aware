@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorFillSchemeEntry.GetIntegerValue
+Gets the Integer value stored within the entry.

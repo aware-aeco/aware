@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_UserPromptAware.PromptMultipleItems
+Get multiple items from the user.

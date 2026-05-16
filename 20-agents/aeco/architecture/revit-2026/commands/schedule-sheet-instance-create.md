@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleSheetInstance.Create
+Creates an instance of a schedule segment on a sheet.

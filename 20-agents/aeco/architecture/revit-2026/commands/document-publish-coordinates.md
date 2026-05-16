@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.PublishCoordinates
+Publish coordinates to the specified ProjectLocation of the link instance.

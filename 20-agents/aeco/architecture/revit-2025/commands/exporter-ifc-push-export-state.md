@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFC.PushExportState
+Sets the internal state of the exporter to process the geometry and properties of the input element.

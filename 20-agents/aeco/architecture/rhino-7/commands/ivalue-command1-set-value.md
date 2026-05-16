@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IValueCommand`1.SetValue
+Sets the value in the command from the control.

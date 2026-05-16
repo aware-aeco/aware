@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.CanFilterByGlobalParameters
+Checks whether a field can be used with a global parameter-based filter.

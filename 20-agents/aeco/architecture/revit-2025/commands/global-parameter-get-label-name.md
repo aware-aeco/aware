@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GlobalParameter.GetLabelName
+Returns the name of this parameter's label, which is used to label dimension elements.

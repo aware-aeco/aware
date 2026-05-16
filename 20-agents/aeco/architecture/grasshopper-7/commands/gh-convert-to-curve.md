@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToCurve
+Convert data into Rhino.Geometry.Curve.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormatOptions.GetUnitTypeId
+Gets the identifier of the unit used to quantify values.

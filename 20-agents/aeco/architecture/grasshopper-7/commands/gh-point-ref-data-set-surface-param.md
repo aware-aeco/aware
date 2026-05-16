@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PointRefData.SetSurfaceParam
+Set the surface reference parameters

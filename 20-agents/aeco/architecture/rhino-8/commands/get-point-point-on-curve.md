@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetPoint.PointOnCurve
+Use to determine is point was on a curve.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportFontTable.ContainsKey
+Checks whether a font key exists in the table.

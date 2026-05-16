@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPModel.GetElectricalSystems
+Retrieves the electrical systems that are currently created using this MEPModel.

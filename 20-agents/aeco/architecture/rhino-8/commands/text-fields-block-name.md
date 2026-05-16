@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextFields.BlockName
+Returns the block definition name of a block instance

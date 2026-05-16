@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoGet.GetRectangleWithCounts
+Gets a 3d rectangle with prompts for counts in X and Y directions.

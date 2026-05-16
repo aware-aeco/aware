@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RectangleF.ToString
+Converts this rectangle to a string

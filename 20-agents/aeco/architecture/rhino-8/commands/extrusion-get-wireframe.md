@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Extrusion.GetWireframe
+Constructs all the Wireframe curves for this Extrusion.

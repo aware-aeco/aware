@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroupTable.GroupObjectCount
+Returns the number of objects that are members of a group.

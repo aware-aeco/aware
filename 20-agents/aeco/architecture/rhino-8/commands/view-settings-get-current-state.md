@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSettings.GetCurrentState
+Gets the current settings.

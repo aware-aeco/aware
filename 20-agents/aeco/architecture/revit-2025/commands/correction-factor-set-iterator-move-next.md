@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CorrectionFactorSetIterator.MoveNext
+Move the iterator one item forward.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Padding.Equals
+Determines the equality between this instance and the specified object

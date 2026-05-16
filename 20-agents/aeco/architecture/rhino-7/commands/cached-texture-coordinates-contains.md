@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CachedTextureCoordinates.Contains
+Determines whether this collection contains a specific value.

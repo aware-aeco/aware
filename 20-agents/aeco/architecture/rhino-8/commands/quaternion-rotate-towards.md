@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Quaternion.RotateTowards
+Returns the quaternion obtained by rotating a towards b, limiting the rotation by MaxRadians.

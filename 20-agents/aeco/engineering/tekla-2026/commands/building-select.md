@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Building.Select
+Selects the Building Hierarchy object from model database. The object identifier must be set.

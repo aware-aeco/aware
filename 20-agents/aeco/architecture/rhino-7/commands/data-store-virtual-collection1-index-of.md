@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataStoreVirtualCollection`1.IndexOf
+Determines the index of a specific item in the collection.

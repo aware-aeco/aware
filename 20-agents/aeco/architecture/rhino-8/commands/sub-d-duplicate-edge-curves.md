@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubD.DuplicateEdgeCurves
+Gets Nurbs form of all edges in this SubD, with clamped knots.             NB: Does not update the SubD evaluation cache before getting the edges.

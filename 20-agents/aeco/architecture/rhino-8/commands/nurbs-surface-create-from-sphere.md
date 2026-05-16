@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsSurface.CreateFromSphere
+Constructs a new NURBS surfaces from sphere data.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelHandler.IsModelSaved
+Tells whether current model has been saved.

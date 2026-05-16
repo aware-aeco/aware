@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralAsset.SetPoissonRatio
+Sets the Poisson ratio of the asset.

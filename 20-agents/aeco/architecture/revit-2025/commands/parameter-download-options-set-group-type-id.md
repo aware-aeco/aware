@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterDownloadOptions.SetGroupTypeId
+Set properties palette group identifier.

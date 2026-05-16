@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedFilePickerHandler.ClearFilters
+Clears all filters

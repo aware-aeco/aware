@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Torus.ToRevSurface
+Converts this torus to a surface of revolution representation.              This is synonymous with calling .

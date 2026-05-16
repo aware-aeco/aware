@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterCollection`1.Refresh
+Refreshes the list by applying the filter and sort to the contained items

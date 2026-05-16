@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Cylinder.ToBrep
+Constructs a Brep representation of this Cylinder.              This is synonymous with calling NurbsSurface.CreateFromCylinder().

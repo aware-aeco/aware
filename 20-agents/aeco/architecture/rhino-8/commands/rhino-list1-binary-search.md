@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoList`1.BinarySearch
+Searches the entire sorted List for an element using the default comparer              and returns the zero-based index of the element.

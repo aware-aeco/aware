@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewHandler.RedrawWorkplane
+Sets the workplane to current transformation plane and redraws it.

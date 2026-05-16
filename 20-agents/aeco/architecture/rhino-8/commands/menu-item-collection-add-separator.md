@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MenuItemCollection.AddSeparator
+Adds the separator with the specified order.

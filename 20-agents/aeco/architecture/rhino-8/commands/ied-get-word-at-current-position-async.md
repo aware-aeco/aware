@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.GetWordAtCurrentPositionAsync
+Word at current cursor position

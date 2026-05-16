@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AppearanceSettings.DefaultPaintColor
+Get a default paint color for Rhino. The current paint color may             be different than the default

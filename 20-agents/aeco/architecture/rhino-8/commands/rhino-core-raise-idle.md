@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoCore.RaiseIdle
+Raises the Idle event.

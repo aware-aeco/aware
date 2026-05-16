@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Cell3.Slice
+Slice this cell using a neighbouring point.

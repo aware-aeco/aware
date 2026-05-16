@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Railing.GetPath
+Gets the railing path.

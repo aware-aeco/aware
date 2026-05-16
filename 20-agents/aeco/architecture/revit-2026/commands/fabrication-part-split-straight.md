@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.SplitStraight
+Splits the straight into two at the passed in point.

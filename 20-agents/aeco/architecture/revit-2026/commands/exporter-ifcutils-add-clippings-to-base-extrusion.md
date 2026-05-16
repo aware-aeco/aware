@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.AddClippingsToBaseExtrusion
+Processes the geometry of the wall to create an extruded area solid representing the geometry of the wall (including    any clippings imposed by neighboring elements).

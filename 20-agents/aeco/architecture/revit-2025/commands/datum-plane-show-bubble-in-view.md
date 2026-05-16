@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DatumPlane.ShowBubbleInView
+Shows the bubble in a view. This method does not apply to Reference planes.

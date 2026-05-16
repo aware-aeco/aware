@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_BezierSolver.AngleAt
+Evaluate the tangent angle of a Bezier span.

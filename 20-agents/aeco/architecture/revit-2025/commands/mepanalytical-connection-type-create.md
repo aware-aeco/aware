@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPAnalyticalConnectionType.Create
+Creates an analytical connection type element.

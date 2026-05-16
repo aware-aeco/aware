@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Material.Duplicate
+Duplicates the material

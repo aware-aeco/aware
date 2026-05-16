@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GridSurfaceExtensions.SetIsManual
+Sets the flag that indicates whether the grid surface is manual

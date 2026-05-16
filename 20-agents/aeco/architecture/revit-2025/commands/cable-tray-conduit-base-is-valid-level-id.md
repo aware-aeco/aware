@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableTrayConduitBase.IsValidLevelId
+Identifies if a level id is valid.

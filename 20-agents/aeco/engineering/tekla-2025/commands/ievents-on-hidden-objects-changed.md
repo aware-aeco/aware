@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEvents.OnHiddenObjectsChanged
+Called when objects are set to hidden or view is redrawn

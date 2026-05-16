@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Decal.UVBounds
+The UV bounds of the decal. Only used when mapping is UV.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.GetPartition
+Retrieves a partition. See  for details.

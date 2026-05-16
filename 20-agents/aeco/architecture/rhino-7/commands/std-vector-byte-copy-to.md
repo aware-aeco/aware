@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StdVectorByte.CopyTo
+Copies the contents of a  into another StdVectorByte.

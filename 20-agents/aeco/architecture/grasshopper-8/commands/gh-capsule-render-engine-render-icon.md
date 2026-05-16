@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CapsuleRenderEngine.RenderIcon
+Render an image icon centered into the box. If the content box has been defined the icon   will be centered there, otherwise the outline box will be used.

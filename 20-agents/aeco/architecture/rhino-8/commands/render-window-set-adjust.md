@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderWindow.SetAdjust
+OBSOLETE. NOT IMPLEMENTED.

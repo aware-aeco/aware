@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Region.Reset
+Resets the region

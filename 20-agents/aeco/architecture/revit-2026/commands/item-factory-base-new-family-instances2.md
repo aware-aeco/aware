@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ItemFactoryBase.NewFamilyInstances2
+Creates Family instances within the document.

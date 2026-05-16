@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Motion.ResizeContainer
+Call this function to override the width or height without   interfering with the animation.

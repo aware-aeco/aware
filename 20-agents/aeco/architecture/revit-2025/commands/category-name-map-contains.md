@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CategoryNameMap.Contains
+Tests for the existence of a category with that name within the map.

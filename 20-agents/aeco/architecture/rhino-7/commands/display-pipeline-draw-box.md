@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawBox
+Draws the edges of a BoundingBox.

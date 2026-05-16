@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.AddValueString
+Adds a string value to a built-in parameter.

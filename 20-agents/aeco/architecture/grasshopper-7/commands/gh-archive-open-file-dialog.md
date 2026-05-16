@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Archive.OpenFileDialog
+Displays a standard OpenFileDialog with all the fields set to cater for Grasshopper files.

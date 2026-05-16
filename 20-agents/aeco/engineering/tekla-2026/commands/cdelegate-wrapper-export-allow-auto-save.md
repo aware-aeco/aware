@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportAllowAutoSave
+DO NOT USE! For internal usage only!

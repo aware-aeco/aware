@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostUtils.GetPrinterFormNames
+Get list of form names available for a given printer

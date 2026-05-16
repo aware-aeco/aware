@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorCMYK.Distance
+Calculates the 'distance' of two CMYK colors

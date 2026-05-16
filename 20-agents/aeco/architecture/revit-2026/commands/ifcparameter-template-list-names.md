@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCParameterTemplate.ListNames
+Returns a list of names of IFC export parameter mapping templates.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ManifestTable.ActiveObjectCount
+Total number of items in the manifest, including deleted items.

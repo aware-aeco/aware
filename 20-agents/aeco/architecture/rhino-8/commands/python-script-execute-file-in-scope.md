@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PythonScript.ExecuteFileInScope
+Executes a Python file in the calling script scope. All old variables are kept.

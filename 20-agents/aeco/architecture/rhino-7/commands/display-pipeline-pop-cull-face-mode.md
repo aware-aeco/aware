@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.PopCullFaceMode
+Pop a FaceCull flag off the engine's stack.

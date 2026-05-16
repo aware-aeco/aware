@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportDGNSettings.SetDGNExportOptions
+Sets the options stored in these settings.

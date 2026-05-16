@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ITextBuffer.SetBackground
+Sets the background color for the specified range.

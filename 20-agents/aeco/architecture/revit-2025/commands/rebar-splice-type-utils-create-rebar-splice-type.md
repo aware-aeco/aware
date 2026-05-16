@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSpliceTypeUtils.CreateRebarSpliceType
+Creates a Rebar Splice Type element.

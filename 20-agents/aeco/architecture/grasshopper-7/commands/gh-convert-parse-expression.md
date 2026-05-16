@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ParseExpression
+Attempts to parse an expression.

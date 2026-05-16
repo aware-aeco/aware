@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PerformanceAdviser.GetRuleName
+Retrieves the name of the rule.

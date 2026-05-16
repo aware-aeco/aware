@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GraphicsPathExtensions.AddArc
+Adds an arc to the path at the specified

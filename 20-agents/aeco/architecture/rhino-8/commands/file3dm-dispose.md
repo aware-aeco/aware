@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dm.Dispose
+Actively reclaims unmanaged resources that this instance uses.

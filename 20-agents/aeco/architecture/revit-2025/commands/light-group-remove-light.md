@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightGroup.RemoveLight
+Remove the given light instance from the set of light instances in this group

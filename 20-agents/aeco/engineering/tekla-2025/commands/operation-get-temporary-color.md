@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetTemporaryColor
+Gets the objects representation color seen currently on UI

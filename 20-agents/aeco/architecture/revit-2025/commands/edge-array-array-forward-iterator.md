@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EdgeArrayArray.ForwardIterator
+Retrieve a forward moving iterator to the array.

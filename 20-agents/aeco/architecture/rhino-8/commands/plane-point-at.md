@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Plane.PointAt
+Evaluate a point on the plane.

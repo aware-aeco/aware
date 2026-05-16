@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayFloat.Array
+Return the raw data.

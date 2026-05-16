@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmInstanceDefinitionTable.AddLinked
+Adds a linked instance definition to the instance definition table.

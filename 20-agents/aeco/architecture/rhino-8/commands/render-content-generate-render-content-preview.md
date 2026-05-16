@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContent.GenerateRenderContentPreview
+Generate a render content preview

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Wire.ConnectTo
+Connects the wire to other elements.

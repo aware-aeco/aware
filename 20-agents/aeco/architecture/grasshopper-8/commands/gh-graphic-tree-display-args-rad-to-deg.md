@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicTreeDisplayArgs.RadToDeg
+Convert Radians to Degrees

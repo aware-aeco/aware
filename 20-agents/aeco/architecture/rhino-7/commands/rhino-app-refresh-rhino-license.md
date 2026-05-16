@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoApp.RefreshRhinoLicense
+Refresh the license used by Rhino. This allows any part of Rhino to ensure that the most current version of the license file on disk is in use.

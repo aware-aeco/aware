@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaBasedLoadData.DisconnectFromUpstreamNode
+Disconnects from an upstream electrical analytical node.

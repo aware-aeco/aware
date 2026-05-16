@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportSaveOperation
+DO NOT USE! For internal usage only!

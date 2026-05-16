@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Viewport.ComputeProjection
+Forces a recomputation of all cached data.

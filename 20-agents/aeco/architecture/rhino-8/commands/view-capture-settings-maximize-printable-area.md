@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewCaptureSettings.MaximizePrintableArea
+Minimize cropping so the full drawable area is used

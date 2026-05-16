@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedDocumentControlHandler.InsertPage
+Inserts the page.

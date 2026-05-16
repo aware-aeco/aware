@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IPipeFittingAndAccessoryPressureDropServer.IsApplicable
+Check if the server is applicable for the pipe fitting or pipe accessory.

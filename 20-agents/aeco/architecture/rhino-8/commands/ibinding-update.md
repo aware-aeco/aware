@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IBinding.Update
+Updates the binding from the source to the destination

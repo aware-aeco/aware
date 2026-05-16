@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarHostData.GetRebarsInHost
+Returns all Rebar elements hosted by the referenced element.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RealtimeDisplayMode.LastRenderedPass
+Implement to communicate last completed pass to the underlying system.

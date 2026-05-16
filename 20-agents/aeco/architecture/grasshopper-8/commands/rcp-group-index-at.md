@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RcpGroup.IndexAt
+Gets the item index at the given point.

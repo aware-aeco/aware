@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportGetSolidSerialized
+DO NOT USE! For internal usage only!

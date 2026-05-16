@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoltCircle.Delete
+Deletes the bolt circle instance with the given ID from the model database.

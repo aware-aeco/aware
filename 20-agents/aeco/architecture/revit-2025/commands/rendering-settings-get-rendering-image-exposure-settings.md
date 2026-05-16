@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderingSettings.GetRenderingImageExposureSettings
+Returns an  object that represents the rendering image exposure settings.

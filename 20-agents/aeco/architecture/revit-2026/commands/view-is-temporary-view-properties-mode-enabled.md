@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.IsTemporaryViewPropertiesModeEnabled
+Returns true when Temporary View Properties mode is in progress, false otherwise.

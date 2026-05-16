@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IPerformanceAdviserRule.FinalizeCheck
+Invoked by performance advisor once in the end of the check.

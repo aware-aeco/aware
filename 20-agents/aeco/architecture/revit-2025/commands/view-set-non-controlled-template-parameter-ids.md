@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.SetNonControlledTemplateParameterIds
+Sets the parameters that will not be included when this view is used as a template.

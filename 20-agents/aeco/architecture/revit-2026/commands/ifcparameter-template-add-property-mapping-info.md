@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCParameterTemplate.AddPropertyMappingInfo
+Adds a property mapping info to the property set.

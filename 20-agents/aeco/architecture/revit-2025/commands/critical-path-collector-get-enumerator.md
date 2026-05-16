@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CriticalPathCollector.GetEnumerator
+Returns an enumerator that iterates through a collection.

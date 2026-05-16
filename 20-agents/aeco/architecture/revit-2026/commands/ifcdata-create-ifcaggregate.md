@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCData.CreateIFCAggregate
+Creates an IFCAggregate data object.

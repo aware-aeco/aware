@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileUdo.Write
+Write a Moray UDO file based on the contents of a RhinoDoc

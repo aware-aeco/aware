@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_State.ClearStates
+Removes all items from the state database.

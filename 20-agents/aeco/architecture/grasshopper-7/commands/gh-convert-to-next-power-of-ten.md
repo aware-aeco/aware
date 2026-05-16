@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToNextPowerOfTen
+Round a number upwards to the nearest power of ten.

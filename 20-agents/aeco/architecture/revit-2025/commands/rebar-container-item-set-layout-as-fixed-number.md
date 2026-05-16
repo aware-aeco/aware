@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainerItem.SetLayoutAsFixedNumber
+Sets the Layout Rule property of rebar set to FixedNumber.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitLinkType.Create
+Creates a new Revit link type from an external resource reference and loads the    linked document.

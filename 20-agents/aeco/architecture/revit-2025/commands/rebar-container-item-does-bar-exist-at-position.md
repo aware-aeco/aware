@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainerItem.DoesBarExistAtPosition
+Checks whether a bar exists at the specified position.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshFaceList.RemoveAt
+Removes a face from the mesh.

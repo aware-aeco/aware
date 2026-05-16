@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetFabricationConnectorDomain
+Gets the fabrication connector domain from its identifier.

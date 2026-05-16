@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableTrayConduitBase.IsValidEndPoints
+Identifies if two end points are valid.

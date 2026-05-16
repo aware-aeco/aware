@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PhaseArray.Append
+Add the phase to the end of the array.

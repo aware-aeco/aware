@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSheetSetting.SaveAs
+Save the current view sheet set to another view sheet set with the specified name.

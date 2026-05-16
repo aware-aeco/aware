@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CodeBlocks.GetMutableCodeBlock
+Get all the lines that belong to the Nth mutable code block.

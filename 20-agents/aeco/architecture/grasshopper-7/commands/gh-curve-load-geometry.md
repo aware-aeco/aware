@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Curve.LoadGeometry
+If the curve is referenced and not yet loaded, attempts to load the curve.

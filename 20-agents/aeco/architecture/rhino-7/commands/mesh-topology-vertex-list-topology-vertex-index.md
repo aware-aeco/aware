@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshTopologyVertexList.TopologyVertexIndex
+Gets the topology vertex index for an existing mesh vertex in the mesh's             VertexList.

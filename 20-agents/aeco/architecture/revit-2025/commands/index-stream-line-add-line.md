@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndexStreamLine.AddLine
+Inserts a  segment into the stream and associated buffer.

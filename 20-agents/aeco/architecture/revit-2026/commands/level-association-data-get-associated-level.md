@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LevelAssociationData.GetAssociatedLevel
+Returns the Associated Level id.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightGroupManager.SetLightGroupOn
+Turns the given light group on or off for rendering the given view depending on the bool argument

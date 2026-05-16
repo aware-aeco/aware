@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Subelement.IsParameterModifiable
+Checks if given parameter of this subelement is modifiable.

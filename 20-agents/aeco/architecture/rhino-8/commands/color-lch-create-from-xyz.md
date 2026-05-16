@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorLCH.CreateFromXYZ
+Create the nearest LCH equivalent of an XYZ color.

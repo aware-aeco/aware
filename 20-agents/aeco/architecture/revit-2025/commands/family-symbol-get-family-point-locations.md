@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilySymbol.GetFamilyPointLocations
+Returns the Point Locations for the Family Symbol.

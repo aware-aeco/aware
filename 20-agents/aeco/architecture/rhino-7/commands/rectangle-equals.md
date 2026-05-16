@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rectangle.Equals
+Compares this rectangle to an object for equality

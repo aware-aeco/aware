@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDFace.EdgeDirectionMatchesFaceOrientation
+Check if a given edge in this face has the same direction as the face orientation

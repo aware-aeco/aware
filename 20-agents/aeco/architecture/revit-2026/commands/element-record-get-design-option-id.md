@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementRecord.GetDesignOptionId
+Gets the design option id of the element record.

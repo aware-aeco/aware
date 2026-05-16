@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View3D.ToggleToPerspective
+Toggles this view to perspective.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.GetSortGroupFieldCount
+Gets the number of sorting/grouping fields in this ScheduleDefinition.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Edge.AsCurveFollowingFace
+Returns a curve that corresponds to this edge as oriented in its topological direction on the specified face.

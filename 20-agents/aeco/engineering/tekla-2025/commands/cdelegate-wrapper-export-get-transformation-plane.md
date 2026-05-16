@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetTransformationPlane
+DO NOT USE! For internal usage only!

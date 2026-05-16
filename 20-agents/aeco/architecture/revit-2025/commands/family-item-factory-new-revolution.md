@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyItemFactory.NewRevolution
+Add a new Revolution instance into the Autodesk Revit family document.

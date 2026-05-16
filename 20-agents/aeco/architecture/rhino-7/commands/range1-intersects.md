@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Range`1.Intersects
+Determines if the specified  intersects (overlaps) this instance.

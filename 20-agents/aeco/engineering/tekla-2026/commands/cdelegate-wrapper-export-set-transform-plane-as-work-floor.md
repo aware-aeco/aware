@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportSetTransformPlaneAsWorkFloor
+DO NOT USE! For internal usage only!

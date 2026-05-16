@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Field.SubEntityWriteAccessGranted
+Checks whether there is write access to subentities storable in this field.

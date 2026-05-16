@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalFileReference.IsValidPathTypeForExternalFileReference
+Checks whether a PathType enum value will be valid to    use with this ExternalFileReference.

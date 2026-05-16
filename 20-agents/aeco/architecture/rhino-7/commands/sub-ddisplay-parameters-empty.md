@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDDisplayParameters.Empty
+Get an empty SubDDisplayParameters.

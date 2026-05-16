@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Revision.CombineWithNext
+Combines the specified Revision with the next Revision.

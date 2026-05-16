@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurtainGrid.GetUGridLineIds
+Gets all ElementIds of grid lines in the U direction.

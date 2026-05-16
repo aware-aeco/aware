@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View3D.ScalePerspectiveCropBox
+Scale an existing crop box of the perspective view.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetPartCustomDataType
+Gets the custom data type from its identifier. See FabricationCustomDataType enumerator.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Connection.GetPrimaryObject
+Returns the primary object of the connection.

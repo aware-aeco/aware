@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.GetSubCurves
+Gets subcurves from a curve.              The results will be similar to what is produced by Rhino's Explode command.

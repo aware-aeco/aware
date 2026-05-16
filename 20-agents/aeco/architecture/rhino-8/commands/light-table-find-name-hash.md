@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightTable.FindNameHash
+Finds a LightObject given its name hash.

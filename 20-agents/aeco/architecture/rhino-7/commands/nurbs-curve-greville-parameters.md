@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurve.GrevilleParameters
+Gets all Greville parameters for this curve.

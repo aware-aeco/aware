@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoView.CreateShadedPreviewImage
+Creates a bitmap preview image of model.

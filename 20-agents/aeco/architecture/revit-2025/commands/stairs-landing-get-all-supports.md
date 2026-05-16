@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StairsLanding.GetAllSupports
+Returns all the supports hosting the stairs landing.

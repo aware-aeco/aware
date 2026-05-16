@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-KeyBasedTreeEntriesIterator.IsDone
+Identifies if the iteration has completed.

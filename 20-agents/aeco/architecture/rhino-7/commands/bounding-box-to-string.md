@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoundingBox.ToString
+Constructs the string representation of this aligned bounding box.

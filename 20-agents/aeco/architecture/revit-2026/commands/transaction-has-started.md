@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transaction.HasStarted
+Determines whether the transaction has been started yet.

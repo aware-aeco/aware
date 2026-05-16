@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoApp.WriteLine
+Print a newline in the command window.

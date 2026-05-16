@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.ToNurbsCurve
+Constructs a NURBS curve representation of this curve.

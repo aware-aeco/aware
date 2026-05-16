@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CategorySet.Contains
+Tests for the existence of a category within the set.

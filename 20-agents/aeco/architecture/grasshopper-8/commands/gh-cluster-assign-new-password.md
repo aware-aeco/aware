@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Cluster.AssignNewPassword
+Assign a new password to this cluster.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSplice.MoveRebarSpliceGeometry
+Moves the RebarSpliceGeometry with the specified vector.

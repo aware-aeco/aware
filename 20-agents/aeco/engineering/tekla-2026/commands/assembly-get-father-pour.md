@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Assembly.GetFatherPour
+Returns the pour that the assembly is directly associated to.

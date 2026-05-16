@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedControlHandler`3.GetNativeParentWindow
+Gets the window this control is contained in

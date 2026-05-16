@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ValueListItem.ExpireValue
+Expires the cached value. Call this method if you have reason to believe   that the current value is no longer valid.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CreatePatch
+Construct a mesh patch from a variety of input geometry.

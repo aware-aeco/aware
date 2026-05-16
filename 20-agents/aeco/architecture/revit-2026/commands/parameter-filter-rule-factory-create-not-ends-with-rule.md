@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterFilterRuleFactory.CreateNotEndsWithRule
+Creates a filter rule that determines whether strings from the document    do not end with a certain string value.

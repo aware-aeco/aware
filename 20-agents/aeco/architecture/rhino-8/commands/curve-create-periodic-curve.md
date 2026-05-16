@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.CreatePeriodicCurve
+Removes kinks from a curve. Periodic curves deform smoothly without kinks.

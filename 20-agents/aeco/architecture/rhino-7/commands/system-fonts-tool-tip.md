@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SystemFonts.ToolTip
+Gets the system tooltip font with optional specified  and .

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Matrix.ScaleAt
+Prepend a scale to the matrix from the specified point

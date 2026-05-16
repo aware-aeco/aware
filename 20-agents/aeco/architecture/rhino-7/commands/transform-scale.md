@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform.Scale
+Constructs a new uniform scaling transformation with a specified scaling anchor point.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SlabShapeEditor.Enable
+Enables the slab shape editing functionality.

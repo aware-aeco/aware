@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevolvedSurface.GetProfileCurveInWorldCoordinates
+Returns a copy of the profile curve expressed in the world coordinate system.

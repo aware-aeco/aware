@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.RenderMeshes
+Returns a set of custom render primitives for this object.

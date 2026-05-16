@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpatialElement.GetDefaultLocation
+Gets the default location of the spatial element.

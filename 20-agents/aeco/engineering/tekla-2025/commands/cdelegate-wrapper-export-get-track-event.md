@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetTrackEvent
+DO NOT USE! For internal usage only!

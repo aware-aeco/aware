@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConduitSizes.GetConduitSizesIterator
+Returns a ConduitSizeIterator to the conduit sizes.

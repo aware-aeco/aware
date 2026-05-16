@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WallUtils.AllowWallJoinAtEnd
+Allows the wall's end to join to other walls. If that end is near other walls it will become joined as a result.

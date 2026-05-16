@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Format.FormatCurveValidity
+If the curve is invalid, return a string describing why.

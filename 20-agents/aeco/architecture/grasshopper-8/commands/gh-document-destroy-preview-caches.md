@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.DestroyPreviewCaches
+Wipe all caches for Viewport Preview logic.

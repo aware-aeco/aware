@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_DocumentOwner.DocumentClosed
+This method will be called whenever the owner document was closed.

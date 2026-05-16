@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Node3Proximity.RegisterNode
+Register a new node with this collection.

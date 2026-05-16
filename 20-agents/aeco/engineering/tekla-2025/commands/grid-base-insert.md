@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GridBase.Insert
+Inserts the grid into the model.

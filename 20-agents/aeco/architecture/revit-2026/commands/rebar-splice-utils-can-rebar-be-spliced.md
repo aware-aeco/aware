@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSpliceUtils.CanRebarBeSpliced
+Verifies if the rebar can be spliced with the provided line.

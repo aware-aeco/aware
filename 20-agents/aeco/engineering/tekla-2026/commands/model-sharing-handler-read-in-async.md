@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelSharingHandler.ReadInAsync
+Reads in updates to the shared model.

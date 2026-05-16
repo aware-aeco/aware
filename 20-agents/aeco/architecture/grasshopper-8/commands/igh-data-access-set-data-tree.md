@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_DataAccess.SetDataTree
+Folds a utility tree representation into this tree.

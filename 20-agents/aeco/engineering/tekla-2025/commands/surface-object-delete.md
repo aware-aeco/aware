@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SurfaceObject.Delete
+Deletes the model object from the model database.

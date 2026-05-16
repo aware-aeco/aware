@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceWithContext.GetInstanceTransform
+Gets the transform of the instance.

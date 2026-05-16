@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DividedPath.IsValidFixedNumberOfPoints
+Identifies if the indicated number of points is valid for assignment    to a DividedPath with a layout type 'FixedNumber'.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Commands.Run_GrasshopperOpen
+Run the GrasshopperOpen command logic.

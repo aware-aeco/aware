@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBendingDetail.IsSchematicBendingDetail
+Validate that the element is a schematic bending detail.

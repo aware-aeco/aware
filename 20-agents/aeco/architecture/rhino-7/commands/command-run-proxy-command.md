@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Command.RunProxyCommand
+Execute some code as if it were running in a command

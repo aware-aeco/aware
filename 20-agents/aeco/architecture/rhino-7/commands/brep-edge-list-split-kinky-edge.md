@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepEdgeList.SplitKinkyEdge
+Splits the edge into G1 pieces.

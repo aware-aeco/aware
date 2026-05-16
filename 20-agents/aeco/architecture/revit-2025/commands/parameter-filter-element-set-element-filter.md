@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterFilterElement.SetElementFilter
+Sets the rules that must be satisfied for a given element to pass this filter.

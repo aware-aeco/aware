@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToTextDot_Secondary
+Attempts to convert other data types into an Rhino.Geometry.TextDot.   Data is not quaranteed to be duplicated.

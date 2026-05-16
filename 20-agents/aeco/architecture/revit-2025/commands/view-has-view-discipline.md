@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.HasViewDiscipline
+Indicates if the view has a Discipline property

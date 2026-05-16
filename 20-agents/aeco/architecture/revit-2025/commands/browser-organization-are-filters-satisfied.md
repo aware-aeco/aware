@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrowserOrganization.AreFiltersSatisfied
+Determines if the given element satisfies the filters defined by the browser organization.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-dotEdges_t.GetEdges
+Get edges in ArrayList.

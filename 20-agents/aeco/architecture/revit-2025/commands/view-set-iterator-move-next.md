@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSetIterator.MoveNext
+Move the iterator one item forward.

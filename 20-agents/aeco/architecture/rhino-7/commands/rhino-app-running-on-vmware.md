@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoApp.RunningOnVMWare
+Verifies that Rhino is running on VMWare

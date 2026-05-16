@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObjectTable.FindByLayer
+Finds all File3dmObject that are in a given layer.

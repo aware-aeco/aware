@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalElement.SetTransform
+Sets the transform of Analytical Element Local Coordinate System.

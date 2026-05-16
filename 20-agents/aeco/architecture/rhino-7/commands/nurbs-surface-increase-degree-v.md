@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsSurface.IncreaseDegreeV
+Increase the degree of this surface in V direction.

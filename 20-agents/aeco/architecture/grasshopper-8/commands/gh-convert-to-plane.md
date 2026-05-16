@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToPlane
+Convert data into Rhino.Geometry.Plane.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinetypeTable.LoadDefaultLinetypes
+Fills in the linetype table with any default linetypes not already included.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPAnalyticalModelData.GetNumberOfSegments
+Returns the number of analytical segments.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGeometryNodeVisitor.Visit
+Visits a node that is an instance of PolygonNode node

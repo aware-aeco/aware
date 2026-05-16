@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawLineArrow
+Draws an arrow made up of three line segments.

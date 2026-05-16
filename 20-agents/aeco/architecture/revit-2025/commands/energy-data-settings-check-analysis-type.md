@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyDataSettings.CheckAnalysisType
+Checks that the analysis type falls within an appropriate range.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalDemandFactorDefinition.ClearValues
+Clears all the values stored for this demand factor definition.

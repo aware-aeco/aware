@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjRef.Hatch
+Gets the hatch if the referenced geometry is one.

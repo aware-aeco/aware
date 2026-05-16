@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DynamicLayout.Create
+Creates the layout content

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.ToPolyline
+Gets a polyline approximation of a curve.

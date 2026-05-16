@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TemporaryViewModes.DeactivateMode
+Deactivates the given temporary mode.

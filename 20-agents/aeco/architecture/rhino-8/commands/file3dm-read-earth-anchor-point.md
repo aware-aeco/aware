@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dm.ReadEarthAnchorPoint
+Reads only the earth anchor point from an existing 3dm file

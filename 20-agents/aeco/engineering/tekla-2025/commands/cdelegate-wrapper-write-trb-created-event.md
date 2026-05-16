@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.WriteTrbCreatedEvent
+DO NOT USE! For internal usage only!

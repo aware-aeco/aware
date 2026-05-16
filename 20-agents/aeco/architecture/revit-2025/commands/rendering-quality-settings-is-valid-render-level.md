@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderingQualitySettings.IsValidRenderLevel
+Validate the render level is between 1 and 40

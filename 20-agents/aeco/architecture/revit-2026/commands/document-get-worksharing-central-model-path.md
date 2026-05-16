@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.GetWorksharingCentralModelPath
+Gets the central model path of the worksharing model.

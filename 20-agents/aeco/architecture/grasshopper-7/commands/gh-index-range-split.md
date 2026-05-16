@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_IndexRange.Split
+Split a range into two using an integer index.

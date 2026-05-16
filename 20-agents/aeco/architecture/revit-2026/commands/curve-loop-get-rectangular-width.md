@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveLoop.GetRectangularWidth
+Returns the width of a curve loop if it is rectangular with respect to the projection plane.

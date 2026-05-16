@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StdVectorGuid.Append
+Appends a new  at the end of this vector.

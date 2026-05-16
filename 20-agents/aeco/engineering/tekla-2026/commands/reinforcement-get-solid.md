@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Reinforcement.GetSolid
+Method for getting the solid information of the reinforcement.

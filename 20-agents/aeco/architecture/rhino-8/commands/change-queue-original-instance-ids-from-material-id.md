@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ChangeQueue.OriginalInstanceIdsFromMaterialId
+Return the collection of original document instance ids assocaited with the material id.

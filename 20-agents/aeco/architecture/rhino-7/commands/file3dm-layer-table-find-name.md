@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmLayerTable.FindName
+Finds a Layer given its name.

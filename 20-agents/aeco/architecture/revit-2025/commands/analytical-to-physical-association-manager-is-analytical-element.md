@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalToPhysicalAssociationManager.IsAnalyticalElement
+Returns true if the element is an analytical element.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-JoinGeometryUtils.AreElementsJoined
+Determines whether two elements are joined.

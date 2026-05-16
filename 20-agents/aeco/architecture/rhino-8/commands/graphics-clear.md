@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Graphics.Clear
+Resets all pixels in the  region with the specified

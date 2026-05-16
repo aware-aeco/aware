@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConnectorSet.Erase
+Removes a specified object from the set.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraint.TargetIsBarBend
+Returns true if the RebarTargetConstraintType of the RebarConstraint is 'BarBend'.

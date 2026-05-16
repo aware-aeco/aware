@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGraphicsPath.AddPath
+Adds the specified  to the current path, optionally connecting the current figure to the start of the path

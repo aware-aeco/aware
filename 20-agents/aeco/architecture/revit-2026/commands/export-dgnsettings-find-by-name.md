@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportDGNSettings.FindByName
+Returns the pre-defined non-in-session exporting settings for DGN in the given document with the specified name.

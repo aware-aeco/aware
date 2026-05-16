@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.ChangeSeam
+Change the seam of a closed trimmed surface.

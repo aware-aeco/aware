@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-VisualAnalysisMode.ObjectSupportsAnalysisMode
+Gets a value indicating if this visual analysis mode can be used on a given Rhino object.

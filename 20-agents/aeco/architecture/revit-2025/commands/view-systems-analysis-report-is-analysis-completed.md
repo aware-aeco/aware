@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSystemsAnalysisReport.IsAnalysisCompleted
+Indicates if the background systems analysis has completed or not.

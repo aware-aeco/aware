@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PrintSetup.Revert
+Revert the current print setting.

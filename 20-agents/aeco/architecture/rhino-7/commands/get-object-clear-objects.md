@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetObject.ClearObjects
+Clear possible special object drawing

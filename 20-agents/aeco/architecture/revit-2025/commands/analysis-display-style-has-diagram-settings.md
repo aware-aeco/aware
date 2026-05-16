@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayStyle.HasDiagramSettings
+If true style has diagram settings.

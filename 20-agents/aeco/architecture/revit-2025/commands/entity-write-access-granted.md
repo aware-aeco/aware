@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Entity.WriteAccessGranted
+Checks whether this Entity may be stored by the current add-in.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Polyline.RemoveNearlyEqualSubsequentPoints
+Removes one copy of a point that is equal to the previous or later point, by an absolute tolerance factor.

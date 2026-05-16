@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextureMapping.TryGetMappingMesh
+Get custom mapping mesh from this texture mapping.

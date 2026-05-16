@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralAsset.SetYoungModulus
+Sets the Young's modulus of the asset.

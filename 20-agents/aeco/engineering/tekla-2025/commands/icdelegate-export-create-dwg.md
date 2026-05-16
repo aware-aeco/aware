@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportCreateDwg
+DO NOT USE! For internal usage only!

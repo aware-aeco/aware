@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AdaptiveComponentInstanceUtils.SetInstanceFlipped
+Sets the value of the flip parameter on the adaptive instance.

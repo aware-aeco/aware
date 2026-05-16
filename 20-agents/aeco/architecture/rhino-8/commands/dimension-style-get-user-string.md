@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DimensionStyle.GetUserString
+Gets user string from this geometry.

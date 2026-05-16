@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralConnectionHandlerType.Create
+Creates a new StructuralConnectionHandlerType object.

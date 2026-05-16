@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.CreateArcBlend
+Creates a polycurve consisting of two tangent arc segments that connect two points and two directions.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraint.Create
+This method creates a constraint for a given RebarConstrainedHandle.    Will throw exception if used for Shape Driven Rebar.

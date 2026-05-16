@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rectangle.Round
+Converts a floating point  to an integral  by rounding the X, Y, Width, and Height.

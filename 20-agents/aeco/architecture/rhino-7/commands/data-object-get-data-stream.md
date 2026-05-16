@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataObject.GetDataStream
+Gets the data stream with the specified type identifier.

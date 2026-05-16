@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Graph.Draw_PreRenderTags
+Override this function if you want to draw something behind of or instead of the default Domain tags.   This function is called whether or not cnt.LockGrips is true

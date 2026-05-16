@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.GetCustomFieldId
+Gets custom field id from the cell.

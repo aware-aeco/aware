@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MathComparisonUtils.IsAlmostZero
+Checks if value is almost zero, using the internal tolerance.

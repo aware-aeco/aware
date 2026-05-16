@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Matrix.RotateAt
+Prepend a rotation around the specified point to the matrix

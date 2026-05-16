@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurveKnotList.Contains
+Returns an indication of the presence of a value in the knot list.

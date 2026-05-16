@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralConnectionHandler.AddElementIds
+Adds element ids to the connection.    All element ids in an array should be of applicable category.

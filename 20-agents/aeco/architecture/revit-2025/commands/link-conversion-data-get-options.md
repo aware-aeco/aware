@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinkConversionData.GetOptions
+Extra information used during the creation of the Revit document.

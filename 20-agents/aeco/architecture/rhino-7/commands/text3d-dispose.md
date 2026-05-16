@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Text3d.Dispose
+Actively reclaims unmanaged resources that this instance uses.

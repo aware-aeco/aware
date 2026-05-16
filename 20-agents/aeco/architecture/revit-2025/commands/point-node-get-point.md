@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointNode.GetPoint
+Returns the point object corresponding to the node.

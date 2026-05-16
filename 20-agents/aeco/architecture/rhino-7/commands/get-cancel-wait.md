@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetCancel.Wait
+Awaits a particular task to finish.

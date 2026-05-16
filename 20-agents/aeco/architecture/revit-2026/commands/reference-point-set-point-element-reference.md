@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferencePoint.SetPointElementReference
+Change the rule for computing the  location of the ReferencePoint relative to other elements in the document.

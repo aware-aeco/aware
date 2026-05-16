@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IReadOnlySupport.GetTextAsync
+Return all content as one string. Read-only lines are prefixed with prefixToAddToReadOnlyLines

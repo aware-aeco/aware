@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshTopologyEdgeList.IsNgonInterior
+Returns true if the topological edge is an interior ngon edge

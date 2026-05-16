@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarCoverType.Create
+Creates a new CoverType in the document.

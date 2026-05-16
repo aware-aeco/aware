@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Material.Duplicate
+Duplicate this material.

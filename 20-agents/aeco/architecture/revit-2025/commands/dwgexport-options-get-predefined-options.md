@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DWGExportOptions.GetPredefinedOptions
+Returns an instance DWGExportOptions containing settings from a predefined export setup.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightType.GetInitialColor
+Return a copy of an object derived from InitialColor

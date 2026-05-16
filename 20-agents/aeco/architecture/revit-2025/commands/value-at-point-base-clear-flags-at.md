@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ValueAtPointBase.ClearFlagsAt
+Sets flags for the given measurement to ValueAtPointFlags::None.

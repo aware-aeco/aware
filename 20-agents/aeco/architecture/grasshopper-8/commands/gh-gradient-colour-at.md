@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Gradient.ColourAt
+Evaluate the colour at a specific parameter.

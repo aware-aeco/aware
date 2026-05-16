@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SchemaBuilder.GUIDIsValid
+Checks whether the supplied GUID value is valid.

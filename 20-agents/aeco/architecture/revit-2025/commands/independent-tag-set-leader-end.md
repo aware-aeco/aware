@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndependentTag.SetLeaderEnd
+Set the end position of the tag's leader that points to specified reference.

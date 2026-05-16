@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportEnumerateObjects
+DO NOT USE! For internal usage only!

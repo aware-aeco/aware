@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point3dList.Equals
+Overrides the dafault object equality to compare lists by value.

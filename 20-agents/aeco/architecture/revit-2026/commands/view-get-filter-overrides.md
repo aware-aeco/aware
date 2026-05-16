@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetFilterOverrides
+Gets graphic overrides that a filter applies to the view.

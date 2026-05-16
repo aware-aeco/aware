@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Padding.GetHashCode
+Gets the hash code for this Padding instance

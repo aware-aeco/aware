@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SnapShotsClient.Dispose
+SnapShotsClient Dispose

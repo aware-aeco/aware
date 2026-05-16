@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PythonScript.GetStackTraceFromException
+Retrieves a meaningful representation of the call stack.

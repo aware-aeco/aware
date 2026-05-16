@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TriangulatedShellComponent.Clear
+Empties the contents of this TriangulatedShellComponent.

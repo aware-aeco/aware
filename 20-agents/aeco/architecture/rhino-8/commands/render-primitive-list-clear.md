@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderPrimitiveList.Clear
+Remove all primitives from this list

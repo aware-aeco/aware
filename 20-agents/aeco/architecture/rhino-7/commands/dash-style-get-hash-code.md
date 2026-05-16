@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DashStyle.GetHashCode
+Serves as a hash function for a  object.

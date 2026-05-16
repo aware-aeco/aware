@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConductorSize.Create
+Creates a Conductor Size.

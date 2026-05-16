@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.GetEnumerator
+Gets an enumerator that allows to modify each point cloud point.

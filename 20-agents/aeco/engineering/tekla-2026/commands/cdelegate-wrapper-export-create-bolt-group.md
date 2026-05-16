@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportCreateBoltGroup
+DO NOT USE! For internal usage only!

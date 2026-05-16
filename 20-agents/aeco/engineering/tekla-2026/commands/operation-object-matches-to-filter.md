@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.ObjectMatchesToFilter
+Checks whether the object matches to the criteria in the given filter.

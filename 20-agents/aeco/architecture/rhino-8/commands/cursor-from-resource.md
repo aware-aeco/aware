@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Cursor.FromResource
+Loads a cursor from the resource in the specified or caller's

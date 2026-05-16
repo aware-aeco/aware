@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DynamicLayout.BeginVertical
+Begins a new vertical section in the layout

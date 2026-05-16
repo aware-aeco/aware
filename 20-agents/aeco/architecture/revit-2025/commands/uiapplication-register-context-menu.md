@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIApplication.RegisterContextMenu
+Adds a new context menu creator.

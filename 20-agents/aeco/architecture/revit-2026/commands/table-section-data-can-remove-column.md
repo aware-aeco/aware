@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.CanRemoveColumn
+Verifies that if the column at the given index can be removed.

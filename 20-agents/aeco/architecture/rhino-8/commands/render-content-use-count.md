@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContent.UseCount
+UseCount returns how many times the content is used

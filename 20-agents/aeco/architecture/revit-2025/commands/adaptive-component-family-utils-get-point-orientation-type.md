@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AdaptiveComponentFamilyUtils.GetPointOrientationType
+Gets orientation type of an Adaptive Placement Point.

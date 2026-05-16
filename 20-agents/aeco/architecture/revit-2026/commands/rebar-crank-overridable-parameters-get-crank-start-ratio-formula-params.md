@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarCrankOverridableParameters.GetCrankStartRatioFormulaParams
+Gets the formula parameter ids defined in the RebarShape family which are associated with start crank ratio parameters.

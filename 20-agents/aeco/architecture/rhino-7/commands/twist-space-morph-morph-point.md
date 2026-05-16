@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TwistSpaceMorph.MorphPoint
+Morphs an Euclidean point. This method is abstract.

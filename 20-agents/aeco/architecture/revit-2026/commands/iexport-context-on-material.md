@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExportContext.OnMaterial
+This method marks a change of the material.

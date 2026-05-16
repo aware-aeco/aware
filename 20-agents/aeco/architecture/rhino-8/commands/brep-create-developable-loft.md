@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateDevelopableLoft
+Creates a single developable surface between two curves.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentAttributes.InvalidateCanvas
+The canvas must be invalidated when the mouse is near enough and   this component has variable parameters.

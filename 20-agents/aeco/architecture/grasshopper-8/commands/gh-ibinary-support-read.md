@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_IBinarySupport.Read
+Called when an object is required to deserialize itself.

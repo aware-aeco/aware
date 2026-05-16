@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewTable.FlashObjects
+Cause objects selection state to change momentarily so the object             appears to flash on the screen.

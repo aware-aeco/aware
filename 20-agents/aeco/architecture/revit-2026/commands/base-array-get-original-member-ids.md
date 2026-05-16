@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BaseArray.GetOriginalMemberIds
+Retrieves the original member Ids of the Array.

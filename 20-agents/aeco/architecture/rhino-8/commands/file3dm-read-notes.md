@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dm.ReadNotes
+Reads only the notes from an existing 3dm file.

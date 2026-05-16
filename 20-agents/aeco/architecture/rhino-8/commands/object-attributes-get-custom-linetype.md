@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectAttributes.GetCustomLinetype
+Get an optional custom linetype associated with these attributes. If null,              then the attributes use the linetype index to determine it's linetype

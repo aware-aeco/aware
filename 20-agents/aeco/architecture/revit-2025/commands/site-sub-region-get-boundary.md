@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SiteSubRegion.GetBoundary
+Gets the boundary of current subregion.

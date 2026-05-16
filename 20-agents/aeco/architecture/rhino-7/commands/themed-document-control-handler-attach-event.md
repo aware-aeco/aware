@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedDocumentControlHandler.AttachEvent
+Attaches the specified event.

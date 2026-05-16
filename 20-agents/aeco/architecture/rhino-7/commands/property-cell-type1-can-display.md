@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PropertyCellType`1.CanDisplay
+Determines whether this instance can display the specified itemType.

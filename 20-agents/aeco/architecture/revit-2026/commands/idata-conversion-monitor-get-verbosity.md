@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IDataConversionMonitor.GetVerbosity
+Reports requested verbosity level

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PartUtils.CreateParts
+Creates a new set of parts out of the original elements.

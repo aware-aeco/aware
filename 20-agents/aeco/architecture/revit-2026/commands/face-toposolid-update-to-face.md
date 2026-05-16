@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FaceToposolid.UpdateToFace
+Resets the face toposolid to its defining faces.

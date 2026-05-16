@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroundConductorSizeSetIterator.Reset
+Bring the iterator back to the start of the set.

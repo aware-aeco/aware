@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MetaDataProxy.SetContentInstanceId
+Set Content instance id for meta data

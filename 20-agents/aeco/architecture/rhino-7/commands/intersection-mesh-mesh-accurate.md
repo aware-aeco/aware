@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.MeshMeshAccurate
+Intersects two meshes. Overlaps and near misses are handled. This is an old method kept for compatibility.

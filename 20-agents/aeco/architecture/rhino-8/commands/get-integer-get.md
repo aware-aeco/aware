@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetInteger.Get
+Call to get an integer.

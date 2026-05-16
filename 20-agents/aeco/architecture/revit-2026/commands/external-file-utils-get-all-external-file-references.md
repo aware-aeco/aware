@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalFileUtils.GetAllExternalFileReferences
+Gets the ids of all elements which are external file references.

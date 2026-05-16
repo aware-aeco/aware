@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSystemSpanSymbol.Create
+Creates a new instance of RebarSystemSpanSymbol in the project.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.UnhighlightAllSubObjects
+Removes highlighting from all sub-objects.

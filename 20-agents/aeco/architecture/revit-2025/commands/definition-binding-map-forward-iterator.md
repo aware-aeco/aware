@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DefinitionBindingMap.ForwardIterator
+Retrieve a forward moving iterator to the map.

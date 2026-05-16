@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHOrdinateDimension_Primary
+Converts similar data into a GH_OrdinateDimension instance.  Data is not guaranteed to be duplicated.

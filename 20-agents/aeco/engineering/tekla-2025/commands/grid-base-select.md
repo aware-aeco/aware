@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GridBase.Select
+Selects the grid with the given ID.

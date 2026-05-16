@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LayerTable.CreateLayer
+Basic tool used by the add layer methods.

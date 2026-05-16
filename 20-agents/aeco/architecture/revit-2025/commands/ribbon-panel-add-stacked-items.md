@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RibbonPanel.AddStackedItems
+Adds three stacked items to the panel.

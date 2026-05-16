@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IPointCloudAccess.GetOffset
+Implement this method to return the offset stored in the point cloud.

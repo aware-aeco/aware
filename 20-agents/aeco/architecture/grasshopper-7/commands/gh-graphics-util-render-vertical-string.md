@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.RenderVerticalString
+Render vertical text (rotated 90 degrees counter-clockwise) within a rectangle.

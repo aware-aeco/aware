@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaBasedLoadData.RemoveElectricalLoadArea
+Removes electrical load area from the area based load.

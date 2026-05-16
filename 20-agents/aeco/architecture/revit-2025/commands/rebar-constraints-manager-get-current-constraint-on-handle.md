@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraintsManager.GetCurrentConstraintOnHandle
+Retrieves the RebarConstraint that acts on the specified RebarConstraintHandle.

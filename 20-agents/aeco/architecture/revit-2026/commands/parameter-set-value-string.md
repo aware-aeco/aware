@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Parameter.SetValueString
+Set the parameter value according to the input string.

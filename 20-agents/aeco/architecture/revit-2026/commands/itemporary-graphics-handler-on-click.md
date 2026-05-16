@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ITemporaryGraphicsHandler.OnClick
+Handles mouse click event on a given temporary graphics object managed by .

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Goo.CastFrom
+Attempt a cast from generic object

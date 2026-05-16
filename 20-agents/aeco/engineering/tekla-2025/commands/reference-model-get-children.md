@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceModel.GetChildren
+Returns an enumerator of all the children reference model objects.

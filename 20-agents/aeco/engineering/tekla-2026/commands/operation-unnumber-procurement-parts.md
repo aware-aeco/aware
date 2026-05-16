@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.UnnumberProcurementParts
+Unassign numbers in the procurement numbering.

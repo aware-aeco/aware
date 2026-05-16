@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CategoryNameMap.Erase
+Removes a category with the specified name from the map.

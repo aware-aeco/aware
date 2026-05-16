@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_StateAwareObject.SaveState
+Override this function to store your state data.   You have to return a deserializable string.

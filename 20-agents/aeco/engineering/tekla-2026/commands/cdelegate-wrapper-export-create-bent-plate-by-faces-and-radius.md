@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportCreateBentPlateByFacesAndRadius
+DO NOT USE! For internal usage only!

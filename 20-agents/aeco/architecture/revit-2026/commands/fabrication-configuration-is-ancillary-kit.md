@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.IsAncillaryKit
+Gets whether the specified fabrication ancillary identifier is an ancillary kit or not.

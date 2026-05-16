@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarCoupler.Create
+Creates a new instance of a Rebar Coupler element within the project.

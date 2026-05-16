@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.IsoCurve
+Gets isoparametric curve.

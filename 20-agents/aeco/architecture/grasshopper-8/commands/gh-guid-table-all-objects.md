@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GuidTable.AllObjects
+Collect all the objects that are stored in this Table.   The result might contain duplicates.

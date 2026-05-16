@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailuresAccessor.DeleteAllWarnings
+Deletes all FailureMessages of severity "Warning" currently posted in a document.

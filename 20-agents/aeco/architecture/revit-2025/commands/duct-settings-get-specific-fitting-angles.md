@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DuctSettings.GetSpecificFittingAngles
+Gets the list of specific fitting angles.

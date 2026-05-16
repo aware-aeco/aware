@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicTreeDisplayArgs.RadialBox
+Compute the extents of a rectanle within the current layout.

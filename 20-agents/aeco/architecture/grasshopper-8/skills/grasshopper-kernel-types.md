@@ -6,76 +6,139 @@ description: API reference for namespace Grasshopper.Kernel.Types from Grasshopp
 # Grasshopper.Kernel.Types
 
 - **Complex**
+  - Complex number type in Grasshopper. Do not confuse with GH_Complex which is the  IGH_Goo implementation of ComplexNumber.
 - **GH_AngularDimension**
+  - Represents an implementation of a Rhino angular dimension.
 - **GH_AnnotationBase**
+  - Represents an implementation of a Rhino annotation base class.
 - **GH_Arc**
+  - Represents a 3D circular arc. GH_Arc re-implements the OpenNURBS OnArc class.
 - **GH_Boolean**
+  - Represents a boolean value. GH_Boolean re-implements the framework System.Boolean type.
 - **GH_Box**
+  - Represents a 3D oriented Box volume.
 - **GH_Brep**
+  - Represents a 3D polysurface. GH_Brep wraps the functionality of the OpenNURBS OnBrep class.
 - **GH_Centermark**
+  - Represents an implementation of a Rhino centermark.
 - **GH_Circle**
+  - Represents a 3D circle. GH_Circle re-implements the OpenNURBS OnCircle class.
 - **GH_Colour**
+  - Represents an ARGB colour. GH_Colour re-implements the framework System.Drawing.Color type.
 - **GH_ComplexNumber**
+  - Wraps up the Complex data type for IGH_Goo adherence.
 - **GH_Culture**
+  - Represents a globally unique identifier. GH_Guid re-implements the framework System.Guid type.
 - **GH_Curve**
+  - Represents a 3D spline curve.
 - **GH_DetailView**
+  - Represents a Rhino model detail view. Wraps the functionality of the  type.
 - **GH_DifferentialSolver**
+  - Enumerates all implemented differential samplers.
 - **GH_Dimension**
+  - Represents an implementation of a Rhino dimension base class.
 - **GH_Extrusion**
+  - Represents a 3D extrusion. GH_Extrusion wraps the functionality of the OpenNURBS OnExtrusion class.
 - **GH_Field**
+  - Represents a field of forces.
 - **GH_FieldElement**
+  - Abstract implementation of IGH_FieldElement, derive from this class   rather than implementing IGH_FieldElement to save yourself time and effort.
 - **GH_GeometricGooWrapper**
+  - Utility class for maintaining all kinds of IGH_GeometricGoo types.
 - **GH_GeometricGoo`1**
+  - Abstract base implementation of IGH_GeometricGoo. If you implement IGH_GeometricGoo, use this for a booster.
 - **GH_GeometryGroup**
 - **GH_GooProxy`1**
+  - Abstract base implementation of IGH_GooProxy
 - **GH_Goo`1**
+  - Base class for IGH_Goo implementation. Takes care of some default behaviour.
 - **GH_Guid**
+  - Represents a globally unique identifier. GH_Guid re-implements the framework System.Guid type.
 - **GH_Hatch**
+  - Represents an implementation of a Rhino hatch.
 - **GH_InstanceReference**
+  - Represents block instance reference. Wraps the functionality of the  type.
 - **GH_Integer**
+  - Represents a 32-bit signed integer. GH_Integer re-implements the framework System.Int32 type.
 - **GH_Interval**
+  - Represents a one-dimensional numeric domain.
 - **GH_Interval2D**
+  - Represents a two-dimensional numeric domain.
 - **GH_Leader**
+  - Represents an implementation of a Rhino leader.
 - **GH_Light**
+  - Represents an implementation of a Rhino Light class.
 - **GH_Line**
+  - Represents a 3D line segment. GH_Line re-implements the OpenNURBS OnLine class.
 - **GH_LineCharge**
+  - Line charge implementation for IGH_Fields.
 - **GH_LinearDimension**
+  - Represents an implementation of a Rhino linear dimension.
 - **GH_LonLatCoordinate**
 - **GH_Material**
+  - Represents a implementation of the Rhino material
 - **GH_Matrix**
+  - Represents a rectangular numeric matrix. GH_Integer re-implements Rhino.Geometry.Matrix.
 - **GH_Mesh**
+  - Represents a 3D polygonal mesh composed of quads and tris. GH_MEsh wraps the functionality of the OpenNURBS OnMesh class.
 - **GH_MeshFace**
+  - Represents a tri or quad mesh face. GH_MeshFace works similar to the OpenNURBS OnMeshFace class.
 - **GH_MeshingParameters**
 - **GH_Number**
+  - Represents a double-precision floating point number. GH_Number re-implements the framework System.Double type.
 - **GH_ObjectWrapper**
 - **GH_OrdinateDimension**
+  - Represents an implementation of a Rhino ordinate dimension.
 - **GH_Plane**
+  - Represents a 3D plane. GH_Plane re-implements the OpenNURBS OnPlane class.
 - **GH_Point**
 - **GH_PointCharge**
+  - Point charge implementation for IGH_Fields.
 - **GH_PointCloud**
+  - Represents a point cloud.
 - **GH_PointRefData**
 - **GH_PointRefType**
 - **GH_PointUtil**
 - **GH_Predicate**
 - **GH_QuickCastType**
+  - Enumerates the QuickCast data types.
 - **GH_RadialDimension**
+  - Represents an implementation of a Rhino radial dimension.
 - **GH_Rectangle**
+  - Represents a 3D rectangle. GH_Rectangle re-implements the RhinoCommon Rectangle3d.
 - **GH_SpinForce**
+  - Rotational spin force for IGH_Fields.
 - **GH_String**
+  - Represents a literal string. GH_String re-implements the framework System.String type.
 - **GH_StructurePath**
 - **GH_SubD**
+  - Represents a 3D subdivision surface.
 - **GH_Surface**
+  - Represents a 3D (trimmed) surface. GH_Surface wraps the functionality of the OpenNURBS OnBrepFace class.
 - **GH_TextDot**
+  - Represents an implementation of a Rhino text dot.
 - **GH_TextEntity**
+  - Represents an implementation of a Rhino text entity.
 - **GH_Time**
+  - Represents a date and time. GH_Time re-implements the framework System.DateTime type.
 - **GH_Transform**
+  - Represents a collection of transformations.
 - **GH_Vector**
+  - Represents a 3D vector. GH_Vector re-implements the RhinoCommon Vector3d struct.
 - **GH_VectorForce**
+  - Linear vector force implementation for IGH_Fields.
 - **GH_WrapperType`1**
+  - Defines basic implementation for a wrapper data type.
 - **IGH_FieldElement**
+  - Represents the basic interface for field elements.
 - **IGH_GeometricGoo**
+  - Base interface for all Data inside Grasshoper that could pass for Geometry
 - **IGH_Goo**
+  - Base interface for all Data inside Grasshopper. Every parameter must implement a type of Goo.
 - **IGH_GooProxy**
+  - Base interface for all type proxies.
 - **IGH_QuickCast**
+  - IGH_QuickCast allows certain components to speed up type detection for inputs.   This interface is a Grasshopper core interface only, do not implement it. Do not use it.
 - **IGH_ReferencedData**
 - **UVInterval**
+  - UVInterval data type. Do not confuse this with GH_Interval2D.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MassSurfaceData.GetFaceReferences
+Gets References to the faces that the MassSurfaceData provides properties for.

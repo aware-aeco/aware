@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FlatBufferBuilder.AddShort
+Add a `short` to the buffer (aligns the data and grows if necessary).

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AppearanceSettings.GetPaintColor
+Gets the color that is currently associated with a paint color.

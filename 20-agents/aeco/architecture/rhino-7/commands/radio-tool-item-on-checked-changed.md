@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RadioToolItem.OnCheckedChanged
+Raises the  event.

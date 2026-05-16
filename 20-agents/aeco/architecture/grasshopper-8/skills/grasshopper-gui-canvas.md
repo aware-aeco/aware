@@ -6,37 +6,68 @@ description: API reference for namespace Grasshopper.GUI.Canvas from Grasshopper
 # Grasshopper.GUI.Canvas
 
 - **GH_Border**
+  - Represents a resizing border of a Grasshopper canvas object.
 - **GH_BorderTopology**
+  - Enumerates all possble border types.
 - **GH_Canvas**
+  - The GH_Canvas is the control that handles all mouse and paint events for a single loaded document.
 - **GH_CanvasChannel**
+  - Enumerates all the drawing channels that are handled inside the Grasshopper canvas.
 - **GH_CanvasDocumentChangedEventArgs**
+  - These arguments are used in the DocumentChanged event on GH_Canvas.
 - **GH_CanvasDropTargetValidator**
+  - Utility validator for restricting component creation.
 - **GH_CanvasMode**
+  - Enumerates all pre-defined Canvas modes.
 - **GH_CanvasNavigation**
+  - Enumerates all possible canvas navigations.
 - **GH_CanvasValidator**
+  - Abstract implementation of IGH_CanvasValidator.   Inherit from this class rather than implementing IGH_CanvasValidator from scratch.
 - **GH_CanvasViewportChangedEventArgs**
+  - These arguments are used in the ViewportChanged event on GH_Canvas.
 - **GH_CanvasWidgetListEventArgs**
+  - The event arguments are used in the WidgetListCreated event.
 - **GH_CanvasWireValidator**
+  - Utility validator for restricting wire creation.
 - **GH_Capsule**
+  - Class used to draw standard Grasshopper interface boxes.
 - **GH_CapsuleRenderEngine**
+  - Provides basic Render methods for capsule display.   You typically don't need this class, just use the Render()   overloads on GH_Capsule directly.
 - **GH_DocDiagramPainter**
+  - This class paints diagrammatic images of a collection of objects.
 - **GH_DragDropFileAction**
+  - Enumerates the possible actions for drag+drop loading ghx files.
 - **GH_FilePanel**
+  - A panel on the canvas that allows for recent files to be loaded.
 - **GH_NamedView**
+  - Named views are used both to store named views but also to allow smooth programmatic canvas navigation.
 - **GH_NamedViewEditor**
 - **GH_NamedViewType**
+  - Types of named view anchor points.
 - **GH_NavigationPaneDialog**
 - **GH_ObjectResponse**
+  - Lists the possible responses an object can give when confronted with a UI event.
 - **GH_Orientation**
+  - Enumerates possible alignments.
 - **GH_Painter**
+  - This class performs most of the drawing operations required for Grasshopper Canvas controls.
 - **GH_Palette**
+  - Lists all possible Capsule Palette styles in Grasshopper.
 - **GH_PaletteStyle**
+  - Contains all the colours for a single capsule palette.
 - **GH_PopupSearchDialog**
 - **GH_ResizeBorder**
 - **GH_Skin**
+  - Provides static access to typical Palletes and other GUI colours.
 - **GH_Viewport**
+  - Provides functionality for panning and zooming in a GH_Canvas environment.
 - **GH_WireDirection**
+  - Identifies a wire direction.
 - **GH_WireType**
+  - Enumerates the different kinds of connecting wires.
 - **IGH_CanvasValidator**
+  - 'Interface used for limiting a collection of typical actions on the canvas.   Do not implement this interface directly if you can help it, instead inherit from GH_CanvasValidator.
 - **IGH_ResponsiveObject**
+  - If you wish to participate in Canvas UI events, you must implement this interface.
 - **IGH_TooltipAwareObject**
+  - Implement this interface if you want your object to participate in Grasshopper Canvas tooltips.

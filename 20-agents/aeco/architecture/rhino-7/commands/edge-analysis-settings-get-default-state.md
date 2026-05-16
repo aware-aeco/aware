@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EdgeAnalysisSettings.GetDefaultState
+Gets the factory settings of the application.

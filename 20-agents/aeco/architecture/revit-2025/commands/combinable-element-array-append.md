@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CombinableElementArray.Append
+Add the element to the end of the array.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedLayerStateTable.Import
+Imports named layer states from a 3dm file.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ImporterIFC.GetOptions
+Gets the collection of named options set by the importer client.

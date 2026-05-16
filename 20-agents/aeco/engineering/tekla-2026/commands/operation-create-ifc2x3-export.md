@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.CreateIFC2x3Export
+Creates IFC2x3 export using the given file name.              See Tekla Structures Help for more information about IFC2x3 export files.

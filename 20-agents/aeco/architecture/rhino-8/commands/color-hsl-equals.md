@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorHSL.Equals
+Compares the given object for equality with this object

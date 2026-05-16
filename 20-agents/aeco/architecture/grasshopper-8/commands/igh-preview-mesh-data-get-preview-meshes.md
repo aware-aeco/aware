@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_PreviewMeshData.GetPreviewMeshes
+Gets all the preview meshes associated with this data.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.GetCellCombinedParameters
+Returns an array of combined parameter data for the specified column

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.GetLegacyCurtainSubElements
+Gets the sub elements from a legacy curtain element.

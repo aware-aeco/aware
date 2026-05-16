@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExportContext.OnRPC
+This method marks the beginning of export of an RPC object.

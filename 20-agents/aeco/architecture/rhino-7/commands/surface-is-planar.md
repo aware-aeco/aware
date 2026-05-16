@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.IsPlanar
+Tests a surface to see if it is planar to zero tolerance.

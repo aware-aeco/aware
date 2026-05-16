@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarUpdateCurvesData.SetCycleCounter
+Sets the cycle counter to a specific value.

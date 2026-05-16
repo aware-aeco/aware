@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetAllLoadedItemFiles
+Get list of all loaded fabrication item files.

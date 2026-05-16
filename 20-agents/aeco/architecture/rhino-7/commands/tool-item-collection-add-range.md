@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ToolItemCollection.AddRange
+Adds the specified tool items to the collection.

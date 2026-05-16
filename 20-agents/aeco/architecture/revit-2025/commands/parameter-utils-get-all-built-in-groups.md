@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterUtils.GetAllBuiltInGroups
+Gets the identifiers of all built-in parameter groups.

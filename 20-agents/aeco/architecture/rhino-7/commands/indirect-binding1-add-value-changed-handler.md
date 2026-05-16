@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndirectBinding`1.AddValueChangedHandler
+Adds a handler to trap when the value of this binding changes for the specified object

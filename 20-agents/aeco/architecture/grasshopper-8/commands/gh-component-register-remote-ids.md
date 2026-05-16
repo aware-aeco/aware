@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Component.RegisterRemoteIDs
+Registers all my input parameters with the UUID_LookUpTable

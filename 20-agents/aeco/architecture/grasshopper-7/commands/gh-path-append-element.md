@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Path.AppendElement
+Create a new path by appending a new index value to this path.

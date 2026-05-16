@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ImportSemantic
+DO NOT USE! For internal usage only!

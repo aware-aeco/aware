@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectAttributes.GetUserString
+Gets a user string.

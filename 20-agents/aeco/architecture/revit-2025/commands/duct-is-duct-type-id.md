@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Duct.IsDuctTypeId
+Checks if given type is valid duct type.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoDoc.Undo
+Undo the last action

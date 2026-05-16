@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentParamServer.WriteParamHashData
+Write parameter data to a binary writer.

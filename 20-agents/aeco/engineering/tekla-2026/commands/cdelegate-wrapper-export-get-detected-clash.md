@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetDetectedClash
+DO NOT USE! For internal usage only!

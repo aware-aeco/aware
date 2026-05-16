@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PropertyCellTypeEnum.OnCreate
+Creates the content control for the cell.

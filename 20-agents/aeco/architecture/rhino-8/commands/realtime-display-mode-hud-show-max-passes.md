@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RealtimeDisplayMode.HudShowMaxPasses
+Override to show maximum passes in HUD. By default disabled.

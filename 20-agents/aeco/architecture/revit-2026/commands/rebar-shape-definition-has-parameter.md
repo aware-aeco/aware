@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDefinition.HasParameter
+Whether the definition stores the parameter.

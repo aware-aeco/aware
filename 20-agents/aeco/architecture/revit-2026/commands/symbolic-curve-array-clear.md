@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SymbolicCurveArray.Clear
+Removes every model curve from the array, rendering it empty.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PourBreak.Delete
+Deletes the model object from the model database.

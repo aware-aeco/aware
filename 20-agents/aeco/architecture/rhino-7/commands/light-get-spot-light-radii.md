@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Light.GetSpotLightRadii
+Gets the spot light radii.

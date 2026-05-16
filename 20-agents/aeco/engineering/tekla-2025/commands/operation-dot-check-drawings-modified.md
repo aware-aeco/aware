@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotCheckDrawingsModified
+Check if any drawings have been created, modified or deleted after modification stamp.

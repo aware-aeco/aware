@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.SwapConstructionObjectOrder
+Swaps the order of a construction object

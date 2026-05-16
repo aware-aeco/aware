@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssemblyInstance.CanRemoveElementsFromAssembly
+Identifies if provided assembly members can be removed from the assembly instance.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssetPropertyDoubleArray3d.IsValidValue
+Checks that the value is a valid value for this property.

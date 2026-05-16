@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ActiveObject.RegisterRemoteIDs
+Override this function if you want object changes in the Rhino document to trigger a new solution.

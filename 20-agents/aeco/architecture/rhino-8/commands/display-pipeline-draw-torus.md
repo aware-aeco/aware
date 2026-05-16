@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawTorus
+Draw a wireframe torus.

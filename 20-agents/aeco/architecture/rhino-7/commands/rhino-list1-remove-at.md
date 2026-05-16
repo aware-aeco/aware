@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoList`1.RemoveAt
+Removes the element at the specified index of the List.

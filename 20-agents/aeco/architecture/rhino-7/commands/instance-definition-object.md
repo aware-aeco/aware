@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceDefinition.Object
+returns an object used as part of this definition.

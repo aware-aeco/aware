@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricSheet.GetBendProfileWithFillets
+Returns the profile with generated fillets that defines the shape of the Fabric Sheet bending.

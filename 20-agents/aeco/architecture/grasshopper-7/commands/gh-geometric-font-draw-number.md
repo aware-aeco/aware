@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GeometricFont.DrawNumber
+Draw an integer at the specified location.

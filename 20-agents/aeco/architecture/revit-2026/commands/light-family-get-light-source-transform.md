@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightFamily.GetLightSourceTransform
+Returns a Transform value for the transform of light source.

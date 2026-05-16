@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform2D.OfVector
+Applies the transformation to the vector and returns the result.

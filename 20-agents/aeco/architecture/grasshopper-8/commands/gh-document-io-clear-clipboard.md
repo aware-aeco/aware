@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentIO.ClearClipboard
+Clear the Clipboard Text content.   This function wipes both the Text and UnicodeText clipboard fields.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NodeInCodeTable.Add
+Adds, or replaces a new instance of component function information.

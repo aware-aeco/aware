@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.GetFrustumLeftPlane
+Get left world frustum clipping plane.

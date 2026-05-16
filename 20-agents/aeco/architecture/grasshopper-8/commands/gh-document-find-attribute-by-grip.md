@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.FindAttributeByGrip
+Search for attributes that contain grips near the search locus

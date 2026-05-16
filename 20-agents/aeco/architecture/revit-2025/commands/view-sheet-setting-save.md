@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSheetSetting.Save
+Save the changes for the current view sheet set.

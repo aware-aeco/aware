@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolylineCurve.ToArray
+Returns the underlying Polyline points as an array.

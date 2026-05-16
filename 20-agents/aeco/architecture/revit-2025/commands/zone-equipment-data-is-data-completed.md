@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ZoneEquipmentData.IsDataCompleted
+Is the required data completed for this zone equipment?

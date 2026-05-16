@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadLine.Delete
+Deletes the load line instance with the given ID from the model database.

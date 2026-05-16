@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetTemporaryViewPropertiesId
+When Temporary View Properties mode is in progress it provides view id that overrode settings for current view.    Outside Temporary View Properties mode InvalidElementId will be returned.

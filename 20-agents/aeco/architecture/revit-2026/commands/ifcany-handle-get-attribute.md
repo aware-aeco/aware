@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCAnyHandle.GetAttribute
+Gets the attribute by name.

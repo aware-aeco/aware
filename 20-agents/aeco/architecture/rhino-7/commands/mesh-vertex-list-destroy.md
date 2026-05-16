@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexList.Destroy
+Releases all memory allocated to store faces. The list capacity will be 0 after this call.             Subsequent calls can add new items.

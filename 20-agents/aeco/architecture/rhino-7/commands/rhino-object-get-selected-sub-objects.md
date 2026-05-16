@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.GetSelectedSubObjects
+Get a list of all selected sub-objects.

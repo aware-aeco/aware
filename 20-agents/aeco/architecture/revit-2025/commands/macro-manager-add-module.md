@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MacroManager.AddModule
+Adds a MacroModule to the application.

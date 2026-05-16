@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToCircle_Primary
+Performs a direct cast from OnCircle or GH_Circle.   Data is not quaranteed to be duplicated.

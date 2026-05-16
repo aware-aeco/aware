@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextBox.SelectAll
+Selects all of the text in the control.

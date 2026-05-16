@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.IsValidProfile
+Gets a value indicating whether the given profile is a valid profile.

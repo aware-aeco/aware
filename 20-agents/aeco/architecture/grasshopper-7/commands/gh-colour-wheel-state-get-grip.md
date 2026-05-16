@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourWheelState.GetGrip
+Gets the location of a grip of the colour wheel.   Grips will be returned irrespective of style.

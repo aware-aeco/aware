@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Format.FormatMeshFaceValidity
+If the number is invalid, return a string describing why.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewportInfo.GetCameraAngles
+Gets the field of view angles.

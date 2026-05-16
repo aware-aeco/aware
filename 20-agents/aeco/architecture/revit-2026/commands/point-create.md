@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point.Create
+Creates a point at the given coordinates and assigns it the specified GraphicsStyle and Visibility.

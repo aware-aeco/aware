@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-VertexPositionColored.GetSizeInFloats
+Gets the amount of storage that the vertex takes up in a buffer, measured in floats.

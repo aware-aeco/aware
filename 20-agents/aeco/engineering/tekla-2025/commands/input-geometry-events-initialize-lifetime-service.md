@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InputGeometryEvents.InitializeLifetimeService
+Initializes the lifetime service.

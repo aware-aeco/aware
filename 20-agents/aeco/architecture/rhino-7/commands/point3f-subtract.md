@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point3f.Subtract
+Subtracts a point from another point.             (Provided for languages that do not support operator overloading. You can use the - operator otherwise)

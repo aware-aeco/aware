@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultiServerService.SetServerState
+This method will simply switch the active state of a server without affecting in any way the other servers.

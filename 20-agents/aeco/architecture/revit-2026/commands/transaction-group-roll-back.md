@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TransactionGroup.RollBack
+Rolls back the transaction group, which effectively undoes all transactions committed inside the group.

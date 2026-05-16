@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.PlaneBoundingBox
+Intersects a plane and a bounding box.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DatumPlane.Maximize3DExtents
+Computes the 3d extents of all model geometry and levels, and extends the 3d extents of this datum surface to include the model extents.

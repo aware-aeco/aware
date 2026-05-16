@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CollapsibleSectionViewModel.GetData
+Call for an interface to data

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToRelativePath
+Create a relative path from two absolute paths.

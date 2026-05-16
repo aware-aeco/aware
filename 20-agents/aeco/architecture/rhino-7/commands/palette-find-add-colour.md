@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Palette.FindAddColour
+Finds the index of the specified color, or adds it if it does not exist

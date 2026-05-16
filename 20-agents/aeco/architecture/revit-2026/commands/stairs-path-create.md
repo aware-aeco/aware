@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StairsPath.Create
+Creates a new stairs path for the specified stairs with the specified stairs path type only in the plan view.

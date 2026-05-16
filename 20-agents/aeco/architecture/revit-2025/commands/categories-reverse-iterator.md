@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Categories.ReverseIterator
+Retrieves a backward moving iterator to the map.

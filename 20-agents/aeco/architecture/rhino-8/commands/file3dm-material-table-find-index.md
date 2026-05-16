@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmMaterialTable.FindIndex
+Retrieves a material based on Index. This search type of search is discouraged.             We are moving towards using only IDs for all tables.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotSharingWriteOut
+The dot sharing write out.

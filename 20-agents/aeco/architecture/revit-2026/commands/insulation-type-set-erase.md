@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InsulationTypeSet.Erase
+Removes a specified insulation type from the set.

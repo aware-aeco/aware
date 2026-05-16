@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CopyTrimCurves
+Copy all trims from a Brep face onto a surface.

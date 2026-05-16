@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DocumentValidation.CanDeleteElement
+Indicates if an element can be deleted.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndexStreamPoint.AddPoints
+Inserts multiple  instances into the stream and associated buffer.

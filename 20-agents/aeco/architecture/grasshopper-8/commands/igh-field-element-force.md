@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_FieldElement.Force
+Compute the force at a given location.

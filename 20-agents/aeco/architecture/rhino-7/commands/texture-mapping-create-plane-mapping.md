@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextureMapping.CreatePlaneMapping
+Create a planar UV projection texture mapping

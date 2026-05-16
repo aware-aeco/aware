@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IntersectionEvent.CompareEquivalent
+Compare intersection events.

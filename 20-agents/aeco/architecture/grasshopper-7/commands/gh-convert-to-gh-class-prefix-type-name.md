@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.To_GH_ClassPrefixTypeName
+Rename a Type FullName from the pre-"GH_"-prefix ea.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Capsule.CreateTextCapsule
+Create a new capsule with content text.

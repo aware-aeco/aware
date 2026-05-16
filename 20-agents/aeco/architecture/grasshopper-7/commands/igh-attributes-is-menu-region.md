@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Attributes.IsMenuRegion
+Determines whether a point is available for context menu popups.   By default, IsMenuRegion calls IsPickRegion(PointF).

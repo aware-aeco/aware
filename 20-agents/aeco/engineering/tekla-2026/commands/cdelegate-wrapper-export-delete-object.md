@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportDeleteObject
+DO NOT USE! For internal usage only!

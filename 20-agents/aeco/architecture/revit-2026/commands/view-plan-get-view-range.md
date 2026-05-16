@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewPlan.GetViewRange
+Gets the view range.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.RotateConnectedPartByConnector
+Rotates a connected fabrication part around the axis of the specified connector.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataTree`1.PathExists
+Test if the specified path is already defined inside the tree.

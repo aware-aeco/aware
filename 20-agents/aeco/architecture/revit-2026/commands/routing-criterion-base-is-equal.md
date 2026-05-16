@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RoutingCriterionBase.IsEqual
+Verify if two criteria are the same.

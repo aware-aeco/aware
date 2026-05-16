@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleData.GetLoadClassifications
+Gets an array of the load classifications associated with this panel schedule

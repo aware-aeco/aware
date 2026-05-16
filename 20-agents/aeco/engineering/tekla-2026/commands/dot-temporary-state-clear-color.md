@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-dotTemporaryState.ClearColor
+Clears the temporary color for a model object and keeps the transparency as before.

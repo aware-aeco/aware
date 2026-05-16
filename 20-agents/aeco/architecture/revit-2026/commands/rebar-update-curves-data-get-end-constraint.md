@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarUpdateCurvesData.GetEndConstraint
+Gets the current constraint for the end handle of the Rebar.

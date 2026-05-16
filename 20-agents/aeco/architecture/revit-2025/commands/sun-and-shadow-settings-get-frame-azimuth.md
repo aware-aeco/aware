@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SunAndShadowSettings.GetFrameAzimuth
+Identifies the azimuth of the sun (angle in radians) for a specific frame.

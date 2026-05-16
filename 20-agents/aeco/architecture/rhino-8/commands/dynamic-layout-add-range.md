@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DynamicLayout.AddRange
+Adds a list of controls

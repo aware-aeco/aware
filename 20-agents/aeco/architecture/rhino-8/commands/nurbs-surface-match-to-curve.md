@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsSurface.MatchToCurve
+Constructs a NURBS surface with start and end edge isocurve matching the start and end of targetCurve, and Greville points on targetCurve.

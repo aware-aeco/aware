@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextEntity.CreateCurves
+Returns the outline curves.

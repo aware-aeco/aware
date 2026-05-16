@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.RejectNumberingResults
+Reject the numbering results (cancel previous executed numbering).

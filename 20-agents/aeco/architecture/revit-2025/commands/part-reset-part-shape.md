@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Part.ResetPartShape
+Resets all face offsets applied to part faces.

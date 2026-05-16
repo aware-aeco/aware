@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoltArray.RemoveBoltDistY
+Removes a Y distance from the bolt array in the index position.

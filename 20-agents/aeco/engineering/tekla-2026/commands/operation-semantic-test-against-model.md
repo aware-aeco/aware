@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.SemanticTestAgainstModel
+Converts Test Semantic model against native model.

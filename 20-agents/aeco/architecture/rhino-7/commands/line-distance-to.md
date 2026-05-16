@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Line.DistanceTo
+Compute the shortest distance between this line segment and a test point.

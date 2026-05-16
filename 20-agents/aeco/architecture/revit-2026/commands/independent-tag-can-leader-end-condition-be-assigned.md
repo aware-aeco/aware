@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndependentTag.CanLeaderEndConditionBeAssigned
+Checks whether the LeaderEndCondition can be changed.

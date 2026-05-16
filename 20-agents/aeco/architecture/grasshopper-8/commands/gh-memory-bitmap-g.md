@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MemoryBitmap.G
+Gets the greeb channel value at the given pixel coordinates.

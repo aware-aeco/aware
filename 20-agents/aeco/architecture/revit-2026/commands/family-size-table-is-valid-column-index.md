@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilySizeTable.IsValidColumnIndex
+Checks if the column index is valid.

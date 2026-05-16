@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RealtimeDisplayMode.IsCompleted
+Implement to tell if your render engine has completed a frame for drawing into the viewport

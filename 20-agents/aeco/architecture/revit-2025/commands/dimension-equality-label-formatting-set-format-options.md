@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DimensionEqualityLabelFormatting.SetFormatOptions
+Sets the format options used to show the parameter value.

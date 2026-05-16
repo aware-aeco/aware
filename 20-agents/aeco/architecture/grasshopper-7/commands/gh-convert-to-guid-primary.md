@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGUID_Primary
+Performs a direct cast from Guid, GH_Guid, String and GH_String.

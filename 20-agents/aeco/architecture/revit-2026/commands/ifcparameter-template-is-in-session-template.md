@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCParameterTemplate.IsInSessionTemplate
+Returns true if this is an in-session template.

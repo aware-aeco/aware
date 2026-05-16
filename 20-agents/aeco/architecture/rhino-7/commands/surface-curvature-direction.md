@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SurfaceCurvature.Direction
+Gets the principal curvature direction vector.

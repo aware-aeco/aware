@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ShowExternalReferenceModel
+DO NOT USE! For internal usage only!

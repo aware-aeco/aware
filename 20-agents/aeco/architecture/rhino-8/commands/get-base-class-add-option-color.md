@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetBaseClass.AddOptionColor
+Add a command line option to get colors and automatically save the value.

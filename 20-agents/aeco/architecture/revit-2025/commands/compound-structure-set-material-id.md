@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.SetMaterialId
+Sets a material element for a specified layer.

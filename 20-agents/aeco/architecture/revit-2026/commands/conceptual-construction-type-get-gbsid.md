@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConceptualConstructionType.GetGBSId
+Gets the Green Building Studio identifier associated with the construction.

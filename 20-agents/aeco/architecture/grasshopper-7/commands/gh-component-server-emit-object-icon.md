@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentServer.EmitObjectIcon
+Get the icon that is associated with the given Object ID.

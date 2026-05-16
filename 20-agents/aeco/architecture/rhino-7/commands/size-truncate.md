@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Size.Truncate
+Converts a floating point  to an integral size by truncating the width and height

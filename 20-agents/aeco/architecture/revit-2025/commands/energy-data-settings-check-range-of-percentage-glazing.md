@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyDataSettings.CheckRangeOfPercentageGlazing
+Checks that the percentage glazing value is between 0.00 and 0.95.

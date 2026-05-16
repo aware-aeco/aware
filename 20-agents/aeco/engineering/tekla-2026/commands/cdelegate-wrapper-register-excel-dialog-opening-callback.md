@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.RegisterExcelDialogOpeningCallback
+DO NOT USE! For internal usage only!

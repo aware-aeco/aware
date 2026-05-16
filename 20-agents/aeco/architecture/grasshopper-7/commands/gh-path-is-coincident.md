@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Path.IsCoincident
+Test to see if this path is coincident with another path.

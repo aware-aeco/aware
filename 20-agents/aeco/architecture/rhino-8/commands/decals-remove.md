@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Decals.Remove
+Remove a single decal from the collection.

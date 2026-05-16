@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoList`1.Remove
+Removes the first occurrence of a specific object from the List.

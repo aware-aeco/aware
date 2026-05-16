@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BezierCurve.Dispose
+Actively reclaims unmanaged resources that this instance uses.

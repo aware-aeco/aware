@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Storey.RemoveManualObjectOverrides
+Removes specified manual overrides from this Building Hierarchy item.

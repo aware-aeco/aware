@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Icon.FromResource
+Loads an icon from an embedded resource of the specified assembly

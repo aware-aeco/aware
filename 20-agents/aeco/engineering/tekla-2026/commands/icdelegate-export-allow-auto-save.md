@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportAllowAutoSave
+DO NOT USE! For internal usage only!

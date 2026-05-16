@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PipeFittingAndAccessoryPressureDropUIDataItem.GetEntity
+Returns the entity set by UI server.    or an invalid entity otherwise.

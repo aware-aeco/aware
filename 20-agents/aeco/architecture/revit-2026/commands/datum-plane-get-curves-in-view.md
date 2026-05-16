@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DatumPlane.GetCurvesInView
+Gets a collection of curves representing the DatumPlane element in the given view.

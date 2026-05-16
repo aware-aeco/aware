@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilePdf.DrawText
+Draw text on a page

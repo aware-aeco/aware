@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateFromTaperedExtrudeWithRef
+Creates one or more Breps by extruding a curve a distance along an axis with draft angle.

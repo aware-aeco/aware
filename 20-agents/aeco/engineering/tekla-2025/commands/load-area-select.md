@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadArea.Select
+Selects a load area from the model database. The ID must be set.

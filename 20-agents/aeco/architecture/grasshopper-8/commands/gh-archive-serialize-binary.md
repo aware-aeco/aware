@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Archive.Serialize_Binary
+Serializes the data tree into a Binary byte array.

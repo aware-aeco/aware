@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IUpdater.GetAdditionalInformation
+Auxiliary text that Revit will use to inform the end user    when the Updater is not loaded

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_FieldElement.IsCoincident
+Computes whether the point can be considered coincident with the element.

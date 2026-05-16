@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Schema.ListSchemas
+Lists all schemas in memory.

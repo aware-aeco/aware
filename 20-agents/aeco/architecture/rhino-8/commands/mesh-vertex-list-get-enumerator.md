@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexList.GetEnumerator
+Gets an enumerator that yields all mesh vertices (points) in this collection.

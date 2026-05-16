@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilePdf.Read
+Read a PDF file into a RhinoDoc

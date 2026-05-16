@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalPowerDistributableNodeData.SetConnectedPhasesOnDownstream
+Set the electrical connected phases of the downstream node.

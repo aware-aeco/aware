@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_SettingsServer.EntryNames
+Gets a list of all the entry names in this settings.

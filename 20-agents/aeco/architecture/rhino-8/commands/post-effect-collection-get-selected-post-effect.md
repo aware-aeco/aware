@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PostEffectCollection.GetSelectedPostEffect
+Gets the selected post effect for a certain type into 'id'.             Returns true if successful or false if the selection information could not be found.

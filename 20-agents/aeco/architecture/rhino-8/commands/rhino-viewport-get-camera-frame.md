@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.GetCameraFrame
+Gets the camera plane.

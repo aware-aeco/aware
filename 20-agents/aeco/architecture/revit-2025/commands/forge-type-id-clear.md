@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ForgeTypeId.Clear
+Sets the typeId to an empty string

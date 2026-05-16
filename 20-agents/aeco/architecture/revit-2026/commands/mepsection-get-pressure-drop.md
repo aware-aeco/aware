@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPSection.GetPressureDrop
+Gets the pressure drop for the specified element id in this section.

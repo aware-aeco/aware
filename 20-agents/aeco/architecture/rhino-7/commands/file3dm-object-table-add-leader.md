@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObjectTable.AddLeader
+Adds an annotation leader to the document.

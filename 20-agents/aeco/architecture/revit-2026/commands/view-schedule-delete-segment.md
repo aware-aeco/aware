@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.DeleteSegment
+Deletes a schedule segment.

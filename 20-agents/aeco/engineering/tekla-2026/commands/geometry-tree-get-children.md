@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryTree.GetChildren
+Retrieves the list of nodes which are directly connected to a given node

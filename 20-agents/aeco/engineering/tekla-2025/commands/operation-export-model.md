@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.ExportModel
+Exports TS model to file.

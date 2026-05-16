@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToSubD_Primary
+Performs a direct cast from OnSubD or GH_SubD.   Data is not quaranteed to be duplicated.

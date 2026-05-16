@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurve.IsDuplicate
+Determines if two curves are similar.

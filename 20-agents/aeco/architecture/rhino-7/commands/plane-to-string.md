@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Plane.ToString
+Constructs the string representation of this plane.

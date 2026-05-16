@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ChangeQueue.OriginalInstanceIdsFromTextureId
+Return the collection of original document instance ids assocaited with the Texture id.

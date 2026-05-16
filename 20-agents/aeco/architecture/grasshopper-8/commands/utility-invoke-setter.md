@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Utility.InvokeSetter
+Call a setter property via its name.

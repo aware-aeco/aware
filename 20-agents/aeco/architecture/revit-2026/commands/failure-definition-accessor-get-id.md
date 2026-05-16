@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureDefinitionAccessor.GetId
+Retrieves the unique identifier of the FailureDefinition.

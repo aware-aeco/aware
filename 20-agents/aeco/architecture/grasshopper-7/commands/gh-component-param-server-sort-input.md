@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentParamServer.SortInput
+Sort the input parameter order based on a numeric key array.

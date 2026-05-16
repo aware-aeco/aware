@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Format.FormatKeys
+Format a keys enumeration as though it's a menu shortcut

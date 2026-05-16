@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PreviewAppearance.FromMetaData
+Copy data from MetaData to PreviewAppearance

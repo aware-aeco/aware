@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshFaceNormalList.UnitizeFaceNormals
+Unitizes all the existing face normals.

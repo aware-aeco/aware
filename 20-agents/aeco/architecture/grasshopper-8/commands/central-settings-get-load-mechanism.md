@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CentralSettings.GetLoadMechanism
+Gets what load mechanism has been specified for a certain plugin.

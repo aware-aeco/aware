@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpatialElement.GetSpatialElementDomainData
+Gets the domain data for the spatial element. The domain data contains information of different spatial elements, such as electrical load area. Currently room/space/area don't have domain data.

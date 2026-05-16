@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricSheetType.IsCustom
+Verifies if the type is Custom Fabric Sheet

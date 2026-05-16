@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportCreateIFC
+DO NOT USE! For internal usage only!

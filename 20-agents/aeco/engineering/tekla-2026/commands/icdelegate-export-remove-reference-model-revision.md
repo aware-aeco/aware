@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportRemoveReferenceModelRevision
+DO NOT USE! For internal usage only!

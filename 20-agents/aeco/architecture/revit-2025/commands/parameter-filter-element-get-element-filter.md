@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterFilterElement.GetElementFilter
+Returns an ElementFilter representing the combination of rules used by this filter.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelHistory.GetLocalChanges
+Get changes which are not written out.

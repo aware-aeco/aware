@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.IsDemolishedPhaseOrderValid
+Returns true if createdPhaseId and demolishedPhaseId are in order.

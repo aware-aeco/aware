@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RuledSurface.HasFirstProfilePoint
+Checks if a point was used to define the first profile.

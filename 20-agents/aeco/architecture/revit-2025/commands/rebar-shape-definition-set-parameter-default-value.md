@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDefinition.SetParameterDefaultValue
+Change the parameter's value as stored in the definition.

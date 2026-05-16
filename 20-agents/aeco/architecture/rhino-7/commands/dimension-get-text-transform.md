@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Dimension.GetTextTransform
+Get the transform for this text object's text geometry

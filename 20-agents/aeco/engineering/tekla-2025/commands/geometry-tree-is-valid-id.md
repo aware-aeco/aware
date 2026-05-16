@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryTree.IsValidId
+Returns true if index is a valid node index.

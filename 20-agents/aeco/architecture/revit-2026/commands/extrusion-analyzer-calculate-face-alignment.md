@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExtrusionAnalyzer.CalculateFaceAlignment
+Calculates the alignment status of each face of the solid.

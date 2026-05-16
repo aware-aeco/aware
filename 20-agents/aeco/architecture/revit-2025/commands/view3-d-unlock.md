@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View3D.Unlock
+Unlocks the view. Has no effect if the view is already unlocked.

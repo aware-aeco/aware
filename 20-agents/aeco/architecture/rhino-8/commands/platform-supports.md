@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Platform.Supports
+Gets a value indicating that the specified  is supported by this platform

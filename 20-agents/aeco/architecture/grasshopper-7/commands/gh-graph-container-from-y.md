@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphContainer.FromY
+Remaps a domain value onto the unit-range

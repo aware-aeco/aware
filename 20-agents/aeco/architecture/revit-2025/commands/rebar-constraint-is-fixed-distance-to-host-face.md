@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraint.IsFixedDistanceToHostFace
+Checks if the RebarConstraintType of the RebarConstraint is 'FixedDistanceToHostFace'.

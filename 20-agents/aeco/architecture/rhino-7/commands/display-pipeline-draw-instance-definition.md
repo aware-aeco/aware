@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawInstanceDefinition
+Draws an InstanceDefinition.

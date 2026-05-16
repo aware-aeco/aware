@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraint.IsBindingHandleWithTarget
+Gets the relationship between two RebarConstrainedHandles.

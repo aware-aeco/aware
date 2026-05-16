@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExternalResourceServer.AreSameResources
+Implement this method to indicate whether two given resources are the same.

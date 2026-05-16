@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.CreateConnectivityDiagram
+Gets the connectivity diagram for the current state of this document.

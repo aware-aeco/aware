@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Torus.ToBrep
+Converts this torus to a Brep.              This is synonymous with calling .

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaReinforcement.GetLineFromLayerAtIndex
+Gets the line from the desired layer at the specified index.

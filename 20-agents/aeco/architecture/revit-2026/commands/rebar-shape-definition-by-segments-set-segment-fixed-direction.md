@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDefinitionBySegments.SetSegmentFixedDirection
+Fix the direction of a segment.

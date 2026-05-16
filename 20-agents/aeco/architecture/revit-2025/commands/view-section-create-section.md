@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSection.CreateSection
+Returns a new section ViewSection.

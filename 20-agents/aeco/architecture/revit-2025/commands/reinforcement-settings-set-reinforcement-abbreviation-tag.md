@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReinforcementSettings.SetReinforcementAbbreviationTag
+Sets one abbreviation tag for desired ReinforcementAbbreviationTagType.

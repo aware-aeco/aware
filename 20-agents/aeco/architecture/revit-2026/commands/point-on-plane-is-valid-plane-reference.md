@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointOnPlane.IsValidPlaneReference
+Check whether a geometry reference corresponds to a referenceable plane.

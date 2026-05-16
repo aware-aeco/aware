@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.GetPanel
+Gets the panel for this view

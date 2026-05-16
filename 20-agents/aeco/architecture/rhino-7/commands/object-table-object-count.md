@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.ObjectCount
+Returns the number objects that pass a filter.

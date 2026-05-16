@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObjectTable.AddSphere
+Adds a surface object to the document representing a sphere.

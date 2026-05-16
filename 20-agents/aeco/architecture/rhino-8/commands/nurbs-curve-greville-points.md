@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurve.GrevillePoints
+Gets all Greville points for this curve.

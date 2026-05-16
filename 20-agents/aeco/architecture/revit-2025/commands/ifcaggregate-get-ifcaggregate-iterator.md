@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCAggregate.GetIFCAggregateIterator
+Returns a IFCAggregateIterator that iterates through the collection.

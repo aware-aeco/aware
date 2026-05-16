@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmMaterialTable.AddMaterial
+Adds a material to the model material table

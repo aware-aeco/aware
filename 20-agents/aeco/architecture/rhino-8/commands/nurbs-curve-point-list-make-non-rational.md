@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurvePointList.MakeNonRational
+Converts the curve to a Non-rational NURBS curve. Non-rational curves have unweighted control points.

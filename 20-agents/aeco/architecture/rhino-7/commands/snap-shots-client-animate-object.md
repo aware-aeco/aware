@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SnapShotsClient.AnimateObject
+Called for each frame. Starting at 0.0.

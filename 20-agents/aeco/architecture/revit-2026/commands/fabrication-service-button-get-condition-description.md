@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationServiceButton.GetConditionDescription
+Gets the description for the condition size range.

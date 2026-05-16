@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitLinkType.UnloadLocally
+Unloads a Revit link for the current user only.

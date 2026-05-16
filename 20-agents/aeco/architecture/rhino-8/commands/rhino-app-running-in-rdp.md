@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoApp.RunningInRdp
+Find out if Rhino is running in a remote session

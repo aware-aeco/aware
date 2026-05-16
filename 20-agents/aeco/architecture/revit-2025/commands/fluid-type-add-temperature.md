@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FluidType.AddTemperature
+Adds a fluid temperature to the set.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_SourceCodeBlock.Grow
+Grow this block to include the given line index.

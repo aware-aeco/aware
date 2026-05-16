@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.SetFieldOrder
+Reorders the fields in the schedule.

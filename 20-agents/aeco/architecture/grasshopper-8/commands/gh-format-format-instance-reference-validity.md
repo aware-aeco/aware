@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Format.FormatInstanceReferenceValidity
+If the instance reference is invalid, return a string describing why.

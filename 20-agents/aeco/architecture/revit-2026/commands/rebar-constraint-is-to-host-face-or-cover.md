@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraint.IsToHostFaceOrCover
+Returns true if the RebarConstraintType of the RebarConstraint is either 'FixedDistanceToHostFace' or 'ToCover'.

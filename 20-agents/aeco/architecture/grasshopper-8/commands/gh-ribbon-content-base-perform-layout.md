@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RibbonContentBase.PerformLayout
+This method is called when the control layout has potentially expired.

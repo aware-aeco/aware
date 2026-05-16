@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmStringTable.Delete
+Removes document strings from the 3dm file.

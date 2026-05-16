@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Wall.Flip
+The wall orientation will be flipped.

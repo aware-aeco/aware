@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CollectionChangedHandler`2.RemoveAllItems
+Removes all items from the collection

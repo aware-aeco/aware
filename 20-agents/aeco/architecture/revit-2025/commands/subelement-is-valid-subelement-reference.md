@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Subelement.IsValidSubelementReference
+Checks if given Reference identifies either a valid element or subelement.

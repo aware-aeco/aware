@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureHandlingOptions.GetTransactionFinalizer
+Gets the callback to be executed after transaction is completed.

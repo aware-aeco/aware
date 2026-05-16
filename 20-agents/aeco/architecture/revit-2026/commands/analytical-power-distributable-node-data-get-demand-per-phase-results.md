@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalPowerDistributableNodeData.GetDemandPerPhaseResults
+Get an ElectricalPerPhaseData which contains each electrical phase's demand load and demand current of the power distributable node.

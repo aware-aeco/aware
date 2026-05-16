@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarHandlesData.GetStartHandle
+Gets the start handle tag.

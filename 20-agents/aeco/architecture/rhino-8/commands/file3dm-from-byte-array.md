@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dm.FromByteArray
+Read a 3dm file from a byte array

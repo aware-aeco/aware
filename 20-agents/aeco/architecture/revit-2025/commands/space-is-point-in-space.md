@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Space.IsPointInSpace
+Determines if a point lies within the volume of the Space.

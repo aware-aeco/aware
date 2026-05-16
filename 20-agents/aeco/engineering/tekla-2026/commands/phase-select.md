@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Phase.Select
+Selects a phase.

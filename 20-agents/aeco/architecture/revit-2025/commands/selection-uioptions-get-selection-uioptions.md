@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SelectionUIOptions.GetSelectionUIOptions
+Returns the current user's SelectionOptions.

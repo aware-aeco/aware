@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MenuItemCollection.AddRange
+Adds the specified menu items to the collection.

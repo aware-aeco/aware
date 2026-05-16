@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceVoidCutUtils.AddInstanceVoidCut
+Add a cut to an element using the unattached voids inside a cutting instance.

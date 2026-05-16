@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepTrimList.AddCurveOnFace
+Add a new curve on face to the brep

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyItemFactory.NewLoftForm
+Create new Form element by Loft operation, and add it into the Autodesk Revit family document.

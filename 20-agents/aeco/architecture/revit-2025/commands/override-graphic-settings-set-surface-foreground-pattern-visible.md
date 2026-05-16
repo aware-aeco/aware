@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OverrideGraphicSettings.SetSurfaceForegroundPatternVisible
+Sets the visibility of the surface foreground fill pattern.

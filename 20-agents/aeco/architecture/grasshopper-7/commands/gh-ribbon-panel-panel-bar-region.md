@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RibbonPanel.PanelBarRegion
+Computes the panel bar region.

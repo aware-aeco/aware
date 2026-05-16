@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BinaryArchiveReader.AtEnd
+true if at end of a file

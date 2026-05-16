@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.IsSpace
+Check if the selected cell is a space

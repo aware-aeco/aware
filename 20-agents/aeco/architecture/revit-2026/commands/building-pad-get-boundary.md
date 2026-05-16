@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BuildingPad.GetBoundary
+Gets the boundary of current BuildingPad element.

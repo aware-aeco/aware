@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.GetWallTrimmedCurve
+Obtains the curve of the wall trimmed or extended according to the end conditions of the wall.

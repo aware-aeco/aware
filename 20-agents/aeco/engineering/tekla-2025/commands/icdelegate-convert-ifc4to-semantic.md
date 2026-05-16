@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ConvertIFC4toSemantic
+DO NOT USE! For internal usage only!

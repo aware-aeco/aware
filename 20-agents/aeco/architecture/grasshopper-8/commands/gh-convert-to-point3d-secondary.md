@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToPoint3d_Secondary
+Attempts to convert other data types into an Point.   Data is not quaranteed to be duplicated.

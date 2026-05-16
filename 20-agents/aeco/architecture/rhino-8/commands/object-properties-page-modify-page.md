@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectPropertiesPage.ModifyPage
+Call this method when the page is ready to modify the selected objects             list.  Rhino will suspend UpdatePageNotfictaion, call the passed action             then restore UpdatePageNotfictaion.

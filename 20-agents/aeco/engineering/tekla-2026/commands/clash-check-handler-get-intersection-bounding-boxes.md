@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ClashCheckHandler.GetIntersectionBoundingBoxes
+Get a list of bounding boxes (AABB) of the clashing volumes of two objects.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Subelement.GetAllParameters
+Returns all parameters of this subelement.

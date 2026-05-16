@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ToolbarFileCollection.FindByName
+Gets an open toolbar file by name, or alias.

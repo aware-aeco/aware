@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShape.GetMultiplanarDefinition
+The optional 3D structure of the shape.

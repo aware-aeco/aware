@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Animator.InterpolateDecimal
+Utility interpolation delegate for System.Decimal values.

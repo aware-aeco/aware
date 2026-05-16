@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HVACLoadSpaceType.Create
+Creates a space type.

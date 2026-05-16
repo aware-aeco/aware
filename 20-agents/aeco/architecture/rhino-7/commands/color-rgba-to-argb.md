@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorRGBA.ToArgb
+Converts this color to a 32-bit ARGB value.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.GetValidTypes
+Obtains a set of types that are valid for this element.

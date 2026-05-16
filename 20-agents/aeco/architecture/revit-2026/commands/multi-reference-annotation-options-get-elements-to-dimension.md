@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultiReferenceAnnotationOptions.GetElementsToDimension
+Gets the elements which the dimension will witness.

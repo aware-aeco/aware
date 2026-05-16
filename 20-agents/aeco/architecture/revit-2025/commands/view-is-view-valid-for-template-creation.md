@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.IsViewValidForTemplateCreation
+Verifies that the view is valid for template creation.

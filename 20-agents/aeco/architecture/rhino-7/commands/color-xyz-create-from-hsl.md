@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorXYZ.CreateFromHSL
+Create the nearest XYZ equivalent of an HSL color.

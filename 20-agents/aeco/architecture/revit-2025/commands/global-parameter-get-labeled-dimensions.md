@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GlobalParameter.GetLabeledDimensions
+Returns all dimension elements that are currently labeled by this global parameter.

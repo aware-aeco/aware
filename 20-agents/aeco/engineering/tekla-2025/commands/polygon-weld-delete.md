@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolygonWeld.Delete
+Deletes the polygon weld instance with the given identifier from the model database.

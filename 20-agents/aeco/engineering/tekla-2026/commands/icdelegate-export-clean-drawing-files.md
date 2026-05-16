@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportCleanDrawingFiles
+DO NOT USE! For internal usage only!

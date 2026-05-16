@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Parameter.DissociateFromGlobalParameter
+Dissociates this parameter from a global parameter.

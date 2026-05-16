@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoDoc.ExtractPreviewImage
+Extracts the bitmap preview image from the specified .3dm file.

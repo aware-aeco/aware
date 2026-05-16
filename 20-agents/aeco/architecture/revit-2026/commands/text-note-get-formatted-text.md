@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextNote.GetFormattedText
+Returns an object that contains text and associated formatting of this note.

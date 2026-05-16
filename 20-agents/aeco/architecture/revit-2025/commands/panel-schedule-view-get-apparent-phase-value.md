@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.GetApparentPhaseValue
+Gets the apparent load for the given phase for the given slotted circuit

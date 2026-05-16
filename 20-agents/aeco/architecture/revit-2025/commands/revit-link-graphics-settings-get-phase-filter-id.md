@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitLinkGraphicsSettings.GetPhaseFilterId
+The linked document phase filter id of RevitLinkGraphicsSettings, or  if there is no phase filter explicitly assigned.

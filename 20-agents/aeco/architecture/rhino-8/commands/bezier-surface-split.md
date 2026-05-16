@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BezierSurface.Split
+Divides the Bezier surface at the specified parameter.

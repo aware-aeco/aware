@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoList`1.GetRange
+Constructs a shallow copy of a range of elements in the source List.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BindableWidget.Unbind
+Unbinds any bindings in the  collection and removes the bindings

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableTrayType.IsValidBendMultiplier
+Identifies if the input bend multiplier is valid.

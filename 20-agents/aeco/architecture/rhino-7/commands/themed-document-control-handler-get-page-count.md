@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedDocumentControlHandler.GetPageCount
+Gets the page count.

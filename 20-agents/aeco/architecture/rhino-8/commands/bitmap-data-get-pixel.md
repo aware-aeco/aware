@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BitmapData.GetPixel
+Gets the color of the pixel at the specified

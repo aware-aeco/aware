@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Circle.Rotate
+Rotates the circle around an axis that starts at the base plane origin.

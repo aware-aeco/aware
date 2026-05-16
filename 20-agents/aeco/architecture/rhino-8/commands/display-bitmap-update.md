@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayBitmap.Update
+Update the image used for this DisplayBitmap

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterFilterRuleFactory.CreateIsNotAssociatedWithGlobalParameterRule
+Creates a filter rule that determines whether a parameter is not associated    with a certain global parameter.

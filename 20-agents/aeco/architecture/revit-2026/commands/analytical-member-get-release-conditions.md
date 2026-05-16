@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalMember.GetReleaseConditions
+Gets the release conditions associated with this Analytical Member.

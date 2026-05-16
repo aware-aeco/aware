@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ChangeType.IsIdentical
+Compares if two ChangeTypes are identical

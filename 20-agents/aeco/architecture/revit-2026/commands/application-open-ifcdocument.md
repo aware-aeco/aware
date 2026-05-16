@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.OpenIFCDocument
+Opens an IFC document from disk using custom options.

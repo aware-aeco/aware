@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StairsLanding.CreateAutomaticLanding
+Creates automatic landing(s) between two stairs runs.

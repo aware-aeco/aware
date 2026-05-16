@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CorrectionFactorSet.Clear
+Removes every correction factor from the set, rendering it empty.

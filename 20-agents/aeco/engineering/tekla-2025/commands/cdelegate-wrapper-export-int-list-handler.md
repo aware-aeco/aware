@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportIntListHandler
+DO NOT USE! For internal usage only!

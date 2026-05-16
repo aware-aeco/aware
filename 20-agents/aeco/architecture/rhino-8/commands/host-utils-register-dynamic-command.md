@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostUtils.RegisterDynamicCommand
+Adds a new dynamic command to Rhino.

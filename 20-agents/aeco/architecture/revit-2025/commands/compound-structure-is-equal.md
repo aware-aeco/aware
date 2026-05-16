@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.IsEqual
+Checks whether this CompoundStructure is the same as another CompoundStructure.

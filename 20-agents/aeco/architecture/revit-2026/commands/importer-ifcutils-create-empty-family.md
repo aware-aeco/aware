@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ImporterIFCUtils.CreateEmptyFamily
+Creates an empty family of a given category.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepFaceList.SplitClosedFaces
+Splits closed surfaces so they are not closed.

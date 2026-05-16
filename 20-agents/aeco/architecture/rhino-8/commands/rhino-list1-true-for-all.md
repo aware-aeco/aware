@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoList`1.TrueForAll
+Determines whether every element in the List matches the conditions defined by the specified predicate.

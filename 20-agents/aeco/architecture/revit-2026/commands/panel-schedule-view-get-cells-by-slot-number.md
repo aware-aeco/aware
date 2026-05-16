@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.GetCellsBySlotNumber
+Gets cells for the given slot number

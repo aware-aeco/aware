@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.GetProductListEntryName
+Gets the specified product list entry name.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Parameter.GetAssociatedGlobalParameter
+Returns a global parameter, if any, currently associated with this parameter.

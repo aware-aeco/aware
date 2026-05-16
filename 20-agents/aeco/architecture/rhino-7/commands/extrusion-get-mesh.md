@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Extrusion.GetMesh
+Obtains a reference to a specified type of mesh for this extrusion.

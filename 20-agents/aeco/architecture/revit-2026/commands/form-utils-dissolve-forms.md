@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormUtils.DissolveForms
+Dissolves a collection of form elements into their defining elements.

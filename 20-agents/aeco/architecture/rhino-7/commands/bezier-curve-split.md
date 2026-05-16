@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BezierCurve.Split
+Divides the Bezier curve at the specified parameter.

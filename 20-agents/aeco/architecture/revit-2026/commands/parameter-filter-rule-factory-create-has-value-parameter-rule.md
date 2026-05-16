@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterFilterRuleFactory.CreateHasValueParameterRule
+Creates a filter rule that determines whether an element's parameter has a value.

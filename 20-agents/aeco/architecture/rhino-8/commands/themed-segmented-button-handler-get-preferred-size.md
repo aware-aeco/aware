@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedSegmentedButtonHandler.GetPreferredSize
+Gets the preferred size of this control given the specified .

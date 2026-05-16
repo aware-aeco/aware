@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.GetDefaultElementTypeId
+Gets the default element type id with the given DefaultElementType id.

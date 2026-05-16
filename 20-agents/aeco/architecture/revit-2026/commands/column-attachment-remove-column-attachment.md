@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColumnAttachment.RemoveColumnAttachment
+Removes any attachment of the column to the specified target.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelHistory.UpdateModificationStampToLatest
+Updates the modification stamp to latest.

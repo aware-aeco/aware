@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OverrideGraphicSettings.SetProjectionLinePatternId
+Sets the ElementId of the projection surface line pattern.

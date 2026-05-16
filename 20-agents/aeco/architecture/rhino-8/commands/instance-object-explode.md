@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceObject.Explode
+Explodes the instance reference into pieces.

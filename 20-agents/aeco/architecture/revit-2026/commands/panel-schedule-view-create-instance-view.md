@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.CreateInstanceView
+Creates a new instance of this view (using specific template)

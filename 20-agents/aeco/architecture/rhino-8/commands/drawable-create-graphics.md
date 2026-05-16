@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Drawable.CreateGraphics
+Creates a graphics context for this control

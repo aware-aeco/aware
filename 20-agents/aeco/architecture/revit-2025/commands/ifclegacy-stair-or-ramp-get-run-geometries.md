@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCLegacyStairOrRamp.GetRunGeometries
+Gets the geometries of runs.

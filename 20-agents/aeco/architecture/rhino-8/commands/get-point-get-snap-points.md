@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetPoint.GetSnapPoints
+Gets current snap points.

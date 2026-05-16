@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.LocateSpecification
+Gets the specification identifier by group and name.

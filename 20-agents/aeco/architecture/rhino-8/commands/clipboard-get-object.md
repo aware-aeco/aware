@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Clipboard.GetObject
+Gets a serialized value with the specified  identifier.

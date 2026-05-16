@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObjectTable.AddHatch
+Adds a hatch to the document.

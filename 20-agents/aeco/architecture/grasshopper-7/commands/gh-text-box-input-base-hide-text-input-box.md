@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_TextBoxInputBase.HideTextInputBox
+Hides the text-input override form (if it is displayed).

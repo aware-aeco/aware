@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.GetMaterialVolume
+Gets the volume of the material with the given id.

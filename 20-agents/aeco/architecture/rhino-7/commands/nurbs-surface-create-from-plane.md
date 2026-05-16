@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsSurface.CreateFromPlane
+Creates a NURBS surface from a plane and additonal parameters.

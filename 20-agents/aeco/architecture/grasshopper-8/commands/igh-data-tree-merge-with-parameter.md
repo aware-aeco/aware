@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_DataTree.MergeWithParameter
+Utility function for assigning Script Data Trees to parameters.

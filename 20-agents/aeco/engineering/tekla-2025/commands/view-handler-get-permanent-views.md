@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewHandler.GetPermanentViews
+Returns the permanent views.

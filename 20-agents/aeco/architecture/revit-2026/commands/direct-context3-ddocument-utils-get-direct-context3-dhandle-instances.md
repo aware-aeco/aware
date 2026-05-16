@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectContext3DDocumentUtils.GetDirectContext3DHandleInstances
+Returns all DirectContext3D handle instances of the given category in the document.

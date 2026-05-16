@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GeometricFont.DrawDash
+Draw the geometric character '-' at the specified location.

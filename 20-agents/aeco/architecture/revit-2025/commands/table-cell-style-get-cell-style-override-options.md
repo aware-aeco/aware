@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableCellStyle.GetCellStyleOverrideOptions
+Gets cell style override options of this cell.

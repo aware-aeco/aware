@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderingSettings.GetRenderingRegionOutline
+Returns the outline of the rendering region.

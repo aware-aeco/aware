@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.GetParamValue
+Gets the cell's text based on its type

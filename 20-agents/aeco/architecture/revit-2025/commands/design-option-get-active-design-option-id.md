@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DesignOption.GetActiveDesignOptionId
+Gets the active design option id for the current design option set.

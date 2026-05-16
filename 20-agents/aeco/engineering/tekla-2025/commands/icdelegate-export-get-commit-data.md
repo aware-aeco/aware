@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportGetCommitData
+DO NOT USE! For internal usage only!

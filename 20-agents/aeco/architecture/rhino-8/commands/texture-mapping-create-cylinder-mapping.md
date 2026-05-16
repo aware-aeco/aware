@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextureMapping.CreateCylinderMapping
+Create a cylindrical projection texture mapping.

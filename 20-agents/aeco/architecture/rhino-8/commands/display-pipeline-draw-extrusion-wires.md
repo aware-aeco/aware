@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawExtrusionWires
+Draws all the wireframe curves of an extrusion object.

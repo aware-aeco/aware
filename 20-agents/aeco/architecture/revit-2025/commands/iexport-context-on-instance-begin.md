@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExportContext.OnInstanceBegin
+This method marks the start of processing of an instance node (e.g. a family instance).

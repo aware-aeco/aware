@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.IsCellInPhaseLoads
+Check if this cell in the phase loads

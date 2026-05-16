@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_NetworkSorter.CreateContext
+Call this function construct the context (environment).

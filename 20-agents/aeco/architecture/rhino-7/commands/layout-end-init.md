@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Layout.EndInit
+Ends the initialization when loading from xaml or other code generated scenarios

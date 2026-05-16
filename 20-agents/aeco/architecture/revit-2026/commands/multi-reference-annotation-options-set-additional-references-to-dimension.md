@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultiReferenceAnnotationOptions.SetAdditionalReferencesToDimension
+Sets the additional references which the dimension will witness.

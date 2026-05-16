@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.IsWorksetVisible
+Indicates whether the workset is visible in this view.

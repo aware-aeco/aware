@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OptionalFunctionalityUtils.Is3DMImportLinkAvailable
+Checks whether the 3DM Import/Link functionality is available in the installed Revit.

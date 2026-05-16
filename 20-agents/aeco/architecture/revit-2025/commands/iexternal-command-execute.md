@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExternalCommand.Execute
+Overload this method to implement and external command within Revit.

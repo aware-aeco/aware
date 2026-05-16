@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BitmapExtensions.BitmapAsTextureFileReference
+Inserts bitmap into Rhino's texure manager and returns a FileReference.

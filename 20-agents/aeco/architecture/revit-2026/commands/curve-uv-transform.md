@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveUV.Transform
+Transform this CurveUV by the given 2D affine transform if possible.

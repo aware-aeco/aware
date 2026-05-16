@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ImportPointListHandler
+DO NOT USE! For internal usage only!

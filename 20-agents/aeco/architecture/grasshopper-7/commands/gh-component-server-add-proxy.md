@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentServer.AddProxy
+Add a proxy object to the component server.   Expert user function, talk to David Rutten before calling it.

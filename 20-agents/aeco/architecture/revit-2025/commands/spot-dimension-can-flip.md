@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpotDimension.CanFlip
+Verifies that the direction of the dimension can be flipped.

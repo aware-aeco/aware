@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Color.ToElementId
+Converts this color to an Element ID value

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.ToNurbsSurface
+Gets a NURBS surface representation of this surface. Default              tolerance of 0.0 is used.

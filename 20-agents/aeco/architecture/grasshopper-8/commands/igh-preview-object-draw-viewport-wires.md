@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_PreviewObject.DrawViewportWires
+Implement this function to draw all wire and point geometry previews.

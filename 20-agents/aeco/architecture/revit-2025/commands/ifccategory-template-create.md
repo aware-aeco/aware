@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCCategoryTemplate.Create
+Create a IFC category mapping template with default values.

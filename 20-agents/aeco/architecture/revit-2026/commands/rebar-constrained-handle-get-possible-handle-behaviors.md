@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstrainedHandle.GetPossibleHandleBehaviors
+Gets a list of possible handle behaviors for the current handle.

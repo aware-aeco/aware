@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.GetHubId
+Gets ForgeDM hub id where the model locates. It is cached in session.

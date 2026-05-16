@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Extrusion.SetMesh
+Sets a specified type of mesh for this extrusion.

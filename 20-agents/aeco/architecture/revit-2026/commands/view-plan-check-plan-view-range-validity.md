@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewPlan.CheckPlanViewRangeValidity
+Checks if the plan view range is valid.

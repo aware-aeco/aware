@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectAttributes.ClearRenderingAttributes
+Clears, or resets the rendering attributes.

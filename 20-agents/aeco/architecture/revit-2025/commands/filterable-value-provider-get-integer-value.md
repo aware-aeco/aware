@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterableValueProvider.GetIntegerValue
+Gets an integer value from the given element.

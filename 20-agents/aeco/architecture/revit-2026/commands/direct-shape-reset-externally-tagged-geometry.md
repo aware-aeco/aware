@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShape.ResetExternallyTaggedGeometry
+Removes all of the externally tagged geometry in this DirectShape.

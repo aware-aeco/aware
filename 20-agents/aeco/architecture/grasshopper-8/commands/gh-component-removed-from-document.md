@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Component.RemovedFromDocument
+Overrides the RemovedFromDocument method and delegates the call to all parameters.

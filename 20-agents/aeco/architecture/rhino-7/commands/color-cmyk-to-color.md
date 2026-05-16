@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorCMYK.ToColor
+Gets this object as an ARGB color value

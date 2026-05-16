@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.CreateExtrusion
+Constructs a surface by extruding a curve along a vector.

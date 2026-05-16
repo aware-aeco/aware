@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportDeleteClipBox
+Deletes a clip box from the view.

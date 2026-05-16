@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BeamSystem.Create
+Creates a new BeamSystem with specified profile curves.

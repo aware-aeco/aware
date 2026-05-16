@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ResizeBorder.Setup
+Set up a new sizing operation.

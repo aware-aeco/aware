@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilledRegion.IsValidFilledRegionTypeId
+Indicates whether the given Id is a valid filled region type Id.

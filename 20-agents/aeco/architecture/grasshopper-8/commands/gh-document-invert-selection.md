@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.InvertSelection
+Invert the selected state of all top-level attributes.

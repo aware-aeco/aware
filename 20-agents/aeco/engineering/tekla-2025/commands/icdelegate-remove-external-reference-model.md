@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.RemoveExternalReferenceModel
+DO NOT USE! For internal usage only!

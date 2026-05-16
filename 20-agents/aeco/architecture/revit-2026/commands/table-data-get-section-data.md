@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableData.GetSectionData
+Returns the section data array element at the specified index.

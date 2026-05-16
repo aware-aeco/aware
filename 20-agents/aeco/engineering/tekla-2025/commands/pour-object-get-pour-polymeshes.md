@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PourObject.GetPourPolymeshes
+Returns a new polymesh enumerator based on merged faces of the pour object in the current plane.

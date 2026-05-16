@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarCrankTypeUtils.CreateRebarCrankType
+Creates a Rebar Crank Type element.

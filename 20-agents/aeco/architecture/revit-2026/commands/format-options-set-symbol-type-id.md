@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormatOptions.SetSymbolTypeId
+Sets the symbol that should be displayed to indicate the unit quantifying the value.

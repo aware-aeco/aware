@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CreateFromPlane
+Constructs a planar mesh grid.

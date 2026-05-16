@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Thread.Abort
+Abort this instance, for custom thread instances

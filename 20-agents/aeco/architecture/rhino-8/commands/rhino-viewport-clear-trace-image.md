@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.ClearTraceImage
+Remove trace image (background bitmap) for this viewport if one exists.

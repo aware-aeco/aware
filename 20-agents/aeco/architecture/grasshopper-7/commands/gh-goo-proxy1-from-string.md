@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GooProxy`1.FromString
+If IsParsable(), then attempts to convert the string to a generic type value

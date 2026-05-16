@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShapeType.AddExternallyTaggedGeometry
+Adds the externally tagged geometry object to the DirectShapeType.

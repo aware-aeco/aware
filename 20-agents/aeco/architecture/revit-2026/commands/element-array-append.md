@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementArray.Append
+Add the element to the end of the array.

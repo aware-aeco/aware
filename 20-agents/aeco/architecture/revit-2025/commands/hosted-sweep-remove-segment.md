@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostedSweep.RemoveSegment
+Remove segments from the  hosted sweep object.

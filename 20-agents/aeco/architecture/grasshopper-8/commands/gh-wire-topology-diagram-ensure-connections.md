@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_WireTopologyDiagram.EnsureConnections
+Creates the topological connector wire if it doesn't already exist.

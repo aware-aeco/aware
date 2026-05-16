@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Gutter.AddSegment
+Add segments to the gutter.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_FontServer.MeasureString
+Measure the size of a string

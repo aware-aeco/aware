@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplacementElement.RemoveDisplacedElement
+Remove a displaced element from this DisplacementElement.

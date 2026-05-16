@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyDataSettings.IsDocumentUsingEnergyDataAnalyticalModel
+Get EnergyDataSettings element and if it exists, return result from getCreateAnalyticalModel.

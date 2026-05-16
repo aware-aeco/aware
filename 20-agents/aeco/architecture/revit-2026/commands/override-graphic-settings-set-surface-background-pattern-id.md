@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OverrideGraphicSettings.SetSurfaceBackgroundPatternId
+Sets the ElementId of the surface background pattern override.    The fill pattern must be a drafting pattern.    A value of InvalidElementId means no override is set.

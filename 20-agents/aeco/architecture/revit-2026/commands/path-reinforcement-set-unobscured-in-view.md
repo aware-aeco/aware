@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PathReinforcement.SetUnobscuredInView
+Sets Path Reinforcement to be shown unobscured in a view.

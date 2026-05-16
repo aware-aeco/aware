@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReinforcementSettings.GetRebarRoundingManager
+Returns an object for managing reinforcement rounding override settings used by RebarBarTypes, Rebar and RebarInSystem elements.

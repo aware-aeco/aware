@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Gradient.NewGripRegion
+Gets the new Grip region rectangle based on a gradient destination rectangle.

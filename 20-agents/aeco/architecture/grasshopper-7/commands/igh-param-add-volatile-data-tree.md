@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Param.AddVolatileDataTree
+Insert an entire data tree into this parameter.

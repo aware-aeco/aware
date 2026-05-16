@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WorksharingDisplaySettings.CanUserHaveOverrides
+Checks whether a single username can have customized graphic overrides.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewFamilyType.IsValidDefaultTemplate
+Verifies that the input can be used as a default template for this view type.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterFilterElement.SetCategories
+Sets the categories admitted by this filter.

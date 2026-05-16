@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PointRefData.EvSurface
+Evaluate this reference structure when applied to the surface

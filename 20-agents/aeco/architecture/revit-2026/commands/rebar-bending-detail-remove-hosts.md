@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBendingDetail.RemoveHosts
+Remove the reinforcement elements from those represented by the input bending detail.

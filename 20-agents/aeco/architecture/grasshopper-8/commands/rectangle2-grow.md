@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rectangle2.Grow
+Grow the rectangle to include a point. Rectangle must be increasing for this to work properly.

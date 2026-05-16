@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MacroManagerIterator.Reset
+Resets the iterator to the initial state.

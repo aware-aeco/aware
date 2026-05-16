@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Task.GetAllTasksOfSelectedObjects
+Returns an enumerator of all the tasks related to the selected objects.

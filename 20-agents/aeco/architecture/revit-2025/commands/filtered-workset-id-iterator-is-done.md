@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilteredWorksetIdIterator.IsDone
+Identifies if the iteration has completed.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SizeF.GetHashCode
+Gets the hash code for this Size

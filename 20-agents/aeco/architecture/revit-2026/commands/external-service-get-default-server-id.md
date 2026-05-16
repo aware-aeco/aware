@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalService.GetDefaultServerId
+Returns the Id of the default server if one was assigned to the service.

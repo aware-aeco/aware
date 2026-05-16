@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateBooleanSplit
+Splits shared areas of Breps and creates separate Breps from the shared and unshared parts.

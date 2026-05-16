@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-dotUIPicker_t.Construct
+Constructs a new instance of the  struct.

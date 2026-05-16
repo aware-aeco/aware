@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCGeometryInfo.CreateSurfaceGeometryInfo
+Creates a new container object which holds IfcSurface handles processed from a Revit geometry object.

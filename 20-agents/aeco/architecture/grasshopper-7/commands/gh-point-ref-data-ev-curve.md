@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PointRefData.EvCurve
+Evaluate this reference structure when applied to a curve

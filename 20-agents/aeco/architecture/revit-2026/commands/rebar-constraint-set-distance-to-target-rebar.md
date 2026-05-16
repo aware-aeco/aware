@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraint.SetDistanceToTargetRebar
+Sets the offset distance between the constrained RebarConstrainedHandle and its target Rebar handle surface.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_LayoutTab.Deselect
+Deselect this tab and all objects it contains.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoList`1.AsReadOnly
+Constructs a read-only wrapper of this class.

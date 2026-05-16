@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StackedDialogPage.RemovePage
+Remove this page from the dialog box

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightManagerSupport.LightDescription
+Gets the string representation of the light description

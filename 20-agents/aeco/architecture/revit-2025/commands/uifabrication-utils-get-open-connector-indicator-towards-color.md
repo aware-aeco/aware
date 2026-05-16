@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIFabricationUtils.GetOpenConnectorIndicatorTowardsColor
+Gets the color of the open connector indicator in towards direction.

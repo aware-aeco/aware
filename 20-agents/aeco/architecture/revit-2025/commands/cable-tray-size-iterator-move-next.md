@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableTraySizeIterator.MoveNext
+Increments the iterator to the next item.

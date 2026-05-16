@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationNetworkChangeService.SetServiceId
+Set the fabrication service identifier to change the elements to.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_PreviewMeshData.DestroyPreviewMeshes
+Erase all cached preview meshes.

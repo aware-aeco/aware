@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.GetTimeKind
+Gets the kind of time implied by a System.DateTime value.

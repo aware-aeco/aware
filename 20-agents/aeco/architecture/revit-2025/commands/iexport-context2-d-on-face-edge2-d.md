@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExportContext2D.OnFaceEdge2D
+This method is called when a Face edge is being output.

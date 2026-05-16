@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.IsSimpleRegion
+Determines whether the region is a simple region in this CompoundStructure.

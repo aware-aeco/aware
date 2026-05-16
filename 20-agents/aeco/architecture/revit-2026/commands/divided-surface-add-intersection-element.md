@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DividedSurface.AddIntersectionElement
+Adds an intersection element to the divided surface.

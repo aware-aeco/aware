@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentServer.RemoveAllDocuments
+Remove all documents in the global list.

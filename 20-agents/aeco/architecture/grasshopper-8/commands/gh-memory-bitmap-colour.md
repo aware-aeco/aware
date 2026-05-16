@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MemoryBitmap.Colour
+Gets the colour at the given pixel coordinates.

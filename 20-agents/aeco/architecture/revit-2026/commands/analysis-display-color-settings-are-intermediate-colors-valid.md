@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayColorSettings.AreIntermediateColorsValid
+Verify intermediate color entries

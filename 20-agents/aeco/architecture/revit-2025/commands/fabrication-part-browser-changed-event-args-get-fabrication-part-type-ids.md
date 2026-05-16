@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPartBrowserChangedEventArgs.GetFabricationPartTypeIds
+Returns set of fabrication part types in use in the routing solution mode.

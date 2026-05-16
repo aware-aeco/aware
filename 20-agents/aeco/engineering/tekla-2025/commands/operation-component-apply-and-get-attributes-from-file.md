@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.ComponentApplyAndGetAttributesFromFile
+Read the attributes of given component type from file.

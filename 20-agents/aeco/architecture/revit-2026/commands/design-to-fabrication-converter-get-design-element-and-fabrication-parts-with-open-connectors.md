@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DesignToFabricationConverter.GetDesignElementAndFabricationPartsWithOpenConnectors
+Gets the collection of design elements that failed to convert and the associated set of fabrication parts with open connectors.

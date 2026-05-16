@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PathOfTravel.CreateMultiple
+Creates multiple new paths of travel between same size sets of start and end points and provides creation result statuses.

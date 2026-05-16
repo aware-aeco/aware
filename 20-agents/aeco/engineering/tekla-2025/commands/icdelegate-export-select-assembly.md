@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportSelectAssembly
+DO NOT USE! For internal usage only!

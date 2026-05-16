@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarUpdateCurvesData.GetAttachmentType
+Returns attachment type for stirrups to be used in cover calculation.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform1D.TransformParameterDomain
+Performs a transform of the parameter range defined by domain, and ensures that the domain is ordered correctly.

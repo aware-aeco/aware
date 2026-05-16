@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CustomRenderMeshProvider.AllObjectsChanged
+Call this method if your render meshes change.

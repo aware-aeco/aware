@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.FindAllDownstreamObjects
+Find all objects that depend in some way on the Source.

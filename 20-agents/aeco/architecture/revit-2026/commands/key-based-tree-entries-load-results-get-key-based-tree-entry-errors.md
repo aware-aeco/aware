@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-KeyBasedTreeEntriesLoadResults.GetKeyBasedTreeEntryErrors
+Gets information about KeyBasedTreeEntry objects that could not be included in the KeyBasedTreeEntries    object due to errors.

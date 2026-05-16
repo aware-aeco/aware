@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RealtimeDisplayMode.IsFrameBufferAvailable
+Implement to tell the render pipeline that a framebuffer is ready

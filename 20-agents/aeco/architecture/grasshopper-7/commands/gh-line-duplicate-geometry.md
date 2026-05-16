@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Line.DuplicateGeometry
+Create a duplicate of this line.

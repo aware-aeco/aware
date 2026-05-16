@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPAnalyticalModelData.GetSegmentData
+Gets the analysis data on the specified segment.

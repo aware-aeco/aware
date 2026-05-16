@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ContinuousRail.GetStartExtensionPath
+Retrieves the start extension path.

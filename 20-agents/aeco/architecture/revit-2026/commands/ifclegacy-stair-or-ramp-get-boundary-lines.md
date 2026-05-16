@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCLegacyStairOrRamp.GetBoundaryLines
+Gets boundary lines.

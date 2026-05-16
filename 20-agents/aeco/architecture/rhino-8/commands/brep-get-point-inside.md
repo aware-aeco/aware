@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.GetPointInside
+Finds a point inside of a solid Brep.

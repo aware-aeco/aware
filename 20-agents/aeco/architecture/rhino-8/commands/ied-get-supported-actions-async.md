@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.GetSupportedActionsAsync
+A list of supported actions.             Pass it's id to TriggerActionAsync to run it.

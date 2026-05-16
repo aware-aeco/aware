@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssetProperty.IsValidSchemaIdentifier
+Check that schema name is valid

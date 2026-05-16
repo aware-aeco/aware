@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolymeshFacet.ToString
+Returns formatted string showing (V1, V2, V3) with values formatted as regular integers

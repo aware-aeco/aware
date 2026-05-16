@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Connector.GetMEPConnectorInfo
+Gets MEP connector information.

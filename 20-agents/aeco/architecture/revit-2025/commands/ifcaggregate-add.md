@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCAggregate.Add
+Adds an element to the aggregate.

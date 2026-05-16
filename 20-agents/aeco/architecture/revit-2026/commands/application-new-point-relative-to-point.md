@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewPointRelativeToPoint
+Create a PointRelativeToPoint object, which is used to define  the placement of a ReferencePoint relative to a host point.

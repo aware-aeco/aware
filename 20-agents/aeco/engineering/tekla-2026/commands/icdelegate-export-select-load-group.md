@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportSelectLoadGroup
+DO NOT USE! For internal usage only!

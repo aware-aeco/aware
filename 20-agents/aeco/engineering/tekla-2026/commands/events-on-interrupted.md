@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Events.OnInterrupted
+Called when uesr interrupts.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CreateFromExtrusion
+Constructs a mesh from a brep.

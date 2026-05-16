@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContentKindList.Count
+The number of kinds in the collection

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubmenuExtensions.GetChildren
+Gets an enumeration of all children of the specified submenu.

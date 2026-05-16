@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Point.SetReferenceParams
+Sets both param values of the point reference

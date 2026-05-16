@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderMeshes.AddInstance
+Adds a new instance to the render primitives collection.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportGetAllReportProperties
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.AlignPartByConnector
+Align the part by its connector to a point and rotation in free space.

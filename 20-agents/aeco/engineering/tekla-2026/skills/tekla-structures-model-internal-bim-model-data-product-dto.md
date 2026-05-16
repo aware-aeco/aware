@@ -6,3 +6,4 @@ description: API reference for namespace Tekla.Structures.ModelInternal.BimModel
 # Tekla.Structures.ModelInternal.BimModelDataProduct.DTO
 
 - **CreateModelRequest**
+  - Represents a request to create a new BIM model.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoundingBox.PointAt
+Evaluates the bounding box with normalized parameters.             The box has idealized side length of 1x1x1.

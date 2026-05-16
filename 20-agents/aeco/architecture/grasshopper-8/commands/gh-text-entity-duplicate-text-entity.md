@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_TextEntity.DuplicateTextEntity
+Create a duplicate of this text entity.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-dotPolygon_t.GetPoints
+Get polygon points in ArrayList.

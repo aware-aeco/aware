@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailuresAccessor.IsElementsDeletionPermitted
+Checks if resolution of the failures by deleting failure elements is permitted.

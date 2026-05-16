@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.RemoveRange
+Removes points at given indices.

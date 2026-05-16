@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExternalServer.GetServerId
+Implement this method to return the id of the server.

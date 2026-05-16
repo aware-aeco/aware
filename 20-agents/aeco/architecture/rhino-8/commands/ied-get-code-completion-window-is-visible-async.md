@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.GetCodeCompletionWindowIsVisibleAsync
+Checks whether the code completion window is currently visible / open

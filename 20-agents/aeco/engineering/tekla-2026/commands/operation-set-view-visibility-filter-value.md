@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.SetViewVisibilityFilterValue
+Sets the model view visibility filter value.

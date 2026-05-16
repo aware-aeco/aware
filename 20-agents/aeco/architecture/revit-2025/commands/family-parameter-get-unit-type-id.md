@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyParameter.GetUnitTypeId
+Gets the identifier of the unit quantifying the parameter value.

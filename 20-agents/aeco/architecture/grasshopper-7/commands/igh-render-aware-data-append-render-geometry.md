@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_RenderAwareData.AppendRenderGeometry
+Push this geometry down a render pipeline.

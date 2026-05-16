@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Group.AddObject
+Add a new object to this group. The ID must represent a top-level object in the document that owns this group.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewCaptureSettings.GetModelScale
+Returns the model scale factor.

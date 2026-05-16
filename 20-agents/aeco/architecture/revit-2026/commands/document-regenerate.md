@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.Regenerate
+Updates the elements in the Revit document to reflect all changes.

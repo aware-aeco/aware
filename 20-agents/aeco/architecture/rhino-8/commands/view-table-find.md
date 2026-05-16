@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewTable.Find
+Finds a view in this document with a given main viewport Id.

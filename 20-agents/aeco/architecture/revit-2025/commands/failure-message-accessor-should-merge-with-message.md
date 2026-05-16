@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureMessageAccessor.ShouldMergeWithMessage
+Checks if the FailureMessage should be merged with the other FailureMessage for better user experience.

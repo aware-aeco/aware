@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.AutoSaveFileName
+Computes the autosave filename for a full grasshopper filepath.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexList.Show
+Shows the vertex at the given index.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpaceMorph.IsMorphable
+true if the geometry can be morphed by calling SpaceMorph.Morph(geometry)

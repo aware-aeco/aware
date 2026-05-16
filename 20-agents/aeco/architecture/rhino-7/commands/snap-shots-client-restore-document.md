@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SnapShotsClient.RestoreDocument
+Called when the user restores a snapshot and SupportDocument() returns true.

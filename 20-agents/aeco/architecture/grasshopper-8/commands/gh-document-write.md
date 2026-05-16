@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.Write
+Standard archiving function. Will serialize the entire document.

@@ -6,3 +6,4 @@ description: API reference for namespace Rhino.Render.ParameterNames from RhinoC
 # Rhino.Render.ParameterNames
 
 - **PhysicallyBased**
+  - Helper class with properties containing the names of fields available in our PBR implementation.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_HtmlWriter.WriteLineBreak
+Write a line break into the Html document.   Ideally you should achieve formatting using div tags, not line breaks.

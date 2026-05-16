@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.IsAStraight
+Checks whether it is a straight part.

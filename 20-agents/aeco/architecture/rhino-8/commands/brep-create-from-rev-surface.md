@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateFromRevSurface
+Constructs a brep form of a surface of revolution.

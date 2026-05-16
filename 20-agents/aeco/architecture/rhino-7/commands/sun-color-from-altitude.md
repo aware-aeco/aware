@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Sun.ColorFromAltitude
+Get sun color based on altitude.

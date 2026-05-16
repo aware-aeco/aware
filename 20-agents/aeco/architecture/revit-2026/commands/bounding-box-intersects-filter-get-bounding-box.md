@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoundingBoxIntersectsFilter.GetBoundingBox
+Gets the outline being used for this filter.

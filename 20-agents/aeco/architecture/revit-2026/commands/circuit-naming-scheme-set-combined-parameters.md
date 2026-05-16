@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CircuitNamingScheme.SetCombinedParameters
+Sets combined parameters array.

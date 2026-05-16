@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.GetClippingPlaneFromDocument
+Harvest a clipping plane surface from a Rhino document.

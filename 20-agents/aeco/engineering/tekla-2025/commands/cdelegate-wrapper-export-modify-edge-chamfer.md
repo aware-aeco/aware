@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportModifyEdgeChamfer
+DO NOT USE! For internal usage only!

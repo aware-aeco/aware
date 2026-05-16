@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Plane.ClosestPoint
+Gets the point on the plane closest to a test point.

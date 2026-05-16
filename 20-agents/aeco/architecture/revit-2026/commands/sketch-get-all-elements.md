@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Sketch.GetAllElements
+Returns all elements which belong to the sketch.

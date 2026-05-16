@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Cell3.MidPlane
+Compute the mid-plane between two points.   Points must not be coincident.

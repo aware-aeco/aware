@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetModelToProjectionTransforms
+Gets the transforms from the model space to the view projection space.

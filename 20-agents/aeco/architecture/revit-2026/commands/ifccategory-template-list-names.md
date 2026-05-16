@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCCategoryTemplate.ListNames
+Returns a list of names of IFC export mapping templates.

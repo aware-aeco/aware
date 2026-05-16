@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DoubleArray.Clear
+Removes every double from the array, rendering it empty.

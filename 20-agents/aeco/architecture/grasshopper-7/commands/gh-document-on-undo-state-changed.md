@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.OnUndoStateChanged
+Raise the UndoStateChanged event.

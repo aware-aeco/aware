@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportAddComponentInputToStack
+DO NOT USE! For internal usage only!

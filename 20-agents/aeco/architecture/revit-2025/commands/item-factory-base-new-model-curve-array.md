@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ItemFactoryBase.NewModelCurveArray
+Creates an array of new model line elements.

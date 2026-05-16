@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Path.ToString
+Concatenates the indices in the path.

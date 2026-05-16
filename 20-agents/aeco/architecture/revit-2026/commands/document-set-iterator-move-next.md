@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DocumentSetIterator.MoveNext
+Move the iterator one item forward.

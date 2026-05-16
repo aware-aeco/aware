@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PostEffectPipeline.ExecutionOrder
+Returns a list of the post effects to be executed by this pipeline in order.

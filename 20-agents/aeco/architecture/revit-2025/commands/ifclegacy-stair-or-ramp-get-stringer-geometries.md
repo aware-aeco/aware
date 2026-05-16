@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCLegacyStairOrRamp.GetStringerGeometries
+Gets the geometries of stringers.

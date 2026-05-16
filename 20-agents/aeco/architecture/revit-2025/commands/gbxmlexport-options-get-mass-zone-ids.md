@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GBXMLExportOptions.GetMassZoneIds
+Gets a list of mass zones to analyze in the exported gbXML.

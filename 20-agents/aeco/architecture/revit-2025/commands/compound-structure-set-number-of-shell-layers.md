@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.SetNumberOfShellLayers
+Sets the number of interior or exterior shell layers.

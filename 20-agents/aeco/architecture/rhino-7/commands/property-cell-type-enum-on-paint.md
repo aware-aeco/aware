@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PropertyCellTypeEnum.OnPaint
+Paints the cell when  is false.

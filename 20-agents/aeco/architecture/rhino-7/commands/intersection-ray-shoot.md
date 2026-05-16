@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.RayShoot
+Computes point intersections that occur when shooting a ray to a collection of surfaces and Breps.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectContext3DHandleSettings.IsEqual
+Check if the contents of two instances of settings are equal.

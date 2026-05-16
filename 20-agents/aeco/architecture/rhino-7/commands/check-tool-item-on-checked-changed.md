@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CheckToolItem.OnCheckedChanged
+Raises the  event.

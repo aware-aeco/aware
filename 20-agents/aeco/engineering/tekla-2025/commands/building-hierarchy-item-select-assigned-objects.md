@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BuildingHierarchyItem.SelectAssignedObjects
+Select assigned objects in 3d view.

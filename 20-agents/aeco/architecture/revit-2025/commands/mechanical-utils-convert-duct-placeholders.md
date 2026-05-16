@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MechanicalUtils.ConvertDuctPlaceholders
+Converts a collection of duct placeholder elements into duct elements.

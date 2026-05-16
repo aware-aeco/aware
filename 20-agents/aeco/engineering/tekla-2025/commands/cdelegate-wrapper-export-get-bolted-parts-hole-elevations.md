@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetBoltedPartsHoleElevations
+DO NOT USE! For internal usage only!

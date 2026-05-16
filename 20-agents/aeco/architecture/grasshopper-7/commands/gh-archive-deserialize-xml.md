@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Archive.Deserialize_Xml
+Deserializes an Xml string.

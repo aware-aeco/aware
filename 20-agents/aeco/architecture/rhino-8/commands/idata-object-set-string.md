@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IDataObject.SetString
+Sets a string into the data object with the specified type identifier.

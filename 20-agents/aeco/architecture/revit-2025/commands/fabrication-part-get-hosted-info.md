@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.GetHostedInfo
+Gets the fabrication hosted element information.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCProductWrapper.Create
+Establishes a new product manager for elements and objects derived from a parent product manager, allowing override of allowRelateToLevel

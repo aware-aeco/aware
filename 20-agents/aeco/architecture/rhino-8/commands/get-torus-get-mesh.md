@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetTorus.GetMesh
+Prompt for the getting of a mesh torus.

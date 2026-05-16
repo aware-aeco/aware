@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_FileDropTarget.HandleDrop
+Handle a file drop.

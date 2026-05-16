@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PerformanceAdviser.GetRuleId
+Retrieves an id of a rule for a given index in the list.

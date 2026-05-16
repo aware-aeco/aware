@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.GetPlaneFromDocument
+Harvest the object frame plane from a Rhino document.

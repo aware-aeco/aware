@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIDocument.ShowElements
+Shows the elements by zoom to fit.

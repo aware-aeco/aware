@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Part.GetSourceElementOriginalCategoryIds
+Gets the category ids of the source elements which were used to form this part.

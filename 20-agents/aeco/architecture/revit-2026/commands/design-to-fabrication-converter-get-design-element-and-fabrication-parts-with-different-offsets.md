@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DesignToFabricationConverter.GetDesignElementAndFabricationPartsWithDifferentOffsets
+Gets the collection of design elements that failed to convert and the associated set of fabrication parts with different offsets.

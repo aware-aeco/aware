@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoftedPlate.Modify
+Modifies the lofted plate object values in the database.

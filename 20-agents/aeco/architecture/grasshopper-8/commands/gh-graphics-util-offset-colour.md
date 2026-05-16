@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.OffsetColour
+Add a fixed value to all the channels in a colour.

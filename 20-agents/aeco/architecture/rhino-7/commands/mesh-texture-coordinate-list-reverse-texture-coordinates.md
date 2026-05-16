@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshTextureCoordinateList.ReverseTextureCoordinates
+Reverses one coordinate direction of the texture coordinates.             The region of the bitmap the texture uses does not change.             Either Us or Vs direction is flipped.

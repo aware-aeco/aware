@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Wire.Create
+Creates a new wire.

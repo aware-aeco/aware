@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndependentTag.HasTagText
+Checks if the IndependentTag has a valid tag text.

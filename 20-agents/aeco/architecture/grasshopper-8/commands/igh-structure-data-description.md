@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Structure.DataDescription
+Gets a description of the data contained in this structure.

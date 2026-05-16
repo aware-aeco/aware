@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportCreateConicalBentPlateByPartsAndRadiusAperture
+DO NOT USE! For internal usage only!

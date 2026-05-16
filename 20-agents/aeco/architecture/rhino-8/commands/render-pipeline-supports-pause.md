@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderPipeline.SupportsPause
+Override and return true if the renderer supports pausing

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Selection.PickPoint
+Prompts the user to pick a point on the active work plane.

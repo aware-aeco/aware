@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BezierSurface.Domain
+Gets the domain in a direction.

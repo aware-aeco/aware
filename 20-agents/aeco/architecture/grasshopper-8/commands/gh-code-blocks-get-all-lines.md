@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CodeBlocks.GetAllLines
+Convert all blocks to a single array of lines and readonly flags.

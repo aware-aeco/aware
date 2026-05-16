@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Subelement.GetReference
+Obtains the reference to this subelement.

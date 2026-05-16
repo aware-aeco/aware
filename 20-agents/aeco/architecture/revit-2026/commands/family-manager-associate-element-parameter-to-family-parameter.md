@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyManager.AssociateElementParameterToFamilyParameter
+Associates or disassociates the element parameter to an existing family parameter.

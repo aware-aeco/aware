@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.IsValidColumnNumber
+Verifies if the column number is valid.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFC.RegisterSpaceBoundingElementHandle
+Stores a handle representing a space bounding element to the ExporterIFC's internal cache.

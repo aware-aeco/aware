@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexStatusList.Add
+Adds a new flag at the end of the list.

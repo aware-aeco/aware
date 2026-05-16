@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Solid.GetBoundingBox
+Retrieves a box that circumscribes the solid geometry.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Quaternion.Set
+Sets all coefficients of the quaternion.

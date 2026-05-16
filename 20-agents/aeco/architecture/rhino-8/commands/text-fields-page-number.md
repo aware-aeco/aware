@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextFields.PageNumber
+Returns the current layouts page number

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalFileUtils.GetExternalFileReference
+Gets the external file referencing data for the given element.

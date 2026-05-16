@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoGet.InGetObject
+Returns true if currently in a GetObject.GetObjects()

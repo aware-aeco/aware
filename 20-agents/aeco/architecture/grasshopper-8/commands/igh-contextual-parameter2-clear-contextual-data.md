@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_ContextualParameter2.ClearContextualData
+Clear previously assigned collection of values as contextual data

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceDefinition.GetReferences
+Gets a list of the CRhinoInstanceObjects (inserts) that contains             a reference this instance definition.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Component.Select
+Selects a component from the model database. The component ID must be set.

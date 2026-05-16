@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DraftAngleAnalysisSettings.RestoreDefaults
+Commits the default settings as the current settings.

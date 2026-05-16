@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OptionalFunctionalityUtils.IsSKPImportLinkAvailable
+Checks whether the SKP Import/Link functionality is available in the installed Revit.

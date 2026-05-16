@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamingUtils.IsValidName
+Identifies if the input string is valid for use as an object name in Revit.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableTraySizeIterator.Reset
+Resets the iterator to the initial state.

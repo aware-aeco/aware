@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelHistory.GetModifiedObjectsWithType
+Gets based on type a list of the objects that have been added or modified after the modification stamp.

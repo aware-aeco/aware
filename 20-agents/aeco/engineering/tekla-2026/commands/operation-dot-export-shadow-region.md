@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotExportShadowRegion
+Gets a Shadow (Projection) Area for list of parts.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_FormShepard.UnregisterForm
+Remove a sheep from the flock.

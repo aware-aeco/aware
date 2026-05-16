@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinearWorkflow.GetHashCode
+Get hash code for this object. It is the Hash property cast to int.

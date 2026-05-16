@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.SaveAs
+Saves the document to a given path.

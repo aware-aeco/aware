@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurtainGridSet.Insert
+Insert the specified item into the set.

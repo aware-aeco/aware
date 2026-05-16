@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileObj.Write
+Write an obj file based on the contents of a RhinoDoc

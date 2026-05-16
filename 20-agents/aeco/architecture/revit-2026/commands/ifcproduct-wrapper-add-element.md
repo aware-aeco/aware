@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCProductWrapper.AddElement
+Adds an IfcElement handle to associate with the IfcProduct in this wrapper.

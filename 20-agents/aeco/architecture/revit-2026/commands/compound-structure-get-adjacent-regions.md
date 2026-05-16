@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.GetAdjacentRegions
+Gets the ids of region bound to a specified segment.

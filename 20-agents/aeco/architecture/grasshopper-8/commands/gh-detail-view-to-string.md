@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DetailView.ToString
+Format the detail view using default grasshopper formatting logic.

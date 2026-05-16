@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceDefinitionGeometry.GetObjectIds
+list of object ids in the instance geometry table

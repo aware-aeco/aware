@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepTrim.IsReversed
+Get orientation of trim with respect to it's corresponding edge.

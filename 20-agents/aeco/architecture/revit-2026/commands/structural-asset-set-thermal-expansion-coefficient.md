@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralAsset.SetThermalExpansionCoefficient
+Sets the thermal expansion coefficient of the asset.

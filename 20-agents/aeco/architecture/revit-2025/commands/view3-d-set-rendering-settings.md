@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View3D.SetRenderingSettings
+Changes the rendering settings for this 3d view.

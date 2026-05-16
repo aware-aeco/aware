@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Serializer.JsonToUDAs
+Deserializes json data produced by Model!dbHistoryJsonWriteUDAs() into dictionary of properties.

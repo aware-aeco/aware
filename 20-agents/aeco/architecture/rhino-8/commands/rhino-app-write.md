@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoApp.Write
+Print formatted text in the command window.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DraftAngleAnalysisSettings.UpdateFromState
+Sets all settings to a particular defined joined state.

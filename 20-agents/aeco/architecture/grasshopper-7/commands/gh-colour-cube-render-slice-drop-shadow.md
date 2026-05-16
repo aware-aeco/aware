@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourCube.RenderSliceDropShadow
+Render the drop shadow onto the slice.

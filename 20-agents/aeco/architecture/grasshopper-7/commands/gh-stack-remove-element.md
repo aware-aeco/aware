@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Stack.RemoveElement
+Remove the stack element at the specified index.

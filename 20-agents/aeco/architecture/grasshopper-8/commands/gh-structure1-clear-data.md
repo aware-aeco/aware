@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Structure`1.ClearData
+Removes all data from all paths without affecting the structure topology.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.GetLapLength
+Gets the lap length that is used for the specified end - 0 for start, 1 for end.

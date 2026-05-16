@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WorksetConfiguration.Close
+Sets a group of user-created worksets to close.

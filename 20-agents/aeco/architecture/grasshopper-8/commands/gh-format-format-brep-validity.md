@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Format.FormatBrepValidity
+If the brep is invalid, return a string describing why.

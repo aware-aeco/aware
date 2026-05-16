@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.ExportDwgFromSelected
+Dwg export from selected objects.

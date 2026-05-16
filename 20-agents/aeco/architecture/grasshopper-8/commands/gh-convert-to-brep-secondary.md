@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToBrep_Secondary
+Attempts to convert other data types into an OnBrep.   Data is not quaranteed to be duplicated.

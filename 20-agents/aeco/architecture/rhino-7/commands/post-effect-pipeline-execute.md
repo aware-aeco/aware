@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PostEffectPipeline.Execute
+Execute the pipeline. This executes all the post effects in order.             Only this rectangle need be modified by the post effects.

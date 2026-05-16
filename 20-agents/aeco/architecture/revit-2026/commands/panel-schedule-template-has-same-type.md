@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleTemplate.HasSameType
+Checks if given template has the same panel schedule type with this template.

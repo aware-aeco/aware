@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ImageConverter.CanConvertTo
+Gets a value indicating that this converter can convert to the specified type.

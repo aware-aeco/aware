@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InsulationLiningBase.IsValidThickness
+Identifies if the given thickness value is valid for assignment to insulation or lining elements.

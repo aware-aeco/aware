@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Matrix.RowReduce
+Row reduces a matrix to calculate rank and determinant.

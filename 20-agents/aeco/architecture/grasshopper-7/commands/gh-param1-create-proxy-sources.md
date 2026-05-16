@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Param`1.CreateProxySources
+Convert all proper source parameters into proxy sources.

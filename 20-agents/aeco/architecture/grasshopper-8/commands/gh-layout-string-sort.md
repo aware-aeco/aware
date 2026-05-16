@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Layout.StringSort
+For: RH-83156. Specifically handle leading whitespace for sorting purposes.

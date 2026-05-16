@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DynamicItem.Create
+Creates the content for this item

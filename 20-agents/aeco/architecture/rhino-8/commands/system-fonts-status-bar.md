@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SystemFonts.StatusBar
+Gets the system status bar font with optional specified  and .

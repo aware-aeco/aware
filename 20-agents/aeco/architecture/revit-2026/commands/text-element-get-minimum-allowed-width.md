@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextElement.GetMinimumAllowedWidth
+Returns the minimum width the text element can be assigned.

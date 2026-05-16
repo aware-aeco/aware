@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Polymesh.Fingerprint
+Gets fingerprint information for input brep

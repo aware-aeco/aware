@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.Add
+Append a new point to the end of the list.

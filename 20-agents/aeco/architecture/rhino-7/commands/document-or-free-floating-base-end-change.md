@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DocumentOrFreeFloatingBase.EndChange
+See BeginChange

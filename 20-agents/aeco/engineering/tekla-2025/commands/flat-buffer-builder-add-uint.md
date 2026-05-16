@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FlatBufferBuilder.AddUint
+Add an `uint` to the buffer (aligns the data and grows if necessary).

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Dialogs.ShowSelectLinetypeDialog
+Displays Rhino's single linetype selection dialog.

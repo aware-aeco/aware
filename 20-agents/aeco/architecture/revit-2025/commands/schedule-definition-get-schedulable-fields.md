@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.GetSchedulableFields
+Gets a list of all non-calculated/non-combined fields that are eligible to be    included in this schedule.

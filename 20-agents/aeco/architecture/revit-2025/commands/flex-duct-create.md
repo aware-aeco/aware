@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FlexDuct.Create
+Creates a new flexible duct into the document, using a point array and flexible duct type.

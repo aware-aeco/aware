@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BezierCurve.CurvatureAt
+Evaluate the curvature vector at a curve parameter.

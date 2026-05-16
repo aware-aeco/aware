@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Site.GetSpaces
+Gets all spaces belonging to this site.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PythonScript.SetupScriptContext
+Setups the script context. Use a RhinoDoc instance unless unsure.

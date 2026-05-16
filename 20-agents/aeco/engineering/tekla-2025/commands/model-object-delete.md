@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObject.Delete
+Deletes the instance from the model database.

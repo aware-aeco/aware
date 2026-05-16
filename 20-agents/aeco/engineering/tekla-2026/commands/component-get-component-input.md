@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Component.GetComponentInput
+Returns the component input object.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentParamServer.UnregisterInputParameter
+Removes the specified parameter from this component.

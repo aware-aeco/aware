@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MassInstanceUtils.GetGrossVolume
+Get the total building volume represented by a mass instance.

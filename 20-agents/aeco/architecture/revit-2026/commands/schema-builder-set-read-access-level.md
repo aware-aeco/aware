@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SchemaBuilder.SetReadAccessLevel
+Sets top level read access (for entities)

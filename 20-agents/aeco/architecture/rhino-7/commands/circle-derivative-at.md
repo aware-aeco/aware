@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Circle.DerivativeAt
+Determines the value of the Nth derivative at a parameter.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableView.GetCalculatedValueName
+Gets the calculated value name for a cell from the template view.

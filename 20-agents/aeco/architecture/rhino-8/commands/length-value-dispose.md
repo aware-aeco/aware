@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LengthValue.Dispose
+actively reclaim native allocated ON_LenghtValue*

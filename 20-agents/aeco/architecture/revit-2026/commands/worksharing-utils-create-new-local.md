@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WorksharingUtils.CreateNewLocal
+Takes a path to a central model and copies the model into a new local file for the current user.

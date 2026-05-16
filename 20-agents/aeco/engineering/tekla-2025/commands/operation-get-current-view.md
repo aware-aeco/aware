@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetCurrentView
+Returns the view over that the mouse was hovering last

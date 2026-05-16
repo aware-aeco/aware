@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalSetting.GetElectricalSettings
+Get the electrical settings of the project.

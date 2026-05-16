@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCCategoryTemplate.GetMappingInfoById
+Gets a copy of IFC mapping info by category id.

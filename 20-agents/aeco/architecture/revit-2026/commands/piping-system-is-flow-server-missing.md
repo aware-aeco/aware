@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PipingSystem.IsFlowServerMissing
+Indicates if any flow server which was used in the piping system is not available.

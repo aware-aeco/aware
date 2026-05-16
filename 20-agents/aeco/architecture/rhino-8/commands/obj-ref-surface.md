@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjRef.Surface
+Gets the surface if the referenced geometry is one.

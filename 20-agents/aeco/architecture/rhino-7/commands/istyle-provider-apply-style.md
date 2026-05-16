@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IStyleProvider.ApplyStyle
+Applies styles to the specified

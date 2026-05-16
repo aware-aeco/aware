@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoApp.Exit
+Exits, or closes, Rhino.

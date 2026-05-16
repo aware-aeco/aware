@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ID.CompareTo
+Compares this ID to another ID.

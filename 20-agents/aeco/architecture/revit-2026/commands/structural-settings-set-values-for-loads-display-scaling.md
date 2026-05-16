@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralSettings.SetValuesForLoadsDisplayScaling
+Sets values for loads display scaling by providing two load forces and their corresponding length of the representative lines in internal units.

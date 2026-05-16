@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.StringToGuid
+Create a Guid based on SHA256 hashing of a string.

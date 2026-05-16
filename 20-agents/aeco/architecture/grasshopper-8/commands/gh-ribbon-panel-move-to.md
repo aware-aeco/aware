@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RibbonPanel.MoveTo
+Move the panel and all content to a new location.

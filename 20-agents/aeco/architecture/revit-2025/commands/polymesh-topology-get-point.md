@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolymeshTopology.GetPoint
+Returns one point at the given index.

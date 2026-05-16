@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHInterval
+Convert data into GH_Intervals.

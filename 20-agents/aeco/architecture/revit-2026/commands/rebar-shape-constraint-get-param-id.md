@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeConstraint.GetParamId
+Return the Id of the parameter associated with this constraint.

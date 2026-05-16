@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitServerInternalException.GetObjectData
+Retrieves data needed to serialize the target object.

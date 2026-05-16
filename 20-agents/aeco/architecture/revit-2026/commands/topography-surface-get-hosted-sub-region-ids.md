@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TopographySurface.GetHostedSubRegionIds
+Gets the ids of all subregion elements hosted on this topography surface.

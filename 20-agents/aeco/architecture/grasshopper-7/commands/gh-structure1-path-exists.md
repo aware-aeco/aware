@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Structure`1.PathExists
+Returns True if the specified path is already defined inside the structure.

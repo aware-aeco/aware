@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyAnalysisSurface.GetAnalyticalOpenings
+Returns the analytical openings of the analytical surface.

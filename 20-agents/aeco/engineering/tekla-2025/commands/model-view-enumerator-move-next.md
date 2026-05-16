@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelViewEnumerator.MoveNext
+Moves to the next view in the enumerator.

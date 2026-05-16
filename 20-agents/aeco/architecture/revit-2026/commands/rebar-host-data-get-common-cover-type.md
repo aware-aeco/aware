@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarHostData.GetCommonCoverType
+If all exposed faces of the host have the same associated CoverType,    return that CoverType; otherwise, return .

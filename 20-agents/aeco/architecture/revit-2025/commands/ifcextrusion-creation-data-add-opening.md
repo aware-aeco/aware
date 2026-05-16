@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCExtrusionCreationData.AddOpening
+Adds an opening to the data.

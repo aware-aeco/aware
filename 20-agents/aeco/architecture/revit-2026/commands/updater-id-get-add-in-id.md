@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UpdaterId.GetAddInId
+AddInId of the UpdaterId

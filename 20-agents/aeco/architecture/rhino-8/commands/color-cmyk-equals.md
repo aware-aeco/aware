@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorCMYK.Equals
+Returns a value indicating that this is equal to the specified object

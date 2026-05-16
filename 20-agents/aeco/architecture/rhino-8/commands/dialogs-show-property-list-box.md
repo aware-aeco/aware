@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Dialogs.ShowPropertyListBox
+Displays Rhino's property list box.

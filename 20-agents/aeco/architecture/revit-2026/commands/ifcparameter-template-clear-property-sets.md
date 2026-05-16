@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCParameterTemplate.ClearPropertySets
+Removes all property sets from the template.

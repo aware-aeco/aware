@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CreateRefinedCatmullClarkMesh
+Instantiates a new mesh that represents a Catmull-Clark subdivision of the mesh.

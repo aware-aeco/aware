@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StringTable.Delete
+Removes user data strings from the document.

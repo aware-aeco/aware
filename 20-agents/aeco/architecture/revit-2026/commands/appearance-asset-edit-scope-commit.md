@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AppearanceAssetEditScope.Commit
+Finishes the edit scope.

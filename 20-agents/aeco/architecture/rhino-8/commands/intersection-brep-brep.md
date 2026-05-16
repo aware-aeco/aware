@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.BrepBrep
+Intersects two Breps.

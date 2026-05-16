@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WidgetHandler`1.Dispose
+Disposes this object

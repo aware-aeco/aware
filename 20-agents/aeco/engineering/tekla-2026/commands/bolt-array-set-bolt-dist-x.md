@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoltArray.SetBoltDistX
+Sets the X distance at the index defined by the argument.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.NewSpaces2
+Creates a set of new unplaced spaces on a given phase.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightManagerSupport.UnGroup
+UnGroups the lights

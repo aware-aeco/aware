@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SliderOrientation.Equals
+Determines whether the specified  is equal to the current .

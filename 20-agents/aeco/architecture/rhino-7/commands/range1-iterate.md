@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Range`1.Iterate
+Iterates the range between the start and end values.

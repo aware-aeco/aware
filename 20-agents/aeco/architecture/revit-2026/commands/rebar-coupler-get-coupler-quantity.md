@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarCoupler.GetCouplerQuantity
+Identifies the number of couplers in a set.

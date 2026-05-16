@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-VersionNumber.ToVersion
+Convert this VersionNumber class to System.Version()

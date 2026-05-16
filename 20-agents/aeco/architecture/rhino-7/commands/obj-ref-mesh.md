@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjRef.Mesh
+Gets the mesh if the referenced geometry is one.

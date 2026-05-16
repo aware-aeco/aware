@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorLCH.MakePositive
+Ensure the Chromaticity of this color is positive.

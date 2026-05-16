@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConduitSettings.GetConduitSettings
+Gets the conduit settings of the project.

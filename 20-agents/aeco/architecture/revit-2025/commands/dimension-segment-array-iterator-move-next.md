@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DimensionSegmentArrayIterator.MoveNext
+Move the iterator one item forward.

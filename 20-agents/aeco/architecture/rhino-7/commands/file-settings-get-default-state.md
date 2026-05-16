@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileSettings.GetDefaultState
+Returns the default state.

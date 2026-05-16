@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDrivenAccessor.GetDistributionPath
+The distribution path of a rebar set.

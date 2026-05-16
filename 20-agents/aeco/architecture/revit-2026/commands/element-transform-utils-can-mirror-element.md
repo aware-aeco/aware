@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementTransformUtils.CanMirrorElement
+Determines whether element can be mirrored.

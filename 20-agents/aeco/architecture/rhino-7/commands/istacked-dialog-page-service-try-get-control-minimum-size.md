@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IStackedDialogPageService.TryGetControlMinimumSize
+Get the minimum size associated with a control object

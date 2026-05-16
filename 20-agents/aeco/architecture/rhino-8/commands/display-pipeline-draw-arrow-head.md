@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawArrowHead
+Draws a single arrow head.

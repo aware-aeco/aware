@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportAddComponentAttributeToStack
+DO NOT USE! For internal usage only!

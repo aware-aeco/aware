@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HierarchicDefinition.AddObjects
+Associates hierarchical objects with the hierarchical definition.              Fails if the hierarchical definition doesn't exist in the model.

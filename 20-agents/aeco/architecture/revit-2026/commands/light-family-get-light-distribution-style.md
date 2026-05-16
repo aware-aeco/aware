@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightFamily.GetLightDistributionStyle
+Returns a LightDistributionStyle value for the light distribution

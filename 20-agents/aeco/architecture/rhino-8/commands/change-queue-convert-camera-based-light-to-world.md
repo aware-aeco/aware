@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ChangeQueue.ConvertCameraBasedLightToWorld
+Convert given (camera-based) light to a world-based light (in-place)

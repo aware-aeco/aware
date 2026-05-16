@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HierarchicDefinition.Select
+Selects the hierarchical definition instance from the model. The ID must be set.

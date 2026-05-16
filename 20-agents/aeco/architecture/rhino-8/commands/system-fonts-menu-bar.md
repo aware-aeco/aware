@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SystemFonts.MenuBar
+Gets the system menu bar font with optional specified  and .

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.IsManifold
+Returns true if every mesh "edge" has at most two faces.

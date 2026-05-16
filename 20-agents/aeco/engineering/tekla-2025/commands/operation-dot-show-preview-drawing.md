@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotShowPreviewDrawing
+dot Show This Preview Drawing

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshingParameters.CopyFrom
+Call this method to copy MeshingParameters from another instance.

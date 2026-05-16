@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarHostData.IsFaceExposed
+Checks whether the specified face is considered exposed, and    therefore has an associated CoverType.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelHistory.GetCurrentModificationStamp
+Gets the current modification stamp from the model.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportGetTemporaryColor
+DO NOT USE! For internal usage only!

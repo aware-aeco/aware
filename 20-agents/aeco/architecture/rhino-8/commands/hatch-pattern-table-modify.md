@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HatchPatternTable.Modify
+Modify hatch pattern settings.

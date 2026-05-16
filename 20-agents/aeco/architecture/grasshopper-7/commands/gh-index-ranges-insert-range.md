@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_IndexRanges.InsertRange
+Insert an index range into the collection.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Layer.GetParentName
+Get a layer's "parent" path name

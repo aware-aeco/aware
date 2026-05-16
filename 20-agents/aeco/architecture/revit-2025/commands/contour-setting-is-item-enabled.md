@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ContourSetting.IsItemEnabled
+Check if a ContourSettingItem is enabled

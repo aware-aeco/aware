@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ITextBuffer.SetUnderline
+Sets the underline flag for the specified text range.

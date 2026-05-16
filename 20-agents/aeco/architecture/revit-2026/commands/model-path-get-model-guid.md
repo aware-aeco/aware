@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelPath.GetModelGUID
+A GUID identifying the Revit cloud model.

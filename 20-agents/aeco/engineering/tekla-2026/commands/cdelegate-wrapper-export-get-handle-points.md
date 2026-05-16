@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetHandlePoints
+DO NOT USE! For internal usage only!

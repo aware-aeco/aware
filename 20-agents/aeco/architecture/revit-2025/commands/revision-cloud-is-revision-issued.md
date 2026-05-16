@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevisionCloud.IsRevisionIssued
+Indicates whether the Revision associated with this RevisionCloud has been issued.

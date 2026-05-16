@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BimModelDataProductClient.UpdateModelAsync
+Asynchronously updates a BIM model in the Bim Model Data Product.

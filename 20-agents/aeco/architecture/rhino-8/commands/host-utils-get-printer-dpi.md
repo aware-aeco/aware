@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostUtils.GetPrinterDPI
+Get the output resolution for a given printer.

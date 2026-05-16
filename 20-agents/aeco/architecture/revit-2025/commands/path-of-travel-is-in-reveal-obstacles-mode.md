@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PathOfTravel.IsInRevealObstaclesMode
+Returns current state of Reveal Obstacles mode for the given view.

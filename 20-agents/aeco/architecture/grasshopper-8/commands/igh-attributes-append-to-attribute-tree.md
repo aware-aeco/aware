@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Attributes.AppendToAttributeTree
+Recursively append these attributes and all child attributes to the attribute list.

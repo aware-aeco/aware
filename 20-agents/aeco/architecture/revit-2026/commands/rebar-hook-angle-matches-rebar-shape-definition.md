@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.HookAngleMatchesRebarShapeDefinition
+Checks that the hook angle of the specified RebarHookType matches the hook angle used in the Rebar's RebarShape at the specified end of the bar.

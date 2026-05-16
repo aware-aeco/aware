@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDefinitionByArc.AddConstraintSagittaLength
+Specify a parameter to drive the sagittal    length (the height of the circular segment, measured    perpendicular to the chord).

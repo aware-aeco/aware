@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TopographySurface.AddPoints
+Adds points to a topography surface.

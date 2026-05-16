@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Pen.Dispose
+Releases all resource used by the  object.

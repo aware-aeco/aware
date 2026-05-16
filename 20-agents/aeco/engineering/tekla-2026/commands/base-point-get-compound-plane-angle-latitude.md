@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BasePoint.GetCompoundPlaneAngleLatitude
+Gets the Latitude as a compound plane angle.

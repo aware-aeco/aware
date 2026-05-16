@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCData.AsAggregate
+Gets storage value as IFCAggregate when its PrimitiveType is aggregate.

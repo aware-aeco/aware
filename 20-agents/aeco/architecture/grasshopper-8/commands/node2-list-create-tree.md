@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Node2List.CreateTree
+Create a VorNodeTree that contains all the Nodes in this list.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Selection.SetElementIds
+Selects the elements.

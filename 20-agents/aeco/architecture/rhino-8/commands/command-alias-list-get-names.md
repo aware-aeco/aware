@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CommandAliasList.GetNames
+Returns a list of command alias names.

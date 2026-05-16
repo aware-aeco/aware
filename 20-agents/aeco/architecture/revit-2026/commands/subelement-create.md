@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Subelement.Create
+Creates an object representing element or subelement.

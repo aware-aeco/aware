@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.IsAHanger
+Checks whether it is a hanger.

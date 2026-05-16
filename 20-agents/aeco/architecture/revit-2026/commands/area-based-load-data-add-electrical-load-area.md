@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaBasedLoadData.AddElectricalLoadArea
+Adds electrical load area into the area based load.

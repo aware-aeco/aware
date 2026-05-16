@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Graphics.RestoreTransform
+Restores the transform state

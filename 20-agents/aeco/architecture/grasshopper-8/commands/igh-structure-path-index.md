@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Structure.PathIndex
+Find the indices that delineate the given path domain.

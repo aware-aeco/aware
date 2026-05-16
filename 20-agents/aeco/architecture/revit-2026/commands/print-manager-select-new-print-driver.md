@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PrintManager.SelectNewPrintDriver
+Select a new printer.

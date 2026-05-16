@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileEps.Read
+Read a Eps file into a RhinoDoc

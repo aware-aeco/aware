@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportDGNSettings.GetActivePredefinedSettings
+Returns the active pre-defined non-in-session exporting settings for DGN in the given document.

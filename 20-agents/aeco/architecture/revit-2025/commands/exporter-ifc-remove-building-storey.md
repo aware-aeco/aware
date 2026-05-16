@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFC.RemoveBuildingStorey
+Removes an IFCLevelInfo corresponding to a level from the exporter's internal cache.

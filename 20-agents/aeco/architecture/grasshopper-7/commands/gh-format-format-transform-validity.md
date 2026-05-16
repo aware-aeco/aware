@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Format.FormatTransformValidity
+If the transform is invalid, return a string describing why.

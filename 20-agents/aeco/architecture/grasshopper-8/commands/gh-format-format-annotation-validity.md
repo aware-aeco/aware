@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Format.FormatAnnotationValidity
+If the annotation is invalid, return a string describing why.

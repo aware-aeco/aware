@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayLegendSettings.IsEqual
+Compares two legend settings objects.

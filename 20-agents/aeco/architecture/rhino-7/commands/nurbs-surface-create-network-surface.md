@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsSurface.CreateNetworkSurface
+Builds a surface from an ordered network of curves/edges.

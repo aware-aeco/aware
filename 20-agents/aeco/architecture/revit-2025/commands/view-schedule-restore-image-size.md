@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.RestoreImageSize
+Restores all images to their original sizes.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationDrawingsServiceExtractor.ExtractDrawingData
+Extract the attributes data for the given drawings.

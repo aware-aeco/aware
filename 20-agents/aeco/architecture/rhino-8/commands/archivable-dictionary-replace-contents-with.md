@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ArchivableDictionary.ReplaceContentsWith
+Replace the contents of the dictionary with that of the given source dictionary.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RibbonTab.PerformLayout
+Performs layout logic of all panels

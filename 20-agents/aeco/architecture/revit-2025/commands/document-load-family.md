@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.LoadFamily
+Loads the contents of this family document into another document.

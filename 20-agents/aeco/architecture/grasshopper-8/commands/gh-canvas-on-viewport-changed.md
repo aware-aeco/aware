@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Canvas.OnViewportChanged
+Ensure the canvas and document viewport data are synchronised and raises the ViewportChanged event.

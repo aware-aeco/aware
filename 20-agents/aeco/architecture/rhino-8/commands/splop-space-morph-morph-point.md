@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SplopSpaceMorph.MorphPoint
+Morphs an Euclidean point.

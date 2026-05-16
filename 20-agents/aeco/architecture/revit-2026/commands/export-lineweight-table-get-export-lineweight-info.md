@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLineweightTable.GetExportLineweightInfo
+Gets a copy of the ExportLineweightInfo corresponding to the given ExportLineweightKey.

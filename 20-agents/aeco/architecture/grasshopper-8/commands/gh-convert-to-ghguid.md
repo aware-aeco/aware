@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHGuid
+Convert data into GH_Guid.

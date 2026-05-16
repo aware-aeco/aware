@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipelineAttributes.SetDitherTransparencyEffect
+Set a dither transparency effect to make objects render with a given amount of              transparency using a dither effect.

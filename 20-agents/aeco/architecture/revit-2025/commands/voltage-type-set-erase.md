@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-VoltageTypeSet.Erase
+Removes a specified voltage type from the set.

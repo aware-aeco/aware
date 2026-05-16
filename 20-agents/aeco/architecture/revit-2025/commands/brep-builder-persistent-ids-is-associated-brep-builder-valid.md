@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BRepBuilderPersistentIds.IsAssociatedBRepBuilderValid
+Validates the associated (in the constructor) BRepBuilder for this BRepBuilderPersistentIds.

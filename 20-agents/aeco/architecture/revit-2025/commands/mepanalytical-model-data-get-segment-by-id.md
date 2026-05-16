@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPAnalyticalModelData.GetSegmentById
+Gets the analytical segment with the specified id.

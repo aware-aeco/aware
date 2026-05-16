@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlugIn.PlugInExists
+Verifies that a Rhino plug-in is installed.

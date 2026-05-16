@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalResourceReference.GetResourceVersionStatus
+Checks whether this ExternalResourceReference corresponds to the current version of the resource.

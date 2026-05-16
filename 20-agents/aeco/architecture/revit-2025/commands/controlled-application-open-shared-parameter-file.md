@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlledApplication.OpenSharedParameterFile
+Enables access to shared parameter groups and definitions that are maintained on disk.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WallSweep.WallAllowsWallSweep
+Validates that the wall is of a type that may be a host for a wall sweep or reveal.

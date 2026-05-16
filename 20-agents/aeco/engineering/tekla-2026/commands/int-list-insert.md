@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IntList.Insert
+Inserts the integer to the specified index.

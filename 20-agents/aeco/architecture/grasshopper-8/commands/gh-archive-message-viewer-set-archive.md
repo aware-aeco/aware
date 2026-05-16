@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ArchiveMessageViewer.SetArchive
+Set a new archive. The messages in this archive will be displayed on the form.

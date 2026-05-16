@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.GetNormals
+Returns all normals assigned to the mesh.

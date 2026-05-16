@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_SliderBase.MouseDown
+Respond to mouse-down events.

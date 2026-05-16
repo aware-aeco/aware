@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormatOptions.CanSuppressTrailingZeros
+Checks whether trailing zeros can be suppressed for the display unit in this FormatOptions.

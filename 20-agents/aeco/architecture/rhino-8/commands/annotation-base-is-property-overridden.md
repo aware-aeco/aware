@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnnotationBase.IsPropertyOverridden
+Returns true if a property is overridden

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCAnyHandle.IsSubTypeOf
+Determines whether the instance is an instance of the specified instance type or a subtype of this instance type.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_FileDropTarget.AcceptableFile
+Gets a value indicating whether or not the path can be handled by the local object.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointF.DotProduct
+Gets the dot product of this instance and the specified

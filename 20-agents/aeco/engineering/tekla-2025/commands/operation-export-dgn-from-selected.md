@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.ExportDgnFromSelected
+Dgn export from selected objects.

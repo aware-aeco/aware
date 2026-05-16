@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssetPropertyDoubleArray4d.SetValueAsDoubles
+Sets the value of the property.

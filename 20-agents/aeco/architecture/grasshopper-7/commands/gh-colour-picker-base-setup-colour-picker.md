@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourPickerBase.SetupColourPicker
+Setup all UI elements.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ConnectivityDisparity.ExternalInputs
+Find all external sources for a given id in the subset.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadTemperature.Delete
+Deletes the load temperature instance with the given ID from the model database.

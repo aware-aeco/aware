@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportPatternTable.GetKeys
+Gets all the keys stored in the map.

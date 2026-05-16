@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileFbx.Read
+Read a Fbx file intof a RhinoDoc

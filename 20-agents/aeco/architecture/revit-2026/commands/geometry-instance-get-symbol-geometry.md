@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryInstance.GetSymbolGeometry
+Computes the geometric representation of the symbol which generates this instance.

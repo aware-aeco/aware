@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Floor.GetDefaultFloorType
+Returns id of default floor type.

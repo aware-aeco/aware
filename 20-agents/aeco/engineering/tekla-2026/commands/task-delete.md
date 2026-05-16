@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Task.Delete
+Deletes the task instance from the model. The identifier must be set.

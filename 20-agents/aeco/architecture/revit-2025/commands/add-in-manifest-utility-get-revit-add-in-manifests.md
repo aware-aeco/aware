@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AddInManifestUtility.GetRevitAddInManifests
+Reads all AddInManifests from the .addin files available in a folder.

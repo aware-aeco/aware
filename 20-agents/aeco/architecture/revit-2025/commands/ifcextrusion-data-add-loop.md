@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCExtrusionData.AddLoop
+Adds a curve loop to the extrusion data.

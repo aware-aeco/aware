@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BinaryArchiveReader.BeginRead3dmChunk
+Begins reading a chunk that must be in the archive at this location.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.Duplicate
+Duplicates this view.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.Reduce
+Reduce polygon count

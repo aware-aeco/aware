@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpatialFieldManager.Clear
+Clear all analysis results managed by this manager object

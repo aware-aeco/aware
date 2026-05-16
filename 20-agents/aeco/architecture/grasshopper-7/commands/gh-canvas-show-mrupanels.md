@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Canvas.ShowMRUPanels
+Show any hidden MRU panels by sliding them back into view.

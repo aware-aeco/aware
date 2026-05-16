@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CalculateBoundingBoxEventArgs.IncludeBoundingBox
+Unites a bounding box with the current display bounding box in order to ensure             dynamic objects in "box" are drawn.

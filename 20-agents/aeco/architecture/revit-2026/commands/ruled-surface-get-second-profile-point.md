@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RuledSurface.GetSecondProfilePoint
+If a point was used to define the second profile, returns a copy of that point.

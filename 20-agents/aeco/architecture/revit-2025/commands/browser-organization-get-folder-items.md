@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrowserOrganization.GetFolderItems
+Returns a collection of leaf  objects each containing the given element Id.

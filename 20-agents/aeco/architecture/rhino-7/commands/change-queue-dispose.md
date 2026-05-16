@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ChangeQueue.Dispose
+Dispose our ChangeQueue

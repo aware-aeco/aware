@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Utilities.SafeFrameEnabled
+Queries whether or not the Safe Frame is visible.

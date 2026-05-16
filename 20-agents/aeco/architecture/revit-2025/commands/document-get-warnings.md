@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.GetWarnings
+Returns list of failure messages generated from persistent (reviewable) warnings accumulated in the document.

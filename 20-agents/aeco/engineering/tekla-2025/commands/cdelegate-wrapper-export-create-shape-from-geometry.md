@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportCreateShapeFromGeometry
+DO NOT USE! For internal usage only!

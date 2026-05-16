@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleFieldId.ToString
+Gets a String representation of the integer value of the id.

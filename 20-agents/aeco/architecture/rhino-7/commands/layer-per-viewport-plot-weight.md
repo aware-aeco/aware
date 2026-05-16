@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Layer.PerViewportPlotWeight
+Gets the plot weight, in millimeters, for this layer.

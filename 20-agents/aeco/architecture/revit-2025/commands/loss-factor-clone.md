@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LossFactor.Clone
+Creates a copy of the LossFactor derived object.

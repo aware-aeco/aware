@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSpliceTypeUtils.SetStaggerLengthMultiplier
+Sets the lap length multiplier value.

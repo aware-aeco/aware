@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObjectEnumerator.MoveNext
+Moves to the next item in the enumerator.

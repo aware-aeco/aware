@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReinforcementRoundingManager.GetLengthUnitTypeId
+Gets the identifier of the length unit quantifying the reinforcement rounding values.

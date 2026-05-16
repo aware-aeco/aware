@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinetypeTable.AddReferenceLinetype
+Adds a reference linetypes that will not be saved in files.

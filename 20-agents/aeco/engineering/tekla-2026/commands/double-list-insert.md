@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DoubleList.Insert
+Inserts the double to the specified index.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WireSet.Erase
+Removes a specified object from the set.

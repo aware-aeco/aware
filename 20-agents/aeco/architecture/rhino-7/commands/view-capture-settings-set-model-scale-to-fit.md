@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewCaptureSettings.SetModelScaleToFit
+Scales the model to fit.

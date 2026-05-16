@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailuresAccessor.PostFailure
+Posts an additional failure message to be processed for the current transaction.

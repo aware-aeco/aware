@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Wire.AppendVertex
+Appends one vertex to the end of the wire.

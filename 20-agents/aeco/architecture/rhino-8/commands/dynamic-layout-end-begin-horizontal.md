@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DynamicLayout.EndBeginHorizontal
+Ends the current horizontal section, then begins a new horizontal section with a new row

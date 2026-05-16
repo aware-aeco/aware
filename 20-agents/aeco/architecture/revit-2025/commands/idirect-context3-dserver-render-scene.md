@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IDirectContext3DServer.RenderScene
+Performs rendering of the scene that the server creates.

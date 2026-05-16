@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexList.Hide
+Hides the vertex at the given index.

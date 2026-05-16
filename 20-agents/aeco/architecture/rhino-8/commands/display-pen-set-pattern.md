@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPen.SetPattern
+Set pattern to apply for a stroke.

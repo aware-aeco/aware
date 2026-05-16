@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetModelViewVisibilityFilterValue
+Gets the model view visibility filter value.

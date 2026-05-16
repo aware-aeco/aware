@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SurfaceFilletBase.Dispose
+Actively reclaims unmanaged resources that this instance uses.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FaceArray.Append
+Add the face to the end of the array.

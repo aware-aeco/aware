@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralSectionGeneralU.GetFlangeThicknessInWidthCenter
+Returns thickness of flange measured in the 0.5 * width,    sometimes used for sections with width <= 300 mm.

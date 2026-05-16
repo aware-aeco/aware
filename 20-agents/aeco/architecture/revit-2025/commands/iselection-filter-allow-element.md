@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ISelectionFilter.AllowElement
+Override this pre-filter method to specify if the element should be permitted to be selected.

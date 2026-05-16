@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TemperatureRatingType.RemoveWireSize
+Remove an existing wire size type from this temperature rating type.

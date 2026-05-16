@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCHybridImportOptions.Create
+Create a IFCHybridImportOptions from an options string, or null if it isn't hybrid mode.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.BrepSurface
+Intersects a Brep and a Surface.

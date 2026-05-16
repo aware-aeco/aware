@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.CanViewBeDuplicated
+Identifies if this view can be duplicated.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_TagArtist.Paint
+This method is called whenever a Canvas channel is painted

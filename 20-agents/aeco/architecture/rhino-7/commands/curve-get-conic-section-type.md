@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.GetConicSectionType
+Returns the type of conic section based on the curve's shape.

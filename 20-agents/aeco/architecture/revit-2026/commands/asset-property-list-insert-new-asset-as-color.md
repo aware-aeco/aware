@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssetPropertyList.InsertNewAssetAsColor
+Insert a new AssetPropertyDouble4 containing the input value to this list.

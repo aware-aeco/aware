@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyManager.MakeInstance
+Set the family parameter as an instance parameter.

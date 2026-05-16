@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportPatternTable.GetExportPatternInfo
+Gets a copy of the pattern info associated to the input pattern key.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TessellatedBuildIssue.MakesDataUnusable
+Reports whether this issue makes some data unusable ('true')    or is only shows that data format conventions were broken,    but the data are still usable (false).

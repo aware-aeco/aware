@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportModifyGeometryTreePolygonNode
+DO NOT USE! For internal usage only!

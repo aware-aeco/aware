@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetObject.SetCustomGeometryFilter
+Set filter callback function that will be called by the CustomGeometryFilter

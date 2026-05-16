@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Tracing.Assert
+Display a typical ASSERT dialog with stack information.

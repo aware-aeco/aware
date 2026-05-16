@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MassLevelData.IsValidConceptualConstructionTypeElement
+Checks if the ElementId is an acceptable conceptual construction type ElementId for the MassLevelData (Mass Floor).

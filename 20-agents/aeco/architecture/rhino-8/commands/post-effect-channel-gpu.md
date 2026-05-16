@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PostEffectChannel.GPU
+Return an interface to this channel for doing channel operations on the GPU.

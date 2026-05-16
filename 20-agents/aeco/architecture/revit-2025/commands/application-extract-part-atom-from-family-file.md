@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.ExtractPartAtomFromFamilyFile
+Writes a PartAtom XML from the contents of a family file.

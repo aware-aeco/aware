@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGraphicsPath.AddBezier
+Adds a bezier curve to the path with two control points

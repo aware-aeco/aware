@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DuctFittingAndAccessoryData.GetFamilyInstanceId
+Gets the Id of the fiting or accessory instance

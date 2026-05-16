@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FillGrid.CalculateStrokesPerArea
+Calculates the number of the segments of the pattern per unit area.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TypeConverter.ConvertTo
+Converts to the specified type.

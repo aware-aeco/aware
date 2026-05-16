@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormatOptions.GetSymbolTypeId
+Gets the identifier of the symbol indicating the unit quantifying the value.

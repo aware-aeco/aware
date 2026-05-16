@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.WithEdgeSoftening
+Constructs new mesh from the current one, with edge softening applied to it.

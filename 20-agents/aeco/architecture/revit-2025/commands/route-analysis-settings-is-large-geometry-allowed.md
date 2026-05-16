@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RouteAnalysisSettings.IsLargeGeometryAllowed
+Returns if large geometry is allowed for path of travel creation or not.

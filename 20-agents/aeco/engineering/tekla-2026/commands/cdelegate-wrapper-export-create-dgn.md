@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportCreateDgn
+DO NOT USE! For internal usage only!

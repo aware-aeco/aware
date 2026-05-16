@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Subelement.ChangeTypeId
+Changes the type of the subelement.

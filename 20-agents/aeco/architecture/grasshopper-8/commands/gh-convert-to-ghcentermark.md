@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHCentermark
+Convert data into GH_Centermark.

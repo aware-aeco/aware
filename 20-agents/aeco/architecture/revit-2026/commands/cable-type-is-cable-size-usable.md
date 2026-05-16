@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableType.IsCableSizeUsable
+Checks whether the Cable Size can be used by this Cable Type or not.

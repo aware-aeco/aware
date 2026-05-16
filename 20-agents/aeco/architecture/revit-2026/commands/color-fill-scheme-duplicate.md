@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorFillScheme.Duplicate
+Generates a copy of current scheme.

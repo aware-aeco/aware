@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricSheet.IsUnobscuredInView
+Checks if this fabric sheet is shown unobscured in a view.

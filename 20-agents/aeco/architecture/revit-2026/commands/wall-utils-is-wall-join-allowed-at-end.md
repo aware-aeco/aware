@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WallUtils.IsWallJoinAllowedAtEnd
+Identifies if the indicated end of the wall allows joins or not.

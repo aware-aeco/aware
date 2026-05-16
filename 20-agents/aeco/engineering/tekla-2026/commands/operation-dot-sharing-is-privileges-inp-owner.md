@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotSharingIsPrivilegesInpOwner
+Check if user is privileges.inp owner.

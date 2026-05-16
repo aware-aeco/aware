@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Torus.ToNurbsSurface
+Converts this torus to its NURBS surface representation.              This is synonymous with calling .

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilySymbol.CanHaveStructuralSection
+Identifies if this FamilySymbol can have a structural section.

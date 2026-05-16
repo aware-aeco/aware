@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FaceSilhouetteNode.GetFace
+Returns the Face object corresponding to the node.

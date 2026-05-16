@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.CreateMeshes
+Create meshes used to render and analyze surface and polysurface objects.

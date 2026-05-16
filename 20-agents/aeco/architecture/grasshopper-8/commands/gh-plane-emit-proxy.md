@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Plane.EmitProxy
+Returns a proxy that represents this plane. Do not call this function unless you're

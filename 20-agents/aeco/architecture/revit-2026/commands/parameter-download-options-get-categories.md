@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterDownloadOptions.GetCategories
+Get categories for binding.

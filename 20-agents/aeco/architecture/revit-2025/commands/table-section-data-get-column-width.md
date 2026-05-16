@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.GetColumnWidth
+Returns a column's width in feet

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Hub.HasOrigin
+Provides information if Hub has a specific location at point in 3D space.

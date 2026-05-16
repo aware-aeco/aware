@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Goo.EmitProxy
+Create a new proxy for this instance. Return Null if this class does not support proxies.

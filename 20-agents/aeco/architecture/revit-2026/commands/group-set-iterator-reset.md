@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroupSetIterator.Reset
+Bring the iterator back to the start of the set.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotTryGetSubdirectoryFromFilePrefixAndSuffix
+Searches for subdirectory for the file.

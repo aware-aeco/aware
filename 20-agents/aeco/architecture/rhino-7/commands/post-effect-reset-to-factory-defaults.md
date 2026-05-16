@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PostEffect.ResetToFactoryDefaults
+Reset the state to factory defaults.

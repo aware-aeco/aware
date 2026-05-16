@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IStackedDialogPageService.GetImageHandle
+Convert image to platform specific unmanaged pointer

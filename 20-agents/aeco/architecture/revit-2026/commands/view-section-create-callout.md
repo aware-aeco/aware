@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSection.CreateCallout
+Creates a new callout view.

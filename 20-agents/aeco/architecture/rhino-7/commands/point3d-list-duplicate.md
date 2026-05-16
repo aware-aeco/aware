@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point3dList.Duplicate
+Returns a deep copy of this point list instance.

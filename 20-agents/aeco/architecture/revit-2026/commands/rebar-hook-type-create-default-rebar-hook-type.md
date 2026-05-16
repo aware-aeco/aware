@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarHookType.CreateDefaultRebarHookType
+Creates a new RebarHookType object with a default name.

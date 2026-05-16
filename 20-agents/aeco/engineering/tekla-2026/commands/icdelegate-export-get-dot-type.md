@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportGetDotType
+DO NOT USE! For internal usage only!

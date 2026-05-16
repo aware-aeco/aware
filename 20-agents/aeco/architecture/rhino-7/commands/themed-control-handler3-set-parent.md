@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedControlHandler`3.SetParent
+Called when the parent of the control has been set

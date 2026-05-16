@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DynamicLayout.Add
+Add the control with the optional scaling

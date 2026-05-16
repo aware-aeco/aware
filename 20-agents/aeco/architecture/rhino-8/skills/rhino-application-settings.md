@@ -6,50 +6,97 @@ description: API reference for namespace Rhino.ApplicationSettings from RhinoCom
 # Rhino.ApplicationSettings
 
 - **AppearanceSettings**
+  - Provides static methods and properties to deal with the appearance of the application.
 - **AppearanceSettingsState**
+  - snapshot of the values in
 - **ChooseOneObjectSettings**
+  - Contains static methods and properties to modify "choose one object" settings.
 - **ChooseOneObjectSettingsState**
+  - Represents a snapshot of .
 - **ClipboardState**
+  - Defines enumerated constant values for different behavior that is related to clipboard data.
 - **CommandAliasList**
+  - Contains static methods and properties to access command aliases.
 - **CommandPromptPosition**
+  - Defines enumerated constant values for default positions of the command prompt inside the frame of the full editor window.
 - **CursorMode**
+  - Defines enumerated constant values for particular OSnap cursor colors.
 - **CursorTooltipSettings**
+  - Cursor tooltips place information at the cursor location.             Note: Turning on cursor tooltips turns off object snap cursors.
 - **CursorTooltipSettingsState**
+  - Represents a snapshot of .
 - **CurvatureAnalysisSettings**
+  - Contains static methods and properties to modify curvature analysis-related commands.
 - **CurvatureAnalysisSettingsState**
+  - Represents a snapshot of .
 - **CurvatureGraphSettings**
+  - Contains static methods and properties to modify curvature graph commands.
 - **CurvatureGraphSettingsState**
+  - Represents a snapshot of .
 - **DraftAngleAnalysisSettings**
 - **DraftAngleAnalysisSettingsState**
+  - Represents a snapshot of
 - **EdgeAnalysisSettings**
+  - Contains static methods and properties to modify the visibility of edges in edge-related commands.
 - **EdgeAnalysisSettingsState**
+  - Represents a snapshot of .
 - **FileSettings**
+  - Contains static methods and properties relating Rhino files.
 - **FileSettingsState**
+  - Represents a snapshot of .
 - **GeneralSettings**
+  - Contains static methods and properties to give access to Rhinoceros settings.
 - **GeneralSettingsState**
+  - Represents a snapshot of .
 - **HistorySettings**
+  - Provides static (Shared in Vb.Net) properties to modify Rhino History settings.
 - **Installation**
+  - The type of Rhino executable that is executing
 - **KeyboardShortcut**
+  - A shortcut is a key plus modifier combination that executes a macro
 - **LicenseNode**
+  - License node types.
 - **MiddleMouseMode**
+  - Defines enumerated constant values to define what happens when             either the middle mouse button on a three-button mouse is clicked or after pressing the wheel on a wheeled mouse.
 - **ModelAidSettings**
+  - Contains static methods and properties to modify model aid settings.
 - **ModelAidSettingsState**
+  - Represents a snapshot of .
 - **MouseSelectMode**
+  - Defines enumerated constant values to indicate a particular window selection mode.
 - **NeverRepeatList**
+  - Contains static methods and properties relating to the list of commands that are never repeated.
 - **OpenGLSettings**
+  - Static methods and properties to control OpenGL settings
 - **OpenGLSettingsState**
+  - Represents a snapshot of
 - **OsnapModes**
+  - Defines several bit masks for each of the OSnap that are defined.             Refer to the Rhino Help file for further information.
 - **PackageManagerSettings**
+  - Settings specific to Rhino's package manager
 - **PaintColor**
+  - Contains enumerated constant values to represent logical colors associated with elements of the user interface.
 - **PointDisplayMode**
+  - Defines enumerated constant values for world coordinates and CPlane point display modes.
 - **SelectionFilterSettings**
+  - Selection filter settings restrict any selection mode (SelWindow, SelCrossing, SelAll, etc.) to specified object types.             Note, selection filter settings are not persistent.
 - **SelectionFilterSettingsState**
+  - Represents a snapshot of .
 - **ShortcutKey**
+  - Shortcut key combinations
 - **ShortcutKeySettings**
+  - Contains static methods and properties to control keyboard shortcut keys
 - **SmartTrackSettings**
+  - Contains static methods and properties that target the Smart Track feature behavior.
 - **SmartTrackSettingsState**
+  - Represents a snapshot of .
 - **ViewSettings**
+  - Contains static methods and properties to control view settings.
 - **ViewSettingsState**
+  - Represents a snapshot of .
 - **WidgetColor**
+  - Contains enumerated constant values to represent logical colors associated with elements of the user interface.
 - **ZebraAnalysisSettings**
+  - Contains static methods and properties to modify Zebra analysis-related commands.
 - **ZebraAnalysisSettingsState**
+  - Represents a snapshot of .

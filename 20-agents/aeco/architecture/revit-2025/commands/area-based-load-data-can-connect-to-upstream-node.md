@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaBasedLoadData.CanConnectToUpstreamNode
+Verifies that the area based load can connect to the upstream electrical analytical node.    If the area based load already has an upstream node or the upstream node is full of downstream nodes, the area based load can't connect to the upstream node.

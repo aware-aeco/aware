@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_GeometricGoo.Morph
+Morph the object or a deformable representation of the object.

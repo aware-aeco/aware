@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Seam.GetSecondaryObjects
+Returns an array list containing all the secondary objects.

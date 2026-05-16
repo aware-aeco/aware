@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.DuplicateMesh
+Constructs a copy of this mesh.             This is the same as .

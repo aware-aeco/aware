@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.CreateExportObjectList
+Converts Reference models as TS native objects.

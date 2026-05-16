@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PartUtils.CreateMergedPart
+Create a single merged part which represents the Parts    specified by partsToMerge.

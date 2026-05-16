@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetTemplateParameterIds
+Returns a list of parameter ids that may be controlled when this view is assigned as a template.

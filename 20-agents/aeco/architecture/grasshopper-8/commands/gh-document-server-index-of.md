@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentServer.IndexOf
+Gets the index of the given document.

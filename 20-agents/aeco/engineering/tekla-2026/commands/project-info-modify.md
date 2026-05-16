@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ProjectInfo.Modify
+Modifies the current project information.

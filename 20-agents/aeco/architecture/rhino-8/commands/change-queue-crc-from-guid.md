@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ChangeQueue.CrcFromGuid
+Helper function to get a CRC from a Guid.

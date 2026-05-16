@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlaneSurface.GetExtents
+Gets the extents of the plane surface.

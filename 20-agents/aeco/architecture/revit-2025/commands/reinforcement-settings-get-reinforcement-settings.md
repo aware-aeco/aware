@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReinforcementSettings.GetReinforcementSettings
+Obtains the ReinforcementSettings object for the specified project document.

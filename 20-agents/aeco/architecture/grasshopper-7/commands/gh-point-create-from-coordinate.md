@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Point.CreateFromCoordinate
+Create a new point geometry instance based on a fixed coordinate

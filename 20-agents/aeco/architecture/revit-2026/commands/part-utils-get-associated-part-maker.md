@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PartUtils.GetAssociatedPartMaker
+Gets associated PartMaker for an element.

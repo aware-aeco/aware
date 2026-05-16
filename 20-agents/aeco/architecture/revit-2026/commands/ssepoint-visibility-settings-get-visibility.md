@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SSEPointVisibilitySettings.GetVisibility
+Gets the SSE point visibility for the given category.

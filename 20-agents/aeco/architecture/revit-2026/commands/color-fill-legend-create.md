@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorFillLegend.Create
+Creates new instance of ColorFillLegend.

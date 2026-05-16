@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WebView.ExecuteScriptAsync
+Executes the specified javascript in the context of the current page asynchronously, returning its result.

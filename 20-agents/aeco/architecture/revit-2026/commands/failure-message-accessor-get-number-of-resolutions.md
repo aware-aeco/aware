@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureMessageAccessor.GetNumberOfResolutions
+Retrieves number of resolutions that can be used to resolve failure.

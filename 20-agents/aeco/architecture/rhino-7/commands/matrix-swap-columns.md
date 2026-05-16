@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Matrix.SwapColumns
+Exchanges two columns.

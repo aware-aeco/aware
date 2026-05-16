@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetNumber.SetUpperLimit
+Sets an upper limit on the number that can be returned.             By default there is no upper limit.

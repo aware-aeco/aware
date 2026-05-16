@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContent.ChildSlotOn
+Gets the on-ness property for the texture in the specified child slot.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Rule.Apply
+Applies this rule to an integer.

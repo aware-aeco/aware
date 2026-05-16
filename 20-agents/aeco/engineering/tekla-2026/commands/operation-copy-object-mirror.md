@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.CopyObjectMirror
+Creates a mirrored copy of the given model object.

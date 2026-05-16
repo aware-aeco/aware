@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Dialog`1.Close
+Close the dialog with the specified result

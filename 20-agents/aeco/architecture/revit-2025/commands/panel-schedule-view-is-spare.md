@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.IsSpare
+Check if the circuit is a spare

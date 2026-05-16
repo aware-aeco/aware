@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportPathListHandler
+DO NOT USE! For internal usage only!

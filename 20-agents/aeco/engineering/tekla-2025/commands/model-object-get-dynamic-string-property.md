@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObject.GetDynamicStringProperty
+Gets a dynamic string property from the model object.

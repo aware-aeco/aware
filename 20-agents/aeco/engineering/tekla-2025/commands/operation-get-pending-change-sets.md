@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetPendingChangeSets
+Gets the initial change set that includes all changes prior joining a session

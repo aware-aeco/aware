@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointOnEdgeFaceIntersection.GetFaceReference
+Get a copy of the face reference.

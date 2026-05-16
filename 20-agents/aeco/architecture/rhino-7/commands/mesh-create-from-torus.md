@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CreateFromTorus
+Constructs a mesh torus.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBarType.SetCrankLength
+Sets the crank length for the specified Rebar Crank Type.

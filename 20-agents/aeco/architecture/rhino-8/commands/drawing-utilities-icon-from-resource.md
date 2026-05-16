@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DrawingUtilities.IconFromResource
+Load a Icon from an embedded resource.

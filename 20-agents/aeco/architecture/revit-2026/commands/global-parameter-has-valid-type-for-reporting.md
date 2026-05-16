@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GlobalParameter.HasValidTypeForReporting
+Tests that the global parameter has data of a type that supports reporting.

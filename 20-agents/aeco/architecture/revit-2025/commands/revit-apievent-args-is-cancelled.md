@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitAPIEventArgs.IsCancelled
+Indicates whether the event is being cancelled.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraintsManager.ClearHandleConstraintPairHighlighting
+Clears all highlighting in all views.

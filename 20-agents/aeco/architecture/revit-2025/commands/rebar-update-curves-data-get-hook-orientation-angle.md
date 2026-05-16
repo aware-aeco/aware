@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarUpdateCurvesData.GetHookOrientationAngle
+Get the hook orientation angle at end that is currently in the rebar.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.SetDeckEmbeddingType
+Sets the deck embedding type to use for the specified structural deck.

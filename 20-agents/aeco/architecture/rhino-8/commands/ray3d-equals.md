@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Ray3d.Equals
+Determines whether the specified System.Object is a Ray3d and has the same values as the present ray.

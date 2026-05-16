@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Utility.DocumentTolerance
+Returns the Absolute Tolerance of the model document

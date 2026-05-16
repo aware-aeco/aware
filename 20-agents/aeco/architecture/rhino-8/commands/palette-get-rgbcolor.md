@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Palette.GetRGBColor
+Gets the cached ARGB value of the color at the specified

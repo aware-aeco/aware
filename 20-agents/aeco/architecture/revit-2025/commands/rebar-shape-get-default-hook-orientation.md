@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShape.GetDefaultHookOrientation
+Get the hook orientation.

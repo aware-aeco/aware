@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RhinoScriptInterface.AssignDataToParameter
+Find a parameter and assign some persistent data.

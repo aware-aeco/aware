@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IColumnItem.SetValue
+Sets the value of this object for the specified column/index

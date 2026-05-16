@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.SetExternalReferenceModelObjectColoring
+Sets the given external reference models objects coloring. For all objects, give null/empty container.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RhinoScriptInterface.IsEditorLoaded
+Returns the loaded state of the Grasshopper Main window.

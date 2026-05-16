@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UpdaterRegistry.IsUpdaterEnabled
+Checks if the updater is enabled or not.

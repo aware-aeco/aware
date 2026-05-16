@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ChangeQueue.EnvironmentFromOriginalInstanceId
+Get the RenderEnvironment from the ChangeQueue content cache from the original instance id

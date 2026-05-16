@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToUVInterval
+Convert data into Grasshopper.Kernel.Types.UVInterval.

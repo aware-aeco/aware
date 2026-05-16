@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFC.GetPresentationLayerAssignments
+Get the list of the internally IfcPresentationLayerAssignments and their respective shape representations.

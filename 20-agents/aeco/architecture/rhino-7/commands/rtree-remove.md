@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RTree.Remove
+Removes an element from the tree.

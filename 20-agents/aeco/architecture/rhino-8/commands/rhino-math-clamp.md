@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoMath.Clamp
+Restricts a  to be specified within an interval of two integers.

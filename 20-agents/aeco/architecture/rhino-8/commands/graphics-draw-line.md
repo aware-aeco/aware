@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Graphics.DrawLine
+Draws a 1 pixel wide line with the specified

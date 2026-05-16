@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Duct.CreatePlaceholder
+Creates a new placeholder duct.

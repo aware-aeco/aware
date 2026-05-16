@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.AddOrderedPointCloud
+Adds a point cloud object to the document.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.IsValidFabricatorFinish
+Check if finish is according to fabricator settings.

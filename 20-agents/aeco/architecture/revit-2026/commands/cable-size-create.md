@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableSize.Create
+Creates a Cable Size.

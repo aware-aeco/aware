@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceArrayArray.Append
+Add the ReferenceArray to the end of the array.

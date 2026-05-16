@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NonContinuousRailStructure.GetNonContinuousRailCount
+Gets number of Non-Continuous Rails.

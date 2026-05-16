@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Font.FromStream
+Creates a new instance of the Font class from the specified stream.

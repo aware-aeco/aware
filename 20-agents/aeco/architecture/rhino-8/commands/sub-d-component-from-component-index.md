@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubD.ComponentFromComponentIndex
+Returns a SubDComponent, either a SubDEdge, SubDFace, or SubDVertex, from a component index.

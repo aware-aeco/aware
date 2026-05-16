@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawSurface
+Draw wireframe display for a single surface.

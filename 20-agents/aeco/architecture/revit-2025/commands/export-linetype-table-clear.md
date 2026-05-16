@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLinetypeTable.Clear
+Removes all contents stored in Export line type table.

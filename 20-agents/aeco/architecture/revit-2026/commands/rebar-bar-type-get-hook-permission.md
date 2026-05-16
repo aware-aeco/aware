@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBarType.GetHookPermission
+Identifies if a hook type is permitted for this bar type

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IRcpItem.MouseUp
+Respond to a mouse button up event.

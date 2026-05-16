@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshUnsafeLock.NormalVector3fArray
+Retrieves a pointer to the raw mesh vertex normal array, which uses vectors             defined with single precision floating point numbers, or throws an exception if none is available.

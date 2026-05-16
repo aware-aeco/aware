@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Structure`1.RemovePath
+Removes a path and all associated data from the structure.   If the path doesn't exist, nothing will happen.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoDoc.OpenDocuments
+Returns a list of currently open Rhino documents

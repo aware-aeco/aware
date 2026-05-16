@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Size.Contains
+Gets a value indicating that the specified  is within the  and  of this size

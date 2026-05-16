@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GeometricGoo`1.GetBoundingBox
+Compute an aligned boundingbox.

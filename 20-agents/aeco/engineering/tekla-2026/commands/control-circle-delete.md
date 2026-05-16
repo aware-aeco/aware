@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlCircle.Delete
+Deletes the control circle with the given Identifier.

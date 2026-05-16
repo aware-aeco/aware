@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.CreateDGNv8Export
+Dgn export from all or selected objects.

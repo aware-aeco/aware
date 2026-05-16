@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Polyline.ClosestPoint
+Gets the point on the polyline which is closest to a test-point.

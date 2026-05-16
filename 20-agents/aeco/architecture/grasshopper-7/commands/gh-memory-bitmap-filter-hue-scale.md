@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MemoryBitmap.Filter_HueScale
+Convert the image to a greyscale representation of the hues.

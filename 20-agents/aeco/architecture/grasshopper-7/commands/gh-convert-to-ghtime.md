@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHTime
+Convert data into GH_Time.

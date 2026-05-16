@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Material.SetMaterialAspectByPropertySet
+Sets an aspect of the material to a shared property set.

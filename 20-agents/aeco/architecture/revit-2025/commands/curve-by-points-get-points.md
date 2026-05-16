@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveByPoints.GetPoints
+Get the sequence of points interpolated by this curve.

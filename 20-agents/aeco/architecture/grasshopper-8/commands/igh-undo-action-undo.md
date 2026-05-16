@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_UndoAction.Undo
+Undo the action stored in this record.

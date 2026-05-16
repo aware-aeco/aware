@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementType.IsValidDefaultFamilyType
+Identifies if this type is a valid default family type for the given family category id.

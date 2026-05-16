@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RoofComponents.GetPlaneDirections
+The plane directions of roof slabs.

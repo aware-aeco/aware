@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmGroupTable.FindName
+Finds a Group given its name.

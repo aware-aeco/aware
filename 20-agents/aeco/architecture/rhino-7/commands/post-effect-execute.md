@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PostEffect.Execute
+Execute the post effect.

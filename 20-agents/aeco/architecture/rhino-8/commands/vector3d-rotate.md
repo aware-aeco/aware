@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Vector3d.Rotate
+Rotates this vector around a given axis.

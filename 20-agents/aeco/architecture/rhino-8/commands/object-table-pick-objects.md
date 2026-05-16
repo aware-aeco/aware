@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.PickObjects
+Pick one or more objects based on a given pick context

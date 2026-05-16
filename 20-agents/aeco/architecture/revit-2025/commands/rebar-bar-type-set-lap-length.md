@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBarType.SetLapLength
+Sets the lap length for the specified Rebar Splice Type.

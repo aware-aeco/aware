@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BaseExportOptions.SetExportPatternTable
+Sets the pattern table to use during export.

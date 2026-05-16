@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.IsVerticallyHomogeneous
+Indicates whether this CompoundStructure represents a single set of parallel layers.

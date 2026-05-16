@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitLinkInstance.GetLinkDocument
+The document associated with the Revit link.

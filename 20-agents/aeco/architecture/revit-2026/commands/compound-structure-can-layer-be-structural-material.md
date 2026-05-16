@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.CanLayerBeStructuralMaterial
+Identifies if the input layer can be designated as defining the structural material for this structure.

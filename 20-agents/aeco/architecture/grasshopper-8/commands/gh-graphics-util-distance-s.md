@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.DistanceS
+Compute the squared distance between two points.

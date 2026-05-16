@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralAsset.Equals
+Determines whether this structural asset is equal to another.

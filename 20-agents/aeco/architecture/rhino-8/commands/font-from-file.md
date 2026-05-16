@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Font.FromFile
+Creates a new instance of the Font class with the specified font file on disk.

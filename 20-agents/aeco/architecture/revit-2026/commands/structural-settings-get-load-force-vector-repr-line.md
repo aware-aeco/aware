@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralSettings.GetLoadForceVectorReprLine
+Returns the representative line of the load force vector according to loads display scaling.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IDirectContext3DServer.CanExecute
+Can be used to allow the server to execute only in certain views.

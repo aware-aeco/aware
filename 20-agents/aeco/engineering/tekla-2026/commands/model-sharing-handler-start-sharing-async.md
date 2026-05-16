@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelSharingHandler.StartSharingAsync
+Starts sharing a model with the specified code, description, and location.

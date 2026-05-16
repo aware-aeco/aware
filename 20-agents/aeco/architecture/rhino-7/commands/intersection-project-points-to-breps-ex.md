@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.ProjectPointsToBrepsEx
+Projects points onto breps.

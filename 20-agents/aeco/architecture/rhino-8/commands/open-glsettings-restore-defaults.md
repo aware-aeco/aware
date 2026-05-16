@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OpenGLSettings.RestoreDefaults
+Updates from the default setting state.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Layer.DeletePlotColor
+Removes the plot color for layer. The layer's color will be used for the plot color.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HatchPattern.HatchLineAt
+Gets a HatchLine at an index.

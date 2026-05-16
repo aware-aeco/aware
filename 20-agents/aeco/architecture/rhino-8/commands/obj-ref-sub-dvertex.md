@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjRef.SubDVertex
+Gets the SubDVertex if the referenced geometry is one.

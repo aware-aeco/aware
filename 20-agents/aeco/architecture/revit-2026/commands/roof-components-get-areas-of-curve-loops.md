@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RoofComponents.GetAreasOfCurveLoops
+The areas of CurveLoops of roof slabs.

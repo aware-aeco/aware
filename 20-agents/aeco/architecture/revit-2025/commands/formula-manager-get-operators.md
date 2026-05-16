@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormulaManager.GetOperators
+Gets list of operator names supported by formula engine

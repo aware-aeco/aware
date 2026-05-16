@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EdgeAnalysisSettings.GetCurrentState
+Gets the current settings of the application.

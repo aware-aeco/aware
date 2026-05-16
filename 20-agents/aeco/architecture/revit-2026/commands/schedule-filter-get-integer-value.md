@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleFilter.GetIntegerValue
+Gets the filter value for a filter using an integer value.

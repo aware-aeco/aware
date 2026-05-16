@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-dotTemporaryState.GetTemporaryColor
+Get temporary color for given object

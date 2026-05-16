@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalSystem.Create
+Creates a new MEP Electrical System element from an unused Connector.

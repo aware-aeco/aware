@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceObject.SubObjectFromComponentIndex
+Get a RhinoObject in this block

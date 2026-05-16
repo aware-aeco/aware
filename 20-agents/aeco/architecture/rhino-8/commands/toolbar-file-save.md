@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ToolbarFile.Save
+Saves the toolbar file.

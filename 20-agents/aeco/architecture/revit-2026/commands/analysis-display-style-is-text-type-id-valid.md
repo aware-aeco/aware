@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayStyle.IsTextTypeIdValid
+Verify if text type id is valid.

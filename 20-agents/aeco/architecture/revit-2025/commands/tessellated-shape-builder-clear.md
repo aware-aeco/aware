@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TessellatedShapeBuilder.Clear
+Erases all face set and clears the logs, if any.

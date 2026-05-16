@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Graphics.FillPolygon
+Fills a polygon defined by  with the specified

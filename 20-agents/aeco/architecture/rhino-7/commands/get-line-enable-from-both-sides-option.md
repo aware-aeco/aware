@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetLine.EnableFromBothSidesOption
+If true, then the "BothSides" option shows up when the             start point is interactively picked.

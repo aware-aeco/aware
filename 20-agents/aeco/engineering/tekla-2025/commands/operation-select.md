@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.Select
+Selects a list of objects from the user interface.

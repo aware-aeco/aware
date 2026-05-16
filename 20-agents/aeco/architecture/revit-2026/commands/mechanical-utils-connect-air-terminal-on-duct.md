@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MechanicalUtils.ConnectAirTerminalOnDuct
+Connects an air terminal to a duct directly (without the need for a tee or takeoff).

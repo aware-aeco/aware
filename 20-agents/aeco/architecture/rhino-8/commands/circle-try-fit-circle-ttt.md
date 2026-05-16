@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Circle.TryFitCircleTTT
+Try to fit a circle to three curves using tangent relationships.

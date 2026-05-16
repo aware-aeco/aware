@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveLoop.GetExactLength
+Returns the sum of exact lengths of all curves in the loop.

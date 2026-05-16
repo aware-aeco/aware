@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointOnEdgeFaceIntersection.SetFaceReference
+Change the face reference.

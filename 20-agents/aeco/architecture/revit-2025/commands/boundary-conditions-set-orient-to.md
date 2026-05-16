@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoundaryConditions.SetOrientTo
+Sets the boundary condition orientation option.

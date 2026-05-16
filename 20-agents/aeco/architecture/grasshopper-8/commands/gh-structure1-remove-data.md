@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Structure`1.RemoveData
+Removes the first occurence of a data instance in the tree.

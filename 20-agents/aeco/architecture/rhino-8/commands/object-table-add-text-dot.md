@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.AddTextDot
+Adds a text dot object to Rhino.

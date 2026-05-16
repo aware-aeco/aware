@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExternalResourceServer.GetIconPath
+Implement this method to return the path to an icon file which will be displayed in Revit    user interfaces associated to this server.

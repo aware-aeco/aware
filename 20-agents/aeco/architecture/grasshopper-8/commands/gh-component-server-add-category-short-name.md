@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentServer.AddCategoryShortName
+Add an abbreviation for a tab category. 2~4 letter abbreviations are best.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WireTypeSet.Clear
+Removes every wire type from the set, rendering it empty.

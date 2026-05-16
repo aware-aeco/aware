@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Cluster.CreateFromFilePath
+Recreate this cluster based on a provided filepath.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepVertex.EdgeIndices
+Gets the indices of all edges associated with this vertex.

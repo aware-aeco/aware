@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarHookType.GetDefaultHookExtension
+Computes the default hook length, which is equal to barDiameter * multiplier.

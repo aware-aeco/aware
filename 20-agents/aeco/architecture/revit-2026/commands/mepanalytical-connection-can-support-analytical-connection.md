@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPAnalyticalConnection.CanSupportAnalyticalConnection
+Checks if the connector can support the analytical connection.

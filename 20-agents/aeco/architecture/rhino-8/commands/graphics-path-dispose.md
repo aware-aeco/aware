@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GraphicsPath.Dispose
+Releases all resources used by the  object

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamespaceInfo.FindResource
+Finds the resource in the  with the specified

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RibbonPanel.CollapseLeastSignificantColumn
+Removes the rightmost column that features only Obscure items.

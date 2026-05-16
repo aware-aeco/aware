@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudInstance.HasColor
+Returns true if at least one scan of the element have color, false otherwise.

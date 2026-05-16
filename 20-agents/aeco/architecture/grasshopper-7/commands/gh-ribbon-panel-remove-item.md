@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RibbonPanel.RemoveItem
+Removes an item from the content

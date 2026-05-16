@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolylineCurve.Parameter
+Gets a parameter at a specified index in the polyline curve.

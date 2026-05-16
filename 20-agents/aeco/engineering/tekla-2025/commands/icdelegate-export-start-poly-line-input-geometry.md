@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportStartPolyLineInputGeometry
+DO NOT USE! For internal usage only!

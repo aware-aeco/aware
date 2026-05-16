@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Format.FormatLineValidity
+If the line is invalid, return a string describing why.

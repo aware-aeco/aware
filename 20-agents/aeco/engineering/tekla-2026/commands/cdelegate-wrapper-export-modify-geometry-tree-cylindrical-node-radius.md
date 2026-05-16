@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportModifyGeometryTreeCylindricalNodeRadius
+DO NOT USE! For internal usage only!

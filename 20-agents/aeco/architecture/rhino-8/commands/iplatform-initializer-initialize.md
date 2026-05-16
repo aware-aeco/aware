@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IPlatformInitializer.Initialize
+Called to add specific functionality to the specified

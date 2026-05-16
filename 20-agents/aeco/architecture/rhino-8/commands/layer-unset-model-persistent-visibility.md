@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Layer.UnsetModelPersistentVisibility
+Remove any model persistent visibility setting from this layer.

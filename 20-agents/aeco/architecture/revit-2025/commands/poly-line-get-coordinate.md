@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolyLine.GetCoordinate
+Gets the coordinate point of the specified index.

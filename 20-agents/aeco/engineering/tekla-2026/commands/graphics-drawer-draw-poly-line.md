@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GraphicsDrawer.DrawPolyLine
+Draw a temporary polyline into all open Tekla Structures views.

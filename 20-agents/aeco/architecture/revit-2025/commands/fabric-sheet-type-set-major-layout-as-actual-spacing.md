@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricSheetType.SetMajorLayoutAsActualSpacing
+Sets the major layout pattern as ActualSpacing, while specifying the needed parameters for this pattern.

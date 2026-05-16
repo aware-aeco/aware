@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform.DecomposeRigid
+Decomposes a rigid transformation. The transformation must be affine.

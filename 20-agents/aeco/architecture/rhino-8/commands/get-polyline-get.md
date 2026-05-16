@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetPolyline.Get
+Perform the 'get' operation.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaBasedLoadData.GetUpstreamNodeId
+Gets the upstream electrical analytical node id.

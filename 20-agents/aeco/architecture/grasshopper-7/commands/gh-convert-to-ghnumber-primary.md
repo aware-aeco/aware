@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHNumber_Primary
+Converts similar data into a GH_Number instance.  Data is not quaranteed to be duplicated.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IAssertEventCallback.OnAssertOccured
+Called when an assert occurs.

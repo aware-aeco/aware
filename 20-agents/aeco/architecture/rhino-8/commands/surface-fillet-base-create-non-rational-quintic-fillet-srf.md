@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SurfaceFilletBase.CreateNonRationalQuinticFilletSrf
+Creates a fillet using non-rational Quintic sections with a tangent and inner slider

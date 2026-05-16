@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Circle.TrySmallestEnclosingCircle
+Attempt to create the smallest circle enclosing a set of planar points.

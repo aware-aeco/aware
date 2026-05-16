@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BentPlateTools.ExtractBentPlateFromComponent
+If bent plate is in a component, extracts it from the component and assigns it a new Identifier.

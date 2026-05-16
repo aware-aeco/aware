@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetAttribute
+Gets the attribute value of the given object.

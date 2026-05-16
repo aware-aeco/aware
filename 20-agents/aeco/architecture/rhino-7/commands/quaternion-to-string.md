@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Quaternion.ToString
+Returns a string representation of this Quaternion.

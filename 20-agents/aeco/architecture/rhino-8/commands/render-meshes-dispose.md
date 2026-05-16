@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderMeshes.Dispose
+Dispose this collection

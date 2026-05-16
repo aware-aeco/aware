@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveLoop.Create
+Creates a new curve loop.

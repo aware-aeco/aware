@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetPoint.EnableCurveSnapPerpBar
+Controls display of the curve snap perpendicular bar icon.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CitySet.Clear
+Removes every city from the set, rendering it empty.

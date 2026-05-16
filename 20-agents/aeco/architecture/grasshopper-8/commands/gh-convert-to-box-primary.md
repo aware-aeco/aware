@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToBox_Primary
+Performs a direct cast from Box.   Data is not quaranteed to be duplicated.

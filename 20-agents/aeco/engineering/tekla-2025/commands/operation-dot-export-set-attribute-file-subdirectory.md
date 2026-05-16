@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotExportSetAttributeFileSubdirectory
+Sets subdirectory for the file suffix.

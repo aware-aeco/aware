@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RealtimeDisplayMode.RegisterDisplayModes
+Find and register classes that derive from RealtimeDisplayMode             from the given plug-in.

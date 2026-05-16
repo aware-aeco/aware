@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileGltf.Write
+Write a glTF file based on the contents of a RhinoDoc

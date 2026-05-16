@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSpliceUtils.GetSpliceChain
+Returns all the rebars that are part of a splice chain with the input rebar.

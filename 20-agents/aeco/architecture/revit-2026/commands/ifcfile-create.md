@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCFile.Create
+Creates an IFC file for exporting.

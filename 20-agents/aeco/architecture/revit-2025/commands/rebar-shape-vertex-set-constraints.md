@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeVertex.SetConstraints
+Assign a new list of constraints to this vertex.

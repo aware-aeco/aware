@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmViewTable.CopyTo
+Copies the content of the table to an array.

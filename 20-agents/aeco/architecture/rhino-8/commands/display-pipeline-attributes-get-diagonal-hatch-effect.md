@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipelineAttributes.GetDiagonalHatchEffect
+Get the current diagonal hatch strength and width in pixels.

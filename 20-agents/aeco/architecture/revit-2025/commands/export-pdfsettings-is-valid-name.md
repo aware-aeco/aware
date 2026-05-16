@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportPDFSettings.IsValidName
+Returns result that the proposed name is valid and not exist in the specified document.

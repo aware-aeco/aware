@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataTree`1.ToString
+Creates a brief description of the tree.

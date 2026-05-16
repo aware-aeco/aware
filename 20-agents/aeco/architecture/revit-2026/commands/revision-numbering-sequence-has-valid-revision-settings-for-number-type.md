@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevisionNumberingSequence.HasValidRevisionSettingsForNumberType
+Checks whether the revision numbering sequence owns a valid revision settings for number type.

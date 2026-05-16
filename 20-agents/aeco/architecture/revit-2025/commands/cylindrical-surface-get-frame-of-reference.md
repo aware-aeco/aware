@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CylindricalSurface.GetFrameOfReference
+Returns frame of reference associated with this CylindricalSurface.

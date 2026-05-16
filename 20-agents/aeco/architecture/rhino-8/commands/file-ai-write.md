@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileAi.Write
+Write a Ai file based on the contents of a RhinoDoc

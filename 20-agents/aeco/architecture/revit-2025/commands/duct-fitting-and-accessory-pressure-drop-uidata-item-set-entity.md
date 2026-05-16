@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DuctFittingAndAccessoryPressureDropUIDataItem.SetEntity
+Stores the entity in the UI data item.

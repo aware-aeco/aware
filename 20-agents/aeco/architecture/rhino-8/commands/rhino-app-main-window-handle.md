@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoApp.MainWindowHandle
+Gets the HWND of the Rhino main window.

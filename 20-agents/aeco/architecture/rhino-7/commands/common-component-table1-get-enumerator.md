@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CommonComponentTable`1.GetEnumerator
+Returns the enumerator that yields all items.

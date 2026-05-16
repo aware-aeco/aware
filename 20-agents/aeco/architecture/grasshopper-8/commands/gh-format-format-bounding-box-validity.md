@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Format.FormatBoundingBoxValidity
+If the box is invalid, return a string describing why.

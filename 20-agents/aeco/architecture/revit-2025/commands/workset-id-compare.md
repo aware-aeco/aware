@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WorksetId.Compare
+Compares two WorksetIds.

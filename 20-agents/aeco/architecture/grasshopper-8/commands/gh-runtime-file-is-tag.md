@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RuntimeFile.IsTag
+Tests whether a string is a predefined Grasshopper Help keyword.

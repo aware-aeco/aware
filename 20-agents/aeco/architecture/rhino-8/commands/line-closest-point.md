@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Line.ClosestPoint
+Finds the point on the (in)finite line segment that is closest to a test point.

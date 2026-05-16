@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RoofComponents.GetPlaneOrigins
+The plane origins of roof slabs.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BinaryArchiveReader.SeekFromStart
+seek from start position ( like fseek( ,SEEK_SET) )

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContentKindList.Contains
+Query whether or not the collection contains a particular kind designation.

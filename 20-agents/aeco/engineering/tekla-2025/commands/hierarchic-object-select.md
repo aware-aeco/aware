@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HierarchicObject.Select
+Selects the hierarchical object instance from the model. The ID must be set.

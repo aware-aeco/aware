@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PointUtil.FitPlaneThroughPoints
+Fit a least-squares plane through a collection of points.

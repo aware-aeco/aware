@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarHandleNameData.GetCustomHandleTag
+Gets the handle tag for which we need to specify the name.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BimModelDataProductClient.CreateModelVersionAsync
+Creates a new version for an existing model.

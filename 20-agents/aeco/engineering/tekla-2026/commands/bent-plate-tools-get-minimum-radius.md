@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BentPlateTools.GetMinimumRadius
+Returns the minimum radius for bend sections in a given bent plate

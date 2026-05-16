@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedViewTable.FindByName
+Finds a named view.

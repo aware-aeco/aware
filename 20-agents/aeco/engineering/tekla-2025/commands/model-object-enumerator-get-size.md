@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObjectEnumerator.GetSize
+Returns the total amount of items.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Linetype.RemoveTaper
+Remove taper information for stroke

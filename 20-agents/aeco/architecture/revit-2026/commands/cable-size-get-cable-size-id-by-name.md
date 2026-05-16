@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableSize.GetCableSizeIdByName
+Gets the Cable Size id by given Cable Size name.

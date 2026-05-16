@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurve.GrevilleParameter
+Gets the greville (edit point) parameter that belongs              to the control point at the specified index.

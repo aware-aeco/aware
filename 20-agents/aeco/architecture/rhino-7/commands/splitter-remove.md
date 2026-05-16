@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Splitter.Remove
+Removes the specified child from the container.

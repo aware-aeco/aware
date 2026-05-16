@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSheetSetting.Rename
+Rename the current view sheet set.

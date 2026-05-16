@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilePdf.Create
+Create a new instance of a FilePdf class

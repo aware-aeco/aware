@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableCellStyleOverrideOptions.SetAllOverrides
+Sets all overrides to a specific value.

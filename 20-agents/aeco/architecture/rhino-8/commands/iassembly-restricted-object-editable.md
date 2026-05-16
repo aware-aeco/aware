@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IAssemblyRestrictedObject.Editable
+Determines whether an assembly can modify the instance.

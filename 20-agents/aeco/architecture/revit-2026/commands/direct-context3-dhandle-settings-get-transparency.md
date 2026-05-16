@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectContext3DHandleSettings.GetTransparency
+Gets the transparency value of the handle and the associated DirectContext3D graphics.

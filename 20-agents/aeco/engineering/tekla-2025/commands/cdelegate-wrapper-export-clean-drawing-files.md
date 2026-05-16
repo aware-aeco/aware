@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportCleanDrawingFiles
+DO NOT USE! For internal usage only!

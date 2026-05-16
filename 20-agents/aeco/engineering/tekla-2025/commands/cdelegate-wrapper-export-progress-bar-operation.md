@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportProgressBarOperation
+DO NOT USE! For internal usage only!

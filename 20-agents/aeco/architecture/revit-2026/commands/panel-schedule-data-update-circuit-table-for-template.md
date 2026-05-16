@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleData.UpdateCircuitTableForTemplate
+Redraw the circuit table for a template with the given parameter updates

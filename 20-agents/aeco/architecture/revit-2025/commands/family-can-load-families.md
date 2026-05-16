@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Family.CanLoadFamilies
+Checks whether the document is in a state that allows the loading of families.

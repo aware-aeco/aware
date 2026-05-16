@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dm.ReadRevisionHistory
+Quickly check a file for it's revision information.  This function does             not read the entire file, just what it needs to get revision information out

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RTree.Insert
+Inserts an element into the tree.

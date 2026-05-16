@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Box.MakeValid
+Attempts to make the Box valid. This is not always possible.

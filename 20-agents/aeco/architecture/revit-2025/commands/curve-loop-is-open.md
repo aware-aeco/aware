@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveLoop.IsOpen
+Returns whether the curve loop is open or closed, as determined by an internal flag.

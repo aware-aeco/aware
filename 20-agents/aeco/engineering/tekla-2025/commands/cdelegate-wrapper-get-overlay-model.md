@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.GetOverlayModel
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCProductWrapper.AddAnnotation
+Adds an annotation handle to associate with the IfcProduct in this wrapper.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.GetValidFamiliesForNoteBlock
+Gets a list of families that can be used for a note block.

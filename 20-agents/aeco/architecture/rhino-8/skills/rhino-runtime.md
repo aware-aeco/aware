@@ -6,26 +6,50 @@ description: API reference for namespace Rhino.Runtime from RhinoCommon.dll
 # Rhino.Runtime
 
 - **AdvancedSetting**
+  - Advanced setting Id
 - **AssemblyResolver**
+  - Assembly Resolver for the Rhino App Domain.
 - **CommonObject**
+  - Base class for .NET classes that wrap C++ unmanaged Rhino classes.
 - **CorruptGeometryException**
+  - Thrown when Rhino finds a brep or mesh that will cause a crash if used for calculations.
 - **DocumentCollectedException**
+  - Represents the error that happen when a class user attempts to execute a modifying operation             on an object that has been added to a document.
 - **HostUtils**
+  - Contains static methods to deal with the runtime environment.
 - **IPlatformServiceLocator**
+  - Get platform specific services that are used internally for             general cross platform funtions in RhinoCommon. This includes             services like localization and GUI components that have concrete             implementations in the RhinoWindows or RhinoMac assemblies
 - **IShrinkWrapService**
+  - Internal interface used by ShrinkWrap functions
 - **IZooClientUtilities**
+  - Interface implemented in ZooClient and added to Rhino via dependency injection
 - **ImportOptionsSections**
+  - Standard CRhImportOptions sections to import
 - **Interop**
+  - Contains static methods to marshal objects between RhinoCommon and legacy Rhino_DotNet or C++.
 - **LicenseStateChangedEventArgs**
+  - Passed to LicenseStateChanged event on RhinoApp
 - **LicenseTypes**
+  - Different licensing modes that Rhino can run in
 - **Mode**
+  - Contains enumerated constant values to represent Rhino's Runtime Mode.
 - **NamedParametersEventArgs**
+  - Dictionary style class used for named callbacks from C++ -> .NET
 - **NotLicensedException**
+  - Exception thrown when calling functions in RhinoCommon and the             application is executing without a license
 - **PythonCompiledCode**
+  - Represents scripting compiled code.
 - **PythonScript**
+  - Represents a Python script.
 - **RdkNotLoadedException**
+  - Is thrown when the RDK is not loaded.
 - **RiskyAction**
+  - Defines risky actions that need to be reported in crash exceptions
 - **Skin**
+  - Represents a customized environment that changes the appearance of Rhino.             Skin DLLs must contain a single class that derives from the Skin class.
 - **TextFields**
+  - This Class Processes Text Field Functions
 - **ViewCaptureWriter**
+  - Callback system used by SVG and PDF exporter to generate documents. Not intended             for general SDK usage
 - **ZooClientParameters**
+  - ZooClientParameters is a read-only set of parameters that control             the flow of licensing inside ZooClient. Because this class flows through a number of             other classes, functions, and UI, it is read-only so that inadvertent changes are not             made to the data as it propagates from the caller.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DividedSurface.IsSeedNode
+Reports whether a grid node is a "seed node," a node that is associated with one or more tiles.

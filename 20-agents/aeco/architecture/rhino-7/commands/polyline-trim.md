@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Polyline.Trim
+Constructs a polyline out of a parameter sub-domain in this curve.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPAnalyticalSegment.SetLossCoefficientOverride
+Sets the overridden value of loss coefficient.

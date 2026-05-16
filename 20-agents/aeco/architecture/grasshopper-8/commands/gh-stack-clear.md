@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Stack.Clear
+Remove all boxes, timestamps and animators.

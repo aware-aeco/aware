@@ -7,39 +7,63 @@ description: API reference for namespace Rhino.Input.Custom from RhinoCommon.dll
 
 - **CommandLineOption**
 - **CommandLineOptionType**
+  - Behavior for a command line option
 - **ConeConstraint**
 - **CylinderConstraint**
 - **GeometryAttributeFilter**
+  - If an object passes the geometry TYPE filter, then the geometry ATTRIBUTE             filter is applied.
 - **GetArc**
 - **GetBaseClass**
+  - Base class for GetObject, GetPoint, GetSphere, etc.                          You will never directly create a GetBaseClass but you will use its member             functions after calling GetObject.Gets(), GetPoint.Get(), and so on.                          Provides tools to set command prompt, set command options, and specify             if the "get" can optionally accept numbers, nothing (pressing enter),             and undo.
 - **GetCancel**
 - **GetCircle**
 - **GetCone**
+  - Class provides user interface to define a cone.
 - **GetCylinder**
+  - Class provides user interface to define a cylinder.
 - **GetEllipse**
+  - Class provides user interface to define an ellipse.
 - **GetEllipsoid**
+  - Class provides user interface to define an ellipsoid.
 - **GetFileNameMode**
 - **GetInteger**
+  - Used to get integer numbers.
 - **GetLine**
+  - Use to interactively get a line.  The Rhino "Line" command uses GetLine.
 - **GetLineMode**
 - **GetNumber**
+  - Used to get double precision numbers.
 - **GetObject**
+  - The GetObject class is the tool commands use to interactively select objects.
 - **GetObjectGeometryFilter**
 - **GetOption**
+  - If you want to explicitly get string input, then use GetString class with             options. If you only want to get options, then use this class (GetOption)
 - **GetPoint**
+  - Used to interactively get a point.
 - **GetPointDrawEventArgs**
+  - Arguments for drawing during point getting.
 - **GetPointMouseEventArgs**
+  - Arguments for mouse information during point getting.
 - **GetPolyline**
+  - Use to interactively get a polyline.
 - **GetSphere**
+  - Class provides user interface to define a sphere.
 - **GetString**
+  - Used to get strings.
 - **GetTorus**
+  - Class provides user interface to define a torus.
 - **GetTransform**
+  - Used for getting a Transform
 - **GetTruncatedCone**
+  - Class provides user interface to define a truncated cone.
 - **OptionColor**
 - **OptionDouble**
 - **OptionInteger**
 - **OptionToggle**
 - **PickContext**
+  - Utility for determining if objects are picked
 - **PickMode**
+  - Picking can happen in wireframe or shaded display mode
 - **PickStyle**
+  - Provides picking values that describe common CAD picking behavior.
 - **TaskCompleteEventArgs**

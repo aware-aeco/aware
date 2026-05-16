@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplacementElement.GetRelativeDisplacement
+The relative displacement applied to the displaced elements by this DisplacementElement.

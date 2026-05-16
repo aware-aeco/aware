@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CapsuleRenderEngine.CreateRoundedRectangle
+Static (Shared in VB) method for creating rectangles with rounded corners.

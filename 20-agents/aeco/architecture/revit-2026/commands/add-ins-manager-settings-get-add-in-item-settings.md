@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AddInsManagerSettings.GetAddInItemSettings
+Returns  if the manager stores the settings for Add-in identified by the Guid,  otherwise.

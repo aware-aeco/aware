@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Category.IsBuiltInCategoryValid
+Checks if a Category exists for a given BuiltInCategory.

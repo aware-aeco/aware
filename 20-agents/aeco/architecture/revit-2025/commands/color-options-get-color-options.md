@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorOptions.GetColorOptions
+Returns the current Revit instance's ColorOptions.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.DeleteAcceptedMaterial
+Unaccept material that is against fabricator settings.

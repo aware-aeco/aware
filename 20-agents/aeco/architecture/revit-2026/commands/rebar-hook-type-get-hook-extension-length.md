@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarHookType.GetHookExtensionLength
+Computes the hook extension length based on current hook length

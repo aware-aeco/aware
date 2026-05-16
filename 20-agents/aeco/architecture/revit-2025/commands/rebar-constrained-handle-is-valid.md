@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstrainedHandle.IsValid
+Checks that the RebarConstrainedHandle still has access to valid Rebar handle data    and that its RebarConstraintsManager is still valid.

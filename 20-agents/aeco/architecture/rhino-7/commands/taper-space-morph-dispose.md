@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TaperSpaceMorph.Dispose
+Actively reclaims unmanaged resources that this instance uses.

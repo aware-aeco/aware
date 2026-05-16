@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Dialogs.ShowLayerMaterialDialog
+Show a modal dialog to edit the material in the layer specified in layerIndices.

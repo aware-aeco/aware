@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveByPoints.SortPoints
+Order a set of ReferencePoints in the same way Revit does when creating a curve from points.

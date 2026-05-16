@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RTree.Point3dKNeighbors
+Finds a certain amount of points in a list of 3D points that are the k-closest to a test point.

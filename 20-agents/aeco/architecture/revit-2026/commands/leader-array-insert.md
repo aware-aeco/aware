@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LeaderArray.Insert
+Insert the specified item into the array.

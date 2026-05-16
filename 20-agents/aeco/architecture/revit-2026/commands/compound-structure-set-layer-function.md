@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.SetLayerFunction
+Sets the function of the specified layer.

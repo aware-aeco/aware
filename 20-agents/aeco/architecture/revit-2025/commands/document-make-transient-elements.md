@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.MakeTransientElements
+This method encapsulates the process of creating transient elements in the document.

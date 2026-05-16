@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.InsertSplitBolt
+Inserts a bolt group that can be split.

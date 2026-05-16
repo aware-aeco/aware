@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadedFamilyIntegrityCheck.CheckFamily
+Check that the loaded family has its content document.

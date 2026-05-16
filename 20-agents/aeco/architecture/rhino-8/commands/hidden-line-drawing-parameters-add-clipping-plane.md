@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HiddenLineDrawingParameters.AddClippingPlane
+Specify clipping planes that are active for this view.

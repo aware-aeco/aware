@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralConnectionHandler.IsDetailed
+Checks if Structural Connection Handler has the detailed connection style.

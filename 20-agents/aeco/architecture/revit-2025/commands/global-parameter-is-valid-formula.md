@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GlobalParameter.IsValidFormula
+Tests that the given expression is a valid as formula for this parameter.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContentCollection.Dispose
+Dispose function for RenderContentCollection

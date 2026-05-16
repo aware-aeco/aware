@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryTree.AddNode
+Adds a geometry primitive node to this GeometryTree.

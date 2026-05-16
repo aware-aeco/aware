@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourCube.RenderBackFaces
+Render the fills of the backfaces.

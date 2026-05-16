@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PipeScheduleType.Create
+Creates a new pipe schedule type with the given name.

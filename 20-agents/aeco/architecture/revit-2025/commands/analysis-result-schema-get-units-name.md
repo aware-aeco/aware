@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisResultSchema.GetUnitsName
+returns units name by index

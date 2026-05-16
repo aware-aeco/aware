@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportCreateViewSnapshotToFile
+DO NOT USE! For internal usage only!             Creates a snapshot of the view to the specified filepath.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Extrusion.WallSurface
+Gets one of the longitudinal surfaces of the extrusion.

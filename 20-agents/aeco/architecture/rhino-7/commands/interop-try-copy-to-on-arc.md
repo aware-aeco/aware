@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interop.TryCopyToOnArc
+Attempts to copy the contents of a Rhino.Geometry.Arc to a RMA.OpenNURBS.OnArc.

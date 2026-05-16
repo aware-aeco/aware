@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ScriptEditorButton.PopulateTooltip
+Populate the tooltip.

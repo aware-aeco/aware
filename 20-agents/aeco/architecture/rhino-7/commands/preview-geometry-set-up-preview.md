@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PreviewGeometry.SetUpPreview
+SetUpPreview

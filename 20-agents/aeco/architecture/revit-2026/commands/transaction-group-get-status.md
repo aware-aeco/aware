@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TransactionGroup.GetStatus
+Gets the current status of the transaction group.

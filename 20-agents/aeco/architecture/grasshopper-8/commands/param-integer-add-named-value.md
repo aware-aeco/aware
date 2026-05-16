@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Param_Integer.AddNamedValue
+Add a named integer value to this parameter.   Note: Named valued are not (de)serialized.

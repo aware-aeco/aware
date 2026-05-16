@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Assembly.HasUserDefinedCoordSys
+Returns whether the assembly has a user defined coordinate system.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlugIn.SaveSettings
+Write settings to disk which will raise a              event.

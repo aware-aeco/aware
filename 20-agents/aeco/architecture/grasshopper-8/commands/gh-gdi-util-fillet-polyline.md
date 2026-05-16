@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GDI_Util.FilletPolyline
+Fillet all the corners of a freeform outline.

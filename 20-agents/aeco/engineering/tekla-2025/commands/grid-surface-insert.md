@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GridSurface.Insert
+Inserts the grid surface into the model.

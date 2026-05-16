@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoView.CaptureToBitmap
+Capture View contents to a bitmap.

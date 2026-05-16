@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.HideElements
+Sets the elements to be hidden in the view.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.Merge
+Copies the point values of another point cloud into this one.

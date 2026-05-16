@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Form.GetCurvesAndEdgesReference
+Given a point, return all edges and curves that it is lying on.

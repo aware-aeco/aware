@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WireConduitTypeSet.Erase
+Removes a specified conduit type from the set.

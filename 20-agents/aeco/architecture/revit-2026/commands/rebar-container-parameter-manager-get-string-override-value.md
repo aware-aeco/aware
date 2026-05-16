@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainerParameterManager.GetStringOverrideValue
+Get the string value for an overriden parameter.

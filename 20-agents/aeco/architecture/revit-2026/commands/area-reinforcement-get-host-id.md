@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaReinforcement.GetHostId
+The element that contains the Area Reinforcement.

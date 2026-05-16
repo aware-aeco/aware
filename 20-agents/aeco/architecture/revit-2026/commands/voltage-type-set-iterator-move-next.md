@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-VoltageTypeSetIterator.MoveNext
+Move the iterator one item forward.

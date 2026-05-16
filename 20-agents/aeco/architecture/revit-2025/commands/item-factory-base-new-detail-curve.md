@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ItemFactoryBase.NewDetailCurve
+Creates a new detail curve element.

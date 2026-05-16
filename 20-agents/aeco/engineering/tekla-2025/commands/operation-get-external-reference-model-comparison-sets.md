@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetExternalReferenceModelComparisonSets
+Gets the available comparison sets titles.

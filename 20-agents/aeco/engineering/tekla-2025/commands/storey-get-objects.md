@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Storey.GetObjects
+Gets all ModelObjects that belong to this Storey. The objects still need to be selected separately after calling this method.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureMessageKey.IsValid
+Checks if the failure message key is valid

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceDefinitionTable.Find
+Finds the instance definition with a given name.

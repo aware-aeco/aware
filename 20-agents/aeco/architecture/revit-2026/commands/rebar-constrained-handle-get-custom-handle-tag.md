@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstrainedHandle.GetCustomHandleTag
+Returns the tag of the handle. The type of the handle should be 'CustomHandle'.

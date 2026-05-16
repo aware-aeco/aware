@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCParameterTemplate.GetPropertyMappingInfos
+Creates an array of property mappings contained in the property set according to provided selection type.

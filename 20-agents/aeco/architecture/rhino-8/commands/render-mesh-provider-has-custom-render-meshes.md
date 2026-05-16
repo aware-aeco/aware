@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderMeshProvider.HasCustomRenderMeshes
+Determine if custom render primitives will be supplied for a particular object.

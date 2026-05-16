@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfigurationInfo.GetAllFabricationConfigurations
+Gets all added fabrication configurations.

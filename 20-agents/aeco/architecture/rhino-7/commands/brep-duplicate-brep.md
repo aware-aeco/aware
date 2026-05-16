@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.DuplicateBrep
+Same as , but already performs a cast to a brep.             This cast always succeeds.

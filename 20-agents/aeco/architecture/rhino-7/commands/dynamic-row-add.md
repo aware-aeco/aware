@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DynamicRow.Add
+Add the specified controls to the row

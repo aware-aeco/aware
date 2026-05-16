@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Control.Detach
+Detaches the control by removing it from its parent

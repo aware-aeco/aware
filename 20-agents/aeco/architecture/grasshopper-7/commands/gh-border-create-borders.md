@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Border.CreateBorders
+Static (Shared) method for creating a set of borders.

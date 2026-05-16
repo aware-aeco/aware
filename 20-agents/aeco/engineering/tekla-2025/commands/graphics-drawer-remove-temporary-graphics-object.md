@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GraphicsDrawer.RemoveTemporaryGraphicsObject
+Remove a temporary graphic object from all views.

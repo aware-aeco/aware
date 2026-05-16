@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.SetConfiguration
+Set the fabrication configuration with specific profile.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Triangle3d.Transform
+Transform this triangle.

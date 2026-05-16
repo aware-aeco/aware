@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NumberSystem.GetReferencePick
+Gets the reference curve.

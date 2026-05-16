@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetPolybeamCoordinateSystem
+DO NOT USE! For internal usage only!

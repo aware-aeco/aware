@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextEditorOptions.GetTextEditorOptions
+Returns the current Revit instance's TextEditorOptions.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDefinitionBySegments.SetSegmentVariableDirection
+Remove the fixed direction from a segment.

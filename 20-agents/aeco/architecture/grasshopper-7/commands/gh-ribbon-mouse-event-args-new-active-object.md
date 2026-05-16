@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RibbonMouseEventArgs.NewActiveObject
+Register a new active object. This object will have first dips when the next event fires.

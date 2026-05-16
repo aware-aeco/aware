@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportAttachPointCloud
+DO NOT USE! For internal usage only!

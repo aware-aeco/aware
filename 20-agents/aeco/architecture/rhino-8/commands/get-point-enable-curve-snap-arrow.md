@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetPoint.EnableCurveSnapArrow
+Controls display of the curve snap arrow icon.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepFaceList.StandardizeFaceSurfaces
+Standardize all faces in the brep.

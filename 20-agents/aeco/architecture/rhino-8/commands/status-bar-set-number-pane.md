@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StatusBar.SetNumberPane
+Sets the number pane to a number value

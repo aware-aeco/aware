@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.SetDefaultFamilyTypeId
+Sets the default family type id for the given family category.

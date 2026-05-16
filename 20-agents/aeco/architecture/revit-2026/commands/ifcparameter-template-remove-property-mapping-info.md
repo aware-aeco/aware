@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCParameterTemplate.RemovePropertyMappingInfo
+Removes the property mapping from the property set by id.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoApp.LoginToCloudZoo
+Logs in to the cloud zoo.

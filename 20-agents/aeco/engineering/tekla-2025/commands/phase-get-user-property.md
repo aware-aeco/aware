@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Phase.GetUserProperty
+Retrieves a string property for the phase.

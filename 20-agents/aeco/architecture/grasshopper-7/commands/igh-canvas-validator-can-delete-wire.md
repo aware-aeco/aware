@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_CanvasValidator.CanDeleteWire
+Validates whether a wire can be deleted.

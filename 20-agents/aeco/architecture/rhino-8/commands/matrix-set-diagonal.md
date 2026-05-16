@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Matrix.SetDiagonal
+Sets diagonal value and zeros off all non-diagonal values.

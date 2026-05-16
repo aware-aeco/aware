@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Timer.ExpireTargets
+Expire all target objects, but do not start a new solution.

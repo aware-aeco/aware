@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RoutingPreferenceManager.GetNumberOfRules
+The number of RoutingPreference rules in a group.

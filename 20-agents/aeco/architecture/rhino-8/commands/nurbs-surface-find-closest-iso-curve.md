@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsSurface.FindClosestIsoCurve
+Find the closest isoparamentric curve, given a test point.

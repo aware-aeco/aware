@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContent.SetName
+Set instance name for this content

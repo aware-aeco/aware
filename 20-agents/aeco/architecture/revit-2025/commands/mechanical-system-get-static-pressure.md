@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MechanicalSystem.GetStaticPressure
+Gets the static pressure of this mechanical system.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.CreateViewList
+Creates a view list.

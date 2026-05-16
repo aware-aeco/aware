@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDFace.VertexAt
+Get a vertex that this face uses by index

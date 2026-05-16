@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObjectTable.AddLine
+Adds a line object to Rhino.

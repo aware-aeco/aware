@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RibbonPanel.AddSeparator
+Adds a new Separator to the panel.

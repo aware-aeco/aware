@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayBitmap.Dispose
+Actively reclaims unmanaged resources that this instance uses.

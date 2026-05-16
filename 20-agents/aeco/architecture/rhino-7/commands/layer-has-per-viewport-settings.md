@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Layer.HasPerViewportSettings
+Verifies that a layer has per viewport settings.

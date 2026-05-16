@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCAggregate.AddAggregate
+Creates a nested aggregate and adds it to the aggregate.

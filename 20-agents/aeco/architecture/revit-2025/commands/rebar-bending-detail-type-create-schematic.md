@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBendingDetailType.CreateSchematic
+Creates a new RebarBendingDetailType object for schematic representations.

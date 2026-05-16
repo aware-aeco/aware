@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RibbonPainter.TabEdgeBrush
+Generates the default brush for TAB edge curves.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoDoc.GetAnalysisMeshingParameters
+Get analysis meshing parameters currently used by the document

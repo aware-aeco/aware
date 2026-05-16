@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.CanMoveSlotTo
+Verifies if can circuits in the source slot to the specific slot.

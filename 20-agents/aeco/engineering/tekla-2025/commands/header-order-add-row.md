@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HeaderOrder.AddRow
+Adds the row to the header order list.

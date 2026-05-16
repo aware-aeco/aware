@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.CurvatureAt
+Computes the curvature at the given UV coordinate.

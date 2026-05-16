@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentObject.Menu_AppendTextItem
+Utility function for inserting text boxes into menus.

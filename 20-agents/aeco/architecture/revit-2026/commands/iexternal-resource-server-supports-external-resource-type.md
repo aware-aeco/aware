@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExternalResourceServer.SupportsExternalResourceType
+Implement this method to indicate whether the server can provide data for a specified type of external resource.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.StartLiveSharing
+Start LiveSharing and return changesets via callback

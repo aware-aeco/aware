@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadUniform.Insert
+Inserts the load uniform into the model database.

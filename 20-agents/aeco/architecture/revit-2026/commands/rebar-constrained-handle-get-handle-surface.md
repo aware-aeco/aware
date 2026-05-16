@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstrainedHandle.GetHandleSurface
+Gets the surface of this handle.

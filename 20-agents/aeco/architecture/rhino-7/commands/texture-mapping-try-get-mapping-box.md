@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextureMapping.TryGetMappingBox
+Get a box projection from the texture mapping.

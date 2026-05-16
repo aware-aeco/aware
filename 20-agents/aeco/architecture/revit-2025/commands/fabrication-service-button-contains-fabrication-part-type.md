@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationServiceButton.ContainsFabricationPartType
+Checks to see if the fabrication part type exists on one of the button conditions.

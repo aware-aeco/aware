@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCCategoryTemplate.ResetActiveTemplate
+Sets the mapping template element to be the active mapping template in the document.

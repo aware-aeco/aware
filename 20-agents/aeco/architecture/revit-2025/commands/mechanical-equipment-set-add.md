@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MechanicalEquipmentSet.Add
+Adds member element ids to the mechanical equipment set.

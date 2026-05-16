@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroundConductorSizeSetIterator.MoveNext
+Move the iterator one item forward.

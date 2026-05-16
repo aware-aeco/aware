@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Format.FormatComplexValidity
+If the complex number is invalid, return a string describing why.

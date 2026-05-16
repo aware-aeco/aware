@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Linetype.AppendSegment
+Adds a segment to the pattern.

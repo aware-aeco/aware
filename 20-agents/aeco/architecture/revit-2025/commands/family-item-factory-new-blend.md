@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyItemFactory.NewBlend
+Add a new Blend instance into the Autodesk Revit family document.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawObject
+Draws a RhinoObject.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightShape.Clone
+Creates a copy of the LightShape derived object.

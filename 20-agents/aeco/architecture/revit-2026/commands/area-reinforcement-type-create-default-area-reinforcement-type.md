@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaReinforcementType.CreateDefaultAreaReinforcementType
+Creates a new AreaReinforcementType object with a default name.

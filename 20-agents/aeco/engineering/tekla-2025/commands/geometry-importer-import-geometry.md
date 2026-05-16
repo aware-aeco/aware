@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryImporter.ImportGeometry
+Imports the geometry from core

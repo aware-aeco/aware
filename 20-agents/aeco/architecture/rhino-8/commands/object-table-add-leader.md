@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.AddLeader
+Adds a Leader object to the document.

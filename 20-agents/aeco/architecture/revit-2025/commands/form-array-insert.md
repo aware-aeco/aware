@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormArray.Insert
+Insert the specified form into the array.

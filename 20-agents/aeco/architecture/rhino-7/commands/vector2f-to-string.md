@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Vector2f.ToString
+Constructs the string representation of the current vector.

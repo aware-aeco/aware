@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataTree`1.Path
+Gets the data path at the specified index.

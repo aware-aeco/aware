@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlPlane.Select
+Selects the control plane with the given ID.

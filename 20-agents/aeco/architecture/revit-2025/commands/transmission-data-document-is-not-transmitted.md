@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TransmissionData.DocumentIsNotTransmitted
+Determines whether the document at a given file location    is not transmitted.

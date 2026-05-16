@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyInstance.GetFamilyPointPlacementReferences
+Returns the Point Placement References for the Family Instance.

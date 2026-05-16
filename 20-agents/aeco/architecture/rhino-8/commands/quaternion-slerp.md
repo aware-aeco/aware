@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Quaternion.Slerp
+Interpolates between two quaternions, using spherical linear interpolation.

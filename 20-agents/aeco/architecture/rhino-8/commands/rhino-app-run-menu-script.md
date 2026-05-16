@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoApp.RunMenuScript
+Run a Rhino menu item script.  Will add the selected menu string to the MRU command menu.

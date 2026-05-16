@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TypeDescriptor.GetConverter
+Gets the type converter for the specified type.

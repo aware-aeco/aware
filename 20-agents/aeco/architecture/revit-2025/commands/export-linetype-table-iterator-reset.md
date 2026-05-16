@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLinetypeTableIterator.Reset
+Resets the iterator to the initial state.

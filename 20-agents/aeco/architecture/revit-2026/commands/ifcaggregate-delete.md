@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCAggregate.Delete
+Delete the aggregate object from the IFCFile model.

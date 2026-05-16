@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Node2List.BoundingBox
+Compute the bounding box of all Nodes.

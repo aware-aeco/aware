@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportPatternTable.GetPatternTableIterator
+Returns a PatternTableIterator that iterates through the collection.

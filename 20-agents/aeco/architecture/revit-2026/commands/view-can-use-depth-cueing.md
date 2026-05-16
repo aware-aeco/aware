@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.CanUseDepthCueing
+Indicates if view can use Depth Cueing

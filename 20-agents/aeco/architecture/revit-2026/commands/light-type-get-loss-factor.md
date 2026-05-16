@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightType.GetLossFactor
+Return a copy of an object derived from LossFactor

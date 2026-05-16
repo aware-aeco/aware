@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MaterialRefs.CopyTo
+Copies the elements of this dictionary to an System.Array, starting at             a particular System.Array index.

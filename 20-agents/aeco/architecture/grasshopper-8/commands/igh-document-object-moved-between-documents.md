@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_DocumentObject.MovedBetweenDocuments
+This method will be called when an object is moved from one document to another.

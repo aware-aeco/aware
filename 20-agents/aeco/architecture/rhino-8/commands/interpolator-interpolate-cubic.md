@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interpolator.InterpolateCubic
+Sample the list of numbers with cubic interpolation.

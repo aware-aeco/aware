@@ -20,12 +20,14 @@ description: API reference for namespace Grasshopper.Kernel.Parameters.Hints fro
 - **GH_GeometryBaseHint**
 - **GH_GuidHint**
 - **GH_HintSeparator**
+  - Represents a separator in the Hint menu.
 - **GH_IntegerHint_CS**
 - **GH_IntegerHint_VB**
 - **GH_IntervalHint**
 - **GH_LineHint**
 - **GH_MeshHint**
 - **GH_NullHint**
+  - Represents a 1:1 data cast.
 - **GH_PlaneHint**
 - **GH_Point3dHint**
 - **GH_PolylineHint**

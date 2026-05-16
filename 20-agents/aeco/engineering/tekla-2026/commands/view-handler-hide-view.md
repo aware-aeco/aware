@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewHandler.HideView
+Closes a model view.

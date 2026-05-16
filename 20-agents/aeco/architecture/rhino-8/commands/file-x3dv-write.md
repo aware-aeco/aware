@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileX3dv.Write
+Write a x3dv file based on the contents of a RhinoDoc

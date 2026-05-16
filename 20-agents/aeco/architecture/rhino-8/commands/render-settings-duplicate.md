@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderSettings.Duplicate
+Makes a free-floating copy of the object.

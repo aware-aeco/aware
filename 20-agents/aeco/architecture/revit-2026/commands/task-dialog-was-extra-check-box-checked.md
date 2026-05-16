@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TaskDialog.WasExtraCheckBoxChecked
+Gets the status of the extra checkbox.

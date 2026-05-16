@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextEntity.Create
+Create Text geometry or null if input is invalid

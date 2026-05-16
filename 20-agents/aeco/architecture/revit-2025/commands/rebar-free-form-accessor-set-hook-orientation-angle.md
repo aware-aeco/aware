@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarFreeFormAccessor.SetHookOrientationAngle
+Set the hook orientation angle at end. Will throw exception if the rebar has valid constraints.

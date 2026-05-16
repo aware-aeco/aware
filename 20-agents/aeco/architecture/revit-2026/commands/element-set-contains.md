@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementSet.Contains
+Tests for the existence of an element within the set.

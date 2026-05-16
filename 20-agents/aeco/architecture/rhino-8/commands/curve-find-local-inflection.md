@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.FindLocalInflection
+Local minimization for point on a curve with tangent perpendicular to N.

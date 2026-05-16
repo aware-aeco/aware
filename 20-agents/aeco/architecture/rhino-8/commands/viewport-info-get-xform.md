@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewportInfo.GetXform
+Computes a transform from a coordinate system to another.

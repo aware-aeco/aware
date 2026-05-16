@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataTree`1.AllData
+Collects all data in the tree in a single list.   Does not alter the topology of this tree.

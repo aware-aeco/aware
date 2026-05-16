@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarHandlePositionData.GetNumberOfBars
+Gets the number of bars currently in the rebar.

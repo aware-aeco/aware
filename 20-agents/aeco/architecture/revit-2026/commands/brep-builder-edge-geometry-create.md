@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BRepBuilderEdgeGeometry.Create
+Constructs a BRepBuilderEdgeGeometry representing a straight line between the two given points.

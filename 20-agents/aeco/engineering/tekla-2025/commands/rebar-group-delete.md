@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarGroup.Delete
+Deletes the rebar group instance with the given identifier from the model database.

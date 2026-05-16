@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SolidSolidCutUtils.RemoveCutBetweenSolids
+Removes the solid-solid cut between the two elements if it exists.

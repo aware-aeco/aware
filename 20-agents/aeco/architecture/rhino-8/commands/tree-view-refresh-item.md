@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TreeView.RefreshItem
+Refreshes the specified item and all its children, keeping the selection if not part of the refreshed nodes

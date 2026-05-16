@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.AddTrimCurve
+Add a 2d curve used by the brep trims

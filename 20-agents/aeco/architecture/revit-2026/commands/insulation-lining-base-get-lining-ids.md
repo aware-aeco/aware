@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InsulationLiningBase.GetLiningIds
+Returns the ids of the lining elements associated to a given element.

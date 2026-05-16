@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.GetLocalTangentPoint
+Search for a location on the curve, near seedParmameter, that is tangent to a test point.

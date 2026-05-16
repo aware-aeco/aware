@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UpdaterRegistry.GetIsUpdaterOptional
+Check if the updater is optional or not.

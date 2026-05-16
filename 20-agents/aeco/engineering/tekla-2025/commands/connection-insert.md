@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Connection.Insert
+Inserts the connection into the model database. All the attributes must be set.

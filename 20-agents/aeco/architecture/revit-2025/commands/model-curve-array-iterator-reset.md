@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelCurveArrayIterator.Reset
+Bring the iterator back to the start of the array.

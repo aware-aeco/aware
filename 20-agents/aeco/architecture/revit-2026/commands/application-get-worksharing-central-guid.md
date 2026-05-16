@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.GetWorksharingCentralGUID
+Gets the worksharing central GUID of the given server-based model.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SolidUtils.SplitVolumes
+Splits a solid geometry into several separate solids.

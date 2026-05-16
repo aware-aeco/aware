@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_IndexRange.Contains
+Tests whether a specified range is entirely contained within this range.

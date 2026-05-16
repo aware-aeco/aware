@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ImportOverlayModelWithMetadata
+DO NOT USE! For internal usage only!

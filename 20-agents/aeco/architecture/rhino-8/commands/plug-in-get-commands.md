@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlugIn.GetCommands
+All of the commands associated with this plug-in.

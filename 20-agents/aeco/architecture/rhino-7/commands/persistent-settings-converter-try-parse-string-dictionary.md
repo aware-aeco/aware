@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PersistentSettingsConverter.TryParseStringDictionary
+Attempts to convert a string to a key value string pair array.

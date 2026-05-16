@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContentCollection.Clear
+Clear the collection.

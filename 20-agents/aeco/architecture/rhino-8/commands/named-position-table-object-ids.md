@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedPositionTable.ObjectIds
+Array of Rhino Object Guids related to a Named Position.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCHybridImport.ImportElements
+Imports IFC Elements using AnyCAD.

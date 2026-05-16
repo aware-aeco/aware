@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Param_Integer.ClearNamedValues
+Destroy all named values.

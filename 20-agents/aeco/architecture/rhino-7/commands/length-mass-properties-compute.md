@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LengthMassProperties.Compute
+Calculates the length mass properties of a curve.

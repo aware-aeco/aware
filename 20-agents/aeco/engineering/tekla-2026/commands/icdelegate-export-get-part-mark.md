@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportGetPartMark
+DO NOT USE! For internal usage only!

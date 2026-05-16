@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateEdgeSurface
+Constructs a coons patch from 2, 3, or 4 curves.

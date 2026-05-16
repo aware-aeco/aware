@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ProjectLocationSet.Contains
+Tests for the existence of a project location within the set.

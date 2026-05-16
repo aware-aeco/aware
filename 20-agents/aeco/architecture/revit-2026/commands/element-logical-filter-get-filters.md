@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementLogicalFilter.GetFilters
+Returns an array of copies of the filters that are logically combined by this ElementLogicalFilter.

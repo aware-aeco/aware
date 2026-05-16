@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WorksharingUtils.CheckoutElements
+Obtains ownership for the current user of as many specified elements as possible.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ParamViewerAttributes.AdjustLayout
+Grow or shrink the param viewer based on the contents.

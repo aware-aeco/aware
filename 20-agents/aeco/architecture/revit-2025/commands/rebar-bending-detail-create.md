@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBendingDetail.Create
+Creates a new instance of a bending detail.

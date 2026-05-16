@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDefinitionByArc.SetArcTypeSpiral
+Set the RebarShapeDefinitionByArc.Type property to Spiral.

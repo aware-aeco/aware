@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetPointClouds
+DO NOT USE! For internal usage only!

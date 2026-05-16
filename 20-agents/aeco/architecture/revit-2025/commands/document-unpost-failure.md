@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.UnpostFailure
+Deletes the posted failure message associated with a given FailureMessageKey.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportValidatePolymesh
+DO NOT USE! For internal usage only!

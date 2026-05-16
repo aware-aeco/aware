@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBendingDetail.SetTagRelativeRotation
+Sets the embedded tag rotation angle w.r.t. the realistic bending detail element.

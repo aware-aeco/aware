@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportModifyAssembly
+DO NOT USE! For internal usage only!

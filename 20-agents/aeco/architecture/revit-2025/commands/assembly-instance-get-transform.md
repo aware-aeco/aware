@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssemblyInstance.GetTransform
+Gets the origin of the assembly instance.

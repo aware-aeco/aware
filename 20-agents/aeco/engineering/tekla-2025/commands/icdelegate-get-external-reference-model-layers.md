@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.GetExternalReferenceModelLayers
+DO NOT USE! For internal usage only!

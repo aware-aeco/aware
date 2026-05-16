@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterValue.IsEqual
+Tests equality with another instance of the same class.

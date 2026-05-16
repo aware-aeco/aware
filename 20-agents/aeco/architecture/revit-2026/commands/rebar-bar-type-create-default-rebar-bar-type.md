@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBarType.CreateDefaultRebarBarType
+Creates a new RebarBarType object with a default name.

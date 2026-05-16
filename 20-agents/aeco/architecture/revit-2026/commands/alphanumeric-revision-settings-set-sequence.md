@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AlphanumericRevisionSettings.SetSequence
+Sets the sequence of strings to be used as numbers for revisions with the Alphanumeric RevisionNumberType.

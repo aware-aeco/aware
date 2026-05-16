@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.SelectObjectsInExternalReferenceModel
+Selects the given objects in the external reference model

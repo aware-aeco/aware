@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexList.GetConnectedVertices
+Gets indices of all vertices that form "edges" with a given vertex index.

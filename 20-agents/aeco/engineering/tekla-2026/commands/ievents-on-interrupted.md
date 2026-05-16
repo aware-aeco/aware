@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEvents.OnInterrupted
+Called when user interrupts.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralConnectionType.ValidFamilySymbolId
+Checks whether the family symbol id is allowed for    StructuralConnectionTypes with the given value for the applyTo    property.

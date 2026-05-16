@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rectangle.Intersect
+Intersect the rectangle with the specified

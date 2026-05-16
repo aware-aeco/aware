@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ProjectBrowserOptions.GetProjectBrowserOptions
+Returns the current Revit instance's ProjectBrowserOptions.

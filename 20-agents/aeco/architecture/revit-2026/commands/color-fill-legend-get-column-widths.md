@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorFillLegend.GetColumnWidths
+Returns array of column widths in the legend.

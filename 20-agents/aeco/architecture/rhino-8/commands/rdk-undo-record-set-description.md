@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RdkUndoRecord.SetDescription
+Set description for RdkUndoRecord

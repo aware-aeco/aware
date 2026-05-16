@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DimensionType.SetAlternateUnitsFormatOptions
+Sets the FormatOptions to optionally override the default settings in the Units class for the alternate units value.

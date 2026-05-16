@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadNature.Create
+Creates a new LoadNature.

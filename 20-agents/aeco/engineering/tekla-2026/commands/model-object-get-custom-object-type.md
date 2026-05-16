@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObject.GetCustomObjectType
+Gets custom object type name from an existing object.

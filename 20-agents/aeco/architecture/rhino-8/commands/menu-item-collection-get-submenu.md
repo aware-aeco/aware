@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MenuItemCollection.GetSubmenu
+Gets the submenu from the collection with the specified text, optionally creating one if not found.

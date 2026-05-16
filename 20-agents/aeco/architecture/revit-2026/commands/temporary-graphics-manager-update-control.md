@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TemporaryGraphicsManager.UpdateControl
+Updates the in-canvas control identified by the unique index.

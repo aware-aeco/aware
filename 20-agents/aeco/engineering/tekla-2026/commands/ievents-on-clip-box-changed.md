@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEvents.OnClipBoxChanged
+Called when user inserts, updates or deletes a clip box.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SunAndShadowSettings.GetFrameTime
+Identifies the date and time of the SunAndShadowSettings element for a given frame.

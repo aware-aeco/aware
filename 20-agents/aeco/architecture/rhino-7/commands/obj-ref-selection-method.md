@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjRef.SelectionMethod
+Gets the method used to select this object.

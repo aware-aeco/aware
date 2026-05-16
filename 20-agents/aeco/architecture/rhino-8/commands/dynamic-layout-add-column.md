@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DynamicLayout.AddColumn
+Adds a column of controls in a new vertical section

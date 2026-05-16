@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ChangeQueue.OriginalInstanceIdsFromEnvironmentId
+Return the collection of original document instance ids assocaited with the Environment id.

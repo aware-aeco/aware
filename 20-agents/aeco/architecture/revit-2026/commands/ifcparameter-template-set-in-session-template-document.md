@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCParameterTemplate.SetInSessionTemplateDocument
+Set document for in-session template.

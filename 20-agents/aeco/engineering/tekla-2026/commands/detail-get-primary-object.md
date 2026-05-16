@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Detail.GetPrimaryObject
+Returns the primary object.

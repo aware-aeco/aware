@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.PopProjection
+Pop a view projection off this pipelines projection stack

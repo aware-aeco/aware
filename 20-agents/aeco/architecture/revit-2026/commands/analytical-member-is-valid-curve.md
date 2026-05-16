@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalMember.IsValidCurve
+Verifies if the curve is valid for an Analytical Member.

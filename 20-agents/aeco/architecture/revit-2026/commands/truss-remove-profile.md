@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Truss.RemoveProfile
+Remove the profile of a truss.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Grid.GetExtents
+Gets the extents of the grid in the model.

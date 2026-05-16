@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.GetIFCType
+Obtains the IFC type associated to the given element for the current export.

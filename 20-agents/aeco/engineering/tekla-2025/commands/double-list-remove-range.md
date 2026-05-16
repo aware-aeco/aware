@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DoubleList.RemoveRange
+Removes a range of items starting from the given index.

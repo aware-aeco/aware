@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DividedPath.IsValidSpacingRuleJustification
+Checks that the justification enumeration value is valid

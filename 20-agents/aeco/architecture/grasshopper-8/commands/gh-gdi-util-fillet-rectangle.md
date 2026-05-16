@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GDI_Util.FilletRectangle
+Create a rectangle with filleted corners.

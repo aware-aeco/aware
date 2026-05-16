@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Stairs.IsInEditMode
+Indicates whether the stairs is in edit mode or not.

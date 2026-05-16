@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Canvas.AddValidator
+Add a new drop validator to the canvas.

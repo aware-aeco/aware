@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Color.FromElementId
+Creates a new color from an Element ID value

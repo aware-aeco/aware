@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ClassArrayString.ConstPointer
+Gets the constant (immutable) pointer of this array.

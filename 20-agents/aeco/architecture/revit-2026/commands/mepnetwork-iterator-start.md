@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPNetworkIterator.Start
+Gets the first step of network iteration.

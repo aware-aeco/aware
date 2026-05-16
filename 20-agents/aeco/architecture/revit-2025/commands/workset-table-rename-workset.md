@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WorksetTable.RenameWorkset
+Renames the workset.

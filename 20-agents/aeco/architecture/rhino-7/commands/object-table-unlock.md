@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.Unlock
+If objref.Object().IsLocked() is true, then the object will be returned to normal (visible and selectable) mode.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GridPlane.Insert
+Inserts the grid surface into the model.

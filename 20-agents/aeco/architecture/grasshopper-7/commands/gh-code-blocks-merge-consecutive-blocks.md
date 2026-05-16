@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CodeBlocks.MergeConsecutiveBlocks
+Merge all consecutive blocks with identical readonly flags.

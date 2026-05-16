@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentServer.FindAssembly
+Gets the assembly that corresponds to the given library ID.

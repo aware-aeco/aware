@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DividedSurface.Create
+Creates a new instance of a divided surface with a default layout.

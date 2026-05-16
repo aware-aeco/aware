@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawZebraPreview
+Draws a shaded Brep with Zebra stripe preview.

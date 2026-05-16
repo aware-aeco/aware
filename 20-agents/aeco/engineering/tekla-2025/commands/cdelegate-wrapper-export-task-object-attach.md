@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportTaskObjectAttach
+DO NOT USE! For internal usage only!

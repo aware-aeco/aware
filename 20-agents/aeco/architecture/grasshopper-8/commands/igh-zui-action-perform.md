@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_ZuiAction.Perform
+This method will be called when the action needs to be performed.

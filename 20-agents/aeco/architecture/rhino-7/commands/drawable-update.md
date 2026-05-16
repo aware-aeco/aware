@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Drawable.Update
+Update the specified  directly

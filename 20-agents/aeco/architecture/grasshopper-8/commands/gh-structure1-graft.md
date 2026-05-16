@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Structure`1.Graft
+Grafts all paths by reallocating all data into child paths.

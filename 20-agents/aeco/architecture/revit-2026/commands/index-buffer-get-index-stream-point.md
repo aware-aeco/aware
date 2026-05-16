@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndexBuffer.GetIndexStreamPoint
+Gets a stream that can be used to write  primitives into the buffer.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarHandleNameData.SetCustomHandleName
+Sets the name of the handle.

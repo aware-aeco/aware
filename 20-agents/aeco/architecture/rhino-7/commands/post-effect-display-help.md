@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PostEffect.DisplayHelp
+Displays the post effect's help page, if any.

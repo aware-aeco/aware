@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.SaveAsCloudModel
+Saves current non-workshared or workshared model as a cloud model or workshared cloud model in BIM 360 Docs or Autodesk Docs.

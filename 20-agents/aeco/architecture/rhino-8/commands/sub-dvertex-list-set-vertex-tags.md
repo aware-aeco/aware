@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDVertexList.SetVertexTags
+Set vertex tags for a list of vertices. Useful for adding creases to SubDs

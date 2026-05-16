@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.CanInsertColumn
+Verifies if a new column can be inserted at the given index.

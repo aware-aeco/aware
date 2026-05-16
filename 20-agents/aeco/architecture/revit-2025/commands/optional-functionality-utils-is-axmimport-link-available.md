@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OptionalFunctionalityUtils.IsAXMImportLinkAvailable
+Checks whether the AXM Import/Link functionality is available in the installed Revit.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextNote.AddLeader
+Adds a leader to the text note.

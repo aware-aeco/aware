@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourWheelState.ContinueGripDrag
+If BeginGrip(3)rag returned true, call this method on subsequent mousemoves.

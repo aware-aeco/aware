@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Polymesh.Convert
+Converts a struct of polymeshes to a list of FacetedBrep.

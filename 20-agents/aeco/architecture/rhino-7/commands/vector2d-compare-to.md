@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Vector2d.CompareTo
+Compares this  with another .             Components evaluation priority is first X, then Y.

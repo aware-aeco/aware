@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstrainedHandle.IsEqual
+Checks if the specified RebarConstrainedHandle is the same as 'this'.

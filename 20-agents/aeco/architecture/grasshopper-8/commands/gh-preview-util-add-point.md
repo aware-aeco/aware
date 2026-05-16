@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PreviewUtil.AddPoint
+Add a point to the temporary Preview lists.

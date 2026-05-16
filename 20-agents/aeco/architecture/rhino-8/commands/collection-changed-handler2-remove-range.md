@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CollectionChangedHandler`2.RemoveRange
+Removes a specified count of items from the collection starting at the specified index

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_TaskCapableComponent.RequestTaskCancellation
+Called by the framework when solving has been interrupted and tasks do not need to complete.

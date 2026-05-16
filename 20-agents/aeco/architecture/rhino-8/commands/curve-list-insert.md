@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveList.Insert
+Inserts a line at a given index of this list.

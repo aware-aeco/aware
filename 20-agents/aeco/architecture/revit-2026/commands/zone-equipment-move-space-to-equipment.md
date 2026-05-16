@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ZoneEquipment.MoveSpaceToEquipment
+Moves the selected analytical spaces from the identified zone equipment to another target zone equipment.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitLinkType.HasSaveablePositions
+Determines whether the link has changes to shared positioning that could    be saved.

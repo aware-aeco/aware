@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EffectInstance.SetSpecularColor
+Sets the specular color parameter of the effect instance.

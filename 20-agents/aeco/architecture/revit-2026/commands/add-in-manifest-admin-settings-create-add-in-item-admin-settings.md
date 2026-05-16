@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AddInManifestAdminSettings.CreateAddInItemAdminSettings
+Creates new  for an Add-in with the specified Guid and adds it to this  settings.

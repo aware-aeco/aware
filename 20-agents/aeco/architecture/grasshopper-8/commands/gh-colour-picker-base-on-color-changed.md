@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourPickerBase.OnColorChanged
+Raise the ColorChanged event.

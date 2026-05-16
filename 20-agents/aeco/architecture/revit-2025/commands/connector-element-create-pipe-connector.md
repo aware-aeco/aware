@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConnectorElement.CreatePipeConnector
+Create a new pipe ConnectorElement with a face and an edge.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SnapShotsClient.SupportsAnimation
+Returns true if the client allows animation.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.Offset
+Constructs a new surface which is offset from the current surface.

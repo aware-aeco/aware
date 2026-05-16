@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.ExtendOnSurface
+Extends a curve on a surface.

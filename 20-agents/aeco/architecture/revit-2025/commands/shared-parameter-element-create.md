@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SharedParameterElement.Create
+Creates a new shared parameter element in the document representing the parameter stored in the input ExternalDefinition.

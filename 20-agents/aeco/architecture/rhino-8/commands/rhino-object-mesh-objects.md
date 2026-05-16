@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.MeshObjects
+Meshes Rhino objects.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SingleServerService.UnsetActiveServer
+Unset the active server for the particular document.

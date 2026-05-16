@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitLinkOperations.SetGetLocalPathForOpenCallback
+Sets the IGetLocalPathForOpenCallback that will support the "Open (and Unload)" command for Revit links    obtained from an IExternalResourceServer.

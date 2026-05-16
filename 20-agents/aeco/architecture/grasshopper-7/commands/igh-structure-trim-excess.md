@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Structure.TrimExcess
+Trims the excess allocated memory in all branches

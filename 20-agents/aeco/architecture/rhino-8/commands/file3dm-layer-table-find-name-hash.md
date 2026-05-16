@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmLayerTable.FindNameHash
+Finds a Layer given its name hash.

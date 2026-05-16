@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelSharingHandler.GetModelsAsync
+Gets the list of shared models available for the current user.

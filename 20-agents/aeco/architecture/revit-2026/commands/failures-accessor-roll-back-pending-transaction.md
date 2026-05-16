@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailuresAccessor.RollBackPendingTransaction
+Finishes pending failures processing by rolling back the pending transaction.

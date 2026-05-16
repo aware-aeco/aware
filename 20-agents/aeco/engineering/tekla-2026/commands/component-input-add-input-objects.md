@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ComponentInput.AddInputObjects
+Adds an array list of  model objects to the component input.

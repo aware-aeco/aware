@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilySizeTableManager.ImportSizeTable
+Imports a FamilySizeTable from a CSV file.

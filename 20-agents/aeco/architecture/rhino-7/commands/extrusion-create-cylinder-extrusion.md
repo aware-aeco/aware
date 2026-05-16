@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Extrusion.CreateCylinderExtrusion
+Gets an extrusion form of a cylinder.

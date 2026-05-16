@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.SetEntity
+Stores the entity in the element. If an Entity described by the same Schema already    exists, it is overwritten.

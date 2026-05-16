@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LicenseUtils.DeleteLicense
+Deletes a license along with its license file.

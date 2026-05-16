@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UV.GetLength
+The length of this 2-D vector.

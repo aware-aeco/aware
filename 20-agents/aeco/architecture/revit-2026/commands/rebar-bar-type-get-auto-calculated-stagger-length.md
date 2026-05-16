@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBarType.GetAutoCalculatedStaggerLength
+Identifies if the stagger length is auto calculated for the specified Rebar Splice Type.

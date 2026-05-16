@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WorkPlaneChanger.Dispose
+Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.

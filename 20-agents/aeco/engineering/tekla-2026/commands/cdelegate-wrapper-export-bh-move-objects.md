@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportBhMoveObjects
+DO NOT USE! For internal usage only!

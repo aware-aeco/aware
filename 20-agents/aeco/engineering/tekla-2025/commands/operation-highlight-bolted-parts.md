@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.HighlightBoltedParts
+Highlights parts connected by the bolt group.

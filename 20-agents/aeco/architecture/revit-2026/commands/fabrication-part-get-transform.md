@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.GetTransform
+Gets the transformation matrix of the fabrication part element.

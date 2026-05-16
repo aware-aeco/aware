@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBarType.Create
+Creates a new RebarBarType object

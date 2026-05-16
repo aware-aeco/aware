@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.AddLine
+Adds a line object to Rhino.

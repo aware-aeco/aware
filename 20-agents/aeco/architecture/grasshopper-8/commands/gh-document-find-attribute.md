@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.FindAttribute
+Search for attributes that contain a certain point.

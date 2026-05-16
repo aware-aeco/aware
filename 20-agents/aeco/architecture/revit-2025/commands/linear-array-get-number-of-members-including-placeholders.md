@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinearArray.GetNumberOfMembersIncludingPlaceholders
+Returns the number of items in an array, including placeholder items in families.

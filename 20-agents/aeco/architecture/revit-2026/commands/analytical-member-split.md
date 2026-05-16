@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalMember.Split
+Splits the analytical member at a point on its defining curve.

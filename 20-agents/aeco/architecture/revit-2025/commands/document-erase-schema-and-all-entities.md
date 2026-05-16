@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.EraseSchemaAndAllEntities
+Erases Schema and all its Entities from the document.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.PullPointsToMesh
+Pulls a collection of points to a mesh.

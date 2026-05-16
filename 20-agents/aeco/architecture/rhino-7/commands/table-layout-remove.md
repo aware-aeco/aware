@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableLayout.Remove
+Remove the specified child control.

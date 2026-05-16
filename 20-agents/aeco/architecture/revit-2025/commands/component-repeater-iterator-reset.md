@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ComponentRepeaterIterator.Reset
+Resets the iterator to the initial state.

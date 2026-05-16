@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DracoCompression.Write
+Write the compressed data to disk

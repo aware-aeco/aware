@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyAnalysisDetailModel.GetAnalyticalSurfaces
+The collection of analytical surfaces.

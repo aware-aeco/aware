@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoMath.TryParseNumber
+Evaluates command line math expression.

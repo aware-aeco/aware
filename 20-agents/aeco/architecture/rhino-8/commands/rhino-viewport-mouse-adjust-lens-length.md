@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.MouseAdjustLensLength
+Adjusts the camera lens length.

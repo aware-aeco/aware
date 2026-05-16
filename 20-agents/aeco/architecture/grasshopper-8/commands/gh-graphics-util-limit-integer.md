@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.LimitInteger
+Limits the given integer to the 0~255 range.

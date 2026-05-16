@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileStp.Read
+Read a Stp file into a RhinoDoc

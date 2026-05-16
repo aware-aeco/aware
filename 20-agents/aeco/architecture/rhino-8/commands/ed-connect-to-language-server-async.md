@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Ed.ConnectToLanguageServerAsync
+Experimental undocumented language server integration

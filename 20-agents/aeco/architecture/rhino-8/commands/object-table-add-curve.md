@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.AddCurve
+Adds a curve object to Rhino.

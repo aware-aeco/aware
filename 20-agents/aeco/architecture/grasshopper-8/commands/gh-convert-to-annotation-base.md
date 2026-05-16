@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToAnnotationBase
+Convert data into Rhino.Geometry.AnnotationBase.

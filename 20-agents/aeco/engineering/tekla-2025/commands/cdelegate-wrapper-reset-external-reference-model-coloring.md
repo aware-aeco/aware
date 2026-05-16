@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ResetExternalReferenceModelColoring
+DO NOT USE! For internal usage only!

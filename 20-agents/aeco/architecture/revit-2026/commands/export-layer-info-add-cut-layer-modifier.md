@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLayerInfo.AddCutLayerModifier
+Adds a cut layer modifier to the layer info.

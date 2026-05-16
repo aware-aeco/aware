@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Truss.AttachChord
+Attach a truss's specific chord to a specified element, the element should be a roof or floor.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RealtimeDisplayMode.ShowCaptureProgress
+Override if you want to i.e. hide the progress dialog for capture progress.

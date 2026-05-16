@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.ConstructDocumentTree
+Create a hierarchical document tree of ownership with this document as the root.

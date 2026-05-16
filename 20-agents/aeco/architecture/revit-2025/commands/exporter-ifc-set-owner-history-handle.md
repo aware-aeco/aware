@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFC.SetOwnerHistoryHandle
+Sets the handle to the IfcOwnerHistory for the file.

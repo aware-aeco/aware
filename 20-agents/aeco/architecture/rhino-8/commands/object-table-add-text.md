@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.AddText
+Adds a v6_TextObject to the document.

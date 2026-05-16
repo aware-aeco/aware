@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PathReinforcement.IsAlternatingLayerEnabled
+Checks if alternating bars are present in Path Reinforcement.

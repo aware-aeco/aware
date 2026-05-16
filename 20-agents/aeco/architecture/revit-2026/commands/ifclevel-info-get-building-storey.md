@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCLevelInfo.GetBuildingStorey
+Gets the IfcBuildingStorey handle.

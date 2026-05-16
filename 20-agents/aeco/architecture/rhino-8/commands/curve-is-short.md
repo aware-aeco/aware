@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.IsShort
+Used to quickly find short curves.

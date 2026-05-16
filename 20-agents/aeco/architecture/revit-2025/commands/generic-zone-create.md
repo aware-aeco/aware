@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GenericZone.Create
+Creates a new instance of a generic zone and adds it to the document.

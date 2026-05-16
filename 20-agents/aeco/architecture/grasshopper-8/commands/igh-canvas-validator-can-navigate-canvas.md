@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_CanvasValidator.CanNavigateCanvas
+Validates whether the canvas can be navigated (panning, zooming etc)

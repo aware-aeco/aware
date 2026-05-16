@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Point3D.ToString
+Converts this structure to a human-readable string.

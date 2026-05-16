@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StringHolder.GetString
+Gets managed string from unmanaged ON_wString pointer.

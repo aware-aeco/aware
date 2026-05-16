@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.GetPartCustomDataText
+Get custom data text for the specified custom data.

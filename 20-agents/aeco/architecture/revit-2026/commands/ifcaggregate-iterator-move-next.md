@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCAggregateIterator.MoveNext
+Increments the iterator to the next object in the IFCAggregate.

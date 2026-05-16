@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayInterval.Add
+Adds a new  at the end of this array.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportStartCustomComponentCreation
+DO NOT USE! For internal usage only!

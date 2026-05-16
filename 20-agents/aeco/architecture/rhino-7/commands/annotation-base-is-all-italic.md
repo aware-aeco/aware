@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnnotationBase.IsAllItalic
+Returns true if all of the text in the annotation is Italic, otherwise returns false

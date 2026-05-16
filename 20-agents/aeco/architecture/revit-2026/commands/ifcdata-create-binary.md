@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCData.CreateBinary
+Creates a binary data object.

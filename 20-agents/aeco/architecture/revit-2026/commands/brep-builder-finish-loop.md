@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BRepBuilder.FinishLoop
+Indicates that the caller has finished defining the given loop.

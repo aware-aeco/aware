@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContentKindList.Dispose
+Dispose a kind list.

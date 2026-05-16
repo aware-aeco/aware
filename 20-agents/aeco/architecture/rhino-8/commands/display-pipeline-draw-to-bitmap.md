@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawToBitmap
+Draw a given viewport to an off-screen bitmap.

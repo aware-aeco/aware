@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarHostData.GetFabricSheetsInHost
+Returns all FabricSheet elements hosted by the referenced element.

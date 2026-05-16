@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderMaterial.FromMaterial
+Constructs a new material from a Material.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportCalculateContourPolygon
+DO NOT USE! For internal usage only.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileDialog.IsValidFilterString
+Determines if the input string is acceptable as input for a FileDialog filter string.

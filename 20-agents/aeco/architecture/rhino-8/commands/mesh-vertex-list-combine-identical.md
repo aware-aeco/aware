@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexList.CombineIdentical
+Merges identical vertices.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentObject.Menu_AppendCustomItem
+Utility function for inserting exotic controls into dropdown menus.

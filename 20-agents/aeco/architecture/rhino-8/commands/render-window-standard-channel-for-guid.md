@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderWindow.StandardChannelForGuid
+Get the StandardChannels for the given Guid

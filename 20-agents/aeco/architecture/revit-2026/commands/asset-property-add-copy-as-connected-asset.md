@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssetProperty.AddCopyAsConnectedAsset
+Makes a copy of the asset and connects it to this property.

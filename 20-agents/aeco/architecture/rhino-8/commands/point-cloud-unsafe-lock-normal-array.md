@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudUnsafeLock.NormalArray
+Retrieves a pointer to the raw array of point normals, or null if none is available.

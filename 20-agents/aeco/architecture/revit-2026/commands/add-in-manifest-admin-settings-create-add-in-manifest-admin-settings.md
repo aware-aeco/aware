@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AddInManifestAdminSettings.CreateAddInManifestAdminSettings
+Creates a new instance of .

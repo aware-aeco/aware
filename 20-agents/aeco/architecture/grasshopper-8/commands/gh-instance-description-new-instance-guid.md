@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_InstanceDescription.NewInstanceGuid
+Generate a new random instance GUID

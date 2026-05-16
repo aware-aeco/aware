@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.GetDefaultNameForRevisionSchedule
+Gets the default view name that will be used when creating a revision schedule.

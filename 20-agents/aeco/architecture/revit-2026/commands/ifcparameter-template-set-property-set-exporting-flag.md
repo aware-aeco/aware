@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCParameterTemplate.SetPropertySetExportingFlag
+Define whether the provided property set must be included in export.

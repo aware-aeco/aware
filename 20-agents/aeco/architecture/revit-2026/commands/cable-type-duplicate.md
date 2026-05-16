@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableType.Duplicate
+Duplicates this Cable Type.

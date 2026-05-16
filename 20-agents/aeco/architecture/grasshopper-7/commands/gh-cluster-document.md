@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Cluster.Document
+Gets the cluster document. If the cluster has a password, you'll need to supply it.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InitialColor.Clone
+Creates a copy of the InitialColor derived object.

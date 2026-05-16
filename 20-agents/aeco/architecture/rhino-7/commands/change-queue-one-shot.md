@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ChangeQueue.OneShot
+Call Flush() once, after that automatically dispose the queue.

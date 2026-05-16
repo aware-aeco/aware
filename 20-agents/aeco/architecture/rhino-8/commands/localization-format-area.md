@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Localization.FormatArea
+Format an Area string from a number

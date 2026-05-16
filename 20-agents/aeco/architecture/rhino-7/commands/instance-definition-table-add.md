@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceDefinitionTable.Add
+Adds an instance definition to the instance definition table.

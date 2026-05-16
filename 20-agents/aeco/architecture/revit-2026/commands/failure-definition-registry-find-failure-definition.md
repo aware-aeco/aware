@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureDefinitionRegistry.FindFailureDefinition
+Finds a specific FailureDefinition by a given FailureDefinitionId.

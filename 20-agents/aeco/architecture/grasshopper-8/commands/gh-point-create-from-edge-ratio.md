@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Point.CreateFromEdgeRatio
+Create new point geometry instance based on an edge parameter ratio

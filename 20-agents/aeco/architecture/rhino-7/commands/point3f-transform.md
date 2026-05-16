@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point3f.Transform
+Transforms the present point in place. The transformation matrix acts on the left of the point. i.e.,             result = transformation*point

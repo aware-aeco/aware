@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BasePoint.Delete
+Deletes the base point from the model database.

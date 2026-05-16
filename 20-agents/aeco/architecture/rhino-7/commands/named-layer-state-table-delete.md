@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedLayerStateTable.Delete
+Deletes an existing named layer state.

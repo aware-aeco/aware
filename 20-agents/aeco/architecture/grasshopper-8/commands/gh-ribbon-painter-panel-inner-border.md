@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RibbonPainter.PanelInnerBorder
+Computes a graphicspath that delineates the inner edge of a typical panel

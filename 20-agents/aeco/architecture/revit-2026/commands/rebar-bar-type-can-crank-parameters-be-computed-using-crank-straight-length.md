@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBarType.CanCrankParametersBeComputedUsingCrankStraightLength
+Identifies if the all crank parameters can be computed for the specified crank straight length and Rebar Crank Type.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileSW.Read
+Read a .sldprt or .sldasm file into a RhinoDoc

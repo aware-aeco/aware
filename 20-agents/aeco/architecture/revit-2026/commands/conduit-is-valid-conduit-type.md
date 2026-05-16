@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Conduit.IsValidConduitType
+Identifies if a conduit type is valid.

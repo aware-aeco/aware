@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.PopDepthWriting
+Pop a DepthWriting flag off the engine's stack.

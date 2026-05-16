@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DocumentPreviewSettings.IsViewIdValidForPreview
+Identifies if the view id is valid as a preview view id.

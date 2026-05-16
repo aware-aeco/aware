@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoAccountsManager.GetAuthTokensAsync
+Asynchronously retrieves auth tokens with the given criteria from the Rhino Accounts server.

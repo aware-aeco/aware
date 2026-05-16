@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RealtimeDisplayMode.HudMaximumPasses
+Override to communicate the maximum passes count currently in use for the render session.             Can be shown in the HUD

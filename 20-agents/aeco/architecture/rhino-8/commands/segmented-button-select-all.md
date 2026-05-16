@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SegmentedButton.SelectAll
+Selects all items when  is set to Multiple.

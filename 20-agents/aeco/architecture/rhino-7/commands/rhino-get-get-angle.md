@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoGet.GetAngle
+Allows user to interactively pick an angle

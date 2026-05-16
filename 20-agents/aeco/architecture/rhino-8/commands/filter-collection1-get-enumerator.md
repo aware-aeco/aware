@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterCollection`1.GetEnumerator
+Gets the enumerator for the collection.

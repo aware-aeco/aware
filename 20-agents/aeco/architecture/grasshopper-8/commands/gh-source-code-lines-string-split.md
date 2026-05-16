@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_SourceCodeLines.StringSplit
+Splits a string into substrings.

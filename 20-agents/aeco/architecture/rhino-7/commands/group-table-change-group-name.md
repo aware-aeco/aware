@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroupTable.ChangeGroupName
+Changes the name of a group.

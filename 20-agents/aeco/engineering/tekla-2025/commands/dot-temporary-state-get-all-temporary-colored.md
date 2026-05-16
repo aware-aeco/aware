@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-dotTemporaryState.GetAllTemporaryColored
+Get all temporary colored objects and their color

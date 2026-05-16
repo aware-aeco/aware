@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolyBeam.AddContourPoint
+Adds a contour point to the polybeam.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarUpdateCurvesData.GetCycleCounter
+Gets the cycle counter that is stored in the rebar.

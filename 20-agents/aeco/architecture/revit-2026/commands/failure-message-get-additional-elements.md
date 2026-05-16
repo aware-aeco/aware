@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureMessage.GetAdditionalElements
+Retrieves list of the additional reference elements for the failure.

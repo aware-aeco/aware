@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_LooseChunk.Deserialize_Xml
+Deserializes an Xml string.

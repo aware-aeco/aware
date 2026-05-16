@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurve.CreateParabolaFromFocus
+Creates a parabola from focus and end points.

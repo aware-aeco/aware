@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoGet.InGetPoint
+Returns true if currently in a GetPoint.Get()

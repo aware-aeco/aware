@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Embeddable.PrepareForCommit
+This will be called prior to a Commit operation.

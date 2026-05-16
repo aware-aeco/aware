@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.ExportRevitFromAll
+Revit export from all objects.

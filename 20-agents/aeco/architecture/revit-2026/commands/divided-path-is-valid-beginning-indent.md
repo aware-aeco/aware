@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DividedPath.IsValidBeginningIndent
+Checks that the indent value does not cause the beginningIndent and endIndent to overlop

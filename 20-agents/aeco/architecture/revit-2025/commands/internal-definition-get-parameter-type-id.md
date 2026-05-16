@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InternalDefinition.GetParameterTypeId
+Tests whether this definition identifies a built-in parameter or not.

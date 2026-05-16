@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPAnalyticalModelData.GetMEPAnalyticalModelData
+Gets the MEP analytical model data of the specified element.

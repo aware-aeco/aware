@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.ShowAssembliesHierarchy
+Show assemblies hierarchy.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedParametersEventArgs.SetWindowHandle
+Set a HWND on Windows or NSView* on Mac

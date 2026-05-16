@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationServiceSettings.HasValidFluidSetting
+Is the service associated with a fluid type and temperature?

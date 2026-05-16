@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewShapeBuilder.Reset
+Clears the accumulated geometry and resets other ViewShapeBuilder parameters to invalid values.

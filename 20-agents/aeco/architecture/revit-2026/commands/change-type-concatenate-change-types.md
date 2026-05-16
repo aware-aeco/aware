@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ChangeType.ConcatenateChangeTypes
+Creates a ChangeType that is a union of the two input ChangeTypes

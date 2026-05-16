@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalService.GetOptions
+A copy of the options the service was registered with.

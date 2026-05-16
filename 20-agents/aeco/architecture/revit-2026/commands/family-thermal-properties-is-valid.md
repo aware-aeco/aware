@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyThermalProperties.IsValid
+Confirms that the thermal properties are correctly set for assignment to a FamilySymbol.

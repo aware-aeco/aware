@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GeometricFont.DrawSemiColon
+Draw the geometric character ';' at the specified location.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpatialFieldManager.IsResultSchemaNameUnique
+Verify the uniqueness of the name among all registered result schemas.

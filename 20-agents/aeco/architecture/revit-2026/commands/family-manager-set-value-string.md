@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyManager.SetValueString
+Set the string value of a family parameter of the current family type.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MechanicalUtils.ConnectDuctPlaceholdersAtCross
+Connects a group of placeholders that can intersect in a Cross connection.

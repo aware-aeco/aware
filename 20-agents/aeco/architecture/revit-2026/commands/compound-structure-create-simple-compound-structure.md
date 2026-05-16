@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.CreateSimpleCompoundStructure
+Creates a non-vertically compound structure comprised of parallel layers.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PersistentParam`1.Script_AddPersistentData
+Method used primarily for COM_Access code.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.SpanCount
+Gets number of smooth nonempty spans in the parameter direction.

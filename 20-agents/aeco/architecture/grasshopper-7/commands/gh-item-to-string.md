@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Item.ToString
+Converts the struct into a human readable format.

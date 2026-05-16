@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ScriptEditorButton.RespondToMouseDown
+Respond to a mouse down event.

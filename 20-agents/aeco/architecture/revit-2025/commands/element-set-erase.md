@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementSet.Erase
+Removes a specified element from the set.

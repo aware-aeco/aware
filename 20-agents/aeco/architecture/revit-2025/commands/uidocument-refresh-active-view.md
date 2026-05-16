@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIDocument.RefreshActiveView
+Refresh the display of the active view in the active document.

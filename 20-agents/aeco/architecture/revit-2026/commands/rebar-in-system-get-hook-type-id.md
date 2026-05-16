@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarInSystem.GetHookTypeId
+Get the id of the RebarHookType to be applied to the rebar.

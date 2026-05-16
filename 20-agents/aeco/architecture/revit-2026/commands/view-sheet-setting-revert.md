@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSheetSetting.Revert
+Revert the current view sheet set.

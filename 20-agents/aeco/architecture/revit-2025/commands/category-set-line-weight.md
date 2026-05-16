@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Category.SetLineWeight
+Sets the line weight for the given graphics style type.

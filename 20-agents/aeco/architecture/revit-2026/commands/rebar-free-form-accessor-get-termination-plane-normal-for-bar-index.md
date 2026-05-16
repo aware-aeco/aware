@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarFreeFormAccessor.GetTerminationPlaneNormalForBarIndex
+Gets the plane's normal in which the termination (e.g. hook, crank) at end of bar with index barPositionIndex will stay.

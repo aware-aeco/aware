@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Quaternion.Lerp
+Interpolates between two quaternions, using linear interpolation.

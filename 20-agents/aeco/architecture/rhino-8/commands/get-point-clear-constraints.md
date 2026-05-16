@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetPoint.ClearConstraints
+Removes any explicit constraints added by calls to GetPoint::Constraint() and enable             the built-in constraint options.

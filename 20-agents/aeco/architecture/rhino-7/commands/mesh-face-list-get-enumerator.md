@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshFaceList.GetEnumerator
+Gets an enumerator that yields all faces in this collection.

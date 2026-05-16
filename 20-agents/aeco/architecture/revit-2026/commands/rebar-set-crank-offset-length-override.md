@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.SetCrankOffsetLengthOverride
+Sets the crank offset length at the indicated bar end as an override value.

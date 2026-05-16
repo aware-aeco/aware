@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SurfaceFilletBase.G2ChordalQuintic
+make fillet surfaces and hack them up to active pieces. Adjusts cross sections

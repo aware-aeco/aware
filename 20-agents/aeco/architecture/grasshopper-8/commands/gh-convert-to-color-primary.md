@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToColor_Primary
+Performs a direct cast from Drawing.Color, GH_Color and OnColor.

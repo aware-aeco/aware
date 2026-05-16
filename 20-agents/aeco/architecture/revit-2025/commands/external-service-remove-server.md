@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalService.RemoveServer
+Removes/unregisters a server from the service.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EdgeChamfer.Delete
+Deletes the edge chamfer instance with the given ID from the model database.

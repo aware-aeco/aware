@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.TryConvertBrep
+Attempts to convert a generic Geometry object into a Brep.

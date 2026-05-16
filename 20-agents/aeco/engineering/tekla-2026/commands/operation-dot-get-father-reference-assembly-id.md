@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotGetFatherReferenceAssemblyId
+Gets reference objects parent reference assembly.

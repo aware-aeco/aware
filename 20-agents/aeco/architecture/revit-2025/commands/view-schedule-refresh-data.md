@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.RefreshData
+Rebuilds the schedule data if it is out of date.

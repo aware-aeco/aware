@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightType.GetLightShape
+Return a copy of an object derived from LightShape

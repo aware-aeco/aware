@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.LocateMaterial
+Gets material by group and name.

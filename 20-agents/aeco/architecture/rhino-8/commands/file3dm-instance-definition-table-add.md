@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmInstanceDefinitionTable.Add
+Adds an instance definition to the instance definition table.

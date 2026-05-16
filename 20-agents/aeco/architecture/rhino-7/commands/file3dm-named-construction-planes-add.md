@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmNamedConstructionPlanes.Add
+Adds a named construction plane to the table.

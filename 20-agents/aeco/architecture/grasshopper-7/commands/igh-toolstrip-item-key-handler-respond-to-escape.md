@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_ToolstripItemKeyHandler.RespondToEscape
+Handles an Escape keydown event.

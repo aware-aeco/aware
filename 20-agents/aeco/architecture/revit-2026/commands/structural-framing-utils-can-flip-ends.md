@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralFramingUtils.CanFlipEnds
+Determines if the ends of the given framing element can be flipped.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurvePointList.IndexOf
+Gets the index of a control point, or -1.

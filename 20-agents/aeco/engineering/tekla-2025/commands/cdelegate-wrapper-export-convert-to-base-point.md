@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportConvertToBasePoint
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainerParameterManager.ClearOverrides
+Clears any overridden values from all parameters of the associated RebarContainer element.

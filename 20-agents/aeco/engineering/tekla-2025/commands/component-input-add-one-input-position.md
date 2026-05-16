@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ComponentInput.AddOneInputPosition
+Adds an input position to the component input.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportFontTable.Remove
+Removes the pair (key, info) by font key.

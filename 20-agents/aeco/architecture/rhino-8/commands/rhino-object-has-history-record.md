@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.HasHistoryRecord
+Returns whether this object has a history record

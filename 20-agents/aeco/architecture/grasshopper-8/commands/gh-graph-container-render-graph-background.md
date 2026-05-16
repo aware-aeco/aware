@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphContainer.Render_GraphBackground
+Renders the default Graph background.

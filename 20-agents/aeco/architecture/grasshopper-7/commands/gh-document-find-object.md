@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.FindObject
+Find the object that matches the ID.

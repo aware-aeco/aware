@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.ReplaceProxySources
+Replace all remaining proxy sources in the document with UnresolvedProxy Objects.

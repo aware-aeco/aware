@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightType.GetInitialIntensity
+Return a copy of an object derived from InitialIntensity

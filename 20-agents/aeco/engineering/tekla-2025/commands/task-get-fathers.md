@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Task.GetFathers
+Returns an enumerator of all the task type fathers for the task object.

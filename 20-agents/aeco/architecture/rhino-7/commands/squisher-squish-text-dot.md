@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Squisher.SquishTextDot
+Maps a TextDot on or near a previously squished 3d surface to the resulting 2d surface

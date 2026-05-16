@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarTrimExtendData.CreateEndConstraint
+Creates a constraint for the end handle of the rebar. This constraint will be set preferred after the API execution is finished successfully.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarUpdateCurvesData.GetHostId
+Gets the id of the host structural for this rebar.

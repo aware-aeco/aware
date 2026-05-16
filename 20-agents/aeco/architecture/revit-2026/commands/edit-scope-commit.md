@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EditScope.Commit
+Finishes the edit scope.

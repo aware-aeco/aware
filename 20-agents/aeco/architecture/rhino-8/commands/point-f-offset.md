@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointF.Offset
+Offsets the X and Y co-ordinates of this point by the specified  and  values

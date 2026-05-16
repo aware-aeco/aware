@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaMassProperties.WorldCoordinatesPrincipalMomentsOfInertia
+Calculates the principal moments of inertia and principal axes with respect to world coordinates.

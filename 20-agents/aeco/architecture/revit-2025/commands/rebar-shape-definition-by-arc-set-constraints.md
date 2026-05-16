@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDefinitionByArc.SetConstraints
+Assign a new list of constraints to this definition.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PersistentSettingsConverter.IsStringDictionary
+Determines if the string value is formatted as a key value pair             string list.

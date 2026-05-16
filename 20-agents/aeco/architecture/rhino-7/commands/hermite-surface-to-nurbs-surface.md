@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HermiteSurface.ToNurbsSurface
+Constructs a NURBS surface satisfying the Hermite interpolation conditions.

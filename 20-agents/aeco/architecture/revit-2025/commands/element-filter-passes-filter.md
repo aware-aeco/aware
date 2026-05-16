@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementFilter.PassesFilter
+Applies the filter to a given element.

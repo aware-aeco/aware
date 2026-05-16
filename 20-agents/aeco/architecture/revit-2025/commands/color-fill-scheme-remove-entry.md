@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorFillScheme.RemoveEntry
+Removes an entry whose parameter value is the same as the input from the scheme

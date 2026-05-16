@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IRebarUpdateServer.GetCustomHandles
+This function should define all handles that the Rebar has. This function is called when the Rebar is created.

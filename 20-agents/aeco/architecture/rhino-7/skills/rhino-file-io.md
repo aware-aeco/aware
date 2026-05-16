@@ -6,56 +6,103 @@ description: API reference for namespace Rhino.FileIO from RhinoCommon.dll
 # Rhino.FileIO
 
 - **BinaryArchiveException**
+  - Thrown by BinaryArchiveReader and BinaryArchiveWriter classes when             an IO error has occurred.
 - **BinaryArchiveFile**
 - **BinaryArchiveMode**
 - **BinaryArchiveReader**
+  - Represents an entity that is capable of reading a binary archive and             instantiating strongly-typed objects.
 - **BinaryArchiveWriter**
+  - Represents an entity that is able to write data to an archive.
 - **CommonComponentTable`1**
+  - Provides a base table type that encompasses all document tables, both in RhinoDoc and File3dm.
 - **ContentHash**
+  - Contains information that is useful to uniquely identify an object.             This object is immutable.
 - **DracoColorFormat**
+  - Color format for vertex colors
 - **DracoCompression**
+  - Google Draco compression for mesh and point cloud data
 - **DracoCompressionOptions**
+  - Options for applying Draco compression
 - **File3dm**
+  - Represents a 3dm file, which is stored using the OpenNURBS file standard.             The 3dm format is the main Rhinoceros storage format.Visit http://www.opennurbs.com/ for more details.
 - **File3dmCommonComponentTable`1**
+  - Provides a base table type that is shared among all File3dm tables.
 - **File3dmDimStyleTable**
+  - Provides access to annotation styles in the 3dm file.
 - **File3dmGroupTable**
+  - Provides access to groups in the 3dm file.
 - **File3dmHatchPatternTable**
+  - Provides access to hatch pattern definitions in the 3dm file.
 - **File3dmInstanceDefinitionTable**
+  - Provides access to instance (block) definitions in the 3dm file.
 - **File3dmLayerTable**
+  - Provides access to layers in the 3dm file.
 - **File3dmLinetypeTable**
+  - Provides access to Linetypes in the 3dm file.
 - **File3dmMaterialTable**
+  - Provides access to materials in the 3dm file.
 - **File3dmNamedConstructionPlanes**
+  - Provides access to named construction planes in the 3dm file.
 - **File3dmNotes**
+  - Represents the notes information stored in a 3dm file.
 - **File3dmObject**
+  - Used to store geometry table object definition and attributes in a File3dm.
 - **File3dmObjectTable**
+  - Represents a simple object table for a file that is open externally.             This class mimics Rhino.DocObjects.Tables.ObjectTable while providing external access to the file.
 - **File3dmPlugInData**
+  - Represents custom plug-in data, in the 3dm file, written by a plug-in.
 - **File3dmPlugInDataTable**
+  - Table of custom data provided by plug-ins
 - **File3dmSettings**
+  - General settings in a 3dm file.
 - **File3dmStringTable**
+  - Provides access to document strings in the 3dm file.
 - **File3dmTypeCodes**
+  - Typecode format 4 bytes long                          x xxxxxxxxxxxxxxx,x xxx xxxx xxxx x x xx             | |               | |               | |  |             |        |        |                 |             |        |        |         |       +---  "stuff" bit             |        |        |         |             |        |        |         +-- specific codes             |        |        |             |        |        +-- RESERVED - DO NOT USE (should be 0) (will be used to control CRC on/off)             |        |             |        +-- category:_000 0000 0000 0001  Legacy geometry    TCODE_LEGACY_GEOMETRY             |                     _000 0000 0000 0010  openNURBS object   TCODE_OPENNURBS_OBJECT             |                     _000 0000 0000 0100  -- RESERVED - DO NOT USE (should be 0 in any typecode) --              |                     _000 0000 0000 1000  -- RESERVED - DO NOT USE (should be 0 in any typecode) --                                  |                     _000 0000 0001 0000  Geometry           TCODE_GEOMETRY             |                     _000 0000 0010 0000  Annotation             |                     _000 0000 0100 0000  Display Attributes TCODE_DISPLAY             |                     _000 0000 1000 0000  Rendering          TCODE_RENDER                  |                     _000 0001 0000 0000                                      |                     _000 0010 0000 0000  Interface          TCODE_INTERFACE              |                     _000 0100 0000 0000  -- RESERVED - DO NOT USE (should be 0 in any typecode) --             |                     _000 1000 0000 0000  Tolerances         TCODE_TOLERANCE             |                     _001 0000 0000 0000  Tables             TCODE_TABLE                 |                     _010 0000 0000 0000  Table record       TCODE_TABLEREC             |                     _100 0000 0000 0000  User information   TCODE_USER             |              +-- format: 0 - data size in header  - data block follows    TCODE_SHORT                         1 - data in header - no data block follows
 - **File3dmViewTable**
+  - Provides access to views in the 3dm file.
 - **File3dmWriteOptions**
+  - Options used by File3dm.Write
 - **FileFindPreference**
+  - Defines options for file search.
 - **FileObj**
+  - Support for obj file format
 - **FileObjReadOptions**
+  - Options used when reading an obj file.
 - **FileObjWriteOptions**
 - **FilePdf**
+  - Support for PDF file format
 - **FilePdfEventArgs**
+  - Used for events that are fired while constructing/saving a PDF
 - **FilePly**
+  - Support for ply file format
 - **FilePlyWriteOptions**
 - **FileReadOptions**
 - **FileReference**
+  - Manages a reference to an existing or non-existing file,             using either or both absolute or relative paths.             Once constructed, this class is immutable.
 - **FileReferenceStatus**
+  - Enumerates a list of file statuses.
 - **FileSlc**
+  - Support for writing slice (SLC) file format
 - **FileSlcWriteOptions**
+  - Options used when writing a SLC file
 - **FileStp**
+  - Support for writing STEP (STP) file format
 - **FileStpWriteOptions**
+  - Options used when writing a STP file
 - **FileType**
 - **FileWriteOptions**
 - **ICommonComponentTable`1**
+  - Provides methods to use all File3dm and RhinoDoc tables under the same contract.             Do not derive from this interface. This is to ensure all tables can be used with the same method list.
 - **ImageFile**
+  - Support functions for image files
 - **ManifestTable**
+  - Maintains an index to every model component that is in the 3dm file.             This is the "more comprehensive" table that contains all objects in all other tables.
 - **NameHash**
+  - Contains information that is useful to uniquely identify an object name.             This object is immutable.
 - **SHA1OpenNURBS**
+  - Provides the OpenNURBS implementation of SHA1.                          This class is provided only with the purpose of hashing. It is not meant to be             used for any cryptographic purpose.
 - **SerializationOptions**
+  - Contains options for serializing -or storing- data,             such as Rhino version and user data.
 - **TextLog**
+  - Used for collecting text data

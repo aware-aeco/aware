@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EffectInstance.IsValid
+Tests whether the effect instance is valid for rendering.

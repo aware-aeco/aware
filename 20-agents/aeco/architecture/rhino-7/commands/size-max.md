@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Size.Max
+Returns the maximum width and height of two sizes

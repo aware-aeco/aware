@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DrawingUtilities.CreateMeshPreviewImage
+Creates a preview image of a mesh.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCLevelInfo.GetRelatedProducts
+Gets all building products on this level.

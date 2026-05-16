@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_FontServer.StringToFont
+Convert a font description string back into a font.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportCreateControlSpline
+DO NOT USE! For internal usage only!

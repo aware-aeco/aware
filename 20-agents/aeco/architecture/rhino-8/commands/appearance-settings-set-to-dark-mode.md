@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AppearanceSettings.SetToDarkMode
+Set UI to the default dark mode color scheme

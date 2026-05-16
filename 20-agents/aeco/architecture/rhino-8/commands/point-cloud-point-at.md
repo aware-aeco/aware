@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.PointAt
+Returns the location of the point at a specific index.

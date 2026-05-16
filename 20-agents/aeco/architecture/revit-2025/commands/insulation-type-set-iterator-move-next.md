@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InsulationTypeSetIterator.MoveNext
+Move the iterator one item forward.

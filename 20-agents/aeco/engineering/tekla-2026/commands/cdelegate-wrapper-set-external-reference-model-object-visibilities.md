@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.SetExternalReferenceModelObjectVisibilities
+DO NOT USE! For internal usage only!

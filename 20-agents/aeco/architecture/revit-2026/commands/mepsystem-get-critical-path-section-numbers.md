@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPSystem.GetCriticalPathSectionNumbers
+Obtains a list of the critical path section numbers.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedViewTable.Restore
+Sets the MainViewport of a standard RhinoView to a named views settings

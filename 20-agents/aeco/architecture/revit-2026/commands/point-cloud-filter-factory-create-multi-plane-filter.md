@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudFilterFactory.CreateMultiPlaneFilter
+Creates a new point cloud filter based upon planar boundaries.

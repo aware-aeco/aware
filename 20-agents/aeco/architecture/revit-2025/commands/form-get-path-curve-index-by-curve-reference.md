@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Form.GetPathCurveIndexByCurveReference
+Given a reference to certain curve in the path, return its index.

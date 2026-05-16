@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IPointCloudAccess.GetColorEncoding
+Returns the encoding used by points in this point cloud.

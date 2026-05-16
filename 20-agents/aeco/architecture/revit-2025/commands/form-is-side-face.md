@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Form.IsSideFace
+Given a face, tell if it is a side face.

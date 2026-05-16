@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorCMYK.CreateFromHSV
+Constructs the nearest CMYK equivalent of an HSV color.

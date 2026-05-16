@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PythonScript.ContainsVariable
+Determines if the main scripting context has a variable with a name.

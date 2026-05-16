@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementIntersectsElementFilter.GetElement
+Gets the target element.

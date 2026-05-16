@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MouseTracker.DropFrames
+Drop all frames older than a given limit.

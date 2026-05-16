@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.IsCoreLayer
+Checks if the specified layer is a core layer.

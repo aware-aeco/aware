@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StackedDialogPage.MakeActivePage
+Make this page the active, visible page

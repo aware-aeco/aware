@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StringList.GetRange
+Gets a part of the string list.

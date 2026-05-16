@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportSingleRebarGetRebarSet
+DO NOT USE! For internal usage only.

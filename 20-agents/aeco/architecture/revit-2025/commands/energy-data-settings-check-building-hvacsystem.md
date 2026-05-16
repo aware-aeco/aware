@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyDataSettings.CheckBuildingHVACSystem
+Checks that the building HVAC system falls within an appropriate range.

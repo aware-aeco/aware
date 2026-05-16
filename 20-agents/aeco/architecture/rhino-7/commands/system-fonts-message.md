@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SystemFonts.Message
+Gets the system message box font with optional specified  and .

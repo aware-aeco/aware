@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Gradient.MouseDragAbort
+Abort grip drag.

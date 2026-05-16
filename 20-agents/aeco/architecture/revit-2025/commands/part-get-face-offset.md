@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Part.GetFaceOffset
+Get face offset of the given part face.

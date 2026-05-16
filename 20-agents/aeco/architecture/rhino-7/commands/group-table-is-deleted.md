@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroupTable.IsDeleted
+Verifies a group is deleted.

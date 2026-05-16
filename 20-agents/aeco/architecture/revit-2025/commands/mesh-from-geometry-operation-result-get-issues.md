@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshFromGeometryOperationResult.GetIssues
+Returns the array of issues encountered while building a mesh.

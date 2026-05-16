@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PartMaker.SetSourceElementIds
+Set the source elements for the PartMaker.

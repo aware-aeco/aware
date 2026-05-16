@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObjectVisualization.SetTemporaryState
+Sets visualization temporary state (red, blue, green and transparency) for given model objects

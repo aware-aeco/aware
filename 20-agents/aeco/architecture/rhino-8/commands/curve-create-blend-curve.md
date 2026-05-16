@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.CreateBlendCurve
+Create a Blend curve between two existing curves.

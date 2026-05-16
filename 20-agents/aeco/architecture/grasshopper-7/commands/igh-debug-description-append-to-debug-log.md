@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_DebugDescription.AppendToDebugLog
+Write important debugging data to a debug writer object.

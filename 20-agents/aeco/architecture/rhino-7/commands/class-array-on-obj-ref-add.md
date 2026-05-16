@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ClassArrayOnObjRef.Add
+Adds an ObjRef to the list.

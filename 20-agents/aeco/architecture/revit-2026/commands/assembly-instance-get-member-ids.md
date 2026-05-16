@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssemblyInstance.GetMemberIds
+Gets member element ids for the assembly instance.

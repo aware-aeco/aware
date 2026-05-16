@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroundConductorSizeSet.Erase
+Removes a specified GroundConductorSize from the set.

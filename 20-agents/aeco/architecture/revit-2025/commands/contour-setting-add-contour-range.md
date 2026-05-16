@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ContourSetting.AddContourRange
+Add a set of contours as a contour setting item to the current contour setting.

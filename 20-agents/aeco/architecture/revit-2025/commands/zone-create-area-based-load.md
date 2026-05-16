@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Zone.CreateAreaBasedLoad
+Creates a new instance of an area based load and adds it to the document.

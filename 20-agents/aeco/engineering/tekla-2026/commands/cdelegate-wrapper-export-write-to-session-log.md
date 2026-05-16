@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportWriteToSessionLog
+DO NOT USE! For internal usage only!

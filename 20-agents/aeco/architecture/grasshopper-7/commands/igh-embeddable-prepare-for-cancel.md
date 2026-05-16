@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Embeddable.PrepareForCancel
+This will be called prior to a Cancel operation.

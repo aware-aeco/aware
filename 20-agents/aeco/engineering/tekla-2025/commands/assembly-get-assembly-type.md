@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Assembly.GetAssemblyType
+Returns the type of the assembly.

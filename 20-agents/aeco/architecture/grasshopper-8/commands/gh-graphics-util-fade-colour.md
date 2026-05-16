@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.FadeColour
+Fade a colour to transparency by linearly blending a parameter between extremes.

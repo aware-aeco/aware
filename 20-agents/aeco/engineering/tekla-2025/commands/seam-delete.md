@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Seam.Delete
+Deletes the seam instance with the given ID from the model database.

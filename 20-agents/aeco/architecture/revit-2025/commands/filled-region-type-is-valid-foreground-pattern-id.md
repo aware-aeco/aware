@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilledRegionType.IsValidForegroundPatternId
+Check if the id is valid for a foreground pattern

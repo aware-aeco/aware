@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LicenseUtils.GetLicenseStatus
+Returns the current status of every license for UI purposes.

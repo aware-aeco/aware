@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ImageView.Create
+Create an ImageView containing an image imported from disk.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlugIn.NameFromPath
+Gets a plug-in name for an installed plug-in given the path to that plug-in.

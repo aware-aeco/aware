@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.NormalizeIndentationAsync
+Fix indentation inconsistencies - not tested

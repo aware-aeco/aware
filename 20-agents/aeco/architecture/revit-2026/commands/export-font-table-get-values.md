@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportFontTable.GetValues
+Returns a collection of the values stored in this table.

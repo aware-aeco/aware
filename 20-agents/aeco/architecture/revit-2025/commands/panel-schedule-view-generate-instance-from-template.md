@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.GenerateInstanceFromTemplate
+Assigns the data from the template to the instance and performs any tasks specific to the instance (3rd phase, borders, etc)

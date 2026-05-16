@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_NumberPresets.AddPreset
+Add a new preset to the collection.

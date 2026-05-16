@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndependentTag.HasLeaderElbow
+Whether the tag's leader that points to the reference has an elbow point or not.

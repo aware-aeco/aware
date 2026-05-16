@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadCombination.GetUsageIds
+Returns collection of the load combination usage IDs.

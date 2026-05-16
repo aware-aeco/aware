@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.NewRoomBoundaryLines
+Creates a new boundary line as an Room border.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CursorServer.Cursor
+Gets a cursor from the cache.

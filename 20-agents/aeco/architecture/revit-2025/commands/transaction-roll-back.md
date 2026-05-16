@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transaction.RollBack
+Rolls back all changes made to the model during the transaction.

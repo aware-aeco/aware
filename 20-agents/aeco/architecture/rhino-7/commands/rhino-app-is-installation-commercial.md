@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoApp.IsInstallationCommercial
+If licenseType is a commercial license, returns true. A commercial license grants             full use of the product.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeSegment.SetConstraints
+Assign a new list of constraints to this segment.

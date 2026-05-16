@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.HasTextureMapping
+Returns true if this object has a texture mapping form any source (pluginId)

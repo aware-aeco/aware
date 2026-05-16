@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPNetworkSegmentId.IsValid
+Verifies if this is a valid segment id.

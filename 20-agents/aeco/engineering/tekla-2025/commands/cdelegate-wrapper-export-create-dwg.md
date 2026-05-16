@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportCreateDwg
+DO NOT USE! For internal usage only!

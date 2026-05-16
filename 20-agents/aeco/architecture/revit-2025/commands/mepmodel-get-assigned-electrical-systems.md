@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPModel.GetAssignedElectricalSystems
+Retrieves the electrical systems this electrical panel currently is assigned to.

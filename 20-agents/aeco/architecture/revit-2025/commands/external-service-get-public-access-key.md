@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalService.GetPublicAccessKey
+Access key to use to execute a service.

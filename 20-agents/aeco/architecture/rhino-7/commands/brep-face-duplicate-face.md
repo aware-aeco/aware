@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepFace.DuplicateFace
+Duplicate a face from the brep to create new single face brep.

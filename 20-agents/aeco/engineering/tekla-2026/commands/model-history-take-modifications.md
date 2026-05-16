@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelHistory.TakeModifications
+Take modifications since previous call.

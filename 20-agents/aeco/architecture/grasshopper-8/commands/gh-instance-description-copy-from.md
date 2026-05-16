@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_InstanceDescription.CopyFrom
+Copy all fields (except the instance ID) from another instance description.

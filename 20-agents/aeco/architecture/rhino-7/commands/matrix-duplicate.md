@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Matrix.Duplicate
+Create a duplicate of this matrix.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeMultiplanarDefinition.SetPresenceOfSegments
+Simultaneously set the presence of all 3D segments.

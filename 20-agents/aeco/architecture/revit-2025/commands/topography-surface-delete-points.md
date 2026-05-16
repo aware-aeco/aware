@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TopographySurface.DeletePoints
+Deletes points from a Topography surface.

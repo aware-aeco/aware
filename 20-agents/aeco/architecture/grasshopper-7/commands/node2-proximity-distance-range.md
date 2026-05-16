@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Node2Proximity.DistanceRange
+Gets the squared minimum and maximum distance

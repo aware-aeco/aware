@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryTree.GetParentNode
+Gets the parent node of node in the geometry tree.

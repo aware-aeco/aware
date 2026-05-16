@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFamilyLoadOptions.OnSharedFamilyFound
+A method called when the shared family was found in the target document.

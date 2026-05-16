@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotGetSecondaries
+Returns all the secondary assemblables belonging to the assembly.

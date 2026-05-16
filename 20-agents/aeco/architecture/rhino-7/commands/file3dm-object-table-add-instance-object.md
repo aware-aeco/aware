@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObjectTable.AddInstanceObject
+Adds an instance reference geometry object to the table.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterValue.IsSameType
+Tests another instance is of the same value type.

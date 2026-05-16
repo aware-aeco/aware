@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Instances.RedrawCanvas
+Forces a redraw of the currently active Grasshopper Canvas.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Graph.Draw_PreRenderGrip
+Override this function if you want to draw something in addition to or instead of the current Grip

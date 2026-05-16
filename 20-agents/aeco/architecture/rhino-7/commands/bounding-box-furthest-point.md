@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoundingBox.FurthestPoint
+Finds the furthest point on the Box.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ItemFactoryBase.PlaceGroup
+Place an instance of a Model Group into the Autodesk Revit document, using a location and a group type.

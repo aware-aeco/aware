@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ConvertIfcGuidToTsGuid
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MathComparisonUtils.IsGreaterThan
+Checks if value1 is strictly greater than value2, using the internal tolerance.

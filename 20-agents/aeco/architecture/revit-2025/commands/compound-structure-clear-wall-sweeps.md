@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.ClearWallSweeps
+Removes all sweeps or reveals from the compound structure.

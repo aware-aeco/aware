@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEvents.OnViewOpened
+Called when a view is opened.

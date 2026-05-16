@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalDemandFactorValue.SetMaxRangeToUnlimited
+Sets the max range on the value to unlimited

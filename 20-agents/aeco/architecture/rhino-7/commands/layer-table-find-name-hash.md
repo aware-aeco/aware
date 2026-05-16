@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LayerTable.FindNameHash
+Finds a Layer given its name hash.

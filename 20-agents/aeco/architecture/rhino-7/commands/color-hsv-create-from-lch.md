@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorHSV.CreateFromLCH
+Create the nearest HSV equivalent of a LCH color.

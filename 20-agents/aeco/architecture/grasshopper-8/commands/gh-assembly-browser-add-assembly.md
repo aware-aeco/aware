@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_AssemblyBrowser.AddAssembly
+Append a new assembly path to the Referenced Assembly list.

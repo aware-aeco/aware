@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextureMapping.CreateSphereMapping
+Create a spherical projection texture mapping.

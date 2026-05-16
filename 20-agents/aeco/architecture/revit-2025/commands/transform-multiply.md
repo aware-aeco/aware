@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform.Multiply
+Multiplies this transformation by the specified transformation and returns the result.

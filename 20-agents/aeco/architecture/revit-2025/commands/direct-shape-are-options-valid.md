@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShape.AreOptionsValid
+Validates that the given DirectShapeOptions are allowed for this particular DirectShape.

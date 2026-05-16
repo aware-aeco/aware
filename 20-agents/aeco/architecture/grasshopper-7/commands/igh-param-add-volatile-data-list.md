@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Param.AddVolatileDataList
+Inserts a list of items into the data structure.

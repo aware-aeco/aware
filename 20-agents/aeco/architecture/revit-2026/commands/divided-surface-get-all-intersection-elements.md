@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DividedSurface.GetAllIntersectionElements
+Gets all intersection elements which produce division lines.

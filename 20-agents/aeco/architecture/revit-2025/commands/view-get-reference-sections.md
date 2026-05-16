@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetReferenceSections
+Returns element ids of all reference sections in the view.

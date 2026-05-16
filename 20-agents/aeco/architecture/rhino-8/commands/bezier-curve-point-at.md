@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BezierCurve.PointAt
+Evaluates point at a curve parameter.

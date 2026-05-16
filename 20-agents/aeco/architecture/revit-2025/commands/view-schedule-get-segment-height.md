@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.GetSegmentHeight
+Gets the segment height.

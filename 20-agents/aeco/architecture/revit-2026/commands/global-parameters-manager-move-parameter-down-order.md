@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GlobalParametersManager.MoveParameterDownOrder
+Moves given paramerer Down in the current order.

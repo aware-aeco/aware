@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.CanFilterByValue
+Checks whether a field can be used with a value-based filter.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PythonScript.GetVariableNames
+Retrieves all variable names in the script.

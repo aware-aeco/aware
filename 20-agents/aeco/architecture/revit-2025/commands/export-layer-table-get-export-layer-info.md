@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLayerTable.GetExportLayerInfo
+Gets a copy of the layer info associated to the input pattern key.

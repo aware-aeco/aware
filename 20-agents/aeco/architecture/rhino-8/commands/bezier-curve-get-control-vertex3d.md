@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BezierCurve.GetControlVertex3d
+Gets the 3D location of a control vertex at the specified index.

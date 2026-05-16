@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportUndoOperation
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Line.ToString
+Constructs the string representation of this line, in the form "From,To".

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Contour.CalculatePolygon
+Calculate a polygon approximating the contour with chamfers evaluated.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BalusterPattern.RemoveBaluster
+Removes a baluster from the main baluster pattern.

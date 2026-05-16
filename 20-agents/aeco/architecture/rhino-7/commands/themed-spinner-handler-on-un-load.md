@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedSpinnerHandler.OnUnLoad
+Called when the control is unloaded, which is when it is not currently on a displayed window

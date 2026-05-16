@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.PointAt
+Evaluates a point at a given parameter.

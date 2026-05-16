@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConceptualConstructionType.GetFloorOrSlabConstructionType
+Get a Floor or Slab ConceptualConstructionType by its ConceptualConstructionFloorSlabType.

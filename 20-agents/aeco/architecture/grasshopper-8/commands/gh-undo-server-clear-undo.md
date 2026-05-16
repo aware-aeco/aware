@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_UndoServer.ClearUndo
+Clear the redo list.

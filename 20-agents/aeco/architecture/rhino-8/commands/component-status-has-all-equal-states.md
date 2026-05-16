@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ComponentStatus.HasAllEqualStates
+For the purposes of this test, Selected and SelectedPersistent are considered equal.

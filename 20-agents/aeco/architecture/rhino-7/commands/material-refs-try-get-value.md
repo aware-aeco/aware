@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MaterialRefs.TryGetValue
+Gets the value associated with the specified key.

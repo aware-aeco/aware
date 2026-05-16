@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.Open
+Opens the pipeline.

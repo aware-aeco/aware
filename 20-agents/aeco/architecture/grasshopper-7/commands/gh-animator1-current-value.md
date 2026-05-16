@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Animator`1.CurrentValue
+Gets the current animated value.

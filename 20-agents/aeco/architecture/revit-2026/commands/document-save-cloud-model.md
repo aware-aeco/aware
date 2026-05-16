@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.SaveCloudModel
+Saves cloud model.

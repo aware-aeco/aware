@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpatialElementGeometryResults.GetBoundaryFaceInfo
+Query the spatial element boundary face information with the given face.

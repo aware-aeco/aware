@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Leader.DuplicateAnnotation
+Create a duplicate of this annotation.

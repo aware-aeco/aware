@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Hatch.Get2dCurves
+Gets 2d curves that define the boundaries of the hatch

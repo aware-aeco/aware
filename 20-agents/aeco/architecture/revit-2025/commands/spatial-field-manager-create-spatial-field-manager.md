@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpatialFieldManager.CreateSpatialFieldManager
+Factory method - creates manager object for the given view

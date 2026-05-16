@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Node2List.NullifyDuplicates
+Set all duplicate nodes to NULL

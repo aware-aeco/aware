@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDDisplayParameters.AbsoluteDisplayDensityFromSubD
+Gets absolute SubD display density for subd.

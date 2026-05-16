@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextEntity.CreateWithRichText
+Create RichText geometry or null if input is invalid

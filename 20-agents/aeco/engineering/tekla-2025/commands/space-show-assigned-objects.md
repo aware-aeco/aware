@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Space.ShowAssignedObjects
+Show previously hidden assigned objects in 3d view.

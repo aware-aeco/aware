@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.CreateFreeForm
+Creates a free form rebar that will be unconstrained. Constraints can't be added later to this rebar.

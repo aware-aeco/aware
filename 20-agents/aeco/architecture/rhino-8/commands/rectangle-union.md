@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rectangle.Union
+Union the  into this instance to encompass both rectangles

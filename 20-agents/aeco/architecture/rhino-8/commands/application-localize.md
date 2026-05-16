@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.Localize
+Localizes the specified text for the current locale, or provide alternative text for system supplied strings.

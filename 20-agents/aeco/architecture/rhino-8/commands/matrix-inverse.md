@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Matrix.Inverse
+Creates an inverted copy of the specified matrix.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotGetObjectExtremaBoxData
+Retrieves the extrema box data for a specified object.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterSet.Erase
+Removes a specified parameter from the set.

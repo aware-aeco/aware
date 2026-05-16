@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.Merge
+Merges, or appends, a specified point cloud into this one.

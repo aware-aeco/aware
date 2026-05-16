@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightType.GetLightDistribution
+Return a copy of an object derived from LightDistribution

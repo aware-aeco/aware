@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawCylinder
+Draw a wireframe cylinder.

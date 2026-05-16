@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SnapShotsClient.PlugInId
+The plug-in id that registers this client.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Quaternion.Equals
+Determines whether this quaternion has the same value of another quaternion.

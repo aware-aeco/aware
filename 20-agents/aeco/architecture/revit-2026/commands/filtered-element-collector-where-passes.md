@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilteredElementCollector.WherePasses
+Applies an element filter to the collector.

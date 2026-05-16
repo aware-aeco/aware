@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorFillScheme.AddEntry
+Adds new entry to the scheme.

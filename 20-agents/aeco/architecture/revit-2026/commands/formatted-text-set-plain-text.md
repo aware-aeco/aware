@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormattedText.SetPlainText
+Sets the text with the given text in a plain text form in a range.

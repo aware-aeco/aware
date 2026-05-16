@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DetailCurveArray.Insert
+Insert the specified item into the array.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Definitions.Contains
+Tests for the existence of a definition within the set.

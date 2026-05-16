@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricWireType.CreateDefaultFabricWireType
+Creates a new FabricWireType object with a default name.

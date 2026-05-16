@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetEventTimeGuid
+Gets the time Guid from the latest Connect Upload event

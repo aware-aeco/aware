@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_CanvasValidator.AddedToCanvas
+This method will be called by the Canvas when this validator is added to it.

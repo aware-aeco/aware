@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.SetTextAsync
+Sets the text in the editor

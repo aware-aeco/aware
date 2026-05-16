@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetNumberingTemporaryRecordList
+Get a list of numbering temporary records in byte[] format for protobuf usage.

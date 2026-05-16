@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedExpanderHandler.AttachEvent
+Attaches the handler events.

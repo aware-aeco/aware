@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Panel.Remove
+Removes the specified child from the container

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SnapShotsClient.ViewsCategory
+Predefined views category

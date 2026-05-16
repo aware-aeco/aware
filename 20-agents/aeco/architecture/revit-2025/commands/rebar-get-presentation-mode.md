@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.GetPresentationMode
+Gets the presentation mode for this rebar set when displayed in the given view.

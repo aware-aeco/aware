@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SiteLocation.ConvertToProjectTime
+Converts local time or UTC time to project time.

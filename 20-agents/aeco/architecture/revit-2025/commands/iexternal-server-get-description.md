@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExternalServer.GetDescription
+Implement this method to return a description of the server.

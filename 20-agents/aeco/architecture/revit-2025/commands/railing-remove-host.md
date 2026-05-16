@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Railing.RemoveHost
+Removes the association between the railing and its host.

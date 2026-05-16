@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedLayerStateTable.Save
+Saves or updates a named layer state.

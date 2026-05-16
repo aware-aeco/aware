@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.TransparencyMatrix
+Create an image transparency matrix for a specific blending factor.

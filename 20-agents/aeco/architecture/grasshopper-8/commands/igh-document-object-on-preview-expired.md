@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_DocumentObject.OnPreviewExpired
+Raises the PreviewExpired event on the toplevel object.

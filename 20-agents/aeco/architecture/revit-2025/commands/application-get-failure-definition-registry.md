@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.GetFailureDefinitionRegistry
+Returns the instance of FailureDefinitionRegistry.

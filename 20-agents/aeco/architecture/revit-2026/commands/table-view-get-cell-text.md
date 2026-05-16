@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableView.GetCellText
+Gets the cell's text based on its type

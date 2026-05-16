@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_UpgradeUtil.SwapComponents
+Replace an existing component with a different one. All parameters (input and output) will be migrated.

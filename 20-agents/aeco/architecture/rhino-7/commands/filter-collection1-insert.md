@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterCollection`1.Insert
+Insert the item at the specified index.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentEditor.CollapseForm
+Collapses the form into the title bar area.

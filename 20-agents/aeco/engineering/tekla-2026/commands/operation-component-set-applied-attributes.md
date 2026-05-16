@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.ComponentSetAppliedAttributes
+Sets the applied attributes for a given component type.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentParamServer.Find
+Find the parameter that has the given InstanceGuid.

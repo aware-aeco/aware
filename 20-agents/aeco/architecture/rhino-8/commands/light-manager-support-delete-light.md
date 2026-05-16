@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightManagerSupport.DeleteLight
+Delete light

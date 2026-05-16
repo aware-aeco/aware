@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TransactionGroup.SetName
+Sets the transaction group's name.

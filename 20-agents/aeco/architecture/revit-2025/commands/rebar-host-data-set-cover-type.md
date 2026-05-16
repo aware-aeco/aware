@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarHostData.SetCoverType
+Associates the specified CoverType with the specified face of the element.

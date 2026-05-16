@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextFields.PageName
+Return the current layout page name

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Extrusion.PathLineCurve
+Gets the line-like curve that is the conceptual axis of the extrusion.

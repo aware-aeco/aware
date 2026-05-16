@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DimensionStyle.CopyFrom
+Copy settings from source dimension style without changing the name, Id or             index of this DimensionStyle.

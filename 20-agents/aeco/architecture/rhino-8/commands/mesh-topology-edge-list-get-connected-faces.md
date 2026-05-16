@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshTopologyEdgeList.GetConnectedFaces
+Gets indices of faces connected to an edge.

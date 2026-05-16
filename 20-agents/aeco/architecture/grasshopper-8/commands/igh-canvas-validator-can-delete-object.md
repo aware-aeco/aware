@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_CanvasValidator.CanDeleteObject
+Validates whether a specific object can be deleted.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PartMakerMethodToDivideVolumes.AreElementsValidIntersectingReferences
+Identifies if provided members are valid.

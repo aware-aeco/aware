@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BentPlateGeometrySolver.ModifyPolygon
+Modify the shape of a polygon section, and updates related cylindrical sections accordingly.

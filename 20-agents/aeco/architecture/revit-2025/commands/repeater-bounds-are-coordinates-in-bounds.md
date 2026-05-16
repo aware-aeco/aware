@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RepeaterBounds.AreCoordinatesInBounds
+Determines whether given coordinates are within the bounds.

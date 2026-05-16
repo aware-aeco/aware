@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.IsValidFabricatorMaterial
+Check if material is according to fabricator settings.

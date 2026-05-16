@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GenericDelegateFake`1.ExportConnectGeometryTreesWithRadiusAperture
+DO NOT USE! For internal usage only!

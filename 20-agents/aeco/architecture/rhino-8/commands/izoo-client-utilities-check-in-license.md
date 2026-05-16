@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IZooClientUtilities.CheckInLicense
+Checks in a checked out license to the owning Zoo.

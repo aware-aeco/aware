@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SurfaceObject.Modify
+Modifies the existing model object in the model database to match the current one.

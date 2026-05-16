@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DynamicLayout.BeginHorizontal
+Begins a new horizontal row section

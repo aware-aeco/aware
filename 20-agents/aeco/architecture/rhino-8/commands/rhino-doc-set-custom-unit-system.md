@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoDoc.SetCustomUnitSystem
+Changes the unit system to custom units and sets the custom unit scale.

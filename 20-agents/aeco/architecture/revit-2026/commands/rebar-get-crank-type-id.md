@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.GetCrankTypeId
+Gets the id of the Crank Type id that is applied to the rebar.

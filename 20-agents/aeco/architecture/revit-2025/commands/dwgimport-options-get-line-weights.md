@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DWGImportOptions.GetLineWeights
+Gets array of line weights.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PathReinforcement.RemovePathReinforcementSystem
+Deletes the specified PathReinforcement, and converts its RebarInSystem    elements to equivalent Rebar elements.

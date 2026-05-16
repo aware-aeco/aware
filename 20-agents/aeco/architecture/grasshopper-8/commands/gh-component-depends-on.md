@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Component.DependsOn
+Returns True is any one of my input parameters depends on the source.

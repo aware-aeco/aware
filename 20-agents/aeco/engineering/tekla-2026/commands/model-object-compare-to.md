@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObject.CompareTo
+Compares Identifiers of model objects.

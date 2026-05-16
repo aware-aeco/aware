@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDEdgeList.SetEdgeTags
+Set edge tags for a list of edges. Useful for adding creases to SubDs

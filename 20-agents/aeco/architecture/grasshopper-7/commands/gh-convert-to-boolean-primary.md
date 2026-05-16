@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToBoolean_Primary
+Performs a direct cast from boolean or GH_Boolean.

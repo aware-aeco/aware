@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEvents.OnTemporaryStatesChanged
+Called when the temporary states are changed.

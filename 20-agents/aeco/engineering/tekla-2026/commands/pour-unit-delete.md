@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PourUnit.Delete
+At the moment pour units cannot be deleted.

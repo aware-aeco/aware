@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCParameterTemplate.Create
+Create an IFC parameter mapping template with default values.

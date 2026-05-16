@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ISerializable.Write
+This method is called whenever the instance is required to serialize itself.

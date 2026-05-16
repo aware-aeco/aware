@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedControlHandler`3.SuspendLayout
+Suspends the layout of child controls

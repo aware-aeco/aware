@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshFaceList.Insert
+Inserts a mesh face at a defined index in this list.

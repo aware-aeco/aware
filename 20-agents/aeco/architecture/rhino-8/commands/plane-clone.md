@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Plane.Clone
+Returns a deep copy of this instance.

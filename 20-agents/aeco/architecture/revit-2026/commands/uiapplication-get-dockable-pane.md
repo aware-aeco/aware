@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIApplication.GetDockablePane
+Gets a DockablePane object by its ID.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Navigation.Remove
+Removes the specified child.

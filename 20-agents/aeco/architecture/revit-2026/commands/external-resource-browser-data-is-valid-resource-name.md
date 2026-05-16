@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalResourceBrowserData.IsValidResourceName
+Checks whether the resource name is valid.

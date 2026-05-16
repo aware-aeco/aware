@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RdkSelectionNavigator.CanGoBackwards
+Check the backwards status of the navigator

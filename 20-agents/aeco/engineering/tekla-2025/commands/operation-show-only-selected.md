@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.ShowOnlySelected
+Show Only Selected objects in current view.

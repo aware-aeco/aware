@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObjectTable.AddEllipse
+Adds a curve object to the document representing an ellipse.

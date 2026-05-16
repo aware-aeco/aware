@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyItemFactory.NewSweptBlend
+Adds a new swept blend into the family document, using a selected reference as the path.

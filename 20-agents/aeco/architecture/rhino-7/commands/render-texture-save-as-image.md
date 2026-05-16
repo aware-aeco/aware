@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderTexture.SaveAsImage
+Save texture as image

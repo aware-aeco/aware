@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Viewport.ProjectPoint
+Project a point from canvas coordinates into control coordinates.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Dimension.HasOneSegment
+Determines whether a dimension has one segment.

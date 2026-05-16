@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.DestroyRegionTopology
+Destroys a Brep's region topology information.

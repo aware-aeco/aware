@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.FindClusters
+Find all the clusters that have a matching ID.

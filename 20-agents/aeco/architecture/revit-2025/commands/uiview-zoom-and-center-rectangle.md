@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIView.ZoomAndCenterRectangle
+Zoom and center the view to a specified rectangle.

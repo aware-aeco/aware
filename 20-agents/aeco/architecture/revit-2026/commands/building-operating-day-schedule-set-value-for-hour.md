@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BuildingOperatingDaySchedule.SetValueForHour
+Sets the usage value for an hour.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConnectiveGeometry.GetGeometryLegSections
+Gets geometry end GeometrySections which are possible to remove.

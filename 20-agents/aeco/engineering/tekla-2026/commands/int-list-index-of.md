@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IntList.IndexOf
+Gets the index of the specified integer.

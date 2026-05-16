@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Component.DrawViewportWires
+Draw preview wires for this component and all associated parameters.

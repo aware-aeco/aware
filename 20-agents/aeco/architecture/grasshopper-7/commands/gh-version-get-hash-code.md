@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Version.GetHashCode
+Returns the hash code for this instance.

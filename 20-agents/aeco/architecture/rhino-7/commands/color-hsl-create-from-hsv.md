@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorHSL.CreateFromHSV
+Constructs the nearest HSL equivalent of an HSV color.

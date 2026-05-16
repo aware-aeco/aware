@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.ClearOldFabricatorSettings
+Clears stored fabricator settings. This should be called when fabricator settings change.

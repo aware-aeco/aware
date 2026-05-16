@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Serializer.JsonToUDAChanges
+Deserializes json data produced by Model!dbHistoryJsonWriteUDAChanges.

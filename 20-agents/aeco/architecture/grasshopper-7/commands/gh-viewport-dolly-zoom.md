@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Viewport.DollyZoom
+Advanced interface function for mouse 'dolly' zooming.

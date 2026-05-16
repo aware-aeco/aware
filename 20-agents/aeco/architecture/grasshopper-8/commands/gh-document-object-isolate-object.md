@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentObject.IsolateObject
+Destroy all connections to other objects.

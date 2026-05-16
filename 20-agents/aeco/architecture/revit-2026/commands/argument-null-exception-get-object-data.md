@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ArgumentNullException.GetObjectData
+Retrieves data needed to serialize the target object.

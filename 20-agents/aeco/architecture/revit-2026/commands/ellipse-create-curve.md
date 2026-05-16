@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Ellipse.CreateCurve
+Creates a new geometric ellipse or elliptical arc object.

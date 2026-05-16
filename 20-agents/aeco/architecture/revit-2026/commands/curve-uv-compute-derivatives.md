@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveUV.ComputeDerivatives
+Computes the first derivative, the second derivative and the unit tangent vector at the specified parameter along the curve.

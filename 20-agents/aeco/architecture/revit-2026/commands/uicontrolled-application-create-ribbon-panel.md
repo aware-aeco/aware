@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIControlledApplication.CreateRibbonPanel
+Create a new RibbonPanel on the designated standard Revit tab.

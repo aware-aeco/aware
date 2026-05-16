@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Beam.Delete
+Deletes the beam instance with the given identifier from the model database.

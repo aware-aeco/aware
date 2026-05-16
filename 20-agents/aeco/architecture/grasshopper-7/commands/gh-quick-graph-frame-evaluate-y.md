@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_QuickGraphFrame.EvaluateY
+Convert a normalised Y parameter back to actual values.

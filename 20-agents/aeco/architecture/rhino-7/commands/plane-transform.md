@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Plane.Transform
+Transform the plane with a Transformation matrix.

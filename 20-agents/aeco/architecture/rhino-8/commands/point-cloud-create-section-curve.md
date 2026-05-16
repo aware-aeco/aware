@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.CreateSectionCurve
+Creates planar curves by intersecting a plane with a point cloud.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexNormalList.ComputeNormals
+Computes the vertex normals based on the physical shape of the mesh.

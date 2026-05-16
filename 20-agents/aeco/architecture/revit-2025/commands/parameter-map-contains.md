@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterMap.Contains
+Tests for the existence of a key within the map.

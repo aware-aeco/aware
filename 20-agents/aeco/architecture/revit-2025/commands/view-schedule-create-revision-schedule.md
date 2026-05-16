@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.CreateRevisionSchedule
+Creates a revision schedule.

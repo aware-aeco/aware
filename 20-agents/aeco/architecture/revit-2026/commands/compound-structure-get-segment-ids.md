@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.GetSegmentIds
+Gets the segment ids of this compound structure.

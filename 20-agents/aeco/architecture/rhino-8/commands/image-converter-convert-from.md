@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ImageConverter.ConvertFrom
+Performs the conversion from the given  to an  object

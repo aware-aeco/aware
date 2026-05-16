@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureMessageKey.Equals
+Determines whether the specified  is equal to the current .

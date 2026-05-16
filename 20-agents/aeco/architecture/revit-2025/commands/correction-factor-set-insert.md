@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CorrectionFactorSet.Insert
+Insert the specified correction factor into the set.

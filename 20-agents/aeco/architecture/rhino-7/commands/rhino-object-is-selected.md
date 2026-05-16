@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.IsSelected
+Check selection state.

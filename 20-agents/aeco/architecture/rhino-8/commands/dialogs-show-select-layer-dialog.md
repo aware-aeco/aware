@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Dialogs.ShowSelectLayerDialog
+Displays Rhino's single layer selection dialog.

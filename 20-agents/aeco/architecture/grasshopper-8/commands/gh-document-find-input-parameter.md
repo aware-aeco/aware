@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.FindInputParameter
+Search for input (upstream) parameters that contain the locus

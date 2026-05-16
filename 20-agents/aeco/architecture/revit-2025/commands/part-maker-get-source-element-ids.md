@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PartMaker.GetSourceElementIds
+Get the source elements for the PartMaker.

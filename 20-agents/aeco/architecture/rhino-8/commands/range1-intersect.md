@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Range`1.Intersect
+Gets the intersection of this instance and the specified .

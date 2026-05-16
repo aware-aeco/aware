@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetHiddenObjects
+Retrieves a list of hidden objects in the model.

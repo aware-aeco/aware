@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolylineCurve.SetParameter
+Sets a parameter at a specified index in the polyline curve.

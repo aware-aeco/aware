@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConduitSizeSettings.RemoveSize
+Erase the existing ConduitSize with this nominal diameter. The conduit standard name determines the location of the size in the size table.

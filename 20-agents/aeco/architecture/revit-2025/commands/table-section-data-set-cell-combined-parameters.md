@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.SetCellCombinedParameters
+Allows the caller to set combined parameter for a specified column

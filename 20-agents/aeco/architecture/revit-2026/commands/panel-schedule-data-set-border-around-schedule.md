@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleData.SetBorderAroundSchedule
+Adds a border around the schedule

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportSetAsCurrentRevision
+DO NOT USE! For internal usage only!

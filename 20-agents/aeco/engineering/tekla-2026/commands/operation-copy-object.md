@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.CopyObject
+Copies the model object using the given translation vector.

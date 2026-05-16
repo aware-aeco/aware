@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelComponent.ClearId
+Resets the HasId property of the model component to false, if possible.

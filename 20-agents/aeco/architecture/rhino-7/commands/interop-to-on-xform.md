@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interop.ToOnXform
+Constructs a Rhino_DotNet OnXform from a given RhinoCommon Transform.

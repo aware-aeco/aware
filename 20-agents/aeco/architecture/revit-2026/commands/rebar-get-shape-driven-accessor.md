@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.GetShapeDrivenAccessor
+Returns an interface providing access to shape-driven properties and methods for this Rebar element.

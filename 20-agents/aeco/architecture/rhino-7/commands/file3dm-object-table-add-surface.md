@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObjectTable.AddSurface
+Adds a surface object to Rhino.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UnitUtils.GetAllDisciplines
+Gets the identifiers of all available disciplines.

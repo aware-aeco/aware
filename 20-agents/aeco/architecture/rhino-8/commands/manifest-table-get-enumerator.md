@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ManifestTable.GetEnumerator
+Visits all model components in the document, including default ones.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Component.IsolateObject
+Sever the connections of all input and output parameters.

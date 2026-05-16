@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewTable.EnableCameraIcon
+Use to turn camera icon on and off

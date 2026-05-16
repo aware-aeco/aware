@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadGroup.Select
+Selects a load group from the model database. The ID must be set.

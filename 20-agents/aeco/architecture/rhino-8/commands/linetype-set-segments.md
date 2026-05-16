@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Linetype.SetSegments
+Set all segments.

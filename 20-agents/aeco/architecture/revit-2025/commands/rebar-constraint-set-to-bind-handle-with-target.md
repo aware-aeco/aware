@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraint.SetToBindHandleWithTarget
+Sets the relationship between two RebarConstrainedHandles.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHPoint
+Convert data into GH_Points.

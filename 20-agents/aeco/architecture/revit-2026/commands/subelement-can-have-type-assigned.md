@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Subelement.CanHaveTypeAssigned
+Identifies if the subelement can have a type assigned.

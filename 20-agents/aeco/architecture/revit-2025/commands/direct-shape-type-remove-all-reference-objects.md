@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShapeType.RemoveAllReferenceObjects
+Removes all reference objects (if any) from the DirectShapeType.

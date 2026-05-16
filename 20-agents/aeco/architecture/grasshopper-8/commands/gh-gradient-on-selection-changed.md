@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Gradient.OnSelectionChanged
+Raise the SelectionChanged event.

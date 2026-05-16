@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.DuplicateNakedEdgeCurves
+Duplicate naked edges of this Brep.

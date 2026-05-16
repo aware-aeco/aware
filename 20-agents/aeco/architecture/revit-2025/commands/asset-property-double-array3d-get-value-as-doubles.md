@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssetPropertyDoubleArray3d.GetValueAsDoubles
+Get the value property as doubles.

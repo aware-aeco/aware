@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.AlignPartByInsertionPointAndCutInToStraight
+Align the part by its insertion point to a point and rotation on a straight. This will automatically size and connect the part being cut into, if possible.

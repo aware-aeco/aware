@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileSkpReadOptions.ToDictionary
+Create a dictionary of these options. This dictionary can be passed to the             RhinoDoc.Import function

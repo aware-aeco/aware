@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetObject.PassesGeometryAttributeFilter
+Checks geometry to see if it passes the basic GeometryAttributeFilter.

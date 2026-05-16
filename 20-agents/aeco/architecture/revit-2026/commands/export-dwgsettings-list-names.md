@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportDWGSettings.ListNames
+Returns a list of names of dwg/dxf export settings.

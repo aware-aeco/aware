@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DevelopableSrf.GetLocalDevopableRuling
+Finds minimum twist ruling between 2 curves at local domains

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCLevelInfo.GetRelatedElements
+Gets all building elements on this level.

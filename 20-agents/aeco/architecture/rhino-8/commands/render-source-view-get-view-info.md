@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderSourceView.GetViewInfo
+Get the ViewInfo as specified by the render source view settings.

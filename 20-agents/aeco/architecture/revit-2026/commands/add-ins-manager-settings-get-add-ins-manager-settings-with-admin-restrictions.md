@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AddInsManagerSettings.GetAddInsManagerSettingsWithAdminRestrictions
+Gets  with Administrator restrictions override if such restrictions exist.

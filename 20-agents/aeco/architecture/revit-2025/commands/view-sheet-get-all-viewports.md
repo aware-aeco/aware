@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSheet.GetAllViewports
+Returns the ElementIds of Viewports on this sheet.

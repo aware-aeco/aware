@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UnitUtils.GetAllMeasurableSpecs
+Gets the identifiers of all available measurable specs.

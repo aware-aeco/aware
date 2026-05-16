@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableTray.IsValidRungSpace
+Identifies if the input rung space is valid.

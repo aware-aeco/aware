@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExtrusionRoof.GetProfile
+Retrieve the Profile of ExtrusionRoof.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.CanExportWallGeometryAsExtrusion
+Identifies if the base geometry of the wall can be represented as an extrusion.

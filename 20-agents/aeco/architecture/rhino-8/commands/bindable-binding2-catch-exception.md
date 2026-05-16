@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BindableBinding`2.CatchException
+Catches any exceptions when setting the value of the binding

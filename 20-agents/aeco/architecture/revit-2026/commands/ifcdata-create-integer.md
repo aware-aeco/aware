@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCData.CreateInteger
+Creates an integer data object.

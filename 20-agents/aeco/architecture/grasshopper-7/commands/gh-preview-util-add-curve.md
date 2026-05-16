@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PreviewUtil.AddCurve
+Add a curve to the temporary Preview lists.

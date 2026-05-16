@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ComponentIndex.IsUnset
+Return true is this component index is the same as the Unset component index

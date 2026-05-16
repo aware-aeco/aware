@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View3D.GetSavedOrientation
+Gets the saved orientation of the View3D.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConnectiveGeometry.GetNeighborSections
+Gets neighbor sections of the geometrySection inside this ConnectiveGeometry.

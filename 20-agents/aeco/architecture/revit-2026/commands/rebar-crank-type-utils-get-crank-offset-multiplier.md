@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarCrankTypeUtils.GetCrankOffsetMultiplier
+Gets the crank offset multiplier value.

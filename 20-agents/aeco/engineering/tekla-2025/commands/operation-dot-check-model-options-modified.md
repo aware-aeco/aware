@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotCheckModelOptionsModified
+Check if model options have been modified after modification stamp.

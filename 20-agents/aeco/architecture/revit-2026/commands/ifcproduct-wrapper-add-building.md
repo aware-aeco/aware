@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCProductWrapper.AddBuilding
+Adds an IfcBuilding handle to associate with the IfcProduct in this wrapper.

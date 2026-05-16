@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.Magnify
+Zooms or dollies in order to scale the viewport projection of observed objects.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileSettings.GetDataFolder
+Gets the data folder for machine or current user.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RepeatingReferenceSource.GetDefaultRepeatingReferenceSource
+Returns the default repeating reference source for a given element.

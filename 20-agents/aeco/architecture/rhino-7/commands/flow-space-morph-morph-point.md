@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FlowSpaceMorph.MorphPoint
+Morphs an Euclidean point.

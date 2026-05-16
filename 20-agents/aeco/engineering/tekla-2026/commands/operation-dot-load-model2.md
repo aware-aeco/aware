@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotLoadModel2
+Load model2 from folder.             dotUnloadModel2 MUST be called to release.

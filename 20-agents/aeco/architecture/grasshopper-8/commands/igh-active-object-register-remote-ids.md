@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_ActiveObject.RegisterRemoteIDs
+If this object depends on Rhino Objects, you must register the UUIDs of those objects.   Failure to do so will result in faulty event handling.

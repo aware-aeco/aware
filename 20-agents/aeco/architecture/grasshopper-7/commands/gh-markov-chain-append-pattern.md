@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MarkovChain.AppendPattern
+Append a new pattern to the database or grow a pattern which already exists.

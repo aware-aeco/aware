@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilteredWorksetIterator.Reset
+Resets the iterator to the beginning.

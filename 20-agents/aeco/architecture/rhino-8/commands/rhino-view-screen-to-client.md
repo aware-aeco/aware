@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoView.ScreenToClient
+Converts a point in screen coordinates to client coordinates for this view.

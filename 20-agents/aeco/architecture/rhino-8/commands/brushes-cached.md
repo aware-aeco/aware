@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brushes.Cached
+Gets a cached solid brush with the specified color

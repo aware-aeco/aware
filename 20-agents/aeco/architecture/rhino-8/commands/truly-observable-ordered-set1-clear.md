@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TrulyObservableOrderedSet`1.Clear
+Clears the ordered set.

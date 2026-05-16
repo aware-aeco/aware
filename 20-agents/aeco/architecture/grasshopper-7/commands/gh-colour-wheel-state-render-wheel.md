@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourWheelState.RenderWheel
+Render the wheel to a graphics surface.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedParametersEventArgs.TryGetPoint
+Try to get a Point3d value for a given key name

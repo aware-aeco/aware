@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ImageFile.SupportsAlphaChannel
+Returns true if file at given path is an image file and that file format supports             an alpha channel

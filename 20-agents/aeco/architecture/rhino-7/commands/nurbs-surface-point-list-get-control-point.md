@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsSurfacePointList.GetControlPoint
+Gets the control point at the given (u, v) index.

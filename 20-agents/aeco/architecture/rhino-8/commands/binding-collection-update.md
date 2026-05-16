@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BindingCollection.Update
+Updates all bindings manually

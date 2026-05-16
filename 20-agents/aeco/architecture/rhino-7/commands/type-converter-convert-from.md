@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TypeConverter.ConvertFrom
+Converts from the specified object.

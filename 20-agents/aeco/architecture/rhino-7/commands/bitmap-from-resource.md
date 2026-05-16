@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Bitmap.FromResource
+Loads a bitmap from the resource in the specified or caller's assembly

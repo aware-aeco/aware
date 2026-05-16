@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.BoxClosestArcPoint
+Find the closest point on or in a box given a test point. Arc extension is implied.

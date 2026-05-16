@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurve.CreatePlanarRailFrames
+Computes planar rail sweep frames at specified parameters.

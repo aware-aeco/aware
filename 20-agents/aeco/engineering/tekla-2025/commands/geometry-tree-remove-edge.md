@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryTree.RemoveEdge
+Removes a connection between two geometry primitives of this GeometryTree

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayPoint3d.ToArray
+Copies the unmanaged array to a managed counterpart.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightGroup.GetLights
+Get the set of contained light instances    The set of light instances

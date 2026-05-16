@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.CanModifyDetailLevel
+Check if Detail Level can be modified.

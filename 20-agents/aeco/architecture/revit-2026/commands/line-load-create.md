@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LineLoad.Create
+Creates a new custom line load within the project.

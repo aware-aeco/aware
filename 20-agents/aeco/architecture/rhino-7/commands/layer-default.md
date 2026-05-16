@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Layer.Default
+Sets layer to default settings.

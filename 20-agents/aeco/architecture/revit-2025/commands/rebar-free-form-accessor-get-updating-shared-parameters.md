@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarFreeFormAccessor.GetUpdatingSharedParameters
+Get the shared parameters listed as dependencies in the calculation of the rebar curves

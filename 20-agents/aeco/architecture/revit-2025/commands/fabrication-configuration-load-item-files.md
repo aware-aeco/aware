@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.LoadItemFiles
+Loads the specified fabrication item files into the project.

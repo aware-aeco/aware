@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportHierarchicObjectChildrenOperation
+DO NOT USE! For internal usage only!

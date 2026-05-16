@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportObjectsMatchToFilter
+DO NOT USE! For internal usage only!

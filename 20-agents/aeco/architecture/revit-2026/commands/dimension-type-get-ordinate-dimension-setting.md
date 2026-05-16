@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DimensionType.GetOrdinateDimensionSetting
+Gets the ordinate dimension settings for this DimensionType.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Connection.SetPrimaryObject
+Sets the primary object of the connection.

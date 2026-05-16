@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableData.IsEqual
+Checks if this element is equal in value to the other element.

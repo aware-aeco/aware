@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPNetworkSegmentData.GetDownstreamSegments
+Gets all downstream network segments.

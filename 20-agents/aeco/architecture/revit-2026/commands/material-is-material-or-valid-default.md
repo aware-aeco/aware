@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Material.IsMaterialOrValidDefault
+Validates whether the specified element id is a material element.

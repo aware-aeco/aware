@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_BezierSolver.TangentAt
+Evaluate the tangent vector of a Bezier span.

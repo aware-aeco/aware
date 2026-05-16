@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Linetype.Default
+Set linetype to default settings.

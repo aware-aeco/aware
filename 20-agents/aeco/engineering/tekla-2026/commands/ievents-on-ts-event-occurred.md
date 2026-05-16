@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEvents.OnTsEventOccurred
+Called when a TS event occurs.

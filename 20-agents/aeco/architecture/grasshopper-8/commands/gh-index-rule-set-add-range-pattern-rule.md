@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_IndexRuleSet.AddRangePatternRule
+Append a rule for filtering range patterns.

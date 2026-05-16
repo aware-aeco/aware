@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedControlHandler`3.ResumeLayout
+Resumes the layout after it has been suspended, and performs a layout

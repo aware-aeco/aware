@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RadioButtonGroup.GetItems
+Gets the collection of ToggleButtons assigned to the RadioButtonGroup.

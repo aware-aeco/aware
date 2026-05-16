@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DefaultDivideSettings.GetSurfaceLayout
+Gets the default Divided Surface layout for U or V gridlines.

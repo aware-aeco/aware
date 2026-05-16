@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorWithTransparency.SetTransparency
+set transparency

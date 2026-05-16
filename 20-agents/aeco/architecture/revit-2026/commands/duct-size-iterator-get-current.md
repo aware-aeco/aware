@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DuctSizeIterator.GetCurrent
+Returns the current MEPSize.

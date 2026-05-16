@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPAnalyticalSystem.GetWaterLoopData
+Returns the water loop data, null if not available.

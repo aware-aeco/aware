@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ZebraAnalysisSettings.GetCurrentState
+Gets the current settings of the application.

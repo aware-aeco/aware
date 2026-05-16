@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.CanFilterByParameterExistence
+Checks whether a field can be used with a HasParameter filter.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetBaseClass.Result
+Returns result of the Get*() call.

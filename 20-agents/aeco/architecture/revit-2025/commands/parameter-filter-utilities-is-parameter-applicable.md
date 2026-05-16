@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterFilterUtilities.IsParameterApplicable
+Used to determine whether the element supports the given parameter.

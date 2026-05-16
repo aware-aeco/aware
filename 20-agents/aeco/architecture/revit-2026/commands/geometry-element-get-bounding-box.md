@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryElement.GetBoundingBox
+Retrieves a box that encloses the geometry element.

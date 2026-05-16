@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Cylinder.CircleAt
+Compute the circle at the given elevation parameter.

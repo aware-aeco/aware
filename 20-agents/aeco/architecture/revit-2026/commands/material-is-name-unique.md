@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Material.IsNameUnique
+Validates whether the material name is unique in document.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RealtimeDisplayMode.IsRendererStarted
+Override to tell the started state of your render engine.

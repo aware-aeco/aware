@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayDouble.Dispose
+Actively reclaims unmanaged resources that this instance uses.

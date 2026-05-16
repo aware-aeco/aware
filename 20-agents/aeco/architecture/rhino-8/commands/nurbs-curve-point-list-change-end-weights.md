@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurvePointList.ChangeEndWeights
+Use a combination of scaling and reparameterization to change the end weights to the specified values.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpacingRule.SetLayoutNone
+Set the Layout property to None.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.SelectedObjects
+Returns all selected objects in the document

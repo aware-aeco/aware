@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmGroupTable.FindNameHash
+Finds a Group given its name hash.

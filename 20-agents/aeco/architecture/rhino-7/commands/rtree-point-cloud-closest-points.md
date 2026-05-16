@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RTree.PointCloudClosestPoints
+Finds the point in a list of 3D points that is closest to a test point.

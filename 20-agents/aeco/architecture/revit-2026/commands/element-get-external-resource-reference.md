@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.GetExternalResourceReference
+Gets the ExternalResourceReference associated with a specified external resource type.

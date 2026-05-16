@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RTree.SearchOverlaps
+Searches two R-trees for all pairs elements whose bounding boxes overlap.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GlobalParameter.SetValue
+Sets a new value of the global parameter.

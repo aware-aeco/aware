@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CircleRebarGroup.Insert
+Inserts the circle rebar group into the model database. All the attributes must be set.

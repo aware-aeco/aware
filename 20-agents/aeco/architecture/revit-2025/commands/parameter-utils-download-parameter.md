@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterUtils.DownloadParameter
+Create a shared parameter element in the given document according to a parameter definition downloaded from the Parameters Service.

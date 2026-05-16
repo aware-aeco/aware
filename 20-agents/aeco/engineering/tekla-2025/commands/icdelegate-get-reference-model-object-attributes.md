@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.GetReferenceModelObjectAttributes
+DO NOT USE! For internal usage only!

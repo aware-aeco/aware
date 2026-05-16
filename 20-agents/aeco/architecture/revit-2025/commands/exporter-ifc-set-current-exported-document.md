@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFC.SetCurrentExportedDocument
+Sets the exporter to process a particular document during export.

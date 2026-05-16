@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayStyle.HasVectorSettings
+If true style has vector settings.

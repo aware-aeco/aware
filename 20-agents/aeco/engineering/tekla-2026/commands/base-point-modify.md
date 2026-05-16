@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BasePoint.Modify
+Modifies the base point in the model database.

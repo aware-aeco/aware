@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Hub.GetPointId
+Returns ElementId of the associated Point element.

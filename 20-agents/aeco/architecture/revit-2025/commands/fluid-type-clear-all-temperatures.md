@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FluidType.ClearAllTemperatures
+Clears all fluid temperatures in the set.

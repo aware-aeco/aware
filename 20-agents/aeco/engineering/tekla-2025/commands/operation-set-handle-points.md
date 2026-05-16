@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.SetHandlePoints
+Set the Shape Item Handle Points

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.Equals
+Determines whether the specified  equals to this .

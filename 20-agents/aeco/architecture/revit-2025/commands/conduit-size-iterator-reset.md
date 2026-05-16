@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConduitSizeIterator.Reset
+Resets the iterator to the initial state.

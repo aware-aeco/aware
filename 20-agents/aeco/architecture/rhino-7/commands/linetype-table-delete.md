@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinetypeTable.Delete
+Deletes linetype.

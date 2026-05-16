@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorFillScheme.CanDefineByRange
+Checks whether the scheme entries can be explained by range.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RepeatingReferenceSource.HasRepeatingReferenceSource
+Determines whether an element has any repeating reference sources that can be used when creating component repeaters.

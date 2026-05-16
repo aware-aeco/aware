@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.SetRowHeightInPixels
+This sets a row's height in logical pixels

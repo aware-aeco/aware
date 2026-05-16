@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShapeLibrary.GetDirectShapeLibrary
+Get the currently active Library object

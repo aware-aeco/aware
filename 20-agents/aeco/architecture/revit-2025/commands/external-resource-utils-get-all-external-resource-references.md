@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalResourceUtils.GetAllExternalResourceReferences
+Gets the ids of all elements which refer to a specific type of external resource.

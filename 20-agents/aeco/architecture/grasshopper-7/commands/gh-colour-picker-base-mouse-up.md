@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourPickerBase.MouseUp
+Respond to mouse-up events.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interval.FromIntersection
+Returns a new Interval that is the Intersection of the two input Intervals.

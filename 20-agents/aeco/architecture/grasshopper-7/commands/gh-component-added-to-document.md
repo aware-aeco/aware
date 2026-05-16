@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Component.AddedToDocument
+Overrides the AddedToDocument method and delegates the call to all parameters.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObject.SetDynamicStringProperty
+Sets a dynamic string property for the model object.

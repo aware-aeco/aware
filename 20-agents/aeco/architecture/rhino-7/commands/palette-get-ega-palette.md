@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Palette.GetEgaPalette
+Gets the standard 64-color EGA palette

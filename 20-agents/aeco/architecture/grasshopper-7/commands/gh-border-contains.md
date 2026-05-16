@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Border.Contains
+Test a point for border inclusion.

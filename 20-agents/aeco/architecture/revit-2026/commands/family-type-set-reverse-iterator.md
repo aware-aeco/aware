@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyTypeSet.ReverseIterator
+Retrieve a backward moving iterator to the set.

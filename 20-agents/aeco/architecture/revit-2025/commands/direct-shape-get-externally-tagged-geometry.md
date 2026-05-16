@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShape.GetExternallyTaggedGeometry
+Gets the externally tagged geometry by its external ID that is stored in this DirectShape.

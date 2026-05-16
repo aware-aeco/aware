@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.GetCurrentPositionAsync
+Current cursor position.             note: character means column

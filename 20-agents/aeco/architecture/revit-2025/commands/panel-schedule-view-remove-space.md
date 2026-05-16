@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.RemoveSpace
+Remove a space at specific cell.

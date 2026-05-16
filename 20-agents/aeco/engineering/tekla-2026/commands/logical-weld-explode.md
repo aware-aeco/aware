@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LogicalWeld.Explode
+Removes the logical weld from the model but not the children welds.

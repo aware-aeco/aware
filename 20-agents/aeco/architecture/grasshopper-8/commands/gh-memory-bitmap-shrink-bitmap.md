@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MemoryBitmap.ShrinkBitmap
+Shrink an image by removing all outer columns and rows that contain only fully transparent pixels.

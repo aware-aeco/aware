@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportCreateNCStructure
+DO NOT USE! For internal usage only!

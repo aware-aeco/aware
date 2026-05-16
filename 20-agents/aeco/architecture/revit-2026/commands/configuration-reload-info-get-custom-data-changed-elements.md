@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConfigurationReloadInfo.GetCustomDataChangedElements
+Gets a list of ElementIds of fabrication parts that had custom data updated during the reload.

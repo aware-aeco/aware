@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshFaceNormalList.Clear
+Clears the Face Normal list on the mesh.

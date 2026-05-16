@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ProjectLocation.Create
+Create an instance of ProjectLocation in the document.

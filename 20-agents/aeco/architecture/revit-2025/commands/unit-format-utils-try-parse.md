@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UnitFormatUtils.TryParse
+Parses a formatted string into a number with units if possible.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObject.Select
+Selects the model object instance from the model database.

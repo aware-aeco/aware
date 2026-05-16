@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormattedText.SetIndentLevel
+Sets the number of tab stops that the paragraph should be indented.

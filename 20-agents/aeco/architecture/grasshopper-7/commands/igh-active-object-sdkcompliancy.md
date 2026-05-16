@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_ActiveObject.SDKCompliancy
+Test whether this object is compliant with a given Rhino version.

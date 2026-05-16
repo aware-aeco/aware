@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportFontTable.Add
+Inserts a (key,info) pair into Export font table.

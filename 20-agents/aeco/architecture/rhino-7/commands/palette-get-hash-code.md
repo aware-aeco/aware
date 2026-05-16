@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Palette.GetHashCode
+Gets the hash code for this palette

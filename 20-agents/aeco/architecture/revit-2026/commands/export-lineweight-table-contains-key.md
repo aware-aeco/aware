@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLineweightTable.ContainsKey
+Checks whether a line weight key exists in the table.

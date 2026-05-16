@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshFaceList.ConvertTrianglesToQuads
+Joins adjacent triangles into quads if the resulting quad is 'nice'.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_DocumentObject.OnPingDocument
+Raise the PingDocument Event on the toplevel object and try to find   the document which owns this object.

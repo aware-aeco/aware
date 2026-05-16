@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpiralBeam.Select
+Selects a spiral beam object from the database.

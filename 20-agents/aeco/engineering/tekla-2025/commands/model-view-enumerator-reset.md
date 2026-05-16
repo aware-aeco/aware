@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelViewEnumerator.Reset
+Resets the enumerator.

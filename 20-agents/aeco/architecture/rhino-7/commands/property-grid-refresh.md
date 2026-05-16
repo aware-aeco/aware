@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PropertyGrid.Refresh
+Refreshes the grid with new values from the selected object(s)

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dm.Audit
+This function is only kept for forward assembly compatibility.

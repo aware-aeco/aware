@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Structure`1.FlattenData
+Collects all data in the structure under a single list.   Does not alter the state of this structure.

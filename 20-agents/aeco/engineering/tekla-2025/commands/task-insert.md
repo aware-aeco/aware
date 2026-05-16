@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Task.Insert
+Inserts the task instance in the model.

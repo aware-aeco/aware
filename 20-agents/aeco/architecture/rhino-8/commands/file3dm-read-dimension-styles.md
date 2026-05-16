@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dm.ReadDimensionStyles
+Read the dimension styles table out of a 3dm file.

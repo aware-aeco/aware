@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EdgeArrayArray.Insert
+Insert the specified edge array into the array.

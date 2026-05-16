@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewCropRegionShapeManager.GetSplitRegionMinimum
+Returns the proportional location of the minimum boundary of the specified split crop region.

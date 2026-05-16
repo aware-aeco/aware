@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlledApplication.GetLibraryPaths
+Returns path information identifying where Revit searches for content.

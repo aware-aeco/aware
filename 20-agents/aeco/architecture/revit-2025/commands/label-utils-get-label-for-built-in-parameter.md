@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LabelUtils.GetLabelForBuiltInParameter
+Gets the user-visible name for a built-in parameter in a specific LanguageType.

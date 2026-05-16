@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayGuidPointer.ToArray
+Returns the managed counterpart of the unmanaged array.

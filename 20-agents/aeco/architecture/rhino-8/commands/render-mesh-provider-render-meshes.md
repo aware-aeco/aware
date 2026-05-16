@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderMeshProvider.RenderMeshes
+Returns a complete set of custom render primitives for a given ObjectId.

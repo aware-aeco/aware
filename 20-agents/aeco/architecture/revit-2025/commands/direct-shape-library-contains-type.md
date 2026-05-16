@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShapeLibrary.ContainsType
+A quick check whether a definition type already exists in the library. Checks for type objects only.

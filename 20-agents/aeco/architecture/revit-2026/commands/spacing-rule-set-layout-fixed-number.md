@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpacingRule.SetLayoutFixedNumber
+Set the Layout property to FixedNumber.

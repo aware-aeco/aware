@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.GetTypeOfStorage
+Get the storage type of the identified built-in parameter.

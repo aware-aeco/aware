@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DrawingUtilities.PixelsFromSvg
+Get array of bytes that represent RGBA values for an image of a given             size created from SVG

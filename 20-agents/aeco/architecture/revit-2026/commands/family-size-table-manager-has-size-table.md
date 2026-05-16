@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilySizeTableManager.HasSizeTable
+Checks if a FamilySizeTable of a given name exists.

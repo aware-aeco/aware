@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurve.CreateRailFrames
+Computes relatively parallel rail sweep frames at specified parameters.

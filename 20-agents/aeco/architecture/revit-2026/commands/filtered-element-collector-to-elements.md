@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilteredElementCollector.ToElements
+Returns the complete set of elements that pass the filter(s).

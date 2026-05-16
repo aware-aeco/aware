@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarMesh.Delete
+Deletes the reinforcement mesh instance with the given identifier from the model database.

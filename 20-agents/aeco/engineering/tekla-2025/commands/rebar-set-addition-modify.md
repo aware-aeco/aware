@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSetAddition.Modify
+Modifies the rebar set addition in the model database to match the current one.

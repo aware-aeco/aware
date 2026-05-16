@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LabelUtils.GetStructuralSectionShapeName
+Gets the user-visible name for a StructuralSectionShape.

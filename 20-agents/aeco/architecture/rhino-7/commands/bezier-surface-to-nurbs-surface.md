@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BezierSurface.ToNurbsSurface
+Constructs a NURBS surface representation of this surface.

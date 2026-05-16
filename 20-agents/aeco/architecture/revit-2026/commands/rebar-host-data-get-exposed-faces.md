@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarHostData.GetExposedFaces
+Returns all the exposed faces, that is, those that have an associated CoverType.

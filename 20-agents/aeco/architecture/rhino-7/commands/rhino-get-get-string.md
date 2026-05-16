@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoGet.GetString
+Easy to use string getter.

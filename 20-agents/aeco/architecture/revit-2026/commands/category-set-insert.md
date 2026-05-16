@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CategorySet.Insert
+Insert the specified category into the set.

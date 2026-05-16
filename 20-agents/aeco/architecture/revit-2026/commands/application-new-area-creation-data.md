@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewAreaCreationData
+Creates an object which wraps the arguments of Area for batch creation.

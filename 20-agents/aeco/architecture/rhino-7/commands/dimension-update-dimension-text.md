@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Dimension.UpdateDimensionText
+Remakes dimension text geometry object and sets it on the dimension.

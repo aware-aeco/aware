@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextFields.FileName
+Return full path to the document

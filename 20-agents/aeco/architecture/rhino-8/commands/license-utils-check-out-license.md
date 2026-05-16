@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LicenseUtils.CheckOutLicense
+Checks out a license that is on loan from a Zoo server             on a permanent basis.

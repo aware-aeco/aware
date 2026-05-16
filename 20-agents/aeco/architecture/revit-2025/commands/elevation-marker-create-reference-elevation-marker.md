@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElevationMarker.CreateReferenceElevationMarker
+Creates a new ElevationMarker.

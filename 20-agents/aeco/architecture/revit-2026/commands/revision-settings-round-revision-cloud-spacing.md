@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevisionSettings.RoundRevisionCloudSpacing
+Rounds the given revision cloud spacing value according to the document's settings.

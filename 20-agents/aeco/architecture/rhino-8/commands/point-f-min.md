@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointF.Min
+Returns the minimum X and Y components of two points

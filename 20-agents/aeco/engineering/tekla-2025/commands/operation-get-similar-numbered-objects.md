@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetSimilarNumberedObjects
+Gets similar objects based on numbering of given object.

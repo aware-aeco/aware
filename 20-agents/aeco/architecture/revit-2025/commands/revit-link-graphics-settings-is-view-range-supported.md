@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitLinkGraphicsSettings.IsViewRangeSupported
+Returns true if the input view supports ViewRange settings of , false otherwise.

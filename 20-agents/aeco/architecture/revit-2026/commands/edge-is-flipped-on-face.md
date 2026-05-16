@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Edge.IsFlippedOnFace
+Determines if this edge's topological direction on the Face is opposite to its parametric direction.

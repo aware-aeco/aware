@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Subelement.GetGeometryObject
+Retrieve one geometric primitive representing given subelement.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurveKnotList.IndexOf
+Returns the first item in the list.

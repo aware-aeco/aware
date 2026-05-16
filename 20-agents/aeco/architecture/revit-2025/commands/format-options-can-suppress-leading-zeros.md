@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormatOptions.CanSuppressLeadingZeros
+Checks whether leading zeros can be suppressed for the display unit in this FormatOptions.

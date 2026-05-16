@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CriticalPathIterator.MoveNext
+Increments the iterator to the next downstream segment on the critical path.

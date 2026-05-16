@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyDataSettings.CheckExportComplexity
+Checks that the export complexity falls within an appropriate range.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExportContext.OnFaceBegin
+This method marks the beginning of a Face to be exported.

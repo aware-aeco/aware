@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DesignToFabricationConverter.SetMapForFamilySymbolToFabricationPartType
+Set a map for the conversion of in line family symbols to similar fabrication part types.

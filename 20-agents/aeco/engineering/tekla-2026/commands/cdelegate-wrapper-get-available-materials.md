@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.GetAvailableMaterials
+DO NOT USE! For internal usage only!

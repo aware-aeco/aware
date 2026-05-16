@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextElement.GetMaximumAllowedWidth
+Returns the maximum width the text element can be assigned.

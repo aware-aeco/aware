@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CollectionChangedHandler`2.ElementAt
+Gets the element at the specified index of the current registered collection.

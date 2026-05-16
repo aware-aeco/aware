@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyDataSettings.CheckProjectPhase
+Checks that the input element is a project phase.

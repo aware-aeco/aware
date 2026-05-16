@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderEnvironment.NewBasicEnvironment
+Constructs a new  from a .

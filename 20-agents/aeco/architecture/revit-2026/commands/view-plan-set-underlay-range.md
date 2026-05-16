@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewPlan.SetUnderlayRange
+Sets the underlay base and underlay top to the specified levels.

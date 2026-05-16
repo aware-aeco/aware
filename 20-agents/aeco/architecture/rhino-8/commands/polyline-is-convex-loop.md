@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Polyline.IsConvexLoop
+Determines if a polyline is convex.

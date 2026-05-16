@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBendingDetail.SetRotation
+Sets the rotation angle in radians for the bending detail relative to its view.

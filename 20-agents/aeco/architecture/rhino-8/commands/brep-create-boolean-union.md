@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateBooleanUnion
+Compute the Boolean Union of a set of Breps.

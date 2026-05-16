@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StatusBar.SetMessagePane
+Sets the message pane to a message.

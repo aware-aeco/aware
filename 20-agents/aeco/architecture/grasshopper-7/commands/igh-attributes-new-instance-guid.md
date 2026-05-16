@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Attributes.NewInstanceGuid
+Generate a new instance GUID for the owner object.

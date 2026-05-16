@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Plane.CreateByThreePoints
+Creates a Plane object passing through three points supplied as arguments.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleFilter.GetDoubleValue
+Gets the filter value for a filter using a double value.

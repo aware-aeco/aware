@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WallSweep.GetHostIds
+Gets a list of all host walls on which the sweep resides.

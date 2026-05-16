@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SolidOrShellTessellationControls.UseLevelOfDetail
+Returns true if the use of levelOfDetail is enabled, false if not. The use of levelOfDetail is enabled    by calling setLevelOfDetail (with a valid input).

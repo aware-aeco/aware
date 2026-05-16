@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SlabShapeEditor.ModifySubElement
+Manipulates the crease on the corresponding slab, roof or floor.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Param.AddVolatileData
+Inserts an item of volatile data into the data structure.

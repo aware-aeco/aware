@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Folders.ShowFolderInExplorer
+Open a specific folder in Windows Explorer.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostUtils.GetActivePlugInVersionFolders
+Recurses through the auto install plug-in folders and returns the directories containing "active" versions of plug-ins.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PythonScript.EvaluateExpression
+Evaluates statements and an expression in the main scripting context.

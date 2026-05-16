@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationUtils.ExportToPCF
+Exports a list of fabrication parts into PCF format.

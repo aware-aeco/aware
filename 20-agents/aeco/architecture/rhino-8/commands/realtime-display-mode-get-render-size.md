@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RealtimeDisplayMode.GetRenderSize
+Get the current render resolution for the running render session.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObjectTable.AddPolyline
+Adds a polyline object to Rhino.

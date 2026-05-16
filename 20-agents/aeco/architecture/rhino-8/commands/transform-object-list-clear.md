@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TransformObjectList.Clear
+Remove all elements from this list

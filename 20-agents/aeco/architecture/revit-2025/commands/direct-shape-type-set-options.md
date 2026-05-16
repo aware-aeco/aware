@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShapeType.SetOptions
+Sets the options to use for this DirectShapeType.

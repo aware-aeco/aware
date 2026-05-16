@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.GetUnits
+Gets the Units object.

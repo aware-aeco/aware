@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalLoadAreaData.CreateElectricalLoadAreas
+Creates electrical load areas on all the empty plan circuits of the given level.

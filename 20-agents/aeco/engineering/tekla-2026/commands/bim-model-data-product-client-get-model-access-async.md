@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BimModelDataProductClient.GetModelAccessAsync
+Asynchronously retrieves the access control list for a specific BIM model.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjRef.Geometry
+Gets the geometry linked to the object targeted by this reference.

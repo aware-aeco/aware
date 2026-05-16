@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TopographyEditScope.Start
+Starts a topography surface edit mode for an existing TopographySurface element.

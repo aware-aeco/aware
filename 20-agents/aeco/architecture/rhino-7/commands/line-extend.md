@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Line.Extend
+Extend the line by custom distances on both sides.

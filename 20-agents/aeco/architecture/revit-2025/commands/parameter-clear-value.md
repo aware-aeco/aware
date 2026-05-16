@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Parameter.ClearValue
+Clears the parameter to its initial value.

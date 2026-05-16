@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ProjectLocation.SetProjectPosition
+Sets the coordinates of a point in the ProjectLocation's coordinate system.

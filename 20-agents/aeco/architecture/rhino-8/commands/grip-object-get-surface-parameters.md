@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GripObject.GetSurfaceParameters
+Retrieves the NURBS surface 2d parameter space values of this GripObject from the surface it's associated with.

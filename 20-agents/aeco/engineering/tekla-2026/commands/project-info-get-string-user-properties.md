@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ProjectInfo.GetStringUserProperties
+Retrieves all string properties for the ProjectInfo.

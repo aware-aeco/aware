@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetPrintingController
+Get printing controller object on the TS side.

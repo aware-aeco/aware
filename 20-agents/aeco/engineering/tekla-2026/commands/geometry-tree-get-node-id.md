@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryTree.GetNodeId
+Find the index associated to a given node.

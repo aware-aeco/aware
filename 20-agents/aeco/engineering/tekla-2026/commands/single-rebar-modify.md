@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SingleRebar.Modify
+Modifies the existing single rebar in the model database to match the current one.

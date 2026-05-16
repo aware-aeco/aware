@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBarType.GetStaggerLength
+Gets the stagger length taking into account the specified Rebar Splice Type.

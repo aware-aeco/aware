@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarHandlesData.GetEndHandle
+Gets the end handle tag.

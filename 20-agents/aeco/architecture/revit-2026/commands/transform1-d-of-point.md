@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform1D.OfPoint
+Applies the transformation to the 1-dimensional point and returns the result.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LineLoad.SetPoints
+Sets start and end point of the line load.

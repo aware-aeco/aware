@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedControlHandler`3.OnLoadComplete
+Called after all other controls have been loaded

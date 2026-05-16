@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PreviewAppearance.SetRotationX
+SetRotationX

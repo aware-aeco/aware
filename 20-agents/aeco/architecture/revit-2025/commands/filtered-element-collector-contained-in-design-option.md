@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilteredElementCollector.ContainedInDesignOption
+Applies an ElementDesignOptionFilter to the collector.

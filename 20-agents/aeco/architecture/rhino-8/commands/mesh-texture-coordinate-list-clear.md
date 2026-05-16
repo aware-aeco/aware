@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshTextureCoordinateList.Clear
+Clears the Texture Coordinate list on the mesh.

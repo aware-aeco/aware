@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralSectionGeneralT.GetWebThicknessInHeightCenter
+Returns thickness of web measured in the 0.5 * height,

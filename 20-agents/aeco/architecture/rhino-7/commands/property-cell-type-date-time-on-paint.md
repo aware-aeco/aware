@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PropertyCellTypeDateTime.OnPaint
+Paints the cell when  is false.

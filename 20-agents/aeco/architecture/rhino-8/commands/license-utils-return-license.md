@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LicenseUtils.ReturnLicense
+This (internal) version of Rhino.PlugIns.LicenseUtils.ReturnLicense is used             is used by Rhino.PlugIns.PlugIn objects.

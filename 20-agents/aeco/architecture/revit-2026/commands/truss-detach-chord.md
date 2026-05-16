@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Truss.DetachChord
+Detach a truss's specific chord from the element to which it is attached.

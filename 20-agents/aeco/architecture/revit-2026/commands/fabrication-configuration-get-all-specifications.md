@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetAllSpecifications
+Gets all specification identifiers in the fabrication configuration.

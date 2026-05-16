@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationRodInfo.GetRodAttachedElementId
+Gets the identifier of the attached component for the specified rod.

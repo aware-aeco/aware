@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArraySurfacePointer.Dispose
+Actively reclaims unmanaged resources that this instance uses.

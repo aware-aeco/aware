@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubD.ClearEvaluationCache
+Clear cached information that depends on the location of vertex control points

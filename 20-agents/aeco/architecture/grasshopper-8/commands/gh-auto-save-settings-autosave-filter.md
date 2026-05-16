@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_AutoSaveSettings.AutosaveFilter
+Tests a given trigger to see if it allows an autosave operation.

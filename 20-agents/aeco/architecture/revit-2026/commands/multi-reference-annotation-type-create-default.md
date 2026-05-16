@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultiReferenceAnnotationType.CreateDefault
+Creates the first MultiReferenceAnnotationType element and adds it to the document.

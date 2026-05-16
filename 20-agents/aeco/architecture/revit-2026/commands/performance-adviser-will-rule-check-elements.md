@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PerformanceAdviser.WillRuleCheckElements
+Reports if rule needs to be executed on individual elements.

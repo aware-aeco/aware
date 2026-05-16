@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Canvas.HideMRUPanels
+Hide all existing MRU panels by sliding them out of view.

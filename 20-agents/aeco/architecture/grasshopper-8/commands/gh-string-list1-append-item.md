@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_StringList`1.AppendItem
+Add a new list item.

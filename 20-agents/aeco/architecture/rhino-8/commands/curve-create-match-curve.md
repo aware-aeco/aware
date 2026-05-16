@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.CreateMatchCurve
+Changes a curve end to meet a specified curve with a specified continuity.

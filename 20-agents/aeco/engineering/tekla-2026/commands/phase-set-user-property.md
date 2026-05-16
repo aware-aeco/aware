@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Phase.SetUserProperty
+Sets a string property for the phase.

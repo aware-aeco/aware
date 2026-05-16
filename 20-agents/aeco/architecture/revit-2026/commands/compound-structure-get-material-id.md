@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.GetMaterialId
+Retrieves the material element id of a specified layer.

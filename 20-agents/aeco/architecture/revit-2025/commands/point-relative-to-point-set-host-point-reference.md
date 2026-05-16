@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointRelativeToPoint.SetHostPointReference
+Change the host point reference.

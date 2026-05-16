@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Contour.AddContourPoint
+Adds a new contour point to the contour. Do not add the same contour point twice.

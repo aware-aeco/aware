@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GeometricFont.Draw2
+Draw the geometric character '2' at the specified location.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.AddSurface
+Adds a 3D surface used by BrepFace.

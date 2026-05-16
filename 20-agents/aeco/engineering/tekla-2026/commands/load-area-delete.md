@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadArea.Delete
+Deletes the load area instance with the given ID from the model database.

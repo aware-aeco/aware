@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NameHash.Equals
+Determines if another name hash has the same value.

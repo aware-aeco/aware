@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NumberingSchema.AssignElementsToSequence
+Assigns the input elements to a sequence identified by the given partition name.

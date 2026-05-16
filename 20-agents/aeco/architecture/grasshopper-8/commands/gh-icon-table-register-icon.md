@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_IconTable.RegisterIcon
+Register a new icon with the table. If the supplied icon is a null reference,   the NullIconIndex will be returned.

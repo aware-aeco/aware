@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IPipeFittingAndAccessoryPressureDropUIServer.GetDBServerId
+Returns the Id of the corresponding DB server for which this server provides an optional UI.

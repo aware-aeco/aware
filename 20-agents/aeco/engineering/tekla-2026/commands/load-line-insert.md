@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadLine.Insert
+Inserts the load line into the model database.

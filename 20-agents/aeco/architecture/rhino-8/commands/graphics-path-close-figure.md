@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GraphicsPath.CloseFigure
+Closes the current figure by connecting a line to the beginning of the figure

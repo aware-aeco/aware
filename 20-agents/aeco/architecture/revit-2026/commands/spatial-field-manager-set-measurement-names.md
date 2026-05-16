@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpatialFieldManager.SetMeasurementNames
+Sets Names for all measurements

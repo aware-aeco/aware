@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OverrideGraphicSettings.SetProjectionLineWeight
+Sets the projection surface line weight.

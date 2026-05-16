@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Component.Write
+Write all required data for deserialization to an IO archive.

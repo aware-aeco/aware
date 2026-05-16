@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.AddDiagnosticsAsync
+Text decorations, i.e. squiggly lines, etc, representing errors, warnings, hints, or information

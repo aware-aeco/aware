@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DimensionSegment.IsTextPositionAdjustable
+Indicates if this dimension is supported to set/get TextPosition/LeaderPosition.

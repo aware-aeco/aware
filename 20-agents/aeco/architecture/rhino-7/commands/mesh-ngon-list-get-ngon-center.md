@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshNgonList.GetNgonCenter
+Gets the center point of an ngon.             This the average of the corner points.

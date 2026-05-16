@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PropertyCellTypeNumber`1.OnCreate
+Creates the content control for the cell.

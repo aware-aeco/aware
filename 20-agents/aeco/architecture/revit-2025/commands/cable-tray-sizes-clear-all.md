@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableTraySizes.ClearAll
+Removes all MEPSizes in the cable tray sizes.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Lexer.EvaluatePath
+Evaluate the variables in this mask with the provided expression solver.

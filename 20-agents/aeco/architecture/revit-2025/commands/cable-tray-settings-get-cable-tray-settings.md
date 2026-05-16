@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableTraySettings.GetCableTraySettings
+Gets the cable tray settings of the project.

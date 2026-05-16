@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultistoryStairs.IsPinned
+Checks if a stair is pinned.

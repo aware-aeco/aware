@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DoubleClickOptions.GetAction
+Returns the active user's desired action for a particular double-click target.

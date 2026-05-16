@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Node2List.Insert
+Insert a single node into this list. This will reset all sorting flags and caches.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BaseRebarModifier.Insert
+Inserts the rebar modifier into the model database.

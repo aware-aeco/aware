@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Part.GetBooleans
+Returns an enumerator of all the connected boolean objects.

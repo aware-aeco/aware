@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormattedText.GetPlainText
+Returns the entire text in a plain text form.

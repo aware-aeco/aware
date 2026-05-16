@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Box.Geometry
+Convert the box to a GeometryBase instance.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceVoidCutUtils.InstanceVoidCutExists
+Check whether the instance is cutting the element

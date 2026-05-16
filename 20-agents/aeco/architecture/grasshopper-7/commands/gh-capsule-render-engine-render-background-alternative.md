@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CapsuleRenderEngine.RenderBackground_Alternative
+Render a custom capsule background fill. This is usually the third stage in a capsule rendering.

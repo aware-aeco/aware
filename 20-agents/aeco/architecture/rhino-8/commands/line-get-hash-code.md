@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Line.GetHashCode
+Computes a hash number that represents this line.

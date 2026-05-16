@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Edge.ComputeDerivatives
+Returns the vectors describing the edge at the specified parameter.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.Delete
+Deletes a set of elements from the document.

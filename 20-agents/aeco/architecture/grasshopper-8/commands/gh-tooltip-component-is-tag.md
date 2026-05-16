@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_TooltipComponent.IsTag
+Test whether the current Tooltip tag matches the object.

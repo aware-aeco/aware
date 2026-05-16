@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Edge.Tessellate
+Returns a polyline approximation to the edge.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MarkovOutcome.DecreaseValence
+Decrease the valence of this outcome by 1.

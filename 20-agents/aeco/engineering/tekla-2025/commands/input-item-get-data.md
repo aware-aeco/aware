@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InputItem.GetData
+Returns the data of the input item.             See also: .

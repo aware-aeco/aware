@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementIdSetFilter.GetIdsToInclude
+Returns the ids of this filter.

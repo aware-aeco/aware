@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleTemplate.IsValidPanelConfiguration
+Checks if given panel configuration is valid for given panel schedule type.

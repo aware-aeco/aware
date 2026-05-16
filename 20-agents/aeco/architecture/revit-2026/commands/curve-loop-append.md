@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveLoop.Append
+Append the curve to this loop.

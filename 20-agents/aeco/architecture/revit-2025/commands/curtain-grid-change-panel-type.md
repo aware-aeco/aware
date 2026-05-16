@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurtainGrid.ChangePanelType
+Change the type of a curtain panel.

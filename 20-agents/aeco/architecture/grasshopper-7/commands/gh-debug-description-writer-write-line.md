@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DebugDescriptionWriter.WriteLine
+Write a new blank line to the log.

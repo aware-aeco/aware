@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.GetBoundingBoxUV
+Gets the UV bounding box of the surface.

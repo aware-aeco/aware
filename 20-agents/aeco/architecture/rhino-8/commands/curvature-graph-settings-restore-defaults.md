@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurvatureGraphSettings.RestoreDefaults
+Commits the default settings as the current settings.

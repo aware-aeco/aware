@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Leader.CreateWithRichText
+Creates a Leader geometry object

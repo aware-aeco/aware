@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyAnalysisSurface.GetAnalyticalSpace
+Gets the primary analytical space this surface is associated with.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Commands.Run_GrasshopperGetSDKDocumentation
+Run the _GrasshopperDownloadSDKDocumentation command logic.

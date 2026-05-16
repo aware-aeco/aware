@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PreviewJobSignature.ImageWidth
+The Width of the rendered preview image

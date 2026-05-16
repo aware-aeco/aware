@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Format.FormatPointValidity
+If the point is invalid, return a string describing why.

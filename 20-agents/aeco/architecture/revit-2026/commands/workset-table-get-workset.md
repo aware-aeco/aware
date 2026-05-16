@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WorksetTable.GetWorkset
+Returns the workset from a input Guid.

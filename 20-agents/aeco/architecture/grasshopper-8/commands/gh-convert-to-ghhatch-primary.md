@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHHatch_Primary
+Converts similar data into a GH_Hatch instance.  Data is not guaranteed to be duplicated.

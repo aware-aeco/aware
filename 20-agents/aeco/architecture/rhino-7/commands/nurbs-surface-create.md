@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsSurface.Create
+Constructs a new NURBS surface with internal uninitialized arrays.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.Import
+Imports an ATFX file into the document.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralConnectionHandler.GetConnectedElementIds
+Retrieves list of element ids of connected elements.

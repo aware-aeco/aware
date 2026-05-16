@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetObject.GetMultiple
+Call to select objects.

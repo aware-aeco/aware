@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IReadOnlySupport.SetTextAsync
+Content passed as one string where each read only line is already formatted with a read only prefix.

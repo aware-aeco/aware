@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.GetLoadClassificationDemandCurrent
+Gets the Demand Current for given Load Classification

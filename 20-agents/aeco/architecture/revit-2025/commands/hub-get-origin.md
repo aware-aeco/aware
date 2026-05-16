@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Hub.GetOrigin
+Retrieves position of a Hub if such position is a 3D point.

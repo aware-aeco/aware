@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContentCollection.Count
+The number of items in the collection.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentServer.FindObjectByName
+Find an object by name. Obsolete and hidden objects are ignored.   Only exact matches are included.

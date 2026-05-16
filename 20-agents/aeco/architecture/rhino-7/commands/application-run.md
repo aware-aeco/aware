@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.Run
+Runs the application and begins the main loop.

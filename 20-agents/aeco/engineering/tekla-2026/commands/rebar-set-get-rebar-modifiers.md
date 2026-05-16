@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSet.GetRebarModifiers
+Returns an enumerator of all child  objects.

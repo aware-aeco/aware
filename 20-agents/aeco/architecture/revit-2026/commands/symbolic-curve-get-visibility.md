@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SymbolicCurve.GetVisibility
+Gets the visibility for the symbolic curve.

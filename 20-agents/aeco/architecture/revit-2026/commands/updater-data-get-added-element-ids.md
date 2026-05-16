@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UpdaterData.GetAddedElementIds
+Returns set of elements newly added to the document.    This set is mutually exclusive of elements returned by getDeletedElementIds() and getModifiedElementIds().

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultiServerService.GetActiveServerIds
+Returns Ids of the currently active application-level servers registered for the service.

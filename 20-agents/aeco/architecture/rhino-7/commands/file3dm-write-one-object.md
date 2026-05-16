@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dm.WriteOneObject
+Creates a simple 3dm file that contains a single geometric object.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CustomDisplay.Clear
+Clear the drawing lists.

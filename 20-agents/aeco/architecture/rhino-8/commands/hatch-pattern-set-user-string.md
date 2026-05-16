@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HatchPattern.SetUserString
+Attach a user string (key,value combination) to this geometry.

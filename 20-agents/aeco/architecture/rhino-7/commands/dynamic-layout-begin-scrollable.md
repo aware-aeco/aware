@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DynamicLayout.BeginScrollable
+Begins a the scrollable section in the dynamic layout with a specified border.

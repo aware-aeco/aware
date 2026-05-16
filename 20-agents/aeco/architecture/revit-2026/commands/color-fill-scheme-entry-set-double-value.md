@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorFillSchemeEntry.SetDoubleValue
+Sets new Double value of entry.

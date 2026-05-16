@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point3d.DistanceToSquared
+Computes the square of the distance between two points.             This method is usually largely faster than DistanceTo().

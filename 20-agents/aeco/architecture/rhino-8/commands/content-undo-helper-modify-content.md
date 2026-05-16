@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ContentUndoHelper.ModifyContent
+Call this before modifying or deleting a content. Undo will cause the content to be restored.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSection.CreateReferenceSection
+Creates a new reference section.

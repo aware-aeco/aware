@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentServer.RemoveCachedObject
+Remove a cache entry from the object cache. This cannot be undone.

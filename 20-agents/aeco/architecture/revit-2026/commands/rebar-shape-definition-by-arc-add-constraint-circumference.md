@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDefinitionByArc.AddConstraintCircumference
+Specify a parameter to drive the circumference of the shape.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolyLine.Create
+Creates a polyline with coordinate points provided.

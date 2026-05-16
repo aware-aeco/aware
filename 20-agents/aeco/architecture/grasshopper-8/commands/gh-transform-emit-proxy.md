@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Transform.EmitProxy
+Returns a proxy that represents this transform. Do not call this function unless you're

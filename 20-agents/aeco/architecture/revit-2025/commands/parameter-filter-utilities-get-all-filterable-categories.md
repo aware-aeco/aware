@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterFilterUtilities.GetAllFilterableCategories
+Returns the set of categories that may be used in a ParameterFilterElement.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Dialogs.ShowNumberBox
+Displays Rhino's number edit box.

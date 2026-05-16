@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceIntersector.GetFilter
+Gets the ElementFilter used in intersection testing.

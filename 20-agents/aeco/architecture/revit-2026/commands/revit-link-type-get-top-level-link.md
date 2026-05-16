@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitLinkType.GetTopLevelLink
+Returns the ElementId of the (top-level) linked model with the given    ExternalResourceReference.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Edge.TessellateOnFace
+Returns a polyline approximation to the edge in UV parameters of the face.

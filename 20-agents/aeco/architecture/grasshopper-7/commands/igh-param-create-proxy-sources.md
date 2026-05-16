@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Param.CreateProxySources
+Convert all proper source parameters into proxy sources.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PourObject.GetAssembly
+Returns the assembly that the pour object belongs to.

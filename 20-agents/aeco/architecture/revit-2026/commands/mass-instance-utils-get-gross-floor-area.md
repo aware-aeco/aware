@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MassInstanceUtils.GetGrossFloorArea
+Get the total occupiable floor area represented by a mass instance.

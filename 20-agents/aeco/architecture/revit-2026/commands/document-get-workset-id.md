@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.GetWorksetId
+Get Id of the Workset which owns the element.

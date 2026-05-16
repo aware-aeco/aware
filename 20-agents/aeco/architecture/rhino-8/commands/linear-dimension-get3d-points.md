@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinearDimension.Get3dPoints
+Get locations of dimension's 3d points

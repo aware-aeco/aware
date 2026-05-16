@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpaceMorph.Morph
+Apply the space morph to geometry.

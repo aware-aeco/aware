@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateFromBox
+Constructs new brep that matches a bounding box.

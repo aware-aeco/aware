@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphContainer.ToX
+Remaps a normalized value (0.0~1.0) onto the x-domain

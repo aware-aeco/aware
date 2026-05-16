@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GlobalParameter.CanChangeReporting
+Tests whether the global parameter permits a change of its current value of the IsReporting attribute.

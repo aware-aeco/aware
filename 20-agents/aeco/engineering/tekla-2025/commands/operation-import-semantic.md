@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.ImportSemantic
+Import semantic file. Creates native objects to TS model based on the file.

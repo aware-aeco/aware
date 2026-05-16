@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-XYZ.IsAlmostEqualTo
+Determines whether 2 vectors are the same within the given tolerance.

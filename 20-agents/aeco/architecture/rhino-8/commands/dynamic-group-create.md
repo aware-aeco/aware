@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DynamicGroup.Create
+Creates the group box layout.

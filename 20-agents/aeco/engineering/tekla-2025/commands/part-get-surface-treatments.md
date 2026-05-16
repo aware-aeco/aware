@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Part.GetSurfaceTreatments
+Returns an enumerator of all the connected surface treatments.

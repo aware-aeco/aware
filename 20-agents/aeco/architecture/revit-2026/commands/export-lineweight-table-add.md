@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLineweightTable.Add
+Inserts a (key, info) pair into Export line weight table.

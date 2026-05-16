@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetBaseClass.EnableTransparentCommands
+Control the availability of transparent commands during the get.

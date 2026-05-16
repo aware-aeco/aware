@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyAnalysisOpening.GetWindowType
+Gets the analytic window type this surface is associated with. Null when this surface is not a window.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AppearanceSettings.GetDefaultState
+Gets the factory settings of the application.

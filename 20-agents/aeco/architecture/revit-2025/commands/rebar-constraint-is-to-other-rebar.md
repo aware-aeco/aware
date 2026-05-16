@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraint.IsToOtherRebar
+Checks if the RebarConstraintType of the RebarConstraint is 'ToOtherRebar'.

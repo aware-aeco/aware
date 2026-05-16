@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConceptualConstructionType.GetShadeConstructionType
+Get a Shade ConceptualConstructionType by its ConceptualConstructionShadeType.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryBase.GetUserString
+Gets user string from this geometry.

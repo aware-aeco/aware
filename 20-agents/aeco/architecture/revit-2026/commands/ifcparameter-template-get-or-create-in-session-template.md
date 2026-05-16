@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCParameterTemplate.GetOrCreateInSessionTemplate
+Gets the in-session non-serializable template or create new.

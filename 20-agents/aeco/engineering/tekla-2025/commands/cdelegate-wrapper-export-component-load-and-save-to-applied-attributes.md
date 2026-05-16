@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportComponentLoadAndSaveToAppliedAttributes
+DO NOT USE! For internal usage only!

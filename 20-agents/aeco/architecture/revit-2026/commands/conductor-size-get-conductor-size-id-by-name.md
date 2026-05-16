@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConductorSize.GetConductorSizeIdByName
+Gets the Conductor Size id by given Conductor Size name.

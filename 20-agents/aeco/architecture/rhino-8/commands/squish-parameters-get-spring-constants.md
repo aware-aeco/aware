@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SquishParameters.GetSpringConstants
+See if the spring constants could have been set with SetSpringConstants().

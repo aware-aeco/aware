@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToPoint3d
+Convert data into Rhino.Geometry.Point3d.

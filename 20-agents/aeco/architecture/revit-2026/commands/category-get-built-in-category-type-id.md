@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Category.GetBuiltInCategoryTypeId
+Gets the ForgeTypeId identifying the given built-in category.

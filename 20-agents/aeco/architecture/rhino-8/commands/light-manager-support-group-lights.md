@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightManagerSupport.GroupLights
+Creates a new group with the lights

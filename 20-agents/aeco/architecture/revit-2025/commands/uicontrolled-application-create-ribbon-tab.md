@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIControlledApplication.CreateRibbonTab
+Creates a new tab on the Revit user interface.

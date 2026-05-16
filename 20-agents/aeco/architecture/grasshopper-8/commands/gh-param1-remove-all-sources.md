@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Param`1.RemoveAllSources
+Remove all sources from this parameter.

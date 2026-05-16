@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Plane.IsCoplanar
+Test if this plane is co-planar with a another plane.

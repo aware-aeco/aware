@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.IsolateCategoriesTemporary
+Set categories to be temporarily isolated in the view.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileReference.CreateFromFullAndRelativePaths
+Returns a new file reference. This returns a new instance even if the path does not exist.

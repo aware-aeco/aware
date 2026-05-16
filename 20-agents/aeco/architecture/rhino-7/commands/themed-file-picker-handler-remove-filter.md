@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedFilePickerHandler.RemoveFilter
+Removes a filter at the specified index

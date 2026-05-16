@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentParamServer.RegisterInputParam
+Add a parameter to the end of the input list.

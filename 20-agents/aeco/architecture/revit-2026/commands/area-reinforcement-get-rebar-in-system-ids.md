@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaReinforcement.GetRebarInSystemIds
+Returns the ids of the RebarInSystem elements owned by the AreaReinforcement    element.

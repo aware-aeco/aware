@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObject.SetCustomObjectType
+Sets a custom object type name for an existing object.

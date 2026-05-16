@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.SurfaceSurface
+Intersects two Surfaces.

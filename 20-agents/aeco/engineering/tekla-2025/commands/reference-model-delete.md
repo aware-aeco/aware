@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceModel.Delete
+Deletes the reference model with the given identifier.

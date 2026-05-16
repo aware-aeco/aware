@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObject.GetUserProperty
+Retrieves a string property for the model object.

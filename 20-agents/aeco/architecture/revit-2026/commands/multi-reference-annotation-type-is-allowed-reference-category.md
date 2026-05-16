@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultiReferenceAnnotationType.IsAllowedReferenceCategory
+Checks if the reference category can be used with multi-reference annotations.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HiddenLineDrawing.Compute
+Perform the hidden line drawing calculation based on input parameters

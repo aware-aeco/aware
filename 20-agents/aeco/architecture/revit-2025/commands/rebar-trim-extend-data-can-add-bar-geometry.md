@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarTrimExtendData.CanAddBarGeometry
+Returns true if getNumberOfBarGeometry() is less than GetNumberOfBars(), false otherwise.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContentCollection.GetForcedVaries
+See SetForcedVaries

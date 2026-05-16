@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedMessageBox.AddButton
+Adds a button to the message box

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LicenseUtils.Echo
+Test connectivity with the Zoo.

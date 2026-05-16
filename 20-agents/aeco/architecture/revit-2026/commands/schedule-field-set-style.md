@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleField.SetStyle
+Sets the style of this field.

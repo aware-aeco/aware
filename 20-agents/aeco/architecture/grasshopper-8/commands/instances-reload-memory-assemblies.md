@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Instances.ReloadMemoryAssemblies
+Unload and attempt to reload all plugin assemblies that were loaded via the COFF pipeline.

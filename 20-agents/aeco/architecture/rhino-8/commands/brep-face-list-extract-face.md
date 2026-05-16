@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepFaceList.ExtractFace
+Extracts a face from a Brep.

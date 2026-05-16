@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TemperatureRating.GetTemperatureRatingIdByName
+Gets the Conductor Temperature Rating id by given Conductor Temperature Rating name.

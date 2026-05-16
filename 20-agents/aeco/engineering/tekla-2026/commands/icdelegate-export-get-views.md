@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportGetViews
+DO NOT USE! For internal usage only!

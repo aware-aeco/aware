@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportFontTable.GetExportFontInfo
+Gets a copy of the font info associated to the input font key.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostedSweep.HorizontalFlip
+Flip the hosted sweep object along horizontal line.

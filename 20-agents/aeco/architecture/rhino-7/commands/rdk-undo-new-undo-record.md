@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RdkUndo.NewUndoRecord
+Get a new UndoRecord

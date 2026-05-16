@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourCube.RenderSliceEdgeShadows
+Render the edge shadows of the slice due to GI.

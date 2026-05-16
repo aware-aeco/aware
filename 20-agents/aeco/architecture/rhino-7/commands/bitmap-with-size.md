@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Bitmap.WithSize
+Gets an Icon representation of this Bitmap scaled to draw within the specified fitting size.

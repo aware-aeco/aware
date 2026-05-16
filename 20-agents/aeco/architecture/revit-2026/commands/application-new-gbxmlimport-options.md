@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewGBXMLImportOptions
+Creates Green-Building XML Import options.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetBaseClass.CommandResult
+Helper method for getting command result value from getter results.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSet.Insert
+Insert the specified view into the set.

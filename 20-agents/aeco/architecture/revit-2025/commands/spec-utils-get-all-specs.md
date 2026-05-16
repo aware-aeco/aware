@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpecUtils.GetAllSpecs
+Gets the identifiers of all specs.

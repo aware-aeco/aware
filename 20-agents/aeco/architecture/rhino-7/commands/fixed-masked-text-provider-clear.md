@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FixedMaskedTextProvider.Clear
+Called to clear a range of characters at the specified position in the masked text.

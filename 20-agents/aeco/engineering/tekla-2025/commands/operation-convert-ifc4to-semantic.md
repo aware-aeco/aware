@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.ConvertIFC4toSemantic
+Converts IFC4 to Semantic TrimBIM.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_UpgradeUtil.ReplaceOutputParameters
+Move all output parameters from one component to another.   Only use this function if the target component can handle the output layout of the source component.

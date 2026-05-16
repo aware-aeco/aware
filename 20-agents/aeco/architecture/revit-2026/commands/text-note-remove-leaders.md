@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextNote.RemoveLeaders
+Removes all leaders currently attached to the text note.

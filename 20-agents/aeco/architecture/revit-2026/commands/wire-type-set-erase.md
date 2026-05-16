@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WireTypeSet.Erase
+Removes a specified wire type from the set.

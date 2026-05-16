@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BinaryArchiveWriter.BeginWrite3dmChunk
+Begins writing a chunk

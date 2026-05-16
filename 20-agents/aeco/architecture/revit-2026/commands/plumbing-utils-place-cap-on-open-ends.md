@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlumbingUtils.PlaceCapOnOpenEnds
+Places caps on the open connectors of the pipe curve, pipe fitting or pipe accessory.

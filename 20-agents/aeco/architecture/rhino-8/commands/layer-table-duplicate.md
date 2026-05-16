@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LayerTable.Duplicate
+Duplicates, or copies, a layer. Duplicated layers are added to the document.

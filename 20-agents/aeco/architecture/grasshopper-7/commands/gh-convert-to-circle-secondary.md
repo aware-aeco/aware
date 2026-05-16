@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToCircle_Secondary
+Attempts to convert other data types into an OnCircle.   Data is not quaranteed to be duplicated.

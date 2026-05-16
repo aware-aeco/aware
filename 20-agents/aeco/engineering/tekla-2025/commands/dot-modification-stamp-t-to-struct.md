@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-dotModificationStamp_t.ToStruct
+DO NOT USE! For internal usage only!

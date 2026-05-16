@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepTrimList.Add
+Add a new trim that will be part of an inner, outer, or slit loop             to the brep.

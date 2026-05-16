@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.SupportsRevealConstraints
+Checks that the view can have the Reveal Constraints mode activated.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolymeshTopology.GetPoints
+Returns all points of the polymesh.

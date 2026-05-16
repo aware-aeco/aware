@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostUtils.GetCustomComputeEndpoints
+Used by compute to define custom endpoints

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshTopologyEdgeList.IsEdgeUnwelded
+Determines if the mesh edge is unwelded, or if the mesh faces that share the edge have unique vertex indices.

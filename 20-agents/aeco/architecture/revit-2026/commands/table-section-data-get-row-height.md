@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.GetRowHeight
+Returns a row's height in feet

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CustomPart.Insert
+Inserts the custom part into the model database.

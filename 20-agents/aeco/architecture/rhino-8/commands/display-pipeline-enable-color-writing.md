@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.EnableColorWriting
+Enable or disable the ColorWriting behavior of the engine.

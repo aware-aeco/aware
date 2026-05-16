@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Layer.UnsetPerViewportPersistentVisibility
+Remove any per viewport persistent visibility setting so the layer's overall setting will be used for all viewports.

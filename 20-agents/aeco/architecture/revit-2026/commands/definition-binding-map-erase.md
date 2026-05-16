@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DefinitionBindingMap.Erase
+Removes a binding with the specified definition from the map.

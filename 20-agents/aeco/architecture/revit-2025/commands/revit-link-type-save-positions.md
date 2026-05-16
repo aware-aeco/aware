@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitLinkType.SavePositions
+Saves shared coordinates changes back to the linked document.

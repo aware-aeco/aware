@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DualBinding`1.ToString
+Returns a  that represents the current .

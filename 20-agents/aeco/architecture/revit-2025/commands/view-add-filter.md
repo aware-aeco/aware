@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.AddFilter
+Adds a filter to the view.

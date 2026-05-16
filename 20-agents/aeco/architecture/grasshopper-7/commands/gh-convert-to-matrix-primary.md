@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToMatrix_Primary
+Performs a direct cast from Matrix or GH_Matrix.

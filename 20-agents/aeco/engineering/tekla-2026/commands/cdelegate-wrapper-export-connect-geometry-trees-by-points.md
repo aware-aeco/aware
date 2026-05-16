@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportConnectGeometryTreesByPoints
+DO NOT USE! For internal usage only!

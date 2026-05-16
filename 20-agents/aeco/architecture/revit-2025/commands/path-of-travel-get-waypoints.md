@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PathOfTravel.GetWaypoints
+return the waypoints set for the Path of Travel

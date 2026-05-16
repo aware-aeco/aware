@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TaskWorktype.Modify
+Modifies the task worktype instance in the model. The identifier must be set.

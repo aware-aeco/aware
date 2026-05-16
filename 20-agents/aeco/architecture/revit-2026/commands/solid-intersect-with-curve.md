@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Solid.IntersectWithCurve
+Calculates and returns the intersection between a curve and this solid.

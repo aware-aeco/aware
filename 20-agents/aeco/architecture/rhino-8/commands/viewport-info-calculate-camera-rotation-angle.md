@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewportInfo.CalculateCameraRotationAngle
+Calculates the camera rotation angle.

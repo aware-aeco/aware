@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GridItem.SetValue
+Sets the value of this object for the specified column/index

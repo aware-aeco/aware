@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FillPatternElement.GetFillPatternElementByName
+Retrieves the FillPatternElement by its name.

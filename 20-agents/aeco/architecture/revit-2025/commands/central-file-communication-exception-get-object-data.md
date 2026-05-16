@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CentralFileCommunicationException.GetObjectData
+Retrieves data needed to serialize the target object.

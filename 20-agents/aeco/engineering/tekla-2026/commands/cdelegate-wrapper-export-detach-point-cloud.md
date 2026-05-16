@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportDetachPointCloud
+DO NOT USE! For internal usage only!

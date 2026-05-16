@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpatialElementGeometryCalculator.CanCalculateGeometry
+This indicates whether the input spatial element is a valid one.

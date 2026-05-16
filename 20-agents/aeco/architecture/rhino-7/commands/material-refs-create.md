@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MaterialRefs.Create
+Call this method to create a MaterialRef which can be used when calling             one of the Add methods.

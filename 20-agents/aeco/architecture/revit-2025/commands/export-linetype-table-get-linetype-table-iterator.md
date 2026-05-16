@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLinetypeTable.GetLinetypeTableIterator
+Returns a ExportLinetypeTableIterator that iterates through the collection.

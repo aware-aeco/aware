@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ContourOperation.GetPolycurveFromContourPoints
+GetPolycurveFromContourPoints converts the given contour points (section points) to a polycurve.

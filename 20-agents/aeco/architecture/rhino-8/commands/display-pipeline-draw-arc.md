@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawArc
+Draw a single arc object.

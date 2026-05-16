@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataObject.SetData
+Sets a data array for the specified type identifier.

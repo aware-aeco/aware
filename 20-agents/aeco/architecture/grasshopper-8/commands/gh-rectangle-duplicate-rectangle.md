@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Rectangle.DuplicateRectangle
+Create a duplicate of this rectangle.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetPartMark
+DO NOT USE! For internal usage only!

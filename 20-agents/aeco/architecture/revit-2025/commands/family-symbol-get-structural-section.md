@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilySymbol.GetStructuralSection
+Gets the structural section from element.

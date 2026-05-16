@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaBasedLoadType.Create
+Creates an area based load type.

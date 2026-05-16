@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PrintPreviewDialog.ShowDialog
+Shows the print preview dialog with the specified

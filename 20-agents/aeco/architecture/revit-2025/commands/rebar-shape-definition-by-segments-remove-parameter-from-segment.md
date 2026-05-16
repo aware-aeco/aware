@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDefinitionBySegments.RemoveParameterFromSegment
+Remove constraints from a segment.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IAssemblable.GetAssembly
+Returns the assembly that the assemblable belongs to.

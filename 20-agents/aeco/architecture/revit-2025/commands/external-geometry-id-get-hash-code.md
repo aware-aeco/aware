@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalGeometryId.GetHashCode
+Gets the hash code.

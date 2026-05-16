@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyManager.RenameCurrentType
+Rename the current family type.

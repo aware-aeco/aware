@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicTreeDisplayArgs.RemapDegrees
+Adjust the angle (in degrees) to match tree orientation

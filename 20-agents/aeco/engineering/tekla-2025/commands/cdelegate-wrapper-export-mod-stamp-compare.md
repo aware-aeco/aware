@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportModStampCompare
+DO NOT USE! For internal usage only!

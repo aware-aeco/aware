@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PreviewAppearance.RotationY
+RotationY

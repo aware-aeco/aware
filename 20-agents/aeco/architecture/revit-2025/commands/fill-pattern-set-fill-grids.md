@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FillPattern.SetFillGrids
+Set the fill grids in this fill pattern.

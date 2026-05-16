@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_UserObject.SaveToFile
+Save the current User Object state to a file. Any existing file will be overwritten.

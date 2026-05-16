@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObjectTable.AddPoint
+Adds a point object to the table.

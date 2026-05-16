@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilteredElementCollector.Excluding
+Applies an ExclusionFilter to the collector.

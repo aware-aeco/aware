@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralAsset.SetShearModulus
+Sets the shear modulus of the asset.

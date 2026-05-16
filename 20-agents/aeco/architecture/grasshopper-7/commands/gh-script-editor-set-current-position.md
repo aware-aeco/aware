@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ScriptEditor.SetCurrentPosition
+Set the current caret position.

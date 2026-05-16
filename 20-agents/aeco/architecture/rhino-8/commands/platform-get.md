@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Platform.Get
+Gets the generator of the specified type

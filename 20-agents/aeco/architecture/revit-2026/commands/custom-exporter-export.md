@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CustomExporter.Export
+Exports a collection of 3D or 2D views

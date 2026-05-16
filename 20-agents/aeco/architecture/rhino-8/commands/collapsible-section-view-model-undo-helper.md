@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CollapsibleSectionViewModel.UndoHelper
+Helper function to ease the use of undo records

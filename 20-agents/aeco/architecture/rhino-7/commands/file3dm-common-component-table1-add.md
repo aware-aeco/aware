@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmCommonComponentTable`1.Add
+Adds an item.

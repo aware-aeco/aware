@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NumericRevisionSettings.IsValid
+Determines whether the NumericRevisionSettings object is in a valid state.

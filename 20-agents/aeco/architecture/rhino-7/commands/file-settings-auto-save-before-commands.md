@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileSettings.AutoSaveBeforeCommands
+Input list of commands that force AutoSave prior to running.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoList`1.RemoveAll
+Removes the all the elements that match the conditions defined by the specified predicate.

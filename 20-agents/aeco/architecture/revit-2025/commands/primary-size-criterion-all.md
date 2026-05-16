@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PrimarySizeCriterion.All
+Creates a criterion with a range of all sizes.

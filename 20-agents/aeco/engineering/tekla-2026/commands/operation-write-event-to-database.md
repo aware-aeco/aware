@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.WriteEventToDatabase
+Writes an event to the database

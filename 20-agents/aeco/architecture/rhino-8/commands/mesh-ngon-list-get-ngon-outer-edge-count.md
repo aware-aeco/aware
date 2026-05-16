@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshNgonList.GetNgonOuterEdgeCount
+Gets the outer edge count of an ngon.

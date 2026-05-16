@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoltXYList.AddBoltDistY
+Adds a Y distance to the bolt XY list.

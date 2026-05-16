@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurveKnotList.RemoveKnotAt
+Remove a knot from a curve and adjusts the remaining control points to maintain curve position as closely as possible.

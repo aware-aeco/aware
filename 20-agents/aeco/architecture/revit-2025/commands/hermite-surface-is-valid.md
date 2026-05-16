@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HermiteSurface.IsValid
+Checks whether this HermiteSurface object is valid.

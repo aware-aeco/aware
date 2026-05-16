@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DefinitionBindingMap.GetEnumerator
+Retrieve a forward moving iterator to the map.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Graphics.IsVisible
+Returns true if the clip region intersects             the specified rectangle.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DimensionType.CanHaveEqualityFormula
+Checks whether this DimensionType can have an equality formula.

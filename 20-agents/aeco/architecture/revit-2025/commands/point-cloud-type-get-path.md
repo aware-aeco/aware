@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudType.GetPath
+Gets the path of the link source from which the points are loaded.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetViewRotationPointFromCurrentView
+Get view rotation point in global coordinates from current view.

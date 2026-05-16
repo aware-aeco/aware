@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BentPlateTools.GetMaximumRadiuses
+Returns the maximum radius for bend section with given parameters.

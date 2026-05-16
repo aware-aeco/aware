@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIDocument.PromptToPlaceElementTypeOnLegendView
+Prompts the user to place an element type onto a legend view.

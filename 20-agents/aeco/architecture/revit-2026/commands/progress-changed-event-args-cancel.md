@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ProgressChangedEventArgs.Cancel
+Requests to cancel the progress bar's operation.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorHSL.Distance
+Calculates the 'distance' of two HSL colors

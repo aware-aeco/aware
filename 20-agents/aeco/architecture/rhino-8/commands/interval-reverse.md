@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interval.Reverse
+Changes interval to [-T1, -T0].

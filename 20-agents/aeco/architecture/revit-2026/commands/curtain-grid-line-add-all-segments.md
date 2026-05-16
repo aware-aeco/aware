@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurtainGridLine.AddAllSegments
+All the segments on this grid line will be added.

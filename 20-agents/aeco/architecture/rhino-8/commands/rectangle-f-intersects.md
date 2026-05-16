@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RectangleF.Intersects
+Gets a value indicating that the specified  overlaps this rectangle

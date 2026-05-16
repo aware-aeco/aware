@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndirectBinding`1.ToBool
+Converts this binding to return a nullable boolean binding

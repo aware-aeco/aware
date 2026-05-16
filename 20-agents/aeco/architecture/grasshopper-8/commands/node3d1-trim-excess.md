@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Node3d`1.TrimExcess
+Trim the excess space on all index lists. You can call this method to reduce memory usage.   It will not modify the tree in any functional way.

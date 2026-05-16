@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ZooClientParameters.VerifyPreviousVersionLicense
+When a caller calls GetLicense, ZooClient may call VerifyPreviousVersionLicense to ensure              previousVersionLicense is legitimate and can be used to upgrade license.

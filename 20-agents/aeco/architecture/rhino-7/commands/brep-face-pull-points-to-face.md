@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepFace.PullPointsToFace
+Pulls one or more points to a brep face.

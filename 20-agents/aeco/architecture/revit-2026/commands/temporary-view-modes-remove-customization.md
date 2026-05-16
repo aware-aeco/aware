@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TemporaryViewModes.RemoveCustomization
+Removes all customized values for the TemporaryViewProperties mode.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PourObject.GetObjects
+Returns an enumerator of all objects related to pour.

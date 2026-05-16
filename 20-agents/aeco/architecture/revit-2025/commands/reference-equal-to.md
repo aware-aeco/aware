@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Reference.EqualTo
+Checks if given reference is equal to this reference.

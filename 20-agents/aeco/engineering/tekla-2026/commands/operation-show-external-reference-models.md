@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.ShowExternalReferenceModels
+Sets the given external reference models visible.

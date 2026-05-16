@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevisionCloud.Create
+Creates a new RevisionCloud in the model.

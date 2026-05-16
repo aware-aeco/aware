@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryCreationUtilities.CreateRevolvedGeometry
+Creates a solid of revolution by revolving a set of closed curve loops around an axis by a specified angle.

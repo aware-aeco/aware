@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DrawContext.IsInterrupted
+Checks whether the current rendering pass has been interrupted.

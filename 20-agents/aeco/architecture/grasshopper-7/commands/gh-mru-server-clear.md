@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MRU_Server.Clear
+Destroy all MRU records.

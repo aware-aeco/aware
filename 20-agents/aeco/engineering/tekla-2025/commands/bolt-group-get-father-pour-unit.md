@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoltGroup.GetFatherPourUnit
+Returns the pour unit that the bolt group is associated to.

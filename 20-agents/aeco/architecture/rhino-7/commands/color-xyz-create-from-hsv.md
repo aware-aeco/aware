@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorXYZ.CreateFromHSV
+Constructs the nearest XYZ equivalent of an HSV color.

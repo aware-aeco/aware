@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SystemIcons.Get
+Gets a static system-defined icon for the specified type.

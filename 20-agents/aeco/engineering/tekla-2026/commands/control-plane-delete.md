@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlPlane.Delete
+Deletes the control plane with the given ID.

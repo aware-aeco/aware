@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToInterval
+Convert data into Rhino.Geometry.Interval.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.SetLockSlot
+Set lock state for a circuit slot at specific cell.

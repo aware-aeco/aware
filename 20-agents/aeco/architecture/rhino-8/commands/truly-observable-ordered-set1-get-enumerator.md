@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TrulyObservableOrderedSet`1.GetEnumerator
+Returns an enumerator that iterates through the set.

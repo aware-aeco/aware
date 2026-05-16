@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSplice.Insert
+Inserts the rebar splice into the model database. All the attributes must be set.

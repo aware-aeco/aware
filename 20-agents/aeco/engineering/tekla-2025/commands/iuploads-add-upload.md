@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IUploads.AddUpload
+Adds an upload.

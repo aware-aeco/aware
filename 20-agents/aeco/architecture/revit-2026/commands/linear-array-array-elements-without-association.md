@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinearArray.ArrayElementsWithoutAssociation
+Creates a new linear array from a set of elements.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CreateFromSurface
+Constructs a mesh from a surface

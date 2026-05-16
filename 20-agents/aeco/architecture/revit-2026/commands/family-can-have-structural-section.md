@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Family.CanHaveStructuralSection
+Identifies if this Family can have a structural section.

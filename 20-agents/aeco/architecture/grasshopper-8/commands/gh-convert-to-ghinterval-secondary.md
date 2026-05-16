@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHInterval_Secondary
+Converts similar data into a GH_Interval instance.  Data is not quaranteed to be duplicated.

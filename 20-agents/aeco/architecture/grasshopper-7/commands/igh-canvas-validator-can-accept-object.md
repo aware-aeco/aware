@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_CanvasValidator.CanAcceptObject
+Validates whether a specific component can be accepted by the canvas at all.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceModelObject.GetReferenceModel
+Gets the reference model that the reference object belongs to.

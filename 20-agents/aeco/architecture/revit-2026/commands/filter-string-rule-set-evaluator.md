@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterStringRule.SetEvaluator
+Sets the evaluator that implements the test for this rule.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepVertexList.Add
+Create and add a new vertex to this list

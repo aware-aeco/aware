@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Compression.Compress
+Compress an array of bytes using the Deflate algorithm.

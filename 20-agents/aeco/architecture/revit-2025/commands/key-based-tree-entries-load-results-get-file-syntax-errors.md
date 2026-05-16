@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-KeyBasedTreeEntriesLoadResults.GetFileSyntaxErrors
+Gets all the records in the key-based tree data text file that could not be parsed into KeyBasedTreeEntries.

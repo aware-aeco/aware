@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ContourSetting.RemoveItem
+Remove a contour setting item from the current contour setting.

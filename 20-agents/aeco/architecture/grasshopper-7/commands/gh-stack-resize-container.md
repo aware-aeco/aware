@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Stack.ResizeContainer
+Call this function to override the width or height of all elements without   interfering with the animation.

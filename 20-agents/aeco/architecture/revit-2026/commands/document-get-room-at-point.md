@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.GetRoomAtPoint
+Gets a room containing the point.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-KeyBasedTreeEntries.GetKeyBasedTreeEntriesIterator
+Returns a KeyBasedTreeEntriesIterator that iterates through the collection.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SurfaceObjectCreator.CreateByFace
+Creates a surface object by a model object's face.

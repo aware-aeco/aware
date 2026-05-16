@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.RenumberIndexes
+Renumbers the Circuit Naming Index for the circuits in the panel.

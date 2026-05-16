@@ -6,100 +6,198 @@ description: API reference for namespace Autodesk.Revit.DB.Analysis from RevitAP
 # Autodesk.Revit.DB.Analysis
 
 - **AllowLargeGeometry**
+  - An enumerated type containing settings information related to handling of large geometries.
 - **AnalysisDisplayColorEntry**
+  - Contains one entry of intermediate colors in color settings for analysis display style.
 - **AnalysisDisplayColorSettings**
+  - Contains color settings for analysis display style element.
 - **AnalysisDisplayColoredSurfaceSettings**
+  - Contains colored surface settings for analysis display style element.
 - **AnalysisDisplayDeformedShapeSettings**
+  - Contains deformed shape settings for analysis display style element.
 - **AnalysisDisplayDiagramSettings**
+  - Contains diagram settings for analysis display style element.
 - **AnalysisDisplayLegend**
+  - The legend that describes an Analysis Visualization.
 - **AnalysisDisplayLegendSettings**
+  - Contains legend settings for analysis display style element.
 - **AnalysisDisplayMarkersAndTextSettings**
+  - Contains markers and text settings for analysis display style element.
 - **AnalysisDisplayStyle**
+  - Exposes API for manipulation of analysis display style.
 - **AnalysisDisplayStyleColorSettingsType**
+  - Defines types for color settings of analysis display style.
 - **AnalysisDisplayStyleDeformedShapeTextLabelType**
+  - Defines text visualization types for deformed shape settings of analysis display style.
 - **AnalysisDisplayStyleDiagramFenceType**
+  - Defines fence visualization types for diagram settings of analysis display style.
 - **AnalysisDisplayStyleDiagramTextLabelType**
+  - Defines text label visualization types for diagram settings of analysis display style.
 - **AnalysisDisplayStyleMarkerTextLabelType**
+  - Text label visualization types for Markers and Text settings of analysis display style.
 - **AnalysisDisplayStyleMarkerType**
+  - Marker types for Markers and Text settings of analysis display style.
 - **AnalysisDisplayStyleVectorArrowheadScale**
+  - Defines arrow head scaling for vector settings of analysis display style.
 - **AnalysisDisplayStyleVectorOrientation**
+  - Defines vector orientation for vector settings of analysis display style.
 - **AnalysisDisplayStyleVectorPosition**
+  - Defines vector position for vector settings of analysis display style.
 - **AnalysisDisplayStyleVectorTextType**
+  - Defines text visualization types for vector settings of analysis display style.
 - **AnalysisDisplayVectorSettings**
+  - Contains vector settings for analysis display style element.
 - **AnalysisMode**
+  - This enum is used to define the Energy Analysis Model.
 - **AnalysisResultSchema**
+  - Contains all information about one analysis result. Each result may contain several measurements.
 - **BuildingEnvelopeAnalyzer**
+  - Analyzes which elements are part of the building envelope, the building elements exposed to the outside.
 - **BuildingEnvelopeAnalyzerOptions**
+  - Specific options for the method analyzing the building elements for the building envelope.
 - **BuildingOperatingDaySchedule**
+  - Represents the operating schedule of a 24 hour day.
 - **BuildingOperatingYearSchedule**
+  - Represents an operating schedule that contains 365 daily usage BuildingOperatingDaySchedules.
 - **ConceptualConstructionFloorSlabType**
+  - ConceptualConstructionType values for Floors.
 - **ConceptualConstructionOpeningType**
+  - ConceptualConstructionType values for Openings.
 - **ConceptualConstructionRoofType**
+  - ConceptualConstructionType values for Roofs.
 - **ConceptualConstructionShadeType**
+  - ConceptualConstructionType values for Shades.
 - **ConceptualConstructionType**
+  - This element is used to describe the conceptual physical, construction, and energy properties in a manner    that can be understood by both the Revit BIM model and Green Building Studio/Green Building XML.    For serialization
 - **ConceptualConstructionWallType**
+  - ConceptualConstructionType values for Walls.
 - **ConceptualConstructionWindowSkylightType**
+  - ConceptualConstructionType values for Windows and Skylights
 - **ConceptualSurfaceType**
+  - This element represents a conceptual BIM object category to assign to faces in Mass geometries.    There is one ConceptualSurfaceType element for each of the Mass Surface Subcategories.    for serialization
 - **ConstructionType**
+  - This enumeration specifies the available analytical construction types    like external walls, windows etc. for use in the detailed analytical    energy model.
 - **CriticalPathCollector**
+  - This class is used to search and traverse the network analytical segments on the critical path.
 - **CriticalPathIterator**
+  - An iterator to traverse the critical path in the CriticalPathCollector.
 - **EnergyAnalysisConstruction**
+  - Represent an analytical construction as a composite of layered materials.
 - **EnergyAnalysisDetailModel**
+  - Manage the analytical thermal model.
 - **EnergyAnalysisDetailModelOptions**
+  - Options that govern the calculations for the generation of the energy analysis detail model.
 - **EnergyAnalysisDetailModelTier**
+  - Level of computation for energy analysis model.
 - **EnergyAnalysisMaterial**
+  - A description of a material with thermal properties in a composite construction.
 - **EnergyAnalysisOpening**
+  - Analytical opening.
 - **EnergyAnalysisOpeningType**
+  - Energy analysis opening type.
 - **EnergyAnalysisSpace**
+  - Analytical space.
 - **EnergyAnalysisSurface**
+  - Analytical surface.    The collection of analytic openings belonging to this analytical parent surface
 - **EnergyAnalysisSurfaceType**
+  - Analytical surface types.
 - **EnergyAnalysisWindowType**
+  - The EnergyAnalysisWindowType class contains the thermal properties (e.g., heat transfer coefficient) of the window-type analytical openings.
 - **EnergyAnalysisZone**
+  - Analytical zone.
 - **EnergyDataSettings**
+  - This element contains settings for gbXML Export and Heating and Cooling Load Calculations    and project level settings for Conceptual Energy Analysis.    for serialization
 - **EnergyModelType**
+  - This enum is used to define if the energy model is based on rooms/spaces, building elements or analysis mode in EnergyDataSettings.
 - **FieldDomainPoints**
+  - Abstract base class for various classes of field domain points
 - **FieldDomainPointsByParameter**
+  - Represents a set of one-dimensional point coordinates (defined usually on curve)
 - **FieldDomainPointsByUV**
+  - Represents a set of two-dimensional point coordinates (defined usually on surface)
 - **FieldDomainPointsByXYZ**
+  - Represents a set of three-dimensional point coordinates
 - **FieldValues**
+  - Contains values corresponding to domain points.    Each domain point may have an array of values, each corresponding to a separate "measurement" for which this value was calculated.
 - **GenericZone**
+  - Provides access to the GenericZone Element in Autodesk Revit.
 - **GenericZoneDomainData**
+  - A base class for specific domain requirements for a generic zone.
 - **HVACLoadBuildingType**
+  - The type element of building.
 - **HVACLoadConstructionClass**
+  - Enumerated type listing options for construction class for HVAC analysis.
 - **HVACLoadLoadsReportType**
+  - Enumerated type listing possible types of reports generated for HVAC loads.
 - **HVACLoadSpaceType**
+  - The type element of space.
 - **HVACLoadType**
+  - The base class for building type and space type.
 - **MEPAnalyticalModelData**
+  - Represents the MEP analytical model data attached to individual element.
 - **MEPAnalyticalNode**
+  - Represents an analytical node of the MEP analytical model.
 - **MEPAnalyticalSegment**
+  - Represents an analytical segment of the MEP analytical model.
 - **MEPAnalyticalSegmentType**
+  - The type of analytical segment.
 - **MEPNetworkIterator**
+  - An iterator to traverse the MEP analytical network.
 - **MEPNetworkSegmentData**
+  - Represents the analysis data for one network segment.
 - **MEPNetworkSegmentId**
+  - Represents a unique identifier for one analytical segment in the network.
 - **MassLevelData**
+  - MassLevelData is a conceptual representation of an occupiable floor (Mass Floor) in a conceptual building model.    It is defined by associating a particular level with a particular mass element in a Revit project.
 - **MassSurfaceData**
+  - Holds properties and other data about a face in the MassEnergyAnalyticalModel element.
 - **MassSurfaceDataMaterialType**
+  - Indicates how the visualization material for the MassSurfaceData is calculated.
 - **MassSurfaceDataSource**
+  - Indicates whether values for the properties of the MassSurfaceData    are synchronized with the EnergyDataSettings of the    document or instead, serve as overrides of those settings.
 - **OutdoorAirFlowStandard**
+  - An enumerated type listing all the possible outdoor airflow standard for a space type.
 - **PathOfTravel**
+  - An element which holds a graphical representation of the shortest route between two points in the plane of a floor plan view.    The shortest route is calculated to go around model geometry visible in the view.    Route calculation is affected by properties of the RouteAnalysisSettings element.
 - **PathOfTravelCalculationServerIds**
+  - Ids for external servers implementing path of travel calculations.
 - **PathOfTravelCalculationStatus**
+  - An enumerated type containing possible results of the Path of Travel calculation.
 - **Polyloop**
+  - A Polyloop represent a planar polygon with ordered points.
 - **RouteAnalysisSettings**
+  - RouteAnalysisSettings is an element which contains project-wide settings for route calculations.    The PathOfTravel element uses these settings to calculate a route between two points in a plan view.By default, the route will go around the geometry of all visible model elements which have model geometry in the Route Analysis Zone.The Route Analysis Zone, determined per view, is the space between these two horizontal planes:    a top plane vertically offset by AnalysisZoneTopOffset above the view's level and    a bottom plane vertically offset by AnalysisZoneBottomOffset ft above the view's level.    By default, the route will ignore the following elements:    elements outside of the crop region of the view;elements without any model geometry (annotations or view-specific elements);model lines (category OST_Lines);demolished elements;elements displayed in the underlay of the view.    There are a few ways to customize Route Analysis on a project-wide basis.    You can adjust the Route Analysis Zone using AnalysisZoneTopOffset    and AnalysisZoneBottomOffset.You can specify a set of model categories you would like ignored during route calculation.    To enable ignoring the set of specified categories, set EnableIgnoredCategoryIds to true.    To change the set of ignored categories, use SetIgnoredCategoryIds method    and IgnoreImports and IgnorePointClouds properties.    To query the set of ignored categories, use GetIgnoredCategoryIds.
 - **SpatialFieldManager**
+  - Exposes all API for an external analysis application.    Its primary role is creation, deletion and modification of SpatialFieldElement elements.
 - **SpatialFieldPrimitiveHideMode**
+  - Defines modes which can be used by a SpatialFieldPrimitive to hide the original referenced element.
 - **SystemsAnalysisOptions**
+  - Contains the options for systems analysis.
 - **SystemsAnalysisReportStyle**
+  - The report style of systems analysis.
 - **ValueAtPoint**
+  - Stores values at one domain point.    Each value corresponds to a "measurement" for which this value was calculated.
 - **VectorAtPoint**
+  - Stores vectors at one domain point.    Each vector corresponds to a "measurement" for which this vector was calculated.
 - **ViewSystemsAnalysisReport**
+  - Represents a report instance of the systems analysis.
 - **gbXMLBuildingHVACSystem**
+  - Enumerations for gbXML (Green Building XML) format, used for energy    analysis, schema version 0.34.
 - **gbXMLBuildingOperatingSchedule**
+  - Enumerations for gbXML (Green Building XML) format, used for energy    analysis, schema version 0.34.
 - **gbXMLBuildingType**
+  - Enumerations for gbXML (Green Building XML) format, used for energy    analysis, schema version 0.34.
 - **gbXMLConditionType**
+  - This enumeration corresponds to the conditionType attribute in gbXML.    The enumerated attribute identifies the type of heating, cooling,    or ventilation the space has.
 - **gbXMLExportBuildingEnvelope**
+  - Indicates the determination method for the building envelope
 - **gbXMLExportComplexity**
+  - This enumeration specifies the level of detail of the exported analytical energy model in gbXML.    Complex means that Curtain Walls and Curtain Systems are exported as several openings, panel by panel;    a curtain wall with 50 panels gets exported as 50 openings. Simple means that one "huge" opening with    the total opening area equal to the 50 panels is exported. This is more appropriate for most energy analysis.    Mullions mean that Mullions in Curtain Walls and Systems are exported as shading surfaces. A "simplified"    analytical shading surface is produced from a mullion based on its centerline, thickness and offset.
 - **gbXMLOpeningType**
+  - This enumeration corresponds to the openingType attribute in gbXML    and identifies the type of opening defined.
 - **gbXMLServiceType**
+  - This enumeration corresponds to the systemType attribute in gbXML    and is used for specifying the service for the building or space.
 - **gbXMLSpaceType**
+  - This enumeration corresponds to the spaceType attribute in gbXML.    The enumerated attribute identifies the type of space defined and    allows to better approximate the actual internal loads and schedules    associated with the defined space type.
 - **gbXMLSurfaceType**
+  - This enumeration corresponds to the surfaceType attribute in gbXML    and identifies the type of surface defined.

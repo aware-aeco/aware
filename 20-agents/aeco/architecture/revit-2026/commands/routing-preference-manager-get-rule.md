@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RoutingPreferenceManager.GetRule
+Gets the specified rule.

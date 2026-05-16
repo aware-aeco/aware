@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportRunOrStopClashCheck
+DO NOT USE! For internal usage only!

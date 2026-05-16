@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLineweightTableIterator.IsDone
+Identifies if the iteration has completed.

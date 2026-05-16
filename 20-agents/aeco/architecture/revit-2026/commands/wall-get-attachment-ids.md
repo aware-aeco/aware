@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Wall.GetAttachmentIds
+Gets the ids of the target elements that are attached to the Wall.

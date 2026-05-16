@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConicalSurface.GetFrameOfReference
+Returns frame of reference associated with this ConicalSurface.

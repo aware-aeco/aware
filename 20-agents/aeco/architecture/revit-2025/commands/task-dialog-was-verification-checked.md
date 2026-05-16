@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TaskDialog.WasVerificationChecked
+Gets the status of the verification checkbox.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurve.CreateHSpline
+Construct an H-spline from a sequence of interpolation points

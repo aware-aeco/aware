@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Vector2d.IsTiny
+Uses RhinoMath.ZeroTolerance for IsTiny calculation.

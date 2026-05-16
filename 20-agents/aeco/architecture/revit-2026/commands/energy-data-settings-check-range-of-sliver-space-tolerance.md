@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyDataSettings.CheckRangeOfSliverSpaceTolerance
+Checks that the sliver space tolerance is greater than or equal to zero.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Polyline.CreateInscribedPolygon
+Create a regular polygon inscribed in a circle. The vertices of the polygon will be on the circle.

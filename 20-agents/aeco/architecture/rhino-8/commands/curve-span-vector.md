@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.SpanVector
+Returns the vector of span division parameters for this curve.

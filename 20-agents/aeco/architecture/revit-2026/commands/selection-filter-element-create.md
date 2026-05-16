@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SelectionFilterElement.Create
+Creates a new SelectionFilterElement in the given document.

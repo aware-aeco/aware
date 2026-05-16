@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.LocateInsulationSpecification
+Gets the insulation specification by group and name.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceDefinitionGeometry.GetUserString
+Gets user string from this geometry.

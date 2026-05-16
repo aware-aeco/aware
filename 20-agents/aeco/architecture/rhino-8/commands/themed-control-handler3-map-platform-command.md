@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedControlHandler`3.MapPlatformCommand
+Specifies a command to execute for a platform-specific command

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ClassificationEntry.HasBadCategoryId
+Checks if the category id is Revit BuiltInCategory id.

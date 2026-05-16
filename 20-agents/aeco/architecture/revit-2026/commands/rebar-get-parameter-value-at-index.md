@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.GetParameterValueAtIndex
+Get the parameter value for a bar at the specified index.

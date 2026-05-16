@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Wall.IsWallCrossSectionValid
+Checks whether the desired cross section is valid for the current wall.

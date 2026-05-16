@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayStyle.GetElements
+Returns set of all analysis display styles elements in the given document.

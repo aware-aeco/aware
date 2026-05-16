@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Clipboard.SetData
+sets a data array into the clipboard with the specified type identifier.

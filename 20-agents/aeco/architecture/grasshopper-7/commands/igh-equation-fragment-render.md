@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_EquationFragment.Render
+Render this fragment and all contained fragments.

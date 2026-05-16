@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCAggregate.AddValueOfType
+Adds an ifc object with primitive type of aggregate's item type to the aggregate.

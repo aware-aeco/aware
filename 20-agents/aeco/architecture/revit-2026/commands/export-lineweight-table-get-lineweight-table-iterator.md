@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLineweightTable.GetLineweightTableIterator
+Returns a ExportLineweightTableIterator that iterates through the collection.

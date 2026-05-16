@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SlabShapeEditor.AddPoint
+Add a point to the element.

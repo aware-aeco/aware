@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-VertexBuffer.IsValid
+Tests whether the buffer is valid for rendering.

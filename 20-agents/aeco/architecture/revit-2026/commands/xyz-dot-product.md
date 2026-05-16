@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-XYZ.DotProduct
+The dot product of this vector and the specified vector.

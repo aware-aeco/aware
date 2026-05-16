@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedParametersEventArgs.TryGetWindowImageHandle
+Gets a HWND on Windows or NSVIew* on Mac

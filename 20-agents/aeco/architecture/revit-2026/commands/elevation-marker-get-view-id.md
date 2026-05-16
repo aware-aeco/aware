@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElevationMarker.GetViewId
+Returns the ViewSection id for the index of the ElevationMarker.

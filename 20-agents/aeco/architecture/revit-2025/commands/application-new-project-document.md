@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewProjectDocument
+Creates a new project document with no template file specified.

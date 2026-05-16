@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.SetColorFillSchemeId
+Applies color fill scheme to this view.

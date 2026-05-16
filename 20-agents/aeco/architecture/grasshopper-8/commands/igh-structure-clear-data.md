@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Structure.ClearData
+Removes all data from all paths without affecting the structure topology.

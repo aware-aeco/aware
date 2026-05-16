@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.AddRange
+Appends a collection of points to this point cloud.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlugIn.IdFromFileName
+Attempt to get a plugiin id from just the filename of a plug-in

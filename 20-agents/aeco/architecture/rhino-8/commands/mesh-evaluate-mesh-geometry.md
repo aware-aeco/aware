@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.EvaluateMeshGeometry
+If the mesh has SurfaceParameters, the surface is evaluated at             these parameters and the mesh geometry is updated.

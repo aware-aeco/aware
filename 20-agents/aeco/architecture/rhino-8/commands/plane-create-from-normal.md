@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Plane.CreateFromNormal
+Constructs a plane from a point and normal vector.

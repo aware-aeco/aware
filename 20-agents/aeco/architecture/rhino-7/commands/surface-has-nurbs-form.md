@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.HasNurbsForm
+Is there a NURBS surface representation of this surface.

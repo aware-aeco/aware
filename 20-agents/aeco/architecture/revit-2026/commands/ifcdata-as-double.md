@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCData.AsDouble
+Gets storage value as double when its PrimitiveType is double.

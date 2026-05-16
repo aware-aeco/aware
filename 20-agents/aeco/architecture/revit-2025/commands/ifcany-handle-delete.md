@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCAnyHandle.Delete
+Deletes the handle.

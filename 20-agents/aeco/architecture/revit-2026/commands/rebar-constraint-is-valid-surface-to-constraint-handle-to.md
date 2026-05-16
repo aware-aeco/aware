@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraint.IsValidSurfaceToConstraintHandleTo
+Checks if the surface can be used to create a constraint to it for the input handle.

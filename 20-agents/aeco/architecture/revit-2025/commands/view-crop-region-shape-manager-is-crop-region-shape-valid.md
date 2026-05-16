@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewCropRegionShapeManager.IsCropRegionShapeValid
+Verifies that boundary represents one closed curve loop without self-intersections,    consisting of non-zero length straight lines in a plane parallel to the view plane.

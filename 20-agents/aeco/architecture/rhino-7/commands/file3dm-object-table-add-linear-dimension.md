@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObjectTable.AddLinearDimension
+Adds a linear dimension to the 3dm file object table.

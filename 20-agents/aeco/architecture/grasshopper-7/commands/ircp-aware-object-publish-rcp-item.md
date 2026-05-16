@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IRcpAwareObject.PublishRcpItem
+Emit a new object to be inserted on a Remote Control Panel.

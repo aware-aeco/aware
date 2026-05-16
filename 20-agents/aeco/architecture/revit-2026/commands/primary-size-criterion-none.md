@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PrimarySizeCriterion.None
+Creates a criterion with a range of no sizes.

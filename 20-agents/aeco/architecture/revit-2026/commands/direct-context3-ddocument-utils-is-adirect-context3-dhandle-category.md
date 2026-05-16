@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectContext3DDocumentUtils.IsADirectContext3DHandleCategory
+Checks whether the provided category ID is one of the categories used by DirectContext3D handle elements.

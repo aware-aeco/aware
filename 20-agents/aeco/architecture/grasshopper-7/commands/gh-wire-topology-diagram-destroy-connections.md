@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_WireTopologyDiagram.DestroyConnections
+Destroys the topological connector wire if it exists.

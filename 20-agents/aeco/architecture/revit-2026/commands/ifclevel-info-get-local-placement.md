@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCLevelInfo.GetLocalPlacement
+Gets the local placement.

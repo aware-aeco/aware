@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Toposolid.SetCutVoidStability
+Enables or disables the setting for stability of Boolean operations for Toposolid elements.

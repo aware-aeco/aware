@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DigitScrollerBase.OnValueChanged
+Raise the ValueChanged event.

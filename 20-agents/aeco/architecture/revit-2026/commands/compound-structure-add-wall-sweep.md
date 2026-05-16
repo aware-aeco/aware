@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.AddWallSweep
+Adds a new wall sweep or reveal to the compound structure.

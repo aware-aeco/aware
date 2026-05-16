@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.RemoveTextAsync
+Remove text in range

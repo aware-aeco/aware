@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContentCollection.Iterator
+Gets an iterator for the collection

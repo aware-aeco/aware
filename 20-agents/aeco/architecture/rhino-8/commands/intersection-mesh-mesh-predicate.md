@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.MeshMeshPredicate
+Determines if meshes intersect or overlap.

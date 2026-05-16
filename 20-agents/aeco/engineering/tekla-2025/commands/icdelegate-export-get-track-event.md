@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportGetTrackEvent
+DO NOT USE! For internal usage only!

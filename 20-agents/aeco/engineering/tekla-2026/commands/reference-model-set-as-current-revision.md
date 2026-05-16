@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceModel.SetAsCurrentRevision
+Sets the given revision as current revision.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObject.GetHashCode
+Provides an hash code for this item.

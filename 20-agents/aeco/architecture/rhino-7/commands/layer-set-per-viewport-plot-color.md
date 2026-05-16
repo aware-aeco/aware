@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Layer.SetPerViewportPlotColor
+Sets the plot color for this layer.

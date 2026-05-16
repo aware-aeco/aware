@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHAnnotationBase
+Convert data into GH_AnnotationBase.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayArrayPoint3d.PointCountAt
+Gets the amount of points in a polyline.

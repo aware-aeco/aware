@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RibbonPainter.DropDownBar
+Computes a graphicspath that delineates the bar along the top of a dropdown form

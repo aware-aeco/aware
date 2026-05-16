@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.DeleteMacro
+Delete the specified macro and associated files

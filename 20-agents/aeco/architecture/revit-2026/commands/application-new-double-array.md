@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewDoubleArray
+Creates a new instance of a double array.

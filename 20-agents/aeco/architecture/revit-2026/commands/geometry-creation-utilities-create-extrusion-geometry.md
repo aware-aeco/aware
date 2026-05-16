@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryCreationUtilities.CreateExtrusionGeometry
+Creates a solid by linearly extruding one or more closed coplanar curve loops.

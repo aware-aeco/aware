@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IZooClientUtilities.LogoutOfCloudZoo
+Logs the user out of the cloud zoo. This logs out the current user and voids any existing leases.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.SelectSubObject
+Reports if an object can be selected.

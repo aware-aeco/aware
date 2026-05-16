@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipelineAttributes.HasColorFadeEffect
+Returns TRUE if there is a color fade effect enabled with a color fade effect amount             larger than 0.0, FALSE otherwise.

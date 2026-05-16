@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetDeletedSubmittedPartsCount
+Retrieves the number of deleted parts that were previously submitted to procurement.

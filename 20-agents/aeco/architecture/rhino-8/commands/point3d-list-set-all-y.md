@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point3dList.SetAllY
+Set all the Y values for the points to a single value

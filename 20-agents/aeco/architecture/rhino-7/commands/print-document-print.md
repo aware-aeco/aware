@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PrintDocument.Print
+Prints this document immediately using the current

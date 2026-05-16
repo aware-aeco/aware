@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshTextureCoordinateList.NormalizeTextureCoordinates
+Scales the texture coordinates so the texture domains are [0,1]              and eliminate any texture rotations.

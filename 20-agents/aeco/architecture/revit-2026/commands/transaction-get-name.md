@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transaction.GetName
+Returns the transaction's name.

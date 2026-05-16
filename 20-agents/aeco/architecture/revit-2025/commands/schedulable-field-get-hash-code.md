@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SchedulableField.GetHashCode
+Gets the integer value of the SchedulableField as hash code

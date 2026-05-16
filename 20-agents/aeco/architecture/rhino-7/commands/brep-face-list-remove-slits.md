@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepFaceList.RemoveSlits
+Remove slit trims and slit boundaries from each face.

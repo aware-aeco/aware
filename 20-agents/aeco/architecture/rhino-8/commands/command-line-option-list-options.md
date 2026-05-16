@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CommandLineOption.ListOptions
+If this OptionType is a list, then the option should contain a list of values             that the user can pick from.

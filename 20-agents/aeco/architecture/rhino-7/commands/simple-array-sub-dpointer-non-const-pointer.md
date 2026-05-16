@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArraySubDPointer.NonConstPointer
+Gets the non-constant pointer (for modification) of this array.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplacementPath.SetAnchorPoint
+Sets the reference that determines the origin of this DisplacementPath.

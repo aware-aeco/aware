@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewPointOnEdge
+Create a PointOnEdge object which is used to define the placement of a ReferencePoint.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotWriteErrorToSessionLog
+Writes a message in the TeklaStructures Error Log file.

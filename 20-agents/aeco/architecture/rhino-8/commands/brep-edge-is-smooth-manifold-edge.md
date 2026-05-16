@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepEdge.IsSmoothManifoldEdge
+For a manifold, non-boundary edge, decides whether or not the two surfaces             on either side meet smoothly.

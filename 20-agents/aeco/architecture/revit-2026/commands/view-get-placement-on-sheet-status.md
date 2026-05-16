@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetPlacementOnSheetStatus
+Determines if this view placed on a sheet completely or partially.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayGuid.ConstPointer
+Gets the constant (immutable) pointer of this array.

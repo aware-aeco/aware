@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEvents.OnViewDeleted
+Called when a view is deleted.

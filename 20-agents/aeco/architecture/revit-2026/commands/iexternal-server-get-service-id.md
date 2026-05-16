@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExternalServer.GetServiceId
+Implement this method to return the id of the service.

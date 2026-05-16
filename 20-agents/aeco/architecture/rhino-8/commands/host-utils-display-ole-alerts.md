@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostUtils.DisplayOleAlerts
+Defines if Ole alerts ("Server busy") alerts should be visualized.             This function makes no sense on Mono.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Leader.Explode
+Explodes this leader into its geometric components.

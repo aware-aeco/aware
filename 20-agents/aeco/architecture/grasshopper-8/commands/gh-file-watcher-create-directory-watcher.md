@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_FileWatcher.CreateDirectoryWatcher
+Create a new FileSystem Watcher object aimed at a specific file.

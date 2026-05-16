@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.GetMinimumLayerThickness
+Get the minimum allowable layer thickness.

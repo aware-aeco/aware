@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColumnAttachment.IsValidColumn
+Says whether a FamilyInstance supports column attachments.

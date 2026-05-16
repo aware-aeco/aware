@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Variant.ToGoo
+Attempt to convert a Variant to a Grasshopper IGH_Goo type.

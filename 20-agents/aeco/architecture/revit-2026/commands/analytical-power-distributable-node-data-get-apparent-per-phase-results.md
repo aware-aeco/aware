@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalPowerDistributableNodeData.GetApparentPerPhaseResults
+Get an ElectricalPerPhaseData which contains each electrical phase's apparent load and apprent current of the power distributable node.

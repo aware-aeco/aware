@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportGetCoordinateSystem
+DO NOT USE! For internal usage only!

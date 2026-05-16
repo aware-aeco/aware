@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.CreateShapeFromGeometry
+Create a new shape in the shape catalog, based on the part geometry.

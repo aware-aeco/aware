@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.CreateTweenSurfacesWithSampling
+Create tween surfaces that gradually transition between two bounding surfaces using point sampling.

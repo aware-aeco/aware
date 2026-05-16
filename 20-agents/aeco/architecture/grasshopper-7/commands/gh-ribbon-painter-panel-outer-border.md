@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RibbonPainter.PanelOuterBorder
+Computes a graphicspath that delineates the outer edge of a typical panel

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewInfo.ClippingPlaneSurfaces
+Returns a list of ClippingPlaneSurfaces for this view.

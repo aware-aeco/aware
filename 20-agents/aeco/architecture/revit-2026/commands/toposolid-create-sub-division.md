@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Toposolid.CreateSubDivision
+Creates a Toposolid subdivision element with the current Toposolid as its host.

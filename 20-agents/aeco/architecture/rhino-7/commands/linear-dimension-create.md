@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinearDimension.Create
+Initialize Dimension parameters

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentParamServer.GetHashCode
+Creates a SHA1 hash from the parameter data.

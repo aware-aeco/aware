@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveIntersectResult.GetOverlaps
+Gets information about the points shared between the two curves.

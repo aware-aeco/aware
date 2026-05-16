@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileLwo.Read
+Read a lwo file into a RhinoDoc

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoApp.MainWindow
+Main Rhino Window

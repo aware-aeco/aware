@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.Clone
+Clones the pipeline. Creates an identical copy of "this" pipeline.             Copies all conduits from "this" pipeline to the new pipeline.

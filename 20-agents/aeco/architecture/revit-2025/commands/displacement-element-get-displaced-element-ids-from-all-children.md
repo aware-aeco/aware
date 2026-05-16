@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplacementElement.GetDisplacedElementIdsFromAllChildren
+The element ids of elements displaced by this DisplacementElement and any    DisplacementElement which declare this one as parent.

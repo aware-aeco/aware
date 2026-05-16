@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoApp.GetExecutableDirectory
+directory

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DigitNumber.LimitValue
+Limits the value to the minimum and maximum domain.

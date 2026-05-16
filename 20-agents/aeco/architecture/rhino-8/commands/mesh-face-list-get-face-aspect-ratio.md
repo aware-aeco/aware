@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshFaceList.GetFaceAspectRatio
+Returns the mesh face at the given index.

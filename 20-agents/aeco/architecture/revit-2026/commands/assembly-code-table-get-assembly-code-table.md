@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssemblyCodeTable.GetAssemblyCodeTable
+Returns the AssemblyCodeTable for the specified document.

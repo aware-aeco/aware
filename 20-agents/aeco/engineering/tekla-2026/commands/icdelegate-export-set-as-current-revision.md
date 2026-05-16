@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportSetAsCurrentRevision
+DO NOT USE! For internal usage only!

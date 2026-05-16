@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OverrideGraphicSettings.SetSurfaceForegroundPatternColor
+Sets the override color of the surface foreground pattern.

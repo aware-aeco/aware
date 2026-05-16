@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostObjectSubcomponentInfo.GetCurveLoop
+Gets the CurveLoop representing the base profile curve loop of the roof or floor slab

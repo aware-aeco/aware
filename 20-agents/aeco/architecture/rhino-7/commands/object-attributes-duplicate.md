@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectAttributes.Duplicate
+Constructs a copy of this  instance.

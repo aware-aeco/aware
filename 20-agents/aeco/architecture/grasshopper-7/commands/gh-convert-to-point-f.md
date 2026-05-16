@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToPointF
+Convert a Rhino SDK point structure to a GDI point structure.

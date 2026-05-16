@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObjectEnumerator.GetEnumerator
+Gets the enumerator.

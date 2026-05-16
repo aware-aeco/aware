@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform.ToFloatArray
+Return the matrix as a linear array of 16 float values.

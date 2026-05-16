@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BimModelDataProductClient.GetModelVersionsAsync
+Asynchronously retrieves all versions of a given BIM model from the Bim Model Data Product service.

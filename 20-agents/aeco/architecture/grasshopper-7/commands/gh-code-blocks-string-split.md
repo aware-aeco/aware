@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CodeBlocks.StringSplit
+String split utility class.

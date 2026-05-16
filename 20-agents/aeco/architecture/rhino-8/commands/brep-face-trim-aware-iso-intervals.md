@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepFace.TrimAwareIsoIntervals
+Gets intervals where the iso curve exists on a BrepFace (trimmed surface)

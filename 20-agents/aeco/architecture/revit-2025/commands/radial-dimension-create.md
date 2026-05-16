@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RadialDimension.Create
+Creates a new instance of an Radial Dimension element within the project.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralFramingUtils.FlipEnds
+Flips the ends of the structural framing element.

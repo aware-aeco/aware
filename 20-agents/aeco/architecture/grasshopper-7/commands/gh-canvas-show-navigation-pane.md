@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Canvas.ShowNavigationPane
+Displays the quick-navigation popup pane at the cursor.

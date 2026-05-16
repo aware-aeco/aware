@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExtendedObservableCollection`1.AddRange
+Adds the specified  to the collection.

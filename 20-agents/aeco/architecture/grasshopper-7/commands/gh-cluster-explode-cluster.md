@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Cluster.ExplodeCluster
+Explode this cluster back into the document that contains it.

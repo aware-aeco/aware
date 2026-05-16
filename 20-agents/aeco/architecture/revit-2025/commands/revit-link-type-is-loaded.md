@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitLinkType.IsLoaded
+Checks whether the link with this id is loaded.

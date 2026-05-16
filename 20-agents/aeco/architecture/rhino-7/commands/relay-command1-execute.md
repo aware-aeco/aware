@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RelayCommand`1.Execute
+Executes the command with the specified parameter.

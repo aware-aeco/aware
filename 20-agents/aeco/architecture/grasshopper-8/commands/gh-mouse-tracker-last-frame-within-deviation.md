@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MouseTracker.LastFrameWithinDeviation
+Starting from the youngest frame, finds the oldest frame that is still   within a maximum deviation of the youngest frame.

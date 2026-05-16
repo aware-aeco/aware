@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalDefinitionCreationOptions.SetDataType
+Sets the parameter's data type.

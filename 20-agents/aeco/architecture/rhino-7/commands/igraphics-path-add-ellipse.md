@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGraphicsPath.AddEllipse
+Adds an ellipse to the path

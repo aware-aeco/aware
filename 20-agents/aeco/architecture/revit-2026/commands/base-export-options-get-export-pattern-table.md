@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BaseExportOptions.GetExportPatternTable
+Gets a copy of the pattern table.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToArc_Primary
+Performs a direct cast from OnArc or GH_Arc.   Data is not quaranteed to be duplicated.

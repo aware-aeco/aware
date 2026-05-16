@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Form.IsProfileEdge
+Tell if an edge or curve is generated from a profile.

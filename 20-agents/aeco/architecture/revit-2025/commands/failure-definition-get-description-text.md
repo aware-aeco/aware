@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureDefinition.GetDescriptionText
+Retrieves the description text of the failure.

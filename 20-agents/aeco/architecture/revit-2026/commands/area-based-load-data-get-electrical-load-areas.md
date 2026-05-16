@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaBasedLoadData.GetElectricalLoadAreas
+Gets electrical load areas which the area based load includes.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationDrawingsServiceExtractor.GetRootFolder
+Get the root folder for the storage of the export files.

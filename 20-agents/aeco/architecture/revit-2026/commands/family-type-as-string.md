@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyType.AsString
+Provides access to the string contents of the given family parameter.

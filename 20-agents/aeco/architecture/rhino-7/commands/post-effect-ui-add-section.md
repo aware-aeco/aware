@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PostEffectUI.AddSection
+Add a section to the UI.

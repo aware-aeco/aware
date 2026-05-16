@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceDefinitionTable.InstanceDefinitionIndex
+Get the index of the instance definition with a given id.

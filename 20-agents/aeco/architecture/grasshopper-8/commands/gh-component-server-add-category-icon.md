@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentServer.AddCategoryIcon
+Add an icon for a tab category. 16x16 images are required.

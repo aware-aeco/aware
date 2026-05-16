@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GDI_Util.Freeform_Blob
+Create a meta-ball outline for a set of rectangles.

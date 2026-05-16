@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.ShortPath
+Constructs a geodesic between 2 points, used by ShortPath command in Rhino.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Viewport.UnprojectRectangle
+Project a rectangle from control coordinates into canvas coordinates.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedParametersEventArgs.TryGetRhinoObjects
+Get array of RhinoObject for the specified key

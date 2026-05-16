@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_ContextualParameter.AutoAssignContextualData
+Use the in-build getter UI to assign data to the parameter.

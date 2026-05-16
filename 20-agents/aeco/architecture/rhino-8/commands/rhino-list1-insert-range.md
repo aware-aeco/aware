@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoList`1.InsertRange
+Inserts the elements of a collection into the List at the specified index.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjRef.SetSelectionComponent
+When an object is selected by picking a sub-object, SetSelectionComponent             may be used to identify the sub-object.

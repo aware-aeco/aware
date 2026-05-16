@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoMath.EvaluateNormalPartials
+Expert tool to evaluate partial derivatives of surface unit normal.

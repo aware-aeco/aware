@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSection.CreateDetail
+Returns a new detail ViewSection.

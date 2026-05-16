@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndirectBinding`1.RemoveValueChangedHandler
+Removes the handler for the specified reference from

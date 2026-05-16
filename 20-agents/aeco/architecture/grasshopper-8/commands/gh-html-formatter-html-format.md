@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_HtmlFormatter.HtmlFormat
+Converts all the items in this formatter into a single HTML formatted string

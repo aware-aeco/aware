@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.GetColors
+Copy all the point colors in this point cloud to an array.

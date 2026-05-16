@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetPartContour
+DO NOT USE! For internal usage only!

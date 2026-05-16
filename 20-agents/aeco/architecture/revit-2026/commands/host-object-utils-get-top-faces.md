@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostObjectUtils.GetTopFaces
+Returns the top faces for this host object.

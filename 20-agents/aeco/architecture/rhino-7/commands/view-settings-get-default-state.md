@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSettings.GetDefaultState
+Gets the view factory settings.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoCore.Dispose
+IDisposable implementation

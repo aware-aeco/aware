@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModificationOutsideTransactionException.GetObjectData
+Retrieves data needed to serialize the target object.

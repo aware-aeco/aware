@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.Trim
+Constructs a sub-surface that covers the specified UV trimming domain.

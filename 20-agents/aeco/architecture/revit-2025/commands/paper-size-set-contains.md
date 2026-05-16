@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PaperSizeSet.Contains
+Tests for the existence of an item within the set.

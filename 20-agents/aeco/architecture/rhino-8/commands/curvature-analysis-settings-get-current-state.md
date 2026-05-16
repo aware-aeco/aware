@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurvatureAnalysisSettings.GetCurrentState
+Gets the current settings of the application.

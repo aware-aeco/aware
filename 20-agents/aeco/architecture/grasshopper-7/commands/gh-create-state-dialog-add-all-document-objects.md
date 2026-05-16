@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CreateStateDialog.AddAllDocumentObjects
+Include all IGH_StateAware objects in the document in this dialog and automatically   set inclusion flags for selected objects.

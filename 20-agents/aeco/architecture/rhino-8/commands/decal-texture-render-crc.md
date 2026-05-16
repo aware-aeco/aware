@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Decal.TextureRenderCRC
+This method is deprecated in favor of TextureRenderHash below.

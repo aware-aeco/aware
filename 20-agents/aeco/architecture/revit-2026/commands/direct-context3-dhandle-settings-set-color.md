@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectContext3DHandleSettings.SetColor
+Sets color for a piece of DirectContext3D graphics.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PipeFittingAndAccessoryPressureDropUIDataItem.GetPipeFittingAndAccessoryData
+Gets the fitting data stored in the UI data item.

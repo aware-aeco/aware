@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_ToolstripItemKeyHandler.RespondToEnter
+Handles an Enter keydown event.

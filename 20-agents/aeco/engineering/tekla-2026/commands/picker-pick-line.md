@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Picker.PickLine
+Queries the user to pick a line from the model.

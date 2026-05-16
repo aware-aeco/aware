@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObjectTable.AddRadialDimension
+Adds a radial dimension object to the 3dm file object table.

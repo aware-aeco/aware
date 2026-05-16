@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilySymbol.Activate
+Activates the symbol to ensure that its geometry is accessible.

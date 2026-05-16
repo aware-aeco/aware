@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoftedPlate.Select
+Selects a lofted plate object from the database.

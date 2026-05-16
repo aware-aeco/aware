@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DGNExportOptions.GetPredefinedSetupNames
+Returns a list of names of predefined setups of DGN export options.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolyLine.Evaluate
+Evaluates a parameter on the polyline.

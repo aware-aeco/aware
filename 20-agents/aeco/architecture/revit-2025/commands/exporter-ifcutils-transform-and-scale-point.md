@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.TransformAndScalePoint
+Converts a point from global Revit coordinates to current IFC coordinates, including scale.

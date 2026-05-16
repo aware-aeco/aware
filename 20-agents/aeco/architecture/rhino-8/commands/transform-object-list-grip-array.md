@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TransformObjectList.GripArray
+Gets access to the internal GripObject array of the TransformObjectList object.

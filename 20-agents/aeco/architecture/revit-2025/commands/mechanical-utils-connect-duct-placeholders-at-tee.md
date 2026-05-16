@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MechanicalUtils.ConnectDuctPlaceholdersAtTee
+Connects a trio of placeholders that can intersect in a Tee connection.

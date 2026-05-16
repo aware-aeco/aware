@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPartRouteEnd.CreateFromConnector
+Create fabrication routing end from connector end point.

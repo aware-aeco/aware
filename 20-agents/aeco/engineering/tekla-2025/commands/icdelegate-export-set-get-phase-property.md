@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportSetGetPhaseProperty
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Layer.PerViewportIsVisible
+Gets the per viewport visibility of this layer.

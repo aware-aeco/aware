@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterRule.ElementPasses
+Derived classes override this method to implement the test that determines    whether the given element passes this rule or not.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DividedSurface.GetGridNodeLocation
+Specify whether a particular grid node is  interior to the surface, on the boundary, or outside the boundary.

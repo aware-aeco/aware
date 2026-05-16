@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.GetMeshFromDocument
+Harvest a mesh object from a Rhino document.

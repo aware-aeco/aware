@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.IsValidCategoryForMaterialTakeoff
+Checks whether a category can be used for a material takeoff.

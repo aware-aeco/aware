@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurvePointList.ControlPolygon
+Constructs a polyline through all the control points.              Note that periodic curves generate a closed polyline with fewer              points than control-points.

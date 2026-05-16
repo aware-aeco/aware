@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Connect.GetProjectId
+Gets the ProjectIdUDA id of opened tekla model. Is the same ID as trimble connect project of the model.

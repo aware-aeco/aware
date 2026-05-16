@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.SetGraphicsStyleId
+Sets the graphics style id for this curve.

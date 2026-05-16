@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-VisualAnalysisMode.AdjustAnalysisMeshes
+Interactively adjusts surface analysis meshes of objects using a Rhino built-in analysis mode.

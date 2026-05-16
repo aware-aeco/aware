@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementRecord.IsCurveDriven
+Identifies if the element is curve driven.

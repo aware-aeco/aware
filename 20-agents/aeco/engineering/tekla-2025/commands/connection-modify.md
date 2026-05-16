@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Connection.Modify
+Modifies the existing connection in the model database to match the current one.

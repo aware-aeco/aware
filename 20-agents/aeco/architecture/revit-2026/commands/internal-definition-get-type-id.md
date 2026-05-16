@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InternalDefinition.GetTypeId
+Gets the identifier of the parameter.

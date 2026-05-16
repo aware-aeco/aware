@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IModelExportContext.OnPoint
+This method is called when a Point is being output.

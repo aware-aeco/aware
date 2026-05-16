@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SnapShotsClient.LayersCategory
+Predefined layers category

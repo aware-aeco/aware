@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TaskDialog.Show
+Shows the task dialog.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshTextureCoordinateList.ToFloatArray
+Copies all vertices to a linear array of float in u,v order

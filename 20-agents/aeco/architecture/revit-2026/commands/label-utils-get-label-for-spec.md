@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LabelUtils.GetLabelForSpec
+Gets the user-visible name for a spec.

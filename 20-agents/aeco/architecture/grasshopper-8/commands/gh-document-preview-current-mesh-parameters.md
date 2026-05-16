@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.PreviewCurrentMeshParameters
+Gets the currently relevant meshing parameters (do not modify the instance as it may be shared).

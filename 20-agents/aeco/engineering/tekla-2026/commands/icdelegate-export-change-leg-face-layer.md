@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportChangeLegFaceLayer
+DO NOT USE! For internal usage only.

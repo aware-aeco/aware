@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportSetGetPhaseProperty
+DO NOT USE! For internal usage only!

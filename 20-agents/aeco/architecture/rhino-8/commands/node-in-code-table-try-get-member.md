@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NodeInCodeTable.TryGetMember
+Dynamically binds the table to property-like access via its item names.

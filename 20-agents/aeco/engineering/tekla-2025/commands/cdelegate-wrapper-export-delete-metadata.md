@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportDeleteMetadata
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsSurfaceData.GetKnotsV
+Get the list of knots in the v-direction.

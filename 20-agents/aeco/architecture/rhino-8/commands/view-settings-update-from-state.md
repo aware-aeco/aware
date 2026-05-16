@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSettings.UpdateFromState
+Updates from a particular setting state.

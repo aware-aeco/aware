@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourCube.Average
+Compute the average of two colours.

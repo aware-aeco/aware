@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeneralSettings.GetDefaultState
+Gets the factory settings.

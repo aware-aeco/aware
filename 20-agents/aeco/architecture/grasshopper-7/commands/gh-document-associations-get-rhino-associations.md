@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentAssociations.GetRhinoAssociations
+Find all the Rhino 3dm files that have been associated with a given Grasshopper file.

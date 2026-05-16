@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToInterval_Secondary
+Attempts to convert other data types into an Interval.   Data is not quaranteed to be duplicated.

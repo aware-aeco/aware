@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_SourceCodeEditor.CreateManagedEditor
+Create a new editor that is known by the manager.

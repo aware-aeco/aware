@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ToposolidType.GetContourSetting
+Get the contour setting object from the current toposolid type.

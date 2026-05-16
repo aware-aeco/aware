@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepCurveList.Add
+Adds a curve

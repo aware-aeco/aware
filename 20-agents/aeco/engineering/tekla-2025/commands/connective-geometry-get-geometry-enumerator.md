@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConnectiveGeometry.GetGeometryEnumerator
+Gets a new geometry sections enumerator for enumerating through the geometry sections.

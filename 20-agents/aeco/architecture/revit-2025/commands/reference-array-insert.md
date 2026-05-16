@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceArray.Insert
+Insert the specified reference into the array.

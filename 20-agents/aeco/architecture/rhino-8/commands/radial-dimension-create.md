@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RadialDimension.Create
+Initialize Dimension parameters

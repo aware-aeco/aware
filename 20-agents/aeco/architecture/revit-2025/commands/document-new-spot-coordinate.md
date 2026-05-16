@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.NewSpotCoordinate
+Generate a new spot coordinate object within the project.

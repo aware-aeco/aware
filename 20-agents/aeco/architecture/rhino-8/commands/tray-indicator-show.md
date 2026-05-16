@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TrayIndicator.Show
+Show this instance of .

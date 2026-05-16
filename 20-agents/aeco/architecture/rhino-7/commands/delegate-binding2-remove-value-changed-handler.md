@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DelegateBinding`2.RemoveValueChangedHandler
+Removes the handler for the specified reference from

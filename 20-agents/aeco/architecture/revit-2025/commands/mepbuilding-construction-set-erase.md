@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPBuildingConstructionSet.Erase
+Removes a specified MEPBuildingConstruction from the set.

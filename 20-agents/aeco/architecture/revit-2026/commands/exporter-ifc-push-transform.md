@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFC.PushTransform
+Sets the internal transform of the exporter to process the geometry and properties of the input element.

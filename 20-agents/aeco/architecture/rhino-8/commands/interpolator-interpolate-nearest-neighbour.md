@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interpolator.InterpolateNearestNeighbour
+Sample the list of numbers with Nearest Neighbor interpolation.

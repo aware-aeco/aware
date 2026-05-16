@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Control.AttachNative
+Attaches the control for direct use in a native application

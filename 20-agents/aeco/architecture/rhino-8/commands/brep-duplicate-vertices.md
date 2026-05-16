@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.DuplicateVertices
+Duplicate all the corner vertices of this Brep.

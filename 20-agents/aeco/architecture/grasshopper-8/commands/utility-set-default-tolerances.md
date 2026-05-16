@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Utility.SetDefaultTolerances
+Utility function to set absolute and angle tolerance fields.

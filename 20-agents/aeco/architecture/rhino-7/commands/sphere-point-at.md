@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Sphere.PointAt
+Evaluates the sphere at specific longitude and latitude angles.

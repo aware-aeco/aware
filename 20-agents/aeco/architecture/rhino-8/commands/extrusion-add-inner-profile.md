@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Extrusion.AddInnerProfile
+Adds an inner profile.

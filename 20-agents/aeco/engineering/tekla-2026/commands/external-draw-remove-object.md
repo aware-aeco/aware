@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalDraw.RemoveObject
+Remove object from all views.

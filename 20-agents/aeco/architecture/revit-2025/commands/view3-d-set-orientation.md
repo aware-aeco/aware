@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View3D.SetOrientation
+Sets the temporary orientation of the View3D.  The new orientation is not saved in the document.

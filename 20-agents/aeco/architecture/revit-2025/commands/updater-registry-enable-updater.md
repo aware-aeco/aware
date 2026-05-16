@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UpdaterRegistry.EnableUpdater
+Enables the updater.

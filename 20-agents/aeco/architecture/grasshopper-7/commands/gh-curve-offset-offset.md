@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CurveOffset.Offset
+Offset the curve(s) and apply all trimming and joining logic.

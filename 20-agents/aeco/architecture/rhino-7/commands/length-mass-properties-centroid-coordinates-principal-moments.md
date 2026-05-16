@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LengthMassProperties.CentroidCoordinatesPrincipalMoments
+Calculates the eigenvalues and eigenvectors of the moments matrix with repect to centroid coordinates.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MullionTypeSet.Erase
+Removes a specified mullion type from the set.

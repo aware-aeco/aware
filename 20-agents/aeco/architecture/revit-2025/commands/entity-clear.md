@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Entity.Clear
+Resets the field to its default value.

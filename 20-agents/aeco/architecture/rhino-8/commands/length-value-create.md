@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LengthValue.Create
+Create from string

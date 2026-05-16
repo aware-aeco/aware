@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToInterval_Primary
+Performs a direct cast from OnInterval or GH_Interval.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferencePoint.GetCoordinateSystem
+The position and orientation of the ReferencePoint.

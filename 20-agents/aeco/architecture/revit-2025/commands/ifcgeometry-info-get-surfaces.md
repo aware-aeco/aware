@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCGeometryInfo.GetSurfaces
+Gets the IfcSurface handles created representing the processed geometry and stored in this object.

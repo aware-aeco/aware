@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StringWrapper.SetString
+Set contents of this string.

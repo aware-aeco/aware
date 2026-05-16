@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WireSizeSet.Erase
+Removes a specified wire size from the set.

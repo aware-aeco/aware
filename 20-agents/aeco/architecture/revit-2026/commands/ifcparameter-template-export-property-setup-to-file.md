@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCParameterTemplate.ExportPropertySetupToFile
+Exports mapping information of the provided property setup to a text file.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Entity.IsValid
+Checks whether this Entity has a live Schema corresponding to it.

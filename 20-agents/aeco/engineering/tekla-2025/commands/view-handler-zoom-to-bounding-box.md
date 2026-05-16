@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewHandler.ZoomToBoundingBox
+Zooms a model view.

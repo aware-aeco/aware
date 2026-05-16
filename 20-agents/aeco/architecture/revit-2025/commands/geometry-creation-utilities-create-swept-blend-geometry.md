@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryCreationUtilities.CreateSweptBlendGeometry
+Creates a solid by simultaneously sweeping and blending two or more closed planar curve loops along a single curve.

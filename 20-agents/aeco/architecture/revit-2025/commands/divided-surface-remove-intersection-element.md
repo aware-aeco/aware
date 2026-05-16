@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DividedSurface.RemoveIntersectionElement
+Removes an intersection element from a divided surface.

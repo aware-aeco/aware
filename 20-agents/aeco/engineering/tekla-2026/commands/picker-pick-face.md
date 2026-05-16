@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Picker.PickFace
+Queries the user to pick a face from the model.

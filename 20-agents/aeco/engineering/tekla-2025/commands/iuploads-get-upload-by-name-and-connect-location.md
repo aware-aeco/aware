@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IUploads.GetUploadByNameAndConnectLocation
+Gets an upload by name and connect location.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.OnObjectsAdded
+Raise the ObjectsAdded event.

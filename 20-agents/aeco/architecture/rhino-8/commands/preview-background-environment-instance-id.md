@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PreviewBackground.EnvironmentInstanceId
+EnvironmentInstanceId

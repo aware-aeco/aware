@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DividedPath.IsValidMeasurementType
+Checks that the measurement type enumeration value is valid

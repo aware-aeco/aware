@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.SetConstructionPlane
+Sets the construction plane to cplane.

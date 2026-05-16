@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoltArray.AddBoltDistY
+Adds a Y distance to the bolt array.

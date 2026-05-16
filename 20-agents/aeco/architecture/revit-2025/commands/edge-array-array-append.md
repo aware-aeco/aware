@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EdgeArrayArray.Append
+Add the edge array to the end of the array.

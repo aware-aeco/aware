@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GenericZone.GetBoundaries
+Gets the boundaries for the generic zone.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyAnalysisSurface.GetAdjacentAnalyticalSpace
+Gets the secondary adjacent analytical space this surface is associated with.

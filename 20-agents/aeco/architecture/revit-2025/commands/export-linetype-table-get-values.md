@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLinetypeTable.GetValues
+Returns all the values stored in the map.

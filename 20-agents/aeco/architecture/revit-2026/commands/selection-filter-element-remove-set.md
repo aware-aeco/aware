@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SelectionFilterElement.RemoveSet
+Removes a set of ElementIds from the filter's set.

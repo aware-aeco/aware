@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.Fit
+Fits a new surface through an existing surface.

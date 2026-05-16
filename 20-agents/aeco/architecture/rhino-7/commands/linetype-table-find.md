@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinetypeTable.Find
+Obsolete. Use the other overload.

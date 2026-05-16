@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AdaptiveComponentFamilyUtils.SetPointConstraintType
+Sets constrain type of an Adaptive Shape Handle Point.

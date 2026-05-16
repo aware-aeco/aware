@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICommonComponentTable`1.FindId
+Retrieves an object based on ID. You should prefer ID search over Index search.

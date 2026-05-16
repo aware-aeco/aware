@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.GetOverlayModelEntitiesIfcGuidsFromIds
+DO NOT USE! For internal usage only!             Retrieves the GUIDs corresponding to the provided list of runtime ids for the specified overlay model.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSplice.GetRebarSpliceGeometry
+Gets the RebarSpliceGeometry.

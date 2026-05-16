@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ImageInstance.IsValidView
+Check that the view is a valid view for ImageInstance elements

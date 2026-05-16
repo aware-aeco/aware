@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PaperSizeSet.ReverseIterator
+Retrieve a backward moving iterator to the set.

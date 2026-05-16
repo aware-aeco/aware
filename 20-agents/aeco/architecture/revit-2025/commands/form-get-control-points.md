@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Form.GetControlPoints
+Given an edge or a curve or a face, return all control points lying on it (in form of geometry references).

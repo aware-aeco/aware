@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectAttributes.GetHideInDetailOverrides
+Get list of details that this object is supposed to be hidden in

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_NumberSlider.SetSliderValue
+Sets member value directly.  This sets the value of the internal slider, it does not backsolve for any expressions.

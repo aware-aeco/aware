@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NonContinuousRailStructure.RemoveNonContinuousRail
+Removes Non-Continuous Rail from the Rail Structure.

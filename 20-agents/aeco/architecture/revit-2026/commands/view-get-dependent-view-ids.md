@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetDependentViewIds
+Get the ids of dependent views.

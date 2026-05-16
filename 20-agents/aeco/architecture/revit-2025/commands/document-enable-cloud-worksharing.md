@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.EnableCloudWorksharing
+Enables cloud worksharing for a cloud model

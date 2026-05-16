@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlanViewRange.GetOffset
+Get the offset value associated with a View Depth plane

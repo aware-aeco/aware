@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TransformObjectList.AddObjects
+Add objects to list with a GetObject

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveLoopIterator.MoveNext
+Increments the iterator to the next item.

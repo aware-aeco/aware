@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawSubDShaded
+Draw a shaded mesh representation of a SubD

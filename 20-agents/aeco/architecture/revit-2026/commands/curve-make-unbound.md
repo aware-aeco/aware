@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.MakeUnbound
+Makes this curve unbound.

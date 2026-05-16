@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultipleValuesIndicationSettings.GetMultipleValuesIndicationSettings
+Returns the MultipleValuesIndicationSettings element for a given document.

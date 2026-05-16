@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BinaryArchiveReader.ReadIntArray
+Reads an array of  from the archive.             An array is returned even if the input was another enumerable type.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Sphere.Translate
+Moves this sphere along a motion vector.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interval.GetHashCode
+Computes the hash code for this  object.

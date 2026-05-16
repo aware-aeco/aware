@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.GetFrustumCenter
+Returns world coordinates of frustum's center.

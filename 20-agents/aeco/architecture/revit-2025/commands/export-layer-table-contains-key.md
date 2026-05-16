@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLayerTable.ContainsKey
+Checks whether a layer key exists in the table.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AppearanceAssetElement.SetRenderingAsset
+Sets the rendering asset for the appearance asset element.

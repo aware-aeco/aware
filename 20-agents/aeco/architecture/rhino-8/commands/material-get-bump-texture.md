@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Material.GetBumpTexture
+Gets the bump texture of this material.

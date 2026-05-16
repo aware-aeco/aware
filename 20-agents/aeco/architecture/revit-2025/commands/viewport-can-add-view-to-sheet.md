@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Viewport.CanAddViewToSheet
+Verifies that the view can be added to the ViewSheet.

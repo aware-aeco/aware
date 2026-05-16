@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportSetStringPropertyToDatabase
+DO NOT USE! For internal usage only!

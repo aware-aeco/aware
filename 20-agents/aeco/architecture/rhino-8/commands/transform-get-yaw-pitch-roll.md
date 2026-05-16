@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform.GetYawPitchRoll
+Find the Tait-Byran angles (also loosely called Euler angles) for a rotation transformation.

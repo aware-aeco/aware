@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.SolidOrientation
+Determines orientation of a "solid" mesh.

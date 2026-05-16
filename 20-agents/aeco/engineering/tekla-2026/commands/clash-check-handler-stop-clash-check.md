@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ClashCheckHandler.StopClashCheck
+Stops the clash checking.

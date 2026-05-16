@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceModelObject.Modify
+At the moment reference objects cannot be modified.

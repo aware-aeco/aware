@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryCreationUtilities.CreateSweptGeometry
+Creates a solid by sweeping one or more closed coplanar curve loops along a path.

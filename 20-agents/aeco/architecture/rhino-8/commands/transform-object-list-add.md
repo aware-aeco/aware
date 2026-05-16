@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TransformObjectList.Add
+Add a RhinoObject to this list

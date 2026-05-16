@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableTray.IsValidCableTrayType
+Identifies if a cable tray type is valid.

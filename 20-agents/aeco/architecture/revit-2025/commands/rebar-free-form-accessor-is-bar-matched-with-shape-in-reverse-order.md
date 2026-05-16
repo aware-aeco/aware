@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarFreeFormAccessor.IsBarMatchedWithShapeInReverseOrder
+Checks if the bar at index barPositionIndex it's matched in reversed order with its shape.

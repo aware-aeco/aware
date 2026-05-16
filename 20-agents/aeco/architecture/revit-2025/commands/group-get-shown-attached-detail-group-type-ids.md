@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Group.GetShownAttachedDetailGroupTypeIds
+Returns the attached detail groups which have displayed instances for    this group type in the input view.

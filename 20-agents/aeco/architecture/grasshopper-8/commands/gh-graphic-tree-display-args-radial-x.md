@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicTreeDisplayArgs.RadialX
+Compute the x-coordinate of a point defined by radial coordinates

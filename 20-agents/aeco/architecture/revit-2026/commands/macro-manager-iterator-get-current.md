@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MacroManagerIterator.GetCurrent
+Returns the current Macro module.

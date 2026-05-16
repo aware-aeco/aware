@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlArc.Delete
+Deletes the control arc with the given Identifier.

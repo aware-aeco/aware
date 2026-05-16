@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricatorProject.GetFabricatorProject
+Returns information about the current model's project.

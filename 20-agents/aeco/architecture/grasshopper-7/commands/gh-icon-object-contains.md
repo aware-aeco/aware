@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_IconObject.Contains
+Tests a floating point coordinate for shape inclusion.

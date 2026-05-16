@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetViewIdFromCameraChangedEvent
+DO NOT USE! For internal usage only!

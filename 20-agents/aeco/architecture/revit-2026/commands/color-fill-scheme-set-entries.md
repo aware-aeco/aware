@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorFillScheme.SetEntries
+Update scheme entries in batch mode.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCParameterTemplate.GetActiveTemplate
+Gets the active mapping template element in the document.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.JoinCurves
+Joins a collection of curve segments together.

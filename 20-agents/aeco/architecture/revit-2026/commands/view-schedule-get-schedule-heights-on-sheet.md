@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.GetScheduleHeightsOnSheet
+Gets the heights of schedule title, column header and each schedule body row.

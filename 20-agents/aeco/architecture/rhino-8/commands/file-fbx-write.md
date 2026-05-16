@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileFbx.Write
+Write a Fbx file based on the contents of a RhinoDoc

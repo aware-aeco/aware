@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelComponent.IsValidComponentName
+Tests for a valid model component name.

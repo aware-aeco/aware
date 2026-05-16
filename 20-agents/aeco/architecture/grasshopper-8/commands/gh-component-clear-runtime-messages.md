@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Component.ClearRuntimeMessages
+Clears all runtime messages in me and my parameters

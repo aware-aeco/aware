@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawMeshWires
+Draws all the wires in a given mesh.

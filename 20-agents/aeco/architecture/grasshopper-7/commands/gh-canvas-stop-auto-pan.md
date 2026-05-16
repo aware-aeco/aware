@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Canvas.StopAutoPan
+Stop the auto-panning timer.

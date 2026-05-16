@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UpdaterRegistry.SetExecutionOrder
+Forces execution order between two updaters    Execution order: first before second

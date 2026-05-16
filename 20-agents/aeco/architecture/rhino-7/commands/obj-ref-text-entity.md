@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjRef.TextEntity
+Gets the text entity if the referenced geometry is one.

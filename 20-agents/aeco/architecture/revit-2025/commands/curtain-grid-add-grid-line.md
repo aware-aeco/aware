@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurtainGrid.AddGridLine
+Add a grid line to the curtain grid.

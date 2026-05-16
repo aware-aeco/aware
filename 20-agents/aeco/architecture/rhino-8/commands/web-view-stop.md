@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WebView.Stop
+Stops loading the current page.

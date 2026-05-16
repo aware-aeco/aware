@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpatialFieldManager.GetSpatialFieldManager
+Retrieves manager object for the given view or returns NULL

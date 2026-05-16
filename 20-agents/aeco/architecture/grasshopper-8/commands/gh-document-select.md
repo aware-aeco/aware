@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.Select
+Default pick selection behaviour. (looks at current Shift + Control modifier states to determine addition/removal)

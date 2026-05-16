@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderPrimitiveList.Add
+Add mesh and material.

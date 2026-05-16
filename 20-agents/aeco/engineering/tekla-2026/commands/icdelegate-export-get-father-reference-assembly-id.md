@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportGetFatherReferenceAssemblyId
+DO NOT USE! For internal usage only!

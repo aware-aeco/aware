@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CommandAliasList.IsAlias
+Verifies that a command alias exists in Rhino.

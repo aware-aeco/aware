@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Instances.EnforceInvariantCulture
+If the Setting "EnforceInvariantCulture" is set to False, this function does nothing

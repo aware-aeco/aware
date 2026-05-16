@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DockablePane.IsShown
+Identify the pane is currently visible or in a tab.

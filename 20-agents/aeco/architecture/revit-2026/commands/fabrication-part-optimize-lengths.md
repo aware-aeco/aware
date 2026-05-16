@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.OptimizeLengths
+Optimizes the length fabrication straight parts.

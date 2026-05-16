@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewTable.AddPageView
+Constructs a new page view with a given title and, at the same time, adds it to the list.

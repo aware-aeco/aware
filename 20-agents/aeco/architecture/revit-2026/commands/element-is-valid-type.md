@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.IsValidType
+Checks if given type is valid for the set of elements.

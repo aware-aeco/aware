@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SelectionFilterElement.SetElementIds
+Replaces the set of ElementIds contained by this filter.

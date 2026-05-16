@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.SetExternalReferenceModelObjectColoring
+DO NOT USE! For internal usage only!

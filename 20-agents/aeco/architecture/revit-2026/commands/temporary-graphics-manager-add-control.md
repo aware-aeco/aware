@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TemporaryGraphicsManager.AddControl
+Creates an in-canvas control.

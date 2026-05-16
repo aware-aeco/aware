@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportDWGSettings.Create
+Create a DWG export settings with default values.

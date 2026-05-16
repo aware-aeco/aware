@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.NewPointBoundaryConditions
+Creates a new Point BoundaryConditions Element.

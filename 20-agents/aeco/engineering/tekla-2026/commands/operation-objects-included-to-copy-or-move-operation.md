@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.ObjectsIncludedToCopyOrMoveOperation
+Check if model object is included in to the copy or move operation.

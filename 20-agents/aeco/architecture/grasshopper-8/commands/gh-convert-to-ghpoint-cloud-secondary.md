@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHPointCloud_Secondary
+Converts similar data into a GH_PointCloud instance.  Data is not quaranteed to be duplicated.

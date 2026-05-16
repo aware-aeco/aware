@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.ClearColors
+Destroys the color information in this point cloud.

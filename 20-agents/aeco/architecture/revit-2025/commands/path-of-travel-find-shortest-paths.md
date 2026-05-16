@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PathOfTravel.FindShortestPaths
+For a floor plan view, calculates paths from each start point to its closest destinations.    Returns the path, represented by an array of XYZ points.

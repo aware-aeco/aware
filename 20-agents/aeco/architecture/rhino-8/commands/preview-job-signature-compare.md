@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PreviewJobSignature.Compare
+Compare two Preview Job Signatures. True if they are the same, otherwise false.

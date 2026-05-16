@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.SetSelectedExternalReferenceModel
+DO NOT USE! For internal usage only!

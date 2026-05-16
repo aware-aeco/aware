@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OptionalFunctionalityUtils.IsDWGImportLinkAvailable
+Checks whether the DWG Import/Link functionality is available in the installed Revit.

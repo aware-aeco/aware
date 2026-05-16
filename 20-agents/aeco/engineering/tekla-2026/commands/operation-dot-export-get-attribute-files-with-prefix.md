@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotExportGetAttributeFilesWithPrefix
+Gets attribute files with specified prefix and suffix.

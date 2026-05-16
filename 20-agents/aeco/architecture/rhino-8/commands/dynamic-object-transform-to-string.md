@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DynamicObjectTransform.ToString
+String representation of DynamicObject

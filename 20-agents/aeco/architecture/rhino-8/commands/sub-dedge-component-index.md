@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDEdge.ComponentIndex
+Gets the component index of this edge.

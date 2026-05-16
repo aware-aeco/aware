@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.GetGeometryFromInplaceWall
+Obtains a special snapshot of the geometry of an in-place wall element suitable for export.

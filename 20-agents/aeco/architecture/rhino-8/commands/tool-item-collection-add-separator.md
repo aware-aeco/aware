@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ToolItemCollection.AddSeparator
+Adds a separator item with the specified  or

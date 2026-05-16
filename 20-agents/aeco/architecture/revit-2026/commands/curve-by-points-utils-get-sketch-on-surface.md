@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveByPointsUtils.GetSketchOnSurface
+Gets the relationship between the CurveElement and face.

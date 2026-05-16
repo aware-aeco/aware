@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalSetting.RemoveWireMaterialType
+Remove the wire material type from project.

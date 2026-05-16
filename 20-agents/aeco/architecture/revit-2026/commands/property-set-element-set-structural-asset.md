@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PropertySetElement.SetStructuralAsset
+Sets a copy of the given StucturalAsset to be used in the PropertySetElement.

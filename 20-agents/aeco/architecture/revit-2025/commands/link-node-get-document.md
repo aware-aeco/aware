@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinkNode.GetDocument
+Returns the document associated with the link.

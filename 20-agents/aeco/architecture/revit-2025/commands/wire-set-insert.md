@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WireSet.Insert
+Insert the specified item into the set.

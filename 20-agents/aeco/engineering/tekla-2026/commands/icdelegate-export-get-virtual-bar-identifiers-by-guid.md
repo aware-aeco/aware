@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportGetVirtualBarIdentifiersByGuid
+DO NOT USE! For internal usage only!

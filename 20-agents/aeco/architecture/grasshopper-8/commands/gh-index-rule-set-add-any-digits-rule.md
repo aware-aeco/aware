@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_IndexRuleSet.AddAnyDigitsRule
+Append a rule for any amount of digits.

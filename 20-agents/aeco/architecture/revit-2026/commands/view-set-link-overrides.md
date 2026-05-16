@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.SetLinkOverrides
+Sets the graphic overrides of a  or  in the view.

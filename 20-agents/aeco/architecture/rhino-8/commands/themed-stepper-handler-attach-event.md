@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedStepperHandler.AttachEvent
+Attaches control events

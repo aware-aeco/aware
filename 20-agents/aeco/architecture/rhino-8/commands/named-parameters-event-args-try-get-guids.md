@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedParametersEventArgs.TryGetGuids
+Try to get a UUID array value for a given key name

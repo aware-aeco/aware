@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Path.Read
+Read this path from an archive.

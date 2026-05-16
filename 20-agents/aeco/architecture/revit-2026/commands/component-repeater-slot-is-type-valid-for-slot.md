@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ComponentRepeaterSlot.IsTypeValidForSlot
+Determines whether instance of given family type can be used in the component repeater slot.

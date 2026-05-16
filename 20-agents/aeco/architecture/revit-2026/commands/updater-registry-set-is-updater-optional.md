@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UpdaterRegistry.SetIsUpdaterOptional
+Sets a flag indicating whether an updater is optional or not.

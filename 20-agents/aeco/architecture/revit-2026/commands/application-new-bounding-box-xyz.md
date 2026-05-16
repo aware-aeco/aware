@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewBoundingBoxXYZ
+Creates a three-dimensional rectangular box.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UserDataList.Purge
+Removes all user data from this geometry.

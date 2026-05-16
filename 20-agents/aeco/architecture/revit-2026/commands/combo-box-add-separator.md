@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ComboBox.AddSeparator
+Adds a separator to the drop-down list.

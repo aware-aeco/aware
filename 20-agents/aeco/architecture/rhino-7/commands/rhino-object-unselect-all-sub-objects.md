@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.UnselectAllSubObjects
+Removes selection from all sub-objects.

@@ -6,3 +6,4 @@ description: API reference for namespace Tekla.Structures.Model.Geometry from Te
 # Tekla.Structures.Model.Geometry
 
 - **Rotation3D**
+  - Represents 3d rotation of object.

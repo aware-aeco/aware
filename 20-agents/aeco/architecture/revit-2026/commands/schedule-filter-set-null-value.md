@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleFilter.SetNullValue
+Sets the filter to have no specified value (used for HasParameter filters).

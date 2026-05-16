@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorCMYK.CreateFromRGBA
+Create the nearest CMYK equivalent of a RGBA color.

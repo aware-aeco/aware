@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationNetworkChangeService.GetInLinePartTypes
+Get a set of element identifiers of fabrication part types for in-line parts.

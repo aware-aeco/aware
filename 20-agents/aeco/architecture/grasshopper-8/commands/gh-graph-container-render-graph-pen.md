@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphContainer.Render_GraphPen
+Gets the default pen used to draw graph curves.

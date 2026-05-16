@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataStoreVirtualCollection`1.CopyTo
+Copies the contents of the collection to the specified array starting at the specified index

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroupSet.Contains
+Tests for the existence of a group within the set.

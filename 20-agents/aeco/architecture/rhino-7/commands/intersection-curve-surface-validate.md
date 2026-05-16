@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.CurveSurfaceValidate
+Intersects a curve and a surface.

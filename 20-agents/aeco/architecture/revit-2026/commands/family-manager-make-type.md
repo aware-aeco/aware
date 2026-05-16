@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyManager.MakeType
+Set the family parameter as a type parameter.

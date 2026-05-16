@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroupSet.Insert
+Insert the specified group into the set.

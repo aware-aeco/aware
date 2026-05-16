@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Commands.Run_GrasshopperReloadAssemblies
+Run the _GrasshopperReloadMemoryAssemblies command logic.

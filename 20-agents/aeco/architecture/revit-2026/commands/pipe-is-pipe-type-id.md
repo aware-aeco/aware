@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Pipe.IsPipeTypeId
+Checks if given type is valid pipe type.

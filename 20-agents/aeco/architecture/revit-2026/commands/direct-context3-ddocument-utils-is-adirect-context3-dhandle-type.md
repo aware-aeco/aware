@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectContext3DDocumentUtils.IsADirectContext3DHandleType
+Checks whether the provided Element ID corresponds to a DirectContext3D handle type element.

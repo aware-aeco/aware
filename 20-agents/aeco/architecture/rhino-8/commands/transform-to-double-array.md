@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform.ToDoubleArray
+Return the matrix as a linear array of 16 double values.

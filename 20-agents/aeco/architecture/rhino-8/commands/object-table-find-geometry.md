@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.FindGeometry
+Same as FindId, but returns the Geometry property directly, if it exists.

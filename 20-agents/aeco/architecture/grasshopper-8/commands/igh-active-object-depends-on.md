@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_ActiveObject.DependsOn
+Solve the inheritance relationship between this object and a potential parental object.

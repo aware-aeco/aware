@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewTable.Redraw
+Redraws all views.

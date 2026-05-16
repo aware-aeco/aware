@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SelectableFilterCollection`1.SelectAll
+Selects all rows in the underlying list.

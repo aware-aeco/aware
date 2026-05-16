@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExtElemChangeBeamSection.ChangeSection
+The method that will be called when user wants to change beam section

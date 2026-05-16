@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointList.ToArray
+Copies the points to a point array.

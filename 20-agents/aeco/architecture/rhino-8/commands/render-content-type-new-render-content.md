@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContentType.NewRenderContent
+Returns a new instance of the render content of this type.  This content can be added to a persistant list.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Part.GetSolid
+Returns the solid of the part.

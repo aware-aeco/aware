@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_ObjectProxy.CreateInstance
+Create a new instance from the target object.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormattedText.GetIndentLevel
+Returns the indent level of the paragraphs in the text range.

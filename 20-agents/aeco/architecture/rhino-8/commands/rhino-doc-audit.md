@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoDoc.Audit
+Audits the contents of the document.

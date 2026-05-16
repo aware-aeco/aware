@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Component.DocumentContextChanged
+Overrides the DocumentContextChanged method and delegates the call to all parameters.

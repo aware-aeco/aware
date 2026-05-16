@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Railing.SetPath
+Sets the railing path.

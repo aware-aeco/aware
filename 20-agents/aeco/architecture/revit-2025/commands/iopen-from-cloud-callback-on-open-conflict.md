@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IOpenFromCloudCallback.OnOpenConflict
+A method called when the conflict is happen during the model opening.

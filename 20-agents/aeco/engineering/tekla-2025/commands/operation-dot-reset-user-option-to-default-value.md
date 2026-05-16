@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotResetUserOptionToDefaultValue
+Resets advanced user option to its default value.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Form.IsVertexReference
+Tell if the pick is the reference to a vertex of the form.

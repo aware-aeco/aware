@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.AutomatedTesting_BroadcastMessage
+DO NOT USE! For internal usage only!

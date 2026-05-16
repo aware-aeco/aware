@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraintsManager.GetAllConstrainedHandles
+Retrieves all handles on the Rebar that are constrained to external references.

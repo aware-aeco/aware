@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.Extend
+Analytically extends the surface to include the interval.

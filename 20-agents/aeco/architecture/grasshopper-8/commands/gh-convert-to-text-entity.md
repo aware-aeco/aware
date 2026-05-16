@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToTextEntity
+Convert data into Rhino.Geometry.TextEntity.

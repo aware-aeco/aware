@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableCellStyle.ResetOverride
+Resets any overrides applied to this cell.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIControlledApplication.LoadPackageContents
+Loads add-ins from the given packageContents.xml file.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InputGeometry.RemoveObject
+Stops listening of events and destroys object from the view

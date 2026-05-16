@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DynamicControl.Create
+Creates the content for this item

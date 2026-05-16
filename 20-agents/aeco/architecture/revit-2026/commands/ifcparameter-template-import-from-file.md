@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCParameterTemplate.ImportFromFile
+Import mapping template from a text file.

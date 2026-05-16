@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferencePoint.SetVisibility
+Sets the visibility for the point.

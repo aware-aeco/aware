@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralConnectionType.GetAllStructuralConnectionTypeIds
+Collects the ids of all StructuralConnectionTypes in the document.

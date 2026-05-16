@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Instances.HideRemotePanel
+Hides the remote control panel.

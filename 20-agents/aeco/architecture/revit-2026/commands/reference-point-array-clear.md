@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferencePointArray.Clear
+Removes every reference from the array, rendering it empty.

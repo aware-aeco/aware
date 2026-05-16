@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PersistentSettingsSavedEventArgs.CommandSettings
+The new command settings

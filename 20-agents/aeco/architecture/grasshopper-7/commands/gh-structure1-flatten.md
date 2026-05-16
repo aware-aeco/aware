@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Structure`1.Flatten
+Flattens the entire structure into a single path.

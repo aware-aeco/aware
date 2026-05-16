@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayBitmap.GetBlendModes
+Gets the source and destination blend modes.

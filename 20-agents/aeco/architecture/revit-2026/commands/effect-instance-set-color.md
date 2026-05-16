@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EffectInstance.SetColor
+Sets the color parameter of the effect instance.

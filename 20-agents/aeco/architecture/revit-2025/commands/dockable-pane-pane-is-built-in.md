@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DockablePane.PaneIsBuiltIn
+Returns true if %id% refers to a built-in Revit dockable pane, rather than one created by an add-in.

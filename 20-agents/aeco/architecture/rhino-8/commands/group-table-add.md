@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroupTable.Add
+Adds a new empty group to the group table.

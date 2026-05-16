@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.BreakOnLineWithExceptionAsync
+Add debugger stopped marker and exception message on specified line number.

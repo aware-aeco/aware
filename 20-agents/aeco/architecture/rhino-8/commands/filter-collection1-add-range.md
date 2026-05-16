@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterCollection`1.AddRange
+Adds the specified  to the collection.

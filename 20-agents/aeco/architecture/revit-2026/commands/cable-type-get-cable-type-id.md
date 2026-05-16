@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableType.GetCableTypeId
+Gets the Cable Type id by given cable type name.

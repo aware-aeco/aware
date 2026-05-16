@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.ShowActiveWorkPlane
+Show the active work plane of the view.

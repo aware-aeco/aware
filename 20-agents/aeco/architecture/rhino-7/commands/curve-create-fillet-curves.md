@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.CreateFilletCurves
+Creates a tangent arc between two curves and trims or extends the curves to the arc.

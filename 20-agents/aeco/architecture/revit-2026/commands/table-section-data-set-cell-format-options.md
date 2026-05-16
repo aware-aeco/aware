@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.SetCellFormatOptions
+Sets a cell's FormatOptions.

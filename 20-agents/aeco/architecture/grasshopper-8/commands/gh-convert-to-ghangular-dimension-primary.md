@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHAngularDimension_Primary
+Converts similar data into a GH_AngularDimension instance.  Data is not guaranteed to be duplicated.

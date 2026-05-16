@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ZoomToExternalReferenceModel
+DO NOT USE! For internal usage only!

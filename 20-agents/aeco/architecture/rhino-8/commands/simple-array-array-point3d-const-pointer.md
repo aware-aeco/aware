@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayArrayPoint3d.ConstPointer
+Gets the constant (immutable) pointer of this array.

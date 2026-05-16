@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform.ScaleBasis
+Scales the basis vectors of this transformation and returns the result.

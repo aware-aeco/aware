@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroupSet.Clear
+Removes every group from the set, rendering it empty.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_TreeRules.Apply
+Apply all the local rules to a path+index combination.

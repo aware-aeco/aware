@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AdaptiveComponentFamilyUtils.IsAdaptiveComponentFamily
+Verifies if the Family is an Adaptive Component Family.

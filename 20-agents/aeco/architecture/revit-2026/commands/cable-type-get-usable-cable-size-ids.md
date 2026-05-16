@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableType.GetUsableCableSizeIds
+Gets all the Cable Sizes that can be used by this Cable Type, sorted by name.

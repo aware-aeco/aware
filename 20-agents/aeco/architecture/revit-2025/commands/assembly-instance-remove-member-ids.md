@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssemblyInstance.RemoveMemberIds
+Removes member element ids from the assembly instance.

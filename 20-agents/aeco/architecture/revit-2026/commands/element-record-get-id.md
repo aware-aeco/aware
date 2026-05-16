@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementRecord.GetId
+Gets the id of the element record.

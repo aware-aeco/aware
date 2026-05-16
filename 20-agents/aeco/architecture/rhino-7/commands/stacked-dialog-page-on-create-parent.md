@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StackedDialogPage.OnCreateParent
+Called when the parent window has been created on Windows platforms             only.

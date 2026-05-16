@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HierarchicDefinition.Modify
+Modifies the hierarchical definition instance in the model. The ID must be set.

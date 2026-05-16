@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Viewport.GetLabelOutline
+Gets the outline viewport's label on the sheet.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HierarchicDefinition.Delete
+Deletes the hierarchical definition instance from the model. The ID must be set.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interop.NSFontFromFont
+Get native NSFont* from a Rhino Font. Only works on Mac

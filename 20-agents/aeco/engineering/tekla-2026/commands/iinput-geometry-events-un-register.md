@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IInputGeometryEvents.UnRegister
+Unregisters the instance from listening to events.

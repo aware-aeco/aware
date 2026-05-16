@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveLoop.Flip
+Reverses the orientation of the curve loop.

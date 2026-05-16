@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshFaceNormalList.AddFaceNormal
+Appends a face normal to the list of mesh face normals.

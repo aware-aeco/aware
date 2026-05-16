@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormattedText.GetAllCapsStatus
+Returns whether ,  or a  of characters in the entire text are in all caps.

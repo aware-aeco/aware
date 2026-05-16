@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContentKindList.SingleKind
+The single kind in the list. If the list does not contain exactly one kind, returns 'None'.

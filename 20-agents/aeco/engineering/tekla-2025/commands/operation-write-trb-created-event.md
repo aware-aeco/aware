@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.WriteTrbCreatedEvent
+Writes a TrbCreated event to the dbvirtual

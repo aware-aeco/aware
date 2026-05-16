@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IDataObject.GetObject
+Gets a serialized value with the specified  identifier.

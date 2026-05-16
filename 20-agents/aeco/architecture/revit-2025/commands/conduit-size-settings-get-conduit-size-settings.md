@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConduitSizeSettings.GetConduitSizeSettings
+Gets the conduit size settings of the project.

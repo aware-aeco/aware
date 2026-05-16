@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point.Equals
+Returns a value indicating that the specified  is equal to this point

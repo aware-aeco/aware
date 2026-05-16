@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorConverter.CanConvertTo
+Determines if this can convert a  to the

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Stairs.GetStairsLandings
+Returns all the stairs landing components in the stairs.

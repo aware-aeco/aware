@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PathOfTravel.Update
+Updates the path of travel by recalculating the path between the original start and end points.

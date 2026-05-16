@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadGroup.Insert
+Inserts the load group into the model database.

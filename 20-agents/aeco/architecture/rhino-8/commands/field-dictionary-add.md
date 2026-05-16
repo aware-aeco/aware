@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FieldDictionary.Add
+Add a new StringField to the dictionary.  This will be a data only             field and not show up in the content browsers.

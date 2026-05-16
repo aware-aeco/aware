@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transaction.SetFailureHandlingOptions
+Sets options for handling failures to be used when the transaction is being committed or rolled back.

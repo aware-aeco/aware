@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveUV.Create
+Create a CurveUV from a bounded 3D Curve lying in the XY plane.

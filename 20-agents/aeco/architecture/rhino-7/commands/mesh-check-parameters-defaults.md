@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshCheckParameters.Defaults
+Gets the default mesh check parameters.

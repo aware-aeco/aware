@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Capsule.Render
+Render the capsule onto a graphics context.

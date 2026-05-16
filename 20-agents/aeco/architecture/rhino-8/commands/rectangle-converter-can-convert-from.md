@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RectangleConverter.CanConvertFrom
+Determines if this converter can convert from the specified

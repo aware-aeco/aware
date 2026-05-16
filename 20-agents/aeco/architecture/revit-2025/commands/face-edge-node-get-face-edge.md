@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FaceEdgeNode.GetFaceEdge
+Returns the Face edge object corresponding to the node.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_FontList.CreateFont
+Create a font that best approximates the current settings.

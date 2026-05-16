@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmDisplacement.DeleteAllSubItems
+Deletes all the sub-items from the displacement.

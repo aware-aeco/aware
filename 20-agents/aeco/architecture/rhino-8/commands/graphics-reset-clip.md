@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Graphics.ResetClip
+Resets the clip bounds to encompass the entire drawing area

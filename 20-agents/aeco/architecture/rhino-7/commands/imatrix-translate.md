@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IMatrix.Translate
+Prepend a translation to the matrix

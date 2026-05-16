@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyDataSettings.CheckBuildingType
+Checks that the building type falls within an appropriate range.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UserDataListEnumerator.Reset
+Reset the enumerator

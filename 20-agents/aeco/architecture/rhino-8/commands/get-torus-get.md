@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetTorus.Get
+Prompt for the getting of a torus.

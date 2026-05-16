@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalAnalyticalLoadSet.Create
+Creates an electrical analytical load set.

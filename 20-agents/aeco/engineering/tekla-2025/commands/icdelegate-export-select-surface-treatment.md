@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportSelectSurfaceTreatment
+DO NOT USE! For internal usage only!

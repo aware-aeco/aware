@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.GetTextureMapping
+Get objects texture mapping

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyDataSettings.CheckRangeOfPercentageSkylights
+Checks that the percentage skylights value is between 0.00 and 0.95.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CollectionChangedHandler`2.ReplaceItem
+Replaces the item at the specified index

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.EnableCrankLengthOverride
+Enables or disables the ability to override crank lengths for this rebar instance.

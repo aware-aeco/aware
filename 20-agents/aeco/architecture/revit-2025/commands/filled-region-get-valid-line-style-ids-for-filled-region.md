@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilledRegion.GetValidLineStyleIdsForFilledRegion
+Gets the line style Ids which are permitted to be assigned to a filled region.

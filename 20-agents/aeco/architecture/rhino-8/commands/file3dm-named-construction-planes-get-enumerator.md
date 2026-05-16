@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmNamedConstructionPlanes.GetEnumerator
+Gets an enumerator that yields all construction planes in this collection.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DocumentChangedEventArgs.GetDeletedElementIds
+Returns set of elements that were deleted from the document.

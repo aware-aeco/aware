@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricSheetType.CreateDefaultFabricSheetType
+Creates a new FabricSheetType object with a default name.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ComponentRepeaterIterator.IsDone
+Identifies if the iteration has completed.

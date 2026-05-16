@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormattedText.GetItalicStatus
+Returns whether ,  or a  of characters in the entire text are italic.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Viewport.IsVisible
+Test visibility of a point.

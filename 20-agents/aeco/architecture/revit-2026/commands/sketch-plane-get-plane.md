@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SketchPlane.GetPlane
+Returns the corresponding Plane.

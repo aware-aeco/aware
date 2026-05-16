@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralConnectionHandler.GetOrigin
+Retrieves origin point of Structural Connection Handler element.

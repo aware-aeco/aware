@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Format.FormatDetailViewValidity
+If the detail view is invalid, return a string describing why.

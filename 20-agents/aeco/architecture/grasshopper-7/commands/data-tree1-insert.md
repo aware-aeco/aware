@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataTree`1.Insert
+Insert a data item to the specified branch in the tree.   If the branch doesn't exist yet, it will be created.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepFace.ChangeSurface
+Expert user tool that replaces the 3d surface geometry use by the face.

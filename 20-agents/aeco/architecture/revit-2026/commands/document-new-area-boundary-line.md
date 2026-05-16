@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.NewAreaBoundaryLine
+Creates a new boundary line as an Area border.

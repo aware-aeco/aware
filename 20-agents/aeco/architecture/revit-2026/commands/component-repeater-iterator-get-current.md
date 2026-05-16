@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ComponentRepeaterIterator.GetCurrent
+Returns the current repeater slot.

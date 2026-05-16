@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_IReader.TryGetInt32
+Gets the value of the item with the specified name.              Name comparison is not case-sensitive.

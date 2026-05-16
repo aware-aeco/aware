@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_StateTagList.RenderStateTags
+Render all StateTags in this list to the designated Graphics surface.

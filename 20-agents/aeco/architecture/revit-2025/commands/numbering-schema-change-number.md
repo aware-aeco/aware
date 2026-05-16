@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NumberingSchema.ChangeNumber
+Replaces an existing number with a new one (that does not exist yet).

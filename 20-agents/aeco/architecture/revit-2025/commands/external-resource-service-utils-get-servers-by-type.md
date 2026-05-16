@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalResourceServiceUtils.GetServersByType
+Gets registered external resource servers which support the external resource type.

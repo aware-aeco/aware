@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetSpecificationGroup
+Gets the specification group from its identifier.

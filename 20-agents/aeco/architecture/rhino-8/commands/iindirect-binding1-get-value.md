@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IIndirectBinding`1.GetValue
+Gets the value from the specified object using this binding

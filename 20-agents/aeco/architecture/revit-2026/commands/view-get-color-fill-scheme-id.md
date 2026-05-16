@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetColorFillSchemeId
+Returns id of the color fill scheme element applied to the view.

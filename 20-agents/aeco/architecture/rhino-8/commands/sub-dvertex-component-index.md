@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDVertex.ComponentIndex
+Gets the component index of this vertex.

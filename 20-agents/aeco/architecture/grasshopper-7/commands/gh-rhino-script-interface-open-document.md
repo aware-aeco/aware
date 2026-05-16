@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RhinoScriptInterface.OpenDocument
+Open a Grasshopper document.   The editor will be loaded if necessary,   but it will not be automatically shown.

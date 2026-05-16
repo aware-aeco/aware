@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShape.SetEndTreatmentTypeId
+Sets the EndTreatmentType id at the specified rebar shape end.

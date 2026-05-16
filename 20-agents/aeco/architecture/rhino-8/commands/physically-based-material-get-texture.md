@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PhysicallyBasedMaterial.GetTexture
+Get the texture that corresponds with the specified texture type for this material.

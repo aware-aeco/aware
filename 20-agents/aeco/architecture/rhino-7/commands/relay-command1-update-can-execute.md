@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RelayCommand`1.UpdateCanExecute
+Tells consumers of this command that the  state has changed and should be queried again.

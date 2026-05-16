@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDVertex.FaceAt
+Retrieve a SubDFace from this vertex

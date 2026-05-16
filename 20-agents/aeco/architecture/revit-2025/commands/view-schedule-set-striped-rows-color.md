@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.SetStripedRowsColor
+Sets the color applied to part of the pattern for a schedule with striped rows.

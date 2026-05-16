@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHTextEntity_Secondary
+Converts similar data into a GH_TextEntity instance.  Data is not guaranteed to be duplicated.

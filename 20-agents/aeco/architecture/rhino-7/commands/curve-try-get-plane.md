@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.TryGetPlane
+Test a curve for planarity and return the plane.

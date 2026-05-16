@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UpdaterRegistry.UnregisterUpdater
+Unregisters an updater for the given document.

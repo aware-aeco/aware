@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RealtimeDisplayMode.StartRenderer
+Override to start your render engine.                          Note that before using the RenderWindow you *must* call SetSize             to properly initialize the underlying DIB.

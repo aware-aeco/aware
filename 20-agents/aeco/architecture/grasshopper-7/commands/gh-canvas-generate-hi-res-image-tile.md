@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Canvas.GenerateHiResImageTile
+Generate a single tile in a Hi-Res image export.

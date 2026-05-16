@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ImageInstance.GetLocation
+Returns the location of one of the points of the ImageInstance

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SlabShapeEditor.DrawPoint
+Adds a point to the corresponding slab, roof or floor.

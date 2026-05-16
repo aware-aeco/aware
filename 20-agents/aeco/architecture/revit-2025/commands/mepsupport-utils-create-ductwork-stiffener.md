@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPSupportUtils.CreateDuctworkStiffener
+Create family based stiffener on the specified fabrication ductwork.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.AddBrep
+Adds a brep object to Rhino.

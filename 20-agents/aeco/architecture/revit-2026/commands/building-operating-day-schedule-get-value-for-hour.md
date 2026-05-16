@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BuildingOperatingDaySchedule.GetValueForHour
+Gets the usage value for an hour.

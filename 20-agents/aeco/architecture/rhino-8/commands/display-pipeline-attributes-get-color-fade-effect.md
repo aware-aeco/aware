@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipelineAttributes.GetColorFadeEffect
+Get the current color fade effect data.

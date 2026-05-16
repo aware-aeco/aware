@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.GetHookRotationAngle
+Gets the out of plane hook rotation angle at the specified end.

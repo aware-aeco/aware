@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlPolycurve.Select
+Selects a polycurve with the given Identifier.

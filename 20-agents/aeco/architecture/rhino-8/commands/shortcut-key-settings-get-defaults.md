@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ShortcutKeySettings.GetDefaults
+Get all the default shortcuts registered with Rhino

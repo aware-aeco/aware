@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RhinoScriptInterface.IsEditorVisible
+Returns the visible state of the Grasshopper Main window.

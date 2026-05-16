@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TreeGridView.ReloadData
+Refreshes the data, keeping the selection

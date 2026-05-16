@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Range.FromLength
+Creates a new integer range with the specified start and length.

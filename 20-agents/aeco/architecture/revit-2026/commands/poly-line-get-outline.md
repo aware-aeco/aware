@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolyLine.GetOutline
+Gets the outline of the polyline.

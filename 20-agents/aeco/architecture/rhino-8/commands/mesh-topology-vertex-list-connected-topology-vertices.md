@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshTopologyVertexList.ConnectedTopologyVertices
+Gets all topological vertices that are connected to a given vertex.

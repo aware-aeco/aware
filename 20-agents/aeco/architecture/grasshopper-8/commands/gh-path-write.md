@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Path.Write
+Write this path to an archive.

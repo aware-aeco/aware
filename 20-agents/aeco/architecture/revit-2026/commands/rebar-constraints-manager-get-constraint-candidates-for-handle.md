@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraintsManager.GetConstraintCandidatesForHandle
+For shape driven rebar returns all possible RebarConstraints that will constrain RebarConstrainedHandle to the provided reference.For free form rebar will return an empty list.

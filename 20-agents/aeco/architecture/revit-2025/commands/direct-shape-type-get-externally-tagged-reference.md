@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShapeType.GetExternallyTaggedReference
+Retrieve a Reference to reference geometry of the DirectShapeType that is associated with a particular ExternalGeometryId.

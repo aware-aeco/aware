@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Circle.TryFitCircleToPoints
+Attempt to fit a circle through a set of points.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalSystem.RemoveFromCircuit
+remove a set of exist components from the Electrical System.

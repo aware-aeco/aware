@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PluginUtil.LoadGrasshopper
+Performs all steps required during Grasshopper loading.   If this function returns false, the plugin should not be allowed to load.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HVACLoadSpaceType.IsNameUnique
+Determines whether a potential space type name is unique.

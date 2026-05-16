@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-VertexIndexPairArray.Insert
+Insert the specified VertexIndex pair into the array.

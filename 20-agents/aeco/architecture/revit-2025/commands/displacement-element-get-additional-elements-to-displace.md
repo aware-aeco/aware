@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplacementElement.GetAdditionalElementsToDisplace
+Identify a set of elements that potentially should be displaced along with a given element.

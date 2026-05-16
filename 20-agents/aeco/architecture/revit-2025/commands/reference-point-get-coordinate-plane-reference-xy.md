@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferencePoint.GetCoordinatePlaneReferenceXY
+A reference for the XY plane of the coordinate system.

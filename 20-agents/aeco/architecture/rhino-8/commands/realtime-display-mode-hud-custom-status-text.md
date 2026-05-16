@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RealtimeDisplayMode.HudCustomStatusText
+Override to display status of the render engine.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Brep.BrepTightBoundingBox
+Compute the boundingbox of a Brep object without meshing.

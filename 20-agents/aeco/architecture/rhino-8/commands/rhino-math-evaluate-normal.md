@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoMath.EvaluateNormal
+Expert tool to evaluate surface unit normal.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-KeyBasedTreeEntriesLoadResults.GetFileReadErrors
+Gets the names of any files which could not be read due to access errors.

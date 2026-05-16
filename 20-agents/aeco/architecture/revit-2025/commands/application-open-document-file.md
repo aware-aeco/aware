@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.OpenDocumentFile
+Opens a document from disk.

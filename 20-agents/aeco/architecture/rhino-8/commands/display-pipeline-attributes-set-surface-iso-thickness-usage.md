@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipelineAttributes.SetSurfaceIsoThicknessUsage
+This is a helper function that combines setting IsoThicknessUsed and SurfaceNakedEdgeThicknessUsageFlags settings to correspond             to the behavor of the Settings page.

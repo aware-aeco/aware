@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PhaseArray.Insert
+Insert the specified phase into the array.

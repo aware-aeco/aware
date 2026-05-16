@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PipingSystem.GetFlow
+Gets the flow of this piping system.

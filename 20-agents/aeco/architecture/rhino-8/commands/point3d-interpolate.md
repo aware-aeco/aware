@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point3d.Interpolate
+Interpolate between two points.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Control.Print
+Shows a print dialog to print the specified control

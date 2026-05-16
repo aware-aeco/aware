@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.EnableCustomGrips
+Turns on/off the object's editing grips.

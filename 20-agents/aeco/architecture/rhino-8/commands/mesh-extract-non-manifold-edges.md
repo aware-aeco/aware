@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.ExtractNonManifoldEdges
+Extracts, or removes, non-manifold mesh edges.

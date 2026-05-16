@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.ComputeThickness
+Compute thickness metrics for this mesh.

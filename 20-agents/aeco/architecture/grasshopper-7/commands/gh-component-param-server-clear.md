@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentParamServer.Clear
+Removes all input and output parameters.

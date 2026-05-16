@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.GetGeneratingElementIds
+Returns the ids of the element(s) that generated the input geometry object.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExportContextBase.OnPolyline
+This method is called when a Polyline is being output.

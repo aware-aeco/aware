@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHDimension
+Convert data into GH_Dimension.

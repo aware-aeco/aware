@@ -6,118 +6,190 @@ description: API reference for namespace Rhino.Render from RhinoCommon.dll
 # Rhino.Render
 
 - **AddCustomUISections**
+  - This class contains the event to add custom ui sections when the content ui is created.
 - **AddCustomUISectionsEventArgs**
+  - Used as Rhino.Render Custom Events args.
 - **AsyncRenderContext**
+  - \ingroup rhino_render             Inherit from AsyncRenderContext to be able to create asynchronous             render engine implementations through RhinoCommon.
 - **CachedTextureCoordinates**
+  - Used for cached texture coordinates
 - **City**
+  - City
 - **ComponentOrders**
+  - Pixel component order for channels in the RenderWindow and PostEffects.
 - **ContentCollectionIterator**
+  - An iterator for the RenderContentCollection
 - **ContentUndoBlocker**
 - **ContentUndoHelper**
+  - Content undo helper to be used with "using {}" to enclose a block of changes.
 - **ContentUuids**
+  - Content Guids of RenderContent provided by the RDK SDK.                          These Guids can be used to check against RenderContent.TypeId.
 - **ConvertibleExtensions**
+  - Extension methods for IConvertible that work when             an object is a Variant.
 - **CrcRenderHashFlags**
 - **CreatePreviewEventArgs**
+  - Used in RenderPlugIn virtual CreatePreview function
 - **CreatePreviewReason**
+  - Reason the content preview is being generated
 - **CreateTexture2dPreviewEventArgs**
 - **CustomRenderContentAttribute**
+  - Attributes for RenderContent
 - **CustomRenderMeshProvider**
+  - You must call CustomRenderMeshProvider.RegisterProviders() from your             plug-ins OnLoad override for each assembly containing a custom mesh             provider.  Only publicly exported classes derived from             CustomRenderMeshProvider with a public constructor that has no parameters             will get registered.
 - **CustomRenderMeshProvider2**
 - **Decal**
+  - Represents a decal, or a picture that can be moved on an object.
 - **DecalCreateParams**
+  - Used by RhinoObject.AddDecal() to create and add a decal
 - **DecalMapping**
 - **DecalProjection**
 - **Decals**
+  - Represents all the decals of an object.
 - **Dithering**
+  - This is the interface to linear workflow settings.
 - **DocumentOrFreeFloatingBase**
+  - Base class for Rhino.Render objects that are owned by the document, or can be delivered separately             from other functions.  In general, you cannot create these objects yourself.
 - **DynamicIconUsage**
 - **FilterContentByUsage**
+  - Content collection filter value
 - **FreeFloatingBase**
+  - Base class for Rhino.Render objects that are owned by the document, or can be delivered separately             from other functions.  In general, you cannot create these objects yourself.
 - **GroundPlane**
+  - Represents an infinite plane for implementation by renderers.             See SupportsFeature.
 - **ICurrentEnvironment**
 - **ICurrentEnvironment_Get**
 - **IRhRdkPreviewSceneServer_eRotationType**
+  - c# version of IRhRdkPreviewSceneServer eRotationType enum
 - **ImageFile**
+  - Controls interaction with RDK render image files
 - **ImageFileEvent**
 - **ImageFileEventArgs**
 - **LightArray**
 - **LightManagerSupport**
+  - Base class for implementing custom light managers in .NET
 - **LightManagerSupportClient**
 - **LightMangerSupportCustomEvent**
+  - LightMangerSupportCustomEvent
 - **LinearWorkflow**
+  - This is the interface to linear workflow settings.
 - **MappingTag**
+  - Holds texture mapping information.
 - **MetaDataProxy**
+  - ProxyClass for MetaData
 - **NamedValue**
 - **PhysicallyBasedMaterial**
 - **PixelBuffer**
 - **PreviewAppearance**
+  - PreviewAppearance class
 - **PreviewBackground**
+  - PreviewBackGround takes care of constucting and desctrutction of PreviewLight
 - **PreviewGeometry**
+  - PreviewAppearance takes care of constucting and desctrutction of PreivewGeometry
 - **PreviewLighting**
+  - PreviewAppearance takes care of constucting and desctrutction of PreviewLight
 - **PreviewSceneQuality**
+  - Quality levels when creating preview images
 - **PreviewSceneServer**
+  - PreviewSceneServer
 - **ProxyTypes**
+  - Defines the proxy type of the render content
 - **RdkUndo**
+  - RdkUndo class, which is used to get the              RdkUndoRecord
 - **RdkUndoRecord**
+  - RdkUndoRecord class
 - **RealtimeDisplayMode**
+  - Base class for implementing real-time display modes in .NET.                          Pay special attention that in StartRenderer the RenderWindow.SetSize()             function is called if the implementation relies on the RenderWindow to             do the drawing to the viewport. If i.e. OpenGL is used to draw render             results to the viewport then SetSize() doesn't have to be called, nor             should the implementation then access channels on the RenderWindow, as             those then don't exist. For OpenGL-based drawing the RenderWindow is             used as a container for ViewInfo management, nothing else.
 - **RealtimeDisplayModeClassInfo**
+  - Class information obligatory for registering RealtimeDisplayMode             implementations.
 - **RenderChannels**
+  - Render Channels. This corresponds to the user's settings in the Rendering panel.
 - **RenderContent**
+  - Base class for all RenderContent - RenderMaterial, RenderTexture and RenderEnvironment                          Contents have a unique type id which is the same for all instances of the same class and an instance id             which is unique for each instance.They know how to provide a shader for rendering, how to read and write             their state as XML and how to create their own user interfaces.                          There are two flavors of content in the RDK -- temporary and persistent.It is very important to understand             the distinction between a temporary content instance and a persistent content instance, and the fact that a             temporary instance (and all its children) can become persistent.Persistent content is registered with a             document and is usually(but not always) owned by it.                          Temporary contents get created and deleted very often during the normal operation of the RDK.In fact, just             about anything the user clicks on might result in a temporary content being created and deleted again.They             are created by the content browser, the thumbnail rendering, and so on.They are 'free floating' and are             owned by whomever created them.They do not appear in the modeless UI, they do not get saved in the 3dm             file, and they can freely be deleted again after use.                          Contrast this with persistent contents which are attached to a document.They are always owned by RDK,             appear in the modeless UI and get saved in the 3dm file. Pointers to persistent contents should never             be stored by clients; you should only store their instance ids and look them up again using             RenderContent.FromId. They can be deleted only after detaching them from the document.                          RenderContent::Create is the highest-level function for creating a content.It creates it,             initializes it, adds it to the document and sends many events.It even records undo.You cannot call this             method from just anywhere. It must only be called by 'UI code'; scripts or buttons on a dialog.It results             in a persistent (usually top-level) content being attached to the document and appearing in all the RDK UI             elements that display contents, like the thumbnail and tree views.If you call this method and specify a             parent and child-slot name, your new content will be attached to the document-resident parent as a child             and the UI will be updated accordingly.                          The important point is that everything is temporary while the content structure is being built. Only             after the whole structure is complete will the top-level parent be attached to the document making the             whole structure persistent.
 - **RenderContentChangeReason**
+  - Enumeration denoting type of change for attach or detach
 - **RenderContentChangedEventArgs**
+  - EventArgs for the RenderContentChanged event
 - **RenderContentCollection**
+  - A collection of Render content
 - **RenderContentEventArgs**
+  - Event args for RenderContent
 - **RenderContentFieldChangedEventArgs**
+  - EventArgs for the RenderContentFieldChanged event
 - **RenderContentKind**
+  - Defines constant values for all render content kinds, such as material,             environment or texture.
 - **RenderContentKindList**
+  - Models a collection of kinds.
 - **RenderContentManager**
+  - RenderContentManager's RestoreRenderContents method unpacks the              default render contents from the from the application and places them              in the User's folder.  Only available on Mac at the moment.
 - **RenderContentSerializer**
+  - Used to import and export custom render content such as             materials, environments and textures.  You must override             RenderPlugIn.RenderContentSerializers() and return an array of             derived RenderContentSerializer class types to add to the content             browsers.
 - **RenderContentStyles**
 - **RenderContentType**
+  - Represents one of the render content types registered with Rhino.
 - **RenderEndEventArgs**
+  - Contains information about why OnRenderEnd was called
 - **RenderEnvironment**
 - **RenderEnvironmentTable**
 - **RenderMaterial**
 - **RenderMaterialTable**
 - **RenderPanelType**
+  - Contains the custom user interfaces that may be provided
 - **RenderPanels**
+  - This class is used to extend the standard Render user interface
 - **RenderPipeline**
+  - Provides facilities to a render plug-in for integrating with the standard             Rhino render window. Also adds helper functions for processing a render             scene. This is the suggested class to use when integrating a renderer with             Rhino and maintaining a "standard" user interface that users will expect.
 - **RenderPlugInInfo**
 - **RenderPlugInList**
 - **RenderPrimitive**
 - **RenderPrimitiveList**
 - **RenderPrimitiveType**
 - **RenderPropertyChangedEvent**
+  - Used by Rhino.Render object property value has changed events.
 - **RenderSettings**
+  - Contains settings used in rendering.
 - **RenderSourceView**
+  - Helper class to get the correct view from the Render View Source settings.                           An instance of this class is supposed to be used with the using() {} construct.
 - **RenderTabs**
 - **RenderTexture**
 - **RenderTextureTable**
 - **RenderWindow**
 - **RenderWindowClonedEventArgs**
 - **SafeFrame**
+  - SafeFrame
 - **SceneServerData**
+  - The Scene Server Data used by the PreviewSceneServer
 - **SceneServerDataUsage**
+  - SceneServerData Usage (Synchronous or Asynchronous)
 - **SimulatedEnvironment**
 - **SimulatedTexture**
 - **Skylight**
 - **Sun**
+  - Represents the Sun on a little portion of Earth.
 - **SupportOptions**
 - **TextureEnvironmentMappingMode**
 - **TextureEvaluator**
+  - This is the interface to a lightweight object capable of evaluating texture color throughout uvw space.  Derive from this class to create your own texture evaluator to return from a custom RenderTexture.
 - **TextureGeneration**
 - **TextureGraphInfo**
 - **TextureMapping**
+  - Represents a texture mapping.
 - **TextureMappingType**
+  - Defines enumerated constants for mapping types such as planar, cylindrical or spherical.
 - **TextureMode**
 - **TextureProjectionMode**
 - **TextureRenderHashFlags**
 - **TextureWrapType**
 - **TexturedColor**
+  - Color4f specialization of TexturedValue.
 - **TexturedFloat**
+  - float specialization of TexturedValue.
 - **TexturedValue`1**
+  - Generic class to help holding on to related values. This can be             used to get data from textured content fields with the             HandleTexturedValue function.
 - **TimeZone**
+  - TimeZone
 - **TwoColorRenderTexture**
 - **UndoRedo**
+  - This class contains the event for UndoRedoChanged that is fired from RDK .
 - **Utilities**
 - **it_strategy**
+  - Defines the collection type to iterate.

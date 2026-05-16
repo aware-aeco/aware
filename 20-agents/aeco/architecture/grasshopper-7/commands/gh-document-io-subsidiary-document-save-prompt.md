@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentIO.SubsidiaryDocumentSavePrompt
+Display a 'stuff has changed do you want to save' message box with Yes/No/Cancel options.

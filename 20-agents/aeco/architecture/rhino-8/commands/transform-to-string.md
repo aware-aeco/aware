@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform.ToString
+Returns a string representation of this transform.

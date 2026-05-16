@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HotReloadService.Initialize
+Initializes hot reload of controls, if it is supported.

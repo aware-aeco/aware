@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPAnalyticalSegment.SetOverrideType
+Sets the override type of pressure loss calculation.

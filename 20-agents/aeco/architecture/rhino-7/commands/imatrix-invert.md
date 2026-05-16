@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IMatrix.Invert
+Inverts this matrix

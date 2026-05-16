@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GraphicsDrawer.DrawLineSegment
+Draws a temporary line segment in the currently active rendered view.

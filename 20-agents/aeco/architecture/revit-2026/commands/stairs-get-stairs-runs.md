@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Stairs.GetStairsRuns
+Returns all the stairs run components in the stairs.

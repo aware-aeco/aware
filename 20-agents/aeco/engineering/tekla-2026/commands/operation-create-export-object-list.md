@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.CreateExportObjectList
+Converts Create only object list instead of full export.

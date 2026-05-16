@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HermiteSurface.VParameterAt
+Gets the "v" parameter at an index. These parameters are strictly increasing.

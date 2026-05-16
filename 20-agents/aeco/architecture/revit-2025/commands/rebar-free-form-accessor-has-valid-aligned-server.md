@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarFreeFormAccessor.HasValidAlignedServer
+Returns true if the current rebar is created with the Aligned Free Form rebar server, false otherwise.

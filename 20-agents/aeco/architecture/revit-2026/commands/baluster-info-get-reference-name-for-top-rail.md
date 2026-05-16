@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BalusterInfo.GetReferenceNameForTopRail
+Gets the name string to be used as a reference to Top Rail in the current language.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShapeLibrary.FindDefinitionType
+Find a DirectShapeType element by definition id. The element will be used for creating instances of that definition.

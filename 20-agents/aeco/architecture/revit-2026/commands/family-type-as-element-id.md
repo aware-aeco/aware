@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyType.AsElementId
+Provides access to the Autodesk::Revit::DB::ElementId^ stored in the given family parameter.

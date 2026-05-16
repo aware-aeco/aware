@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateFromSphere
+Constructs a Brep definition of a sphere.

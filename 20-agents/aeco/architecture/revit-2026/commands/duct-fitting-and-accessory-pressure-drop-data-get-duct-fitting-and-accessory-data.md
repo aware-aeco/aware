@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DuctFittingAndAccessoryPressureDropData.GetDuctFittingAndAccessoryData
+Returns the fitting and accessory information.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpatialElementFromToCalculationPoints.IsAcceptableFromPosition
+Checks whether a given "from" position is valid.

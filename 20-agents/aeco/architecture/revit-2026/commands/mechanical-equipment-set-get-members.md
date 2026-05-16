@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MechanicalEquipmentSet.GetMembers
+Gets member element ids for the mechanical equipment set.

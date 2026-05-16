@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolyCurve.SegmentIndexes
+Finds the segments that overlap the Polycurve sub domain.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Dialogs.ShowMultiListBox
+Displays Rhino's multiple selection list box.

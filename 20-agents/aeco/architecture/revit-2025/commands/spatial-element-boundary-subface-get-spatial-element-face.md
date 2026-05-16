@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpatialElementBoundarySubface.GetSpatialElementFace
+Returns the face of the spatial element's 3D geometry.

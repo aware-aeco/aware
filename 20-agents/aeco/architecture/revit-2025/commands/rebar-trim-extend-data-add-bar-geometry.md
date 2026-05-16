@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarTrimExtendData.AddBarGeometry
+Adds a new rebar geometry. This information is set to the rebar after the API execution is finished successfully.

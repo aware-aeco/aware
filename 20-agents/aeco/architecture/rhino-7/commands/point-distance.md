@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point.Distance
+Gets the distance between this point and the specified

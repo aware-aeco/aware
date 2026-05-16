@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.IsClosed
+Gets a value indicating if the surface is closed in a direction.

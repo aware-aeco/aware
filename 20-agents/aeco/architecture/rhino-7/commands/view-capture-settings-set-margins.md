@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewCaptureSettings.SetMargins
+Set distances from the edge of the paper (MediaSize) to the CropRectange             in a defined unit system

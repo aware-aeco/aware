@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BentPlate.Modify
+Modifies the bent plate object values in the database.

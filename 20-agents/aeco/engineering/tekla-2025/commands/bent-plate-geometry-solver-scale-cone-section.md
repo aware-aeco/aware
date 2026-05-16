@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BentPlateGeometrySolver.ScaleConeSection
+Scale the shape of a conical section.

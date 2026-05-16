@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Gradient.RemoveGrip
+Remove the grip at the specified index.

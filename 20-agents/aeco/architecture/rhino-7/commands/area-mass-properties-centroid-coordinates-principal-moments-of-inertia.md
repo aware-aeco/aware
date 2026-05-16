@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaMassProperties.CentroidCoordinatesPrincipalMomentsOfInertia
+Calculates the principal moments of inertia and principal axes with repect to centroid coordinates.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-VertexStreamPositionColored.AddVertex
+Inserts a  into the stream and associated buffer.

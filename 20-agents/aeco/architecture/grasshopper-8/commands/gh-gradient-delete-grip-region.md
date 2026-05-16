@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Gradient.DeleteGripRegion
+Gets the Delete Grip region rectangle based on a gradient destination rectangle.

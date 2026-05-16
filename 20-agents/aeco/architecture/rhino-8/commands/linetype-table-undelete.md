@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinetypeTable.Undelete
+Restores a linetype that has been deleted.

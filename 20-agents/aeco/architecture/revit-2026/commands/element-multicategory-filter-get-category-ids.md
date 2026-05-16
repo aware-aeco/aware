@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementMulticategoryFilter.GetCategoryIds
+Gets the category ids assigned to this filter.

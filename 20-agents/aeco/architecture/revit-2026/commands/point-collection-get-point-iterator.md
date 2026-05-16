@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCollection.GetPointIterator
+Creates and returns an iterator for the points contained in this collection.

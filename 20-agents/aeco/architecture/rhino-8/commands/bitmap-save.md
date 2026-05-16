@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Bitmap.Save
+Saves the bitmap to a file in the specified format

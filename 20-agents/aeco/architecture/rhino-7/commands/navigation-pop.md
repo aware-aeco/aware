@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Navigation.Pop
+Pops the last item from the navigation stack.

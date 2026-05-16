@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoApp.AskUserForRhinoLicense
+Display UI asking the user to enter a license for Rhino or use one from the Zoo.

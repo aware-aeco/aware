@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoApp.InFullScreen
+Verifies that Rhino is running in full screen mode.

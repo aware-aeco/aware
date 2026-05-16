@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConnectorElement.GetLinkedConnectorElement
+Get the linked connector element.

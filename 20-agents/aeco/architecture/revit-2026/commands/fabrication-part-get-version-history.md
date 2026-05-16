@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.GetVersionHistory
+Gets a history of version change information about the current part.

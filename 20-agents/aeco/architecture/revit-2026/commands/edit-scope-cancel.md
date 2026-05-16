@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EditScope.Cancel
+Cancels the edit scope.

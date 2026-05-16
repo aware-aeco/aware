@@ -6,3 +6,4 @@ description: API reference for namespace Autodesk.Revit.DB.Steel from RevitAPI.d
 # Autodesk.Revit.DB.Steel
 
 - **SteelElementProperties**
+  - This class is used to attach steel fabrication information to various Revit elements.

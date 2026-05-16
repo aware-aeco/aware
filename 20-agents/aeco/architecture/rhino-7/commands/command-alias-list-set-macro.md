@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CommandAliasList.SetMacro
+Modifies the macro of a command alias.

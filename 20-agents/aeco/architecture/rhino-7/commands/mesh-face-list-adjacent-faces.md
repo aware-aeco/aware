@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshFaceList.AdjacentFaces
+Gets all faces that share a topological edge with a given face.

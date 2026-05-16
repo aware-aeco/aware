@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Stairs.GetStairsSupports
+Returns all the stairs support components in the stairs.

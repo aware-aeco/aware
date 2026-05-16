@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_SettingsServer.Read
+Low-level deserializer.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.IsDuplicate
+See if this and other are same brep geometry.

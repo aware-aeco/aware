@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Graphics.DrawRectangle
+Draws a rectangle

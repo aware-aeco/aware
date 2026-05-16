@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CreateExtrusion
+Constructs a mesh by extruding a curve along a vector.

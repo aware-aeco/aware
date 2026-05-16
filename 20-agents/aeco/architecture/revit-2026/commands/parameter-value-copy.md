@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterValue.Copy
+Makes an identical copy of the given parameter value.

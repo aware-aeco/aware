@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RcpGroup.ReplaceItem
+Replace an item with a placeholder.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurvePointList.CopyTo
+Copied the list to an array.

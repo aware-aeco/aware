@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetItemFolders
+Gets a list of fabrication item folders in the fabrication item folder structure.

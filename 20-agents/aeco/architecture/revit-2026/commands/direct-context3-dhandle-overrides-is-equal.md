@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectContext3DHandleOverrides.IsEqual
+Check if the contents of two overrides are equal.

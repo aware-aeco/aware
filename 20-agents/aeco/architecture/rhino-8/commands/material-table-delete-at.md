@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MaterialTable.DeleteAt
+Removes a material at a specific position from this material table.

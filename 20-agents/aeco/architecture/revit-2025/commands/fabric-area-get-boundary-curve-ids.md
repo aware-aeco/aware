@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricArea.GetBoundaryCurveIds
+Retrieves the identifiers of the set of curves forming the boundary of the Fabric Area.

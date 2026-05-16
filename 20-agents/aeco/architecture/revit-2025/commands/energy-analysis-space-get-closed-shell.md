@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyAnalysisSpace.GetClosedShell
+Gets the collection of polygons that form a closed shell.    This method returns a collection of polyloops (planar    polygons) that defines an enclosed volume measured by    interior bounding surfaces.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObjectVisualization.ClearAllTemporaryStates
+Clears temporary visualization from all model objects and restores permanent representation.

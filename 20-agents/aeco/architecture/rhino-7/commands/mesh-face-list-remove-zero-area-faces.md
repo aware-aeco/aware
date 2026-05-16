@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshFaceList.RemoveZeroAreaFaces
+Deletes or fixes mesh faces that have zero area.

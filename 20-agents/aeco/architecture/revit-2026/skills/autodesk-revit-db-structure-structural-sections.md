@@ -6,57 +6,112 @@ description: API reference for namespace Autodesk.Revit.DB.Structure.StructuralS
 # Autodesk.Revit.DB.Structure.StructuralSections
 
 - **StructuralElementDefinitionData**
+  - Class containing information about section and position of the structural element.
 - **StructuralSection**
+  - The base class for StructuralSection specific classes, designed to provide common parameters and ability to differentiate between different structural section shapes.
 - **StructuralSectionAnalysisParams**
+  - Defines common set of parameters for structural analysis.
 - **StructuralSectionCParallelFlange**
+  - Defines parameters for C-channel Parallel Flange structural section.
 - **StructuralSectionCProfile**
+  - Defines parameters for C Profile structural section.
 - **StructuralSectionCProfileWithFold**
+  - Defines parameters for C Profile with fold structural section.
 - **StructuralSectionCProfileWithLips**
+  - Defines parameters for C Profile with lips structural section.
 - **StructuralSectionCSlopedFlange**
+  - Defines parameters for C-channel Sloped Flange structural section.
 - **StructuralSectionColdFormed**
+  - Defines parameters for Hot Formed structural section.
 - **StructuralSectionConcreteCross**
+  - Defines parameters for parameterized concrete cross structural section.
 - **StructuralSectionConcreteRectangle**
+  - Defines parameters for parameterized concrete rectangle structural section.
 - **StructuralSectionConcreteRectangleCut**
+  - Defines parameters for parameterized concrete rectangle cut structural section.
 - **StructuralSectionConcreteRound**
+  - Creates a new instance of Structural Section Concrete Round shape with the associated set of parameters,    used to attach to structural element.
 - **StructuralSectionConcreteT**
+  - Defines parameters for parameterized concrete T structural section.
 - **StructuralSectionErrorCode**
+  - Error codes for StructuralSection related operations.
 - **StructuralSectionGeneralC**
+  - Defines parameters for Channel Cold Formed shape.
 - **StructuralSectionGeneralCEx**
+  - Defines parameters for Channel With Fold Cold Formed shape.
 - **StructuralSectionGeneralF**
+  - Defines parameters for Flat Bar.
 - **StructuralSectionGeneralH**
+  - Defines parameters for Rectangular Pipe structural section.
 - **StructuralSectionGeneralI**
+  - Defines parameters for general Double T shape.
 - **StructuralSectionGeneralLA**
+  - Defines parameters for Angle Cold Formed structural section.
 - **StructuralSectionGeneralLZ**
+  - Defines parameters for Z Cold Formed shape.
 - **StructuralSectionGeneralR**
+  - Defines parameters for pipes.
 - **StructuralSectionGeneralS**
+  - Defines parameters for Round Bar structural section.
 - **StructuralSectionGeneralShape**
+  - General shapes for structural sections.
 - **StructuralSectionGeneralT**
+  - Defines parameters for Tees shape.
 - **StructuralSectionGeneralU**
+  - Defines parameters for general Channel shape.
 - **StructuralSectionGeneralW**
+  - Defines parameters for Angle structural section.
 - **StructuralSectionHotRolled**
+  - Defines parameters for hot rolled structural sections.
 - **StructuralSectionIParallelFlange**
+  - Defines parameters for I-shape Parallel Flange structural section.
 - **StructuralSectionISlopedFlange**
+  - Defines parameters for I-shape Sloped Flange structural section.
 - **StructuralSectionISplitParallelFlange**
+  - Defines parameters for I-split Parallel Flange structural section.
 - **StructuralSectionISplitSlopedFlange**
+  - Defines parameters for I-split Sloped Flange structural section.
 - **StructuralSectionIWelded**
+  - Defines parameters for I-shape Welded structural section.
 - **StructuralSectionIWideFlange**
+  - Defines parameters for I-shape Wide Flange structural section.
 - **StructuralSectionLAngle**
+  - Defines parameters for L-angle Flange structural section.
 - **StructuralSectionLProfile**
+  - Defines parameters for L profile structural section.
 - **StructuralSectionLProfileWithLips**
+  - Defines parameters for L Profile with lips structural section.
 - **StructuralSectionPipeStandard**
+  - Defines parameters for pipes also known as RoundHSS or HollowStructuralSection (HSS).
 - **StructuralSectionRectangleHSS**
+  - Defines parameters for parameterized rectangle HSS structural section.
 - **StructuralSectionRectangleParameterized**
+  - Defines parameters for parameterized rectangle structural section.
 - **StructuralSectionRectangular**
+  - Defines common set of parameters for structural section rectangular contour.
 - **StructuralSectionRectangularBar**
+  - Defines parameters for Rectangular Bar structural section.
 - **StructuralSectionRound**
+  - Defines common set of  parameters for structural section round contour.
 - **StructuralSectionRoundBar**
+  - Defines parameters for Round Bar structural section.
 - **StructuralSectionRoundHSS**
+  - Defines parameters for pipes known as Round HSS (HollowStructuralSection).
 - **StructuralSectionShape**
+  - Shapes for structural sections.
 - **StructuralSectionSigmaProfile**
+  - Defines parameters for Sigma Profile structural section.
 - **StructuralSectionSigmaProfileWithFold**
+  - Defines parameters for structural Sigma profile section with fold.
 - **StructuralSectionSigmaProfileWithLips**
+  - Defines parameters for structural Sigma Profile section with lips.
 - **StructuralSectionStructuralTees**
+  - Defines parameters for Structural Tees structural section.
 - **StructuralSectionUserDefined**
+  - Defines parameters for parameterized user defined structural section.
 - **StructuralSectionUtils**
+  - This class provides utilities related to Structural Section Properties.
 - **StructuralSectionZProfile**
+  - Defines parameters for Z Profile structural section.
 - **StructuralSectionZProfileWithLips**
+  - Defines parameters for Z Profile with lips structural section.

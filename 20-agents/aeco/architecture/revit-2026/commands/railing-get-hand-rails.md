@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Railing.GetHandRails
+Get all the handrails of the railing.

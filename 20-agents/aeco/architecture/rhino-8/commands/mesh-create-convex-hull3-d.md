@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CreateConvexHull3D
+Attempts to create a 3d convex hull mesh from input points.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Format.FormatTextDotValidity
+If the text dot is invalid, return a string describing why.

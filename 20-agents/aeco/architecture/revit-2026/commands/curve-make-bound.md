@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.MakeBound
+Changes the bounds of this curve to the specified values.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIDocument.GetPlacementTypes
+Get a collection of valid placement types for input family symbol.

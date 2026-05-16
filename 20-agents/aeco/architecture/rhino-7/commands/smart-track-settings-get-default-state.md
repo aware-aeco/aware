@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SmartTrackSettings.GetDefaultState
+Gets the Smart Track factory settings.

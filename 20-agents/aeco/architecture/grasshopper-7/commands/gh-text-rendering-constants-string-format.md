@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_TextRenderingConstants.StringFormat
+Get a precooked StringFormat instance. Do not modify or dispose instances returned by this method.   The format uses NoWrap flags and EllipsisCharacter trimming.

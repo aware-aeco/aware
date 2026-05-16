@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Canvas.GetCanvasScreenBuffer
+Get a bitmap that resembles the current state of the canvas.

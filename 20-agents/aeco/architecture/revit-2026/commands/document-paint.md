@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.Paint
+Paint the element's face with specified material.

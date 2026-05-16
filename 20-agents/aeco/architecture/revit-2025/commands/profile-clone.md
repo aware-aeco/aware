@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Profile.Clone
+Returns a copy of this profile.

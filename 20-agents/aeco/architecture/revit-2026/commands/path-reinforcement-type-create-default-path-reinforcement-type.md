@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PathReinforcementType.CreateDefaultPathReinforcementType
+Creates a new PathReinforcementType object with a default name.

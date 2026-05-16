@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MarkovPattern.AppendOutcome
+Append a new outcome to this pattern or increment an existing outcome.

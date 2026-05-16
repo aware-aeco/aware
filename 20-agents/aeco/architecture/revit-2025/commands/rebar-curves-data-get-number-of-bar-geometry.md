@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarCurvesData.GetNumberOfBarGeometry
+Gets the number of Bar Geometry that were added.

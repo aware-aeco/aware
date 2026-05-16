@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceVoidCutUtils.GetCuttingVoidInstances
+Return ids of the instances with unattached voids cutting the element.

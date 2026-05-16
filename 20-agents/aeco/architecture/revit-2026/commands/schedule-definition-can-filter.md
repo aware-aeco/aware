@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.CanFilter
+Checks whether filters can be added to this ScheduleDefinition.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaMassProperties.Compute
+Computes an AreaMassProperties for a closed planar curve.

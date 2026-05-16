@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Clipboard.SetString
+Sets a string into the clipboard with the specified type identifier.

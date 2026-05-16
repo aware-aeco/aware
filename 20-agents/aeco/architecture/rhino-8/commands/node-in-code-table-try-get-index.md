@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NodeInCodeTable.TryGetIndex
+Gets the ComponentFunctionInfo at

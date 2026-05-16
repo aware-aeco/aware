@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CriticalPathIterator.GetCurrent
+Gets the analytical segment id at the current iterating position.

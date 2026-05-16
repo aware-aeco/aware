@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View3D.CanResetCameraTarget
+Checks whether the camera target can be reset for this view.

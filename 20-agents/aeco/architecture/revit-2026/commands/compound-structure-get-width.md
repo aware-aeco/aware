@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.GetWidth
+The width implied by this compound structure.

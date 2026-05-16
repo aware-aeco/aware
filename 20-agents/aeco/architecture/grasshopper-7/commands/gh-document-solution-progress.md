@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.SolutionProgress
+Returns the progress of the current solution.

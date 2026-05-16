@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarCoupler.GetCouplerPositionTransform
+Return a transform representing the relative position of the coupler at index couplerPositionIndex in the set.

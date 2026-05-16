@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPBuildingConstructionSet.Insert
+Insert the specified MEPBuildingConstruction into the set.

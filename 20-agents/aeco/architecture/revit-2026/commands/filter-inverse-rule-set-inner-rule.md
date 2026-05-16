@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterInverseRule.SetInnerRule
+Gets the rule being inverted.

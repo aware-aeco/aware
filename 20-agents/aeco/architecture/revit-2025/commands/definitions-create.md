@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Definitions.Create
+Creates a new parameter definition using specified options.

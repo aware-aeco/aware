@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoGet.GetView
+Allows the user to interactively pick a viewport.

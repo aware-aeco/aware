@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GumballDisplayConduit.SetBaseGumball
+Contents of the gumball are copied to the base gumball of this class.

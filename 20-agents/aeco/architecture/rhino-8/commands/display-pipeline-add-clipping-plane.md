@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.AddClippingPlane
+Add a clipping plane to be used during the drawing of this frame

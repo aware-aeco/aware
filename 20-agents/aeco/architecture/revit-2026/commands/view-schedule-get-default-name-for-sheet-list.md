@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.GetDefaultNameForSheetList
+Gets the default view name that will be used when creating a sheet list.

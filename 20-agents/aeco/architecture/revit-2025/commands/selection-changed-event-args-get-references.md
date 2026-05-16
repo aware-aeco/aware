@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SelectionChangedEventArgs.GetReferences
+Returns the references that are currently selected.

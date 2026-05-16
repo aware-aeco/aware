@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.HasDetailLevel
+Check if the view has a Detail Level property

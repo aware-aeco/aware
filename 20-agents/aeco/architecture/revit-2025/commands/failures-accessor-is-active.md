@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailuresAccessor.IsActive
+Method allows to check if this instance of the accessor is currently active.

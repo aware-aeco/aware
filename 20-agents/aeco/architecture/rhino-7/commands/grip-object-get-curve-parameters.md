@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GripObject.GetCurveParameters
+Retrieves the 2d parameter space values of this GripObject from the curve it's associated with.

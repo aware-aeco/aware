@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainer.IsItemHidden
+Identifies if a given RebarContainerItem is hidden in this view.

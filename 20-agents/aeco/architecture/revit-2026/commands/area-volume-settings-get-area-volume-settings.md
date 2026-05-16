@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaVolumeSettings.GetAreaVolumeSettings
+Get the area and volume settings of the project.

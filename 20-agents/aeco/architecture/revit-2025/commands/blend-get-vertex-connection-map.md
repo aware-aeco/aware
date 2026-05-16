@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Blend.GetVertexConnectionMap
+Gets the mapping between the vertices in the top and bottom profiles.

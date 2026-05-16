@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RealtimeDisplayMode.HudShow
+Override if you want to hide the HUD. Shown by default

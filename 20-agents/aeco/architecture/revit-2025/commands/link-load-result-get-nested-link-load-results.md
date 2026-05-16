@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinkLoadResult.GetNestedLinkLoadResults
+Gets the results for this link's nested links.

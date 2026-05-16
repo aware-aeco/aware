@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SlabShapeEditor.CreateCreasesFromFoldingLines
+Convert selected folding lines to split lines

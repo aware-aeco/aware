@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.CreateRevisionCloud
+Creates a revision cloud curve from a planar curve.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.GetValidCategoriesForKeySchedule
+Gets a list of categories that can be used for a key schedule.

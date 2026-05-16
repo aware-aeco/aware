@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCProductWrapper.ClearFinishMaterials
+Clear finish materials in this wrapper.

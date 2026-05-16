@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TransformObjectList.ObjectArray
+Gets access to the internal RhinoObject array of the TransformObjectList object.

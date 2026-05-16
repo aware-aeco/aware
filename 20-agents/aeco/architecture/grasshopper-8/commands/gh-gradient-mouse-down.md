@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Gradient.MouseDown
+Begin grip drag operation.

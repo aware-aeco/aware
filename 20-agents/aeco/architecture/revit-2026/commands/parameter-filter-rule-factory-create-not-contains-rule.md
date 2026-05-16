@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterFilterRuleFactory.CreateNotContainsRule
+Creates a filter rule that determines whether strings from the document do not    contain a certain string value.

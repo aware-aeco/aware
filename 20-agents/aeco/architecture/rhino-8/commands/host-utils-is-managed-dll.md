@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostUtils.IsManagedDll
+Inspects a dll to see if it is compiled as native code or as a .NET assembly

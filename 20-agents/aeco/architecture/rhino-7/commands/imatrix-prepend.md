@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IMatrix.Prepend
+Prepend the specified matrix to this matrix

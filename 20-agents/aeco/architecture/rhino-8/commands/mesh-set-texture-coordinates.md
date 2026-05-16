@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.SetTextureCoordinates
+Set texture coordinates using given mapping and applying given transform.                          Set lazy to false to generate texture coordinates right away.

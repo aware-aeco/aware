@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UV.Normalize
+Returns a new UV whose coordinates are the normalized values from this vector.

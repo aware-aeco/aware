@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ZooClientParameters.VerifyLicenseKey
+Called by GetLicense to ensure that the license key entered by the user is legitimate and can be used.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferencePointArrayIterator.Reset
+Bring the iterator back to the start of the array.

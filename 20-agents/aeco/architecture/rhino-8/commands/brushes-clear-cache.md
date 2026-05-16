@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brushes.ClearCache
+Clears the brush cache

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetCircle.Get
+Perform the 'get' operation.

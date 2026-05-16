@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterMap.ReverseIterator
+Retrieve a backward moving iterator to the map.

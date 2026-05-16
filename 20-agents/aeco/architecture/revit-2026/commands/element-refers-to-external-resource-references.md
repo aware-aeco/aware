@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.RefersToExternalResourceReferences
+Determines whether this Element uses external resources.

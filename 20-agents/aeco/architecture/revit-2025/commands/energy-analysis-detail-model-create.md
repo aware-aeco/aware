@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyAnalysisDetailModel.Create
+Creates a new energy analysis detailed model.

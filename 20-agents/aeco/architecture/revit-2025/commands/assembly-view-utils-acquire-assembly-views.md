@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssemblyViewUtils.AcquireAssemblyViews
+Transfers the assembly views owned by a source assembly instance to a target sibling assembly instance of the same assembly type.

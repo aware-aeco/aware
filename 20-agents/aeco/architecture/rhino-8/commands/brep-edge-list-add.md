@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepEdgeList.Add
+Create and add a new edge to this list

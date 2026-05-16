@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjRef.Light
+Gets the light if the referenced geometry is one.

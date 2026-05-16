@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ITextBuffer.Delete
+Deletes text from the specified range

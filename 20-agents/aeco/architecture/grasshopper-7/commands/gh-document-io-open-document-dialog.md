@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentIO.OpenDocumentDialog
+Display the Open GH/GHX dialog.

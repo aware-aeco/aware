@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportRunMacro
+DO NOT USE! For internal usage only!

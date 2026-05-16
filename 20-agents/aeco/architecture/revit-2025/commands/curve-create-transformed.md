@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.CreateTransformed
+Crates a new instance of a curve as a transformation of this curve.

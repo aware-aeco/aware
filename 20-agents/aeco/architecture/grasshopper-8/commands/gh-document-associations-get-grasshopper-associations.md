@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentAssociations.GetGrasshopperAssociations
+Find all the Grasshopper ghx files that have been associated with a given Rhino file.

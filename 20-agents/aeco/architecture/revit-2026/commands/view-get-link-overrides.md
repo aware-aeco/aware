@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetLinkOverrides
+Gets the graphic overrides of a  or  in view.

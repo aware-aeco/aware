@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Part.CompareTo
+Compares the instantiated part with another one.

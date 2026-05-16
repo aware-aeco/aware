@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.StopLiveSharing
+Stop LiveSharing

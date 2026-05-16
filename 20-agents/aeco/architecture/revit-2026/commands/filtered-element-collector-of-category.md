@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilteredElementCollector.OfCategory
+Applies an ElementCategoryFilter to the collector.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Item.CreateFrom
+Creates a new instance of GH_Item and sets the fields from a reader object.

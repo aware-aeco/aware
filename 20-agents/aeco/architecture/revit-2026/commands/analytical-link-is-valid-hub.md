@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalLink.IsValidHub
+Checks whether input hub is valid for an AnalyticalLink.

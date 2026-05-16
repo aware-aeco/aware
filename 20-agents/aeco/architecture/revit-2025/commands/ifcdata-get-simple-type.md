@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCData.GetSimpleType
+Gets the IFC type name.

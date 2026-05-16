@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurtainGridLine.RemoveSegment
+Remove the segment specified by the input curve.

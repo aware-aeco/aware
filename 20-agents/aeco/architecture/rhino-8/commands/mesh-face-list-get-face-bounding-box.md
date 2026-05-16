@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshFaceList.GetFaceBoundingBox
+Gets the bounding box of a face.

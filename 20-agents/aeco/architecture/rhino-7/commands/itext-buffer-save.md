@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ITextBuffer.Save
+Saves the buffer into a stream with the specified format.

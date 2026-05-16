@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PaperSizeSet.Insert
+Insert the specified item into the set.

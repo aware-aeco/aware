@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayModeDescription.CopyDisplayMode
+Copies an existing display mode.

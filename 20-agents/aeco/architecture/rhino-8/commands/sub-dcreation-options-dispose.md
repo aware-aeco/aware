@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDCreationOptions.Dispose
+Delete unmanaged pointer for this

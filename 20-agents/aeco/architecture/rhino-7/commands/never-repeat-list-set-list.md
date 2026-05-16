@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NeverRepeatList.SetList
+Puts the command name tokens in m_dont_repeat_list.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PipeSettings.GetPipeSlopes
+Get pipe slopes.

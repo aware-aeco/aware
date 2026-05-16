@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmPlugInDataTable.Dump
+Prepares a text dump of table.

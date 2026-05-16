@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SlabShapeVertexArray.GetEnumerator
+Retrieve a forward moving iterator to the array.

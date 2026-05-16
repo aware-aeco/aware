@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLayerInfo.AddLayerModifier
+Adds a project layer modifier to the layer info.

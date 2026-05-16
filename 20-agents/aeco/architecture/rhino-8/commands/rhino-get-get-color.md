@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoGet.GetColor
+Easy to use color getter.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportModifyLoadGroup
+DO NOT USE! For internal usage only!

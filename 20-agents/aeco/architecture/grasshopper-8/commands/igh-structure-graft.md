@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Structure.Graft
+Grafts all paths by reallocating all data into child paths.

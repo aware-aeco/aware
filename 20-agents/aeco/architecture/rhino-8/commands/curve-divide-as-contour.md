@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.DivideAsContour
+Divides this curve at fixed steps along a defined contour line.

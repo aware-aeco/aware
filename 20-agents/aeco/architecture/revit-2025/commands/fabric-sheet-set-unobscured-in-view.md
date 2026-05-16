@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricSheet.SetUnobscuredInView
+Sets this fabric sheet to be shown unobscured in a view.

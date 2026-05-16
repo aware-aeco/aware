@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlCircle.Insert
+Inserts the control circle into the model.

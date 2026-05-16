@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View3D.GetRenderingSettings
+Returns the current rendering settings for this 3d view.

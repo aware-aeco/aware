@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportClearFilterCache
+DO NOT USE! For internal usage only!

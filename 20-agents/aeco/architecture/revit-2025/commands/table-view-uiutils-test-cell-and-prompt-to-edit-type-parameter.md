@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableViewUIUtils.TestCellAndPromptToEditTypeParameter
+Prompts the end-user to control whether a type parameter contained in the specified table cell should be allowed edited.

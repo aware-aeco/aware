@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarUpdateCurvesData.GetBarModelDiameter
+Gets the model diameter of the Rebar.

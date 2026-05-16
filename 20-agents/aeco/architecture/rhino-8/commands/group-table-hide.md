@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroupTable.Hide
+Hides all objects that are members of a group.

@@ -6,193 +6,381 @@ description: API reference for namespace Rhino.Geometry from RhinoCommon.dll
 # Rhino.Geometry
 
 - **AngularDimension**
+  - Represents a dimension of an entity that can be measured with an angle.
 - **AnnotationBase**
+  - Provides a common base class to all annotation geometry.             This class refers to the geometric element that is independent from the document.
 - **AnnotationType**
+  - ON::AnnotationType identifies the type of an annotation object derived from ON_Annotation.
 - **Arc**
+  - Represents the value of a plane, two angles and a radius in             a sub-curve of a three-dimensional circle.                          The curve is parameterized by an angle expressed in radians. For an IsValid arc             the total subtended angle AngleRadians() = Domain()(1) - Domain()(0) must satisfy             0 < AngleRadians() < 2*PiThe parameterization of the Arc is inherited from the Circle it is derived from.             In particulart -> center + cos(t)*radius*xaxis + sin(t)*radius*yaxiswhere xaxis and yaxis, (part of Circle.Plane) form an orthonormal frame of the plane             containing the circle.
 - **ArcCurve**
+  - Represent arcs and circles.             ArcCurve.IsCircle returns true if the curve is a complete circle.
 - **AreaMassProperties**
+  - Contains static initialization methods and allows access to the computed             metrics of area, area centroid and area moments in closed             planar curves, in meshes, in surfaces, in hatches and in boundary representations.
 - **Arrowhead**
+  - Arrowhead used by annotation
 - **BezierCurve**
+  - Represents a Bezier curve.             Note: as an exception, the bezier curve is not derived from .
 - **BezierSurface**
+  - Represents a Bezier surface.
 - **BlendContinuity**
+  - Used in curve and surface blending and matching functions.
 - **BlendType**
+  - Blend types used for creating filleted Brep edges
 - **BoundingBox**
+  - Represents the value of two points in a bounding box              defined by the two extreme corner points.             This box is therefore aligned to the world X, Y and Z axes.
 - **Box**
+  - Represents the value of a plane and three intervals in             an orthogonal, oriented box that is not necessarily parallel to the world Y, X, Z axes.
 - **Brep**
+  - /// Boundary Representation. A surface or polysurface along with trim curve information.
 - **BrepEdge**
+  - Represents a single edge curve in a Brep object.
 - **BrepFace**
+  - Provides strongly-typed access to brep faces.             A Brep face is composed of one surface and trimming curves.
 - **BrepLoop**
+  - Represent a single loop in a Brep object. A loop is composed             of a list of trim curves.
 - **BrepLoopType**
+  - Each brep loop has a defined type, e.g. outer, inner or point on surface.
 - **BrepRegion**
+  - Represents a brep topological region that has sides.
 - **BrepRegionFaceSide**
+  - Represents a side of a  entity.
 - **BrepSolidOrientation**
+  - Enumerates all possible Solid Orientations for a Brep.
 - **BrepTrim**
+  - Brep trim information is stored in BrepTrim classes. Brep.Trims is an             array of all the trims in the brep. A BrepTrim is derived from CurveProxy             so the trim can supply easy to use evaluation tools via the Curve virtual             member functions.             Note well that the domains and orientations of the curve m_C2[trim.m_c2i]             and the trim as a curve may not agree.
 - **BrepTrimType**
+  - Each brep trim has a defined type.
 - **BrepVertex**
+  - Brep vertex information
 - **Centermark**
+  - Represents a center mark
 - **Circle**
+  - Represents a circle in 3D.             The values used are a radius and an orthonormal frame	of the plane containing the circle,             with origin at the center.The circle is parameterized by radians from 0 to 2 Pi given byt -> center + cos(t)*radius*xaxis + sin(t)*radius*yaxiswhere center, xaxis and yaxis define the orthonormal frame of the circle plane.
 - **ClippingPlaneSurface**
+  - Represents a planar surface that is used as clipping plane in viewports.             A clipping plane object maintains a list of viewports that it clips against.
 - **ComponentIndex**
+  - Represents an index of an element contained in another object.
 - **ComponentIndexType**
+  - Defines enumerated values to represent component index types.
 - **ComponentStatus**
+  - Provides information about selection, highlighting, visibility, editability and integrity states of a component.             This structure is immutable.
 - **Concavity**
+  - Enumerates the possible types of edge concavity types.
 - **Cone**
+  - Represents the center plane, radius and height values in a right circular cone.
 - **ConicSectionType**
+  - Defines enumerated values for types of conic sections.
 - **Continuity**
+  - Provides enumerated values for continuity along geometry,             such as continuous first derivative or continuous unit tangent and curvature.
 - **ControlPoint**
+  - Represents control point geometry with three-dimensional position and weight.
 - **Curve**
+  - Represents a base class that is common to most RhinoCommon curve types.             A curve represents an entity that can be all visited by providing             a single parameter, usually called t.
 - **CurveBooleanRegions**
+  - Represents the results of a Curve.CreateBooleanRegions calculation.
 - **CurveEnd**
+  - Defines the extremes of a curve through a flagged enumeration.
 - **CurveEvaluationSide**
+  - Defines enumerated values for the options that defines a curve evaluation side when evaluating kinks.
 - **CurveExtensionStyle**
+  - Defines enumerated values for styles to use during curve extension, such as "Line", "Arc" or "Smooth".
 - **CurveKnotStyle**
+  - Defines enumerated values for knot spacing styles in interpolated curves.
 - **CurveOffsetCornerStyle**
+  - Defines enumerated values for all implemented corner styles in curve offsets.
 - **CurveOffsetEndStyle**
+  - Defines enumerated values for all implemented end styles in curve offsets.
 - **CurveOrientation**
+  - Defines enumerated values for closed curve orientations.
 - **CurveProxy**
+  - Represent curve geometry. Usually this is part of another piece of geometry             that can be represented as a "proxy".
 - **CurveSimplifyOptions**
+  - Enumerates the options to use when simplifying a curve.
 - **Cylinder**
+  - Represents the values of a plane, a radius and two heights -on top and beneath-             that define a right circular cylinder.
 - **DetailView**
+  - Represents a view of the model placed on a page layout.
 - **DevelopableSrf**
+  - Helpers for developable surface functions
 - **Dimension**
+  - Base class for dimensions
 - **DistancingMode**
+  - Defines how offset and similar operations should work.
 - **EdgeAdjacency**
+  - Enumerates all possible Topological Edge adjacency types.
 - **Ellipse**
+  - Represents the values of a plane and the two semi-axes radii in an ellipse.
 - **ExtrudeCornerType**
+  - Corner types used for creating a tapered extrusion
 - **Extrusion**
+  - Represents an extrusion, or objects such as beams or linearly extruded elements,             that can be represented by profile curves and two miter planes at the extremes.
 - **GeometryBase**
+  - Provides a common base for most geometric classes. This class is abstract.
 - **Hatch**
+  - Represents a hatch in planar boundary loop or loops.             This is a 2d entity with a plane defining a local coordinate system.             The loops, patterns, angles, etc are all in this local coordinate system.             The Hatch object manages the plane and loop array             Fill definitions are in the HatchPattern or class derived from HatchPattern             Hatch has an index to get the pattern definition from the pattern table.
 - **HermiteSurface**
+  - Create an ON_NurbsSurface satisfying Hermite interpolation conditions at a grid of points.
 - **HiddenLineDrawing**
+  - Represents a hidden line drawing object.             A hidden line drawing consists of curves generated from source objects.             The curves correspond to edges, and silhouettes of  source objects and             intersections with cutting planes.
 - **HiddenLineDrawingObject**
+  - Represents an object added to a HiddenLineDrawing
 - **HiddenLineDrawingObjectCurve**
+  - Curves generated from source objects which correspond to edges, and             silhouettes of source objects and intersections with cutting planes. A             HiddenLineDrawingObjectCurve is partitioned into hidden and visible             segments called HiddenLineDrawingSegment
 - **HiddenLineDrawingParameters**
+  - Input used for computing a hidden line drawing
 - **HiddenLineDrawingPoint**
+  - Points generated from source objects which correspond to point and point cloud source objects.
 - **HiddenLineDrawingSegment**
+  - The results of HiddenLineDrawing calculation are a collection of segments.             A segment is a sub-curve of a HiddenLineDrawingObjectCurve.
 - **InstanceDefinitionGeometry**
+  - Represents a block definition in a File3dm. This is the same as             Rhino.DocObjects.InstanceDefinition, but not associated with a RhinoDoc.
 - **InstanceReferenceGeometry**
+  - Represents a reference to the geometry in a block definition.
 - **Interpolator**
+  - Exposes a set of standard numeric interpolation algorithms.
 - **Interval**
+  - Represents an interval in one-dimensional space,             that is defined as two extrema or bounds.
 - **InvalidDimensionStyleIdException**
+  - General exception that can be thrown by annotations
 - **IsoStatus**
+  - Defines enumerated values for isoparametric curve direction on a surface, such as X or Y,             and curve sides, such as North or West boundary.             Note: odd values are all x-constant; even values > 0 are all y-constant.
 - **KnotStyle**
+  - Knot styles for NURBS curves and surfaces.             If a knot vector meets the conditions of two styles,             then the style with the lowest value is used.
 - **Leader**
+  - Leader geometry class
 - **LengthMassProperties**
+  - Contains static initialization methods and allows access to the computed             metrics of length, length centroid, and length moments in curves.
 - **Light**
+  - Represents a light that shines in the modeling space.
 - **LightStyle**
+  - Defines enumerated values to represent light styles or types, such as directional or spotlight.
 - **Line**
+  - Represents the value of start and end points in a single line segment.
 - **LineCurve**
+  - Represents a linear curve.
 - **LinearDimension**
+  - Represents a linear dimension
 - **LoftType**
+  - Specifies enumerated constants for all supported loft types.
 - **Matrix**
+  - Represents an arbitrarily sized matrix of double-precision             floating point numbers. If you are working with a 4x4 matrix, then you may want             to use the  class instead.
 - **Mesh**
+  - Represents a geometry type that is defined by vertices and faces.             This is often called a face-vertex mesh.
 - **MeshCheckParameters**
+  - Output of a mesh checking operations.
 - **MeshDisplacementInfo**
+  - Contains mesh displacement information.
 - **MeshExtruder**
+  - Extrudes a mesh and provides preview
 - **MeshExtruderFaceDirectionMode**
+  - Defines how mesh extruder decides orients faces
 - **MeshExtruderParameterMode**
+  - Parameter mode for creating texture coordinates and surface parameters
 - **MeshFace**
+  - Represents the values of the four indices of a mesh face quad.             If the third and fourth values are the same, this face represents a             triangle.
 - **MeshNgon**
+  - Represents a mesh ngon.             When retrieved from the Ngon property of a mesh,             this contains faces that have edge valence strictly higher than 4.When retrieving Ngons from ,             this might contain also triangles and quads.
 - **MeshPart**
+  - Represents a portion of a mesh for partitioning
 - **MeshPipeCapStyle**
+  - Enumerates methods to end a mesh pipe.
 - **MeshPoint**
+  - Represents a point that is found on a mesh.
 - **MeshThicknessMeasurement**
+  - Thickness measurement used in the mesh thickness solver.
 - **MeshType**
+  - Defines enumerated values for various mesh types.
 - **MeshUnsafeLock**
+  - Permits access to the underlying mesh raw data structures in an unsafe way.
 - **MeshUnwrapMethod**
+  - Unwrapping method used
 - **MeshUnwrapper**
+  - Unwraps meshes and stores the result in their texture coordinates
 - **MeshingParameterStyle**
+  - Type of Mesh Parameters used by the RhinoDoc for meshing objects
 - **MeshingParameterTextureRange**
+  - Defines how to pack render/meshes textures.
 - **MeshingParameters**
+  - Represents settings used for creating a mesh representation of a brep or surface.
 - **MorphControl**
+  - Represents a geometry that is able to control the morphing behavior of some other geometry.
 - **NurbsCurve**
+  - Represents a Non Uniform Rational B-Splines (NURBS) curve.
 - **NurbsSurface**
+  - Represents a Non Uniform Rational B-Splines (NURBS) surface.
 - **OrdinateDimension**
+  - Represents an ordinate dimension
 - **Particle**
+  - Represents a simple particle.             This base class only defines position and display properties (size, color, bitmap id).             You will most likely create a class that derives from this particle class to perform some             sort of physical simulation (movement over time or frames).
 - **ParticleSystem**
 - **PipeCapMode**
+  - Styles used for creating Brep pipes.
 - **Plane**
+  - Represents the value of a center point and two axes in a plane in three dimensions.
 - **PlaneFitResult**
+  - Enumerates all possible outcomes of a Least-Squares plane fitting operation.
 - **PlaneSurface**
+  - Represents a plane surface, with plane and two intervals.
 - **Point**
+  - Represents a geometric point.             This is fundamentally a class that derives from              and contains a single  location.
 - **Point2d**
+  - Represents the two coordinates of a point in two-dimensional space,             using -precision floating point numbers.
 - **Point2f**
+  - Represents the two coordinates of a point in two-dimensional space,             using -precision floating point numbers.
 - **Point3d**
+  - Represents the three coordinates of a point in three-dimensional space,             using -precision floating point values.
 - **Point3dGrid**
+  - Represents a rectangular grid of 3D points.
 - **Point3f**
+  - Represents the three coordinates of a point in three-dimensional space,             using -precision floating point numbers.
 - **Point4d**
+  - Represents the four coordinates of a point in four-dimensional space.             The W (fourth) dimension is often considered the weight of the point as seen in 3D space.
 - **PointCloud**
+  - Represents a collection of coordinates with optional normal vectors and colors.
 - **PointCloudItem**
+  - Represents a single item in a point cloud. A PointCloud item              always has a location, but it has an optional normal vector and color.
 - **PointCloudUnsafeLock**
+  - Permits access to the underlying PointCloud raw data structures in an unsafe way.
 - **PointContainment**
+  - Defines enumerated values for closed curve/point spatial relationships.
 - **PointFaceRelation**
+  - Enumerates the possible point/BrepFace spatial relationships.
 - **PolyCurve**
+  - Represents a curve that is the result of joining several (possibly different)             types of curves.
 - **Polyline**
+  - Represents an ordered set of points connected by linear segments.             Polylines are closed if start and end points coincide.
 - **PolylineCurve**
+  - Represents the geometry of a set of linked line segments.             This is fundamentally a class that derives from              and internally contains a .
 - **PreserveEnd**
+  - Preserves, or maintains, the shape of the opposite the one being edited.
 - **QuadRemeshParameters**
+  - Parameters for QuadRemesh method
 - **QuadRemeshSymmetryAxis**
+  - Symmetrical meshing axis
 - **Quaternion**
+  - Represents the four coefficient values in a quaternion.             The first value a is the real part,             while the rest multiplies i, j and k, that are imaginary.quaternion = a + bi + cj + dk
 - **RTree**
+  - Represents a spatial search structure based on implementations of the             R-tree algorithm by Toni Gutman.
 - **RTreeEventArgs**
+  - Represents event data that is passed when an item that meets certain              criteria is found and the passed RTree event is raised.
 - **RadialDimension**
+  - Represents a dimension of a circular entity that can be measured with radius or diameter.
 - **RailType**
+  - Rail types used for creating filleted Brep edges
 - **Ray3d**
+  - Represents an immutable ray in three dimensions, using position and direction.
 - **Rectangle3d**
+  - Represents the values of a plane and two intervals             that form an oriented rectangle in three dimensions.
 - **ReduceMeshParameters**
+  - Parameters for Reduce method
 - **RegionContainment**
+  - Defines enumerated values for closed curve/closed curve relationships.
 - **RevSurface**
+  - Represents a surface of revolution.             Revolutions can be incomplete (they can form arcs).
 - **ShutLiningCurveInfo**
+  - Contains shutlining curve information. This is used in .
 - **Silhouette**
+  - Information about silhouette curves that are generated from             geometry (surfaces, brep faces, meshes)
 - **SilhouetteType**
+  - Enumerates the different types of silhouettes and their origins.
 - **SmoothingCoordinateSystem**
+  - The direction of the smoothing used by Curve, Surface, and Mesh Smooth.
 - **SpaceMorph**
+  - Represents a spacial, Euclidean morph.
 - **Sphere**
+  - Represents the plane and radius values of a sphere.
 - **SquishDeformation**
+  - The types of deformation allowed in the squish process
 - **SquishFlatteningAlgorithm**
+  - Represents the type of flattening to use
 - **SquishParameters**
+  - Parameters used by the 'Squish' command flattening algorithm
 - **Squisher**
+  - class used to wrap Squish functions
 - **SubD**
+  - Subdivision surface
 - **SubDAutomaticMeshToSubDContext**
+  - ON_SubD::AutomaticMeshToSubDContext indentifies a context where meshes can automatically             be converted to subds.
 - **SubDChainType**
+  - SubD::ChainType specifies what edge and vertex tag tests are used when creating edge chains.
 - **SubDComponent**
+  - A part of SubD geometry. Common base class for vertices, faces, and edges
 - **SubDComponentLocation**
+  - The ON_SubDComponentLocation enum is used when an ON_SubD component             is referenced and it is important to distinguish between the             component's location in the SubD control net and its location             in the SubD limit surface.
 - **SubDCreationOptions**
+  - Options used for creating a SubD
 - **SubDDisplayParameters**
+  - A collection of parameters that are passed to functions that calculate a various representations of SubD objects.
 - **SubDEdge**
+  - Single edge of a SubD
 - **SubDEdgeTag**
+  - ON_SubDEdgeTag identifies the type of subdivision edge.  Different tags use             different subdivision algorithms to calculate the subdivision point.
 - **SubDEndCapStyle**
+  - ON_SubDEndCapStyle enumerates the type of end caps functions like ON_SubD::CreateCylinder will create.             Use ON_SubDEndCapStyleFromUnsigned(integer value) to convert integer values to an ON_SubDEndCapStyle.             Use ON_SubDEndCapStyleToString(end_cap_style) to convert ON_SubDEndCapStyle values to string descriptions.
 - **SubDFace**
+  - Single face of a SubD
 - **SubDFriendlyKnotType**
+  - ON_SubD::SubDFriendlyKnotType identifies the types of subd friendly NURBS knot vectors.             SubD friendly NURBS curves and surfacaes are always cubic and nonrational.             Any time there is a multiple knot, the 2nd derivative is zero at the corresponding parameter.             SubD friendly NURBS curves are either periodic or have zero 2nd derivative at the ends.
 - **SubDFromSurfaceMethods**
+  - ON_SubDFromSurfaceParameters::Method are ways to create a SubD from a surface.
 - **SubDHashType**
+  - ON_SubDHashType used used to specify what type of SubD information is hashed (topology or geometry).
 - **SubDPatchStyle**
+  - SubD::PatchStyle identifies the style of patch used to fill holes.
 - **SubDToBrepOptions**
+  - Options used for converting a SubD to a Brep
 - **SubDVertex**
+  - Single vertex of a SubD
 - **SubDVertexFacetType**
+  - Summarizes the number of edges in faces in the whole object.
 - **SubDVertexTag**
+  - ON_SubDVertexTag identifies the type of subdivision vertex.  Different tags use             different subdivision algorithms to determine where the subdivision point and             limit point are located.  There are toplological constraints that restrict which             tags can be assigned.
 - **SumSurface**
+  - Represents a sum surface, or an extrusion of a curve along a curved path.
 - **Surface**
+  - Represents a base class that is common to most RhinoCommon surface types.             A surface represents an entity that can be all visited by providing             two independent parameters, usually called (u, v), or sometimes (s, t).
 - **SurfaceCurvature**
+  - Maintains computed information for surface curvature evaluation.
 - **SurfaceProxy**
+  - Provides a base class to brep faces and other surface proxies.
 - **SweepBlend**
+  - Blend types for creating swept surfaces
 - **SweepFrame**
+  - Frame types for creating swept surfaces
 - **SweepMiter**
+  - Miter types for creating swept surfaces
 - **SweepOneRail**
+  - Utility class for generating Breps by sweeping cross section curves over a single rail curve.              Note, this class has been superseded by the Rhino.Geometry.Brep.CreateFromSweep static functions.
 - **SweepRebuild**
+  - Rebuild types for creating swept surfaces
 - **SweepTwoRail**
+  - Utility class for generating Breps by sweeping cross section curves over two rail curves.             Note, this class has been superseded by the Rhino.Geometry.Brep.CreateFromSweep static functions.
 - **TextDot**
+  - Represents a text dot, or an annotation entity with text that always faces the camera and always has the same size.             This class refers to the geometric element that is independent from the document.
 - **TextEntity**
 - **TextJustification**
+  - Specifies enumerated constants used to indicate the internal alignment and justification of text.
 - **TextRunType**
 - **Torus**
+  - Represents the value of a plane and two radii in a torus that is oriented in three-dimensional space.
 - **Transform**
+  - Represents the values in a 4x4 transform matrix.             This is parallel to C++ ON_Xform.
 - **TransformRigidType**
+  - Lists all possible outcomes for rigid transformation.
 - **TransformSimilarityType**
+  - Lists all possible outcomes for transform similarity.
 - **Triangle3d**
+  - Represents a triangle, modeled using double three points that use double-precision floating point numbers.
 - **Unroller**
+  - Represents the operation of unrolling a single surface.
 - **Vector2d**
+  - Represents the two components of a vector in two-dimensional space,             using -precision floating point numbers.
 - **Vector2f**
+  - Represents the two components of a vector in two-dimensional space,             using -precision floating point numbers.
 - **Vector3d**
+  - Represents the three components of a vector in three-dimensional space,             using -precision floating point numbers.
 - **Vector3f**
+  - Represents the three components of a vector in three-dimensional space,             using -precision floating point numbers.
 - **VolumeMassProperties**
+  - Contains static initialization methods and allows access to the computed             metrics of volume, volume centroid and volume moments in              in solid meshes, in solid surfaces and in solid (closed) boundary representations.

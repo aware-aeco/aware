@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalEquipment.SetCircuitNamingSchemeType
+Sets the circuit naming scheme for Electrical Equipment.

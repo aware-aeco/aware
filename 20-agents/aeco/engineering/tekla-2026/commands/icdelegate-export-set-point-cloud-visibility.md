@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportSetPointCloudVisibility
+DO NOT USE! For internal usage only!

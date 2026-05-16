@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileStl.Write
+Write a STL file based on the contents of a RhinoDoc

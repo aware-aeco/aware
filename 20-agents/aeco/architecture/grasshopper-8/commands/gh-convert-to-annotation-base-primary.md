@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToAnnotationBase_Primary
+Performs a direct cast from Rhino.Geometry.AnnotationBase or GH_AnnotationBase.  Data is not guaranteed to be duplicated.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.FoldAllMarkerRegionsAsync
+Fold all marker regions

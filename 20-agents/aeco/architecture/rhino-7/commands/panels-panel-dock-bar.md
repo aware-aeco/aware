@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Panels.PanelDockBar
+Will always return Guid.Emty in Mac Rhino.  In Windows Rhino it will             look for the dock bar which contains the specified panel class Id and             return the dock bar Id.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CorruptModelException.GetObjectData
+Retrieves data needed to serialize the target object.

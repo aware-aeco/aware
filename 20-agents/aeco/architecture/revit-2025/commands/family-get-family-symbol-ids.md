@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Family.GetFamilySymbolIds
+Gets the ids of the FamilySymbols owned by this Family.

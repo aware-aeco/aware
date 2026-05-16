@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoDoc.IsMetricUnitSystem
+Determines if a document unit system is a metric unit system.

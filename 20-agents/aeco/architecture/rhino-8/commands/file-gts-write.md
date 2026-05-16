@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileGts.Write
+Write a Gts file based on the contents of a RhinoDoc

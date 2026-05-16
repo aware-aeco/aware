@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Polyloop.GetPoints
+Gets the array of points in the polygon.

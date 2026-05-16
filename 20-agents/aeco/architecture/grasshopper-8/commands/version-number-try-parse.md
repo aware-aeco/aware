@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-VersionNumber.TryParse
+Converts the specified string representation of a version number to its VersionNumber equivalent and returns a value that indicates whether the conversion succeeded.

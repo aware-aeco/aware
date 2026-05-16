@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolyBeam.GetCenterLinePolycurve
+Get centerline as polycurve

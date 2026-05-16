@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interval.Swap
+Exchanges T0 and T1.

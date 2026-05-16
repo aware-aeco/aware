@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_DocumentOwner.DocumentModified
+This method will be called whenever the owned document is modified.

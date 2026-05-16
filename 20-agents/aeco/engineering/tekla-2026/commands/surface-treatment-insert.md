@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SurfaceTreatment.Insert
+Inserts the surface treatment to the database.

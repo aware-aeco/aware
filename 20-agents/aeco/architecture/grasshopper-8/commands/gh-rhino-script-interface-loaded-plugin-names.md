@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RhinoScriptInterface.LoadedPluginNames
+Gets an array of the names and versions (if known) of all loaded plugins.

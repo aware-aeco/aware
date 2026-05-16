@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoList`1.Add
+Adds an object to the end of the List.

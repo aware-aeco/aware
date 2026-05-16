@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LineLoad.SetCurve
+Sets the curve for the line load.

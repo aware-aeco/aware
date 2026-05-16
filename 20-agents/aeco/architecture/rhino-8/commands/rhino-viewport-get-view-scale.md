@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.GetViewScale
+Get Scale transform applied to the viewport

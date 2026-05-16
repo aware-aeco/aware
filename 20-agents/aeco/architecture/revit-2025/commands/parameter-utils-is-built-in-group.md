@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterUtils.IsBuiltInGroup
+Checks whether a ForgeTypeId identifies a built-in parameter group.

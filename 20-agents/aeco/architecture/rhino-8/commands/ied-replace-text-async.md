@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.ReplaceTextAsync
+Replace text in range

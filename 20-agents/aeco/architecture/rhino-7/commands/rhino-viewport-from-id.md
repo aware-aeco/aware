@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.FromId
+Call this method to get the viewport with the specified Id.

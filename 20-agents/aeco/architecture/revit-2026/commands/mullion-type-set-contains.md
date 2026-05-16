@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MullionTypeSet.Contains
+Tests for the existence of a mullion type within the set.

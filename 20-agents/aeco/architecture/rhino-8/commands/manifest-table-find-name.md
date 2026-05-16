@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ManifestTable.FindName
+Uses the name to find a model component.             The name is the value that is stored in the .Name property.             Deleted objects have no name.

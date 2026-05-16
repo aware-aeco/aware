@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AdaptiveComponentFamilyUtils.SetPlacementNumber
+Sets Placement Number of an Adaptive Placement Point.

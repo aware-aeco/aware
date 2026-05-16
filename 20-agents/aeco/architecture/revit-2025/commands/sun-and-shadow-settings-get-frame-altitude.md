@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SunAndShadowSettings.GetFrameAltitude
+Identifies the altitude of the sun (angle in radians) for a specific frame.

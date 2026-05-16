@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContent.GetUiHash
+This allows a content to have more than one UI for the same content type.

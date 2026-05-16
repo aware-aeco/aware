@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextFields.DetailScale
+Returns a detail views scale

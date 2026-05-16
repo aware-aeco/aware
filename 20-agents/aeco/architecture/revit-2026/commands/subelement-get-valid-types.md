@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Subelement.GetValidTypes
+Obtains a set of types that are valid for this subelement.

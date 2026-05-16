@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CopyFrom
+Copies mesh values into this mesh from another mesh.

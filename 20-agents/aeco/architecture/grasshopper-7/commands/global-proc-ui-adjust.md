@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Global_Proc.UiAdjust
+Adjust an integer value based on the system wide UI scale factor.

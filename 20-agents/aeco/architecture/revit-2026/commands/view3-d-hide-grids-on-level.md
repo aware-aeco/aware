@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View3D.HideGridsOnLevel
+This method hides the grid lines in this 3D view on the given Level.

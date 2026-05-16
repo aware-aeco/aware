@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Parameter.CanBeAssociatedWithGlobalParameters
+Tests whether this parameter can be associated with any global parameter.

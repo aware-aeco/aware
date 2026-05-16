@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationService.IsValidButtonIndex
+Validates the button index.

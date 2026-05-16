@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyType.AsDouble
+Provides access to the double precision number of the given family parameter.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ToolbarFile.GetToolbar
+Gets a toolbar.

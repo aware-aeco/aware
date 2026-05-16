@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Layer.PerViewportColor
+Gets the display color for this layer.

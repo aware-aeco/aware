@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HiddenLineDrawing.BoundingBox
+Get tight bounding box of the hidden line drawing.

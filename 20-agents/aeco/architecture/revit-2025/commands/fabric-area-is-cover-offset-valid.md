@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricArea.IsCoverOffsetValid
+Identifies if the specified value is valid for use as a cover offset.

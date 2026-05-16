@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_BakeAwareObject.BakeGeometry
+Bake all the goemetry in this object in the given Rhino document.

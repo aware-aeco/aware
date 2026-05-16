@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IDropHandler.Execute
+Implement this method to handle the drop event for your data.

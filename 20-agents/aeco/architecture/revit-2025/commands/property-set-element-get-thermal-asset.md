@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PropertySetElement.GetThermalAsset
+Gets a copy of the ThermalAsset.

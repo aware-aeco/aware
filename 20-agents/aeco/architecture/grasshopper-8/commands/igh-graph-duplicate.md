@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Graph.Duplicate
+Returns a full duplicate (perhaps minus any cache values) of the graph.

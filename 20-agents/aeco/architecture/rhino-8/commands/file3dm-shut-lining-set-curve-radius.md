@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmShutLining.SetCurveRadius
+Sets the radius of the pipe used to create the shut-line for the given curve.

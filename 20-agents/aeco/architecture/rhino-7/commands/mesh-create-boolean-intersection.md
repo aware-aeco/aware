@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CreateBooleanIntersection
+Computes the solid intersection of two sets of meshes.

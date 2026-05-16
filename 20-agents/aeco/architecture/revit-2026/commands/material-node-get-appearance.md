@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MaterialNode.GetAppearance
+Appearance properties associated with the material.

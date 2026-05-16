@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Wall.CreateProfileSketch
+Creates a new Wall profile Sketch.

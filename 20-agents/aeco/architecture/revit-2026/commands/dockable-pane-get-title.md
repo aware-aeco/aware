@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DockablePane.GetTitle
+Returns the current title (a.k.a. window caption) of the dockable pane.

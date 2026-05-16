@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.GetExternalReferenceModelComparisonTolerances
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SquishParameters.SetSpringConstants
+A simplified interface for setting the Stretch and Compression spring constants

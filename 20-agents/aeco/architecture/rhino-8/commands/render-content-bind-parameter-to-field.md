@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContent.BindParameterToField
+Use bindings to automatically wire parameters to fields

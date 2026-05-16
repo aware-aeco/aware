@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObjectSelector.GetSelectedObjects
+Returns an enumerator of all the selected model objects in the model view.

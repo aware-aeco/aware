@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCAnyHandle.IsTypeOf
+Determines whether the instance is an instance of exactly the specified instance type.

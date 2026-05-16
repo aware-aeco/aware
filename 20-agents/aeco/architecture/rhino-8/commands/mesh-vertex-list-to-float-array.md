@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexList.ToFloatArray
+Copies all vertices to a linear array of float in x,y,z order

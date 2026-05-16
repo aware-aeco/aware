@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ArchivableDictionary.GetEnumerator
+Gets the enumerator of this dictionary.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transaction.Start
+Starts the transaction.

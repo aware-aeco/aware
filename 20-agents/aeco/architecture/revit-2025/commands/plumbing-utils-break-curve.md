@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlumbingUtils.BreakCurve
+Breaks the pipe curve into two parts at the given position.

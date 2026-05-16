@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.GetExternalReferenceModelLayers
+DO NOT USE! For internal usage only!

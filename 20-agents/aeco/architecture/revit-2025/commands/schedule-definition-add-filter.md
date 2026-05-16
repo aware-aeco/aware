@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.AddFilter
+Adds a new filter at the end of the list.

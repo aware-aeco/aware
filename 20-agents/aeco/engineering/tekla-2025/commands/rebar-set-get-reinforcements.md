@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSet.GetReinforcements
+Returns an enumerator of all the connected  objects.

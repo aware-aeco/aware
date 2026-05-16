@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEventHandler.SubscribeEvent
+Subscribes an event listener to the event

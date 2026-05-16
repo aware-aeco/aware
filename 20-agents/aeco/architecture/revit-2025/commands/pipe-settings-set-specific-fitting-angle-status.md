@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PipeSettings.SetSpecificFittingAngleStatus
+Sets the status of given specific angle.

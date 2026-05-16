@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeVertex.GetConstraints
+Retrieve the list of constraints associated with this vertex.

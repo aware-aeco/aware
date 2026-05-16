@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelSharingHandler.InviteUserAsync
+Invite sharing user.

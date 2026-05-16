@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ChangeQueue.GetQueueSun
+Get sun known to the queue at the time of the Flush

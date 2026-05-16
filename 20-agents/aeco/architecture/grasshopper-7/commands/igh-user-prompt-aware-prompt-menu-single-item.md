@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_UserPromptAware.PromptMenuSingleItem
+Create a menu item that will be inserted into the Parameter context menu   for getting single values.

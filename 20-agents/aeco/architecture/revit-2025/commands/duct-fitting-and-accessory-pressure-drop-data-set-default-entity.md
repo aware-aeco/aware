@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DuctFittingAndAccessoryPressureDropData.SetDefaultEntity
+Stores the default entity in the data.

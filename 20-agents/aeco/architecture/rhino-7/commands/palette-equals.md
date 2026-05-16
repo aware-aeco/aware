@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Palette.Equals
+Gets a value indicating that this object is equal to the specified

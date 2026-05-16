@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmInstanceDefinitionTable.FindNameHash
+Finds a InstanceDefinitionGeometry given its name hash.

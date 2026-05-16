@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmPlugInDataTable.Clear
+Remove all entries from this table.

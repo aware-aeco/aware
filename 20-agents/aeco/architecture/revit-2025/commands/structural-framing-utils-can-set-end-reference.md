@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralFramingUtils.CanSetEndReference
+Determines if a reference can be set for the given end of the framing element.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetVirtualBarIdentifiersByGuid
+Gets the identifiers of the virtual bars associated with a GUID.

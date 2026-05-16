@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostUtils.CreateCommands
+Parses a plugin and create all the commands defined therein.

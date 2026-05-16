@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Viewport.Create
+Creates a new Viewport at a given location on a sheet.

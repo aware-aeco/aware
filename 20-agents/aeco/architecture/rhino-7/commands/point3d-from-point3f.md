@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point3d.FromPoint3f
+Converts a single-precision point in a double-precision point.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.SetHostId
+The element that contains the rebar.

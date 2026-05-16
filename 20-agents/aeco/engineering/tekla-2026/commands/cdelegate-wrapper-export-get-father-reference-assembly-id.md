@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetFatherReferenceAssemblyId
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIView.Close
+Closes the view.

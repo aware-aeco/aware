@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderingSettings.GetBackgroundSettings
+Returns an object that represents the rendering background settings.

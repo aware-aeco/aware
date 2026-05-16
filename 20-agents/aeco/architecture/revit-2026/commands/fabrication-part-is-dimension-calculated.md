@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.IsDimensionCalculated
+Checks if the fabrication dimension is calculated.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsSurface.CreateSubDFriendly
+Create a bi-cubic SubD friendly surface from a surface.

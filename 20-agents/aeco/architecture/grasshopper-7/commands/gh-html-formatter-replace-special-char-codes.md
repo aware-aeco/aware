@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_HtmlFormatter.ReplaceSpecialCharCodes
+Replaces special chars (© ® ™ ² ³ ×) from a string with HTML codes for those chars.

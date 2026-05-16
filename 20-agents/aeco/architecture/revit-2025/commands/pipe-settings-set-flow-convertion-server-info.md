@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PipeSettings.SetFlowConvertionServerInfo
+Set the MEPServerInfo of the current plumbing flow convertion server.

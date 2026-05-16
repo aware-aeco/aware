@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.HasDisplayStyle
+Indicates if view has a DisplayStyle property

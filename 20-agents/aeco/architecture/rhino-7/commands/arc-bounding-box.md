@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Arc.BoundingBox
+Computes the 3D axis aligned bounding box for this arc.

@@ -6,32 +6,60 @@ description: API reference for namespace Rhino from RhinoCommon.dll
 # Rhino
 
 - **AngleUnitSystem**
+  - ON::AngleUnitSystem identifies an angle unit system
 - **AntialiasLevel**
+  - Provides the anti-alias levels used for render quality
 - **BitmapExtensions**
+  - Rhino specific extension methods for System.Drawing.Bitmap
 - **DisplayDeviceInfo**
+  - Get information about display devices found on this machine (GPUs).
 - **DocumentEventArgs**
+  - Provides document information for RhinoDoc events.
 - **DocumentOpenEventArgs**
+  - Provides document information for RhinoDoc events.
 - **DocumentSaveEventArgs**
+  - Provides document information for RhinoDoc events.
 - **GpuDeviceInfo**
+  - Represents a GPU device providing name, vendor and memory all as strings.                           Currently fully implemented only on Windows.
 - **IEpsilonComparable`1**
 - **IEpsilonFComparable`1**
 - **IRhinoDocObserver**
+  - Implement this interface if you are a modeless interface to aid in             handling multiple document implementations
 - **IndexPair**
+  - Represents two indices: I and J.
 - **LengthValue**
+  - Represents a length with an associated unit system and a string             representation of that length. This allows for going back and             forth from numerical representation of a length and a string             representation without "guessing" at the initial string
 - **PersistentSettings**
+  - A dictionary of SettingValue items.
 - **PersistentSettingsConverter**
+  - Used to convert string to string lists and string dictionaries and back             to strings again.
 - **PersistentSettingsEventArgs**
+  - Represents event data that is passed as state in persistent settings events.
 - **PersistentSettingsEventArgs`1**
+  - Represents the persistent settings modification event arguments.
 - **PersistentSettingsSavedEventArgs**
+  - Event argument passed to the  event.
 - **ReadFileResult**
+  - ON::ReadFileResult reports what happened when a file read was attempted.
 - **RhinoApp**
+  - .NET RhinoApp is parallel to C++ CRhinoApp.
 - **RhinoDoc**
+  - Represents an active model.
 - **RhinoDocObserverArgs**
+  - Arguments passed to  methods.
 - **RhinoFileWatcherChangeReason**
+  - Passed to IRhinoFileEventWatcher::Changed when a change event is raised.
 - **RhinoMath**
+  - Provides constants and static methods that are additional to             .
 - **RhinoWindow**
+  - Represents the top level window in Rhino
 - **RuntimeEnvironment**
+  - ON::RuntimeEnvironment identifies a runtime environment (operating system).             This value is saved in binary archives so appropriate adjustments             to resources provided by runtime environments, like fonts, can be made             when an archive created in one runtime environment is used in another.
 - **ScaleValue**
+  - Represents a scale with associated LengthValues and string representations             of the scale. This allows for going back and forth from numerical             representations of a scale and a string representation without "guessing"             at the initial scale.
 - **Symbols**
+  - Characters used for different 'drafting style' symbols
 - **UnitSystem**
+  - ON::LengthUnitSystem identifies a length unit system             United States customary length units references:               http://www.nist.gov/pml/wmd/metric/upload/frn-59-5442-1959.pdf               http://en.wikipedia.org/wiki/United_States_customary_units               http://en.wikipedia.org/wiki/International_yard_and_pound
 - **UnitsChangedWithScalingEventArgs**
+  - Provides information about UnitsChangedWithScaling events.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AppearanceAssetElement.GetRenderingAsset
+Gets the rendering asset for the appearance asset element.

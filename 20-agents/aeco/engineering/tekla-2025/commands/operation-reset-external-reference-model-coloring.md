@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.ResetExternalReferenceModelColoring
+Resets the given external reference models objects coloring back to default.

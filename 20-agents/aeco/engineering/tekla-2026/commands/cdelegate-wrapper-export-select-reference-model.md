@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportSelectReferenceModel
+DO NOT USE! For internal usage only!

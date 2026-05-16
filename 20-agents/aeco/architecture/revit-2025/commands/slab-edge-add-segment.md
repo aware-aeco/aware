@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SlabEdge.AddSegment
+Add segments to the slab edge.

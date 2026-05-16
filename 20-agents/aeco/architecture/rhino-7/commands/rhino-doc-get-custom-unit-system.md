@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoDoc.GetCustomUnitSystem
+Get the custom unit system name and custom unit scale.

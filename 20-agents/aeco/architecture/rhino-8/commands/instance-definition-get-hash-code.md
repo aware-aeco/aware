@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceDefinition.GetHashCode
+Use Id.GetHashCode()

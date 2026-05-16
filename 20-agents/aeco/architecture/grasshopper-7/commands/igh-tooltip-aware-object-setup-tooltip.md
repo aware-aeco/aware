@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_TooltipAwareObject.SetupTooltip
+This function is called when a tooltip it about to be displayed.

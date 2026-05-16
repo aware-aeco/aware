@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoApp.ExecuteCommand
+Execute a Rhino command.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Attributes`1.NewInstanceGuid
+Generate a new instance GUID for the owner object.

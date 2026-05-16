@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MemoryBitmap.Filter_Multiply
+Multiply all values in a specific channel with a specific factor.

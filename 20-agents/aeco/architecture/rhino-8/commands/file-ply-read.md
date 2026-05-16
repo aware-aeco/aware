@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilePly.Read
+Read a PLY file into a RhinoDoc

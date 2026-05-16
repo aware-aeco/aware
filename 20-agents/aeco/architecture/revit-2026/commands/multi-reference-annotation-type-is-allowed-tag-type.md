@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultiReferenceAnnotationType.IsAllowedTagType
+Checks if the tag type can be assigned to this multi-reference annotation type.

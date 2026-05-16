@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotTranslateLabel
+Get translation in current language from loaded ail files.

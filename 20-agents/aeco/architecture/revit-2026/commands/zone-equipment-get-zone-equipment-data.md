@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ZoneEquipment.GetZoneEquipmentData
+Gets the zone equipment data.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarInSystem.SetBarIncluded
+Sets if the bar at the desired index is included or not.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CollectionChangedHandler`2.InsertRange
+Inserts multiple items to the specified index in the collection

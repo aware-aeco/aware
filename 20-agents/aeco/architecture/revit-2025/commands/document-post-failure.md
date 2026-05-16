@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.PostFailure
+Posts a failure to be displayed to the user at the end of transaction.

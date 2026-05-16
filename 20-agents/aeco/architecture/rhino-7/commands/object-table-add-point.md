@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.AddPoint
+Adds a point object to the document.

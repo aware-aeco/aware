@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureHandlingOptions.GetClearAfterRollback
+Obtains the flag indicating if all posted failures should be removed silently when transaction is being rolled back.

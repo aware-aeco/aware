@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.CreateViewTemplate
+Creates a new view template instance from this view instance.

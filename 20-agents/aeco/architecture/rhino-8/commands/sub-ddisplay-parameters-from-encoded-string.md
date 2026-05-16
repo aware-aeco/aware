@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDDisplayParameters.FromEncodedString
+Converts encoded serialized string into a MeshingParameters

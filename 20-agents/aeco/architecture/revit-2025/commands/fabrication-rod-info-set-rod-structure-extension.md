@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationRodInfo.SetRodStructureExtension
+Set the length of the rod's top extension into structure. The rod must be attached to structure.

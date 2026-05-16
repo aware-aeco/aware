@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveArray.ForwardIterator
+Retrieve a forward moving iterator to the array.

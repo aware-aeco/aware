@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Model.GetInfo
+Returns information about the currently open model.

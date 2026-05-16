@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.EnableFilteringCache
+Enable caching of filters from files.

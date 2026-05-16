@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.AssociateWithRhinoDocument
+Associate this GH_Document with the currently active Rhino document.   This only works if both the 3dm and the ghx file have been saved at least once.

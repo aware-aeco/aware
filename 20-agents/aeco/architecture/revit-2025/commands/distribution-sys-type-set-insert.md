@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DistributionSysTypeSet.Insert
+Insert the specified DistributionSys type into the set.

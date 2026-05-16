@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderSettings.SetRenderEnvironmentOverride
+Set the given environment override on/off. Only works for usage Reflection and Skylighting.

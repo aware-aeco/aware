@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentObject.CreateAttributes
+This function creates the stand-alone attributes for this object.   If you wish to supply your own Attributes, you must override this function.

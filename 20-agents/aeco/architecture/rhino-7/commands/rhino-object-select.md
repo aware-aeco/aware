@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.Select
+Selects an object.

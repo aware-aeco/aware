@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Wall.CanHaveProfileSketch
+Checks whether this wall has or can have a profile sketch.

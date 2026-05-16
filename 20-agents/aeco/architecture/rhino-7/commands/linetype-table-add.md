@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinetypeTable.Add
+Adds a new linetype with specified definition to the linetype table.

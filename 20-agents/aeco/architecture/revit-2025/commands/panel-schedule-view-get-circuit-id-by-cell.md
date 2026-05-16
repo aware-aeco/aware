@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.GetCircuitIdByCell
+Gets the circuit id for the given slot number

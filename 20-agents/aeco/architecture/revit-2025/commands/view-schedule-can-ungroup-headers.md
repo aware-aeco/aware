@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.CanUngroupHeaders
+Indicates if selected headers can be ungrouped.

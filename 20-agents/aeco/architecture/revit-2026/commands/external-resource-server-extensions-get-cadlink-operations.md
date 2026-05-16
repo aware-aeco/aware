@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalResourceServerExtensions.GetCADLinkOperations
+Gets the specific methods supported by external resource CAD Links.

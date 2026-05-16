@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CutPlane.Select
+Selects a cut plane from the model database. The part ID must be set.

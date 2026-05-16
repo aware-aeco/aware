@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCollection.GetPointBufferPointer
+Returns an unsafe pointer to the buffer in which this collection stores the points.

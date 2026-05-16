@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.AssociateRegionWithLayer
+Associates a region with a layer.

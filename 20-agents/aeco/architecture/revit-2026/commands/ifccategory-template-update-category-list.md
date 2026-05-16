@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCCategoryTemplate.UpdateCategoryList
+Updates the mapping table with the categories from the document.

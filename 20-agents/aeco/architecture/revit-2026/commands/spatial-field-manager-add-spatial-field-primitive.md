@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpatialFieldManager.AddSpatialFieldPrimitive
+Creates empty analysis results primitive not associated with any geometry element

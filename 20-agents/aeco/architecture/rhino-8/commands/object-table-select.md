@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.Select
+Select a single object.

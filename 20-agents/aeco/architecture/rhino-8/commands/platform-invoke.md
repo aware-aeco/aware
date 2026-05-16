@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Platform.Invoke
+Invoke the specified action within the context of this platform

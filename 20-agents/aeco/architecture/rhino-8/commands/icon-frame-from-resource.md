@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IconFrame.FromResource
+Creates an instance of the  from an embedded resource.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.GetHashCode
+Gets the hash code of this document instance.

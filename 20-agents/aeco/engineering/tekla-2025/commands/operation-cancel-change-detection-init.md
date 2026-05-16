@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.CancelChangeDetectionInit
+Cancels the change detection initialization, if in progress.

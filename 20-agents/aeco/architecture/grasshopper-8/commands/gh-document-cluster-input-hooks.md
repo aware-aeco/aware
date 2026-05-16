@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.ClusterInputHooks
+Gets a sorted list of all the cluster input hooks.

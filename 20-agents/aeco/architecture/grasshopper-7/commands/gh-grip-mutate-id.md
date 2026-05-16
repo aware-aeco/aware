@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Grip.MutateId
+Create a new grip ID.

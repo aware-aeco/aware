@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmShutLining.SetCurveEnabled
+Sets whether shut-line is created for the given curve.

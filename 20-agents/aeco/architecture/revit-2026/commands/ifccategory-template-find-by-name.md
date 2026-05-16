@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCCategoryTemplate.FindByName
+Returns mapping template element by name.

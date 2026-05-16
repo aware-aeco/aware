@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationDrawingsServiceExtractor.GetTemporaryFilesFolder
+Get the folder where the intermediate files for extraction are stored.

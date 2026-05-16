@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GraphicsRenderer.RemoveGraphicObjectContainers
+Remove a graphic object container from all views.

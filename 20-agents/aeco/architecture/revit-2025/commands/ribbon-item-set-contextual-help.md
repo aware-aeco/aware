@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RibbonItem.SetContextualHelp
+Sets the contextual help bound with this button.

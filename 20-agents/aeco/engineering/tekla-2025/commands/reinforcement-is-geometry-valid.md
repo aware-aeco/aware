@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Reinforcement.IsGeometryValid
+Tells whether the geometry of a reinforcement object is valid or not.

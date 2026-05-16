@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RhinoScriptInterface.IsSolverEnabled
+Returns the state of the Grasshopper Solver.

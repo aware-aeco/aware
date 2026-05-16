@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.IsElementVisibleInTemporaryViewMode
+Identifies if the input element is visible for the temporary view mode for this view.

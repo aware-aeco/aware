@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportTryGetSubdirectoryFromFileName
+DO NOT USE! For internal usage only!

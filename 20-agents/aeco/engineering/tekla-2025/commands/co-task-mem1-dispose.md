@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CoTaskMem`1.Dispose
+Disposes the object

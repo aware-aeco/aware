@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.IsInPlane
+Test a curve to see if it lies in a specific plane.

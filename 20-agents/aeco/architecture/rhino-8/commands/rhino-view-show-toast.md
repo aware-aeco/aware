@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoView.ShowToast
+Shows a temporary popup message in the lower right corner of the view

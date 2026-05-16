@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CullUnusedFaces
+Culls faces with m_face_index == -1.

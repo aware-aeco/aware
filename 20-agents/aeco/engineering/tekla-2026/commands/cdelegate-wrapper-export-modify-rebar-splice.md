@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportModifyRebarSplice
+DO NOT USE! For internal usage only!

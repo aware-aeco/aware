@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FlexDuct.IsFlexDuctTypeId
+Checks if given type is valid flexible duct type.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorFillScheme.CanUpdateEntry
+Checks whether entry exists in the scheme and not the same as input one.

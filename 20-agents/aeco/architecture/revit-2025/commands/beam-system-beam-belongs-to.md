@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BeamSystem.BeamBelongsTo
+Find out the BeamSystem to which the beam belongs.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlSpline.Modify
+Modifies the control spline with the given Identifier.

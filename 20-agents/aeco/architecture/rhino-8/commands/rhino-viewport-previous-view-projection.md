@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.PreviousViewProjection
+Sets the view projection and target to the settings that             were active before the last call to NextViewProjection.

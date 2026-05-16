@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Control.SuspendLayout
+Suspends the layout of child controls

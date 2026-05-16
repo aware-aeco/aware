@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DocumentControl.Remove
+Remove the specified child from the container.

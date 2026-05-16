@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MacroModule.GetMacro
+Gets the macro with the give name.

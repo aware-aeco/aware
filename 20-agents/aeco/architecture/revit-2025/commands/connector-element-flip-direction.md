@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConnectorElement.FlipDirection
+Reverses the direction of the connector element.

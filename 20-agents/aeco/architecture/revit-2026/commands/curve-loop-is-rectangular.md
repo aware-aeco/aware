@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveLoop.IsRectangular
+Identifies if the curve loop is rectangular with respect to a given projection plane.

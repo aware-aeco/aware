@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DrawableCellStates.GetHashCode
+Serves as a hash function for a  object.

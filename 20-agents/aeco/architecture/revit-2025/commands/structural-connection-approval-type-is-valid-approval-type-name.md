@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralConnectionApprovalType.IsValidApprovalTypeName
+Verifies if the provided approval name is unique in the document.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BaseRebarModifier.Select
+Selects the rebar modifier from the model database. The identifier must be set.

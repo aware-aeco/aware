@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaReinforcement.GetNumberOfLines
+Gets the number of lines on the specified layer. It also counts the excluded ones.

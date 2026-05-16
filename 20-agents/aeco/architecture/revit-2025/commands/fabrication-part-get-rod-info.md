@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.GetRodInfo
+Gets the fabrication rod information.

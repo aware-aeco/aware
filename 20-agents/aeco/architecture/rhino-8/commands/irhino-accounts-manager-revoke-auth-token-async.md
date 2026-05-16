@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IRhinoAccountsManager.RevokeAuthTokenAsync
+Invalidates/revokes an  object from the Rhino Accounts server.

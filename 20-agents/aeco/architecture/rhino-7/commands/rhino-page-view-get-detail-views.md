@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoPageView.GetDetailViews
+Gets a list of the detail view objects associated with this layout.

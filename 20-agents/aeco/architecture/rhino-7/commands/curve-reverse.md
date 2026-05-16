@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.Reverse
+Reverses the direction of the curve.

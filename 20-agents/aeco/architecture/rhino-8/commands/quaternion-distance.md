@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Quaternion.Distance
+Returns the distance or norm of the difference between two quaternions.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Polyline.ToNurbsCurve
+Constructs a nurbs curve representation of this polyline.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderWindow.RegisterPostEffectExecutionControl
+Register an instance of PostEffectExecutionControl.

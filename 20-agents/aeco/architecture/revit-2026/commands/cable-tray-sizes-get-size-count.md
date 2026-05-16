@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableTraySizes.GetSizeCount
+Gets the size count of the cable tray size table.

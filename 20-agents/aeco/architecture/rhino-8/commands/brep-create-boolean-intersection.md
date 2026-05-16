@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateBooleanIntersection
+Compute the Solid Intersection of two sets of Breps.

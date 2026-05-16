@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Quaternion.GetRotation
+Returns the rotation defined by the quaternion.

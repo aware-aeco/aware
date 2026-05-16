@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDefinitionByArc.AddConstraintChordLength
+Specify a parameter to drive the chord length (the straight-line distance between the endpoints of the arc).

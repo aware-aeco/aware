@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewPosition.GetPlacedViewportIdsForViewPosition
+Gets the placed viewport ids for the view position.

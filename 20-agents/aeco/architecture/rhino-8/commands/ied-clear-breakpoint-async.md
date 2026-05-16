@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.ClearBreakpointAsync
+Remove breakpoint at specified line number

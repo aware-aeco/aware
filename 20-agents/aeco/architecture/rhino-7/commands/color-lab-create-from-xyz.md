@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorLAB.CreateFromXYZ
+Create the nearest LAB equivalent of an XYZ color.

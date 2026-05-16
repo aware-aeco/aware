@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalLoadClassification.Create
+Creates a new instance of load classification and adds it to the document.

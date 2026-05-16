@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorFillScheme.IsValidSchemeName
+Checks whether the name is valid for new generated scheme.

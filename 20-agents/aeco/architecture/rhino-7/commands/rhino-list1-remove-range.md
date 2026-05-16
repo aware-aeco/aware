@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoList`1.RemoveRange
+Removes a range of elements from the List.

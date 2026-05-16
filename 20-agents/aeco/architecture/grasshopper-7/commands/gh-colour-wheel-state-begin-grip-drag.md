@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourWheelState.BeginGripDrag
+Potentially start a new grip drag.

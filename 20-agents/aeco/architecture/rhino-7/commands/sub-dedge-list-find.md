@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDEdgeList.Find
+Find an edge in this SubD with a given id

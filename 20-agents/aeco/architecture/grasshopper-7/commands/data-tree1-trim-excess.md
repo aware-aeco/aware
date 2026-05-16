@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataTree`1.TrimExcess
+Trims the excess allocated memory in all branches

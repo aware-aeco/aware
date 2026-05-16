@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RTree.CreatePointCloudTree
+Constructs a new tree with an element for each point cloud point.

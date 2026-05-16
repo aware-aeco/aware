@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicTreeDisplayArgs.SetupViewport
+Assign the viewport member with this function to ensure that   other constants are also set.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLinetypeTable.GetExportLinetypeInfo
+Gets a copy of the ExportLinetypeInfo corresponding to the given ExportLinetypeKey.

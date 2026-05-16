@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DoubleClickOptions.SetRenameOnSlowDoubleClickInProjectBrowser
+Sets whether the desired action is to rename item in project browser on slow double-click.

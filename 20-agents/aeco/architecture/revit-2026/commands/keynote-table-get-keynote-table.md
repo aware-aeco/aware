@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-KeynoteTable.GetKeynoteTable
+Gets the KeynoteTable from a Revit document.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CreateVertexColorsFromBitmap
+Populate the vertex colors from a bitmap image.

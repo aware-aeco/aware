@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GenericForm.GetVisibility
+Gets the visibility for the generic form.

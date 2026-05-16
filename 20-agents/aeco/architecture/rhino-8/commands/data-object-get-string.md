@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataObject.GetString
+Gets a string from the data object with the specified type identifier.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OpenOptions.GetOpenWorksetsConfiguration
+Gets the object used to configure the worksets to open when the model is opened.

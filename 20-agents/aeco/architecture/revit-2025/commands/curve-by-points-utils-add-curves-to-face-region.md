@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveByPointsUtils.AddCurvesToFaceRegion
+Adds The CurveElements to one or more FaceRegions.

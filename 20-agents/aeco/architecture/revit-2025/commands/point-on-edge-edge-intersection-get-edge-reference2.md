@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointOnEdgeEdgeIntersection.GetEdgeReference2
+Get a copy of the second edge or curve reference.

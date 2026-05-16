@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetSpecificationAbbreviation
+Gets specification abbreviation.

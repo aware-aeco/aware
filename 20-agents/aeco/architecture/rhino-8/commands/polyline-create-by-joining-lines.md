@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Polyline.CreateByJoiningLines
+Creates polylines by joining lines.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PhaseArray.Clear
+Removes every phase from the array, rendering it empty.

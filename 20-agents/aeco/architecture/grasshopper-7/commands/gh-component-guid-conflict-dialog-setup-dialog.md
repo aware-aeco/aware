@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentGuidConflictDialog.SetupDialog
+Call this method prior to displaying the form

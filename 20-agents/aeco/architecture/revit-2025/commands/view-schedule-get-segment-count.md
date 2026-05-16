@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.GetSegmentCount
+Gets the total count of schedule segments.

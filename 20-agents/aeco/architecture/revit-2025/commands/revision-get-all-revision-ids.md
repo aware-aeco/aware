@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Revision.GetAllRevisionIds
+Returns the ids of all Revisions in the project ordered by sequence number.

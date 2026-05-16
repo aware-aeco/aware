@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleField.CanTotalByAssemblyType
+Indicates if totals by assembly type can be enabled for this field.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveLoop.GetCurveLoopIterator
+Returns a curve that iterates through the curve loop.

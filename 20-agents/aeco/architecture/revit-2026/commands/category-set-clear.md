@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CategorySet.Clear
+Removes every item from the set, rendering it empty.

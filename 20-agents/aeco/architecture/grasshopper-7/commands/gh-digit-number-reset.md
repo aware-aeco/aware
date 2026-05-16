@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DigitNumber.Reset
+Reset all parts to zero.

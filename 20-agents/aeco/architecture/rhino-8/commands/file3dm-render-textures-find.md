@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmRenderTextures.Find
+Finds a texture by its id, if possible. Returns null on failure.

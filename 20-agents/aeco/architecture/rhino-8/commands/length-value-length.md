@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LengthValue.Length
+Length value in this instance's current unit system

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ForgeTypeId.GetHashCode
+Returns the hash code for this ForgeTypeId

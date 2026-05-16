@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TransactionGroup.Start
+Starts the transaction group

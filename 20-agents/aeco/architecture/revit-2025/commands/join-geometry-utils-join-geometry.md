@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-JoinGeometryUtils.JoinGeometry
+Creates clean joins between two elements that share a common face.

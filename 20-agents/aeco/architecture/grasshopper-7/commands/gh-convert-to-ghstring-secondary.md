@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHString_Secondary
+Converts similar data into a GH_String instance.  Data is not quaranteed to be duplicated.

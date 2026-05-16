@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EdgeArray.Clear
+Removes every edge from the array, rendering it empty.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GenericLayout.Horizontal_ByPosition
+Perform left-to-right layout on a list of rectangles at the left edge of the layout area.

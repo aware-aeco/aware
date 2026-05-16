@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ProjectLocationSet.Erase
+Removes a specified project location from the set.

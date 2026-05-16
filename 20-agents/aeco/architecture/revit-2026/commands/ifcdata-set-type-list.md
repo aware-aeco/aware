@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCData.SetTypeList
+Sets the corresponding IFC type by its type list name.

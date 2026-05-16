@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicTreeDisplayArgs.RadialY
+Compute the y-coordinate of a point defined by radial coordinates

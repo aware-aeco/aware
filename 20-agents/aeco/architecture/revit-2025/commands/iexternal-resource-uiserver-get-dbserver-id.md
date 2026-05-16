@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExternalResourceUIServer.GetDBServerId
+Implement this method to return the id of the server which is associated with this UI server.

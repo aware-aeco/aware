@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.GetRevitServerNetworkHosts
+Gets the list of all Revit Server Network hosts in current session.

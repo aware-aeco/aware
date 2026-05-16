@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstrainedHandle.IsEdgeHandle
+Returns true if the RebarHandleType of the RebarConstrainedHandle is 'Edge'.

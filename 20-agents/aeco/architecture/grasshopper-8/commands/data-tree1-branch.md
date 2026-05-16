@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataTree`1.Branch
+Gets the list of data which belongs to a given Branch path.

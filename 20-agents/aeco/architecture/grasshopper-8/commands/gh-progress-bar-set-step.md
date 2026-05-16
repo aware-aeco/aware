@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ProgressBar.SetStep
+Set the current step.

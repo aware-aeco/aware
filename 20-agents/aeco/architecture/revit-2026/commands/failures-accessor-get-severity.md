@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailuresAccessor.GetSeverity
+Provides access to the current failure severity.

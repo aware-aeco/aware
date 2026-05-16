@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.ZoomBoundingBox
+Zooms the viewport to the given bounding box.

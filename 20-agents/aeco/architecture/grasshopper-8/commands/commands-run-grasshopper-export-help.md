@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Commands.Run_GrasshopperExportHelp
+Run the _GrasshopperExportHelp command logic.

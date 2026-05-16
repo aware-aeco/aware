@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.ClearIgnoreList
+Clears the Object Exception Ignore List.

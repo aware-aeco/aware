@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MemoryBitmap.CopyChannel
+Copy the contents of one channel into another.

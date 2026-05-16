@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MarkovChain.Clear
+Reset the markov database.

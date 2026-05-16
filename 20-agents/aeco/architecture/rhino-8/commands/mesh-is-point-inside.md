@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.IsPointInside
+Determines if a point is inside a solid mesh.

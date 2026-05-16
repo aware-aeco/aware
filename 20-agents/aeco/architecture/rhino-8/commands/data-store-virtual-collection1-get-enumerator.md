@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataStoreVirtualCollection`1.GetEnumerator
+Gets the enumerator for the collection

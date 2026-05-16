@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.GetMovedBarTransform
+Returns a transform representing the movement of the bar relative to its default position along the distribution path.

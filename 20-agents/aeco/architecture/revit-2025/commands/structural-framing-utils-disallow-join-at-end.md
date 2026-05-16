@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralFramingUtils.DisallowJoinAtEnd
+Sets the indicated end of the framing element to not be allowed to join to others.

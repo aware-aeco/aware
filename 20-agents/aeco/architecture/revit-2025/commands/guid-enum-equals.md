@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GuidEnum.Equals
+Compares two Guid-based enum object based on their concrete class and GUID value.

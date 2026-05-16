@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.LaunchExternalReferenceModelComparisonTolerancesDialog
+Launches the comparison tolerances dialog.

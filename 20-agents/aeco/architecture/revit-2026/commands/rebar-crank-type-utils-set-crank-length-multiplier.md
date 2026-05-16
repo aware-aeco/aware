@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarCrankTypeUtils.SetCrankLengthMultiplier
+Sets the crank length multiplier value.

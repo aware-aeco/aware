@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContentCollection.GetSearchPattern
+See SetSearchPattern

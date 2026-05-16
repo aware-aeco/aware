@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Connection.GetSecondaryObjects
+Returns the secondary objects.

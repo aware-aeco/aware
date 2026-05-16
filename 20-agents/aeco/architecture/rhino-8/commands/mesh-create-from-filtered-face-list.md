@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CreateFromFilteredFaceList
+Constructs a sub-mesh, that contains a filtered list of faces.

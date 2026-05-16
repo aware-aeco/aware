@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlSpline.Select
+Selects the control spline with the given Identifier.

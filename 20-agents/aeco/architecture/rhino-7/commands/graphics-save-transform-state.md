@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Graphics.SaveTransformState
+Gets an object that will restore to the current transform state when disposed.

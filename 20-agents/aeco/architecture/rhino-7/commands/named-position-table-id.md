@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedPositionTable.Id
+Guid of a Named Position.

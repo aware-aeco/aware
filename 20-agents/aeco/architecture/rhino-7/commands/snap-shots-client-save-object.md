@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SnapShotsClient.SaveObject
+Called when the user saves a snapshot and SupportsObjects() and SupportsObject(Rhino.DocObjects.RhinoObject doc_object) returns true.

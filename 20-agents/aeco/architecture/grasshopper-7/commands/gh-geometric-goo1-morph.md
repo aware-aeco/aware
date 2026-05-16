@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GeometricGoo`1.Morph
+Morph the object or a deformable representation of the object.

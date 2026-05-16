@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetCone.GetMesh
+Prompt for the getting of a mesh cone.

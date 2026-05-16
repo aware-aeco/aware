@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportFreezeRebarSet
+DO NOT USE! For internal usage only!

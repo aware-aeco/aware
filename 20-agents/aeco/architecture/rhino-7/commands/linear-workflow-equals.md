@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinearWorkflow.Equals
+Compare two LinearWorkflow objects. They are considered equal when             their Hashes match.

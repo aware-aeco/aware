@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.ReloadConfiguration
+Reloads the fabrication configuration from its source fabrication configuration.

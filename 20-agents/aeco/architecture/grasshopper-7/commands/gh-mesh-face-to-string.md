@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MeshFace.ToString
+Format the mesh face using default grasshopper formatting logic.

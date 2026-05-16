@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCFile.Close
+Close the IFC file.

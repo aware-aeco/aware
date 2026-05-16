@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OverrideGraphicSettings.SetCutLinePatternId
+Sets the ElementId of the cut surface line pattern.

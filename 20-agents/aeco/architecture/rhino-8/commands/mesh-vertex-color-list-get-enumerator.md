@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexColorList.GetEnumerator
+Gets an enumerator that yields all colors in this collection.

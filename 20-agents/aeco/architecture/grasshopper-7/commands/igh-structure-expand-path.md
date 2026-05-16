@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Structure.ExpandPath
+Expand a path in this structure by appending an element.

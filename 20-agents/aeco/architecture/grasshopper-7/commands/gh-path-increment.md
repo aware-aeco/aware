@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Path.Increment
+Increment a specific index in this path by one.

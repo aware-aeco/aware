@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewportInfo.RotateCamera
+Rotates the view camera.

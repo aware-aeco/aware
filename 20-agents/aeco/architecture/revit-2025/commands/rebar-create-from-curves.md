@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.CreateFromCurves
+Creates a new instance of a shape driven Rebar element within the project.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SelectionFilterElement.RemoveSingle
+Removes a single ElementId from the filter's set.

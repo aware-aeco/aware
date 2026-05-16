@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IDuctFittingAndAccessoryPressureDropServer.IsApplicable
+Check if the server is applicable for the duct fitting or duct accessory.

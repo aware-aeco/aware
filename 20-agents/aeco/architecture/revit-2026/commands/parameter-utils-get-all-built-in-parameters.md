@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterUtils.GetAllBuiltInParameters
+Gets the identifiers of all built-in parameters.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DGNExportOptions.SetExportLineweightTable
+Sets the line weight table to use during export.

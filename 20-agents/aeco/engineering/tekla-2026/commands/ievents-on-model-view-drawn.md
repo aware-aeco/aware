@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEvents.OnModelViewDrawn
+Called when a view is drawn or redrawn.

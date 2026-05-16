@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetSurfaceGeometryType
+DO NOT USE! For internal usage only!

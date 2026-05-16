@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.MergeCells
+Merges cells for the given area.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PathOfTravel.InsertWaypoint
+Insert a waypoint at the specified index

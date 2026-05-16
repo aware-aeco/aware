@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportGetPartLine
+DO NOT USE! For internal usage only!

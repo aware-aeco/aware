@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.PointAt
+Evaluate a mesh at a set of barycentric coordinates.

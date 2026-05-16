@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BimModelDataProductClient.DeleteModelAsync
+Asynchronously deletes a BIM model from the Bim Model Data Product.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.RemoveColumn
+Removes a column data at a specified index.

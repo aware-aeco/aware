@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.ChangeRegionWidth
+Adjust the width of an existing simple region.

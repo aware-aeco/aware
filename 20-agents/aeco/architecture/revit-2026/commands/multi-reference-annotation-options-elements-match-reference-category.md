@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultiReferenceAnnotationOptions.ElementsMatchReferenceCategory
+Verifies that all of the elements match the reference category required    by the MultiReferenceAnnotationType.

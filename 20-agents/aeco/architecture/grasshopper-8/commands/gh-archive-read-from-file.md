@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Archive.ReadFromFile
+Reads a new archive tree from a file.

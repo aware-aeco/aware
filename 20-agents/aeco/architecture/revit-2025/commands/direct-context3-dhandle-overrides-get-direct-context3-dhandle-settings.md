@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectContext3DHandleOverrides.GetDirectContext3DHandleSettings
+Gets override settings associated with a DirectContext3D handle instance or type.

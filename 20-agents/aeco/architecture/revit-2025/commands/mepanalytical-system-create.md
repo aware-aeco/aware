@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPAnalyticalSystem.Create
+Creates a new analytical system

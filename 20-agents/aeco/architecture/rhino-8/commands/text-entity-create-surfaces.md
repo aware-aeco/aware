@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextEntity.CreateSurfaces
+Creates planar breps from the outline curves.

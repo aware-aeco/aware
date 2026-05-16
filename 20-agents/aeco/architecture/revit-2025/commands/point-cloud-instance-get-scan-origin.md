@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudInstance.GetScanOrigin
+Returns the origin point of a scan in model coordinates.

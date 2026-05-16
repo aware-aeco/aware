@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDefinition.GetParameters
+Return the Ids of the shared parameters in the Definition.

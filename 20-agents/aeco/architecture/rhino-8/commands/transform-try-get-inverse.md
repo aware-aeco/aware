@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform.TryGetInverse
+Attempts to get the inverse transform of this transform.

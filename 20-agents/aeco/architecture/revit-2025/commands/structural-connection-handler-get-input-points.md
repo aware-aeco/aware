@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralConnectionHandler.GetInputPoints
+Returns a list of additional points defining certain connections.

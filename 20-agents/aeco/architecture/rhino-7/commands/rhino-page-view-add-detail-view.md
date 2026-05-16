@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoPageView.AddDetailView
+Creates a detail view object that is displayed on this page and adds it to the document.

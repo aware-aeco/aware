@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileReference.Dispose
+Reclaims unmanaged resources used by this object.

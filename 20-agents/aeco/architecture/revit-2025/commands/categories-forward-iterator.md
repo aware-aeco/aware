@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Categories.ForwardIterator
+Retrieves a forward moving iterator to the map.

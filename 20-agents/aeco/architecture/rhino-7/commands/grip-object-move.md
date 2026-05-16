@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GripObject.Move
+Moves the grip to a new location.

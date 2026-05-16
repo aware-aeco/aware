@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RibbonTab.EnsurePanel
+Ensures a panel with a certain name exists.

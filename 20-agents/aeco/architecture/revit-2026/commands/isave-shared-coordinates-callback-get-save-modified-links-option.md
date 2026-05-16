@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ISaveSharedCoordinatesCallback.GetSaveModifiedLinksOption
+Determines whether Revit should save the link, not save the link,    or discard shared positioning entirely.

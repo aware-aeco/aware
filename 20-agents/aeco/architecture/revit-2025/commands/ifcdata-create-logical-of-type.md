@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCData.CreateLogicalOfType
+Creates a logical data object of the specified type.

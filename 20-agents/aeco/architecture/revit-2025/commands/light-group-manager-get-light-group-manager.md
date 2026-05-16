@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightGroupManager.GetLightGroupManager
+Creates a light group manager object from the given document

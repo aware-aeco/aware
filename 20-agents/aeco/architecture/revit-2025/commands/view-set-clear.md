@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSet.Clear
+Removes every view from the set, rendering it empty.

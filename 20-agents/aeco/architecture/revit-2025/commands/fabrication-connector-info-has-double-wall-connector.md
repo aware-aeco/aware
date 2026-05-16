@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConnectorInfo.HasDoubleWallConnector
+Checks if there are any double wall connectors fabricated.

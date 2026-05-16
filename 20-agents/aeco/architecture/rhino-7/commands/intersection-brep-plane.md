@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.BrepPlane
+Intersects a Brep with an (infinite) plane.

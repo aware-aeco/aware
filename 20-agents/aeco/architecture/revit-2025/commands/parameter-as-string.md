@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Parameter.AsString
+Provides access to the string contents of the parameter.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricArea.GetValidViewsForTags
+Gets ids of the views where tags and symbols can be placed for the FabricArea and/or FabricSheets

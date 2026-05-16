@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinePattern.SetSegments
+Sets the sequence of segments that defines this line pattern.

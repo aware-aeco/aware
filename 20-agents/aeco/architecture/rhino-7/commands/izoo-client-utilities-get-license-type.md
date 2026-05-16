@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IZooClientUtilities.GetLicenseType
+Returns the type of a specified product license

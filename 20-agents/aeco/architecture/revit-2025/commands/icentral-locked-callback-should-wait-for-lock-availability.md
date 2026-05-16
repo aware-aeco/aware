@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICentralLockedCallback.ShouldWaitForLockAvailability
+Returns whether Revit should wait and try again to acquire the lock on central.

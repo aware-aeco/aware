@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentServer.IndexOfAutoSave
+Gets the document index that is associated with the specified autosave location.

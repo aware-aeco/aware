@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewportInfo.GetScreenPort
+Gets the location of viewport in pixels.             See documentation for SetScreenPort.

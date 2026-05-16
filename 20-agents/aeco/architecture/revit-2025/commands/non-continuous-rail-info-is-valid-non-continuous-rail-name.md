@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NonContinuousRailInfo.IsValidNonContinuousRailName
+Checks whether the input name is valid for a non-continuous rail in its associated railing type.

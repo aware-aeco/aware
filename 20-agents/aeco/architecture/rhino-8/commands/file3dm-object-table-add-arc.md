@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObjectTable.AddArc
+Adds a curve object to the document representing an arc.

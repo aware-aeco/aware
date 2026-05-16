@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Panels.IsPanelVisible
+Check to see if a panel is currently visible, if isSelectedTab             is true then the tab must be the active tab as well.

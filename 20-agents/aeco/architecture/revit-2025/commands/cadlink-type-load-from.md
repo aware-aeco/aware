@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CADLinkType.LoadFrom
+Loads or reloads the DWG link from the given external resource reference.

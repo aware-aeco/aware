@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportDrawTemporaryText
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PythonScript.AddRuntimeAssembly
+Add assembly to list of assemblies used by python

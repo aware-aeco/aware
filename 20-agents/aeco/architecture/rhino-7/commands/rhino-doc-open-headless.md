@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoDoc.OpenHeadless
+Opens a 3DM file into a new headless RhinoDoc.

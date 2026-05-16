@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ContourPlate.Delete
+Deletes the contour plate instance with the given identifier from the model database.

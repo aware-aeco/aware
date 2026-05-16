@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Localization.LocalizeCommandName
+Commands that need to be localized should call this function.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AppearanceAssetElement.GetAppearanceAssetElementByName
+Gets an AppearanceAssetElement by name.

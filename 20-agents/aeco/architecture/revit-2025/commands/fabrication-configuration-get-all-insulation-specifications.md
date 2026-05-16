@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetAllInsulationSpecifications
+Gets all insulation specification identifiers in the fabrication configuration.

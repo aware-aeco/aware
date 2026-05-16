@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.WithShutLining
+Constructs new mesh from the current one, with shut lining applied to it.

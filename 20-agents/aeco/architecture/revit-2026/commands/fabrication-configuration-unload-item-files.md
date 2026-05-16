@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.UnloadItemFiles
+Unload the specified fabrication item files from the project.

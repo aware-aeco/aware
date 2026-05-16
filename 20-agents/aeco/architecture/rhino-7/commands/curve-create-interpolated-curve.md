@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.CreateInterpolatedCurve
+Interpolates a sequence of points. Used by InterpCurve Command             This routine works best when degree=3.

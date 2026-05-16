@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.AddCircle
+Adds a curve object to the document representing a circle.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.UnselectedObjects
+Returns all unselected objects in the document

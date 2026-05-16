@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Hatch.CreateDisplayGeometry
+Generate geometry that would be used to draw the hatch with a given hatch pattern

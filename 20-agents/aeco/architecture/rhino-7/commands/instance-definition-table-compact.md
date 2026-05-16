@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceDefinitionTable.Compact
+Purge deleted instance definition information that is not in use.             This function is time consuming and should be used in a thoughtful manner.

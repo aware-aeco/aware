@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterCollection`1.RemoveAt
+Removes the item at the specified index.

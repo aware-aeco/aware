@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalEquipment.IsValidDistributionSystem
+Verifies that the Distribution System can be assigned to the Electrical Equipment.

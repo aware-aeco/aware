@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormattedText.GetListType
+Returns the  of a paragraph.

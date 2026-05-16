@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToUVInterval_Primary
+Performs a direct cast from UVInterval or GH_Interval2D.

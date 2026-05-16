@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroupTable.GroupNames
+Returns an array of all group names.

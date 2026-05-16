@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.NewFlexDuct
+Adds a new flexible duct into the document,  using two connector, and duct type.

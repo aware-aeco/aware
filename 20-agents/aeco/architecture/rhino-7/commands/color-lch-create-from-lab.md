@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorLCH.CreateFromLAB
+Create the nearest LCH equivalent of a LAB color.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BentPlateGeometrySolver.SetBendAngle
+Sets  as the angle of curved section              and modifies  starting from .

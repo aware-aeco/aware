@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoPageView.SetPageAsActive
+Deactivates the active details and sets the page view as active.

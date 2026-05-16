@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RepeaterCoordinates.GetCoordinate
+Returns the coordinate in the given dimension.

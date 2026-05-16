@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewFamilyInstanceCreationData
+Creates an object which wraps the arguments of NewFamilyInstance() for batch creation.

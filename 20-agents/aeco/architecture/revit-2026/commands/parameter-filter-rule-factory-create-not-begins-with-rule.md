@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterFilterRuleFactory.CreateNotBeginsWithRule
+Creates a filter rule that determines whether strings from the document    do not begin with a certain string value.

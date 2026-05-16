@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricArea.GetTotalSheetMass
+Calculates the total sheet mass: Volume of Wire * Unit Weight.

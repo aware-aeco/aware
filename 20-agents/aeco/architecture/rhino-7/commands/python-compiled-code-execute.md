@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PythonCompiledCode.Execute
+Executes the script in a specific scope.

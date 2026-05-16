@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Grid.UnselectRow
+Unselects the specified

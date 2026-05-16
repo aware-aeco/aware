@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.GetLayerFunction
+Retrieves the function of the specified layer.

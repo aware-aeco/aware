@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Reference.ConvertToStableRepresentation
+Converts the reference to a stable String representation.

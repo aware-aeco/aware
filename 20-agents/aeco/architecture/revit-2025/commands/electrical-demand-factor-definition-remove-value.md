@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalDemandFactorDefinition.RemoveValue
+Removes a value to the value set for this demand factor definition

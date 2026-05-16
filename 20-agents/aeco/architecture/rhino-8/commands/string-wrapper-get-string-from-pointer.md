@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StringWrapper.GetStringFromPointer
+Get string from an ON_wString*

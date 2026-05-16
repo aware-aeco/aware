@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_InstanceGuidDependent.InstanceGuidsChanged
+This method will be called by the GH_Document that owns this object after   it mutates some or all of it's object InstanceIds.

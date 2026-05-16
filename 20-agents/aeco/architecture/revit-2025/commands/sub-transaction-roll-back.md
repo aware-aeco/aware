@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubTransaction.RollBack
+Discards all changes made to the model during the sub-transaction.

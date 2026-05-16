@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Polymesh.GetSolidBrep
+Gets the cleaned Brep

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.SphereSphere
+Intersects two spheres using exact calculations.

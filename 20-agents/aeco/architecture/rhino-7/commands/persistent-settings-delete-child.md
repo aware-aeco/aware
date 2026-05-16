@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PersistentSettings.DeleteChild
+Call this method to delete a child settings key.

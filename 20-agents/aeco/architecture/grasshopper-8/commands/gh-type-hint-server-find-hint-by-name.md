@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_TypeHintServer.FindHintByName
+Search the entire assembly for a type hint that matches the name.   The search is not case sensitive.

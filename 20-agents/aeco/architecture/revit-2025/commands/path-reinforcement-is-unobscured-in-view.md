@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PathReinforcement.IsUnobscuredInView
+Checks if Path Reinforcement is shown unobscured in a view.

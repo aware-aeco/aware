@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.GetAllFabricationBodyConnectorDefinitions
+Gets all connectors that are valid to be assigned to the part for a specified body connector

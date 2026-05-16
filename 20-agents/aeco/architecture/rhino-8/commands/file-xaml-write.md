@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileXaml.Write
+Write a Xaml file based on the contents of a RhinoDoc

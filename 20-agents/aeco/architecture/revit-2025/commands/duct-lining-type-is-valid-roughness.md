@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DuctLiningType.IsValidRoughness
+Identifies if the input roughness is valid.

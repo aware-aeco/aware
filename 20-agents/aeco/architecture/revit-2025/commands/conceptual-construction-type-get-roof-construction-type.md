@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConceptualConstructionType.GetRoofConstructionType
+Get a Roof ConceptualConstructionType by its ConceptualConstructionRoofType.

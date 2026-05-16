@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FaceWall.IsWallTypeValidForFaceWall
+Identifies if a wall type may be applied to a face wall.

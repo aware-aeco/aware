@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ContourPlate.GetContourPolycurve
+Get contour as polycurve

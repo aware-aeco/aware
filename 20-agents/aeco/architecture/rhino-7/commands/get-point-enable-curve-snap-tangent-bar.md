@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetPoint.EnableCurveSnapTangentBar
+Controls display of the curve snap tangent bar icon.

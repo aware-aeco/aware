@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TreeView.RefreshData
+Refreshes the data, keeping the selection

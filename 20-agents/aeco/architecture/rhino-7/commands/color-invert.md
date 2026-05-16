@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Color.Invert
+Inverts the RGB color values

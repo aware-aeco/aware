@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPNetworkSegmentData.IsValid
+Verified if this segment data has been assigned some valid values afer calculation.

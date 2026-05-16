@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObject.Equals
+Check if Identifiers of model objects are same.

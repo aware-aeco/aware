@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TransmissionData.GetAllExternalFileReferenceIds
+Gets the ids of all ExternalFileReferences.

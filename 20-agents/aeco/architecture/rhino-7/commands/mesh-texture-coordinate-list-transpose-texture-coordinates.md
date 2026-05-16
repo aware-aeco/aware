@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshTextureCoordinateList.TransposeTextureCoordinates
+Transposes texture coordinates.             The region of the bitmap the texture uses does not change.             All texture coordinates rows (Us) become columns (Vs), and vice versa.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableLayout.Add
+Adds a control to the specified x & y coordinates.

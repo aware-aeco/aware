@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RcpGroup.ImpliedInsertionIndex
+Finds the insertion index implied by the position of a point.

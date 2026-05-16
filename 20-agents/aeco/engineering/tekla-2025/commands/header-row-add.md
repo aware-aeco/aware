@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HeaderRow.Add
+Adds a list of items to the header row.

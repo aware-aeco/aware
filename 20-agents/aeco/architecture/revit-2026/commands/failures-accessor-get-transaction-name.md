@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailuresAccessor.GetTransactionName
+Retrieves the name of the transaction for which failures are being processed.

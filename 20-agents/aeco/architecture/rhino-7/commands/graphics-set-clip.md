@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Graphics.SetClip
+Sets the clip region to the specified

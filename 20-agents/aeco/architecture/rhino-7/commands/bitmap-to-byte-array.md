@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Bitmap.ToByteArray
+Saves the bitmap to an image of the specified  into a byte array

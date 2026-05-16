@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.GetAllowedReferenceModelFileExtensions
+DO NOT USE! For internal usage only!

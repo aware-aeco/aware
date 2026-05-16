@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform.TextureMapping
+Construct a UVW Transform from components.

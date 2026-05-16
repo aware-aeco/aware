@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToMatrix_Secondary
+Attempts to convert other data types into a Matrix.   Data is not quaranteed to be duplicated.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DuctSizeSettings.RemoveSize
+Erase the existing MEPSize with this nominal diameter. The duct shape determines the location of the size in the size table.

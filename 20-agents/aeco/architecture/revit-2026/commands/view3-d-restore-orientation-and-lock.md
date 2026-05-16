@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View3D.RestoreOrientationAndLock
+Locks the view and restores its orientation.

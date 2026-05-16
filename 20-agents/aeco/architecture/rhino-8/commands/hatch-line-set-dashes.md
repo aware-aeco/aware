@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HatchLine.SetDashes
+Sets a new dash array.

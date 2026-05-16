@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyAnalysisDetailModel.GetMainEnergyAnalysisDetailModel
+Gets the EnergyAnalysisDetailModel in given document.

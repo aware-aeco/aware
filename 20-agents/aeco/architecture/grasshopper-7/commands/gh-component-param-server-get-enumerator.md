@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentParamServer.GetEnumerator
+Gets a customized enumerator which iterates over all (both input and output) parameters.

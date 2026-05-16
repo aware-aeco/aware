@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceModel.Select
+Selects the reference model with the given identifier.

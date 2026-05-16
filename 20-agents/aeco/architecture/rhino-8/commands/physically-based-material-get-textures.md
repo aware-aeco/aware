@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PhysicallyBasedMaterial.GetTextures
+Get array of textures that this material uses

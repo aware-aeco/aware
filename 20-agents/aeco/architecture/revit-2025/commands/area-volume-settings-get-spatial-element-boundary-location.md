@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaVolumeSettings.GetSpatialElementBoundaryLocation
+Gets the spatial element boundary location based on spatial element type.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.ResetCellOverride
+Resets the override of the column.

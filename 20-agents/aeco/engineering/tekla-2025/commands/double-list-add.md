@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DoubleList.Add
+Adds a new double to the end of the double list.

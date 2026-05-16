@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjRef.SubD
+Gets the SubD if the referenced geometry is one.

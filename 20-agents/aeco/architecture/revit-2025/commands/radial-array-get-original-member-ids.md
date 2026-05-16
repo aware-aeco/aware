@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RadialArray.GetOriginalMemberIds
+Retrieves the ids for the original elements from which the array was created. These elements form the first item in the array.

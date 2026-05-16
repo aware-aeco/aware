@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.GetRebarConstraintsManager
+Returns an object for managing the external constraints on the Rebar element

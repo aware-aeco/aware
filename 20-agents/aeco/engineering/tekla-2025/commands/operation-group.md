@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.Group
+Groups a list of single rebars or rebar groups and creates a new rebar group.

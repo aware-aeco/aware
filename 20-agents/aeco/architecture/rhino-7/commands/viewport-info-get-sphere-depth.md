@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewportInfo.GetSphereDepth
+Gets near and far clipping distances of a bounding sphere.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RoutingConditions.Clear
+Clear all existing conditions

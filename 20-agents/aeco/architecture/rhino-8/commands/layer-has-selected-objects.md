@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Layer.HasSelectedObjects
+Returns true if the layer has one or more selected Rhino objects.

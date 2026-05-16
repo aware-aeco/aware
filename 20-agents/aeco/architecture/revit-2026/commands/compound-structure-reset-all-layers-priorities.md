@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.ResetAllLayersPriorities
+Resets all the priorities of all layers to the default priorities defined by their functions.

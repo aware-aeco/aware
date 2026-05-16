@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstrainedHandle.GetHandleName
+Gets the name of the handle.

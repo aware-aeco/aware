@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDDisplayParameters.ClampDisplayDensity
+Limits display density to a value useful in user interface code.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PythonScript.SetVariable
+Sets a variable with a name and an object. Object can be null (Nothing in Visual Basic).

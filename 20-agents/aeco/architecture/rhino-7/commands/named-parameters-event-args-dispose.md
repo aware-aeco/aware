@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedParametersEventArgs.Dispose
+Dispose native resources

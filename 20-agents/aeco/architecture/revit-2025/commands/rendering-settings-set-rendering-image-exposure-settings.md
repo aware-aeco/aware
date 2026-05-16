@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderingSettings.SetRenderingImageExposureSettings
+Changes the rendering image exposure settings.

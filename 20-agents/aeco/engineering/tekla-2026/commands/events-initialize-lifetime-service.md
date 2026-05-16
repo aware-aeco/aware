@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Events.InitializeLifetimeService
+Initializes the lifetime service.

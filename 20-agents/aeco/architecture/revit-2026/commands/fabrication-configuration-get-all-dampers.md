@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetAllDampers
+Gets all damper identifiers in the fabrication configuration.

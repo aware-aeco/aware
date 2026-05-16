@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interop.FileReadOptionsConstPointer
+Returns the underlying const CRhinoFileReadOptions* for a Rhino.FileIO.FileReadOptions object.             You should only be interested in using this function if you are writing C++ code.

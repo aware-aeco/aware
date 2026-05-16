@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.CustomDataExists
+Checks to see if the specified custom data exists.

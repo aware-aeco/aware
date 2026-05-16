@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurvePointList.Contains
+Determines if this list contains an item.

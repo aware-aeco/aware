@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Plane.ClosestParameter
+Gets the parameters of the point on the plane closest to a test point.

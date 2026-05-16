@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.GetMonitoredLocalElementIds
+Provides the local element IDs when the element is monitoring.

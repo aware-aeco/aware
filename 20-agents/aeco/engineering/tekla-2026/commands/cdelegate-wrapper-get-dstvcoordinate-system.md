@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.GetDSTVCoordinateSystem
+DO NOT USE! For internal usage only!

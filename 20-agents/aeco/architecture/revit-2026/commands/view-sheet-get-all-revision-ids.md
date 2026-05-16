@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSheet.GetAllRevisionIds
+Gets the ordered array of Revisions which participate in the sheet's revision schedules.

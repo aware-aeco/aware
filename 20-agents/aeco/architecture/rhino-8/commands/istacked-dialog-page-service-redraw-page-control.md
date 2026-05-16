@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IStackedDialogPageService.RedrawPageControl
+Redraw the specified control.

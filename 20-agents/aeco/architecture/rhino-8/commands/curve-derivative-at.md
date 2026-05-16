@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.DerivativeAt
+Evaluate the derivatives at the specified curve parameter.

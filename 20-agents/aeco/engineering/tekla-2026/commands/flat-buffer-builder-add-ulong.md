@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FlatBufferBuilder.AddUlong
+Add an `ulong` to the buffer (aligns the data and grows if necessary).

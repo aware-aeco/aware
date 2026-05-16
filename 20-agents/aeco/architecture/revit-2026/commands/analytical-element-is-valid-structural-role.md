@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalElement.IsValidStructuralRole
+Checks whether the value set for Analytical Structural Role is valid for an Analytical Element.

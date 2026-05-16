@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObjectVisualization.GetAllTemporaryColored
+Gets all temporary colored objects and their color

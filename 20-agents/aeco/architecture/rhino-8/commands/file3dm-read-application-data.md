@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dm.ReadApplicationData
+Reads only the application information from an existing 3dm file.

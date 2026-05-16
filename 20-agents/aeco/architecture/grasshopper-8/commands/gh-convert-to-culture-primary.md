@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToCulture_Primary
+Performs a direct cast from System.Globalization.CultureInfo and GH_Culture.

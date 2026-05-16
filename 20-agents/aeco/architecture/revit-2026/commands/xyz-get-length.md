@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-XYZ.GetLength
+Gets the length of this vector.

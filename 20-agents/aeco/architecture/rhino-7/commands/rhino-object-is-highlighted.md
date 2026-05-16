@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.IsHighlighted
+Check highlight state.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ChangeQueue.MaterialFromId
+Get the RenderMaterial from the ChangeQueue material cache based on RenderHash

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportCreateNCStructure
+DO NOT USE! For internal usage only!

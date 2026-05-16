@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.GetCustomRenderMeshParameter
+Query the object for the value of a given named custom render mesh parameter.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBendingDetail.IsRealisticBendingDetail
+Validate that the element is a realistic bending detail.

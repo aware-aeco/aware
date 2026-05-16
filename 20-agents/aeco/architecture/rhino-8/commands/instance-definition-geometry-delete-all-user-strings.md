@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceDefinitionGeometry.DeleteAllUserStrings
+Deletes all user strings attached to this geometry.

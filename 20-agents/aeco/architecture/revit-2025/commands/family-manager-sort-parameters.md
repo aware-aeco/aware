@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyManager.SortParameters
+Sorts the family parameters according to the desired sort order.

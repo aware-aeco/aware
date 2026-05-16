@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.GetSystemsAnalysisWorkflows
+Returns name and path information identifying systems analysis workflow files.

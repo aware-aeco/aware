@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEvents.OnViewCreated
+Called when a view is created.

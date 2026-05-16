@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedViewTable.Rename
+Renames a named view.

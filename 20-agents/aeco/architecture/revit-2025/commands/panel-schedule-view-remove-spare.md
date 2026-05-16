@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.RemoveSpare
+Remove a spare at specific cell.

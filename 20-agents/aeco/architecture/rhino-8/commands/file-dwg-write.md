@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileDwg.Write
+Write a DWG file based on the contents of a RhinoDoc

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IStyleProvider.ApplyCascadingStyle
+Applies cascading styles to the specified .

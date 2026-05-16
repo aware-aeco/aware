@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToLeader
+Convert data into Rhino.Geometry.Leader.

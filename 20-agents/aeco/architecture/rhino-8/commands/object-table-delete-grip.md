@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.DeleteGrip
+Deletes a grip object.

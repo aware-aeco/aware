@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarGroup.Select
+Selects a rebar group from the model database. The reinforcement identifier must be set.

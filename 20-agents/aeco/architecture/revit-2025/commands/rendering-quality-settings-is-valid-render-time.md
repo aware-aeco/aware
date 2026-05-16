@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderingQualitySettings.IsValidRenderTime
+Validate the render time is between 1 and 32768.

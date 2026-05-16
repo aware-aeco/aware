@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SnapShotsClient.ObjectsCategory
+Predefined objects category

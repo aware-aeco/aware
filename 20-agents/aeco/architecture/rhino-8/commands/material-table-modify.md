@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MaterialTable.Modify
+Modify material settings.

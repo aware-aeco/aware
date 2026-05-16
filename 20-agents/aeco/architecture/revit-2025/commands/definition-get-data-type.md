@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Definition.GetDataType
+Gets a ForgeTypeId identifying the data type describing values of the parameter.

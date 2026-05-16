@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Centermark.AdjustFromPoints
+Update dimension geometry from point locations.

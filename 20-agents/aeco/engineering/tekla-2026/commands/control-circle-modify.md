@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlCircle.Modify
+Modifies the control circle with the given Identifier.

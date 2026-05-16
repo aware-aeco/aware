@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Graphics.SaveTransform
+Saves the current transform state

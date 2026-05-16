@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayLinetypePointer.ToNonConstArray
+Copies the unmanaged array to a managed counterpart.

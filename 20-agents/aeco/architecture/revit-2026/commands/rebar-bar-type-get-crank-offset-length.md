@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBarType.GetCrankOffsetLength
+Gets the crank offset taking into account the specified Rebar Crank Type.

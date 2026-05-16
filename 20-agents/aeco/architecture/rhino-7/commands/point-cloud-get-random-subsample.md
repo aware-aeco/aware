@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.GetRandomSubsample
+Returns a random subsample of a point cloud.

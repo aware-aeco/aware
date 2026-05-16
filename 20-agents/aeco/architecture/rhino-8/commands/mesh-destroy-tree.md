@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.DestroyTree
+Destroys the mesh vertex access tree.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Toposolid.Simplify
+Simplifies the toposolid by reducing the number of inner vertices to the given percentage.

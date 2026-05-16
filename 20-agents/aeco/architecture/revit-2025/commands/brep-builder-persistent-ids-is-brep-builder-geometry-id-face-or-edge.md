@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BRepBuilderPersistentIds.IsBRepBuilderGeometryIdFaceOrEdge
+Validates the input BRepBuilderGeometryId that will be used to create a correspondence.    In order to be valid, the input BRepBuilderGeometryId must represent the ID of either a Face or an Edge.

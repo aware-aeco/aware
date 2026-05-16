@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GridPlane.Select
+Selects the grid surface with the given ID.

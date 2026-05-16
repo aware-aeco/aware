@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetReferenceModelObjectAttributes
+Gets the reference model object attributes.

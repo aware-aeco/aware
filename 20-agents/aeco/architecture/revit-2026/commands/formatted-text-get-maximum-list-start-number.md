@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormattedText.GetMaximumListStartNumber
+Returns the maximum allowed list start number.

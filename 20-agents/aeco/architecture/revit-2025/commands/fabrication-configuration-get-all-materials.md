@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetAllMaterials
+Gets all material identifiers in the fabrication configuration.

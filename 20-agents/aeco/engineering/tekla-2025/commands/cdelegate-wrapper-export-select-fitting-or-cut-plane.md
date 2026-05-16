@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportSelectFittingOrCutPlane
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LabelUtils.GetLabelForSymbol
+Gets the user-visible name for a symbol.

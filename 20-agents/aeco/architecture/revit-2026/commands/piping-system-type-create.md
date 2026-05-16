@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PipingSystemType.Create
+Creates a new instance of a piping system type and adds it to the document.

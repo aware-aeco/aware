@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBarType.CanCrankParametersBeComputedUsingCrankRatio
+Identifies if the all crank parameters can be computed for the specified crank ratio and Rebar Crank Type.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.QuadRemeshBrep
+Create QuadRemesh from a Brep             Set Brep Face Mode by setting QuadRemeshParameters.PreserveMeshArrayEdgesMode

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetLatestUndoLogInfo
+Gets the latest info messsage from undo log

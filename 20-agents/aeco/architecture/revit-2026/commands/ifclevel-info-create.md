@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCLevelInfo.Create
+Creates an IFCLevelInfo.

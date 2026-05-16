@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToString_Primary
+Performs a direct cast from String and GH_String.

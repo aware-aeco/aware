@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Structure`1.AllData
+Gets an enumerator for all the data items in this structure.

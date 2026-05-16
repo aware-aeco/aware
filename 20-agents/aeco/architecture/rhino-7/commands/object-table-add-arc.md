@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.AddArc
+Adds a curve object to the document representing an arc.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayArrayPoint3d.PolylineAt
+Gets a polyline at an index.

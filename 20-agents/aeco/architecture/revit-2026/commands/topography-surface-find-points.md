@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TopographySurface.FindPoints
+Filters and returns only the points of the topography surface which lie within the input bounding box.

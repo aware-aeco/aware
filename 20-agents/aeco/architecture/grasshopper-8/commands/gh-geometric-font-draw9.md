@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GeometricFont.Draw9
+Draw the geometric character '9' at the specified location.

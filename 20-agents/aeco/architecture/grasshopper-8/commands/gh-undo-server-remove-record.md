@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_UndoServer.RemoveRecord
+Remove the record with the specified ID from the undo or redo stack.

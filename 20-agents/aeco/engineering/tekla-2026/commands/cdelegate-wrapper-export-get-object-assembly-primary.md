@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetObjectAssemblyPrimary
+DO NOT USE! For internal usage only!

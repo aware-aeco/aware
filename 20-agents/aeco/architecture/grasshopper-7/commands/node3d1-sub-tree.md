@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Node3d`1.SubTree
+Gets an iterator for all nodes in this (sub)tree.

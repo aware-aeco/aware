@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CapsuleRenderEngine.GetImpliedStyle
+Static (Shared in VB) method for solving which palette style is implied by the properties.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceModelObject.Delete
+At the moment reference objects cannot be deleted.

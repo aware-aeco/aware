@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderWindow.GetRequestedRenderChannels
+Get array of Guids representing the channels requested by the post effect pipeline for this RenderWindow.

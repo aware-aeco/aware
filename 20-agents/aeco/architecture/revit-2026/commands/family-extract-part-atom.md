@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Family.ExtractPartAtom
+Writes a PartAtom XML from the contents of a family object.

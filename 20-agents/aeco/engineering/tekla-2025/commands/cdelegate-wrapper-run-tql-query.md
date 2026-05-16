@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.RunTqlQuery
+DO NOT USE! For internal usage only!

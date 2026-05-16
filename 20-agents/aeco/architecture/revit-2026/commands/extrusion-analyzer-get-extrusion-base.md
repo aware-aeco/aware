@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExtrusionAnalyzer.GetExtrusionBase
+Obtains the face that represents the base contour of the extrusion analysis.

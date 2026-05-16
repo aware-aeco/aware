@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectAttributes.GetGroupList
+Returns an array of GroupCount group indices.  If GroupCount is zero, then GetGroupList() returns null.

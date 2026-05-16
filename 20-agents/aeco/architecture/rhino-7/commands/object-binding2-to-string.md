@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectBinding`2.ToString
+Returns a  that represents the current .

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedConstructionPlaneTable.Add
+Adds named construction plane to document.

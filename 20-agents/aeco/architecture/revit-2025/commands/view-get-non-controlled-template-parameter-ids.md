@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetNonControlledTemplateParameterIds
+Returns a list of parameters that are not marked as included when this view is used as a template.

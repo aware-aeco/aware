@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHBoolean
+Convert data into GH_Boolean.

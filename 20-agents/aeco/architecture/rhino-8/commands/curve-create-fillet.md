@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.CreateFillet
+Computes the fillet arc for a curve filleting operation.

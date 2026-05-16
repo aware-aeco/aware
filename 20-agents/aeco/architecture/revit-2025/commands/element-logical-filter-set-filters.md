@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementLogicalFilter.SetFilters
+Replaces current filters in the logical filter with any number of input filters.

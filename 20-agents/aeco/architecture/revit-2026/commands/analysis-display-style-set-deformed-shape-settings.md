@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayStyle.SetDeformedShapeSettings
+Set deformed shape settings object for the style.

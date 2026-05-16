@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderPrimitiveList.ConvertMeshesToTriangles
+Convert mesh quad faces to triangle faces.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.ConvertTemporaryHideIsolateToPermanent
+Convert all temporary hidden elements or categories to permanently hidden in view.

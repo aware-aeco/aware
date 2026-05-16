@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalFileReference.GetPath
+Gets the path of the link, relative or absolute according    to the link's settings

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmShutLining.DeleteAllCurves
+Deletes all the curves from the shut-lining.

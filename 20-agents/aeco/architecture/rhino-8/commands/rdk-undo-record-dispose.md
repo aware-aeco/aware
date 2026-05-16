@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RdkUndoRecord.Dispose
+Dispose for RdkUndoRecord

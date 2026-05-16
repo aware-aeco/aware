@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayColorSettings.IsEqual
+Compares two color settings objects.

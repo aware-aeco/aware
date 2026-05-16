@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Circle.ClosestPoint
+Gets the point on the circle which is closest to a test point.

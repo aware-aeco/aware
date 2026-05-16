@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ComponentIndex.Equals
+Determines whether the specified  is equal to the current ,             comparing by value.

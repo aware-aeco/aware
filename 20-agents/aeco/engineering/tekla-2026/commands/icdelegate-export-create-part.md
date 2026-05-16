@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportCreatePart
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UserDataList.Find
+Finds a specific data type in this regulated collection.

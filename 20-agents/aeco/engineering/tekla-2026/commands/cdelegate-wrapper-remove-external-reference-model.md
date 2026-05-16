@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.RemoveExternalReferenceModel
+DO NOT USE! For internal usage only!

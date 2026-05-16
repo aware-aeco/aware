@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleField.CanTotal
+Indicates if totals can be enabled for this field.

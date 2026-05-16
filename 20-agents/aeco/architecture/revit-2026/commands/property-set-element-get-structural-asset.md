@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PropertySetElement.GetStructuralAsset
+Gets a copy of the StructuralAsset.

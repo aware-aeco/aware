@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileDialog.Show
+Shows the dialog using the stored settings.

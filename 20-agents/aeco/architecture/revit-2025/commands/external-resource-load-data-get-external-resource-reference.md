@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalResourceLoadData.GetExternalResourceReference
+Returns the ExternalResourceReference that identifies which resource should be loaded.

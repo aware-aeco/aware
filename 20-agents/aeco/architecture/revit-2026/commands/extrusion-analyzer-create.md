@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExtrusionAnalyzer.Create
+Creates an ExtrusionAnalyzer and computes and stores the Solid's shadow.

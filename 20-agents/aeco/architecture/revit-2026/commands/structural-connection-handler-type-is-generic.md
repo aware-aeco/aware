@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralConnectionHandlerType.IsGeneric
+Checks if StructuralConnectionHandlerType is generic.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.MouseInOutDolly
+Moves the camera towards or away from the view maintaining focus on the view.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.SetPositionByEnd
+Positions the connector of the fabrication part element by the passed point.

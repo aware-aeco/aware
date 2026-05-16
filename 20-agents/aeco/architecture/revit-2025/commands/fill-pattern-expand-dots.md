@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FillPattern.ExpandDots
+Corrects pattern dots to make them be drawn properly for Revit.

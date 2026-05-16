@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Component.GetComponents
+Returns an enumerator of all the connected components.

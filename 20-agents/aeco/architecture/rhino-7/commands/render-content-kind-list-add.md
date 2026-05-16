@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContentKindList.Add
+Add a kind to a kind list.

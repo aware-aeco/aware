@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Param`1.RemoveEffects
+Remove all post-process effects. Note to implementors,   you must call the base method if you override this function.

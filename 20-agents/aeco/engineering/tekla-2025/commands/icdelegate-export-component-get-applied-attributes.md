@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportComponentGetAppliedAttributes
+DO NOT USE! For internal usage only!

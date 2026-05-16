@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepTrimList.MatchEnds
+Matches the endpoints of all trims in the Brep.

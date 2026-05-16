@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceDefinition.UsesLayer
+Returns true if some object in the instance definition is on the layer with the specified layer index.

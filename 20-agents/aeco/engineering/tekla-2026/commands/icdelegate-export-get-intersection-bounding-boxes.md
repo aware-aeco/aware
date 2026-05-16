@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportGetIntersectionBoundingBoxes
+DO NOT USE! For internal usage only!

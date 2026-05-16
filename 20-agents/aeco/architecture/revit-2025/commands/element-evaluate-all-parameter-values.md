@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.EvaluateAllParameterValues
+Evaluates all the parameters' values of the element.

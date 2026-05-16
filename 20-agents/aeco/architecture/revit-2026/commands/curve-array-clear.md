@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveArray.Clear
+Removes every curve from the array, rendering it empty.

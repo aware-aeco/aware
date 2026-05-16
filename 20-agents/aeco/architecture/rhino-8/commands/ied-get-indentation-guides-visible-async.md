@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.GetIndentationGuidesVisibleAsync
+Usually defined at the language level but this overrides it.

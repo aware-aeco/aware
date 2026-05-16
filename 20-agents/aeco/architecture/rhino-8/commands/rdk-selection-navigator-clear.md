@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RdkSelectionNavigator.Clear
+Clear the navigator.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultiSegmentGrid.GetMultiSegementGridId
+Retrieve the element id of the MultiSegmentGrid of which the specified Grid is a member.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormatOptions.CanHaveSymbol
+Checks whether a symbol can be specified to display the unit in this FormatOptions.

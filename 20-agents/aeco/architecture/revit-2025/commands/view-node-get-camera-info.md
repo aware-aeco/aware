@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewNode.GetCameraInfo
+Information about the observation point (the camera) of the view.

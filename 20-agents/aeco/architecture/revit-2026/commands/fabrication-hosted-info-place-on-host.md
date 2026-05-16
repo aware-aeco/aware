@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationHostedInfo.PlaceOnHost
+Places the part on the specified host.

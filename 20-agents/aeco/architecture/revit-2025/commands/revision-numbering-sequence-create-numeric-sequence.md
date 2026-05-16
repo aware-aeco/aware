@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevisionNumberingSequence.CreateNumericSequence
+Creates a new numeric revision numbering sequence in the document.

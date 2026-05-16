@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HeaderRow.GetRowItems
+Returns the list of items from the header row.

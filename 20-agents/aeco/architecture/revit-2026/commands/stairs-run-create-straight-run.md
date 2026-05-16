@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StairsRun.CreateStraightRun
+Creates a straight run in the project document.

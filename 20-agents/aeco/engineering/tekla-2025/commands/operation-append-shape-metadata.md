@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.AppendShapeMetadata
+Append the metadata defined in keyValStrings to shape identified by guid             NOTE: Expected order of strings in the keyValStrings is:             key, value, value type, label, description

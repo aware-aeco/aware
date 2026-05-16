@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextFields.BlockAttributeText
+User text associated with a block

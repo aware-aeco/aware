@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HatchPattern.ReadFromFile
+Reads hatch pattern definitions from a file.

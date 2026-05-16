@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Circle.ToNurbsCurve
+Constructs a nurbs curve representation of this circle.              This amounts to the same as calling NurbsCurve.CreateFromCircle().

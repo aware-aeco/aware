@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToVector3d_Secondary
+Attempts to convert other data types into a Vector.   Data is not quaranteed to be duplicated.

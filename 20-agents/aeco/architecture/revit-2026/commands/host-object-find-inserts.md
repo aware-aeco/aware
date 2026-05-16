@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostObject.FindInserts
+Gets the ids of the instances inserted into this host object.

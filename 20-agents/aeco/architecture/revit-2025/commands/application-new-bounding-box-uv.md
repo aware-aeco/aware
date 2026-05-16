@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewBoundingBoxUV
+Creates an empty two-dimensional rectangle.

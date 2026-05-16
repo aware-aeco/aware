@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WorksharingUtils.CheckoutWorksets
+Obtains ownership for the current user of as many specified worksets as possible.

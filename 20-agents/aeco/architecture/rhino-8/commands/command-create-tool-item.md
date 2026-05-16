@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Command.CreateToolItem
+Creates a new tool item attached to this command.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyManager.SetFormula
+Set the formula of a family parameter.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.NewAreaTag
+Creates a new area tag.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.GetFilters
+Gets all filters in this ScheduleDefinition.

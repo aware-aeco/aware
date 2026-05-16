@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Solver.Solve_Connectivity
+Connectivity solver. Returns a topological edge diagram of delaunay faces.

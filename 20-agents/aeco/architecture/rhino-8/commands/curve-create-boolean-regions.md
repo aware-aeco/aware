@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.CreateBooleanRegions
+Curve Boolean method, which trims and splits curves based on their overlapping regions.

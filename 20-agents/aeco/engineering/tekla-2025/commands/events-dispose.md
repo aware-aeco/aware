@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Events.Dispose
+Disposes the instance.

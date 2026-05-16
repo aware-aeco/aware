@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OpenFileDialog.ShowOpenDialog
+Show the actual dialog to allow the user to select a file.

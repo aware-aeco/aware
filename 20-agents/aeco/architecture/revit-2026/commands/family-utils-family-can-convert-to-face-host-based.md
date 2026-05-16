@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyUtils.FamilyCanConvertToFaceHostBased
+Indicates whether the family can be converted to face host based.

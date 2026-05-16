@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.SetCellType
+Sets a column's cell type

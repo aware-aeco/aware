@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyDataSettings.CheckConstructionSetElement
+Checks that the construction set ElementId is acceptable.

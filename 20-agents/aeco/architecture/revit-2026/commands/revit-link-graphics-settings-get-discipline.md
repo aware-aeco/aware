@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitLinkGraphicsSettings.GetDiscipline
+The linked document discipline of RevitLinkGraphicsSettings.

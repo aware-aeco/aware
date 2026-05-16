@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SelectionFilterElement.AddSet
+Adds a set of ElementIds to the filter's set.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CircuitNamingScheme.IsNameUnique
+Validates whether the CircuitNamingScheme name is unique in document.

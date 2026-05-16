@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawInstanceDefinitionShaded
+Draws a shaded InstanceDefinition.

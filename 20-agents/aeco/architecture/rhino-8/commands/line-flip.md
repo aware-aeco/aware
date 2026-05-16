@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Line.Flip
+Flip the endpoints of the line segment.

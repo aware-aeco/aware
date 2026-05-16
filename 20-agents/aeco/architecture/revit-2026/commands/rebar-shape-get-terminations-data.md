@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShape.GetTerminationsData
+Gets the terminations (e.g. hook, crank) data.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CapsuleRenderEngine.CreateHighlightBar
+Static (Shared in VB) method for creating Grasshopper Capsule highlight fills.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepFace.TrimAwareIsoCurve
+Similar to IsoCurve function, except this function pays attention to trims on faces              and may return multiple curves.

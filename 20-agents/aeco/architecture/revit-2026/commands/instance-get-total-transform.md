@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Instance.GetTotalTransform
+Gets the total transform, which includes the true north transform for instances like import instances.

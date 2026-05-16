@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConnectorManager.Lookup
+Lookup the connector using the unique index value that identify this connector.

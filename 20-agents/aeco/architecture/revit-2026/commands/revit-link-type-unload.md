@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitLinkType.Unload
+Unloads the Revit link.

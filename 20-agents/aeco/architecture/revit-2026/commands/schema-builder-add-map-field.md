@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SchemaBuilder.AddMapField
+Creates a field containing an ordered key-value map in the Schema, with given name and    type of contained values.

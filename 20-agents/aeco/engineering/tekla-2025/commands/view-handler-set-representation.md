@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewHandler.SetRepresentation
+Sets the object representation.

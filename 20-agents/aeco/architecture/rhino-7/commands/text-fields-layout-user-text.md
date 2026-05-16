@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextFields.LayoutUserText
+Returns a value from the active layouts user text strings for the specified key.

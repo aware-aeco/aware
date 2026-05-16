@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleTemplate.Create
+Creates a new instance of a panel schedule template.

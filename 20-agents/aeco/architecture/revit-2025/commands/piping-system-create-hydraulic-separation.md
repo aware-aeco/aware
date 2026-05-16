@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PipingSystem.CreateHydraulicSeparation
+Creates new system which is hydraulically separated from the existing system.

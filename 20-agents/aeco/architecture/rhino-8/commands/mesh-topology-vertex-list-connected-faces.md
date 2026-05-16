@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshTopologyVertexList.ConnectedFaces
+Gets all faces that are connected to a given vertex.

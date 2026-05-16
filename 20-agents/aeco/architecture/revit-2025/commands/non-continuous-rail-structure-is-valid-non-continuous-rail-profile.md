@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NonContinuousRailStructure.IsValidNonContinuousRailProfile
+Checks whether the input id represents a profile which can be used as the profile of this non-continuous rail.

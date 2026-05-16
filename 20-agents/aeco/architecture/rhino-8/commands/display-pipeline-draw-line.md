@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawLine
+Draws a single line object.

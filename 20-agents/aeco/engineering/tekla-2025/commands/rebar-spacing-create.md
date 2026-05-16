@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSpacing.Create
+Craetes a spacing defined by number of bars.

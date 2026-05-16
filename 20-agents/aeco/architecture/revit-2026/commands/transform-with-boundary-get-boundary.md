@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TransformWithBoundary.GetBoundary
+Returns the boundary for the model space to view projection space transform.

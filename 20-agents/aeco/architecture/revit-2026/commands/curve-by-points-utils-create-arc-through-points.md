@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveByPointsUtils.CreateArcThroughPoints
+Creates an arc through the given reference points.

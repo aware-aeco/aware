@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SingleRebar.Delete
+Deletes the single rebar instance with the given identifier from the model database.

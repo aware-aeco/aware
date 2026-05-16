@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDefinitionBySegments.AddConstraintParallelToSegment
+Constrain the length of a segment by parameterizing its length.

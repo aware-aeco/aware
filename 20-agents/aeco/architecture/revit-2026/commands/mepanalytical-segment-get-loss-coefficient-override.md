@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPAnalyticalSegment.GetLossCoefficientOverride
+Gets the overridden value of loss coefficient, dimensionless.

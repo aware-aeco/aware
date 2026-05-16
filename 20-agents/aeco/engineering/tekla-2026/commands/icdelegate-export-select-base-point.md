@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportSelectBasePoint
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DstvStructure.WriteOutput
+Used to write the DstvStructure to the NC file.

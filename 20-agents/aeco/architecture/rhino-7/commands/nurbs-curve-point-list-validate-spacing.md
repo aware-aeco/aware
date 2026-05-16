@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurvePointList.ValidateSpacing
+Simple check of distance between adjacent control points

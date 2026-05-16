@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Stack.SetNewTarget
+Set new target dimenions for the given object.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpatialElementGeometryResults.GetGeometry
+The solid from the spatial element.

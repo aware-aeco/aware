@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostUtils.LoadAssemblyFrom
+Calls Assembly.LoadFrom in .NET 4.8. May call a different routine under .NET Core

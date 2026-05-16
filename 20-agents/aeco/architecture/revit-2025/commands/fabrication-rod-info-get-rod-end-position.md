@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationRodInfo.GetRodEndPosition
+Gets the position of the rod end.

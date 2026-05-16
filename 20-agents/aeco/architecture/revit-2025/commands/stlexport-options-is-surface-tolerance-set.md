@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-STLExportOptions.IsSurfaceToleranceSet
+Checks whether the SurfaceTolerance tessellation parameter is explicitly set.

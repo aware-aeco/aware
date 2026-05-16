@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CircuitNamingScheme.Create
+Creates a new CircuitNamingScheme.

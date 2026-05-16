@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralSectionUtils.GetStructuralElementDefinitionData
+Return structural element definition data.

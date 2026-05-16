@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarUpdateCurvesData.GetTerminationPlaneNormalForBarIdx
+Gets the plane's normal in which the termination (e.g. hook, crank) at end of bar with index barPositionIndex that is currently in Rebar.

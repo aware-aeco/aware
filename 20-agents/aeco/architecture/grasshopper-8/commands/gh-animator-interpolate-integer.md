@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Animator.InterpolateInteger
+Utility interpolation delegate for System.Int32 values.

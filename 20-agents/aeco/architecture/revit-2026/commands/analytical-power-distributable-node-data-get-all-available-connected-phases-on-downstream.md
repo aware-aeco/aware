@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalPowerDistributableNodeData.GetAllAvailableConnectedPhasesOnDownstream
+Get all the available electrical connected phases that this power distributable node can provide to the downstream node.

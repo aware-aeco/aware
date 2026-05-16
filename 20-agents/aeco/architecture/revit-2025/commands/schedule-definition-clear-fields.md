@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.ClearFields
+Removes all fields.

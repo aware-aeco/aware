@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCCategoryTemplate.SetMappingInfo
+Set the mapping info for the key.

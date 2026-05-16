@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIControlledApplication.LoadAddIn
+Loads add-ins from the given manifest file.

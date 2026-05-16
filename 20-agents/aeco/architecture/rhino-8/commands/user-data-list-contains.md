@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UserDataList.Contains
+Checks for the existence of a specific type of user-data in this list             Both .NET and native user-data is checked

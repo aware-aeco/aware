@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Reference.CreateLinkReference
+Creates a Reference from a Reference in an RVT Link.

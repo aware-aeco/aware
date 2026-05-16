@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileDgn.Read
+Read a dgn file into a RhinoDoc

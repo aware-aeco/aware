@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyInstance.GetReferenceByName
+Gets the family instance reference corresponding to the named reference plane in the instance's family.

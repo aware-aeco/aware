@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetPoint.SetBasePoint
+Sets a base point used by ortho snap, from snap, planar snap, etc.

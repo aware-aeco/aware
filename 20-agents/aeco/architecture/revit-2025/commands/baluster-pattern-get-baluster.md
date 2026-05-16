@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BalusterPattern.GetBaluster
+Gets information about the given baluster from the main baluster pattern.

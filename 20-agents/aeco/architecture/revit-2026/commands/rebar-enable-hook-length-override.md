@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.EnableHookLengthOverride
+Enables or disables the ability to override hook lengths for this rebar instance.

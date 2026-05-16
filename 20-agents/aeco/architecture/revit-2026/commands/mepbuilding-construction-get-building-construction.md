@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPBuildingConstruction.GetBuildingConstruction
+Gets the current Building Construction from the project information.

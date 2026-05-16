@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CssStyle.AddProperty
+Add a property to this style. If the new property conflicts with an existing property,   it will not be added.

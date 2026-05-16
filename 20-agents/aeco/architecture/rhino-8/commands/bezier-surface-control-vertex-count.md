@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BezierSurface.ControlVertexCount
+Number of control vertices in this surface

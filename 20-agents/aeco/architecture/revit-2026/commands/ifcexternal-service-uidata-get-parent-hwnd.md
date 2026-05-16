@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCExternalServiceUIData.GetParentHwnd
+return the parent handle

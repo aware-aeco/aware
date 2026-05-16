@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RoofBase.GetSlabShapeEditor
+Gets a SlabShapeEditor that can used to add or modify points of this RoofBase.

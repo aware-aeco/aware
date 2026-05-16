@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportSelectGridPlane
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Form.DeleteProfile
+Delete a profile of the form.

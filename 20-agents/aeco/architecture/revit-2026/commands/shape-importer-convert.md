@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ShapeImporter.Convert
+Converts the geometry stored in the external format into a collection of Revit geometry objects.

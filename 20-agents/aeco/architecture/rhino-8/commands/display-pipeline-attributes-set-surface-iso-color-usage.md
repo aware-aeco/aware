@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipelineAttributes.SetSurfaceIsoColorUsage
+Helper function for setting SurfaceIsoColorsUsed and SurfaceIsoSingleColor

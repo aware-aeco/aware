@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportDasStartCommand
+DO NOT USE! For internal usage only!

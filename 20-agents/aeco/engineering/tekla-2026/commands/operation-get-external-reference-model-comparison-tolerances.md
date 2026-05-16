@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetExternalReferenceModelComparisonTolerances
+Gets the available comparison tolerance items titles.

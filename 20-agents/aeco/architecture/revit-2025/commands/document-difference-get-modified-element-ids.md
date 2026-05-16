@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DocumentDifference.GetModifiedElementIds
+Modified element id collection.

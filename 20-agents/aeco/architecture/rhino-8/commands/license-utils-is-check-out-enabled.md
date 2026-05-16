@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LicenseUtils.IsCheckOutEnabled
+Returns whether or not license checkout is enabled.

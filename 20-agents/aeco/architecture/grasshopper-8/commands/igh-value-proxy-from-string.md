@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_ValueProxy.FromString
+If IsParsable(), then attempts to convert the string to a generic type value

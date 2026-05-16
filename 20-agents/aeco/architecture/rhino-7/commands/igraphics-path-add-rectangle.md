@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGraphicsPath.AddRectangle
+Adds a rectangle to the path

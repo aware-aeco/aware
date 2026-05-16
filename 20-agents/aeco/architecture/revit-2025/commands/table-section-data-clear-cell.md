@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.ClearCell
+Deletes text or image, or removes parameter of this cell.

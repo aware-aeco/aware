@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ContentHash.CreateFromFile
+Creates a new ContentHash, representing the content of a file.

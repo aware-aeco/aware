@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalDraw.DrawObject
+Draw object.

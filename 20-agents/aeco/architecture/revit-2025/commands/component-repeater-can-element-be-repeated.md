@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ComponentRepeater.CanElementBeRepeated
+Determines whether an element can be repeated using the RepeatElements method.

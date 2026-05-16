@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Control.TriggerStyleChanged
+Triggers the StyleChanged event and re-applies the styles to this control and its children.

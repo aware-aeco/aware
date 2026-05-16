@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Extrusion.SetPathAndUp
+Allows to set the two points at the extremes and the up vector.

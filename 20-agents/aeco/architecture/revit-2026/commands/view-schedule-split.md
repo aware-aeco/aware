@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.Split
+Splits the schedule into several segments by given height of each segment.

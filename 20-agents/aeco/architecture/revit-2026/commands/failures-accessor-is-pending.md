@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailuresAccessor.IsPending
+Checks if the failure processing is pending.

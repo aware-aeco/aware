@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterFilterElement.GetElementFilterParametersForCategory
+Retrieves a list of the parameters associated with all rules in the filter    that are combined (using logical AND) with a FilterCategoryRule corresponding to single %categoryId%.

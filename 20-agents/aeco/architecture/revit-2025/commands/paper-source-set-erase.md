@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PaperSourceSet.Erase
+Removes a specified object from the set.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLayerTable.GetLayerTableIterator
+Returns a LayerTableIterator that iterates through the collection.

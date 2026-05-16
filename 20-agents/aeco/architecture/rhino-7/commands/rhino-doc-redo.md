@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoDoc.Redo
+Redo the last action that was "undone"

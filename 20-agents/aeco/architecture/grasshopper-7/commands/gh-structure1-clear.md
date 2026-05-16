@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Structure`1.Clear
+Clears the entire structure.

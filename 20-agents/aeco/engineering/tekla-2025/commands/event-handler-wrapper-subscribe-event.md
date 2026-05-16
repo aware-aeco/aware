@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EventHandlerWrapper.SubscribeEvent
+Registers an event listener to the event

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotGetObjectsWithAnyModification
+Get objects with any modifications after the stamp by selected object types. Does not include deleted objects.

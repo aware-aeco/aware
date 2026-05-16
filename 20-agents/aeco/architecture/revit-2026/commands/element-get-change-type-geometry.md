@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.GetChangeTypeGeometry
+Returns ChangeType associated with a change in the geometry of an element

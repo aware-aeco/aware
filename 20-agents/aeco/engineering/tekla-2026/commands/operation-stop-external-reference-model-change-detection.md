@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.StopExternalReferenceModelChangeDetection
+Stops any external reference model change detection operation.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.UnloadServices
+Unload the specified fabrication services from the project.

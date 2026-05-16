@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshFaceList.GetFaceVertices
+Gets the 3D location of the vertices forming a face.

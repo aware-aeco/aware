@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SketchEditScope.Start
+Starts a sketch edit mode.

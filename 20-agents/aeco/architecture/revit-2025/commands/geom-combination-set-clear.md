@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeomCombinationSet.Clear
+Removes every item GeomCombination the set, rendering it empty.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UpdaterRegistry.IsUpdaterRegistered
+Checks whether updater with the given id is registered in a document.

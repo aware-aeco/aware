@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.GetViewVisibilityFilterValue
+DO NOT USE! For internal usage only!

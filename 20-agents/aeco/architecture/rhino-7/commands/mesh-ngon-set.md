@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshNgon.Set
+Set the ngon vertex and face index lists.

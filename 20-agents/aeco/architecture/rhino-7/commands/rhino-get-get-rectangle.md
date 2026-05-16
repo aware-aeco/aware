@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoGet.GetRectangle
+Gets a 3d rectangle.

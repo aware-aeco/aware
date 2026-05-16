@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileDst.Read
+Read a dst file into a RhinoDoc

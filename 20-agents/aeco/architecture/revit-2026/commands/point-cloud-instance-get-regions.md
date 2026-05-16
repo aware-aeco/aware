@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudInstance.GetRegions
+Returns array of region names.

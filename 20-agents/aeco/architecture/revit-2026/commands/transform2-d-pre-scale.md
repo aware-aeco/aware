@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform2D.PreScale
+Scales the linear part of this transformation and returns the result.

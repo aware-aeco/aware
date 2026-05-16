@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarFreeFormAccessor.GetHookOrientationAngleAtIndex
+Gets the hook orientation angle that is applied to this Rebar at the bar with index barPositionIndex at the specified end.

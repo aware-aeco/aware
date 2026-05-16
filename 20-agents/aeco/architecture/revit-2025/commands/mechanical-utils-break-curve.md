@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MechanicalUtils.BreakCurve
+Breaks the duct curve into two parts at the given position.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetPoint.PermitElevatorMode
+Permits the use of the control key to define a line constraint.

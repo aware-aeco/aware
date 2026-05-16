@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FluidTemperatureSetIterator.IsDone
+Identifies if the iteration has completed.

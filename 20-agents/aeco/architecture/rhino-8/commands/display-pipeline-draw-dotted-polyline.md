@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawDottedPolyline
+Draws a set of connected lines (polyline) in a dotted pattern (0x00001111).

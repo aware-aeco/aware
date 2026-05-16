@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IReadOnlySupport.GetTextAndReadOnlyLineNumbersAsync
+Another way to get content where some of the lines are read only.

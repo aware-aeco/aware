@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WallSweep.GetWallSweepInfo
+Gets the information of the wall sweep or reveal.

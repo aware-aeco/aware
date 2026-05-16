@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexList.Remove
+Removes the vertex at the given index and all faces that reference that index.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolyLine.GetCoordinates
+Gets the coordinate points of the polyline.

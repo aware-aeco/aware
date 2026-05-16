@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPSection.IsMain
+Check whether the type of fitting in this section is main.

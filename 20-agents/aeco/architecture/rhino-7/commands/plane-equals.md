@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Plane.Equals
+Determines if an object is a plane and has the same components as this plane.

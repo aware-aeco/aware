@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExportContextBase.OnCurve
+This method is called when a Curve is being output.

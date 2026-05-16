@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroupTable.Undelete
+Undeletes a previously deleted group.

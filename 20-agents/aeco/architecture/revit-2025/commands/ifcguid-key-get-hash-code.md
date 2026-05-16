@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCGuidKey.GetHashCode
+Returns the hash code for this IFCGuidKey

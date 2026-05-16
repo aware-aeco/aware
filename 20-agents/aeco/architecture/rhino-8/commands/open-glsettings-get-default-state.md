@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OpenGLSettings.GetDefaultState
+Gets the OpenGL factory settings.

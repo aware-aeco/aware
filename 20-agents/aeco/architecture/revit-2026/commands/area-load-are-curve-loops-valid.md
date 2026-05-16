@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaLoad.AreCurveLoopsValid
+Checks if curve loops are valid for creating an area load.

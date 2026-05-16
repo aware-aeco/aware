@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interop.NativeRhinoDocPointer
+Gets the C++ CRhinoDoc* for a given RhinoCommon RhinoDoc class.

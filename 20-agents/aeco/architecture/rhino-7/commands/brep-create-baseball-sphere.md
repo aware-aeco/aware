@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateBaseballSphere
+Creates a brep representation of the sphere with two similar trimmed NURBS surfaces, and no singularities.

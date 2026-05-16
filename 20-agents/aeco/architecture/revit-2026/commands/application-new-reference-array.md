@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewReferenceArray
+Creates a new instance of a reference array.

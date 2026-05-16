@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.ScaleColour
+Multiply the channels of a colour construct with a fixed factor.

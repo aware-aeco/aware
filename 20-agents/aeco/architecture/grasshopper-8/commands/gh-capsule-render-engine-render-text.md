@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CapsuleRenderEngine.RenderText
+Render the capsule text.   This is usually the sixth and final stage in a capsule rendering.

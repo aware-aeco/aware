@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Storey.GetManualObjectOverrides
+Gets all manually overridden objects from this Building Hierarchy item.

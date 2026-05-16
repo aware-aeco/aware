@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.Delete
+Deletes the brep instance with the given identifier from the model database.

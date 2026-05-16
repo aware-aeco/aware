@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.CanSplitAndMergeRegionsBeUsed
+Checks whether split and merge regions operations can be used for this compound structure.

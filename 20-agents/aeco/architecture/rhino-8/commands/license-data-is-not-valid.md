@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LicenseData.IsNotValid
+Indicates whether a LicenseData object is either null or invalid.

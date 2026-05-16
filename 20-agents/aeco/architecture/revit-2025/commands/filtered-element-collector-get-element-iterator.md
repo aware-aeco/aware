@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilteredElementCollector.GetElementIterator
+Returns an element iterator to the elements passing the filters.

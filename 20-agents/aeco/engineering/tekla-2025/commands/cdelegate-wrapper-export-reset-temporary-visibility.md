@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportResetTemporaryVisibility
+DO NOT USE! For internal usage only!

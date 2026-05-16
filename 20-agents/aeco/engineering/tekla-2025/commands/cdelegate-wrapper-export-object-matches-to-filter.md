@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportObjectMatchesToFilter
+DO NOT USE! For internal usage only!

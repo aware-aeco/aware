@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.CheckObject1ModifiedAfterObject2
+Check if object 1 has been modified after object 2.

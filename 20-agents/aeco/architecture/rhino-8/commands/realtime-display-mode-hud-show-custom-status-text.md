@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RealtimeDisplayMode.HudShowCustomStatusText
+Override to show status text in HUD. By default disabled.

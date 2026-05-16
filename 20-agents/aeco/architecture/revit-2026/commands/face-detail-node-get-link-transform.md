@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FaceDetailNode.GetLinkTransform
+Returns link transform of the object being drawn.

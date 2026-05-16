@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.DeleteClipPlanes
+Removes all clip planes in the array.

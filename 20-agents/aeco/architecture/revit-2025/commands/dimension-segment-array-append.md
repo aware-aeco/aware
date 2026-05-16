@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DimensionSegmentArray.Append
+Add the item to the end of the array.

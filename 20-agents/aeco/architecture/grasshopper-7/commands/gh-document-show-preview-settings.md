@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.ShowPreviewSettings
+Display the Preview settings dialog.

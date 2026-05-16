@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToPlane_Primary
+Performs a direct cast from OnPlane or GH_Plane.   Data is not quaranteed to be duplicated.

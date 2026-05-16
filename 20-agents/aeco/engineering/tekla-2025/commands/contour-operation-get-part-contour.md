@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ContourOperation.GetPartContour
+Get contour geometry using the PartId

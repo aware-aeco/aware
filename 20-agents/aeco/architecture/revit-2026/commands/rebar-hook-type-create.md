@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarHookType.Create
+Creates a new RebarHookType in a document.

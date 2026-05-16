@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshFaceList.Clear
+Clears the Face list on the mesh.

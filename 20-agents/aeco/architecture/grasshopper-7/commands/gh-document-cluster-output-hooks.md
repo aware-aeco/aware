@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.ClusterOutputHooks
+Gets a sorted list of all the cluster output hooks.

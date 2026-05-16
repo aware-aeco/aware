@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleTemplate.GetPanelScheduleType
+Returns the panel schedule type.

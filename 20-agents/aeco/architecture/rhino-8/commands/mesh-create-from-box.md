@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CreateFromBox
+Constructs new mesh that matches a bounding box.

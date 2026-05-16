@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalElement.GetReference
+Returns a reference to a given curve within the Analytical Element.

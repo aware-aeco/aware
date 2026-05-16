@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_DocumentObject.OnObjectChanged
+Raises the ObjectChanged event on the current (!not the top level!) object.

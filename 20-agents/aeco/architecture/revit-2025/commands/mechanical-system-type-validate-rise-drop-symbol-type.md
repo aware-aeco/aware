@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MechanicalSystemType.ValidateRiseDropSymbolType
+Confirms if the parameter is a valid HVAC rise/drop symbol type.

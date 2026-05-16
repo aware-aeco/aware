@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSheet.GetAllPlacedViews
+Returns the ElementIds of Views placed on this sheet.

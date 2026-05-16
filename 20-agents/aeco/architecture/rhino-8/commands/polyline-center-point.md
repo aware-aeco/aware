@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Polyline.CenterPoint
+Compute the center point of the polyline as the weighted average of all segments.

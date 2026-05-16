@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmStringTable.GetValue
+Returns a string value at a given index.

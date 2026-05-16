@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FillGrid.SetSegments
+Sets the segments to the fill grid.

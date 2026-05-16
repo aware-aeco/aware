@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CommandMenuItem.SetToolTip
+Set toolTip of CommandMenuItem

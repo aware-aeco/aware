@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepFace.IsPointOnFace
+Tests if a parameter space point is in the active region of a face.

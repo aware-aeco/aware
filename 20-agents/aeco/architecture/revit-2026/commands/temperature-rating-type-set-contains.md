@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TemperatureRatingTypeSet.Contains
+Tests for the existence of a TemperatureRating type within the set.

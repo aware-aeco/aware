@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GuidTable.Clear
+Clear the entire table.

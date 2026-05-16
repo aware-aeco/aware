@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExportContext.OnFaceEnd
+This method marks the end of the current face being exported.

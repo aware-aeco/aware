@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoundarySegment.GetCurve
+Get a copy of the curve that is formed along this boundary.

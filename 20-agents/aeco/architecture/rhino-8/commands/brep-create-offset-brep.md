@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateOffsetBrep
+Offsets a Brep.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.GetField
+Gets a field.

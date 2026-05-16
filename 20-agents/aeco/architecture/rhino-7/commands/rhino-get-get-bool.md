@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoGet.GetBool
+Easy to use Boolean getter.

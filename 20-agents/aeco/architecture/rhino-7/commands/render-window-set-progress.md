@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderWindow.SetProgress
+Accepts a rendering progress value to inform the user of the rendering advances.

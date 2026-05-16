@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailuresAccessor.GetDocument
+Provides access to a document for which failures are being processed or preprocessed.

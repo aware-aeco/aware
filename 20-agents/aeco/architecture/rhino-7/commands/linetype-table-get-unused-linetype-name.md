@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinetypeTable.GetUnusedLinetypeName
+Gets unused linetype name used as default when creating new linetypes.

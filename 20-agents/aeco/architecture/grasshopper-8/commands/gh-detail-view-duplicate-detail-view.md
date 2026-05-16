@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DetailView.DuplicateDetailView
+Create a duplicate of this hatch.

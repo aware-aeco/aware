@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ComponentInput.AddInputPolygon
+Adds a polygon to the component input.

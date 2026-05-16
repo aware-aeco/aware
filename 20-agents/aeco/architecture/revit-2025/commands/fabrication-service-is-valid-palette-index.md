@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationService.IsValidPaletteIndex
+Validates the palette index.

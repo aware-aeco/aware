@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.InsertTextAtCursorPositionAsync
+Insert text at current cursor position

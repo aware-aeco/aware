@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarHandlesData.GetCustomHandles
+Gets the handle definitions for the rebar that were added.

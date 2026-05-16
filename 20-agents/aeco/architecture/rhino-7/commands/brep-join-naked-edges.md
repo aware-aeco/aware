@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.JoinNakedEdges
+Joins naked edge pairs within the same brep that overlap within tolerance.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Command.InCommand
+Determines if Rhino is currently running a command.

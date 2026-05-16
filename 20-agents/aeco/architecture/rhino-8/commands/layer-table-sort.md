@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LayerTable.Sort
+Updates the layer sort order

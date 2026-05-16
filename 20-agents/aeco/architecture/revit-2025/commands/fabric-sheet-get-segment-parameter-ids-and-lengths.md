@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricSheet.GetSegmentParameterIdsAndLengths
+Returns the array of pairs [parameter ID, length] that correspond to segments of a bent fabric sheet (like A, B, C, D etc.).

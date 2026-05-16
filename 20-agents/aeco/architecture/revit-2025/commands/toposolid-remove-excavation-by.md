@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Toposolid.RemoveExcavationBy
+Remove the excavation between the given element and the toposolid.

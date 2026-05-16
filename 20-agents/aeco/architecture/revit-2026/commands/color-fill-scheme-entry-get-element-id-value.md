@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorFillSchemeEntry.GetElementIdValue
+Gets the ElementId value stored within the entry.

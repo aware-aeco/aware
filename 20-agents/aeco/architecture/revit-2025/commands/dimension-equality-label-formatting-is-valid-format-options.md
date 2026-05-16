@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DimensionEqualityLabelFormatting.IsValidFormatOptions
+Checks whether a FormatOptions object is valid for the LabelType.

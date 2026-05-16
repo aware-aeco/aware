@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MemoryBitmap.Filter_DitherPattern
+Create a checkerboard dither pattern.

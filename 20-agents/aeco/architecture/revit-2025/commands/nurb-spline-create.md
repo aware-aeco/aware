@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbSpline.Create
+Creates a new geometric NurbSpline object from a HermiteSpline.

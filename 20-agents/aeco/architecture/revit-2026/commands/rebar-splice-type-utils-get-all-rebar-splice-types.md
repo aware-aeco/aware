@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSpliceTypeUtils.GetAllRebarSpliceTypes
+Gets all the Rebar Splice Types elements from the document.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHBox_Secondary
+Converts similar data into a GH_Box instance.  Data is not quaranteed to be duplicated.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WidgetHandler`1.HandleEvent
+Called to handle a specific event

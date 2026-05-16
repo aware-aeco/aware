@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.ConvertIfcGuidToTsGuid
+Converts the given IFC guid (short) to TS guid (long).

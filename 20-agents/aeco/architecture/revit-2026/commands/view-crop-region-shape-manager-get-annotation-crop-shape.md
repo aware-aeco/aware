@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewCropRegionShapeManager.GetAnnotationCropShape
+Gets the annotation crop box assigned to the view.

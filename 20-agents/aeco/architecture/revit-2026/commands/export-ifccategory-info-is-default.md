@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportIFCCategoryInfo.IsDefault
+Determines if a ExportIFCCategoryInfo contains default information.

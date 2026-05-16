@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RibbonPainter.TabPaneBrush
+Generates the default brush for TAB content fills

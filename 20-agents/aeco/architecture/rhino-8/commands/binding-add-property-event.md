@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Binding.AddPropertyEvent
+Adds an event handler for a specified  of a  object.

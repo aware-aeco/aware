@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CreateBooleanSplit
+Splits a set of meshes with another set.

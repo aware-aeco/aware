@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroupTable.Lock
+Locks all objects that are members of a group.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Node3List.NearestNodes
+Perform a brute force node search for the N nearest nodes in the set.

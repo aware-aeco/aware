@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConceptualConstructionType.IsValidSurfaceSubcategoryForConstruction
+Indicates if this ConceptualConstructionType is appropriate for the input MassSurfaceData subcategory.

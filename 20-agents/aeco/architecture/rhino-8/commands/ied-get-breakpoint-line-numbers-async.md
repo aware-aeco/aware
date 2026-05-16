@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.GetBreakpointLineNumbersAsync
+Get line numbers that have breakpoints

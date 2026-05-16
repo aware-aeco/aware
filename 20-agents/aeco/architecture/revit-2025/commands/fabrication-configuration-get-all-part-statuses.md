@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetAllPartStatuses
+Gets all possible fabrication part status identifiers.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormattedText.SetAllCapsStatus
+Sets the characters in the entire text to be in all caps or not.

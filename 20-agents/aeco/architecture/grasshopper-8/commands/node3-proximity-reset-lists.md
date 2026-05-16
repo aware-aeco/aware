@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Node3Proximity.ResetLists
+This function resets all search results and clears all caches.   It is called once prior to a search operation.

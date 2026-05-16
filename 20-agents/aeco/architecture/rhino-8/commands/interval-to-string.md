@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interval.ToString
+Returns a string representation of this .

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurveKnotList.RemoveMultipleKnots
+Remove multiple knots from this curve.

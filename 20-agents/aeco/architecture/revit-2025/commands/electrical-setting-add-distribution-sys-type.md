@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalSetting.AddDistributionSysType
+Add a new distribution system type to project.

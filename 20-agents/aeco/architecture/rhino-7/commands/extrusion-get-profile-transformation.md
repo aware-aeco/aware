@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Extrusion.GetProfileTransformation
+Gets the transformation that maps the XY profile curve to its 3d location.

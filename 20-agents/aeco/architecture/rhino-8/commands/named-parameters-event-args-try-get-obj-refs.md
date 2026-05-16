@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedParametersEventArgs.TryGetObjRefs
+Try to get an array of ObjRef instances for a given key name

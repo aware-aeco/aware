@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureMessageAccessor.SetCurrentResolutionType
+Sets the type of a resolution to be used to resolve the failure.

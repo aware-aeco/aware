@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryInstance.GetDocument
+Gets the document that contains the symbol of this instance.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LicenseUtils.ShowLicenseValidationUi
+ShowLicenseValidationUi

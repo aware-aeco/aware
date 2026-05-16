@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Toposolid.Split
+Split the toposolid by the given curve loops.

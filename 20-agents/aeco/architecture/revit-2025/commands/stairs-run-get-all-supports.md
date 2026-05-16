@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StairsRun.GetAllSupports
+Retrieves all supports hosted by the stair's run.

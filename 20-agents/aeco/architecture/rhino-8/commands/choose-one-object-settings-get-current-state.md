@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ChooseOneObjectSettings.GetCurrentState
+Gets the current settings of the application.

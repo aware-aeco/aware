@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transaction.GetStatus
+Returns the current status of the transaction.

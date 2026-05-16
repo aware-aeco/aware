@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetShapeMetadataVal
+Get metadata value associated with the input key

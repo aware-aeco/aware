@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PartMakerMethodToDivideVolumes.UsesReference
+Identifies if the PartMaker uses the intersecting reference.

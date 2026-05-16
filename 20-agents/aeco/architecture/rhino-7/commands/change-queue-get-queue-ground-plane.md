@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ChangeQueue.GetQueueGroundPlane
+Get groundplane known to the queue at the time of the Flush

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MaterialPreview.Thumbnail
+Gets a thumbnail of the preview, without any selection widgets drawn in.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitLinkType.IsFromRevitServer
+Checks whether the Revit link is located on Revit Server.

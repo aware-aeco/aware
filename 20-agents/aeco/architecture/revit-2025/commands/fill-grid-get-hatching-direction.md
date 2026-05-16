@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FillGrid.GetHatchingDirection
+Provides the hatching propagation. Hatching is inverted.

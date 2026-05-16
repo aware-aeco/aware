@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.SetSketchyLines
+Sets the sketchy lines settings for the view.

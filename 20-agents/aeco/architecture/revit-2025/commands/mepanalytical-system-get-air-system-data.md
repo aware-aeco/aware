@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPAnalyticalSystem.GetAirSystemData
+Returns the air system data, null if not available.

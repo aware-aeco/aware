@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorCMYK.GetHashCode
+Gets the hash code for this object

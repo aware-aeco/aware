@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCData.SetSimpleType
+Sets the corresponding IFC type by its name.

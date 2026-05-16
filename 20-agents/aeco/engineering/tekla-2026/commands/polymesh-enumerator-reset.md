@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolymeshEnumerator.Reset
+Resets the enumerator to the beginning.

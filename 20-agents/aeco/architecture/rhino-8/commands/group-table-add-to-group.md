@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroupTable.AddToGroup
+Adds an object to an existing group.

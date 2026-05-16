@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TypeConverter.IsValid
+Determines whether this instance is valid the specified value.

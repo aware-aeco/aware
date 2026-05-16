@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportModifyBooleanPart
+DO NOT USE! For internal usage only!

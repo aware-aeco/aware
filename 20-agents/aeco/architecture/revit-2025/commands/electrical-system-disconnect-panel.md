@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalSystem.DisconnectPanel
+Disconnect the panel for the Electrical System.

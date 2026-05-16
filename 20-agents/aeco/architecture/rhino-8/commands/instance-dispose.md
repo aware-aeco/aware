@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Instance.Dispose
+Dispose method

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoundingBox.ClosestPoint
+Finds the closest point on or in the bounding box.

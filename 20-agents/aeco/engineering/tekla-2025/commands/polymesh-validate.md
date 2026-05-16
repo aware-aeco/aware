@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Polymesh.Validate
+Converts a FacetedBrep to a polymesh and validates.

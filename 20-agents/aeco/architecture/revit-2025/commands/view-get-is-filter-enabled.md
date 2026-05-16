@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetIsFilterEnabled
+Identifies if the filter is enabled in this view.

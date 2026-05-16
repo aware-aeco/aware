@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportFontTableIterator.MoveNext
+Increments the iterator to the next item.

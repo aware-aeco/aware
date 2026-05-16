@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SnapShotsClient.RegisterSnapShotClient
+Function used to register snapshots client

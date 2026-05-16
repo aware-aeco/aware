@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnnotationBase.FirstCharProperties
+Extracts the font properties (bold, italic, underline, and facename) from the first character run of an RTF string.

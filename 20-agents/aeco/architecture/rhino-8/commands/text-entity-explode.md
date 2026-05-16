@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextEntity.Explode
+Explodes this text entity into an array of curves.

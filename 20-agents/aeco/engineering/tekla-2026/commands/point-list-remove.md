@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointList.Remove
+Removes the first occurence of the point from the list.

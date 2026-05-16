@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConductorMaterial.GetConductorMaterial
+Gets the Conductor Material data by given Conductor Material id.

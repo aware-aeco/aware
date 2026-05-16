@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StatusBar.ClearMessagePane
+Removes the message from the message pane.

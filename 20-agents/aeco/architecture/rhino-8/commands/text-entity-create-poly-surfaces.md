@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextEntity.CreatePolySurfaces
+Creates breps from the outline curves with specified height.

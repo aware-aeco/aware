@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepTrimList.AddSingularTrim
+Add a new singular trim to the brep.

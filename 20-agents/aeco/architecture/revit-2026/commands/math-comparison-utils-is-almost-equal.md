@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MathComparisonUtils.IsAlmostEqual
+Checks if two doubles are almost equal, using the internal tolerance.

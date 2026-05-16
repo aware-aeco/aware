@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_InstanceReference.ToString
+Format the instance reference using default grasshopper formatting logic.

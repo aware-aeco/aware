@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DynamicLayout.AddRow
+Adds a new row of controls to the current vertical section

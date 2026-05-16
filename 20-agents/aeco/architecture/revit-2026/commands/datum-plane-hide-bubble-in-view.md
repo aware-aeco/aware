@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DatumPlane.HideBubbleInView
+Hides the bubble in a view. This method does not apply to Reference planes.

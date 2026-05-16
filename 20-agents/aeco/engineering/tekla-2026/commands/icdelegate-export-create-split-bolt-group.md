@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportCreateSplitBoltGroup
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Size.ToString
+Converts this Size struct to a string

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CursorServer.ResetCursor
+Reset the cursor of the given control to default.

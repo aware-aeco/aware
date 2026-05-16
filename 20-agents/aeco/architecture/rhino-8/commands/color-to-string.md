@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Color.ToString
+Converts this object to a string

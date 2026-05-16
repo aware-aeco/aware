@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetFatherComponent
+DO NOT USE! For internal usage only!

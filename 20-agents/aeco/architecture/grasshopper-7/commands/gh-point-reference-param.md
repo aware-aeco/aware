@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Point.ReferenceParam
+Retrieve the indexed param of the point reference data.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetPartCustomDataName
+Gets the custom data name from its identifier.

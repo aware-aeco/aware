@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TopographySurface.IsValidFaceSet
+Identifies whether the facets can construct a valid topography surface.

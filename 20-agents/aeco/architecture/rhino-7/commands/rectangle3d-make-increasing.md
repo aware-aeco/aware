@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rectangle3d.MakeIncreasing
+Ensures the X and Y dimensions are increasing or singleton intervals.

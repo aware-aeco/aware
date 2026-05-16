@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoMath.UnitScale
+Computes the scale factor for changing the measurements unit systems.

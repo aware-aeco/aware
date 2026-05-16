@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IMatrix.Append
+Append the specified  to this matrix

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_CanvasValidator.CanCreateObject
+Validates whether a specific component may be inserted at a specific point.

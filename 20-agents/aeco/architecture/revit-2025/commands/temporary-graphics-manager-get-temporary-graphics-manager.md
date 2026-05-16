@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TemporaryGraphicsManager.GetTemporaryGraphicsManager
+Gets a TemporaryGraphicsManager reference of the document.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormatOptions.IsValidAccuracy
+Checks whether an accuracy is valid for the display unit in this FormatOptions.

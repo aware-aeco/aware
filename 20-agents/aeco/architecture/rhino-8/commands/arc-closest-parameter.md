@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Arc.ClosestParameter
+Gets parameter on the arc closest to a test point.

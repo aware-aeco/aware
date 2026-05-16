@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssetProperties.FindByName
+Gets the property with the given name.

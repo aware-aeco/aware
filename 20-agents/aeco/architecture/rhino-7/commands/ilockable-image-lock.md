@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ILockableImage.Lock
+Locks the data of the image to directly access the bytes of the image

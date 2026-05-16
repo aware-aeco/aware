@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dm.IsValid
+The File3dm object is kept consistent during its creation.             Therefore, this function now returns only true.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IMemberForcesServer.MemberForcesUpdate
+The server's method that will be called when Revit User clicks Member Forces button in the MPP.

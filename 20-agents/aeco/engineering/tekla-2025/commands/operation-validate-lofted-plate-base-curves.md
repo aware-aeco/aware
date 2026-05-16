@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.ValidateLoftedPlateBaseCurves
+Validates a set of base curves for a lofted plate

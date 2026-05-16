@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportModifyTaskDependency
+DO NOT USE! For internal usage only!

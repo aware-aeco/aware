@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetWorksetVisibility
+Returns the visibility settings of a workset for this particular view.

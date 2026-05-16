@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UndoRecord.Dispose
+UndoRecord Dispose

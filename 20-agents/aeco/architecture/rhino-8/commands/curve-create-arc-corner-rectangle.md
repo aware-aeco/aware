@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.CreateArcCornerRectangle
+Creates an arc-cornered (rounded) rectangular curve.

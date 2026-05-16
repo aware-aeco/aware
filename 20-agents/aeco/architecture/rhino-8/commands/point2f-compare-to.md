@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point2f.CompareTo
+Compares this  with another .             Coordinates evaluation priority is first X, then Y.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjRef.TextDot
+Gets the text dot if the referenced geometry is one.

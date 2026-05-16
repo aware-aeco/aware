@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WallSweep.Create
+Creates a new wall sweep or reveal.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Text.Create
+Create a new instance of GH_Text.

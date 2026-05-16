@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableTraySizeIterator.HasCurrent
+Identifies if the iterator has a current item.

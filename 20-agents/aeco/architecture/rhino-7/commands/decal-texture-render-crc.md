@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Decal.TextureRenderCRC
+Get the texture render CRC for the referenced texture using the TextureRenderHashFlags             given

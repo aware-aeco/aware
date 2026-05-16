@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SolidUtils.IsValidForTessellation
+Tests if the input solid or shell is valid for tessellation.

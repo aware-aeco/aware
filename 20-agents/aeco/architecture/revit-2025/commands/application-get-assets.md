@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.GetAssets
+Gets all the Assets of the specified type.

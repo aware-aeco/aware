@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LogicalWeld.SetMainWeld
+Sets the main weld for the logical weld.

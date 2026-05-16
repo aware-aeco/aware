@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceIntersector.GetTargetElementIds
+Gets the set of ElementIds to test from in intersection testing.

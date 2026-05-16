@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultistoryStairs.Create
+Creates a multistory stairs from an existing component-based stairs.

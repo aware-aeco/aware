@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailuresProcessingEventArgs.GetProcessingResult
+Retrieves current status of the failures processing result.

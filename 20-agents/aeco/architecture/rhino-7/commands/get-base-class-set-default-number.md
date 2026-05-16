@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetBaseClass.SetDefaultNumber
+Sets a number as default value that will be returned if the user presses ENTER key during the get.

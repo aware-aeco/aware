@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormatOptions.IsValidForSpec
+Checks whether this FormatOptions is valid for a given spec.

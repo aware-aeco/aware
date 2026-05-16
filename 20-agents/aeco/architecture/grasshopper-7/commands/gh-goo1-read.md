@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Goo`1.Read
+Default behaviour is to return True.

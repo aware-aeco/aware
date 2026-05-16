@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportUtils.GetNurbsSurfaceDataForSurface
+Returns the necessary information to define a NURBS surface    for a given  or .

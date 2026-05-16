@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Tooltip.Show
+Display the tooltip on screen.

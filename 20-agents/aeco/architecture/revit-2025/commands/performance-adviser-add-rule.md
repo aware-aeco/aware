@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PerformanceAdviser.AddRule
+Adds a performance adviser rule to the list of rules.

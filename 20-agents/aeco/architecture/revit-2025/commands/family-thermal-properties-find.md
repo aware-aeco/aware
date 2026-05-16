@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyThermalProperties.Find
+Finds the thermal properties by the 'id' property of a constructionType node in Constructions.xml.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SHA1OpenNURBS.StringHash
+Computes the SHA1 hash of a string, converted to UTF8.

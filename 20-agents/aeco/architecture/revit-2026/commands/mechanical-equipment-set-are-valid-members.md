@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MechanicalEquipmentSet.AreValidMembers
+Checks if these are valid members for mechanical equipment set.

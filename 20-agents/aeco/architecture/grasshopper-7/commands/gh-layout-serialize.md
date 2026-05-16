@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Layout.Serialize
+Serialize this layout as an xml string.

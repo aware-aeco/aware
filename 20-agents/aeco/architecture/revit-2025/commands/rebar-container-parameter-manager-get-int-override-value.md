@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainerParameterManager.GetIntOverrideValue
+Get the integer value for an overriden parameter.

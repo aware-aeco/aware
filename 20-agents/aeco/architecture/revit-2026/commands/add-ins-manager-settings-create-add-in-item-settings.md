@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AddInsManagerSettings.CreateAddInItemSettings
+Creates new  for an Add-in with the specified Guid.

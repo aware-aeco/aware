@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.AddShapeMetadataKeyVal
+Add key-value fields to Shape Metadata.

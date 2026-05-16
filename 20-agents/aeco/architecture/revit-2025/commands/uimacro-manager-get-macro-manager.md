@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIMacroManager.GetMacroManager
+Gets the UI Macro manager from the UI application.

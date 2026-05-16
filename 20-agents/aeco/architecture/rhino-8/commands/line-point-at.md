@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Line.PointAt
+Evaluates the line at the specified parameter.

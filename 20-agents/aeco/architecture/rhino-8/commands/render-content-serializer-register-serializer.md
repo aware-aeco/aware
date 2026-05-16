@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContentSerializer.RegisterSerializer
+Register the RenderContentSerializer

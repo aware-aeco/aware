@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform.CompareTo
+Compares this transform with another transform.             M33 has highest value, then M32, etc..

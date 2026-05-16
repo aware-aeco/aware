@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RealtimeDisplayMode.ShutdownRenderer
+Override to shutdown your render engine

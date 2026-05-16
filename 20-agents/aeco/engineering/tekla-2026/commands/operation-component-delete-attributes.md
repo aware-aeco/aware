@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.ComponentDeleteAttributes
+Delete the attributes for a given component type.

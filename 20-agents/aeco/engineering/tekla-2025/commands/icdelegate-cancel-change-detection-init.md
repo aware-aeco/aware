@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.CancelChangeDetectionInit
+DO NOT USE! For internal usage only!

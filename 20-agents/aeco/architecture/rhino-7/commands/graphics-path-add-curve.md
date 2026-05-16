@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GraphicsPath.AddCurve
+Adds a curve that intersects with the specified  to the path

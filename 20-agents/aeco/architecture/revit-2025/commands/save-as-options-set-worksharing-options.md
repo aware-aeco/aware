@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SaveAsOptions.SetWorksharingOptions
+Sets Worksharing options for SaveAs.

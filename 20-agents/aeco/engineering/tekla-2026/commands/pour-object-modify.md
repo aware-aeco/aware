@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PourObject.Modify
+Modifies the pour object with the given identifier.

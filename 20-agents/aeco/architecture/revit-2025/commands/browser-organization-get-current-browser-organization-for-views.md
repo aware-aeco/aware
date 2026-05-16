@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrowserOrganization.GetCurrentBrowserOrganizationForViews
+Gets the   that applies to the Views section of the project browser.

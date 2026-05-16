@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HVACLoadBuildingType.IsNameUnique
+Determines whether a potential building type name is unique.

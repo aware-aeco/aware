@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.GetOverridableHookParameters
+Outputs the formula parameter ids defined in the RebarShape family which are associated with hook length and hook tangent length parameters.

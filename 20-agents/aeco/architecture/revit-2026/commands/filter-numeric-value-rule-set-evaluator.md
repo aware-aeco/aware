@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterNumericValueRule.SetEvaluator
+Sets the evaluator that implements the test for this rule.

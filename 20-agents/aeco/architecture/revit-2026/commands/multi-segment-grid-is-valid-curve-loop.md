@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultiSegmentGrid.IsValidCurveLoop
+Identifies whether the specified curve loop is valid for creation of a MultiSegmentGrid.

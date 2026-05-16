@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_ObjectProxy.DuplicateProxy
+Create a duplicate of this proxy.

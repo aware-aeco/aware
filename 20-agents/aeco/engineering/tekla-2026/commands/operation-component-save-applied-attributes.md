@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.ComponentSaveAppliedAttributes
+Saves the applied attributes of given component type to file.

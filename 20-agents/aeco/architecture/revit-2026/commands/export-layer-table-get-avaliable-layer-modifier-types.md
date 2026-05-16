@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLayerTable.GetAvaliableLayerModifierTypes
+Gets all the avaliable layer modifier types for the layer key.

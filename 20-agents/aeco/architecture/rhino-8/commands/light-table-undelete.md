@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightTable.Undelete
+Restores a light that has been deleted.

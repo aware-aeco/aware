@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportCompareObjects
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSetAddition.Insert
+Inserts the rebar set addition into the model database.

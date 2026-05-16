@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WireMaterialType.RemoveGroundConductorSize
+Remove an existing ground conductor size from this material type.

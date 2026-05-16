@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.AppendToDebugLog
+Useful for creating textual representations of this document for debugging purposes.

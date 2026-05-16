@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGUID_Secondary
+Performs indirect casts from other data types into Guids.

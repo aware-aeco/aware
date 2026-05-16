@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ClippingPlaneSurface.ClearClipParticipationLists
+Remove list of object ids that this clipping plane surface clips. This causes the clipping             plane surface to clip all objects

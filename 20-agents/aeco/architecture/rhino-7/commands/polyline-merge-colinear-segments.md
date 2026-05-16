@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Polyline.MergeColinearSegments
+Merge co-linear consecutive segments in a polyline.             This method will automatically remove any zero-length segments as well.

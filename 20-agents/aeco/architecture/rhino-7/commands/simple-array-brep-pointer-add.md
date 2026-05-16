@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayBrepPointer.Add
+Adds a brep to the list.

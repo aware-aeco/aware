@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewTypeBinding
+Creates a new empty type binding object.

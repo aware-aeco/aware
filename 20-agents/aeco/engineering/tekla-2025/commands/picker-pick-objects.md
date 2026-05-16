@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Picker.PickObjects
+Queries the user to pick model objects from the model.

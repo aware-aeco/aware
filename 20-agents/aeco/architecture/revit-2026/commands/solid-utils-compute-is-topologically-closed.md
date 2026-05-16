@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SolidUtils.ComputeIsTopologicallyClosed
+Compute whether the input Solid is topologically closed.

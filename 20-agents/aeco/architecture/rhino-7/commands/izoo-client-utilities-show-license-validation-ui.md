@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IZooClientUtilities.ShowLicenseValidationUi
+Shows user interface to validate and register a license.             Returns true if the license is successfully validated; false otherwise

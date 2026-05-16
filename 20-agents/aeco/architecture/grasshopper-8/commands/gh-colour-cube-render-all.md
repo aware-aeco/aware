@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourCube.RenderAll
+Call all render methods in the correct order.

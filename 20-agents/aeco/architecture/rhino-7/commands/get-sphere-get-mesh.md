@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetSphere.GetMesh
+Prompt for the getting of a mesh sphere.

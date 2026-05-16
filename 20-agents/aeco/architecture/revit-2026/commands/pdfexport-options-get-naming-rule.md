@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PDFExportOptions.GetNamingRule
+Gets a copy of the naming rule.

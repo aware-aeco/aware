@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayStyle.HasColoredSurfaceSettings
+If true style has colored surface settings.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Decal.TryGetColor
+Blend color with the decal color at a given point.

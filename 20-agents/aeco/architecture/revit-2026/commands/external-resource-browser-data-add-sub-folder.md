@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalResourceBrowserData.AddSubFolder
+Adds a subfolder to the folder path with the given name and icon type.

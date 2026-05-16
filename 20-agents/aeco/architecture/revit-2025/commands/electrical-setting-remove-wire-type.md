@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalSetting.RemoveWireType
+Remove wire type definition from project.

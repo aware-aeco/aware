@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GlobalParameter.UnlabelDimension
+Unlabels a dimension that is currently labeled by this global parameter.

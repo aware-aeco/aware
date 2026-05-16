@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Graphics.FillPie
+Fills a pie with the specified

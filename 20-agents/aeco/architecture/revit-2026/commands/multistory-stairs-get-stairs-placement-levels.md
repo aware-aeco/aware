@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultistoryStairs.GetStairsPlacementLevels
+Gets all the levels the given stairs group placed on.

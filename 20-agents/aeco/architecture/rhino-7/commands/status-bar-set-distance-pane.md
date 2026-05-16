@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StatusBar.SetDistancePane
+Sets the distance pane to a distance value.

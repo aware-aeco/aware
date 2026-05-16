@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.GetNumberOfShellLayers
+Retrieves the number of interior or exterior shell layers.

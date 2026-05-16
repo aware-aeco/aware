@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TrulyObservableOrderedSet`1.RemoveAt
+Removes an element at the specified index from the set.

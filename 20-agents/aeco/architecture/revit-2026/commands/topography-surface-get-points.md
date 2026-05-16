@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TopographySurface.GetPoints
+Gets the points that define this topography surface.

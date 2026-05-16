@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportSetPrintingController
+DO NOT USE! For internal usage only!

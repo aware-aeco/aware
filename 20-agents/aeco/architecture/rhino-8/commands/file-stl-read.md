@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileStl.Read
+Read a STL file into a RhinoDoc

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.GetOutlines
+Constructs the outlines of a mesh projected against a plane.

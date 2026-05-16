@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportDWGSettings.GetActivePredefinedSettings
+Returns the active pre-defined non-in-session exporting settings for DWG in the given document.

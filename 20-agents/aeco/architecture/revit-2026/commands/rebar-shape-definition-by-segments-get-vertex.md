@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDefinitionBySegments.GetVertex
+Return a reference to one of the vertices in the definition.

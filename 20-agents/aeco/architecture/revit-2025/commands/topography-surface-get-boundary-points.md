@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TopographySurface.GetBoundaryPoints
+Gets the points which are on the boundary of the topography surface.

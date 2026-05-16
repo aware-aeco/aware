@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObjectTable.AddPoints
+Adds multiple points to the document.

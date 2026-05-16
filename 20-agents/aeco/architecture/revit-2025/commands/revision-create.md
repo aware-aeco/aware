@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Revision.Create
+Creates a new Revision in the project.

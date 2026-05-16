@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PluginUtil.SaveSettings
+Forces all runtime settings to be saved to the disk.

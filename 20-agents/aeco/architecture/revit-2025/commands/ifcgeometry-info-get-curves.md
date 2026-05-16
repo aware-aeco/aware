@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCGeometryInfo.GetCurves
+Gets the IfcCurve handles created representing the processed geometry and stored in this object.

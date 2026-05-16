@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPSection.GetCoefficient
+Gets the loss coefficient for the specified element id in this section.

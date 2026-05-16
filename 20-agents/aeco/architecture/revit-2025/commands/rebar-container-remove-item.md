@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainer.RemoveItem
+Removes Item from the Rebar Container.

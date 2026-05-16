@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.SetEnabledFlags
+Set the enabled flags of all selected objects to true or false

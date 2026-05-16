@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpatialElementBoundarySubface.GetBoundingElementFace
+Returns the face of the bounding element.

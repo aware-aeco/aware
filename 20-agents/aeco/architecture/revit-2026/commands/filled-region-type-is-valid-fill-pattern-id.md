@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilledRegionType.IsValidFillPatternId
+Check if the id is a FillPatternElement or an invalidElementId

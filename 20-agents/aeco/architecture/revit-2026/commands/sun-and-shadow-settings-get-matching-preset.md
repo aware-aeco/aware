@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SunAndShadowSettings.GetMatchingPreset
+Finds the name of the 'per-document' SunAndShadowSettings that matches the properties    of this per-view element.

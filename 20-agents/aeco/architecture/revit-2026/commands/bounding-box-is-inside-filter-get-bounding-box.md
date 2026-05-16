@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoundingBoxIsInsideFilter.GetBoundingBox
+Gets the outline being used for this filter.

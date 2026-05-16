@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectPropertiesPageCollection.Add
+Custom page to add

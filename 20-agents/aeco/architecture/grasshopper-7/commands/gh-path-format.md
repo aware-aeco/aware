@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Path.Format
+Format a path.

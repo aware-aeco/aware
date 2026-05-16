@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObjectVisualization.SetVisibility
+Sets visibility for given model objects.

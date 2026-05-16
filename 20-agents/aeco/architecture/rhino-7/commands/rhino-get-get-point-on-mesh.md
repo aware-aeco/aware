@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoGet.GetPointOnMesh
+Gets a point constrained to an existing mesh in the document.

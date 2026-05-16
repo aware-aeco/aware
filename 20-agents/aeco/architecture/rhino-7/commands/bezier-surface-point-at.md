@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BezierSurface.PointAt
+Evaluates point at a surface parameter.

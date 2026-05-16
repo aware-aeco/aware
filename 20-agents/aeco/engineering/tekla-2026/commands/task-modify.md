@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Task.Modify
+Modifies the task instance in the model. The identifier must be set.

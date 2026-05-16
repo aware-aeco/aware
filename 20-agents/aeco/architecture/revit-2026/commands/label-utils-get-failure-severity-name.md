@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LabelUtils.GetFailureSeverityName
+Gets the user-visible name for the Severity of a Warning

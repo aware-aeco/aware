@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CommandAliasList.Clear
+Removes all aliases from the list.

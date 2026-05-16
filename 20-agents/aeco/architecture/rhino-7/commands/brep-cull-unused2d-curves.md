@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CullUnused2dCurves
+Culls 3d curves not referenced by an edge.

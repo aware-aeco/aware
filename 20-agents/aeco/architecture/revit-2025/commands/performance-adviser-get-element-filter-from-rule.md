@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PerformanceAdviser.GetElementFilterFromRule
+Retrieves a filter to restrict elements to be checked.

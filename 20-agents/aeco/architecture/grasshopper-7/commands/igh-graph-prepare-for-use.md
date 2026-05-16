@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Graph.PrepareForUse
+This method is called when a Graph is about to be displayed/used, maybe for the first time ever, maybe not.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshingParameters.FromEncodedString
+Converts encoded serialized string into a MeshingParameters

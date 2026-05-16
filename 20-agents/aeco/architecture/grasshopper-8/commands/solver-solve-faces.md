@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Solver.Solve_Faces
+Core Delaunay solver.

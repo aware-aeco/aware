@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitLinkType.UpdateFromIFC
+Updates a Revit link type from an IFC file and loads the linked document.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TemporaryGraphicsManager.GetAll
+Returns all temporary graphics object indexes managed by this manager.

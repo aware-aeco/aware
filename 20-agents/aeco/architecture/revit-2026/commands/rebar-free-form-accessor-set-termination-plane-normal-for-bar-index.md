@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarFreeFormAccessor.SetTerminationPlaneNormalForBarIndex
+Sets the plane's normal in which the termination (e.g. hook, crank) at end of bar with index barPositionIndex will stay.    Will throw exception if the rebar has valid constraints.

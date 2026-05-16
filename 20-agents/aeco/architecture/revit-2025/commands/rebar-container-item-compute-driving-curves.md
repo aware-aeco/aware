@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainerItem.ComputeDrivingCurves
+Compute the driving curves.

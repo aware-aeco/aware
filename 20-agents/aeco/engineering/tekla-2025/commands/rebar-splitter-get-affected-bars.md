@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSplitter.GetAffectedBars
+Gets the virtual bars affected by this splitter.

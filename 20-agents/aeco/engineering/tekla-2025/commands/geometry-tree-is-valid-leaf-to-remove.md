@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryTree.IsValidLeafToRemove
+Returns true if its possible to remove geometrySection from geometry.

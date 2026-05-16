@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ClassArrayString.Add
+Adds a string to the list.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Model.GetGUIDByIdentifier
+Returns the GUID of the given identifier instance.

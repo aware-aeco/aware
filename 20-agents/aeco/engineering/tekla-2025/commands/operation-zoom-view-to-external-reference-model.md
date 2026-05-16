@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.ZoomViewToExternalReferenceModel
+Zooms a view to the external reference models area.

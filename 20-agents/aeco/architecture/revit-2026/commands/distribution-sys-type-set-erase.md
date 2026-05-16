@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DistributionSysTypeSet.Erase
+Removes a specified DistributionSys type from the set.

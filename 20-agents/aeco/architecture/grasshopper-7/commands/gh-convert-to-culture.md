@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToCulture
+Convert data into Colors.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Vector2d.Equals
+Determines whether the specified System.Object is a Vector2d and has the same value as the present vector.

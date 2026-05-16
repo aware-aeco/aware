@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExternalService.GetName
+Implement this method to return the name of the service.

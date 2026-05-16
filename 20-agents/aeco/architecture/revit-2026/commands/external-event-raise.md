@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalEvent.Raise
+Instructing Revit to raise (signal) the external event.

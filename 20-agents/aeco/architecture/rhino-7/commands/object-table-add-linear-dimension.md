@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.AddLinearDimension
+Adds a linear dimension object to the document.

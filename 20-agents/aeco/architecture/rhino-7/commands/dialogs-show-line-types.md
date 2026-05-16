@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Dialogs.ShowLineTypes
+Displays Rhino's LineType list box.

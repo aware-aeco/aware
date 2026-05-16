@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Face.GetSurface
+Returns a copy of this face's surface.

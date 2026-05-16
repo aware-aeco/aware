@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Circle.IsInPlane
+Evaluates whether or not this circle is co-planar with a given plane.

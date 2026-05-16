@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyItemFactory.NewSweptBlendForm
+Create new Form element by swept blend operation, and add it into the Autodesk Revit family document.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OpenGLSettings.UpdateFromState
+Updates from a particular setting state.

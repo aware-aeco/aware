@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCCategoryTemplate.ImportFromFile
+Import mapping template from a text file.

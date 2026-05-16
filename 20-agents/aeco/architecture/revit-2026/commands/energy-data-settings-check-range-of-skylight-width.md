@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyDataSettings.CheckRangeOfSkylightWidth
+Checks that the skylight width is greater than or equal to eight inches.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShape.IsSupportedDocument
+Tests whether a DirectShape or a DirectShapeType may be created in this document.

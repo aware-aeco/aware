@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetBaseClass.View
+Gets a view the user clicked in during GetPoint.Get(), GetObject.GetObjects(), etc.

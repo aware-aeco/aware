@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Assembly.Modify
+Modifies the assembly instance in the model.

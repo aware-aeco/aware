@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetBaseClass.ClearCommandOptions
+Clear all command options.

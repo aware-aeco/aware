@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Triangle3d.BarycentricCoordsAt
+Gets the projection of a point onto the barycentric coordinates.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationService.GetButtonCount
+Gets the number of buttons for a given palette in the service.

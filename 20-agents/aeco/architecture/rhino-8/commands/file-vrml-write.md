@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileVrml.Write
+Write a wrl file based on the contents of a RhinoDoc

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Param`1.AddSource
+Append a new Source parameter to the end of the Sources list.   Sources provide this parameter with data at runtime.

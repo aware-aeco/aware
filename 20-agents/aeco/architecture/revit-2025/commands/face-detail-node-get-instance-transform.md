@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FaceDetailNode.GetInstanceTransform
+Returns instance transform of the object being drawn.

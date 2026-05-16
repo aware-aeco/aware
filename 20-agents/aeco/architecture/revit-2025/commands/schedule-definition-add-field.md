@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.AddField
+Adds a regular field at the end of the list.

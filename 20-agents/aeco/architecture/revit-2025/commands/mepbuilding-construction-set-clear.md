@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPBuildingConstructionSet.Clear
+Removes every MEPBuildingConstruction from the set, rendering it empty.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterUtils.GetParameterTypeId
+Gets the ForgeTypeId identifying the built-in parameter corresponding to the given BuiltInParameter value.

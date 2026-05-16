@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleData.IsSymmetric
+Check if this panel schedule is symmetric

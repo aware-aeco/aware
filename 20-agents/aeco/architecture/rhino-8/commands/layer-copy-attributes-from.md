@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Layer.CopyAttributesFrom
+Copy typical attributes from another layer

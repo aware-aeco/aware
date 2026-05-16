@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TransactionGroup.HasEnded
+Determines whether the transaction group has ended already.

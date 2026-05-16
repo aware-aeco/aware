@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Utility.DocumentAngleTolerance
+Returns the Angle Tolerance in degrees for the model document

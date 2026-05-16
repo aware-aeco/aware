@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraintsManager.SetPreferredConstraint
+Sets the RebarConstraint as preferred constraint for its RebarConstrainedHandle.

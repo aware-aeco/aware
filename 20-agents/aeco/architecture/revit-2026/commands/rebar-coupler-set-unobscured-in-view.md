@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarCoupler.SetUnobscuredInView
+Sets this rebar coupler element to be shown unobscured in a view.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetObjectExtremaBoxData
+DO NOT USE! For internal usage only!

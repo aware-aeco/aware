@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoundingBox.Corner
+Gets one of the eight corners of the box.

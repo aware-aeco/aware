@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Goo`1.EmitProxy
+Create a new proxy for this instance. Return Null if this class does not support proxies.

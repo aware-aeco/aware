@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.GetDefaultParameterNameForKeySchedule
+Gets the default parameter name that will be used when creating a key schedule.

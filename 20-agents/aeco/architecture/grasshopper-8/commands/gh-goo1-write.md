@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Goo`1.Write
+Default behaviour is to return True.

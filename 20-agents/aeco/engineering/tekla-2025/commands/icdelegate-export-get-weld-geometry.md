@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportGetWeldGeometry
+DO NOT USE! For internal usage only!

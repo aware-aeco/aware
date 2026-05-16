@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.ExportImage
+Exports a view or set of views into an image file.

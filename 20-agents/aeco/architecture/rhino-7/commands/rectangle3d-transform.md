@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rectangle3d.Transform
+Transforms this rectangle. Note that rectangles cannot be skewed or tapered.

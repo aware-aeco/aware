@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetCropRegionShapeManagerForReferenceCallout
+Returns an object for managing view crop region shape for reference callout.

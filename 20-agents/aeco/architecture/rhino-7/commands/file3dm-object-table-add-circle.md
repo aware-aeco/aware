@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObjectTable.AddCircle
+Adds a curve object to the document representing a circle.

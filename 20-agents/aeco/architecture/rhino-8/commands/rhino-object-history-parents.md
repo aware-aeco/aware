@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.HistoryParents
+Gets the ids of the parent Rhino objects of this object.

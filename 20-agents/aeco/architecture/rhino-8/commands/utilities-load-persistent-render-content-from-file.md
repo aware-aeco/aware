@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Utilities.LoadPersistentRenderContentFromFile
+Loads a content from a library file and adds it to the persistent content list of a particular document.

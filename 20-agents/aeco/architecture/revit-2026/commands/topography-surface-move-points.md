@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TopographySurface.MovePoints
+Moves a collection of points in a topography surface by a designated vector.

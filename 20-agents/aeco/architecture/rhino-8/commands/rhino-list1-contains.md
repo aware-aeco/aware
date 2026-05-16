@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoList`1.Contains
+Determines whether an element is in the List.

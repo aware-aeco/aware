@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetPoint.PermitTabMode
+Permits the use of the tab key to define a line constraint.

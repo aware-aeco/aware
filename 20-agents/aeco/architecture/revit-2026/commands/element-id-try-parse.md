@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementId.TryParse
+Parse the string representation of the id into a corresponding ElementId.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndexPair.Contains
+Determines whether the  contains a specific value.

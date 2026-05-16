@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableView.GetAvailableParameterCategories
+Get all available parameter categories.

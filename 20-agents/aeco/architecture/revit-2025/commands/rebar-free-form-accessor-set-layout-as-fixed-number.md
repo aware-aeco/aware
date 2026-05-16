@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarFreeFormAccessor.SetLayoutAsFixedNumber
+Sets the Layout Rule property of rebar set to Fixed Number.

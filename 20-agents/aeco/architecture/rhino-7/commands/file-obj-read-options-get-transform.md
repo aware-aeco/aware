@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileObjReadOptions.GetTransform
+Calculates the YToZ transform.

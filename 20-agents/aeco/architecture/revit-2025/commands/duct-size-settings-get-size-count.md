@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DuctSizeSettings.GetSizeCount
+Get the size count of the duct size table. The duct shape determines the location of the size in the size table.

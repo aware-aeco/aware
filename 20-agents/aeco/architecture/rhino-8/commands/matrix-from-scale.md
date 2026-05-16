@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Matrix.FromScale
+Creates a new matrix with the specified

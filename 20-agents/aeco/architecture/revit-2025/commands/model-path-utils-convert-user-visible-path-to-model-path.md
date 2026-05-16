@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelPathUtils.ConvertUserVisiblePathToModelPath
+Converts a user-visible path (string) to a ModelPath.

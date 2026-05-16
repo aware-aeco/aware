@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CitySet.Contains
+Tests for the existence of a city within the set.

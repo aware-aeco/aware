@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayConduit.GetSelectionFilter
+The selection filter will make per-object conduit functions only be             called for selected objects (when the filter is turned on)

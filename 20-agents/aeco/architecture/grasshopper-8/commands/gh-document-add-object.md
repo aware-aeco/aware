@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.AddObject
+Add a new object to the document. If the object is already contained, nothing will happen

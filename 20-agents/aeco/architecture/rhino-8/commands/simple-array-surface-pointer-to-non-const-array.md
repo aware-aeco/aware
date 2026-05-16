@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArraySurfacePointer.ToNonConstArray
+Copies the unmanaged array to a managed counterpart.             Elements are made non-constant.

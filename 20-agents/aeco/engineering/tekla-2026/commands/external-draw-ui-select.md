@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalDraw.UiSelect
+Selects a list of objects from the user interface.

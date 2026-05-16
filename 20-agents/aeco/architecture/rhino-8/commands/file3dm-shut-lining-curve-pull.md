@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmShutLining.CurvePull
+Returns whether the given curve is pulled to the surface before creating the shut-line.

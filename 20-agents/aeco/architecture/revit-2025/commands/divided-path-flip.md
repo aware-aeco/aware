@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DividedPath.Flip
+Toggle the flipped value

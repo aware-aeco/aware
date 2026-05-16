@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudUnsafeLock.Release
+Releases the lock and updates the underlying unmanaged data structures.

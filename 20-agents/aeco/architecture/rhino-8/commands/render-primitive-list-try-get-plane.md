@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderPrimitiveList.TryGetPlane
+Call this method to get a box at the specified index.

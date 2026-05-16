@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.AddLine
+Adds a new line in the mesh.

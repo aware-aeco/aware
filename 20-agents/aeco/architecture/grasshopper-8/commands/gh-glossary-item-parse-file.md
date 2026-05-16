@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GlossaryItem.ParseFile
+Parse a *.glossary file and return a glossary entry.

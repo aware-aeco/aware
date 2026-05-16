@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Plane.DrawPlane
+Draw a plane with default colours and default size.

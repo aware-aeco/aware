@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-VertexIndexPairArray.Clear
+Removes every VertexIndex pair from the array, rendering it empty.

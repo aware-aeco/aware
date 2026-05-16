@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LayerTable.FindByFullPath
+Searches for a layer using the fully qualified name, that includes ancestors.             Deleted layers have no name.

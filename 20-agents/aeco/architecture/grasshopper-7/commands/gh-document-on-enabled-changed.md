@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.OnEnabledChanged
+Raise the EnabledChanged event.

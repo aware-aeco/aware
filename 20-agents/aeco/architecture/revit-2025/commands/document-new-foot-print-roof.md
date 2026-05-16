@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.NewFootPrintRoof
+Creates a new FootPrintRoof element.

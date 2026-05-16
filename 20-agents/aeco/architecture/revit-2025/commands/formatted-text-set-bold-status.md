@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormattedText.SetBoldStatus
+Sets the characters in the entire text to be bold or not bold.

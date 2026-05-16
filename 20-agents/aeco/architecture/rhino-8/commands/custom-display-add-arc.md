@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CustomDisplay.AddArc
+Adds a new, black arc to the display list.

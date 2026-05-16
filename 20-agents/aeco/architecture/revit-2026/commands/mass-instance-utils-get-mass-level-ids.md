@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MassInstanceUtils.GetMassLevelIds
+Get the ElementIds of the Levels associated with a mass instance.

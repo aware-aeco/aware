@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjRef.SubDEdge
+Gets the SubDEdge if the referenced geometry is one.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawMarker
+Draws an arrow marker as a view-aligned widget.

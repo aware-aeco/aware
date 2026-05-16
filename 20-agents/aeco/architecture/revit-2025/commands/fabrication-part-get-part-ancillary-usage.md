@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.GetPartAncillaryUsage
+Gets a list of all ancillary usage information for the part.

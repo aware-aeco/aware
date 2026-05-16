@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Layout.AddTab
+Add a new tab to this layout. The tab will receive a default name.

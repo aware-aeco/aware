@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportGetPointClouds
+DO NOT USE! For internal usage only!

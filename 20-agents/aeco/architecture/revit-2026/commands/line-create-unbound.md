@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Line.CreateUnbound
+Creates a new instance of an unbound linear curve.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SunAndShadowSettings.IsAfterStartDateAndTime
+Checks whether the end date and time is valid.

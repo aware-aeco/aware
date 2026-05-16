@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPAnalyticalSegment.GetNetworkSegmentId
+Gets the NetworkSegmentId.

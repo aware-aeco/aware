@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.IsFinishAccepted
+Check if detailer has accepted a finish that is against fabricator settings.

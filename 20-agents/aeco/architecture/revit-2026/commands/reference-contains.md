@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Reference.Contains
+Checks if given reference identifies part of object identified by this reference.

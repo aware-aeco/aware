@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BaseRebarModifier.Delete
+Deletes the rebar modifier from the model database.

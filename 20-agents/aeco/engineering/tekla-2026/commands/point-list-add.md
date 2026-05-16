@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointList.Add
+Adds a new point to the end of the point list.

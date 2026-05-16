@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DrawingUtilities.CreateCurvePreviewGeometry
+Create a series of closed polyline loops representing a curve and a linetype combination.

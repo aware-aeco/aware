@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderPrimitiveList.PrimitiveType
+Type of primitive object at this index.

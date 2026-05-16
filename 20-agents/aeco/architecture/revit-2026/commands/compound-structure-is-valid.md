@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.IsValid
+Checks for errors or inconsistencies in the data in this CompoundStructure.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.GetHiddenObjects
+Retrieves the hidden objects

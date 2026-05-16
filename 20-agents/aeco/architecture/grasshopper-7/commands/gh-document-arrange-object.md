@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.ArrangeObject
+Rearrange the stack order of the object.

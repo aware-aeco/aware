@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.LaunchExternalReferenceModelComparisonSetsDialog
+Launches the comparison sets dialog.

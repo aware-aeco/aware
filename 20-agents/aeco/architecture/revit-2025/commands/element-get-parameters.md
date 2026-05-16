@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.GetParameters
+Retrieves the parameters from the element via the given name.

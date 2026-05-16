@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interval.NormalizedIntervalAt
+Converts interval value, or pair of values, to normalized parameter.

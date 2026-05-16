@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceModelObject.GetFather
+Returns the reference hierarchy father.

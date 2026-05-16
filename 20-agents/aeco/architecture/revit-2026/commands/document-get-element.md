@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.GetElement
+Gets the Element referenced by the input ElementId.

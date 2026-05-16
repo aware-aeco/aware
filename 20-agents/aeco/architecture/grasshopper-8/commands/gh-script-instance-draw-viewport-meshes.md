@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ScriptInstance.DrawViewportMeshes
+Override this method to draw meshes in the Rhino viewports.

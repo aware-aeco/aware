@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Graphics.Flush
+Flushes the drawing (for some platforms)

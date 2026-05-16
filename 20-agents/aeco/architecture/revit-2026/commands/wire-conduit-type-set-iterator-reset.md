@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WireConduitTypeSetIterator.Reset
+Bring the iterator back to the start of the set.

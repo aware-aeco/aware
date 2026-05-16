@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportSelectPourUnit
+DO NOT USE! For internal usage only!

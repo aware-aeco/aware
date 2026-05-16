@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Animator.InterpolateDouble
+Utility interpolation delegate for System.Double values.

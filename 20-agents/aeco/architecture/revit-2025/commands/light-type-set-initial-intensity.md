@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightType.SetInitialIntensity
+Replace the current initial intensity object with the given object

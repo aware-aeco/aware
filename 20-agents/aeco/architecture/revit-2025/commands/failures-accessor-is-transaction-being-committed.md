@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailuresAccessor.IsTransactionBeingCommitted
+Checks if the transaction for which failures are processed is being committed or rolled back.

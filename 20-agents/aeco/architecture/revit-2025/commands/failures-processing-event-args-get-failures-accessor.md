@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailuresProcessingEventArgs.GetFailuresAccessor
+Provides access to the failure information in the document.

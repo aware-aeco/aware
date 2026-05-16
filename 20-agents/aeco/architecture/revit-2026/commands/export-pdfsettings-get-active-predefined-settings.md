@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportPDFSettings.GetActivePredefinedSettings
+Gets the active settings element in the document.

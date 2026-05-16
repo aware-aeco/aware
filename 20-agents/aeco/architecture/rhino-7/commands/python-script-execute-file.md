@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PythonScript.ExecuteFile
+Executes a Python file. The file is executed in a new, __main__ scope.

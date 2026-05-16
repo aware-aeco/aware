@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayModeDescription.ImportFromFile
+Imports a DisplayModeDescription from a Windows-style .ini file.

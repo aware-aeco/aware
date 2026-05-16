@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.IsSphere
+Determines if the surface is a portion of a sphere within RhinoMath.ZeroTolerance.

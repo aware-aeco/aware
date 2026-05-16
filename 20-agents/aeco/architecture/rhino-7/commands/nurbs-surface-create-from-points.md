@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsSurface.CreateFromPoints
+Constructs a NURBS surface from a 2D grid of control points.

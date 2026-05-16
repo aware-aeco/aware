@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConceptualConstructionType.GetWallConstructionType
+Get a Wall ConceptualConstructionType by its ConceptualConstructionWallType.

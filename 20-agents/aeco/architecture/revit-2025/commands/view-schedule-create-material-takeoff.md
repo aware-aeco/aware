@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.CreateMaterialTakeoff
+Creates a material takeoff.

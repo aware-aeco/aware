@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportViewHideUnselected
+DO NOT USE! For internal usage only!

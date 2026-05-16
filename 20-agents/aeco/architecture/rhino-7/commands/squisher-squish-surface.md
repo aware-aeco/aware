@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Squisher.SquishSurface
+Squish the surface into a flat brep

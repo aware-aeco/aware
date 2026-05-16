@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IntList.Contains
+Checks if the given integer is in the list.

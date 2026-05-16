@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.GetExternalResourceReferences
+Gets the map of the external resource references referenced    by the element.

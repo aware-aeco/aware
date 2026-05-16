@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraint.FlipSideForClearBarSpacingZeroDistanceConstraint
+Flips the side on which a RebarConstrainedHandle constrained using clear bar distance with zero offset connects to another Rebar target handle.

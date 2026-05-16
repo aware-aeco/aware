@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.TransformComponent
+Transform an array of Brep components, bend neighbors to match, and leave the rest fixed.

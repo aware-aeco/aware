@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TabbedDialogExtension.SetContextualHelp
+Sets the contextual help.

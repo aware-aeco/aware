@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Animator.InterpolatePointF
+Utility interpolation delegate for System.Drawing.PointF values.

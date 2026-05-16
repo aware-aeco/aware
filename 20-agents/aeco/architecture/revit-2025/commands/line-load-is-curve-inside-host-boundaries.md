@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LineLoad.IsCurveInsideHostBoundaries
+Indicates if the curve is inside panel's boundaries or on panel's edges or if the curve is on the member's curve.

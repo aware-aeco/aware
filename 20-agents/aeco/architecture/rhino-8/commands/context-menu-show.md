@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ContextMenu.Show
+Show the context menu at the current mouse position.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderPipeline.GetRenderWindowFromRenderViewSource
+Like GetRenderWindow(), but with the size for RenderWindow             set from RenderViewSources if fromRenderViewSource is set to true

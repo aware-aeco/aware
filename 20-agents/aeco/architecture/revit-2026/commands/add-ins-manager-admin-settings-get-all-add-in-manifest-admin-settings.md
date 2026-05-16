@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AddInsManagerAdminSettings.GetAllAddInManifestAdminSettings
+Gets all .

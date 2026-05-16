@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RepeaterBounds.GetLowerBound
+Returns the smallest index of the array in the given dimension.

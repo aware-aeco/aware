@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportPatternTableIterator.Reset
+Resets the iterator to the initial state.

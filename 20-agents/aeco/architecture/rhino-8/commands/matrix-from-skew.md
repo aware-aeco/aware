@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Matrix.FromSkew
+Creates a new matrix with a skew

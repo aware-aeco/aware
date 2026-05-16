@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleField.GetStyle
+Gets the style of this field.

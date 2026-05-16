@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCCategoryTemplate.GetCategoryMappingTable
+Gets the table that contains a mapping from Revit categories to IFC entities.

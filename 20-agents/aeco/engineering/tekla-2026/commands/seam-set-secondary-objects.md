@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Seam.SetSecondaryObjects
+Sets the secondary objects.

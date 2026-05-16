@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-XYZ.Negate
+Negates this vector.

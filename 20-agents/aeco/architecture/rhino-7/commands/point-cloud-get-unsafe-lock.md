@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.GetUnsafeLock
+Allows the developer to obtain unsafe pointers to the underlying unmanaged data structures of the PointCloud.

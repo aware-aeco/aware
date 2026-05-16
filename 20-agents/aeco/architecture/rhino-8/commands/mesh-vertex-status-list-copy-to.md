@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexStatusList.CopyTo
+Copies to an array, starting at an index.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshNgonList.Insert
+Inserts a mesh ngon at a defined index in this list.

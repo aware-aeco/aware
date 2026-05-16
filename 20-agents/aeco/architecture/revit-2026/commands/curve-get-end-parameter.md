@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.GetEndParameter
+Returns the raw parameter value at the start or end of this curve.

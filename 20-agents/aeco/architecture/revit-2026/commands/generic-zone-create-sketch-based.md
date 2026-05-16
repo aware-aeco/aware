@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GenericZone.CreateSketchBased
+Creates a new instance of a sketch-based generic zone and adds it to the document.

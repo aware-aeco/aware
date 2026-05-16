@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Sphere.ClosestPoint
+Returns point on sphere that is closest to given point.

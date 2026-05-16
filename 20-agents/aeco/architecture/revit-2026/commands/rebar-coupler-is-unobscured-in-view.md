@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarCoupler.IsUnobscuredInView
+Checks if this rebar coupler element is shown unobscured in a view.

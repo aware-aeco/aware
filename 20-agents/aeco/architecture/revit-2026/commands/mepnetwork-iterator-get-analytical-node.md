@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPNetworkIterator.GetAnalyticalNode
+Gets the analytical node at the current iteration step.

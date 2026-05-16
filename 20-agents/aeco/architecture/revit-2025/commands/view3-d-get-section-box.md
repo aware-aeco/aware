@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View3D.GetSectionBox
+Gets a copy of the section box for this 3D view.

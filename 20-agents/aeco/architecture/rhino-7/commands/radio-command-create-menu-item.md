@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RadioCommand.CreateMenuItem
+Creates a new menu item attached to this command.

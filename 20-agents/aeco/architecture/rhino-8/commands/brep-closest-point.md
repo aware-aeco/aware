@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.ClosestPoint
+Finds a point on the brep that is closest to testPoint.

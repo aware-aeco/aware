@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroundConductorSizeSet.Contains
+Tests for the existence of a GroundConductorSize within the set.

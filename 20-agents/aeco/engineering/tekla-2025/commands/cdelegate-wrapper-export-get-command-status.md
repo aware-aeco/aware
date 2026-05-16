@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetCommandStatus
+DO NOT USE! For internal usage only!

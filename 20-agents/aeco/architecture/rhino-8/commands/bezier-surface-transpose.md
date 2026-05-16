@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BezierSurface.Transpose
+Transposes surface parameterization (swap U and V)

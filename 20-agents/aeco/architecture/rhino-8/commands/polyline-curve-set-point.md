@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolylineCurve.SetPoint
+Sets a point at a specified index in the polyline curve.

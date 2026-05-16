@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FontFamily.Equals
+Tests this instance for equality with another font family

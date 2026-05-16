@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.IsValidVersionGUID
+Checks whether the GUID is valid for the given document. Empty GUID is allowed.

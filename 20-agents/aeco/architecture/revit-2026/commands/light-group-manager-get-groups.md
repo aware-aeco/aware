@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightGroupManager.GetGroups
+Get the set of contained LightGroup objects    The set of LightGroup objects

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterCategoryRule.AllCategoriesFilterable
+Checks that all of the given categories are filterable.

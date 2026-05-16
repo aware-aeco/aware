@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ArchivableDictionary.TryGetPlane
+Get value as Plane, will only succeed if value was created using Set(string key, Plane value)

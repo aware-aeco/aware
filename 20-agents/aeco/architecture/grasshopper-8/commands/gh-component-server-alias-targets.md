@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentServer.AliasTargets
+Get all the target Component IDs for a given alias.

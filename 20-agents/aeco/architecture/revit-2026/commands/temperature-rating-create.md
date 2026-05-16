@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TemperatureRating.Create
+Creates a Conductor Temperature Rating.

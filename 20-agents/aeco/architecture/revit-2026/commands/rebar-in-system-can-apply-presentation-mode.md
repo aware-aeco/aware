@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarInSystem.CanApplyPresentationMode
+Checks if a presentation mode can be applied for this rebar in the given view.

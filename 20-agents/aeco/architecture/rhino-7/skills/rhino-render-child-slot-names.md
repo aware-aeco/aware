@@ -6,3 +6,4 @@ description: API reference for namespace Rhino.Render.ChildSlotNames from RhinoC
 # Rhino.Render.ChildSlotNames
 
 - **PhysicallyBased**
+  - Helper class with properties containing the names of children available in our PBR implementation.

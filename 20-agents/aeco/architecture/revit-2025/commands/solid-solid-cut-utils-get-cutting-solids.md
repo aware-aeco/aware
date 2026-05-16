@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SolidSolidCutUtils.GetCuttingSolids
+Gets all the solids which cut the input element.

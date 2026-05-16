@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_StateServer.RestoreState
+Restore a certain state.

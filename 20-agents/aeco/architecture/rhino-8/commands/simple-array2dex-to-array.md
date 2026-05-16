@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArray2dex.ToArray
+Returns the managed counterpart of the unmanaged array.

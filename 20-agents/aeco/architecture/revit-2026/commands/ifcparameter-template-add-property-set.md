@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCParameterTemplate.AddPropertySet
+Adds a property set to the template.

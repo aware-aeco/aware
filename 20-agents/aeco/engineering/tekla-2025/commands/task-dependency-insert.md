@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TaskDependency.Insert
+Inserts the task dependency instance in the model.

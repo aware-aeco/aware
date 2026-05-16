@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterUtils.IsBuiltInParameter
+Checks whether an ElementId identifies a built-in parameter.

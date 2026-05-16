@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultiReferenceAnnotationOptions.IsAllowedDimensionStyleType
+Only Linear and LinearFixed dimension style types are allowed for new MultiReferenceAnnotations.

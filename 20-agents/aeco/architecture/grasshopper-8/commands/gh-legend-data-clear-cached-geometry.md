@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_LegendData.ClearCachedGeometry
+You must call this function when making changes to the legend object   after it was drawn at least once.

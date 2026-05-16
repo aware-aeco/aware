@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssemblyInstance.GetCenter
+Returns the center of the bounding box for the assembly instance.    This is the default position for placed assembly instances.

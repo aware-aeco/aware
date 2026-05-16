@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PerformanceAdviser.GetPerformanceAdviser
+Returns the only instance of PerformanceAdviser in the Application.

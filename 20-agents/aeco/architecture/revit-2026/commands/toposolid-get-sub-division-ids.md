@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Toposolid.GetSubDivisionIds
+Gets all element ids of Toposolid subdivisions with the current Toposolid as its host.

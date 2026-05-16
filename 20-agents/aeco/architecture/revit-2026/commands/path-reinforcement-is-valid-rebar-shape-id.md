@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PathReinforcement.IsValidRebarShapeId
+Identifies whether an element id corresponds to a Rebar Shape element which can be used in Path Reinforcement.

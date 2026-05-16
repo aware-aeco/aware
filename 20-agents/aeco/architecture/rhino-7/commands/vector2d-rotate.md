@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Vector2d.Rotate
+Rotates this vector.

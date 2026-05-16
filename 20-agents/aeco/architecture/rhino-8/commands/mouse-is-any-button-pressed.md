@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mouse.IsAnyButtonPressed
+Returns true if any of the specified mouse buttons is pressed.

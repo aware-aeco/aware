@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SurfaceFilletBase.CreateRationalArcsFilletSrf
+Creates a standard surface fillet using rational arc sections

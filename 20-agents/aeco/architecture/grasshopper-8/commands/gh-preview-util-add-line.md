@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PreviewUtil.AddLine
+Add a line to the temporary Preview lists.

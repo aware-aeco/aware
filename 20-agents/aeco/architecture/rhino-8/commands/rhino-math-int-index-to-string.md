@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoMath.IntIndexToString
+Portrays an  index in text.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.Quit
+Quits the application

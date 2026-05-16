@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyParameterSet.Erase
+Removes a specified object from the set.

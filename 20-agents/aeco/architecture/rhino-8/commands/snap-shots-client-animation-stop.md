@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SnapShotsClient.AnimationStop
+Called once at the end of an animation.

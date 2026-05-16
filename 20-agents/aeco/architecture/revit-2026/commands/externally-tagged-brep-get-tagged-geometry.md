@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternallyTaggedBRep.GetTaggedGeometry
+Returns the externally tagged geometry object.

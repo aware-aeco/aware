@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlanTopologySetIterator.MoveNext
+Move the iterator one item forward.

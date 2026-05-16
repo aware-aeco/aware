@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ScriptEditorButton.FormHandleDestroyed
+Called once, when the script editor is destroyed.

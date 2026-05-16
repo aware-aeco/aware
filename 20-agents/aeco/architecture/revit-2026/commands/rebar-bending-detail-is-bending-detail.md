@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBendingDetail.IsBendingDetail
+Checks if the input element is a bending detail.

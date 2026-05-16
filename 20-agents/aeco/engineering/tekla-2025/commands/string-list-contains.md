@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StringList.Contains
+Checks if the string is in the list.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ProjectLocationSet.Insert
+Insert the specified project location into the set.

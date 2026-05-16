@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.IsValidCategoryForEmbeddedSchedule
+Indicates if a category can be used for an embedded ScheduleDefinition    in this ScheduleDefinition.

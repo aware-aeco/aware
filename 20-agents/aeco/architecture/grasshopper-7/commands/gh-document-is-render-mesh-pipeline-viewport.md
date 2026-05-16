@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.IsRenderMeshPipelineViewport
+Test to see whether a pipeline should have custom render meshes vs. previews.

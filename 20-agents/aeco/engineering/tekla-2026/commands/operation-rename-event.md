@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.RenameEvent
+Renames an existing event

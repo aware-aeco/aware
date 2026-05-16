@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-dotnetDoubleList_t.FromStruct
+Fills the double list from this struct.

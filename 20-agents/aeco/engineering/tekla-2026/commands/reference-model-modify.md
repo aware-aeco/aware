@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceModel.Modify
+Modifies the reference model with the given identifier.

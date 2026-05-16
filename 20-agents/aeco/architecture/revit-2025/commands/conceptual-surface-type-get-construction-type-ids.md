@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConceptualSurfaceType.GetConstructionTypeIds
+The element ids of the ConceptualConstructionType's associated with this ConceptualSurfaceType.

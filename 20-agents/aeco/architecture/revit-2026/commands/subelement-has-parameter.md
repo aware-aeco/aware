@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Subelement.HasParameter
+Checks if this subelement have given parameter.

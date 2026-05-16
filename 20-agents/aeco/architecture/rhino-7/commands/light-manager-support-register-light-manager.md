@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightManagerSupport.RegisterLightManager
+Find and register classes that derive from LightManagerSupport             from the given plug-in.

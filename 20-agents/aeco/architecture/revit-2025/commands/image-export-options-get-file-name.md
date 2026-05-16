@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ImageExportOptions.GetFileName
+Gets the file name that will be produced when exporting a view to an image.

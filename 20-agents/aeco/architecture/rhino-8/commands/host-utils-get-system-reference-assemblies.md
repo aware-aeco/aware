@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostUtils.GetSystemReferenceAssemblies
+Gets the system reference assemblies to use when compiling code dynamically with Roslyn.             Includes RhinoCommon, Rhino.UI, and Eto.

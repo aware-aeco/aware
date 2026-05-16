@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphContainer.ToY
+Remaps a normalized value (0.0~1.0) onto the y-range

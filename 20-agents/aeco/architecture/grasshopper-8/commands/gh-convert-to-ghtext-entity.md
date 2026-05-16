@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHTextEntity
+Convert data into GH_TextEntity.

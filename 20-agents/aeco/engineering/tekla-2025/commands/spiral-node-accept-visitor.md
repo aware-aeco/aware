@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpiralNode.AcceptVisitor
+Entry method for the visitor pattern.

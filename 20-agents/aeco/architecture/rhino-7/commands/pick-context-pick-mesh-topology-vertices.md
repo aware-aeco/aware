@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PickContext.PickMeshTopologyVertices
+Utility for picking mesh vertices

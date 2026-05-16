@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_ActiveObject.ClearRuntimeMessages
+Clear all message lists.

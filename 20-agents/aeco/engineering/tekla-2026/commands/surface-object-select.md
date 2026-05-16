@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SurfaceObject.Select
+Selects the model object from the model by the identifier of this instance.

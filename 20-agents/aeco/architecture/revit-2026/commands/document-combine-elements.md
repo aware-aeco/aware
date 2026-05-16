@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.CombineElements
+Combine a set of combinable elements into a geometry combination.

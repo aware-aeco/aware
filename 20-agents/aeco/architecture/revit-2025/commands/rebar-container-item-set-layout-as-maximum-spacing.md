@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainerItem.SetLayoutAsMaximumSpacing
+Sets the Layout Rule property of rebar set to MaximumSpacing

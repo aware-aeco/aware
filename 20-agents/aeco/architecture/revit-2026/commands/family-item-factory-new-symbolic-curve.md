@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyItemFactory.NewSymbolicCurve
+Create a symbolic curve in an Autodesk Revit family document.

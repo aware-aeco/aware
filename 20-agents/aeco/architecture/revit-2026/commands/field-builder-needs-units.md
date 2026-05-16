@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FieldBuilder.NeedsUnits
+Checks whether the field type requires explicit unit conversions.

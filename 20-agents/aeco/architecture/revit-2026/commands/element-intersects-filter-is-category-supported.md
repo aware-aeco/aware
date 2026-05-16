@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementIntersectsFilter.IsCategorySupported
+Identifies if the input element is of a category supported by element intersection filters.

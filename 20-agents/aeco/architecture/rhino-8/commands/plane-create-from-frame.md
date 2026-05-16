@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Plane.CreateFromFrame
+Constructs a plane from a point, and two vectors in the plane.

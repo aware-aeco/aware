@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightGroupManager.CreateGroup
+Create a new LightGroup object with the given name

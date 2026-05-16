@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Connection.Delete
+Deletes the connection instance with the given ID from the model database.

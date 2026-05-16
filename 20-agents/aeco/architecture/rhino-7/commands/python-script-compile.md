@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PythonScript.Compile
+Compiles a class in a quick-to-execute proxy.

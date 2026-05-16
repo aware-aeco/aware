@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ItemFactoryBase.NewAlignment
+Add a new locked alignment into the Autodesk Revit document.

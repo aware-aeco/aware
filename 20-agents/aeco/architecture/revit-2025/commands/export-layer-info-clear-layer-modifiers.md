@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLayerInfo.ClearLayerModifiers
+Clears all the project layer modifiers stored in the layer info.

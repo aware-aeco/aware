@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Connect.GetUploads
+Gets the uploads for the specified model and project info.

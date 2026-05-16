@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Structure`1.Write
+Write the entire GH_Structure to an archive.   This method relies on the the serialization of the IGH_Goo items it contains.

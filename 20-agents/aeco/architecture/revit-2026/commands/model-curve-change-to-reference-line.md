@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelCurve.ChangeToReferenceLine
+Changes this curve to a reference curve.

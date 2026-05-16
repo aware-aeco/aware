@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dm.ReadPreviewImage
+Attempts to read the preview image out of a 3dm file.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDefinitionBySegments.AddListeningDimensionBendToBend
+Specify a dimension between two bends, measured by a read-only parameter.

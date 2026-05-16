@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointOnPlane.SetPlaneReference
+Change the geometric plane reference.

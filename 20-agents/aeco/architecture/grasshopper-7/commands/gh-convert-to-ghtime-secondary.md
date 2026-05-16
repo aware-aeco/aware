@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHTime_Secondary
+Converts similar data into a GH_Time instance.  Data is not quaranteed to be duplicated.

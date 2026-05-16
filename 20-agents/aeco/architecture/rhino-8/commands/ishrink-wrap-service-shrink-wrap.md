@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IShrinkWrapService.ShrinkWrap
+Create a shrinkwrap from a single mesh             Null on error or incompatible settings

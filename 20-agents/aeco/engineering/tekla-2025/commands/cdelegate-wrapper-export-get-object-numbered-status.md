@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetObjectNumberedStatus
+DO NOT USE! For internal usage only!

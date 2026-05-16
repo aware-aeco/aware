@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GenericZone.RemoveSpaces
+Removes spaces from the zone.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WireframeBuilder.Reset
+Clears the accumulated geometry.

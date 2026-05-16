@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterableValueProvider.IsIntegerValueSupported
+Determines whether the provide can provide an integer value for the given element.

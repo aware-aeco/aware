@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BasePoint.Insert
+Inserts the base point into the model database.

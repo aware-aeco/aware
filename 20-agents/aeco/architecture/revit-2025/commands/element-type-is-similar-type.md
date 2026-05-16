@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementType.IsSimilarType
+Checks if given type is similar to this type.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceDefinition.GetContainers
+Gets a list of all the InstanceDefinitions that contain a reference this InstanceDefinition.

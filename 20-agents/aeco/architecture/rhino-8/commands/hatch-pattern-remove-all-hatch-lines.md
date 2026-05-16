@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HatchPattern.RemoveAllHatchLines
+Remove all of the hatch line from the pattern.

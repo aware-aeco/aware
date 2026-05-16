@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.CancelBreakOnLineAsync
+Remove debugger stopped marker.

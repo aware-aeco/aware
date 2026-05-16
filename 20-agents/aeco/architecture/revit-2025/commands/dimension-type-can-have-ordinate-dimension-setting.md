@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DimensionType.CanHaveOrdinateDimensionSetting
+Checks whether this DimensionType can have an ordinate dimension settings.

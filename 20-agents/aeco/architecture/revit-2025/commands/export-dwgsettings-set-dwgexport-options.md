@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportDWGSettings.SetDWGExportOptions
+Sets the options stored in these settings.

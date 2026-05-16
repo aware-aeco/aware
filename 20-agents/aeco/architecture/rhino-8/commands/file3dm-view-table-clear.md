@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmViewTable.Clear
+Removes all items from the table.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_TimerAttributes.RenderTimerConnection
+Render a timer expiration connection

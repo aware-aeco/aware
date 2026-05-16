@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_FileEntry.ResolveFileState
+Starts a threaded file resolver.

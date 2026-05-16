@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rectangle.Inset
+Insets the rectangle by the specified padding.

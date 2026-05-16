@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.ShrinkWrap
+Returns a ShrinkWrap mesh from this point cloud object.

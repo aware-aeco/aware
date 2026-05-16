@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.GetSectionData
+Gets section data that will be written to

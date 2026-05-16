@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPAnalyticalConnectionType.IsNameUnused
+Checks if this is an unused name.

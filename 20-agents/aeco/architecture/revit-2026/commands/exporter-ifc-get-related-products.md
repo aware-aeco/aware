@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFC.GetRelatedProducts
+Gets all products not associated to stories.

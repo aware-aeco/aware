@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.SetCategoryHidden
+Sets if elements of the given category will be visible in this view.

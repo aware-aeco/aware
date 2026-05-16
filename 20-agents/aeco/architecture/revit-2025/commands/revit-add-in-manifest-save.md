@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitAddInManifest.Save
+Saves the information in the manifest to its associated .addin file location.

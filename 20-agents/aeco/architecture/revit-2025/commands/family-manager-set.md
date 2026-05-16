@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyManager.Set
+Set the ElementId value of a family parameter of the current family type.

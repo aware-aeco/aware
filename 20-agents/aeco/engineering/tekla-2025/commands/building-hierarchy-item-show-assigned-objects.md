@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BuildingHierarchyItem.ShowAssignedObjects
+Show previously hidden assigned objects in 3d view.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.GetCellCategoryId
+Returns a column's ParamId    Associated with the paramId to find the correct element

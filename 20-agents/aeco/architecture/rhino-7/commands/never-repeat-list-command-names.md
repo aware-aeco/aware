@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NeverRepeatList.CommandNames
+The list of commands to not repeat.

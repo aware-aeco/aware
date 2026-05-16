@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Matrix.TransformSize
+Transforms the size with the current matrix.

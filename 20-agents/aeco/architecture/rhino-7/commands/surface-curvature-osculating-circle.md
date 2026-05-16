@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SurfaceCurvature.OsculatingCircle
+Computes the osculating circle along the given direction.

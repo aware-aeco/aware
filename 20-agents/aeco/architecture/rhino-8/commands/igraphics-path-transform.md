@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGraphicsPath.Transform
+Transforms the points in the path with the specified matrix

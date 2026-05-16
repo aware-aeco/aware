@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitLinkGraphicsSettings.SetViewDetailLevel
+Sets view detail level and detail level type of RevitLinkGraphicsSettings.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OpenGLSettings.GetCurrentState
+Gets the current settings.

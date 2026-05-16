@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShapeType.CanChangeFamilyName
+Checks whether the DirectShapeType supports a custom family name.

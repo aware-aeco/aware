@@ -6,78 +6,154 @@ description: API reference for namespace Autodesk.Revit.DB.Architecture from Rev
 # Autodesk.Revit.DB.Architecture
 
 - **BalusterInfo**
+  - The class represents an instance of a railing baluster or post.
 - **BalusterPattern**
+  - Baluster pattern class.
 - **BalusterPlacement**
+  - A class which contains information regarding baluster and post placement for a given railing type.
 - **BreakCornerCondition**
+  - Condition on which the corner post is inserted.
 - **BreakPatternCondition**
+  - Condition on which patterns distribution will be broken.
 - **BuildingPad**
+  - Represents a BuildingPad element.
 - **ContinuousRail**
+  - Represents a continuous rail element in Autodesk Revit.
 - **ContinuousRailType**
+  - A type element containing the properties of a continuous rail.
 - **CutLineType**
+  - The available line types for a stairs cut line.
 - **CutMarkSymbol**
+  - The available shapes for the cut mark symbol.
 - **CutMarkType**
+  - An object represents the cut mark type in Autodesk Revit.
 - **Fascia**
+  - An object that represents a fascia within the Autodesk Revit project.
 - **FasciaType**
+  - An object that represents the fascia type in Autodesk Revit.
 - **Gutter**
+  - An object that represents a gutter within the Autodesk Revit project.
 - **GutterType**
+  - An object that represents the gutter type in Autodesk Revit.
 - **HandRail**
+  - Represents a hand rail element in Autodesk Revit.
 - **HandRailPosition**
+  - The position of the hand rail.
 - **HandRailType**
+  - A rail type object that is used in the generation of hand rail.
 - **MultistoryStairs**
+  - Represents a multistory stairs element in Autodesk Revit.
 - **NonContinuousRailInfo**
+  - A class which contains information needed to define a single non-continuous rail in a .
 - **NonContinuousRailStructure**
+  - A class that represents a collection of Non-Continuous Rails being a part of Railing Type.
 - **PatternJustification**
+  - Justification of patterns distribution.
 - **PostPattern**
+  - Post pattern class.
 - **RailAngledJoinOption**
+  - The angled joins of the rails.
 - **RailConnectionOption**
+  - The connections between rails.
 - **RailExtensionStyle**
+  - The extension style of the rail.
 - **RailIndex**
+  - The continuous rail position index.
 - **RailJoinOption**
+  - The join type of the system rails.
 - **RailSupportJustification**
+  - The justification of the rail supports.
 - **RailSupportsLayout**
+  - The layout of the rail supports.
 - **RailTagentJoinOption**
+  - The tangent joins of the rails.
 - **RailTransitionOption**
+  - The transition type of the continuous rail.
 - **RailTypeDefaultJoinOption**
+  - The default join type of the rail.
 - **Railing**
+  - Represents a railing element in Autodesk Revit.
 - **RailingHeightCorrectionOption**
+  - Railing height correction option.
 - **RailingPathCurveJoinOption**
+  - The join type of the railing path.
 - **RailingPlacementPosition**
+  - Railing placement position.
 - **RailingSlopeOption**
+  - The option determines the slope of the railing.
 - **RailingType**
+  - An object supporting management of baluster and post placement within the railing type.
 - **RiserToTreadConnectionOption**
+  - Represents the connection style of the riser and tread in relation to each other.
 - **Room**
+  - Provides access to the room topology in Autodesk Revit.
 - **RoomFilter**
+  - A filter used to match rooms.
 - **RoomTag**
+  - Provides access to the room tag in Autodesk Revit.
 - **RoomTagFilter**
+  - A filter used to match room tags.
 - **RoomTagType**
+  - An object that represents a Room Tag type.
 - **SiteSubRegion**
+  - Represents a proxy class exposing the interfaces needed to access details of a subregion.
 - **SketchedCurveSlopeOption**
+  - The option determines the slop of the sketched run/landing.
 - **Stairs**
+  - Represents a stairs element in Autodesk Revit.
 - **StairsComponentConnection**
+  - Represents information about a connection among stairs components(run to landing).
 - **StairsComponentConnectionEndType**
+  - The end type identifying the connection type among stairs runs and landings.
 - **StairsConstructionMethod**
+  - Represents the construction method of the stairs.
 - **StairsEndConnectionType**
+  - The join style between a run and landing.
 - **StairsEndNotchOption**
+  - The style of notch width for the stairs.
 - **StairsLanding**
+  - An object that represents a stairs landing in Autodesk Revit.
 - **StairsLandingType**
+  - Represents a stairs landing type in Autodesk Revit.
 - **StairsNumberSystemReferenceOption**
+  - The reference types permitted for a number system to refer to the geometry of a stairs run.
 - **StairsPath**
+  - An object that represents the stairs path.
 - **StairsPathDirection**
+  - The direction style of stairs path.
 - **StairsPathLineShapeAtCorner**
+  - The options for the line shape of a stairs path at a corner.
 - **StairsPathType**
+  - An object represents the stairs path type.
 - **StairsRun**
+  - Represents a stairs run element in Autodesk Revit.
 - **StairsRunJustification**
+  - The position of the run relative to the Up-direction path used to create the run.
 - **StairsRunStyle**
+  - The shape of a run. Different shape has different ways of manipulation.
 - **StairsRunType**
+  - A stairs run type object that is used in the generation of stairs run.
 - **StairsSupportTopsideSurfaceType**
+  - The style of the topside surface of the support.
 - **StairsTextOrientation**
+  - The options to be used when orienting text annotations relative to stairs.
 - **StairsType**
+  - A type element containing the properties for a component-based stair.
 - **StairsUndersideSurfaceStyle**
+  - The style of the underside surface of the run.
 - **StairsWinderStyle**
+  - The calculation method for the layout of the winder run steps.
 - **TopRail**
+  - Represents a top rail element in Autodesk Revit.
 - **TopRailType**
+  - A rail type object that is used in the generation of top rail.
 - **TopographyEditScope**
+  - A TopographyEditScope allows an application to create and maintain an editing session for a TopographySurface.
 - **TopographyLinkType**
+  - This class represents the site file brought into the current Revit document.
 - **TopographySurface**
+  - Represents a TopographySurface element.
 - **TreadNosingPosition**
+  - Represents on which edges of the nosing to apply the nosing profile.
 - **WinderPathResult**
+  - Flag indicates whether curves are valid to use as base lines for winder path.

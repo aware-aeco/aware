@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextArea.ScrollTo
+Scrolls the specified range into view.

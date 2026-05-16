@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ValueProxy`1.ToString
+Performs a default ToString operation on the local value.  If the value is Nothing, an empty String is returned.

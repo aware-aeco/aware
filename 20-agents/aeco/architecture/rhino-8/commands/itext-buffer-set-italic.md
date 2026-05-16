@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ITextBuffer.SetItalic
+Sets the italic flag for the specified text range.

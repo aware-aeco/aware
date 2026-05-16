@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConduitSizeSettingIterator.MoveNext
+Increments the enumerator to the next item.

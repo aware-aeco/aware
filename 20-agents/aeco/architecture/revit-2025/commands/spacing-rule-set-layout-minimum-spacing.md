@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpacingRule.SetLayoutMinimumSpacing
+Set the Layout property to MinimumSpacing.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssemblyInstance.IsValidNamingCategory
+Identifies if the naming category is valid for an assembly instance.

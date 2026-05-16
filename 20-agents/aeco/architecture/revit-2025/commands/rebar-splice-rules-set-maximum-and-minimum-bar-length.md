@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSpliceRules.SetMaximumAndMinimumBarLength
+Sets the maximum and minimum bar length.

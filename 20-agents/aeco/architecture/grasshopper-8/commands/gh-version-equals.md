@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Version.Equals
+Performs value equality comparison.

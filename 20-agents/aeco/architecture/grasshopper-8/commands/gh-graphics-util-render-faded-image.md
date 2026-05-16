@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.RenderFadedImage
+Render an icon into a rectangle with a specific fading factor.

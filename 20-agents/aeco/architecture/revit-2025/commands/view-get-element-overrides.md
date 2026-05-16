@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetElementOverrides
+Gets graphic overrides for an element in the view.

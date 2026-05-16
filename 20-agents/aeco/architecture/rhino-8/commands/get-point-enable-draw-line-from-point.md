@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetPoint.EnableDrawLineFromPoint
+Controls drawing of dynamic a line from the start point.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableRow.Scaled
+Creates a scaled table row with the specified

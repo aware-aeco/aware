@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContentSerializer.LoadMultiple
+Create any number of new render contents loaded from any number of files.

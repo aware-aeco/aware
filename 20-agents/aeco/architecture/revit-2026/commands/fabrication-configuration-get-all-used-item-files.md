@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetAllUsedItemFiles
+Returns all the used fabrication item files. A fabrication item file is used if any fabrication parts in the model were created from it.

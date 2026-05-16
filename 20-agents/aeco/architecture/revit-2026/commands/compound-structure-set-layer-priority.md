@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.SetLayerPriority
+Sets the priority of the specific layer.

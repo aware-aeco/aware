@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetBentPlateMinimumRadius
+DO NOT USE! For internal usage only!

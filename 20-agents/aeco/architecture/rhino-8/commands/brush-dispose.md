@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brush.Dispose
+Releases all resource used by the  object.

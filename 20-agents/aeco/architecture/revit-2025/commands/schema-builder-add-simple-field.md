@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SchemaBuilder.AddSimpleField
+Creates a field containing a single value in the Schema, with given name and type.

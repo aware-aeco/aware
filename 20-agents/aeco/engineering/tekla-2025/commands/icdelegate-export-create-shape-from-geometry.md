@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportCreateShapeFromGeometry
+DO NOT USE! For internal usage only!

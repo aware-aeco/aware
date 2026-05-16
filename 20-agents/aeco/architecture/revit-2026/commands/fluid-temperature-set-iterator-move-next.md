@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FluidTemperatureSetIterator.MoveNext
+Increments the iterator to the next item.

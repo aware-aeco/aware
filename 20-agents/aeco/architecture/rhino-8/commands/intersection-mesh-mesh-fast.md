@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.MeshMeshFast
+This is an old overload kept for compatibility. Overlaps and near misses are ignored.

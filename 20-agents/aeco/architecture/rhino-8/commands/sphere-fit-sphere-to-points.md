@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Sphere.FitSphereToPoints
+Attempts to fit a sphere to a collection of points.

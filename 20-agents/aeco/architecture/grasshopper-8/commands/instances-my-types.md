@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Instances.MyTypes
+Get all the type identifiers that are part of the Grasshopper assembly.

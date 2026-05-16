@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Schema.GetField
+Gets a Field of a given name from the Schema.

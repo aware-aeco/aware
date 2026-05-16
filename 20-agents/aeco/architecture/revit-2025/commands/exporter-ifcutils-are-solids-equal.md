@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.AreSolidsEqual
+Determines whether two solids are identical, potentially offset from each other.

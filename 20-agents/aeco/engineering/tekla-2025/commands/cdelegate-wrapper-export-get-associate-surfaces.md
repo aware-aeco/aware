@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetAssociateSurfaces
+DO NOT USE! For internal usage only!

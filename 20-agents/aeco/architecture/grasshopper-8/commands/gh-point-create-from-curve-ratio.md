@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Point.CreateFromCurveRatio
+Create new point geometry instance based on a curve parameter ratio

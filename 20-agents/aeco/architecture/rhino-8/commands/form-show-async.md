@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Form.ShowAsync
+Shows the form with a task that can be awaited until it is closed

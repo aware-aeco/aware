@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IPrintingController.PrintReportToPdf
+Print report to PDF.

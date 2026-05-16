@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceDefinition.GetObjects
+Gets an array with the objects that belong to this instance definition.

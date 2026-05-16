@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentServer.AddCategorySymbolName
+Add a single char category description.

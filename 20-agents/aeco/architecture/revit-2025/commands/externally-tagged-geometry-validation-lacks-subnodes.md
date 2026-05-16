@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternallyTaggedGeometryValidation.LacksSubnodes
+Makes sure that the input geometry object does not have sub-nodes.

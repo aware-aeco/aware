@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitAPIPreEventArgs.Cancel
+When the event is cancellable, may call the Cancel() method to cancel it.

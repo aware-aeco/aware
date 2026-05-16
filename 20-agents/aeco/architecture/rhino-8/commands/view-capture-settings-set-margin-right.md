@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewCaptureSettings.SetMarginRight
+Set the distance from the right edge of the paper to the CropRectangle

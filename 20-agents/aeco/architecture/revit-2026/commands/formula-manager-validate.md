@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormulaManager.Validate
+Validates the formuls

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoDoc.Create
+Creates a new RhinoDoc

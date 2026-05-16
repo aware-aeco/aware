@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Floor.Create
+Creates a new instance of architectural floor within the project.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DoubleClickOptions.GetDoubleClickOptions
+Returns the current user's DoubleClickOptions.

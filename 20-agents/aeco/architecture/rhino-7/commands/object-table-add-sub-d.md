@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.AddSubD
+Adds a SubD object to Rhino.

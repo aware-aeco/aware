@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ImageType.Create
+Creates a new ImageType element and loads the image into it.

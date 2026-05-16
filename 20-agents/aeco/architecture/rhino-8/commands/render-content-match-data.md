@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContent.MatchData
+Implement to transfer data from another content to this content during creation.

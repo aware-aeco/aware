@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolyCurve.PolyCurveParameter
+Converts a segment curve parameter to a polycurve parameter.

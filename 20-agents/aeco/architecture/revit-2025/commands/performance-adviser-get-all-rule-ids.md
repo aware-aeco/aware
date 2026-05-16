@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PerformanceAdviser.GetAllRuleIds
+Retrieves an enumeration of rule Ids.

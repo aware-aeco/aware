@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoltArray.GetBoltDistYCount
+Returns the amount of Y distances in the bolt array.

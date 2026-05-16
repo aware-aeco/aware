@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NonContinuousRailStructure.GetNonContinuousRail
+Gets the Non-Continuous Rail object of specified index from the Rail Structure.

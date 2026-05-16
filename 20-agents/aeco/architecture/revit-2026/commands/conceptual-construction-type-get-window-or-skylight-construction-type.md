@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConceptualConstructionType.GetWindowOrSkylightConstructionType
+Get a Window or Skylight ConceptualConstructionType by its ConceptualConstructionWindowSkylightType.

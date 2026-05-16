@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlugIn.SetLoadProtection
+Set load protection state for a certain plug-in

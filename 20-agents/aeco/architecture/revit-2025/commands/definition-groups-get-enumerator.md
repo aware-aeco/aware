@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DefinitionGroups.GetEnumerator
+Retrieves an enumerator to the collection.

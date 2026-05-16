@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-VolumeMassProperties.Sum
+Sum mass properties together to get an aggregate mass.

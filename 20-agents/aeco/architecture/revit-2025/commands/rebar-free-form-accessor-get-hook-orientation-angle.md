@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarFreeFormAccessor.GetHookOrientationAngle
+Get the hook orientation angle at end.

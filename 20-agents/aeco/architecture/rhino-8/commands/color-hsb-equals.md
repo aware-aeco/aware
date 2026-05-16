@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorHSB.Equals
+Compares an object to determine equality with this instance

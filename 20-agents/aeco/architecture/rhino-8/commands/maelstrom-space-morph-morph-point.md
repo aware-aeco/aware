@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MaelstromSpaceMorph.MorphPoint
+Morphs an Euclidean point.

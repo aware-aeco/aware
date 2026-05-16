@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainerParameterManager.IsOverriddenParameterModifiable
+Checks if overridden parameter is modifiable.

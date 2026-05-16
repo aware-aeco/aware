@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinkLoadResult.IsCodeSuccess
+Check if load result code signifies success.

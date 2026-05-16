@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CursorServer.IsCursor
+Test for the existence of a cursor.

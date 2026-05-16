@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.GetUnscaledTransform
+Obtains the unscaled transform from an IfcLocalPlacement handle.

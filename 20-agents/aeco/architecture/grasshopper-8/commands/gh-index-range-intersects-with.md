@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_IndexRange.IntersectsWith
+Tests whether certain indices are described by both this and another range.

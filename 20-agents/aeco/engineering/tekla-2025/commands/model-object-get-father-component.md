@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObject.GetFatherComponent
+Returns the father component of the model object.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Pipe.IsPipingConnector
+Checks if the given connector is a valid piping connector.

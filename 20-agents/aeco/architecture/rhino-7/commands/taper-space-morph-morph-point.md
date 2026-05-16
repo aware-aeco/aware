@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TaperSpaceMorph.MorphPoint
+Morphs an Euclidean point.

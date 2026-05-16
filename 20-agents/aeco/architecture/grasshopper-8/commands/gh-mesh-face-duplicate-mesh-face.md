@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MeshFace.DuplicateMeshFace
+Create a duplicate of this Mesh face.

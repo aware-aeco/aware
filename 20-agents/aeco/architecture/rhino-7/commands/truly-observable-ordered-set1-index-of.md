@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TrulyObservableOrderedSet`1.IndexOf
+Searches for the specified object and returns the zero-based index of the first occurrence.

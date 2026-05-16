@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.ToBrep
+Converts the surface into a Brep.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EdgeEndPoint.Evaluate
+Evaluate the end point of the edge in 3d coordinates.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplacementElement.GetDisplacedElementIds
+The ids of the elements affected by this DisplacementElement.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilteredElementIterator.Reset
+Resets the iterator to the beginning.

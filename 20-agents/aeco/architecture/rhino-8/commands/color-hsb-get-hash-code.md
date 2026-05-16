@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorHSB.GetHashCode
+Gets the hash code for this object

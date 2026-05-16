@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OptionalFunctionalityUtils.IsNavisworksExporterAvailable
+Checks whether a Navisworks Exporter is available in the installed Revit.

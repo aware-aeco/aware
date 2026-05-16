@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportModifySurfaceObject
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Space.GetSolid
+Returns the solid of the space.

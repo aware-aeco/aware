@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SketchEditScope.IsElementWithoutSketch
+Validates if an element can have a sketch but currently does not.

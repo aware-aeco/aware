@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Seam.Select
+Selects a seam from the model database. The seam ID must be set.

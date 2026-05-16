@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointF.Rotate
+Treats the point as a vector and rotates it around the origin (0,0) by the specified .

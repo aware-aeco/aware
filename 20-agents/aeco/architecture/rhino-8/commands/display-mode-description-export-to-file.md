@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayModeDescription.ExportToFile
+Exports a DisplayModeDescription to a Windows-style .ini file.

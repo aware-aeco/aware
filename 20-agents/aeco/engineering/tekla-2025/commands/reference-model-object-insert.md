@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceModelObject.Insert
+At the moment reference objects cannot be inserted.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.AlignPartByInsertionPoint
+Align the part by its insertion point to a point and rotation in free space.

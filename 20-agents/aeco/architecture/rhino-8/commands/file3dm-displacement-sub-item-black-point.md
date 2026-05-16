@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmDisplacement.SubItemBlackPoint
+Gets the override for displacement 'black-point'.             face_index is the index of the face on the polysurface/SubD.

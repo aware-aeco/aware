@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IDirectContext3DServer.UseInTransparentPass
+Indicates whether this server will submit geometry during the rendering pass for transparent geometry.

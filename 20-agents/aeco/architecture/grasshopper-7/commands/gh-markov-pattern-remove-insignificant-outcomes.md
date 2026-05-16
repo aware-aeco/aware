@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MarkovPattern.RemoveInsignificantOutcomes
+Remove all insignificant outcomes from this pattern.

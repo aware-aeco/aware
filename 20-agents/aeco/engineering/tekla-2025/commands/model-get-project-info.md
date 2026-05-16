@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Model.GetProjectInfo
+Returns information about the current model's project.

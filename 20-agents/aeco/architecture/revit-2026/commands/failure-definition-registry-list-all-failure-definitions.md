@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureDefinitionRegistry.ListAllFailureDefinitions
+Retrieves all the registered FailureDefinitions.

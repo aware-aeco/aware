@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DuctInsulation.Create
+Creates a new instance of duct insulation.

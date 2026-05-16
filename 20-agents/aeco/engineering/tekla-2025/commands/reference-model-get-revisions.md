@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceModel.GetRevisions
+Gets the reference models available revisions.

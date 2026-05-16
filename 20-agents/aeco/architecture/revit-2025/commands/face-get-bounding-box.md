@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Face.GetBoundingBox
+Returns the UV bounding box of the face.

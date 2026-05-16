@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TemperatureRatingType.RemoveInsulationType
+Remove an existing insulation type from this temperature rating type.

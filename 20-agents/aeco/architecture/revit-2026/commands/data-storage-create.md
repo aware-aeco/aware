@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataStorage.Create
+Creates a new DataStorage element and adds it to the document.

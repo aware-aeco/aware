@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIApplication.RemoveAddInCommandBinding
+Removes an AddInCommandBinding.

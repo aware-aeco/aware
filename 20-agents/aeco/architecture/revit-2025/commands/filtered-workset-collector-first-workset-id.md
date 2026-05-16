@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilteredWorksetCollector.FirstWorksetId
+Returns the id of the first workset to pass the filter(s).

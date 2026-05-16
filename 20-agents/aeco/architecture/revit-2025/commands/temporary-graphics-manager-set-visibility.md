@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TemporaryGraphicsManager.SetVisibility
+Changes the visibility of temporary graphics object.

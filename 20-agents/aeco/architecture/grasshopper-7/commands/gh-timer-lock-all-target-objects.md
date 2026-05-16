@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Timer.LockAllTargetObjects
+Lock all target objects if the   property is set to true.

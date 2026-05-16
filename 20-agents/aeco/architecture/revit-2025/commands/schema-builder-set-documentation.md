@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SchemaBuilder.SetDocumentation
+Sets the documentation string for the Schema.

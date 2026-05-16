@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainer.GetItem
+Gets the item stored in the RebarContainer at the associated index.

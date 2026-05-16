@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationNetworkChangeService.ChangeSize
+Changes the size of the selection of fabrication parts.

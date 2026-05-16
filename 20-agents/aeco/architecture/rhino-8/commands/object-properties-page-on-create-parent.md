@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectPropertiesPage.OnCreateParent
+Called when the parent container is initially created.

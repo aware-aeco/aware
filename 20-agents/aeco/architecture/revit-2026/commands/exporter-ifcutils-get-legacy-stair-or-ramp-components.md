@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.GetLegacyStairOrRampComponents
+Gets the components of a stair or ramp.

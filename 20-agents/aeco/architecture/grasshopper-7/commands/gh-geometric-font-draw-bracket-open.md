@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GeometricFont.DrawBracketOpen
+Draw the geometric character '{' at the specified location.

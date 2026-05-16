@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_NetworkSorter.Sort
+Perform a single sorting step

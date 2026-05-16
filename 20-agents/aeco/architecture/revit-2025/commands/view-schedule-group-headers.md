@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.GroupHeaders
+Groups schedule header cells.

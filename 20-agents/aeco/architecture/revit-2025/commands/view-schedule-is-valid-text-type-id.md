@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.IsValidTextTypeId
+Identifies if the input id represents a valid text type id for use in the schedule properties.

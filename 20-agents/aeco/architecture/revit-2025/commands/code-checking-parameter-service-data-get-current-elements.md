@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CodeCheckingParameterServiceData.GetCurrentElements
+Returns the list of Ids of the current elements.

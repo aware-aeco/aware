@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Font.ToString
+Gets a string representation of the font object

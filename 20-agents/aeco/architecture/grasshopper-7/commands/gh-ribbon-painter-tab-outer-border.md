@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RibbonPainter.TabOuterBorder
+Computes a graphicspath that delineates the outer edge of a typical tabpane

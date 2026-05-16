@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurtainGrid.GetUnlockedPanelIds
+Gets all ElementIds of the unlocked panels of the curtain grid.

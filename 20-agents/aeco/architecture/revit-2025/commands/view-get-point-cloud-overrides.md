@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetPointCloudOverrides
+Returns point cloud overrides object for the view.

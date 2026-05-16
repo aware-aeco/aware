@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Face.ComputeSecondDerivatives
+Returns the second partial derivatives of the face at the specified point.

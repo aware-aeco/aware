@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectContext3DHandleOverrides.Assign
+Assigns values of the source overrides to this object.

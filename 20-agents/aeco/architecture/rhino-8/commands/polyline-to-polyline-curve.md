@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Polyline.ToPolylineCurve
+Constructs a polyline curve representation of this polyline.

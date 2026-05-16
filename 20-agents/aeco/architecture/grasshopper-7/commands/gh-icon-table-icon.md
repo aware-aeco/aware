@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_IconTable.Icon
+Gets the icon at the specified index.

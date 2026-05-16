@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BitmapTable.ExportToFile
+Writes a bitmap to a file.

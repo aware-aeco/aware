@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TrayIndicator.SetMenu
+Sets the indicator menu.

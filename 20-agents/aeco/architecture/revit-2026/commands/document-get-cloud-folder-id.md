@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.GetCloudFolderId
+Gets ForgeDM folder id where the model locates.

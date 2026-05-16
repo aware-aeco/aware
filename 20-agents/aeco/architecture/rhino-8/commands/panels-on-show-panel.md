@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Panels.OnShowPanel
+Call this method to raise the Show event

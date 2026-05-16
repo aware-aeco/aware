@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoCore.DoIdle
+Processes all Rhino Idle tasks.

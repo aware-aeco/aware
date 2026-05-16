@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolymeshTopology.GetFacet
+Returns a definition of one facet

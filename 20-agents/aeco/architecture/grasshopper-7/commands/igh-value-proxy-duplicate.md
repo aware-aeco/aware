@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_ValueProxy.Duplicate
+Create an exact duplicate of the type.

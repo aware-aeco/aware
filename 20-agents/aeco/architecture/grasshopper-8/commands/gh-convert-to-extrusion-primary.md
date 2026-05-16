@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToExtrusion_Primary
+Performs a direct cast from Rhino.Geometry.Extrusion or GH_Extrusion.   Data is not quaranteed to be duplicated.

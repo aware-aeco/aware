@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.DeleteEntity
+Deletes the existing entity created by %schema% in the element

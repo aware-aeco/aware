@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.ClearNormals
+Destroys the normal vector information in this point cloud.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurve.SetEndCondition
+Set end condition of a NURBS curve to point, tangent and curvature.

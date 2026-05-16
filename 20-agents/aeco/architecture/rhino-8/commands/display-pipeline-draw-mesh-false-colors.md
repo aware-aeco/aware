@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawMeshFalseColors
+Draws the mesh faces as false color patches.              The mesh must have Vertex Colors defined for this to work.

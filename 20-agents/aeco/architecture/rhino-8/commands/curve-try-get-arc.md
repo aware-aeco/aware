@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.TryGetArc
+Try to convert this curve into an Arc using RhinoMath.ZeroTolerance.

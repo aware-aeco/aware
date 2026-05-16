@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainer.Contains
+Checks if the RebarContainer has this item as one of its members.

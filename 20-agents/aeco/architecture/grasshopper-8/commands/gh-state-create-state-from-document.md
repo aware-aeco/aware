@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_State.CreateStateFromDocument
+Creates a state database from a document.

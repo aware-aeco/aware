@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.GetDeckProfileId
+Retrieves the profile loop used for the specified structural deck.

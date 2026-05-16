@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoundingBox.Union
+Updates this BoundingBox to represent the union of itself and another box.

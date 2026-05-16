@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConduitSizeSettings.DoesConduitStandardTypeExist
+Checks if the specified conduit standard exist.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_GeometricGoo.Transform
+Transforms the object or a deformable representation of the object.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationNetworkChangeService.SetPaletteId
+Set the fabrication palette identifier to change the elements to.

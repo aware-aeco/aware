@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectPropertiesPage.OnSizeParent
+Called when the parent containers client rectangle size has changed and             the PageControl has been resized.

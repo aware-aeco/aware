@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoList`1.RemoveNulls
+Removes all elements from the List that are null references (Nothing in Visual Basic).              This function will not do anything if T is not a Reference type.

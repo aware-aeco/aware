@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GeometryPipeline.ToggleTypeFilter
+Toggle the filter for a specific type. This method records undo and also resolves immediately.

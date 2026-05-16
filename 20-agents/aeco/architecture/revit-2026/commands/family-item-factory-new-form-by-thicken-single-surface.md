@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyItemFactory.NewFormByThickenSingleSurface
+Create a new Form element by thickening a single-surface form, and add it into the Autodesk Revit family document.

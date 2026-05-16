@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.GetSubDFromDocument
+Harvest a sub-d object from a Rhino document.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WorksharingDisplaySettings.GetOrCreateWorksharingDisplaySettings
+Returns the worksharing display settings for the document, creating    new settings for the current user if necessary.

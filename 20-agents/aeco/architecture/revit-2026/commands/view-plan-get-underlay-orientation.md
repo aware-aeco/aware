@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewPlan.GetUnderlayOrientation
+Returns the underlay orientation of this view.

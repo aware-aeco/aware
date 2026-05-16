@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentEditor.ScriptAccess_NewDocument
+Creates a new document and loads it into the Canvas.

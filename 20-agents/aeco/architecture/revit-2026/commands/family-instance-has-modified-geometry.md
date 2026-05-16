@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyInstance.HasModifiedGeometry
+Identifies if the geometry of this FamilyInstance  has been modified from the automatically generated default.

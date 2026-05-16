@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IContextMenuCreator.BuildContextMenu
+Build a Context Menu.

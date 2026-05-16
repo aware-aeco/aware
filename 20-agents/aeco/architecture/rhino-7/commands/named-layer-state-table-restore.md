@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedLayerStateTable.Restore
+Restores a named layer state.

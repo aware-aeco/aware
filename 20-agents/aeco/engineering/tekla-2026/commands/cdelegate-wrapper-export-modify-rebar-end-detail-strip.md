@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportModifyRebarEndDetailStrip
+DO NOT USE! For internal usage only.

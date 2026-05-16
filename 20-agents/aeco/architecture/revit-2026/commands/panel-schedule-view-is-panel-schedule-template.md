@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.IsPanelScheduleTemplate
+Check if this is a panel schedule template.

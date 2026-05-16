@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Node3d`1.NearestItems
+Find the N nearest items.

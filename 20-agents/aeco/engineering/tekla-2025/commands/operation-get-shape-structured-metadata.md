@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetShapeStructuredMetadata
+Get metadata from the shape catalog for a shape specified by its GUID

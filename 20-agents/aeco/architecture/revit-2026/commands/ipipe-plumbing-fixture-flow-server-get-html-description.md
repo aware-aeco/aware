@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IPipePlumbingFixtureFlowServer.GetHtmlDescription
+The method that Revit will invoke to get an HTML formatted description of the server.

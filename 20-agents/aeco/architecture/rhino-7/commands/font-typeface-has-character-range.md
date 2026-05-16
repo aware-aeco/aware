@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FontTypeface.HasCharacterRange
+Gets a value indicating that this font supports the character range specified

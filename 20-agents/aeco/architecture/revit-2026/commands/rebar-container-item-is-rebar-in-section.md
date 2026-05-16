@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainerItem.IsRebarInSection
+Identifies if this rebar set is shown as a cross-section in the given view.

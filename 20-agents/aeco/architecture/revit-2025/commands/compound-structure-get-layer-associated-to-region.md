@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.GetLayerAssociatedToRegion
+Gets the layer associated to a particular region.

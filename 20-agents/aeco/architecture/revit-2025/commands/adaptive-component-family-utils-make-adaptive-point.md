@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AdaptiveComponentFamilyUtils.MakeAdaptivePoint
+Makes Reference Point an Adaptive Point or makes an Adaptive Point a Reference Point.

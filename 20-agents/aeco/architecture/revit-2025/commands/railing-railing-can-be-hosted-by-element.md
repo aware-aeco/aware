@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Railing.RailingCanBeHostedByElement
+Checks whether the specified element can be used as a host for the railing.    The host can be:    stairsstairs componentrampfloorslab edgewallroof

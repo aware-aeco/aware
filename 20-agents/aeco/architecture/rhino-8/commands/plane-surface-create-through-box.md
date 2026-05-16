@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlaneSurface.CreateThroughBox
+Create a plane that contains the intersection of a bounding box.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostUtils.SendLogMessageToCloudCallbackProc
+Informs RhinoCommon of an message that has been handled but that the developer wants to screen.

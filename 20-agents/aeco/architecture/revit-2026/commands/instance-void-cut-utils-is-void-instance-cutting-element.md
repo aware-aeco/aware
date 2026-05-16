@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceVoidCutUtils.IsVoidInstanceCuttingElement
+Indicates if the element is a family instance with unattached voids that can cut other elements.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.GetObjectIdList
+Returns an enumerable based on a  filter.

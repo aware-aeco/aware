@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PartMakerMethodToDivideVolumes.IsValidSketchPlane
+Identifies if provided sketch plane is valid.

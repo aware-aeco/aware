@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderWindow.GetAdjust
+Get an ImageAdjust instance containing current image adjusting settings             for this RenderWindow

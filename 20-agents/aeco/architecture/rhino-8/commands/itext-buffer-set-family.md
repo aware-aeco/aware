@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ITextBuffer.SetFamily
+Sets the font family for the specified text range.

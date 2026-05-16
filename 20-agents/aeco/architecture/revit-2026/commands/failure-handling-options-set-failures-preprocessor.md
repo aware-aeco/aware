@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureHandlingOptions.SetFailuresPreprocessor
+Sets the callback to be invoked in the beginning of failure processing.

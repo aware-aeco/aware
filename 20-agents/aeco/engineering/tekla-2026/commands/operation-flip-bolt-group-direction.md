@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.FlipBoltGroupDirection
+Flip bolt group direction

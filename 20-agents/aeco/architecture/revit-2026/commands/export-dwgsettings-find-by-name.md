@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportDWGSettings.FindByName
+Returns the pre-defined non-in-session exporting settings for DWG in the given document with the specified name.

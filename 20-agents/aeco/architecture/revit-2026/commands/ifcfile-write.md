@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCFile.Write
+Writes content to a file of IFC format.

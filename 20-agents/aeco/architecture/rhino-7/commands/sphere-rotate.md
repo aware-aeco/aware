@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Sphere.Rotate
+Rotates this sphere about the center point.

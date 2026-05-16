@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IZooClientUtilities.ConvertLicense
+Converts a standalone license to a network license.

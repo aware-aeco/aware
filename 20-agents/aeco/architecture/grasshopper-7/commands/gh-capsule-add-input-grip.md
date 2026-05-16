@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Capsule.AddInputGrip
+Add an input grip to this UI Box. This is the recommended overload.

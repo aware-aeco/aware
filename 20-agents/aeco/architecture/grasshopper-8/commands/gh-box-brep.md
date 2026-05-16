@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Box.Brep
+Differs from Rhino.Geometry.Brep.FromBox() because it  Handles degenerate cases.

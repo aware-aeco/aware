@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetOrderedFilters
+Gets the filters applied to the view in the order they are applied.

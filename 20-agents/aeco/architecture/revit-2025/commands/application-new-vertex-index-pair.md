@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewVertexIndexPair
+Creates a new VertexIndexPair object.

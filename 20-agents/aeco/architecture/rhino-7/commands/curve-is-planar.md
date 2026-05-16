@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.IsPlanar
+Test a curve for planarity.

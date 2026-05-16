@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Range`1.Touches
+Determines if the specified  touches (but doesn't intersect) this instance.

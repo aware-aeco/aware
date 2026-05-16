@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralConnectionHandler.GetInputReferences
+Gets references of input elements.

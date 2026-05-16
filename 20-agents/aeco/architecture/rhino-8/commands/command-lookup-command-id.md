@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Command.LookupCommandId
+Returns the ID of a command.

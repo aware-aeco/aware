@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndexBuffer.IsValid
+Tests whether the buffer is valid for rendering.

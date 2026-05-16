@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.SetHookRotationAngle
+Sets the out of plane hook rotation angle at the specified end.

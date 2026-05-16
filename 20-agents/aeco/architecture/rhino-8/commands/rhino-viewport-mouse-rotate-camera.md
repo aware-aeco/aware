@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.MouseRotateCamera
+Rotates the view around the camera location.

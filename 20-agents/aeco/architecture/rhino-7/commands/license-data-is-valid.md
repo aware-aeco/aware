@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LicenseData.IsValid
+Public validator.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.IsContinuous
+Tests continuity at a surface parameter value.

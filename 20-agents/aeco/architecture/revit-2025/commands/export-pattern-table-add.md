@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportPatternTable.Add
+Inserts a (key,info) pair into Export pattern table.

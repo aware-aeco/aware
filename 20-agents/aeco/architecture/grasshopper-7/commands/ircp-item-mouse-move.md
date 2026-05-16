@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IRcpItem.MouseMove
+Respond to a mouse move event.

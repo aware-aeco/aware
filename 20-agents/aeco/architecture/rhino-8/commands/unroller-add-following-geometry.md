@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Unroller.AddFollowingGeometry
+Adds curves that should be unrolled along with the surface/brep.

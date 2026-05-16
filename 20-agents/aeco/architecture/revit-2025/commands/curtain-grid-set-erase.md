@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurtainGridSet.Erase
+Removes a specified object from the set.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Wall.IsWrappingAtLocationAllowed
+If end wrapping is allowed at the location.

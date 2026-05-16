@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaReinforcement.RemoveAreaReinforcementSystem
+Deletes the specified AreaReinforcement, and converts its RebarInSystem    elements to equivalent Rebar elements.

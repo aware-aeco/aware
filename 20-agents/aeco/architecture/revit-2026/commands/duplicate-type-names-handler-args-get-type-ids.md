@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DuplicateTypeNamesHandlerArgs.GetTypeIds
+Returns ids of the types with duplicate names.

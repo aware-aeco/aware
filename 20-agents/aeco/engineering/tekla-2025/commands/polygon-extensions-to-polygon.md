@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolygonExtensions.ToPolygon
+Converts the  value to a  instance.

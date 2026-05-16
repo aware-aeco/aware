@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveElement.SetTangentLock
+Sets a new status for an existing tangent join with another curve element at the given end-point.

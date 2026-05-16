@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBarType.CanCrankParametersBeComputedUsingCrankOffsetLength
+Identifies if the all crank parameters can be computed for the specified crank offset length and Rebar Crank Type.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationServiceButton.GetConditionUpperValue
+Gets the condition upper value (valid if less) for a given condition index.

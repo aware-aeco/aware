@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureMessageAccessor.GetFailingElementIds
+Retrieves Ids of Elements that have caused the failure.

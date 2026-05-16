@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarFreeFormAccessor.RemoveUpdatingSharedParameter
+Remove existing shared parameter as a dependency for the calculation of the rebar curves.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BentPlateGeometrySolver.ModifyRadius
+Modify the radius of a cylindrical section.

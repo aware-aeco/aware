@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarFreeFormAccessor.SetLayoutAsMaximumSpacing
+Sets the Layout Rule property of rebar set to Maximum Spacing.

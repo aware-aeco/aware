@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PartUtils.IsMergedPart
+Is the Part the result of a merge.

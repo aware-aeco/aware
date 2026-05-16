@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_PreviewData.DrawViewportMeshes
+Implement this function to draw all shaded meshes.   If the viewport does not support shading, this function will not be called.

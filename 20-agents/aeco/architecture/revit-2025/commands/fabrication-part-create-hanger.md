@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.CreateHanger
+Creates a free placed hanger.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateSolid
+Constructs closed polysurfaces from surfaces and polysurfaces that bound a region in space.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshTopologyEdgeList.GetEdgeIndex
+Returns index of edge that connects topological vertices.              returns -1 if no edge is found.

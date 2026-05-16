@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainerParameterManager.GetDoubleOverrideValue
+Get the double value for an overriden parameter.

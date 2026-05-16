@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_OrdinateDimension.DuplicateOrdinateDimension
+Create a duplicate of this ordinate dimension.

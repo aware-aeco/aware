@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetOverlayModel
+Gets the overlay model information.

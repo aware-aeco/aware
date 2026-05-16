@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GuidConversion.GetGuidMapping
+Gets the GUID mapping.

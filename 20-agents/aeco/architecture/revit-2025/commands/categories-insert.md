@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Categories.Insert
+Inserts the specified category with the specified name into the map.

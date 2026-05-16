@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DatumPlane.SetCurveInView
+Sets the extents to match the curve.

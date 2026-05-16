@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinearArray.IsElementArrayable
+Indicates whether the input element is arrayable.

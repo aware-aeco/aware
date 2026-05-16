@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Component.ComputeData
+Compute all data and fill out all output parameters.

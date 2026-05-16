@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedPropertyGrid.Refresh
+Refreshes the properties of the grid

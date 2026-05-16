@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceDefinition.CreatePreviewBitmap
+Creates a preview bitmap of the instance definition.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsSurfaceKnotList.InsertKnot
+Inserts a knot and update control point locations.             Does not change parameterization or locus of curve.

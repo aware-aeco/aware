@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroupLoadOptions.GetDuplicateTypeNamesHandler
+Returns current duplicate type names handler or  if none is set.

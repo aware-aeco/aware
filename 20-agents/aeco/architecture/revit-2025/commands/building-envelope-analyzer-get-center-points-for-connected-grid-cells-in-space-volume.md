@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BuildingEnvelopeAnalyzer.GetCenterPointsForConnectedGridCellsInSpaceVolume
+Returns the collection of connected cells in an enclosed space volume.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.KeyboardDolly
+Emulates the keyboard arrow key in terms of interaction.

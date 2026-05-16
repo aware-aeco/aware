@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ToolItemCollection.Add
+Adds the specified item given its order.

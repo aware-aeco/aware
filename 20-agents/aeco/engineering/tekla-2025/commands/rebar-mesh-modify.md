@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarMesh.Modify
+Modifies the existing reinforcement mesh in the model database to match the current one.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PipingSystem.GetVolume
+Gets the volume of this piping system.

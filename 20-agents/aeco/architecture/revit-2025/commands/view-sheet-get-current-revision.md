@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSheet.GetCurrentRevision
+Returns the most recent numbered Revision shown on this ViewSheet.

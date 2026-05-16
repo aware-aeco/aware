@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudInstance.GetSelectionFilter
+Returns the currently active selection filter for this point cloud.

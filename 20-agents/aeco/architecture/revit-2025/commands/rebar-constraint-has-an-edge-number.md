@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraint.HasAnEdgeNumber
+Checks if the getTargetRebarEdgeNumber method can be called for the RebarConstraint.

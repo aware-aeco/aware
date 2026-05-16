@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Screen.GetImage
+Gets a copy of a portion of the screen as an image

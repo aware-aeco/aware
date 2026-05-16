@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationRodInfo.AttachToHanger
+Attaches the hanger rod to another bearer hanger.

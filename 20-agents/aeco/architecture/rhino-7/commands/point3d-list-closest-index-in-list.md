@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point3dList.ClosestIndexInList
+Finds the index of the point in a list of points that is closest to a test point.

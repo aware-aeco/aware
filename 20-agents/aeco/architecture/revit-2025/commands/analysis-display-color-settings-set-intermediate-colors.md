@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayColorSettings.SetIntermediateColors
+Set intermediate color entries (other than the minimum and maximum settings).

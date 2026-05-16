@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.GetFirstCoreLayerIndex
+Gets the index of the first core layer.

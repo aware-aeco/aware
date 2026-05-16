@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.IsLayerValid
+Verifies that the data in this layer is internally consistent.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Detail.GetReferencePoint
+Returns the reference point.

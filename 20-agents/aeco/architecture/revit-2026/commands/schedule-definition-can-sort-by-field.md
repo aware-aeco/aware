@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.CanSortByField
+Checks whether a field can be used for sorting/grouping.

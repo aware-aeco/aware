@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoGet.StringToCommandOptionName
+Convert some arbitrary string value to a valid command option name             removing any invalid characters.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Parameter.AsElementId
+Provides access to the Autodesk::Revit::DB::ElementId^ stored within the parameter.

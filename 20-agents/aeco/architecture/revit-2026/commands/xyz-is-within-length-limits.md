@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-XYZ.IsWithinLengthLimits
+Validates that the input point is within Revit design limits.

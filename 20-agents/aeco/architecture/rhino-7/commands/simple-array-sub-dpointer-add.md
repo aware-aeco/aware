@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArraySubDPointer.Add
+Adds a subd to the list.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBarType.SetCrankStraightLength
+Sets the crank straigh length for the specified Rebar Crank Type.

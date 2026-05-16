@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureMessage.GetFailingElements
+Retrieves list of the elements that have caused the failure.

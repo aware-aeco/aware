@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainer.IsUnobscuredInView
+Checks if this rebar container element is shown unobscured in a view.

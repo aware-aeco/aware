@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationServiceSettings.GetFluidTemperature
+Gets the fluid temperature of the specified service.

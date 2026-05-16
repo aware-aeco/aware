@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DefinitionBindingMap.Clear
+Removes every binding from the map, rendering it empty.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShapeReferenceOptions.GetExternalGeometryId
+Retrieves the ExternalGeometryId associated with the reference object.

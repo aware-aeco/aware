@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportStartPluginCreation
+DO NOT USE! For internal usage only!

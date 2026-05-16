@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipelineAttributes.SetCurveThicknessUsage
+Sets usage, pixel thickness (CurveThickness) or a scale thickness (CurveThicknessScale)

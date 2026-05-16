@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.GetRoomBoundaryAsCurveLoopArray
+Obtains the spatial element boundary curves as an array of CurveLoops, needed for processing into IFC-specific    elements later.

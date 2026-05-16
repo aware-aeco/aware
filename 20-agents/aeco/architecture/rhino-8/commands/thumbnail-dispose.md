@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Thumbnail.Dispose
+Dispose for Thumbnail

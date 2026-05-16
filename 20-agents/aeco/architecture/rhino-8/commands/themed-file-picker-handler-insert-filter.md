@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedFilePickerHandler.InsertFilter
+Inserts a filter at the specified index

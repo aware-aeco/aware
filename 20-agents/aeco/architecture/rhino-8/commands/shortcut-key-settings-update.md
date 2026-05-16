@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ShortcutKeySettings.Update
+Add or modify shortcuts with a list or KeyboardShortcut elements

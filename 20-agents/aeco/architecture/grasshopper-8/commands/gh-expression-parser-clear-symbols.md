@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ExpressionParser.ClearSymbols
+Destroy the Symbols cache.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurve.IncreaseDegree
+Increase the degree of this curve.

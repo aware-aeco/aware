@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StdVectorGuid.ConstPointer
+Gets the constant (immutable) pointer of this vector.

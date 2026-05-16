@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.Delete
+Deletes the view.

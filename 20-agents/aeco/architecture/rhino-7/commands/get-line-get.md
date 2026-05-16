@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetLine.Get
+Perform the 'get' operation.

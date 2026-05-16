@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointF.Max
+Returns the maximum X and Y components of two points

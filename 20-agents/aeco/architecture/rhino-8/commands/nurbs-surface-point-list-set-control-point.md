@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsSurfacePointList.SetControlPoint
+Sets the control point at the given (u, v) index.

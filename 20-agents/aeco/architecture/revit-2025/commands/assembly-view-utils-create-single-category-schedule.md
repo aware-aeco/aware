@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssemblyViewUtils.CreateSingleCategorySchedule
+Creates a new single-category schedule assembly view for the assembly instance.

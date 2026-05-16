@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarCrankTypeUtils.GetCrankRatio
+Gets the crank ratio value.

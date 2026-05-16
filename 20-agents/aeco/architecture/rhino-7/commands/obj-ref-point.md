@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjRef.Point
+Gets the point if the referenced geometry is one.

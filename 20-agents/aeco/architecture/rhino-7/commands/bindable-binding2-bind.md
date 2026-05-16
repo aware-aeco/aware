@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BindableBinding`2.Bind
+Binds the specified  to this binding.

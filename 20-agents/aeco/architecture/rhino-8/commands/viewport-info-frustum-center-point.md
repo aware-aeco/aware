@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewportInfo.FrustumCenterPoint
+Return a point on the central axis of the view frustum.             This point is a good choice for a general purpose target point.

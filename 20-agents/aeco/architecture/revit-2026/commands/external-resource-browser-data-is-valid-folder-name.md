@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalResourceBrowserData.IsValidFolderName
+Checks whether the folder name is valid.

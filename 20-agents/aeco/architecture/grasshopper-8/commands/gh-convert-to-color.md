@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToColor
+Convert data into Colors.

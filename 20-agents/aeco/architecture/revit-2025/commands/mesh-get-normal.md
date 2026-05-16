@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.GetNormal
+Returns a normal unit vector at the given index.

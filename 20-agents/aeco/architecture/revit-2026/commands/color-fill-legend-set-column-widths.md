@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorFillLegend.SetColumnWidths
+Sets array of column widths.

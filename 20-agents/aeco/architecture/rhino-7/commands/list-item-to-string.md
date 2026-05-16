@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ListItem.ToString
+Gets the listItem's string

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightType.SetLightDistribution
+Replace the current LightDistribution object with the given object

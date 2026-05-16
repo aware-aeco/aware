@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.RegisterExcelDialogOpeningCallback
+Registers a callback for opening the Excel report dialog.

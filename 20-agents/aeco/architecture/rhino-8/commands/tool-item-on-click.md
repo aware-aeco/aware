@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ToolItem.OnClick
+Raises the  event.

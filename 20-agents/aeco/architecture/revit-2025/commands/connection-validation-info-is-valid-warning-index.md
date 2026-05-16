@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConnectionValidationInfo.IsValidWarningIndex
+Validate warning index.

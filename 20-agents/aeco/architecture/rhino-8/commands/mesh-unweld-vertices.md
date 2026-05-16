@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.UnweldVertices
+Ensures that faces sharing a common topological vertex have unique indices into the  collection.

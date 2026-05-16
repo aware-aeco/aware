@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Canvas.RemoveValidator
+Remove a drop validator from the canvas.

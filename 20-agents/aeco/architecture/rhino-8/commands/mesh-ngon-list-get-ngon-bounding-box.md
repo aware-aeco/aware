@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshNgonList.GetNgonBoundingBox
+Gets the bounding box of an ngon.

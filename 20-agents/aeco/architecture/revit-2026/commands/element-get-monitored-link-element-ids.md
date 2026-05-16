@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.GetMonitoredLinkElementIds
+Provides the link instance IDs when the element is monitoring.

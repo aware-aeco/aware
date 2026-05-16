@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Task.AddObjectsToTask
+Adds objects to the task.

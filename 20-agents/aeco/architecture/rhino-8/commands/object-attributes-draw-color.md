@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectAttributes.DrawColor
+Gets an object's draw color, which is based on the object's color source

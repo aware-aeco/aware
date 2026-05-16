@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextArea.SelectAll
+Selects all text.

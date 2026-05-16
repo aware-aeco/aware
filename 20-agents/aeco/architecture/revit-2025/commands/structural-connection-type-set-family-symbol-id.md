@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralConnectionType.SetFamilySymbolId
+FamilySymbol of the annotation to use for this connection type.

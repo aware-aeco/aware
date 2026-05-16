@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryTree.GetBranch
+Creates a new GeometryTree that is formed by the branch in this instance that starts at node.

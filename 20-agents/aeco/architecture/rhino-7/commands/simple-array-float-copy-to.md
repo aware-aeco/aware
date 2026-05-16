@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayFloat.CopyTo
+Copies the contents of a  into another SimpleArrayFloat.

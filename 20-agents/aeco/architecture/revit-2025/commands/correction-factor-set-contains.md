@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CorrectionFactorSet.Contains
+Tests for the existence of a correction factor within the set.

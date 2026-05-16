@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelAidSettings.GetDefaultState
+Gets the factory settings.

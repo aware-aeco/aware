@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourCube.ColorAtRail
+Get the color at a position along the depth rail.

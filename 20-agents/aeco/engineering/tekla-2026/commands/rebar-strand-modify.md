@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarStrand.Modify
+Modifies the existing strand in the model database to match the current one.

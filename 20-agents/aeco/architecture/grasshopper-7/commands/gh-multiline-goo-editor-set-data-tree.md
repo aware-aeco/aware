@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MultilineGooEditor.SetDataTree
+Assign a list of data to the textbox.

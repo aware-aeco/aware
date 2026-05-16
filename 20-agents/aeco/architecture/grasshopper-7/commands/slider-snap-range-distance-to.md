@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SliderSnapRange.DistanceTo
+Compute the distance from a value to this snap range.

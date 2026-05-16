@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.IsValidViewScale
+This validator checks that the view scale is in the allowable range.

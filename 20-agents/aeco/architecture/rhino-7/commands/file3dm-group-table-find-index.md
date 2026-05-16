@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmGroupTable.FindIndex
+Retrieves a Group object based on an index. This search type of search is discouraged.             We are moving towards using only IDs for all tables.

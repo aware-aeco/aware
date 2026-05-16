@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IDirectContext3DServer.GetSourceId
+Reports this server's source ID.

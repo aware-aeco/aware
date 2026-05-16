@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayDeformedShapeSettings.IsEqual
+Compares two deformed shape settings objects.

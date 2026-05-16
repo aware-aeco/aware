@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_NumberSlider.HarvestDecimalPlaces
+Try and harvest the number of decimal places implied by a piece of text.   Text must represent a regular number.

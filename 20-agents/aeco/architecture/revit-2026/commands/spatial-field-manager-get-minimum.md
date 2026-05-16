@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpatialFieldManager.GetMinimum
+Calculates the minimum value for all primitives

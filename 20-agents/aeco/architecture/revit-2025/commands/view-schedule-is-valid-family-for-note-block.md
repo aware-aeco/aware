@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.IsValidFamilyForNoteBlock
+Checks whether a family can be used for a note block.

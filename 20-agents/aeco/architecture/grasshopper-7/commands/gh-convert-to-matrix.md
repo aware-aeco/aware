@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToMatrix
+Convert data into Rhino.Geometry.Matrix.

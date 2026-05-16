@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PointCloud.DuplicatePointCloud
+Create a duplicate of this curve.

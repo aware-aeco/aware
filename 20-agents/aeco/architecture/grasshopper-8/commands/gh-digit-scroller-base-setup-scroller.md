@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DigitScrollerBase.SetupScroller
+Set the minimum, maximum and value fields simultaneously.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExportContext.OnElementBegin
+This method marks the beginning of an element to be exported.

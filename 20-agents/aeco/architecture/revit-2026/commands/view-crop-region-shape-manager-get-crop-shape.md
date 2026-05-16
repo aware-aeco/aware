@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewCropRegionShapeManager.GetCropShape
+Gets the crop boundaries that are curently active.

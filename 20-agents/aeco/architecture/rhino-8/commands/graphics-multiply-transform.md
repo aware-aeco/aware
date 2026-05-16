@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Graphics.MultiplyTransform
+Multiplies the co-ordinate system with the given

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyItemFactory.NewRadialDimension
+Generate a new radial dimension object using a specified dimension type.

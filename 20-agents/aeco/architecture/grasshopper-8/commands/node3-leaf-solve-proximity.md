@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Node3Leaf.SolveProximity
+Recursive method that solves a proximity search.

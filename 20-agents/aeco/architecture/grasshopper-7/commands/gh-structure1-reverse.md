@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Structure`1.Reverse
+Reverse the order of items in all branches.

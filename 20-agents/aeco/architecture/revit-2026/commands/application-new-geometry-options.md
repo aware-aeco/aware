@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewGeometryOptions
+Creates an object to specify user preferences in parsing of geometry.

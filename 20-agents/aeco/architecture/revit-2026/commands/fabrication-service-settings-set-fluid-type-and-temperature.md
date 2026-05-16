@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationServiceSettings.SetFluidTypeAndTemperature
+Sets the fluid type and temperature of the specified service.

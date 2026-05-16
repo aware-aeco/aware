@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayStyle.HasMarkersAndTextSettings
+If true style has markers and text settings.

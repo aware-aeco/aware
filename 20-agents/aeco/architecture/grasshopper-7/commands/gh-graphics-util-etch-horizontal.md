@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.EtchHorizontal
+Draws an etched line segment.

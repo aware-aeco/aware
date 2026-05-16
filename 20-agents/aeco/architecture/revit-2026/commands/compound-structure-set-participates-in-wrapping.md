@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.SetParticipatesInWrapping
+Assigns if a layer is included in wrapping at inserts and ends.

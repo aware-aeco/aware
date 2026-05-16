@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCAnyHandle.UnsetAttribute
+Unsets the attribute value.

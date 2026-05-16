@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CombinableElementArray.GetEnumerator
+Retrieve a forward moving iterator to the array.

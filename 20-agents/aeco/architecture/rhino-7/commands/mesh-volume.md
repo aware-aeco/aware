@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.Volume
+Compute volume of the mesh.

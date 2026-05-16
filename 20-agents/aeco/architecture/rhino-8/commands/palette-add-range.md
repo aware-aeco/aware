@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Palette.AddRange
+Adds the specified  to this palette collection

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Level.GetNearestLevelId
+Returns id of the Level which is closest to the specified elevation.

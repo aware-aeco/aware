@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.HasAllChangesFromCentral
+Returns whether the model in the current session is up to date with central.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.GetProjectId
+Gets ForgeDM project id where the model locates.

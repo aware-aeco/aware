@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalGeometryId.IsValidExternalGeometryId
+Checks whether a given string represents a valid ExternalGeometryId or not.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCData.GetTypeList
+Gets the multiple strings represent one IFC type name.

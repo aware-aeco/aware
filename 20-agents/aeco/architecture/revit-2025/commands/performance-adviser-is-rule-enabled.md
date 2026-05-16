@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PerformanceAdviser.IsRuleEnabled
+Retrieves an enabled/disabled status for the given rule.

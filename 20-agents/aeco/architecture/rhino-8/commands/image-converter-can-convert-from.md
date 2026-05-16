@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ImageConverter.CanConvertFrom
+Gets a value indicating that this converter can convert from the source type to an image

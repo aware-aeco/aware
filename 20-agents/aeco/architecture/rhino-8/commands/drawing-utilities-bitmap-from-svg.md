@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DrawingUtilities.BitmapFromSvg
+Create bitmap of a given size from an svg string

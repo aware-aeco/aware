@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorRGBA.CreateFromLAB
+Create the nearest RGBA equivalent of a LAB color.

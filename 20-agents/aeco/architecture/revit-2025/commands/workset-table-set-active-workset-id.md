@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WorksetTable.SetActiveWorksetId
+Sets the active workset.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Model.GetReportPropertyDouble
+Get a list of property values, where the property is of type double, for the given identifiers.

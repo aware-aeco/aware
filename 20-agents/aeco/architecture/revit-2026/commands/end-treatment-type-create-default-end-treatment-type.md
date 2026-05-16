@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EndTreatmentType.CreateDefaultEndTreatmentType
+Creates a new EndTreatmentType object with a default name.

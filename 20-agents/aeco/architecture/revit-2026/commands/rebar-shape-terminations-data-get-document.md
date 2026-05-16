@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeTerminationsData.GetDocument
+Gets the document containing the end treatment ids.
