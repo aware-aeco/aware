@@ -6,8 +6,8 @@
 //! this file verifies routing, help-text, version reporting, and exit-code
 //! mapping.
 //!
-//! NOTE: `agent install` is implemented as of v0.2 Task 10.
-//! The unimplemented-smoke test now uses `agent uninstall` (still stubbed).
+//! NOTE: All v0.2 commands are now implemented. The unimplemented-smoke test
+//! uses `app run` which remains stubbed until v0.3.
 
 use assert_cmd::Command;
 use predicates::prelude::*;
@@ -67,15 +67,15 @@ fn app_subcommand_help_works() {
 
 #[test]
 fn unimplemented_subcommand_exits_nonzero_with_message() {
-    // `agent install` is now implemented (v0.2 Task 10).
-    // Use `agent uninstall` which remains stubbed until a later task.
+    // All v0.2 commands are implemented. Use `app run` which remains stubbed
+    // until v0.3 (runtime phase).
     Command::cargo_bin("aware")
         .unwrap()
-        .args(["agent", "uninstall", "tekla"])
+        .args(["app", "run", "some-app"])
         .assert()
         .failure()
         .stderr(predicate::str::contains("not yet implemented"))
-        .stderr(predicate::str::contains("agent uninstall"));
+        .stderr(predicate::str::contains("app run"));
 }
 
 #[test]

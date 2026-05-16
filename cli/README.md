@@ -6,15 +6,18 @@ This folder houses the Rust implementation. The contract it satisfies is in [`10
 
 ## Status
 
-**v0.1 — read-only foundation.** Eight surfaces shipped:
+**v0.2 — install + validate.** Sixteen surfaces shipped (eight from v0.1 plus eight new):
 
 - `aware --version` / `aware --help`
-- `aware doctor`
+- `aware doctor` (now includes agent-integrity checks)
 - `aware agent list` / `agent describe <id>` / `agent skill <id> <skill>`
+- `aware agent install <path>` / `agent install <id>[@version]` / `agent install <bundle>`
+- `aware agent uninstall <id>` / `agent update <id>` / `agent validate <path>`
 - `aware app list` / `app show <id>`
+- `aware app install <path>` / `app uninstall <id>` / `app validate <path>` / `app export <id> <output>`
 
-Everything else (`install`, `validate`, `run`, `connect`, `build`, `skill ...`)
-remains `NotYetImplemented` until its phase per [cli-roadmap.md](../10-core/cli-roadmap.md).
+Still stubbed: `agent publish`, `app run/stop/logs` (v0.3), `connect / disconnect` (v0.4),
+`build agent`, `skill ...` (v0.5).
 
 ## Build
 
@@ -32,18 +35,30 @@ First build pulls ~30 crates (clap, serde, tokio, etc.). Subsequent builds are i
 # Default reads ~/.aware/. Override via AWARE_HOME for testing:
 export AWARE_HOME=$(pwd)/test-fixtures/aware
 
-aware doctor                    # filesystem health check
-aware agent list                # table of installed agents
-aware agent describe tekla      # manifest summary + commands + skills
-aware agent skill tekla drawing-identity   # raw skill .md content
-aware app list                  # installed apps
-aware app show welded-to-tc     # ASCII topology + provenance
-aware --json agent list         # JSON envelope for piping
+# Read-only (v0.1)
+aware doctor                              # filesystem + integrity health check
+aware agent list                          # table of installed agents
+aware agent describe tekla
+aware agent skill tekla drawing-identity
+aware app list
+aware app show welded-to-tc
+aware --json agent list
+
+# Install + validate (v0.2)
+aware agent install ./20-agents/aeco/engineering/tekla       # local path
+aware agent install tekla                                    # from registry
+aware agent install aware-aeco                               # bundle: all 7 agents
+aware agent uninstall tekla
+aware agent update tekla
+aware agent validate ./my-agent
+aware app install ./my-app                                   # writes lockfile.yaml
+aware app validate ./my-app
+aware app export welded-to-tc /tmp/exported.flo
 ```
 
-The `AWARE_HOME` env var overrides the default `~/.aware/` location for the
-session — useful for testing against repo fixtures without polluting your
-home directory.
+By default the CLI reads the registry from
+`https://raw.githubusercontent.com/aware-aeco/aware/main/registry-index.json`.
+Override with `AWARE_REGISTRY=<https-or-file-url>` for testing or alternative registries.
 
 ## Test
 
