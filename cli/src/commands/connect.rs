@@ -33,8 +33,42 @@ pub struct DisconnectArgs {
     pub r#as: Option<String>,
 }
 
-pub fn run_connect(_args: ConnectArgs, _ctx: &Context) -> Result<(), AwareError> {
-    Err(AwareError::NotYetImplemented("connect"))
+pub fn run_connect(args: ConnectArgs, _ctx: &Context) -> Result<(), AwareError> {
+    let cfg = crate::auth::config::for_integration(&args.integration)?;
+
+    if args.refresh {
+        let token = crate::auth::refresh::ensure_fresh(&args.integration, args.r#as.as_deref())?;
+        println!(
+            "\u{2713} refreshed {} (expires at unix-{})",
+            args.integration, token.expires_at
+        );
+        return Ok(());
+    }
+
+    let extra_scopes: Vec<String> = args
+        .scopes
+        .as_deref()
+        .map(|s| {
+            s.split(',')
+                .map(|p| p.trim().to_string())
+                .filter(|p| !p.is_empty())
+                .collect()
+        })
+        .unwrap_or_default();
+
+    let token = crate::auth::pkce::run_pkce_flow(&cfg, &extra_scopes)?;
+    crate::auth::keychain::store_token(&token, args.r#as.as_deref())?;
+    println!("\u{2713} Encrypted to OS keychain.");
+    println!("  service: aware-aeco");
+    println!(
+        "  account: {}{}",
+        args.integration,
+        args.r#as
+            .as_deref()
+            .map(|a| format!(".{a}"))
+            .unwrap_or_default()
+    );
+    Ok(())
 }
 
 pub fn run_disconnect(_args: DisconnectArgs, _ctx: &Context) -> Result<(), AwareError> {
