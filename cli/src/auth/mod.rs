@@ -5,6 +5,6 @@
 #![allow(dead_code)]
 
 pub mod config;
-// pub mod keychain;  // Task 3
+pub mod keychain;
 // pub mod pkce;      // Task 4
 // pub mod refresh;   // Task 5
