@@ -99,6 +99,21 @@ fn replace_markers(original: &str, new_block: &str) -> Result<String, AwareError
     Ok(out)
 }
 
+/// Auto-regenerate `<aware_home>/diagrams/installed.mmd` after install /
+/// uninstall / update. Best-effort — failures don't tear down the caller.
+pub fn auto_regenerate(ctx: &Context) -> Result<(), AwareError> {
+    let agents = discover_agents(&ctx.paths)?;
+    let diagrams_dir = ctx.paths.diagrams_dir();
+    std::fs::create_dir_all(&diagrams_dir)
+        .map_err(|e| AwareError::Internal(format!("mkdir {}: {e}", diagrams_dir.display())))?;
+    let agents_block = render_agents_block(&agents);
+    let body = render_standalone(&agents, &agents_block);
+    let path = diagrams_dir.join("installed.mmd");
+    std::fs::write(&path, body)
+        .map_err(|e| AwareError::Internal(format!("write {}: {e}", path.display())))?;
+    Ok(())
+}
+
 /// Render the standalone Mermaid diagram — the full picture, not just the
 /// agent block. Useful for end users wanting to see "what's in my AWARE
 /// install" without needing the repo's hand-curated `aware-master.mmd`.

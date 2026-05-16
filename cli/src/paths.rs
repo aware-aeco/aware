@@ -53,6 +53,10 @@ impl Paths {
     pub fn app_instance_dir(&self, app: &str, instance: &str) -> PathBuf {
         self.apps_dir().join(app).join("instances").join(instance)
     }
+
+    pub fn diagrams_dir(&self) -> PathBuf {
+        self.aware_home.join("diagrams")
+    }
 }
 
 #[cfg(test)]

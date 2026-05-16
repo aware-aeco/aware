@@ -59,6 +59,7 @@ pub fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError> {
             crate::install::uninstall_agent(&agent, &ctx.paths)?;
             println!("✓ uninstalled {agent}");
             let _ = auto_regenerate_plugins(ctx);
+            let _ = crate::commands::diagram::auto_regenerate(ctx);
             Ok(())
         }
         AgentCommand::Update { agent } => update(ctx, &agent),
@@ -75,6 +76,7 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
         println!("✓ installed {installed} from {}", path.display());
         // Auto-regenerate host plugins (best-effort — failures don't tear down the install)
         let _ = auto_regenerate_plugins(ctx);
+        let _ = crate::commands::diagram::auto_regenerate(ctx);
         return Ok(());
     }
 
@@ -96,6 +98,7 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
         }
         // Auto-regenerate host plugins (best-effort — failures don't tear down the install)
         let _ = auto_regenerate_plugins(ctx);
+        let _ = crate::commands::diagram::auto_regenerate(ctx);
         return Ok(());
     }
     let (id, version_pin) = match spec.split_once('@') {
@@ -107,6 +110,7 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
     println!("✓ installed {installed}");
     // Auto-regenerate host plugins (best-effort — failures don't tear down the install)
     let _ = auto_regenerate_plugins(ctx);
+    let _ = crate::commands::diagram::auto_regenerate(ctx);
     Ok(())
 }
 
@@ -116,6 +120,8 @@ fn update(ctx: &Context, id: &str) -> Result<(), AwareError> {
     let _ = crate::install::uninstall_agent(id, &ctx.paths);
     let installed = crate::install::install_agent_from_registry(id, None, &ctx.paths, &index)?;
     println!("✓ updated {installed}");
+    let _ = auto_regenerate_plugins(ctx);
+    let _ = crate::commands::diagram::auto_regenerate(ctx);
     Ok(())
 }
 
