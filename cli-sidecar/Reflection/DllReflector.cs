@@ -269,12 +269,21 @@ public static class DllReflector
         var out_ = new List<string>();
         foreach (var g in globs)
         {
+            // Case 1: literal file path.
             if (File.Exists(g))
             {
                 out_.Add(Path.GetFullPath(g));
                 continue;
             }
-            // Simple glob: split directory + pattern
+            // Case 2: bare directory path — auto-expand to *.dll so callers do not
+            // need to append \*.dll manually (e.g. --from-dlls "C:\Tekla\bin").
+            if (Directory.Exists(g))
+            {
+                foreach (var hit in Directory.EnumerateFiles(g, "*.dll"))
+                    out_.Add(Path.GetFullPath(hit));
+                continue;
+            }
+            // Case 3: glob pattern — split directory + pattern and enumerate.
             var dir = Path.GetDirectoryName(g);
             var pattern = Path.GetFileName(g);
             if (string.IsNullOrEmpty(dir)) dir = ".";

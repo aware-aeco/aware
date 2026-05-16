@@ -82,6 +82,26 @@ public class DllReflectorTests
     }
 
     /// <summary>
+    /// Verifies that passing a bare directory path (no glob suffix) auto-expands to *.dll
+    /// and successfully reflects the DLLs inside — specifically FixtureAssembly.dll.
+    /// This is the UX fix: callers no longer need to append \*.dll manually.
+    /// </summary>
+    [Fact]
+    public void DirectoryPathAutoExpandsToDlls()
+    {
+        var fixturePath = FixturePath();
+        Assert.True(File.Exists(fixturePath), $"fixture not at {fixturePath}");
+
+        // Pass the directory that contains FixtureAssembly.dll — no *.dll suffix.
+        var dir = Path.GetDirectoryName(fixturePath)!;
+        var agent = DllReflector.Reflect(new[] { dir }, agentIdOverride: "dir-expand-test");
+
+        // The directory contains FixtureAssembly.dll so commands from it must be present.
+        var commandNames = agent.Commands.Select(c => c.Name).ToList();
+        Assert.Contains("greeter-greet", commandNames);
+    }
+
+    /// <summary>
     /// Smoke-tests GetRefPackRoots (indirectly via Reflect) on the current OS:
     /// verifies that at least one packs root either exists or the scan is silently skipped.
     /// On a developer machine with .NET SDK installed this will enumerate ref-pack DLLs;
