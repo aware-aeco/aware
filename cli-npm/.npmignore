@@ -1,0 +1,4 @@
+binaries/
+.github/
+*.test.js
+**/__tests__/
