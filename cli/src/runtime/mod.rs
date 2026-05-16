@@ -6,4 +6,5 @@
 #![allow(dead_code)]
 
 pub mod provenance;
+pub mod template;
 // other submodules added later in v0.3
