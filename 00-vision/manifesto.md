@@ -11,13 +11,13 @@ The five structural truths it rests on are in **[the decalog](./decalog.md)**. I
 ## The 60 seconds that prove it
 
 ```bash
-$ winget install aware-aeco
+$ npm install -g @aware-aeco/cli
   ✓ aware CLI installed
-  ✓ 12 AECO agents installed
+  ✓ 11 AECO agents available via `aware agent install`
   ✓ aware-aeco plugin registered with: claude-code, codex
 
 $ claude-code
-  ✓ plugin: aware-aeco v0.1 · 12 agents available
+  ✓ plugin: aware-aeco · 11 agents available
 
 > Watch this Tekla model. When a welded assembly appears,
 > upload its drawing to my Trimble Connect fab folder.
@@ -144,12 +144,14 @@ No build system to learn. No CI pipeline to fight. No boilerplate generators. Ma
 ## Start
 
 ```bash
-winget install aware-aeco       # Windows
-brew install aware-aeco         # Mac
-curl -fsSL https://aware-aeco.dev/install | sh   # Linux / WSL
+npm install -g @aware-aeco/cli                           # any OS (Windows / Mac / Linux)
+curl -fsSL .../aware-aeco/aware/main/scripts/install.sh | bash   # Mac / Linux, no Node required
+iex (irm .../aware-aeco/aware/main/scripts/install.ps1)          # Windows PowerShell, no Node required
 
 claude-code
 > compose an aware app that does <whatever you wish existed>
 ```
+
+`winget install aware-aeco` and `brew install aware-aeco` are queued — they require an MSI installer (Windows) and a Homebrew formula (Mac), both tracked as follow-up phases. See [cli/README.md](../cli/README.md) for the current install matrix.
 
 Welcome to what comes after software.
