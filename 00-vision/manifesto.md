@@ -4,7 +4,7 @@
 
 That is the whole thesis.
 
-The five structural truths it rests on are in **[the decalog](./decalog.md)**. If anything in this document conflicts with the decalog, the decalog wins.
+The eight structural truths it rests on are in **[the decalog](./decalog.md)**. If anything in this document conflicts with the decalog, the decalog wins.
 
 ---
 
