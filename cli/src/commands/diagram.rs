@@ -165,6 +165,13 @@ fn render_agents_block(agents: &[DiscoveredAgent]) -> String {
             "poc",
         ),
         (
+            "Viz",
+            "Visualization",
+            &buckets.visualization,
+            "Lumion · Enscape · Twinmotion · V-Ray",
+            "poc",
+        ),
+        (
             "Cross",
             "Cross-cutting",
             &buckets.cross_cutting,
@@ -226,6 +233,7 @@ struct Buckets<'a> {
     engineering: Vec<&'a DiscoveredAgent>,
     architecture: Vec<&'a DiscoveredAgent>,
     construction: Vec<&'a DiscoveredAgent>,
+    visualization: Vec<&'a DiscoveredAgent>,
     cross_cutting: Vec<&'a DiscoveredAgent>,
     ops: Vec<&'a DiscoveredAgent>,
 }
@@ -245,6 +253,8 @@ fn bucket_by_vertical(agents: &[DiscoveredAgent]) -> Buckets<'_> {
             buckets.architecture.push(a);
         } else if kws.contains(&"construction") {
             buckets.construction.push(a);
+        } else if kws.contains(&"visualization") {
+            buckets.visualization.push(a);
         } else if kws.contains(&"cross-cutting") {
             buckets.cross_cutting.push(a);
         } else if kws.contains(&"operations") {
@@ -261,6 +271,7 @@ fn count_verticals(agents: &[DiscoveredAgent]) -> usize {
         !b.engineering.is_empty(),
         !b.architecture.is_empty(),
         !b.construction.is_empty(),
+        !b.visualization.is_empty(),
         !b.cross_cutting.is_empty(),
         !b.ops.is_empty(),
     ]
