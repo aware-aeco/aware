@@ -56,6 +56,12 @@ pub enum AppCommand {
         /// Follow the log as it's written (like `tail -f`).
         #[arg(long)]
         tail: bool,
+        /// Pretty-print each event from the most recent (or given) run.
+        #[arg(long)]
+        replay: bool,
+        /// Override which run-id to inspect (default: most recent).
+        #[arg(long)]
+        run_id: Option<String>,
     },
 }
 
@@ -81,7 +87,19 @@ pub async fn dispatch(cmd: AppCommand, ctx: &Context) -> Result<(), AwareError> 
             app,
             instance,
             tail,
-        } => logs(ctx, &app, instance.as_deref(), tail, false, None).await,
+            replay,
+            run_id,
+        } => {
+            logs(
+                ctx,
+                &app,
+                instance.as_deref(),
+                tail,
+                replay,
+                run_id.as_deref(),
+            )
+            .await
+        }
     }
 }
 
@@ -261,15 +279,71 @@ async fn logs(
     app_id: &str,
     instance: Option<&str>,
     tail: bool,
-    _replay: bool,
-    _run_id_override: Option<&str>,
+    replay: bool,
+    run_id_override: Option<&str>,
 ) -> Result<(), AwareError> {
     let instance = instance.unwrap_or("default");
-    let run_id =
+    let run_id = if let Some(id) = run_id_override {
+        id.to_string()
+    } else {
         crate::runtime::provenance::most_recent_run_id(&ctx.paths.logs_dir(), app_id, instance)
-            .ok_or_else(|| AwareError::NotFound(format!("no runs for {app_id}/{instance}")))?;
+            .ok_or_else(|| AwareError::NotFound(format!("no runs for {app_id}/{instance}")))?
+    };
     let log_path =
         crate::runtime::provenance::log_path_for(&ctx.paths.logs_dir(), app_id, instance, &run_id);
+
+    if replay {
+        use crate::runtime::provenance::{RunEvent, read_run_events};
+        let events = read_run_events(&log_path).await?;
+        for event in &events {
+            match event {
+                RunEvent::RunStart {
+                    ts,
+                    run_id,
+                    app,
+                    instance,
+                    ..
+                } => {
+                    println!("[{ts}] \u{25b6} run-start  {app}/{instance} (run {run_id})");
+                }
+                RunEvent::NodeStart {
+                    ts,
+                    node,
+                    agent,
+                    command,
+                    ..
+                } => {
+                    let kind = agent
+                        .as_deref()
+                        .map(|a| format!("({a}/{})", command.as_deref().unwrap_or("")))
+                        .unwrap_or_default();
+                    println!("[{ts}] \u{25b6} {node}  {kind}");
+                }
+                RunEvent::NodeOutput { ts, node, data, .. } => {
+                    println!("[{ts}] \u{2192} {node}  output {data}");
+                }
+                RunEvent::NodeError {
+                    ts, node, error, ..
+                } => {
+                    println!("[{ts}] \u{2717} {node}  error: {error}");
+                }
+                RunEvent::NodeStop {
+                    ts, node, reason, ..
+                } => {
+                    println!("[{ts}] \u{25fc} {node}  stop: {reason}");
+                }
+                RunEvent::RunEnd { ts, status, .. } => {
+                    let mark = match status.as_str() {
+                        "ok" => "\u{2713}",
+                        "interrupted" => "\u{25fc}",
+                        _ => "\u{2717}",
+                    };
+                    println!("[{ts}] {mark} run-end  {status}");
+                }
+            }
+        }
+        return Ok(());
+    }
 
     if !tail {
         // Read and print raw JSONL
