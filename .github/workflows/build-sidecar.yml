@@ -22,6 +22,10 @@ jobs:
             rid: linux-x64
             artifact: aware-sidecar-linux-x64
             binary: aware-sidecar
+          - os: macos-latest
+            rid: osx-arm64
+            artifact: aware-sidecar-osx-arm64
+            binary: aware-sidecar
 
     runs-on: ${{ matrix.os }}
 
@@ -70,10 +74,27 @@ jobs:
           fi
           echo "✓ Linux sidecar smoke passed"
 
+      - name: Smoke test (macOS runner)
+        if: matrix.os == 'macos-latest'
+        shell: bash
+        run: |
+          dotnet build cli-sidecar/Tests/FixtureAssembly
+          bin="cli-sidecar/bin/Release/net9.0/${{ matrix.rid }}/publish/${{ matrix.binary }}"
+          chmod +x "$bin"
+          fixture="cli-sidecar/Tests/FixtureAssembly/bin/Debug/net9.0/FixtureAssembly.dll"
+          req='{"op":"reflect-dlls","args":{"globs":["'"$fixture"'"],"agent_id":"ci-smoke"}}'
+          resp=$(echo "$req" | "$bin")
+          if [[ ! "$resp" == *'"ok":true'* ]]; then
+            echo "::error::sidecar smoke failed: $resp"
+            exit 1
+          fi
+          echo "✓ macOS sidecar smoke passed"
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.artifact }}
           path: cli-sidecar/bin/Release/net9.0/${{ matrix.rid }}/publish/${{ matrix.binary }}
 
-# macOS sidecar build deferred to v0.5.3.
+# All three platforms (Windows + Linux + macOS arm64) build in CI.
+# Intel macOS (osx-x64) and ARM Linux (linux-arm64) are not in scope.
