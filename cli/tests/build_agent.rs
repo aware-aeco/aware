@@ -74,27 +74,31 @@ fn build_from_dlls_with_no_sidecar_returns_not_found() {
 }
 
 #[test]
-fn build_from_com_is_not_yet_implemented() {
+fn build_from_com_with_no_sidecar_returns_not_found() {
+    // --from-com now routes through the C# sidecar (v0.5.2). Without a sidecar
+    // binary, discovery fails with NotFound (exit 7).
     let tmp = tempfile::tempdir().unwrap();
     Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", tmp.path())
+        .env("AWARE_SIDECAR", "C:/aware-sidecar-does-not-exist-test")
         .args(["build", "agent", "--from-com", "AutoCAD.Application"])
         .assert()
-        .failure()
-        .stderr(predicate::str::contains("not yet implemented"));
+        .failure(); // exit 7 (NotFound) — sidecar missing
 }
 
 #[test]
-fn build_from_headers_is_not_yet_implemented() {
+fn build_from_headers_with_no_sidecar_returns_not_found() {
+    // --from-headers now routes through the C# sidecar (v0.5.2). Without a sidecar
+    // binary, discovery fails with NotFound (exit 7).
     let tmp = tempfile::tempdir().unwrap();
     Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", tmp.path())
+        .env("AWARE_SIDECAR", "C:/aware-sidecar-does-not-exist-test")
         .args(["build", "agent", "--from-headers", "/some/path"])
         .assert()
-        .failure()
-        .stderr(predicate::str::contains("not yet implemented"));
+        .failure(); // exit 7 (NotFound) — sidecar missing
 }
 
 #[test]

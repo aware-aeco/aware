@@ -61,6 +61,35 @@ internal static class Program
                         return 1;
                     }
                 }
+                case "from-com":
+                {
+                    if (!OperatingSystem.IsWindows())
+                    {
+                        EmitError(envelope.Op, "--from-com is Windows-only");
+                        return 1;
+                    }
+                    var argsObj = envelope.Args.Deserialize(SidecarJsonContext.Default.FromComArgs);
+                    if (argsObj is null) { EmitError(envelope.Op, "missing args"); return 2; }
+                    try
+                    {
+                        var agent = AwareSidecar.Com.ComReflector.Reflect(argsObj.ProgId, argsObj.AgentId);
+                        EmitOk(envelope.Op, new ResponseData { Agent = agent });
+                        return 0;
+                    }
+                    catch (Exception ex) { EmitError(envelope.Op, ex.Message); return 1; }
+                }
+                case "from-headers":
+                {
+                    var argsObj = envelope.Args.Deserialize(SidecarJsonContext.Default.FromHeadersArgs);
+                    if (argsObj is null) { EmitError(envelope.Op, "missing args"); return 2; }
+                    try
+                    {
+                        var agent = AwareSidecar.Headers.HeaderParser.Parse(argsObj.Files, argsObj.AgentId);
+                        EmitOk(envelope.Op, new ResponseData { Agent = agent });
+                        return 0;
+                    }
+                    catch (Exception ex) { EmitError(envelope.Op, ex.Message); return 1; }
+                }
                 default:
                 {
                     EmitError(envelope.Op, $"unknown op: {envelope.Op}");
@@ -96,6 +125,8 @@ internal static class Program
 [JsonSerializable(typeof(RequestEnvelope))]
 [JsonSerializable(typeof(ReflectDllsArgs))]
 [JsonSerializable(typeof(DecompileArgs))]
+[JsonSerializable(typeof(FromComArgs))]
+[JsonSerializable(typeof(FromHeadersArgs))]
 [JsonSerializable(typeof(OkResponse))]
 [JsonSerializable(typeof(ErrorResponse))]
 [JsonSerializable(typeof(ResponseData))]

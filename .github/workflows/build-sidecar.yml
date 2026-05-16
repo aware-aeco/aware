@@ -3,40 +3,77 @@ name: Build sidecar
 on:
   push:
     tags:
-      - 'v0.5.1*'
-      - 'v0.5.2*'
+      - 'v0.5.*'
       - 'v0.6*'
       - 'v1.*'
   workflow_dispatch: {}
 
 jobs:
-  build-windows:
-    runs-on: windows-latest
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            rid: win-x64
+            artifact: aware-sidecar-win-x64
+            binary: aware-sidecar.exe
+          - os: ubuntu-latest
+            rid: linux-x64
+            artifact: aware-sidecar-linux-x64
+            binary: aware-sidecar
+
+    runs-on: ${{ matrix.os }}
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x'
-      - name: Publish NativeAOT (win-x64)
-        run: dotnet publish cli-sidecar -c Release -r win-x64 -p:PublishAot=true
-      - name: Smoke test the published binary
+
+      - name: Install clang on Linux
+        if: matrix.os == 'ubuntu-latest'
+        run: sudo apt-get update && sudo apt-get install -y clang
+
+      - name: Publish NativeAOT (${{ matrix.rid }})
+        run: dotnet publish cli-sidecar -c Release -r ${{ matrix.rid }} -p:PublishAot=true
+
+      - name: Smoke test (Windows runner)
+        if: matrix.os == 'windows-latest'
         shell: pwsh
         run: |
           dotnet build cli-sidecar/Tests/FixtureAssembly
-          $bin = "cli-sidecar/bin/Release/net9.0/win-x64/publish/aware-sidecar.exe"
+          $bin = "cli-sidecar/bin/Release/net9.0/${{ matrix.rid }}/publish/${{ matrix.binary }}"
           $fixture = "cli-sidecar/Tests/FixtureAssembly/bin/Debug/net9.0/FixtureAssembly.dll"
-          $req = ('{"op":"reflect-dlls","args":{"globs":["' + $fixture.Replace("\","/") + '"],"agent_id":"ci-smoke"}}')
+          $req = ('{{"op":"reflect-dlls","args":{{"globs":["{0}"],"agent_id":"ci-smoke"}}}}' -f $fixture.Replace("\","/"))
           $resp = $req | & $bin
           if (-not $resp.Contains('"ok":true')) {
             Write-Error "sidecar smoke failed: $resp"
             exit 1
           }
-          Write-Host "sidecar smoke passed"
+          Write-Host "✓ Windows sidecar smoke passed"
+
+      - name: Smoke test (Linux runner)
+        if: matrix.os == 'ubuntu-latest'
+        shell: bash
+        run: |
+          dotnet build cli-sidecar/Tests/FixtureAssembly
+          bin="cli-sidecar/bin/Release/net9.0/${{ matrix.rid }}/publish/${{ matrix.binary }}"
+          chmod +x "$bin"
+          fixture="cli-sidecar/Tests/FixtureAssembly/bin/Debug/net9.0/FixtureAssembly.dll"
+          req='{"op":"reflect-dlls","args":{"globs":["'"$fixture"'"],"agent_id":"ci-smoke"}}'
+          resp=$(echo "$req" | "$bin")
+          if [[ ! "$resp" == *'"ok":true'* ]]; then
+            echo "::error::sidecar smoke failed: $resp"
+            exit 1
+          fi
+          echo "✓ Linux sidecar smoke passed"
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: aware-sidecar-win-x64
-          path: cli-sidecar/bin/Release/net9.0/win-x64/publish/aware-sidecar.exe
+          name: ${{ matrix.artifact }}
+          path: cli-sidecar/bin/Release/net9.0/${{ matrix.rid }}/publish/${{ matrix.binary }}
 
-  # Linux + macOS sidecars are tracked for v0.5.2 (their NativeAOT paths need
-  # platform-specific toolchain setup); not blocking v0.5.1.
+# macOS sidecar build deferred to v0.5.3.

@@ -22,3 +22,15 @@ public sealed class DecompileArgs
     [JsonPropertyName("agent_id")] public string? AgentId { get; set; }
     [JsonPropertyName("accept_license")] public bool AcceptLicense { get; set; }
 }
+
+public sealed class FromComArgs
+{
+    [JsonPropertyName("progid")] public string ProgId { get; set; } = "";
+    [JsonPropertyName("agent_id")] public string? AgentId { get; set; }
+}
+
+public sealed class FromHeadersArgs
+{
+    [JsonPropertyName("files")] public string[] Files { get; set; } = Array.Empty<string>();
+    [JsonPropertyName("agent_id")] public string? AgentId { get; set; }
+}

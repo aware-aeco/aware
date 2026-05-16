@@ -16,22 +16,26 @@ pub fn build_from_dlls(path: &str, agent_id: Option<&str>) -> Result<GeneratedAg
     crate::sidecar::reflect_dlls(args)
 }
 
-pub fn build_from_com(
-    _progid: &str,
-    _agent_id: Option<&str>,
-) -> Result<GeneratedAgent, AwareError> {
-    Err(AwareError::NotYetImplemented(
-        "--from-com is deferred to v0.5.2 (separate phase: COM TypeLib interop in the sidecar)",
-    ))
+pub fn build_from_com(progid: &str, agent_id: Option<&str>) -> Result<GeneratedAgent, AwareError> {
+    if !cfg!(windows) {
+        return Err(AwareError::NotYetImplemented("--from-com is Windows-only"));
+    }
+    let args = crate::sidecar::FromComArgs {
+        progid: progid.to_string(),
+        agent_id: agent_id.map(String::from),
+    };
+    crate::sidecar::from_com(args)
 }
 
 pub fn build_from_headers(
-    _path: &str,
-    _agent_id: Option<&str>,
+    path: &str,
+    agent_id: Option<&str>,
 ) -> Result<GeneratedAgent, AwareError> {
-    Err(AwareError::NotYetImplemented(
-        "--from-headers is deferred to v0.5.3 (separate phase: libclang via P/Invoke or clang.exe shell)",
-    ))
+    let args = crate::sidecar::FromHeadersArgs {
+        files: vec![path.to_string()],
+        agent_id: agent_id.map(String::from),
+    };
+    crate::sidecar::from_headers(args)
 }
 
 pub fn build_with_decompile(pkg: &str) -> Result<GeneratedAgent, AwareError> {
@@ -76,16 +80,36 @@ mod tests {
     }
 
     #[test]
-    fn com_returns_not_yet_implemented() {
-        let err = build_from_com("progid", None).unwrap_err();
-        assert!(matches!(err, AwareError::NotYetImplemented(_)));
-        assert!(err.to_string().contains("not yet implemented"));
+    fn com_no_sidecar_returns_not_found_or_not_implemented() {
+        // On Windows, build_from_com routes to the sidecar; without a sidecar binary it returns
+        // NotFound. On non-Windows it returns NotYetImplemented (Windows-only guard).
+        // SAFETY: single-threaded test; env var is restored immediately after.
+        unsafe {
+            std::env::set_var("AWARE_SIDECAR", "C:/aware-sidecar-does-not-exist-test.exe");
+        }
+        let err = build_from_com("WScript.Shell", None).unwrap_err();
+        unsafe {
+            std::env::remove_var("AWARE_SIDECAR");
+        }
+        let ok = matches!(
+            err,
+            AwareError::NotFound(_) | AwareError::NotYetImplemented(_)
+        );
+        assert!(ok, "expected NotFound or NotYetImplemented, got: {err}");
     }
 
     #[test]
-    fn headers_returns_not_yet_implemented() {
-        let err = build_from_headers("path", None).unwrap_err();
-        assert!(matches!(err, AwareError::NotYetImplemented(_)));
+    fn headers_no_sidecar_returns_not_found() {
+        // build_from_headers now routes to the sidecar; without a sidecar binary it returns NotFound.
+        // SAFETY: single-threaded test; env var is restored immediately after.
+        unsafe {
+            std::env::set_var("AWARE_SIDECAR", "C:/aware-sidecar-does-not-exist-test.exe");
+        }
+        let err = build_from_headers("path/to/header.h", None).unwrap_err();
+        unsafe {
+            std::env::remove_var("AWARE_SIDECAR");
+        }
+        assert!(matches!(err, AwareError::NotFound(_)));
     }
 
     #[test]
