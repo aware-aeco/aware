@@ -6,18 +6,19 @@ This folder houses the Rust implementation. The contract it satisfies is in [`10
 
 ## Status
 
-**v0.2 — install + validate.** Sixteen surfaces shipped (eight from v0.1 plus eight new):
+**v0.3 — runtime.** Nineteen surfaces shipped (sixteen from v0.1+v0.2 plus three new):
 
 - `aware --version` / `aware --help`
-- `aware doctor` (now includes agent-integrity checks)
+- `aware doctor` (now includes Integrity + Running checks)
 - `aware agent list` / `agent describe <id>` / `agent skill <id> <skill>`
-- `aware agent install <path>` / `agent install <id>[@version]` / `agent install <bundle>`
-- `aware agent uninstall <id>` / `agent update <id>` / `agent validate <path>`
+- `aware agent install <path|id[@version]|bundle>` / `agent uninstall <id>` / `agent update <id>` / `agent validate <path>`
 - `aware app list` / `app show <id>`
 - `aware app install <path>` / `app uninstall <id>` / `app validate <path>` / `app export <id> <output>`
+- `aware app run <app>` — execute the topology (one-shot or long-running) ← v0.3
+- `aware app stop <app>` — terminate a running long-running app ← v0.3
+- `aware app logs <app> [--tail | --replay [--run-id <id>]]` — read execution traces ← v0.3
 
-Still stubbed: `agent publish`, `app run/stop/logs` (v0.3), `connect / disconnect` (v0.4),
-`build agent`, `skill ...` (v0.5).
+Still stubbed: `agent publish` (v0.2+), `connect / disconnect` (v0.4), `build agent`, `skill ...` (v0.5).
 
 ## Build
 
@@ -55,6 +56,47 @@ aware app install ./my-app                                   # writes lockfile.y
 aware app validate ./my-app
 aware app export welded-to-tc /tmp/exported.flo
 ```
+
+### Run an app (v0.3)
+
+```bash
+# One-shot app (all nodes stateless): runs to completion, exits
+aware app run my-oneshot-app
+
+# Long-running app (any stateful node like a watcher): blocks until Ctrl+C
+aware app run welded-to-tc --instance fab-east
+
+# Inputs and config overrides
+aware app run welded-to-tc --config tc-project-id=proj-123 --config tc-folder-id=folder-456
+
+# Stop a long-running app from another terminal
+aware app stop welded-to-tc --instance fab-east
+
+# Read execution traces
+aware app logs welded-to-tc                       # raw JSONL of most recent run
+aware app logs welded-to-tc --tail                # follow live
+aware app logs welded-to-tc --replay              # pretty-printed replay of most recent run
+aware app logs welded-to-tc --replay --run-id r_abc123   # specific run
+```
+
+The runtime invokes each agent's CLI transport binary by name (from `transport.cli.binary`).
+Until v0.5 builds those binaries, expect "binary not found" errors at run-time — the orchestrator
+logic itself is tested with in-process mocks under the hood.
+
+### Templating
+
+Node configs support Jinja-style substitution:
+
+- `{{ inputs.X }}` — inputs passed via `--config` or app-level config
+- `{{ <node-id>.<output-field> }}` — upstream outputs (kebab-case node ids are auto-translated to underscore; use bracket syntax for raw kebab access: `{{ upstream["my-node"].field }}`)
+- `{{ secrets.<id> }}` — credentials from `~/.aware/credentials/<id>.json`
+- `{{ config.X }}` — app-level config kv from `~/.aware/apps/<app>/config.yaml`
+
+### Provenance
+
+Every run writes a JSONL trace to `~/.aware/logs/<app>/<instance>/<run-id>.jsonl` with events for
+`run-start`, `node-start`, `node-output`, `node-error`, `node-stop`, `run-end`. Replay them at any time
+with `aware app logs ... --replay`.
 
 By default the CLI reads the registry from
 `https://raw.githubusercontent.com/aware-aeco/aware/main/registry-index.json`.
