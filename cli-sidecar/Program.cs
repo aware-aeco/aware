@@ -33,17 +33,33 @@ internal static class Program
                 {
                     var argsObj = envelope.Args.Deserialize(SidecarJsonContext.Default.ReflectDllsArgs);
                     if (argsObj is null) { EmitError(envelope.Op, "missing args"); return 2; }
-                    // Task 3 implements DllReflector.Reflect(...)
-                    EmitError(envelope.Op, "reflect-dlls handler lands in Task 3");
-                    return 1;
+                    try
+                    {
+                        var agent = AwareSidecar.Reflection.DllReflector.Reflect(argsObj.Globs, argsObj.AgentId);
+                        EmitOk(envelope.Op, new ResponseData { Agent = agent });
+                        return 0;
+                    }
+                    catch (Exception ex)
+                    {
+                        EmitError(envelope.Op, ex.Message);
+                        return 1;
+                    }
                 }
                 case "decompile":
                 {
                     var argsObj = envelope.Args.Deserialize(SidecarJsonContext.Default.DecompileArgs);
                     if (argsObj is null) { EmitError(envelope.Op, "missing args"); return 2; }
-                    // Task 4 implements IlspyShell.Decompile(...)
-                    EmitError(envelope.Op, "decompile handler lands in Task 4");
-                    return 1;
+                    try
+                    {
+                        var agent = AwareSidecar.Decompile.IlspyShell.Decompile(argsObj.PackagePath, argsObj.Version, argsObj.AgentId, argsObj.AcceptLicense);
+                        EmitOk(envelope.Op, new ResponseData { Agent = agent });
+                        return 0;
+                    }
+                    catch (Exception ex)
+                    {
+                        EmitError(envelope.Op, ex.Message);
+                        return 1;
+                    }
                 }
                 default:
                 {
