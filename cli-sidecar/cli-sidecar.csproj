@@ -24,7 +24,11 @@
       IL2104, IL3053: roll-up codes the ILC emits when a package produces AOT/trim warnings.
       All three codes are passed to the ILC via NoWarn (fed to ilc nowarn by the native targets).
     -->
-    <NoWarn>$(NoWarn);IL2026;IL2104;IL3053</NoWarn>
+    <!--
+      IL2050: LoadTypeLibEx P/Invoke declares an out ITypeLib COM interface parameter. ITypeLib
+      is BCL-defined and will not be trimmed. COM ref is managed manually via Marshal.ReleaseComObject.
+    -->
+    <NoWarn>$(NoWarn);IL2026;IL2050;IL2104;IL3053</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
