@@ -14,6 +14,7 @@ mod error;
 mod manifest;
 mod paths;
 mod render;
+mod validate;
 
 use clap::{Parser, Subcommand};
 
