@@ -4,8 +4,8 @@
 
 #![allow(dead_code)]
 
+pub mod fetch;
 pub mod index;
-// pub mod fetch;  // added in Task 5
 
 #[allow(unused_imports)]
 pub use index::{BundleEntry, Index, IndexEntry, VersionEntry};

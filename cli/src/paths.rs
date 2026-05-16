@@ -35,6 +35,11 @@ impl Paths {
         self.aware_home.join("config.yaml")
     }
 
+    #[allow(dead_code)] // consumed by Task 5+ (registry::fetch via commands)
+    pub fn cache_dir(&self) -> PathBuf {
+        self.aware_home.join("cache")
+    }
+
     #[allow(dead_code)] // consumed by v0.4 (aware connect)
     pub fn credentials_dir(&self) -> PathBuf {
         self.aware_home.join("credentials")
@@ -64,6 +69,11 @@ mod tests {
     #[test]
     fn config_path_appends_config_yaml() {
         assert_eq!(p("/x").config_path(), PathBuf::from("/x/config.yaml"));
+    }
+
+    #[test]
+    fn cache_dir_appends_cache() {
+        assert_eq!(p("/x").cache_dir(), PathBuf::from("/x/cache"));
     }
 
     #[test]
