@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShape.HasExternalGeometry
+Checks whether the externally tagged geometry is already present in this DirectShape.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DividedSurface.GetTileReference
+Get a reference to one of the tile surfaces associated with a given seed node.

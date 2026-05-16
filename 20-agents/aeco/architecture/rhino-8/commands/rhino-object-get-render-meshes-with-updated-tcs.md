@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.GetRenderMeshesWithUpdatedTCs
+Gets the render meshes of some objects.

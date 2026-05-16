@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TreeGridView.GetDragInfo
+Gets the tree grid drag info for the specified DragEventArgs.

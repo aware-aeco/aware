@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedParametersEventArgs.TryGetLine
+Get a line for the specified key

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedControlHandler`3.DoDragDrop
+Starts drag operation using this control as drag source.

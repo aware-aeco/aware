@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentObject.RemovedFromDocument
+This method will be called when an object is removed from a document.   Override this method if you want to handle such events.

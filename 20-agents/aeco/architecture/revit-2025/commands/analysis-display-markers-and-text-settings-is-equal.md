@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayMarkersAndTextSettings.IsEqual
+Compares two colored surface settings objects.

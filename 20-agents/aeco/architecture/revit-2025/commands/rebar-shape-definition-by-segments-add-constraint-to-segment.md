@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDefinitionBySegments.AddConstraintToSegment
+Add a constraint that helps determine the length of a segment.

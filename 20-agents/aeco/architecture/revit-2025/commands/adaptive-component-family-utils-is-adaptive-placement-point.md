@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AdaptiveComponentFamilyUtils.IsAdaptivePlacementPoint
+Verifies if the Reference Point is an Adaptive Placement Point.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadTemperature.Select
+Selects a load temperature from the model database. The ID must be set.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoDoc.CustomRenderMeshesBoundingBox
+Returns the bounding box of custom render primitives for this object .

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MenuItem.PerformValidate
+Executes the  for this item.

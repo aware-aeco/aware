@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectContext3DHandleSettings.SetTransparency
+Sets the transparency value of the handle and the associated DirectContext3D graphics.

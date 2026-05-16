@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewViewSet
+Creates a new instance of a View set.

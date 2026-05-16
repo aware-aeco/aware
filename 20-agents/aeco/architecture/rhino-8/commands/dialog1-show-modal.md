@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Dialog`1.ShowModal
+Shows the dialog and blocks until the user closes the dialog

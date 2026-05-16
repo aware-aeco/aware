@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.GetMaterialIds
+Gets the element ids of all materials present in the element.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCTransformSetter.Initialize
+Initializes the transformation in the transform setter.

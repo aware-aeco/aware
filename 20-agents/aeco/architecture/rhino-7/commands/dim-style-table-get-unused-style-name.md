@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DimStyleTable.GetUnusedStyleName
+Get a unique name for a style that does not already exist in the DimStyle table

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCTransformSetter.Create
+Creates a new instance of a transform setter.

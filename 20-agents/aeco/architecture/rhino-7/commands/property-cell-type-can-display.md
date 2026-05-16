@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PropertyCellType.CanDisplay
+Determines whether this instance can be used to display the specified .

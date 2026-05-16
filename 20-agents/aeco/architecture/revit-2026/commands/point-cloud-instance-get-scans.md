@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudInstance.GetScans
+Returns array of scan names.

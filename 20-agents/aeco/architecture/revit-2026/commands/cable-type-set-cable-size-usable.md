@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableType.SetCableSizeUsable
+Marks the Cable Size can be used by this Cable Type.

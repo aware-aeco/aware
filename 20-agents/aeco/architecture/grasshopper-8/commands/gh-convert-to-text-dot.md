@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToTextDot
+Convert data into Rhino.Geometry.TextDot.

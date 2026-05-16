@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.GetSelfIntersections
+Gets the intersections of this mesh with itself.

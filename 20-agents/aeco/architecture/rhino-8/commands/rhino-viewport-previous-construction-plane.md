@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.PreviousConstructionPlane
+Sets the construction plane to the plane that was             active before the last call to NextConstructionPlane             or SetConstructionPlane.

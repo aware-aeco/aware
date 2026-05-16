@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIView.ZoomSheetSize
+Zoom to the sheet size.

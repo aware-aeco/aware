@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PostEffectPipeline.GetMaxLuminance
+Get the max luminance in the rendering.

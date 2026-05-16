@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Window.Minimize
+Sets  to

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.OffsetOnSurface
+Offset this curve on a brep face surface. This curve must lie on the surface.

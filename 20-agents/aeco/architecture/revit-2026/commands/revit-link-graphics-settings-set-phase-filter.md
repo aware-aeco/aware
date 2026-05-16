@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitLinkGraphicsSettings.SetPhaseFilter
+Sets phase filter id and phase filter type of RevitLinkGraphicsSettings.

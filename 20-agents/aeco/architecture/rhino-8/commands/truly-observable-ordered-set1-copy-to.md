@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TrulyObservableOrderedSet`1.CopyTo
+Copies the values of the set to an array.

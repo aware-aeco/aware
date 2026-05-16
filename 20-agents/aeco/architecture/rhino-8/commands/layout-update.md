@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Layout.Update
+Re-calculates the layout of the controls and re-positions them, if necessary

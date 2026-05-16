@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.CanModifyDisplayStyle
+Indicates if DisplayStyle can be modified.

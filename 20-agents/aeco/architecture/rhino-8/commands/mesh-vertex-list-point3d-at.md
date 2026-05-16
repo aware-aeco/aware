@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexList.Point3dAt
+Get double precision location at a given index

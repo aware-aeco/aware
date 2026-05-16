@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Phase.Insert
+Creates a new phase.

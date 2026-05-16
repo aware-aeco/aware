@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RelayValueCommand`2.GetValue
+Gets the value.

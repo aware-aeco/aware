@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailuresAccessor.SetFailureHandlingOptions
+Sets failure handling options for the transaction currently being finished.

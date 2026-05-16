@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AdaptiveComponentInstanceUtils.IsInstanceFlipped
+Gets the value of the flip parameter on the adaptive instance.

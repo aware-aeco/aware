@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterableValueProvider.IsDoubleValueSupported
+Determines whether the provide can provide a double-precision numeric value for the given element.

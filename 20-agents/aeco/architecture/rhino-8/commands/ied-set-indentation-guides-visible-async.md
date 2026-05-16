@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.SetIndentationGuidesVisibleAsync
+set visibility of indentation guides (usually set at the language level)

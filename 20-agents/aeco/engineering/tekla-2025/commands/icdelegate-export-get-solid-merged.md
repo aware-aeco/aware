@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportGetSolidMerged
+DO NOT USE! For internal usage only!

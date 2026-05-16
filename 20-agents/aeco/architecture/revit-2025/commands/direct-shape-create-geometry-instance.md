@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShape.CreateGeometryInstance
+Creates a copy of a definition shape that was created earlier.

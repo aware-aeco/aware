@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BezierSurface.Dispose
+Actively reclaims unmanaged resources that this instance uses.

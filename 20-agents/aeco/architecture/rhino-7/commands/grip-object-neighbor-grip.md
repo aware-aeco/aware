@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GripObject.NeighborGrip
+Used to get a grip's logical neighbors, like NURBS curve, surface,             and cage control point grips.

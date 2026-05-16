@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexList.GetTopologicalIndenticalVertices
+Gets a list of other vertices which are "topologically" identical             to this vertex.

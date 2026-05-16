@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCData.AsInstance
+Gets storage value as IFCAnyHandle when its PrimitiveType is instance.

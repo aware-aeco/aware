@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHInstanceReference_Primary
+Converts similar data into a GH_InstanceReference instance.  Data is not guaranteed to be duplicated.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextureMapping.Evaluate
+Evaluate the mapping to get a texture coordinate

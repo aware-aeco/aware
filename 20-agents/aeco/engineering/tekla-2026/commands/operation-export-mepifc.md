@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.ExportMEPIFC
+MEP IFC export

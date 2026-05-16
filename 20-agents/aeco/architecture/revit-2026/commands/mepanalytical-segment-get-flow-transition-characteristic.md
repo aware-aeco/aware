@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPAnalyticalSegment.GetFlowTransitionCharacteristic
+Gets the flow transition characteristic of the segment.

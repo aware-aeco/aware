@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.AsReadOnlyListOfPoints
+Returns an enumerator and list indexer over point cloud locations.

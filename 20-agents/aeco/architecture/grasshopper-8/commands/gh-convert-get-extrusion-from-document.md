@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.GetExtrusionFromDocument
+Harvest an extrusion object from a Rhino document.

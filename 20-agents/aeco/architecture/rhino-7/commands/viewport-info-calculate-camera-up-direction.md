@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewportInfo.CalculateCameraUpDirection
+Calculates the camera up direction.

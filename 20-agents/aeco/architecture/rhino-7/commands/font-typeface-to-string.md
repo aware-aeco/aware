@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FontTypeface.ToString
+Gets a string representation of this typeface

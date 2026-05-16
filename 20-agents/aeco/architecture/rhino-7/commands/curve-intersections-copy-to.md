@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveIntersections.CopyTo
+Copies all intersection results into another array, departing at an index in the target array.

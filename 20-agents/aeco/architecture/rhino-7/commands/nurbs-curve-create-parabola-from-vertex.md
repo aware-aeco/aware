@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurve.CreateParabolaFromVertex
+Creates a parabola from vertex and end points.

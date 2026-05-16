@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FreeFormElement.UpdateSolidGeometry
+Updates the geometry of the FreeForm element to the given shape preserving References to the existing geometry where possible (see remarks for rules).

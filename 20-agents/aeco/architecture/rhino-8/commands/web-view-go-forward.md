@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WebView.GoForward
+Navigates the browser forward to the next page in history, if there is one.

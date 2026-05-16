@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Building.GetSolid
+Returns the solid of the pour object.

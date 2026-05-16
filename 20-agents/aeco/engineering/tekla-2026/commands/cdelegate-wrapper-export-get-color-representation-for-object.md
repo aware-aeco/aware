@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetColorRepresentationForObject
+DO NOT USE! For internal usage only!

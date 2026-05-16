@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetReferenceElevations
+Returns element ids of all reference elevations in the view.

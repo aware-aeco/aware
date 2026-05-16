@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CreateFromSurfaceControlNet
+Calculate a mesh representation of a surface's control net.

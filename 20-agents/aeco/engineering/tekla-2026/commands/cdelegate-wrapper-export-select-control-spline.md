@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportSelectControlSpline
+DO NOT USE! For internal usage only!

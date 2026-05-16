@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyDataSettings.GetFromDocument
+Every project document has a EnergyDataSettings element.    Family documents do not have EnergyDataSettings elements.

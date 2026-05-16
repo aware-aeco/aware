@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FillPatternElement.GetFillPattern
+Gets the FillPattern associated to this element.

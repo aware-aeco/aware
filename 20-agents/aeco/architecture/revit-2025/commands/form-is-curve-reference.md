@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Form.IsCurveReference
+Tell if the pick is the reference to a curve of the form.

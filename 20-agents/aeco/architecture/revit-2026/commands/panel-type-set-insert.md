@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelTypeSet.Insert
+Insert the specified panel type into the set.

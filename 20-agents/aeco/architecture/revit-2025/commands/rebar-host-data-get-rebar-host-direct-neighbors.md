@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarHostData.GetRebarHostDirectNeighbors
+Returns a set of ElementIds for Elements joined to the provided host element.

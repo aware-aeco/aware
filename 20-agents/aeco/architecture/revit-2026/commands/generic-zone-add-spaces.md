@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GenericZone.AddSpaces
+Adds spaces to the zone.

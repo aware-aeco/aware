@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WallFoundation.Create
+Creates a new wall foundation within the project.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-XYZ.Divide
+Divides this vector by the specified value and returns the result.

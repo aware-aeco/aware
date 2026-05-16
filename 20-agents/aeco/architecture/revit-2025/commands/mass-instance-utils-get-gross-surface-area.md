@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MassInstanceUtils.GetGrossSurfaceArea
+Get the total exterior building surface area represented by a mass instance.

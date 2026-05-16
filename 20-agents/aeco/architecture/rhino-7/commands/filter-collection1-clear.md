@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterCollection`1.Clear
+Clears the items from the collection.

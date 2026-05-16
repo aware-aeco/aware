@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Seam.SetPrimaryObject
+Sets the primary object.

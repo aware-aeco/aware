@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataStoreVirtualCollection`1.RemoveAt
+Removes the item at the specified index. This collection is read-only so this throws an exception.

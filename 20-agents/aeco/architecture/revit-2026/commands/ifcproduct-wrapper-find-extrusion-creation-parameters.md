@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCProductWrapper.FindExtrusionCreationParameters
+Obtains the extrusion creation data associated with the given element.

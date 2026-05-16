@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PreviewLighting.ElementKind
+ElementKind

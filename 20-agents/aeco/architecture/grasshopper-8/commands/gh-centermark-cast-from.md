@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Centermark.CastFrom
+Remote to Local caster function. This stuff is complex, don't concern yourself with casting logic.

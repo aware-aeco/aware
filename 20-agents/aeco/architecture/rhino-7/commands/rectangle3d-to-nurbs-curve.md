@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rectangle3d.ToNurbsCurve
+Constructs a nurbs curve representation of this rectangle.

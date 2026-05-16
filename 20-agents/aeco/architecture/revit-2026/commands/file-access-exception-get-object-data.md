@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileAccessException.GetObjectData
+Retrieves data needed to serialize the target object.

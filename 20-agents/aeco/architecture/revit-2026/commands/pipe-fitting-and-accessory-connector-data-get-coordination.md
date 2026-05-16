@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PipeFittingAndAccessoryConnectorData.GetCoordination
+Gets the coordination of the connector

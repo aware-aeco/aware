@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.FilterDisabled
+Filter a list of objects.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IZooClientUtilities.GetOneLicenseStatus
+Returns the current status of a license for ui purposes

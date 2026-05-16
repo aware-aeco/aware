@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DimensionStyle.Duplicate
+Construct a deep (full) copy of this object.

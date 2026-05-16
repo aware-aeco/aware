@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmCommonComponentTable`1.Dump
+Prepares a text dump of object table.

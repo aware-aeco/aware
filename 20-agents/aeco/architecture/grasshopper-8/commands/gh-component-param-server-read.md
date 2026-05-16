@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentParamServer.Read
+Read all parameter data from an IO archive.

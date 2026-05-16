@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CitySet.Erase
+Removes a specified city from the set.

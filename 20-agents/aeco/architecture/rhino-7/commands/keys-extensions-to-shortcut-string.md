@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-KeysExtensions.ToShortcutString
+Converts the specified key to a shortcut string such as Ctrl+Alt+Z

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ImageInstance.SetLocation
+Moves the ImageInstance to the specified location

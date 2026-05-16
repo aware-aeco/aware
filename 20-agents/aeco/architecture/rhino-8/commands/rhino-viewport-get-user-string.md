@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.GetUserString
+Gets a user string.

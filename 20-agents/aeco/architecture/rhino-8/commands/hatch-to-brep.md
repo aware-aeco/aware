@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Hatch.ToBrep
+Constructs a Brep representation of this hatch.

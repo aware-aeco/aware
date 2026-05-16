@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RelayCommand`1.CanExecute
+Determines whether this command can execute with the specified parameter.

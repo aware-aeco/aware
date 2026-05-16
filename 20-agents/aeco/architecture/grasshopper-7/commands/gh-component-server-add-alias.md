@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentServer.AddAlias
+Add an alias to a target.

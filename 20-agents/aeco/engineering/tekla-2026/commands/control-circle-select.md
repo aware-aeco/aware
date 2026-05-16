@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlCircle.Select
+Selects the control circle with the given Identifier.

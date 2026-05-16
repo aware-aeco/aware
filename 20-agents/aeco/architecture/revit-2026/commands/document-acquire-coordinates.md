@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.AcquireCoordinates
+Acquires coordinates from the specified link instance.

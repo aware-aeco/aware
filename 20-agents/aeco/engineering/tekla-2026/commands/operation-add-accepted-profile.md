@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.AddAcceptedProfile
+Accept profile that is against fabricator settings.

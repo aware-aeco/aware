@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BuildingEnvelopeAnalyzer.GetBoundingElements
+Returns the collection of building elements exposed to the outside forming the building envelope.

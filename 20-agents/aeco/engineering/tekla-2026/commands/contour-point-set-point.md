@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ContourPoint.SetPoint
+Sets the point's coordinates for the contour point.

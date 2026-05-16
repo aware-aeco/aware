@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NumberingSchema.RemoveGaps
+Removes gaps, if any, in a numbering sequence

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Utility.InvokeMethod
+Call a method via its name.

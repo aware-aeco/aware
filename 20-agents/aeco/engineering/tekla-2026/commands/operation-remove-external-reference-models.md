@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.RemoveExternalReferenceModels
+Removes the given external reference models defined by the given full file names and paths.

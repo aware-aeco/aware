@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableTrayConduitBase.IsWithFitting
+Return whether its cable tray/conduit type is with fitting

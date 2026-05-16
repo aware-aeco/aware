@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmGroupTable.AddGroup
+Adds a new empty group to the group table.

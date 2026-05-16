@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_SliderBase.MouseMove
+Respond to mouse-move events.

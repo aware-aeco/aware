@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ProjectInfo.SetDynamicStringProperty
+Sets a dynamic string property for the ProjectInfo.

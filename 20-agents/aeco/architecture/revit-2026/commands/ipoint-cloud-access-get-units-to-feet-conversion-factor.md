@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IPointCloudAccess.GetUnitsToFeetConversionFactor
+Implement this method to return the conversion factor from the units of the point cloud to feet.

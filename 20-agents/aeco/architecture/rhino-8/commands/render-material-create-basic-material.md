@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderMaterial.CreateBasicMaterial
+Constructs a new basic material from a Material.

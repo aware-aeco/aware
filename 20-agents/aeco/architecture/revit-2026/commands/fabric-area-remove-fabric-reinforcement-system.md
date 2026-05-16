@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricArea.RemoveFabricReinforcementSystem
+Deletes the specified FabricArea, and converts its FabricSheet elements    to equivalent Single Fabric Sheet elements.

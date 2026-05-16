@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-VisualAnalysisMode.Find
+Finds a visual analysis mode by guid.

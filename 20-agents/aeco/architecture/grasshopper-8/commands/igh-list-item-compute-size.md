@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_ListItem.ComputeSize
+Compute the size of this item as a function of layout dimensions.

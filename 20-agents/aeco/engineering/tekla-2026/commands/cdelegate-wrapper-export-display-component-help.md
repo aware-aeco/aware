@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportDisplayComponentHelp
+DO NOT USE! For internal usage only!

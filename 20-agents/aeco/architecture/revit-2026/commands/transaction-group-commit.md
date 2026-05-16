@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TransactionGroup.Commit
+Commits the transaction group.

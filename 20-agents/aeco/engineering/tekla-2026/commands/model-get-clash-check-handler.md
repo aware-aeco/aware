@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Model.GetClashCheckHandler
+Returns a new clash check handler.

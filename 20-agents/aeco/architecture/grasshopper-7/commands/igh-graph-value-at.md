@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Graph.ValueAt
+Evaluates a single parameter in the unit range

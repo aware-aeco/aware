@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GeometricGoo`1.LoadGeometry
+If the geometry is referenced and currently unloaded, forces loading of the geometry.  Not all IGH_GeometricGoo implementations support referenced geometry.

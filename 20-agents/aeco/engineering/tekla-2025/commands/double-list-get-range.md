@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DoubleList.GetRange
+Gets a sub-list of the double list.

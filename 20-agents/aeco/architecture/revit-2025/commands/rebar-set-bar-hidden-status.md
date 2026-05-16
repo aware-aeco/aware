@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.SetBarHiddenStatus
+Sets the bar in this rebar set to be hidden or unhidden in the given view.

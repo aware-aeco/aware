@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjRef.Trim
+If the referenced geometry is an edge of a surface,             this returns the associated brep trim.

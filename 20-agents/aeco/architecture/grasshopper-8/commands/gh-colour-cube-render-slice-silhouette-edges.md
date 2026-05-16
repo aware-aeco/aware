@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourCube.RenderSliceSilhouetteEdges
+Render the silhouette edges of the slice.

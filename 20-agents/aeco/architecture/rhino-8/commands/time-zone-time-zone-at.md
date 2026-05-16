@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TimeZone.TimeZoneAt
+Returns a time zone at given index.

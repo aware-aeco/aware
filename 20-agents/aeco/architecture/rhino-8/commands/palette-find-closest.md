@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Palette.FindClosest
+Finds the closest color in this palette to the specified

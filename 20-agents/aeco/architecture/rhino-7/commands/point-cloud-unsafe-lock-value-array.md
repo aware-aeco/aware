@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudUnsafeLock.ValueArray
+Retrieves a pointer to the raw array of point values, or null if none is available.

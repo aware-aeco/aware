@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_SettingFrontend.SettingsUI
+Create the winforms UI portion for this setting.

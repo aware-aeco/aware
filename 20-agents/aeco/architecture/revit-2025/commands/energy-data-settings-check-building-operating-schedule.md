@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyDataSettings.CheckBuildingOperatingSchedule
+Checks that the building operating schedule falls within an appropriate range.

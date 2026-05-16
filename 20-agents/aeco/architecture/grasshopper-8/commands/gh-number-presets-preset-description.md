@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_NumberPresets.PresetDescription
+Gets the preset description at the given index.

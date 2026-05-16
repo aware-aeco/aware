@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportSelectWeld
+DO NOT USE! For internal usage only!

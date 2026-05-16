@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Selection.PickElementsByRectangle
+Prompts the user to select multiple elements by drawing a rectangle.

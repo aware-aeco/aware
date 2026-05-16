@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PrintDialog.ShowDialog
+Shows the print dialog for the specified , printing after closed if the user selects to print.

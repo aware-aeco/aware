@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalResourceBrowserData.GetMatchOptions
+Gets the match options used to filter external resources.

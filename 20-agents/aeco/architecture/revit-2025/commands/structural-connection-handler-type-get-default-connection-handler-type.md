@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralConnectionHandlerType.GetDefaultConnectionHandlerType
+Gets a default type id for Structural Connection.

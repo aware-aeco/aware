@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IUserInterfaceSection.UserInterfaceDisplayData
+Called by UserInterfaceSection when the selected content changes or a             content field property value changes.

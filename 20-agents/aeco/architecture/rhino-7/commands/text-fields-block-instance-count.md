@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextFields.BlockInstanceCount
+Returns the number of block instances found in the document               with the specified block definition name or the instance reference id.

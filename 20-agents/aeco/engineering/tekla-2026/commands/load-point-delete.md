@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadPoint.Delete
+Deletes the load point instance with the given ID from the model database.

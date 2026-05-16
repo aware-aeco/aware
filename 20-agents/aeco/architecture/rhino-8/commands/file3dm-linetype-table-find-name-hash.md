@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmLinetypeTable.FindNameHash
+Finds a Linetype given its name hash.

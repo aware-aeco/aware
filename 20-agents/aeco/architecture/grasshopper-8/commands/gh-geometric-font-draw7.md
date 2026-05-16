@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GeometricFont.Draw7
+Draw the geometric character '7' at the specified location.

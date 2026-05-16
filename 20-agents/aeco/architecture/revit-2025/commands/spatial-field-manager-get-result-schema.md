@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpatialFieldManager.GetResultSchema
+Returns result schema by index

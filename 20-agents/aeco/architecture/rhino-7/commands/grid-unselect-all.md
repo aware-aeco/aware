@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Grid.UnselectAll
+Clears the selection

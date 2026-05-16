@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Size.FitTo
+Fits this size to the specified , keeping the aspect

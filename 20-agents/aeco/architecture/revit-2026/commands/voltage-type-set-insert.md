@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-VoltageTypeSet.Insert
+Insert the specified voltage type into the set.

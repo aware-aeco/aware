@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCTransaction.RollBack
+Rolls back all changes made to the IFC file during the transaction.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SlabShapeVertexArray.Append
+Add the item to the end of the array.

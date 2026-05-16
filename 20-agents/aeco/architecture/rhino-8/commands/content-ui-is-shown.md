@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ContentUI.IsShown
+Returns true if the UI is being shown, else false

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PartUtils.FindMergeableClusters
+Segregates a set of elements into subsets which are    valid for merge.

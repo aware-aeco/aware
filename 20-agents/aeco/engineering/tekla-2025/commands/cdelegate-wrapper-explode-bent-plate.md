@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExplodeBentPlate
+DO NOT USE! For internal usage only!

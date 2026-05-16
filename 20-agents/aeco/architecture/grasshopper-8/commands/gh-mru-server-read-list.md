@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MRU_Server.ReadList
+Read the MRU data from the grasshopper settings folder.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurtainSystem.AddCurtainGrid
+Add CurtainGrid on the specified face for the CurtainSystem.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BinaryArchiveWriter.WriteDictionary
+Delivers the complete content of a dictionary to the archive.

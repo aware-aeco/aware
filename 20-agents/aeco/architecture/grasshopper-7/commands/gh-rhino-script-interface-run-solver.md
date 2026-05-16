@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RhinoScriptInterface.RunSolver
+Runs the solver once, even if the global solver lock is on.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GooProxy`1.Construct
+Override this method to supply a custom UI during proxy construction.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FillGrid.CalculateLinesPerLength
+Calculates the number of solid lines of the pattern per unit length.

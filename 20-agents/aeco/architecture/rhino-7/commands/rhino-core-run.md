@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoCore.Run
+Runs RhinoApp Message loop

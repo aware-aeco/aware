@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetRunTimeIdentifiersByGuid
+Gets the corresponding run time identifiers to list of guids in a mass operation.

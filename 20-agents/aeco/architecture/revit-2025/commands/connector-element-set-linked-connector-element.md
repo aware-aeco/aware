@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConnectorElement.SetLinkedConnectorElement
+Set the linked connector element.

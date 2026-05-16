@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SelectableFilterCollection`1.SelectRow
+Selects the specified  in the underlying list.

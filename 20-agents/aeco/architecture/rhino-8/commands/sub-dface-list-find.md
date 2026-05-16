@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDFaceList.Find
+Find a face in this SubD with a given id

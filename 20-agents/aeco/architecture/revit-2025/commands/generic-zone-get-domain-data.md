@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GenericZone.GetDomainData
+Gets the domain data for the generic zone.

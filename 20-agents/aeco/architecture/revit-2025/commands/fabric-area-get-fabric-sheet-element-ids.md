@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricArea.GetFabricSheetElementIds
+Retrieves the identifiers of all the FabricSheet Elements in the FabricArea.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleData.RemoveLoadClassification
+Remove a Load Classification Id from the array of Load Classifications

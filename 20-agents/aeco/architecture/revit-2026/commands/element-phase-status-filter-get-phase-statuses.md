@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementPhaseStatusFilter.GetPhaseStatuses
+Returns the phase statuses assigned to this filter.

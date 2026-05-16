@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostedSweep.AddSegment
+Add segments to the hosted sweep object.

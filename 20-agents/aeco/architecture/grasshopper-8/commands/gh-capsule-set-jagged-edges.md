@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Capsule.SetJaggedEdges
+Assign left and right jagged edges.

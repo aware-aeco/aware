@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CreateFromSphere
+Constructs a mesh sphere.

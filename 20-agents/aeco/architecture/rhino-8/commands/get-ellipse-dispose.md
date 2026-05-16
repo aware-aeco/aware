@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetEllipse.Dispose
+Actively releases the unmanaged object.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipelineAttributes.SetColorFadeEffect
+Set a color fade effect to make objects fade a given amount towards a given color.

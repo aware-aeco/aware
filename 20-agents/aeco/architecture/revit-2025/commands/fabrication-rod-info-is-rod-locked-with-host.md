@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationRodInfo.IsRodLockedWithHost
+Checks if the rod is locked with the host. The method is applicable only for bearer hanger.

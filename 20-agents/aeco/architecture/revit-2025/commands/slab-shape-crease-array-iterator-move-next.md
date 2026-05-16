@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SlabShapeCreaseArrayIterator.MoveNext
+Move the iterator one item forward.

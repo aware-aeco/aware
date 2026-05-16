@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.HideActiveWorkPlane
+Hide the active work plane of the view.

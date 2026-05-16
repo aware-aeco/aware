@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SumSurface.Create
+Constructs a new sum surface by extruding a curve A along a path B.

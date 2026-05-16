@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TopographySurface.ContainsPoint
+Identifies whether the given point exists in the topography surface.

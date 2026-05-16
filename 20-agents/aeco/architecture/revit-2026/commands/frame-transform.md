@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Frame.Transform
+Applies the input transform to this frame.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OverrideGraphicSettings.SetCutLineWeight
+Sets the cut surface line weight.

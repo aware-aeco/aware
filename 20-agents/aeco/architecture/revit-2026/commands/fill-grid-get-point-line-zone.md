@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FillGrid.GetPointLineZone
+Gets the index of fill grid line and the point on the grid line nearest to the input point.

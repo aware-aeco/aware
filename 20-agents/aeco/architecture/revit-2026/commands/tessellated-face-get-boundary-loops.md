@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TessellatedFace.GetBoundaryLoops
+Get loops bounding the face.

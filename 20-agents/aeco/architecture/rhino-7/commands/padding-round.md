@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Padding.Round
+Converts a floating point  to an integral padding by rounding each of its components

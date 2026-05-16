@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CommandAliasList.IsDefault
+Computes a value indicating if the current alias list is the same as the default alias list.

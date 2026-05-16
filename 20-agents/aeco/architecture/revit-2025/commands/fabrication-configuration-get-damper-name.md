@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetDamperName
+Gets the damper name from its identifier.

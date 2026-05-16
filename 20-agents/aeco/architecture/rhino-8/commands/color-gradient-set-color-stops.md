@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorGradient.SetColorStops
+Set color stops for the gradient

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetNumber.Get
+Call to get a number.

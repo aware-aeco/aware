@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RTree.Clear
+Removes all elements.

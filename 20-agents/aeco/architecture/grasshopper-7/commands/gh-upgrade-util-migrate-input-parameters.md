@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_UpgradeUtil.MigrateInputParameters
+Migrate all input parameters.

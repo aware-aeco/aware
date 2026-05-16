@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.IsCellOverridden
+Indicates if the column is overridden or not.

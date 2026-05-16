@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurvePointList.UVNDirectionsAt
+Calculates the U, V, and N directions of a NURBS curve control point similar to the method used by Rhino's MoveUVN command.

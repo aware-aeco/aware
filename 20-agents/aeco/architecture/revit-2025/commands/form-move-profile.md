@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Form.MoveProfile
+Move a profile of the form, specified by a reference, and an offset vector.

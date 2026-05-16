@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.CommitChanges
+Moves changes made to this RhinoObject into the RhinoDoc.

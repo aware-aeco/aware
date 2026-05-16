@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Storey.SetManualObjectOverrides
+Manually overrides grouping rules and directly assigns specified model objects to a Building Hierarchy object.

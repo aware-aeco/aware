@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawMeshShaded
+Draws the shaded faces of a given mesh.

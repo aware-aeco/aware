@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.GetElevationProfile
+Obtains the curve loops which bound the wall's elevation profile.

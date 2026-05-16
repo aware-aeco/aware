@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FillGrid.IsEqual
+Check if two fill grids are equal.

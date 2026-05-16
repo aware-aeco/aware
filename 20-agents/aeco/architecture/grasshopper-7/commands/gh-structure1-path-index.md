@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Structure`1.PathIndex
+Find the indices that surround the given path domain. Indices may be out of bounds.

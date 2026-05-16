@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StairsEditScope.Start
+Starts an stairs edit mode for an existing Stairs element

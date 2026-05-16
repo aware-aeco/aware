@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoApp.SetCommandPrompt
+Sets the command prompt in Rhino.

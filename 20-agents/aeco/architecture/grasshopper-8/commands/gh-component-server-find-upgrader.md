@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentServer.FindUpgrader
+Find the upgrader that can convert from the given target.

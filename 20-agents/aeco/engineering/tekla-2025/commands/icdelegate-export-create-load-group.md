@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportCreateLoadGroup
+DO NOT USE! For internal usage only!

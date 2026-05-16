@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextObject.GetTextCorners
+Gets the world 3D corner points of the whole text object.

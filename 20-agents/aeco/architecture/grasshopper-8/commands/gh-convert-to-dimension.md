@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToDimension
+Convert data into Rhino.Geometry.Dimension.

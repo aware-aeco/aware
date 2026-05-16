@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interpolator.InterpolateCosine
+Sample the list of numbers with cosine interpolation.

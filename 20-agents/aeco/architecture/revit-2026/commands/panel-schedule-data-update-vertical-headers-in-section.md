@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleData.UpdateVerticalHeadersInSection
+Sets if this header should have vertical text

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentServer.UpdateRibbonUI
+Forces an update of the Ribbon control on the Grasshopper main form.

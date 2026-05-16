@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IUpdater.GetUpdaterName
+Returns a name that the Updater can be identified by to the user

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Format.FormatString
+Replaces the format items in a string with the string representations of corresponding objects in a specified array.

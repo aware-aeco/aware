@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MechanicalEquipmentSet.AreElementsNotConnectedInSeries
+Checks if the elements are not serially connected.

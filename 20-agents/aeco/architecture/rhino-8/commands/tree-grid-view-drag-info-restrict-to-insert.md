@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TreeGridViewDragInfo.RestrictToInsert
+Helper to restrict the drop to insert items only without allowing draging over existing items.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Cell2.Edges
+Get a list of all the edges that decribe the boundary of this cell.

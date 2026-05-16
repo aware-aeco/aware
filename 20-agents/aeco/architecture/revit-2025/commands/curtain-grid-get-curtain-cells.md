@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurtainGrid.GetCurtainCells
+Gets the CurtainCells owned by this curtain grid.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentServer.ClearStaleUserObjects
+Remove all user objects that no longer point to existing files.

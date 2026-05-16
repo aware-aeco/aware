@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ArchivableDictionary.Clone
+Constructs a deep copy of this object.

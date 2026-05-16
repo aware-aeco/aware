@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoltGroup.GetOtherPartsToBolt
+Returns an array list containing all the other parts that are bolted.

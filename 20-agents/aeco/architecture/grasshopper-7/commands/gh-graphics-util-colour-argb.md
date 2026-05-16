@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.ColourARGB
+Create a colour from integer RGB channels.   Channels are clipped to valid ranges.

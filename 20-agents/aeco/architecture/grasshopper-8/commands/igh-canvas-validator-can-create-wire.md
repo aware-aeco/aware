@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_CanvasValidator.CanCreateWire
+Validates whether a wire-operation can commence.

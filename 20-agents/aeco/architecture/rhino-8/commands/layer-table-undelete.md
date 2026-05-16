@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LayerTable.Undelete
+Undeletes a layer that has been deleted by DeleteLayer().

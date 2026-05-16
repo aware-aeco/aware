@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.MeshPlane
+Intersects a mesh with an (infinite) plane.

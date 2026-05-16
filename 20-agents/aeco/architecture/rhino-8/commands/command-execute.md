@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Command.Execute
+Execute the command programatically.

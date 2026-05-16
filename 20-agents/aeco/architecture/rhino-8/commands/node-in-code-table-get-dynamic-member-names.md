@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NodeInCodeTable.GetDynamicMemberNames
+Returns all additional names in the table.

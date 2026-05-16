@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.AddSpace
+Add a space at specific cell.

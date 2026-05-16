@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalLoadAreaData.HasCircuitsWithoutElectricalLoadAreas
+Checks whether there are any empty plan circuits in which there are no electrical load areas.

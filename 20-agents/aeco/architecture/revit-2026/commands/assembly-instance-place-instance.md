@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssemblyInstance.PlaceInstance
+Places an assembly instance of a given assembly type at the specified location.

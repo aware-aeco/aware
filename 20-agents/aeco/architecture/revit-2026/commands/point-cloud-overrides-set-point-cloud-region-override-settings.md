@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudOverrides.SetPointCloudRegionOverrideSettings
+Assigns override settings to a particular region within a PointCloudInstance element.

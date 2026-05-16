@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHLight_Secondary
+Converts similar data into a GH_Light instance.  Data is not guaranteed to be duplicated.

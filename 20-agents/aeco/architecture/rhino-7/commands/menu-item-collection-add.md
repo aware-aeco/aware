@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MenuItemCollection.Add
+Adds a menu item to the specified collection based on its Order.

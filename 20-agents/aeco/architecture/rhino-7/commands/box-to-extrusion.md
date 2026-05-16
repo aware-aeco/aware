@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Box.ToExtrusion
+Constructs an extrusion representation of this box.

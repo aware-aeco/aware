@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PathReinSpanSymbol.Create
+Creates a new instance of PathReinSpanSymbol in the project.

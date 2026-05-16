@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_IBinarySupport.Write
+Called when an object is required to serialize itself.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.PopClipTesting
+Pop a ClipTesting flag off the engine's stack.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FontTypeface.GetHashCode
+Gets the hash code for this instance

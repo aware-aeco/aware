@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetShapeAllMetadataKeys
+Gets all metadata keys associated with the shape

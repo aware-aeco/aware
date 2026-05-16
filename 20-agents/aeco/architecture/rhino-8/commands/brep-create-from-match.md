@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateFromMatch
+Match an edge to the target curve using the settings provided

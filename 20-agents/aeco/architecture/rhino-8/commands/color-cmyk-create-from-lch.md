@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorCMYK.CreateFromLCH
+Constructs the nearest CMYK equivalent of a LCH color.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshTextureCoordinateList.AddRange
+Appends an array of texture coordinates.

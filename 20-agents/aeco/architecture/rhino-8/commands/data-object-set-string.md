@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataObject.SetString
+Sets a string into the data object with the specified custom type.

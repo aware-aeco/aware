@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DefinitionBindingMap.Insert
+Insert the specified binding with the specified definition into the map.

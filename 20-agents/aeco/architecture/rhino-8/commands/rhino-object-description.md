@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.Description
+Get a brief description of a object, including it's attributes and geometry.

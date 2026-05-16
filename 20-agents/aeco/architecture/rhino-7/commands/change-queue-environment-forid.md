@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ChangeQueue.EnvironmentForid
+Get RenderEnvironment for given RenderHash. Can return null.

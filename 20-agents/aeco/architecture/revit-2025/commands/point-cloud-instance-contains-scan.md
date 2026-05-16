@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudInstance.ContainsScan
+Identifies whether the instance contains a scan.

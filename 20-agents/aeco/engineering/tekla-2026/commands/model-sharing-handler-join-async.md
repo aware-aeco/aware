@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelSharingHandler.JoinAsync
+Joins a shared model using the specified model identifier and join folder.

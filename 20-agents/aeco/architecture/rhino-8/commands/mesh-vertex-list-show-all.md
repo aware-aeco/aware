@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexList.ShowAll
+Shows all vertices in the mesh.

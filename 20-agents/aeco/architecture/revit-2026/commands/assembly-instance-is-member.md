@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssemblyInstance.IsMember
+Determines whether the given ElementId is a member of this assembly

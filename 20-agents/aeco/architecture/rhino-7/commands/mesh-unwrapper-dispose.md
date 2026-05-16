@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshUnwrapper.Dispose
+Dispose of this object and any unmanaged memory associated with it.

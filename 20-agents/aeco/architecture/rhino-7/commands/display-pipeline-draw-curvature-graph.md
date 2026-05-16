@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawCurvatureGraph
+Draw a typical Rhino Curvature Graph.

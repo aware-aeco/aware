@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointOnEdge.SetEdgeReference
+Change the edge or curve reference.

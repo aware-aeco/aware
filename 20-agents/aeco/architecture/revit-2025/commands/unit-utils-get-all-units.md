@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UnitUtils.GetAllUnits
+Gets the identifiers of all available units.

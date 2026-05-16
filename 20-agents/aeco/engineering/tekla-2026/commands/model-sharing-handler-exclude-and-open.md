@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelSharingHandler.ExcludeAndOpen
+Excludes the specified model from sharing and opens it. The currently opened model is closed.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PythonScript.SetIntellisenseVariable
+Sets a variable for runtime introspection.

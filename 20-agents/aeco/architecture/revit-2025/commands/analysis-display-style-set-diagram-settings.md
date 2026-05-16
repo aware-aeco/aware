@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayStyle.SetDiagramSettings
+Set diagram settings object for the style.

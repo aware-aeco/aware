@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Graphics.FillRectangles
+Fills the specified

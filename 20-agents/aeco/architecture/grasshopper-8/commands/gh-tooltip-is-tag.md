@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Tooltip.IsTag
+Returns True if the test object matches the internal Tag object

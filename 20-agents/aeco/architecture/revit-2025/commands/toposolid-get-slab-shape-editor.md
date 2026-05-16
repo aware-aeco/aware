@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Toposolid.GetSlabShapeEditor
+Gets a SlabShapeEditor that can be used to add or modify points of this Toposolid.

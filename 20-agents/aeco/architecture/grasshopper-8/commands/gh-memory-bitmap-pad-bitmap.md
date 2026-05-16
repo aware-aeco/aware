@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MemoryBitmap.PadBitmap
+Add padding edges around a bitmap.

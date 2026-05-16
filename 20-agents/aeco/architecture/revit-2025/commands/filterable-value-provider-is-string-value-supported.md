@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterableValueProvider.IsStringValueSupported
+Determines whether the provide can provide a string value for the given element.

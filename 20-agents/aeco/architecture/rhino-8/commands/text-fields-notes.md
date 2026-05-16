@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextFields.Notes
+Notes for a RhinoDoc

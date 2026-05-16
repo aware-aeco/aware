@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmShutLining.SetCurveIsBump
+Sets whether to create a bump instead of a dent for the given curve.

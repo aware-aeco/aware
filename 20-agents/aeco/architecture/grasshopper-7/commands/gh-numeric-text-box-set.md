@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_NumericTextBox.Set
+Sets limits and value.

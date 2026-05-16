@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainerParameterManager.GetElementIdOverrideValue
+Get the ElementId value for an overriden parameter.

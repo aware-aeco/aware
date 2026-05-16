@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarFreeFormAccessor.HasValidServer
+Returns true if the current rebar contains a valid server GUID, false otherwise.

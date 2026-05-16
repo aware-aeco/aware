@@ -6,232 +6,462 @@ description: API reference for namespace Autodesk.Revit.DB.Structure from RevitA
 # Autodesk.Revit.DB.Structure
 
 - **AlignedDistributionRebarHandles**
+  - This enum represents the values that custom handles tags of RebarConstrainedHandle of Rebar Free Form Aligned Distribution has.    The tag of a  RebarConstrainedHandle    can be obtained by calling the
 - **AlignedFreeFormSetOrientationOptions**
+  - Orientation options for Aligned Free Form Rebar set.
 - **AnalyticalCurveSelector**
+  - Specifies which portion of an Analytical Curve is of interest.
 - **AnalyticalElement**
+  - Base class for a structural analytical elements.    AnalyticalElement represents the analytical portion of a given Structural Element.
 - **AnalyticalElementSelector**
+  - Specifies a portion of an Analytical Element or the whole element.
 - **AnalyticalFixityState**
+  - Specifies the fixity setting of individual degrees of freedom in analytical release conditions.
 - **AnalyticalLink**
+  - An analytical link element that is used to create connections between other Analytical Elements.
 - **AnalyticalLinkType**
+  - An object that specifies the analysis properties for an AnalyticalLink element.
 - **AnalyticalLoopType**
+  - Specifies kind of analytical model loop.
 - **AnalyticalMember**
+  - Represents a linear element in the structural analytical model.
 - **AnalyticalModelSelector**
+  - Defines a portion of an Analytical Model for an Element.
 - **AnalyticalNodeConnectionStatus**
+  - Indicates the Connections Status for an Analytical Node.
 - **AnalyticalNodeData**
+  - This class holds information related to analytical model.
 - **AnalyticalOpening**
+  - An element that represents an Opening in an Analytical Panel element.
 - **AnalyticalPanel**
+  - An element that represents a surface in the Structural Analytical Model.
 - **AnalyticalRigidLinksOption**
+  - Specifies how Rigid Links will be made for the Analytical Model.
 - **AnalyticalStructuralRole**
+  - Indicates the structural role for the analytical elements.
 - **AnalyticalSupportPriority**
+  - Defines how "highly" another Element is giving support for one Element.
 - **AnalyticalSupportType**
+  - Indicates what kind of support another Element provides -- Point, Surface, or Curve.
 - **AnalyticalSurfaceBase**
+  - This is the base class for analytical surface elements.
 - **AnalyticalToPhysicalAssociationManager**
+  - Class which manages the associations between analytical elements and physical elements.
 - **AnalyzeAs**
+  - Analyze As has various functions within the Analytical Model, and is Element-dependent.    "Not for Analysis" usually means that there will not be an Analytical Model generated.    The others indicate how the Analytical Model behavior will treat the Element in question.    For instance "Hanger" columns have different support expectations than "Gravity" columns.
 - **AreaLoad**
+  - An object that represents a force applied across an area.
 - **AreaLoadType**
+  - AreaLoadType class
 - **AreaReinforcement**
+  - An object that represents an Area Reinforcement within the Autodesk Revit project.
 - **AreaReinforcementCurve**
+  - An object that specifies the type of a floor in Autodesk Revit.
 - **AreaReinforcementLayerType**
+  - Describes the layers of an Area Reinforcement
 - **AreaReinforcementType**
+  - An object that specifies the type of a Structural Area Reinforcement element in Autodesk Revit.
 - **BarTerminationsData**
+  - Class that stores data about reinforcement's terminations (e.g. hooks, cranks, end treatments)
 - **BendingDetailAngularDimensionsDisplayOptions**
+  - Describes the angular dimensions display options.
 - **BendingDetailAngularDimensionsMeasurementOptions**
+  - Describes the angular dimension measurement options.
 - **BendingDetailBendDiameterDimensionType**
+  - Describes the dimension type for bend diameter.
 - **BendingDetailCustomFieldMultipleValuesIndicatorOptions**
+  - Describes how the parameters with multiple values will be represented.
 - **BendingDetailCustomFieldProperties**
+  - Represents the properties of a Bending Detail Custom Field.
 - **BendingDetailDimensionTextPosition**
+  - Describes how the text will be positioned with respect to dimension line.
 - **BendingDetailDisplayMode**
+  - Describes the mode in which the Bending Detail will be represented.
 - **BendingDetailDisplayParametersOptions**
+  - Describes how the parameters will be represented.
 - **BendingDetailFor3DShapesOptions**
+  - Describes how the Bending Detail will be represented for 3D shapes.
 - **BendingDetailLevelOfDetail**
+  - Describes the level of detail in which the Bending Detail will be represented.
 - **BendingDetailSegmentLengthsDisplayOptions**
+  - Describes if the segment lengths are represented using dimensions or just as text.
 - **BendingDetailSegmentsRepresentation**
+  - Describes how the Bending Detail will represent the bar segments.
 - **BendingDetailTypeMultipleValuesIndicatorOptions**
+  - Describes how the parameters with multiple values will be represented.
 - **BentFabricBendDirection**
+  - Direction in which FabricSheet is bent.
 - **BentFabricStraightWiresLocation**
+  - Bent Fabric straight wires location.    The side on wich straight wires will be loacted is determined by the start and end point of the first bent profile segment that specifies the direction of the curve loop on plane.
 - **BoundaryConditions**
+  - An object that represents a force applied across an area.
 - **BoundaryConditionsOrientTo**
+  - Specifies boundary condition orientation.
 - **BoundaryConditionsType**
+  - This enum declares type of BoundaryConditions.
 - **BracePlanRepresentation**
+  - The possible representations for braces in plan views.
 - **CodeCheckingParameterServiceData**
+  - The data needed by code checking server to perform code checking.
 - **ConnectionInputPoint**
+  - An object that holds information about a connection input point
 - **ConnectionInputPointInfo**
+  - An object that holds description information about a connection input point
 - **EndTreatmentType**
+  - An end treatment type object that is used to hold information about the end treatment applied to bars that are connected to a coupler.
 - **ExtElemChangeBeamSectionRegistry**
+  - An object that stores IExtElemChangeBeamSection
 - **FabricArea**
+  - An object that represents an Fabric Area Distribution within the Autodesk Revit project. It is container for Fabric Sheet elements.
 - **FabricAreaType**
+  - A FabricAreaType object is used in FabricArea object generation.
 - **FabricHostReference**
+  - Controls if Single Fabric Sheet should be cut by the Host Cover.
 - **FabricLapSplicePosition**
+  - Fabric lap splice position in the fabric distribution
 - **FabricLocation**
+  - Fabric location in the host
 - **FabricReinSpanSymbol**
+  - Represents an instance of a Structural Fabric Reinforcement Symbol in Autodesk Revit.
 - **FabricRoundingManager**
+  - Provides access to element reinforcement roundings overrides.
 - **FabricSheet**
+  - An object that represents an Fabric Sheet Element within the Autodesk Revit project.
 - **FabricSheetAlignment**
+  - Fabric Sheet alignment in the fabric distribution
 - **FabricSheetLayoutPattern**
+  - The pattern for how the wires in Fabric Sheet are laid out.
 - **FabricSheetType**
+  - Represents a fabric sheet type, used in the generation of fabric wires.
 - **FabricTagComponentReference**
+  - How FabricSheet tag text will be aligned to the FabricSheet symbol.
 - **FabricWireItem**
+  - Provides implementation for FabricWires stored in a Custom Fabric Sheet
 - **FabricWireType**
+  - A Fabric Wire Type object that is used in the generation of Fabric Wire.
 - **FamilyStructuralMaterialTypeFilter**
+  - A filter used to match families that have the given structural material type.
 - **Hub**
+  - Represents a connection between two or more Autodesk Revit Elements.
 - **ICodeCheckingParameterServer**
+  - Interface for the code checking parameter server to implement.
 - **IExtElemChangeBeamSection**
+  - Interface Change Beam section functionality to be implemented in add-ins
 - **IMemberForcesServer**
+  - Interface for the Member Forces server to implement.
 - **IRebarUpdateServer**
+  - Represents an interface that should be overridden to allow the generation and update of free form rebar geometry.
 - **IStructuralSectionsServer**
+  - Interface for the section type parameter server to implement.
 - **LineLoad**
+  - An object that represents a force/moment applied in a linear manner.
 - **LineLoadType**
+  - LineLoadType class
 - **LoadBase**
+  - The LoadBase object is the base class for all load objects within the Autodesk Revit API.    Data members
 - **LoadCase**
+  - An object that represents a load usage.
 - **LoadCaseCategory**
+  - Specifies load case category.
 - **LoadCombination**
+  - An object that represents a load combination.
 - **LoadCombinationState**
+  - Specifies load combination state.
 - **LoadCombinationType**
+  - Specifies load combination type.
 - **LoadComponent**
+  - An object that represents a load combination component.
 - **LoadNature**
+  - An object that represents a load nature.
 - **LoadOrientTo**
+  - Specifies load orientation.
 - **LoadType**
+  - This enum declares types of Loads.
 - **LoadTypeBase**
+  - The base class for LoadTypes
 - **LoadUsage**
+  - An object that represents a load usage.
 - **MemberForces**
+  - An object that represents a member forces on analytical element.
 - **MemberForcesServiceData**
+  - The data needed by member forces server to perform type definition.
 - **MultiplanarOption**
+  - Input argument type for Rebar.GetCenterlineCurves method.    Controls whether all curves of a multi-planar Rebar element are returned by    GetCenterlineCurves, or only the curves in the primary plane.
 - **PathReinSpanSymbol**
+  - Represents a Path Reinforcement Span Symbol element in Autodesk Revit.
 - **PathReinforcement**
+  - An object that represents an Path Reinforcement within the Autodesk Revit project.
 - **PathReinforcementType**
+  - An object that specifies the type of a Structural Path Reinforcement element in Autodesk Revit.
 - **PointLoad**
+  - An object that represents a force/moment applied to a single point.    Data members
 - **PointLoadType**
+  - PointLoadType class
 - **Rebar**
+  - Represents a rebar element in Autodesk Revit.
 - **RebarBarType**
+  - A Rebar type object that is used in the generation of Rebar
 - **RebarBendData**
+  - The values in this class provide a summary of information taken from the RebarBarType, RebarHookType, and RebarStyle.
 - **RebarBendingDetail**
+  - Utility class with methods needed for the bending details in view.    The bending detail element has two modes -- the schematic bending detail and realistic bending detail. Some functions are exclusive to one mode.
 - **RebarBendingDetailType**
+  - Type for rebar bending detail elements.
 - **RebarConstrainedHandle**
+  - A class representing a handle on a Rebar that can be joined to a reference, such    as a host Element's surface or cover, another Rebar's handle or to a generic surface.
 - **RebarConstraint**
+  - A class representing a constraint on a handle of a rebar element.
 - **RebarConstraintTargetHostFaceType**
+  - A type to help identify the individual face on a host element to which a Rebar handle    is constrained.
 - **RebarConstraintType**
+  - The various types of constraints that can be applied to a RebarConstrainedHandle.
 - **RebarConstraintsManager**
+  - A class used to obtain information about the constraints (RebarConstraint) acting    on the shape handles (RebarConstrainedHandle) of a Rebar element, and modify the constraints.
 - **RebarConstraintsStatus**
+  - Describes the status of the constraints
 - **RebarContainer**
+  - An object that represents an Rebar Container Element within the Autodesk Revit project.
 - **RebarContainerItem**
+  - Provides implementation for Rebar stored in RebarContainer.
 - **RebarContainerIterator**
+  - An iterator to a Rebar Container.
 - **RebarContainerParameterManager**
+  - Provides implementation of RebarContainer parameters overrides.
 - **RebarContainerType**
+  - Represents a Rebar Container Type, used in the generation of Rebar Container.
 - **RebarCoupler**
+  - Represents a rebar coupler element in Autodesk Revit.
 - **RebarCouplerError**
+  - Error states for the Rebar Coupler
 - **RebarCoverType**
+  - A named value for a clear cover distance.
 - **RebarCrankOverridableParameters**
+  - Class used to store the formula parameter ids defined in the RebarShape family which are associated with crank length, crank offset length, crank straight length and crank angled length parameters.
 - **RebarCrankTypeUtils**
+  - Utility class for dealing with Rebar Crank Type operations.    To find all Rebar Crank Types in the document can be done using FilteredElementCollector of category BuiltInCategory.OST_RebarCrankType.
 - **RebarCurvesData**
+  - The class that contains the information needed to calculate and return the result of the external curve generation.
 - **RebarDeformationType**
+  - Bar deformation type
 - **RebarEndType**
+  - Describes what is added at the end of a Rebar.
 - **RebarFreeFormAccessor**
+  - A class that is used to access the properties and capabilities of free-form Rebar.
 - **RebarFreeFormCreationResult**
+  - Class that encapsulates the result of the rebar free form creation.
 - **RebarFreeFormValidationResult**
+  - Errors for the Free Form Rebar
 - **RebarGeometryType**
+  - Rebar geometry type
 - **RebarHandleBehavior**
+  - Different behaviors that can be applied to a RebarConstrainedHandle.    Depending on the behavior, the RebarConstrainedHandle plane is situated in a different location    All the data in constraints for a RebarConstrainedHandle with a specific behavior are relative to this plane.
 - **RebarHandleNameData**
+  - This class is used to contain the information about the rebar handle name defined by an external application.
 - **RebarHandlePositionData**
+  - The class that contains data for the handle position calculation.
 - **RebarHandleType**
+  - The various types of handles on a Rebar instance that can be joined to References
 - **RebarHandlesData**
+  - This class is used to contain the information about the rebar handles defined by an external application.
 - **RebarHookOrientation**
+  - Orientation of a rebar hook relative to the path of the Rebar Shape.
 - **RebarHookType**
+  - A Rebar Hook type object that is used in the generation of Rebar.
 - **RebarHostCategory**
+  - Rebar host category
 - **RebarHostData**
+  - Interface to rebar-specific data stored in each valid rebar host element.
 - **RebarInSystem**
+  - Represents a rebar element that is part of a system.
 - **RebarLayoutRule**
+  - The rule for how the rebars in rebar set are laid out
 - **RebarPresentationMode**
+  - Bar presentation mode
 - **RebarPropagation**
+  - An utility class containing functions that can be used to propagate rebar elements.
 - **RebarReinforcementData**
+  - class containing the id and the end of rebar on which the coupler stays
 - **RebarRoundingManager**
+  - Provides access to element reinforcement roundings overrides.
 - **RebarShape**
+  - RebarShape specifies the shape type for a Rebar instance.
 - **RebarShapeArcReferenceType**
+  - A Rebar Shape Definition constraint that is    measured to a bend must take the bar diameter into    account by specifying whether it measures to    the exterior, centerline, or interior of the bend.
 - **RebarShapeBendAngle**
+  - A bend in a rebar shape has an angular range    specified by one of these values. The angles refer to    the angle swept out by one segment as it is bent    relative to another. That is, an "Obtuse" bend results    in two segments that meet at an angle that is less    than 90 degrees when measured internally. Put another    way, to create an equilateral triangle, you would need    two "Obtuse" bends.
 - **RebarShapeConstraint**
+  - A dimension or other constraint that takes part in a RebarShapeDefinition.
 - **RebarShapeConstraint180DegreeBendArcLength**
+  - A constraint which can be applied to a RebarShapeSegment, and causes the segment    to be replaced with a 180-degree arc. The associated parameter drives    the arc length.
 - **RebarShapeConstraint180DegreeBendRadius**
+  - A constraint which can be applied to a RebarShapeSegment, and causes the segment    to be replaced with a 180-degree arc. The associated parameter drives    the radius of the arc.
 - **RebarShapeConstraint180DegreeDefaultBend**
+  - A constraint which can be applied to a RebarShapeSegment, and causes the segment    to be replaced with a 180-degree arc. The arc's radius is not specified    by the shape; instead it is a "default bend radius," taken from    the RebarBarType associated with the Rebar instance.
 - **RebarShapeConstraintAngleFromFixedDir**
+  - A constraint which can be applied to a RebarShapeSegment and drives the angle    of the segment relative to a fixed direction in UV-space.
 - **RebarShapeConstraintArcLength**
+  - An arc-length constraint associated with an arc in a RebarShapeDefinition.
 - **RebarShapeConstraintChordLength**
+  - A constraint that can be applied to a RebarShapeDefinitionByArc    and drives the straight distance between the arc endpoints.
 - **RebarShapeConstraintCircumference**
+  - A circumference constraint associated with an arc in a RebarShapeDefinition.
 - **RebarShapeConstraintDiameter**
+  - A diameter constraint associated with an arc in a RebarShapeDefinition.
 - **RebarShapeConstraintFixedSegmentDir**
+  - A constraint that can be applied to a RebarShapeSegment and fixes the    direction of the segment in UV-space.
 - **RebarShapeConstraintProjectedSegmentLength**
+  - A constraint that measures the length of a segment as measured by projecting onto a direction    that is not parallel to the segment.
 - **RebarShapeConstraintRadius**
+  - A radius constraint associated with an arc in a RebarShapeDefinition.
 - **RebarShapeConstraintSagittaLength**
+  - A constraint that can be applied to a RebarShapeDefinitionByArc    and drives the height of the arc.
 - **RebarShapeConstraintSegmentLength**
+  - A constraint that controls the length of a segment.
 - **RebarShapeDefinition**
+  - A class to assist in defining rebar shapes.    A RebarShape element needs exactly one RebarShapeDefinition.
 - **RebarShapeDefinitionByArc**
+  - Definition of a shape whose size and position can determined by a single arc.
 - **RebarShapeDefinitionByArcType**
+  - A RebarShapeDefinitionByArc takes one of three forms.
 - **RebarShapeDefinitionBySegments**
+  - Definition of a shape in terms of one or more straight segments of rebar,    with arc bends between the segments.
 - **RebarShapeDrivenAccessor**
+  - A class that is used to access the properties and capabilities of shape-driven Rebar.
 - **RebarShapeMultiplanarDefinition**
+  - A specification for a simple 3D rebar shape.
 - **RebarShapeParameters**
+  - Class containing functions that create and retrieve shared parameters for RebarShapes.
 - **RebarShapeSegment**
+  - Part of a RebarShapeDefinitionBySegments, representing one segment    of a shape definition.    Makes sure constraints of type RebarShapeConstraintFixedSegmentDir are uniquely set.    If we try to aquire a second constraint of type RebarShapeConstraintFixedSegmentDir we delete the old one.
 - **RebarShapeSegmentEndReferenceType**
+  - A choice of two reference points for one end of a constraint driving the length of    a RebarShapeSegment.
 - **RebarShapeTerminationsData**
+  - Class that stores data about rebar shape's terminations (e.g. hooks, cranks, end treatments)
 - **RebarShapeVertex**
+  - A bend between segments of a rebar shape definition.
 - **RebarShapeVertexTurn**
+  - Specify whether a bend at a RebarShapeVertex represents a left or right turn.
 - **RebarSplice**
+  - A class that can used to access the data between two connected Rebars.
 - **RebarSpliceByRulesError**
+  - Class that defines states for splicing a Rebar by rules.
 - **RebarSpliceByRulesResult**
+  - Class that encapsulates the result of the splice by rules operation.
 - **RebarSpliceByRulesRunOutPosition**
+  - Describes the run-out position.
 - **RebarSpliceError**
+  - Class that defines states for splicing a Rebar.
 - **RebarSpliceGeometry**
+  - This class consists of a vector and a point which will be projected to the nearest Rebar curve.
 - **RebarSpliceOptions**
+  - This class encapsulates the options for the rebar splice operation.
 - **RebarSplicePosition**
+  - Describes the position of the splice.
 - **RebarSpliceRules**
+  - Describes the rules for splicing Rebar.
 - **RebarSpliceShiftOption**
+  - Describes the way bars are shifted in the splice relation.
 - **RebarSpliceTypeUtils**
+  - Utility class for dealing with Rebar Splice Type operations.    To find all Rebar Splice Types in the document can be done using FilteredElementCollector of category BuiltInCategory.OST_RebarSpliceType.
 - **RebarSpliceUtils**
+  - Class with different utilities for Rebar Splice.
 - **RebarStyle**
+  - Describes the usage style of a RebarShape.    The style affects the bend radius and the set of allowable hooks.    It also affects Rebar instance auto-constraining behavior.
 - **RebarSystemSpanSymbol**
+  - Represents a Rebar System Span Symbol element in Autodesk Revit.
 - **RebarTerminationOrientation**
+  - Orientation of a rebar termination (e.g hook, crank) relative to the path of the Rebar Shape.
 - **RebarTrimExtendData**
+  - The class that contains the information needed to calculate and return the curves in a trimmed/extended state, and also find the constraints that trim/extend it.
 - **RebarUpdateCurvesData**
+  - Class holding the information needed to calculate the rebar curves.
 - **RebarWorkInstructions**
+  - Describes how a Free Form Rebar will be fabricated.
 - **ReinforcementAbbreviationObjectType**
+  - Defines the type of desired reinforcement object for abbreviation tags.
 - **ReinforcementAbbreviationTag**
+  - This class is used to access the Area or Path Reinforcement abbreviation tag data.    It stores abbreviation tag value and abbreviation type.
 - **ReinforcementAbbreviationTagType**
+  - Defines all types of abbreviation tags for Area and Path Reinforcement objects.
 - **ReinforcementBarOrientation**
+  - Describes the bar orientation at Path Reinforcement.
 - **ReinforcementData**
+  - Abstract class for various reinforcement data
 - **ReinforcementNumberingMethod**
+  - Defines numbering method settings.
 - **ReinforcementRoundingManager**
+  - A base class providing access to reinforcement rounding overrides for structural elements.
 - **ReinforcementRoundingSource**
+  - An enumerated type listing the possible sources for reinforcement rounding overrides.
 - **ReinforcementSettings**
+  - Provides access to project-wide reinforcement settings.
 - **ReleaseConditions**
+  - An object that represents a Release Conditions on analytical element.
 - **ReleaseType**
+  - The release type.
 - **StirrupTieAttachmentType**
+  - An enumerated tye that represents how the Stirrup/Tie rebar is attached to the cover reference.
 - **StructuralConnectionApplyTo**
+  - An enumerated type that represents the type of structural locations to which a connection annotation may be applied.
 - **StructuralConnectionApprovalType**
+  - A type element that represents a connection approval type.
 - **StructuralConnectionCodeCheckingStatus**
+  - An enumerated type listing all code checking status of the structural connection element.
 - **StructuralConnectionHandler**
+  - An object of Structural Connection Handler.
 - **StructuralConnectionHandlerType**
+  - A StructuralConnectionHandlerType is used in StructuralConnectionHandler element generation.
 - **StructuralConnectionSettings**
+  - Provides access to project-wide structural connections settings.
 - **StructuralConnectionType**
+  - A type element that represents a connection symbol applied to structural members.
 - **StructuralFramingUtils**
+  - A collection of Structural Framing Utilities.
 - **StructuralInstanceUsage**
+  - Represents the structural usage of a family instance.
 - **StructuralInstanceUsageFilter**
+  - A filter used to find elements that are structural family instances (typically columns, beams or braces) of the given structural usage.
 - **StructuralMaterialType**
+  - Represents the structural material type.  This enum value is returned by Autodesk::Revit::DB::FamilyInstance::StructuralMaterialType.
 - **StructuralMaterialTypeFilter**
+  - A filter used to match family instances that have the given structural material type.
 - **StructuralSectionsServiceData**
+  - The data needed by section type server to perform type definition.
 - **StructuralSettings**
+  - Provides access to project-wide structural settings.
 - **StructuralType**
+  - Represents the structural type of a family instance.
 - **StructuralWallUsage**
+  - Represents the structural usage of a wall.
 - **StructuralWallUsageFilter**
+  - A filter used to match walls that have the given structural wall usage.
 - **SurfaceDistributionRebarHandles**
+  - This enum represents the values that custom handles tags of RebarConstrainedHandle of Rebar Free Form Surface Distribution has.    The tag of a  RebarConstrainedHandle    can be obtained by calling the
 - **SurfaceElementExtension**
+  - Presets for given Analytical Extension.
 - **SurfaceElementProjectionZ**
+  - Presets for given Analytical Projection Z.
 - **TargetRebarConstraintType**
+  - A type used to identify the particular part of a Stirrup style rebar to which    a Standard style rebar's handle is constrained.
 - **TranslationRotationValue**
+  - Specifies the type of condition applied to the translation or rotation parameter.
 - **Truss**
+  - Represents all kinds of Trusses.
 - **TrussChordLocation**
+  - This enumerated type represents the options for the Truss Chord Location.
 - **TrussCurveType**
+  - Types of curves created in truss families.
 - **TrussMemberInfo**
+  - Provides access to the information of a truss member in Autodesk Revit.
 - **TrussMemberType**
+  - Indicates the "kind" of a truss member.
 - **TrussType**
+  - Represents a specific type of truss.
 - **WireDistributionDirection**
+  - Defines the direction of the distribution of wires in a Fabric Sheet.
 - **YJustification**
+  - The justification of the framing element in Y.
 - **YZJustificationOption**
+  - The option for whether a framing element has independent or uniform justification on its ends.
 - **ZJustification**
+  - The justification of the framing element in Z.

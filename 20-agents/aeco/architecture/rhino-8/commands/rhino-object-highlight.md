@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.Highlight
+Modifies the highlighting of the object.

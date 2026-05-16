@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedPositionTable.ObjectXform
+Retrieve the Transform of a Rhino Object relate to a Named Position.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlatformExtensionAttribute.Register
+Registers the extension with the specified platform

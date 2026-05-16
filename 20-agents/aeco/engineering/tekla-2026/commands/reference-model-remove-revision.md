@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceModel.RemoveRevision
+Removes the given revision from the reference model.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_SliderBase.ProcessNumber
+Process a number using the given slider characteristics.

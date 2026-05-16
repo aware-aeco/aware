@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExpandableContentUI.AddSection
+Add a section to the UI. Called \e before Create(). A generic controller is attached.

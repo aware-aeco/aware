@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.GetOpenGLWorldToClip
+Get an array of 16 floats that represents the "world" to "clip" coordinate             transformation in OpenGL's right handed coordinate system

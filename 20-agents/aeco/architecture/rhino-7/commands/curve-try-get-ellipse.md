@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.TryGetEllipse
+Try to convert this curve into an Ellipse within RhinoMath.ZeroTolerance.

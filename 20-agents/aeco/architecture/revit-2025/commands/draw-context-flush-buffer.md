@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DrawContext.FlushBuffer
+Submits geometry for rendering.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SystemFonts.Palette
+Gets the system palette font with optional specified  and .

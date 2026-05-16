@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RectangleFConverter.ConvertFrom
+Converts the specified value to a

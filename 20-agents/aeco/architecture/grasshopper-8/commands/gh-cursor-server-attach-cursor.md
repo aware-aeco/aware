@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CursorServer.AttachCursor
+Attach a cursor to a control.

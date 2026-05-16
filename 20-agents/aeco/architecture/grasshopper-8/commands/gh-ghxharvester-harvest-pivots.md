@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GHXHarvester.HarvestPivots
+Harvest all attribute pivots from a GHX/GH archive.

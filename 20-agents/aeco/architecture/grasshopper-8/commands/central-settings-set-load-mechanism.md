@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CentralSettings.SetLoadMechanism
+Sets the user defined load mechanism for a certain plugin.

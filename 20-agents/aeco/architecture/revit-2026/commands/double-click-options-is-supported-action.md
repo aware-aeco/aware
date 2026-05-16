@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DoubleClickOptions.IsSupportedAction
+Checks whether the specified double-click target supports the specified action.

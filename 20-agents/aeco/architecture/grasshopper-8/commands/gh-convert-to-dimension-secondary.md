@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToDimension_Secondary
+Attempts to convert other data types into an Rhino.Geometry.Dimension.   Data is not quaranteed to be duplicated.

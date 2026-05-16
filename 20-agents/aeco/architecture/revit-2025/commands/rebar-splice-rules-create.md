@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSpliceRules.Create
+Creates a new instance of RebarSpliceRules with the default options.

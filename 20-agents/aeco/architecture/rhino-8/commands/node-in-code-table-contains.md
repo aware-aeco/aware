@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NodeInCodeTable.Contains
+Check whether node is registered in this table or not

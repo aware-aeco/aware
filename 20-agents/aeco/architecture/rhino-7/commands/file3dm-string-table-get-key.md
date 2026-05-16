@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmStringTable.GetKey
+Returns a key value at a given index.

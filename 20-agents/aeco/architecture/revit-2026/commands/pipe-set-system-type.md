@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Pipe.SetSystemType
+Updates the associated system type for the pipe.

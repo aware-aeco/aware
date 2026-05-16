@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContent.IsFactoryProductAcceptableAsChild
+Override this method to restrict the type of acceptable child content.             The default implementation of this method just returns true.

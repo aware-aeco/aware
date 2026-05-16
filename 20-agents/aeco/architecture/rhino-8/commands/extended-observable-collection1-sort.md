@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExtendedObservableCollection`1.Sort
+Sorts the collection using the specified .

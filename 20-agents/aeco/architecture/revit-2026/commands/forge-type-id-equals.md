@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ForgeTypeId.Equals
+Determines whether this ForgeTypeId is equal to another.

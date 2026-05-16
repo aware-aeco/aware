@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoList`1.FindIndex
+Searches for an element that matches the conditions defined by the              specified predicate, and returns the zero-based index of the first              occurrence within the entire List.

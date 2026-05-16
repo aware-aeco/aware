@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BooleanPart.Select
+Selects a boolean part from the model database. The part ID must be set.

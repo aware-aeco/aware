@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalToPhysicalAssociationManager.GetAnalyticalToPhysicalAssociationManager
+Returns the AnalyticalToPhysicalAssociationManager for this document.

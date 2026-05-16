@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IPipeFittingAndAccessoryPressureDropServer.GetDataSchema
+Obtains the schema of the ESEntity.

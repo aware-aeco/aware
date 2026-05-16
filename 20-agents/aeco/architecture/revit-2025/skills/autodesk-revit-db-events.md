@@ -6,67 +6,132 @@ description: API reference for namespace Autodesk.Revit.DB.Events from RevitAPI.
 # Autodesk.Revit.DB.Events
 
 - **ApplicationInitializedEventArgs**
+  - The event arguments used by the ApplicationLaunched event.
 - **CreateRelatedFileProgressChangedEventArgs**
+  - The event arguments used during creating related file phase of  in model open operation.
 - **DataTransferMode**
+  - Describes the data transfer mode.
 - **DataTransferProgressChangedEventArgs**
+  - The event arguments used during the data transferring phase of .
 - **DocumentChangedEventArgs**
+  - The event arguments used by the DocumentChanged event.
 - **DocumentClosedEventArgs**
+  - The event arguments used by the DocumentClosed event.
 - **DocumentClosingEventArgs**
+  - The event arguments used by the DocumentClosing event.
 - **DocumentCreatedEventArgs**
+  - The event arguments used by the DocumentCreated event.
 - **DocumentCreatingEventArgs**
+  - The event arguments used by the DocumentCreating event.
 - **DocumentOpenedEventArgs**
+  - The event arguments used by the DocumentOpened event.
 - **DocumentOpeningEventArgs**
+  - The event arguments used by the DocumentOpening event.
 - **DocumentPrintedEventArgs**
+  - The event arguments used by the DocumentPrinted event.
 - **DocumentPrintingEventArgs**
+  - The event arguments used by the DocumentPrinting event.
 - **DocumentReloadLatestProgressChangedEventArgs**
+  - The event arguments used during the reload latest phase of .
 - **DocumentReloadedLatestEventArgs**
+  - The event arguments used by the DocumentReloadedLatestEvent event.    This event will be raised when executing pull a latest changes from a central model.
 - **DocumentReloadingLatestEventArgs**
+  - The event arguments used by the DocumentReloadingLatest event.
 - **DocumentSaveToCentralProgressChangedEventArgs**
+  - The event arguments used during the save to central phase of .
 - **DocumentSaveToLocalProgressChangedEventArgs**
+  - The event arguments used during the save to local phase of .
 - **DocumentSavedAsEventArgs**
+  - The event arguments used by the DocumentSavedAs event.
 - **DocumentSavedEventArgs**
+  - The event arguments used by the DocumentSaved event.
 - **DocumentSavingAsEventArgs**
+  - The event arguments used by the DocumentSavingAs event.
 - **DocumentSavingEventArgs**
+  - The event arguments used by the DocumentSaving event.
 - **DocumentSynchronizedWithCentralEventArgs**
+  - The event arguments used by the DocumentSynchronizedWithCentralEventArgs event.
 - **DocumentSynchronizingWithCentralEventArgs**
+  - The event arguments used by the DocumentSynchronizingWithCentralEventArgs event.
 - **DocumentWorksharingEnabledEventArgs**
+  - The event arguments used by the DocumentWorksharingEnabled event.
 - **ElementTypeDuplicatedEventArgs**
+  - The event arguments used by the ElementTypeDuplicated event.
 - **ElementTypeDuplicatingEventArgs**
+  - The event arguments used by the ElementTypeDuplicating event.
 - **EventStatus**
+  - Describes the status of an action which triggered a post event.
 - **ExternalDataInstanceAddedIntoDocumentEventArgs**
+  - The event arguments used by the ExternalDataInstanceAddedInto event.
 - **ExternalDataInstanceAddingIntoDocumentEventArgs**
+  - The event arguments used by the ExternalDataInstanceAddingInto event.
 - **ExternalDataInstanceRemovedFromDocumentEventArgs**
+  - The event arguments used by the ExternalDataInstanceRemovedFrom event.
 - **ExternalDataInstanceRemovingFromDocumentEventArgs**
+  - The event arguments used by the ExternalDataInstanceRemovingFrom event.
 - **ExternalDataTypeServerFailureResolutionExecutingEventArgs**
+  - The event arguments used by the ExternalDataTypeServerFailureResolutionExecuting event.
 - **FailuresProcessingEventArgs**
+  - The event arguments used by the FailuresProcessing event.
 - **FamilyLoadedIntoDocumentEventArgs**
+  - The event arguments used by the FamilyLoadedInto event.
 - **FamilyLoadingIntoDocumentEventArgs**
+  - The event arguments used by the FamilyLoadingInto event.
 - **FileExportedEventArgs**
+  - The event arguments used by the FileExported event.
 - **FileExportingEventArgs**
+  - The event arguments used by the FileExporting event.
 - **FileImportedEventArgs**
+  - The event arguments used by the FileImported event.
 - **FileImportingEventArgs**
+  - The event arguments used by the FileImporting event.
 - **LinkedResourceOpenedEventArgs**
+  - The event arguments used by .
 - **LinkedResourceOpeningEventArgs**
+  - The event arguments used by .
 - **PostDocEventArgs**
+  - The class is used as base class for arguments of any post-event that is associated to a particular Document.
 - **PostEventArgs**
+  - The class is used as a base class for arguments of any post-event.
 - **PreDocEventArgs**
+  - The class is used as base class for the arguments of any pre-event arguments that is associated to a particular Document.
 - **PreEventArgs**
+  - The class is used as a base class for the arguments for any pre-event.
 - **ProgressChangedEventArgs**
+  - The event arguments used by the ProgressChanged event.
 - **ProgressStage**
+  - The associated action of a ProgressChanged event
 - **ProjectBrowserDataChangedEventArgs**
+  - The event arguments used by the ProjectBrowserDataChanged event.
 - **RevitAPIEventArgs**
+  - The class is used as base class for all event argument classes.
 - **RevitAPIEventStatus**
+  - Describes the status of an action which triggered a post event.
 - **RevitAPIPostDocEventArgs**
+  - The base class used for post events where the arguments must supply access to the document.
 - **RevitAPIPostEventArgs**
+  - The class is used as a base class for arguments of any post-event.
 - **RevitAPIPreDocEventArgs**
+  - The base class used for pre events where the arguments must supply access to the document.
 - **RevitAPIPreEventArgs**
+  - The class is used as a base class for the arguments for any pre-event.
 - **RevitAPISingleEventArgs**
+  - The class is used as a base class for arguments of any single-event.
 - **RevitEventArgs**
+  - The class is used as base class for all event argument classes.
 - **UndoOperation**
+  - The operation associated with DocumentChanged event
 - **ViewExportedEventArgs**
+  - The event arguments used by the ViewExported event.
 - **ViewExportingEventArgs**
+  - The event arguments used by the ViewExporting event.
 - **ViewPrintedEventArgs**
+  - The event arguments used by the ViewPrinted event.
 - **ViewPrintingEventArgs**
+  - The event arguments used by the ViewPrinting event.
 - **ViewsExportedByContextEventArgs**
+  - The event arguments used by the ViewsExportedByContext event.
 - **ViewsExportingByContextEventArgs**
+  - The event arguments used by the ViewsExportingByContext event.
 - **WorksharedOperationProgressChangedEventArgs**
+  - The event arguments used by the WorksharedOperationProgressChanged event, this event will be raised when executing following workshared operations.

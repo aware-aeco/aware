@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WireTypeSet.Insert
+Insert the specified wire type into the set.

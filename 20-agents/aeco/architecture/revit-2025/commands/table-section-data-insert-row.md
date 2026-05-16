@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.InsertRow
+Inserts a row data at a specified index.

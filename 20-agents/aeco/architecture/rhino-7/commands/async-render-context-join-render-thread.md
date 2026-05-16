@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AsyncRenderContext.JoinRenderThread
+Join the render thread, then set to null;

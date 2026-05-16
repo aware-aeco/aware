@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SunAndShadowSettings.GetSunrise
+Identifies the sunrise time for the SunAndShadowSettings element at its current location    and indicated date.

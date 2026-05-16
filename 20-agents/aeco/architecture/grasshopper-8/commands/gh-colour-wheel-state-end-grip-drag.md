@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourWheelState.EndGripDrag
+Terminate a grip drag, this usually happens on mouseup.

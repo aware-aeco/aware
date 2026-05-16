@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Toposolid.ExcavateBy
+Excavates the Toposolid by a given element.

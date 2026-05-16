@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MRU_Server.ClearMissingRecords
+Destroy all MRU records that no longer point to existing files.

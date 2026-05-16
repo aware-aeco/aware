@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepObject.DuplicateBrepGeometry
+Constructs a new deep copy of the Brep geometry.

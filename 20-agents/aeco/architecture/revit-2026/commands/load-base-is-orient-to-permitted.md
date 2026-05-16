@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadBase.IsOrientToPermitted
+Indicates if the provided orientation is permitted for this load.

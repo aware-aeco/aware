@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostObjectUtils.GetBottomFaces
+Returns the bottom faces for this host object.

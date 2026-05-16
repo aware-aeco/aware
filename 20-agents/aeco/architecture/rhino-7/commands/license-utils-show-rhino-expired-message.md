@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LicenseUtils.ShowRhinoExpiredMessage
+Show Rhino or Beta expired message

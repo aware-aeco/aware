@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RibbonPanel.DesiredHeight
+Calculates the desired height of the panel based on a given height.

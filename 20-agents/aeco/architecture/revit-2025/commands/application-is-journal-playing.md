@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.IsJournalPlaying
+Determines if the application is currently in journal playback mode.

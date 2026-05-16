@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Cell3.ToBrep
+Convert the cell to a closed brep.

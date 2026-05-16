@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssemblyInstance.AllowsAssemblyViewCreation
+Returns true if assembly views can be created for this Assembly Instance.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.ExpireSolution
+Expire the entire solution. This will blank all objects.

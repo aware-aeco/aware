@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GlobalParametersManager.GetAllGlobalParameters
+Returns all global parameters available in the given document.

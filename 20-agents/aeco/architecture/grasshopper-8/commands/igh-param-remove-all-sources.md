@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Param.RemoveAllSources
+Remove all sources from this parameter.

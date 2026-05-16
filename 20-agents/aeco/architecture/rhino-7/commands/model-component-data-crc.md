@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelComponent.DataCRC
+Increments the Cyclic Redundancy Check value by this instance.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoGet.InGet
+Returns true if the document is current in a "Get" operation.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayLine.ConstPointer
+Gets the constant (immutable) pointer of this array.

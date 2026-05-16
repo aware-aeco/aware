@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawActivePoint
+Draws a point in style used during "GetPoint" operations

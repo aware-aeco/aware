@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PDFExportOptions.GetExportInBackground
+Execute PDF export as a background process.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interpolator.InterpolateLinear
+Sample the list of numbers with linear interpolation.

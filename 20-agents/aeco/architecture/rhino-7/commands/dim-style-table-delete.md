@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DimStyleTable.Delete
+Removes an annotation style.

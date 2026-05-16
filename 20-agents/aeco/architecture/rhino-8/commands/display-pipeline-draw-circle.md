@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawCircle
+Draw a single circle object.

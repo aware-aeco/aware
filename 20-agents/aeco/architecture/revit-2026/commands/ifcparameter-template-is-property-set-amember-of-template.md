@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCParameterTemplate.IsPropertySetAMemberOfTemplate
+Checks whether a property set exists in the template.

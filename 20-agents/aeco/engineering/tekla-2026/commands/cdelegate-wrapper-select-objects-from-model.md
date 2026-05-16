@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.SelectObjectsFromModel
+DO NOT USE! For internal usage only!

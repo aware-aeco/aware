@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.InsertField
+Adds a regular field at the specified position in the list.

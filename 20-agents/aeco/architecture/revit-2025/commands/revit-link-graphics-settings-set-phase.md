@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitLinkGraphicsSettings.SetPhase
+Sets phase id and phase type of RevitLinkGraphicsSettings.

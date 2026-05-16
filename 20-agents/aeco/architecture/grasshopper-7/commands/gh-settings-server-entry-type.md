@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_SettingsServer.EntryType
+Gets the type of a specific entry.

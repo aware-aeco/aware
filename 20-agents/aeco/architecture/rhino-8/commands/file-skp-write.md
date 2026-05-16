@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileSkp.Write
+Write a Skp file based on the contents of a RhinoDoc

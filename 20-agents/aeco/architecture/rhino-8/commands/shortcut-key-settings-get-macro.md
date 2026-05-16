@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ShortcutKeySettings.GetMacro
+Get macro associated with a given keyboard shortcut

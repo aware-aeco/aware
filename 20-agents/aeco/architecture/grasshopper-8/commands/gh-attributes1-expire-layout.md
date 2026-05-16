@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Attributes`1.ExpireLayout
+Expires the entire layout of the attributes. When overridden,   implementer must place a call to the base class ExpireLayout().

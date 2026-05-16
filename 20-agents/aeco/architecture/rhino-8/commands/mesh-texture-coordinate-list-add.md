@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshTextureCoordinateList.Add
+Adds a new texture coordinate to the end of the Texture list.

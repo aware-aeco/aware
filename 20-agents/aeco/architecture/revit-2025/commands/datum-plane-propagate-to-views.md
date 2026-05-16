@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DatumPlane.PropagateToViews
+Propagates the extents applied to this datum in the view to the specified parallel views.

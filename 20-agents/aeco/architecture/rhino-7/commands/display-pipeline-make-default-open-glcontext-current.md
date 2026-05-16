@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.MakeDefaultOpenGLContextCurrent
+Make a "default" OpenGL context current

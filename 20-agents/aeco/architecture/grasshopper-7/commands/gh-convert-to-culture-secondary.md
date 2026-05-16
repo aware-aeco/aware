@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToCulture_Secondary
+Performs indirect casts from other data types into CultureInfo.

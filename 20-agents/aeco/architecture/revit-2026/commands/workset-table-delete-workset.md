@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WorksetTable.DeleteWorkset
+Delete the specific workset.

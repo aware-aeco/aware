@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipelineAttributes.GetFill
+Get fill colors used for clearing the frame buffer

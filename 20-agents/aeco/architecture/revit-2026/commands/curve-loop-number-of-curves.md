@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveLoop.NumberOfCurves
+Returns the number of curves in the curve loop.

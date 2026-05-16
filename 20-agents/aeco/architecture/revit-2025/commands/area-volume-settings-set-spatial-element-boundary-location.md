@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaVolumeSettings.SetSpatialElementBoundaryLocation
+Sets the spatial element boundary location of a spatial element type.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyManager.DeleteCurrentType
+Remove the current family type.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ToolbarFile.GetGroup
+Gets a toolbar group.

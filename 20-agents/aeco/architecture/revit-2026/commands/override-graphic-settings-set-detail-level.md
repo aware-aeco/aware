@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OverrideGraphicSettings.SetDetailLevel
+Sets the detail level.

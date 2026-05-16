@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevisionsOnSheetUIServiceData.GetParentHwnd
+return the parent handle

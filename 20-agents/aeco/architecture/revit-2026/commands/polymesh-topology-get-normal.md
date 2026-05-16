@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolymeshTopology.GetNormal
+Returns a normal vector at the given index

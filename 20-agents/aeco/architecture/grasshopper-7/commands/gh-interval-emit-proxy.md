@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Interval.EmitProxy
+Returns a proxy that represents this interval. Do not call this function unless you're

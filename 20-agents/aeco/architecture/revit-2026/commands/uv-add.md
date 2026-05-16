@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UV.Add
+Adds the specified 2-D vector to this 2-D vector and returns the result.

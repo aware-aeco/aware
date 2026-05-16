@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Fitting.Delete
+Deletes the fitting instance with the given ID from the model database.

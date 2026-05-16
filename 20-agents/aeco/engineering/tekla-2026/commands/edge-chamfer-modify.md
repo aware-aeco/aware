@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EdgeChamfer.Modify
+Modifies the existing edge chamfer in the model database to match the current one.

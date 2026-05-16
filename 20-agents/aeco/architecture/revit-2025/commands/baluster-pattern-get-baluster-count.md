@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BalusterPattern.GetBalusterCount
+Gets the number of balusters in the main baluster pattern definition.

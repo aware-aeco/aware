@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCOpeningData.GetOpeningSolids
+Gets opening solids.

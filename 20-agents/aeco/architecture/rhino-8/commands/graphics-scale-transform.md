@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Graphics.ScaleTransform
+Scales the co-ordinate system by a factor

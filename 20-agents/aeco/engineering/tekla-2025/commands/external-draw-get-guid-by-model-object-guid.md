@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalDraw.GetGuidByModelObjectGuid
+Get the external draw identifier of the object.

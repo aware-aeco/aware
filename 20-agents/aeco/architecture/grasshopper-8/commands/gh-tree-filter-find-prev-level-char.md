@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_TreeFilter.FindPrevLevelChar
+Find the previous occurance of a char in a string that is level with the search start index.

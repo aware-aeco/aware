@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CustomDisplay.AddText
+Adds a new, black 3D text object to the display list.

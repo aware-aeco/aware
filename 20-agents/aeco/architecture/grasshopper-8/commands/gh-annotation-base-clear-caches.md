@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_AnnotationBase.ClearCaches
+Clears all volatile caches for this instance. The boundingbox is cleared, and if the annotation is referenced,   the local instance of the annotation is erased.

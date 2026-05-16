@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TabControl.Remove
+Remove the specified child from the container.

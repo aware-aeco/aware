@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveByPointsUtils.GetFaceRegions
+Gets the FaceRegions in the existing face.

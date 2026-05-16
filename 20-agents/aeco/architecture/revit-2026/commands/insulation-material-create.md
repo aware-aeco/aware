@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InsulationMaterial.Create
+Creates a Conductor Insulation Material.

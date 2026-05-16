@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorFillScheme.IsValidParameterDefinitionId
+Checks whether the input parameter id can be applied to the scheme.

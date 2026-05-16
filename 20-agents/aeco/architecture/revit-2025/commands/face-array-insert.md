@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FaceArray.Insert
+Insert the specified face into the array.

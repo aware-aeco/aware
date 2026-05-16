@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConceptualConstructionType.GetAllConceptualConstructionsForCategory
+Get all the ids of constructions applicable to the input massSubCategory

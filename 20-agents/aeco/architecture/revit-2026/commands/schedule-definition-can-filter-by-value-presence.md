@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.CanFilterByValuePresence
+Checks whether a field can be used with a value presence-based filter.

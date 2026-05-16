@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Grid.SetVerticalExtents
+Adjusts the grid to extend through only the vertical range between bottom and top.

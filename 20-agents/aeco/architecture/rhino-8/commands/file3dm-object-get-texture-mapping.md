@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObject.GetTextureMapping
+Gets the texture mapping from the  object.

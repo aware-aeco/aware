@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ComponentStatus.Equals
+Determines if another ComponentStatus and this are equal.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.ExportExtrudedSlabOpenings
+Exports the openings associated to an IfcSlab exported as an extrusion.

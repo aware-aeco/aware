@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.IsMeshable
+Returns true if the object is capable of having a mesh of the specified type

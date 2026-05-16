@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TriangulatedShellComponent.GetVertex
+Returns the vertex with a given index.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.ResetSharedCoordinates
+Reset shared coordinates for the host model/file.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyInstance.RemoveCoping
+Removes a coping (cut) from a steel beam.

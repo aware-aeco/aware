@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.CurveBrepFace
+Intersects a curve with a Brep face.

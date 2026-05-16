@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarFreeFormAccessor.GetHookTypeIdAtIndex
+Gets the id of the RebarHookType that is applied to this Rebar at the bar with index barPositionIndex at the specified end.

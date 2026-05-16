@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCProductWrapper.GetAllObjects
+Gets all objects associated with the IfcProduct in this wrapper.

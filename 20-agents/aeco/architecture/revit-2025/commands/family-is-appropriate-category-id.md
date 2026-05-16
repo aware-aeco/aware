@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Family.IsAppropriateCategoryId
+Identifies if the input category id can be assigned as the new category for this family.

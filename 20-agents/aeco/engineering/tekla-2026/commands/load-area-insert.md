@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadArea.Insert
+Inserts the load area into the model database.

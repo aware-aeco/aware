@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Railing.ResetSupportPosition
+Resets the continuous rails support subelements position data.

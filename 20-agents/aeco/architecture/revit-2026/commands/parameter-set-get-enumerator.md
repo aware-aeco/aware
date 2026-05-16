@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterSet.GetEnumerator
+Retrieve a forward moving iterator to the set.

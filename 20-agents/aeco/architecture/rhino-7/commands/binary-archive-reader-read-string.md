@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BinaryArchiveReader.ReadString
+Reads a  from the archive.

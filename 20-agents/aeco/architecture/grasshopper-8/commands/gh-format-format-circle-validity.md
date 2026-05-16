@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Format.FormatCircleValidity
+If the circle is invalid, return a string describing why.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ContourSetting.GetContourSettingItems
+Get all contour setting items.

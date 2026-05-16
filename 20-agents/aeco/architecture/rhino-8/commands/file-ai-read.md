@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileAi.Read
+Read a Ai file into a RhinoDoc

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PropertyStore.RemoveEvent
+Removes the event delegate with the specified

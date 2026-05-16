@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-STLExportOptions.IsValidForSurfaceTolerance
+Checks whether the value is allowed (is in the allowed range) for SurfaceTolerance tessellation parameter.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Level.GetPlaneReference
+Returns a reference to this element as a plane.

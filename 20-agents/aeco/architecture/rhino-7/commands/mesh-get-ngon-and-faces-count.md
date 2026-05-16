@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.GetNgonAndFacesCount
+Retrieves the count of items that  will provide.

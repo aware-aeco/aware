@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationItemFolder.GetItemFiles
+Gets the item files in this item folder.

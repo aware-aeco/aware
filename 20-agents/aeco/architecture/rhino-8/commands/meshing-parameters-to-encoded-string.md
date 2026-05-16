@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshingParameters.ToEncodedString
+Returns a encoded string that represents the MeshingParameters.

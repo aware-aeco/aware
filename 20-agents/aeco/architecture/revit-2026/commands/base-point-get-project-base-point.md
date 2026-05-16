@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BasePoint.GetProjectBasePoint
+Gets the project base point for the document.

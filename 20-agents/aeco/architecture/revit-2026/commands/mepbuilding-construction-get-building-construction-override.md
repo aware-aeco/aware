@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPBuildingConstruction.GetBuildingConstructionOverride
+Gets the Building Construction override for a ConstructionType.

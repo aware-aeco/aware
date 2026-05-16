@@ -6,3 +6,4 @@ description: API reference for namespace Tekla.Structures.Model.ClashChecker fro
 # Tekla.Structures.Model.ClashChecker
 
 - **ClashChekerEvent**
+  - The ClashChekerEvent class contains methods related to clash check events.

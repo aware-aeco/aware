@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.SetFilterVisibility
+Sets the visibility of the elements associated with a filter.

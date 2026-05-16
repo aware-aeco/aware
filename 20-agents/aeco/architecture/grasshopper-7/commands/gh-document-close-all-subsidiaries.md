@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.CloseAllSubsidiaries
+Iterate over all subsidiary documents and close them all without saving.

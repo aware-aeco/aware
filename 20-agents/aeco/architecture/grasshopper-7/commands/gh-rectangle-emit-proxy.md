@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Rectangle.EmitProxy
+Returns a proxy that represents this rectangle. Do not call this function unless you're

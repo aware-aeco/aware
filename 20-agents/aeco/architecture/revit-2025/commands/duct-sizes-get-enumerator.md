@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DuctSizes.GetEnumerator
+Returns an enumerator that iterates through a collection.

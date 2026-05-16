@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayStyle.SetColoredSurfaceSettings
+Set colored surface settings object for the style.

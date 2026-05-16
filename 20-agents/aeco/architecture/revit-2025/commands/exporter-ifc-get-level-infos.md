@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFC.GetLevelInfos
+Returns a collection containing the information about all levels in the document.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveNode.GetCurve
+Returns the geometric curve object corresponding to the node.

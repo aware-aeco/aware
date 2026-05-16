@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.SetRowHeight
+Sets a row's height in feet

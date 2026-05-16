@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MemoryBitmap.Filter_Shift
+Shift all values in a specific channel with a specific amount.

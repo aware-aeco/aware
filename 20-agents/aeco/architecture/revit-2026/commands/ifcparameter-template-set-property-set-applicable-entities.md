@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCParameterTemplate.SetPropertySetApplicableEntities
+Sets the list of IFC entities to which the property set is applicable.

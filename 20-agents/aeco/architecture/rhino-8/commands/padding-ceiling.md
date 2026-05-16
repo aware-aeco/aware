@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Padding.Ceiling
+Converts a floating point  to an integral padding by taking the ceiling of its components

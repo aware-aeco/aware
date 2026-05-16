@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interval.IncludesInterval
+Tests another interval for Interval inclusion.

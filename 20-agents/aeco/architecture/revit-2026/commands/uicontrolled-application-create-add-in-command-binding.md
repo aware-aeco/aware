@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIControlledApplication.CreateAddInCommandBinding
+Creates a new AddInCommandBinding.

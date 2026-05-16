@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.GetFieldIndex
+Converts a field ID to the corresponding field index.

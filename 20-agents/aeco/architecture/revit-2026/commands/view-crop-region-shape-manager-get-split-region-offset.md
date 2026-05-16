@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewCropRegionShapeManager.GetSplitRegionOffset
+Returns the offset for the specified split crop region.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Decals.RemoveAllDecals
+Remove all the decals from the collection.

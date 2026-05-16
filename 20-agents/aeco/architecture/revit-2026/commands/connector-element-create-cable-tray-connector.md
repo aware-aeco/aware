@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConnectorElement.CreateCableTrayConnector
+Create a new cable tray ConnectorElement.

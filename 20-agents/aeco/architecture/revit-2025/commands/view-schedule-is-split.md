@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.IsSplit
+Checks if the schedule is split.

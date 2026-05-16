@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PropertyStore.UnbindCommand
+Unbinds the command associated with the specified key, removing its registration.

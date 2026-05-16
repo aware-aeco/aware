@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileSlc.Write
+Write a SLC file based on the contents of a RhinoDoc

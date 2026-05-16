@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewCaptureSettings.SetModelScaleToValue
+Sets the model scale to a value.

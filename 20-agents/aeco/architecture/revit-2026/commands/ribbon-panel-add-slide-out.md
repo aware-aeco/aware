@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RibbonPanel.AddSlideOut
+Adds a slideout to the current panel.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Matrix.FromRotation
+Creates a new rotation matrix

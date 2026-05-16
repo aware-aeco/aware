@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SystemFonts.Label
+Gets the system label font with optional specified  and .

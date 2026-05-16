@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIView.ZoomToFit
+Zoom the view to fit its contents.

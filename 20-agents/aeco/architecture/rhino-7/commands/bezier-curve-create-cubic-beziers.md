@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BezierCurve.CreateCubicBeziers
+Constructs an array of cubic, non-rational Beziers that fit a curve to a tolerance.

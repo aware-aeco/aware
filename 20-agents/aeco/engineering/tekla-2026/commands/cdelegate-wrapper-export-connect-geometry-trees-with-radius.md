@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportConnectGeometryTreesWithRadius
+DO NOT USE! For internal usage only!

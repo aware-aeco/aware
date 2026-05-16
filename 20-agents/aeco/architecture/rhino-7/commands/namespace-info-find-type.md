@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamespaceInfo.FindType
+Finds the specified type in the  of this

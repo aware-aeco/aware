@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PointUtil.RemapPointsToPlane
+Remap a list of points onto the plane. This operation equals a ChangeBasisXForm for each point.

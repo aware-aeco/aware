@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorFillScheme.GetSupportedParameterIds
+Retrieves collection of all parameters supported by the scheme.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.IsFilterApplied
+Indicates if a filter is applied to the view.

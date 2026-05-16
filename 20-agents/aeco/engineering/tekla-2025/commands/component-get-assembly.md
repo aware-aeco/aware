@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Component.GetAssembly
+Returns the assembly that the component belongs to.

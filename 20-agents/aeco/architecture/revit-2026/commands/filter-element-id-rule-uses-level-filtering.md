@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterElementIdRule.UsesLevelFiltering
+This function checks if a parameter uses level filtering.

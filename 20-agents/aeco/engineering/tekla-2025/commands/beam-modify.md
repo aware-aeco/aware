@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Beam.Modify
+Modifies the existing beam in the model database to match the current one.

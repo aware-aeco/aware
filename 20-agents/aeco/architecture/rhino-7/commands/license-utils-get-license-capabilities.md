@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LicenseUtils.GetLicenseCapabilities
+Converts an integer to a LicenseCapabilities flag

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmRenderContent.SetParameter
+Sets a named parameter.             True if the parameter was set, else false.

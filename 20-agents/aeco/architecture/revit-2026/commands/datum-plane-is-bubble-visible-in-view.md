@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DatumPlane.IsBubbleVisibleInView
+Identifies if the bubble is visible or not in a view.

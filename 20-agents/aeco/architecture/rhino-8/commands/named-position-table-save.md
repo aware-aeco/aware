@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedPositionTable.Save
+Save a new Named Position.

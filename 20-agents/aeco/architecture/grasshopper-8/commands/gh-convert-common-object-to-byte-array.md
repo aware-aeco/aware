@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.CommonObjectToByteArray
+Convert a RhinoCommon object into a compressed byte-array using OpenNurbs serialization.

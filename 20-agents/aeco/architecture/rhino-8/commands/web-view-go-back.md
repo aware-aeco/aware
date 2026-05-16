@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WebView.GoBack
+Navigates the browser back to the previous page in history, if there is one.

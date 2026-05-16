@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MarkovChain.ReadFromDisc
+Read the markov database from the disc.

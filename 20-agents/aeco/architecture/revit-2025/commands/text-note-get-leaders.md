@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextNote.GetLeaders
+Returns a collection of leaders currently attached to the text note.

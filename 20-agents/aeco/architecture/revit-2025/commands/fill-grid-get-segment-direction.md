@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FillGrid.GetSegmentDirection
+Provides the segment direction.

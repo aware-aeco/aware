@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDEdgeList.GetEnumerator
+Implementation of IEnumerable

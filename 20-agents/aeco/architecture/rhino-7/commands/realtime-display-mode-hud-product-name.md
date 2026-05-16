@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RealtimeDisplayMode.HudProductName
+Override to return the name of your product. This will be printed in             the HUD.

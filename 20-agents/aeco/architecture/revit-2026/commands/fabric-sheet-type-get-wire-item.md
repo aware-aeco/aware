@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricSheetType.GetWireItem
+Gets the Wire stored in the FabricSheetType at the associated index.

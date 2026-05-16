@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MacroModuleIterator.Reset
+Resets the iterator to the initial state.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportGetBoltedPartsHoleElevations
+DO NOT USE! For internal usage only!

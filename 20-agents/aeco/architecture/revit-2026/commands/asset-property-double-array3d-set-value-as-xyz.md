@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssetPropertyDoubleArray3d.SetValueAsXYZ
+Sets the value property as a vector or point XYZ.

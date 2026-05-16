@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContentSerializer.CanLoadMultiple
+If true the plug-in is capable of loading multiple contents.

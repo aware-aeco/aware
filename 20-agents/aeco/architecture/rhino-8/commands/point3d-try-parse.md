@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point3d.TryParse
+Converts the string representation of a point to the equivalent Point3d structure.

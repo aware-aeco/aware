@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileSkp.Read
+Read a Skp file into a RhinoDoc

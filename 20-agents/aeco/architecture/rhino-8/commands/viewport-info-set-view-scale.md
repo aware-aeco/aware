@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewportInfo.SetViewScale
+Set scaling applied for this viewport projection. For reflected             projections, call with values 1,1,-1

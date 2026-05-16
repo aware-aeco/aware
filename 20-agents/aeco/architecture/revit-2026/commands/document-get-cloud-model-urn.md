@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.GetCloudModelUrn
+A ForgeDM Urn identifying the model.

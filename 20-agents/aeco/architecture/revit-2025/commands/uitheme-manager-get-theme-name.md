@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIThemeManager.GetThemeName
+Gets the theme name for the given theme type.

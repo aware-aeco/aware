@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MenuItem.PerformClick
+Performs the click handler for this item.

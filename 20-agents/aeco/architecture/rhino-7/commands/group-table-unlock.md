@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroupTable.Unlock
+Unlocks all objects that are members of a group.

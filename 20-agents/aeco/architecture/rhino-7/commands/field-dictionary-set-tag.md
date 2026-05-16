@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FieldDictionary.SetTag
+Sets an object that contains data to associate with the field.  THIS IS NOW OBSOLETE - if you were using this, please email andy@mcneel.com and let me know why.

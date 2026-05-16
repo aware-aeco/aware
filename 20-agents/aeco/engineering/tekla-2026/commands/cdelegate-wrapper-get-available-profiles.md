@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.GetAvailableProfiles
+DO NOT USE! For internal usage only!

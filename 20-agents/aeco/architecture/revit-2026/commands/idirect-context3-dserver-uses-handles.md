@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IDirectContext3DServer.UsesHandles
+Tests whether this server uses DirectContext3D handle elements.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetBaseClass.SetCommandPrompt
+Sets prompt message that appears in the command prompt window.

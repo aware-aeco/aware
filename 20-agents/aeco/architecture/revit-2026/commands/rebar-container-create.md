@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainer.Create
+Creates a new instance of a Rebar Container element within the project.

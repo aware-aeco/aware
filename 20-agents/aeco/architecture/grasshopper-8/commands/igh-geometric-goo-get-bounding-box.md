@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_GeometricGoo.GetBoundingBox
+Compute an aligned boundingbox.

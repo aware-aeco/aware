@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Circle.Transform
+Transforms this circle using an transformation matrix.

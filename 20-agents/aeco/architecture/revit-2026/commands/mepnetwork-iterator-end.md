@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPNetworkIterator.End
+Checks if the network iteration has completed.

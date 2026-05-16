@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RibbonPanel.ItemAt
+Returns the item at the specified index in the item list.

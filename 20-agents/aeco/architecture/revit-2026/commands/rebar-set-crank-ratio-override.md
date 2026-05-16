@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.SetCrankRatioOverride
+Sets the crank ratio at the indicated bar end as an override value.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ProjectInfo.GetDynamicStringProperty
+Gets a dynamic string property for the ProjectInfo.

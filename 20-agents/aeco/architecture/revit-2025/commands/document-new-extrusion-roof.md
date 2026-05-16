@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.NewExtrusionRoof
+Creates a new Extrusion Roof.

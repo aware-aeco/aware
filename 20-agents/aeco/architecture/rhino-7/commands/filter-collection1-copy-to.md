@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterCollection`1.CopyTo
+Copies the current filtered collection to the specified array.

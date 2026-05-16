@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyInstance.Split
+Splits the family instance element at a point on its defining curve.

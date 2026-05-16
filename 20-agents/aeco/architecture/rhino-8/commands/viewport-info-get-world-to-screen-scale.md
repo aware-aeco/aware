@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewportInfo.GetWorldToScreenScale
+Gets the scale factor from point in frustum to screen scale.

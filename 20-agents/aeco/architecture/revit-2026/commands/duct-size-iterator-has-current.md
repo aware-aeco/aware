@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DuctSizeIterator.HasCurrent
+Identifies if the iterator has a current item.

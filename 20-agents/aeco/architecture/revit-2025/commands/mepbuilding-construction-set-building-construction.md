@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPBuildingConstruction.SetBuildingConstruction
+Sets the Building Construction of the Project Information.

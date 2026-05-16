@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SolidOrShellTessellationControls.DisableLevelOfDetail
+Disables the use of levelOfDetail. The use of levelOfDetail is enabled by calling setLevelOfDetail (with a valid input).

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RealtimeDisplayMode.UseFastDraw
+Implement and return true if you want the display pipeline to not             wait for IsFramebufferAvailable during the MiddleGround draw phase.             This will also tell the pipeline to draw a complete middleground pass in OpenGL.

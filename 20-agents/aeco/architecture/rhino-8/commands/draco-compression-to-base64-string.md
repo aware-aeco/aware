@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DracoCompression.ToBase64String
+Convert byte array of Draco compressed data into a base64 encoded string

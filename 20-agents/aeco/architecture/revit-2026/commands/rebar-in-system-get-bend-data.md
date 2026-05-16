@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarInSystem.GetBendData
+Gets the RebarBendData, containing bar and hook information, of the instance.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Format.FormatRectangleValidity
+If the rectangle is invalid, return a string describing why.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilteredElementCollector.WhereElementIsViewIndependent
+Applies an ElementOwnerViewFilter to the collector.

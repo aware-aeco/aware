@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCCategoryTemplate.CopyTemplate
+Create copy of mapping template with new name.

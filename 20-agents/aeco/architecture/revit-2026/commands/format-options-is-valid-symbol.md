@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormatOptions.IsValidSymbol
+Checks whether a symbol is valid for the unit in this FormatOptions.

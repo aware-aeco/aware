@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.SaveAsFabricationJob
+Save fabrication parts to an MEP job that can be opened in the fabrication software.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObjectTable.AddBrep
+Adds a brep object to Rhino.

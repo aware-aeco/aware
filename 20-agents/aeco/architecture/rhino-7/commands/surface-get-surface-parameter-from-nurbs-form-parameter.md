@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.GetSurfaceParameterFromNurbsFormParameter
+Translates a parameter from a value on the surface returned by  to the current surface.

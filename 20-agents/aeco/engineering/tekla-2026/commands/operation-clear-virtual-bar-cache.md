@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.ClearVirtualBarCache
+Clear all virtual rebar cache.

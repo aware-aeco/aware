@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Platform.Create
+Creates a new instance of the handler of the specified type

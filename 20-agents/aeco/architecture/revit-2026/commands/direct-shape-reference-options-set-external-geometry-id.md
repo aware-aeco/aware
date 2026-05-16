@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShapeReferenceOptions.SetExternalGeometryId
+Sets the ExternalGeometryId associated with the reference object.    The ID must be non-empty.

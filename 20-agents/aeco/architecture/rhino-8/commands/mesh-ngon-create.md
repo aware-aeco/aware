@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshNgon.Create
+Constructs an ngon from lists of mesh vertex and face indexes.

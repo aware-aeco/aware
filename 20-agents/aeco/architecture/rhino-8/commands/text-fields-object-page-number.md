@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextFields.ObjectPageNumber
+Returns the layout page number the object resides on

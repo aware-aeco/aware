@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGeometricGoo
+Converts an object into GeometricGoo. Does not duplicate the data if a lossless conversion is possible.

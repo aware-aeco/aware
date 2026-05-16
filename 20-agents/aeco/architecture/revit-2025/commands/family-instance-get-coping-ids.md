@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyInstance.GetCopingIds
+Lists the elements currently used as coping cutters for this element.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostUtils.GetRhinoDotNetAssembly
+Only works on Windows. Returns null on Mac.

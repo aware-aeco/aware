@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstrainedHandle.CanSetBehavior
+Checks if the input behavior can be set for this RebarConstrainedHandle.

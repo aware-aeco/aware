@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepFace.SetMesh
+Sets a reference to a specified type of mesh for this brep face.

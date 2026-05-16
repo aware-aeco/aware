@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarHostData.IsValidHost
+Reports whether the element is a valid rebar host.

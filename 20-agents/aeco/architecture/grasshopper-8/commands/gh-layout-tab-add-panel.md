@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_LayoutTab.AddPanel
+Add a new panel to this tab. The panel will receive a default name.

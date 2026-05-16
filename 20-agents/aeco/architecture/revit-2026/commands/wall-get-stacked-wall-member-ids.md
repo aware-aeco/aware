@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Wall.GetStackedWallMemberIds
+Get the sub walls which belongs to the wall.

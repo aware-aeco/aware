@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Part.GetReinforcements
+Returns an enumerator of all the connected reinforcements.

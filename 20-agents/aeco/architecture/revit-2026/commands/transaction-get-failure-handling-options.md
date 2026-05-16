@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transaction.GetFailureHandlingOptions
+Returns the current failure handling options.

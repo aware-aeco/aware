@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MaterialRefs.Remove
+Removes the element with the specified plug-in id from the this dictionary.

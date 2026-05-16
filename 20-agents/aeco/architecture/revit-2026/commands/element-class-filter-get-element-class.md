@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementClassFilter.GetElementClass
+The class for the filter.

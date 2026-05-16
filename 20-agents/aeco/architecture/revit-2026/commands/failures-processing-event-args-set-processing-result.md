@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailuresProcessingEventArgs.SetProcessingResult
+Sets the result of the failures processing accomplished during this event callback.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostUtils.CheckForRdk
+Determines if the RDK is loaded.

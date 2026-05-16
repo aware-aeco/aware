@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportUtils.GetGBXMLDocumentId
+Retrieves the GUID representing this document in exported gbXML files.

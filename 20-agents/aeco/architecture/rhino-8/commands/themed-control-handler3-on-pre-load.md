@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedControlHandler`3.OnPreLoad
+Called before the control is loaded on a form

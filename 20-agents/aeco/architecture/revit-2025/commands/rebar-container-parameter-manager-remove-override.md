@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainerParameterManager.RemoveOverride
+Removes an overridden value from the given parameter.

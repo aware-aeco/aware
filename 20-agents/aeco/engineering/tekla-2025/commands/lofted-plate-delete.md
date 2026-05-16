@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoftedPlate.Delete
+Deletes the lofted plate with this instance identifier from the model database.

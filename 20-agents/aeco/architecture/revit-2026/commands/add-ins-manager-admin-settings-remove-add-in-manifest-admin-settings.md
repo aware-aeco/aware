@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AddInsManagerAdminSettings.RemoveAddInManifestAdminSettings
+Removes input settings from the current .

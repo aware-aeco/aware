@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.HideExternalReferenceModels
+Sets the given external reference models hidden.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Stairs.IsByComponent
+Indicates if the stairs is created by stairs components(runs, landings and supports).

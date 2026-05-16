@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Group.IsCompatibleAttachedDetailGroupType
+Checks if the orientation of the input attached detail group matches the input view's orientation.

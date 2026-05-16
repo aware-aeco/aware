@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interval.MakeIncreasing
+Ensures this  is either singleton or increasing.

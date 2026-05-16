@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ScriptEditor.GetSourceCode
+Gets the source contents of the ScriptEditor window.

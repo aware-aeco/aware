@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SketchEditScope.IsSketchEditingSupported
+Checks whether sketch can be edited.

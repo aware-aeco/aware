@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Linetype.GetSegment
+Gets the segment information at a index.

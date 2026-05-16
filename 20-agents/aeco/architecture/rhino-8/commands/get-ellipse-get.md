@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetEllipse.Get
+Prompt for the getting of an ellipse.

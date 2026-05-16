@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-INavisworksExporter.ValidateExportOptions
+Determines if the inputs are valid, and returns an error message if not.

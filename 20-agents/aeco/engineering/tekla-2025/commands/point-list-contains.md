@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointList.Contains
+Checks if the given point is in the list.

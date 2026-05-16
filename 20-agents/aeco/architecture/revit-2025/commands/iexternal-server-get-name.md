@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExternalServer.GetName
+Implement this method to return the name of the server.

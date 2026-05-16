@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Cluster.DoKeysMatch
+Test two keys.

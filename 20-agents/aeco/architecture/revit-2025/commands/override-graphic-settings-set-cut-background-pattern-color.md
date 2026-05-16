@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OverrideGraphicSettings.SetCutBackgroundPatternColor
+Sets the override color of the background pattern of cut faces.

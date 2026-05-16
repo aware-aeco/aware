@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BezierSurface.Transform
+Transforms the surface

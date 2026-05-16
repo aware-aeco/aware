@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileSvg.Read
+Read a Svg file into a RhinoDoc

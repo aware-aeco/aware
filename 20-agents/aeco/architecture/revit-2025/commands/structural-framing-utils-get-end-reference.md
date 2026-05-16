@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralFramingUtils.GetEndReference
+Returns a reference to the end of a framing element according to the setback settings.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.UnselectAll
+Unselect objects.

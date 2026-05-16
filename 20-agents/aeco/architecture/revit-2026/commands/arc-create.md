@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Arc.Create
+Creates a new geometric arc object based on three points.

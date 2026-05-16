@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_AnnotationBase.DuplicateGeometry
+Create a duplicate of this annotation.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportBuildingHierarchyOperation
+DO NOT USE! For internal usage only!

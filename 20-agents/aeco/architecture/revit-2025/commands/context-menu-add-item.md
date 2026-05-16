@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ContextMenu.AddItem
+Add an item to the Context Menu.

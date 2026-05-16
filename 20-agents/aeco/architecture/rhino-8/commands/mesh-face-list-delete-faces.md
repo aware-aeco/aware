@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshFaceList.DeleteFaces
+Removes a collection of faces from the mesh without affecting the remaining geometry.

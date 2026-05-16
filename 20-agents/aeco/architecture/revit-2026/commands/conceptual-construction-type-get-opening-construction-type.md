@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConceptualConstructionType.GetOpeningConstructionType
+Get an Opening ConceptualConstructionType by its ConceptualConstructionOpeningType.

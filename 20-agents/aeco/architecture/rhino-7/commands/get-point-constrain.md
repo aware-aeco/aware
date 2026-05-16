@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetPoint.Constrain
+Constrains the picked point to lie on a line.

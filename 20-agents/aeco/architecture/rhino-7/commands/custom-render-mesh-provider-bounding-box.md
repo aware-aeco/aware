@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CustomRenderMeshProvider.BoundingBox
+Returns a bounding box for the custom render meshes for the given object.

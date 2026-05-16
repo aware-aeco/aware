@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.CopyHistoryOnReplace
+Gets the setting of the CopyOnReplace field in this object's history

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mouse.SetCursor
+Temporarily sets the current mouse pointer to the specified .

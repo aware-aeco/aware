@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoView.Redraw
+Redraws this view.

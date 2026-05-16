@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotChangeLegFaceLayer
+Applies the layer change to the legfaces of the rebar set.

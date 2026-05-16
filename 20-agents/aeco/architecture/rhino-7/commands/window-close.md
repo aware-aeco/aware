@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Window.Close
+Closes the window

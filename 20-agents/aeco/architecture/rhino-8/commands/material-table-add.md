@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MaterialTable.Add
+Adds a new material to the table based on the default material.

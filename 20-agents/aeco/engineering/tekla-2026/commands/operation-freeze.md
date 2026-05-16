@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.Freeze
+Freezes or unfreezes a rebar set.

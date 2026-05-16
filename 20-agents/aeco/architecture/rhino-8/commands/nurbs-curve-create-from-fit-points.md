@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurve.CreateFromFitPoints
+Fits a NURBS curve to a dense, ordered set of points.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.ShortDescription
+Gets a localized short descriptive name of the object.

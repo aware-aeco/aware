@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.GetSegmentCoordinate
+Gets the coordinate of a segment.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightManagerSupport.ObjectSerialNumberFromLight
+Get the object serial number of the light

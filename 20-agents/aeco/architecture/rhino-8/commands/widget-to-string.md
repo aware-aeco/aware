@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Widget.ToString
+Gets a string that represents the current object with its ID if specified.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Sphere.LatitudeRadians
+Computes the parallel at a specific latitude angle.             The angle is specified in radians.

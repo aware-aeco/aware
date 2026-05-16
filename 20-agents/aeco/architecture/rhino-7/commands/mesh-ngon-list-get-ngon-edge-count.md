@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshNgonList.GetNgonEdgeCount
+Gets the complete edge count of an ngon.

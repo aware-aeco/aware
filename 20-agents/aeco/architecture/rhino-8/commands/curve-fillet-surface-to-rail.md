@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.FilletSurfaceToRail
+Creates a surface between two surfaces, with a fixed rail curve on the first surface.

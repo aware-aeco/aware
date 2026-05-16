@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedPositionTable.Objects
+Array of Rhino Objects related to a Named Position.

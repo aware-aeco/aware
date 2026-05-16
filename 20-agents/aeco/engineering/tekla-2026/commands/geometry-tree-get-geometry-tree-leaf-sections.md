@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryTree.GetGeometryTreeLeafSections
+Gets end GeometrySections of the geometry which are possible to remove.

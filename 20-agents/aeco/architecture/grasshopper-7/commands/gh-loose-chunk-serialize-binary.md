@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_LooseChunk.Serialize_Binary
+Serializes the data tree into a byte array.

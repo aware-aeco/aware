@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.RemoveAt
+Remove the point at the given index.

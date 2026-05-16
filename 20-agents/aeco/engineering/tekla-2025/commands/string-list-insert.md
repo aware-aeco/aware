@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StringList.Insert
+Inserts the string to the specified index.

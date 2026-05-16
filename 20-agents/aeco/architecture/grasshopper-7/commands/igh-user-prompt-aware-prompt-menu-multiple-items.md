@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_UserPromptAware.PromptMenuMultipleItems
+Create a menu item that will be inserted into the Parameter context menu   for getting multiple values.

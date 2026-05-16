@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsSurface.ConvertSpanToBezier
+Convert a NURBS surface bispan into a Bezier surface.

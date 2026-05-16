@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.LoadServices
+Loads the specified fabrication services into the project.

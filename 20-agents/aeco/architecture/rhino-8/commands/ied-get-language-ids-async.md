@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.GetLanguageIdsAsync
+Ids of supported languages

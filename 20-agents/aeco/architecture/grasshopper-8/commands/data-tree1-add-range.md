@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataTree`1.AddRange
+Add (append) a list of data items to the last branch in the tree.   If no branch exists yet, a new one will be created.

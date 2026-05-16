@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PythonScript.CreateTextEditorControl
+Creates a control where the user is able to type Python code.

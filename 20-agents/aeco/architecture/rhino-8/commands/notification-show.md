@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Notification.Show
+Shows the current notification.

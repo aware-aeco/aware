@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.IsValidRowNumber
+Verifies if the row number is valid.

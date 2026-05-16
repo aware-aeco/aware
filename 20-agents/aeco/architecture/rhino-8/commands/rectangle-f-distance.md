@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RectangleF.Distance
+Calculates the distance between the specified  and .

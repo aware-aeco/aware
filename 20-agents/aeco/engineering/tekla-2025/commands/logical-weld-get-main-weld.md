@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LogicalWeld.GetMainWeld
+Returns the main weld of the logical weld.

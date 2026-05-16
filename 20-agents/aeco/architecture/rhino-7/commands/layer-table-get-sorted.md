@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LayerTable.GetSorted
+Gets an array of layer indices that are sorted by the values of .

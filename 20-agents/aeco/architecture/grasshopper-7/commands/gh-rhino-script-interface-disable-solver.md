@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RhinoScriptInterface.DisableSolver
+Disables the Grasshopper Solver. If the Solver is disabled,   expired components and parameter will not be recomputed,   though any existing solution will remain intact.

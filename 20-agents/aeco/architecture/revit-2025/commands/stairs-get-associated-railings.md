@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Stairs.GetAssociatedRailings
+Gets a list of the Railing elements which are associated to the boundaries of the stairs.

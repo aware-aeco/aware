@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelExtensions.TryGetModelObjectType
+Tries to get the  of the  identified by the given , if any.

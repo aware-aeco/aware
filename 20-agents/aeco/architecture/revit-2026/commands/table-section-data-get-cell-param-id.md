@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.GetCellParamId
+Returns a column's ParamId

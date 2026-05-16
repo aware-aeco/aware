@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.EnableClippingPlanes
+Enable or disable the Clipping Plane logic of the engine.

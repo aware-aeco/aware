@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjRef.Object
+Returns the referenced Rhino object.

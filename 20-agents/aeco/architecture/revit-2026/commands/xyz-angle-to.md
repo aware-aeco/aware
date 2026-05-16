@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-XYZ.AngleTo
+Returns the angle between this vector and the specified vector.

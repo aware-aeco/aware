@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedParametersEventArgs.TryGetInt
+Try to get an int value for a given key name

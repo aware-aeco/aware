@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisResultSchema.GetNumberOfUnits
+returns number of possible units

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFC.GetMaterialIdForCurrentExportState
+This gets the material id that is associated with the element in the current export state.

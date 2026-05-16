@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CircuitNamingScheme.IsValidCombinedParameters
+Validates whether the combined parameters is valid.

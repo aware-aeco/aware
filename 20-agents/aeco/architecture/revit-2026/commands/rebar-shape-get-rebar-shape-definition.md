@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShape.GetRebarShapeDefinition
+Return the definition of the RebarShape.

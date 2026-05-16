@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IRebarUpdateServer.GetCustomHandleName
+This function should return the name of the handle.

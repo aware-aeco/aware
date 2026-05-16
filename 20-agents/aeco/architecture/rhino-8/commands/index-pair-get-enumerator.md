@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndexPair.GetEnumerator
+Gets an enumerator that goes over  and , in this order.

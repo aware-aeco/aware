@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.GetRegionIds
+Gets the region ids of this compound structure.

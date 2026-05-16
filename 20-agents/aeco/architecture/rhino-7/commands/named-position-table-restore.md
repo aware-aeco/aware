@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedPositionTable.Restore
+Restore a Named Position.

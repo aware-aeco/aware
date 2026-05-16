@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureMessage.GetDefaultResolutionCaption
+Retrieves the caption of the default resolution of the failure.

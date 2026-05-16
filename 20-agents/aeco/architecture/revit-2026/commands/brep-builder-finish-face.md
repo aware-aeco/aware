@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BRepBuilder.FinishFace
+Indicates that the caller has finished defining the given face.

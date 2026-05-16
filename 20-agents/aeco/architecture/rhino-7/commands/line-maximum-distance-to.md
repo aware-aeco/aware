@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Line.MaximumDistanceTo
+Finds the largest distance between this line as a finite segment             and a test point.

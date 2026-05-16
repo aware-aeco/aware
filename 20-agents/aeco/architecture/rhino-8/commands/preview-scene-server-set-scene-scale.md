@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PreviewSceneServer.SetSceneScale
+Set Scene Server Scale

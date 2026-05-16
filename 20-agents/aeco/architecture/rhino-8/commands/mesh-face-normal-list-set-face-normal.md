@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshFaceNormalList.SetFaceNormal
+Sets a face normal vector at an index using three single-precision numbers.

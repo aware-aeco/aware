@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.TranslateObjects
+Offset objects by a certain distance in X and Y

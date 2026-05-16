@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedPositionTable.Delete
+Delete a Named Position.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Viewport.HasViewportTransforms
+Indicates if the viewport has transforms.

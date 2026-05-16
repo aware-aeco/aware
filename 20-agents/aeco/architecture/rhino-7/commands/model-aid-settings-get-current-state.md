@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelAidSettings.GetCurrentState
+Gets the current settings.

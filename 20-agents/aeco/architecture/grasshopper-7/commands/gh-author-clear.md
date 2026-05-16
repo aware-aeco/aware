@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Author.Clear
+Erase all fields.

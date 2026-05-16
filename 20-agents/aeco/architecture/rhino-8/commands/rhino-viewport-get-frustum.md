@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.GetFrustum
+Gets the view frustum.

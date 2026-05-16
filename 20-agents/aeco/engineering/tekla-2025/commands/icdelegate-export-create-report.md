@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportCreateReport
+DO NOT USE! For internal usage only!

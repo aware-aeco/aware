@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentEditor.FadeOut
+Call this method if the prompt switches to Rhino.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipelineAttributes.HasDiagonalHatchEffect
+Returns TRUE if there is a diagonal hatch effect enabled with a hatch strength             larger than 0.0, FALSE otherwise.

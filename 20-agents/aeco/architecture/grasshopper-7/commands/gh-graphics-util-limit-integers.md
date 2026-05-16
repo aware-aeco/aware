@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.LimitIntegers
+Limits RGB channels to the 0~255 range,

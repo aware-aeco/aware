@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelSharingHandler.GetLocationsAsync
+Gets the list of available locations for shared models.

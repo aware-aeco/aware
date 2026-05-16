@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.CullControlPolygon
+Returns a value indicating if only points on the side of the surface that             face the camera are displayed.

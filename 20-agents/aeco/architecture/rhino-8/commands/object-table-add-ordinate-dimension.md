@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.AddOrdinateDimension
+Adds an ordinate dimension object to the document.

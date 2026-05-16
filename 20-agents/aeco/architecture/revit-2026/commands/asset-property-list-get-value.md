@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssetPropertyList.GetValue
+Gets a collection of properties stored in this property list. These properties are copied.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.CircleCircle
+Intersects two circles using exact calculations.

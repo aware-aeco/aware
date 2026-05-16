@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BinaryArchiveReader.ReadMeshingParameters
+Reads a  from the archive.

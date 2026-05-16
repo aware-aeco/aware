@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShape.CreateElementInstance
+Creates a DirectShape object and adds it to document.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayColoredSurfaceSettings.IsEqual
+Compares two colored surface settings objects.

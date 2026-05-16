@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetBaseClass.ClearDefault
+Clears any defaults set using SetDefaultPoint, SetDefaultNumber, SetDefaultString, or SetCommandPromptDefault.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolyCurve.SegmentIndex
+Finds the segment used for evaluation at polycurve_parameter.

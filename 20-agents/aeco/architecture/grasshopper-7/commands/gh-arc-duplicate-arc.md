@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Arc.DuplicateArc
+Create a duplicate of this arc.

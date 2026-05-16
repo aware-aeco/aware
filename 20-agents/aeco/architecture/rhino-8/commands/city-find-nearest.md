@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-City.FindNearest
+Finds nearest city of specified input parameters.

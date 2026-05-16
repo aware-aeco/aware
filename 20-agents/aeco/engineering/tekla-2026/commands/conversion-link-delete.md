@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConversionLink.Delete
+Deletes the conversion link instance from the model. The identifier must be set.

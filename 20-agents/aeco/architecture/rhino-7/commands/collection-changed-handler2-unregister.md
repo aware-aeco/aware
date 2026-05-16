@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CollectionChangedHandler`2.Unregister
+Unregisters the current registered collection

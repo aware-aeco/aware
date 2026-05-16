@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPAnalyticalSegment.GetFlowConvergenceCharacteristic
+Gets the flow convergence characteristic of the segment.

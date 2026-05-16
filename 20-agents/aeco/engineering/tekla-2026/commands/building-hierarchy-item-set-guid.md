@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BuildingHierarchyItem.SetGuid
+Sets Guid for Building Hierarchy object. To be used when selecting object.

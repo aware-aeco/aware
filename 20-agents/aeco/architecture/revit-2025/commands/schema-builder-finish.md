@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SchemaBuilder.Finish
+Registers and returns the created Schema object.

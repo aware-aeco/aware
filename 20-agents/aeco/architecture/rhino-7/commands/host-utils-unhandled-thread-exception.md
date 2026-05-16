@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostUtils.UnhandledThreadException
+Exception handler for exceptions occurring on the UI thread

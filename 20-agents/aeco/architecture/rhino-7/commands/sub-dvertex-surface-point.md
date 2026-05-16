@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDVertex.SurfacePoint
+The SubD surface point

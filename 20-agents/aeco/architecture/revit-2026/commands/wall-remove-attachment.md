@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Wall.RemoveAttachment
+Removes any attachment of the wall to the specified target.

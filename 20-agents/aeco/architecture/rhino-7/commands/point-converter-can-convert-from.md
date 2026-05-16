@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointConverter.CanConvertFrom
+Determines if this converter can convert from the specified

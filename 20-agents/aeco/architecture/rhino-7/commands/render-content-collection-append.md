@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContentCollection.Append
+Append a RenderContent to the collection

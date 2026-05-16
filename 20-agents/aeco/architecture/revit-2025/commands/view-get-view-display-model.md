@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetViewDisplayModel
+Returns the current view display model settings for the view.

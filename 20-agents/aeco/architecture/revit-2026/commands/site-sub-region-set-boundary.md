@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SiteSubRegion.SetBoundary
+Set the given curve loops as the boundary of an existing SiteSubRegion.

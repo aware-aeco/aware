@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlanViewRange.GetLevelId
+Get the element id of the level for a View Depth plane

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ConvertTsGuidToIfcGuid
+DO NOT USE! For internal usage only!

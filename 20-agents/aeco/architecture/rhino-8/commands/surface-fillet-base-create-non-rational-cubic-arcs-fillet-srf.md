@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SurfaceFilletBase.CreateNonRationalCubicArcsFilletSrf
+Creates a surface fillet using Non-rational Cubic arc approximations as sections

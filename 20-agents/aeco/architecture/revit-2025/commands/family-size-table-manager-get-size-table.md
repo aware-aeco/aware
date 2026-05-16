@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilySizeTableManager.GetSizeTable
+Get a FamilySizeTable by name.

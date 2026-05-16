@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IDataObject.Clear
+Clears the data object completely of all values

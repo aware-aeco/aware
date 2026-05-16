@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dm.ReadWithLog
+Reads a 3dm file from a specified location.

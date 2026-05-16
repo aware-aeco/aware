@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSet.GetRebarLegSurfaces
+Returns an enumerator of all child  objects.

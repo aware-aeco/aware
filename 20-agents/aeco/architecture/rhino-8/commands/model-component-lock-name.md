@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelComponent.LockName
+Locks the component Name property.

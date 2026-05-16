@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Ceiling.GetCeilingGridLines
+Get the geometric representation of the ceiling grid, optionally including the ceiling boundary.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSheet.GetAdditionalRevisionIds
+Gets the Revisions that are additionally included in the sheet's revision schedules.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinearWorkflow.CopyFrom
+Create a copy of linearworkflow

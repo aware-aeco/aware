@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportRefreshReferenceFile
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TrayIndicator.Hide
+Hide this instance of .

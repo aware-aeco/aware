@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Categories.NewSubcategory
+Add a new subcategory into the Autodesk Revit document.

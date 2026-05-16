@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.SupportsWorksharingDisplayMode
+Checks whether this view supports the given worksharing display mode.

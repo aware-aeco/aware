@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MaterialTable.Find
+Finds a material index.

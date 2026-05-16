@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WorksetConfiguration.Open
+Sets a group of user-created worksets to open.

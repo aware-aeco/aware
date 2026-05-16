@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetCylinder.Get
+Prompt for the getting of a cylinder.

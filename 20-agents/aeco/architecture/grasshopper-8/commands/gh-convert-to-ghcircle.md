@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHCircle
+Convert data into GH_Circles.

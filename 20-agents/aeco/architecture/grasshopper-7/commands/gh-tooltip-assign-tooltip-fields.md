@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Tooltip.AssignTooltipFields
+Set all fields of the Tooltip. You'll still need to call Show() to display the tooltip.

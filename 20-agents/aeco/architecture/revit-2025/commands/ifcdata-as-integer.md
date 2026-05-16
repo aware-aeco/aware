@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCData.AsInteger
+Gets storage value as integer when its PrimitiveType is integer.

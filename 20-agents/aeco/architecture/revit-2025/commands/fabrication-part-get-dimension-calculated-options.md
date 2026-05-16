@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.GetDimensionCalculatedOptions
+Gets the calculated options of the fabrication dimension.

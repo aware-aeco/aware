@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.MakeEndsMeet
+Makes adjustments to the ends of one or both input curves so that they meet at a point.

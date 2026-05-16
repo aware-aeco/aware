@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDefinition.GetParameterFormula
+Return the parameter's formula, if one is associated with it.

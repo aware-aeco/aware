@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSheet.SetAdditionalRevisionIds
+Sets the Revisions to additionally include in the sheet's revision schedules.

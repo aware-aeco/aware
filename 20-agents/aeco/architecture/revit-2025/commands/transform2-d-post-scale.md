@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform2D.PostScale
+Scales both the linear and translational parts of this transformation and returns the result.

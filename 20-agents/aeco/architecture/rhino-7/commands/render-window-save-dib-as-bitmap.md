@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderWindow.SaveDibAsBitmap
+Save current Dib of RenderWindow as file             Helper function for debugging purposes.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.GetDimensionValue
+Gets the value of the fabrication dimension, returns value in Revit internal units.

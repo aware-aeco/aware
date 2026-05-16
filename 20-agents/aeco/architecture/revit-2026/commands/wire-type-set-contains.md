@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WireTypeSet.Contains
+Tests for the existence of a wire type within the set.

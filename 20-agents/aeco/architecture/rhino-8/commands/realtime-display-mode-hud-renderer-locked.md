@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RealtimeDisplayMode.HudRendererLocked
+Implement to support locking in the viewport

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_UpgradeUtil.MigrateRecipients
+Migrate all recipients from A to B, while maintaining order.

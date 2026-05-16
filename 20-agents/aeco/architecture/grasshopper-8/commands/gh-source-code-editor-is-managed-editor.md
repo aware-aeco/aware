@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_SourceCodeEditor.IsManagedEditor
+Tests to see if a given ID is already defined.

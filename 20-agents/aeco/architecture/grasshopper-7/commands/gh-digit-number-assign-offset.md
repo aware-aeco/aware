@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DigitNumber.AssignOffset
+Assign an offset to a given digit and recursively adjust all leftwards offsets if needed.

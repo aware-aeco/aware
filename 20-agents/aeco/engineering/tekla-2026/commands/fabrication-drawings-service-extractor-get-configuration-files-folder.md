@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationDrawingsServiceExtractor.GetConfigurationFilesFolder
+Get the folder where the configuration files for extraction are stored.

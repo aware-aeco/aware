@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ChangeQueue.EnvironmentIdForUsage
+Get RenderEnvironment RenderHash for given usage.

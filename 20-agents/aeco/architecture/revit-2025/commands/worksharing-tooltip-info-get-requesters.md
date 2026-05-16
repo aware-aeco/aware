@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WorksharingTooltipInfo.GetRequesters
+The ordered list of unique user names of users who have outstanding editing requests for    the specified element.

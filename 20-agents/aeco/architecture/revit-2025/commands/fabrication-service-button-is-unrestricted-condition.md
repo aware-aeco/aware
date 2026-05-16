@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationServiceButton.IsUnrestrictedCondition
+Checks if the condition is unrestricted.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GraphicsPathExtensions.AddEllipse
+Adds an ellipse to the path at the specified

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveIntersections.GetEnumerator
+Returns an enumerator that is capable of yielding all IntersectionEvents in the collection.

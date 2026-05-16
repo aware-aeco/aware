@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.AddPoints
+Adds multiple points to the document.

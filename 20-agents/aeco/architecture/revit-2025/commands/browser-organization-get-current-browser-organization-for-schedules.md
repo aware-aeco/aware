@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrowserOrganization.GetCurrentBrowserOrganizationForSchedules
+Gets the   that applies to the Schedules section of the project browser.

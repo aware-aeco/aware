@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepEdge.TrimIndices
+Gets the indices of all trims associated with this edge.

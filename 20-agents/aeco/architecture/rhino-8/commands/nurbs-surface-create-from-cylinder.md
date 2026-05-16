@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsSurface.CreateFromCylinder
+Constructs a new NURBS surfaces from cylinder data.

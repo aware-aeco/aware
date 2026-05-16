@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-KeysExtensions.FromShortcutString
+Parses a shortcut string such as "Ctrl+Alt+Z" into a  value

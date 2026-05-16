@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepFace.CreateExtrusion
+Extrude a face in a Brep.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableTraySizes.GetCableTraySizes
+Gets the cable tray sizes of the project.

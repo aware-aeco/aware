@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DefaultDivideSettings.GetDefaultDivideSettings
+Obtains the DefaultDivideSettings object for the specified document.

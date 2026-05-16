@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElevationMarker.CreateElevation
+Creates a new elevation ViewSection on the ElevationMarker at the desired index.

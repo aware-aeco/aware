@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DocumentPrintedEventArgs.GetFailedViewElementIds
+Returns ElementIds of the views that that failed to print (if any).

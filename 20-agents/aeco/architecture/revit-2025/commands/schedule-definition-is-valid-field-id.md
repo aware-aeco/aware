@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.IsValidFieldId
+Checks whether a ScheduleFieldId is the ID of a field in this ScheduleDefinition.

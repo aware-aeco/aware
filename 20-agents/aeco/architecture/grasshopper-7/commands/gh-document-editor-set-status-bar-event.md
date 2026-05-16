@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentEditor.SetStatusBarEvent
+Set a new message on the Grasshopper status bar.

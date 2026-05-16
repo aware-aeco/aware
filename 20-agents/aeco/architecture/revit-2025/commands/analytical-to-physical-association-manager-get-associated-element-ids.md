@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalToPhysicalAssociationManager.GetAssociatedElementIds
+Returns ids of the elements which are in association with the element with the given ElementId.

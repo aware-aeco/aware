@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadLine.Select
+Selects a load line from the model database. The ID must be set.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ChangeType.Contains
+Checks whether this ChangeType contains the input ChangeType

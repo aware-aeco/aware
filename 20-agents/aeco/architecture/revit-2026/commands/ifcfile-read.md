@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCFile.Read
+Reads content from a file of IFC format.

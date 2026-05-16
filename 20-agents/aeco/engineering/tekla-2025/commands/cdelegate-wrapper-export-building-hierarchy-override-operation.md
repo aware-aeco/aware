@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportBuildingHierarchyOverrideOperation
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssetProperty.AddConnectedAsset
+Adds a new connected asset attached to this asset property, if it allows it.

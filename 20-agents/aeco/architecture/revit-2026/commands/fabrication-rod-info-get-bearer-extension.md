@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationRodInfo.GetBearerExtension
+Gets the bearer extension. The method is applicable only for bearer hanger.

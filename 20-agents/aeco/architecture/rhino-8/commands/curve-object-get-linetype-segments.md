@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveObject.GetLinetypeSegments
+Converts the linetype pattern of the curve into curve segments and points             based on the active Rhino viewport.

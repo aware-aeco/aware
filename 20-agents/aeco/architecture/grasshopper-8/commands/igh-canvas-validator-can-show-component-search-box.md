@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_CanvasValidator.CanShowComponentSearchBox
+Validates whether the double-click-component-search-window is allowed to pop up at a specific point.

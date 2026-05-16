@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourCube.RenderGrip
+Render the slice grip.

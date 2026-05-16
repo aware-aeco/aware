@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RdkSelectionNavigator.GoBackwards
+Navigate backwards if possible

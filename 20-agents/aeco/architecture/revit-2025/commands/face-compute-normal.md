@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Face.ComputeNormal
+Returns the normal vector for the face at the given point.

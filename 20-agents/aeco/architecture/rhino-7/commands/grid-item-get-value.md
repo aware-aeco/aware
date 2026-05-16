@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GridItem.GetValue
+Gets the value from this item for the specified column/index

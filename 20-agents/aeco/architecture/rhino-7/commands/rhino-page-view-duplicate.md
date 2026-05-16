@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoPageView.Duplicate
+Copies a page view.

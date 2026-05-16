@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Graphics.DrawImage
+Draws the specified  at a location with no scaling

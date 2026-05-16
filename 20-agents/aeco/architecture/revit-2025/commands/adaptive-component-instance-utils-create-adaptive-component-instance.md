@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AdaptiveComponentInstanceUtils.CreateAdaptiveComponentInstance
+Creates a FamilyInstance of Adaptive Component Family.

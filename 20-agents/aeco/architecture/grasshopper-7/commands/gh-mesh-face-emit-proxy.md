@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MeshFace.EmitProxy
+Returns a proxy that represents this mesh face. Do not call this function unless you're

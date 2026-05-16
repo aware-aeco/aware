@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Part.GetBolts
+Returns an enumerator of all the connected bolts.

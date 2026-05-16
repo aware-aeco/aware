@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Utility.FixNewlines
+Make sure all newlines in a string adhere to the current platform standard.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormattedText.SetItalicStatus
+Sets the characters in the entire text to be italic or not italic.

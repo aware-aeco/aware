@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelSharingHandler.GetSharingEvents
+Gets an instance of  to subscribe to sharing-related events.

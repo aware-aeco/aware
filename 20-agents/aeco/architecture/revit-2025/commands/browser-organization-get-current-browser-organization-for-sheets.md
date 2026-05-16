@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrowserOrganization.GetCurrentBrowserOrganizationForSheets
+Gets the  that applies to the Sheets section of the project browser.

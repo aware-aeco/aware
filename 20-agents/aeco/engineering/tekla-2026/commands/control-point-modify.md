@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlPoint.Modify
+Modifies the control point with the given Identifier.

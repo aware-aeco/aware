@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContentCollection.Remove
+Remove an array of contents from the collection.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndependentTag.IsTaggedOnSubelement
+Returns true if the any of the tagged references is a subelement.

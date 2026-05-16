@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.AdjustEndLength
+Adjusts the length for the specified connector.

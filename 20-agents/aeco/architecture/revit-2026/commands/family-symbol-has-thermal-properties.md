@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilySymbol.HasThermalProperties
+Identifies if this FamilySymbol can include thermal properties.

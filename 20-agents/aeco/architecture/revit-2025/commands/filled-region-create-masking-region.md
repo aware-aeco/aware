@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilledRegion.CreateMaskingRegion
+Creates a masking region on a sketch plane in a 3d model family.

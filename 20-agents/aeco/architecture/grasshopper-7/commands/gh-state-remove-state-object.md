@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_State.RemoveStateObject
+Remove an object from the database.

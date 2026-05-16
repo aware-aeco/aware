@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoApp.RunScript
+Runs a Rhino command script.

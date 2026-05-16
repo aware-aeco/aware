@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DetailElementOrderUtils.IsDetailElement
+Indicates if the element is a detail element that participates in detail draw ordering in the view.

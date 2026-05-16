@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PostEffectCollection.PostEffectDataFromId
+Get a post effect data for an id.

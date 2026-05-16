@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Structure`1.ExpandPath
+Expand a path in this structure by appending an element.

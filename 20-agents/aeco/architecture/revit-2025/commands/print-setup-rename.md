@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PrintSetup.Rename
+Rename the current print setting with the specified name.

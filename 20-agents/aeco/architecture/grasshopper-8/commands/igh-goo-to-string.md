@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Goo.ToString
+Creates a string description of the current instance value

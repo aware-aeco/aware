@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EffectInstance.SetTransparency
+Sets the transparency parameter of the effect instance.

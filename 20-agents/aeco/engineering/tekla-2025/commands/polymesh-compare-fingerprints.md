@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Polymesh.CompareFingerprints
+Compares two fingerprints

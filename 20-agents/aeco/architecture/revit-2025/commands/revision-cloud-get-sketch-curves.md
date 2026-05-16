@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevisionCloud.GetSketchCurves
+Returns copies of the Curves that form this RevisionCloud.

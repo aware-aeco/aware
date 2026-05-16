@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Part.GetReferenceLine
+Returns the reference line for the given part.

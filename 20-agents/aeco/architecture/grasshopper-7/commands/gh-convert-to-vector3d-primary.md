@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToVector3d_Primary
+Performs a direct cast from On3dVector or GH_Vector.   Data is not quaranteed to be duplicated.

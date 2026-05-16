@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepRegion.GetFaceSides
+Gets an array of  entities delimiting this region.

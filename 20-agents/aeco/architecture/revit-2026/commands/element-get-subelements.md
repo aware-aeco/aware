@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.GetSubelements
+Returns the collection of element subelements.

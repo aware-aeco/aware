@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rectangle.Align
+Aligns the rectangle to a grid of the specified

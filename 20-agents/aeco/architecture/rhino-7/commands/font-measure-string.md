@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Font.MeasureString
+Measures the specified string to get its size in logical pixels.

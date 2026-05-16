@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ListItemCollection.Add
+Adds a new item to the list with the specified text

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RibbonPanel.PerformLayout
+Performs a tight-fit stacking of all content items. All items will be layed out and the panel Region will be adjusted to match.

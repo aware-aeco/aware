@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PostEffectPipeline.SetStartTimeInMilliseconds
+Set the start time of the rendering in milliseconds since some unspecified epoch.

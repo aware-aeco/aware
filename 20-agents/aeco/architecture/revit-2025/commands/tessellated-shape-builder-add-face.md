@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TessellatedShapeBuilder.AddFace
+Adds a face to the currently open connected face set.

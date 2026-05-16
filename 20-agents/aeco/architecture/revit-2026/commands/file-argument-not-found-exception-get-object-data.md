@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileArgumentNotFoundException.GetObjectData
+Retrieves data needed to serialize the target object.

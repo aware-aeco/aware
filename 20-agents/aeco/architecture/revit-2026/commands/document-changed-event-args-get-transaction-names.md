@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DocumentChangedEventArgs.GetTransactionNames
+Returns names of the transactions associated with this event

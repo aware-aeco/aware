@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StringTable.SetString
+Adds or sets a user data string to the document.

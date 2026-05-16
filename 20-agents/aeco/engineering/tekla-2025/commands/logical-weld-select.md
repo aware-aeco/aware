@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LogicalWeld.Select
+Selects a logical weld from the model database. The logical weld identifier must be set.

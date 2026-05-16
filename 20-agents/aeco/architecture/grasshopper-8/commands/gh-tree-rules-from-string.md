@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_TreeRules.FromString
+Attempt to parse a Pattern string.

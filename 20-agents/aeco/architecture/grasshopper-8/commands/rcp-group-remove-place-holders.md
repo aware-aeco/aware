@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RcpGroup.RemovePlaceHolders
+Remove all placeholders from this group.

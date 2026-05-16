@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadCase.IsLoadCaseSubcategoryId
+Checks whether provided element ID refer to subcategory of Structural Load Cases () category - one of built-in or user defined.

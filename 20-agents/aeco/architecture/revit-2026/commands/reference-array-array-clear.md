@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceArrayArray.Clear
+Removes every ReferenceArray from the array, rendering it empty.

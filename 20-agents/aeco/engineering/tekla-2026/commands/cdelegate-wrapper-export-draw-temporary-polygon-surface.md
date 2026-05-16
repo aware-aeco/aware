@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportDrawTemporaryPolygonSurface
+DO NOT USE! For internal usage only!

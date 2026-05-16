@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceNode.GetSymbolGeometryId
+Gets the SymbolGeometryId associated with the node.

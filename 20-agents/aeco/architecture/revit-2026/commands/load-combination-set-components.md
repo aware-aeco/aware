@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadCombination.SetComponents
+Sets a collection of the load combination components.

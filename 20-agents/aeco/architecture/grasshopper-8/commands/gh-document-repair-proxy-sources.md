@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.RepairProxySources
+Attempts to resolve all proxy sources in the document.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PreviewUtil.AddBox
+Add a box to the temporary Preview lists.

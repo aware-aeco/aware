@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Solid.Intersect
+Returns a list of line - solid intersection points.

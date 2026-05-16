@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.GetFreeFormAccessor
+Returns an interface providing access to free-form properties and methods for this Rebar element.

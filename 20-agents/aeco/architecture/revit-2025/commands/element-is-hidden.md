@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.IsHidden
+Identifies if the element has been permanently hidden in the view.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.CanASlopeBeApplied
+This will test if a slope can be applied to the part and maintain connections with any connected parts.

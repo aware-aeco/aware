@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolylineCurve.ToPolyline
+Returns the underlying Polyline, or points.

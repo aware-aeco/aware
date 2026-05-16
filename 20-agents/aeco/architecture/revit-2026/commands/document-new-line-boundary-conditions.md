@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.NewLineBoundaryConditions
+Creates a new Line BoundaryConditions element on a host element.

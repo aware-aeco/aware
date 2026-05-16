@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.GetDefaultNameForMaterialTakeoff
+Gets the default view name that will be used when creating a material takeoff.

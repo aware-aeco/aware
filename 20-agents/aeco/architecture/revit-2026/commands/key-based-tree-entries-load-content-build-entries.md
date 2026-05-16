@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-KeyBasedTreeEntriesLoadContent.BuildEntries
+Builds a KeyBasedTreeEntries object.

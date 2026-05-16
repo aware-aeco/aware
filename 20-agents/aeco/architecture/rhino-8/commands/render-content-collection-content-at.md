@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContentCollection.ContentAt
+Content at index

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyManager.RenameParameter
+Rename a family parameter.

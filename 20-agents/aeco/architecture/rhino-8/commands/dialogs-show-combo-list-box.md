@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Dialogs.ShowComboListBox
+Displays Rhino's combo list box.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisResultSchema.SetUnits
+Sets names and multipliers of all units for result visualization

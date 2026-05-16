@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalElement.GetTransform
+Returns the transform which reflects Analytical Element orientation.

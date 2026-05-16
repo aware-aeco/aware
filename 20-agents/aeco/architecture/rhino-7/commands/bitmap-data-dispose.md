@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BitmapData.Dispose
+Releases all resource used by the  object.

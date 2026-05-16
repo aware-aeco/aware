@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitLinkUIUtils.ReportLinkLoadResults
+This function reports any errors which were encountered    when loading the Revit links represented by the given    LinkLoadResult map.

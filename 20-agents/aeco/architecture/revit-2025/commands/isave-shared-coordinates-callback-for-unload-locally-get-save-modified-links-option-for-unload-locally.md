@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ISaveSharedCoordinatesCallbackForUnloadLocally.GetSaveModifiedLinksOptionForUnloadLocally
+Determines whether Revit should save the link or not prior    to unloading the link locally.

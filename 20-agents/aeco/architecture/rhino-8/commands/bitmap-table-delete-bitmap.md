@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BitmapTable.DeleteBitmap
+Deletes a bitmap.

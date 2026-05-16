@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportUtils.GetExportId
+Retrieves the GUID representing the subelement in DWF and IFC export.

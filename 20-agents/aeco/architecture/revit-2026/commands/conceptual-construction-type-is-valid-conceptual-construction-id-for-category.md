@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConceptualConstructionType.IsValidConceptualConstructionIdForCategory
+Indicate if a ConceptualConstruction is appropriate to assign to a MassSurfaceData of a particular Mass subcategory.

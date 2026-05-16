@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SizeConverter.ConvertFrom
+Converts the specified value to a

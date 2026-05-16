@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ProjectInfo.GetIntegerUserProperties
+Retrieves all integer properties for the ProjectInfo.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailuresAccessor.JournalFailures
+Allows to record information about failures in the journal.

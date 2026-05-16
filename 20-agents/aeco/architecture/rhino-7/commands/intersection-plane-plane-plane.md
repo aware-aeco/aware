@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.PlanePlanePlane
+Intersects three planes to find the single point they all share.

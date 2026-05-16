@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshNgonList.IsValid
+Tests an ngon to see if the vertex and face references are valid and pass partial boundary validity checks.

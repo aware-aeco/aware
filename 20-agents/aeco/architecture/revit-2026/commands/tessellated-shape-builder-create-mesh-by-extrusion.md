@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TessellatedShapeBuilder.CreateMeshByExtrusion
+Builds a mesh by extruding curve loop(s) along extrusion distance.

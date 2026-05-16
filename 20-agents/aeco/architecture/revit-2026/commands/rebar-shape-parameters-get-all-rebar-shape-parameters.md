@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeParameters.GetAllRebarShapeParameters
+List all shape parameters used by all the existing RebarShapes in the specified document.

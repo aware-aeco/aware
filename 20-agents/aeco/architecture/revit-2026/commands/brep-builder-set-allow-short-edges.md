@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BRepBuilder.SetAllowShortEdges
+Make BRepBuilder allow edges that it would normally disallow as being too short for Revit geometry.

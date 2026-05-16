@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarFreeFormAccessor.GetEndTreatmentTypeIdAtIndex
+Gets the id of the EndTreatmentType that is applied to the bar with index barPositionIndex at the specified end.

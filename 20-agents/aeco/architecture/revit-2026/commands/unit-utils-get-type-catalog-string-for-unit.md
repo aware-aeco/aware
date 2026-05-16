@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UnitUtils.GetTypeCatalogStringForUnit
+Gets the string used in type catalogs to identify a given unit.

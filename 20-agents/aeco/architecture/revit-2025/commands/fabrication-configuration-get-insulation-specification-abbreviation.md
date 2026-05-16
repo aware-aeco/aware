@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetInsulationSpecificationAbbreviation
+Gets insulation specification abbreviation.

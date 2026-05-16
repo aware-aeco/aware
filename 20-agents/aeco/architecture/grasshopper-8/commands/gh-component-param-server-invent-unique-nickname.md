@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentParamServer.InventUniqueNickname
+Create a new, unique parameter nickname.

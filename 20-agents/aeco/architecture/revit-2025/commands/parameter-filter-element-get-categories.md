@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterFilterElement.GetCategories
+Gets the categories admitted by this filter.

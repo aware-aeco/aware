@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolylineSegments.GetVertices
+Returns an array of vertices of the polyline segments.

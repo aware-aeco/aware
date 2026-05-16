@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderingQualitySettings.IsCustomQuality
+Checks if the current rendering quality is custom or not.

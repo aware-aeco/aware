@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentIO.SaveAsDocumentDialog
+Display the Save As GH/GHX dialog.

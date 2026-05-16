@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Triangle3d.PointAtBarycentricCoords
+Gets a point within this triangle using barycentric coordinates.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.SetColumnWidthInPixels
+This sets a column's width in logical pixels

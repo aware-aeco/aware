@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PersistentParam`1.SetPersistentData
+Add a collection of values to the persistent data.

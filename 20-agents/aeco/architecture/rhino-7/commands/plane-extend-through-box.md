@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Plane.ExtendThroughBox
+Extends this plane through a bounding box.

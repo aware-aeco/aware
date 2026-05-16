@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.Select
+Selects the view.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ZebraAnalysisSettings.GetDefaultState
+Gets the factory settings of the application.

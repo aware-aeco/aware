@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.ClearDiagnosticsAsync
+Clear/remove all diagnostics

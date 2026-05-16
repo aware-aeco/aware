@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DuctSizeIterator.IsDone
+Identifies if the iteration has completed.

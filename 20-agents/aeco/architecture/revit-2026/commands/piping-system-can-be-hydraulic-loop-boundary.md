@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PipingSystem.CanBeHydraulicLoopBoundary
+Checks if the element can be used as a hydraulic loop boundary.

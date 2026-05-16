@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.GetRoofComponents
+Gets the components of roof slabs.

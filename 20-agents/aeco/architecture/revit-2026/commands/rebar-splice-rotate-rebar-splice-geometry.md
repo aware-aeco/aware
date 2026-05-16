@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSplice.RotateRebarSpliceGeometry
+Rotates the RebarSpliceGeometry about the given axis and angle.

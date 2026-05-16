@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssetProperty.IsEditable
+Check if property can be edited.

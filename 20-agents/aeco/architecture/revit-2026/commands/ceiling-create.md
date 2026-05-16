@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Ceiling.Create
+Creates a new instance of ceiling within the project.

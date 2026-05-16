@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WorksetDefaultVisibilitySettings.SetWorksetVisibility
+Set the default visibility of a workset.

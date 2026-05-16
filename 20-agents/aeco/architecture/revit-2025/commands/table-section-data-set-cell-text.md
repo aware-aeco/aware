@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.SetCellText
+Sets a cell's to display the specified text.

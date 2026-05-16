@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointList.GetRange
+Gets a part of the point list.

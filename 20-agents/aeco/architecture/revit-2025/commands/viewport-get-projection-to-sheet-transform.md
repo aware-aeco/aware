@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Viewport.GetProjectionToSheetTransform
+Returns the transform from the view's projection space to the sheet space.

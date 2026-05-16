@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ActiveObject.RuntimeMessages
+Gets the list of cached runtime messages that were recorded during solver-time processes.

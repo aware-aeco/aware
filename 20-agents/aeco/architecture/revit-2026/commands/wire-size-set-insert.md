@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WireSizeSet.Insert
+Insert the specified wire size into the set.

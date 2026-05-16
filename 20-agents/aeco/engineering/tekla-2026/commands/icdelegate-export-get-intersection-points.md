@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportGetIntersectionPoints
+DO NOT USE! For internal usage only!

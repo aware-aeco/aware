@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.FilterObjects
+Filter a list of objects using several filters at once

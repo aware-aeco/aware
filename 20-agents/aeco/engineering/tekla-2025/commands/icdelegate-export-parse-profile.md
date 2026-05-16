@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportParseProfile
+DO NOT USE! For internal usage only!

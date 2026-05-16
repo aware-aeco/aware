@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BuildingOperatingYearSchedule.GetScheduleForDay
+Gets the BuildingOperatingDaySchedule for this day of the year.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CustomDisplay.AddVector
+Adds a new, black vector to the display list.

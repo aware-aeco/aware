@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Node2List.RemoveAt
+Remove the node at the specified index. Sorting flags are maintained but caches are destroyed.

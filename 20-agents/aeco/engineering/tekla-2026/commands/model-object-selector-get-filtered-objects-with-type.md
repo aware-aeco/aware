@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObjectSelector.GetFilteredObjectsWithType
+Returns an enumerator of the model objects in the current model with the given type and selected by the filter.

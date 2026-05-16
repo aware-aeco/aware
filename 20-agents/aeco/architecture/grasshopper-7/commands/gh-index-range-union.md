@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_IndexRange.Union
+Create a range which contains both input ranges.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IStackedDialogPageService.NativeHandle
+Gets the native window handle associated with the host object if there is one.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CssProperty.CompareTo
+Compare this CSS property to another one.

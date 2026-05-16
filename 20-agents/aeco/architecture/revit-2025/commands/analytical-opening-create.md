@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalOpening.Create
+Creates a new instance of an Analytical Opening within the project.

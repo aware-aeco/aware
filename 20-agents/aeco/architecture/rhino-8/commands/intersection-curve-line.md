@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.CurveLine
+Intersects a curve and an infinite line.

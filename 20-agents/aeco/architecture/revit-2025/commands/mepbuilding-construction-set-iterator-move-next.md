@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPBuildingConstructionSetIterator.MoveNext
+Move the iterator one item forward.

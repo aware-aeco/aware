@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GenericZone.GetSketchId
+Gets the sketch id for the generic zone.

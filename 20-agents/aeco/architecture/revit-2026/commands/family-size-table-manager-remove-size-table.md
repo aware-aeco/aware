@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilySizeTableManager.RemoveSizeTable
+Removes the FamilySizeTable of a given name.

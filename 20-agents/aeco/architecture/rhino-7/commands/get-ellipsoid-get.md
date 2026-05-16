@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetEllipsoid.Get
+Prompt for the getting of a ellipsoid.

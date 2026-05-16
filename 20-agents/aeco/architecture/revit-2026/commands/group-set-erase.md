@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroupSet.Erase
+Removes a specified group from the set.

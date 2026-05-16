@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoApp.InvokeAndWait
+Work-In-Progress. Testing this with our unit test framework

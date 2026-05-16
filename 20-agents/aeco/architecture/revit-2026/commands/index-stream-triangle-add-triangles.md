@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndexStreamTriangle.AddTriangles
+Inserts multiple  instances into the stream and associated buffer.

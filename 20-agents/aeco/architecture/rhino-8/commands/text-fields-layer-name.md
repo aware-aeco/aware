@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextFields.LayerName
+Returns the name of a layer based on the layers guid

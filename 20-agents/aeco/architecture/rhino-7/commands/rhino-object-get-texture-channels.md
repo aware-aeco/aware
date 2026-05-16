@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.GetTextureChannels
+Get a list of the texture mapping channel Id's associated with object.

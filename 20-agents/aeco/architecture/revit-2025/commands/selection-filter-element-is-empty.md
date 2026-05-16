@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SelectionFilterElement.IsEmpty
+Determines whether this filter's set is empty or not.

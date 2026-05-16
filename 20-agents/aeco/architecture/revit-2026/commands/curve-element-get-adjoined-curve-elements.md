@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveElement.GetAdjoinedCurveElements
+Returns elements that are joining with this curve element at the given end point.

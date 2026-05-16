@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilteredElementIterator.MoveNext
+Increments the iterator to the next element passing the filter.

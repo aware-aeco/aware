@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.ZoomWindow
+Zooms the viewport to the given rectangle.

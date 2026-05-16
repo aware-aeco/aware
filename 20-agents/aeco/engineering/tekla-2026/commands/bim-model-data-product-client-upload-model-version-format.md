@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BimModelDataProductClient.UploadModelVersionFormat
+Uploads a file in a specific format for an existing model version.

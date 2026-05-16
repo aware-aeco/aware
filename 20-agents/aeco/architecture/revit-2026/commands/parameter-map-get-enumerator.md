@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterMap.GetEnumerator
+Retrieve a forward moving iterator to the map.

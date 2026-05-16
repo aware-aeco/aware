@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshFace.Set
+Sets all the corners for this face as a triangle.

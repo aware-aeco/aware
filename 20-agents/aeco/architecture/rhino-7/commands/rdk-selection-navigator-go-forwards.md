@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RdkSelectionNavigator.GoForwards
+Navigate forwards if possible

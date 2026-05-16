@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dm.ToByteArray
+Write to an in-memory byte[]

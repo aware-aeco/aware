@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Control.ReleaseMouseCapture
+Releases the mouse capture after a call to .

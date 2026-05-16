@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleData.UpdateLoadSummary
+Update the load summary section

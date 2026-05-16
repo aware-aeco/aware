@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Subelement.IsValidType
+Checks if given type is valid for this subelement.

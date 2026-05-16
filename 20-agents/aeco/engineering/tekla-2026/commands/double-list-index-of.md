@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DoubleList.IndexOf
+Gets the index of the specified double.

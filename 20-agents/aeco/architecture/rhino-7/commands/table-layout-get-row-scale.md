@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableLayout.GetRowScale
+Gets the scale for the specified row.

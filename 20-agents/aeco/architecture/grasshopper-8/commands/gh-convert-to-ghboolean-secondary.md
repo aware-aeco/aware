@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHBoolean_Secondary
+Converts similar data into a GH_Boolean instance.  Data is not quaranteed to be duplicated.

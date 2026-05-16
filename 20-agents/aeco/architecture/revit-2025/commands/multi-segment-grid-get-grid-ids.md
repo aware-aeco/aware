@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultiSegmentGrid.GetGridIds
+Get the element ids of the Grids that make up this MultiSegmentGrid.

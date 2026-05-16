@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_ContextualParameter.AssignContextualData
+Assign a collection of values as contextual data.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleData.SetLoadClassifications
+Sets the Load Classifications associated with this panel schedule

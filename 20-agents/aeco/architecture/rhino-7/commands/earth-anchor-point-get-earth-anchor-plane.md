@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EarthAnchorPoint.GetEarthAnchorPlane
+Returns the earth anchor plane

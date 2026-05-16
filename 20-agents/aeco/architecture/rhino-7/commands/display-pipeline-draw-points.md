@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawPoints
+Draw a set of points with a given radius, style and color.

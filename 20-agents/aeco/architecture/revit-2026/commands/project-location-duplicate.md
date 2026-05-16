@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ProjectLocation.Duplicate
+Generate a copy of this project location with the specified name.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataObject.Contains
+Gets a value indicating that data with the specified type is contained in the data object.

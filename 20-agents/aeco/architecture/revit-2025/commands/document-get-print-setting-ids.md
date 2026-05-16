@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.GetPrintSettingIds
+Retrieves all Print Settings of current project.

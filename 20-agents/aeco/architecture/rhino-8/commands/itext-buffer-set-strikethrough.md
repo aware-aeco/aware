@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ITextBuffer.SetStrikethrough
+Sets the strikethrough for the specified text range.

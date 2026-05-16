@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHArc
+Convert data into GH_Arcs.

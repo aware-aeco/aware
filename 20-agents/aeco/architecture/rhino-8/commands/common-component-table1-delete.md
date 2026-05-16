@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CommonComponentTable`1.Delete
+Deletes an item. Items that are deleted are still keeping their space, but the 'IsDeleted' flag is checked.

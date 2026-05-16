@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Control.GetPreferredSize
+Gets the preferred size of this control given infinite space available.

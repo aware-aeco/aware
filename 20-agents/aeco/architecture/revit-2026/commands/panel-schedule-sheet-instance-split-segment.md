@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleSheetInstance.SplitSegment
+Split the panel schedule into    Thrown if the index is out of bounds.

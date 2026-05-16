@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RangeExtensions.Interval
+Gets the interval for the specified  between the start and end dates.

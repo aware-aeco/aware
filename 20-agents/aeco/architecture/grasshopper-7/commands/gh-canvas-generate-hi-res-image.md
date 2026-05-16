@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Canvas.GenerateHiResImage
+Generate a collection of hi-res images of the document.

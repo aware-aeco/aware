@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CustomFieldData.SetCustomFieldProperties
+Sets an instance of  which represents the properties of this field.

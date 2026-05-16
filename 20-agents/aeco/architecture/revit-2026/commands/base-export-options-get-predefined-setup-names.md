@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BaseExportOptions.GetPredefinedSetupNames
+Returns a list of names of predefined setups of export options.

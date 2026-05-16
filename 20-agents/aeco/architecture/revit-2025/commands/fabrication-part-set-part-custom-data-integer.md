@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.SetPartCustomDataInteger
+Set the custom data integer value for the specified custom data.

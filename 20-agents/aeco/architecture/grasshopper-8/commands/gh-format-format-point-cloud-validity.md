@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Format.FormatPointCloudValidity
+If the pointcloud is invalid, return a string describing why.

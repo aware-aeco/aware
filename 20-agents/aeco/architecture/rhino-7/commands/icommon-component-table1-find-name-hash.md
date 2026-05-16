@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICommonComponentTable`1.FindNameHash
+Retrieves an object based on Name.

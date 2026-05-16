@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Archive.WriteToFile
+Writes the current tree to a file.

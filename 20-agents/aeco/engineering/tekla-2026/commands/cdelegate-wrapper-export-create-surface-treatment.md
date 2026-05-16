@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportCreateSurfaceTreatment
+DO NOT USE! For internal usage only!

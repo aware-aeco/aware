@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Palette.Clone
+Creates a clone of this palette

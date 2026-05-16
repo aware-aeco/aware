@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_UpgradeUtil.MigrateSources
+Migrate all sources from A to B, while maintaining order.

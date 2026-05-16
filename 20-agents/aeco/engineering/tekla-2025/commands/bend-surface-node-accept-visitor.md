@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BendSurfaceNode.AcceptVisitor
+Entry method for the visitor pattern

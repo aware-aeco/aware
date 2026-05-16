@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ScrollBarVerticalBase.BeginDrag
+Start a new drag operation.

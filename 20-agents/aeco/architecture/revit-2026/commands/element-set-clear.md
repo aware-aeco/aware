@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementSet.Clear
+Removes every item element the set, rendering it empty.

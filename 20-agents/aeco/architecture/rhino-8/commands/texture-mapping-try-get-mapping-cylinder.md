@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextureMapping.TryGetMappingCylinder
+Get a cylindrical projection parameters from this texture mapping.

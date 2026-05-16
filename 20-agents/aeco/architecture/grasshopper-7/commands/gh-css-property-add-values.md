@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CssProperty.AddValues
+Append a collection of values to this property.

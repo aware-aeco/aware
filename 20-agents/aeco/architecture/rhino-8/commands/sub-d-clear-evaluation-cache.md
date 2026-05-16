@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubD.ClearEvaluationCache
+Clear all cached evaluation information (meshes, surface points, bounding boxes, ...)              that depends on edge tags, vertex tags, and the location of vertex control points.

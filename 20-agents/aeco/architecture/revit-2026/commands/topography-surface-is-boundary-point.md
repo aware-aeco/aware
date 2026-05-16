@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TopographySurface.IsBoundaryPoint
+Identifies whether the given point is an existing boundary point of the current topography surface.

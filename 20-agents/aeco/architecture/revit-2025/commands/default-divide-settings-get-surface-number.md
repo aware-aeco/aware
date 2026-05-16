@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DefaultDivideSettings.GetSurfaceNumber
+Gets the default Divided Surface number for a fixed number layout for U or V gridlines.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform.ProjectAlong
+Construct a projection onto a plane along a specific direction.

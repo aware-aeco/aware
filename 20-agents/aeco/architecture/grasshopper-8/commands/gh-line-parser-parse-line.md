@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_LineParser.ParseLine
+Parse a line of text and convert it to custom data.

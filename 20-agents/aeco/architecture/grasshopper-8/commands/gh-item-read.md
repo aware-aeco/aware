@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Item.Read
+Deserialize this item from a binary stream.

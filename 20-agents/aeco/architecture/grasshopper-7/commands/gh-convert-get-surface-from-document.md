@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.GetSurfaceFromDocument
+Harvest a surface object from a Rhino document.

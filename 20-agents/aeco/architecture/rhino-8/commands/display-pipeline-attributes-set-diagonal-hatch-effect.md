@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipelineAttributes.SetDiagonalHatchEffect
+Set a diagonal hatch effect to make objects render with diagonal hatch with             a given strength and width in pixels. The effect works by brightening and              darkening pixels in a diagonal pattern.

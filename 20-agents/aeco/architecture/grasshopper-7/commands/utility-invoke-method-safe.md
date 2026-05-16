@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Utility.InvokeMethodSafe
+Call a method via its name. No exceptions are thrown.

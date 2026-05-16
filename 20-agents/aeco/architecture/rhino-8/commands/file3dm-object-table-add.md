@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObjectTable.Add
+Duplicates the object, then adds a copy of the object to the document.

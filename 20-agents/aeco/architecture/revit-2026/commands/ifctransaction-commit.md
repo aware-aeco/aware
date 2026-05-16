@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCTransaction.Commit
+Commits all changes made to the IFC file during the transaction.

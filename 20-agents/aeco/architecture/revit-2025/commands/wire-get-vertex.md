@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Wire.GetVertex
+Gets the position of an existing vertex.

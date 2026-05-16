@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Line.EmitProxy
+Returns a proxy that represents this line. Do not call this function unless you're

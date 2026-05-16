@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDefinitionByArc.GetConstraints
+Retrieve the list of constraints associated with this definition.

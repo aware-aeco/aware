@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObject.GetDoubleUserProperties
+Retrieves all double properties for the model object.

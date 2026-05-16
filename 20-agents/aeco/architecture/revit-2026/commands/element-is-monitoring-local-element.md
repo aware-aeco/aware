@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.IsMonitoringLocalElement
+Indicate whether an element is monitoring other local elements.

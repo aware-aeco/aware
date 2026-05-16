@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.KeyboardRotate
+Emulates the keyboard arrow key in terms of interaction.

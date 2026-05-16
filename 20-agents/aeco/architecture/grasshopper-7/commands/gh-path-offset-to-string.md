@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PathOffset.ToString
+Format the Path Offset.

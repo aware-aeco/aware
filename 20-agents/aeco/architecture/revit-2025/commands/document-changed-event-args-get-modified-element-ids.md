@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DocumentChangedEventArgs.GetModifiedElementIds
+Returns set of elements that were modified.

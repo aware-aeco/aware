@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevisionNumberingSequence.GetAlphanumericRevisionSettings
+Returns a copy of the AlphanumericRevisionSettings owned by this revision numbering sequence.

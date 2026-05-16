@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderTabs.SessionIdFromTab
+Get the session Id that created the specified tab object.

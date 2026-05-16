@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Graphics.DrawText
+Draws text with the specified ,  and location

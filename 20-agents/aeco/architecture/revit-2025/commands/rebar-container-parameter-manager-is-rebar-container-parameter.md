@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainerParameterManager.IsRebarContainerParameter
+Checks if the parameter is a Rebar Container parameter

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Node3List.CullDuplicates
+Removes all duplicates from this list. It also removes ALL null references.

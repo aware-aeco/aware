@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.GetSpliceStaggerLength
+Gets the stagger length that is used for the specified end - 0 for start, 1 for end.

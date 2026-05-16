@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CriticalPathCollector.GetCalculatedFlow
+Gets the calculated flow of the network.

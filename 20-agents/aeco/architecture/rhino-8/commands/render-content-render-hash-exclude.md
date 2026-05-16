@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContent.RenderHashExclude
+This method is deprecated in favor of the one that takes CrcRenderHashFlags.

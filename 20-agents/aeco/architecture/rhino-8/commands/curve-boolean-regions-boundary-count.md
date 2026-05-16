@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveBooleanRegions.BoundaryCount
+Returns the number of boundary curves in a curve region.

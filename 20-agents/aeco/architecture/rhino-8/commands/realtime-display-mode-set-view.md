@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RealtimeDisplayMode.SetView
+Set ViewInfo for this RealtimeDisplayMode instance.

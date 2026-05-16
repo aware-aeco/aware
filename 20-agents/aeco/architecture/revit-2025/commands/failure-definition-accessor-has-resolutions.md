@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureDefinitionAccessor.HasResolutions
+Checks if the FailureDefinition has at least one resolution.

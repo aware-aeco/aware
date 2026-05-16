@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshFaceList.GetFace
+Returns the mesh face at the given index.

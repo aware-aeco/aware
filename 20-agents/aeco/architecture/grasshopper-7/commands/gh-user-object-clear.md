@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_UserObject.Clear
+Destroy all data except the file path and the ID.

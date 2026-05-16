@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoundaryConditions.GetCurve
+Returns curve that define geometry of the line boundary conditions.

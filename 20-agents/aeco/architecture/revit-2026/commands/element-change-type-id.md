@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.ChangeTypeId
+Changes the type of all elements in the given set.

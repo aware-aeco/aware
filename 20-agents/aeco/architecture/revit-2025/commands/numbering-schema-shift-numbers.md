@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NumberingSchema.ShiftNumbers
+Shifts all numbers in the sequence so the starting number has the given value.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalSystem.IsCircuitPathValid
+Checks whether the list of the electrical system circuit path node position is valid.

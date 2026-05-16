@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IHeaderButtonHandler.OnButtonClicked
+Implement this method to handle a button click.

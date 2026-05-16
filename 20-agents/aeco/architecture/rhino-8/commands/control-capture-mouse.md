@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Control.CaptureMouse
+Captures all mouse events to this control.

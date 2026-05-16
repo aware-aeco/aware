@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.DisabledObjects
+Returns all disabled objects in the document

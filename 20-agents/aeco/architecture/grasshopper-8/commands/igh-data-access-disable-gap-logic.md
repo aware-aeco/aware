@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_DataAccess.DisableGapLogic
+Call this function if you want to disable the gap null logic for the current iteration.

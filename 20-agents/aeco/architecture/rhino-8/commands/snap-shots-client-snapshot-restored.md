@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SnapShotsClient.SnapshotRestored
+Called after all clients restored their data.

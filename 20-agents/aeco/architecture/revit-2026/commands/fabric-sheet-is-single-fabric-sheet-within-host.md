@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricSheet.IsSingleFabricSheetWithinHost
+Identifies if the specified single Fabric Sheet position is within the host.

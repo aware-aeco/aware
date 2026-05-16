@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ISharingCalls.CloseProcess
+Closes the Structures sharing process.

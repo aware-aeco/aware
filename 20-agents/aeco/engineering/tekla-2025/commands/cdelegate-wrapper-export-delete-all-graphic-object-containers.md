@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportDeleteAllGraphicObjectContainers
+DO NOT USE! For internal usage only!

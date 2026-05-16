@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.IsPhaseDemolishedValid
+Returns true if demolishedPhaseId is an allowed value for the property DemolishedPhaseId in this Element.

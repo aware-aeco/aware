@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarFreeFormAccessor.GetCustomDistributionPath
+Gets the custom distribution path for free form rebar set.

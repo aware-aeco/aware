@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricWireItem.Create
+Creates a new instance of a single Fabric wire.

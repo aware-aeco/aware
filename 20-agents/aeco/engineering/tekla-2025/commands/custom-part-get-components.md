@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CustomPart.GetComponents
+Returns an enumerator of all the connected components.

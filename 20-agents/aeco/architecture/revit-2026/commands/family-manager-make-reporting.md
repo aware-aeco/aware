@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyManager.MakeReporting
+Set the family parameter as a reporting parameter.

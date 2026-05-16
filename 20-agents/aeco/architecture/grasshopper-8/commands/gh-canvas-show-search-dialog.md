@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Canvas.ShowSearchDialog
+Display the Find dialog.   If a Find dialog is already active for this canvas, nothing will happen.

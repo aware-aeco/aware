@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BRepBuilderSurfaceGeometry.Create
+Construct BRepBuilderSurfaceGeometry based on a permitted Revit Surface.

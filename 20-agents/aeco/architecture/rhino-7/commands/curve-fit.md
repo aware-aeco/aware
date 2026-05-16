@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.Fit
+Fits a new curve through an existing curve.

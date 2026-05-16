@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportCreateReferenceModelObjectAttributeEnumerator
+DO NOT USE! For internal usage only!

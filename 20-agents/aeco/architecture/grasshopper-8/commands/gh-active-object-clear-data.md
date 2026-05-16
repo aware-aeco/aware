@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ActiveObject.ClearData
+This function is called whenever the object needs to   clear all solution data. Override this function if you need to perform custom clensing.

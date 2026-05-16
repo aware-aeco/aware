@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsSurface.CreateRailRevolvedSurface
+Constructs a railed Surface-of-Revolution.

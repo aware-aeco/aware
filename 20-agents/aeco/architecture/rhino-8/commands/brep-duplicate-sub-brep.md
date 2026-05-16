@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.DuplicateSubBrep
+Copy a subset of this Brep into another Brep.

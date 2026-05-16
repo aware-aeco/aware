@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_CanvasValidator.CanDragObject
+Validates whether some components can be dragged.

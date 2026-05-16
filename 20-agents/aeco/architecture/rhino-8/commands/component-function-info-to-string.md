@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ComponentFunctionInfo.ToString
+Returns a string representing this function.

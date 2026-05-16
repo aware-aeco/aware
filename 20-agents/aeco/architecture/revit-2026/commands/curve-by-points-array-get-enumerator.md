@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveByPointsArray.GetEnumerator
+Retrieve a forward moving iterator to the array.

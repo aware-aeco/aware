@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OverrideGraphicSettings.SetProjectionLineColor
+Sets the projection surface line color.

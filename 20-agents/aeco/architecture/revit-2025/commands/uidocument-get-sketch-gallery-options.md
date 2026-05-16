@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIDocument.GetSketchGalleryOptions
+Gets the valid sketch gallery options of a family symbol.

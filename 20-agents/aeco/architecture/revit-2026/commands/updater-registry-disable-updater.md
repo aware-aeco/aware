@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UpdaterRegistry.DisableUpdater
+Disables the updater.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICustomFieldProperties.AreEqualTo
+Identifies if the custom field properties are equal or not.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPSystem.GetPhysicalNetworksNumber
+Get the physical networks number in the system.

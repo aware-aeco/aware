@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.GetRowHeightInPixels
+This returns a row's height in logical pixels

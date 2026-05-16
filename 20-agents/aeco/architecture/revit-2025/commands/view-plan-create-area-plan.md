@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewPlan.CreateAreaPlan
+Creates a new area plan ViewPlan.

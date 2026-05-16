@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmDisplacement.SetSubItemMappingChannel
+Sets the override for displacement 'mapping channel'.             face_index is the index of the face on the polysurface/SubD.

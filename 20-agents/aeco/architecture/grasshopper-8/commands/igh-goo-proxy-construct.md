@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_GooProxy.Construct
+This method will be called when a new instance of this type is constructed.   It allows implementers to supply a customized UI to be shown during construction.   This method should never throw exceptions.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHLinearDimension_Secondary
+Converts similar data into a GH_LinearDimension instance.  Data is not guaranteed to be duplicated.

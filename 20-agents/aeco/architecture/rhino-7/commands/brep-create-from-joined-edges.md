@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateFromJoinedEdges
+Joins two naked edges, or edges that are coincident or close together, from two Breps.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Toposolid.CanBeExcavatedBy
+Checks if the given element can be used to excavate the Toposolid.

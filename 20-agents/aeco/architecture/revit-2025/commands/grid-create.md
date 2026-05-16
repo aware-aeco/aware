@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Grid.Create
+Creates a new radial grid line.

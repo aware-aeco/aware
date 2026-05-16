@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DistributionSysTypeSet.Contains
+Tests for the existence of a DistributionSys type within the set.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportPatternTableIterator.MoveNext
+Increments the iterator to the next item.

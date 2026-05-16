@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHRadialDimension_Secondary
+Converts similar data into a GH_RadialDimension instance.  Data is not guaranteed to be duplicated.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CreateFromClosedPolyline
+Attempts to create a Mesh that is a triangulation of a simple closed polyline that projects onto a plane.

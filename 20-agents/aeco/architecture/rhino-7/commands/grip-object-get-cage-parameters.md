@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GripObject.GetCageParameters
+Retrieves the 2d parameter space values of this GripObject from the cage it's associated with.

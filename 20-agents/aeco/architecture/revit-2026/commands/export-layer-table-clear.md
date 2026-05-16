@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLayerTable.Clear
+Removes all contents stored in the table.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.IsSelectable
+Reports if an object can be selected.

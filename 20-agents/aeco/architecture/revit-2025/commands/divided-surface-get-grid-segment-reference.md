@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DividedSurface.GetGridSegmentReference
+Get a reference to a line segment connecting two adjacent grid nodes.

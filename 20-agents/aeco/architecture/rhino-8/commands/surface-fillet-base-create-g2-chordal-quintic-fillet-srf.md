@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SurfaceFilletBase.CreateG2ChordalQuinticFilletSrf
+Creates a surface fillet using G2 chordal Quintic arc approximations as sections

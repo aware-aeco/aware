@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetSetModstamp
+DO NOT USE! For internal usage only!

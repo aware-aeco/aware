@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.InvertColour
+Computes the inverted colour. Alpha remains the same.

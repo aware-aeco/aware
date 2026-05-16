@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParticleSystem.Remove
+Removes a single particle from this system.

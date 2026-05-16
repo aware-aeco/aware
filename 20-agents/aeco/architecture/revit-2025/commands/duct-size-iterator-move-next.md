@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DuctSizeIterator.MoveNext
+Increments the iterator to the next item.

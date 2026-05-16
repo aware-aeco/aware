@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UserDataListEnumerator.MoveNext
+Advance enumerator to next UserData item.

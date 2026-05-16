@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Silhouette.Compute
+Compute silhouettes of a shape for a perspective projection.

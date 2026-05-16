@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotSharingWriteOutCommit
+The dot sharing write out commit.

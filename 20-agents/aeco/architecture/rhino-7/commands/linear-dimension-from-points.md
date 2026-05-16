@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinearDimension.FromPoints
+Initializes a new instance of the  class, based on three points.

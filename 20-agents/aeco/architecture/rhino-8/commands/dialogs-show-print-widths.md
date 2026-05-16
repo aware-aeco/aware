@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Dialogs.ShowPrintWidths
+Shows the print widths dialogs

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsSurfaceData.GetControlPoint
+Get the list of control points.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_StateServer.RemoveState
+Remove a certain state. This method adds an undo record to the document.

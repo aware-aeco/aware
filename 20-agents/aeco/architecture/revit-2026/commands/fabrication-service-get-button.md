@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationService.GetButton
+Gets the service button for a given palette index and button index from the service.

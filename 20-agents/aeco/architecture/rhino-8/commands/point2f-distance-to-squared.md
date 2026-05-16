@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point2f.DistanceToSquared
+Computes the squared distance between two points.

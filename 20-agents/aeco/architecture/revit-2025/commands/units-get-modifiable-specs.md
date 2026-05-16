@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Units.GetModifiableSpecs
+Gets all specs for which the default FormatOptions can be modified.

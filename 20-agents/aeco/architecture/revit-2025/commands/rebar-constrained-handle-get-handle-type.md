@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstrainedHandle.GetHandleType
+Returns the RebarHandleType of a RebarConstrainedHandle.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetPartStatusDescription
+Gets the status description from its identifier.

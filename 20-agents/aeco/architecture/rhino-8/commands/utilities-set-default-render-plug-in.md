@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Utilities.SetDefaultRenderPlugIn
+Set default render application

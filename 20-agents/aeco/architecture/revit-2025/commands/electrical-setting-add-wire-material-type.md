@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalSetting.AddWireMaterialType
+Add a new type of wire material.

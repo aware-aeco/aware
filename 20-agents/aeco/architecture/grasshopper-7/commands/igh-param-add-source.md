@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Param.AddSource
+Append a new Source parameter to the end of the Sources list.   Sources provide this parameter with data at runtime.

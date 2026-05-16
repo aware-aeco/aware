@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContent.ChildSlotAmount
+Gets the amount property for the texture in the specified child slot.

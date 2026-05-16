@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationNetworkChangeService.GetMapOfAllSizesForStraights
+Get a set of FabricationPartSizeMapSet of all straight sizes for all services.

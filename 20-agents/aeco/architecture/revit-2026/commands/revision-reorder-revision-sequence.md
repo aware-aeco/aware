@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Revision.ReorderRevisionSequence
+Reorders the sequence of Revisions in the project.

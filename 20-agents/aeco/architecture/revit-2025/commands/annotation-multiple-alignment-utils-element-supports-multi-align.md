@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnnotationMultipleAlignmentUtils.ElementSupportsMultiAlign
+Returns true if element can be aligned to other similar elements.

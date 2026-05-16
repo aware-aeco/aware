@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Family.GetFamilyTypeParameterValues
+Returns all applicable values for a FamilyType parameter of this family.

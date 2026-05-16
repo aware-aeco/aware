@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetObject.EnablePreSelect
+Control the pre-selection behavior GetObjects.

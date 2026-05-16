@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGraphicsPath.AddLines
+Adds lines to each of the specified  to the path

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point3d.CullDuplicates
+Removes duplicates in the supplied set of points.

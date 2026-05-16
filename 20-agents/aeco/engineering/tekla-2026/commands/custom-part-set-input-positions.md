@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CustomPart.SetInputPositions
+Sets the start and end point of the custom part.

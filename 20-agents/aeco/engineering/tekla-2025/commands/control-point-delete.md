@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlPoint.Delete
+Deletes the control point with the given Identifier.

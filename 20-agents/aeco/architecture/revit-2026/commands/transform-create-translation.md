@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform.CreateTranslation
+Creates a transform that represents a translation via the specified vector.

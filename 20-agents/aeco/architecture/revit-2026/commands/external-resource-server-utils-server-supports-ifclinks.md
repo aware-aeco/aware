@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalResourceServerUtils.ServerSupportsIFCLinks
+Checks that the server referenced by the given ExternalResourceReference supports    IFC links.

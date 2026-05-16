@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TopographySurface.MovePoint
+Moves a point in a TopographySurface to a new designated location.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContent.FromId
+Search for a content object based on its Id

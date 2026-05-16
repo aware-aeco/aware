@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.GetColumnWidthInPixels
+This returns a column's width in logical pixels

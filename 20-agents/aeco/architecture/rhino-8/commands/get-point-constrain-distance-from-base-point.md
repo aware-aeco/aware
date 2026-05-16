@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetPoint.ConstrainDistanceFromBasePoint
+Sets distance constraint from base point.

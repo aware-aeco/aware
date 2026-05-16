@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarCurvesData.GetDistributionPath
+Gets the distribution path currently stored in the rebar.

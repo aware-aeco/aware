@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.IsTemporaryHideIsolateActive
+Indicates if the view is temporarily hiding or isolating elements or categories.

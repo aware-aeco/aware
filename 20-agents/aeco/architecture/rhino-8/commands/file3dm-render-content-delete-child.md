@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmRenderContent.DeleteChild
+Deletes any existing child with the specified child slot name.             True if successful, else false.

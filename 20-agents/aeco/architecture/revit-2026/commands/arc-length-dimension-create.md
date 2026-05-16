@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ArcLengthDimension.Create
+Creates a new instance of an Arc Length Dimension element within the project.

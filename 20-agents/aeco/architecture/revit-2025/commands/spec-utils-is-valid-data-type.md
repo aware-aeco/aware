@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpecUtils.IsValidDataType
+Returns true if the given ForgeTypeId identifies a valid parameter data type.

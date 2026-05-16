@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalLink.Create
+Creates a new instance of a AnalyticalLink element between two Hubs.

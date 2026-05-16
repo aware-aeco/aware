@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Utility.DocumentUnits
+Returns the unit system for the model document

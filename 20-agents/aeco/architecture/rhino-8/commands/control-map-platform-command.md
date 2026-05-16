@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Control.MapPlatformCommand
+Specifies a command to execute for a platform-specific command

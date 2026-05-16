@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolygonWeld.Select
+Selects a polygon weld from the model database. The polygon weld identifier must be set.

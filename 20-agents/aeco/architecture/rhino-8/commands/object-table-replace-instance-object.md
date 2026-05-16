@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.ReplaceInstanceObject
+Replaces the underlying instance definition of an instance object.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryInstance.GetSymbolGeometryId
+Gets the SymbolGeometryId that contains data about the symbol of this instance.

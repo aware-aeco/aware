@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ImageType.CanReload
+Check whether the ImageType can be reloaded from file.

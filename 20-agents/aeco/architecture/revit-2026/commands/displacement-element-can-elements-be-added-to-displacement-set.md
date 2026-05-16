@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplacementElement.CanElementsBeAddedToDisplacementSet
+Indicates if these elements can be displaced by this DisplacementElement.

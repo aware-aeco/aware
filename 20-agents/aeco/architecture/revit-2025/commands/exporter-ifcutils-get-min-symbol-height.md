@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.GetMinSymbolHeight
+Obtains the minimum height of the given FamilySymbol.

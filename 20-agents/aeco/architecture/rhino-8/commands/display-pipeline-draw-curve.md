@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawCurve
+Draw a single Curve object.

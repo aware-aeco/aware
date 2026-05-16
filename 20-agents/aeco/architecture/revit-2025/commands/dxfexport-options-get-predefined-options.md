@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DXFExportOptions.GetPredefinedOptions
+Returns an instance DXFExportOptions containing settings from a predefined export setup.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFC.GetOrCreateFillPattern
+Get (or create) the IfcFillPatternStyle associated with an ElementId.

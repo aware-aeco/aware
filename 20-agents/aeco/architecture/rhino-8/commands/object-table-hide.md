@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.Hide
+If objref.Object().IsNormal() is true, then the object will be hidden.

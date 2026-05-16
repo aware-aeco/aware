@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RoutingPreferenceRule.RemoveCriteron
+Removes an existing criterion.

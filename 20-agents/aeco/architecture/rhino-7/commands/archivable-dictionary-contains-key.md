@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ArchivableDictionary.ContainsKey
+Determines whether the dictionary contains the specified key.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCExtrusionData.GetLoops
+Gets the curve loops that form the base shape of the extrusion.

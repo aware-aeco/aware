@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShapeType.GetOptions
+Gets a copy of the current options for this DirectShapeType.

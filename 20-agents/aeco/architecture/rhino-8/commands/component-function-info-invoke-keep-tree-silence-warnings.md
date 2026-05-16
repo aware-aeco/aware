@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ComponentFunctionInfo.InvokeKeepTreeSilenceWarnings
+Runs  with keepTree equal to true,             and discards warnings (this is a dangerous operation!).

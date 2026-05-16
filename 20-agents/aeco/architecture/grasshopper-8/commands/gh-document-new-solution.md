@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.NewSolution
+Start a new solution.

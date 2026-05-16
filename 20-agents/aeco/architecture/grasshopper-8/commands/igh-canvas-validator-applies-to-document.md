@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_CanvasValidator.AppliesToDocument
+Test whether this validator applies to a specific document.

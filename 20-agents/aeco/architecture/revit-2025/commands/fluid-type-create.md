@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FluidType.Create
+Creates a new fluid type and adds it to the document.

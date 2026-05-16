@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ConnectivityDisparity.ExternalOutputs
+Find all external recipients for a given id in the subset.

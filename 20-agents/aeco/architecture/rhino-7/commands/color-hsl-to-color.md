@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorHSL.ToColor
+Converts this HSL color to a RGB  value

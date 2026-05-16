@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshFaceList.ConvertQuadsToTriangles
+Splits all quads along the short diagonal.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PartUtils.GetSplittingCurves
+Identifies the curves that were used to create the part and the plane in which they reside.

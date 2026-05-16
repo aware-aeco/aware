@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Seam.GetPrimaryObject
+Returns the primary object.

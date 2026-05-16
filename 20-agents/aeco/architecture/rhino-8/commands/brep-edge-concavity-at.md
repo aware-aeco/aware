@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepEdge.ConcavityAt
+Determine the concavity of this edge at a specific parameter.

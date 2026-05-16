@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetNumberingUpToDate
+DO NOT USE! For internal usage only!

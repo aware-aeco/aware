@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceableViewUtils.ChangeReferencedView
+Changes a particular reference view (such as a reference section or reference callout) to refer to a different View.

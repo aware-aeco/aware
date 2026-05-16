@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubTransaction.Start
+Starts the sub-transaction.

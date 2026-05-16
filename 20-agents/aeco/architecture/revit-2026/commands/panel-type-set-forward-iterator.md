@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelTypeSet.ForwardIterator
+Retrieve a forward moving iterator to the set.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarHostData.GetAreaReinforcementsInHost
+Returns all AreaReinforcement elements hosted by the referenced element.

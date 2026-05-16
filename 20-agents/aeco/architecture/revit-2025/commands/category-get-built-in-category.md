@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Category.GetBuiltInCategory
+Gets the BuiltInCategory value corresponding to the given built-in category identifier.

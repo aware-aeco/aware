@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PrintSetup.Delete
+Delete the current print setting, and make the In-Session setting as the current one.

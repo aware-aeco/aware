@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.FindByWindowRegion
+Finds objects bounded by a polyline region

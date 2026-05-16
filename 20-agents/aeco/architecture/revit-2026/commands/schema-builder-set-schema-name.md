@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SchemaBuilder.SetSchemaName
+Sets the name of the Schema.

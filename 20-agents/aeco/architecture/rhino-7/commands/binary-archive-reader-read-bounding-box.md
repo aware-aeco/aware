@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BinaryArchiveReader.ReadBoundingBox
+Reads a  from the archive.

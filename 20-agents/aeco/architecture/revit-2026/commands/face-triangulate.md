@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Face.Triangulate
+Returns a triangular mesh approximation to the face.

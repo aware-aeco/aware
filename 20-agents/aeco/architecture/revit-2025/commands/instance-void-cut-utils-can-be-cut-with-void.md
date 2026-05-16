@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceVoidCutUtils.CanBeCutWithVoid
+Indicates if the element can be cut by an instance with unattached voids.

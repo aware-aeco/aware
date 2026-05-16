@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ImportIFCOptions.GetImportIFCOptions
+Returns the current Revit instance's ImportIFCOptions.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Linetype.RemoveSegment
+Removes a segment in the linetype.

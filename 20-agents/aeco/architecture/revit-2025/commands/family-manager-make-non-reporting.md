@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyManager.MakeNonReporting
+Set the reporting family parameter as a regular/driving parameter.

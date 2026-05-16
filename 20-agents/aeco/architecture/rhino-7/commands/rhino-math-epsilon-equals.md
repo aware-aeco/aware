@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoMath.EpsilonEquals
+Compare two doubles for equality within some "epsilon" range

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ZoneEquipment.Create
+Creates a new zone equipment

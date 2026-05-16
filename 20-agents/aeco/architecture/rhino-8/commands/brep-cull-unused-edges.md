@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CullUnusedEdges
+Culls edges with m_edge_index == -1.

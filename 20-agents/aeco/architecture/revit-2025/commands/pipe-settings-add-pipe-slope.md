@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PipeSettings.AddPipeSlope
+Add a pipe slope value.

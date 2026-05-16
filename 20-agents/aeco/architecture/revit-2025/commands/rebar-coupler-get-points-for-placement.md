@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarCoupler.GetPointsForPlacement
+gets the point (or points in case of rebar set) where the coupler is placed

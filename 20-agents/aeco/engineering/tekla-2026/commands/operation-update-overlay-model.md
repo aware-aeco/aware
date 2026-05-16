@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.UpdateOverlayModel
+Imports external reference model.

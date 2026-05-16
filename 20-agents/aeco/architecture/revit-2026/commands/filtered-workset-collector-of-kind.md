@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilteredWorksetCollector.OfKind
+Applies a WorksetKindFilter to the collector.

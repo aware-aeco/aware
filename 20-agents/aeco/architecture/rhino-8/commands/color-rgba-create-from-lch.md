@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorRGBA.CreateFromLCH
+Create the nearest RGBA equivalent of a LCH color.

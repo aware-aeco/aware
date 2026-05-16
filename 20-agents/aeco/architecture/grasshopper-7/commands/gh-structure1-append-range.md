@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Structure`1.AppendRange
+Append a list of data items to the last branch in the structure

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NumberingSchema.IsValidPartitionName
+Tests if the given string can be used as a name for a numbering partition.

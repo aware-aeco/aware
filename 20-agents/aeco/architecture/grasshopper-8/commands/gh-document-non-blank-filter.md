@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.NonBlankFilter
+This delegate can be used in the FindAllDownstreamObjects(...) methods. Only includes objects that are non-blank and non-failed.

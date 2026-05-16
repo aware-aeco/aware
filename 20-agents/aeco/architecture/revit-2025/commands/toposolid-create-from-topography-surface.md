@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Toposolid.CreateFromTopographySurface
+Creates a toposolid element from a host TopographySurface, and toposolid sub-divisions from its subregions.

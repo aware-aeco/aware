@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.DisplayPrintReportDialog
+DO NOT USE! For internal usage only!

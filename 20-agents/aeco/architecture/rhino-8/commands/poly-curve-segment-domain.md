@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolyCurve.SegmentDomain
+Returns the polycurve sub-domain assigned to a segment curve.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Control.RectangleToScreen
+Converts a rectangle from screen space to control space.

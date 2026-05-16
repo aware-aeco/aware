@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConduitSizeIterator.GetCurrent
+Returns the current ConduitSize.

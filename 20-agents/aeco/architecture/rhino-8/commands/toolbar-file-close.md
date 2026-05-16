@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ToolbarFile.Close
+Closes the toolbar file.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ObjRefToGeometry
+Convert a Rhino Object Reference into Grasshopper IGH_GeometricGoo.

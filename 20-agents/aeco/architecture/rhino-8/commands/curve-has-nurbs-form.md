@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.HasNurbsForm
+Does a NURBS curve representation of this curve exist?

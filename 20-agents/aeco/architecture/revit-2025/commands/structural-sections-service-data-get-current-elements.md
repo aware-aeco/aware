@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralSectionsServiceData.GetCurrentElements
+Returns the list of Ids of the current elements.

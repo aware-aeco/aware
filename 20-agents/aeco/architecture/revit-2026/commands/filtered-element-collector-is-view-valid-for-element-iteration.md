@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilteredElementCollector.IsViewValidForElementIteration
+Identifies if the particular element is valid for iteration of drawn elements.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_VarParamComponent.IsVariableParam
+Returns a value indicating whether a specific parameter is considered to be variable.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalElement.IsValidSelector
+Indicates if the input selector is valid for the Analytical Element.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Color.ToHSL
+Converts this RGB color to the HSL colorspace.

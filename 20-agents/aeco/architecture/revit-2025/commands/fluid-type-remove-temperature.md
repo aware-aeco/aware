@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FluidType.RemoveTemperature
+Removes a fluid temperature via the temperature value from the set.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelPath.GetProjectGUID
+A GUID identifying the BIM 360 Docs or Autodesk Docs project to which the model is associated.

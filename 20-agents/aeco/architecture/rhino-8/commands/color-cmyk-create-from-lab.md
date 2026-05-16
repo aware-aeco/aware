@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorCMYK.CreateFromLAB
+Constructs the nearest CMYK equivalent of a LAB color.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point2f.GetHashCode
+Computes a hash number that represents the current point.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetAvailableMaterials
+Gets the available materials for profile.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormattedText.SetSuperscriptStatus
+Sets the characters in the entire text to be superscript or not superscript.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.RefitSplit
+Splits the surface into two and refits the split edge

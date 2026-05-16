@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FlatBufferBuilder.AddSbyte
+Add a `sbyte` to the buffer (aligns the data and grows if necessary).

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.Clone
+Returns a copy of this curve.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHLeader
+Convert data into GH_Leader.

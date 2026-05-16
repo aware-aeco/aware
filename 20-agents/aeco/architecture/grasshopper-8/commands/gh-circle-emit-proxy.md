@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Circle.EmitProxy
+Returns a proxy that represents this circle. Do not call this function unless you're

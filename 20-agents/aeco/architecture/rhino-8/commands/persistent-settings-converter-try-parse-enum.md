@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PersistentSettingsConverter.TryParseEnum
+Converts an enumerated value string (integer as string) to             a enumerated value name.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoDoc.EndUndoRecord
+Ends the undo record.

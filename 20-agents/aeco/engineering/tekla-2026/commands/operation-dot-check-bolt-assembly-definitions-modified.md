@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotCheckBoltAssemblyDefinitionsModified
+Check if bolt assembly definitions have been modified after modification stamp.

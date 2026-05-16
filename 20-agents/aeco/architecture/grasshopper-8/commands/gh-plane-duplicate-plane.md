@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Plane.DuplicatePlane
+Create a duplicate of this plane.

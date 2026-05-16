@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Plane.CreateFromPoints
+Construct a plane from three non-collinear points.

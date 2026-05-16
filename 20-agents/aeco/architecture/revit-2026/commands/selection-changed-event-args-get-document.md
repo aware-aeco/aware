@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SelectionChangedEventArgs.GetDocument
+Returns the document associated with this event.

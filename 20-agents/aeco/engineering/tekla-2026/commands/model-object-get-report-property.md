@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObject.GetReportProperty
+Retrieves a string property of the report for the model object.

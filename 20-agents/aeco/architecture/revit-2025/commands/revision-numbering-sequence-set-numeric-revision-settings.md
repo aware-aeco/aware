@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevisionNumberingSequence.SetNumericRevisionSettings
+Replaces the current numeric revision numbering settings with the provided settings.

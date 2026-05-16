@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudOverrides.GetPointCloudRegionOverrideSettings
+Gets override settings assigned to a particular region within a PointCloudInstance element.

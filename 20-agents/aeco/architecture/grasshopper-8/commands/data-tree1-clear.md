@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataTree`1.Clear
+Clears the entire tree.

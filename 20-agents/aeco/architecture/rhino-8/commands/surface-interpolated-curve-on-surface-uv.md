@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.InterpolatedCurveOnSurfaceUV
+Returns a curve that interpolates points on a surface. The interpolant lies on the surface.

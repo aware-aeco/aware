@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SymbolicCurveArray.Insert
+Insert the specified model curve into the array.

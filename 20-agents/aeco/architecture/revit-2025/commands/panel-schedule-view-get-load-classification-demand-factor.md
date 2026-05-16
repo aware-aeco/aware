@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.GetLoadClassificationDemandFactor
+Gets the Demand Factor for given Load Classification

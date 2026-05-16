@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PourObject.GetParts
+Returns an enumerator of all parts related to pour.

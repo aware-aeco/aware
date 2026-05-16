@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Color.GetHashCode
+Gets the hash code for this Color

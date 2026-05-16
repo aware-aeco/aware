@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetBaseClass.AddOptionToggle
+Adds a command line option to toggle a setting.

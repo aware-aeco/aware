@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexNormalList.UnitizeNormals
+Unitizes all vertex normals.

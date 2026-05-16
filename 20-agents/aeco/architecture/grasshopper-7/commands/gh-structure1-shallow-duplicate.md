@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Structure`1.ShallowDuplicate
+Create a structure with a similar topology to this one with pointers to the same data items.

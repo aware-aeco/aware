@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetPointInputChangedEvent
+DO NOT USE! For internal usage only!

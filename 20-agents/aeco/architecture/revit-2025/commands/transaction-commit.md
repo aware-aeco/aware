@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transaction.Commit
+Commits all changes made to the model during the transaction.

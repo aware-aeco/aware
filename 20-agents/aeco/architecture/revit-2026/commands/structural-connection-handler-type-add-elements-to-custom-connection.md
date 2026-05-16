@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralConnectionHandlerType.AddElementsToCustomConnection
+Modifies StructuralConnectionHandlerType of input StructuralConnectionHandler by adding representors of input elements or subelements.

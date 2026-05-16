@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableSize.GetCableSizeIds
+Gets all the Cable Size ids in the given document, sorted by name.

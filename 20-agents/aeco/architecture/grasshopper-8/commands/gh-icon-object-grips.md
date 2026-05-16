@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_IconObject.Grips
+Gets a list of Icon object grips.

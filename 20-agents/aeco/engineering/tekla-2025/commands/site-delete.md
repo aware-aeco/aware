@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Site.Delete
+Deletes the Building Hierarchy object instance with the given identifier from the model database.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.RemoveSplice
+Removes the splice relation at the specified end and all the Rebar Constraints involved in splice.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ClippingPlaneSurface.RemoveClipViewportId
+Removes a viewport id that this being clipped by this clipping plane.

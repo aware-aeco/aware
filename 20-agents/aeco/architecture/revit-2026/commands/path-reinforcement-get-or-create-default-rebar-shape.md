@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PathReinforcement.GetOrCreateDefaultRebarShape
+Creates a new RebarShape object with a default name or    returns existing one which fulfills Path Reinforcement bending data requirements.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ActiveObject.ComputeData
+This function is called whenever the object is required to generate new data.

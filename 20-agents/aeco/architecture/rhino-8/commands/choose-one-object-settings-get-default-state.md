@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ChooseOneObjectSettings.GetDefaultState
+Gets the factory settings of the application.

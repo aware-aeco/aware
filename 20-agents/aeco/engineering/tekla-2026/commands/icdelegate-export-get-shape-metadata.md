@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportGetShapeMetadata
+DO NOT USE! For internal usage only!

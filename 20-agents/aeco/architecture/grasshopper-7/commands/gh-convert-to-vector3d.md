@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToVector3d
+Convert data into Rhino.Geometry.Vector3d.

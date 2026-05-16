@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GuidConversion.GetNewGuid
+Gets the new GUID.

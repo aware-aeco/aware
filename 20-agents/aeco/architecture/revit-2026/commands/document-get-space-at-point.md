@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.GetSpaceAtPoint
+Gets a space containing the point.

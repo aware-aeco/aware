@@ -15,6 +15,7 @@ description: API reference for namespace Grasshopper.Kernel.Components from Gras
 - **GH_DataDamAttributes**
 - **GH_DataDamComponent**
 - **GH_DocExampleComponent**
+  - Ignore this, it is used to generate Doc examples.
 - **GH_ExplodeTreeComponent**
 - **GH_ExplodeTreeComponent_OBSOLETE**
 - **GH_FlattenComponentUpgrader**

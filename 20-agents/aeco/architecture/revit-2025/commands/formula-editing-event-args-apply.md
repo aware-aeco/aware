@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormulaEditingEventArgs.Apply
+Applies formula to the parameter

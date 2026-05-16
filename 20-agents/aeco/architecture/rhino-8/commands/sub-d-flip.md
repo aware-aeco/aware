@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubD.Flip
+Reverses the orientation of all SubD normals.

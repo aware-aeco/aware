@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlPolycurve.Insert
+Inserts a polycurve into the model.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.ContainsClusterHooks
+Tests whether this document contains at least one cluster hook.

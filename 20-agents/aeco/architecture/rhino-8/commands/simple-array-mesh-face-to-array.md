@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayMeshFace.ToArray
+Copies the unmanaged array to a managed counterpart.

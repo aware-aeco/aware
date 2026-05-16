@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HatchPatternTable.Find
+Finds the hatch pattern with a given name. Search ignores case.

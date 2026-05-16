@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicBranch.SolveLeafAngles
+Collects all leafs in this tree and distributes them equally inside an angle domain.

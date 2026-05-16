@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StringList.IsEqual
+Compares the current object with an object of the same type.

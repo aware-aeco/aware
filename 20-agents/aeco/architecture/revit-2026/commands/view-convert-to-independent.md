@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.ConvertToIndependent
+Convert the dependent view to independent.

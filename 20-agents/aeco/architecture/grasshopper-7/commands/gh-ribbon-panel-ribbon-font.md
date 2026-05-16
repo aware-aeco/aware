@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RibbonPanel.RibbonFont
+Returns the font which is used to draw the panel bar tag

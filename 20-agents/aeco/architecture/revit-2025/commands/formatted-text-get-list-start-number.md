@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormattedText.GetListStartNumber
+Returns the list start number of the paragraphs in a given text range.

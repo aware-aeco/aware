@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Group.RemoveObject
+Remove an object from this group.

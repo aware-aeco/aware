@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DigitScrollerBase.MouseUp
+Respond to mouse-up events.

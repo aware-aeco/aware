@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainerParameterManager.AddSharedParameterAsOverride
+Adds a shared parameter as one of the parameter overrides stored by this Rebar Container element.

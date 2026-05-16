@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Subelement.GetParameterValue
+Obtains the current parameter value of this subelement given a parameter id.

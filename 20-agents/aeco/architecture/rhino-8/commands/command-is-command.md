@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Command.IsCommand
+Determines is a string is a command.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportGetColorRepresentationForObject
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetFabricationConnectorName
+Gets the fabrication connector name from its identifier.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Squisher.SquishMesh
+Squish the given mesh into a flat mesh

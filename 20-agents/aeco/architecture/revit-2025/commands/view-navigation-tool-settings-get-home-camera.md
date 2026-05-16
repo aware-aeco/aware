@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewNavigationToolSettings.GetHomeCamera
+Gets a copy of the structure containing information about the store Home view orientation.

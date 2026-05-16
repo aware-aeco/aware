@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FieldBuilder.SetSpec
+Sets the spec describing the field's values.

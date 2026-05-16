@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexList.HideAll
+Hides all vertices in the mesh.

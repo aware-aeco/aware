@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MaterialRefs.Contains
+Determines whether this dictionary contains a specific value.

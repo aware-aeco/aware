@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewCropRegionShapeManager.SplitRegionHorizontally
+Splits horizontally one region in split crop.

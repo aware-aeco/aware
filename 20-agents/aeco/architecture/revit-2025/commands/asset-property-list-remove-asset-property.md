@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssetPropertyList.RemoveAssetProperty
+Remove the AssetProperty from the list.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.Split
+Split a mesh by an infinite plane.

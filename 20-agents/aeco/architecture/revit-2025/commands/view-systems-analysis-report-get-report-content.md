@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSystemsAnalysisReport.GetReportContent
+Gets the report content in this view.

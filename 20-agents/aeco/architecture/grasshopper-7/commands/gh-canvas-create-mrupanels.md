@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Canvas.CreateMRUPanels
+Create new MRU panels. This function only does something if there is no document loaded in the canvas.

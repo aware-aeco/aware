@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.CreateContourCurves
+Creates a planar curves by intersecting a plane with a point cloud.

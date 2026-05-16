@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotGetAllowedReferenceModelFileExtensions
+Gets list of allowed reference model extensions.

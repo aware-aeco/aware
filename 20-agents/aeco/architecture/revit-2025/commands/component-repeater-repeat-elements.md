@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ComponentRepeater.RepeatElements
+Repeats a set of adaptive component hosted on one or more repeating references.

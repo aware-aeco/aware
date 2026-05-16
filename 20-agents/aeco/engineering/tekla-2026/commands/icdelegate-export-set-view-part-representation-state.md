@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportSetViewPartRepresentationState
+DO NOT USE! For internal usage only!

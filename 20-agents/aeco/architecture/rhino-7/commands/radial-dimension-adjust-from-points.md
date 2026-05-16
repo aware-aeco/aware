@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RadialDimension.AdjustFromPoints
+Update Dimension geometry from point locations

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ContentNode.GetTransform
+A transformation matrix associated with the node.

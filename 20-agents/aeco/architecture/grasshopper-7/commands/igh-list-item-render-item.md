@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_ListItem.RenderItem
+Render this item into the specified destination rectangle.

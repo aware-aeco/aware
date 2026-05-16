@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Instances.DocumentEditorFadeOut
+Calls the FadeOut() method on the DocumentEditor if it exists.

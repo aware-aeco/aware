@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubTransaction.HasEnded
+Determines whether the sub-transaction has ended already.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderPipeline.Render
+Call this function to render the scene normally. The function returns when rendering is complete (or cancelled).

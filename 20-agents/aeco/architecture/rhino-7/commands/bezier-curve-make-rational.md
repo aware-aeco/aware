@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BezierCurve.MakeRational
+Make bezier rational

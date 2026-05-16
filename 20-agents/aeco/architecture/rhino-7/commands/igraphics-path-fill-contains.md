@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGraphicsPath.FillContains
+Gets a value indicating that the specified  is contained by the path when filled

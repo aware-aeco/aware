@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoDoc.GetRenderPrimitives
+Get a enumerable list of custom mesh primitives

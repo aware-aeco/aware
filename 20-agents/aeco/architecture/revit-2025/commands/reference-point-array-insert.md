@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferencePointArray.Insert
+Insert the specified reference into the array.

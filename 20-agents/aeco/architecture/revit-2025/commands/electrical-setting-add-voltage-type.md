@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalSetting.AddVoltageType
+Add a new type definition of voltage into project.

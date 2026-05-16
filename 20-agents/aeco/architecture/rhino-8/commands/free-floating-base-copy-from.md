@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FreeFloatingBase.CopyFrom
+Copy from another object

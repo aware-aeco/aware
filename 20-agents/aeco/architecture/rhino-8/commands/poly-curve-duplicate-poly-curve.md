@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolyCurve.DuplicatePolyCurve
+Duplicates this polycurve.             This is the same as .

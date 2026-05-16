@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ToolbarFileCollection.FindByPath
+Gets an open toolbar by full path.

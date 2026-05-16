@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Form.GetProfileAndCurveLoopIndexFromReference
+Given a reference to certain curve or edge, get the index of its profile and curve loop respectively.

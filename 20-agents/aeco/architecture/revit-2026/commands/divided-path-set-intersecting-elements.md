@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DividedPath.SetIntersectingElements
+Set the elements whose intersection with path produces points.

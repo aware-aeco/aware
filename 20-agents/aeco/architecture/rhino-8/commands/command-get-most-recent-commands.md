@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Command.GetMostRecentCommands
+Gets an array of most recent command descriptions.

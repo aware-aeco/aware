@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Truss.DropTruss
+Drop truss Family, it will disassociate all members from the truss and delete the truss.

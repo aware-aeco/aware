@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.SetTextureMapping
+Sets texture mapping and mapping object transform for a channel

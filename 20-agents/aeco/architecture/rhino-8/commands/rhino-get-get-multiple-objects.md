@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoGet.GetMultipleObjects
+Easy to use object getter for getting multiple objects.

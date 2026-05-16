@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilledRegion.SetLineStyleId
+Sets the line style Id for all boundaries.

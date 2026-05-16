@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Graphics.FillEllipse
+Fills an ellipse with the specified

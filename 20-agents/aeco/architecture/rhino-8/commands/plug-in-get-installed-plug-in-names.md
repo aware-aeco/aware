@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlugIn.GetInstalledPlugInNames
+Returns the names of all installed Rhino plug-ins.

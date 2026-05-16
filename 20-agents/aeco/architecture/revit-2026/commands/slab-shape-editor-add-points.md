@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SlabShapeEditor.AddPoints
+Add an array of points to the element.

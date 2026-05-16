@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.UnhideElements
+Sets the elements to be shown in the given view if they are currently hidden.

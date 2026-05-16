@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ArchivableDictionary.TryGetPoint3d
+Get value as Point3d, will only succeed if value was created using Set(string key, Point3d value)

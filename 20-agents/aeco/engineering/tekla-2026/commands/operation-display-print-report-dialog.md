@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.DisplayPrintReportDialog
+Opens the print dialog for a report with the given filename.

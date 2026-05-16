@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Plane.RemapToPlaneSpace
+Convert a point from World space coordinates into Plane space coordinates.

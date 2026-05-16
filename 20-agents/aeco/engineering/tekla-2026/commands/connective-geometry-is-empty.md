@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConnectiveGeometry.IsEmpty
+Checks whether the geometry is degenerate

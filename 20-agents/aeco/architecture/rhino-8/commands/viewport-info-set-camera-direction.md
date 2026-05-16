@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewportInfo.SetCameraDirection
+Sets the direction that the camera faces.

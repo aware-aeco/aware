@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Utilities.ShowContentChooser
+Shows the content chooser to allow the user to select a new or existing content.

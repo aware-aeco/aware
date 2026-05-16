@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BindingMap.Remove
+The Remove method is used to remove a parameter binding.

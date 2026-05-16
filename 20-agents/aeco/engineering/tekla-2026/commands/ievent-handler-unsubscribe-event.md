@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEventHandler.UnsubscribeEvent
+Unsuscribes an event listener to the event

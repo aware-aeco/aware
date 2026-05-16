@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPartBrowserChangedEventArgs.GetCurrentSolutionPartTypeIds
+Returns set of fabrication part types that are used in the currently selected solution.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RibbonPanel.Contains
+Checks to see whether a specific id/exposure combination is already present in this panel.

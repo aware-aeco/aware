@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricSheet.IsNotBent
+Method to verify that a fabric sheet is flat.

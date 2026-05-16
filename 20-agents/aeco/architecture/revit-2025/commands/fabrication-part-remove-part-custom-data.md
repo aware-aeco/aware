@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.RemovePartCustomData
+Remove custom data from the fabrication part.

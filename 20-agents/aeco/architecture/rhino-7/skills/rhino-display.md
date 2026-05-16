@@ -6,51 +6,80 @@ description: API reference for namespace Rhino.Display from RhinoCommon.dll
 # Rhino.Display
 
 - **BackgroundStyle**
+  - Constants that define how the background of a viewport should be filled.
 - **BlendMode**
+  - Defines enumerated constants for display blend modes.
 - **CalculateBoundingBoxEventArgs**
 - **Color4f**
+  - Color defined by 4 floating point values.
 - **ColorCMYK**
+  - Represents a CMYK (Cyan, Magenta, Yellow, Key) color with double precision floating point channels.              CMYK colors are used primarily in printing environments as they provide a good simulation of physical ink.
 - **ColorGradient**
 - **ColorHSL**
+  - Represents an HSL (Hue, Saturation, Luminance) color with double precision floating point channels.              HSL colors are used primarily in Graphical User Interface environments as they provide a              very natural approach to picking colors.
 - **ColorHSV**
+  - Represents an HSV (Hue, Saturation, Value) color with double precision floating point channels.              HSV colors (also sometimes called HSB, where B means Brightness) are similar to HSL colors in that they             represent colors in a cylindrical color space, and are intended to provide intuitive means to edit the              brightness of a particular color over RGB color space where each color channel would need to be              modified to affect the color brightness.
 - **ColorLAB**
+  - Represents a LAB (Lightness, A, B) color with double precision floating point channels.              LAB colors are based on nonlinearly compressed CIE XYZ color space coordinates.               The A and B parameters of a LAB color represent the opponents.
 - **ColorLCH**
+  - Represents an LCH (Lightness, A, B) color with double precision floating point channels.              LCH colors (also sometimes called CIELUV) are transformation of the 1931 CIE XYZ color space,              in order to approach perceptual uniformity. They are primarily used in computer graphics which              deal with colored lights.
 - **ColorRGBA**
+  - Represents a sRGBA (Red, Green, Blue, Alpha) color with double precision floating point channel.
 - **ColorStop**
+  - Combination of a color and position. Used in defining gradient fills
 - **ColorXYZ**
+  - Represents an XYZ (Hue, Saturation, Luminance) color with double precision floating point channels.              XYZ colors are based on the CIE 1931 XYZ color space standard and they mimic the natural              sensitivity of cones in the human retina.
 - **CullFaceMode**
 - **CullObjectEventArgs**
 - **CustomDisplay**
+  - Provides some basic (indeed, very basic) mechanisms for drawing custom geometry in viewports.
 - **DefinedViewportProjection**
+  - Parallel and perspective projections that are "standard" in Rhino
 - **DepthMode**
 - **DisplayBitmap**
+  - A bitmap resource that can be used by the display pipeline (currently only             in OpenGL display).  Reuse DisplayBitmaps for drawing if possible; it is             much more expensive to construct new DisplayBitmaps than it is to reuse             existing DisplayBitmaps.
 - **DisplayBitmapDrawList**
 - **DisplayConduit**
 - **DisplayEngine**
 - **DisplayMaterial**
 - **DisplayModeChangedEventArgs**
 - **DisplayModeDescription**
+  - Description of a how Rhino will display in a viewport. These are the modes             that are listed under "Advanced display" in the options dialog.
 - **DisplayPipeline**
+  - The display pipeline calls events during specific phases of drawing              During the drawing of a single frame the events are called in the following order.                            [Begin Drawing of a Frame]              CalculateBoundingBoxCalculateClippingPanesSetupFrustumSetupLightingInitializeFrameBufferDrawBackgroundIf this is a layout and detail objects exist the channels are called in the                same order for each detail object (drawn as a nested viewport)PreDrawObjectsFor Each Visible Non Highlighted ObjectSetupObjectDisplayAttributesPreDrawObjectDrawObjectPostDrawObjectPostDrawObjects - depth writing/testing onDrawForeGround - depth writing/testing offFor Each Visible Highlighted ObjectSetupObjectDisplayAttributesPreDrawObjectDrawObjectPostDrawObjectPostProcessFrameBuffer (If a delegate exists that requires this)DrawOverlay (if Rhino is in a feedback mode)              [End of Drawing of a Frame]                           NOTE: There may be multiple DrawObject calls for a single object. An example of when this could                    happen would be with a shaded sphere. The shaded mesh is first drawn and these channels would                    be processed; then at a later time the isocurves for the sphere would be drawn.
 - **DisplayPipelineAttributes**
+  - Represents display pipeline settings, such as "show transparency" and "show grips".
 - **DisplayTechnology**
+  - Graphics display techologies.
 - **DrawEventArgs**
 - **DrawForegroundEventArgs**
 - **DrawFrameStages**
 - **DrawObjectEventArgs**
 - **GradientType**
+  - Style of color gradient
 - **InitFrameBufferEventArgs**
 - **PageViewSpaceChangeEventArgs**
 - **PointStyle**
+  - Defines styles used for drawing points.
 - **RhinoPageView**
+  - A window that contains a single layout 'page'
 - **RhinoView**
+  - A RhinoView represents a single "window" display of a document. A view could             contain one or many RhinoViewports (many in the case of Layout views with detail viewports).             Standard Rhino modeling views have one viewport.
 - **RhinoViewport**
+  - Displays geometry with a given projection. In standard modeling views there             is a one to one relationship between RhinoView and RhinoViewports. In a page             layout, there may be multiple RhinoViewports for a single layout.
 - **ShaderLanguage**
+  - Graphics Shader Language             https://en.wikipedia.org/wiki/OpenGL_Shading_Language#Versions
 - **StereoContext**
 - **Text3d**
+  - 3D aligned text with font settings.
 - **ViewCapture**
 - **ViewCaptureSettings**
+  - Holds the information required to generate high resolution output of a             RhinoViewport.  This is used for generating paper prints or image files
 - **ViewEventArgs**
 - **ViewportType**
 - **VisualAnalysisMode**
+  - Represents a base class for visual analysis modes.             This class is abstract.
 - **ZBiasMode**
+  - Biasing applied to geometry to attempt to get coplanar items             to draw on top of or below other geometry
 - **ZBufferCapture**
+  - Provides functionality for getting the z-buffer values from a viewport             and a given display mode

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableTray.Create
+Creates a new instance of cable tray.

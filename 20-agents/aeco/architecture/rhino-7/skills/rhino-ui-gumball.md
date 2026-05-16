@@ -9,6 +9,7 @@ description: API reference for namespace Rhino.UI.Gumball from RhinoCommon.dll
 - **GumballDisplayConduit**
 - **GumballFrame**
 - **GumballMode**
+  - Transformation modes for gumballs.
 - **GumballObject**
 - **GumballPickResult**
 - **GumballScaleMode**

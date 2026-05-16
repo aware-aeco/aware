@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Parser.StringToFragment
+Parse a block of text and return it as an interpreted IGH_Fragment.

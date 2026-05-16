@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ImporterIFCUtils.UpdateDirectShapeCategory
+Updates the category of a DirectShape.

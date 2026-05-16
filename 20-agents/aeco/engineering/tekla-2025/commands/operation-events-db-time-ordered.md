@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.EventsDbTimeOrdered
+Checks if the provided event time guids are ordered correctly

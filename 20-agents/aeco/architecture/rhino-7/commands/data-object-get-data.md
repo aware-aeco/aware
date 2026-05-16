@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataObject.GetData
+Gets a byte array from the data object with the specified type identifier.

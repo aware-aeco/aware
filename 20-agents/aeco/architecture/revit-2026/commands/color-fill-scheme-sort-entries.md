@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorFillScheme.SortEntries
+Sorts the scheme entries ascending.

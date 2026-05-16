@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.EnsureUIThread
+Ensures the current thread is the main/UI thread

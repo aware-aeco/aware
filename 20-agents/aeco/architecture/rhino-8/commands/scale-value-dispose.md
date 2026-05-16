@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScaleValue.Dispose
+actively reclaim native allocated ON_SacleValue*

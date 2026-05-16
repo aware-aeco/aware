@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.UpdateOverlayModel
+DO NOT USE! For internal usage only!

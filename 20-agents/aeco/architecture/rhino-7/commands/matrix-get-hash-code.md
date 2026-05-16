@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Matrix.GetHashCode
+Gets the hash code for this matrix. The hash code will change              when the matrix changes so you cannot change matrices while they are stored in              hash tables.

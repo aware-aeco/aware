@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportSetViewCamera
+DO NOT USE! For internal usage only!

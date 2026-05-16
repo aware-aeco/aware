@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Clipboard.GetString
+Gets a string from the clipboard with the specified type identifier.

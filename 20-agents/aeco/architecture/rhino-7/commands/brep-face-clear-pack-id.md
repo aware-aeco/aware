@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepFace.ClearPackId
+Sets BrepFace.PackId to 0.

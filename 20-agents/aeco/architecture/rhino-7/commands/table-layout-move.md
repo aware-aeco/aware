@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableLayout.Move
+Moves the specified control to the new x and y coordinates.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCHybridImport.UpdateElements
+Updates IFC Elements using AnyCAD.

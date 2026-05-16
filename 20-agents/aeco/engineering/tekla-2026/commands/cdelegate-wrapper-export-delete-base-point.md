@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportDeleteBasePoint
+DO NOT USE! For internal usage only!

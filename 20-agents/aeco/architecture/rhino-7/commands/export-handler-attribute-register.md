@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportHandlerAttribute.Register
+Registers the extension with the specified platform

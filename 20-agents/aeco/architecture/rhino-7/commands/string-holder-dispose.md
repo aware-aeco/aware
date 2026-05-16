@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StringHolder.Dispose
+IDispose implementation

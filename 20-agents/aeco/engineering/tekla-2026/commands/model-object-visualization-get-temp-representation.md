@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObjectVisualization.GetTempRepresentation
+Gets the temporary representation (red, blue, green and transparency) of given model object

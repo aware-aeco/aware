@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParticleSystem.Update
+Calls Update on every particle in the system.

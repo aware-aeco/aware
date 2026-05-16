@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.GetDocumentPreviewSettings
+Returns the preview settings for the given document.

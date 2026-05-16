@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InitialIntensity.Clone
+Creates a copy of the InitialIntensity derived object.

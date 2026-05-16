@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Chunk.FindItem
+Finds the first item that matches the given name.              Only items without index qualifiers are considered.              Name comparisons are not case-sensitive.

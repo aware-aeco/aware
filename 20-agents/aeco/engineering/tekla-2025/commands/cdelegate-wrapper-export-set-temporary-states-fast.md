@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportSetTemporaryStates_FAST
+DO NOT USE! For internal usage only!

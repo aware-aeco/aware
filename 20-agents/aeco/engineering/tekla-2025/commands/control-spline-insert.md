@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlSpline.Insert
+Inserts the control spline into the model.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarMesh.Select
+Selects a reinforcement mesh from the model database. The reinforcement identifier must be set.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyItemFactory.NewCurveByPoints
+Create a 3d curve through two or more points in an Autodesk Revit family document.

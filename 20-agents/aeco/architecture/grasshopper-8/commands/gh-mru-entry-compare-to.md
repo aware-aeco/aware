@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MRU_Entry.CompareTo
+Compare two MRU Events and sort them by time.

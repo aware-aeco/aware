@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewHandler.GetAllViews
+Fetches all the views from the model.

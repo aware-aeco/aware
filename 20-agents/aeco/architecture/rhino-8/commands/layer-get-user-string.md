@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Layer.GetUserString
+Gets user string from this geometry.

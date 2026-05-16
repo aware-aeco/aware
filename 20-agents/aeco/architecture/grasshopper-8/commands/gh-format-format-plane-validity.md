@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Format.FormatPlaneValidity
+If the plane is invalid, return a string describing why.

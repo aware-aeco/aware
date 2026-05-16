@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexNormalList.ToFloatArray
+Copies all vertex normals to a linear array of float in x,y,z order

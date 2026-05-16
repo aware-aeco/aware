@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetAncillaries
+Gets fabrication ancillaries of the specified type.

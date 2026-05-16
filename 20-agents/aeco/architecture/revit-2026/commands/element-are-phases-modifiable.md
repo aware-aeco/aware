@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.ArePhasesModifiable
+Returns true if the properties CreatedPhaseId and DemolishedPhaseId can be modified for this Element.

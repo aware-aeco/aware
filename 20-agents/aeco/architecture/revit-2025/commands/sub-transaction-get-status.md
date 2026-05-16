@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubTransaction.GetStatus
+Returns the current status of the sub-transaction.

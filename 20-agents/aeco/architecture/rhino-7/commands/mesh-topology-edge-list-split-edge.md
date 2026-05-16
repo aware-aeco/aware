@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshTopologyEdgeList.SplitEdge
+Divides a mesh edge to create two or more triangles

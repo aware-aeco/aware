@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentObject.Menu_AppendSeparator
+Utility function for appending separators to a menu dropdown.   If the dropdown is empty or if it already has a separator at the bottom, nothing will happen.

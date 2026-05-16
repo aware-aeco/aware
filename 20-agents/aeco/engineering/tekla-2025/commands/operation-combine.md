@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.Combine
+Combines two beams into one beam.

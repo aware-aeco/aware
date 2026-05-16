@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ClippingPlaneObject.RemoveClipViewport
+Removes a viewport from the list of viewports that this clipping plane clips.

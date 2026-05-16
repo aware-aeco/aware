@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextFields.UserText
+User text associated with an object, block or layout

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StackedDialogPage.OnCancel
+Called when stacked dialog Cancel button is pressed.

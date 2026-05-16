@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PartUtils.IsPartDerivedFromLink
+Is the Part derived from link geometry.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalMember.IsValidSectionTypeId
+Checks whether the family symbol id is allowed for    Analytical Member as Section Type property.

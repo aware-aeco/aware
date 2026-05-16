@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MacroManagerIterator.MoveNext
+Increments the iterator to the next item.

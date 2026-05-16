@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarHostData.IsReferenceContainedByAValidHost
+Identifies whether an element that contains the given reference can host reinforcement.

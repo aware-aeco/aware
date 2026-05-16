@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LabelUtils.GetLabelForDiscipline
+Gets the user-visible name for a discipline.

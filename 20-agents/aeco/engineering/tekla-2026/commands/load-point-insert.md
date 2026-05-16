@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadPoint.Insert
+Inserts the load point into the model database.

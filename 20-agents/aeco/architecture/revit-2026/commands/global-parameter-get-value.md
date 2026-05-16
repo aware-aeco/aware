@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GlobalParameter.GetValue
+Obtains the curent value of the global parameter.

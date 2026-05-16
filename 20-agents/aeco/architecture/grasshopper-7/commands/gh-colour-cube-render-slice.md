@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourCube.RenderSlice
+Render the square slice with colour gradients.

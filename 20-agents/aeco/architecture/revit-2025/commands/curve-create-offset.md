@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.CreateOffset
+Creates a new curve that is an offset of the existing curve.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CylindricalSurfaceNode.Clone
+Creates a new object that is a copy of the current instance.

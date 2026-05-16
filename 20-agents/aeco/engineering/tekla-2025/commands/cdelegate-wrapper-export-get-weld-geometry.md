@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetWeldGeometry
+DO NOT USE! For internal usage only!

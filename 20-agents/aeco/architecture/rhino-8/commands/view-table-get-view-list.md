@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewTable.GetViewList
+Gets an array of all the views.

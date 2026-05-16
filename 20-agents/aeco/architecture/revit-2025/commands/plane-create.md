@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Plane.Create
+Creates a Plane object defined by a local frame of reference.

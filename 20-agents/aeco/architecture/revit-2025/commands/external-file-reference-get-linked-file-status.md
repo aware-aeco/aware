@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalFileReference.GetLinkedFileStatus
+Returns a LinkedFileStatus.Enum corresponding to the    load status of the referenced file.

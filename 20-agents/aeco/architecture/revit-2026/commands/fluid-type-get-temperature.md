@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FluidType.GetTemperature
+Gets a copy of the FluidTemperature object matching a given temperature value.

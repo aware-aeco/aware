@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderMeshProvider.GetParameter
+Runtime access to specific parameters on for a given objectId relating to this primitive provider.

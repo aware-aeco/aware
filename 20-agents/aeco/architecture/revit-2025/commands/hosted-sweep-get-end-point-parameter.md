@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostedSweep.GetEndPointParameter
+Retrieve segment's start point or end point parameter.

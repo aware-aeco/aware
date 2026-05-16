@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PropertyStore.SetCommand
+Sets an  value for the specified property .

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSet.Contains
+Tests for the existence of a view within the set.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.GetCellCalculatedValue
+Gets the calculated value for the specified column

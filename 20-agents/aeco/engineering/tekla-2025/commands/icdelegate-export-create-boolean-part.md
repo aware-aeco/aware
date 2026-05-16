@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportCreateBooleanPart
+DO NOT USE! For internal usage only!

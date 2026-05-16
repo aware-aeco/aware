@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CustomObject.StartCustomObjectDM
+Starts a custom object creation command.

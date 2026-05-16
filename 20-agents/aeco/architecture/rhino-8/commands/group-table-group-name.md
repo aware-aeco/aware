@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroupTable.GroupName
+Returns the name of a group.

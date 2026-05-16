@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShapeReferenceOptions.IsValidReferenceName
+Validates that the input name can be assigned to a direct shape reference.

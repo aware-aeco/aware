@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointF.GetHashCode
+Gets the hash code of this point

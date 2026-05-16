@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Face.GetEdgesAsCurveLoops
+Returns a list of closed curve loops that correspond to the edge loops of the face.  Curves in each curve loop correspond to individual edges.

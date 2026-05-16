@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Ray3d.GetHashCode
+Computes a hashing number that represents the current ray.

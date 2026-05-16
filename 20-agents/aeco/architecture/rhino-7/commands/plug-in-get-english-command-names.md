@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlugIn.GetEnglishCommandNames
+Gets names of all "non-test" commands for a given plug-in.

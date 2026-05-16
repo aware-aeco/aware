@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PostEffect.GetHashCode
+A CRC of the state of this post effect.

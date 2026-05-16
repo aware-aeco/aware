@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_TextBoxInputBase.ShowTextInputBox
+Display a floating text-box on top of the owner control.

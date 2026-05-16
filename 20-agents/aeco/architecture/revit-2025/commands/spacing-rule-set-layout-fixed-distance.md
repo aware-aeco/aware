@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpacingRule.SetLayoutFixedDistance
+Set the Layout property to FixedDistance.

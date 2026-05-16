@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Param`1.ClearProxySources
+Remove all proxy sources without attempting to relink them.

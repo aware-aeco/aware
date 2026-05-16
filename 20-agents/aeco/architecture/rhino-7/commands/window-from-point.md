@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Window.FromPoint
+Gets the window at the specified logical screen point.

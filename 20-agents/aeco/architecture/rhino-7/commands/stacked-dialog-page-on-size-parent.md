@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StackedDialogPage.OnSizeParent
+Called when the parent window has been resized

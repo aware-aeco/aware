@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Units.IsModifiableSpec
+Checks whether the default FormatOptions can be modified for a given spec.

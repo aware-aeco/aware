@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interval.Grow
+Grows the  to include the given number.

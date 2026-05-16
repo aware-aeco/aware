@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BindableBinding`2.BindDataContext
+Binds to an object's  using the specified .

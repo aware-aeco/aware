@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WireTypeSetIterator.MoveNext
+Move the iterator one item forward.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshingParameters.DocumentCurrentSetting
+Gets the MeshingParameters that are currently set for a document.             These are the same settings that are shown in the DocumentProperties             "mesh settings" user interface.

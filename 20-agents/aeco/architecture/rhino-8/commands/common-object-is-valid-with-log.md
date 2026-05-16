@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CommonObject.IsValidWithLog
+Determines if an object is valid. Also provides a report on errors if this             object happens not to be valid.

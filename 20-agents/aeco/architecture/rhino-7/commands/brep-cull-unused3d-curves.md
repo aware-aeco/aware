@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CullUnused3dCurves
+Culls 2d curves not referenced by a trim.

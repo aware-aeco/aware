@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEvents.OnModelSaveInfo
+Called when model is saved.

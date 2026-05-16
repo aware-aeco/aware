@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportModifyRebarSplice
+DO NOT USE! For internal usage only!

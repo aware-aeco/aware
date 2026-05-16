@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.Smooth
+Smooths a mesh by averaging the positions of mesh vertices in a specified region.

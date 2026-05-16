@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-XYZ.Normalize
+Returns a new XYZ whose coordinates are the normalized values from this vector.

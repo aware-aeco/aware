@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.NewSlabEdge
+Creates a slab edge along a reference.

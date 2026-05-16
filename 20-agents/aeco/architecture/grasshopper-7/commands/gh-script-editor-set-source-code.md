@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ScriptEditor.SetSourceCode
+Set the source contents of the ScriptEditor window.

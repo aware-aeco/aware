@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.MouseLateralDolly
+Pans the camera

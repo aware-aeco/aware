@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpaceSetIterator.MoveNext
+Move the iterator one item forward.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadTemperature.Insert
+Inserts the load temperature into the model database.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DynamicScrollable.Create
+Creates the group box layout.

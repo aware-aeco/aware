@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rectangle3d.Corner
+Gets the corner at the given index.

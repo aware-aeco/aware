@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarCrankTypeUtils.SetCrankOffsetMultiplier
+Sets the crank offset multiplier value.

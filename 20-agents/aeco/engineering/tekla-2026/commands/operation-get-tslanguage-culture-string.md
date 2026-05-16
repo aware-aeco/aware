@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetTSLanguageCultureString
+Get the Tekla Structures culture language format (ex:en-US).

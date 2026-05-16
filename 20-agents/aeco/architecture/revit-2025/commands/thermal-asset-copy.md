@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThermalAsset.Copy
+Produces a copy of the asset.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementTransformUtils.MoveElements
+Moves a set of elements by a given transformation.

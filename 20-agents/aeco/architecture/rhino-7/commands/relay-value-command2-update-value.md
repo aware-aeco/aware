@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RelayValueCommand`2.UpdateValue
+Signals that the value has been updated and the delegate to get the value should be called.

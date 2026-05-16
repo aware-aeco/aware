@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_IWriter.SetInt64
+Add a new data item to this chunk.              The name must be unique or an exception will be thrown.

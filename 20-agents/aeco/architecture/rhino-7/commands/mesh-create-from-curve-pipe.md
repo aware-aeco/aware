@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CreateFromCurvePipe
+Constructs a new mesh pipe from a curve.

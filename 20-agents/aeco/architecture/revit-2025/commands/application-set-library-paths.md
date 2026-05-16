@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.SetLibraryPaths
+Sets path information identifying where Revit searches for content.

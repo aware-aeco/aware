@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TessellatedShapeBuilderResult.GetIssuesForFaceSet
+Returns the array of issues encountered while processing    a face set with index 'setIndex'.

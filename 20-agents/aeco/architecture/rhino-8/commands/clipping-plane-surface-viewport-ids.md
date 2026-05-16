@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ClippingPlaneSurface.ViewportIds
+Returns the ids of RhinoViewport objects that are clipped by this clipping plane.

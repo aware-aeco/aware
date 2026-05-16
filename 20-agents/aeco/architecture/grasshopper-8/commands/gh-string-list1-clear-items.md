@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_StringList`1.ClearItems
+Removes all items from the list and expires the caches.

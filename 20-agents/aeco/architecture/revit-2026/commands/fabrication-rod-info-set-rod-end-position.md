@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationRodInfo.SetRodEndPosition
+Sets the position of the rod end. The method is applicable only for bearer hanger.

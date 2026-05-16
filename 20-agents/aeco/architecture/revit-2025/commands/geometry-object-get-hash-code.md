@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryObject.GetHashCode
+Gets the integer value of the geometry object as hash code

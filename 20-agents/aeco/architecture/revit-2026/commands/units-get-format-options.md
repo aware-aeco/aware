@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Units.GetFormatOptions
+Gets the default FormatOptions for a spec.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Reinforcement.GetFatherPourUnit
+Returns the pour unit that the rebar is associated to.

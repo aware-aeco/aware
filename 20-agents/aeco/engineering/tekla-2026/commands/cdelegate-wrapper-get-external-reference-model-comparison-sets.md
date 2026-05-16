@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.GetExternalReferenceModelComparisonSets
+DO NOT USE! For internal usage only!

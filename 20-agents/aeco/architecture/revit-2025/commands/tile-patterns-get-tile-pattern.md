@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TilePatterns.GetTilePattern
+Retrieve a TilePattern object from a built-in type.

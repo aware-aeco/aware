@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetAllPartCustomData
+Gets all possible fabrication part custom data identifiers.

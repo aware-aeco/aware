@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportPDFSettings.Create
+Returns an new created ExportPDFSettings element in the document with specified settings.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHBrep
+Convert data into GH_Breps.

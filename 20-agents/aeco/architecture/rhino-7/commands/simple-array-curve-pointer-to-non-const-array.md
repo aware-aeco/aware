@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayCurvePointer.ToNonConstArray
+Copies the unmanaged array to a managed counterpart.

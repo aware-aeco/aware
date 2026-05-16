@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSpliceUtils.GetLapDirectionForSpliceGeometryAndPosition
+This function calculates the lap direction given a RebarSpliceGeometry and a RebarSplicePosition.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RectangleF.GetHashCode
+Gets the hash code for this rectangle

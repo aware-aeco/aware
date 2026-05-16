@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayStyle.SetVectorSettings
+Set vector settings object for the style.

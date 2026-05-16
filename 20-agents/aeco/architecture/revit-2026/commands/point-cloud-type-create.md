@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudType.Create
+Creates a new point cloud type for a given point cloud engine.

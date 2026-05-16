@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-dotTemporaryState.SetState
+Set state for all objects

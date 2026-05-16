@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.GetFrustumTopPlane
+Get top world frustum clipping plane.

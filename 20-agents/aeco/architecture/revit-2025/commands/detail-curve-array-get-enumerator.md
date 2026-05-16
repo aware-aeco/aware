@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DetailCurveArray.GetEnumerator
+Retrieve a forward moving iterator to the array.

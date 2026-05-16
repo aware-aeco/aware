@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CullUnusedVertices
+Culls vertices with m_vertex_index == -1.

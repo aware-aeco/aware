@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetMousePositionInModelCoordinates
+Gets the mouse position in model coordinates.

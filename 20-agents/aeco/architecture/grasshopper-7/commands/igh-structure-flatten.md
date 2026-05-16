@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Structure.Flatten
+Flattens the entire structure into a single path.

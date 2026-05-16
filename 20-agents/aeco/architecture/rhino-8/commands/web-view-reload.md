@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WebView.Reload
+Reloads the current page

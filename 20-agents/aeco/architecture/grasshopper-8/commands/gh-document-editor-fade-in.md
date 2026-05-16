@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentEditor.FadeIn
+Call this method if the prompt switches back to Grasshopper.

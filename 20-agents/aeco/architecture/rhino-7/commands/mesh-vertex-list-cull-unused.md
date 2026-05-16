@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexList.CullUnused
+Removes all vertices that are currently not used by the Face list.

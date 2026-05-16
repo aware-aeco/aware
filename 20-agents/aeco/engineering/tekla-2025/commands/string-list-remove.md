@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StringList.Remove
+Removes the first occurence of the string from the list.

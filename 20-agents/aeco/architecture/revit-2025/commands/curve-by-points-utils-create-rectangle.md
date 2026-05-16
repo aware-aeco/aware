@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveByPointsUtils.CreateRectangle
+Creates rectangle on face or sketchplane for two given diagonal points.

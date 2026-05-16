@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Instances.ShowRemotePanel
+Shows the remote control panel.

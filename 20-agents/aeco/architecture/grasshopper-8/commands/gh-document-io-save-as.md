@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentIO.SaveAs
+Perform a default Save As operation on the internal document.

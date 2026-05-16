@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIApplication.CanPostCommand
+Identifies if the given command can be posted, using .

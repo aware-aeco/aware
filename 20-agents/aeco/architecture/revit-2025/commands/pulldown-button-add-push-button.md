@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PulldownButton.AddPushButton
+Adds a new pushbutton to the pulldown button and associates it with an ExternalCommand.

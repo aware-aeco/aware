@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetSnapshotFromDatabase
+DO NOT USE! For internal usage only!

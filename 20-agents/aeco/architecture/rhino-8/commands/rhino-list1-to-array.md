@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoList`1.ToArray
+Constructs an array that contains all items in this list.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.TrimInterval
+Trims the curve in-place by removing portions of the curve outside the specified interval.

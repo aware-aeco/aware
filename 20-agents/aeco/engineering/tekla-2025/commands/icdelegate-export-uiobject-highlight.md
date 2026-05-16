@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportUIObjectHighlight
+DO NOT USE! For internal usage only!

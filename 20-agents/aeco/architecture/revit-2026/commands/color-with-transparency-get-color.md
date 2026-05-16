@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorWithTransparency.GetColor
+get color

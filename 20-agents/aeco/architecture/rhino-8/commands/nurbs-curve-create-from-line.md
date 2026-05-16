@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurve.CreateFromLine
+Gets a non-rational, degree 1 NURBS curve representation of the line.

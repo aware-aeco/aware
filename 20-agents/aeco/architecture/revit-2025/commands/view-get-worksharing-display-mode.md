@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetWorksharingDisplayMode
+Gets the current worksharing display mode for this view.

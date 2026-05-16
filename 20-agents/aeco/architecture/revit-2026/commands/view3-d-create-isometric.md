@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View3D.CreateIsometric
+Returns a new isometric View3D.

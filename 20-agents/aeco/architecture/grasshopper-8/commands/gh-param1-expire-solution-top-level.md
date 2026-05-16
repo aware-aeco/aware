@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Param`1.ExpireSolutionTopLevel
+Invoke the Expiresolution(bool) method on the toplevel object.

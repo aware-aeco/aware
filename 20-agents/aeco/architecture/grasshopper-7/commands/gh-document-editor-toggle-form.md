@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentEditor.ToggleForm
+Collapses the form if it's currently expanded or expands the form if it's currently collapsed.

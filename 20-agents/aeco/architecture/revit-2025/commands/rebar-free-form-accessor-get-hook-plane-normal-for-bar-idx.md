@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarFreeFormAccessor.GetHookPlaneNormalForBarIdx
+Returns the normal of plane in which the hook at end of bar with index barPositionIndex will stay.

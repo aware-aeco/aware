@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPNetworkIterator.GetAnalyticalModelData
+Gets the analytical model data at the current iteration step.

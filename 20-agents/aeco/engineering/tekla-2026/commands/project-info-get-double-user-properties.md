@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ProjectInfo.GetDoubleUserProperties
+Retrieves all double properties for the ProjectInfo.

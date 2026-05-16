@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform.Rotation
+Constructs a new rotation transformation with specified angle, rotation center and rotation axis.

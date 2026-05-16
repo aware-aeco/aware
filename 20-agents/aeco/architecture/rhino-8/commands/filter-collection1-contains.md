@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterCollection`1.Contains
+Gets a value indicating that the specified  is contained within this collection.

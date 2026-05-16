@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.Show
+If objref.Object().IsHidden() is true, then the object will be returned to normal (visible and selectable) mode.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InsulationMaterial.GetInsulationMaterial
+Gets the Conductor Insulation Material data by given Conductor Insulation Material id.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCCategoryTemplate.ResetActiveTemplate
+Removes the information about active mapping temple of the document.

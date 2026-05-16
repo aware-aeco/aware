@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PrintManager.Apply
+Apply the local print settings to global for all documents.

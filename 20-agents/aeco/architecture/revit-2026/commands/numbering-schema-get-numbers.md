@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NumberingSchema.GetNumbers
+Returns all numbers currently used in the given numbering sequence

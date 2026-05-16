@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SnapShotsClient.PrepareForDocumentAnimation
+Called once at the start of an animation.

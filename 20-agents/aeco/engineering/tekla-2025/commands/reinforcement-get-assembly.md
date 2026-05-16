@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Reinforcement.GetAssembly
+Returns the assembly that the reinforcement belongs to.

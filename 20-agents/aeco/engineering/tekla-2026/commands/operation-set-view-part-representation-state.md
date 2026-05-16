@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.SetViewPartRepresentationState
+Sets The representation state of the current view for parts

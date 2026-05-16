@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Railing.Flip
+Flips the railing.

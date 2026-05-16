@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rectangle3d.RecenterPlane
+Re-centers the base plane on one of the corners.

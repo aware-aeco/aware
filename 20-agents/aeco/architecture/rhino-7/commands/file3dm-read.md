@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dm.Read
+Reads a 3dm file from a specified location.

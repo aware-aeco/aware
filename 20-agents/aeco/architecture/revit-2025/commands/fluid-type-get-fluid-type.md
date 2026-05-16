@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FluidType.GetFluidType
+Gets a fluid type by name.

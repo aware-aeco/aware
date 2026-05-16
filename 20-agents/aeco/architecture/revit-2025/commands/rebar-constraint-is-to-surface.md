@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraint.IsToSurface
+Checks if the RebarConstraintType of the RebarConstraint is 'ToSurface'.

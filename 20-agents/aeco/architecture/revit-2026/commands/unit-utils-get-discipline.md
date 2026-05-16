@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UnitUtils.GetDiscipline
+Gets the discipline for a given measurable spec.

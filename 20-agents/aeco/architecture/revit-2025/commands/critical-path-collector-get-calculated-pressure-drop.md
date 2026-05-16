@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CriticalPathCollector.GetCalculatedPressureDrop
+Gets the calculated pressure drop of the network.

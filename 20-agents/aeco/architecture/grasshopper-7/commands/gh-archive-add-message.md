@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Archive.AddMessage
+Add a new message to the record.

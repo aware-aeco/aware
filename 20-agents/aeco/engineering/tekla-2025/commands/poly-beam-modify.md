@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolyBeam.Modify
+Modifies the existing polybeam in the model database to match the current one.

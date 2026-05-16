@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Material.Default
+Set material to default settings.

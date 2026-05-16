@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Layout.Deserialize
+Deserialize this layout from a *.ghlayout file.   If this function returns False, the state of this object   is undefined.

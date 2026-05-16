@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaBasedLoadBoundaryLineData.IsLevelWithinRange
+Checks whether the given level is between the bottom level and the top level (including    the bottom level and the top level) of the area based load boundary line.

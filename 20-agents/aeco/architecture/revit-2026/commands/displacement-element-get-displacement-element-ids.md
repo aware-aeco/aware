@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplacementElement.GetDisplacementElementIds
+The element ids of all DisplacementElements owned by the specified view.

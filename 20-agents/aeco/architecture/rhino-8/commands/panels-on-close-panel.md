@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Panels.OnClosePanel
+Call this method to raise the Closed event

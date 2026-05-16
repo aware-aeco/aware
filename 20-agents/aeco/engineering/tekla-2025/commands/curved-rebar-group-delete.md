@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurvedRebarGroup.Delete
+Deletes the curved rebar group instance with the given identifier from the model database.

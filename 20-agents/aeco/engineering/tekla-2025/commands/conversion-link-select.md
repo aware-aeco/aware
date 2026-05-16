@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConversionLink.Select
+Selects the conversion link instance from the model. The identifier must be set.

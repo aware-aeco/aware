@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StdVectorGuid.NonConstPointer
+Gets the non-constant pointer (for modification) of this vector.

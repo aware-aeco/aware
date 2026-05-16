@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawGradientHatch
+Draw a two point gradient filled hatch

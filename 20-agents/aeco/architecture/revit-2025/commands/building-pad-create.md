@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BuildingPad.Create
+Creates a new BuildingPad element and adds it to the document.

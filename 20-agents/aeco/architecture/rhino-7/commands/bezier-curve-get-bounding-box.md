@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BezierCurve.GetBoundingBox
+Bounding box solver. Gets the world axis aligned bounding box for the curve.

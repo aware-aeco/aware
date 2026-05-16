@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailuresAccessor.DeleteElements
+Resolves failures by deletion of elements related to the failures.

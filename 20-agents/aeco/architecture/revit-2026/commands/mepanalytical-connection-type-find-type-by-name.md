@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPAnalyticalConnectionType.FindTypeByName
+Finds the analytical connection type by its name.

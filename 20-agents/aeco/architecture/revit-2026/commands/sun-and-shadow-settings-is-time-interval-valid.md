@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SunAndShadowSettings.IsTimeIntervalValid
+Checks whether the time interval is valid for the SunAndShadowType.

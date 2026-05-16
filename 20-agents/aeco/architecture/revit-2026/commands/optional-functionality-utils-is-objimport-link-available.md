@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OptionalFunctionalityUtils.IsOBJImportLinkAvailable
+Checks whether the OBJ Import/Link functionality is available in the installed Revit.

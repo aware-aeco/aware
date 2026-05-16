@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexList.ToPoint3fArray
+Copies all vertices to a new array of .

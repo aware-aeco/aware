@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSpliceUtils.GetSpliceGeometries
+Computes a list of RebarSpliceGeometry which respects the rules. This list can be used to splice the Rebar.

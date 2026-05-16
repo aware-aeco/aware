@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalResourceServerUtils.ServerSupportsRevitLinks
+Checks that the server referenced by the given ExternalResourceReference supports    Revit links.

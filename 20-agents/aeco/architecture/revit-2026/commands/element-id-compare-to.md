@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementId.CompareTo
+Compares two element ids. Implementation of System.IComparable interface

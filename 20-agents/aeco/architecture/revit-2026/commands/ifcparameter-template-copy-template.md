@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCParameterTemplate.CopyTemplate
+Create copy of mapping template with new name.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Gradient.NormalizeGrips
+Normalize all grips.   This will scale all grip parameters so that the full gradient extend equals 0~1.

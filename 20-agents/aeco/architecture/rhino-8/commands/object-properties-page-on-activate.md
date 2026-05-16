@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectPropertiesPage.OnActivate
+Called when this page is activated/deactivated.

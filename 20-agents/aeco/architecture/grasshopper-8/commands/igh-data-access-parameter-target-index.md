@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_DataAccess.ParameterTargetIndex
+Get the target index for the specified output parameter.

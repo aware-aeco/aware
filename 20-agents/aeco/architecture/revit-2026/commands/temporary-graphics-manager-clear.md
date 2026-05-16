@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TemporaryGraphicsManager.Clear
+Clear all temporary graphics objects managed by this manager.

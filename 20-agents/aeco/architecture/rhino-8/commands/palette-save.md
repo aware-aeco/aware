@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Palette.Save
+Saves this palette to the specified binary writer in (A)RGB components

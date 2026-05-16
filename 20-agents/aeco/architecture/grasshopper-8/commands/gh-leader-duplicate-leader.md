@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Leader.DuplicateLeader
+Create a duplicate of this leader.

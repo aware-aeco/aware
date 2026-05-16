@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TessellatedShapeBuilderResult.GetNumberOfFaceSets
+Gets number of face sets for which 'this' result was obtained.

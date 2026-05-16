@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.DisplayPrompt
+Displays a message in the status bar.

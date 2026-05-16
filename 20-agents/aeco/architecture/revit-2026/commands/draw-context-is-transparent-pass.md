@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DrawContext.IsTransparentPass
+Determines whether the current rendering pass is for transparent objects.

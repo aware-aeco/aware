@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Part.ResetFaceOffset
+Resets the offset applied to the given part face.

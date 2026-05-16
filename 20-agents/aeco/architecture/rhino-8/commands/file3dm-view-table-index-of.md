@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmViewTable.IndexOf
+Returns the index of the current ViewInfo.

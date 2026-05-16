@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.GetBrepFromDocument
+Harvest a brep object from a Rhino document.

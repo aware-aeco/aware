@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.RemoveField
+Removes a field.

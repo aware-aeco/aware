@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Outline.Contains
+Determine if this Outline contains the specified point to within a tolerance.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyDataSettings.GetReportsFolderParsed
+Gets the absolute reports folder path that is parsed from the original input.

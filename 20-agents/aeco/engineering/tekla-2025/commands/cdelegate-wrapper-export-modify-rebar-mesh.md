@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportModifyRebarMesh
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.GetMeshes
+Get a SimpleArrayMeshPointer containing all meshes for the related Mesh

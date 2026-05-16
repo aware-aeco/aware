@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.AreItemFilesLoaded
+Checks if the fabrication item files have been loaded.

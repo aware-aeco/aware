@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPen.FromLinetype
+Create a display pen that matches a linetype definition

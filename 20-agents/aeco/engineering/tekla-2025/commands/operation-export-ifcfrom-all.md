@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.ExportIFCFromAll
+IFC export from all objects

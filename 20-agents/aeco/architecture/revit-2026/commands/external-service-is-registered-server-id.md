@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalService.IsRegisteredServerId
+Checks if the Id represents a valid server that has been registered for the service.

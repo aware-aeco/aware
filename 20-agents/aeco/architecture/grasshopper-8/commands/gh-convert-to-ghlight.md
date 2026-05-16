@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHLight
+Convert data into GH_Light.

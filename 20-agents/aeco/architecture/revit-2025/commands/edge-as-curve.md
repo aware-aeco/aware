@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Edge.AsCurve
+Returns a curve that corresponds to the edge's parametric orientation.

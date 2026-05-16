@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexColorList.Add
+Adds a new vertex color to the end of the color list.

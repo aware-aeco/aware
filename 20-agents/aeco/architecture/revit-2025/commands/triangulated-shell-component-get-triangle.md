@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TriangulatedShellComponent.GetTriangle
+Returns the triangle corresponding to the given index.

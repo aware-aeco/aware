@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.IsValidImageSymbolId
+Identifies if the element id represents a valid ImageSymbol element.

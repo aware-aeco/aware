@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCData.CreateDoubleOfType
+Creates a double data object of the specified type.

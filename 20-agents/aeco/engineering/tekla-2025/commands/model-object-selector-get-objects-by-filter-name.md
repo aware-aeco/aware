@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObjectSelector.GetObjectsByFilterName
+Returns an enumerator of the model objects in the current model selected by the given selection             filter.

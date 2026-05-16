@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Platform.ThreadStart
+Used at the start of your custom threads

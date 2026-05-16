@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point3dList.Transform
+Applies a transform to all the points in the list.

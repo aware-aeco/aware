@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FaceArray.Clear
+Removes every face from the array, rendering it empty.

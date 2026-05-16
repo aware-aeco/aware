@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaReinforcement.IsLayerActive
+Identifies if the layer is active or not.

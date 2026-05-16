@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataTree`1.ItemExists
+Test if the specified path + item index are defined inside the tree.

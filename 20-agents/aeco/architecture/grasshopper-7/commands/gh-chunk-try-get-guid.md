@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Chunk.TryGetGuid
+Gets the value of the item with the specified name.              Name comparison is not case-sensitive.

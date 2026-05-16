@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Vector3d.CrossProduct
+Computes the cross product (or vector product, or exterior product) of two vectors.             This operation is not commutative.

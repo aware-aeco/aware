@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepFace.UnderlyingSurface
+Gets the untrimmed surface that is the base of this face.

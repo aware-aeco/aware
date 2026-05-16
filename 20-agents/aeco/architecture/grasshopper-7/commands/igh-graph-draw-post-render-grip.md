@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Graph.Draw_PostRenderGrip
+Override this function if you want to draw something on top of the current Grip

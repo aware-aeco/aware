@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_UserPromptAware.PromptSingleItem
+Get a single item from the user.

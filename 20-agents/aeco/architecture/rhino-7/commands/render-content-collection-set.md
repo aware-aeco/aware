@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContentCollection.Set
+Set an array of const contents as the collection.

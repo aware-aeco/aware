@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.IsProductListEntryCompatibleSize
+Checks to see if this part can be changed to the specified product entry without altering any connected dimensions.

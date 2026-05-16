@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointF.Restrict
+Restricts the X and Y co-ordinates within the specified

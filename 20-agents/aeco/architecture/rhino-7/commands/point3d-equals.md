@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point3d.Equals
+Determines whether the specified  is a  and has the same values as the present point.

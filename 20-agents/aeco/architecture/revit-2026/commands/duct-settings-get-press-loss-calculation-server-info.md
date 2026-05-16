@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DuctSettings.GetPressLossCalculationServerInfo
+Get the MEPServerInfo of the current pipe pressure loss calculation server.

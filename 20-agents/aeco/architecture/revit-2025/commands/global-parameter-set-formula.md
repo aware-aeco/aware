@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GlobalParameter.SetFormula
+Sets a formula expression for this parameter.

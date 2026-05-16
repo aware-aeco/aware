@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryBase.Translate
+Translates the object along the specified vector.

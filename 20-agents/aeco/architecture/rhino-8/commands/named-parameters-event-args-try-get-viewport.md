@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedParametersEventArgs.TryGetViewport
+Try to get a viewport for a given key name

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Clipboard.GetData
+Gets a data array from the clipboard with the specified type identifier.

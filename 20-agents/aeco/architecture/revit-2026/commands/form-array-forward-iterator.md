@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormArray.ForwardIterator
+Retrieve a forward moving iterator to the array.

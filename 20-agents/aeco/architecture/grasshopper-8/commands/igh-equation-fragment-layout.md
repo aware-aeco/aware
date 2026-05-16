@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_EquationFragment.Layout
+Performs a complete recursive layout of this fragment and all contained fragments.  Note that layout only determines the Size of the fragment, not it's location.

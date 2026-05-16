@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DynamicLayout.EndVertical
+Ends the current vertical section

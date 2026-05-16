@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ContentUI.IsCreated
+Returns true if the UI is created, else false

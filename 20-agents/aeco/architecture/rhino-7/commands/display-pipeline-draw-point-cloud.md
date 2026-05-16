@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawPointCloud
+Draws a point cloud.

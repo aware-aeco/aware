@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_SourceCodeLines.FindNthBlock
+Find the Nth block of source code lines that adheres to the given parameters.

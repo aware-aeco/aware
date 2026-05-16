@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ImportInstance.SetVisibility
+Sets the visibility for the import instance in a family document.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDVertex.EdgeAt
+Retrieve a SubDEdge from this vertex

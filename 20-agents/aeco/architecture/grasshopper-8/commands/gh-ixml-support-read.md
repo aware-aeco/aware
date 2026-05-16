@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_IXmlSupport.Read
+Called when an object is required to deserialize itself.

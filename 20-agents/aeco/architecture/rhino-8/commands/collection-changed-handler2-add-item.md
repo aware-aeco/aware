@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CollectionChangedHandler`2.AddItem
+Adds the item to the end of the collection

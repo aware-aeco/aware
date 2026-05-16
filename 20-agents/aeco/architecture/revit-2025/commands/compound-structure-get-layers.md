@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.GetLayers
+A copy of the layers which define this compound structure.

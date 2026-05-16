@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralConnectionHandler.AddReferences
+Adds references to the connection.    All references should be of applicable category.

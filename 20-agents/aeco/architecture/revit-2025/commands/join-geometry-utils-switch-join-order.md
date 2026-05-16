@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-JoinGeometryUtils.SwitchJoinOrder
+Reverses the order in which two elements are joined.

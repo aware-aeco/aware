@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourWheelState.SetGrip
+Set a single grip to a new location.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InputItem.GetInputType
+Returns the type of the input item.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CriticalPathIterator.IsDone
+Identifies if the iteration has completed.

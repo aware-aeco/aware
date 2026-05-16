@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarGroup.Modify
+Modifies the existing rebar group in the model database to match the current one.

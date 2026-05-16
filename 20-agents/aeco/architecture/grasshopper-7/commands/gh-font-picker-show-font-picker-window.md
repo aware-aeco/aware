@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_FontPicker.ShowFontPickerWindow
+Display the fontpicker in a window.

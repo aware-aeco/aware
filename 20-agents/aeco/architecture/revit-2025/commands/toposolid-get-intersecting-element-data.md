@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Toposolid.GetIntersectingElementData
+Gets intersection data of all intersecting elements.

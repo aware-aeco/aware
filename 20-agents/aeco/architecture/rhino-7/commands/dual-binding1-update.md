@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DualBinding`1.Update
+Updates the binding value (sets the source with the value of the destination)

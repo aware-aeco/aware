@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilySizeTable.GetColumnHeader
+Gets a column of the table at at given index.

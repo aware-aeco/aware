@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableTray.GetShapeType
+Returns the shape type for the cable tray.

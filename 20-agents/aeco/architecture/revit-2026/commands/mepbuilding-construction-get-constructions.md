@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPBuildingConstruction.GetConstructions
+Gets all the Building Constructions corresponding to the specific Construction type.

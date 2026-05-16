@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MemoryBitmap.R
+Gets the red channel value at the given pixel coordinates.

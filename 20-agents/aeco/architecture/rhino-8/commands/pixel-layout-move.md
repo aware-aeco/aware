@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PixelLayout.Move
+Moves the control to the specified coordinates

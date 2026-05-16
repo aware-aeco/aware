@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewPointOnEdgeEdgeIntersection
+Construct a PointOnEdgeEdgeIntersection object which is used to define the placement of a ReferencePoint given two references to edge.

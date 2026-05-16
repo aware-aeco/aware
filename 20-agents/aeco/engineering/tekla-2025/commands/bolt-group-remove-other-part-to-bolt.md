@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoltGroup.RemoveOtherPartToBolt
+Removes the given part from the list of the other bolted parts.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RoofComponents.GetLoopFaces
+The faces of the loops of roof slabs.

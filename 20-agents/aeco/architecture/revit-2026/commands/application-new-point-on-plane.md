@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewPointOnPlane
+Construct a PointOnPlane object which is used to define the placement of a ReferencePoint from its property values.

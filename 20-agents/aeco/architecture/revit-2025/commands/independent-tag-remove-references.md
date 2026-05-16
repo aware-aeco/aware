@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndependentTag.RemoveReferences
+Removes the provided list of references from the tag's list of references.

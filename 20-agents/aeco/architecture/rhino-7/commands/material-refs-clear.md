@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MaterialRefs.Clear
+Removes all items from this dictionary.

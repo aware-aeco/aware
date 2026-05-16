@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ComponentStatus.ToString
+Provides a string representation of this ComponentStatus.

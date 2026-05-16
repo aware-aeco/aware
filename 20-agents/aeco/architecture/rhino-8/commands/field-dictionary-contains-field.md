@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FieldDictionary.ContainsField
+Call this method to determine if a this FieldsList contains a field             with the specified field name.

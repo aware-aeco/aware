@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PhaseFilter.SetPhaseStatusPresentation
+Sets the phase status presentation.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToVariant
+Convert an object to a Grasshopper Expression Variant if possible.

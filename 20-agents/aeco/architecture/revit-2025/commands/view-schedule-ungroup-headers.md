@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.UngroupHeaders
+Ungroups selected headers of schedule.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.ExpirePreview
+Expires the preview caches of the conduit.

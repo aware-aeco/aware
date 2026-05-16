@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AngularDimension.Create
+Initialize Dimension parameters

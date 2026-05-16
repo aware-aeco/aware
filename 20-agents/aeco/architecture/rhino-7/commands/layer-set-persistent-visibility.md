@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Layer.SetPersistentVisibility
+Set the persistent visibility setting for this layer

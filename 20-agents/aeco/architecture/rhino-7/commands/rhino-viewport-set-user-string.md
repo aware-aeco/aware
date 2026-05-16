@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.SetUserString
+Attach a user string (key,value combination) to this geometry.

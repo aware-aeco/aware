@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementSet.Insert
+Insert the specified element into the set.

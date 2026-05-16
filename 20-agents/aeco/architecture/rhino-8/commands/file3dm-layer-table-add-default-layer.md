@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmLayerTable.AddDefaultLayer
+Easy way to add a default layer to the model.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WireSizeSet.Clear
+Removes every wire size from the set, rendering it empty.

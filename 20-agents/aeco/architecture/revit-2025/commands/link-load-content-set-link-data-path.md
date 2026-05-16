@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinkLoadContent.SetLinkDataPath
+Sets the Link data path owned by this LinkLoadContent object.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Building.GetBuildings
+Gets child buildings (building sections) belonging to this building.

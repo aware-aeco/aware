@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalDemandFactorDefinition.SetValues
+Sets the value set to the demand factor definition.

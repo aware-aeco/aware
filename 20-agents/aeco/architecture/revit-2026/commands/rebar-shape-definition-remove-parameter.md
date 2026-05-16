@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDefinition.RemoveParameter
+Remove the parameter from the definition.

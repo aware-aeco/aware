@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BasicFileInfo.Extract
+Returns an instance of BasicFileInfo filled with basic information about a Revit file located at the given file-path

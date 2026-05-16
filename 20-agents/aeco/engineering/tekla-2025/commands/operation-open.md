@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.Open
+Opens a new model to Tekla Structures ignoring auto saved information.

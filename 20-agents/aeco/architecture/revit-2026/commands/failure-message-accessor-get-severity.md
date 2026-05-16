@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureMessageAccessor.GetSeverity
+Retrieves the severity of the failure.

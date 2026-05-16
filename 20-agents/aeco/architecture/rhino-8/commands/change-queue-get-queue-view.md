@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ChangeQueue.GetQueueView
+Get view known to the queue at the time of the Flush

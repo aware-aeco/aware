@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FarmiHelper.CopyDirectory
+Copy directory recursively.

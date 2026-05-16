@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CreateFromSubDControlNet
+Create a mesh from a SubD control net

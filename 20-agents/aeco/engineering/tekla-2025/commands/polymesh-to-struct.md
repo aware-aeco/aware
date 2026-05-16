@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Polymesh.ToStruct
+Converts a FacetedBrep to dotnet polymesh struct.

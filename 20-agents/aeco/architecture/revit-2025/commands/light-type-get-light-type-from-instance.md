@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightType.GetLightTypeFromInstance
+Creates a light type object from the given document and element ID

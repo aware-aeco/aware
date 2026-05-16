@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CreateRefinedLoopMesh
+Instantiates a new mesh that represents a Loop subdivision of the mesh.

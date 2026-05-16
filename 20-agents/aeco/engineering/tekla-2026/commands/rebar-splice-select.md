@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSplice.Select
+Selects a rebar splice from the model database. The splice identifier must be set.

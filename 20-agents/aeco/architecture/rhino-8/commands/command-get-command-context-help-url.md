@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Command.GetCommandContextHelpUrl
+Returns a command's context help url.

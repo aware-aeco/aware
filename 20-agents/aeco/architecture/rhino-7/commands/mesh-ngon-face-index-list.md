@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshNgon.FaceIndexList
+Get the ngon's mesh face index list.

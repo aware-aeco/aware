@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_HtmlWriter.WriteText
+Write a section of text to the Html document.

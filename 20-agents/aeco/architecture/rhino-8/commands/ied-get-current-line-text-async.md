@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.GetCurrentLineTextAsync
+Text at line that has the cursor

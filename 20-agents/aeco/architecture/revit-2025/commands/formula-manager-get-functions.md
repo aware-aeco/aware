@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormulaManager.GetFunctions
+Gets list of function names supported by formula engine

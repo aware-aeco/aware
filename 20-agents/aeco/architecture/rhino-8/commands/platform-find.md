@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Platform.Find
+Find the delegate to create instances of the specified

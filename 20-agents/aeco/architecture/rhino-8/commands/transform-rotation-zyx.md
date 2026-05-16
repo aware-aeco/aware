@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform.RotationZYX
+Create rotation transformation From Tait-Byran angles (also loosely known as Euler angles).

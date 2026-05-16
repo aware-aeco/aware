@@ -6,14 +6,20 @@ description: API reference for namespace Rhino.DocObjects.Tables from RhinoCommo
 # Rhino.DocObjects.Tables
 
 - **BitmapTable**
+  - Stores the list of bitmaps in a Rhino document.
 - **DimStyleTable**
 - **DimStyleTableEventArgs**
 - **DimStyleTableEventType**
 - **FontTable**
+  - Font tables store the list of fonts in a Rhino document.             The FontTable is now just a wrapper around the DimStyles table.
 - **GroupTable**
+  - Group tables store the list of groups in a Rhino document.
 - **GroupTableEventArgs**
+  - Contains group table event data.
 - **GroupTableEventType**
+  - Defines the types of group table events.
 - **HatchPatternTable**
+  - All of the hatch pattern definitions contained in a rhino document.
 - **InstanceDefinitionTable**
 - **InstanceDefinitionTableEventArgs**
 - **InstanceDefinitionTableEventType**
@@ -29,13 +35,20 @@ description: API reference for namespace Rhino.DocObjects.Tables from RhinoCommo
 - **MaterialTableEventType**
 - **ModifyType**
 - **NamedConstructionPlaneTable**
+  - Contains all named construction planes in a rhino document.             This class cannot be inherited.
 - **NamedLayerStateTable**
+  - All named layer states in a Rhino document.
 - **NamedPositionTable**
+  - All named positions in a rhino document.
 - **NamedViewTable**
+  - All named views in a rhino document.
 - **ObjectTable**
 - **RestoreLayerProperties**
 - **RhinoDocCommonTable`1**
 - **RuntimeDocumentDataTable**
+  - Collection of document runtime data. This is a good place to             put non-serialized, per document data.
 - **SnapshotTable**
+  - All snapshots in a rhino document.
 - **StringTable**
+  - Collection of document user data strings
 - **ViewTable**

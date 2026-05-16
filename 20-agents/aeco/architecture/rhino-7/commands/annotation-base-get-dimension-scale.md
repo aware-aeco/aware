@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnnotationBase.GetDimensionScale
+Get view dependent dimension scale

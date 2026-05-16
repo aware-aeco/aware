@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HierarchicDefinition.Insert
+Inserts the hierarchical definition instance in the model.

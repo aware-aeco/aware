@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StatusBar.UpdateProgressMeter
+Sets the current position of Rhino's status bar progress meter.

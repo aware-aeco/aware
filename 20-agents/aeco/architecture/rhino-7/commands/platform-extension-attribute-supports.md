@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlatformExtensionAttribute.Supports
+Gets a value indicating that this extension supports the specified platform.

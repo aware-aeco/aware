@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarFreeFormAccessor.SetLayoutAsMinimumClearSpacing
+Sets the Layout Rule property of rebar set to Minimum Clear Spacing.

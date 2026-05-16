@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConductorSize.GetConductorSizeIds
+Gets all the Conductor Size ids in the given document, sorted by name.

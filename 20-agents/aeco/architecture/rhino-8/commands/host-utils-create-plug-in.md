@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostUtils.CreatePlugIn
+Instantiates a plug-in type and registers the associated commands and classes.

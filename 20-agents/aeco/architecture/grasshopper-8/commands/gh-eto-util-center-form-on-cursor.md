@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_EtoUtil.CenterFormOnCursor
+Positions a Form so that it is centered around the cursor

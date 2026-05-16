@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDDisplayParameters.ExtraCoarse
+Parameters for an extra course limit surface display mesh.             SubD display density = adaptive SubDDisplayParameters.Density.ExtraCoarseDensity.

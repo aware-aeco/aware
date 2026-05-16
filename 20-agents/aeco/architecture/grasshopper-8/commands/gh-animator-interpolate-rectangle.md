@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Animator.InterpolateRectangle
+Utility interpolation delegate for System.Drawing.Rectangle values.

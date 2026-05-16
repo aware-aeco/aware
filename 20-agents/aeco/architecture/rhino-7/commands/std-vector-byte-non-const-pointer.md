@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StdVectorByte.NonConstPointer
+Gets the non-constant pointer (for modification) of this vector.

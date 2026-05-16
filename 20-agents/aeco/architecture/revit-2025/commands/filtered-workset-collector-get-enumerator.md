@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilteredWorksetCollector.GetEnumerator
+Returns an enumerator that iterates through a collection.

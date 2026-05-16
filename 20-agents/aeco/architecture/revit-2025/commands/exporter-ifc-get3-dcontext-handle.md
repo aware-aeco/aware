@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFC.Get3DContextHandle
+Obtains the IfcRepresentationContext or IfcRepresentationSubContext handle to be used for 3D entities (Model entities).

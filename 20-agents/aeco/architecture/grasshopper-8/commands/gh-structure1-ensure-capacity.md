@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Structure`1.EnsureCapacity
+Ensures that all current branches have a certain capacity.

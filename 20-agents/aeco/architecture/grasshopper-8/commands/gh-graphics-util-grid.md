@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.Grid
+Draw a default grid.

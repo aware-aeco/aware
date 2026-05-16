@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MarkovChain.FindPattern
+Finds the pattern in the level 1 chain that matches the given ID.

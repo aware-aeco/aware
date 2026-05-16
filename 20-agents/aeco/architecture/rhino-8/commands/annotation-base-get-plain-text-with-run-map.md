@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnnotationBase.GetPlainTextWithRunMap
+Return plain text string for this annotation with field expressions unevaluated.

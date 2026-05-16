@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayStyle.GetColorSettings
+Get color settings object from the style.

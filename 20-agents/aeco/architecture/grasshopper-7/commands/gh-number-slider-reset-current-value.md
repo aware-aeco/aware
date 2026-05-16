@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_NumberSlider.ResetCurrentValue
+Call this method if you think the currently cached value is not longer valid.

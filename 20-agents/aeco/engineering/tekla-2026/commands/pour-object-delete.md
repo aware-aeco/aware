@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PourObject.Delete
+At the moment pour objects cannot be deleted.

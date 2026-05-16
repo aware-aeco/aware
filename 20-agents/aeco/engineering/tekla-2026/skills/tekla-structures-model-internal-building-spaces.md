@@ -6,3 +6,4 @@ description: API reference for namespace Tekla.Structures.ModelInternal.Building
 # Tekla.Structures.ModelInternal.BuildingSpaces
 
 - **Space**
+  - Building space.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDSurfaceInterpolator.Clear
+Destroys the information needed to solve the interpolation.

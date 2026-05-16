@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.CreateSchedule
+Creates a regular schedule that can relate to a specific area scheme.

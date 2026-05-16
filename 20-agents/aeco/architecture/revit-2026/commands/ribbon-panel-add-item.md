@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RibbonPanel.AddItem
+Adds a Ribbon item to the panel.

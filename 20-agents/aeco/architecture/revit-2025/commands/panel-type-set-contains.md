@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelTypeSet.Contains
+Tests for the existence of a panel type within the set.

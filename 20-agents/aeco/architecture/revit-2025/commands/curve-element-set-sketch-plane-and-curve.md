@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveElement.SetSketchPlaneAndCurve
+Sets the sketch plane and the curve for this CurveElement.

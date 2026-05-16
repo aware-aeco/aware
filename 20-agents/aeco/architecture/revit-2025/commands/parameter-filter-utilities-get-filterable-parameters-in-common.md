@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterFilterUtilities.GetFilterableParametersInCommon
+Returns the filterable parameters common to the given categories.

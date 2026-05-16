@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IHeaderButtonHandler.ButtonDetails
+Implement this method to describe custom buttons on the section header.             RDK calls this method continually increasing iIndex until it returns \e false

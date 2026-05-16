@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.IsValidCategoryForKeySchedule
+Checks whether a category can be used for a key schedule.

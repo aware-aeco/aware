@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.SelectObjectsInExternalReferenceModel
+DO NOT USE! For internal usage only!

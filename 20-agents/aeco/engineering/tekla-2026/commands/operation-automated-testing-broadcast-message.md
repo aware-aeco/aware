@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.AutomatedTesting_BroadcastMessage
+Broadcasts a test message to TS core for automated testing purposes.

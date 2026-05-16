@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HatchPattern.GetUserStrings
+Gets a copy of all (user key string, user value string) pairs attached to this geometry.

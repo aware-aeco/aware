@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FluidType.GetFluidTemperatureSetIterator
+Returns a FluidTemperatureSetIterator that iterates through the collection.

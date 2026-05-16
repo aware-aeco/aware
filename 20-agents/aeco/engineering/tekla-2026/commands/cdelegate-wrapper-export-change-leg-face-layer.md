@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportChangeLegFaceLayer
+DO NOT USE! For internal usage only.

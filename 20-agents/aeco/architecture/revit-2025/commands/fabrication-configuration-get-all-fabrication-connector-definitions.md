@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetAllFabricationConnectorDefinitions
+Gets fabrication connector identifiers from the fabrication configuration, filtered by shape and domain.

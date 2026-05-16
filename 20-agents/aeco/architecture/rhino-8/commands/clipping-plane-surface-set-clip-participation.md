@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ClippingPlaneSurface.SetClipParticipation
+Set a list of specific object ids and layers that this clipping plane surface clips.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportModifyRebarPropertyStrip
+DO NOT USE! For internal usage only.

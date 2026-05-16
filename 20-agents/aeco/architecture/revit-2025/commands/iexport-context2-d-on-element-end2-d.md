@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExportContext2D.OnElementEnd2D
+This method marks the end of an element being exported.

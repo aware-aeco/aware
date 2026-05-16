@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedViewTable.Delete
+Remove named view from the document.

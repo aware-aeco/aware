@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Solver.Compute
+Compute the convex hull of list of nodes.

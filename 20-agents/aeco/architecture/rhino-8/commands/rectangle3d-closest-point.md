@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rectangle3d.ClosestPoint
+Gets the point on the rectangle that is closest to a test-point.

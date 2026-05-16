@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SurfaceTreatment.Modify
+Modifies the surface treatment with the given identifier in the database to match             the current one.

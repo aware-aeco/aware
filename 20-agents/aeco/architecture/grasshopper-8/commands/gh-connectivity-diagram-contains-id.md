@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ConnectivityDiagram.ContainsID
+Test the diagram for a given Node ID.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CriticalPathCollector.ToNetworkSegmentIds
+Returns the list of analytical segment ids on the network critical path.

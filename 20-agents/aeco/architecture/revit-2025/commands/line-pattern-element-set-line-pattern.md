@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinePatternElement.SetLinePattern
+Sets the LinePattern associated to this element.

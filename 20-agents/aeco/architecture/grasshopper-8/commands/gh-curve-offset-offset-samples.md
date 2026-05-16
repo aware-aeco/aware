@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CurveOffset.OffsetSamples
+Utility method for getting all offset samples.

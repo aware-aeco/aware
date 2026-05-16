@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalLinkType.IsValidAnalyticalFixityState
+Returns whether the input fixity state is valid for Analytical Link Type parameters.

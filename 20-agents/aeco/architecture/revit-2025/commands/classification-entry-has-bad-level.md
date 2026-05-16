@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ClassificationEntry.HasBadLevel
+Checks if the level is an integer in range between 1 and 5 inclusive.

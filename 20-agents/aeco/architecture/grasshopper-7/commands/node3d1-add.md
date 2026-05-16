@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Node3d`1.Add
+Insert another item into the tree.   The item should be within the region of this node.

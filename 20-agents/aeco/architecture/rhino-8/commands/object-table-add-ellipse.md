@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.AddEllipse
+Adds a curve object to the document representing an ellipse.

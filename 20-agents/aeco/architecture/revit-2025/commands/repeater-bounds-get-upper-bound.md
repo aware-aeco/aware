@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RepeaterBounds.GetUpperBound
+Returns the highest index of the array in the given dimension.

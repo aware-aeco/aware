@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MRU_Server.AppendRecentFileRecord
+Add a new MRU event to this server.

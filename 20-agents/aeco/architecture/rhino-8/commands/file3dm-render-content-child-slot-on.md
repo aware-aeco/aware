@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmRenderContent.ChildSlotOn
+True if a particular child slot is 'on'.

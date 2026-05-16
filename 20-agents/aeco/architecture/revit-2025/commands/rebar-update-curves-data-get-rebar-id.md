@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarUpdateCurvesData.GetRebarId
+Get the id of the Rebar element currently being calculated.

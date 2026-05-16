@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalMember.FlipCurve
+Flip the Analytical Member

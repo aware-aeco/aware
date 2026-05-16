@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform2D.OfPoint
+Applies the transformation to the point and returns the result.

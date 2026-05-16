@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetServiceGUID
+Gets the service GUID by its identifier.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PDFExportOptions.SetNamingRule
+Sets the naming rule.

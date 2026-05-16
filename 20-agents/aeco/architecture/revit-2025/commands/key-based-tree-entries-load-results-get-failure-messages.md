@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-KeyBasedTreeEntriesLoadResults.GetFailureMessages
+Get all error or warnings created while attempting to load KeyBasedTreeEntries.

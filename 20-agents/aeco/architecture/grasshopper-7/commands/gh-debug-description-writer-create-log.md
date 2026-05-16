@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DebugDescriptionWriter.CreateLog
+Get a single string that represents the entire log so far.

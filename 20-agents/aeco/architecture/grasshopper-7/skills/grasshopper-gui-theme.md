@@ -7,6 +7,7 @@ description: API reference for namespace Grasshopper.GUI.Theme from Grasshopper.
 
 - **GH_BackgroundSettings**
 - **GH_BackgroundStyle**
+  - Enumerates the pre-defined canvas background themes.
 - **GH_ObjectSettings**
 - **GH_PageSettings**
 - **GH_PaletteSettings**

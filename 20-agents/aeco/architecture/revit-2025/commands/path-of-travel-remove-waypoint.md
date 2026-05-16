@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PathOfTravel.RemoveWaypoint
+Remove a waypoint.

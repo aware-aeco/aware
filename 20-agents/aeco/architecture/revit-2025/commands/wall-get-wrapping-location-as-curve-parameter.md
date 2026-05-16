@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Wall.GetWrappingLocationAsCurveParameter
+Gets the non-normalized (actual) curve parameter of the location.

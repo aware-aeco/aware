@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Fonts.Fantasy
+Gets a font with the  family and the specified size and style

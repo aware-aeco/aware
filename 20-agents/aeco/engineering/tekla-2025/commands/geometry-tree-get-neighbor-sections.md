@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryTree.GetNeighborSections
+Gets neighbor sections of the node with nodeIndex index.

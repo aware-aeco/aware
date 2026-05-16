@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Command.DisplayHelp
+Displays help for a command.

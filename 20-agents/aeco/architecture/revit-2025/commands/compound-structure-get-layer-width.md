@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.GetLayerWidth
+Retrieves the width of a specified layer.

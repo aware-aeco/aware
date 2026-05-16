@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Cluster.WriteGhClusterFile
+Write this cluster object to a *.ghcluster file.

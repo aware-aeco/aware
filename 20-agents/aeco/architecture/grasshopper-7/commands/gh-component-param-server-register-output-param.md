@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentParamServer.RegisterOutputParam
+Add a parameter to the end of the output list.

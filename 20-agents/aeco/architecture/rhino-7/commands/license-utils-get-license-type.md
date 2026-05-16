@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LicenseUtils.GetLicenseType
+Returns the contentType of a specified product license

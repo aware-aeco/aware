@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoundingBox.ToBrep
+Constructs a  representation of this bounding box.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Param`1.ExpireOwner
+Utility method for expiring the owner component (if it exists).

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ManifestTable.FindIndex
+Uses the index to find a model component.             The index is the value that is stored in the .Index property.

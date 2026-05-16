@@ -6,72 +6,142 @@ description: API reference for namespace Autodesk.Revit.DB.Mechanical from Revit
 # Autodesk.Revit.DB.Mechanical
 
 - **AirCoolingCoilType**
+  - The type of air cooling coil.
 - **AirFanType**
+  - The type of air fan.
 - **AirHeatExchangerType**
+  - The type of air loop.
 - **AirHeatingCoilType**
+  - The type of air heating coil.
 - **AirSystemData**
+  - Represents the data and parameter of analytical air system.
 - **AnalyticalSystemDomain**
+  - The domain type of analytical system.
 - **ComponentClassification**
+  - An enumerated type lists all MEP component classification. This attribute describes the general purpose of the MEP part component, that is used for scheduling, tagging, filter, ODBC, and etc.    One component classification may include more than one part type.
 - **ConditionType**
+  - An enumerated type listing all the possible condition types for a space object.
 - **Duct**
+  - A duct in the Autodesk Revit MEP product.
 - **DuctFittingAndAccessoryConnectorData**
+  - The input data used by external servers for calculation of the duct fitting and duct accessory coefficient.
 - **DuctFittingAndAccessoryData**
+  - The input data used by external servers for calculation of the duct fitting and duct accessory coefficient.
 - **DuctFittingAndAccessoryPressureDropData**
+  - The input and output data used by external servers for calculation of the duct fitting and duct accessory pressure drop.
 - **DuctFittingAndAccessoryPressureDropItem**
+  - A flow path of the duct/pipe fitting and accessory. It is defined by the begin connector and end connector.
 - **DuctFlowConfigurationType**
+  - An enumerated type listing all duct flow configuration types for a connector.
 - **DuctInsulation**
+  - Represents insulation applied to the outside of a given duct , fitting or accessory.
 - **DuctInsulationType**
+  - This class represents a duct insulation type in Autodesk Revit.
 - **DuctLining**
+  - Represents Lining applied to the inside of a given duct, fitting or accessory.
 - **DuctLiningType**
+  - This class represents a duct lining type in Autodesk Revit.
 - **DuctLossMethodType**
+  - An enumerated type listing all duct loss calculation methods for a connector.
 - **DuctPressureDropData**
+  - The input and output data used by external servers for calculation of the duct pressure drop.
 - **DuctSettings**
+  - The duct setting class.
 - **DuctShape**
+  - Enumerated type listing possible shapes for ducts.
 - **DuctSizeIterator**
+  - An iterator to a set of MEP duct sizes from DuctSizes.
 - **DuctSizeSettingIterator**
+  - An iterator to a set of items from DuctSizeSettings. Each item is a KeyValuePair(DuctShape::Enum, DuctSizes).
 - **DuctSizeSettings**
+  - Duct sizes settings
 - **DuctSizes**
+  - Class RbsDuctSizes being used to store the duct sizes
 - **DuctSystemType**
+  - An enumerated type listing all the possible duct system types for a connector object.
 - **DuctType**
+  - A duct type element.
 - **EquipmentClassification**
+  - This enumeration is used to classify the mechanical equipment.
 - **FlexDuct**
+  - A flex duct in the Autodesk Revit MEP product.
 - **FlexDuctType**
+  - A flex duct type in the Autodesk Revit MEP product.
 - **IDuctFittingAndAccessoryPressureDropServer**
+  - Interface class for external servers implementing duct fitting and duct accessory coefficient calculation.
 - **IDuctPressureDropServer**
+  - Interface for external servers implementing duct pressure drop calculation.
 - **MEPAnalyticalSystem**
+  - Represents an analytical system where the air or water is circulated to satisfy building energy requirements.
 - **MEPBuildingConstruction**
+  - Construction definition for Project Information.
 - **MEPBuildingConstructionSet**
+  - A set that contains MEPBuildingConstructions.
 - **MEPBuildingConstructionSetIterator**
+  - An iterator to a MEPBuildingConstruction set.
 - **MEPHiddenLineSettings**
+  - Represents the settings contained in the document associated to the MEP hidden line display.
 - **MEPSection**
+  - A section in the Autodesk Revit MEP product.
 - **MEPSpaceConstruction**
+  - Construction definition for Space.
 - **MechanicalEquipment**
+  - Provides access to the Mechanical Equipment in Autodesk Revit MEP.
 - **MechanicalEquipmentSet**
+  - A set of interrelated mechanical equipment in a MEP system that works together.
 - **MechanicalEquipmentSetType**
+  - Represents a type for a set of interrelated mechanical equipment in a MEP system that works together.
 - **MechanicalFitting**
+  - A mechanical fitting in the Autodesk Revit MEP product.
 - **MechanicalSystem**
+  - A mechanical system element.
 - **MechanicalSystemType**
+  - Base class for duct system types
 - **MechanicalUtils**
+  - General utility methods in the Autodesk Revit MEP product.
 - **OccupancyUnit**
+  - An enumerated type listing the occupancy unit of measure for a space object.
 - **ReturnAirflowType**
+  - An enumerated type listing all the possible return airflow types for a space object.
 - **RiseDropSymbol**
+  - This enumeration corresponds to the rise/drop symbol used    in mechanical systems
 - **Space**
+  - Provides access to the space topology in Autodesk Revit.
 - **SpaceFilter**
+  - A filter used to match spaces.
 - **SpaceSet**
+  - A set that can contain any type of object.
 - **SpaceSetIterator**
+  - An iterator to a set.
 - **SpaceTag**
+  - Provides access to the space tag in Autodesk Revit.
 - **SpaceTagFilter**
+  - A filter used to match space tags.
 - **SpaceTagType**
+  - An object that represents a Space Tag style.
 - **SpaceType**
+  - An enumerated type listing all the possible space types for a space object.
 - **SystemCalculationLevel**
+  - Enumerated type listing flags that can toggle on or off certain calculations related to MEP systems.
 - **SystemZoneData**
+  - Represents the specific domain requirements for a system-zone used in MEP design.
 - **SystemZoneElementType**
+  - Represents an element type for a system-zone element.
 - **WaterChillerType**
+  - The type of water chiller.
 - **WaterLoopData**
+  - Represents the data and parameters of analytical water loop.
 - **WaterLoopType**
+  - The type of water loop.
 - **Zone**
+  - A zone is a collection of one or more spaces.
 - **ZoneElementDomainData**
+  - A base class for specific domain requirements for a zone.
 - **ZoneEquipment**
+  - Represents an early-stage equipment placeholder that provides heating or cooling to part of air system or water loop.
 - **ZoneEquipmentBehavior**
+  - The behavior of zone equipment associated with spaces.
 - **ZoneEquipmentData**
+  - Represents the data and parameters of analytical zone equipment.
 - **ZoneEquipmentHvacType**
+  - The type of zone equipment.

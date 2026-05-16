@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssetProperty.GetConnectedProperty
+Gets one connected property with specified index.

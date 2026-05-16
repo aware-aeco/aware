@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportUIObjectsPick
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DracoCompression.DecompressFile
+Read compressed data from disk and decompress to RhinoCommon geometry

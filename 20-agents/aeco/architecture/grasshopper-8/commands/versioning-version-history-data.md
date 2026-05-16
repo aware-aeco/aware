@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Versioning.VersionHistoryData
+Gets the currently most up-to-date version history data.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewHandler.GetActiveView
+Get the current active MDI child window view

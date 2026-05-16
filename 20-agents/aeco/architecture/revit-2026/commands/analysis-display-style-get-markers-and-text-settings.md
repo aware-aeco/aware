@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayStyle.GetMarkersAndTextSettings
+Get markers and text settings object from the style.

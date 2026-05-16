@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_HtmlWriter.WriteHorizontalGradient
+Write a collection of horizontal div blocks with a gradient colour.

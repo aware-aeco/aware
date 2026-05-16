@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayStyle.HasDeformedShapeSettings
+If true style has deformed shape settings.

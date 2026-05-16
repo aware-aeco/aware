@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Form.ScaleProfile
+Scale a profile of the form, by a specified origin and scale factor.

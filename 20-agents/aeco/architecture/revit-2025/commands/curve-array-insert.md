@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveArray.Insert
+Insert the specified curve into the array.

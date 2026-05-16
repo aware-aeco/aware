@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PathOffset.OffsetPath
+Offset a path + index value without wrapping.

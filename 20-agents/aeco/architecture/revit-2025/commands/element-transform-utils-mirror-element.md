@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementTransformUtils.MirrorElement
+Creates a mirrored copy of an element about a given plane.

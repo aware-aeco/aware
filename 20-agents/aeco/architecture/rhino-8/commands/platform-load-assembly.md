@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Platform.LoadAssembly
+Loads the extensions specified by the assembly attribute .

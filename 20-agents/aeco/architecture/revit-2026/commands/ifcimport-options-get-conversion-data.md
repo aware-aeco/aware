@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCImportOptions.GetConversionData
+Get the data used in the creation of the associated Revit file for an IFC link operation, if it exists.

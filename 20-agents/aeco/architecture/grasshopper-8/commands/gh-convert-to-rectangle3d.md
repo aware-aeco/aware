@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToRectangle3d
+Convert data into Rhino.Geometry.Line.

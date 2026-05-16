@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-STLExportOptions.IsGridAspectRatioSet
+Checks whether the GridAspectRatio tessellation parameter is explicitly set.

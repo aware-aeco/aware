@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Navigation.Push
+Pushes a new pane onto the navigation stack with the specified  and .

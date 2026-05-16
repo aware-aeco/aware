@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Connector.GetFabricationConnectorInfo
+Gets fabrication connectivity information.

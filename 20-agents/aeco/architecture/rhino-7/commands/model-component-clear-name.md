@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelComponent.ClearName
+Resets the HasName property of the model component to false, if possible.

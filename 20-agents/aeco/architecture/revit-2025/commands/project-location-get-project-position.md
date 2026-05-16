@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ProjectLocation.GetProjectPosition
+Gets the coordinates of a point in the ProjectLocation's coordinate system.

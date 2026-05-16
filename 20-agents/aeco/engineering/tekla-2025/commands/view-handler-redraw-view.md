@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewHandler.RedrawView
+Redraws a model view.

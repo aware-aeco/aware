@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IUpdater.Execute
+The method that Revit will invoke to perform an update.

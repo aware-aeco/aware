@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.GetAttachedColumns
+Obtains a list of columns known to Revit as intersecting with this wall.

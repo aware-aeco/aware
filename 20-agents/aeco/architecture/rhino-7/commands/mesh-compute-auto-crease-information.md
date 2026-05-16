@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.ComputeAutoCreaseInformation
+Do not use this method.             Length: top.Mesh.Vertices.Count

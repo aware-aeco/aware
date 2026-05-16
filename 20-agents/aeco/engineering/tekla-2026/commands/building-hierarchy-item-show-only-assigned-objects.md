@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BuildingHierarchyItem.ShowOnlyAssignedObjects
+Show only assigned objects in 3d view.

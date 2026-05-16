@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyItemFactory.NewOpening
+Create an opening to cut the wall or ceiling.

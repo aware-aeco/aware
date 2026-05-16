@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCLegacyStairOrRamp.GetNumberOfRisers
+Gets the number of risers.

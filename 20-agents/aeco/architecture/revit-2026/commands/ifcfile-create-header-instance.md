@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCFile.CreateHeaderInstance
+Creates an IFC header instance in the file model.

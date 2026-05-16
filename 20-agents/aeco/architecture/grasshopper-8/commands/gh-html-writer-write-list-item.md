@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_HtmlWriter.WriteListItem
+Write a complete list item.

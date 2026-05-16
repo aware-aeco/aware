@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ResizeBorder.Solve
+Solve a resizing step.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform.GetEulerZYZ
+Find the Euler angles for a rotation transformation.

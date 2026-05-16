@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToPoint
+Convert a floating point GDI point structure to an integer rounded point.

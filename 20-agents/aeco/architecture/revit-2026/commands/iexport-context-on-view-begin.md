@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExportContext.OnViewBegin
+This method marks the beginning of a 3D view to be exported.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyDataSettings.CheckBuildingConstructionClass
+Checks that the building construction class falls within an appropriate range.

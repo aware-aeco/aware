@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ExpressionParser.Evaluate
+Evaluate the expression currently loaded in the Symbols cache using the currently loaded variables.

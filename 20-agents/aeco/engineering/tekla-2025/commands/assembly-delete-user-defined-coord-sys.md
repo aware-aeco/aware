@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Assembly.DeleteUserDefinedCoordSys
+Deletes the assembly's user defined coordinate system, if it has one.

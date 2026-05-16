@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportParseProfile
+DO NOT USE! For internal usage only!

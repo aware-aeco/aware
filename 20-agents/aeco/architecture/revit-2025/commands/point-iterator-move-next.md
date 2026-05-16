@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointIterator.MoveNext
+Increments the iterator to the next point in the collection.

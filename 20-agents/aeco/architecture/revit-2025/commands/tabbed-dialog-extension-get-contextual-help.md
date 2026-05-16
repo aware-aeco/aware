@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TabbedDialogExtension.GetContextualHelp
+Gets the contextual help.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorSelectionDialog.Show
+Shows the Revit Color dialog as a modal dialog.

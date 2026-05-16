@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RoutingConditions.AppendCondition
+Appends a routing condition to the end of existing routing conditions. Note that the first item (indexed at 0) is the condition for the primary connector.

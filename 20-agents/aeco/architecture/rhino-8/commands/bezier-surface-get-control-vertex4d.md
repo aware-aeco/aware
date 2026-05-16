@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BezierSurface.GetControlVertex4d
+Get location of a control vertex.

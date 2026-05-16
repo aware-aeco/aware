@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorWithTransparency.SetBlue
+set blue

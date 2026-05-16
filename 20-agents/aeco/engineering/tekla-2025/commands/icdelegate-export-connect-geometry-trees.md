@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportConnectGeometryTrees
+DO NOT USE! For internal usage only!

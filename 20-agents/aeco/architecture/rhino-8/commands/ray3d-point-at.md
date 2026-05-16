@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Ray3d.PointAt
+Evaluates a point along the ray.

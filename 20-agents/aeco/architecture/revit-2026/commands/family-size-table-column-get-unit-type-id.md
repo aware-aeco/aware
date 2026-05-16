@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilySizeTableColumn.GetUnitTypeId
+Gets the identifier of the unit quantifying values in the column.

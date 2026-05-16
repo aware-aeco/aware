@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PostEffectPipeline.Dimensions
+Get the dimensions of the frame buffer. All channels in the frame buffer have the same dimensions.

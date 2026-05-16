@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlLine.Insert
+Inserts the control line into the model.

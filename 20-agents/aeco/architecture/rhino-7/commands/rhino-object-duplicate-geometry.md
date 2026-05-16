@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.DuplicateGeometry
+Constructs a deep (full) copy of the geometry.

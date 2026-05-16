@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_HtmlFormatter.AddRemark
+Adds a remark to the list.  Remarks are displayed underneath the contact details

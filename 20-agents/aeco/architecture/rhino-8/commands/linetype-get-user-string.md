@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Linetype.GetUserString
+Gets user string from this geometry.

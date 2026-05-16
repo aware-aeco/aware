@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentEditor.ClearStatusBar
+Clear the Grasshopper status-bar.

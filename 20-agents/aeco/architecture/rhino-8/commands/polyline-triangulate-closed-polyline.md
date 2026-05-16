@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Polyline.TriangulateClosedPolyline
+Attempts to create a list of triangles which represent a             triangulation of a closed polyline

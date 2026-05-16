@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.SemanticTestAgainstModel
+DO NOT USE! For internal usage only!

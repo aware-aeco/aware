@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureDefinition.CreateFailureDefinition
+Creates an instance of a FailureDefinition.

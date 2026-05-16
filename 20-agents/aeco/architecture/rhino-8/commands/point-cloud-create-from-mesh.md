@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.CreateFromMesh
+Creates a point cloud from a mesh.

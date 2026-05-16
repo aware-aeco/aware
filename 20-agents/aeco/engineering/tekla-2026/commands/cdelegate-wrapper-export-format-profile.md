@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportFormatProfile
+DO NOT USE! For internal usage only!

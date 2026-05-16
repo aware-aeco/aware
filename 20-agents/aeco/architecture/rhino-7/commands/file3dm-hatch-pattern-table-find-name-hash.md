@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmHatchPatternTable.FindNameHash
+Finds a HatchPattern given its name hash.

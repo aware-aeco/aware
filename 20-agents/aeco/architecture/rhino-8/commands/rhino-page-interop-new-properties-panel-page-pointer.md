@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoPageInterop.NewPropertiesPanelPagePointer
+For internal use only, provides access to unmanaged core

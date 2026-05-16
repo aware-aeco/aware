@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DeleteElements.Create
+Creates an instance of the DeleteElements resolution.

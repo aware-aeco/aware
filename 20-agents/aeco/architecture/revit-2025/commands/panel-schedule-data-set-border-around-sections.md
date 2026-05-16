@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleData.SetBorderAroundSections
+Adds a border around the sections

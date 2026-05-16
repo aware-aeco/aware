@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationRodInfo.AttachToStructure
+Attaches to the nearest structural element.

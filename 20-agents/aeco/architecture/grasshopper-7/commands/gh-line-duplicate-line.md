@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Line.DuplicateLine
+Create a duplicate of this line.

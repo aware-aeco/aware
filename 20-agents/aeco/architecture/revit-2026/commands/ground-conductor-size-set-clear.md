@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroundConductorSizeSet.Clear
+Removes every GroundConductorSize from the set, rendering it empty.

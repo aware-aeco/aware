@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableLayout.Horizontal
+Creates a horizontal table layout with the specified cells.

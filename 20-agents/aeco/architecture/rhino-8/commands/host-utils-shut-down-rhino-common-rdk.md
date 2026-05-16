@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostUtils.ShutDownRhinoCommon_RDK
+Makes sure all static RhinoCommon RDK components are de-initialized so they aren't calling into space when the RDK is unloaded.

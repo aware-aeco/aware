@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PropertyCellTypeEnum.OnConfigure
+Configures the content control for the given cell information.

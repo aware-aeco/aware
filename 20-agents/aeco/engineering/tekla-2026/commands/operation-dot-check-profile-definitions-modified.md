@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotCheckProfileDefinitionsModified
+Check if profile definitions been modified after modification stamp.

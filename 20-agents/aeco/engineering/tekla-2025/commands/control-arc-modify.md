@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlArc.Modify
+Modifies the control arc with the given Identifier.

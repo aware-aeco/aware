@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Squisher.Is2dPatternSquished
+Returns true if the input geometry was the result of a squish operation

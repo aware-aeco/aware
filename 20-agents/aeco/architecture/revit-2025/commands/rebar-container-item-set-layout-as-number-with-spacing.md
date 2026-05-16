@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainerItem.SetLayoutAsNumberWithSpacing
+Sets the Layout Rule property of rebar set to NumberWithSpacing

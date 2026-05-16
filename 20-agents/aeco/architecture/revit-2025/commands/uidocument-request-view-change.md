@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIDocument.RequestViewChange
+Requests an asynchronous change of the active view in the currently active document.

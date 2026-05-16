@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.GetFillSurfaces
+Return list of fill surfaces if any for object and clipping plane.

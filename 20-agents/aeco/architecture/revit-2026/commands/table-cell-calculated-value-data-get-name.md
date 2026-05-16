@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableCellCalculatedValueData.GetName
+Gets the name of the calculated value.

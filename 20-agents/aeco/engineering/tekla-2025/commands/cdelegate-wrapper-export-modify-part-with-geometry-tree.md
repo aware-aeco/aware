@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportModifyPartWithGeometryTree
+DO NOT USE! For internal usage only!

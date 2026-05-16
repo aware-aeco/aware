@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContentCollection.FirstTag
+Gets the first tag

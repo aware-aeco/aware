@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpatialFieldManager.RegisterResult
+Registers result and assigns it a unique result index

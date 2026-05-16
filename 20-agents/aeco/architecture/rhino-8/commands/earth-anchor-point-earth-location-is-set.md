@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EarthAnchorPoint.EarthLocationIsSet
+Checks if the earth location is set or not.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SnapShotsClient.ApplicationCategory
+Predefined application category

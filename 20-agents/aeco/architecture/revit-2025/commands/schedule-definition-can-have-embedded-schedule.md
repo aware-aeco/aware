@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.CanHaveEmbeddedSchedule
+Indicates if this ScheduleDefinition can have an embedded ScheduleDefinition    added.

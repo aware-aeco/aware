@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PerformanceAdviser.PostWarning
+Reports a problem detected during execution of a rule.

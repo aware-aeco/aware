@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepCurveList.GetEnumerator
+Get an enumerator that visits all curves.

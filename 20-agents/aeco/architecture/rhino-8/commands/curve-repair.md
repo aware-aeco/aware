@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.Repair
+Repairs a curve.

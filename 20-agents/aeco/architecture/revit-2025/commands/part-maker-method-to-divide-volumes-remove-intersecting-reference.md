@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PartMakerMethodToDivideVolumes.RemoveIntersectingReference
+Removed intersecting reference.

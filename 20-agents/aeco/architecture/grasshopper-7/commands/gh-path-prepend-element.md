@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Path.PrependElement
+Create a new path by prepending a new index value to this path.

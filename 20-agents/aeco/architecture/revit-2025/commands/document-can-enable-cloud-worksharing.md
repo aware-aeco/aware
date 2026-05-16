@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.CanEnableCloudWorksharing
+Checks if cloud worksharing can be enabled for the cloud model.

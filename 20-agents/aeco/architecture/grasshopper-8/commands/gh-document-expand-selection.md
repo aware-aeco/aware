@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.ExpandSelection
+Grow or shift the selection set based on source and recipient links

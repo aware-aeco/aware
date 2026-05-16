@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawSphere
+Draw a wireframe sphere.

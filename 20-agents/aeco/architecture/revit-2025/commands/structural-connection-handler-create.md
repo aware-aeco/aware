@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralConnectionHandler.Create
+Creates a new instance of a Structural Connection Handler, which defines the connection between given elements.

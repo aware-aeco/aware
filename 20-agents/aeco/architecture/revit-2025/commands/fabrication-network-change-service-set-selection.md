@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationNetworkChangeService.SetSelection
+Set the element selection to change the service or size for.

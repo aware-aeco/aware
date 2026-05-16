@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Entity.ReadAccessGranted
+Checks whether this Entity may be retrieved by the current add-in.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepFaceList.SplitKinkyFaces
+Splits any faces with creases into G1 pieces.

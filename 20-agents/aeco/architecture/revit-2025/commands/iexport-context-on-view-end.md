@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExportContext.OnViewEnd
+This method marks the end of a 3D view being exported.

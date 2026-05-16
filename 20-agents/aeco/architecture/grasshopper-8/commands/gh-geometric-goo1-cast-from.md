@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GeometricGoo`1.CastFrom
+Attempt a cast from generic object.

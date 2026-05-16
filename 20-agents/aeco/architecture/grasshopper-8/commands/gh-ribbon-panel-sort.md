@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RibbonPanel.Sort
+Sorts items on the panel.

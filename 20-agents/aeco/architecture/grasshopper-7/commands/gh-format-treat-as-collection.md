@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Format.TreatAsCollection
+This method is used in Scripting components to determine whether a certain class was   'intended' as a collection or as a single piece of  data .

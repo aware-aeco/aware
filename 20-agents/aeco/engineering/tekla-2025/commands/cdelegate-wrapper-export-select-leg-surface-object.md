@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportSelectLegSurfaceObject
+DO NOT USE! For internal usage only!

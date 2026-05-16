@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AppearanceSettings.UsingDefaultDarkModeColors
+Determine if Rhino is running with default dark mode color settings

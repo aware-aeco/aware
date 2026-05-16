@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableLayout.SetRowScale
+Sets the scale for the specified row.

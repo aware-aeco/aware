@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_HtmlWriter.WriteHorizontalRule
+Write a horizontal rule into the Html document.

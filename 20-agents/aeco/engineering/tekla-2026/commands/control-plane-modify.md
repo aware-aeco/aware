@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlPlane.Modify
+Modifies the control plane with the given ID.

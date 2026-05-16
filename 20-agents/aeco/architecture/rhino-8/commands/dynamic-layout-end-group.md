@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DynamicLayout.EndGroup
+Ends a group.

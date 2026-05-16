@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CategorySet.ForwardIterator
+Retrieve a forward moving iterator to the set.

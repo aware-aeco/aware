@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContentType.GetAllAvailableTypes
+Gets an array of all available render content types registered with Rhino.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.CanFilterBySubstring
+Checks whether a field can be used with a substring-based filter.

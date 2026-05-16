@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AddInsManagerAdminSettings.CreateAddInsManagerAdminSettings
+Creates a new instance of .

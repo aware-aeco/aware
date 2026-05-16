@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepFace.RefitTrim
+The RefitTrim command replaces a trimmed surface edge with an untrimmed edge.

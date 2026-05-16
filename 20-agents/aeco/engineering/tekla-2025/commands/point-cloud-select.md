@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.Select
+Select point cloud by Guid, by Name, by OriginalPath or by Url.

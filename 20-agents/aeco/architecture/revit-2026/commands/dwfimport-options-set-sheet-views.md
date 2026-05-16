@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DWFImportOptions.SetSheetViews
+Set sheet views where DWF markups are imported.

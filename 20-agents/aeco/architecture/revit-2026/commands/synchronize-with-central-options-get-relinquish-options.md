@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SynchronizeWithCentralOptions.GetRelinquishOptions
+Gets the options which govern whether or not to relinquish elements and workset types.

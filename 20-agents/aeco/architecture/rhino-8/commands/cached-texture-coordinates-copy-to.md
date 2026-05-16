@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CachedTextureCoordinates.CopyTo
+Copies the elements of the this collection to an System.Array,             starting at a particular System.Array index.

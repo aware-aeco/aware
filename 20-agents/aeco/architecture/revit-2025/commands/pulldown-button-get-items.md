@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PulldownButton.GetItems
+Gets a copy of the collection of buttons assigned to the pulldown button.

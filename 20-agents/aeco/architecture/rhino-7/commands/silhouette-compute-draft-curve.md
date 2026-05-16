@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Silhouette.ComputeDraftCurve
+Computes draft curve silhouettes of a shape.

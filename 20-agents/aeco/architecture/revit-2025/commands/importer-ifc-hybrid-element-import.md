@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ImporterIFC.HybridElementImport
+Imports IFC Elements using non-open-source framework.

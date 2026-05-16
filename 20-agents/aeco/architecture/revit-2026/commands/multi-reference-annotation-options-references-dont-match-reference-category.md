@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultiReferenceAnnotationOptions.ReferencesDontMatchReferenceCategory
+Verifies that all of the references belongs to elements which doesn't match the    reference category required by the MultiReferenceAnnotationType.

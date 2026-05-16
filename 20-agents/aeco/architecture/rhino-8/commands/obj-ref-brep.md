@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjRef.Brep
+Gets the brep if this reference geometry is one.

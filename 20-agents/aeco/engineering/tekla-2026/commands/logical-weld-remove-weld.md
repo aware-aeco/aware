@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LogicalWeld.RemoveWeld
+Removes a weld from the logical weld.

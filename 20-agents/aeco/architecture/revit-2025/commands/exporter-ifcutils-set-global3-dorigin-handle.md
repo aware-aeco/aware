@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.SetGlobal3DOriginHandle
+Sets the handle representing the 3D origin.

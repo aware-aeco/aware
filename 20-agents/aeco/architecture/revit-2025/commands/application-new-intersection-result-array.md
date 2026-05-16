@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewIntersectionResultArray
+Creates a new instance of an IntersectionResult array.

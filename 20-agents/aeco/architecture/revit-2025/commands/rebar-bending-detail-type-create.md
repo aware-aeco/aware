@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBendingDetailType.Create
+Creates a new RebarBendingDetailType object.

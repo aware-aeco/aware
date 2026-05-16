@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.GetSelectedObjectTypes
+What geometry types are currently selected

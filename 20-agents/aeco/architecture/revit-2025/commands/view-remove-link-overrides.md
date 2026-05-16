@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.RemoveLinkOverrides
+Deletes the graphical link overrides in the current view.

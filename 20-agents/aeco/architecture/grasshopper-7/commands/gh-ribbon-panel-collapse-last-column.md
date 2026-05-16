@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RibbonPanel.CollapseLastColumn
+Removes the rightmost column

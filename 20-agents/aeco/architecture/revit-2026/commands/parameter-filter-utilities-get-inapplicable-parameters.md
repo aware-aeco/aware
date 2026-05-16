@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterFilterUtilities.GetInapplicableParameters
+Returns the parameters that are not among the set of filterable    parameters common to the given categories.

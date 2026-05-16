@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Binding.Unbind
+Unbind this from the target object(s)

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Chunk.CopyValuesFromChunk
+Copy all values and sub-chunks from another chunk.

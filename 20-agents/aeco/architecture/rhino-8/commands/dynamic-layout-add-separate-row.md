@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DynamicLayout.AddSeparateRow
+Adds a separate horizontal row of items in a new vertical section

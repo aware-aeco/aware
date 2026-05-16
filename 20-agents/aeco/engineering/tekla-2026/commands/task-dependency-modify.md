@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TaskDependency.Modify
+Modifies the task dependency instance in the model. The identifier must be set.

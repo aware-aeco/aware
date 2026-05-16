@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BinaryArchiveReader.ReadGeometry
+Reads a -derived object from the archive.             The  class is abstract.

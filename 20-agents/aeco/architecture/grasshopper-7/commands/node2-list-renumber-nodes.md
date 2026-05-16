@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Node2List.RenumberNodes
+Reset all indices of all nodes by renumbering them in their current order.   Nulls are ignored but they do affect the numbering.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentEventServer.CreateGuidTable
+Create the entire ID table from scratch.

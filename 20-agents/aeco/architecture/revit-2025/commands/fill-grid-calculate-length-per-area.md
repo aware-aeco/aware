@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FillGrid.CalculateLengthPerArea
+Calculates length of the pattern per unit area.

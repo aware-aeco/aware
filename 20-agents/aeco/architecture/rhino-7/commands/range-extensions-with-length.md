@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RangeExtensions.WithLength
+Creates a new range starting at the same position as the specified  and a new length.

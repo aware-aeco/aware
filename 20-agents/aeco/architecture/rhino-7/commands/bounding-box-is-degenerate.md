@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoundingBox.IsDegenerate
+Determines whether a bounding box is degenerate (flat) in one or more directions.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ClipPlane.Insert
+Creates a new clip plane to the application view.             The application view must be visible.

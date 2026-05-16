@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.GetPoints
+Copy all the point coordinates in this point cloud to an array.

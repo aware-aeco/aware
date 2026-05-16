@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Wall.RemoveProfileSketch
+Reverts an edited wall to its original shape.

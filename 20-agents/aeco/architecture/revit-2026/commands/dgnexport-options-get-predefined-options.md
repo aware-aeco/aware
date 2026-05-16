@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DGNExportOptions.GetPredefinedOptions
+Returns an instance DGNExportOptions containing settings from a predefined export setup.

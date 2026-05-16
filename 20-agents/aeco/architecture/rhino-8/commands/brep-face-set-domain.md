@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepFace.SetDomain
+Sets the surface domain of this face.

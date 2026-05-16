@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObjectTable.AddClippingPlane
+Adds a clipping plane object to Rhino.

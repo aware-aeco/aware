@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View3D.CanSaveOrientation
+Returns true if the View3D's orientation can be saved, false otherwise.

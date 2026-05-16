@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Viewport.GetBoxCenter
+Returns the center of the outline of the viewport on the sheet, excluding the viewport label.

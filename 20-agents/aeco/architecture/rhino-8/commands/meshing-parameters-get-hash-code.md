@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshingParameters.GetHashCode
+Computes a hash number that represents the current MeshingParameters.

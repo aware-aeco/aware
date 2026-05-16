@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectAttributes.HasDisplayModeOverride
+Determines if an object has a display mode override for a given viewport.

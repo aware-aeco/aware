@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DuctFittingAndAccessoryPressureDropUIData.GetUnits
+Gets units.

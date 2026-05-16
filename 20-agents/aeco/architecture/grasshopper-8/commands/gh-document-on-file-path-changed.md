@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.OnFilePathChanged
+Raise the FilePathChanged event.

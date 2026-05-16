@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.IsModelAutoSaved
+Tells whether a model has auto saved information.

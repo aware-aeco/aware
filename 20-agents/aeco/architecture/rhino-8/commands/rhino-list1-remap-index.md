@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoList`1.RemapIndex
+Remap an index in the infinite range onto the List index range.

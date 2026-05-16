@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Wall.GetWrappingLocationAsReferences
+Gets an array of references to faces at the location.

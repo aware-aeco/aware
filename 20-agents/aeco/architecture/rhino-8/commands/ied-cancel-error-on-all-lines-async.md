@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.CancelErrorOnAllLinesAsync
+Cancel error on all lines

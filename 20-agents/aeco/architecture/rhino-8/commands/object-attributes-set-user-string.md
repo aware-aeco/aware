@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectAttributes.SetUserString
+Attach a user string (key,value combination) to this geometry.

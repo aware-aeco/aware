@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToCircle
+Convert data into Rhino.Geometry.Circle.

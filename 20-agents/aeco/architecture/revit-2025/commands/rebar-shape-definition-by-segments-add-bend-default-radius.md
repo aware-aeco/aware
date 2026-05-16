@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDefinitionBySegments.AddBendDefaultRadius
+Specify a default-radius bend.

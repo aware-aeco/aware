@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.RemoveFilter
+Removes a filter.

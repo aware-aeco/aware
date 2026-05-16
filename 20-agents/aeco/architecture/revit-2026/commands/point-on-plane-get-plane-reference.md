@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointOnPlane.GetPlaneReference
+The geometric plane reference.

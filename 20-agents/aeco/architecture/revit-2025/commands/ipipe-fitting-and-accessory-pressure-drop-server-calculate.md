@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IPipeFittingAndAccessoryPressureDropServer.Calculate
+Calculate the pipe fitting and pipe accessory coefficient.

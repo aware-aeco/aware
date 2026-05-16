@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WireframeBuilder.AddPoint
+Add a point to the shape representation stored in this WireframeBuilder.

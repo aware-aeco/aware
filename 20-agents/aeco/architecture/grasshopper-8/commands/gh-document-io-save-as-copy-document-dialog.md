@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentIO.SaveAsCopyDocumentDialog
+Display the Save As Copy GH/GHX dialog.

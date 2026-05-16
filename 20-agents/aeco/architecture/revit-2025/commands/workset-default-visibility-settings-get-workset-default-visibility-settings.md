@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WorksetDefaultVisibilitySettings.GetWorksetDefaultVisibilitySettings
+Get the WorksetDefaultVisibilitySettings of the document.

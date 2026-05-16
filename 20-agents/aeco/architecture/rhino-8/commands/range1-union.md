@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Range`1.Union
+Gets the union of this instance and the specified , including touching ranges.

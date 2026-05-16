@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.MergeAllCoplanarFaces
+Merges adjacent coplanar faces into single faces.

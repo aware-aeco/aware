@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SlabShapeEditor.ResetSlabShape
+Removes the modifications made during editing and resets the element geometry back to the unmodified state.

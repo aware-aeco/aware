@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssemblyInstance.Disassemble
+Removes the assembly instance and releases the member elements.

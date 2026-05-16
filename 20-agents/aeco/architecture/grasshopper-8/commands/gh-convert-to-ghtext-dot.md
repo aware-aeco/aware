@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHTextDot
+Convert data into GH_TextDot.

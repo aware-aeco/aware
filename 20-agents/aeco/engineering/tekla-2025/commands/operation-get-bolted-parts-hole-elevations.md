@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetBoltedPartsHoleElevations
+Gets the bolt group parts hole elevations

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextLog.PrintWrappedText
+Send text wrapped at a set line length

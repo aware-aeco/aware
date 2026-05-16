@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultistoryStairs.DisconnectLevels
+Shrinks the multistory stairs by disconnecting input levels.

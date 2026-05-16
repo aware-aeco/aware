@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportSelectReferenceModelObject
+DO NOT USE! For internal usage only!

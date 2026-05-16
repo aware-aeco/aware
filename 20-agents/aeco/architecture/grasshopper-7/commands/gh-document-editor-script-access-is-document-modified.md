@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentEditor.ScriptAccess_IsDocumentModified
+Gets the modified flag of the currently loaded document.

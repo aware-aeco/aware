@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SnapShotsClient.Name
+The client's name.

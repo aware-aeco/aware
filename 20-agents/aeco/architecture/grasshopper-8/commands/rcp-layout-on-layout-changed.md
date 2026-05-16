@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RcpLayout.OnLayoutChanged
+Raise the LayoutChanged event.

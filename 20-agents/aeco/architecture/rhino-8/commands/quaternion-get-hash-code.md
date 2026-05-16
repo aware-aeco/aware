@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Quaternion.GetHashCode
+Gets a non-unique but repeatable hashing code for this quaternion.

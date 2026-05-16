@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ContourSetting.AddSingleContour
+Add a single contour as a contour setting item to the current contour setting.

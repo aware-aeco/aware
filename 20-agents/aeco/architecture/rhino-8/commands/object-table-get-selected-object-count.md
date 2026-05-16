@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.GetSelectedObjectCount
+Compute the current number of selected objects

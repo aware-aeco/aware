@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureHandlingOptions.GetDelayedMiniWarnings
+Obtains the flag indicating if showing of mini-warning dialog should be delayed until the end of next transaction.

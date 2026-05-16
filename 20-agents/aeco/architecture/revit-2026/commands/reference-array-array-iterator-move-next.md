@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceArrayArrayIterator.MoveNext
+Move the iterator one item forward.

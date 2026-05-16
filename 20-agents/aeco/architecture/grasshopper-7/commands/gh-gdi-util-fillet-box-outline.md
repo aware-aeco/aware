@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GDI_Util.FilletBoxOutline
+Fillet all the corners of the combined outline of a set of rectangles.

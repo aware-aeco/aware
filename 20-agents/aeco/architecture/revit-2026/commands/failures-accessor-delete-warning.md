@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailuresAccessor.DeleteWarning
+Deletes one specific failure message of severity "Warning".

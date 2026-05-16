@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.StretchAndFit
+Stretch the fabrication part from the specified connector and fit to the target routing end.

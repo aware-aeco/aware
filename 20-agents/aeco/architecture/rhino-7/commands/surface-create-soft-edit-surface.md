@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.CreateSoftEditSurface
+Creates a soft edited surface from an existing surface using a smooth field of influence.

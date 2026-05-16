@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.GetCurveFromDocument
+Harvest a curve object from a Rhino document.

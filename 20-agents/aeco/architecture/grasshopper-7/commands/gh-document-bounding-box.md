@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.BoundingBox
+Returns the boundingbox of all the normal attributes. If the document contains no   normal attributes an Empty RectangleF structure is returned.

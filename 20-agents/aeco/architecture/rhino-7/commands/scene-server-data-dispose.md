@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SceneServerData.Dispose
+Dispose for SceneServerData

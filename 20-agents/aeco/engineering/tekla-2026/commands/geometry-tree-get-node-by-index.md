@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryTree.GetNodeByIndex
+Returns geometry node by geometry index.

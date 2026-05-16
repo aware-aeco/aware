@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileStp.Write
+Write a STP file based on the contents of a RhinoDoc

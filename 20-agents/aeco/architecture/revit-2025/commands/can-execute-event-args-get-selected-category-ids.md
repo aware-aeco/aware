@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CanExecuteEventArgs.GetSelectedCategoryIds
+Gets the category ids of selected elements.

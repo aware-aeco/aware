@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IPointCloudAccess.Free
+Completes the lifetime of the object providing this interface.

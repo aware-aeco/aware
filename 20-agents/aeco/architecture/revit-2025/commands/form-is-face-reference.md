@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Form.IsFaceReference
+Tell if the pick is the reference to a face of the form.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoltArray.Select
+Selects a bolt array from the model database. The ID must be set.

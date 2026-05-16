@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraint.GetPositiveOffsetDirectionForToOtherRebarConstraint
+Returns the positive offset direction vector.

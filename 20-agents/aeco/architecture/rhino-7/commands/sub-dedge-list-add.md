@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDEdgeList.Add
+Add a new edge to the list.

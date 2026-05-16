@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.GetPartCustomDataInteger
+Get custom data integer value for the specified custom data.

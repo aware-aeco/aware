@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayMeshFace.ConstPointer
+Gets the constant (immutable) pointer of this array.

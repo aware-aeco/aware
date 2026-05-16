@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoMath.Wrap
+Limits a  to be specified within an interval of two numbers by repeating the available interval cyclically.

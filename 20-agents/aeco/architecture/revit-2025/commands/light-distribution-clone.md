@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightDistribution.Clone
+Creates a copy of the LightDistribution derived object.

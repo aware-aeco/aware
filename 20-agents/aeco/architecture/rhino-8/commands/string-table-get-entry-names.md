@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StringTable.GetEntryNames
+Return list of all entry names for a given section of user data strings in the document.

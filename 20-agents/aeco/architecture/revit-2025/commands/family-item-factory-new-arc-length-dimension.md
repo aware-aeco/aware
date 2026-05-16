@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyItemFactory.NewArcLengthDimension
+Creates a new arc length dimension object using the specified dimension type.

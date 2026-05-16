@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateQuadSphere
+Constructs a Brep definition of a quad sphere.

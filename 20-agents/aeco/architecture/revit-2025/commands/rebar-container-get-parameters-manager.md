@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainer.GetParametersManager
+Returns an object used to manage parameters of the Rebar Container.

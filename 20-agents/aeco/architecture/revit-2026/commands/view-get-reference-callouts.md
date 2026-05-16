@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetReferenceCallouts
+Returns element ids of all reference callouts in the view.

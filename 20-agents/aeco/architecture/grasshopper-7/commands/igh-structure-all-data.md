@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Structure.AllData
+Gets an enumerator for all the data items in this structure.

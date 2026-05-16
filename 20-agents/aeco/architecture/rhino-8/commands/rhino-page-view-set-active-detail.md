@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoPageView.SetActiveDetail
+Sets the active detail.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.OnObjectDeleted
+Raise the ObjectsDeleted event.

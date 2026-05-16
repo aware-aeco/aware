@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ConvertIFC4toSemantic
+DO NOT USE! For internal usage only!

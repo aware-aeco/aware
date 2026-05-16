@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Connector.DisconnectFrom
+Remove connection between two connectors.

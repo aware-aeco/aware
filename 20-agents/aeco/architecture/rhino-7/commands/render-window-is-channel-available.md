@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderWindow.IsChannelAvailable
+Query if a channel is available.

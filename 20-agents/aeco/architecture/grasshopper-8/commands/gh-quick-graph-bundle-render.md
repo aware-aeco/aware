@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_QuickGraphBundle.Render
+Draw this graph into a frame.

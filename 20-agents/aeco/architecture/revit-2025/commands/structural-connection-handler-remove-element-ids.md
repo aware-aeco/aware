@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralConnectionHandler.RemoveElementIds
+Removes element ids from the connection.    All element ids in an array should belong to the connection.

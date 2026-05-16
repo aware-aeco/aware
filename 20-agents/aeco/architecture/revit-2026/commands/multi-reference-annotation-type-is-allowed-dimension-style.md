@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultiReferenceAnnotationType.IsAllowedDimensionStyle
+Checks if the dimension style can be used with multi-reference annotations.

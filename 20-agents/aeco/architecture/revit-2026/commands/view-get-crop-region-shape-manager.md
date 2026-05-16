@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetCropRegionShapeManager
+Returns an object for managing view crop region shape.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.RenderRoundBar
+Render a cylinder shaped object with round caps.

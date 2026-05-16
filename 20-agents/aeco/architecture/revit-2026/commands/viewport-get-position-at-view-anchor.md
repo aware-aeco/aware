@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Viewport.GetPositionAtViewAnchor
+Gets the position coordinates at the ViewAnchor.

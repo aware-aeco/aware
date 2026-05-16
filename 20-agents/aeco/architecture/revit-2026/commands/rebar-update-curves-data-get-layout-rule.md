@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarUpdateCurvesData.GetLayoutRule
+Gets the layout rule for this bar.

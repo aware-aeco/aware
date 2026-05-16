@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StringList.ToArray
+Copies the strings to a string array.

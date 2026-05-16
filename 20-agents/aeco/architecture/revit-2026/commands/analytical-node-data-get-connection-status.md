@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalNodeData.GetConnectionStatus
+Returns the Connection Status for this Analytical Node.

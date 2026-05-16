@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LayerTable.Delete
+Deletes layer.

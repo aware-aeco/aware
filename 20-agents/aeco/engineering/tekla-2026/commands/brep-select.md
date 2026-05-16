@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.Select
+Selects a brep from the model database. The brep identifier must be set.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubD.CreateQuadSphere
+Creates a SubD sphere made from quad faces.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ClipPlane.Delete
+Deletes the clip plane from the application view.             The application view must be visible.

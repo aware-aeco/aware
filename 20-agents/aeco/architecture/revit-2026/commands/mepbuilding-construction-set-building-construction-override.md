@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPBuildingConstruction.SetBuildingConstructionOverride
+Sets the Building Construction override for a ConstructionType.

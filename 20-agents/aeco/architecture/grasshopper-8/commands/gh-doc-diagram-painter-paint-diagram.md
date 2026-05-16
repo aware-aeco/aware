@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocDiagramPainter.PaintDiagram
+Paint a diagram of a document.

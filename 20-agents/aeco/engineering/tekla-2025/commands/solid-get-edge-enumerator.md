@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Solid.GetEdgeEnumerator
+Returns a new edge enumerator in the current plane.

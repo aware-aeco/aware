@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IRcpItem.MouseDown
+Respond to a mouse button down event.

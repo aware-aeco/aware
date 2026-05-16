@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateFromMesh
+Create a brep representation of a mesh

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WorksharingDisplaySettings.SetGraphicOverrides
+Sets the graphic overrides assigned to elements in a particular user workset.

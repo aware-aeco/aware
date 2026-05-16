@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewHandler.GetTemporaryViews
+Returns the temporary views.

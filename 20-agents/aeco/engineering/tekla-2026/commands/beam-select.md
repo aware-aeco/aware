@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Beam.Select
+Selects a beam from the model database. The beam identifier must be set.

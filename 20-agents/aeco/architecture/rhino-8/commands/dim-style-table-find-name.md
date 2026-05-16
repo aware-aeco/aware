@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DimStyleTable.FindName
+Finds the DimensionStyle with a given name and returns it. None is returned if no DimensionStyle is found.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FacetingUtils.ConvertTrianglesToQuads
+Replaces pairs of adjacent, coplanar triangles by quadrilaterals.

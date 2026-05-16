@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainer.SetItemHiddenStatus
+Sets the RebarContainerItem to be hidden or unhidden in the given view.

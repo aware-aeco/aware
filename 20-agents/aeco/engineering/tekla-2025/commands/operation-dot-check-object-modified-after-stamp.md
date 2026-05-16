@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotCheckObjectModifiedAfterStamp
+Check if object has been modified after modification stamp.

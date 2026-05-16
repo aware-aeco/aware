@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Part.GetAssembly
+Returns the assembly that the part belongs to.

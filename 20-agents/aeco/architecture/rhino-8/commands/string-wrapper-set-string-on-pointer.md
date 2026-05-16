@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StringWrapper.SetStringOnPointer
+Set contents of an ON_wString*

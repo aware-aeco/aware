@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UpdaterRegistry.RemoveDocumentTriggers
+Removes all triggers associated with specified document and Updater    Does not unregister updater.

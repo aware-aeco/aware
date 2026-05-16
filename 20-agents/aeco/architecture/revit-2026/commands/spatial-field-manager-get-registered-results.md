@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpatialFieldManager.GetRegisteredResults
+Returns an array of indices of all registered results

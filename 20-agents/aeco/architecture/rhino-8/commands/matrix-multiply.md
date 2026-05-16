@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Matrix.Multiply
+Multiply the specified  and .

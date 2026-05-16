@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GenericDelegateFake`1.ExportGetAttributeFilesWithPrefix
+DO NOT USE! For internal usage only!

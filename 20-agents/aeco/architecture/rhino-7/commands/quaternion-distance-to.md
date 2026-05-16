@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Quaternion.DistanceTo
+Computes the distance or norm of the difference between this and another quaternion.

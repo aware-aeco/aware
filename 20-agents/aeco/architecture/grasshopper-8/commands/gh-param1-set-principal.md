@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Param`1.SetPrincipal
+Set the principal parameter state.

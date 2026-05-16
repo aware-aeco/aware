@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.IsPeriodic
+Gets a value indicating if the surface is periodic in a direction (default is false).

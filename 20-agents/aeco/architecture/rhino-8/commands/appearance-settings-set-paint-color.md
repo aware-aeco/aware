@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AppearanceSettings.SetPaintColor
+Sets the logical paint color association to a specific .Net library color, without forced UI update.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.SetTraceImage
+Set trace image (background bitmap) for this viewport.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableView.GetCalculatedValueText
+Gets the calculated value text for a cell from the instance view.

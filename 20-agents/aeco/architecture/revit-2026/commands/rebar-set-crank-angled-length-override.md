@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.SetCrankAngledLengthOverride
+Sets the crank angled length at the indicated bar end as an override value.

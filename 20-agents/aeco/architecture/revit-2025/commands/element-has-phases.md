@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.HasPhases
+Returns true if this Element has the properties CreatedPhaseId and DemolishedPhaseId.

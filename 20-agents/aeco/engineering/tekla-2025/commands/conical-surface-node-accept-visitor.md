@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConicalSurfaceNode.AcceptVisitor
+Entry method for the visitor pattern.

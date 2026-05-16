@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IRevisionsOnSheetUIServer.ShowDialog
+Shows dialog on managing RevisionsOnSheetUI.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BaseExportOptions.SetExportFontTable
+Sets font table to option.

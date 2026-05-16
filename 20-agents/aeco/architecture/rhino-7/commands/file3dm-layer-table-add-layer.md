@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmLayerTable.AddLayer
+Easy way to add a new layer to the model.

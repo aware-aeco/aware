@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CommandAliasList.Add
+Adds a new command alias to Rhino.

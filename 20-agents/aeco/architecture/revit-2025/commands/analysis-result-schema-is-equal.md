@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisResultSchema.IsEqual
+Determines if the input object is equivalent to this AnalysisResultSchema.

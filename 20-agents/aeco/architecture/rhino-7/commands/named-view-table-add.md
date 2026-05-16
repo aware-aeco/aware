@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedViewTable.Add
+Adds named view to document which is based on an existing viewport.

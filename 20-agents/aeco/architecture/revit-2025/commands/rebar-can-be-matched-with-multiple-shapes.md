@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.CanBeMatchedWithMultipleShapes
+Checks if this Rebar can be matched with multiple Rebar Shapes.

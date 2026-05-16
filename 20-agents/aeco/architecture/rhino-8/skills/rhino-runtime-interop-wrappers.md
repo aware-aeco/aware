@@ -6,41 +6,79 @@ description: API reference for namespace Rhino.Runtime.InteropWrappers from Rhin
 # Rhino.Runtime.InteropWrappers
 
 - **ClassArrayObjRef**
+  - Represents a wrapper to an unmanaged "array" (list) of CRhinoObjRef instances.             Wrapper for a C++ ON_ClassArray of CRhinoObjRef
 - **ClassArrayOnObjRef**
+  - Represents a wrapper to an unmanaged "array" (list) of ON_ObjRef instances.             Wrapper for a C++ ON_ClassArray of ON_ObjRef
 - **ClassArrayString**
+  - Wrapper for a C++ ON_ClassArray<ON_wString>             If you are not writing C++ code then this class is not for you.
 - **CurveSegment**
+  - For internal use only.
 - **MeshPointDataStruct**
+  - This is only needed when passing values to the Rhino C++ core, ignore             for .NET plug-ins.
 - **RhDisplayPoint**
 - **SimpleArray2dex**
+  - Wrapper for ON_SimpleArray<ON_2dex>. If you are not writing C++ code             then this class is not for you.
 - **SimpleArrayArrayPoint3d**
+  - Wrapper for ON_SimpleArray<ON_PolyLine*>, ON_SimpleArray<ON_3dPointArray*>             If you are not writing C++ code then this class is not for you.
 - **SimpleArrayBinaryArchiveReader**
+  - Wrapper for ON_SimpleArray<ON_BinaryArchive>. If you are not writing C++ code             then this class is not for you.
 - **SimpleArrayBrepPointer**
+  - Wrapper for a C++ ON_SimpleArray<ON_Brep*> or ON_SimpleArray<constant ON_Brep*>             If you are not writing C++ code then this class is not for you.
 - **SimpleArrayByte**
+  - Wrapper for ON_SimpleArray<unsigned char>. If you are not writing C++ code             then this class is not for you.
 - **SimpleArrayClippingPlaneObjectPointer**
+  - ON_SimpleArray of CRhinoClippingPlaneObject*
 - **SimpleArrayCurvePointer**
+  - Wrapper for a C++ ON_SimpleArray of ON_Curve* or constant ON_Curve*.  If you are not             writing C++ code, then you can ignore this class.
 - **SimpleArrayDouble**
+  - Wrapper for ON_SimpleArray<double>. If you are not writing C++ code,             then this class is not for you.
 - **SimpleArrayExtrusionPointer**
+  - Wrapper for a C++ ON_SimpleArray<ON_Extrusion*> or ON_SimpleArray<constant ON_Extrusion*>             If you are not writing C++ code then this class is not for you.
 - **SimpleArrayFloat**
+  - Wrapper for ON_SimpleArray<float>. If you are not writing C++ code             then this class is not for you.
 - **SimpleArrayGeometryPointer**
+  - Wrapper for a C++ ON_SimpleArray<ON_Geometry*>* or ON_SimpleArray<constant ON_Geometry*>.             If you are not writing C++ code, then this class is not for you.
 - **SimpleArrayGuid**
+  - Wrapper for ON_SimpleArray<ON_UUID>. If you are not writing C++ code             then this class is not for you.
 - **SimpleArrayGuidPointer**
+  - Wrapper for ON_SimpleArray<ON_UUID>. If you are not writing C++ code             then this class is not for you.
 - **SimpleArrayHatchLinePointer**
+  - Wrapper for a C++ ON_SimpleArray of ON_HatchLine*.             If you are not writing C++ code, then you can ignore this class.
 - **SimpleArrayInt**
+  - Wrapper for ON_SimpleArray<int>. If you are not writing C++ code             then this class is not for you.
 - **SimpleArrayIntPtr**
+  - Wrapper for ON_SimpleArray<IntPtr>. If you are not writing C++ code             then this class is not for you.
 - **SimpleArrayInterval**
+  - Wrapper for ON_SimpleArray<ON_Interval>. If you are not writing C++ code             then this class is not for you.
 - **SimpleArrayLine**
+  - Wrapper for ON_SimpleArray<ON_Line>. If you are not writing C++ code             then this class is not for you.
 - **SimpleArrayLinetypePointer**
+  - Wrapper for a C++ ON_SimpleArray<ON_Linetype*>             If you are not writing C++ code then this class is not for you.
 - **SimpleArrayMeshFace**
+  - Wrapper for ON_SimpleArray<ON_MeshFace>. If you are not writing C++ code             then this class is not for you.
 - **SimpleArrayMeshPointer**
+  - Represents a wrapper to an unmanaged array of mesh pointers.             Wrapper for a C++ ON_SimpleArray of ON_Mesh* or constant ON_Mesh*. If you are not             writing C++ code then this class is not for you.
 - **SimpleArrayPlane**
+  - Wrapper for ON_SimpleArray<ON_Plane>. If you are not writing C++ code             then this class is not for you.
 - **SimpleArrayPoint2d**
+  - ON_SimpleArray<ON_2dPoint> class wrapper.  If you are not writing             C++ code then this class is not for you.
 - **SimpleArrayPoint3d**
+  - ON_SimpleArray<ON_3dPoint>, ON_3dPointArray, ON_PolyLine all have the same size             This class wraps all of these C++ versions.  If you are not writing C++ code then this             class is not for you.
 - **SimpleArraySubDPointer**
+  - Wrapper for a C++ ON_SimpleArray<ON_SubD*> or ON_SimpleArray<constant ON_SubD*>             If you are not writing C++ code then this class is not for you.
 - **SimpleArraySurfacePointer**
+  - Wrapper for a C++ ON_SimpleArray of ON_Surface* or constant ON_Surface*.  If             you are not writing C++ code then this class is not for you.
 - **SimpleArrayUint**
+  - Wrapper for ON_SimpleArray<unsigned int>. If you are not writing C++ code             then this class is not for you.
 - **StdVectorByte**
+  - Wrapper for std::vector<unsigned char>. If you are not writing C++ code             then this class is not for you.
 - **StdVectorFloat**
+  - Wrapper for ON_SimpleArray<float>. If you are not writing C++ code             then this class is not for you.
 - **StdVectorGuid**
+  - Wrapper for std::vector<ON_UUID>. If you are not writing C++ code             then this class is not for you.
 - **StdVectorOfSharedPtrToMesh**
+  - Represents a wrapper to an unmanaged array of mesh pointers.             Wrapper for a C++ ON_SimpleArray of ON_Mesh* or constant ON_Mesh*. If you are not             writing C++ code then this class is not for you.
 - **StringHolder**
+  - This class is used to pass strings back and forth between managed             and unmanaged code.  This should not be needed by plug-ins.             If you are just dealing with an ON_wString*,             use
 - **StringWrapper**
+  - Represents a wrapper to an unmanaged OpenNurbs string.             Wraps a C++ ON_wString*.

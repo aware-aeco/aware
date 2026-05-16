@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform1D.Assign
+Assigns values from the input transformation to this transformation.

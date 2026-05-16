@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Truss.GetTrussMemberInfo
+Query if a given element is a member of a truss, its lock status and its usage, etc.

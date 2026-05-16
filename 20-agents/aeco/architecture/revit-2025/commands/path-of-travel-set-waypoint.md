@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PathOfTravel.SetWaypoint
+Updates the specified waypoint.

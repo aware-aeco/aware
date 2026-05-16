@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToHatch_Secondary
+Attempts to convert other data types into an Rhino.Geometry.Hatch.   Data is not quaranteed to be duplicated.

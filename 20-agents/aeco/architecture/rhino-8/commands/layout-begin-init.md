@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Layout.BeginInit
+Begins the initialization when loading from xaml or other code generated scenarios

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-JoinGeometryUtils.IsCuttingElementInJoin
+Determines whether the first of two joined elements is cutting the second element.

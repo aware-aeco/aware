@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetSketchyLines
+Returns the current sketchy lines settings for the view.

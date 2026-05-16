@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Frame.IsOrthogonal
+Determines if this frame's basis vectors are orthogonal.

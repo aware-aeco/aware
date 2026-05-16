@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.InsertSortGroupField
+Adds a new sorting/grouping field at the specified position in the list.

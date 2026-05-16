@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_WireTopologyDiagram.AppendDiagram
+Create a wire topology diagram which describes the entire document.

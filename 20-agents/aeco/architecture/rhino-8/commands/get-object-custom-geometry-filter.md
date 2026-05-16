@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetObject.CustomGeometryFilter
+Checks geometry to see if it can be selected.             Override to provide fancy filtering.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSheet.Create
+Creates a new ViewSheet.

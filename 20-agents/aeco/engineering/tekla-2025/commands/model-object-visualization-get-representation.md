@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObjectVisualization.GetRepresentation
+Gets current permanent representation (red, blue, green and transparency) of given model object

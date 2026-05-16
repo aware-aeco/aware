@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RhinoScriptInterface.EnableSolver
+Enables the Grasshopper Solver. If the Solver is enabled,   expired components and parameter will be recomputed.

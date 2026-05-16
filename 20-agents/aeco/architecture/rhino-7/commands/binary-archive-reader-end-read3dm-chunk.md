@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BinaryArchiveReader.EndRead3dmChunk
+Calling this will skip rest of stuff in chunk if it was only partially read.

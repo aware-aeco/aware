@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolyCurve.SegmentCurve
+Gets the segment curve at the given index.

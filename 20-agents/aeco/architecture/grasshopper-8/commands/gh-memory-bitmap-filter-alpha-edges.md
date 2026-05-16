@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MemoryBitmap.Filter_AlphaEdges
+Set the alpha component on all edges to a specific value.

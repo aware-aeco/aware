@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ValueList.NextItem
+Safe method of selecting the next item.   The select next logic depends on the ListMode, in that only Cycle and Sequence support NextItem()

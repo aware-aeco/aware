@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PartMakerMethodToDivideVolumes.GetSketchCurves
+Populates the array with copies of curves in the sketch.

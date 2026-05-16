@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SelectableFilterCollection`1.Remove
+Remove the specified item from this collection.

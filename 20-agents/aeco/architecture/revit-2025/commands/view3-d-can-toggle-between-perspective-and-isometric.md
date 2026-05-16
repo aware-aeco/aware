@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View3D.CanToggleBetweenPerspectiveAndIsometric
+Checks whether this view can toggle between perspective and isometric.

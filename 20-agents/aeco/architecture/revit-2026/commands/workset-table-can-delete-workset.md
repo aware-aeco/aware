@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WorksetTable.CanDeleteWorkset
+Indicates if a workset can be deleted.

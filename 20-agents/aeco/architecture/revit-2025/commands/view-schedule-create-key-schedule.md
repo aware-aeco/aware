@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.CreateKeySchedule
+Create a key schedule.

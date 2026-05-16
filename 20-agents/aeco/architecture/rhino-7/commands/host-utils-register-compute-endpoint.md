@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostUtils.RegisterComputeEndpoint
+Register a class that can participate as a compute endpoint

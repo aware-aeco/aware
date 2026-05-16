@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetPoint.AddSnapPoint
+Adds a point to the list of osnap points.

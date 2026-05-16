@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DocumentSet.ReverseIterator
+Retrieve a backward moving iterator to the set.

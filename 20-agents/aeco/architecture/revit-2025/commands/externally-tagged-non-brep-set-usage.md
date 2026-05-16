@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternallyTaggedNonBRep.SetUsage
+Controls the usage of this ExternallyTaggedNonBRep.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFC.GetFamilyName
+Gets the name of the element assigned to the current export state.

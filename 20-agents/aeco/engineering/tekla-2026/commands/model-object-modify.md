@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObject.Modify
+Modifies the model instance in the model database.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Interval.ToString
+Format the interval using default grasshopper formatting logic.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.RenderObjectOverlay
+Render all overlay icons for a specific object.   Overlays aren't drawn when the zoom is less than 80%

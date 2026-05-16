@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalMember.Create
+Creates a new instance of an Analytical Member within the project.

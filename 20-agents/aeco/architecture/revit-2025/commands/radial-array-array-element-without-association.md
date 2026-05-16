@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RadialArray.ArrayElementWithoutAssociation
+Creates a new radial array from a single element based    on an input rotation axis.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorHSB.Distance
+Calculates the 'distance' of two HSB colors

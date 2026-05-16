@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderPrimitiveList.TryGetBox
+Call this method to get a box at the specified index.

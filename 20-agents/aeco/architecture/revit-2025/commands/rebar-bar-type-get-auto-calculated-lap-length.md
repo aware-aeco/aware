@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBarType.GetAutoCalculatedLapLength
+Identifies if the lap length is auto calculated for the specified Rebar Splice Type.

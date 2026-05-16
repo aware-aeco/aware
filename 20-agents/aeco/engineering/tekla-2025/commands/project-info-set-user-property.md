@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ProjectInfo.SetUserProperty
+Sets a string property for the ProjectInfo.

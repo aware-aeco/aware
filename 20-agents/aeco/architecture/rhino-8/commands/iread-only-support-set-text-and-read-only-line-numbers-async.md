@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IReadOnlySupport.SetTextAndReadOnlyLineNumbersAsync
+Another way to set the content and indicate which lines are read only.

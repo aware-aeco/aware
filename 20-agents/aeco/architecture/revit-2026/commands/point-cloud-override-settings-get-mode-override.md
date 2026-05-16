@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudOverrideSettings.GetModeOverride
+Lookup color settings for the given color mode.

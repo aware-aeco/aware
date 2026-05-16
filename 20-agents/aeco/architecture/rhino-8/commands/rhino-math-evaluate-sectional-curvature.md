@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoMath.EvaluateSectionalCurvature
+Expert tool to evaluate sectional curvature from surface derivatives and section plane normal.

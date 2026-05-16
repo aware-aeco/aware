@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalSurfaceBase.IsOuterContourValid
+Checks if contour is valid for this Analytical Surface.

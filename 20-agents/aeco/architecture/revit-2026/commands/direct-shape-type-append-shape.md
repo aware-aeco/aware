@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShapeType.AppendShape
+Append shape built by the supplied ShapeBuilderObject to shape representation stored in this DirectShapeType.    The data stored in the supplied ShapeBuilder object will be cleared.

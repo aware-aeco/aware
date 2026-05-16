@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.NewZone
+Creates a new Zone element.

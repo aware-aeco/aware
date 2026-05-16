@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterCollection`1.Remove
+Remove the specified item from the collection.

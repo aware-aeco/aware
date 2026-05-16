@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementRecord.IsAnElementType
+Identifies if the element record represents an ElementType.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObjectTable.AddText
+Adds an annotation text object to the document.

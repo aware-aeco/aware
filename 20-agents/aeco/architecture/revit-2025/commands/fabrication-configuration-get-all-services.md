@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetAllServices
+Returns all fabrication services in the fabrication configuration.

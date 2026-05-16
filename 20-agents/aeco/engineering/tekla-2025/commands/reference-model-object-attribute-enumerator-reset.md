@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceModelObjectAttributeEnumerator.Reset
+Resets the enumerator.

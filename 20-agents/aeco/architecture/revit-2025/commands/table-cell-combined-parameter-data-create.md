@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableCellCombinedParameterData.Create
+construct a TableCellCombinedParameterData

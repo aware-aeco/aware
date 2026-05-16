@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OptionalFunctionalityUtils.IsIFCAvailable
+Checks whether IFC functionality is available in the installed Revit.

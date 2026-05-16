@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BaseImportOptions.GetDefaultLengthUnit
+Get the default length unit used for importing unitless files.

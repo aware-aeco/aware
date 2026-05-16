@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewNavigationToolSettings.GetViewNavigationToolSettings
+Gets the instance of the settings for the given document.

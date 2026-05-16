@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceModelObjectAttributeEnumerator.MoveNext
+Moves to the next reference model object attribute.

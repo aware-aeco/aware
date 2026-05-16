@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_HtmlWriter.WriteSpanStart
+Write the start of a Span section.

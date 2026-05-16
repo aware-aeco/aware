@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLayerInfo.SetLayerModifiers
+Sets a project layer modifier array to the layer info.

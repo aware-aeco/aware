@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_UndoRecord.AddAction
+Append an undo action to this record. You should only do this prior to calling undo for the first time.

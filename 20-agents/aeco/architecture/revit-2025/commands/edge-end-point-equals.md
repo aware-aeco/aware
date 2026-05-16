@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EdgeEndPoint.Equals
+Determines whether this EdgeEndPoint is equal to another.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GripsDrawEventArgs.DrawControlPolygonLine
+Draws the lines in a control polygons.             This is an helper function.

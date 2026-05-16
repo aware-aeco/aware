@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHColour_Secondary
+Converts similar data into a GH_Colour instance.  Data is not quaranteed to be duplicated.

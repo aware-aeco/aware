@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OptionalFunctionalityUtils.IsDWGExportAvailable
+Checks whether the DWG Export functionality is available in the installed Revit.

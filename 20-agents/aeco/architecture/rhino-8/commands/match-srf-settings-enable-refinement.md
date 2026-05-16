@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MatchSrfSettings.EnableRefinement
+Enable refinement of the surface being edited

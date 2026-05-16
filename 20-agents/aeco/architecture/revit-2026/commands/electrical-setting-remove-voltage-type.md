@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalSetting.RemoveVoltageType
+Remove the voltage type from project.

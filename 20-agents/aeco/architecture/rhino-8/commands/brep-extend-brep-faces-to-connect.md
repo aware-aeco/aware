@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.ExtendBrepFacesToConnect
+Extends Faces to meet and trims the faces to each other. If input faces intersect without extending, the selection point indicates the side to keep

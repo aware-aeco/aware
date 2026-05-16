@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MemoryBitmap.A
+Gets the alpha channel value at the given pixel coordinates.

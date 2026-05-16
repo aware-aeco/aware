@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyManager.IsParameterLocked
+For Conceptual Mass and Curtain Panel families, indicate whether the specified dimension-driving parameter is locked.

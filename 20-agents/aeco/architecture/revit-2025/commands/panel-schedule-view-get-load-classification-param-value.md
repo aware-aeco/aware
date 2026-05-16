@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.GetLoadClassificationParamValue
+Gets the load classification parameter value.

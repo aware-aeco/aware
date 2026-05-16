@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TemporaryViewModes.GetCaption
+A text caption to use for the given mode.

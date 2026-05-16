@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarHandlesData.SetEndHandle
+Sets the end handle tag. This information is set to the rebar after the API execution is finished successfully.

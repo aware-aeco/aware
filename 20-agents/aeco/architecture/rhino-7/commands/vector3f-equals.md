@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Vector3f.Equals
+Determines whether the specified System.Object is a Vector3f and has the same values as the present vector.

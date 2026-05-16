@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.MakeValidForV2
+No support is available for this function.             Expert user function that converts all geometry in Brep to NURB form.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StairsRun.GetNumberSystemReference
+Gets the number system reference corresponding to the given reference options.

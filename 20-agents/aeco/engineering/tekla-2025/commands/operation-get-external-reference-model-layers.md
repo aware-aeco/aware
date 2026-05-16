@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetExternalReferenceModelLayers
+Get external reference model layers.

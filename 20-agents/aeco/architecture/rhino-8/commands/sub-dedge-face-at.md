@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDEdge.FaceAt
+Retrieve a SubDFace from this edge.

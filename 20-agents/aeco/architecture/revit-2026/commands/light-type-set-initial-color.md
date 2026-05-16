@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightType.SetInitialColor
+Replace the current initial color object with the given object

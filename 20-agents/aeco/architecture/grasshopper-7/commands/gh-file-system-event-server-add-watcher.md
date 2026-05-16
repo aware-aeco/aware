@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_FileSystemEventServer.AddWatcher
+Add a new file watcher instance.

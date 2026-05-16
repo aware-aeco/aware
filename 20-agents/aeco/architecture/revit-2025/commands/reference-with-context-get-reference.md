@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceWithContext.GetReference
+Gets the reference of the geometric object.

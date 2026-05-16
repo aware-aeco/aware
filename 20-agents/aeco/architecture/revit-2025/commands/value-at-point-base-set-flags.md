@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ValueAtPointBase.SetFlags
+Sets the flags associated to a given measurement.

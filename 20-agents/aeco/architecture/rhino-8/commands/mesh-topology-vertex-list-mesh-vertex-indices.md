@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshTopologyVertexList.MeshVertexIndices
+Gets all indices of the mesh vertices that a given topology vertex represents.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ImageExportOptions.IsValidForSaveToProjectAsImage
+Verify if ImageExportOptions object is valid for calling saveToProjectAsImage

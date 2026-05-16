@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.GetUnusedElements
+Returns the list of element ids that are not used and can be deleted from the document.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StatusBar.SetPointPane
+Sets the point pane to a point value.

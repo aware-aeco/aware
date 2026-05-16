@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MullionTypeSet.Clear
+Removes every mullion type from the set, rendering it empty.

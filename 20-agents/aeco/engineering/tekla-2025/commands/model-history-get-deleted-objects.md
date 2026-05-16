@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelHistory.GetDeletedObjects
+Gets a list of the objects that have been deleted after the modification stamp.

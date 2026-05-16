@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceDefinitionTable.UpdateLinkedInstanceDefinition
+Read the objects from a file and use them as the instance's definition geometry.

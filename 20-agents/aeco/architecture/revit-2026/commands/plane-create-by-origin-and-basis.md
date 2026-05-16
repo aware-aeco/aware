@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Plane.CreateByOriginAndBasis
+Creates a Plane object defined by the two orthogonal unit vectors and passing through the origin point supplied as arguments.

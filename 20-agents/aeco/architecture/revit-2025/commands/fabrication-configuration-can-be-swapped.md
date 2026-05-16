@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.CanBeSwapped
+Checks if the fabrication configuration can be swapped.

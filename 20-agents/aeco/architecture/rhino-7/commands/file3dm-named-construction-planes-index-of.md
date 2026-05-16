@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmNamedConstructionPlanes.IndexOf
+Returns the index of a named construction plane.

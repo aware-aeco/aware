@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.IsDataOutOfDate
+Indicates whether the data in this section is out of date.

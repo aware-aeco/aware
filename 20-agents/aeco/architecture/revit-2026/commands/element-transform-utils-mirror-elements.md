@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementTransformUtils.MirrorElements
+Mirrors a set of elements about a given plane.

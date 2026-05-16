@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalResourceLoadData.GetLoadRequestId
+Returns the load operation GUID.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveArray.ReverseIterator
+Retrieve a backward moving iterator to the array.

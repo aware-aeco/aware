@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometrySectionEnumerator.Reset
+Resets the enumerator to the beginning.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.Close
+Closes the document, save the changes if there are.

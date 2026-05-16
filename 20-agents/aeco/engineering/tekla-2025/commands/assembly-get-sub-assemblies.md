@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Assembly.GetSubAssemblies
+Selects and returns a list of subassemblies belonging to the assembly.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectAttributes.RemoveHideInDetailOverride
+Remove hidden in detail flag for a specific detail

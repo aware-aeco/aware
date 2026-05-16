@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportFontTable.GetKeys
+Returns a collection of the keys stored in this table.

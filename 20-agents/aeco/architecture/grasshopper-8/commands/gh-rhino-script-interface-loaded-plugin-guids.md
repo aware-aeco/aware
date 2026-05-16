@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RhinoScriptInterface.LoadedPluginGuids
+Gets an array of the IDs of all loaded plugins.

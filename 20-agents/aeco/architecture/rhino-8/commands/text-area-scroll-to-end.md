@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextArea.ScrollToEnd
+Scrolls to the end of the text aligned on the same horizontal side as .

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToRectangle3d_Primary
+Performs a direct cast from Rectangle3d or GH_Rectangle.   Data is not quaranteed to be duplicated.

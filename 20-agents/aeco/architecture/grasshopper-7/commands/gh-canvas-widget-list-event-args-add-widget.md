@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CanvasWidgetListEventArgs.AddWidget
+Append a widget to the canvas.

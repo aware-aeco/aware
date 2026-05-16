@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataTree`1.MergeWithParameter
+Utility function for assigning Script Data Trees to output parameters.  Expert user function, don't worry your pretty little head about this one.

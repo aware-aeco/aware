@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ShortcutKeySettings.SetMacro
+Set macro associated with a keyboard shortcut

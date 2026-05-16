@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Solid.GetFaceEnumerator
+Returns a new face enumerator in the current plane.

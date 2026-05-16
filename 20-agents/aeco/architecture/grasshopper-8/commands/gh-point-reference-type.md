@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Point.ReferenceType
+Retrieve the reference type of this point object.

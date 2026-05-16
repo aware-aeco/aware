@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentIO.Copy
+Copy the internal document into the clipboard.

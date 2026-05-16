@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UV.IsUnitLength
+The boolean value indicates whether this 2-D vector is of unit length.

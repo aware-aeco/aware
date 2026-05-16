@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MenuShortcut.ApplyToMenu
+Apply this shortcut to an actual menu item.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BaseArray.GetCopiedMemberIds
+Retrieves the copied member Ids of the Array.

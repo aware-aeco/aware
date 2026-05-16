@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.SetSegmentHeight
+Sets the segment height.

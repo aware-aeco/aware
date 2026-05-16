@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-JoinGeometryUtils.UnjoinGeometry
+Removes a join between two elements.

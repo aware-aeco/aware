@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextFields.ObjectPageName
+Returns the layout page name the object resides on

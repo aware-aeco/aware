@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.ComputeNormalizedParameter
+Computes the normalized curve parameter from the raw parameter.

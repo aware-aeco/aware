@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointOnEdgeFaceIntersection.GetEdgeReference
+Get a copy of the edge or curve reference.

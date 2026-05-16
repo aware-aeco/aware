@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GripObject.GetSurfaceCVIndices
+Retrieves the NURBS surface control point indices of this GripObject from the surface it is associated with.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.SetSortGroupFields
+Replaces all sorting/grouping fields in this ScheduleDefinition.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SegmentedButton.ClearSelection
+Clears all selected items.

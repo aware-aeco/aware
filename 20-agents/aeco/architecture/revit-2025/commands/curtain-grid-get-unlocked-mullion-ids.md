@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurtainGrid.GetUnlockedMullionIds
+Gets all ElementIds of the unlocked mullions of the curtain grid.

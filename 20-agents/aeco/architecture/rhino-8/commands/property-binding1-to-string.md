@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PropertyBinding`1.ToString
+Returns a  that represents the current .

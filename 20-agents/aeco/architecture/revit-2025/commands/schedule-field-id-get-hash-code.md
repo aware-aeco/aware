@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleFieldId.GetHashCode
+Gets the integer value of the id as hash code

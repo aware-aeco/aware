@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureMessageAccessor.GetAdditionalElementIds
+Retrieves Ids of Elements that have not caused the failure but are related to it    Checks if the failure has resolution of a given resolution type.

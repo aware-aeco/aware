@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SlabShapeEditor.PickSupport
+Picks an element to support the slab.  This method will define split lines and create constant bearing lines for the slab.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CustomFieldData.GetCustomFieldProperties
+Gets an instance of  which represents the properties of this field.

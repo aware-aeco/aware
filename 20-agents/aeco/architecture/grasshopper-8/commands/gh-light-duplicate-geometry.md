@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Light.DuplicateGeometry
+Create a duplicate of this light.

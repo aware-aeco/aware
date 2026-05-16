@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UV.Negate
+Negates this 2-D vector.

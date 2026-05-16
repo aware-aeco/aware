@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderTexture.NewBitmapTexture
+Constructs a new basic texture from a SimulatedTexture.

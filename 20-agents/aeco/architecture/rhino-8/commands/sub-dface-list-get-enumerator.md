@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDFaceList.GetEnumerator
+Implementation of IEnumerable

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderPipeline.PauseRendering
+Implement to pause the current render session

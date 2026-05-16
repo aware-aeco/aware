@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportEnumerateObjects
+DO NOT USE! For internal usage only!

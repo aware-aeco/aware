@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Circle2.Circle3Pt
+Fit a circle through three 2d points.

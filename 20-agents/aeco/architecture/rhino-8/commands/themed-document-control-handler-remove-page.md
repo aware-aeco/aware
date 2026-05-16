@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedDocumentControlHandler.RemovePage
+Removes a page.

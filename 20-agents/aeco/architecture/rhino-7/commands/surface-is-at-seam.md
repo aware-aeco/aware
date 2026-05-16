@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.IsAtSeam
+Tests if a surface parameter value is at a seam.

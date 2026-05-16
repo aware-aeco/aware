@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Layer.ParentLayer
+Returns parent of a layer.

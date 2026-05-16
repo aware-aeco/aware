@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StringHolder.ToStringSafe
+Marshals unmanaged ON_wString to a managed .NET string and never returns null.

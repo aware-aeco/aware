@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_TypeHintServer.FindHintByID
+Search the entire assembly for a type hint that matches the ID.

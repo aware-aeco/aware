@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayBinaryArchiveReader.Get
+Get the Guid at index

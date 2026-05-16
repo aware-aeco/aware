@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetMEPIFCExport
+Get MEP IFC export component name

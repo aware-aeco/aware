@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ExpressionSyntaxWriter.RewriteAll
+Apply all syntax rulesets to the expression.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyAnalysisSurface.GetConstruction
+Gets the analytic construction this surface is associated with.

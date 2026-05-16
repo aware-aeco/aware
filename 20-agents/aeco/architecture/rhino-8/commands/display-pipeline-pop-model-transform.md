@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.PopModelTransform
+Pop a model transformation off the engine's model transform stack.

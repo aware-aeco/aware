@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyManager.GetParameters
+Gets the parameters associated to family types in order.

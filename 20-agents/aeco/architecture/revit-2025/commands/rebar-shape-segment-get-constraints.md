@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeSegment.GetConstraints
+Retrieve the list of constraints associated with this segment.

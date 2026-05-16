@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BeamSystem.GetBeamIds
+Gets all the beams of the BeamSystem.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPAnalyticalConnection.GetFlow
+Gets the flow value of this analytical connection.

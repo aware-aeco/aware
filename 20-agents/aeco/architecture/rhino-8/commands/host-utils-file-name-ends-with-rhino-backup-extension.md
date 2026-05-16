@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostUtils.FileNameEndsWithRhinoBackupExtension
+Strip file extension from file name and check to see if it is a valid             Rhino backup file extension.

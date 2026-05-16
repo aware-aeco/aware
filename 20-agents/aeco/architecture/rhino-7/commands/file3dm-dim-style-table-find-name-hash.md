@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmDimStyleTable.FindNameHash
+Finds a DimensionStyle given its name hash.

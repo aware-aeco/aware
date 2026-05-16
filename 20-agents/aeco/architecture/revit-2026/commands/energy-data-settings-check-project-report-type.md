@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyDataSettings.CheckProjectReportType
+Checks that the project report type falls within an appropriate range.

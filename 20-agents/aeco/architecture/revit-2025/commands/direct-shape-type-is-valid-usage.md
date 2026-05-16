@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShapeType.IsValidUsage
+Validates that the ExternallyTaggedGeometryObject's usage is set to an allowed value for a DirectShapeType.

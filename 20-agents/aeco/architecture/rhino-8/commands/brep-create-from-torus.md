@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateFromTorus
+Constructs a Brep definition of a torus.

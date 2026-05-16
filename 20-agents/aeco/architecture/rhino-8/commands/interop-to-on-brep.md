@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interop.ToOnBrep
+Constructs a Rhino_DotNet OnBrep that is a copy of a given brep.

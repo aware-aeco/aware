@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SelectionChangedEventArgs.GetSelectedElements
+Returns ElementIds of selected elements.

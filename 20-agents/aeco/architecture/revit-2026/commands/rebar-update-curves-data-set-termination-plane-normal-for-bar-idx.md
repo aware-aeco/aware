@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarUpdateCurvesData.SetTerminationPlaneNormalForBarIdx
+Sets the plane's normal in which the termination (e.g. hook, crank) at end of bar with index barPositionIndex will stay. This information is set to the rebar after the API execution is finished successfully.

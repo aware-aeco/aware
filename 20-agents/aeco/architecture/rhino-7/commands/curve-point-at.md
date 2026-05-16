@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.PointAt
+Evaluates point at a curve parameter.

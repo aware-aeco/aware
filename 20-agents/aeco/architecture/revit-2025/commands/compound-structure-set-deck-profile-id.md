@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.SetDeckProfileId
+Sets the profile loop to use for the specified structural deck.

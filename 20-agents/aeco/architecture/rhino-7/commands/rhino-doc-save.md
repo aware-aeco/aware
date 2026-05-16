@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoDoc.Save
+Save doc to disk using the document's Path

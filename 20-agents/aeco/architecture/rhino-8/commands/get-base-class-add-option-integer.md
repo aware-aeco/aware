@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetBaseClass.AddOptionInteger
+Adds a command line option to get integers and automatically save the value.

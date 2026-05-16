@@ -6,3 +6,4 @@ description: API reference for namespace Rhino.DocObjects.SnapShots from RhinoCo
 # Rhino.DocObjects.SnapShots
 
 - **SnapShotsClient**
+  - This is the abstract interface class for all Snapshot clients.

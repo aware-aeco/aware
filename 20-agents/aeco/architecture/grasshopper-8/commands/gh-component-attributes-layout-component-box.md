@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentAttributes.LayoutComponentBox
+Utility layout method for GH_Component style UI.

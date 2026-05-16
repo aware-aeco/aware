@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepFaceList.RemoveAt
+Deletes a face at a specified index.

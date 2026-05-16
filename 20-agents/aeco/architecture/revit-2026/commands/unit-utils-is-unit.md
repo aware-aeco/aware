@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UnitUtils.IsUnit
+Checks whether a ForgeTypeId identifies a unit.

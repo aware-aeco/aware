@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextFields.TryFormat
+Formats the contents of a text string with field expressions             and returns the result

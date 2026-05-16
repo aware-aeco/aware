@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.Open
+Open the specified file or url with its associated application.

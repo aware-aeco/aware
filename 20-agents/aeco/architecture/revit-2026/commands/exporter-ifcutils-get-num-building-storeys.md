@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.GetNumBuildingStoreys
+Returns the number of non-empty, non-duplicate building stories in the file.

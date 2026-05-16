@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipelineAttributes.GetSurfaceIsoColorUsage
+Helper function for getting SurfaceIsoColorsUsed and SurfaceSingleIsoColor

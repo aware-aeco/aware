@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.DivideEquidistant
+Calculates 3d points on a curve where the linear distance between the points is equal.

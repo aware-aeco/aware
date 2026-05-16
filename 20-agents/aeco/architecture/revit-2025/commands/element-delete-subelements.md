@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.DeleteSubelements
+Removes the subelements from the element.

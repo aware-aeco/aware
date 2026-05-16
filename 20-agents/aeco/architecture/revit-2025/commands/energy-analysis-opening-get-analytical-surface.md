@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyAnalysisOpening.GetAnalyticalSurface
+Gets the associative analytical parent surface element.

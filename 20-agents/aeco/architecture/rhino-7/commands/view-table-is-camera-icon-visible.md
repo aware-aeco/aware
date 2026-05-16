@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewTable.IsCameraIconVisible
+Determine if a camera icon is being shown

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportCreateRebarGroup
+DO NOT USE! For internal usage only!

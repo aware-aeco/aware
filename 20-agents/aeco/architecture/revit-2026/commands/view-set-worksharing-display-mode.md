@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.SetWorksharingDisplayMode
+Sets the worksharing display mode for this view.

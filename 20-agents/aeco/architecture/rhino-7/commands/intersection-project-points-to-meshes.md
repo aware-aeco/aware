@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.ProjectPointsToMeshes
+Projects points onto meshes.

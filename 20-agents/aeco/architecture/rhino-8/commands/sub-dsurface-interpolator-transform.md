@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDSurfaceInterpolator.Transform
+Apply an arbitrary transformation to the target interpolation points.

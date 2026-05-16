@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PourObject.GetFatherPourUnit
+Returns the pour unit that the pour object belongs to.

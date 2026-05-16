@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.CanRemoveRow
+Verifies that if the row at the given index can be removed..

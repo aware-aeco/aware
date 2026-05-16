@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ITransactionFinalizer.OnCommitted
+This method is called at the end of committing a transaction

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetBaseClass.AddOptionDouble
+Adds a command line option to get numbers and automatically save the value.

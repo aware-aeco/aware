@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.RenderHighlightBox
+Render a typical blueish highlight rectangle

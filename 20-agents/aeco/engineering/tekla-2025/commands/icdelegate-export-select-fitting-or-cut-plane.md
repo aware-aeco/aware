@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportSelectFittingOrCutPlane
+DO NOT USE! For internal usage only!

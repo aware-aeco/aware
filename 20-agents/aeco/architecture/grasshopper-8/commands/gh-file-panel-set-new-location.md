@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_FilePanel.SetNewLocation
+Set a new location with animated properties.

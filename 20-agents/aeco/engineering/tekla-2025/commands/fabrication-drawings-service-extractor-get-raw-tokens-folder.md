@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationDrawingsServiceExtractor.GetRawTokensFolder
+Get the folder where the assembly objects report properties are stored.

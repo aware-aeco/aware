@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.InvokeAsync
+Invokes the specified action on the UI thread asynchronously with a Task.

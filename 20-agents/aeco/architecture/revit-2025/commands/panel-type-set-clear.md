@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelTypeSet.Clear
+Removes every panel type from the set, rendering it empty.

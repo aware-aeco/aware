@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleField.GetSpecTypeId
+The spec describing values of this field, if applicable.

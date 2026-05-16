@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Profile.ParseProfileString
+Parses profile string

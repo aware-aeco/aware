@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GraphicsPathExtensions.LineTo
+Adds a line from the current position to the specified location

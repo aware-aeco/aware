@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveElement.HasTangentLocks
+Tests whether this curve element has any locked tangent joins at the given end-point.

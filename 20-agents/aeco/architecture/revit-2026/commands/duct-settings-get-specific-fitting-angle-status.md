@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DuctSettings.GetSpecificFittingAngleStatus
+Gets the status of given specific angle.

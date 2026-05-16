@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalMember.SetCurve
+Sets the curve for the Analytical Member.

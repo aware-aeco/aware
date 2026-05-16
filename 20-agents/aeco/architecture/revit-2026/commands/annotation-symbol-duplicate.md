@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnnotationSymbol.duplicate
+Duplicate this annotation symbol.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PhaseFilter.Create
+Creates a new phase filter with default status presentation.

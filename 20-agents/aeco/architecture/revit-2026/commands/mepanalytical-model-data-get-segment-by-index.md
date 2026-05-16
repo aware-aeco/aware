@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPAnalyticalModelData.GetSegmentByIndex
+Gets the analytical segment at the specified position.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PixelLayout.SetLocation
+Sets the location of the specified control

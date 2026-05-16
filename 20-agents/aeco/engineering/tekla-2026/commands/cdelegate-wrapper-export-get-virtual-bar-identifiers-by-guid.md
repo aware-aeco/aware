@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetVirtualBarIdentifiersByGuid
+DO NOT USE! For internal usage only!

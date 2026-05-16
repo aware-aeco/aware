@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlugIn.DisplayHelp
+Called by Rhino if AddToHelpMenu is true and menu item associated with this plug-in is selected.

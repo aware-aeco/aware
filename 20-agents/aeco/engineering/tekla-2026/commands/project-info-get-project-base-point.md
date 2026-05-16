@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ProjectInfo.GetProjectBasePoint
+Gets the project base point, if any set.

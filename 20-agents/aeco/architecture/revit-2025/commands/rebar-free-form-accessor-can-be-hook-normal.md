@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarFreeFormAccessor.CanBeHookNormal
+A vector can be hook normal if for a bar specified by index, the bar direction is not parallel with the vector.

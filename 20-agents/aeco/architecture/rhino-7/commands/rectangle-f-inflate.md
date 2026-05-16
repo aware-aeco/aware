@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RectangleF.Inflate
+Inflates all dimensions of this rectangle by the specified

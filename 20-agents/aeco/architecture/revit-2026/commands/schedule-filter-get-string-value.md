@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleFilter.GetStringValue
+Gets the filter value for a filter using a string value.

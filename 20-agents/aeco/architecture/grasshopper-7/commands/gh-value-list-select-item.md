@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ValueList.SelectItem
+Safe method to select a single item.

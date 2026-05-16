@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GooProxy`1.MutateString
+Munge a string to remove obvious errors on account of the user.

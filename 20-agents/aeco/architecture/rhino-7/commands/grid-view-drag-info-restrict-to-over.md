@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GridViewDragInfo.RestrictToOver
+Helper to restrict to drop on top an existing item without allowing any insertion.

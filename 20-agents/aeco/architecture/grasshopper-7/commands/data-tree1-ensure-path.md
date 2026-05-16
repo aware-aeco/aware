@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataTree`1.EnsurePath
+Create a new branch with the specified path if it doesn't already exists.

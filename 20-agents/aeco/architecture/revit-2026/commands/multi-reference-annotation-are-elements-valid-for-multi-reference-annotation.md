@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultiReferenceAnnotation.AreElementsValidForMultiReferenceAnnotation
+The method validates if the input elements match the element category id for the MultiReferenceAnnotationType.

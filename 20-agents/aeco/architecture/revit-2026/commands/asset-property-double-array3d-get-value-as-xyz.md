@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssetPropertyDoubleArray3d.GetValueAsXYZ
+Get the value property as a vector or point XYZ.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IPointCloudAccess.CreatePointSetIterator
+Implement this method to return an iterator for iterating over blocks of this point cloud.

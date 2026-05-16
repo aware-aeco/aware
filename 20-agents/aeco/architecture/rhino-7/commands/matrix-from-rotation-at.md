@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Matrix.FromRotationAt
+Creates a new rotation matrix around a center point with the specified

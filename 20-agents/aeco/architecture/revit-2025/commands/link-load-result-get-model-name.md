@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinkLoadResult.GetModelName
+Gets the name of the model.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralSection.GetBoundarySize
+Returns size of the section boundary.

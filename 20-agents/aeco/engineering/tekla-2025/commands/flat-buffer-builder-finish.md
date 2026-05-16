@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FlatBufferBuilder.Finish
+Finalize a buffer, pointing to the given `root_table`.

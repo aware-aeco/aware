@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshNgonList.NgonIndexFromFaceIndex
+Returns the index of a mesh ngon the face belongs to.

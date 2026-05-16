@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewportInfo.GetCameraFrame
+Gets location and vectors of this camera.

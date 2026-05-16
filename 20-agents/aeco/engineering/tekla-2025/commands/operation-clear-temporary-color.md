@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.ClearTemporaryColor
+Clears temporary color from model objects and keeps the transparency as before.

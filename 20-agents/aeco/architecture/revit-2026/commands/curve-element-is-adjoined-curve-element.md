@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveElement.IsAdjoinedCurveElement
+This method tests whether this and the given curve elements are joined at the given end.

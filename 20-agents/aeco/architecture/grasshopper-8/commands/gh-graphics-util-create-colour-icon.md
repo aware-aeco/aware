@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.CreateColourIcon
+Create a colour swatch icon.

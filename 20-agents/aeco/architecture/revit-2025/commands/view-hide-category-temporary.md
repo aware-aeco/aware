@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.HideCategoryTemporary
+Set one category to be temporarily hidden in the view.

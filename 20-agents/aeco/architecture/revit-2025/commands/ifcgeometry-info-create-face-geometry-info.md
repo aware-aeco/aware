@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCGeometryInfo.CreateFaceGeometryInfo
+Creates a new container object which holds IfcFace handles processed from a Revit geometry object.

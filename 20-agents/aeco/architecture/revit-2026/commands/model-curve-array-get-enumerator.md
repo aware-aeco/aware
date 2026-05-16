@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelCurveArray.GetEnumerator
+Retrieve a forward moving iterator to the array.

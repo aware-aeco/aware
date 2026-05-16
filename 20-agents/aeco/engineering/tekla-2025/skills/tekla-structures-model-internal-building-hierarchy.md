@@ -6,6 +6,10 @@ description: API reference for namespace Tekla.Structures.ModelInternal.Building
 # Tekla.Structures.ModelInternal.BuildingHierarchy
 
 - **Building**
+  - Class for Building Hierarchy Building
 - **BuildingHierarchyItem**
+  - Base class for all Building Hierarchy object types.
 - **Site**
+  - Class for Building Hierarchy Site
 - **Storey**
+  - Class for Building Hierarchy Storey

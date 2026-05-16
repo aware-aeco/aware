@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_StateTagList.Layout
+Layout the StateTags.

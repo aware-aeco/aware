@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentObject.Menu_AppendItem
+Utility function for appending generic menu items.

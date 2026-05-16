@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Notification.ShowModal
+Tells Rhino to display the notification modally.

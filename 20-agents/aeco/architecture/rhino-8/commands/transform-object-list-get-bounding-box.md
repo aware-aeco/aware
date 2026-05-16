@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TransformObjectList.GetBoundingBox
+Gets the bounding box of all of the objects that this list contains.

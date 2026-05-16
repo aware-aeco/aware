@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainerParameterManager.AddOverride
+Adds an override for the given parameter as its value will be displayed for the Rebar Container element.

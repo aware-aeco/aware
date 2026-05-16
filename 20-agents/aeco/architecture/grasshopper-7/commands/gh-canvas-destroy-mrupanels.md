@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Canvas.DestroyMRUPanels
+Destroy any MRU panels that might be in existence.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dm.DumpToTextLog
+Prepares a text dump of the entire model.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LabelUtils.GetLabelForUnit
+Gets the user-visible name for a unit.

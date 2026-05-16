@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_IndexRuleSet.AddDigitPatternRule
+Append a rule for filtering digit patterns. This pattern does not have an upper bound.

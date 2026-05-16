@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Cell3Facet.CleanUp
+Remove coincident points (within tolerance).

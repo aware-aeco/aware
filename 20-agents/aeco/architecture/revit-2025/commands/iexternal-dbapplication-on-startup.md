@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExternalDBApplication.OnStartup
+Implement this method to execute some tasks when Autodesk Revit starts.

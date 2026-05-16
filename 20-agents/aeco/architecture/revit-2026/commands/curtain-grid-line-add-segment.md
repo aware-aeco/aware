@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurtainGridLine.AddSegment
+Add a segment based on the specified segment curve of the gridline.

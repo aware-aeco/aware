@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolymeshFacet.GetVertices
+Returns the three vertices that define this facet

@@ -6,3 +6,4 @@ description: API reference for namespace Grasshopper.Kernel.GDL from Grasshopper
 # Grasshopper.Kernel.GDL
 
 - **GH_GDLParser**
+  - Provided functionality for parsing and writing Grasshopper Descriptor Language text.

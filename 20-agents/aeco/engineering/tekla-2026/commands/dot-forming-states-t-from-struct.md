@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-dotFormingStates_t.FromStruct
+dotFormingStates_t to FormingStates.

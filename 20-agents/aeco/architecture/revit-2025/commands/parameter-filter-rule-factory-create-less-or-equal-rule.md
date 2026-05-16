@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterFilterRuleFactory.CreateLessOrEqualRule
+Creates a filter rule that determines whether ElementId values    from the document are less than or equal to a certain value.

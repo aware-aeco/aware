@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoCore.InvokeInHostContext
+Invokes action in Host context

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RoutingConditions.GetConditionAt
+Gets the routing condition at the specified index position.

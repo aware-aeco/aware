@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoltXYList.GetBoltDistX
+Returns the X distance defined by the argument.

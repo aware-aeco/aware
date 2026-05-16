@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.GetChangeTypeAny
+Returns ChangeType associated with any change in an element.

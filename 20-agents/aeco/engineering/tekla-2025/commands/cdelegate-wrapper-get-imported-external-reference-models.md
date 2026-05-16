@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.GetImportedExternalReferenceModels
+DO NOT USE! For internal usage only!

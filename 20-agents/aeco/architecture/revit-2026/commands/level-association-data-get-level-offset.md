@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LevelAssociationData.GetLevelOffset
+Returns the offset from the Associated Level.

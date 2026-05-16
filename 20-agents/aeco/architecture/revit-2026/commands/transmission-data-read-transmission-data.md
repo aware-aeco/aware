@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TransmissionData.ReadTransmissionData
+Reads the TransmissionData associated with the    file at the given location.

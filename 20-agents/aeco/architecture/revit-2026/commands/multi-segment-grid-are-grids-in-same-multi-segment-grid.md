@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultiSegmentGrid.AreGridsInSameMultiSegmentGrid
+Determine whether two Grids are members of the same GridChain.

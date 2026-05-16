@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.CreateExpressionParser
+Create a new Expression Solver preloaded with the constants defined in this document.

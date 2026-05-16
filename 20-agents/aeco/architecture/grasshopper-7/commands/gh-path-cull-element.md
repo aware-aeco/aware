@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Path.CullElement
+Removes the last index value from the path.   If the path is already empty, nothing will happen.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBendingDetailType.CreateRealistic
+Creates a new RebarBendingDetailType object for full representations.

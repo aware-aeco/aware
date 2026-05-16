@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PreviewUtil.Redraw
+Forces a redraw the the viewports.

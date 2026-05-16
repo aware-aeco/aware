@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HVACLoadBuildingType.Create
+Creates a building type element.

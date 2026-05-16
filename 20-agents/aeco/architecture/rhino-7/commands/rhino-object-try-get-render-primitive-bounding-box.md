@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.TryGetRenderPrimitiveBoundingBox
+Get the bounding box for the custom render meshes associated with this             object.

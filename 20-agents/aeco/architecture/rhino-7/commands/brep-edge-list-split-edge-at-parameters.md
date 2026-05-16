@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepEdgeList.SplitEdgeAtParameters
+Splits an edge at the specified parameters.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IPropertySetDialogFeature.OpenDialog
+Open or focus Property Set Dialog.

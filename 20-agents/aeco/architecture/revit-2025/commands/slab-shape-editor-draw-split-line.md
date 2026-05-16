@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SlabShapeEditor.DrawSplitLine
+Draws a split line on the corresponding slab, roof or floor.

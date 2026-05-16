@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CustomPart.Delete
+Deletes the custom part instance with the given identifier from the model database.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToLeader_Primary
+Performs a direct cast from Rhino.Geometry.Leader or GH_Leader.   Data is not guaranteed to be duplicated.

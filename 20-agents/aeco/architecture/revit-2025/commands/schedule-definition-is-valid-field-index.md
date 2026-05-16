@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.IsValidFieldIndex
+Checks whether an integer is a valid zero-based field index in this ScheduleDefinition.

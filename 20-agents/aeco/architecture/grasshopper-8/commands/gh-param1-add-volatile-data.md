@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Param`1.AddVolatileData
+Inserts an item of volatile data into the data structure.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultiSegmentGrid.IsValidSketchPlaneId
+Identifies whether provided element id corresponds to a SketchPlane that is valid for GridChain creation.

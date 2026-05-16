@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalServiceRegistry.GetService
+Returns an instance of an object that represents the external service with the given Id.

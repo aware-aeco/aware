@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Task.RemoveObjectsFromTask
+Removes objects from the task.

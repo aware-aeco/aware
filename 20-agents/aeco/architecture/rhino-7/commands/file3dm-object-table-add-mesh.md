@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObjectTable.AddMesh
+Adds a mesh object to Rhino.

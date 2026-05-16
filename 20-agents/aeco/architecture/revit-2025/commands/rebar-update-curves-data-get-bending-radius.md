@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarUpdateCurvesData.GetBendingRadius
+Gets the current bending radius of the rebar.

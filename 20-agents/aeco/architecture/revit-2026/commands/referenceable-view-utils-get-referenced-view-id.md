@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceableViewUtils.GetReferencedViewId
+Gets the id of the view referenced by a reference view (such as a reference section or reference callout).

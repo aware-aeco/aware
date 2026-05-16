@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.AddRectangle
+Adds a rectangle to the object table.

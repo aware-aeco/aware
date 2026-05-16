@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilteredWorksetCollector.FirstWorkset
+Returns the first workset to pass the filter(s).

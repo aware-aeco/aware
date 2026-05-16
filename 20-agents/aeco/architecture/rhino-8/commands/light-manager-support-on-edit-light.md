@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightManagerSupport.OnEditLight
+The default implementation of OnEditLight selects the lights and opens              the Lights Properties page

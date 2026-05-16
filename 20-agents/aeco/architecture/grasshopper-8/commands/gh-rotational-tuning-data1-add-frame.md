@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RotationalTuningData`1.AddFrame
+Grow the tuning track by one point and compute the angle.

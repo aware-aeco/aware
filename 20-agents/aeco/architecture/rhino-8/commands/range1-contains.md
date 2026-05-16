@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Range`1.Contains
+Determines if the specified  is between or equal to the  and  of this range.

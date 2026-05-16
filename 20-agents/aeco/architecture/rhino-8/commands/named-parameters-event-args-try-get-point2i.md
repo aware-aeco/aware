@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedParametersEventArgs.TryGetPoint2i
+Try to get a Point value for a given key name

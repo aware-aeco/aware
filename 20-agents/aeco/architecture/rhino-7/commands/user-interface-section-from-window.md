@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UserInterfaceSection.FromWindow
+Find the UserInterfaceSection that created the specified instance of a             window.

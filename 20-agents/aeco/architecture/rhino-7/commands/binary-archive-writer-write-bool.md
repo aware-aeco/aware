@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BinaryArchiveWriter.WriteBool
+Writes a  value to the archive.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableTraySizeIterator.GetCurrent
+Returns the current MEPSize.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GDI_Util.BoxUnion
+Create the outline of a set of boxes.

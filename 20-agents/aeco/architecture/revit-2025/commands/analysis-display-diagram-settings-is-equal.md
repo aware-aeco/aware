@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayDiagramSettings.IsEqual
+Compares two diagram settings objects.

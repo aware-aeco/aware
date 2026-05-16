@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationDrawingsServiceExtractor.CleanUpForZip
+Delete any intermediate and configuration files that are not meant to be in the result zip of the root folder.

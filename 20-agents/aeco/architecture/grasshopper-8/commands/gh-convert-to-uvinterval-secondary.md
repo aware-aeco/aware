@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToUVInterval_Secondary
+Attempts to convert other data types into a UVInterval.   Data is not quaranteed to be duplicated.

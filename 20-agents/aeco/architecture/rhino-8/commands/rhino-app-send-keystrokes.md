@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoApp.SendKeystrokes
+Sends a string of printable characters, including spaces, to Rhino's command line.

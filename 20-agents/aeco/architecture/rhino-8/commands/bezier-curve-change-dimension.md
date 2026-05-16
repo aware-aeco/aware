@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BezierCurve.ChangeDimension
+Change dimension of bezier.

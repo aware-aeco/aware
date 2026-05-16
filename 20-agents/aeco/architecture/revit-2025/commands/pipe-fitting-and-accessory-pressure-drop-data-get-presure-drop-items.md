@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PipeFittingAndAccessoryPressureDropData.GetPresureDropItems
+Returns the pressure drop items

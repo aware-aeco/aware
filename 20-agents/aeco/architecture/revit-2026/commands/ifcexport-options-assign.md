@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCExportOptions.Assign
+Assigns the values of the IFCExportOptions to this options object.

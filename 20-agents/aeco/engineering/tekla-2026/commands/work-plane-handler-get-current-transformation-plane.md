@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WorkPlaneHandler.GetCurrentTransformationPlane
+Gets the current transformation plane.

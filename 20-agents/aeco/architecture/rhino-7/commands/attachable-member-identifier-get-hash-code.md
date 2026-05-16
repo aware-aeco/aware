@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AttachableMemberIdentifier.GetHashCode
+Serves as a hash function for a  object.

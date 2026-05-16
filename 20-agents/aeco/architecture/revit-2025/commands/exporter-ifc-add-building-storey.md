@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFC.AddBuildingStorey
+Adds building storey to the exporter's internal cache.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Graph.Draw_PreRenderGraph
+Override this function if you want to draw something behind of or instead of the default Graph curve

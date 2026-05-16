@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FreeFormElement.CanOffsetFace
+Determines if the input face of the FreeFormElement can be offset.

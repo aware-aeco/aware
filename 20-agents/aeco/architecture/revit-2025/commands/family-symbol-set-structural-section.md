@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilySymbol.SetStructuralSection
+Sets the structural section in element.

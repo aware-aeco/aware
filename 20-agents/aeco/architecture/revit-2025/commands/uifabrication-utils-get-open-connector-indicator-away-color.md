@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIFabricationUtils.GetOpenConnectorIndicatorAwayColor
+Gets the color of the open connector indicator in away direction.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-XYZ.CrossProduct
+The cross product of this vector and the specified vector.

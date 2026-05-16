@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FlatBufferBuilder.CreateString
+Encode the string `s` in the buffer using UTF-8.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDefinitionBySegments.AddListeningDimensionSegmentToSegment
+Specify a dimension perpendicular to two fixed-direction segments, measured by a read-only parameter.

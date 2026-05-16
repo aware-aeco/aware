@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Chunk.Read
+Read this chunk and all child chunks from a binary stream.

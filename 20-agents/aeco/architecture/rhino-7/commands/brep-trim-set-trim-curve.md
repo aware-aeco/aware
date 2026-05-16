@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepTrim.SetTrimCurve
+Set 2d curve geometry used by a b-rep trim.

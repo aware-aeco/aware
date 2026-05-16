@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.RenderWarningIcon
+Render a typical warning icon into a graphics context.   A warning icon is an upright yellow triangle.

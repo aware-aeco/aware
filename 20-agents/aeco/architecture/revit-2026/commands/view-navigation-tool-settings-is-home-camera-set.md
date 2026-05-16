@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewNavigationToolSettings.IsHomeCameraSet
+Checks if the home view is set in the settings.

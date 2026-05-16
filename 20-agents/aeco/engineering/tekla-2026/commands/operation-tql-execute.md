@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.TqlExecute
+TQL execute.

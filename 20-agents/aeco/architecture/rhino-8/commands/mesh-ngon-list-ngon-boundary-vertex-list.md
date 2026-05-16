@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshNgonList.NgonBoundaryVertexList
+Get an ngon's boundary points.

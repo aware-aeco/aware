@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralAsset.Copy
+Produces a copy of the asset.

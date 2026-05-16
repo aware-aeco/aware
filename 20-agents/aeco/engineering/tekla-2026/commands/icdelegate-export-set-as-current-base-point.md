@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportSetAsCurrentBasePoint
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementTransformUtils.GetTransformFromViewToView
+Returns a transformation that is applied to elements when copying from one view to another view.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepLoop.To3dCurve
+Create a 3D curve that approximates the loop geometry.

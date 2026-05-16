@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PipeInsulation.Create
+Creates a new instance of pipe insulation.

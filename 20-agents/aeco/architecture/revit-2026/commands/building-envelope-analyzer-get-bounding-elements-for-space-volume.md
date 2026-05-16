@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BuildingEnvelopeAnalyzer.GetBoundingElementsForSpaceVolume
+Returns the collection of bounding building elements for an enclosed space volume.

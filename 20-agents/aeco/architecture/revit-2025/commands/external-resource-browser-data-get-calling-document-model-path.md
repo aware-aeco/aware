@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalResourceBrowserData.GetCallingDocumentModelPath
+Returns a copy of the ModelPath of the document that is requesting the external resource browser data.

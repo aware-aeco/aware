@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FunctionId.GetObjectData
+Retrieves data needed to serialize the target object.

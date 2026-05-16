@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-KeyBasedTreeEntryError.GetEntry
+Gets the entry for which an error occurred while building the KeyBasedTreeEntries object.

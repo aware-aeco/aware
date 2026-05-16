@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Part.GetWelds
+Returns an enumerator of all the connected welds.

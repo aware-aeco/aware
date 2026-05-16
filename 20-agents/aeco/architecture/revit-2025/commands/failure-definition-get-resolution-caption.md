@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureDefinition.GetResolutionCaption
+Retrieves the caption for a specific resolution type.

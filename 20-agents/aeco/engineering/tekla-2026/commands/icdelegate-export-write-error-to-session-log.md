@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportWriteErrorToSessionLog
+DO NOT USE! For internal usage only!

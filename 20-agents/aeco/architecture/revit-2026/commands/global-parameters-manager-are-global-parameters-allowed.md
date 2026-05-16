@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GlobalParametersManager.AreGlobalParametersAllowed
+Tests whether global parameters are allowed in the given document.

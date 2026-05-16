@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Layer.SetPersistentLocking
+Set the persistent locking setting for this layer

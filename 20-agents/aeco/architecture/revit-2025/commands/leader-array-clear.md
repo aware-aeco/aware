@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LeaderArray.Clear
+Removes every item from the array, rendering it empty.

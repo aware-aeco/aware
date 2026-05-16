@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.GetChangeTypeParameter
+Returns ChangeType associated with a change in a parameter's value

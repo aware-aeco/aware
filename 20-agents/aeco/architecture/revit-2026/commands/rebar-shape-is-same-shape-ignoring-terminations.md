@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShape.IsSameShapeIgnoringTerminations
+Test whether two shapes have equivalent definitions by comparing    the RebarShapeDefinition and MultiplanarDefinition properties.

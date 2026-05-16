@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IRcpItem.MouseDoubleClick
+Respond to a mouse double click event.

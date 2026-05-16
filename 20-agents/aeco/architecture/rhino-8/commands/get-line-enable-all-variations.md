@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetLine.EnableAllVariations
+If true, then all line variations are shown if the default line mode is used

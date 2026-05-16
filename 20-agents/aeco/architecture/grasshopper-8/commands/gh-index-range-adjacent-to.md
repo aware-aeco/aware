@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_IndexRange.AdjacentTo
+Tests whether this range is adjacent to another.

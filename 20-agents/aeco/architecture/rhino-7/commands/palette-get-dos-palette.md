@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Palette.GetDosPalette
+Gets the standard 16-color palette used in DOS

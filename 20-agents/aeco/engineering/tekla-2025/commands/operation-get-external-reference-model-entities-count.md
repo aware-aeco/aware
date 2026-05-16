@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetExternalReferenceModelEntitiesCount
+Get external reference model entities count.

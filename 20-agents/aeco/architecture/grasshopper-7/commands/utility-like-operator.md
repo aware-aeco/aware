@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Utility.LikeOperator
+Exposes the VB.NET Like operator as a static method.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentEditor.CloseForReal
+Really, really close the window.

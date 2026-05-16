@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_SamplingSphere.SampleSphere
+Sample the UV locations of a sphere. The sphere should be centered on the world origin.

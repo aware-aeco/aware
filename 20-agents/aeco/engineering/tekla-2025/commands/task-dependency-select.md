@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TaskDependency.Select
+Selects the task dependency instance from the model. The identifier must be set.

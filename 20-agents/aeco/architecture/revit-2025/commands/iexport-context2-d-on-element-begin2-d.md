@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExportContext2D.OnElementBegin2D
+This method marks the beginning of an element to be exported.

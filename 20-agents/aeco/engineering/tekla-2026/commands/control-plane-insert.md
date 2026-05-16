@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlPlane.Insert
+Inserts the control plane into the model.

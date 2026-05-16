@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MemoryBitmap.B
+Gets the blue channel value at the given pixel coordinates.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FontFamily.GetHashCode
+Gets the hash code for this instance

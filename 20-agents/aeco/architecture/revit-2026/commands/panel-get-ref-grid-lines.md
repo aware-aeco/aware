@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Panel.GetRefGridLines
+This method is used to get the reference gridlines.

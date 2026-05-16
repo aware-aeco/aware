@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIView.Zoom
+Zoom the view.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewVertexIndexPairArray
+Returns an array that can hold VertexIndexPair objects.

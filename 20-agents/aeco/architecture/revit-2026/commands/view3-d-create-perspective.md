@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View3D.CreatePerspective
+Returns a new perspective View3D.

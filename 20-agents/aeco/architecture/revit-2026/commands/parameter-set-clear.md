@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterSet.Clear
+Removes every parameter from the set, rendering it empty.

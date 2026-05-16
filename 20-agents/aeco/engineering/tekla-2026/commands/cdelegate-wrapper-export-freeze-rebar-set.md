@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportFreezeRebarSet
+DO NOT USE! For internal usage only!

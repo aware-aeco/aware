@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalSystem.SelectPanel
+Set the panel for the Electrical System.

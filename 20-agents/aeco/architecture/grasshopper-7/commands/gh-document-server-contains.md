@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentServer.Contains
+Gets a value indicating whether or not the given document is inside the list.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisResultSchema.GetUnitsMultiplier
+returns units multiplier by index

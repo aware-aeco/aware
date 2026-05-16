@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureMessage.SetAdditionalElements
+Sets the additional reference elements for the failure.

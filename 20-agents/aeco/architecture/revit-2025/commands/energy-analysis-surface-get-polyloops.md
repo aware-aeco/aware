@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyAnalysisSurface.GetPolyloops
+Gets the collection of planar polygons describing the surface geometry.

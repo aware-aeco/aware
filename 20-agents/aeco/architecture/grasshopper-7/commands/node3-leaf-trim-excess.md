@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Node3Leaf.TrimExcess
+Removes empty leaves, empty nodelists and nodelist capacity overflow from this leaf and all subleaves.

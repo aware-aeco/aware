@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralFramingUtils.IsJoinAllowedAtEnd
+Identifies if the indicated end of the framing element is allowed to join to others.

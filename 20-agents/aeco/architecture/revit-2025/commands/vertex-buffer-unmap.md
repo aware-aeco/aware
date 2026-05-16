@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-VertexBuffer.Unmap
+Unmaps the buffer, so that it can be used for rendering.

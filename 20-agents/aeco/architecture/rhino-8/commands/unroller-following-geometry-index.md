@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Unroller.FollowingGeometryIndex
+Given an unrolled text dot, returns the index of the source, or following text dot.

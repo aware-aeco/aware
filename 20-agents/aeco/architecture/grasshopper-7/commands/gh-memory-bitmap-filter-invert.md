@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MemoryBitmap.Filter_Invert
+Invert all values in a specific channel.

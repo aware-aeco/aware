@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_InstanceDescription.Write
+Default serialization. Only stores Name, NickName, Description and InstanceGuid fields.   If you want to store additional fields use WriteFull() instead.

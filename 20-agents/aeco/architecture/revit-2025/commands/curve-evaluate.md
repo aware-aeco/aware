@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.Evaluate
+Evaluates and returns the point that matches a parameter along the curve.

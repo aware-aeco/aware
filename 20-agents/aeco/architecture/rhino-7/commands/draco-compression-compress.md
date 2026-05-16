@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DracoCompression.Compress
+Compress a mesh using default compression options.

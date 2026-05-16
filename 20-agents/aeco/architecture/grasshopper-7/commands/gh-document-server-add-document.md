@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentServer.AddDocument
+Add a new document to the global list. If the document is already registered nothing will happen.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PulldownButton.AddSeparator
+Adds a separator to the drop-down list.

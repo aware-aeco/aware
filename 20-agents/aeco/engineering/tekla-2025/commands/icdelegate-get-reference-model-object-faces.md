@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.GetReferenceModelObjectFaces
+DO NOT USE! For internal usage only!

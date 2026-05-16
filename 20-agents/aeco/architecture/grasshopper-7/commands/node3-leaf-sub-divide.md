@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Node3Leaf.SubDivide
+Builds a subtree from a Node list.

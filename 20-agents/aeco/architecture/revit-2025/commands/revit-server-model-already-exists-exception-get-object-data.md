@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitServerModelAlreadyExistsException.GetObjectData
+Retrieves data needed to serialize the target object.

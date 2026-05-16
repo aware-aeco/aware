@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarCrankTypeUtils.GetAllRebarCrankTypes
+Gets all the Rebar Crank Types elements from the document.

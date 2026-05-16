@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Polyline.PointAt
+Gets the point on the polyline at the given parameter.              The integer part of the parameter indicates the index of the segment.

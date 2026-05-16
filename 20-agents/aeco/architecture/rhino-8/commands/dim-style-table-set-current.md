@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DimStyleTable.SetCurrent
+Sets the  property.

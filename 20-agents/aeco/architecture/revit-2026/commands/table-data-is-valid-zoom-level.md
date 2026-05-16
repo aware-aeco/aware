@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableData.IsValidZoomLevel
+Verifies if the value of zoom level is valid.

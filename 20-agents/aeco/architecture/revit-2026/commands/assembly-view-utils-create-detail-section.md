@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssemblyViewUtils.CreateDetailSection
+Creates a new detail section assembly view for the assembly instance.

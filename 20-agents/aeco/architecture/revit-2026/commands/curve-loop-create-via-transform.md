@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveLoop.CreateViaTransform
+Creates a new curve loop as a transformed copy of the input curve loop.

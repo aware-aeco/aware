@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Sun.GetDateTime
+Get the observer's date and time as a DateTime with kind DateTimeKind.Local.                            Param 'kind' specifies the kind of date and time to retrieve from the sun.                            - If DateTimeKind.Local, the returned DateTime will contain the local sun time,                i.e., the time you see in the UI under 'Local'.                           - If DateTimeKind.Utc, the returned DateTime will contain the UTC sun time,                i.e., the time you see in the UI under 'UTC', which is the Sun's local time adjusted                for its time zone and daylight saving (if any).                           **** Local sun time is to do with the Sun's time zone and not the time zone of the computer.                           **** The returned DateTime object always has a kind of Local even if you requested the sun's                   UTC date and time. This is because the Sun's time zone is nothing to do with the actual                   computer's time zone and converting the result would cause further confusion.

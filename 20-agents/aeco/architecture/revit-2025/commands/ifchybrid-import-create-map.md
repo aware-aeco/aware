@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCHybridImport.CreateMap
+Creates a map to look up ElementIds, given an IFC GUID as input.

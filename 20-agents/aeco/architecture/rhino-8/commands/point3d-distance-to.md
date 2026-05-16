@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point3d.DistanceTo
+Computes the distance between two points.

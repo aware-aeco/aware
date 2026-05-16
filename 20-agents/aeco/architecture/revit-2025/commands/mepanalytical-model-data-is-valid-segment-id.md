@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPAnalyticalModelData.IsValidSegmentId
+Verifies if a valid segment id.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsSurfaceKnotList.RemoveMultipleKnots
+Remove multiple knots from this surface

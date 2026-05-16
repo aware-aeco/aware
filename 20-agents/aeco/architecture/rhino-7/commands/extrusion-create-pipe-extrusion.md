@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Extrusion.CreatePipeExtrusion
+Gets an extrusion form of a pipe.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dm.WriteMultipleObjects
+Creates a simple 3dm file that contains a multiple geometric objects.

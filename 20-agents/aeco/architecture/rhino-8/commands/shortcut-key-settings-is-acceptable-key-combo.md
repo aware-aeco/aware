@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ShortcutKeySettings.IsAcceptableKeyCombo
+Is a key plus modifier combination one that can be used with Rhino

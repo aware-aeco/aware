@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Category.IsBuiltInCategory
+Checks whether a ForgeTypeId identifies a built-in category.

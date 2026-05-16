@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StackedDialogPage.OnActivate
+Called when this page is activated/deactivated.

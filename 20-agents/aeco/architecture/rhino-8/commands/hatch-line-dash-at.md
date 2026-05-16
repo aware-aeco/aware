@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HatchLine.DashAt
+Get the dash length at the specified index.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ClashCheckHandler.RunClashCheckWithOptions
+Starts the clash checking with options.

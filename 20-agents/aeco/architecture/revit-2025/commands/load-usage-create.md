@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadUsage.Create
+Creates a new LoadUsage.

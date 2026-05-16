@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoList`1.AddRange
+Adds the elements of the specified collection to the end of the List.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoGet.GetMeshParameters
+Asks the user to specify meshing parameters.

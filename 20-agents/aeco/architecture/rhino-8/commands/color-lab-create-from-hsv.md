@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorLAB.CreateFromHSV
+Constructs the nearest LAB equivalent of an HSV color.

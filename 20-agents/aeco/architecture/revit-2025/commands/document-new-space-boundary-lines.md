@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.NewSpaceBoundaryLines
+Creates a new boundary line as an Space border.

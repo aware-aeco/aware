@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CustomDisplay.AddLine
+Adds a new, black line to the display list.

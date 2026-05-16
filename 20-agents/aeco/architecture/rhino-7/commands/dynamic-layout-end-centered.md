@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DynamicLayout.EndCentered
+Ends the current centered section.

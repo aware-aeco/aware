@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DocumentPreviewSettings.ForceViewUpdate
+Sets Revit to update the preview view if necessary.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CustomFieldData.ValidateCustomFieldProperties
+Validates the custom field properties.

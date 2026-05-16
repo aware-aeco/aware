@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLayerInfo.GetCutLayerModifiers
+Gets all the cut layer modifiers from the layer info.

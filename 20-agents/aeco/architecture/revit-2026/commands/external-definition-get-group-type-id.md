@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalDefinition.GetGroupTypeId
+Returns the identifier of the parameter definition's parameter group.

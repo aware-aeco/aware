@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarFreeFormAccessor.GetServerGUID
+Returns the GUID of the API server.

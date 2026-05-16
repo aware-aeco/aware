@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AngularDimension.AdjustFromPoints
+Updates dimension geometry from point locations.

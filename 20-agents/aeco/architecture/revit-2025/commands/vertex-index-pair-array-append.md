@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-VertexIndexPairArray.Append
+Add the VertexIndex pair to the end of the array.

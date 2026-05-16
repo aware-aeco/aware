@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyUtils.GetProfileSymbols
+Gets the profile Family Symbols of the document.

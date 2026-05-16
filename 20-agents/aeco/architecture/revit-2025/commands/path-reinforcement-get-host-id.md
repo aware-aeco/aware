@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PathReinforcement.GetHostId
+The element that contains the Path Reinforcement.

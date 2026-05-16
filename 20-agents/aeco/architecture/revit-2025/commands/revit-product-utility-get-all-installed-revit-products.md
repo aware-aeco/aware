@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitProductUtility.GetAllInstalledRevitProducts
+Gets a list of Revit products installed on this machine.

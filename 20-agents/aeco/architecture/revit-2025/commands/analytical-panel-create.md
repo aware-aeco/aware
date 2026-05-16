@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalPanel.Create
+Creates a new instance of an Analytical Panel within the project.

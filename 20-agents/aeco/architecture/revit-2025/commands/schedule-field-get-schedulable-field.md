@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleField.GetSchedulableField
+Gets a SchedulableField object representing this field.

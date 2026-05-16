@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetPoint.PermitOrthoSnap
+Controls availability of ortho snap. Default is true.

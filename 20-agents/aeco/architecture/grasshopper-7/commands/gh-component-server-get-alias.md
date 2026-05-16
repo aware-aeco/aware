@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentServer.GetAlias
+Gets the alias display string for a given object.

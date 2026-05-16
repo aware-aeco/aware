@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHCurve_Secondary
+Converts similar data into a GH_Curve instance.  Data is not quaranteed to be duplicated.

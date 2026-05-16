@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraint.GetTargetRebarAngleOnBarOrHookBend
+Returns the angular increment along a bar or hook bend to which the RebarConstraint is attached.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SunAndShadowSettings.IsGroundPlaneLevelValid
+Checks whether the element represents a valid Ground Plane level.

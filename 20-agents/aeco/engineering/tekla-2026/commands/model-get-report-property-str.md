@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Model.GetReportPropertyStr
+Get a list of property values, where the property is of type string, for the given identifiers.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSpliceTypeUtils.SetShiftOption
+Sets the way bars are shifted in the splice relation.

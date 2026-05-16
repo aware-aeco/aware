@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSheet.GetRevisionNumberOnSheet
+Gets the Revision Number for a particular Revision as it will appear on this sheet.

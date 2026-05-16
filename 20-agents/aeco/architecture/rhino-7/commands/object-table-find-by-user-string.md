@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.FindByUserString
+Finds all objects whose UserString matches the search patterns.

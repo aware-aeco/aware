@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssetPropertyList.SetValue
+Sets collection of properties stored in this property list.

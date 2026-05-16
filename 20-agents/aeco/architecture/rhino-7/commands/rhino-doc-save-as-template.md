@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoDoc.SaveAsTemplate
+Save this document as a template

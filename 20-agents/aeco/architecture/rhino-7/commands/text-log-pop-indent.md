@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextLog.PopIndent
+Decrease the indentation level

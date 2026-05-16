@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_NumberSlider.FormatNumber
+Convert a double precision floating point number into a string, using the rounding rules as indicated.

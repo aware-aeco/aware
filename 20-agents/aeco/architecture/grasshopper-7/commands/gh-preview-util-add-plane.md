@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PreviewUtil.AddPlane
+Add a plane to the temporary Preview lists.

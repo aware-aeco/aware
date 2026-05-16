@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.CurveSelf
+Finds the places where a curve intersects itself.

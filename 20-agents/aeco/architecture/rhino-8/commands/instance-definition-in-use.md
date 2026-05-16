@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceDefinition.InUse
+Determines whether the instance definition is referenced.

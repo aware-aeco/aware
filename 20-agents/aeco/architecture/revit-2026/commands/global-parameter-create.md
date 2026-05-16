@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GlobalParameter.Create
+Creates a new Global Parameter in the given document.

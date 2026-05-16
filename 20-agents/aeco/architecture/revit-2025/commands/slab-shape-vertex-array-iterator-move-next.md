@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SlabShapeVertexArrayIterator.MoveNext
+Move the iterator one item forward.

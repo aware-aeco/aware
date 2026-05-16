@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StairsLanding.SetSketchedLandingBoundaryAndPath
+Sets the boundary and path curves of the sketched landing.

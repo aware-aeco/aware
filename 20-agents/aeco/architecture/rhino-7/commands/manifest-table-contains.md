@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ManifestTable.Contains
+Determines if an items is contained in this table.

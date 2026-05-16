@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalResourceServerExtensions.GetRevitLinkOperations
+Gets the specific methods supported by the external resource of Revit Links.

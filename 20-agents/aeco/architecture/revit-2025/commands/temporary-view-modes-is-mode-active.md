@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TemporaryViewModes.IsModeActive
+Tests whether a given mode is currently active or not.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RibbonPanel.MinimumWidth
+Gets the minimum width of a panel (a single column of items)

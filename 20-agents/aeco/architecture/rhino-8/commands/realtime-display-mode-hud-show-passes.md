@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RealtimeDisplayMode.HudShowPasses
+Override to show current pass in HUD. By default disabled.

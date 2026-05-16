@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshUnwrapper.Unwrap
+Unwraps the meshes passed in as constructor arguments and stores the results in texture coordinates.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PythonScript.ExecuteScript
+Executes a Python string.

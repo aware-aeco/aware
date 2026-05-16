@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElevationMarker.CreateReferenceElevation
+Creates a reference elevation on the ElevationMarker at the desired index.

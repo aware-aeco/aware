@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StackedDialogPage.OnApply
+Called when stacked dialog OK button is pressed.

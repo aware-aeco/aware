@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSetAddition.Select
+Selects the rebar set addition from the model database. The rebar set addition identifier must be set.

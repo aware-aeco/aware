@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLayerInfo.RemoveLayerModifier
+Removes a project layer modifier from the layer info.

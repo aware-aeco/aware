@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.CurvatureAt
+Evaluate the curvature vector at a curve parameter.

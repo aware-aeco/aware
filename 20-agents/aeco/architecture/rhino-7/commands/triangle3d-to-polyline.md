@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Triangle3d.ToPolyline
+Create a polyline from this triangle.

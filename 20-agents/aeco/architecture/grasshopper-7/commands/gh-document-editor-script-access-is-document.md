@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentEditor.ScriptAccess_IsDocument
+Returns true if there is an active document.

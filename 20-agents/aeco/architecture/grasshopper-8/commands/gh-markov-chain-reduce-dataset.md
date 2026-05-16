@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MarkovChain.ReduceDataset
+Reduce the data set by removing the least significant members.

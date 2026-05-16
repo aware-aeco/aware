@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Graphics.TranslateTransform
+Translates the origin of the co-ordinate system by the given offset

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UpdaterRegistry.GetRegisteredUpdaterInfos
+Returns UpdaterInfos for all the application-wide updaters.

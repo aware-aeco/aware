@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.DestroyTopology
+Removes topology data, forcing all topology information to be recomputed.

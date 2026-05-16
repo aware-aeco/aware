@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CapsuleRenderEngine.RenderMessage
+Render a text message underneath the capsule.

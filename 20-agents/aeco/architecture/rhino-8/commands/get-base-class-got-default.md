@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetBaseClass.GotDefault
+Returns true if user pressed Enter to accept a default point, number,             or string set using SetDefaultPoint, SetDefaultNumber, or SetDefaultString.

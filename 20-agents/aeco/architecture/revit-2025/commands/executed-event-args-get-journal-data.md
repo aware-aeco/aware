@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExecutedEventArgs.GetJournalData
+Gets the journal data associated to this command (on journal playback).

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ImageInstance.Create
+Creates a new ImageInstance element placed in a view.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepEdgeList.GetEnumerator
+Gets an enumerator that visits all edges.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateFromSweepInParts
+Makes a 2 rail sweep. Like CreateFromSweep but the result is split where parameterization along a rail changes abruptly.

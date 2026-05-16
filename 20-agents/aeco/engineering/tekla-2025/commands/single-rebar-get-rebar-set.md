@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SingleRebar.GetRebarSet
+Gets the parent  of the single rebar.

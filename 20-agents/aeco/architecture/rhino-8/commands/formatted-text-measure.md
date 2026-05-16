@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormattedText.Measure
+Gets the size needed to draw the text.

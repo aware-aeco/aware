@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.GetIFCClassNameByCategory
+Obtains the IFC class name associated to a given category id for the current export.

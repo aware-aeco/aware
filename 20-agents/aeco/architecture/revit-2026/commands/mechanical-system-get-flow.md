@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MechanicalSystem.GetFlow
+Gets the flow of this mechanical system.

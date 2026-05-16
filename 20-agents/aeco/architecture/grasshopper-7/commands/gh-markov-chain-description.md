@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MarkovChain.Description
+Gets a description of the entire Markov database.

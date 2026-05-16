@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelSharingHandler.ReserveNextWriteOutAsync
+Reserves the next write-out for the current user with the specified comment.

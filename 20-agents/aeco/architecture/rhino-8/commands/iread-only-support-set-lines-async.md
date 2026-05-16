@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IReadOnlySupport.SetLinesAsync
+Sets individual lines with their read only state

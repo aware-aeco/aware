@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ArchivableDictionary.Clear
+Removes all keys and values from the dictionary.

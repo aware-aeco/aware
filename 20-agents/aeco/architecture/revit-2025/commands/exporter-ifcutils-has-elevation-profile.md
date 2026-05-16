@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.HasElevationProfile
+Identifies if the wall has a sketched elevation profile.

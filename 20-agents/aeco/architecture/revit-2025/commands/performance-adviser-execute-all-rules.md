@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PerformanceAdviser.ExecuteAllRules
+Executes all rules in the list on a given document.

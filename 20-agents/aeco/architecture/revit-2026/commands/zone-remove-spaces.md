@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Zone.RemoveSpaces
+Remove a set of existing spaces to the current Zone element.

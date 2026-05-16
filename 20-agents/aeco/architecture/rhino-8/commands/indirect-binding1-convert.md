@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndirectBinding`1.Convert
+Converts the binding using the specified  object.

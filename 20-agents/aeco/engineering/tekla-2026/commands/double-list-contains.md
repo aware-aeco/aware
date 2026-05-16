@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DoubleList.Contains
+Checks if the given double is in the list.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DoubleClickOptions.SetAction
+Changes the double-click action associated with a specified target.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IDuctFittingAndAccessoryPressureDropUIServer.ShowSettings
+Shows the settings UI.

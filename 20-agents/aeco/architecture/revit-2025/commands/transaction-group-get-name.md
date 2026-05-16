@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TransactionGroup.GetName
+Returns the transaction group's name. It could be an empty string.

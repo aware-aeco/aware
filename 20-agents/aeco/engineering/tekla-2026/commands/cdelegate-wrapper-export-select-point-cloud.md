@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportSelectPointCloud
+DO NOT USE! For internal usage only!

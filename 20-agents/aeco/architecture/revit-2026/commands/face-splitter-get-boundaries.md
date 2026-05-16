@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FaceSplitter.GetBoundaries
+Gets the boundaries.

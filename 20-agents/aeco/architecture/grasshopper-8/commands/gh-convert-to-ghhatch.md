@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHHatch
+Convert data into GH_Hatch.

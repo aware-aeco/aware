@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View3D.GetLevelsThatShowGrids
+Returns the list of levels ids where grids are displayed in this 3D view.

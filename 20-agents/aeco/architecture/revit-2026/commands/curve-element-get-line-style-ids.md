@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveElement.GetLineStyleIds
+Ids of all line style Elements that are applicable to this curve element.

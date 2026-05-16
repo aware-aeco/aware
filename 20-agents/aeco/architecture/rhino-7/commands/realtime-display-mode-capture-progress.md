@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RealtimeDisplayMode.CaptureProgress
+Override to communicate the progress of a capture.

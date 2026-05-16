@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoGet.GetPoint
+Gets a point coordinate from the document.

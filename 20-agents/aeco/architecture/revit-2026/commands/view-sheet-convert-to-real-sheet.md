@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSheet.ConvertToRealSheet
+Converts a placeholder sheet to a real one with an optional titleblock.

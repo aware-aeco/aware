@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FontTypeface.Equals
+Tests this instance for equality with another font typeface

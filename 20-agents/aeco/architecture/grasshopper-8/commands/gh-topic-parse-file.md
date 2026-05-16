@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Topic.ParseFile
+Parse a *.topic file and return a topic entry.

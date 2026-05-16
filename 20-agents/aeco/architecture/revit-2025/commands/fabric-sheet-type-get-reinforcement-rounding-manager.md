@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricSheetType.GetReinforcementRoundingManager
+Returns an object for managing reinforcement rounding override settings.

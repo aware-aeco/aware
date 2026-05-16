@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayColorEntry.IsEqual
+Compare color entries.

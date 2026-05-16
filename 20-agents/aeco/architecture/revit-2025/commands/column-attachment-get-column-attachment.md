@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColumnAttachment.GetColumnAttachment
+Look up a column attachment by specifying the target id.

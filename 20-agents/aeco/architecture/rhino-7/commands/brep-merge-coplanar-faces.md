@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.MergeCoplanarFaces
+Merges adjacent coplanar faces into single faces.

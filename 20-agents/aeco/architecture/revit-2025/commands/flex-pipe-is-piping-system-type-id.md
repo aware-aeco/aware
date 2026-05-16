@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FlexPipe.IsPipingSystemTypeId
+Checks if given type is valid piping system type.

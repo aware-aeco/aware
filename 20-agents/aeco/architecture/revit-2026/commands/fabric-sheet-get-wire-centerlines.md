@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricSheet.GetWireCenterlines
+Gets a list of curves representing the wires centerlines of the Fabric Sheet in the both distribution directions.

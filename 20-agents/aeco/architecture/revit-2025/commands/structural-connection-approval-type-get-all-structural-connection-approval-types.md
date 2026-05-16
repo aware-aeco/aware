@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralConnectionApprovalType.GetAllStructuralConnectionApprovalTypes
+Collects the ids of all StructuralConnectionApprovalTypes in the document.

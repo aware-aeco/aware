@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceModel.GetConvertedObjects
+Returns an enumerator of model object converted from the reference model.

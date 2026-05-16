@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Triangle3d.TrySmallestEnclosingTriangle
+Attempt to create the smallest triangle containing a set of planar points.

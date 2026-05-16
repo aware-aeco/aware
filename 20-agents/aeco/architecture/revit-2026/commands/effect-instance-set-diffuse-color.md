@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EffectInstance.SetDiffuseColor
+Sets the diffuse color parameter of the effect instance.

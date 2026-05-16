@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CullUnusedSurfaces
+Culls surfaces not referenced by a face.

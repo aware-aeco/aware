@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.GetMaterialArea
+Gets the area of the material with the given id.

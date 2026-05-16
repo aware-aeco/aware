@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_SourceCodeEditor.GetManagedEditor
+Retrieve the editor from the manager that is linked to the given ID.

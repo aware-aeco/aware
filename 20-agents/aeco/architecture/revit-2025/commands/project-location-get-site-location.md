@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ProjectLocation.GetSiteLocation
+Gets the site location to which this project location refers.

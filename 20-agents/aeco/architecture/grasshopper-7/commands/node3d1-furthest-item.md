@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Node3d`1.FurthestItem
+Find the furtest item.

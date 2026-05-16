@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormattedText.GetMinimumListStartNumber
+Returns the minumum allowed list start number.

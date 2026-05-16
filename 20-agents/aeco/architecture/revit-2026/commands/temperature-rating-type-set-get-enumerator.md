@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TemperatureRatingTypeSet.GetEnumerator
+Retrieve a forward moving iterator to the set.

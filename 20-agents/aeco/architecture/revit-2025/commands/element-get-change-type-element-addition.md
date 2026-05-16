@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.GetChangeTypeElementAddition
+Returns ChangeType associated with element addition

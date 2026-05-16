@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PixelLayout.Add
+Adds a control to the layout with the specified pixel coordinates

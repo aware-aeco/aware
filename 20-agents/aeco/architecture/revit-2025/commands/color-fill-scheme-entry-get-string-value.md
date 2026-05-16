@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorFillSchemeEntry.GetStringValue
+Gets the String value stored within the entry.

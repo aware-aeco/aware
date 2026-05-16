@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDrivenAccessor.SetLayoutAsFixedNumber
+Sets the Layout Rule property of rebar set to FixedNumber.

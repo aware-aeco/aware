@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UpdaterRegistry.RemoveAllTriggers
+Removes all triggers associated with Updater with specified UpdaterId.    Does not unregister updater.

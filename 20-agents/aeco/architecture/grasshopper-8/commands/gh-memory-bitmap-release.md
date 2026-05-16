@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MemoryBitmap.Release
+Release the locked bits. You must call this function when you are done with this GH_MemoryBitmap instance.

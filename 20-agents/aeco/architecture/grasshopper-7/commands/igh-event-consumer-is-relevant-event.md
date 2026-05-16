@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_EventConsumer.IsRelevantEvent
+Whenever a new object event is handled, this function will be called to determine whether it will cause an update.

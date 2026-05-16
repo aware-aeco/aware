@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotGetModificationsByFilter
+Get modifications by filter name.

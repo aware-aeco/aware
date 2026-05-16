@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.GetRegions
+Gets an array containing all regions in this brep.

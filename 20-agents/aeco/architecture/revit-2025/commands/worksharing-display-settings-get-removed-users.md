@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WorksharingDisplaySettings.GetRemovedUsers
+Returns the set of users who have been explicitly removed from the settings.

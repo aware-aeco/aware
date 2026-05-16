@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Seam.SetInputPolygon
+Sets the input polygon of the seam.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_NamedView.LoadFromViewport
+Create a named view from a viewport.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjRef.ClippingPlaneSurface
+Gets the clipping plane surface if this reference targeted one.

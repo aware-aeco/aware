@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExternalResourceServer.GetTypeSpecificServerOperations
+Implement this method to get operations supported by the external server for a particular type of external resource.

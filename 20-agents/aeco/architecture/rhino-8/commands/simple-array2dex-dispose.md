@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArray2dex.Dispose
+Actively reclaims unmanaged resources that this instance uses.

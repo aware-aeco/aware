@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaLoad.Create
+Creates a new custom area load within the project.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterDialog.Show
+Shows the FilterDialog editing dialog to the user.

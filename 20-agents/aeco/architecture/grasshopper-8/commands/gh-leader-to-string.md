@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Leader.ToString
+Format the leader using default grasshopper formatting logic.

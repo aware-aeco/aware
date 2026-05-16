@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ScriptEditorButton.FormHandleCreated
+Called once, when the script editor is created.

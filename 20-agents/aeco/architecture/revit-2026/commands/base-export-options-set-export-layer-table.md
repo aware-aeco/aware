@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BaseExportOptions.SetExportLayerTable
+Sets layer table back to option

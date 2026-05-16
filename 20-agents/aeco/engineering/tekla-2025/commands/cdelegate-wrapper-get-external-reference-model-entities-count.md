@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.GetExternalReferenceModelEntitiesCount
+DO NOT USE! For internal testing usage only!

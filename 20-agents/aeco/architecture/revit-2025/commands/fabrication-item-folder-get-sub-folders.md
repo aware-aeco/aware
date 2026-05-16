@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationItemFolder.GetSubFolders
+Gets the item folder's sub folders.

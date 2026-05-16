@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleTemplate.SetTableData
+Assigns table data to this template

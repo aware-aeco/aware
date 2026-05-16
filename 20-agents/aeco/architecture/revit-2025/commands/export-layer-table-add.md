@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLayerTable.Add
+Inserts a (key,info) pair into Export layer table.

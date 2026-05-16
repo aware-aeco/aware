@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentObject.RecordUndoEvent
+Record a generic object change undo event.

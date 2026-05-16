@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ClassificationEntry.HasInvalidKey
+Checks if the key matches the level and parent key.

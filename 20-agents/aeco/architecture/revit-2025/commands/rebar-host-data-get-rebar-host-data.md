@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarHostData.GetRebarHostData
+Gets a RebarHostData object referring to the specified    rebar host element.

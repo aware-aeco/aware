@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSection.IsParentViewValidForCallout
+This validator checks that the parent view is appropriate for callout views.

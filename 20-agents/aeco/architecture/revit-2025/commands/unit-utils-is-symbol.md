@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UnitUtils.IsSymbol
+Checks whether a ForgeTypeId identifies a symbol.

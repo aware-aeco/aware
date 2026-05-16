@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilteredElementCollector.WhereElementIsCurveDriven
+Applies an ElementIsCurveDrivenFilter to the collector.

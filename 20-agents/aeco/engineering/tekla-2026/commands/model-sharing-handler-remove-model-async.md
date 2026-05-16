@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelSharingHandler.RemoveModelAsync
+Removes the shared model from the system.

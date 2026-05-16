@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Remoter.DisposeService
+Dispose Remoting services

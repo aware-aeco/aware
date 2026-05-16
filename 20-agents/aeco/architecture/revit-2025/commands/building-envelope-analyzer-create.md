@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BuildingEnvelopeAnalyzer.Create
+Creates a new analyzer.

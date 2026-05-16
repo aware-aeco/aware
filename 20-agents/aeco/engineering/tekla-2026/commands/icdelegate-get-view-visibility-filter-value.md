@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.GetViewVisibilityFilterValue
+DO NOT USE! For internal usage only!

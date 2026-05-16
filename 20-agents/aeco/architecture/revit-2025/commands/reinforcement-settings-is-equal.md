@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReinforcementSettings.IsEqual
+Checks if Reinforcement Settings is equal to other

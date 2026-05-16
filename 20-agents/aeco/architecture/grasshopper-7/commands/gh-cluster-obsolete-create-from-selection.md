@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Cluster_OBSOLETE.CreateFromSelection
+Create a cluster from the selected portion of a document.

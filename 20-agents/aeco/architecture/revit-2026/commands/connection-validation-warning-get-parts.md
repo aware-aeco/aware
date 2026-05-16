@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConnectionValidationWarning.GetParts
+Get ElementIds of affected parts.

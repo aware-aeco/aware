@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShape.HasEndTreatment
+Identifies if the rebar shape has end treatment at at least one end.

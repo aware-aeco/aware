@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DocumentPrintingEventArgs.GetSettings
+Gets the print settings of the active printing session.

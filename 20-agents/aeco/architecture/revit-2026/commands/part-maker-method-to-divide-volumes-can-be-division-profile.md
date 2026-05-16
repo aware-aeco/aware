@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PartMakerMethodToDivideVolumes.CanBeDivisionProfile
+Checks whether a family defines a profile which can be used by this method.

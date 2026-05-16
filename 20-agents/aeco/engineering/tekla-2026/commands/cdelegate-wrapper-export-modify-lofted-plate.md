@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportModifyLoftedPlate
+DO NOT USE! For internal usage only!

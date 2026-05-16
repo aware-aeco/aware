@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Component.Read
+Read all required data for deserialization from an IO archive.

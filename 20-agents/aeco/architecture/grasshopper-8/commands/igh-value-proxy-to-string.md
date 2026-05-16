@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_ValueProxy.ToString
+Returns a String description of the current value.

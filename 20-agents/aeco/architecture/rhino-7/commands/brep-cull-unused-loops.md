@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CullUnusedLoops
+Culls loops with m_loop_index == -1.

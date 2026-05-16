@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewReferencePointArray
+Creates an empty array that can store ReferencePoint objects.

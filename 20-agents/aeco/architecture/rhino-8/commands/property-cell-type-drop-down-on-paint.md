@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PropertyCellTypeDropDown.OnPaint
+Paints the cell when  is false.

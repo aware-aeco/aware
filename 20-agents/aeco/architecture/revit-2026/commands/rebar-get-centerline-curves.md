@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.GetCenterlineCurves
+A chain of curves representing the centerline of the rebar.

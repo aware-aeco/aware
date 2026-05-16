@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableTraySizes.Contains
+Checks whether a cable tray size with the nominal diameter exists.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryCreationUtilities.CreateBlendGeometry
+Creates a solid by blending two closed curve loops lying in non-coincident planes.

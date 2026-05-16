@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Clipboard.GetDataStream
+Gets the data stream with the specified type identifier.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileAmf.Write
+Write a amf file based on the contents of a RhinoDoc

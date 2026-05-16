@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewCaptureSettings.SetWindowRect
+Set the print area to a window selection based on two points in screen coordinates

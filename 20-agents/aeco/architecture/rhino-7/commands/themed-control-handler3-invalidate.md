@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedControlHandler`3.Invalidate
+Queues a repaint of the entire control on the screen

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBarType.SetHookLength
+Identifies the hook length for a hook type

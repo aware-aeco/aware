@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorLCH.CreateFromHSL
+Create the nearest LCH equivalent of an HSL color.

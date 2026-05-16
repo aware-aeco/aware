@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_FileSystemEventServer.RemoveWatcher
+Remove all watchers that are linked to a specific object.

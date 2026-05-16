@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.ProjectToPlane
+Constructs a curve by projecting an existing curve to a plane.

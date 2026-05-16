@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorGradient.GetColorStops
+Get sorted list of colors / positions that a gradient is defined over

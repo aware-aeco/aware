@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MacroManager.RemoveModule
+Removes a MacroModule.

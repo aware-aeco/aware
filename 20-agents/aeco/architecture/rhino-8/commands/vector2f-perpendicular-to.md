@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Vector2f.PerpendicularTo
+Sets this vector to be perpendicular to another vector.               Result is not unitized.

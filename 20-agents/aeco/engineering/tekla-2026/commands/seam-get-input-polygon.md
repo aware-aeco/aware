@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Seam.GetInputPolygon
+Returns the input polygon of the seam.

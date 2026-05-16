@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExternalService.GetVendorId
+Implement this method to return the vendor Id of the service.

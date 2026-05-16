@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScaleValue.OneToOne
+Make a new ScaleValue set to OneToOne

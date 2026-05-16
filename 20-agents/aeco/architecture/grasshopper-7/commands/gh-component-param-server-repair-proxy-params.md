@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentParamServer.RepairProxyParams
+Attempt to fix all proxy params. Returns false if a single one fails.

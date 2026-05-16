@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BezierCurve.CreateLoftedBezier
+Loft a bezier through a list of points

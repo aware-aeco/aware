@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileIgs.Write
+Write a Igs file based on the contents of a RhinoDoc

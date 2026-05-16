@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rectangle3d.PointAt
+Gets a point in Rectangle space.

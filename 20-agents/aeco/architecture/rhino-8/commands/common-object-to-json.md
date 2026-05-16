@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CommonObject.ToJSON
+Create a JSON string representation of this object

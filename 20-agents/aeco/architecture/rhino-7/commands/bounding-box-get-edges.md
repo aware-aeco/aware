@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoundingBox.GetEdges
+Gets an array of the 12 edges of this box.

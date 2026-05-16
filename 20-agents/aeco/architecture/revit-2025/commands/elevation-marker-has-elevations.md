@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElevationMarker.HasElevations
+Returns true if the ElevationMarker has at least one elevation view, false otherwise.

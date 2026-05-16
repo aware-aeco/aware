@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCExtrusionCreationData.ClearOpenings
+Removes all cached openings from the data.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectContext3DHandleSettings.GetColor
+Gets the color of the handle and the associated DirectContext3D graphics.

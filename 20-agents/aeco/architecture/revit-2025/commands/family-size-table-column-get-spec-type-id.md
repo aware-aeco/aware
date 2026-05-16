@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilySizeTableColumn.GetSpecTypeId
+Gets the identifier of the spec describing values in the column.

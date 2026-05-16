@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MemoryBitmap.Filter_SatScale
+Convert the image to a greyscale representation of the saturation.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshUnsafeLock.FacesArray
+Retrieves a pointer to the raw faces array, which uses 4 integers for each face.             .

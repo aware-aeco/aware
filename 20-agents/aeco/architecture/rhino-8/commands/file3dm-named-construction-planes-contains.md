@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmNamedConstructionPlanes.Contains
+Returns an indication of the presence of a named construction plane in the table.

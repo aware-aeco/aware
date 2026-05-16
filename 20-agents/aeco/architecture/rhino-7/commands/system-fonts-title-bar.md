@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SystemFonts.TitleBar
+Gets the system title bar font with optional specified  and .

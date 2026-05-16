@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetAllProperties
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Stack.InsertElement
+Add a new static element to the stack.

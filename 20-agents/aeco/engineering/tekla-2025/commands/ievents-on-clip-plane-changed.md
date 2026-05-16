@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEvents.OnClipPlaneChanged
+Called when user inserts, updates or deletes a clip plane.

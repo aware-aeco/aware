@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CommandAliasList.Delete
+Deletes an existing command alias from Rhino.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GraphicsDrawer.DrawText
+Draws a temporary text in the currently active rendered view.

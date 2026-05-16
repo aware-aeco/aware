@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PDFExportOptions.IsValidNamingRule
+Whether naming rule is valid or not.

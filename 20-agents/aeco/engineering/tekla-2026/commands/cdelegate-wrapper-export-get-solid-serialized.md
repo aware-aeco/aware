@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetSolidSerialized
+DO NOT USE! For internal usage only!

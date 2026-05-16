@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ChangeQueue.MaterialFromOriginalInstanceId
+Get the RenderMaterial from the ChangeQueue material cache from the original instance id

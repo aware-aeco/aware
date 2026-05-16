@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarLegSurfaceObject.Modify
+Modifies the existing leg surface object in the model database to match the current one.

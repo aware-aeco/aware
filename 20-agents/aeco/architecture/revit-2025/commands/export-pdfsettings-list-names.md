@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportPDFSettings.ListNames
+Returns all the names of the settings instances in the document.

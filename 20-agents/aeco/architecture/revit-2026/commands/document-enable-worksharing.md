@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.EnableWorksharing
+Enables worksharing in the document.

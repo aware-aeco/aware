@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ISelectable`1.SelectAll
+Selects all rows represented in the data store.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MaterialRefs.Add
+Adds an item to this dictionary.

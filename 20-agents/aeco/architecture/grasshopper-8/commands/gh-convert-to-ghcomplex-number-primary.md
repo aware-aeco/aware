@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHComplexNumber_Primary
+Converts similar data into a GH_ComplexNumber instance.  Data is not quaranteed to be duplicated.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DoubleArray.Insert
+Insert the specified double into the array.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SlabShapeEditor.AddSplitLine
+Add a split line to the element.

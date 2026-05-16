@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailuresAccessor.CanRollBackPendingTransaction
+Checks if pending failure processing can be finished by rolling back a pending transaction.

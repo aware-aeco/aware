@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ZoneEquipment.GetAssociatedZoneEquipment
+Gets the associated zone equipment of all specified analytical spaces.

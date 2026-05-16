@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricSheetType.SetMinorLayoutAsNumberWithSpacing
+Sets the major layout pattern as NumberWithSpacing, while specifying the needed parameters for this pattern.

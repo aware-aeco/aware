@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PathOfTravel.Create
+Creates a new path of travel between two points.

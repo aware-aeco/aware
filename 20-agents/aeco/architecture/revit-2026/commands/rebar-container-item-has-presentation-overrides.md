@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainerItem.HasPresentationOverrides
+Identifies if this rebar set has overridden default presentation settings for the given view.

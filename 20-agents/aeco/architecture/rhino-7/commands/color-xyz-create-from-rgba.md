@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorXYZ.CreateFromRGBA
+Create the nearest XYZ equivalent of a RGBA color.

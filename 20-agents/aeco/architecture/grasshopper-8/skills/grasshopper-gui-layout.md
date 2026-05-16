@@ -6,3 +6,4 @@ description: API reference for namespace Grasshopper.GUI.Layout from Grasshopper
 # Grasshopper.GUI.Layout
 
 - **GH_GenericLayout**
+  - Generic layout logic for rectangle stacks.

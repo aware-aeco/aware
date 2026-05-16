@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoList`1.Insert
+Inserts an element into the List at the specified index.

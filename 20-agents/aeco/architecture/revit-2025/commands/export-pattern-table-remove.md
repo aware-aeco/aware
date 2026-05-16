@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportPatternTable.Remove
+Removes the pair (key, info) by pattern key.

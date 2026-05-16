@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.IsValidRegionId
+Determines whether the specified integer is actually the id of a region in this CompoundStructure.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StackedDialogPage.SetEnglishPageTitle
+Change the title passed to the constructor and, this will cause             LocalPageTitle to get called also.

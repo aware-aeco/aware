@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportGetCommandStatus
+DO NOT USE! For internal usage only!

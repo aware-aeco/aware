@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CommandAliasList.GetMacro
+Returns the macro of a command alias.

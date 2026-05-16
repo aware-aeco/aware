@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NameHash.CreateFilePathHash
+Creates a new NameHash, representing the name of a file.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyPointLocation.GetLocation
+Gets the location of the point.

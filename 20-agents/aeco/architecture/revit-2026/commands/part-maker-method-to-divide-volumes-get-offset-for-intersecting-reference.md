@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PartMakerMethodToDivideVolumes.GetOffsetForIntersectingReference
+Gets offset for the intersecting reference.

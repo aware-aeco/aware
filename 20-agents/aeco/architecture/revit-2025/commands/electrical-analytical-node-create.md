@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalAnalyticalNode.Create
+Creates an electrical analytical node.

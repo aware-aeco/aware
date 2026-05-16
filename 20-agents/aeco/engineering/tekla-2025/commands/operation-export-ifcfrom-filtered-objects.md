@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.ExportIFCFromFilteredObjects
+IFC export from filtered objects

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BezierCurve.IncreaseDegree
+Increase degree of bezier

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoundaryConditions.GetOrientTo
+Returns the boundary conditions orientation option.

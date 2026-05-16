@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OrdinateDimension.AdjustFromPoints
+Update Dimension geometry from point locations

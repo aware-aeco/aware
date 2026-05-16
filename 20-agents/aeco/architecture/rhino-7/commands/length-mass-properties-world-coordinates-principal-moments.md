@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LengthMassProperties.WorldCoordinatesPrincipalMoments
+Calculates the eigenvalues and eigenvectors of moments matrix in world coordinates.

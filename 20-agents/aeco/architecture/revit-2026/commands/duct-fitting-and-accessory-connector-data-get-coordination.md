@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DuctFittingAndAccessoryConnectorData.GetCoordination
+Gets the coordination of the connector

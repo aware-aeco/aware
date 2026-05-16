@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjRef.Curve
+Gets the curve if this reference targeted one.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CssStyle.AddComment
+Add a comment to this style.

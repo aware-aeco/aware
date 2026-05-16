@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndexPair.IndexOf
+Determines the index of a specific item in .

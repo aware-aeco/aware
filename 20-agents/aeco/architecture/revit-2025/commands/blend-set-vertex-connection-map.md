@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Blend.SetVertexConnectionMap
+Sets the mapping between the vertices in the top and bottom profiles.

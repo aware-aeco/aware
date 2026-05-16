@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportDisplayPrompt
+DO NOT USE! For internal usage only!

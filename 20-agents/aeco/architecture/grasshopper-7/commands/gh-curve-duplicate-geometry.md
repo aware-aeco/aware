@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Curve.DuplicateGeometry
+Create a duplicate of this curve.

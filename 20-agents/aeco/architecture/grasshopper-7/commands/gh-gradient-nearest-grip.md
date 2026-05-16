@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Gradient.NearestGrip
+Find the nearest grip in screen coordinates.

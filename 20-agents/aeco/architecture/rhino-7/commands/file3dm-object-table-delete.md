@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObjectTable.Delete
+Deletes object from document.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.SetGlobal3DDirectionHandles
+Sets the handles representing the cardinal directions in 3D.

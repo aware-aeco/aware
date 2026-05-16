@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultiReferenceAnnotation.AreReferencesValidForLinearDimension
+If the DimensionStyleType is Linear, validates that the references are valid    for an aligned multi-reference annotation.

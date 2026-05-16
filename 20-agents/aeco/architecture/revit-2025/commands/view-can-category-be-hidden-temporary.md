@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.CanCategoryBeHiddenTemporary
+Check if category can be temporarily hidden in the view.

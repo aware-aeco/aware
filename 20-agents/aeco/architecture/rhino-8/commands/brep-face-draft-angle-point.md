@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepFace.DraftAnglePoint
+Returns the surface draft angle and point at a parameter.

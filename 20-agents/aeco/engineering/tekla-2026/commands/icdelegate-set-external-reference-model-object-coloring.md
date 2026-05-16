@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.SetExternalReferenceModelObjectColoring
+DO NOT USE! For internal usage only!

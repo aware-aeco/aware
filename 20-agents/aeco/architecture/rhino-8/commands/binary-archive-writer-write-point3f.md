@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BinaryArchiveWriter.WritePoint3f
+Writes a  value to the archive.

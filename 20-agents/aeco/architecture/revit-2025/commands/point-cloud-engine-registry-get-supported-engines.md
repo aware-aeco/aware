@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudEngineRegistry.GetSupportedEngines
+Returns a list of the identifiers supported by point cloud engines registered to Revit.

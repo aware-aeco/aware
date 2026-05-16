@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricSheetType.IsValidMajorLapSplice
+Identifies if the input value is valid to be applied as the major lap splice    value for this FabricSheetType.

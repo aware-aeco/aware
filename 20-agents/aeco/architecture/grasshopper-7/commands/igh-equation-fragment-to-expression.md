@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_EquationFragment.ToExpression
+Format the fragment as a partial Grasshopper expression.

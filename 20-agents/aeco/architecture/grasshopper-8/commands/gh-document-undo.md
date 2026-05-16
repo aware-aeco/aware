@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.Undo
+Perform the first undo event.

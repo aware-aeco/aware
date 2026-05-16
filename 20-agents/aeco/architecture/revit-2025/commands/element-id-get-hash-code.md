@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementId.GetHashCode
+Gets the value of the id as hash code

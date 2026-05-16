@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSheet.CreatePlaceholder
+Creates a placeholder sheet in a document.

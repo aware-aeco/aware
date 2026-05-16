@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GripObject.GetGripDirections
+Sometimes grips have directions.  These directions             can have any length and do not have to be orthogonal.

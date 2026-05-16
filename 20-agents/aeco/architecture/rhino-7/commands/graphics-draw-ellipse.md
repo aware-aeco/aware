@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Graphics.DrawEllipse
+Draws a 1 pixel wide ellipse outline with the specified

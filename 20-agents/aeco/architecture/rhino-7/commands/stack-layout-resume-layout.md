@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StackLayout.ResumeLayout
+Resumes the layout after it has been suspended, and performs a layout

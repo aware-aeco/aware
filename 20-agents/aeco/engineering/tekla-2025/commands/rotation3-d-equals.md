@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rotation3D.Equals
+Compares with another rotation.

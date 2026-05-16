@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportModifyConicalNodeRadiuses
+DO NOT USE! For internal usage only!

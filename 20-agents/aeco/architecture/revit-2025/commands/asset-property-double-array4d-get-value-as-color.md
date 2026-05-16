@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssetPropertyDoubleArray4d.GetValueAsColor
+Gets the value property as a color.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelSharingHandler.GetUpdatesAsync
+Get available updates for the model.

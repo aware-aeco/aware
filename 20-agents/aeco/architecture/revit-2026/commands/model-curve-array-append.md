@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelCurveArray.Append
+Add the model curve to the end of the array.

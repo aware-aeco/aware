@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorFillScheme.GetFormatOptions
+Returns the FormatOptions of the scheme.

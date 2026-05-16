@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.SetMergedCell
+Sets the merged cell that this cell is a part of.

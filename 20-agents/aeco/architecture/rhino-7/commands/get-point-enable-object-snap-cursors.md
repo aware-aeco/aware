@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetPoint.EnableObjectSnapCursors
+Enables or disables object snap cursors. By default, object snap cursors are enabled.

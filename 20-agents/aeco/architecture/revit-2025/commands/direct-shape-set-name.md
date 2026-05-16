@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShape.SetName
+Sets the name for the DirectShape element.

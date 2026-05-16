@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinePatternElement.GetLinePattern
+Gets the LinePattern associated to this element.

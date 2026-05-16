@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevisionNumberingSequence.SetAlphanumericRevisionSettings
+Replaces the current alphanumeric revision numbering settings with the provided settings.

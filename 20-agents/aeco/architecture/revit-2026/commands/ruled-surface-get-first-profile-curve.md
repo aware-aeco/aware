@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RuledSurface.GetFirstProfileCurve
+Returns a copy of the first profile curve if it is set.

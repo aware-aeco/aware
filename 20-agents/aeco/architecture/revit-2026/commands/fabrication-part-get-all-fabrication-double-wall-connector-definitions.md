@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.GetAllFabricationDoubleWallConnectorDefinitions
+Gets all connectors that are valid to be assigned to the part for a specified double wall connector

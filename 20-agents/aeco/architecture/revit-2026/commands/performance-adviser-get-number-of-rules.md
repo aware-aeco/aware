@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PerformanceAdviser.GetNumberOfRules
+Retrieves number of performance adviser rules in the list.

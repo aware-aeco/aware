@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshFaceList.ExtractFaces
+Extracts, or removes, faces.

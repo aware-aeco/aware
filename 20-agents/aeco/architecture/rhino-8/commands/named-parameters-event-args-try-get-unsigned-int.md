@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedParametersEventArgs.TryGetUnsignedInt
+Try to get an unsigned int for a given key name

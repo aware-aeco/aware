@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GlobalParametersManager.SortParameters
+Sorts global parameters in the desired order.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterableValueProvider.IsElementIdValueSupported
+Determines whether the provide can provide an ElementId value for the given element.

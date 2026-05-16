@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveLoop.HasPlane
+Identifies if the CurveLoop is planar.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshingParameters.SubDDisplayParameters
+Gets the SubD display parameters.

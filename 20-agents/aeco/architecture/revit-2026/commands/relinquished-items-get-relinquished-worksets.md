@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RelinquishedItems.GetRelinquishedWorksets
+The elements that were relinquished by the current user.

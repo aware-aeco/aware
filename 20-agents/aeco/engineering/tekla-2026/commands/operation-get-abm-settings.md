@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetAbmSettings
+Calls the get settings functionality in the ABM numbering.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyAnalysisConstruction.GetMaterialIds
+Returns a list of ids of the associated materials to analytical construction.

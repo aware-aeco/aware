@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HatchPattern.CreatePreviewGeometry
+Creates preview line segments of the hatch pattern.

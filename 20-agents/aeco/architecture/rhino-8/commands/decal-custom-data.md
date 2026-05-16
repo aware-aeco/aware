@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Decal.CustomData
+Gets decal custom data for the current renderer. See Rhino.Plugins.RenderPlugIn.ShowDecalProperties.

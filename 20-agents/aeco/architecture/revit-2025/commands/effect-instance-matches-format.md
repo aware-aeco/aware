@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EffectInstance.MatchesFormat
+Tests whether the effect instance is appropriate for the given vertex format.

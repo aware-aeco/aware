@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraintsManager.GetPreferredConstraintOnHandle
+For ShapeDriven: Returns the RebarConstraint that has been set as preferred for the specified RebarConstrainedHandle.For FreeForm: Returns the RebarConstraint that acts on the specified RebarConstraintHandle.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExportContext.Finish
+This method is called at the very end of the export process,    after all entities were processed (or after the process was cancelled).

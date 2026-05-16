@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCExtrusionCreationData.GetLocalPlacement
+Gets the reference to the IfcLocalPlacement handle used when creating the extrusion.

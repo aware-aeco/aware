@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedParametersEventArgs.TryGetMeshParameters
+Get an MeshingParameters for the specified key

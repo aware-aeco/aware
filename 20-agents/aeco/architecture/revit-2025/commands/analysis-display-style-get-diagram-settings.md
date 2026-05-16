@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayStyle.GetDiagramSettings
+Get diagram settings object from the style.

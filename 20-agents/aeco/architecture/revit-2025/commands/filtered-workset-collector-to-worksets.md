@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilteredWorksetCollector.ToWorksets
+Returns the complete set of worksets that pass the filter(s).

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Extrusion.Profile3d
+Gets a transversal isocurve of the extruded profile.

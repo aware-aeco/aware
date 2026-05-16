@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DigitScrollerBase.MouseDown
+Respond to mouse-down events.

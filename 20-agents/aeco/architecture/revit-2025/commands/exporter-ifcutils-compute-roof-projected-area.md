@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.ComputeRoofProjectedArea
+Returns the projected area of the room, unscaled.

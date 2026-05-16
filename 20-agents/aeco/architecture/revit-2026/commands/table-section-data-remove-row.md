@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.RemoveRow
+Removes a row data at a specified index.

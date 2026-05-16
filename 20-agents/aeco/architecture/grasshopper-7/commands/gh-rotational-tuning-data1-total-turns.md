@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RotationalTuningData`1.TotalTurns
+Compute the total number of full turns from the first to the last frame.

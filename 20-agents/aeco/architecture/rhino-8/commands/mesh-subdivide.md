@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.Subdivide
+Subdivides the faces of the mesh.

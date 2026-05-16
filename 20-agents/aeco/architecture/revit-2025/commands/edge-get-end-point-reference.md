@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Edge.GetEndPointReference
+Returns a stable reference to the start or the end point of the edge.

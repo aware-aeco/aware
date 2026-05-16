@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View3D.SaveOrientation
+Converts the temporary orientation of the View3D into its saved orientation.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SunAndShadowSettings.CalculateTimeZone
+Use Revit's utilities to calculate the time zone for a given longitude and latitude.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PaddingConverter.CanConvertFrom
+Determines if the specified  can be converted to a  object

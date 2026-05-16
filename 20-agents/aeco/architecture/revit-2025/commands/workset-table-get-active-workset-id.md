@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WorksetTable.GetActiveWorksetId
+Returns the active workset's WorksetId.

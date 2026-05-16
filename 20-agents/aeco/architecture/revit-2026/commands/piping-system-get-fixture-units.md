@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PipingSystem.GetFixtureUnits
+Gets the fixture units of this piping system.

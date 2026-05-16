@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlumbingUtils.ConnectPipePlaceholdersAtElbow
+Connects placeholders that looks like elbow connection.

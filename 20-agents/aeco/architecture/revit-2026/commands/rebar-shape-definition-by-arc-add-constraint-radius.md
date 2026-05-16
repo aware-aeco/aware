@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDefinitionByArc.AddConstraintRadius
+Specify a parameter to drive the radius of the shape.

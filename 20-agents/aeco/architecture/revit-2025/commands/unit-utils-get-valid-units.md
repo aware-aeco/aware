@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UnitUtils.GetValidUnits
+Gets the identifiers of all valid units for a given measurable spec.

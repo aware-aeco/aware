@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectAttributes.HasHideInDetailOverrideSet
+Is this object supposed to be hidden in a given detail

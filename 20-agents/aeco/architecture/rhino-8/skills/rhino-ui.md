@@ -6,47 +6,78 @@ description: API reference for namespace Rhino.UI from RhinoCommon.dll
 # Rhino.UI
 
 - **CursorStyle**
+  - Standard mouse cursors in Rhino
 - **Dialogs**
 - **DistanceDisplayMode**
 - **DrawingUtilities**
+  - RhinoCommon Drawing Utilities
 - **Fonts**
+  - Rhino.Rumtime.UI
 - **GetColorEventArgs**
 - **IDialogService**
 - **IHelp**
+  - Implement this class to add help to a modeless UI panel.
 - **ILocalizationService**
 - **IPanel**
+  - Implement this interface when you want to be notified of when a panel             is shown, hidden or closed.
 - **IPanelsService**
+  - For internal use, the IPanels service is implemented in RhinoWindows             or RhinoMac as appropriate and handles the communication with core             Rhino
 - **IRhinoUiDialogService**
+  - Used by Rhino.UI.Dialogs to access generic Eto dialogs from Rhino Common
 - **IStackedDialogPageService**
+  - For internal use, the IStackedDialogPageService service is implemented in             RhinoWindows or RhinoMac as appropriate and handles the communication             with core Rhino
 - **KeyboardKey**
+  - Keyboard key recognized by shortcuts
 - **LOC**
+  - Used a placeholder which is used by LocalizationProcessor application to create contextId             mapped localized strings.
 - **Localization**
 - **LocalizeStringPair**
+  - Pair of strings used for localization.
 - **ModifierKey**
+  - Keyboard keys typically used in combination with other keys
 - **MouseButton**
 - **MouseCallback**
+  - Used for intercepting mouse events in the Rhino views.
 - **MouseCallbackEventArgs**
 - **MouseCursor**
+  - Contains static methods to control the mouse icon.
 - **NamedColor**
+  - An entry with name and color for the
 - **NamedColorList**
+  - A list of color name/value pairs.
 - **ObjectPropertiesPage**
+  - Base class used to add object property user interface panels
 - **ObjectPropertiesPageCollection**
+  - Passed to Rhino.PlugIns.PlugIn.ObjectPropertiesPages to allow a plug-in             to add custom ObjectPropertiesPage pages to the Rhino properties panel.
 - **ObjectPropertiesPageEventArgs**
 - **OpenFileDialog**
+  - Similar to the System.Windows.Forms.OpenFileDialog, but with customized             Rhino user interface.
 - **OptionPageButtons**
+  - Standard IRhinoOptionsPageButton
 - **OptionsDialogPage**
 - **PanelEventArgs**
+  - Panels.Show event arguments
 - **PanelIds**
+  - Standard Rhino panel ids.
 - **PanelType**
+  - Panel type
 - **Panels**
+  - Access to Rhino panels and register custom panels
 - **PropertyPageType**
+  - IRhinoProperties page type
 - **RhinoGetPlotWidthArgs**
+  - Argument flags passed to methods used to get Rhino plot width lists
 - **RhinoHelp**
+  - Provides access to the built in Rhino help system
 - **RhinoPageInterop**
+  - For internal use only, provides access to unmanaged core             Rhino.
 - **RhinoPlotWidthType**
+  - Supported plot width special types
 - **RhinoPlotWidthValue**
+  - Default width values used by UI objects to represent different states
 - **RuiUpdateUi**
 - **SaveFileDialog**
+  - Similar to the System.Windows.Forms.SaveFileDialog, but with customized             Rhino user interface.
 - **ShowMessageButton**
 - **ShowMessageDefaultButton**
 - **ShowMessageIcon**
@@ -54,11 +85,19 @@ description: API reference for namespace Rhino.UI from RhinoCommon.dll
 - **ShowMessageOptions**
 - **ShowMessageResult**
 - **ShowPanelEventArgs**
+  - Panels.Show event arguments
 - **ShowPanelReason**
+  - OnShowDockbar event type
 - **StackedDialogPage**
+  - Base class to inherit from for the addition of stacked dialog pages.
 - **StatusBar**
+  - Contains static methods to control the application status bar.
 - **Toolbar**
+  - Represents a toolbar in a Rhino toolbar, or .RUI, file.
 - **ToolbarFile**
+  - Represents a Rhino toolbar, or .RUI, file.
 - **ToolbarFileCollection**
+  - Represents a collection of Rhino toolbars, or .RUI, files.
 - **ToolbarGroup**
+  - Represents a toolbar group in a Rhino toolbar, or .RUI, file.
 - **WaitCursor**

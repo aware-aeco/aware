@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaReinforcement.GetBoundaryCurveIds
+Retrieves the set of curves forming the boundary of the Area Reinforcement.

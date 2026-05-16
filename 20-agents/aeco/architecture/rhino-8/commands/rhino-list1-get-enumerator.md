@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoList`1.GetEnumerator
+Constructs an enumerator that is capable of iterating over all items in this list.

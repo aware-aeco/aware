@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Control.PointFromScreen
+Converts a point from screen space to control space.

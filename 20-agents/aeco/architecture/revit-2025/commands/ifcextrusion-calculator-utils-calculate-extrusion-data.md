@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCExtrusionCalculatorUtils.CalculateExtrusionData
+Calculates the extrusion data from a collection of Revit geometry faces.

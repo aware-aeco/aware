@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssetProperty.RemoveConnectedAsset
+Removes the connected asset attached to this asset property if any.

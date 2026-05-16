@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextFields.CurveLength
+Get length of a curve given a string id

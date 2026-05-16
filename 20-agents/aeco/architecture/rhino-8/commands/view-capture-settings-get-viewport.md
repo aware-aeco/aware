@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewCaptureSettings.GetViewport
+Get RhinoViewport that this view capture settings is targeting

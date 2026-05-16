@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WorksharingUtils.GetCheckoutStatus
+Gets the ownership status of an element.

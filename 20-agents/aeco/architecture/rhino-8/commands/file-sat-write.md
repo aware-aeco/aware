@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileSat.Write
+Write a Sat file based on the contents of a RhinoDoc

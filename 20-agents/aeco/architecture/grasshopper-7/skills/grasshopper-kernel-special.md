@@ -14,17 +14,28 @@ description: API reference for namespace Grasshopper.Kernel.Special from Grassho
 - **GH_ButtonObject**
 - **GH_ButtonObjectAttributes**
 - **GH_Cluster**
+  - The Grasshopper Cluster object.
 - **GH_ClusterAttributes**
+  - Attributes for the Cluster Object.
 - **GH_ClusterAttributes_OBSOLETE**
+  - Attributes for the Cluster Object.
 - **GH_ClusterFileType**
+  - Enumerates the possible cluster reference file types.
 - **GH_ClusterHook**
+  - Abstract base class for cluster hooks.
 - **GH_ClusterHookAttributes`1**
 - **GH_ClusterInputHook**
+  - Cluster input parameter used to insert data into a Cluster document.
 - **GH_ClusterInputHookAttributes**
+  - Cluster input parameter attributes.
 - **GH_ClusterOutputHook**
+  - Cluster output parameter used to extract data from a Cluster document.
 - **GH_ClusterOutputHookAttributes**
+  - Cluster output parameter attributes.
 - **GH_ClusterProtection**
+  - Enumerates the possible protection states of the cluster.
 - **GH_Cluster_OBSOLETE**
+  - The Grasshopper Cluster object.
 - **GH_ColourPickerAttributes**
 - **GH_ColourPickerObject**
 - **GH_ColourSwatch**
@@ -32,10 +43,15 @@ description: API reference for namespace Grasshopper.Kernel.Special from Grassho
 - **GH_ColourWheel**
 - **GH_ColourWheelAttributes**
 - **GH_ColourWheelGrip**
+  - Enumerates all possible grips on a colour wheel.
 - **GH_ColourWheelState**
+  - Represents the 12 grips that are part of a colour wheel.
 - **GH_ColourWheelStyle**
+  - Enumerates all defined palette styles for colour wheels.
 - **GH_ConstantObject**
+  - Constant value object.
 - **GH_ConstantObjectAttributes**
+  - Constant value object.
 - **GH_DataRecorder**
 - **GH_DataRecorderAttributes**
 - **GH_DialKnob**
@@ -51,8 +67,11 @@ description: API reference for namespace Grasshopper.Kernel.Special from Grassho
 - **GH_GraphMapper**
 - **GH_GraphMapperAttributes**
 - **GH_Group**
+  - Represents a group of Grasshopper objects.
 - **GH_GroupAttributes**
+  - Attributes for the GH_Group object.
 - **GH_GroupBorder**
+  - Represents all possible Group borders.
 - **GH_ImageSampler**
 - **GH_ImageSamplerAttributes**
 - **GH_ItemPicker**
@@ -63,10 +82,13 @@ description: API reference for namespace Grasshopper.Kernel.Special from Grassho
 - **GH_LegendAttributes**
 - **GH_LegendData**
 - **GH_LegendType**
+  - Enumerates the possible legend display types.
 - **GH_MDSliderMode**
+  - Types of MD sliders
 - **GH_Markup**
 - **GH_MarkupAttributes**
 - **GH_MarkupCollection**
+  - Maintains a managed list of Polyline marks.
 - **GH_MarkupDashPattern**
 - **GH_MarkupProperties**
 - **GH_MultiDimensionalSlider**
@@ -76,31 +98,50 @@ description: API reference for namespace Grasshopper.Kernel.Special from Grassho
 - **GH_Panel**
 - **GH_PanelAttributes**
 - **GH_PanelProperties**
+  - Aggregates all properties of a Text Panel object.
 - **GH_ParamViewer**
 - **GH_ParamViewerAttributes**
 - **GH_PathMapper**
+  - Perform lexical operations on data trees.
 - **GH_PathMapperAttributes**
+  - Attributes for GH_PathLexer object.
 - **GH_PieChart**
+  - PieChart object.
 - **GH_PieChartAttributes**
+  - Attributes for the PieChart object.
 - **GH_PieChartDataSet**
+  - Database containing all the pairs in a single data branch.
 - **GH_PieChartPair**
+  - PieChart atomic data
 - **GH_PolylineReductionSetManager**
 - **GH_QuickGraph**
+  - A quick Graph display.
 - **GH_QuickGraphAttributes**
+  - Attributes for the QuickGraph component.
 - **GH_QuickGraphBundle**
+  - Represents a collection of one or more graph tracks and dots.
 - **GH_QuickGraphDot**
+  - Represents an open interval on a graph track.
 - **GH_QuickGraphFrame**
+  - Combines a set of useful target frame properties and methods.
 - **GH_QuickGraphSortOrder**
+  - Enumerates the ways in which samples can be sorted in quickgraphs.
 - **GH_QuickGraphTrack**
+  - Represents a contiguous collection of normalised valid samples.
 - **GH_Relay**
+  - Represents a relay object for wire organisation.
 - **GH_RelayAttributes**
+  - Attributes for the GH_Relay object.
 - **GH_SamplingFilter**
 - **GH_Scribble**
 - **GH_ScribbleAttributes**
 - **GH_SliderAnimator**
 - **GH_SuireSimplifyNode**
+  - An object for simplifying trees which also works on trees with one path.
 - **GH_SuireStyleNodeAttributes**
+  - Attributes for the Simplify node object.
 - **GH_Synchronisation**
+  - Enumerates the possible synchronisation states between a cluster instance and the cluster file.
 - **GH_TextBalloon**
 - **GH_TextBalloonAttributes**
 - **GH_Timer**
@@ -109,6 +150,7 @@ description: API reference for namespace Grasshopper.Kernel.Special from Grassho
 - **GH_ValueListAttributes**
 - **GH_ValueListItem**
 - **GH_ValueListMode**
+  - Enumerates the possible GUIs for ValueList objects.
 - **GH_ValueTimeline**
 - **GH_ValueTracker**
 - **GH_ValueTrackerAttributes**

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HiddenLineDrawing.Dispose
+Actively reclaims unmanaged resources that this instance uses.

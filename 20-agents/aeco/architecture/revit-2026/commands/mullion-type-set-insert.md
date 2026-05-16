@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MullionTypeSet.Insert
+Insert the specified mullion type into the set.

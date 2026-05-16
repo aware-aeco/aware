@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlugIn.LoadComputeExtensionPlugins
+Used by compute's startup code to load plug-ins that have registered custom endpoints

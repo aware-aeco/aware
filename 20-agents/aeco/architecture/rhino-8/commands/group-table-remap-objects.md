@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroupTable.RemapObjects
+Remaps an enumeration of Rhino objects to new groups.

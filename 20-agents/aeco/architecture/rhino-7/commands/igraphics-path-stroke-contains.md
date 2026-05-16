@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGraphicsPath.StrokeContains
+Gets a value indicating that the spedified  is on the path when stroked with the specified

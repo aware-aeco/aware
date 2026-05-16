@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AlphanumericRevisionSettings.IsValid
+Determines whether the AlphanumericRevisionSettings object is in a valid state.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-STLExportOptions.SetTessellationSettings
+Sets all the tessellation parameters to its predefined values for the given resolution type.

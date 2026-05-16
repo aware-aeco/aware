@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleData.UpdateIsSectionHidden
+Update if this section is hidden or not

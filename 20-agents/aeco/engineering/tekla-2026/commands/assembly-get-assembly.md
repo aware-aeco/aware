@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Assembly.GetAssembly
+Returns the assembly instance the assembly belongs to (null if none).

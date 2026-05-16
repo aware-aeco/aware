@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPSystem.Remove
+Remove elements from system.

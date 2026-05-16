@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentObject.TriggerAutoSave
+Triggers the AutoSave function on the owner document with the object_changed flag.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ISharingCalls.GetUpdatesAsync
+Implements .

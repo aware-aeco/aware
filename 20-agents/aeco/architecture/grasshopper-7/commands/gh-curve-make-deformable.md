@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Curve.MakeDeformable
+Converts the local geometry into deformable nurbs curve geometry.   This method will not destroy Reference data.

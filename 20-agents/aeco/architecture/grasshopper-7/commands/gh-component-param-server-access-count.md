@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentParamServer.AccessCount
+Returns the total number of input parameters that match the access mask.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarTrimExtendData.ClearAllAddedBarGeometry
+This function will remove all bars geometry that were added by calling AddBarGeometry().

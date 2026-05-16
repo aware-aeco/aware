@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CssStyle.FormatCss
+Format the style as CSS code.

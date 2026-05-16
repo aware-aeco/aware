@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AdaptiveComponentFamilyUtils.GetNumberOfPlacementPoints
+Gets number of Placement Point Elements in Adaptive Component Family.

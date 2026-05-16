@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelPathUtils.ConvertModelPathToUserVisiblePath
+Gets a string version of the path of a given ModelPath.

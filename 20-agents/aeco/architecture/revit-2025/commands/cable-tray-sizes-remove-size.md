@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableTraySizes.RemoveSize
+Erases the existing MEPSize.    For cable tray, the nominal diameter is used in MEPSize.

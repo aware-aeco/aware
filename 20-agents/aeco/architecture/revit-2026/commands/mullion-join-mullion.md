@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mullion.JoinMullion
+This method is used to control the join condition the current Mullion with its neighboring mullions.

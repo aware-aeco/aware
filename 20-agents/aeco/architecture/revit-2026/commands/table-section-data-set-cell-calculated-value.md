@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.SetCellCalculatedValue
+Allows the caller to set the calculated value for a specified column

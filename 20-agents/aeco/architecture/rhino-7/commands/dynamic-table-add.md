@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DynamicTable.Add
+Add the specified item to the current row

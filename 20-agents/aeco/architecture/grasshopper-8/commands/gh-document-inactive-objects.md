@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.InactiveObjects
+Returns all objects in the document that don't implement the IGH_ActiveObject interface

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.NewArea
+Creates a new area

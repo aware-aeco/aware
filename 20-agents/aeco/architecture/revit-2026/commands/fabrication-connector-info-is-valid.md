@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConnectorInfo.IsValid
+Checks if the connector has fabrication parameters associated with it that can be set.

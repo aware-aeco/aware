@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalResourceLoadContext.CallingDocumentHasModelPath
+Indicates whether the document requesting the external resource has a defined    ModelPath.

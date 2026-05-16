@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UITimer.Stop
+Stops a running timer

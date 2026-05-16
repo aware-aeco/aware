@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoApp.InvokeOnUiThread
+Execute a function on the main UI thread.

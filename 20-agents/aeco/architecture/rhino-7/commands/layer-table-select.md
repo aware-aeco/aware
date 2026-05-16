@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LayerTable.Select
+Selects layers in the Layer user interface.

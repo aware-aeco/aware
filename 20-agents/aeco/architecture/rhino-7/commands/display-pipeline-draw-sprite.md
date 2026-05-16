@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawSprite
+Draw screen oriented image centered at 2d screen location

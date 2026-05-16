@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GraphicsPathExtensions.AddLine
+Adds a line to the path

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.Flip
+Flips the fabrication part that is directionally oriented (tees, crosses, valves, dampers, etc.) to the opposite direction.

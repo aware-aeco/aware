@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PreviewUtil.AddVector
+Add a vector to the temporary Preview lists.

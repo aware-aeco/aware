@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHMeshFace_Primary
+Converts similar data into a GH_MeshFace instance.  Data is not quaranteed to be duplicated.

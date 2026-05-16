@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalMember.GetReleaseType
+Gets the release type.

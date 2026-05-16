@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.NewFlexPipe
+Adds a new flexible pipe into the document,  using two connector, and flexible pipe type.

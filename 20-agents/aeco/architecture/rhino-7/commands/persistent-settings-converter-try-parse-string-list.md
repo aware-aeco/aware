@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PersistentSettingsConverter.TryParseStringList
+Attempts to convert a string to a string value list.

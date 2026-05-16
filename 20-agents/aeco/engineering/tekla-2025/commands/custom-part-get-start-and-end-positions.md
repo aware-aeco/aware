@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CustomPart.GetStartAndEndPositions
+Returns the start and end points of the custom part.

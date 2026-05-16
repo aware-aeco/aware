@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayPoint2d.Dispose
+Actively reclaims unmanaged resources that this instance uses.

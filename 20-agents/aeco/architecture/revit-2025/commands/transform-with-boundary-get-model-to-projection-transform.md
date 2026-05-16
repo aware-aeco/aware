@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TransformWithBoundary.GetModelToProjectionTransform
+Gets the model space to view projection space transform.

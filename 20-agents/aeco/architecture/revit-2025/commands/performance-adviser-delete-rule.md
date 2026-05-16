@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PerformanceAdviser.DeleteRule
+Deletes a performance adviser rule from the list of rules.

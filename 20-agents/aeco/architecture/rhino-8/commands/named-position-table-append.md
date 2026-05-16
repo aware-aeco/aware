@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedPositionTable.Append
+Append objects to a Named Position.

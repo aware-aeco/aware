@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewportInfo.DollyFrustum
+Moves the frustum clipping planes.

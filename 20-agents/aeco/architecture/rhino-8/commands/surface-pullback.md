@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.Pullback
+Pulls a 3d curve back to the surface's parameter space.

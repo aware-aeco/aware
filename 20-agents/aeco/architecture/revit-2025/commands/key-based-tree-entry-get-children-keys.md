@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-KeyBasedTreeEntry.GetChildrenKeys
+Gets a collection containing the keys of all children entry objects from this entry.

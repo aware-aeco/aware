@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricSheetType.SetMinorLayoutAsActualSpacing
+Sets the minor layout pattern as ActualSpacing, while specifying the needed parameters for this pattern.

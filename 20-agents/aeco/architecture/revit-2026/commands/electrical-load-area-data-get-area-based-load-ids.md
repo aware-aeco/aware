@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalLoadAreaData.GetAreaBasedLoadIds
+Gets the area based load ids of the electrical load area to be included.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Box.ToBrep
+Constructs a brep representation of this box.

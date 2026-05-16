@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interop.ToOnSurface
+Constructs a Rhino_DotNet OnSurface that is a copy of a given curve.

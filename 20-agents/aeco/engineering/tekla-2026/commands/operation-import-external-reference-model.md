@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.ImportExternalReferenceModel
+Imports external reference model.

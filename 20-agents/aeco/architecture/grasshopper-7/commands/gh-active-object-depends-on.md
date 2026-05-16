@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ActiveObject.DependsOn
+Returns a boolean indicating whether or not the current object somehow inherits from the PotenialSource object

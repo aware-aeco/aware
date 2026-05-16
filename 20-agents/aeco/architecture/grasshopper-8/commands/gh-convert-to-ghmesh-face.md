@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHMeshFace
+Convert data into GH_MeshFaces.

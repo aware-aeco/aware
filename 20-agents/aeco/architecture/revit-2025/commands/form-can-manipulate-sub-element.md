@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Form.CanManipulateSubElement
+Tell if a sub element can be deleted/moved/rotated/scaled.

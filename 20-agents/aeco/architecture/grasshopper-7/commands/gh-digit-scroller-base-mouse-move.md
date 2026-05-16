@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DigitScrollerBase.MouseMove
+Respond to mouse-move events.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SchemaBuilder.Ready
+Checks whether the builder may be used.

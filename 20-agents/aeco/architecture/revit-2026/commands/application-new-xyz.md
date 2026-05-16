@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewXYZ
+Creates a XYZ object at the origin.

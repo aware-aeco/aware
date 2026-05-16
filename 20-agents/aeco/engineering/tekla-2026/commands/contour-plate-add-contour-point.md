@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ContourPlate.AddContourPoint
+Adds a contour point to the contour plate.

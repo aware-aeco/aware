@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_GeometricGoo.DuplicateGeometry
+Make a complete duplicate of this geometry. No shallow copies.

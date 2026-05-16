@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewPlan.SetUnderlayOrientation
+Sets the underlay orientation for this view.

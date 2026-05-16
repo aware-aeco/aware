@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.Intersect
+Calculates the intersection of this curve with the specified curve and returns the intersection results.

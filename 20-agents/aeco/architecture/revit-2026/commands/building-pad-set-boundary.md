@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BuildingPad.SetBoundary
+Set a given curve loops as the boundary of the current BuildingPad element.

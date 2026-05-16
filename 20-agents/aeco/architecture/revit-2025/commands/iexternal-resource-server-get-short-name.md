@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExternalResourceServer.GetShortName
+Implement this method to return the short name of the server.

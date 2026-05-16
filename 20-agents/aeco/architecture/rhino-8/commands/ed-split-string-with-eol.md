@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Ed.SplitStringWithEol
+Split string with Eol and return as a collection

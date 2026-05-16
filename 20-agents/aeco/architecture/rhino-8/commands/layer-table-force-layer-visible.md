@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LayerTable.ForceLayerVisible
+Makes a layer and all of its parent layers visible.

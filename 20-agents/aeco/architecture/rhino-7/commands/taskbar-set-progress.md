@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Taskbar.SetProgress
+Sets the state and progress of the application.

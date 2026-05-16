@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderWindow.EndAsyncRender
+Must be called when an asynchronous render has finished or ended for any reason.

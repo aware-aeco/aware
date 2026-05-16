@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroundConductorSizeSet.Insert
+Insert the specified GroundConductorSize into the set.

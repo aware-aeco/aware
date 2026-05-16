@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointIterator.Reset
+Resets the iterator to the beginning of the collection.

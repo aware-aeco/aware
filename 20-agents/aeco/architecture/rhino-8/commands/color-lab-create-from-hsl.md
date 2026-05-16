@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorLAB.CreateFromHSL
+Create the nearest LAB equivalent of an HSL color.

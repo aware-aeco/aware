@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.MostRecentObject
+Gets the most recently added object that is still in the Document.

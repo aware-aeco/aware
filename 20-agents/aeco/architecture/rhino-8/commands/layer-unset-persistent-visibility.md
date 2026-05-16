@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Layer.UnsetPersistentVisibility
+Remove any explicit persistent visibility setting from this layer

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TemperatureRatingTypeSet.Insert
+Insert the specified TemperatureRating type into the set.

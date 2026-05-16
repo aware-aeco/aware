@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ContentUI.EditorUuid
+Get the unique identifier of the editor that the UI is being displayed in.

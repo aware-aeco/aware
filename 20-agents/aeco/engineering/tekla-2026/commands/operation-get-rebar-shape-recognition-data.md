@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetRebarShapeRecognitionData
+Gets the rebar shape recognition data required by certain Construsoft plugins.

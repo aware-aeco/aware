@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConceptualSurfaceType.GetAllMassSubCategoryIds
+Get all the mass subcategory ids for which there are ConceptualSurfaceType's.

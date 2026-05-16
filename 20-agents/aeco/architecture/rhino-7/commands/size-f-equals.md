@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SizeF.Equals
+Compares this size to the specified

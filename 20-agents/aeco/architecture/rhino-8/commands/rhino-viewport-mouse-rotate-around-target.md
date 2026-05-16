@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.MouseRotateAroundTarget
+Rotates the viewport around target.

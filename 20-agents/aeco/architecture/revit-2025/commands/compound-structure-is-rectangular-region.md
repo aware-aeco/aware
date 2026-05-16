@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.IsRectangularRegion
+Determines whether the specified region is rectangular.

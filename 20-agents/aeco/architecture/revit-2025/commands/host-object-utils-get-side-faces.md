@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostObjectUtils.GetSideFaces
+Returns the major side faces for this host object.

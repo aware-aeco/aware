@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PreviewAppearance.Size
+Size - used in the UI.  Always meters.

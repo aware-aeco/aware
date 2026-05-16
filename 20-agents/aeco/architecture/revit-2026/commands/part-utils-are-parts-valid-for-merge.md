@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PartUtils.ArePartsValidForMerge
+Identifies whether Part elements may be merged.

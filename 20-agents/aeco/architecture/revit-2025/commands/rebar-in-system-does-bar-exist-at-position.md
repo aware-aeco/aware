@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarInSystem.DoesBarExistAtPosition
+Checks whether a bar is included at the specified position.

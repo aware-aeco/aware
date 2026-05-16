@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Extrusion.WallEdge
+Gets one of the longitudinal curves along the beam or extrusion.

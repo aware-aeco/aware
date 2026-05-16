@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotExportClearAttributeFileCache
+Clears cached file system for the subfolder "attributes" to take recent changes into account when files are requested next time.

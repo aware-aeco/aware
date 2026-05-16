@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FlatBufferBuilder.AddBool
+Add a `bool` to the buffer (aligns the data and grows if necessary).

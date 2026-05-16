@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightFamily.SetLightShapeStyle
+Set the light shape style to the given shape style

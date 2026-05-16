@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CustomObject.GetCustomObjectTypeAppliedAttributes
+Gets applied attributes for the custom object type.

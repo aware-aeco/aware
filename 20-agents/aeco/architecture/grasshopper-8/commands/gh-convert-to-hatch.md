@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToHatch
+Convert data into Rhino.Geometry.Hatch.

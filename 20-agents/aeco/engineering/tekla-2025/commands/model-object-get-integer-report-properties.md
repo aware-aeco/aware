@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObject.GetIntegerReportProperties
+Retrieves multiple integer report properties for the model object. It is faster             to fetch multiple properties at once.

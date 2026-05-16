@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Container.RemoveAll
+Removes all controls from this container

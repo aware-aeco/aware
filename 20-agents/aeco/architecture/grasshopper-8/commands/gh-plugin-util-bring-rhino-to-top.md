@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PluginUtil.BringRhinoToTop
+Bring the Rhino window to the top of the stack.

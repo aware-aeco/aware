@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PixelLayout.GetLocation
+Gets the location of the control in the container

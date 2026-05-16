@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Graphics.DrawArc
+Draws a 1 pixel wide arc with the specified

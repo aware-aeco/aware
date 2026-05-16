@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaLoad.IsCurveLoopsInsideHostBoundaries
+Checks if contour loops is inside host boundaries.

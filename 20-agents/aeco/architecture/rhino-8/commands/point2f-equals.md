@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point2f.Equals
+Determines whether the specified System.Object is a  and has the same values as the present point.

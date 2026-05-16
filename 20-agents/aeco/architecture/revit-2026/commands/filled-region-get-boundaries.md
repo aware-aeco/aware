@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilledRegion.GetBoundaries
+Gets the boundaries.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.CreateGUID
+Creates a randomized GUID.

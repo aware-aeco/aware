@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-VertexStreamPositionNormalColored.AddVertices
+Inserts multiple  instances into the stream and associated buffer.

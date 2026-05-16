@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentEditor.ScriptAccess_SaveDocumentAs
+Saves the currently active document to disk.

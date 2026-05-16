@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexList.GetVertexFaces
+Gets a list of all of the faces that share a given vertex.

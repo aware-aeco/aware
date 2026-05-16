@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DialKnob.Angle
+Compute the angle in radians of the dial (clockwise, starting at y-up)   for the current value.

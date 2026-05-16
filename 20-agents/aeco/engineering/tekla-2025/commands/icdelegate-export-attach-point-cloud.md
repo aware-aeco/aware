@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportAttachPointCloud
+DO NOT USE! For internal usage only!

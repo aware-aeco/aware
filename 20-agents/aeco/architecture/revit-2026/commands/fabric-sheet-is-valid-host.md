@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricSheet.IsValidHost
+Checks whether an element is a valid host for fabric sheet.

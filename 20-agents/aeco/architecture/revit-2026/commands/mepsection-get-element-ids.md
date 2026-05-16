@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPSection.GetElementIds
+Gets all element ids that are contained in the section.

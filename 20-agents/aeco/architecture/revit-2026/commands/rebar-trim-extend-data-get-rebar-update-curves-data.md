@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarTrimExtendData.GetRebarUpdateCurvesData
+Gets a class that contains information used as input and output for rebar free form calculation.

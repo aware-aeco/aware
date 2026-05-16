@@ -6,30 +6,55 @@ description: API reference for namespace Grasshopper.Kernel.Geometry from Grassh
 # Grasshopper.Kernel.Geometry
 
 - **Circle2**
+  - Represents a circle, defined by origin and radius
 - **Containment**
+  - Represents point|shape relationship types.
 - **GH_CurveOffset**
+  - Utility class for computing curve offsets a la Grasshopper.
 - **GH_CurveOffsetCorner**
+  - Enumerates all possible corner cases for curve offsets
 - **GH_SanityXForm**
 - **Line2**
+  - Represents a single, two-dimensional line segment.
 - **Line3**
+  - Represents a single, three-dimensional line segment.
 - **LineCircleX**
+  - Enumerates all possible solutions to the intersection event of a circle and an infinite line segment.
 - **LineX**
+  - Enumerates all possible solutions to the intersection event of two lines.
 - **Node2**
+  - Represents a single, two-dimensional coordinate with index specifier.
 - **Node2Leaf**
+  - Represents a single element in a recursive quad-tree Node structure.
 - **Node2List**
+  - Represents a list of (un)sorted nodes.
 - **Node2Proximity**
+  - Maintains settings and results for node proximity searches.
 - **Node2Tree**
+  - Frontend for a recursive Quad-tree Node structure.
 - **Node3**
+  - Represents a single, three-dimensional coordinate with index specifier.
 - **Node3Leaf**
+  - Represents a single element in a recursive Oc-tree Node structure.
 - **Node3List**
+  - Represents a list of (un)sorted nodes.
 - **Node3Proximity**
+  - Maintains settings and results for node proximity searches.
 - **Node3Tree**
+  - Frontend for a recursive Oc-tree Node structure.
 - **Parallax**
+  - Represents parallax solutions for 2 vector directions.
 - **Plane**
 - **PointCloud**
+  - Maintains an R-Tree of 3D points.
 - **Rectangle2**
+  - Represents a single, two-dimensional, orthogonal rectangle.
 - **Region2**
+  - Represents a closed, convex region.
 - **SamplingRegion**
 - **Side2**
+  - Enumerates all possible relationships between a point and a line in 2D.
 - **Vec2**
+  - Represents a single, two-dimensional vector.
 - **Vec3**
+  - Represents a single, three-dimensional vector.

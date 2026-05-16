@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoList`1.CopyTo
+Copies the entire List to a compatible one-dimensional array,              starting at the beginning of the target array.

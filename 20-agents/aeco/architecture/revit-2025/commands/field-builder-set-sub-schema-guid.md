@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FieldBuilder.SetSubSchemaGUID
+Sets the GUID of the Schema of the Entities that are intended to be stored in this field.

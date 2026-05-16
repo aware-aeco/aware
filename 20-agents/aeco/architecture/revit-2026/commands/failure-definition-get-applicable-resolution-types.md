@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureDefinition.GetApplicableResolutionTypes
+Retrieves a list of resolution types applicable to the failure.

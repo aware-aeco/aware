@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Cursors.ClearCache
+Clears the cursor cache

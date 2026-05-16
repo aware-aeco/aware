@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Conduit.Create
+Creates a new instance of conduit.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Matrix.FromTranslation
+Creates a new matrix with a translation

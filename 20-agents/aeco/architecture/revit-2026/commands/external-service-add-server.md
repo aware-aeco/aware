@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalService.AddServer
+Registers a server with its service.

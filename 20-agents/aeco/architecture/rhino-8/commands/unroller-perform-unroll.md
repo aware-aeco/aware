@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Unroller.PerformUnroll
+Executes unrolling operations.

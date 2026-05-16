@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIApplication.PostCommand
+Posts the command to the Revit message queue to be invoked when control returns from the current API context.

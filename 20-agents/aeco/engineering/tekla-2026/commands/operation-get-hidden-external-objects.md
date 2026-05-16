@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetHiddenExternalObjects
+Gets the hidden objects of the external reference models.

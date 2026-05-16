@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveElement.CreateAreaBasedLoadBoundaryLines
+Creates area based load boundary lines.

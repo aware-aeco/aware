@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateBlendSurface
+Makes a surface blend between two surface edges.

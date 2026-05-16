@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ConnectivityDiagram.GetAllInputs
+Get all the Nodes that are part of the specified node input.

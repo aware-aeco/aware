@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.GetWorldToScreenScale
+Gets the world to screen size scaling factor at a point in frustum.

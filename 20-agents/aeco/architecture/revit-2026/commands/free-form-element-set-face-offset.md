@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FreeFormElement.SetFaceOffset
+Offsets a planar face of the free form element a certain distance in the normal direction.

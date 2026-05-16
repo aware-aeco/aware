@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeomCombinationSet.Erase
+Removes a specified GeomCombination from the set.

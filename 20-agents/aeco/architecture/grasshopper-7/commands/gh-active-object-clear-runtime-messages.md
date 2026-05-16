@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ActiveObject.ClearRuntimeMessages
+Destroy all warning and error lists

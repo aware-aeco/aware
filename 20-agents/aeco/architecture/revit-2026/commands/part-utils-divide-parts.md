@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PartUtils.DivideParts
+Creates divided parts out of parts.

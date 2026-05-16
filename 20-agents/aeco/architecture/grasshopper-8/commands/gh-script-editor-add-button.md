@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ScriptEditor.AddButton
+Adds another button to the toolbar. Buttons should be added before the form is shown.

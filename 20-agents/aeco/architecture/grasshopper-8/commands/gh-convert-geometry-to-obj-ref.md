@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.GeometryToObjRef
+Create an ObjRef for a referenced IGH_GeometricGoo.  Unreferenced IGH_GeometryGoo will return null.

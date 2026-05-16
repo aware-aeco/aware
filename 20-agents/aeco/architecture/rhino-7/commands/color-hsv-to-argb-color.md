@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorHSV.ToArgbColor
+Convert HSV color to an equivalent System.Drawing.Color.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewFBXExportOptions
+Creates 3D-Studio Max (FBX) Export options.

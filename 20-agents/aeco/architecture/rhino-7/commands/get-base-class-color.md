@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetBaseClass.Color
+Gets a color if Get*() returns GetResult.Color.

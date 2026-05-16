@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SolidSolidCutUtils.CutExistsBetweenElements
+Checks that if there is a solid-solid cut between two elements.

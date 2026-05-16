@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CircuitNamingSchemeSettings.GetCircuitNamingSchemeSettings
+Gets the circuit naming scheme settings of the project.

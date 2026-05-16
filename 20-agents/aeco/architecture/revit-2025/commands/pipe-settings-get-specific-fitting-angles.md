@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PipeSettings.GetSpecificFittingAngles
+Gets the list of specific fitting angles.

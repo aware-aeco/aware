@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshNgonList.NgonHasHoles
+Determines whether a ngon has holes.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FillGrid.GetSegments
+Gets the segments of the fill grid.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryTree.AddEdge
+Adds a connection between two geometry nodes in this GeometryTree.             If needed, the nodes are first added to this GeometryTree.

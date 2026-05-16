@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-KeyBasedTreeEntriesLoadContent.GetEntries
+Gets a copy of KeyBasedTreeEntries object owned by this KeyBasedTreeEntriesLoadContent object.

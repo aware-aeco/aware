@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_StringList`1.BuildCache
+Measures all the items in the collection using the specified formatting domain and font.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferencePoint.GetHubId
+Id of associated Hub.

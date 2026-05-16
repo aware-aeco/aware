@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_InstanceReference.DuplicateInstanceReference
+Create a duplicate of this GH_InstanceReference.

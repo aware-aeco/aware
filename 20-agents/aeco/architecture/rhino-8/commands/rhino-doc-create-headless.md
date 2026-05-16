@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoDoc.CreateHeadless
+Create a new headless RhinoDoc from a template file

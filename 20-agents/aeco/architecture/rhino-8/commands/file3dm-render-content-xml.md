@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmRenderContent.XML
+Gets the render content's state as an XML string.

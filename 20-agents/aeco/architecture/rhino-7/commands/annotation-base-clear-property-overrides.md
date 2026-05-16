@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnnotationBase.ClearPropertyOverrides
+Clears all overridden properties for this annotation

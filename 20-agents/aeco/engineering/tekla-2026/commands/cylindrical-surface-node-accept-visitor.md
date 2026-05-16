@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CylindricalSurfaceNode.AcceptVisitor
+Entry method for the visitor pattern

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlumbingUtils.ConnectPipePlaceholdersAtCross
+Connects placeholders that looks like Cross connection.

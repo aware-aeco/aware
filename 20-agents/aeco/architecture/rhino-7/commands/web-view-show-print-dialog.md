@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WebView.ShowPrintDialog
+Shows the print dialog for the current page.

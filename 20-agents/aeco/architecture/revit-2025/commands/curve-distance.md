@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.Distance
+Returns the shortest distance from the specified point to this curve.

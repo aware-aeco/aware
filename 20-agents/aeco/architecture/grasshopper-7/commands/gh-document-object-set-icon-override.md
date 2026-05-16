@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentObject.SetIconOverride
+Set a new custom icon override for this object.

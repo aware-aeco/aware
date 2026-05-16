@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalResourceServerUtils.ServerSupportsKeynotes
+Checks that the server referenced by the given ExternalResourceReference supports    KeynoteTable data.

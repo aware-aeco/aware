@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Building.GetSpaces
+Gets all spaces belonging to this building.

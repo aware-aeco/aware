@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Group.UngroupMembers
+Ungroups the group.

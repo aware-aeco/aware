@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssemblyViewUtils.CreateSheet
+Creates a new sheet assembly view for the assembly instance.

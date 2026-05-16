@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDefinition.GetParameterDefaultValue
+Return the parameter's default value as stored in the definition.

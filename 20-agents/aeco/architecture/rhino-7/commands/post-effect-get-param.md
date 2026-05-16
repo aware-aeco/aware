@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PostEffect.GetParam
+Get a parameter.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyAnalysisDetailModel.GetAnalyticalOpenings
+The collection of analytical openings.

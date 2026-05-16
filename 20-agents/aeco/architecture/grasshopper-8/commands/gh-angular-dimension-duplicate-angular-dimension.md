@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_AngularDimension.DuplicateAngularDimension
+Create a duplicate of this angular dimension.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.TryFindPoint
+Finds the location of a point, if a point exists in the document.

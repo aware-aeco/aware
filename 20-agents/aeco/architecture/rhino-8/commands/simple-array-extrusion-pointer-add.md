@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayExtrusionPointer.Add
+Adds a extrusion to the list.

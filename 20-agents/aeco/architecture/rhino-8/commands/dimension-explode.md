@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Dimension.Explode
+Explodes this dimension into its geometric components.

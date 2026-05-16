@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.AddAcceptedFinish
+Accept finish that is against fabricator settings.

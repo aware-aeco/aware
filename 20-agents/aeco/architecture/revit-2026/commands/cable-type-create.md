@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableType.Create
+Creates a Cable Type.

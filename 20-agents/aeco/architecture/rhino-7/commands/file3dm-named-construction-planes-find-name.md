@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmNamedConstructionPlanes.FindName
+Finds a named construction plane given its name.

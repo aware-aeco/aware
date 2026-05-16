@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEvents.OnViewClosed
+Called when a view is closed.

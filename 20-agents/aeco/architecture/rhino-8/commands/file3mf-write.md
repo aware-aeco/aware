@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3mf.Write
+Write a 3mf file based on the contents of a RhinoDoc

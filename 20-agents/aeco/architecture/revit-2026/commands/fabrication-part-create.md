@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.Create
+Creates a fabrication part element from a fabrication item file.

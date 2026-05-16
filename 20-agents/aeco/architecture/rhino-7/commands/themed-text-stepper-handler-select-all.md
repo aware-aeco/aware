@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedTextStepperHandler.SelectAll
+Selects all of the text in the control.

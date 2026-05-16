@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinearDimension.Create
+Creates a new instance of an Linear Dimension element within the project.

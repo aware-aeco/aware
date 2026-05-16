@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TimeZone.TimeZones
+Returns number of available time zones.

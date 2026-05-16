@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToPointCloud_Secondary
+Attempts to convert other data types into an Rhino.Geometry.PointCloud.   Data is not quaranteed to be duplicated.

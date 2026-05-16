@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmViewTable.Contains
+Returns an indication of the presence of a view in the table.

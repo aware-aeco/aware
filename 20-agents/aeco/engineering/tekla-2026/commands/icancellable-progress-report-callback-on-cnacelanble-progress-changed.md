@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICancellableProgressReportCallback.OnCnacelanbleProgressChanged
+Called when a progress is updated.

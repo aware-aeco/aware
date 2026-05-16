@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewPlan.Create
+Creates a new ViewPlan.

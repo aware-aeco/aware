@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.Reverse
+Reverses parameterization Domain changes from [a,b] to [-b,-a]

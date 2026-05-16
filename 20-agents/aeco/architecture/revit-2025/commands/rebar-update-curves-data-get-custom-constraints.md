@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarUpdateCurvesData.GetCustomConstraints
+Gets all rebar constraints that are attached to custom handles for this rebar.

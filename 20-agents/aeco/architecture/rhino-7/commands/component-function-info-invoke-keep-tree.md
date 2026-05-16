@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ComponentFunctionInfo.InvokeKeepTree
+Runs  with keepTree equal to true and raises an exception on the first warning.

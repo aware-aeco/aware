@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourWheelState.GripAtPoint
+Find the grip near a point. Whether or not a grip is considered depends on the Style of this wheel.

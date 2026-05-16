@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportShadowArea
+DO NOT USE! For internal usage only!

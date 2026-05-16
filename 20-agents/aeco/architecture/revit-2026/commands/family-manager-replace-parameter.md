@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyManager.ReplaceParameter
+Replace a shared family parameter with a new non-shared family parameter.

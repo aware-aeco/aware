@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHCurve
+Convert data into GH_Curves.

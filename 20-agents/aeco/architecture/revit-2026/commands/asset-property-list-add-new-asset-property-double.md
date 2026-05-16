@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssetPropertyList.AddNewAssetPropertyDouble
+Adds a new AssetPropertyDouble containing the input value to this list.

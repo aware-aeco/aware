@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadGroup.Delete
+Deletes the load group instance with the given ID from the model database.

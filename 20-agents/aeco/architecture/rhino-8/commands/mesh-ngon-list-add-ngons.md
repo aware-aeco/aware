@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshNgonList.AddNgons
+Appends a list of ngons to the end of the mesh ngon list.

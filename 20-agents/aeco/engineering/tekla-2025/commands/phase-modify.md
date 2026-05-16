@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Phase.Modify
+Modifies a phase.

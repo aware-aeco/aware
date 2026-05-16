@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalElement.GetCurve
+Returns the curve of the Analytical Element.

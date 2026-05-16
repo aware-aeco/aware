@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPartRouteEnd.CreateFromCenterline
+Create fabrication routing end from centerline point on straight element.

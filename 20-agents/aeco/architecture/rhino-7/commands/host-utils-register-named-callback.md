@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostUtils.RegisterNamedCallback
+Register a named callback

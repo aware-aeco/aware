@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentServer.NextAvailableDocument
+Gets the most important, non-active document.

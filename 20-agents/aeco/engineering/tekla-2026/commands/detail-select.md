@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Detail.Select
+Selects a detail from the model database. The detail ID must be set.

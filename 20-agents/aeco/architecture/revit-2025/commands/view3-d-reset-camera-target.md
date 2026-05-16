@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View3D.ResetCameraTarget
+Resets the camera target to the center of the field of view.

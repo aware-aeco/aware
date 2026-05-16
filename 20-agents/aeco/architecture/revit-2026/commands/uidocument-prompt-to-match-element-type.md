@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIDocument.PromptToMatchElementType
+Prompts the user to select elements to change them to the input type.

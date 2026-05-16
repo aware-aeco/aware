@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Node3List.Remove
+Remove a single node from this list. Sorting flags are maintained but caches are destroyed.

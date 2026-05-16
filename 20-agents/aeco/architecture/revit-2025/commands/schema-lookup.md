@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Schema.Lookup
+Finds the Schema corresponding to the GUID in memory.

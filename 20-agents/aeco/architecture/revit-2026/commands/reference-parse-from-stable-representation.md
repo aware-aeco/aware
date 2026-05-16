@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Reference.ParseFromStableRepresentation
+Converts a stable String representation of a reference to a Reference object.

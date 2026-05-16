@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewportInfo.UnlockFrustumSymmetry
+Unlocks frustum horizontal and vertical symmetries.

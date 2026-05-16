@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPFamilyConnectorInfo.GetConnectorParameterValue
+Gets the parameter value of the specified connector parameter id.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightType.SetLightShape
+Replace the current LightShape object with the given object

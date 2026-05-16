@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraint.FlipHandleOverTarget
+Flips the RebarConstrainedHandle to the other side of the target bar handle, maintaining the distance in absolute value.

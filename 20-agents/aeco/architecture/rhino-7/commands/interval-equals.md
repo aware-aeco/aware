@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interval.Equals
+Determines whether the specified  is equal to the current ,             comparing by value.

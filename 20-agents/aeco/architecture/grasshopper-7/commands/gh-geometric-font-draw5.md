@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GeometricFont.Draw5
+Draw the geometric character '5' at the specified location.

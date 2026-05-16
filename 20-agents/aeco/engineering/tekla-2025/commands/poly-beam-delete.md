@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolyBeam.Delete
+Deletes the polybeam instance with the given identifier from the model database.

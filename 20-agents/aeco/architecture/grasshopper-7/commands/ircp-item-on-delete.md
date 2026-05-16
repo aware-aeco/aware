@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IRcpItem.OnDelete
+This method will be called when the RcpItem is removed from the remote panel.

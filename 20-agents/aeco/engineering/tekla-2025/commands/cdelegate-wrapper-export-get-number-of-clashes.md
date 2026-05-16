@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetNumberOfClashes
+DO NOT USE! For internal usage only!

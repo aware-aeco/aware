@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportSetProperty
+DO NOT USE! For internal usage only!

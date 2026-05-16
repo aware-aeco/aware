@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PreviewUtil.Clear
+Clear all temporary geometry.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.Transpose
+Transposes surface parameterization (swap U and V)

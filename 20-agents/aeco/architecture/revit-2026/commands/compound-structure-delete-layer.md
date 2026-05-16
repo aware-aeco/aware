@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.DeleteLayer
+Deletes the specified layer from this CompoundStructure.

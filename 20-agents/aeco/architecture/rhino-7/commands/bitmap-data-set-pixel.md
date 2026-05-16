@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BitmapData.SetPixel
+Sets the pixel color at the specified .

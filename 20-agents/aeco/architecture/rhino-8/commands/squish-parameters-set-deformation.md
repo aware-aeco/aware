@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SquishParameters.SetDeformation
+Sets the squish deformation characteristics

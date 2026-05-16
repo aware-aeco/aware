@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TrulyObservableOrderedSet`1.Add
+Adds an object to the end of the ordered set if the set does not already contain the item.

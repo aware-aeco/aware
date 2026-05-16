@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BimModelDataProductClient.GetModelsAsync
+Asynchronously retrieves BIM models from the Bim Model Data Product service.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OptionalFunctionalityUtils.IsDXFExportAvailable
+Checks whether the DXF Export functionality is available in the installed Revit.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConnectorElement.IsSystemClassificationValid
+Checks that the MEPSystemType is valid for the domain of connector.

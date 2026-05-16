@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CreateFromIterativeCleanup
+Repairs meshes with vertices that are too near, using a tolerance value.

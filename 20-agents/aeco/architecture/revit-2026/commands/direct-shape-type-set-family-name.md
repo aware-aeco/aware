@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShapeType.SetFamilyName
+Sets the family name for the DirectShapeType.

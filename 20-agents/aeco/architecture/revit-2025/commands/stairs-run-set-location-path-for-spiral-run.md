@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StairsRun.SetLocationPathForSpiralRun
+Set Location path for a spiral run.

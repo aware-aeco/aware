@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentEditor.ScriptAccess_OpenDocument
+Displays a command line interface for File Open... then loads that file into the Canvas.

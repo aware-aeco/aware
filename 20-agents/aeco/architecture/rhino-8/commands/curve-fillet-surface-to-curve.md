@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.FilletSurfaceToCurve
+Creates a constant-radius fillet surface between a surface and the curve.

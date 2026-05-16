@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepTrim.GetTrimParameter
+Get corresponding trim parameter at given edge parameter.

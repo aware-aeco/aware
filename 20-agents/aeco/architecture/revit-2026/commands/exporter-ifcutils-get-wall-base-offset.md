@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.GetWallBaseOffset
+Obtains the base offset of the wall.

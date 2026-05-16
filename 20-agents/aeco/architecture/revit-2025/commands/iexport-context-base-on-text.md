@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExportContextBase.OnText
+This method is called when a text annotation object is being output.

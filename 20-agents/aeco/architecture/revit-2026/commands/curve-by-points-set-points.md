@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveByPoints.SetPoints
+Change the sequence of points interpolated by this curve.

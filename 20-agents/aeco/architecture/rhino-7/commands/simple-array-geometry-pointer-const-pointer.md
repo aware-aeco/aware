@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayGeometryPointer.ConstPointer
+Gets the constant (immutable) pointer of this array.

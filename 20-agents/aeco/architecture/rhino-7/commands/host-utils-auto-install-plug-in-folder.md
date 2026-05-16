@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostUtils.AutoInstallPlugInFolder
+Gets the auto install plug-in folder for machine or current user.

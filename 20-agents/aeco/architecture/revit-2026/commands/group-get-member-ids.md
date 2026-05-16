@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Group.GetMemberIds
+Retrieves all the member ElementIds of the group.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewTable.EnableRedraw
+Enables or disables screen redrawing.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Dialogs.ShowCheckListBox
+Displays Rhino's check list box.

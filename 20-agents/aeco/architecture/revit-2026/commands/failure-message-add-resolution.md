@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureMessage.AddResolution
+Adds a resolution for the failure.

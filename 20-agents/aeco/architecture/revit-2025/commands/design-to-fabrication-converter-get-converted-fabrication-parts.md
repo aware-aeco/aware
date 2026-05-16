@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DesignToFabricationConverter.GetConvertedFabricationParts
+Gets the set of element identifiers for newly created fabrication parts.

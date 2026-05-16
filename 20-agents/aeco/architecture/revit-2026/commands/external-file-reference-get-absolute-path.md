@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalFileReference.GetAbsolutePath
+Returns an absolute path to the referenced file,    regardless of whether the PathType.Enum is relative or absolute.

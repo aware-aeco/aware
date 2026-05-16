@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RhinoScriptInterface.CloseAllDocuments
+Close all Grasshopper documents.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ApplicationEntryPoint.FinishInitializationEO
+For Revit Macros internal use only.

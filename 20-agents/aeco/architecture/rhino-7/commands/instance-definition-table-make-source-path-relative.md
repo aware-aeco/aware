@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceDefinitionTable.MakeSourcePathRelative
+Obsolete method that always returns false.             Marks the source path for a linked instance definition as relative or absolute.

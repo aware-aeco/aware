@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Cluster.ReadGhClusterFile
+Read all cluster data from a *.ghcluster file.

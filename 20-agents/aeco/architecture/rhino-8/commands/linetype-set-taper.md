@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Linetype.SetTaper
+Set taper to a simple start width / end width

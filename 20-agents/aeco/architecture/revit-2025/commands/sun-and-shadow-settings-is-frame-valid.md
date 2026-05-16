@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SunAndShadowSettings.IsFrameValid
+Checks whether the frame is valid for the supplied SunAndShadowSettings.

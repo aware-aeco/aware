@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Tooltip.Adjust
+Repositions the tooltip to match with new cursor positions.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WidgetHandler`1.AttachEvent
+Attaches the specified event to the platform-specific control

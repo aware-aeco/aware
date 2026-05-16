@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorFillSchemeEntry.SetIntegerValue
+Sets new Integer value of entry.

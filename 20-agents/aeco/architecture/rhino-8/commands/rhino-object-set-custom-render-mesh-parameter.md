@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.SetCustomRenderMeshParameter
+Set the named custom render mesh parameter value for this object.

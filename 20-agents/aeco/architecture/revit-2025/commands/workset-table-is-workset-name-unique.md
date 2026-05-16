@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WorksetTable.IsWorksetNameUnique
+Checks if the given workset name is unique in the document.

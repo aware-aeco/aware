@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LayerTable.Modify
+Modifies layer settings.

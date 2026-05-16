@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmShutLining.SetCurveProfile
+Sets the profile of the shut-line for the given curve.

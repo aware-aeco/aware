@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarHostData.SetCommonCoverType
+Associate a single CoverType with all exposed faces of the host element.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileTxt.Read
+Read a Txt file into a RhinoDoc

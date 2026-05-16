@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AddInId.GetGUID
+value of the AddInId as a GUID

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationServiceButton.IsValid
+Checks if the button contains only valid fittings.

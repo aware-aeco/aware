@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.ShadowRectangle
+Draws shadow edges on the interior of a rectangle.

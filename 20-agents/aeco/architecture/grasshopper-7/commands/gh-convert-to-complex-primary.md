@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToComplex_Primary
+Performs a direct cast from Complex or GH_ComplexNumber

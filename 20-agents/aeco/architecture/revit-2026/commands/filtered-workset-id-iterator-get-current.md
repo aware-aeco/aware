@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilteredWorksetIdIterator.GetCurrent
+The current workset id found by the iterator.

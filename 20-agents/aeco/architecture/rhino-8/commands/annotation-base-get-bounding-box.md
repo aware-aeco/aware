@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnnotationBase.GetBoundingBox
+Aligned bounding box solver. Gets the world axis aligned bounding box for the transformed geometry.

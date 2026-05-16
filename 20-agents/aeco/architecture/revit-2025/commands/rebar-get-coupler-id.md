@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.GetCouplerId
+Get the id of the Rebar Coupler that is applied to the rebar at the specified end.

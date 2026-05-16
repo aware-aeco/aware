@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.NewSpotElevation
+Generate a new spot elevation object within the project.

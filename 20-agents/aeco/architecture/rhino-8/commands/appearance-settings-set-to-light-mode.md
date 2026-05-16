@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AppearanceSettings.SetToLightMode
+Set UI to the default light mode color scheme

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PointUtil.ProjectPointsToPlane
+Project a list of points onto the plane. The result will be points in plane-uv coordinates.

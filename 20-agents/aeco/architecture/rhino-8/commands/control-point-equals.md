@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlPoint.Equals
+Determines if two points exactly match.

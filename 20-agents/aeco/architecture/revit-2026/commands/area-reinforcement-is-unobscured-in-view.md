@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaReinforcement.IsUnobscuredInView
+Checks if Area Reinforcement is shown unobscured in a view.

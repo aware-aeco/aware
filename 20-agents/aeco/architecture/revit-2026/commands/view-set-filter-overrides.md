@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.SetFilterOverrides
+Sets the overrides associated with a filter.

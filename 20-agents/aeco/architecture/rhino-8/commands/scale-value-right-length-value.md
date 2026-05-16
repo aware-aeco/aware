@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScaleValue.RightLengthValue
+Get the Right LengthValue from Scale

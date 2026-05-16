@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GeometryCache.WriteGeometryCache
+Create all cached objects in the document.

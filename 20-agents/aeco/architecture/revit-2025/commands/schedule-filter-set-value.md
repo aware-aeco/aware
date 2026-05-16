@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleFilter.SetValue
+Set the filter value to an ElementId.

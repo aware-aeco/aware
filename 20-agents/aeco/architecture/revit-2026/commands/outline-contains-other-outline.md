@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Outline.ContainsOtherOutline
+Determine if this Outline contains another Outline to within tolerance.

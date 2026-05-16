@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-KeyBasedTreeEntries.FindEntry
+Finds the KeyBasedTreeEntry associated with the given key value.

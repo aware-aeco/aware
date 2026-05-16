@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Font.GetObjectData
+Populates a System.Runtime.Serialization.SerializationInfo with the data needed to serialize the target object.

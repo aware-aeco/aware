@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDDisplayParameters.CreateFromMeshDensity
+This function creates SubDDisplayParameters from a user interface "slider" like Rhino's simple mesh controls.

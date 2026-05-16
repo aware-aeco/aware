@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StdVectorByte.Memory
+Return the raw data.

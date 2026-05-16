@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.GetNormals
+Copy all the normal vectors in this point cloud to an array.

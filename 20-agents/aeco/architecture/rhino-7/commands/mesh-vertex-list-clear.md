@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexList.Clear
+Clears the Vertex list on the mesh.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Color.ToCMYK
+Converts this RGB color to the CMYK colorspace.

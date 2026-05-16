@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.SetIsFilterEnabled
+Sets the filter enabled flag.

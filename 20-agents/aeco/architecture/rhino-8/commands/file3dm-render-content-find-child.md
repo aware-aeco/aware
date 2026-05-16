@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmRenderContent.FindChild
+The child with the specified child slot name, or null if no such child exists.

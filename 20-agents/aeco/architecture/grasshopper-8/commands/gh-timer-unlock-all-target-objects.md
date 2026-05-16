@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Timer.UnlockAllTargetObjects
+Unlock all target objects.

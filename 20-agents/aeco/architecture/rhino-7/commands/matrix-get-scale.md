@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Matrix.GetScale
+Returns the scale coordinates Xx and Yy of the  as a PointF.

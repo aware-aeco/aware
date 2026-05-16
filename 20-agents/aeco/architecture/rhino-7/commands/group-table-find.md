@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroupTable.Find
+Finds a group with a given name.

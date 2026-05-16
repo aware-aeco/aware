@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.IsSubObjectHighlighted
+Determines if a sub-object is highlighted.

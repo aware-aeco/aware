@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationHostedInfo.GetBearerCenterline
+Gets the centerline of the bearer. The method is applicable only for bearer hanger.

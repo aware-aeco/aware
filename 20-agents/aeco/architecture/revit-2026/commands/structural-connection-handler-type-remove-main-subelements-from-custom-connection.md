@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralConnectionHandlerType.RemoveMainSubelementsFromCustomConnection
+Removes one or more subelements from a StructuralConnectionHandlerType. The subelements will be erased.

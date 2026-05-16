@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FieldDictionary.GetField
+Call this method to get the field with the specified name.

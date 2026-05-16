@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.GetPartCustomDataReal
+Get custom data real value for the specified custom data.

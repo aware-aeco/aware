@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudInstance.GetPoints
+Extracts a collection of points based on a filter.

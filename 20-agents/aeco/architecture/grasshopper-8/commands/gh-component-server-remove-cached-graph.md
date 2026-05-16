@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentServer.RemoveCachedGraph
+Remove a cache entry from the graph cache. This cannot be undone.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HotReloadService.WatchFile
+Watches a file for changes and triggers the method specified in the  when it changes.

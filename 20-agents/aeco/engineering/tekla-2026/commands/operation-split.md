@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.Split
+Splits the beam and creates a new one in the given position.

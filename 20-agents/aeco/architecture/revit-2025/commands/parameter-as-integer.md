@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Parameter.AsInteger
+Provides access to the integer number within the parameter.

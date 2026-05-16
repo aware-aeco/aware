@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Viewport.Focus
+Look at a specific point.

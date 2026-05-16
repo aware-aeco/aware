@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLayerInfo.RemoveCutLayerModifier
+Removes a cut layer modifier from the layer info.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurvatureAnalysisSettings.GetDefaultState
+Gets the factory settings of the application.

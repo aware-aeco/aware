@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_DataAccess.SetDataList
+Stores a list of data in an output parameter during GH_Component.SolveInstance().

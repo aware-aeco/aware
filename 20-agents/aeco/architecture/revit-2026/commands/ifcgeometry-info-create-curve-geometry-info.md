@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCGeometryInfo.CreateCurveGeometryInfo
+Creates a new container object which holds IfcCurve handles processed from a Revit geometry object.

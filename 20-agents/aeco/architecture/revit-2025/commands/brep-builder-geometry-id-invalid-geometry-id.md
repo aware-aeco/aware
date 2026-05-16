@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BRepBuilderGeometryId.InvalidGeometryId
+Returns an invalid BRepBuilderGeometryId, used as a return value to indicate an error.

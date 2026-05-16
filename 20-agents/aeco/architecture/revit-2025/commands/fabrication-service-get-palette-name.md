@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationService.GetPaletteName
+Gets the name of a palette based on palette index.

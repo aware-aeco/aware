@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.FindByDrawColor
+Finds all objects whose draw color matches a given color.

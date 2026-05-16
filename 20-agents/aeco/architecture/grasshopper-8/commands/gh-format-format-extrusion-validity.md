@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Format.FormatExtrusionValidity
+If the extrusion is invalid, return a string describing why.

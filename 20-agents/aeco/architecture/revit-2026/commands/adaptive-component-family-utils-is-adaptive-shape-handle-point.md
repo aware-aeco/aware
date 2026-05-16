@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AdaptiveComponentFamilyUtils.IsAdaptiveShapeHandlePoint
+Verifies if the Reference Point is an Adaptive Shape Handle Point.

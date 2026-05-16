@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CreateFromPlanarBoundary
+Do not use this overload. Use version that takes a tolerance parameter instead.

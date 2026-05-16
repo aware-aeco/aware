@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Ed.OnTestEdCommandOptionsChanged
+hack

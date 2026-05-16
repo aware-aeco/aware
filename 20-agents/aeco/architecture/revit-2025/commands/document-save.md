@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.Save
+Saves the document.

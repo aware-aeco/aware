@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.GetLegacyStairsProperties
+Returns one or more properties for legacy (created in R2012 or before) Stairs.

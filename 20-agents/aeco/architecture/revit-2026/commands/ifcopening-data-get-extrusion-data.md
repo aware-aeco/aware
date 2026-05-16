@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCOpeningData.GetExtrusionData
+Gets extrusion data.

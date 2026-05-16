@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Vector2d.GetHashCode
+Provides a hashing value for the present vector.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform.DecomposeTextureMapping
+Decomposition of a uvw transform into components

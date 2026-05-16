@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_DataAccess.AbortComponentSolution
+Call this method if you wish to stop solving this component.

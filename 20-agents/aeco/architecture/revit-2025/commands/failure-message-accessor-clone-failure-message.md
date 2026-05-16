@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureMessageAccessor.CloneFailureMessage
+Creates a copy of the FailureMessage.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetCalloutParentId
+Gets ID of the callout parent view.

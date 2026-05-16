@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilteredElementCollector.WhereElementIsNotElementType
+Applies an inverted ElementIsElementTypeFilter to the collector.

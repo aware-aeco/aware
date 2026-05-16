@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.Flip
+Reverses entire brep orientation of all faces.

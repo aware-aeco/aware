@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.MergeDocument
+Hoist all objects from another document into this one.

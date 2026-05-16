@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubD.CreateFromLoft
+Creates a SubD lofted through shape curves.

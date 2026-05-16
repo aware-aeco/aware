@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayStyle.SetMarkersAndTextSettings
+Set markers and text settings object for the style.

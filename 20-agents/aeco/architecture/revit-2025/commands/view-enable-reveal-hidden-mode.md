@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.EnableRevealHiddenMode
+Enables Reveal Hidden elements mode.

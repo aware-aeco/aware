@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLayerInfo.SetCutLayerModifiers
+Sets a cut layer modifier array to the layer info.

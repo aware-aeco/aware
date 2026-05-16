@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentParamServer.WriteAllParameterData
+Serialize all possible parameter data.   This is a sledge-hammer approach, do not use unless you're desperate.

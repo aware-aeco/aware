@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyInstance.SetCopingIds
+Specifies the set of coping cutters on this element.

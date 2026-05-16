@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextureEvaluator.Dispose
+For Dispose pattern

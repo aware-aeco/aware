@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point3dList.SetAllZ
+Set all the Z values for the points to a single value

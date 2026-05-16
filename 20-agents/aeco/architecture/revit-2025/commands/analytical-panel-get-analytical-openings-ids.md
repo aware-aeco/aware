@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalPanel.GetAnalyticalOpeningsIds
+Returns the Analytical Openings ids of the Analytical Panel.

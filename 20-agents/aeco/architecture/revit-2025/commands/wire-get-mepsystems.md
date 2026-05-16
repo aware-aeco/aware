@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Wire.GetMEPSystems
+Gets the systems to which the wire belongs.

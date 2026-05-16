@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ContourPlate.Insert
+Inserts the contour plate into the model database. All the attributes must be set.

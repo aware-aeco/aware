@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportSetObjectPhase
+DO NOT USE! For internal usage only!

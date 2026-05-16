@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IIFCImporterServer.ImportIFC
+The method that Revit will invoke to perform an import from IFC.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.UnfoldAllAsync
+Unfold all

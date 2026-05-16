@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AddInsManagerSettings.Get
+Returns  for the current Windows user.

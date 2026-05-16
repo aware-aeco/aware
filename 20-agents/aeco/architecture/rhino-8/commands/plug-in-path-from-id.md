@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlugIn.PathFromId
+Gets the path to an installed plug-in given the id of that plug-in

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DotNetModelProxy.Run
+DO NOT USE! For internal usage only!

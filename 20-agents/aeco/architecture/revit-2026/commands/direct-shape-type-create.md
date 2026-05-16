@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShapeType.Create
+Creates a DirectShapeType element.

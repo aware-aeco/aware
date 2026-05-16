@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RdkSelectionNavigator.CanGoForwards
+Check the forwards status of the navigator

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.ConvertModelToSymbolicCurves
+Converts a group of ModelCurves to equivalent SymbolicCurves.

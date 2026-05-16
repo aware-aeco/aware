@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHRectangle_Secondary
+Converts similar data into a GH_Rectangle instance.  Data is not quaranteed to be duplicated.

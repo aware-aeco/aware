@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SingleServerService.GetActiveServerId
+Returns the Id of the currently active application-level server of the service.

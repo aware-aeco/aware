@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileDwg.Read
+Read a DWG file into a RhinoDoc

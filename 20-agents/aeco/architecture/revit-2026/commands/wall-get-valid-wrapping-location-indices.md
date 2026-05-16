@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Wall.GetValidWrappingLocationIndices
+Gets all valid locations for end wrapping.

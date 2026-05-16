@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ComponentRepeater.RemoveRepeaters
+Removes component repeaters from the document,    but leaves the individual repeated components in their respective locations and    hosted on their original hosts.

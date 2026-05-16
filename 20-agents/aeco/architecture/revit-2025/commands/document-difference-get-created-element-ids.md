@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DocumentDifference.GetCreatedElementIds
+Created element id collection.

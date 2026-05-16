@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LayerTable.FindNext
+Use FindName(name, index).

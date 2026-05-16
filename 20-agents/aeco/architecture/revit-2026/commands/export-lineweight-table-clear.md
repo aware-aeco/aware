@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLineweightTable.Clear
+Removes all contents stored in Export line weight table.

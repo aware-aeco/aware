@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.GetSpareCurrentValue
+Gets the value of the apparent current parameter for a spare

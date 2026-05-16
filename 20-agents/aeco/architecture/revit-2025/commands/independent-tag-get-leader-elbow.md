@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndependentTag.GetLeaderElbow
+Returns the position of the elbow of the tag's leader that points to specified reference.    Position of leader's elbow.

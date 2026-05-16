@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshNgonList.GetNgon
+Returns the mesh ngon at the given index.

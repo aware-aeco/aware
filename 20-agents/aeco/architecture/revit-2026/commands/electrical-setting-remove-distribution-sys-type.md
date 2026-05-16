@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalSetting.RemoveDistributionSysType
+Remove an existing distribution system type from the project.

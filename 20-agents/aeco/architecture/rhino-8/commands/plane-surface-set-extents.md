@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlaneSurface.SetExtents
+Sets the extents of the plane surface.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyDataSettings.CheckBuildingEnvelope
+Checks that the building envelope determination method falls within an appropriate range.

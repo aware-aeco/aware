@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroupTable.FindName
+Finds a group given its name. Returns the instance, rather than the index.

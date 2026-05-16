@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalDemandFactorDefinition.GetValues
+Provides access to the value set stored with this demand factor definition

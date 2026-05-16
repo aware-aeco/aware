@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToArc
+Convert data into Rhino.Geometry.Arc.

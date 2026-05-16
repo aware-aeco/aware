@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjRef.PointCloud
+Gets the point cloud if the referenced geometry is one.

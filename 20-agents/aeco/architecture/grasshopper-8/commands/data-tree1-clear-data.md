@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataTree`1.ClearData
+Removes all data from all branches without affecting the tree topology.

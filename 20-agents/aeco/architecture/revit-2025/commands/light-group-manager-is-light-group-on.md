@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightGroupManager.IsLightGroupOn
+Returns true if the given light group is on

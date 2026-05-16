@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.ShrinkWrap
+Returns a ShrinkWrapped mesh or             null when a mesh was not created or error.

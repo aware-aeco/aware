@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.TangentAt
+Evaluates the unit tangent vector at a curve parameter.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform.GetHashCode
+Gets a non-unique hashing code for this transform.

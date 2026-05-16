@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Grid.BeginEdit
+Begin to edit one cell

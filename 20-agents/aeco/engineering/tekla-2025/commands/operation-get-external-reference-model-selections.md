@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetExternalReferenceModelSelections
+Gets the external reference model selections.

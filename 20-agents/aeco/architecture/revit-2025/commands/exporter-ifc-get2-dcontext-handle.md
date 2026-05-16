@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFC.Get2DContextHandle
+Obtains the IfcRepresentationContext handle to be used for 2D entities (Annotations).

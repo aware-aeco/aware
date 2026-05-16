@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableLayout.GetColumnScale
+Gets the scale for the specified column.

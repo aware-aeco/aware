@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Pipe.CreatePlaceholder
+Creates a new placeholder pipe.

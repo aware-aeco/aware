@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawPatternedLine
+Draws a single line with specified pattern.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLayerTableIterator.Reset
+Resets the iterator to the initial state.

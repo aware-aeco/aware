@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GraphicsPath.GetRoundRect
+Creates a rounded rectangle using the specified corner radius

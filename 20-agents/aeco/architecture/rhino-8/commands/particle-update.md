@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Particle.Update
+Base class implementation does nothing.

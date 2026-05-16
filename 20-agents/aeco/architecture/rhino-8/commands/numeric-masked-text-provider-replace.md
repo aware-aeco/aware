@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NumericMaskedTextProvider.Replace
+Called to replace a character at the specified position in the masked text.

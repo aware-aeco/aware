@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarUpdateCurvesData.GetTerminationRotationAngle
+Gets the termination's (e.g hook, crank) rotation angle (in radians) at end that is currently in the rebar.

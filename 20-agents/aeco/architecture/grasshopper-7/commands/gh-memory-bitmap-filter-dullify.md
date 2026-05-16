@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MemoryBitmap.Filter_Dullify
+Reduces contrast based on opacity. This filter pulls all colours towards dull grey, without wrecking drop-shadows.

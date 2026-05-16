@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RelayValueCommand`2.SetValue
+Sets the value.

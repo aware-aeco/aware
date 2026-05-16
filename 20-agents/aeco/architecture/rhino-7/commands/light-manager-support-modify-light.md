@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightManagerSupport.ModifyLight
+Modify properties of the light

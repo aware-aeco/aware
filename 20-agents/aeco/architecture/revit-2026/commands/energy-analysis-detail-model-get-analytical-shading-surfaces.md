@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyAnalysisDetailModel.GetAnalyticalShadingSurfaces
+The collection of analytical shading surfaces.

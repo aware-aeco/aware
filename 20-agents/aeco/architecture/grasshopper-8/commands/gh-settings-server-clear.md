@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_SettingsServer.Clear
+Destroy all settings.

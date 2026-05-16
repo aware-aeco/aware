@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HatchLine.AppendDash
+Add a dash to the pattern.

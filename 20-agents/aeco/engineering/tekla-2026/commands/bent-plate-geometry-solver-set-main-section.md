@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BentPlateGeometrySolver.SetMainSection
+Sets  as a main section of .

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.RemoveFilter
+Removes a filter from the view.

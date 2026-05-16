@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RibbonItem.GetContextualHelp
+Gets the contextual help bound with this control.

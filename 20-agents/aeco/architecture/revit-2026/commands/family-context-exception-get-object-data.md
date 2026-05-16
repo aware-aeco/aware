@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyContextException.GetObjectData
+Retrieves data needed to serialize the target object.

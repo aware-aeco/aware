@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsSurfaceKnotList.RemoveKnotsAt
+Remove knots from the surface and adjusts the remaining control points to maintain surface position as closely as possible.

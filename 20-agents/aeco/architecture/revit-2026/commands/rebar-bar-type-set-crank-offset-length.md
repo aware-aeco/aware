@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBarType.SetCrankOffsetLength
+Sets the crank offset length for the specified Rebar Crank Type.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalAnalyticalNode.DisconnectFromUpstreamNode
+Disconnects from upstream node.

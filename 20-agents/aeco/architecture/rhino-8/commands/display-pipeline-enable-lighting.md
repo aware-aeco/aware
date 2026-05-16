@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.EnableLighting
+Enable or disable the Lighting logic of the engine.

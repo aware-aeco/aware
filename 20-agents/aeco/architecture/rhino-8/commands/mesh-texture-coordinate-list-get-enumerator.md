@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshTextureCoordinateList.GetEnumerator
+Gets an enumerator that yields all texture coordinates in this collection.

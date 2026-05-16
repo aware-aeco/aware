@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RealtimeDisplayMode.HudLastRenderedPass
+Override to communicate the last completed pass. Can be shown in the HUD

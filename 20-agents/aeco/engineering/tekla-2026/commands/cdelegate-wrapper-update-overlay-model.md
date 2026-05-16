@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.UpdateOverlayModel
+DO NOT USE! For internal usage only!

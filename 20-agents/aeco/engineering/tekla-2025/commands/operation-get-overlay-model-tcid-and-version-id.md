@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetOverlayModelTCIdAndVersionId
+Gets the Trimble Connect model identifier and version identifier from the overlay model path.

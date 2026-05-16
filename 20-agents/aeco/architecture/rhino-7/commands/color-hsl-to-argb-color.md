@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorHSL.ToArgbColor
+Convert HSL color to an equivalent System.Drawing.Color.

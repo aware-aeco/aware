@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHNumber
+Convert data into GH_Number.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubD.CreateFromCylinder
+Creates a SubD form of a cylinder.

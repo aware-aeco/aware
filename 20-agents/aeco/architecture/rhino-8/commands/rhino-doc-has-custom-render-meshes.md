@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoDoc.HasCustomRenderMeshes
+Returns true if the document has a set of custom render primitives - ie, CustomRenderMeshes will return non-null.

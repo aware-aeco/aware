@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Font.GetSubstituteFont
+If this font is not installed on the system, try to find a substitute

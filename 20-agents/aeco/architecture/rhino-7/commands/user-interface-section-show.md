@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UserInterfaceSection.Show
+Show or hide this content section.

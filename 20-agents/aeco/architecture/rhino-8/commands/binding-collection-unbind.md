@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BindingCollection.Unbind
+Unbinds all bindings in the collection

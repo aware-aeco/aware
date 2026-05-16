@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Ed.RegisterProvideHoverInfoAsync
+register hover info provider

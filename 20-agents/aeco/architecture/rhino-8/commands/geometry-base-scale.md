@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryBase.Scale
+Scales the object by the specified factor. The scale is centered at the origin.

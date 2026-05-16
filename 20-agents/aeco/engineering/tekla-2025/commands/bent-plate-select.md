@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BentPlate.Select
+Selects a bent plate object from the database.

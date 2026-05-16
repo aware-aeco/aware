@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TypeConverter.ConvertFromInvariantString
+Converts from an invariant string.

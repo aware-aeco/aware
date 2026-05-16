@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rectangle3d.Contains
+Determines if a point is included in this rectangle.

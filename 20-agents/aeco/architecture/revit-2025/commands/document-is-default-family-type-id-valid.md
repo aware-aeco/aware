@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.IsDefaultFamilyTypeIdValid
+Checks whether the family type id is valid for the give family category.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotSharingRestorePrivilegesInp
+Restore privileges.inp file.

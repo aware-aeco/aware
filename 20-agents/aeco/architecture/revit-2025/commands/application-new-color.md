@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewColor
+Returns a new color object.

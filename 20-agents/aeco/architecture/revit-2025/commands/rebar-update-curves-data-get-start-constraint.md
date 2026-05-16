@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarUpdateCurvesData.GetStartConstraint
+Gets the current constraint for the start handle of the Rebar.

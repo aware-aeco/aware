@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralFramingUtils.RemoveEndReference
+Resets the end reference of the structural framing element.

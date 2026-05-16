@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPen.Duplicate
+Create a duplicate of this display pen.

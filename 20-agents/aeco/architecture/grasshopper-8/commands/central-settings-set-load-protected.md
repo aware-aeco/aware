@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CentralSettings.SetLoadProtected
+Sets whether a certain plugin is load protected.

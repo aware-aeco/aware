@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.LineCircle
+Intersects a line with a circle using exact calculations.

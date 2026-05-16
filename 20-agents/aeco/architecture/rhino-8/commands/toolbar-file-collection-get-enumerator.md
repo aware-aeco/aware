@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ToolbarFileCollection.GetEnumerator
+Gets a toolbar file enumerator.

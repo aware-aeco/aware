@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewDrafting.Create
+Creates a new ViewDrafting in the model.

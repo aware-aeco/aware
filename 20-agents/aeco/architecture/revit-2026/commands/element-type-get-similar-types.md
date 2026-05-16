@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementType.GetSimilarTypes
+Obtains a set of types that are similar to this type.

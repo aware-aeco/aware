@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudOverrides.SetPointCloudScanOverrideSettings
+Assigns scan override settings to a particular scan within a PointCloudInstance element.

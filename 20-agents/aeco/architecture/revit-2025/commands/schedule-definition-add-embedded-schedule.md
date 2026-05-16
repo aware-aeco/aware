@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.AddEmbeddedSchedule
+Adds an embedded ScheduleDefinition.

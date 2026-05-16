@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScaleValue.LeftLengthValue
+Get the Left LengthValue from Scale

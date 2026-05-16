@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleField.GetCombinedParameters
+Gets this field's combine parameter array if applicable

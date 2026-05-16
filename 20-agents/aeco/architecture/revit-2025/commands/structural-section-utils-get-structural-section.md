@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralSectionUtils.GetStructuralSection
+Return structural section from element.

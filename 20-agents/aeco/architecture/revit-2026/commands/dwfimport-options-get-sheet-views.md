@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DWFImportOptions.GetSheetViews
+Get sheet views where DWF markups are imported.

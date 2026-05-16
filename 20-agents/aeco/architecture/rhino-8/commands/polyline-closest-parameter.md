@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Polyline.ClosestParameter
+Gets the parameter along the polyline which is closest to a test-point.

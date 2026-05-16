@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferencePointArray.Append
+Add the reference to the end of the array.

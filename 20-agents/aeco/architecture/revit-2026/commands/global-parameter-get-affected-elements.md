@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GlobalParameter.GetAffectedElements
+Returns all elements of which properties are driven by this global parameter.

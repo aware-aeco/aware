@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DimensionStyle.ClearFieldOverride
+Set the field as not overridden

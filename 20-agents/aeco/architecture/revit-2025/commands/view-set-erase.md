@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSet.Erase
+Removes a specified view from the set.

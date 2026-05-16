@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ProjectLocationSet.Clear
+Removes every project location from the set, rendering it empty.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpatialElement.GetBoundarySegments
+Returns the boundary segments.

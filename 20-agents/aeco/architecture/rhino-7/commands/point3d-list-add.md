@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point3dList.Add
+Adds a Point3d to the end of the list with given x,y,z coordinates.

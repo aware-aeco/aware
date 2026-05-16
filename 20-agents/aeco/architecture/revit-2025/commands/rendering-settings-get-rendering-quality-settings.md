@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderingSettings.GetRenderingQualitySettings
+Returns an object that represents the rendering quality settings.

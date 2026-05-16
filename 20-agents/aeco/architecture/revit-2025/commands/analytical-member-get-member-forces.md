@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalMember.GetMemberForces
+Gets the member forces associated with this Analytical Member.

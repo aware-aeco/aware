@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_LayoutPanel.Sort
+Sort all items in this panel based on name.

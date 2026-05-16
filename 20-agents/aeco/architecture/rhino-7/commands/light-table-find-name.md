@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightTable.FindName
+Finds the LightObject with a given name.             Deleted lights have no name.

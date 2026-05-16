@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FluidTemperatureSetIterator.GetCurrent
+Returns the current FluidTemperature.

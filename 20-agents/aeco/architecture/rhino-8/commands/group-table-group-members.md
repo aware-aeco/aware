@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroupTable.GroupMembers
+Gets an array of all of the objects in a group.

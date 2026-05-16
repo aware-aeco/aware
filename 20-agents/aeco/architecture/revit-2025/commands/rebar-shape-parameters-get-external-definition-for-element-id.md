@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeParameters.GetExternalDefinitionForElementId
+Seach a DefinitionFile for the ExternalDefinition corresponding to a parameter in a document.

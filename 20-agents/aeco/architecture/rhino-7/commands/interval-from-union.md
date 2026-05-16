@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interval.FromUnion
+Returns a new Interval which contains both inputs.

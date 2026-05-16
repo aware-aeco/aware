@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadCase.IsNumberUnique
+Checks that a given number is unique among all load cases.

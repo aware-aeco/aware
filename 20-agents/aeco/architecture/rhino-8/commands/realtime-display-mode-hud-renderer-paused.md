@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RealtimeDisplayMode.HudRendererPaused
+Implement to support pausing and resuming in the viewport

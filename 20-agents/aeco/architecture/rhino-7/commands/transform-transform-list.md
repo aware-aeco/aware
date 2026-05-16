@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform.TransformList
+Given a list, an array or any enumerable set of points, computes a new array of transformed points.

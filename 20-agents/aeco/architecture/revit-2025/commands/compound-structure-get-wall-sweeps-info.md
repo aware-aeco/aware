@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.GetWallSweepsInfo
+Obtains a list of the intrinsic wall sweeps or reveals in this CompoundStructure.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCProductWrapper.GetAnElement
+Gets the first element handle added to this wrapper.

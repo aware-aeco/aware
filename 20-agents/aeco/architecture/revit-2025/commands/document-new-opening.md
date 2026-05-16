@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.NewOpening
+Creates a new opening in a roof, floor and ceiling.

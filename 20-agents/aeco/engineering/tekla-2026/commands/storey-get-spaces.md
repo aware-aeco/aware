@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Storey.GetSpaces
+Gets all spaces belonging to this storey.

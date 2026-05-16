@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportDGNSettings.Create
+Create DGN export settings with specified values in DGNExportOptions.

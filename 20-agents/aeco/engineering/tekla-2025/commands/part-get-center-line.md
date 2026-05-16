@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Part.GetCenterLine
+Returns the center line for the given part.

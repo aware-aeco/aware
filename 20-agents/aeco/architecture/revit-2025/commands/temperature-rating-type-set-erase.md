@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TemperatureRatingTypeSet.Erase
+Removes a specified TemperatureRating type from the set.

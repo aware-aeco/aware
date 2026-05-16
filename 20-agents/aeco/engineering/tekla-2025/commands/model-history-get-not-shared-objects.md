@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelHistory.GetNotSharedObjects
+Get object which are was created or modified since last ModelSharing WriteOut.

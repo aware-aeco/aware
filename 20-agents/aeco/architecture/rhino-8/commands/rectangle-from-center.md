@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rectangle.FromCenter
+Creates a new instance of a Rectangle with a specified  and

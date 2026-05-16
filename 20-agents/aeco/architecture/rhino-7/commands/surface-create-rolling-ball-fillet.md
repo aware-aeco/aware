@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.CreateRollingBallFillet
+Constructs a rolling ball fillet between two surfaces.

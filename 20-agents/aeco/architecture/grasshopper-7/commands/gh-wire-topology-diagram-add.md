@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_WireTopologyDiagram.Add
+Add a new wire is it isn't part of the diagram already.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveLoop.GetPlane
+Gets the plane of the curve loop, if it is planar.

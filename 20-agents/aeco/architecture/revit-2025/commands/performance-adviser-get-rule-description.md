@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PerformanceAdviser.GetRuleDescription
+Retrieves the description of the rule.

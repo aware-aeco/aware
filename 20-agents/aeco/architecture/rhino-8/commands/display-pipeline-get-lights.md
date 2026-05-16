@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.GetLights
+Get lights that this pipeline is current using

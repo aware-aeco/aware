@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConnectorElement.CreateConduitConnector
+Create a new conduit ConnectorElement.

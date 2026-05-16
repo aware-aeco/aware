@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LabelUtils.GetLabelFor
+Gets the user-visible name for a gbXMLBuildingType.

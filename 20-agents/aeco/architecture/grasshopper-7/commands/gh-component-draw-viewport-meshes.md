@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Component.DrawViewportMeshes
+Draw preview meshes for this component and all associated parameters.

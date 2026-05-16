@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpaceSet.ForwardIterator
+Retrieve a forward moving iterator to the set.

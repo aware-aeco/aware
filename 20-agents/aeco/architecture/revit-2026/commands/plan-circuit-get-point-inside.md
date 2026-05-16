@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlanCircuit.GetPointInside
+Returns a point inside the circuit.

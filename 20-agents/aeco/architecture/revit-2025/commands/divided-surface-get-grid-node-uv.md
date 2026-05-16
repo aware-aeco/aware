@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DividedSurface.GetGridNodeUV
+Get the position of a grid node in UV coordinates in the surface.

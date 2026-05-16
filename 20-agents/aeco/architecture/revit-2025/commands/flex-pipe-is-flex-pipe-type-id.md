@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FlexPipe.IsFlexPipeTypeId
+Checks if given type is valid flexible pipe type.

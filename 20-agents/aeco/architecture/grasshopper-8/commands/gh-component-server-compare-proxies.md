@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentServer.CompareProxies
+Compare two object proxies. Names and exposures are taken into account.

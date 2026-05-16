@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportSelectComponent
+DO NOT USE! For internal usage only!

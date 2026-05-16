@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarFreeFormAccessor.SetCurves
+Set the curves into a free form Rebar.  Will throw exception if the rebar has valid constraints.

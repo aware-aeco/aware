@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_CanvasValidator.CanShowObjectMenu
+Validates whether the object menu can be shown.

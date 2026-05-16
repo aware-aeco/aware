@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PostEffect.WriteState
+Write the state. If your post effect has no state, you must still return true for success.

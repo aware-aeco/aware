@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralConnectionHandler.IsCustom
+Checks if Structural Connection Handler has the custom connection style.

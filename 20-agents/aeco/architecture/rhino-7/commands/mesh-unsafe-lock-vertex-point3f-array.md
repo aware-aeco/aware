@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshUnsafeLock.VertexPoint3fArray
+Retrieves a pointer to the raw mesh vertex array, which uses coordinates             defined with single precision floating point numbers, or null if none is available.

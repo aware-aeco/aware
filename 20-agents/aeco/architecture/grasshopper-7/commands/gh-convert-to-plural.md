@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToPlural
+Apply english rules to convert a noun into its plural form.   This algorithm is not water-tight as it will not handle any irregular cases.

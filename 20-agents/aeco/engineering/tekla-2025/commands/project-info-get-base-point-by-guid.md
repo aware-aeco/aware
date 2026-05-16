@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ProjectInfo.GetBasePointByGuid
+Gets a base point by given guid.

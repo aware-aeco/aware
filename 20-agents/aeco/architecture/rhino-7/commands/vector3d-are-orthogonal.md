@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Vector3d.AreOrthogonal
+Test whether three vectors describe an orthogonal axis system.             All vectors must be mutually perpendicular this to be the case.

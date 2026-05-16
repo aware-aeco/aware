@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGeometryNode.AcceptVisitor
+Entry method for the visitor pattern

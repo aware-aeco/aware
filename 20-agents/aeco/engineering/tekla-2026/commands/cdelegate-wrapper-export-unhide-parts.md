@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportUnhideParts
+DO NOT USE! For internal usage only!

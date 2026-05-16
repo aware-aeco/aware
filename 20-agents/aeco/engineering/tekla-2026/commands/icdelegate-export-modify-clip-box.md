@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportModifyClipBox
+Modifies a clip box in the view.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewCropRegionShapeManager.RemoveCropRegionShape
+Removes any non-rectangular boundary of the view's crop.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Picker.PickPoints
+Queries the user to pick points from the model.

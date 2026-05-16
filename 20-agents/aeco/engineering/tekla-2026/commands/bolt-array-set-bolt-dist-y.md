@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoltArray.SetBoltDistY
+Sets the Y distance at the index defined by the argument.

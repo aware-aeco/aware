@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.InsertImage
+Inserts a image in the given cell.

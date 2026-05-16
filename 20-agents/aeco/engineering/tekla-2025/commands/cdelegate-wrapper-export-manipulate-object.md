@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportManipulateObject
+DO NOT USE! For internal usage only!

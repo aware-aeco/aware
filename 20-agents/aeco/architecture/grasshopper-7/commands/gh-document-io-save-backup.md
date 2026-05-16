@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentIO.SaveBackup
+Save a time-stamped copy of the current file.

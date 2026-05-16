@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SnapShotsClient.DocumentCategory
+Predefined document category

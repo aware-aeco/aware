@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilteredWorksetCollector.GetWorksetIdIterator
+Returns a FilteredWorksetIdIterator to the worksets passing the current filter.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.ProjectToBrep
+Projects a Curve onto a Brep along a given direction.

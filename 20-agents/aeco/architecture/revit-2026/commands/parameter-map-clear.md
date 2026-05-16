@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterMap.Clear
+Removes every item from the map, rendering it empty.

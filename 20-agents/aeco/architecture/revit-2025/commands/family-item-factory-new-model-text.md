@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyItemFactory.NewModelText
+Create a model text in the Autodesk Revit family document.

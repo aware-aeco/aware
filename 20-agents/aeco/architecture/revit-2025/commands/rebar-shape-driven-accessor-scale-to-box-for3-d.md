@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDrivenAccessor.ScaleToBoxFor3D
+Move and resize a spiral or multiplanar instance to fit within a specified box.    The arguments are interpreted as an arbitrary rectangle in 3D with    vertices: origin, origin+xVec, origin+xVec+yVec, origin+yVec. One end of the    rebar shape is inscribed in this rectangle following the procedure described    for the ScaleToBox method. The other end is placed in the parallel plane at    distance (center-to-center) given by the height argument, in the    direction of (xVec x yVec).    Note that spiral shapes interpret the input arguments using a different convention    than multiplanar shapes.  For spiral shapes, the spiral start will be placed in    the rectangle defined by origin, xVec, yVec, and the end of the spiral will be    placed in the parallel plane.  For multiplanar shapes, the rebar is placed with    its primary shape definition located in the parallel plane defined by the height    argument, and its connector segments extending in the direction opposite (xVec x yVec).    This method replaces ScaleToBoxForSpiral() from prior releases.

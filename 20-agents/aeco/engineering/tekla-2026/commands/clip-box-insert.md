@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ClipBox.Insert
+Creates a new clip box to the application view.             The application view must be visible.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyInstance.HasSweptProfile
+Indicates if this instance can be represented as a swept profile.

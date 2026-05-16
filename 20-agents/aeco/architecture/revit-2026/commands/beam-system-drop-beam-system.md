@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BeamSystem.DropBeamSystem
+Drop beam system, it will disassociate all members from the beam system and delete the beam system.

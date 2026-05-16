@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.GetGeometryObjectFromReference
+Retrieve one geometric primitive contained in the element given a reference.

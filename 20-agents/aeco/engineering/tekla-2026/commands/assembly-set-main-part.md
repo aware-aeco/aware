@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Assembly.SetMainPart
+Sets the main part of the assembly.

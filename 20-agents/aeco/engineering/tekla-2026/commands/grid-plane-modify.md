@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GridPlane.Modify
+Modifies the grid plane with the given ID.

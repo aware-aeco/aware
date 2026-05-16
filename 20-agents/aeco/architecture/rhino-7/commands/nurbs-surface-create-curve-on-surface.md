@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsSurface.CreateCurveOnSurface
+Fit a sequence of 2d points on a surface to make a curve on the surface.

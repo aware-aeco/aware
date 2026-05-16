@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayMeshPointer.Add
+Adds a mesh to the list.

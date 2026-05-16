@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RhinoScriptInterface.ShowEditor
+Show the main Grasshopper Editor.   The editor will be loaded first if needed.   If the Editor is already on screen, nothing will happen.

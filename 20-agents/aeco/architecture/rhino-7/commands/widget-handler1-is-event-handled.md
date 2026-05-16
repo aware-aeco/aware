@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WidgetHandler`1.IsEventHandled
+Gets a value indicating that the specified event is handled

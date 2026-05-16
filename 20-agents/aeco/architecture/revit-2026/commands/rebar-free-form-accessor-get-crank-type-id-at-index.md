@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarFreeFormAccessor.GetCrankTypeIdAtIndex
+Gets the id of the Rebar Crank Type that is applied to this Rebar at the bar with index barPositionIndex at the specified end.

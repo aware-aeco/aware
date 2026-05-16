@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpatialFieldManager.UpdateSpatialFieldPrimitive
+Populates analysis results data (or replaces the existing data) in the existing primitive identified by the unique index

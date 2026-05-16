@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveList.Add
+Adds a line to this list.

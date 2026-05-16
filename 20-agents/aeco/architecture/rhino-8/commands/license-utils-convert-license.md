@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LicenseUtils.ConvertLicense
+Converts a product license from a standalone node             to a network node.

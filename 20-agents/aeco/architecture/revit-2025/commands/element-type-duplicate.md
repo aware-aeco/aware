@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementType.Duplicate
+Duplicates an existing element type and assigns it a new name.

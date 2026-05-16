@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationServiceSettings.GetFabricationServiceSettings
+Gets the settings element in the document.

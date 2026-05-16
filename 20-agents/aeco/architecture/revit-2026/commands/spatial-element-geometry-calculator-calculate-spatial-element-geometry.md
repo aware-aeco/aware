@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpatialElementGeometryCalculator.CalculateSpatialElementGeometry
+Compute the spatial element geometry and returns the boundary face information.

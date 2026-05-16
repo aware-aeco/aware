@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Vector3d.GetHashCode
+Computes the hash code for the current vector.

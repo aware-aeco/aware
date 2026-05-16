@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interop.FromOnBrep
+Copies a Rhino_DotNet brep to a RhinoCommon brep class.

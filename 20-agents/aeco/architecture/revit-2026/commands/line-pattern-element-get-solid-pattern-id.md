@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinePatternElement.GetSolidPatternId
+Gets the solid line pattern element id.

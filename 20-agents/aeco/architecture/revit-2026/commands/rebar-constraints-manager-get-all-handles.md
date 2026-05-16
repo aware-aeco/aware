@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraintsManager.GetAllHandles
+Gets all RebarConstrainedHandles of this bar.

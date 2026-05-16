@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Wire.InsertVertex
+Inserts a new vertex before the specified index.

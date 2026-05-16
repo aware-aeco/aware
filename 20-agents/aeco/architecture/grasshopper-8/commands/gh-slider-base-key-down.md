@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_SliderBase.KeyDown
+Respond to a KeyDown event.

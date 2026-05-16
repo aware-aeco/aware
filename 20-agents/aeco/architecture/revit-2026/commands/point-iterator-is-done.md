@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointIterator.IsDone
+Identifies if the iteration has reached the end of the collection.

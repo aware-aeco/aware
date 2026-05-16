@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContentType.NewContentFromTypeId
+Create a new content specified by the Guid.                           This function can be used to create temporary content, as it calls              ::RhRdkContentFactories().NewContentFromType().

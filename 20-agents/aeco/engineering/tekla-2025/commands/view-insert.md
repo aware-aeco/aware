@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.Insert
+Inserts a new view to the model.

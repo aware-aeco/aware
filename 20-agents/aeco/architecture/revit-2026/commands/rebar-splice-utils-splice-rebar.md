@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSpliceUtils.SpliceRebar
+Splice a rebar with a line.

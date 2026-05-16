@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShape.UpdateExternallyTaggedGeometry
+Updates the externally tagged geometry object in the DirectShape.

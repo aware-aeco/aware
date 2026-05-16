@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HatchLine.Dispose
+Actively releases the unmanaged object.

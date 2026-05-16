@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostObjAttributes.SetCompoundStructure
+Sets the compound structure of the element.

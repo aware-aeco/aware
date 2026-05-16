@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Param.ClearProxySources
+Remove all proxy sources without attempting to relink them.

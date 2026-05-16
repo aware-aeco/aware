@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PostEffectData.DataCRC
+Get a CRC representing the state of the entire post effect.

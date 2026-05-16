@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_NumberPresets.PresetName
+Gets the preset name at the given index.

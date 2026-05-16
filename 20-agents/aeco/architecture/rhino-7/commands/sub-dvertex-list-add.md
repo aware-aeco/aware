@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDVertexList.Add
+Add a new vertex to the end of the Vertex list.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextFields.DocumentText
+Return document user string for a given key

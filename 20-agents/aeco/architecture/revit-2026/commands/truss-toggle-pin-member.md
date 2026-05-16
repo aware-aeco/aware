@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Truss.TogglePinMember
+Pin/Unpin a truss member.

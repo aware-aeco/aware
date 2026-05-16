@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CriticalPathIterator.Reset
+Resets the iterator to the beginning segment.

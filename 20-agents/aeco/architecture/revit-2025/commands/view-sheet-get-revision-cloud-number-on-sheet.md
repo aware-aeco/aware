@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSheet.GetRevisionCloudNumberOnSheet
+Gets the Revision Number for a RevisionCloud on this sheet.

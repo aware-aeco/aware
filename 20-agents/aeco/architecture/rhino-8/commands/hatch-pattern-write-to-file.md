@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HatchPattern.WriteToFile
+Writes a hatch pattern defintion to a file.

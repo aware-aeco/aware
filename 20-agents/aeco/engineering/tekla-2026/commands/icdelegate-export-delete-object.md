@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportDeleteObject
+DO NOT USE! For internal usage only!

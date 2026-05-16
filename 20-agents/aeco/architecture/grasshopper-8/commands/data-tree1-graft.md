@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataTree`1.Graft
+Graft a single path in the tree.   "Grafting" means appending a new branch for every item in an existing branch.

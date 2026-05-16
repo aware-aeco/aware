@@ -8,6 +8,8 @@ description: API reference for namespace Grasshopper.GUI.MRU from Grasshopper.dl
 - **GH_FileEntry**
 - **GH_FileResolveState**
 - **GH_MRU_Entry**
+  - Represents a single entry in the MRU server.
 - **GH_MRU_Server**
+  - Maintains a list of MRU (Most Recently Used) records.
 - **GH_TimeLine**
 - **GH_TimeSpan**

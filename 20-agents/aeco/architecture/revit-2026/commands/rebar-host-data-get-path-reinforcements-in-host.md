@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarHostData.GetPathReinforcementsInHost
+Returns all PathReinforcement elements hosted by the referenced element.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BitmapData.TranslateDataToArgb
+Translates the platform specific pixel format to a 32-bit ARGB value

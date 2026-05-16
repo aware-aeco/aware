@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BitmapTable.AddBitmap
+Adds a new bitmap with specified name to the bitmap table.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Color.ToHex
+Converts this color to a hex representation

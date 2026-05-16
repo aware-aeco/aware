@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MacroManager.GetApplicationMacroSecurityOptions
+Gets the application macro security options.

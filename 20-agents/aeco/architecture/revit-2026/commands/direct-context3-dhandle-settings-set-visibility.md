@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectContext3DHandleSettings.SetVisibility
+Visibility of the handle and the associated DirectContext3D graphics.    A value of true means that the graphics are visible.

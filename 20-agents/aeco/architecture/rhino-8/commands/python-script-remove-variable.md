@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PythonScript.RemoveVariable
+Removes a defined variable from the main scripting context.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextFields.Area
+Returns the area value for a selected object id

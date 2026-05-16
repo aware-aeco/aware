@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelCurveArrArray.Insert
+Insert the specified item into the array.

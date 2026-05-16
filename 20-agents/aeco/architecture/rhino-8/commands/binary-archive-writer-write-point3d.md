@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BinaryArchiveWriter.WritePoint3d
+Writes a  value to the archive.

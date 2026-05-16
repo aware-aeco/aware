@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ChangeQueue.CreateWorld
+Calls CreateWorld with true passed.

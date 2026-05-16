@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ActiveObject.CollectData
+This function is called whenever the object is required to collect   all data. Either from Persistent records, from source params or whatever.

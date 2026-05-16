@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPSpaceConstruction.NewConstruction
+Create a new construction for Space constructions.

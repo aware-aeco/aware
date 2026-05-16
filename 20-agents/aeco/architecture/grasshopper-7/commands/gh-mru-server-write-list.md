@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MRU_Server.WriteList
+Write the MRU data to the Grasshopper settings folder.

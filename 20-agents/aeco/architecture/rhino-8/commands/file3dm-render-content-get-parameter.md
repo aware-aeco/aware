@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmRenderContent.GetParameter
+Gets a named parameter.             The parameter value or null if not found.

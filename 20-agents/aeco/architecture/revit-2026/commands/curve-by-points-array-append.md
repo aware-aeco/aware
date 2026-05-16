@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveByPointsArray.Append
+Add the curve to the end of the array.

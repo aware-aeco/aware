@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelAidSettings.UpdateFromState
+Updates from a particular setting state.

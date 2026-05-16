@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform1D.OfVector
+Applies the transformation to the 1-dimensional vector (a "tangent vector" on the real line) and returns the result.

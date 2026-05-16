@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-City.Cities
+Returns number of available cities.

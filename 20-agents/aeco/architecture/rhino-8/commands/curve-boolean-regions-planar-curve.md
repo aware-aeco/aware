@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveBooleanRegions.PlanarCurve
+Returns a planar curve that was calculated by Curve.CreateBooleanRegions.

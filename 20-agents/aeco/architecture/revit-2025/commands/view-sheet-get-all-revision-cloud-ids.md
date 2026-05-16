@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSheet.GetAllRevisionCloudIds
+Gets the ids of the revision clouds which appear on the sheet's revision schedules.

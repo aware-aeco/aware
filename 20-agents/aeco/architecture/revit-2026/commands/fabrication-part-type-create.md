@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPartType.Create
+Creates a fabrication part type element based on a specific fabrication servic button and condition.

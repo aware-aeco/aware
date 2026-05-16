@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalSystem.GetCircuitPath
+Gets the list of the electrical system circuit path node position.

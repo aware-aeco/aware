@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FaceNode.GetFace
+Returns the Face object corresponding to the node.

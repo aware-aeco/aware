@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetBuildingHierarchyChildObjectGuids
+DO NOT USE! For internal usage only!

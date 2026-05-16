@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Structure.Clear
+Clears the entire structure.

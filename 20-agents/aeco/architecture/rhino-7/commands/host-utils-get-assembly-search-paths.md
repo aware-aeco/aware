@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostUtils.GetAssemblySearchPaths
+Returns list of directory names where additional assemblies (plug-ins, DLLs, Grasshopper components)             may be located

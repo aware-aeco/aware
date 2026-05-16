@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCData.GetHashCode
+Gets the hash code.

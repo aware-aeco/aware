@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IMatrix.Clone
+Clone this instance

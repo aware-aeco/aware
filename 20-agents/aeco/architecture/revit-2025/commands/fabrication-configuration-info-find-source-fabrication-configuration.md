@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfigurationInfo.FindSourceFabricationConfiguration
+Finds the source fabrication configuration on disk which matches the input fabrication configuration.

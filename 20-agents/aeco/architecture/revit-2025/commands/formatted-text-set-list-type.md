@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormattedText.SetListType
+Sets the  of a paragraph.

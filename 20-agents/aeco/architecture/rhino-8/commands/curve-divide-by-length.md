@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.DivideByLength
+Divide the curve into specific length segments.

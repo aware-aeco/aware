@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.CanHaveTypeAssigned
+Identifies if the element can have a type assigned.

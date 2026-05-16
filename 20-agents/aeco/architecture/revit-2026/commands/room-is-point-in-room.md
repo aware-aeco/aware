@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Room.IsPointInRoom
+Determines if a point lies within the volume of the room.

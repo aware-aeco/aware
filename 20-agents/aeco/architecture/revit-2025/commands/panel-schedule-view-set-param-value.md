@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.SetParamValue
+Sets the text for the given cell, returns true if successful, false otherwise

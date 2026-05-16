@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportSelectRebarEndDetailStrip
+DO NOT USE! For internal usage only.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurtainGrid.GetCell
+Get the specified cell located by the intersection of the grid lines.

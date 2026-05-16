@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolymeshTopology.GetNormals
+Returns all normals assigned to the polymesh

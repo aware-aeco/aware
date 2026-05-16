@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SteelElementProperties.AddFabricationInformationForRevitElements
+This method adds fabrication information to the given elements.

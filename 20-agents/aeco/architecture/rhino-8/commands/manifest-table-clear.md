@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ManifestTable.Clear
+Marks all items as deleted.

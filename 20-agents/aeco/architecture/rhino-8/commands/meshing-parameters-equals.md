@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshingParameters.Equals
+Determines whether the specified MeshingParameters has the same values as the present MeshingParameters.

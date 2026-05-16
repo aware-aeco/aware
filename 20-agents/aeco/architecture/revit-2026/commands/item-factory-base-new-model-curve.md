@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ItemFactoryBase.NewModelCurve
+Creates a new model line element.

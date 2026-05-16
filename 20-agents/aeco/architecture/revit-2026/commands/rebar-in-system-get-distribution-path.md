@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarInSystem.GetDistributionPath
+The distribution path of a rebar set.

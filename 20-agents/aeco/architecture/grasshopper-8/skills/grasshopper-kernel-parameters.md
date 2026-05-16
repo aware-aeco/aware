@@ -6,13 +6,17 @@ description: API reference for namespace Grasshopper.Kernel.Parameters from Gras
 # Grasshopper.Kernel.Parameters
 
 - **GH_ExpressionParam`1**
+  - Parameter with expression post-process.
 - **GH_ExpressionUndoAction**
+  - Undo action for expression changes in a parameter.
 - **GH_ProxyParameter**
 - **GH_ProxyParameterAttributes**
 - **GH_Receiver**
 - **GH_ReceiverAttributes**
 - **IGH_ExpressionParameter**
+  - Utility interface used for undo grouping.
 - **IGH_TypeHint**
+  - Represents conversion logic for a certain data type.
 - **Param_AngularDimension**
 - **Param_Arc**
 - **Param_Boolean**

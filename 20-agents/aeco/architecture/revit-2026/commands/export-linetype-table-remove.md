@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLinetypeTable.Remove
+Removes the pair (key, info) corresponding to the given ExportLinetypeKey.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetObject.SetPressEnterWhenDonePrompt
+The default prompt when EnablePressEnterWhenDonePrompt is enabled is "Press Enter             when done". Use this function to specify a different string to be appended.

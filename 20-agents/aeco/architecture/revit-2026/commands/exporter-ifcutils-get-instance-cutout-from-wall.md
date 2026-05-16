@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.GetInstanceCutoutFromWall
+Gets the curve loop corresponding to the hole in the wall made by the instance.

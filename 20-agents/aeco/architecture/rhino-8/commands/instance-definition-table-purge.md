@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceDefinitionTable.Purge
+Purges an instance definition and its definition geometry.

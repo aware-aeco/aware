@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObject.GetDoubleReportProperties
+Retrieves multiple double report properties for the model object. It is faster             to fetch multiple properties at once.

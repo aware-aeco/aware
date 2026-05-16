@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalResourceReference.HasValidDisplayPath
+Checks whether this external Resource has a valid display path.

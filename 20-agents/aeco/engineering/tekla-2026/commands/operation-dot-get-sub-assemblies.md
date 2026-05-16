@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotGetSubAssemblies
+Selects and returns a list of subassemblies belonging to the assembly. Does not select subassemblies

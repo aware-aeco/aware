@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinearWorkflow.CopyFrom
+Copy from another linear workflow object.

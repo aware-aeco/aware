@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleFilter.GetElementIdValue
+Gets the filter value for a filter using an ElementId value.

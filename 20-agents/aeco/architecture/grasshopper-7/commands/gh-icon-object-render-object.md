@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_IconObject.RenderObject
+Draw this object inside the specified graphics surface.

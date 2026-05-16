@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IMatrix.Scale
+Prepend a scale to the matrix from the origin (0, 0)

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmDisplacement.DeleteSubItem
+Deletes a sub-item by its face index.             face_index is the index of the face on the polysurface/SubD.

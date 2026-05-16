@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Chunk.RemoveItem
+Remove an unindexed item from this chunk.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_DataAccess.ParameterTargetPath
+Get the target path for the specified output parameter.

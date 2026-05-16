@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCData.CreateEnumeration
+Creates a enum data object.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.FindCoincidentBrepComponents
+Find the indices of all brep faces, edges and vertices that are within tolerance of a test-point.

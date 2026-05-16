@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIDocument.SaveAndClose
+Close the document, prompting the user for saving it when necessary.

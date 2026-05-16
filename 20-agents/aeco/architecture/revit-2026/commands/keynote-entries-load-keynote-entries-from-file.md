@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-KeynoteEntries.LoadKeynoteEntriesFromFile
+Loads the contents of a keynote text file into the provided KeyBasedTreeEntriesLoadContent.

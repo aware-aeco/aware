@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.GetFarRect
+Get corners of far clipping plane rectangle.

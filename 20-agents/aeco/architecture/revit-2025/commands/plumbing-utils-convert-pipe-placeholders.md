@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlumbingUtils.ConvertPipePlaceholders
+Converts a collection of pipe placeholder elements into pipe elements.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoDoc.SelectRenderContentInEditor
+Selects a collection of contents in any editors they appear in.

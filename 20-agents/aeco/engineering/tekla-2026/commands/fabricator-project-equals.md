@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricatorProject.Equals
+Determines whether the current instance of FabricatorProject is equal to another instance.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.SetDomain
+Sets the domain in a direction.

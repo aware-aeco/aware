@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TemperatureRatingType.AddInsulationType
+Add a new kind of insulation type into this temperature rating type.

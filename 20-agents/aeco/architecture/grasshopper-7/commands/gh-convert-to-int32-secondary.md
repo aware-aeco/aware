@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToInt32_Secondary
+Performs indirect casts from other data types into Integers.

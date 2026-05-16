@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RhinoScriptInterface.CloseDocument
+Close the currently active Grasshopper document.   If there is not active document, nothing will happen.

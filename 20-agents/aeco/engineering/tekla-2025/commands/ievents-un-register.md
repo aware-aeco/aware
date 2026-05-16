@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEvents.UnRegister
+Unregisters the instance from listening to events.

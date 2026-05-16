@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AppearanceSettings.SetWidgetColor
+Sets the logical widget color association to a specific .Net library color, without forced UI update.

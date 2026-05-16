@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.Split
+Splits (divides) the surface into two parts at the specified parameter

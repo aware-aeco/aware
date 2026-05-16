@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Part.CanOffsetFace
+Checks if it is possible to offset the given face.

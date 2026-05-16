@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Component.Delete
+Deletes the component instance with the given ID from the model database.

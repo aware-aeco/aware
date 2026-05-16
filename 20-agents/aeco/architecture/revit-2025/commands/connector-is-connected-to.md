@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Connector.IsConnectedTo
+Identifies if the connector is connected to the specified connector.

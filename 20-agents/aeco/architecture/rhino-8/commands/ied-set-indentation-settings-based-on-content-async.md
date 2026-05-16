@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.SetIndentationSettingsBasedOnContentAsync
+doesn't quite work yet when it comes to setting the tabSize. Needs investigation.

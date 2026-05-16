@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DoubleList.ToArray
+Copies the doubles to an double array.

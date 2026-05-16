@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Schema.ListFields
+The complete list of fields in the Schema, sorted by name.

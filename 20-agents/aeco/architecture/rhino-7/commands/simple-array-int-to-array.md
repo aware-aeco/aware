@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayInt.ToArray
+Returns the managed counterpart of the unmanaged array.

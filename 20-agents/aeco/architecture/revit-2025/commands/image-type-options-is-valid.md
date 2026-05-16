@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ImageTypeOptions.IsValid
+If true the ImageTypeOptions can be used to create or reload an ImageType.

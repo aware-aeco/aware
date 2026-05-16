@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BalusterPattern.DuplicateBaluster
+Duplicates the baluster pointed by given index in the main baluster pattern.

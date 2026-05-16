@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.Tessellate
+Valid only if the curve is bound. Returns a polyline approximation to the curve.

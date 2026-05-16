@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraint.GetRebarConstrainedHandle
+Gets the RebarConstrainedHandle for which this constraint is.

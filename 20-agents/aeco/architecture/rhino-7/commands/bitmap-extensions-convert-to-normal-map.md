@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BitmapExtensions.ConvertToNormalMap
+Use this function to convert a System.Drawing.Bitmap from a bump to a normal texture

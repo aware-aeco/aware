@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCParameterTemplate.IsExportingPropertySet
+Determines whether the provided property set is included in export.

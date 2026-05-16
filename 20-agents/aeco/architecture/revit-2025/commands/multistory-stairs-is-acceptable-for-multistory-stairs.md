@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultistoryStairs.IsAcceptableForMultistoryStairs
+Checks if the given stairs can be used to create a multistory stairs.

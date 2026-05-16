@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WireConduitTypeSet.Insert
+Insert the specified conduit type into the set.

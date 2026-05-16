@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StairsRun.SetLocationPathForStraightRun
+Set location path for a straight run by giving a line.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleTemplate.GetSectionData
+Gets the writable section data object.

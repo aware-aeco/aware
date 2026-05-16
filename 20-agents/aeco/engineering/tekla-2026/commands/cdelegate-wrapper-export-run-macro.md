@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportRunMacro
+DO NOT USE! For internal usage only!

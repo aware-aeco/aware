@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DividedSurface.CanBeIntersectionElement
+Checks if the element can be an intersection reference.

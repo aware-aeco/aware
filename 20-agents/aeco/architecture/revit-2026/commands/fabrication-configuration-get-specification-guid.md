@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetSpecificationGUID
+Gets the specification GUID by its identifier.

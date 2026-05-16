@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectAttributes.GetCustomSectionStyle
+Get an optional custom section style associated with these attributes.

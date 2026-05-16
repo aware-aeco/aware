@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSpacing.IsExactFlexibleType
+Gets whether the spacing is an exact type with flexible space(s).

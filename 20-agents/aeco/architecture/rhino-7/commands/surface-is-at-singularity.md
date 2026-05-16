@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.IsAtSingularity
+Tests if a surface parameter value is at a singularity.

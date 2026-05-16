@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ImporterIFC.HybridCreateImportMap
+Creates a map to look up Element Ids, given an IFCGuid as input.

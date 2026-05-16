@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DynamicLayout.EndScrollable
+Ends a scrollable section.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinetypeTable.SetCurrentLinetypeIndex
+At all times, there is a "current" linetype. Unless otherwise specified, new objects             are assigned to the current linetype. The current linetype is never deleted.

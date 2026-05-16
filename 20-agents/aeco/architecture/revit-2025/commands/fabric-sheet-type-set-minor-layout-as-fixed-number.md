@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricSheetType.SetMinorLayoutAsFixedNumber
+Sets the major layout pattern as FixedNumber, while specifying the needed parameters for this pattern.

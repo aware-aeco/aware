@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewFaceArray
+Creates a new instance of a face array.

@@ -8,7 +8,9 @@ description: API reference for namespace Grasshopper.Kernel.Special.SketchElemen
 - **GH_SketchBox**
 - **GH_SketchCloud**
 - **GH_SketchElement**
+  - Base implementation of IGH_SketchElement
 - **GH_SketchEllipse**
 - **GH_SketchFreehandStroke**
 - **GH_SketchLine**
 - **IGH_SketchElement**
+  - Base interface for all Sketch elements

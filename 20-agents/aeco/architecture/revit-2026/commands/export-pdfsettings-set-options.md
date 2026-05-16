@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportPDFSettings.SetOptions
+Sets options for exporting.

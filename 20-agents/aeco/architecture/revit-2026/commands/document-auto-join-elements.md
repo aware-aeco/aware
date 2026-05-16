@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.AutoJoinElements
+Forces the elements in the Revit document to automatically join to their neighbors where appropriate.

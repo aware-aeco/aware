@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalResourceReference.IsValidReference
+Checks whether the reference is in a valid format.

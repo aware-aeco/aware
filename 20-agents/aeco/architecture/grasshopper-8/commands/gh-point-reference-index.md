@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Point.ReferenceIndex
+Retrieve the index of the point reference data.

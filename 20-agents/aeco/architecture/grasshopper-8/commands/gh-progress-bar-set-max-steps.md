@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ProgressBar.SetMaxSteps
+Sets the maximum number of steps that will be handled during the upcoming progress.

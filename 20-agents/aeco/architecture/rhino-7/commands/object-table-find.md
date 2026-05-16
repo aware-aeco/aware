@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.Find
+Please use FindId().

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewElementId
+Creates a new Autodesk::Revit::DB::ElementId^ object.

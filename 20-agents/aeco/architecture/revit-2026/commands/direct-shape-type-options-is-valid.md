@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShapeTypeOptions.IsValid
+Determines whether a DirectShapeTypeOptions is internally consistent (valid).

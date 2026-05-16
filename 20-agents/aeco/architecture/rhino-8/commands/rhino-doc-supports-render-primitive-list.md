@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoDoc.SupportsRenderPrimitiveList
+Determines if custom render meshes will be built for this document (i.e. - GH meshes).

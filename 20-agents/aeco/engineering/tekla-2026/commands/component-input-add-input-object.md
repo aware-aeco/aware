@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ComponentInput.AddInputObject
+Adds a model object to the component input.

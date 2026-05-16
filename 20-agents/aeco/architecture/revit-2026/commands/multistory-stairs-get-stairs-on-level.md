@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultistoryStairs.GetStairsOnLevel
+Gets the individual stairs or stairs group on the given base level.

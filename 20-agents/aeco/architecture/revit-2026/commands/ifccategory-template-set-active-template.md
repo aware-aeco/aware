@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCCategoryTemplate.SetActiveTemplate
+Sets the mapping template element to be the active mapping template for its document.

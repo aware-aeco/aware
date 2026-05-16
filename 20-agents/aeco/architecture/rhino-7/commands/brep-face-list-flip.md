@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepFaceList.Flip
+Flips the orientation of faces.

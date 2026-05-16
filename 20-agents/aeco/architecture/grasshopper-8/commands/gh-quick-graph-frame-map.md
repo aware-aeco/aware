@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_QuickGraphFrame.Map
+Map a normalised point into frame coordinates.

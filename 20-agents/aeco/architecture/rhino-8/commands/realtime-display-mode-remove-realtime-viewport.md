@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RealtimeDisplayMode.RemoveRealtimeViewport
+Remove RealtimeDisplayMode instance from internal dictionary.

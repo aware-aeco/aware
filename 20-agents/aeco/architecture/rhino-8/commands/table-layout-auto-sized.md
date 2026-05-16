@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableLayout.AutoSized
+Creates a table layout with an auto sized control.

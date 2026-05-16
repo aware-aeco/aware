@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepFace.Split
+Split this face using 3D trimming curves.

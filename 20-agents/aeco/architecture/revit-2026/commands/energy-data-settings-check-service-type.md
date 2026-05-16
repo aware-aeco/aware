@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyDataSettings.CheckServiceType
+Checks that the service type falls within an appropriate range.

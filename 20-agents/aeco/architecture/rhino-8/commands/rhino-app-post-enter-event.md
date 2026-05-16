@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoApp.PostEnterEvent
+Post an enter event to the command line

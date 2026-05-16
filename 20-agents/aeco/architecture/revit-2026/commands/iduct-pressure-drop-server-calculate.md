@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IDuctPressureDropServer.Calculate
+Calculate the duct pressure drop.

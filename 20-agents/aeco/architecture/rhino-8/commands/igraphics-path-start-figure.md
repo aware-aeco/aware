@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGraphicsPath.StartFigure
+Starts a new figure without closing the current figure

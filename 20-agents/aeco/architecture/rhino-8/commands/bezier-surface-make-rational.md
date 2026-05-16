@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BezierSurface.MakeRational
+Make bezier rational

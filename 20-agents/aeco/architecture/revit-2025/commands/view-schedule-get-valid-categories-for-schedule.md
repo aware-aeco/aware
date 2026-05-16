@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.GetValidCategoriesForSchedule
+Gets a list of categories that can be used for a regular schedule.

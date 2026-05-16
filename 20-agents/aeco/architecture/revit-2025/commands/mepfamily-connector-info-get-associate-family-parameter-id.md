@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPFamilyConnectorInfo.GetAssociateFamilyParameterId
+Gets the associate family parameter id of the specified connector parameter id.

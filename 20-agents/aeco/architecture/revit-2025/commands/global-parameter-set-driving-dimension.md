@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GlobalParameter.SetDrivingDimension
+Set a dimension to drive the value of this parameter.

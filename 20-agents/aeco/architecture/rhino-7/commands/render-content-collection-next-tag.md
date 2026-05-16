@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContentCollection.NextTag
+Call FirstTag first - this gets the next tag

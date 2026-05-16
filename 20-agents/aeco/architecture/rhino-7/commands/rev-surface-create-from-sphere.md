@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevSurface.CreateFromSphere
+Constructs a new surface of revolution from the values of a sphere.

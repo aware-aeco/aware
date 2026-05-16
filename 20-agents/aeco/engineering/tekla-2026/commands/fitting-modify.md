@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Fitting.Modify
+Modifies the existing fitting in the model database to match the current one.

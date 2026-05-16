@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnnotationMultipleAlignmentUtils.MoveWithAnchoredLeaders
+Moves the element while keeping the leader end points anchored.

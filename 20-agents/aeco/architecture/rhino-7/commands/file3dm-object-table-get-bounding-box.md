@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObjectTable.GetBoundingBox
+Gets the bounding box containing every object in this table.

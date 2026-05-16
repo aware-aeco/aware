@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetMaterialGaugeGUID
+Gets the material gauge GUID by its material/gauge identifiers.

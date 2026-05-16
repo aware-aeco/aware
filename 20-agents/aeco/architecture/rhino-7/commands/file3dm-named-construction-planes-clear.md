@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmNamedConstructionPlanes.Clear
+Removes all named construction planes from the table.

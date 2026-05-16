@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UV.ToString
+Gets formatted string showing (U, V) with values formatted to 9 decimal places.

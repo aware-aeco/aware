@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RealtimeDisplayMode.HudAllowEditMaxPasses
+Override to allow maximum pass editing. By default disabled.

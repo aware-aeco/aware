@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextFields.PointCoordinate
+returns the location of a 3d point

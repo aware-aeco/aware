@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.GetOrderedParameters
+Gets the parameters associated to the element in order.

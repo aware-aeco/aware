@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHBox
+Convert data into GH_Boxes.

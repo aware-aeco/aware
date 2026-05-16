@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LogicalWeld.AddWeld
+Adds a weld to the logical weld.

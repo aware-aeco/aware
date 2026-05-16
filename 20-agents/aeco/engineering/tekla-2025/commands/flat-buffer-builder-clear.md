@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FlatBufferBuilder.Clear
+Reset the FlatBufferBuilder by purging all data that it holds.

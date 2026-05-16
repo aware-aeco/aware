@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSpliceByRulesResult.GetSpliceGeometries
+Gets the RebarSpliceGeometry collection which is the result of the splice by rules operation.

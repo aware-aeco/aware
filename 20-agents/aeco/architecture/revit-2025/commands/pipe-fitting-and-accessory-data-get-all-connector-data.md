@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PipeFittingAndAccessoryData.GetAllConnectorData
+Gets the connector data of the pipe fitting or pipe accessory.

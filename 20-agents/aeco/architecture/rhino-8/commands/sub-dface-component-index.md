@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDFace.ComponentIndex
+Gets the component index of this face.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RhinoScriptInterface.BakeDataInObject
+Find an object and bake all geometry inside of it.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Decal.GetUVBounds
+The UV bounds of the decal. Only used when mapping is UV.

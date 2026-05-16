@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SnapShotsClient.SupportsDocument
+Defines if the client supports document user data or not

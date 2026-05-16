@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetFabricationConfigurationInfo
+Gets the information about the fabrication configuration of the project.

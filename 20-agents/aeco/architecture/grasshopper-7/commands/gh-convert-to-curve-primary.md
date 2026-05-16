@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToCurve_Primary
+Performs a direct cast from OnCurve or GH_Curve.   Data is not quaranteed to be duplicated.

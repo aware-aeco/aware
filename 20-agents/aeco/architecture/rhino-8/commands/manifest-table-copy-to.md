@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ManifestTable.CopyTo
+Copies the content of this table to an array.

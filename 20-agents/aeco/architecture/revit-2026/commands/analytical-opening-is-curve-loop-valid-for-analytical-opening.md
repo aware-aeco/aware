@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalOpening.IsCurveLoopValidForAnalyticalOpening
+Checks if curve loop is valid for Analytical Opening.

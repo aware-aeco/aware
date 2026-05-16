@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DesignToFabricationConverter.GetConvertedFabricationPartsWithInvalidConnections
+Gets the collection of converted fabrication parts with invalid connections.

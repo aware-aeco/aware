@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportModifyClipBox
+DO NOT USE! For internal usage only!

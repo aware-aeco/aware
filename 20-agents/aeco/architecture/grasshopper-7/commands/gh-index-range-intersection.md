@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_IndexRange.Intersection
+Create the intersection between two ranges.

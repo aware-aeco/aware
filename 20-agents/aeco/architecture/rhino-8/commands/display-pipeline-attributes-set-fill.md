@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipelineAttributes.SetFill
+Set fill mode to solid color and set the fill color

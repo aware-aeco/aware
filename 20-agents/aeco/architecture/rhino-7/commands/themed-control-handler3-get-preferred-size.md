@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedControlHandler`3.GetPreferredSize
+Gets the preferred size of this control given the specified .

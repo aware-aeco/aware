@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DynamicLayout.BeginCentered
+Creates a new section where all controls will be centered together.

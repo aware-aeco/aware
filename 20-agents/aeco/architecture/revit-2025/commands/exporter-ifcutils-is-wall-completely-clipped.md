@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.IsWallCompletelyClipped
+Determines if the input wall is completely removed by interaction with other elements    within the given range.

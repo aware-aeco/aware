@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudInstance.SetSelectionFilter
+Sets active selection filter by cloning of the one passed to it.

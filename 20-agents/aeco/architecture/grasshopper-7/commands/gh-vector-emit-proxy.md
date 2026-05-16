@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Vector.EmitProxy
+Returns a proxy that represents this vector. Do not call this function unless you're

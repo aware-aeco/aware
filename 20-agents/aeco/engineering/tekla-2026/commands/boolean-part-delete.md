@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BooleanPart.Delete
+Deletes the boolean part instance with the given ID from the model database.

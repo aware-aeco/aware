@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.IsSlotGrouped
+Check if the slot is in a group

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmPlugInDataTable.TryRead
+Attempts to read a Rhino plug-in's custom data from the  file.

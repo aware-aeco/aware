@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLayerTable.Remove
+Removes the pair (key, info) by pattern key.

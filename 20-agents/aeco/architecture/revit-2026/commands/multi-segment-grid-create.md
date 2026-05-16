@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultiSegmentGrid.Create
+Create a MultiSegmentGrid element from the specified curve loop.

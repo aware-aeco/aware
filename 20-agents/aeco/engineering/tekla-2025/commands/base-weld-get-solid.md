@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BaseWeld.GetSolid
+Method for getting the weld solid.

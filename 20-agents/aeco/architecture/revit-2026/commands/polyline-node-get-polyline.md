@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolylineNode.GetPolyline
+Returns the polyline object corresponding to the node.

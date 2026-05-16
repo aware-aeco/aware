@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetObject.ActiveGetObject
+Get the currently running GetObject for a given document

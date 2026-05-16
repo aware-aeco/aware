@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Fonts.GetUiFont
+GetUiFont provides access to a set of unmanaged fonts used by Rhino.

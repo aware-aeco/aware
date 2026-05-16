@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RepeatingReferenceSource.GetBounds
+Returns information about the boundaries of the repeating reference array.

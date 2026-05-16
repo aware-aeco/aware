@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.ClusterInstanceCount
+Counts the number of instances of a specific cluster document ID.

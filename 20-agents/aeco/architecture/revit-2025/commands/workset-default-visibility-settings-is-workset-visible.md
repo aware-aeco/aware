@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WorksetDefaultVisibilitySettings.IsWorksetVisible
+Indicates whether the workset is visible by default.

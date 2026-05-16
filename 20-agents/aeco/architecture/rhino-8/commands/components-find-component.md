@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Components.FindComponent
+Finds a component given its full name.

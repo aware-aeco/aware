@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SystemIcons.GetFileIcon
+Gets a file icon for the specified file

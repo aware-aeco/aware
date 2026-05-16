@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalAnalyticalNode.GetAnalyticalPropertyData
+Gets the electrical analytical node property data,  if not available.

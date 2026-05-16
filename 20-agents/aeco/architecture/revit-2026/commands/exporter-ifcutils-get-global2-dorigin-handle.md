@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.GetGlobal2DOriginHandle
+Obtains the handle representing the 2D origin.

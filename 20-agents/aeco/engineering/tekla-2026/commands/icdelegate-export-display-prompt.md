@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportDisplayPrompt
+DO NOT USE! For internal usage only!

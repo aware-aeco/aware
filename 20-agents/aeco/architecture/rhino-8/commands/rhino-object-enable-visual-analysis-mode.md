@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.EnableVisualAnalysisMode
+Used to turn analysis modes on and off.

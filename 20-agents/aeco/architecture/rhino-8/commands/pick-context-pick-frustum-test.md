@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PickContext.PickFrustumTest
+Fast test to check if a bounding box intersects a pick frustum.

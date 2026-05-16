@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.IsPerspectiveViewProjection
+Tells whether the view projection is a perspective projection.

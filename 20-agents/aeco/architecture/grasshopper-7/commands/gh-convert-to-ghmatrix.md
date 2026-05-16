@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHMatrix
+Convert data into ToGHMatrix.

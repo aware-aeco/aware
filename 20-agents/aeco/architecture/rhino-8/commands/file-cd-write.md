@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileCd.Write
+Write a CD file based on the contents of a RhinoDoc

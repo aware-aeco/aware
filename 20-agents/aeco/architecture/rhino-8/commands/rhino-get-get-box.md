@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoGet.GetBox
+Asks the user to select a Box in the viewport.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetCategoryHidden
+Checks if elements of the given category are set to be invisible (hidden) in this view.

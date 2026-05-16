@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ShapeImporter.SetDefaultLengthUnit
+Sets the length unit to be used when the input is a unitless SAT file.

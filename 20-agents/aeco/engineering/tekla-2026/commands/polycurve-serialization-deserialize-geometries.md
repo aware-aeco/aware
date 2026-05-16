@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolycurveSerialization.DeserializeGeometries
+Deserializes the geometry list from core

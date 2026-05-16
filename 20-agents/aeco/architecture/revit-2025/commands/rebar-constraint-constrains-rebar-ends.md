@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraint.ConstrainsRebarEnds
+Returns true if this constraint constrains two rebar ends.

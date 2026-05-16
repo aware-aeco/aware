@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BindableExtensions.Inverse
+Gets a binding with the inverse of the specified nullable boolean value binding.

@@ -6,193 +6,367 @@ description: API reference for namespace Grasshopper.Kernel from Grasshopper.dll
 # Grasshopper.Kernel
 
 - **GH_ActiveObject**
+  - Basic implementation of IGH_ActiveObject interface.   Derive from this class rather than implementing IGH_ActiveObject to make your life easier.
 - **GH_Alias**
+  - Represents a single alias|target combo.
 - **GH_Arrange**
+  - Enumerates possible types of object arrangement.
 - **GH_AssemblyFolderInfo**
+  - Represents a folder from which GHA files are loaded.
 - **GH_AssemblyInfo**
+  - Implement this interface once (and once only) in a GHA project if you wish to   add additional information about your library to Grasshopper. Note you must supply   an empty constructor.
 - **GH_AssemblyInfoStub**
+  - Provides basic properties for a GHA assembly that does not expose a type that derives from GH_AssemblyInfo.   This type is created automatically when a GH_AssemblyInfo type is not found in an assembly.
 - **GH_AssemblyPriority**
+  - Derive from this class if you wish to perform additional steps before any of your components are loaded.   Any class in your project which inherits from GH_AssemblyPriority and which has an   empty constructor will be instantiated prior to any GH_Component or IGH_DocumentObject classes.
 - **GH_AttributesChangedEventArgs**
+  - Event arguments passed during AttributesChanged events.
 - **GH_Attributes`1**
+  - Derive from this class rather than implementing IGH_Attributes from scratch.
 - **GH_Author**
+  - Maintains author information such as name, company, copyright, address etc.
 - **GH_AutoSaveSettings**
+  - Provides access to all AutoSave event flags.
 - **GH_AutoSaveTrigger**
+  - Different types of events that can cause an AutoSave.
 - **GH_BakeUtility**
+  - A utility class for baking. We heavily recommend you use this for any baking,   as it handles invalid objects correctly.
 - **GH_BitmapChannel**
+  - Lists all possible channels for 24 and 32 bit bitmaps.
 - **GH_CaseInsensitiveStringComparer**
+  - Implements the IComparer(Of String) interface for non-case sensitive string comparisons.
 - **GH_CharPatternParamNameConstructor**
 - **GH_ClipboardType**
+  - Enumerates all possible clipboards for GH_DocumentIO operations.
 - **GH_Component**
+  - Inherit from this class if you wish to create a custom component.   Note that you must provide a public, empty constructor which   calls the base class constructor.
 - **GH_ComponentParamServer**
+  - Wraps all members and functions needed for GH_Component to manage its input and output parameters.
 - **GH_ComponentServer**
+  - Maintains proxies for all components, parameters and other object types as defined in all grasshopper assemblies.
 - **GH_ConnectivityDiagram**
+  - Represents a complete connectivity diagram (topology) of a GH_Document.   A connectivity diagram is basically an undirected network of all the wires in a document.
 - **GH_ConnectivityDisparity**
+  - Maintains two connectivity diagrams, one of which is a subset of the other.
 - **GH_ConnectivityNode**
+  - Represents a single node in a Grasshopper connectivity diagram.   A single node represents a single IGH_Param instance.
 - **GH_Conversion**
+  - Level flag for conversion algorithms.
 - **GH_Convert**
+  - Provides static converters for different data types inside Grasshopper.   This class both has specific and generic converters.
 - **GH_CustomEventServer**
+  - RhinoCommon only event server.
 - **GH_DataComparison**
+  - Enumerates all possible Data Matching algorithms for Components.
 - **GH_DataMapping**
+  - Enumerates all parameter data mapping types.
 - **GH_DebugDescriptionWriter**
+  - Writer object used to create debug logs.
 - **GH_DisplayExpiredEventArgs**
+  - Arguments for display events.
 - **GH_DocContextEventArgs**
+  - These arguments are passed along with SettingsChanged events on GH_Document.
 - **GH_DocEnabledEventArgs**
+  - These arguments are passed along with SettingsChanged events on GH_Document.
 - **GH_DocFilePathEventArgs**
+  - These arguments are passed along with FilePathChanged events on GH_Document.
 - **GH_DocModifiedEventArgs**
+  - These arguments are passed along with ModifiedChanged events on GH_Document.
 - **GH_DocObjectEventArgs**
+  - These arguments are passed along with ObjectsAdded and ObjectsRemoved events on GH_Document.
 - **GH_DocSettingsEventArgs**
+  - These arguments are passed along with SettingsChanged events on GH_Document.
 - **GH_DocUndoEventArgs**
+  - These arguments are passed along with UndoStateChanged events on GH_Document.
 - **GH_Document**
+  - Represents a single Grasshopper document.
 - **GH_DocumentAssociations**
 - **GH_DocumentContext**
+  - Enumerates all possible (de)activation contexts for documents.
 - **GH_DocumentEventServer**
+  - RhinoCommon only event server.
 - **GH_DocumentIO**
+  - Provides basic IO operations for GH_Documents.
 - **GH_DocumentObject**
+  - Standard implementation of IGH_DocumentObject.
 - **GH_DocumentProperties**
 - **GH_DocumentRank**
+  - Enumerates all possible document rankings.
 - **GH_DocumentRenderMeshProvider**
+  - Utility class for seeding render queues with GH geometry.
 - **GH_DocumentServer**
+  - Manages and maintains a collection of GH_Documents.
 - **GH_DocumentSettings**
+  - Enumerates all possible types of settings for a GH_Document.
 - **GH_DocumentTree**
+  - Represents a hierarchical tree of documents that are subsidiary to one another.
 - **GH_DocumentTreeNode**
+  - Represents a single node in a document tree.
 - **GH_Exposure**
+  - Lists the different kinds of GUI exposure an object can have.
 - **GH_ExternalFile**
+  - Represents information about external files to be loaded.
 - **GH_ExternalFileType**
+  - Enumerates the possible external files that Grasshopper is interested in.
 - **GH_FileSystemEventServer**
+  - Provides a easy-to-use way to keep tabs on files.
 - **GH_FileWatcher**
+  - Provides easy mechanisms to monitor changes to the local File System.
 - **GH_FileWatcherEvents**
+  - Enumerates all possible file watcher events. These can be combined.
 - **GH_Filter**
+  - Enumerates all object Search filters.
 - **GH_FontServer**
+  - Maintains a collection of standard fonts and mays to measure them.
 - **GH_Format**
+  - Provides standard Grasshopper formatting functions.
 - **GH_GHALoadingEventArgs**
+  - Event arguments used in the GH_GHALoaded event on GH_ComponentServer.
 - **GH_GHXHarvester**
+  - Provides static methods for harvesting data from GHX and GH files.
 - **GH_GetterResult**
+  - Enumerates typical getter results.
 - **GH_GraphProxy**
 - **GH_GuidConflictSolution**
+  - Contains a list of all possible Assembly GUID conflict solutions
 - **GH_GuidTable**
+  - Maintains a quick-access collection of Guids and IGH_ActiveObject references.
 - **GH_IconDisplayMode**
+  - Lists all display modes that individual objects can have.
 - **GH_IncrementalParamNameConstructor**
 - **GH_InstanceDescription**
+  - Base implementation of IGH_InstanceDescription. Consider deriving from this class rather than   implementing IGH_InstanceDescription from scratch.
 - **GH_LibraryLicense**
+  - Enumerates the possible library types for GHA assemblies.
 - **GH_LineParser**
+  - Provides basic functionality for the custom ReadFile component script parsing.
 - **GH_LineParserAction**
+  - Enumerates the possible actions a line parser can invoke.
 - **GH_ListUtil**
+  - Provides utilities for dealing with list of Data from input parameters.
 - **GH_LoadingAttribute**
+  - Assembly loading behaviour attribute.
 - **GH_LoadingDemand**
+  - Enumerates all assembly loading behaviour demands.
 - **GH_LoadingException**
+  - Maintains information about exceptions that occured during Add-On loading.
 - **GH_LoadingInstruction**
+  - Enumerates all external GHA loading process instructions.
 - **GH_LoadingMechanism**
+  - Enumerates all assembly loading mechanisms.
 - **GH_MarkovChain**
+  - Represents a database with multi-depth markov chains.
 - **GH_MarkovOutcome**
+  - Represents a single Markov chain outcome.
 - **GH_MarkovPattern**
+  - Represents a Markov chain pattern and associated outcomes.
 - **GH_MatchLevel**
+  - All possible string matching schemes.
 - **GH_MatchWeight**
+  - Weighting factors of string matches.
 - **GH_MathUtil**
 - **GH_MemoryBitmap**
+  - Utility class for ultra-fast bitmap sampling and filters.
 - **GH_NoiseTable**
 - **GH_ObjectChangedEventArgs**
+  - Event arguments passed during ObjectChanged events.
 - **GH_ObjectEventType**
+  - Represents common changes which can cause the ObjectChanged event to be raised.
 - **GH_ObjectSpecies**
+  - Contains all object species.
 - **GH_ObjectType**
+  - Enumerates all types of object that can be referenced by a GH_ObjectProxy instance.
 - **GH_ParamAccess**
+  - Enumerates the types of access that parameters support.
 - **GH_ParamData**
+  - Enumerates the possible states of being for data inside a parameter.
 - **GH_ParamHashFields**
+  - Enumerates all accepted fields for hashing parameter data.
 - **GH_ParamKind**
+  - Enumerates the different guises of parameter
 - **GH_ParamServerEventArgs**
+  - Arguments used in events for the GH_ComponentParamServer type.
 - **GH_ParamWireDisplay**
+  - Enumerates the possible wire display types for parameters.
 - **GH_Param`1**
+  - Base implementation of IGH_Param. Derive from this class rather than implementing IGH_Param from scratch.   If your parameter can store persistent data, derive from GH_PersistentParam(Of T) instead.
 - **GH_ParameterContext**
+  - Data passed to IGH_ContextualParameter.AutoAssignContextualData  to help define a context state of Rhino/Grasshopper
 - **GH_ParameterSide**
+  - Enumerates possible sides for variable parameters.
 - **GH_PersistentGeometryParam`1**
+  - Derives from GH_PersistentParam(Of T), but adds some useful functions for   dealing with geometric data types.
 - **GH_PersistentParam`1**
+  - Implementation of GH_Param(Of T) that supports persistent data.
 - **GH_PickBox**
+  - Represents the different ways in which picking rectangles can behave.
 - **GH_PingDocumentEventArgs**
+  - Event arguments passed during PingDocument events.
 - **GH_PluginFolderType**
+  - Enumerates the possible folder types for GH_AssemblyFolderInfo
 - **GH_PreviewArgs**
+  - This class is passed to Objects that implement IGH_PreviewObject during drawing operations.
 - **GH_PreviewBoundary**
+  - A closed boundary for filtering previewed objects.
 - **GH_PreviewExpiredEventArgs**
+  - Arguments for preview events.
 - **GH_PreviewFilter**
+  - Lists all possible Grasshopper preview filters.
 - **GH_PreviewMesh**
+  - Enumerates possible meshing parameters for documents.
 - **GH_PreviewMeshArgs**
+  - This class is passed to objects that implement IGH_PreviewData during mesh drawing operations.
 - **GH_PreviewMode**
+  - Lists all possible Grasshopper preview modes.
 - **GH_PreviewUtil**
+  - This class exposes functionality that makes it easy to draw temporary geometry in Rhino viewports.
 - **GH_PreviewWireArgs**
+  - This class is passed to objects that implement IGH_PreviewData during wire drawing operations.
 - **GH_PrincipalState**
+  - Enumerates the different possible states in which the masterness of a parameter can occur.
 - **GH_Process**
+  - Provides static (Shared) access to several basic Win Process properties.
 - **GH_ProcessForm**
 - **GH_ProcessStep**
+  - Enumerates all possible solution states in which the document can be.
 - **GH_ProfilerMode**
+  - Lists all profiler modes.
 - **GH_RelevantObjectData**
+  - Contains information about relevant objects at a specific canvas location.
 - **GH_RelevantObjectFilter**
+  - Enumerates the possible filters to use in relevant object searches.
 - **GH_RenderArgs**
+  - This class is passed to objects that implement IGH_RenderAwareData or IGH_RenderAwareObject during render queue operations.
 - **GH_Revision**
 - **GH_RuntimeMessage**
+  - Contains all fields that together define a RuntimeMessage. Runtime Messages   are created and recorded by document objects during Grasshopper solutions.
 - **GH_RuntimeMessageLevel**
+  - Indicates the severity of a runtime message.
 - **GH_ScriptComponentUtilities**
 - **GH_ScriptInstance**
 - **GH_SearchHit**
 - **GH_SelectionState**
+  - Enumerates the possible effects of a specific selection operation.
 - **GH_SelectionTopology**
+  - Enumerates the possible selection topologies.
 - **GH_SettingsServer**
+  - A single instance of this class is maintained at module level under the   accessor "Settings".
 - **GH_SettingsType**
+  - Lists all the data types available in the GH_SettingsServer class.
 - **GH_SolutionEventArgs**
+  - Event arguments used for Document Solution events.
 - **GH_SolutionExpiredEventArgs**
+  - Arguments for solution events.
 - **GH_SolutionMode**
+  - Enumerates all solution modes.
 - **GH_SolutionPhase**
+  - The Phase flags are used to track object states during solutions.
 - **GH_SolutionSpan**
+  - Represents the time interval for a GH_Document solution.
 - **GH_State**
+  - Represents a single recorded document state.   A state contains values for an arbitrary set of objects inside the document.
 - **GH_StateServer**
+  - Maintains all the recorded states for this document.
 - **GH_StateTag**
+  - Abstract implementation of the IGH_StateTag interface.   Derive from this class rather than implementing IGH_StateTag.
 - **GH_StateTagLayoutDirection**
+  - Enumerates the possible layout directions for parameter state tags.
 - **GH_StateTagList**
+  - Maintains a collection of IGH_StateTag objects.
 - **GH_StringMatcher**
+  - Utility class for finding matches in a database of Strings.
 - **GH_StringPattern**
 - **GH_TaskCapableComponent`1**
+  - Abstract implementation of IGH_TaskCapableComponent. Inherit from this class   instead of implementing IGH_TaskCapableComponent directly.
 - **GH_TimeKind**
+  - Enumerates the possible kinds that a System.DateTime value can imply.
 - **GH_TypeLib**
+  - Utility module that caches a number of oft-used types and type-ids for quick access.   Do not change any of the values in this module or you'll wreck casting and conversion logic.
 - **GH_UndoOperation**
+  - Enumerates all possible types of undo operation.
 - **GH_UpgradeUtil**
+  - Exposes several utility functions for migrating parameters and wires between components useful   while upgrading components.
 - **GH_UserObject**
+  - Represents a custom user object. A User Object is an existing IGH_DocumentObject with   overridden icon, instance description and exposure.
 - **GH_ValueProxy`1**
+  - Represents the abstract base implementation of the IGH_ValueProxy interface.
 - **GH_VarParamEventArgs**
+  - Arguments used in Variable Parameter events.
 - **GH_VarParamSide**
+  - Enumerates possible sides for variable parameters.
 - **GH_WireTopology**
+  - Represents the topological data for a single connector wire.
 - **GH_WireTopologyDiagram**
+  - Represents any number of topological wires.
 - **GH_ZuiAction**
+  - Basic implementation of IGH_ZuiAction.
 - **IGH_ActiveObject**
+  - Base interface for all objects on the canvas that participate in solutions
 - **IGH_Attributes**
+  - Base interface for all Attributes. Attributes are the visual portion of GH_DocumentObjects.   They handle display, mouse events, layout, context menus etc. etc.  You should consider inheriting from GH_Attributes or some other abstract class instead of   implementing this interface from scratch.
 - **IGH_Author**
+  - Provides of collection of basic author details.
 - **IGH_BakeAwareData**
+  - Implement this interface in your IGH_Goo data type if you want to   be included in baking operations.
 - **IGH_BakeAwareObject**
+  - Implement this interface on your IGH_ActiveObject if you want to participate   in the Bake GUI.
 - **IGH_Component**
+  - Base interface for all GH_Component types.   Do not implement this interface from scratch, inherit from GH_Component instead.
 - **IGH_ContextualParameter**
+  - Base interface for contextual parameters.  This makes accessing non-strongly-typed functionality easier.
 - **IGH_DataAccess**
+  - Provides access to component parameters, in order to retrieve and assign data   during solutions.
 - **IGH_DebugDescription**
+  - Implement this interface to participate in Debug Logging.
 - **IGH_DocumentObject**
+  - Base interface for objects that want to play on the Canvas.   Do not implement this interface from scratch. Either inherit from   GH_DocumentObject or one of the other partially finished types such as   GH_ActiveObject, GH_Param(Of T) or GH_Component.
 - **IGH_DocumentOwner**
+  - Implement this interface if you want to be the owner assigned to a document in the Grasshopper documentserver.
 - **IGH_EventConsumer**
+  - Implement this interface if you want to inter-operate with a GH_EventServer.
 - **IGH_InitCodeAware**
+  - Implement this interface in your IGH_DocumentObject class if you want to   handle initialization codes from Canvas Search boxes.
 - **IGH_InstanceDescription**
+  - Base interface for all objects that participate in the Grasshopper GUI.
 - **IGH_InstanceGuidDependent**
+  - Implement this interface in your IGH_DocumentObject class if you want to be informed when   the InstanceGuids of objects in the document are mutated.
 - **IGH_ObjectProxy**
+  - Provides proxy data for all Grasshopper components and parameters.
 - **IGH_Param**
+  - Base interface for all Parameter types in Grasshopper.   Do not implement this interface from scratch, derive from GH_Param or   GH_PersistentParam instead.
 - **IGH_ParamNameConstructor**
 - **IGH_ParamWithPostProcess**
+  - Utility interface for GH_Param(Of T)
 - **IGH_PreviewArgs**
+  - Preview display arguments for IGH_PreviewObjects.
 - **IGH_PreviewData**
+  - All IGH_Goo types that wish to participate in Viewport redraws must implement this interface.
 - **IGH_PreviewMeshData**
+  - Implement this interface if your data deals with preview meshes.
 - **IGH_PreviewObject**
+  - All IGH_DocumentObjects that wish to participate in Viewport redraws must implement this interface.
 - **IGH_ProxyParameter**
 - **IGH_RenderAwareData**
+  - Implement this interface in your IGH_Goo type if you wish to send geometry to a render queue.
 - **IGH_RenderAwareObject**
+  - Implement this interface in your IGH_DocumentObject type if you wish to send geometry to a render queue.
 - **IGH_ScriptInstance**
 - **IGH_StateAwareObject**
+  - Implement this interface if you want to be included in state saving/loading.
 - **IGH_StateTag**
+  - A StateTag is a visual feedback mechanism that reflects a certain local setting of an Object.
 - **IGH_TaskCapableComponent**
+  - GH_Component that can choose to support the use of Tasks to compute solutions  When UseTasks returns true, the component has it's SolveInstance enumeration called  twice. The first pass (InPreSolve=True) is intended solely for collecting data and  starting calculation tasks. The second pass (InPreSolve=False) takes results or the  tasks and sets the output.
 - **IGH_UpgradeObject**
+  - Create a class with an empty constructor that implements this interface if you   want to provide an upgrade mechanism.
 - **IGH_UserPromptAware**
+  - Implement this interface in your IGH_Param if you want to allow users to set data   either through the menu or by double clicking.
 - **IGH_ValueProxy**
 - **IGH_VarParamComponent**
+  - This interface is obsolete, please use the IGH_VariableParameterComponent interface instead.
 - **IGH_VariableParameterComponent**
+  - Implement this interface in your component if you want to enable variable parameter UI.
 - **IGH_ZuiAction**
+  - Represents a single action which is only visible on screen above a certain zoom level.
 - **IRcpAwareObject**
+  - Implement this interface in a parameter or component if you want to be publishable on the remote control panel.

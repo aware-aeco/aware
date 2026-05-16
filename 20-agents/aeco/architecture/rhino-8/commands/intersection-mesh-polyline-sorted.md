@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.MeshPolylineSorted
+Finds the intersection of a mesh and a polyline. Points are guaranteed to be sorted along the polyline.

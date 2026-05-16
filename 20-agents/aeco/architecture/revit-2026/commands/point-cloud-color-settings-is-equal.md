@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudColorSettings.IsEqual
+Check if the contents of two settings are equal.

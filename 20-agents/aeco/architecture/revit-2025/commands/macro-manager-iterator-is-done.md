@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MacroManagerIterator.IsDone
+Identifies if the iteration has completed.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelText.GetVisibility
+Gets the visibility for the model text in a family document.

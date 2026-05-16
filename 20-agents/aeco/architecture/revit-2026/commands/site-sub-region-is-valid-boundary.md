@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SiteSubRegion.IsValidBoundary
+Identifies whether the given curve loops compose a valid boundary.

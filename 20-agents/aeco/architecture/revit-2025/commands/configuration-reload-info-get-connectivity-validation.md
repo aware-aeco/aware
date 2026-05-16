@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConfigurationReloadInfo.GetConnectivityValidation
+Returns information about the post-reload connectivity validation.

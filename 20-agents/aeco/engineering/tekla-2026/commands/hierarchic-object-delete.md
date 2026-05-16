@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HierarchicObject.Delete
+Deletes the hierarchical object instance from the model. The ID must be set.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalAnalyticalLoadSet.GetLoadIds
+Gets Equipment Load ids in the LoadSet.

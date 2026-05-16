@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RuntimeFile.ContainsKey
+Test whether a certain key is present in the File.

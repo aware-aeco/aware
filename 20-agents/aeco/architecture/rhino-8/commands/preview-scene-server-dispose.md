@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PreviewSceneServer.Dispose
+Dispose for PreviewSceneServer

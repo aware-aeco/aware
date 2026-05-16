@@ -6,36 +6,63 @@ description: API reference for namespace Rhino.FileIO from RhinoCommon.dll
 # Rhino.FileIO
 
 - **BinaryArchiveException**
+  - Thrown by BinaryArchiveReader and BinaryArchiveWriter classes when             an IO error has occurred.
 - **BinaryArchiveFile**
 - **BinaryArchiveMode**
 - **BinaryArchiveReader**
+  - Represents an entity that is capable of reading a binary archive and             instantiating strongly-typed objects.
 - **BinaryArchiveWriter**
+  - Represents an entity that is able to write data to an archive.
 - **CommonComponentTable`1**
+  - Provides a base table type that encompasses all document tables, both in RhinoDoc and File3dm.
 - **ContentHash**
+  - Contains information that is useful to uniquely identify an object.             This object is immutable.
 - **DracoColorFormat**
+  - Color format for vertex colors
 - **DracoCompression**
+  - Google Draco compression for mesh and point cloud data
 - **DracoCompressionOptions**
+  - Options for applying Draco compression
 - **File3dm**
+  - Represents a 3dm file, which is stored using the OpenNURBS file standard.             The 3dm format is the main Rhinoceros storage format.Visit http://www.opennurbs.com/ for more details.
 - **File3dmCommonComponentTable`1**
+  - Provides a base table type that is shared among all File3dm tables.
 - **File3dmCurvePiping**
+  - Represents the curve piping attached to file3dm object attributes.
 - **File3dmDimStyleTable**
+  - Provides access to annotation styles in the 3dm file.
 - **File3dmDisplacement**
+  - Represents the displacement attached to file3dm object attributes.
 - **File3dmEdgeSoftening**
+  - Represents the edge softening attached to file3dm object attributes.
 - **File3dmEmbeddedFile**
 - **File3dmEmbeddedFiles**
 - **File3dmGroupTable**
+  - Provides access to groups in the 3dm file.
 - **File3dmHatchPatternTable**
+  - Provides access to hatch pattern definitions in the 3dm file.
 - **File3dmInstanceDefinitionTable**
+  - Provides access to instance (block) definitions in the 3dm file.
 - **File3dmLayerTable**
+  - Provides access to layers in the 3dm file.
 - **File3dmLinetypeTable**
+  - Provides access to Linetypes in the 3dm file.
 - **File3dmMaterialTable**
+  - Provides access to materials in the 3dm file.
 - **File3dmMeshModifiers**
+  - Represents the mesh modifiers attached to file3dm object attributes.
 - **File3dmNamedConstructionPlanes**
+  - Provides access to named construction planes in the 3dm file.
 - **File3dmNotes**
+  - Represents the notes information stored in a 3dm file.
 - **File3dmObject**
+  - Used to store geometry table object definition and attributes in a File3dm.
 - **File3dmObjectTable**
+  - Represents a simple object table for a file that is open externally.             This class mimics Rhino.DocObjects.Tables.ObjectTable while providing external access to the file.
 - **File3dmPlugInData**
+  - Represents custom plug-in data, in the 3dm file, written by a plug-in.
 - **File3dmPlugInDataTable**
+  - Table of custom data provided by plug-ins
 - **File3dmRenderContent**
 - **File3dmRenderEnvironment**
 - **File3dmRenderEnvironments**
@@ -44,107 +71,206 @@ description: API reference for namespace Rhino.FileIO from RhinoCommon.dll
 - **File3dmRenderTexture**
 - **File3dmRenderTextures**
 - **File3dmSettings**
+  - General settings in a 3dm file.
 - **File3dmShutLining**
+  - Represents the shut-lining attached to file3dm object attributes.
 - **File3dmStringTable**
+  - Provides access to document strings in the 3dm file.
 - **File3dmThickening**
+  - Represents the thickening attached to file3dm object attributes.
 - **File3dmTypeCodes**
+  - Typecode format 4 bytes long                          x xxxxxxxxxxxxxxx,x xxx xxxx xxxx x x xx             | |               | |               | |  |             |        |        |                 |             |        |        |         |       +---  "stuff" bit             |        |        |         |             |        |        |         +-- specific codes             |        |        |             |        |        +-- RESERVED - DO NOT USE (should be 0) (will be used to control CRC on/off)             |        |             |        +-- category:_000 0000 0000 0001  Legacy geometry    TCODE_LEGACY_GEOMETRY             |                     _000 0000 0000 0010  openNURBS object   TCODE_OPENNURBS_OBJECT             |                     _000 0000 0000 0100  -- RESERVED - DO NOT USE (should be 0 in any typecode) --              |                     _000 0000 0000 1000  -- RESERVED - DO NOT USE (should be 0 in any typecode) --                                  |                     _000 0000 0001 0000  Geometry           TCODE_GEOMETRY             |                     _000 0000 0010 0000  Annotation             |                     _000 0000 0100 0000  Display Attributes TCODE_DISPLAY             |                     _000 0000 1000 0000  Rendering          TCODE_RENDER                  |                     _000 0001 0000 0000                                      |                     _000 0010 0000 0000  Interface          TCODE_INTERFACE              |                     _000 0100 0000 0000  -- RESERVED - DO NOT USE (should be 0 in any typecode) --             |                     _000 1000 0000 0000  Tolerances         TCODE_TOLERANCE             |                     _001 0000 0000 0000  Tables             TCODE_TABLE                 |                     _010 0000 0000 0000  Table record       TCODE_TABLEREC             |                     _100 0000 0000 0000  User information   TCODE_USER             |              +-- format: 0 - data size in header  - data block follows    TCODE_SHORT                         1 - data in header - no data block follows
 - **File3dmViewTable**
+  - Provides access to views in the 3dm file.
 - **File3dmWriteOptions**
+  - Options used by File3dm.Write
 - **File3ds**
+  - Support for writing 3ds file format
 - **File3dsReadOptions**
+  - Options for reading a 3ds file
 - **File3dsWriteOptions**
+  - Options for writing a 3ds file
 - **File3mf**
+  - Support for writing 3mf file format
 - **File3mfWriteOptions**
+  - Options for writing a 3mf file
 - **FileAi**
+  - Support for writing ai file format
 - **FileAiReadOptions**
+  - Options for reading a AI file (old ai files, ps not pdf)
 - **FileAiWriteOptions**
+  - Options for writing a ai file
 - **FileAmf**
+  - Support for writing amf file format
 - **FileAmfWriteOptions**
+  - Options for writing a amf file
 - **FileCd**
+  - Support for writing CD file format
 - **FileCdWriteOptions**
+  - Options for writing a CD file
 - **FileCsv**
+  - Support for writing Csv file format
 - **FileCsvWriteOptions**
+  - Options for writing a Csv file.             Set any value you want included in the output to true.             With the exception of Header and CumulativeMassProperties,              all checked items apply to each and every object exported.
 - **FileDgn**
+  - Support for writing Dgn file format
 - **FileDgnReadOptions**
+  - Options for reading a Dgn file
 - **FileDst**
+  - Support for writing dst file format
 - **FileDstReadOptions**
+  - Options for reading a Dst file
 - **FileDwg**
+  - Support for writing DWG file format
 - **FileDwgReadOptions**
+  - Options for reading a DWG file
 - **FileDwgWriteOptions**
+  - Options for writing a DWG file
 - **FileEps**
+  - Support for reading eps file format
 - **FileEpsReadOptions**
+  - Options for reading a AI file (old ai files, ps not pdf)
 - **FileFbx**
+  - Support for writing Fbx file format
 - **FileFbxReadOptions**
+  - Options for reading a Fbx file
 - **FileFbxWriteOptions**
+  - Options for writing a Fbx file
 - **FileFindPreference**
+  - Defines options for file search.
 - **FileGHS**
+  - Support for reading eps file format
 - **FileGHSReadOptions**
+  - Options for reading a GHS file
 - **FileGltf**
+  - Support for writing glTF file format
 - **FileGltfWriteOptions**
+  - Options used when writing a glTF file
 - **FileGts**
+  - Support for writing Gts file format
 - **FileGtsWriteOptions**
+  - Options for writing a Gts file
 - **FileIgs**
+  - Support for writing Igs file format
 - **FileIgsWriteOptions**
+  - Options for writing a Igs file
 - **FileLwo**
+  - Support for writing lwo file format
 - **FileLwoReadOptions**
+  - Options for reading a Lwo file
 - **FileLwoWriteOptions**
+  - Options for writing a Lwo file
 - **FileObj**
+  - Support for obj file format
 - **FileObjReadOptions**
+  - Options used when reading an obj file.
 - **FileObjWriteOptions**
 - **FilePdf**
+  - Support for PDF file format
 - **FilePdfEventArgs**
+  - Used for events that are fired while constructing/saving a PDF
 - **FilePdfReadOptions**
+  - Options for reading a PDF file
 - **FilePly**
+  - Support for ply file format
 - **FilePlyReadOptions**
+  - Options for reading a PLY file
 - **FilePlyWriteOptions**
 - **FilePov**
+  - Support for writing POV file format
 - **FilePovWriteOptions**
+  - Options for writing a POV file
 - **FileRaw**
+  - Support for writing Raw file format
 - **FileRawReadOptions**
+  - Options for reading a Raw file
 - **FileRawWriteOptions**
+  - Options for writing a Raw file
 - **FileReadOptions**
 - **FileReference**
+  - Manages a reference to an existing or non-existing file,             using either or both absolute or relative paths.             Once constructed, this class is immutable.
 - **FileReferenceStatus**
+  - Enumerates a list of file statuses.
 - **FileSW**
 - **FileSat**
+  - Support for writing Sat file format
 - **FileSatWriteOptions**
+  - Options used when writing a Sat file
 - **FileSkp**
+  - Support for writing Skp file format
 - **FileSkpReadOptions**
+  - Options used when reading a Skp file
 - **FileSkpWriteOptions**
+  - Options used when writing a Skp file
 - **FileSlc**
+  - Support for writing slice (SLC) file format
 - **FileSlcWriteOptions**
+  - Options used when writing a SLC file
 - **FileStl**
+  - Support for writing STL file format
 - **FileStlReadOptions**
+  - Options for reading a STL file
 - **FileStlWriteOptions**
+  - Options for writing a STL file
 - **FileStp**
+  - Support for writing STEP (STP) file format
 - **FileStpReadOptions**
+  - Options used when reading a STP file
 - **FileStpWriteOptions**
+  - Options used when writing a STP file
 - **FileSvg**
+  - Support for writing Svg file format
 - **FileSvgReadOptions**
+  - Options used when reading a Svg file
 - **FileSwReadOptions**
+  - Options used when reading a SW file
 - **FileTxt**
+  - Support for writing Txt (points) file format
 - **FileTxtReadOptions**
+  - Options for writing a Txt file.
 - **FileTxtWriteOptions**
+  - Options for writing a Txt file.
 - **FileType**
 - **FileUdo**
+  - Support for writing Moray UDO file format
 - **FileUdoWriteOptions**
+  - Options for writing a Moray UDO file
 - **FileUsd**
+  - Support for writing USD file format
 - **FileUsdWriteOptions**
+  - Options for writing a USD file
 - **FileVda**
+  - Support for writing Igs file format
 - **FileVdaWriteOptions**
+  - Options for writing a Vda file
 - **FileVrml**
+  - Support for writing wrl file format
 - **FileVrmlWriteOptions**
+  - Options for writing a wrl file
 - **FileWriteOptions**
 - **FileX3dv**
+  - Support for writing x3dv file format
 - **FileX3dvWriteOptions**
+  - Options for writing a x3dv file
 - **FileX_T**
+  - Support for writing X_T file format
 - **FileX_TWriteOptions**
+  - Options used when writing a X_T file
 - **FileXaml**
+  - Support for writing Xaml file format
 - **FileXamlWriteOptions**
+  - Options for writing a Xaml file
 - **ICommonComponentTable`1**
+  - Provides methods to use all File3dm and RhinoDoc tables under the same contract.             Do not derive from this interface. This is to ensure all tables can be used with the same method list.
 - **ImageFile**
+  - Support functions for image files
 - **ManifestTable**
+  - Maintains an index to every model component that is in the 3dm file.             This is the "more comprehensive" table that contains all objects in all other tables.
 - **NameHash**
+  - Contains information that is useful to uniquely identify an object name.             This object is immutable.
 - **SHA1OpenNURBS**
+  - Provides the OpenNURBS implementation of SHA1.                          This class is provided only with the purpose of hashing. It is not meant to be             used for any cryptographic purpose.
 - **SerializationOptions**
+  - Contains options for serializing -or storing- data,             such as Rhino version, user data, and meshes.
 - **TextLog**
+  - Used for collecting text data

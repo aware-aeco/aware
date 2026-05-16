@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterUtils.DownloadParameterOptions
+Retrieves settings associated with the given parameter from the Parameters Service.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Centermark.ToString
+Format the centermark using default grasshopper formatting logic.

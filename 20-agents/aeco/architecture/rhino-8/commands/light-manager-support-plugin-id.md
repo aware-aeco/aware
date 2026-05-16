@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightManagerSupport.PluginId
+The Guid of the plugin

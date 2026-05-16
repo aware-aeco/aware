@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MarkovChain.ExtendHistory
+Append a new ID to the history record and cache the implied pattern.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.Project
+Projects the specified point on this curve.

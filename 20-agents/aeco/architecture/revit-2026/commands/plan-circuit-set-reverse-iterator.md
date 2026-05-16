@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlanCircuitSet.ReverseIterator
+Retrieve a backward moving iterator to the set.

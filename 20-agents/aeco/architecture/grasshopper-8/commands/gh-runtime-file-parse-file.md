@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RuntimeFile.ParseFile
+Parse a file and return the runtime representation of said file.

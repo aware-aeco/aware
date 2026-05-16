@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GlobalParametersManager.FindByName
+Finds whether a global parameter with the given name exists in the input document.

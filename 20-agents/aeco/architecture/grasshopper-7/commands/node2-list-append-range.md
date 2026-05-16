@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Node2List.AppendRange
+Add a range of nodes to this list. This will reset all sorting flags and caches.

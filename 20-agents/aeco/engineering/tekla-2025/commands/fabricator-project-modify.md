@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricatorProject.Modify
+Modifies the current fabricator project information.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentServer.IsGraphCached
+Tests the graph cache for an existing graph type ID.

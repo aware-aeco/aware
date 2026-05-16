@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.SetWorksetVisibility
+Sets visibility for a workset in this view.

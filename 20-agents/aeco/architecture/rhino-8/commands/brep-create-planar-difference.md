@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreatePlanarDifference
+CreatePlanarDifference

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AdaptiveComponentInstanceUtils.MoveAdaptiveComponentInstance
+Moves Adaptive Component Instance by the specified transformation.

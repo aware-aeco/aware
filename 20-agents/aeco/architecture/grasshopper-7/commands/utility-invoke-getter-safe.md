@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Utility.InvokeGetterSafe
+Call a getter property via its name.  No exceptions are thrown.

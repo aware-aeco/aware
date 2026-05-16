@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SolidSolidCutUtils.IsElementFromAppropriateContext
+Validates that the element is from an appropriate document.

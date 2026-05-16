@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-JoinGeometryUtils.GetJoinedElements
+Returns all elements joined to given element.

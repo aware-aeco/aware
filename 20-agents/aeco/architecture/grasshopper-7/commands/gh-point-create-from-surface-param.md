@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Point.CreateFromSurfaceParam
+Create new point geometry instance based on a curve distance parameter

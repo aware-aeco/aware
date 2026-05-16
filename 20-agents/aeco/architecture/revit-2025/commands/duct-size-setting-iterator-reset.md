@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DuctSizeSettingIterator.Reset
+Resets the iterator to the initial state.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.AreGraphicsOverridesAllowed
+Determines if Visibility/Graphics Overriddes can be applied to the view.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.ComponentGetAppliedAttributes
+Gets the applied attributes of given component type. Please note all hidden attributes are also returned.

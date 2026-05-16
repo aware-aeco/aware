@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CylindricalSurface.Create
+Construct a cylindrical surface defined by a local coordinate system and a radius.

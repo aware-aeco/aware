@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmEmbeddedFiles.Add
+Add a new embedded file and load it from a local file.

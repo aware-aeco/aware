@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetBaseClass.Point
+Gets a point if Get*() returns GetResult.Point.

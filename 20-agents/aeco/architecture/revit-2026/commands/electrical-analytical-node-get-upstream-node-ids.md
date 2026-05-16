@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalAnalyticalNode.GetUpstreamNodeIds
+Gets upstream node ids.

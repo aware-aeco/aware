@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PointRefData.SetCurveParam
+Set the curve reference parameter based on the value of m_RefType and the curve parameter

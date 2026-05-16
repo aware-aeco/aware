@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View3D.SetSectionBox
+Sets the section box for this 3D view.

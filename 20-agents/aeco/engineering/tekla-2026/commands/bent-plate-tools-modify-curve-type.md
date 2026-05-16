@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BentPlateTools.ModifyCurveType
+Modifies bend section curve type of the selected geometry node to Smooth, Narrow or Wide.

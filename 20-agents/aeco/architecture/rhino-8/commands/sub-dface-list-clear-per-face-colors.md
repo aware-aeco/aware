@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDFaceList.ClearPerFaceColors
+Removes all per face color overrides on the active level.

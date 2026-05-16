@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HermiteSpline.Create
+Creates a Hermite spline with specified tangency at its endpoints.

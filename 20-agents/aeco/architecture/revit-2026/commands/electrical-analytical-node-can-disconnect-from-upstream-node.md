@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalAnalyticalNode.CanDisconnectFromUpstreamNode
+Verifies that the current node can disconnect from the upstream node.

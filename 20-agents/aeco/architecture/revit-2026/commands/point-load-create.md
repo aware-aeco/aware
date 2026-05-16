@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointLoad.Create
+Creates a new custom hosted point load within the project using data at point.

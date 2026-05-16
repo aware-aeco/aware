@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.GetSpanVector
+Gets array of span "knots".

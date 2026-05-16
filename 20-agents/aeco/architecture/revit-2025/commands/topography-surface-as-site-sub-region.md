@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TopographySurface.AsSiteSubRegion
+Obtains the subregion object represented by this element.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_LegendData.Render
+Render this legend to a GDI Graphics surface.

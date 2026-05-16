@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationUtils.ValidateConnectivity
+Check if two connectors are valid to connect directly without couplings.

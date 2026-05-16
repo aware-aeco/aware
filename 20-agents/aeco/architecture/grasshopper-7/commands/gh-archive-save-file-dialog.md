@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Archive.SaveFileDialog
+Displays a standard SaveFileDialog with all the fields set to cater for Grasshopper files.

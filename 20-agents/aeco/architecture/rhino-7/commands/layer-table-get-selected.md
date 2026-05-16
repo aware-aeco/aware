@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LayerTable.GetSelected
+Returns the indices of layers that are selected on the Layer user interface.

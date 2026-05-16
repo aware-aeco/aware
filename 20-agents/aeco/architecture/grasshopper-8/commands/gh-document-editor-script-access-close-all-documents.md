@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentEditor.ScriptAccess_CloseAllDocuments
+Closes all documents in the Document Queue.

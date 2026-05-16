@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoList`1.Clear
+Removes all elements from the List.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.GetInsulationLiningGeometry
+Gets insulation and lining geometry for this fabrication part.

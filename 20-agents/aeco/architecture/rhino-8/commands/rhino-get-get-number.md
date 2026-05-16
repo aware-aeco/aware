@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoGet.GetNumber
+Easy to use number getter.

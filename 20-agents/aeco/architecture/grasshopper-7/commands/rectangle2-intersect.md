@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rectangle2.Intersect
+Solve intersection between a semi-infinite line and the rectangle.

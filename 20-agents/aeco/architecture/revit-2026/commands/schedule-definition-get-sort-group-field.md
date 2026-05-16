@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.GetSortGroupField
+Gets a sorting/grouping field.

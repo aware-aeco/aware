@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PropertyStore.AddEvent
+Adds a generic event delegate with the specified key

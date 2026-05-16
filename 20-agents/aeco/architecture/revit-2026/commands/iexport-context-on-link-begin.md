@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExportContext.OnLinkBegin
+This method marks the beginning of a link instance to be exported.

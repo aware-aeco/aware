@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedDocumentControlHandler.GetPage
+Gets the page.

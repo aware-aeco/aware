@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DoubleArray.Append
+Add the double to the end of the array.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Category.GetGraphicsStyle
+Gets the graphics style associated with this category for the given graphics style type.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmGroupTable.GroupMembers
+Gets an array of all of the objects in a group.

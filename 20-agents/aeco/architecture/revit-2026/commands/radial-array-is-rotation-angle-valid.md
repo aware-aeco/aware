@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RadialArray.IsRotationAngleValid
+This indicates whether the input angle is valid.

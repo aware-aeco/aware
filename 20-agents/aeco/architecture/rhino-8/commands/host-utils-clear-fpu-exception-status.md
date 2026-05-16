@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostUtils.ClearFpuExceptionStatus
+Clear FPU exception and busy flags (Intel assembly fnclex)

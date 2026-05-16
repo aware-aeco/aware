@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NumberingSchema.GetSchemasInDocument
+Returns a set of Ids of all Numbering Schema elements for a given document.

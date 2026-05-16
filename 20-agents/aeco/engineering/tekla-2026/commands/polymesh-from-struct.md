@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Polymesh.FromStruct
+Converts a struct of polymesh to a FacetedBrep.

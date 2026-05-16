@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpecUtils.IsSpec
+Checks whether a ForgeTypeId identifies a spec.

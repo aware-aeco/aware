@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.IsRowInCircuitTable
+Check if this row in the circuit table

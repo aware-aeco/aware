@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-KeyBasedTreeEntryTable.GetKeyBasedTreeEntries
+Gets the KeyBasedTreeEntries for this table.

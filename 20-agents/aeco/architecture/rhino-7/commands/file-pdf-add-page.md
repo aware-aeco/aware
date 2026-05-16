@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilePdf.AddPage
+Add a new page to this document and draw a viewport into it based on             provided ViewCaptureSettings

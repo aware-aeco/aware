@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IPipePlumbingFixtureFlowServer.Calculate
+Calculate the pipe plumbing fixture flow.

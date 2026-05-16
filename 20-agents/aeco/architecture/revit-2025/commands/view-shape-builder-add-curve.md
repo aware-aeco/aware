@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewShapeBuilder.AddCurve
+Add a curve to the GRep associated to this ViewShapeBuilder.

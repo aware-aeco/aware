@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotGetParentId
+Get parent id according Organizer logic..

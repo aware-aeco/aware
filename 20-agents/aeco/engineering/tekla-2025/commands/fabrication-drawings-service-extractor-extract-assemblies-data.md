@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationDrawingsServiceExtractor.ExtractAssembliesData
+Extract the attributes data for the selected assemblies.

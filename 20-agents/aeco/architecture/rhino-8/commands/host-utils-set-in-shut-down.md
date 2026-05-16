@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostUtils.SetInShutDown
+Informs the runtime that the application is shutting down.

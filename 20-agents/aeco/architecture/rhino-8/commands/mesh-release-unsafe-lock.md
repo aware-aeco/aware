@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.ReleaseUnsafeLock
+Updates the Mesh data with the information that was stored via the .

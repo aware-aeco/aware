@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CustomDisplay.AddPoints
+Adds a collection of black points to the display list.

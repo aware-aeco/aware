@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyType.HasValue
+Indicates if this family parameter has an assigned value or not.

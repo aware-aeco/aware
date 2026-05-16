@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BindableWidget.UpdateBindings
+Updates all bindings in this widget

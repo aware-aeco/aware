@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WebView.LoadHtml
+Loads the specified stream as html into the control.

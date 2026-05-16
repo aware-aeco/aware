@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DockablePaneProviderData.GetFrameworkElement
+Wrapper function that returns the FrameworkElement for this provider.

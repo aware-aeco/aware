@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelCurve.SetVisibility
+Sets the visibility for the model curve in a family document.

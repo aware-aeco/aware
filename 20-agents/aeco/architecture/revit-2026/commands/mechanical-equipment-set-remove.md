@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MechanicalEquipmentSet.Remove
+Removes member element ids from the mechanical equipment set.

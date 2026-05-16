@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PipeFittingAndAccessoryData.GetEntity
+Returns an Entity of the Schema of the serverGUID.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyDataSettings.SetReportsFolder
+Sets the reports folder path.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultiReferenceAnnotationType.GetAllowedTagCategory
+Returns the category ID for the tag types which can be used by this multi-reference annotation type.

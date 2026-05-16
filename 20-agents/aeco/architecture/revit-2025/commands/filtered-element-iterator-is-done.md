@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilteredElementIterator.IsDone
+Identifies if the iteration has completed.

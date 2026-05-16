@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Triangle3d.WithB
+Replace the B corner.

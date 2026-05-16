@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.SelectedObjectsExist
+Quick way to test if any objects are currently selected

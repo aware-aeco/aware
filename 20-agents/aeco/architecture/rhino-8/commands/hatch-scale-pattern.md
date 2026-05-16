@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Hatch.ScalePattern
+Scale the hatch's pattern

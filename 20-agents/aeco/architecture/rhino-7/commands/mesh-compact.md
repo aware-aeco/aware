@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.Compact
+Removes any unreferenced objects from arrays, re-indexes as needed              and shrinks arrays to minimum required size.

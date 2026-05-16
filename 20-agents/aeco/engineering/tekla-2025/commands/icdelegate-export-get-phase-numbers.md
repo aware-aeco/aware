@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportGetPhaseNumbers
+DO NOT USE! For internal usage only!

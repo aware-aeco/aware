@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Bitmap.Clone
+Creates a clone of the bitmap

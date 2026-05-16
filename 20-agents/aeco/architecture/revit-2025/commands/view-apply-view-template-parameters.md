@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.ApplyViewTemplateParameters
+Applies to this view the parameters of the input view that are not controlled by the current view template.

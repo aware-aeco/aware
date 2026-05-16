@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCFamilyInstanceExtrusionExportResults.GetCutPairOpenings
+Gets the set of "openings" determined from the analysis of the instance geometry.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DGNExportOptions.GetExportLineweightTable
+Gets a copy of the line weight table.

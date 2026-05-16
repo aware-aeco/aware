@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_SliderBase.Render
+Render this slider into a Graphics context.

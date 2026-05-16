@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssetProperties.IsValidIndex
+Returns true if the provided index is valid.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoDoc.FromFilePath
+Search the open document list for a document with a Path equal             to the specified file path.

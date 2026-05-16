@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHLine
+Convert data into GH_Lines.

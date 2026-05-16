@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.GetTableData
+Gets the writable table data object.

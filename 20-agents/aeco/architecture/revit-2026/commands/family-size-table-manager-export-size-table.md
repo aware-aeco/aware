@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilySizeTableManager.ExportSizeTable
+Exports the size table to  aCSV file.

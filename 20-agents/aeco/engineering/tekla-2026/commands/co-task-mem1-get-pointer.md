@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CoTaskMem`1.GetPointer
+Gets an unsafe pointer to the allocated memory.

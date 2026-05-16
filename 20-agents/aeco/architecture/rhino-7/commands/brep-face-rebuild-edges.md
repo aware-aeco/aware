@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepFace.RebuildEdges
+Rebuild the edges used by a face so they lie on the surface.

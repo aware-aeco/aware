@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportManipulateObject
+DO NOT USE! For internal usage only!

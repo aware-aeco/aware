@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Outline.IsScaleValid
+Checks if given scale is valid. Should be greater than zero.

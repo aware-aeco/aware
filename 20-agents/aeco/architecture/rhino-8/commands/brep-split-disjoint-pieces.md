@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.SplitDisjointPieces
+Separates, or splits, a disjoint Brep into separate Breps.

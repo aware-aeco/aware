@@ -6,31 +6,60 @@ description: API reference for namespace Autodesk.Revit.DB.Lighting from RevitAP
 # Autodesk.Revit.DB.Lighting
 
 - **AdvancedLossFactor**
+  - This class encapsulates advanced lighting loss factor calculation.
 - **BasicLossFactor**
+  - This class encapsulates basic lighting loss factor calculation.
 - **CircleLightShape**
+  - This class encapsulates a circle light shape.
 - **ColorPreset**
+  - Preset values of initial colors for specific lighting types
 - **CustomInitialColor**
+  - This class encapsulates a custom initial lighting color.
 - **HemisphericalLightDistribution**
+  - This class encapsulates a hemispherical light distribution.
 - **InitialColor**
+  - This class is the base class for calculating initial light color.
 - **InitialFluxIntensity**
+  - This class encapsulates initial flux intensity calculation.
 - **InitialIlluminanceIntensity**
+  - This class encapsulates initial illuminance intensity calculation.
 - **InitialIntensity**
+  - This class is the base class for calculating lighting initial intensity.
 - **InitialLuminousIntensity**
+  - This class encapsulates initial luminous intensity calculation.
 - **InitialWattageIntensity**
+  - This class encapsulates initial wattage intensity calculation.
 - **LightDimmingColor**
+  - Tags for specific light dimming colors
 - **LightDistribution**
+  - This class is the base class for specifying light distribution.
 - **LightDistributionStyle**
+  - Tags for specific light distribution styles
 - **LightFamily**
+  - This class encapsulates light family information.
 - **LightGroup**
+  - This class represents a set of lights grouped together for easier management of various lighting scenarios
 - **LightGroupManager**
+  - This class represents a set of light groups that are used for easier management of various lighting scenarios
 - **LightShape**
+  - This class is the base class for specifying light shape.
 - **LightShapeStyle**
+  - Tags for specific light shape styles
 - **LightType**
+  - This class encapsulates light information.
 - **LineLightShape**
+  - This class encapsulates a line light shape.
 - **LossFactor**
+  - This class is the base class for calculating lighting loss factor.
 - **PhotometricWebLightDistribution**
+  - This class encapsulates a photometric web light distribution.
 - **PointLightShape**
+  - This class encapsulates a point light shape.
 - **PresetInitialColor**
+  - This class encapsulates a preset initial lighting color.
 - **RectangleLightShape**
+  - This class encapsulates a rectangle light shape.
 - **SphericalLightDistribution**
+  - This class encapsulates a spherical light distribution.
 - **SpotLightDistribution**
+  - This class encapsulates a spot light distribution.

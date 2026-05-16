@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DetailCurveArray.ReverseIterator
+Retrieve a backward moving iterator to the array.

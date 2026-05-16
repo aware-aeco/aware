@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DoubleList.LastIndexOf
+Searches for the last occurence of the double in the list.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.TryGetPlane
+Tests a surface for planarity and return the plane.

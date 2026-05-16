@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Dialogs.ShowListBox
+Displays Rhino's list box.

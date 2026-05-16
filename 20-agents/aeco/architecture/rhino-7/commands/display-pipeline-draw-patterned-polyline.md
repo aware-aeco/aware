@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawPatternedPolyline
+Draws a set of connected lines (polyline) with specified pattern.

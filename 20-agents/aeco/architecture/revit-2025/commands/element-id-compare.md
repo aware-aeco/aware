@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementId.Compare
+Compares two element ids.

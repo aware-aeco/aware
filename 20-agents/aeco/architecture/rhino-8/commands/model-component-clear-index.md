@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelComponent.ClearIndex
+Resets the HasIndex property of the model component to false, if possible.

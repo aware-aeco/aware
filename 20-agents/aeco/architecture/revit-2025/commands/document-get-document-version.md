@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.GetDocumentVersion
+Gets the DocumentVersion that corresponds to a document.

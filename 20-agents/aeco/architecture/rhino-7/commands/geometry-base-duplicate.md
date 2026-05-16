@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryBase.Duplicate
+Constructs a deep (full) copy of this object.

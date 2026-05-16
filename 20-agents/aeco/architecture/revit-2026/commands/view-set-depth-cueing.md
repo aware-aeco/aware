@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.SetDepthCueing
+Sets the depth cueing settings for the view.

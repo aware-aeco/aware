@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ClassificationEntries.LoadClassificationEntriesFromFile
+Loads the contents of a classification text file into the provided KeyBasedTreeEntriesLoadContent.

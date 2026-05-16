@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.SetElementOverrides
+Sets graphic overrides for an element in the view.

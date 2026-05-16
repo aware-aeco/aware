@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDefinitionByArc.AddConstraintDiameter
+Specify a parameter to drive the diameter of the shape.

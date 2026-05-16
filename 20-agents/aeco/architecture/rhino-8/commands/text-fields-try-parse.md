@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextFields.TryParse
+Evaluates the contents of a text string with field expressions             and returns the result

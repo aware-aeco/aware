@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExclusionFilter.GetIdsToExclude
+Returns the ids to be excluded by this filter.

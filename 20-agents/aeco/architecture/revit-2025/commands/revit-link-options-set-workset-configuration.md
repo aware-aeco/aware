@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitLinkOptions.SetWorksetConfiguration
+Sets the set of worksets to open when creating the link.

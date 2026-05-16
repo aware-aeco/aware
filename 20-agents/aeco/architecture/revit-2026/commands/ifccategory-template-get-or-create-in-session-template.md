@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCCategoryTemplate.GetOrCreateInSessionTemplate
+Gets the in-session non-serializable template or create new.

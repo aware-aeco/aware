@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StackedDialogPage.OnDefaults
+Called when stacked dialog Defaults button is pressed (see ShowDefaultsButton).

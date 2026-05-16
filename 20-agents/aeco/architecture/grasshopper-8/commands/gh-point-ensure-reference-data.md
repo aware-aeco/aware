@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Point.EnsureReferenceData
+Creates new Reference data if it doesn't already exists

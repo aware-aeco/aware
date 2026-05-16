@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinearArray.IsValidNumberOfMembers
+This indicates whether the input count is a valid size for an array based on the document.

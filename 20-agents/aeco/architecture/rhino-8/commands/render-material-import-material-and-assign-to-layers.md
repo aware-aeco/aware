@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderMaterial.ImportMaterialAndAssignToLayers
+Imports a material file (.RMTL) and assigns the imported material to one or more layers.

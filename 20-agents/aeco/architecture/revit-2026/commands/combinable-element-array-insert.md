@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CombinableElementArray.Insert
+Insert the specified element into the array.

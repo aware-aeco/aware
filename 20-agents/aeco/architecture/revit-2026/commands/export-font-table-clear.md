@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportFontTable.Clear
+Removes all contents stored in the table.

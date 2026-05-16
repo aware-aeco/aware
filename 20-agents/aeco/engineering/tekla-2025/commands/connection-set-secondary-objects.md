@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Connection.SetSecondaryObjects
+Sets an array list of model objects as the secondary objects of the connection.

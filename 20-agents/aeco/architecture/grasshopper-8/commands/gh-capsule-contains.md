@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Capsule.Contains
+Test a point for capsule containment.

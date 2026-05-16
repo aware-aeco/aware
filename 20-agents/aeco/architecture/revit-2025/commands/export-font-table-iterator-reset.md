@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportFontTableIterator.Reset
+Resets the iterator to the initial state.

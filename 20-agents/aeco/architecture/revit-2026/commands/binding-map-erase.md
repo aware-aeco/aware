@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BindingMap.Erase
+This method is used to erase one item in the map.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjRef.SubDFace
+Gets the SubDFace if the referenced geometry is one.

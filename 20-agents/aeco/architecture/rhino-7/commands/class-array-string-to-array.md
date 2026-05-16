@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ClassArrayString.ToArray
+Copies the unmanaged array to a managed counterpart.

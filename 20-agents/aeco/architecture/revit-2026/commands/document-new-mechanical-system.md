@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.NewMechanicalSystem
+Creates a new MEP mechanical system element.

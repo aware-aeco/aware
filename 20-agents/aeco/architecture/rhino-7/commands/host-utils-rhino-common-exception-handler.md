@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostUtils.RhinoCommonExceptionHandler
+For internal use only!!!             Unhanded exception handler, writes stack trace to RhinoDotNet.txt file

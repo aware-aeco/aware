@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssetPropertyList.IsValidValue
+Check that value is valid.

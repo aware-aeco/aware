@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportCreateRebarMesh
+DO NOT USE! For internal usage only!

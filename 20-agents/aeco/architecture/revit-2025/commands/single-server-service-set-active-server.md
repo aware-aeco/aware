@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SingleServerService.SetActiveServer
+Change the active server for a specific document.

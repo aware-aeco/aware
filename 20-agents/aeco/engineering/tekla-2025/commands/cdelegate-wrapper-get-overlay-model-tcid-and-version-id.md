@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.GetOverlayModelTCIdAndVersionId
+DO NOT USE! For internal usage only!             Gets the Trimble Connect model identifier and version identifier from the reference model path.

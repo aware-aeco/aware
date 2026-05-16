@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PrintSetup.SaveAs
+Save the current print setting to another print setting with the specified name.

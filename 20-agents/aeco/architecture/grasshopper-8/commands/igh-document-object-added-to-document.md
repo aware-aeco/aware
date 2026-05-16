@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_DocumentObject.AddedToDocument
+This method will be called when an object is added to a document.

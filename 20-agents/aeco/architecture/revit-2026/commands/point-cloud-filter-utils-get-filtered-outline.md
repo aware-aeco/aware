@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudFilterUtils.GetFilteredOutline
+Computes outline of a part of a box that satisfies given PointCloudFilter.

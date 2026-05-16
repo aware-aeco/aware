@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform.Multiply
+Multiplies (combines) two transformations.             This is the same as the * operator between two transformations.

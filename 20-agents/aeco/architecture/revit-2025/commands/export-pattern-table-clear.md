@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportPatternTable.Clear
+Removes all contents stored in the table.

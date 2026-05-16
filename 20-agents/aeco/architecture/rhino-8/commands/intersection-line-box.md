@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.LineBox
+Intersects an infinite line and an axis aligned bounding box.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetTransform.CalculateTransform
+Retrieves the final transformation.             Override this virtual function to provide your own custom transformation method.

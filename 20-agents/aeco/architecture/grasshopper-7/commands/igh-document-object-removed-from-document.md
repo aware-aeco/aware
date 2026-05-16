@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_DocumentObject.RemovedFromDocument
+This method will be called when an object is removed from a document.

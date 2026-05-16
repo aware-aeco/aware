@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoPageView.GetPreviewImage
+Creates a preview image of the page.

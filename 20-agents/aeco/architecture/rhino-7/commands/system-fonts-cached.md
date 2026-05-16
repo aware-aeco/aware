@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SystemFonts.Cached
+Gets a cached font

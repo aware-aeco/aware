@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToInt32
+Convert data into Int32s.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BaseImportOptions.SetLayerSelection
+Set the layers name which user want to import into Revit.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BendingDetailCustomFieldProperties.AreEqualTo
+Identifies if the custom field properties are equal or not.

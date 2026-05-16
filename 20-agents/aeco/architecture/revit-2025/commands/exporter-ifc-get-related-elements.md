@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFC.GetRelatedElements
+Gets all elements not associated to stories.

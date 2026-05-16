@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.SetDisabledBreakpointAsync
+Set a disabled breakpoint at specified line number

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.ShadowHorizontal
+Draws a horizontal shadow edge.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TaskDependency.Delete
+Deletes the task dependency instance from the model.

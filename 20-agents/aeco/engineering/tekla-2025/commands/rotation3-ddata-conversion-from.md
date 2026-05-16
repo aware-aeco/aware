@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rotation3DDataConversion.From
+Converts tuple representation to .

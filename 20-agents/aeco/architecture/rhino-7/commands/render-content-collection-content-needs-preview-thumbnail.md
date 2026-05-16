@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContentCollection.ContentNeedsPreviewThumbnail
+To be documented

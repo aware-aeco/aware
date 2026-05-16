@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.CreateSoftEditCurve
+Creates a soft edited curve from an existing curve using a smooth field of influence.

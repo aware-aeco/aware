@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportGetFatherComponent
+DO NOT USE! For internal usage only!

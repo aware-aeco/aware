@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_VariableParamProxy.UpdateUI
+Refresh all UI elements to reflect the current settings.

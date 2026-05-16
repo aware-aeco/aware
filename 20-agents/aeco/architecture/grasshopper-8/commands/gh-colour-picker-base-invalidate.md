@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourPickerBase.Invalidate
+Raise the Invalidated event.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.AncillaryExists
+Checks to see if the specified ancillary exists.

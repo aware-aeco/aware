@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricAreaType.CreateDefaultFabricAreaType
+Creates a new FabricAreaType object with a default name.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalAnalyticalNode.CanConnectToUpstreamNode
+Verifies that the current node can connect to the upstream node.

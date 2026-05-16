@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ComponentRepeater.IsTypeValidForRepeater
+Determines whether given family type can be used as the default type for the repeater.

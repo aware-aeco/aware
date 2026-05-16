@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepFace.ClearMaterialChannelIndex
+Clear this face's rendering material channel index.

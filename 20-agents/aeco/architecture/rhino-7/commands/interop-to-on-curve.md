@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interop.ToOnCurve
+Constructs a Rhino_DotNet OnCurve that is a copy of a given curve.

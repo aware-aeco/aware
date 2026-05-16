@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalFileReference.GetReferencingId
+Gets the ElementId corresponding to the element which    this ExternalFileReference is associated with.

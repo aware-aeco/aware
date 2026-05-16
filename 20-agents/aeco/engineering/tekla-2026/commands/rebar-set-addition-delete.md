@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSetAddition.Delete
+Deletes the rebar set addition with the given identifier from the model database.

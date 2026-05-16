@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ValueProxy`1.FromString
+Performs the String->Value parsing. The default implementation always returns False.

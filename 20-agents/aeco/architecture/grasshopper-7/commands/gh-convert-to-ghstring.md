@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHString
+Convert data into GH_String.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Cone.ToNurbsSurface
+Constructs a Nurbs surface representation of this Cone.              This is synonymous with calling NurbsSurface.CreateFromCone().

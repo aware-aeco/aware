@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalDemandFactorDefinition.AddValue
+Adds a value to the value set for this demand factor definition

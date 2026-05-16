@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interop.PlugInPointer
+Gets a C++ plug-in pointer for a given RhinoCommon plug-in.             This is a Rhino SDK function.

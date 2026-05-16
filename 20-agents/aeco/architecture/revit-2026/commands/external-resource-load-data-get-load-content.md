@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalResourceLoadData.GetLoadContent
+Returns the ExternalResourceLoadContent resulting from this load operation.

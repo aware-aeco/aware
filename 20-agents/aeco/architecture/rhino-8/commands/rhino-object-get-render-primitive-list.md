@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.GetRenderPrimitiveList
+Build custom render mesh(es) for this object.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolyLine.Clone
+Returns a copy of this polyline.

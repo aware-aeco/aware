@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricSheet.GetSheetLocation
+Gets the position and the orientation of the Fabric Sheet instance.

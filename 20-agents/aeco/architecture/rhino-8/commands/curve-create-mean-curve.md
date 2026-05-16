@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.CreateMeanCurve
+Constructs a mean, or average, curve from two curves.

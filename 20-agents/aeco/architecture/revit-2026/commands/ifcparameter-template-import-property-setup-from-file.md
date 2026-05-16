@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCParameterTemplate.ImportPropertySetupFromFile
+Imports mapping information from a text file.

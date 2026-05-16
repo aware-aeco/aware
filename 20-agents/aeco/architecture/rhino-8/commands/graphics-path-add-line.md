@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GraphicsPath.AddLine
+Adds a line to the path with the specified start and end points

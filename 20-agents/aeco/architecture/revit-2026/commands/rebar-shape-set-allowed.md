@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShape.SetAllowed
+Specify which bar types can be used with this RebarShape. Bar types are allowed by default.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.GetScheduleInstances
+Gets the instances ids of schedule or schedule segment.

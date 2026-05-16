@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MacroManager.SetApplicationMacroSecurityOptions
+Sets the application macro security options.

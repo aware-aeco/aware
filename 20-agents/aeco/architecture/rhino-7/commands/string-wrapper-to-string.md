@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StringWrapper.ToString
+Returns the string contents of this wrapper.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetCone.Get
+Prompt for the getting of a cone.

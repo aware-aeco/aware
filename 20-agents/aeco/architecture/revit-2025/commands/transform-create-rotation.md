@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform.CreateRotation
+Creates a transform that represents a rotation about the given axis at (0, 0, 0).

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorFillSchemeEntry.SetElementIdValue
+Sets new ElementId value of entry.

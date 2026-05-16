@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Parser.IsListLine
+Test whether a line contains a list item.

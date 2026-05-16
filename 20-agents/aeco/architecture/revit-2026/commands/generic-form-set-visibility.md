@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GenericForm.SetVisibility
+Sets the visibility for the generic form.

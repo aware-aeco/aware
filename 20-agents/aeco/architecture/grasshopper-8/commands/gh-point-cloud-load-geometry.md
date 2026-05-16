@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PointCloud.LoadGeometry
+If the geometry is referenced and not yet loaded, attempts to load the geometry.

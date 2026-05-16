@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShape.SetTypeId
+Sets the DirectShapeType for the DirectShape element.

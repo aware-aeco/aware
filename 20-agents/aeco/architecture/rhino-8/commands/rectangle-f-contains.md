@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RectangleF.Contains
+Gets a value indicating that the specified  is within the bounds of this rectangle

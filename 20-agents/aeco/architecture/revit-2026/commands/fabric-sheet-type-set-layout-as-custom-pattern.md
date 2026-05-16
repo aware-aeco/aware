@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricSheetType.SetLayoutAsCustomPattern
+Sets the minor and major layout patterns as Custom, while specifying the needed parameters for this pattern.

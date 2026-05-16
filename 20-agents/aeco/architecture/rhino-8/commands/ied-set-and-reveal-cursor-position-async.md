@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.SetAndRevealCursorPositionAsync
+Sets the cursor position and reveal the line in the center of the viewport if it is not in view.

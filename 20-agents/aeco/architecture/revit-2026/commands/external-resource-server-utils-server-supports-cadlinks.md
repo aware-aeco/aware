@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalResourceServerUtils.ServerSupportsCADLinks
+Checks that the server referenced by the given ExternalResourceReference supports    CAD links.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ComponentInput.CopyTo
+Copies the elements of the  to             an , starting at a particular  index.

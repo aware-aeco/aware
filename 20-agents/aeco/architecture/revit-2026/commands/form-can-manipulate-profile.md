@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Form.CanManipulateProfile
+Tell if a profile can be deleted/moved/rotated.

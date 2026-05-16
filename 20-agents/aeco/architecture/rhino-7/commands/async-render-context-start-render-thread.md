@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AsyncRenderContext.StartRenderThread
+Start a new render thread with given function.

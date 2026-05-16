@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.IsValidLayerPriority
+Checks if the layer priority is valid to match the function.

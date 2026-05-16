@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportPDFSettings.FindByName
+Returns settings element by name.

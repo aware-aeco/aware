@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View3D.HasBeenLocked
+Identifies if the view has ever been locked.

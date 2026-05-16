@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CategorySetIterator.MoveNext
+Move the iterator one item forward.

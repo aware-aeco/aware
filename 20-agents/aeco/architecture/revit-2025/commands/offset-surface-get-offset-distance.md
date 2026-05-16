@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OffsetSurface.GetOffsetDistance
+Returns offset distance of this OffsetSurface.

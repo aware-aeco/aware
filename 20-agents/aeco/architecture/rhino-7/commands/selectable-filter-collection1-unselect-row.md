@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SelectableFilterCollection`1.UnselectRow
+Unselects the specified  in the underlying list.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PaperSourceSetIterator.MoveNext
+Move the iterator one item forward.

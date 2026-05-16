@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Field.SubEntityReadAccessGranted
+Checks whether there is read access to subentities storable in this field.

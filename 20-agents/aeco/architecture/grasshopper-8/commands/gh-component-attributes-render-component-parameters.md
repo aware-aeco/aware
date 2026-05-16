@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentAttributes.RenderComponentParameters
+Utility method for rendering all component parameters.

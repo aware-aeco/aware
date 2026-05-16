@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PluginUtil.SendKeyCodeToRhino
+Send a key-code to the Rhino command line.

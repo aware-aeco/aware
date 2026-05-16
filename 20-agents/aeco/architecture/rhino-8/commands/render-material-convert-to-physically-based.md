@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderMaterial.ConvertToPhysicallyBased
+Returns a material that is the best approximation of the original, but as a physically based material.

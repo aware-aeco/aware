@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfigurationInfo.IsValid
+Checks if the fabrication configuration is valid.

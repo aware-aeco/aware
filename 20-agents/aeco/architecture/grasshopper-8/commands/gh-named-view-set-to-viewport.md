@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_NamedView.SetToViewport
+Set the named view to the canvas viewport and redraw the canvas.

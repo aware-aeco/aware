@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.PlaneSphere
+Intersects a plane with a sphere using exact calculations.

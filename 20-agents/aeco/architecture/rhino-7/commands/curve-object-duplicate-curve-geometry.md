@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveObject.DuplicateCurveGeometry
+Returns a copy of the underlying curve geometry.

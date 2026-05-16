@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetBentPlateMaximumRadiuses
+DO NOT USE! For internal usage only!

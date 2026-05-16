@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Plane.Translate
+Translate (move) the plane along a vector.

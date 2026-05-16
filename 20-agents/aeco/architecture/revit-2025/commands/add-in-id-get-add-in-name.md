@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AddInId.GetAddInName
+name of addin associated with this AddInId    Attempts to obtain the name from loaded Third Party AddIns

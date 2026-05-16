@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexNormalList.Clear
+Clears the vertex normal collection on the mesh.

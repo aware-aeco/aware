@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainer.AppendItemFromCurvesAndShape
+Appends an Item to the RebarContainer. Fills its data on base of the input parameters.

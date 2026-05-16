@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BooleanOperationsUtils.ExecuteBooleanOperationModifyingOriginalSolid
+Perform a boolean geometric operation between two solids, and modify the original solid to represent the result.

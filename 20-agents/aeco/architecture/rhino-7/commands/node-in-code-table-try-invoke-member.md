@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NodeInCodeTable.TryInvokeMember
+Dynamically invokes a member of the table.

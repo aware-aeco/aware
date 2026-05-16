@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TemperatureRatingTypeSetIterator.MoveNext
+Move the iterator one item forward.

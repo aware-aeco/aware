@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarCrankTypeUtils.SetCrankRatio
+Sets the crank ratio value.

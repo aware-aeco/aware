@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.OnSettingsChanged
+Raise the SettingsChanged event.

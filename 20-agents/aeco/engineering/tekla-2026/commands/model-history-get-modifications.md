@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelHistory.GetModifications
+Lookup modifications since previous call of TakeModifications() without resetting the modstamp

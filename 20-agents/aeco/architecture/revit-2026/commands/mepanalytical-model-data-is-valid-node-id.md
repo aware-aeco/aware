@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPAnalyticalModelData.IsValidNodeId
+Verifies if a valid analytical node id.

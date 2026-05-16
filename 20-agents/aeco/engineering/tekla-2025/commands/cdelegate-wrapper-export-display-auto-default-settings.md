@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportDisplayAutoDefaultSettings
+DO NOT USE! For internal usage only!

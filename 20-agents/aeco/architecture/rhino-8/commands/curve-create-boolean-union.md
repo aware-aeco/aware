@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.CreateBooleanUnion
+Calculates the boolean union of two or more closed, planar curves.              Note, curves must be co-planar.

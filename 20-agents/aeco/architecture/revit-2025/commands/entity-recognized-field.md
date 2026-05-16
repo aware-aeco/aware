@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Entity.RecognizedField
+Checks whether a Field belongs to the same Schema as this Entity.

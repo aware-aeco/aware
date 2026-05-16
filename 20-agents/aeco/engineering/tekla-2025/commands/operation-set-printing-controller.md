@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.SetPrintingController
+Set printing controller object on the TS side.

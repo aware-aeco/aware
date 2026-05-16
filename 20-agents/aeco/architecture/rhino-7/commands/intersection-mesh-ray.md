@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.MeshRay
+Finds the first intersection of a ray with a mesh.

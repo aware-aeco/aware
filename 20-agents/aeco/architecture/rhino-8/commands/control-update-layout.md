@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Control.UpdateLayout
+Updates the layout of this control if necessary.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.MergeSurfaces
+Merges two surfaces into one surface at untrimmed edges.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UV.Multiply
+Multiplies this 2-D vector by the specified value and returns the result.

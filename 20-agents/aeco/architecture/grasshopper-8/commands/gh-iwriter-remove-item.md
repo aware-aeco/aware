@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_IWriter.RemoveItem
+Remove an unindexed item from this chunk.

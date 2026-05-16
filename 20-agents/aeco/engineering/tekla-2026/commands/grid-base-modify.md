@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GridBase.Modify
+Modifies the grid with the given ID.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.GetHighlightedSubObjects
+Gets a list of all highlighted sub-objects.

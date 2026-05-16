@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Line.Transform
+Transform the line using a Transformation matrix.

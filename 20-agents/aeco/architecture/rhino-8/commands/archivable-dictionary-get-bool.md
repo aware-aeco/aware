@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ArchivableDictionary.GetBool
+Get value as Boolean, will only succeed if value was created using Set(string key, Boolean value)

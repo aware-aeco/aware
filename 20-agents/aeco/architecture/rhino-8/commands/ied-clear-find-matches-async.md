@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.ClearFindMatchesAsync
+Clear found matches

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssetProperties.Get
+Gets the property at the given index.

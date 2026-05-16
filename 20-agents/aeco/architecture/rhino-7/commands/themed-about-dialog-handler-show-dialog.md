@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedAboutDialogHandler.ShowDialog
+Shows the dialog.

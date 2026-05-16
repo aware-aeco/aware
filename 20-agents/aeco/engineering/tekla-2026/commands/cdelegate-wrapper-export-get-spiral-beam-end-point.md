@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetSpiralBeamEndPoint
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Line.TryFitLineToPoints
+Attempt to fit a line through a set of points.

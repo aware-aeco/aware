@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourCube.Blend
+Inteprolate between two colours.

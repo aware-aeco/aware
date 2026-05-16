@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Workset.Create
+Creates a new workset.

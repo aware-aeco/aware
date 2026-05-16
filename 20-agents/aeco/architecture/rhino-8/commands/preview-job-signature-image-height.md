@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PreviewJobSignature.ImageHeight
+The Height of the rendered preview image

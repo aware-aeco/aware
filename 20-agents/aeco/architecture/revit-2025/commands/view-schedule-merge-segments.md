@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.MergeSegments
+Merges two adjacent segments into one.

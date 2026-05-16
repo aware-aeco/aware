@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourCube.ColorAtSlice
+Get the color at a position on the slice.

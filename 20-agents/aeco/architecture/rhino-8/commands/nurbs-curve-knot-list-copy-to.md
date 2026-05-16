@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurveKnotList.CopyTo
+Copies the list to an array.

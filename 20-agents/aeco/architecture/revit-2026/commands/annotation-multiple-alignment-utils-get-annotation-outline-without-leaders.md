@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnnotationMultipleAlignmentUtils.GetAnnotationOutlineWithoutLeaders
+Gets the four corners of the alignable element in model space without its leaders.

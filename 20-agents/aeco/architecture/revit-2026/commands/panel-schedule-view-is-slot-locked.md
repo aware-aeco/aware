@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.IsSlotLocked
+Check if the circuit slot in this cell is locked.

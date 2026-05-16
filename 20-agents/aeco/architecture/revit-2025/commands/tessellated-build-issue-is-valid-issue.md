@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TessellatedBuildIssue.IsValidIssue
+Reports whether the issue is well-formed, valid and does    describe a real problem.

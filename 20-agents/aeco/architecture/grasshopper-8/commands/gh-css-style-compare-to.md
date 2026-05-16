@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CssStyle.CompareTo
+Compare this CSS style to another one.   Comments are ignored in the comparison.

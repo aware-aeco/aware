@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderMeshes.GetHashCode
+Overrides default hash code function - just returns Hash

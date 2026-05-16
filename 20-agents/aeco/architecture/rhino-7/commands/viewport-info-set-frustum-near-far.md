@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewportInfo.SetFrustumNearFar
+Sets the frustum near and far using a bounding box.

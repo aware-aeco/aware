@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportModifyEdgeChamfer
+DO NOT USE! For internal usage only!

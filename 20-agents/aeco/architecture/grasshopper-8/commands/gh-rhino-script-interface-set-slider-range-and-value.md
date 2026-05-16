@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RhinoScriptInterface.SetSliderRangeAndValue
+Find a slider and assign a new value.

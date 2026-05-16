@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointF.ToString
+Converts this point to a string

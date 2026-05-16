@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextFields.DateModified
+Date the document was last edited

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.CombineDateAndTime
+Combine a pure date and a pure time.

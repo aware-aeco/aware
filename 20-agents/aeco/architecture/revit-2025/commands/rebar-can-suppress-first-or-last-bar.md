@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.CanSuppressFirstOrLastBar
+Checks if the first or last bar in rebar set can be hidden in the given view.

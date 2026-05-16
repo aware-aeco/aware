@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPartBrowserChangedEventArgs.GetAllSolutionsPartsTypeCounts
+Returns the total fabrication part type usage count in all routing solutions.

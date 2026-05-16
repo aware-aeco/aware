@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Hatch.CreateFromBrep
+Create a hatch from a planar face of a Brep

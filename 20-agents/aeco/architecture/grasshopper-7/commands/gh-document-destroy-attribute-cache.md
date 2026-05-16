@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.DestroyAttributeCache
+Destroys the Attribute cache. Call this function whenever you do something which might affect attributes.

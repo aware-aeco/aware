@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportRunOrStopClashCheck
+DO NOT USE! For internal usage only!

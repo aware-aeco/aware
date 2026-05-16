@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.IsBox
+Verifies a Brep is in the form of a solid box.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateShell
+Creates a hollowed out shell from a solid Brep. Function only operates on simple, solid, manifold Breps.

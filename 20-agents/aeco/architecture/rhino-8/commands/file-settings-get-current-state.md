@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileSettings.GetCurrentState
+Returns the current state.

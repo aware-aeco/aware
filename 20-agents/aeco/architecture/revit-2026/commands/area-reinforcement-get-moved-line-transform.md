@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaReinforcement.GetMovedLineTransform
+Returns a transform representing the movement of the line relative to its default position along the direction of the desired layer.

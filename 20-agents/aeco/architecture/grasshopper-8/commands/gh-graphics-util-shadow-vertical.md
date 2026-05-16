@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.ShadowVertical
+Draws a vertical shadow edge.

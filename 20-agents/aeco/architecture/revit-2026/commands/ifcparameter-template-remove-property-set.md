@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCParameterTemplate.RemovePropertySet
+Removes provided property set from the template.

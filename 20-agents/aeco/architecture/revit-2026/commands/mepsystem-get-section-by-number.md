@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPSystem.GetSectionByNumber
+Get the Section from section number

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayColorSettings.Colors
+Get number of colors, including min, max and intermediate.

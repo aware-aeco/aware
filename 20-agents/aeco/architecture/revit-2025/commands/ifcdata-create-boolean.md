@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCData.CreateBoolean
+Creates a boolean data object.

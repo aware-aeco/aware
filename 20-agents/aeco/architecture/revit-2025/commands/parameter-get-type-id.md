@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Parameter.GetTypeId
+Gets the identifier of the parameter.

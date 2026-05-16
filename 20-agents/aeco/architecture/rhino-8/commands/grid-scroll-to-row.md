@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Grid.ScrollToRow
+Scrolls to show the specified row in the view

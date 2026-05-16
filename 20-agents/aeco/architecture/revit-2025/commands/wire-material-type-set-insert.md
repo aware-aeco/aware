@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WireMaterialTypeSet.Insert
+Insert the specified wire material type into the set.

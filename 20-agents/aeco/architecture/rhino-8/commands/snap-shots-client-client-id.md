@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SnapShotsClient.ClientId
+The unique id of this client.

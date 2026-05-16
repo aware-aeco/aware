@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GlobalParametersManager.IsValidGlobalParameter
+Tests whether an ElementId is of a global parameter in the given document.

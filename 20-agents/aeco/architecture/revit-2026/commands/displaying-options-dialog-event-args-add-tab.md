@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayingOptionsDialogEventArgs.AddTab
+Add tab to option dialog with tab name and handler information.

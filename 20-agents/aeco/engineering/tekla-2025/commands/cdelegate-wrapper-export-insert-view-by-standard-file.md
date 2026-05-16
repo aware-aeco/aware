@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportInsertViewByStandardFile
+DO NOT USE! For internal usage only!

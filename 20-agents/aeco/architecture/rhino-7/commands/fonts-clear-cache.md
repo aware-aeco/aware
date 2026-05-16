@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Fonts.ClearCache
+Clears the font cache

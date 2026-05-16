@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.GetExtendableRegionIds
+Gets the extendable region ids for the compound structure.

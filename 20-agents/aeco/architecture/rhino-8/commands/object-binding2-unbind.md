@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectBinding`2.Unbind
+Unbinds this binding

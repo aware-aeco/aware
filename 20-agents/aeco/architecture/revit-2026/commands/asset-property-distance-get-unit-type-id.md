@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssetPropertyDistance.GetUnitTypeId
+Gets the identifier of the unit quantifying the distance property.

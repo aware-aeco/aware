@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PanelProperties.IncreaseFont
+Increase the font one level.

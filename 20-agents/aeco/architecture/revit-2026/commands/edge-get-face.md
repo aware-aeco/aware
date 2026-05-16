@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Edge.GetFace
+Returns one of the two faces that meet at the edge.

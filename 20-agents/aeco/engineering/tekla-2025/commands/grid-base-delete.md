@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GridBase.Delete
+Deletes the grid with the given ID.

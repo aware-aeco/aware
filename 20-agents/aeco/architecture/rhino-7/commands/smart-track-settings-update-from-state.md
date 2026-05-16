@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SmartTrackSettings.UpdateFromState
+Updates from a particular setting state.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.IsRebarShapeDriven
+Returns true if the rebar is shape driven and false if free form.

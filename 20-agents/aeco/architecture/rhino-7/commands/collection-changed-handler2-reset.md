@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CollectionChangedHandler`2.Reset
+Resets the collection when it is dramatically changed

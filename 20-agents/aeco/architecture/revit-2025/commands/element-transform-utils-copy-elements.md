@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementTransformUtils.CopyElements
+Copies a set of elements from source view to destination view.

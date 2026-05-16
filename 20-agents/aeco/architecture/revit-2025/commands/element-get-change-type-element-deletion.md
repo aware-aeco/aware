@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.GetChangeTypeElementDeletion
+Returns ChangeType associated with element deletion.

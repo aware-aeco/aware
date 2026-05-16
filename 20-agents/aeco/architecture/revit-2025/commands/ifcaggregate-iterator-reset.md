@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCAggregateIterator.Reset
+Resets the iterator to the beginning of the aggregate.

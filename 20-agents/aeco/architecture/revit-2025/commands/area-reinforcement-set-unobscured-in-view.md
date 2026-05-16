@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaReinforcement.SetUnobscuredInView
+Sets Area Reinforcement to be shown unobscured in a view.

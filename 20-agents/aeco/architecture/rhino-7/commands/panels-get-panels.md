@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Panels.GetPanels
+Gets the panels.

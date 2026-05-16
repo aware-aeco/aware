@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Ed.RegisterProvideSignatureHelpAsync
+register signature help provider

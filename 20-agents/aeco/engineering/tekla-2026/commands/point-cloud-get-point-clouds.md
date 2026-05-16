@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.GetPointClouds
+Utility function: Gets available point clouds.

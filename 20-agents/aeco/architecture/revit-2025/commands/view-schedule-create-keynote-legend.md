@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.CreateKeynoteLegend
+Creates a keynote legend.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EarthAnchorPoint.ModelLocationIsSet
+Checks if the model location is set or not.

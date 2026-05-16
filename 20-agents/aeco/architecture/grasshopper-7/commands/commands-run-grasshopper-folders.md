@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Commands.Run_GrasshopperFolders
+Run the _GrasshopperFolder command.

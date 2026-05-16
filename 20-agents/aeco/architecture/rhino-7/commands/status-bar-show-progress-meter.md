@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StatusBar.ShowProgressMeter
+Starts, or shows, Rhino's status bar progress meter.

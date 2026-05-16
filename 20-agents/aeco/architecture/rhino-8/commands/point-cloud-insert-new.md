@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.InsertNew
+Inserts a new  at a specific position of the point cloud.

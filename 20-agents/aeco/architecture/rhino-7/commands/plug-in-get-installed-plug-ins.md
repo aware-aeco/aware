@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlugIn.GetInstalledPlugIns
+Get a list of all registered plug-in's regardless of if they are loaded or not.

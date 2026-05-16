@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCParameterTemplate.ExportToFile
+Export mapping template to a text file.

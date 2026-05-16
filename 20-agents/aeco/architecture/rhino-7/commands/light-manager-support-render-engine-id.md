@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightManagerSupport.RenderEngineId
+The Guid of the render engine

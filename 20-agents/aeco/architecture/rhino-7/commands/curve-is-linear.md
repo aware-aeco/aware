@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.IsLinear
+Test a curve to see if it is linear to within RhinoMath.ZeroTolerance units (1e-12).

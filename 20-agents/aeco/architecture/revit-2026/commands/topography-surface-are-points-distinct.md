@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TopographySurface.ArePointsDistinct
+Identify whether the input points are distinct in XY location.

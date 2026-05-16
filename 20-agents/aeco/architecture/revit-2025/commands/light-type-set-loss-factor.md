@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightType.SetLossFactor
+Replace the current loss factor object with the given object

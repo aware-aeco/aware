@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewShapeBuilder.ValidateViewType
+Validates the incoming view type. As of today, the only allowed view type is Plan.

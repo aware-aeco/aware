@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetObject.EnablePostSelect
+Control the availability of post selection in GetObjects.

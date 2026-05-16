@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.GetFullGeometryForView
+Generates full geometry for the Rebar for a specific view.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SlabShapeEditor.DeletePoint
+Delete a SlabShapeVertex from the element.

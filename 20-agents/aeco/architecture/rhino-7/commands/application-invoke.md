@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.Invoke
+Invoke the specified action on the UI thread, blocking the current execution until it is complete.

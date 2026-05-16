@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RealtimeDisplayMode.ComputeViewportCrc
+Compute viewport CRC for the given ViewInfo

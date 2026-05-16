@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LineLoad.GetCurve
+Returns curve that define geometry of the line load.

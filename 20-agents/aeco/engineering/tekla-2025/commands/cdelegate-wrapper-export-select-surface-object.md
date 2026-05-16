@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportSelectSurfaceObject
+DO NOT USE! For internal usage only!

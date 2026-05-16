@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DividedSurface.GetGridNodeReference
+Get a reference to the geometric point associated with a grid node.

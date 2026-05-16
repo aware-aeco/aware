@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WireConduitTypeSet.Contains
+Tests for the existence of a conduit type within the set.

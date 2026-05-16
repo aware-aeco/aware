@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterCollection`1.Add
+Add the specified item to the collection.

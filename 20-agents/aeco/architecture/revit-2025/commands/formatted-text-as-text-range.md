@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormattedText.AsTextRange
+Returns a  object that represents the entire text.

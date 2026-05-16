@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoGet.Get2dRectangle
+Gets a rectangle in view window coordinates.

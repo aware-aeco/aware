@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFC.GetDoorWindowOpeningHandle
+Get the handle to the opening associated with a hosted (door/window) element from the internal cache.

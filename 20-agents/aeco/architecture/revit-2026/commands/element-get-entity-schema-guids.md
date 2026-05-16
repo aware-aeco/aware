@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.GetEntitySchemaGuids
+Returns the Schema guids of any Entities stored in this element.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Connector.ConnectTo
+Make connection between two connectors.

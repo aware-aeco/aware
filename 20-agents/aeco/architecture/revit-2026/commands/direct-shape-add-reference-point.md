@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShape.AddReferencePoint
+Adds a reference point to the DirectShape.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndirectBinding`1.EnumToString
+Converts the a binding to an enumeration to/from its string representation

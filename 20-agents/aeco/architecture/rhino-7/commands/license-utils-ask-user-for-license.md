@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LicenseUtils.AskUserForLicense
+This version of Rhino.PlugIns.LicenseUtils.AskUserForLicense             is used by Rhino C++ plug-ins.

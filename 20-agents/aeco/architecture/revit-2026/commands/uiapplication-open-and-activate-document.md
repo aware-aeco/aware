@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIApplication.OpenAndActivateDocument
+Opens and activates a Revit document, include both local document or cloud document.

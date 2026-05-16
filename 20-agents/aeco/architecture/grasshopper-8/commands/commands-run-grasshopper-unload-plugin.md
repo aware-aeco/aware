@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Commands.Run_GrasshopperUnloadPlugin
+Run the _GrasshopperUnloadPlugin command logic.

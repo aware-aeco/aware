@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDrivenAccessor.SetRebarShapeId
+Changes the RebarShape element that defines the shape of the rebar.    Changing the value of this member causes the Rebar instance to choose values for its    shape parameters to preserve its previous shape as closely as possible

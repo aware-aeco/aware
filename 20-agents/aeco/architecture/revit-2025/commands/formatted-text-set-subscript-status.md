@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormattedText.SetSubscriptStatus
+Sets the characters in the entire text to be subscript or not subscript.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Structure`1.Duplicate
+Create an exact duplicate of this structure. All data items are copied as well.

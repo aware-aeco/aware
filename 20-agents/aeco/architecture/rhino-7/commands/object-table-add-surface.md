@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.AddSurface
+Adds a surface object to Rhino.

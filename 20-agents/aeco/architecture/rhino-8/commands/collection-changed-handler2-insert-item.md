@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CollectionChangedHandler`2.InsertItem
+Inserts an item at the specified index in the collection

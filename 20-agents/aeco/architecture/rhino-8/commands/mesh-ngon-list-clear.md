@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshNgonList.Clear
+Clears the Ngon list on the mesh.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsSurface.CreateFromTorus
+Constructs a new NURBS surfaces from torus data.

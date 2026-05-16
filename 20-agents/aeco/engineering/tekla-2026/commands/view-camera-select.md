@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewCamera.Select
+Updates the camera parameters from the application view.

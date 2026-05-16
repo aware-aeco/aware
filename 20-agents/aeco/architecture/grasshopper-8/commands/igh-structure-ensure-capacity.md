@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Structure.EnsureCapacity
+Ensures that all branches have a certain capacity

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UpdaterId.GetGUID
+GUID value of the UpdaterId

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalToPhysicalAssociationManager.HasAssociation
+Verifies if the element has already defined an association.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndexPoint.GetSizeInShortInts
+Gets the amount of storage that the primitive takes up in a buffer, measured in short integers.

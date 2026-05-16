@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SizeConverter.CanConvertFrom
+Determines if this converter can convert from the specified

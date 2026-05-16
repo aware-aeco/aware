@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DividedPath.IsValidSpacingRuleLayout
+Checks that the spacing rule layout enumeration value is valid

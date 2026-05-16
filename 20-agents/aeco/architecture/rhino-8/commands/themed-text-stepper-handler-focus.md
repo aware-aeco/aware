@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedTextStepperHandler.Focus
+Set focus to the text box

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.Modify
+Modifies the existing brep in the model database to match the current one.

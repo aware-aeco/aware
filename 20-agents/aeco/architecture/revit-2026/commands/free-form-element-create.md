@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FreeFormElement.Create
+Creates a new FreeFormElement from a copy of the input geometry.

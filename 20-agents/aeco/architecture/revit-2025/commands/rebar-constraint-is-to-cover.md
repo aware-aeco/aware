@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraint.IsToCover
+Checks if the RebarConstraintType of the RebarConstraint is 'ToCover'.    Returns true if the RebarConstraintType of the RebarConstraint is 'ToCover', false otherwise.

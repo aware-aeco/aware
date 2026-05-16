@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarHandlePositionData.GetDistributionPath
+Gets the distribution path currently stored in the rebar.

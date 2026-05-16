@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Assembly.Delete
+Explodes the assembly instance.

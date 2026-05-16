@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternallyTaggedNonBReps.Add
+Adds a copy of the input AugmentationGeometryObject to this collection.

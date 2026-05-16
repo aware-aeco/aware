@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudDataServices.GetProjectsWithPointCloudsAsync
+Retrieves the list of Trimble Connect projects with point clouds.

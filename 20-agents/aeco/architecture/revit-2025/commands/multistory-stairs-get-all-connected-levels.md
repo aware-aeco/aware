@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultistoryStairs.GetAllConnectedLevels
+Gets all connected level ids of this multistory stairs.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.CurveCurveValidate
+Finds the intersections between two curves.

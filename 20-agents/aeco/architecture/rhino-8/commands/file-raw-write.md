@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileRaw.Write
+Write a raw file based on the contents of a RhinoDoc

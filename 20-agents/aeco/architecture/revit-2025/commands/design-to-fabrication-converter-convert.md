@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DesignToFabricationConverter.Convert
+Converts the set of MEP design elements into fabrication parts.

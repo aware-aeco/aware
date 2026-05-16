@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipelineAttributes.GetDitherTransparencyEffect
+Get the current dither transparency amount.

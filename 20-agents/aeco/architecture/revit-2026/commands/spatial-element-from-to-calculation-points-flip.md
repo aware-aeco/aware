@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpatialElementFromToCalculationPoints.Flip
+flip the direction of the "from" and "to" points

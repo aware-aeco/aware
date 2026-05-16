@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryBase.MemoryEstimate
+Computes an estimate of the number of bytes that this object is using in memory.

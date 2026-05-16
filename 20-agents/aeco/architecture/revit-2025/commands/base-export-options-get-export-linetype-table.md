@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BaseExportOptions.GetExportLinetypeTable
+Gets a copy of the line type table.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextLog.Print
+Send text to the text log

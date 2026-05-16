@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnnotationBase.IsAllUnderlined
+Returns true if all of the text in the annotation is Underlined, otherwise returns false

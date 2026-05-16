@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Material.ClearMaterialAspect
+Removes an aspect from the material.

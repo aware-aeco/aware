@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DynamicLayout.AddCentered
+Adds a control centered in a new vertical section

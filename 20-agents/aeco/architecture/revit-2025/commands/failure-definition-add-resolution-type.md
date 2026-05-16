@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureDefinition.AddResolutionType
+Adds a type of possible resolution for the failure.

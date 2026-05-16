@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PropertySetElement.SetThermalAsset
+Sets a copy of the given ThermalAsset to be used in the PropertySetElement.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Sphere.LongitudeRadians
+Computes the meridian at a specific longitude angle.             The angle is specified in radians.

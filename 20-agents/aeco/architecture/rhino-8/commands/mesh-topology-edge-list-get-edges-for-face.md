@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshTopologyEdgeList.GetEdgesForFace
+Gets indices of edges that surround a given face.

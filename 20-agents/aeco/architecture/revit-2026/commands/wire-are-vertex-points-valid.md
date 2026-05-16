@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Wire.AreVertexPointsValid
+Checks if the given vertex points are valid for the wire.

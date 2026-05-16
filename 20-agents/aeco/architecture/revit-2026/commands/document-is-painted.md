@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.IsPainted
+Checks if the element's face is painted with a material.

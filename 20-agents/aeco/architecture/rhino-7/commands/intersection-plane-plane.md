@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.PlanePlane
+Intersects two planes and return the intersection line. If the planes are              parallel or coincident, no intersection is assumed.

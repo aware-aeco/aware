@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightGroupManager.SetLightDimmer
+Sets the dimmer value for the given light for rendering the given view

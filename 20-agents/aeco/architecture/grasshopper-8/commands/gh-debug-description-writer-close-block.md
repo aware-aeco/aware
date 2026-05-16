@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DebugDescriptionWriter.CloseBlock
+Close the current block and decrease the depth by 1.

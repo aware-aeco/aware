@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ContinuousRail.GetPath
+Retrieves the rail path.

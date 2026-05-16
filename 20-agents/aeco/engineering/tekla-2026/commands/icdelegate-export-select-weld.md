@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportSelectWeld
+DO NOT USE! For internal usage only!

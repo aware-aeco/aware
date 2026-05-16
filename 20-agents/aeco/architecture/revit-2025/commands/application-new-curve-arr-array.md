@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewCurveArrArray
+Creates an empty array that can store geometric curve loops.

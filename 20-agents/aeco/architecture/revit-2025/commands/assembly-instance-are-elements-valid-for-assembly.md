@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssemblyInstance.AreElementsValidForAssembly
+Identifies if provided assembly members are valid.

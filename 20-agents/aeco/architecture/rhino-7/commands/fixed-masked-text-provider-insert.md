@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FixedMaskedTextProvider.Insert
+Called to insert a character at the specified position in the masked text.

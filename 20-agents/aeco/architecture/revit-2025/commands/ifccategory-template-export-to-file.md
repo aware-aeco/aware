@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCCategoryTemplate.ExportToFile
+Export mapping template to a text file.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_StateTag.Render
+Render this tag into a graphics surface.

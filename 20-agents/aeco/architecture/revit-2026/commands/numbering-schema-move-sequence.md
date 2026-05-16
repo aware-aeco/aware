@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NumberingSchema.MoveSequence
+Moves all elements of a numbering sequence from one partition to another.

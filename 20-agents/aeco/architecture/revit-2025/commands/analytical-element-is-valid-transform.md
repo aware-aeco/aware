@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalElement.IsValidTransform
+Checks whether the value set for Local Coordinate System is valid for an Analytical Element.

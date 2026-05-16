@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-VolumeMassProperties.CentroidCoordinatesPrincipalMomentsOfInertia
+Calculates the principal moments of inertia and principal axes with respect to centroid coordinates.

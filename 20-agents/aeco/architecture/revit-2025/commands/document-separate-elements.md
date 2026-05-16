@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.SeparateElements
+Separate a set of combinable elements out of combinations they currently belong to.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Archive.ExtractObject
+Extract a target object from the data tree.

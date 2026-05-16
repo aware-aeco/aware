@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PropertyStore.GetCommand
+Gets the command instance for the specified property key.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyManager.CanElementParameterBeAssociated
+Indicates if this element parameter can be associated with a family parameter.

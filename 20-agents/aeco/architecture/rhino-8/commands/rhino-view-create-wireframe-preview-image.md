@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoView.CreateWireframePreviewImage
+Creates a bitmap preview image of model.

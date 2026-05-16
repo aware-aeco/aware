@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnnotationSymbol.removeLeader
+remove a leader of this annotation symbol.

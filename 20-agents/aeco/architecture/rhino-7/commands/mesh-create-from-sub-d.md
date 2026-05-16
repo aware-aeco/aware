@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CreateFromSubD
+Create a mesh from a SubD limit surface

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudOverrideSettings.IsEqual
+Checks if the contents of two settings are equal.

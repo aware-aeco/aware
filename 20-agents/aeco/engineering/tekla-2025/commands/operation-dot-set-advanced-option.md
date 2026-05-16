@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotSetAdvancedOption
+Sets boolean advanced option value.

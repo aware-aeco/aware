@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.GetNearRect
+Get corners of near clipping plane rectangle.

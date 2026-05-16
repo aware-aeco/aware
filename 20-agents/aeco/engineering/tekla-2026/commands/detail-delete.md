@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Detail.Delete
+Deletes the detail instance with the given ID from the model database.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourWheelState.CreatePalette
+Generate a colour palette based on the current state.

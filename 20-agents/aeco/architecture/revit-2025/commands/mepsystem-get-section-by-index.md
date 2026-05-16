@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPSystem.GetSectionByIndex
+Get the section from the index.

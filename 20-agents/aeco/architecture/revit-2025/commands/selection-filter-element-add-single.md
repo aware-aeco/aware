@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SelectionFilterElement.AddSingle
+Adds a single ElementId to the filter's set.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Truss.Create
+Creates a new Truss.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Line.ToNurbsCurve
+Constructs a nurbs curve representation of this line.              This amounts to the same as calling NurbsCurve.CreateFromLine().

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ToolbarFileCollection.Open
+Opens a toolbar file.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterSet.Contains
+Tests for the existence of a parameter within the set.

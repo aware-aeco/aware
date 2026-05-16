@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interval.CompareTo
+Compares this  with another interval.              The lower bound has first evaluation priority.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PathReinforcement.ConvertRebarInSystemToRebars
+Converts all RebarInSystem elements owned by the input PathReinforcement to equivalent Rebar elements.

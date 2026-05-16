@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilledRegionType.IsValidBackgroundPatternId
+Check if the id is valid for a background pattern

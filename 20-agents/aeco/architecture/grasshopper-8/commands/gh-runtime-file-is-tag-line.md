@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RuntimeFile.IsTagLine
+Tests whether a line of text starts with a Grasshopper Help keyword.

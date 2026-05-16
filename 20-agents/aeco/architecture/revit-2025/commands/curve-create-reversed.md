@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.CreateReversed
+Creates a new curve with the opposite orientation of the existing curve.

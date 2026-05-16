@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterableValueProvider.GetStringValue
+Gets a string value from the given element.

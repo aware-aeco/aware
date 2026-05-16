@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetPoint.SetCursor
+Sets cursor that will be used when Get() is called and snap is not             happening.

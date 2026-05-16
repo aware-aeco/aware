@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToMesh_Primary
+Performs a direct cast from Rhino.Geometry.Mesh or GH_Mesh.   Data is not guaranteed to be duplicated.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHPlane_Secondary
+Converts similar data into a GH_Plane instance.  Data is not quaranteed to be duplicated.

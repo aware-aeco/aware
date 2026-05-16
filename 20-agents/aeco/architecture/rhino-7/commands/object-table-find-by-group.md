@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.FindByGroup
+Finds all RhinoObjects that are in a given group.

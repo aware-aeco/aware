@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferencePoint.GetVisibility
+Gets the visibility for the point.

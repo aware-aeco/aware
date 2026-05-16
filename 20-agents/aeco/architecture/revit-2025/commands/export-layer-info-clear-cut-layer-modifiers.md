@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLayerInfo.ClearCutLayerModifiers
+Clears all the cut layer modifiers stored in the layer info.

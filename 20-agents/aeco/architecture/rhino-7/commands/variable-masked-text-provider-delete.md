@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-VariableMaskedTextProvider.Delete
+Called to delete a range of characters at the specified position in the masked text.

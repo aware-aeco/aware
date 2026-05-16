@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DrawContext.GetOverrideTransparency
+Returns override transparency that will be applied to geometry during rendering.

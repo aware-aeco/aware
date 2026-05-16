@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Hub.GetHubConnectorManager
+Retrieves the ConnectorManager of the Hub.

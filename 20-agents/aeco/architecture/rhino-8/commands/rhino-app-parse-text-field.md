@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoApp.ParseTextField
+Parses a text field string.

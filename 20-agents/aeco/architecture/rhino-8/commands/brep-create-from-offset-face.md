@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateFromOffsetFace
+Offsets a face including trim information to create a new brep.

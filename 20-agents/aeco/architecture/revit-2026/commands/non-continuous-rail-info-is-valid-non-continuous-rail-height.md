@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NonContinuousRailInfo.IsValidNonContinuousRailHeight
+Checks whether the input height is valid for a non-continuous rail in its associated railing type.

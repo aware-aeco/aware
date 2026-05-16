@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyManager.IsUserAssignableParameterGroup
+Checks if the given parameter group can be assigned to new parameters.

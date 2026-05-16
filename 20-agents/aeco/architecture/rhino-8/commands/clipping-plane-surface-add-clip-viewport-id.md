@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ClippingPlaneSurface.AddClipViewportId
+Adds a viewport id to the list of viewports that this clipping plane clips.

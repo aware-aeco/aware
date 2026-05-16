@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.GetCellSpec
+Gets the spec describing values of a cell, if applicable.

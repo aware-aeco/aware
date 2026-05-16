@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Matrix.SwapRows
+Exchanges two rows.

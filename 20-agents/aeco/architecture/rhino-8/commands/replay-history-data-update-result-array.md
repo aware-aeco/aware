@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReplayHistoryData.UpdateResultArray
+Update the Results array with a different set of values. Null entries in the newResults             will result in empty ReplayHistoryResult elements

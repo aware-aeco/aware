@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceDefinition.Equals
+Equality is checked against InstanceDefinition.Id

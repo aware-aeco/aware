@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TransferredProjectStandardsEventArgs.GetSelectedExternalItems
+Gets the collection of externally added items that the user opted to enable for transfer in the Transfer Project Standards dialog.

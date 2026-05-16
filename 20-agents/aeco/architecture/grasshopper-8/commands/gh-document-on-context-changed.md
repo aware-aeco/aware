@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.OnContextChanged
+Raise the ContextChanged event.

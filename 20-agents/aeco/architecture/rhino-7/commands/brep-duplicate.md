@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.Duplicate
+Copies this brep.

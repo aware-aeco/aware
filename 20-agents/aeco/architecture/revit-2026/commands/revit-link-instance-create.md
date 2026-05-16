@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitLinkInstance.Create
+Creates a new instance of a linked Revit project (RevitLinkType).

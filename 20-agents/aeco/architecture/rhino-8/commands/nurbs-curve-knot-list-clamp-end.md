@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurveKnotList.ClampEnd
+Clamp end knots. Does not modify control point locations.

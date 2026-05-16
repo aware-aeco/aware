@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CategoryNameMap.Clear
+Removes every category from the map, rendering it empty.

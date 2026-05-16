@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ID.ToString
+Gets a string representation for this ID.

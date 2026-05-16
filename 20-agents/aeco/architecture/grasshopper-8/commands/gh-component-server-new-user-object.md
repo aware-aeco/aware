@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentServer.NewUserObject
+Create a new UserObject and write it to the Grasshopper User Object folder.

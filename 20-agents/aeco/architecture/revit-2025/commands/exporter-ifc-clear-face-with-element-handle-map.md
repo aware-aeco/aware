@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFC.ClearFaceWithElementHandleMap
+Clear face with element handle map.

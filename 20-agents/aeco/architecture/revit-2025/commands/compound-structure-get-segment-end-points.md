@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.GetSegmentEndPoints
+Gets the end points of a segment.

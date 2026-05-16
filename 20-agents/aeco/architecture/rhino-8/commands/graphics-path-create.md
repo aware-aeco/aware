@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GraphicsPath.Create
+Creates a new instance of the IGraphicsPath for the specified generator

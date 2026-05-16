@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedConstructionPlaneTable.Delete
+Remove named construction plane from the document.

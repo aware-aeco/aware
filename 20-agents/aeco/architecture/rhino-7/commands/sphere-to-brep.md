@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Sphere.ToBrep
+Converts this sphere is it Brep representation

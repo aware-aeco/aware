@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsSurface.MakeRational
+Makes this surface rational.

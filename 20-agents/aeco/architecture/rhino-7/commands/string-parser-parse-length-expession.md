@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StringParser.ParseLengthExpession
+Parse a string for a length value.             Expression can include complex expressions             Simplest version of Length parsing

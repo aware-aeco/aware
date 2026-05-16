@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetTruncatedCone.Get
+Prompt for the getting of a truncated cone.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Structure`1.Simplify
+Simplify the data structure by collapsing path indices shared by all branches.

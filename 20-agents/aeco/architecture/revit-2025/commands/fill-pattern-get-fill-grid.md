@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FillPattern.GetFillGrid
+Gets the specified fill grid.

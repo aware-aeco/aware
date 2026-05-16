@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.DestroyProxySources
+Remove all remaining proxy sources from the document.

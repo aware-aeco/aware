@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToSurface
+Convert data into Rhino.Geometry.Surface.

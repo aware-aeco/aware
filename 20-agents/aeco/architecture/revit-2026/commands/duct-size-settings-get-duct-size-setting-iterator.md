@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DuctSizeSettings.GetDuctSizeSettingIterator
+Returns a DuctSizeSettingIterator object that iterates through the collection.

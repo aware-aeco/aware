@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FillPatternElement.SetFillPattern
+Sets the FillPattern associated to this element.

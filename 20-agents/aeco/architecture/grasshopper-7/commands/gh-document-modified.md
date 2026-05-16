@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.Modified
+Sets the modified flag of this document.

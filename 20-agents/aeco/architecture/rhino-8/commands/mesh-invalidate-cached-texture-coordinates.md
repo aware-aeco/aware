@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.InvalidateCachedTextureCoordinates
+Invalidates all cached texture coordinates. Call this             function when you have made changes that will affect             the texture coordinates on the mesh.

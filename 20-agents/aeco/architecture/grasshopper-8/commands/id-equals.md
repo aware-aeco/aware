@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ID.Equals
+Determines if two IDs are equal.

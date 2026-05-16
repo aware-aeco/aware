@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.AutoLayoutComponents
+Perform automatic layout on this document.

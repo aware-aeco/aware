@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CorrectionFactorSet.Erase
+Removes a specified correction factor from the set.

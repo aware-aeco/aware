@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ImporterIFC.SetFile
+Sets the handle to the IFC file being created during this import operation.

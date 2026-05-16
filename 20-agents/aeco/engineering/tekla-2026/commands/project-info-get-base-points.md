@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ProjectInfo.GetBasePoints
+Gets all available base points as a list.

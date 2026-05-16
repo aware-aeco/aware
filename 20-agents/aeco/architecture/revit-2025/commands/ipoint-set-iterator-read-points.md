@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IPointSetIterator.ReadPoints
+Implement this method to fill the provided buffer with points up to the number of maximum points for    which the buffer was allocated.

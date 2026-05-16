@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadCombination.GetComponents
+Returns collection of the load combination components.

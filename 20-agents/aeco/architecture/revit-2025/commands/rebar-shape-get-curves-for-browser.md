@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShape.GetCurvesForBrowser
+Generate curves for the shape, as used in the shape browser.

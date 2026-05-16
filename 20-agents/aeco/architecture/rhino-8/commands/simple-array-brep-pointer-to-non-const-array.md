@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayBrepPointer.ToNonConstArray
+Copies the unmanaged array to a managed counterpart.

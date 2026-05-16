@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportFontTableIterator.IsDone
+Identifies if the iteration has completed.

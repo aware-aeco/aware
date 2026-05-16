@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.Duplicate
+Duplicates the object that is referenced by objref.             Same as Transform(objref, Transform.Identity, false)

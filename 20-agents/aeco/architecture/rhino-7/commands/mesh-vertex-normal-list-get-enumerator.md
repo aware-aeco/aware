@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexNormalList.GetEnumerator
+Gets an enumerator that yields all normals (vectors) in this collection.

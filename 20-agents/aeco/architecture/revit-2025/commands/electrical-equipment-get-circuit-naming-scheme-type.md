@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalEquipment.GetCircuitNamingSchemeType
+Gets enumerated type of the circuit naming scheme used with Electrical Equipment.

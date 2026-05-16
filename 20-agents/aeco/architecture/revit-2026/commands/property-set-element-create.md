@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PropertySetElement.Create
+Creates a new PropertySetElement to contain the given asset.

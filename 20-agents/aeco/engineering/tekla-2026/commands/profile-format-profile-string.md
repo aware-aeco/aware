@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Profile.FormatProfileString
+Formats profile string

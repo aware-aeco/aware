@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsSurface.MakeNonRational
+Makes this surface non-rational.

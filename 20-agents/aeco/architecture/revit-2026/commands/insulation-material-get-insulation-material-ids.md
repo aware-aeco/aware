@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InsulationMaterial.GetInsulationMaterialIds
+Gets all the Conductor Insulation Material ids in the given document, sorted by name.

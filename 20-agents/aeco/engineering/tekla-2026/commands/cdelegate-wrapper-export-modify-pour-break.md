@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportModifyPourBreak
+DO NOT USE! For internal usage only!

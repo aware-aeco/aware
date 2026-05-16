@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.NewFascia
+Creates a fascia along a reference.

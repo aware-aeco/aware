@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.IsValidSampleHeight
+Is the specified height a valid sample height for this compound structure?

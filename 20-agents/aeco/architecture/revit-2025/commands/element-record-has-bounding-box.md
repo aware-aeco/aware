@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementRecord.HasBoundingBox
+Determines whether this element record has a bounding box.

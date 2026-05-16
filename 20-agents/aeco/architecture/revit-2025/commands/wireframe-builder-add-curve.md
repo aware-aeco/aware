@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WireframeBuilder.AddCurve
+Add a curve to the shape representation stored in this WireframeBuilder.

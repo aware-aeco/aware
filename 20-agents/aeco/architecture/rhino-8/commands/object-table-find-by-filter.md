@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.FindByFilter
+Same as GetObjectList but converts the result to an array.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportGetViewPointFromCurrentView
+DO NOT USE! For internal usage only!

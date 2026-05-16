@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-City.CityAt
+Returns city at given index.

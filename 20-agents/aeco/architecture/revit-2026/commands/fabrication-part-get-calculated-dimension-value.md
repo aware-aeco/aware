@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.GetCalculatedDimensionValue
+Gets the calculated dimension value.

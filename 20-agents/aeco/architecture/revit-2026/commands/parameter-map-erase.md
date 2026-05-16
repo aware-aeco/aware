@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterMap.Erase
+Removes a object with the specified key from the map.

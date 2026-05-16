@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHTextDot_Primary
+Converts similar data into a GH_TextDot instance.  Data is not guaranteed to be duplicated.

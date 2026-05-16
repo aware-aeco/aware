@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HatchPatternTable.Delete
+Deletes a hatch pattern from the table.

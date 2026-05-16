@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LogicalWeld.Modify
+Modifies the existing logical weld in the model database to match the current one.

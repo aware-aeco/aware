@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PostEffect.ReadFromDocumentDefaults
+Because post effects are now in the render settings, this function can no longer be called.

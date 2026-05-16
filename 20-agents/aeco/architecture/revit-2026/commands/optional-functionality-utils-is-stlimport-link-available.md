@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OptionalFunctionalityUtils.IsSTLImportLinkAvailable
+Checks whether the STL Import/Link functionality is available in the installed Revit.

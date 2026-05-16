@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Container.FindChild
+Finds a child control in this container or any of its child containers with the specified

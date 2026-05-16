@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AppearanceAssetElement.Duplicate
+Duplicates the appearance asset element.

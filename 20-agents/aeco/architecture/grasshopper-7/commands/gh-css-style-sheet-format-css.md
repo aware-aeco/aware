@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CssStyleSheet.FormatCss
+Format the entire style-sheet as CSS 2.0 compliant text.

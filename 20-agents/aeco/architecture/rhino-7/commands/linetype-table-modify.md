@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinetypeTable.Modify
+Modify linetype settings.

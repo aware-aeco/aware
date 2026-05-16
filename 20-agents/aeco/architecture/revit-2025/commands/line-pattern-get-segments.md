@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinePattern.GetSegments
+Gets the sequence of segments that defines this line pattern.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EtoEnvironment.GetFolderPath
+Gets the folder path for the specified special folder

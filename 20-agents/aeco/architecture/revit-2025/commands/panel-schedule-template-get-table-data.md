@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleTemplate.GetTableData
+Gets the writable table data object.

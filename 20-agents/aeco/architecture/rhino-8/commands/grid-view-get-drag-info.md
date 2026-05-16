@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GridView.GetDragInfo
+Gets the grid drag info for the specified DragEventArgs.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndirectBinding`1.AfterDelay
+Specifies that the binding should only respond to change events after a delay.

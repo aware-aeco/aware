@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MenuTextBox.CloseEntireMenuStructure
+Call this function to close the ENTIRE menu structure.

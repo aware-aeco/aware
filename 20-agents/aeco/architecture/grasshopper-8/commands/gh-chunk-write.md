@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Chunk.Write
+Write this chunk and all child chunks to a binary stream.

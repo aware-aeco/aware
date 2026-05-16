@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportGetPointCloudVisibleInViews
+DO NOT USE! For internal usage only!

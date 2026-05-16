@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.PlanarCurveCollision
+Determines if two coplanar curves collide (intersect).

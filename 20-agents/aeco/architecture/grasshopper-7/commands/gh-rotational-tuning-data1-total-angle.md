@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RotationalTuningData`1.TotalAngle
+Compute the total angle from the first to the last frame.

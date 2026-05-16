@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultistoryStairs.Unpin
+Removes a particular story of the stairs (identified by its base level id) from a stairs group.

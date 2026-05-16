@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ScriptEditor.GetAllCacheFiles
+Gets a collection of all the cache files.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectPropertiesPage.GetSelectedObjects
+Get selected objects that match a given filter

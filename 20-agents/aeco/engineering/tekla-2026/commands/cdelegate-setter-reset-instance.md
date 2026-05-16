@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateSetter.ResetInstance
+Resets  instance.

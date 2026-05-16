@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.ModifyAttributes
+Modifies an object's attributes.  Cannot be used to change object id.

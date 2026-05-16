@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TypeConverter.CanConvertTo
+Determines whether this instance can convert to the specified destinationType.

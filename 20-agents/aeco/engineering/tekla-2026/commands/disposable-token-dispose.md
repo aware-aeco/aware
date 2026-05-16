@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisposableToken.Dispose
+Invokes the callback.

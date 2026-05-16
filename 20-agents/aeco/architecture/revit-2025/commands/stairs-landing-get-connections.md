@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StairsLanding.GetConnections
+Returns information about the connections in which the stairs landing participates.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform2D.TransformUVDomainIfPossible
+Transforms an envelope () for one surface to an envelope for a coincident but differently parameterized surface.

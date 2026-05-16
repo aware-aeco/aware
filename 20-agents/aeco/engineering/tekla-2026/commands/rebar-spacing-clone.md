@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSpacing.Clone
+Makes a copy of this object.

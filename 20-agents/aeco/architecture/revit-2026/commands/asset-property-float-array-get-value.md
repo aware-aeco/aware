@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssetPropertyFloatArray.GetValue
+Get the value of the property.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveLoop.CreateViaOffset
+Creates a new curve loop that is an offset of the existing curve loop.

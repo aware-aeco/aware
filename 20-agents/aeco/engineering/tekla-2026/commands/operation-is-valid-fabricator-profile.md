@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.IsValidFabricatorProfile
+Check if profile is according to fabricator settings.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCFamilyInstanceExtrusionExportResults.GetExtrusionHandle
+Gets the extruded solid handle generated for the family instance.

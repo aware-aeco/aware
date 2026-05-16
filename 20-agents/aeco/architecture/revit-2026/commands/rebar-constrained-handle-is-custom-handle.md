@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstrainedHandle.IsCustomHandle
+Returns true if the RebarHandleType of the RebarConstrainedHandle is 'CustomHandle'.

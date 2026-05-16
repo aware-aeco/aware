@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewHandler.ShowView
+Opens a model view.

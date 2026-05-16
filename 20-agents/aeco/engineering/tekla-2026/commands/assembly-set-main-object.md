@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Assembly.SetMainObject
+Sets the main object of the assembly.

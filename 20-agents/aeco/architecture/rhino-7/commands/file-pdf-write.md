@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilePdf.Write
+Write PDF to a file

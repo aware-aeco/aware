@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.SetEndPoint
+Forces the curve to end at a specified point.              Not all curve types support this operation.

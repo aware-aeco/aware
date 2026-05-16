@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Node3d`1.AddRange
+Insert a collection of items into the tree. The items should all be within the region of this node.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CssStyleSheet.AddStyle
+Add a new style to this sheet. If the style is already defined, it will not be added again.

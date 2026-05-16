@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainer.GetRebarContainerIterator
+Returns a Rebar Container Iterator that iterates through the Rebar Container Items.

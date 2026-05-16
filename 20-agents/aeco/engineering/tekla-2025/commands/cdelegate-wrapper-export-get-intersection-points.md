@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetIntersectionPoints
+DO NOT USE! For internal usage only!

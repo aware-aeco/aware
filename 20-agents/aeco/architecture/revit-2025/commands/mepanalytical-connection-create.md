@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPAnalyticalConnection.Create
+Creates a new analytical connection between two open connectors.

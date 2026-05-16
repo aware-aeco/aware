@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.Ungrouping
+Ungroups the rebar group and creates new single rebars.

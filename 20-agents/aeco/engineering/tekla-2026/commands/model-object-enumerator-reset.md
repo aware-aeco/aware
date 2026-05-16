@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObjectEnumerator.Reset
+Resets the enumerator to the beginning.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolymeshEnumerator.MoveNext
+Moves to the next item in the enumerator.

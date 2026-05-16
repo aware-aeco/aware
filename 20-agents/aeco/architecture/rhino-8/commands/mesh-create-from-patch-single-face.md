@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CreateFromPatchSingleFace
+Creates a single mesh face from the given input.

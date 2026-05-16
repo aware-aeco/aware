@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContentCollection.GetFilterContentByUsage
+Gets usage filter type for collection

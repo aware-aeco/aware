@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.ConvertModelToDetailCurves
+Converts a group of ModelCurves to equivalent DetailCurves.

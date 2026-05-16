@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.AllowOverrideCellStyle
+Identifies if the style can be overridden in the given cell.

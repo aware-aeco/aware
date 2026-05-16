@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetSimilarNumberedObjects
+DO NOT USE! For internal usage only!

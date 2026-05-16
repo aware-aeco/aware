@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilledRegionType.IsValidLineWeight
+Indicates whether the given line weight value is valid.

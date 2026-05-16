@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SnapShotsClient.ExtendBoundingBoxForObjectAnimation
+Called once at the start of an animation. This can be used to extend the scene bounding box to avoid clipping.

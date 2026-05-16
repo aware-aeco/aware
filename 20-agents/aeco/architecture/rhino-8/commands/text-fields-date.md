@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextFields.Date
+Current date

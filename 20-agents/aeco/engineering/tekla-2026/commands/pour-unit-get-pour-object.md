@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PourUnit.GetPourObject
+Returns the pour object in pour unit.

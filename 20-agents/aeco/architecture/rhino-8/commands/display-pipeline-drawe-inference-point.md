@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DraweInferencePoint
+Draw inference point used in gesture based snapping

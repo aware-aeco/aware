@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotLoadModel2FromLocalHistoryBySharingPacket
+Load model2 from local history, by sharing packet number.             dotUnloadModel2 MUST be called to release.

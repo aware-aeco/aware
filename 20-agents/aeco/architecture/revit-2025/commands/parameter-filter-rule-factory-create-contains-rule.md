@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterFilterRuleFactory.CreateContainsRule
+Creates a filter rule that determines whether strings from the document contain    a certain string value.

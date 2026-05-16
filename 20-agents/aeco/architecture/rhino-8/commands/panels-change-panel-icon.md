@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Panels.ChangePanelIcon
+Update the icon used for a panel tab.

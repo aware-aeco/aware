@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextureMapping.TryGetMappingSphere
+Get a spherical projection parameters from this texture mapping.

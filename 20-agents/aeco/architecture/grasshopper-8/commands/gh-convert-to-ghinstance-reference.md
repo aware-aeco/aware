@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHInstanceReference
+Convert data into GH_InstanceReference.

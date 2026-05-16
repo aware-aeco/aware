@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_DocumentObject.CreateAttributes
+Create new default attributes for this object. You should only call this function   when the Attributes() field is null.

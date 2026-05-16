@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayLine.ToArray
+Copies the unmanaged array to a managed counterpart.

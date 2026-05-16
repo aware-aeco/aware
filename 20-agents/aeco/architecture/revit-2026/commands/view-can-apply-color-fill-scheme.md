@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.CanApplyColorFillScheme
+Checks if the id can be applied as the scheme id of specified category to this view.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHPlane
+Convert data into GH_Planes.

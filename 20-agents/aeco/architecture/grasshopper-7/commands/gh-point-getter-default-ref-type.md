@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PointGetter.DefaultRefType
+Gets the default point reference type based on the layout of the active doc.

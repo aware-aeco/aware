@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShape.GetDefaultHookOrientation
+Gets the termination's orientation. The orientation it's the same for both hook and crank.

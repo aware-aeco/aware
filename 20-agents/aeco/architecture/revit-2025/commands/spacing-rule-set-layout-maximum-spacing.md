@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpacingRule.SetLayoutMaximumSpacing
+Set the Layout property to MaximumSpacing.

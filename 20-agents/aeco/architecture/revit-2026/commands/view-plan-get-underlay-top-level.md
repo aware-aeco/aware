@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewPlan.GetUnderlayTopLevel
+Returns the element id of the level that defines the top of the underlay range.

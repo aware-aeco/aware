@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipelineAttributes.SetSurfaceEdgeThicknessUsage
+Helper function for getting the SurfaceEdgeThicknessFlags

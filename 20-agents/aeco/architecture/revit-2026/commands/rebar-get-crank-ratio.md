@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.GetCrankRatio
+Gets the crank ratio at the indicated bar end.

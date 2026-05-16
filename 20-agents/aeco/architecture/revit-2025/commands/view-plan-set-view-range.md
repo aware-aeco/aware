@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewPlan.SetViewRange
+Sets the view range.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.EditFamily
+Gets the document of a loaded family to edit.

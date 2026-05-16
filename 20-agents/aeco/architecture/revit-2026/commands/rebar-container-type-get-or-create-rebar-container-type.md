@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainerType.GetOrCreateRebarContainerType
+Creates or returns a RebarContainerType object with a given name.

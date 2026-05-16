@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshTopologyVertexList.GetEnumerator
+Gets an enumerator that yields all topology vertices in this collection.

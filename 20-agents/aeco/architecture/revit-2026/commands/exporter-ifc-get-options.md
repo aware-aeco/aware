@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFC.GetOptions
+Gets the collection of named options set by the exporter client.

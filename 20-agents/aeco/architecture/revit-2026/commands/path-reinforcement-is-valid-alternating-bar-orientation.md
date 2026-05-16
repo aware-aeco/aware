@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PathReinforcement.IsValidAlternatingBarOrientation
+Checks if orientation for alternating bars is valid.

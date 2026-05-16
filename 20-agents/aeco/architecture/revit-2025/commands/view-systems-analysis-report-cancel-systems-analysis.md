@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSystemsAnalysisReport.CancelSystemsAnalysis
+Cancels the systems analysis based on the report element id.

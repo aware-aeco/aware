@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlPolycurve.Modify
+Modifies a polycurve with the given Identifier.

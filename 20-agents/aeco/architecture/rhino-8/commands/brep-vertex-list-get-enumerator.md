@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepVertexList.GetEnumerator
+Gets an enumerator that visits all surfaces.

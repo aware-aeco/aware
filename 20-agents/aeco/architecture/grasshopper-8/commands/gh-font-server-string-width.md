@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_FontServer.StringWidth
+Measure the width of a string in pixels

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexList.AddVertices
+Adds a series of new vertices to the end of the vertex list.             This overload accepts double-precision points.

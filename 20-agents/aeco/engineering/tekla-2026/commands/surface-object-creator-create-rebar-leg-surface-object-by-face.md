@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SurfaceObjectCreator.CreateRebarLegSurfaceObjectByFace
+Creates a rebar leg surface object by a model object's face.

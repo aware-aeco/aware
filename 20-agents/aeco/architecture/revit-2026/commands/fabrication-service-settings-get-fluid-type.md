@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationServiceSettings.GetFluidType
+Gets the fluid type of the specified service.

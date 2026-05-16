@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ID.GetHashCode
+Gets the hash code.

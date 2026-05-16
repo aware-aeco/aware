@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ImportExternalRefenceModel
+DO NOT USE! For internal usage only!

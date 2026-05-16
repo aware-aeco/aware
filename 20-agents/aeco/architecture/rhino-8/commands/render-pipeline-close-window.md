@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderPipeline.CloseWindow
+Closes the render window associated with this render instance.

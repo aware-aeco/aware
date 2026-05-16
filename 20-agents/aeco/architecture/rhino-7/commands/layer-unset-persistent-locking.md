@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Layer.UnsetPersistentLocking
+Remove any explicitly persistent locking settings from this layer

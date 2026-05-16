@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MacroManager.GetMacroManagerIterator
+Returns a Macro manager iterator that iterates through the collection.

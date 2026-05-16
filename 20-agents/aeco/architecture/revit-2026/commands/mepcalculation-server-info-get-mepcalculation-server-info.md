@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPCalculationServerInfo.GetMEPCalculationServerInfo
+Gets a MEPCalculationServerInfo by family instance.

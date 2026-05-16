@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextLog.PushIndent
+Increase the indentation level

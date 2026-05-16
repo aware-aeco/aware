@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmPlugInDataTable.GetEnumerator
+Gets the enumerator that visits any  in this table.

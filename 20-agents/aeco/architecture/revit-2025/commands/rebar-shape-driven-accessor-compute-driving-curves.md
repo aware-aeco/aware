@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDrivenAccessor.ComputeDrivingCurves
+Compute the driving curves.

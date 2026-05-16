@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FlatBufferBuilder.AddFloat
+Add a `float` to the buffer (aligns the data and grows if necessary).

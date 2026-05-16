@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.RenderCenteredText
+Render a bit of text centered on a point.

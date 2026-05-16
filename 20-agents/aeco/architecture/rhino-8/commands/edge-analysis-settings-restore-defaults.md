@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EdgeAnalysisSettings.RestoreDefaults
+Commits the default settings as the current settings.

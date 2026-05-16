@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Slider_Obsolete.OnValueChanged
+Raise the ValueChanged event

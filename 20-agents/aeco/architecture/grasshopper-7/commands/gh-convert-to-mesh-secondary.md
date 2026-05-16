@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToMesh_Secondary
+Attempts to convert other data types into an OnMesh.   Data is not quaranteed to be duplicated.

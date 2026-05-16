@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.FindByLayer
+Finds all RhinoObjects that are in a given layer.

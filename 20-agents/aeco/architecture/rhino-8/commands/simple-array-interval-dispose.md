@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayInterval.Dispose
+Actively reclaims unmanaged resources that this instance uses.

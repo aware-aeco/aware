@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AngularDimension.Create
+Creates a new instance of an Angular Dimension element within the project.

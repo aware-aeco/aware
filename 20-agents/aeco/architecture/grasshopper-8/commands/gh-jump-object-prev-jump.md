@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_JumpObject.PrevJump
+Attempts to find the previous jump object.

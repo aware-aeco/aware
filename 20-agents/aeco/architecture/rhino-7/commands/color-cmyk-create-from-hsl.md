@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorCMYK.CreateFromHSL
+Constructs the nearest CMYK equivalent of an HSL color.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightGroupManager.DeleteGroup
+Remove the given LightGroup object from the set of LightGroup objects

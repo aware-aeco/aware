@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PostEffectChannel.Clone
+Return a clone of this channel.

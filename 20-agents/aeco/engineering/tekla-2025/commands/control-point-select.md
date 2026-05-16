@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlPoint.Select
+Selects the control point with the given Identifier.

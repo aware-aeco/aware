@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.SetVisibility
+Set point cloud visibility in given views.

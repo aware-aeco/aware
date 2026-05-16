@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewInstanceBinding
+Creates a new empty instance binding object.

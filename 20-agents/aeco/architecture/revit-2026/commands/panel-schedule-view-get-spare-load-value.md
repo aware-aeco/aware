@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.GetSpareLoadValue
+Gets the value of the apparent load parameter for a spare

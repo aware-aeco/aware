@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-dotWeldGeometry_t.CopyAndInitialize
+Makes a copy of another  struct and initializes the weld geometry polygon.

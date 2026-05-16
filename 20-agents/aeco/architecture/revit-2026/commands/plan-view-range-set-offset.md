@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlanViewRange.SetOffset
+Set the offset value associated with a View Depth plane

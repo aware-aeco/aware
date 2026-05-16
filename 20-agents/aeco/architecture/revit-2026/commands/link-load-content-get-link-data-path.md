@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinkLoadContent.GetLinkDataPath
+Returns the Link data path owned by this LinkLoadContent object.

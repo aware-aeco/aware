@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightFamily.GetLightType
+Return a LightType object for the light type at the given index

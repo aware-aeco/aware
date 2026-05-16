@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.ClosestPoint
+Gets the point on the mesh that is closest to a given test point.

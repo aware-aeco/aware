@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DocumentPrintingEventArgs.GetViewElementIds
+Returns ElementIds of the views to be printed.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReinforcementSettings.GetReinforcementAbbreviationTags
+Gets a list of abbreviation tags for desired reinforcement object type.

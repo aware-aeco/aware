@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricArea.IsValidMinorLapSplice
+Identifies if the specified value is valid for use as a minor lap splice.

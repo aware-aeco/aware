@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCFile.GetInstanceCount
+Counts IFC instances of one particular type.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_IconTable.To32BppArgb
+Converts an image into 32BitPerPixelAlphaRedGreenBlue format.

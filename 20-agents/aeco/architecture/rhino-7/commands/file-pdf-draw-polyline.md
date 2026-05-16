@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilePdf.DrawPolyline
+Draw a polyline path

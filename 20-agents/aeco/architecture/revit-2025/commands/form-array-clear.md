@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormArray.Clear
+Removes every form from the array, rendering it empty.

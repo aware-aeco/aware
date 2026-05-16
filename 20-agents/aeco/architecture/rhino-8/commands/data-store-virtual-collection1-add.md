@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataStoreVirtualCollection`1.Add
+Adds an item to the current collection. This collection is read-only so this throws an exception.

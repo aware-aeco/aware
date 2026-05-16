@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_UpgradeUtil.MigrateOutputParameters
+Migrate all output parameters.

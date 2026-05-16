@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interop.FromOnMesh
+Copies a Rhino_DotNet mesh to a RhinoCommon mesh class.

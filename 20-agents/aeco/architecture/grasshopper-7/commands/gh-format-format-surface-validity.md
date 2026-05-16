@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Format.FormatSurfaceValidity
+If the surface is invalid, return a string describing why.

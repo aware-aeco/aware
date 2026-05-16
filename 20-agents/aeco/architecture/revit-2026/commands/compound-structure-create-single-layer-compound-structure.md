@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.CreateSingleLayerCompoundStructure
+Creates a vertically compound CompoundStructure with one layer.

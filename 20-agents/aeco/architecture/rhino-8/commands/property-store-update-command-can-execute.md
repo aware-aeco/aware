@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PropertyStore.UpdateCommandCanExecute
+Updates the command's execute status, typically when the CommandParameter changes.

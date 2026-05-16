@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.CanUseTemporaryVisibilityModes
+Indicates if view can use temporary visibility modes

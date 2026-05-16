@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PostEffectChannel.CPU
+Return an interface to this channel for doing channel operations on the CPU.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorGradient.Duplicate
+Create a duplicate of this color gradient.

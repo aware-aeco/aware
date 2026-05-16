@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MemoryBitmap.Filter_SpectrumScale
+Convert the image to a spectral representation of the hues.

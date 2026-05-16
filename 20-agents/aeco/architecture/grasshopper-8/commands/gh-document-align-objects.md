@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.AlignObjects
+Perform alignment and distribution logic on all selected objects.

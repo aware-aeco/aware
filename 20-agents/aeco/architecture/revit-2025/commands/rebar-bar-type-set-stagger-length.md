@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBarType.SetStaggerLength
+Sets the stagger length for the specified Rebar Splice Type.

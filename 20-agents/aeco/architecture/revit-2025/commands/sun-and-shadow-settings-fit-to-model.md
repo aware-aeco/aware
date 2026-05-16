@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SunAndShadowSettings.FitToModel
+Adjust SunAndShadowSettings to fit around the current model geometry.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HeaderOrder.GetRows
+Returns the header order list.

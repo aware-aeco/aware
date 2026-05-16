@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCHybridImportOptions.ToString
+Converts the IFCHybridImportOptions class to a revit.ini-compatible string.

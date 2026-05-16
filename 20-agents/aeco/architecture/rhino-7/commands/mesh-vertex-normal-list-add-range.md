@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexNormalList.AddRange
+Appends a collection of normal vectors.

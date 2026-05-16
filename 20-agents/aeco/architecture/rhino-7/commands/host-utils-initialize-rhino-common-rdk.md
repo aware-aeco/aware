@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostUtils.InitializeRhinoCommon_RDK
+Makes sure all static RhinoCommon RDK components are set up correctly.             This happens automatically when the RDK is loaded, so you probably won't             have to call this method.

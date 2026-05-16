@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dm.ReadArchiveVersion
+Reads only the archive 3dm version from an existing 3dm file.

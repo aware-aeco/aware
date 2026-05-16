@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExternalResourceServer.LoadResource
+Implement this method to load the requested resource.

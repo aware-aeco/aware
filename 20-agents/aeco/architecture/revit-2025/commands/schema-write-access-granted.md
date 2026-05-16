@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Schema.WriteAccessGranted
+Checks whether Entities of this Schema may be stored by the current add-in.

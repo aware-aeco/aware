@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HiddenLineDrawing.RejoinCompatibleVisible
+Join consecutive visible curves from a single FullCurve

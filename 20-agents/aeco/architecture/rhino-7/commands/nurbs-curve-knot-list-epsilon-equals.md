@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurveKnotList.EpsilonEquals
+Checks that all values in the other list are sequentially equal within epsilon to the values in this list.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CheckMenuItem.PerformClick
+Performs the click handler for this item which toggles the check state.

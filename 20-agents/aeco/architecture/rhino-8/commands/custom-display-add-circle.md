@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CustomDisplay.AddCircle
+Adds a new, black circle to the display list.

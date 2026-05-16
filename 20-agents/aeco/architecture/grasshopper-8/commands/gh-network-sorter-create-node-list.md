@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_NetworkSorter.CreateNodeList
+Call this function to construct the network frame used for sorting

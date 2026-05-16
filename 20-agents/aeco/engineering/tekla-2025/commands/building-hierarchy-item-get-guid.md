@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BuildingHierarchyItem.GetGuid
+Gets Guid of Building Hierarchy object.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.RenderBalloonTag
+Draw a default balloon tag in a container.

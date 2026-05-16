@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalResourceLoadData.GetLoadContext
+Returns an object containing information about the context of the load operation.

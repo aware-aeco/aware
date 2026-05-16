@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DividedSurface.GetReferencesWithDividedSurfaces
+For a given host element get references to all the faces that host a divided surface

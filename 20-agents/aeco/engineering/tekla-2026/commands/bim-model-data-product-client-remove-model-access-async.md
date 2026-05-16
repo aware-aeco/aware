@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BimModelDataProductClient.RemoveModelAccessAsync
+Asynchronously removes access for a specific principal from a BIM model in the Bim Model Data Product.

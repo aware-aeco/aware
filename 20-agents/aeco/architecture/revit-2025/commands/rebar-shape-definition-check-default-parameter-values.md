@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDefinition.CheckDefaultParameterValues
+Check that the shape can be solved with the default parameter values.

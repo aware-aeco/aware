@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.SaveToProjectAsImage
+Creates an image view from the currently active view.

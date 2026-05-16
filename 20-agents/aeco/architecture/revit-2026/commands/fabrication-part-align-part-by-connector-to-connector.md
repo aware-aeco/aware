@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.AlignPartByConnectorToConnector
+Align a part by its connector to another connector. This will replace the FabricationPart::AlignPartByConnectors method.

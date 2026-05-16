@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubD.ToBrep
+Create a Brep based on this SubD geometry, based on SubDToBrepOptions.Default options.

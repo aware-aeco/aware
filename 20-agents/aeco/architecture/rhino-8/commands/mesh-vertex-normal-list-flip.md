@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexNormalList.Flip
+Reverses direction of all vertex normals             This is the same as Mesh.Flip(true, false, false)

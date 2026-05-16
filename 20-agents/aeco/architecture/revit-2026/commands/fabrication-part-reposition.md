@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.Reposition
+Repositions the fabrication straight part to another end of the run.

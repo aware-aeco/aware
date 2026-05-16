@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.IsCylinder
+Determines if the surface is a portion of a cylinder within RhinoMath.ZeroTolerance.

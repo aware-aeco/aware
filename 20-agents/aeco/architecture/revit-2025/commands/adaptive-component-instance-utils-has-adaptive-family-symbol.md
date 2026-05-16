@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AdaptiveComponentInstanceUtils.HasAdaptiveFamilySymbol
+Verifies if a FamilyInstance has an Adaptive Family Symbol.

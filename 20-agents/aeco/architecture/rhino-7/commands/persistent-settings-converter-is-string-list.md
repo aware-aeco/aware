@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PersistentSettingsConverter.IsStringList
+Determines if the string value is formatted as a string list.

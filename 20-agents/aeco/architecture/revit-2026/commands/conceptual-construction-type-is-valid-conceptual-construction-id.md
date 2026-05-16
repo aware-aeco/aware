@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConceptualConstructionType.IsValidConceptualConstructionId
+Indicates if the ElementId is an id of a ConceptualConstructionType.

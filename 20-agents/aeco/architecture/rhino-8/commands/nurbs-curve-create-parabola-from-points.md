@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurve.CreateParabolaFromPoints
+Creates a parabola from three points.

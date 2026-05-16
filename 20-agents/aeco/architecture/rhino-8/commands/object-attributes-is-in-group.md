@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectAttributes.IsInGroup
+Determines if an object belong to a group or not.

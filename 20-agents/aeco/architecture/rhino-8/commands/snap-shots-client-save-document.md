@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SnapShotsClient.SaveDocument
+Called when the user saves a snapshot and SupportDocument() returns true.

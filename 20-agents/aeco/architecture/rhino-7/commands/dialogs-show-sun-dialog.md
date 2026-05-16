@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Dialogs.ShowSunDialog
+Show the tabbed sun dialog.

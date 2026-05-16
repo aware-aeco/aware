@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpatialFieldManager.IsTextTypeIdValid
+Verify if text type id is valid.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportGetClipPlanes
+DO NOT USE! For internal usage only!

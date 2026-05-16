@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceVoidCutUtils.GetElementsBeingCut
+Return ids of the elements being cut by the instance

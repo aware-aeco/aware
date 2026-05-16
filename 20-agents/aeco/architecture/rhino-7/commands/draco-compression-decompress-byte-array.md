@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DracoCompression.DecompressByteArray
+Decompress data into either a mesh or point cloud.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.GetDepth
+Gets clipping distance of a point.

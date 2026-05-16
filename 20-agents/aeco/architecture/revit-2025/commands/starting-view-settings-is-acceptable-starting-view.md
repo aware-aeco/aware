@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StartingViewSettings.IsAcceptableStartingView
+Checks whether the given Id is an acceptable starting view.  InvalidElementId corresponds to "Last Viewed" and is therefore also acceptable.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Group.ObjectsRecursive
+Gets the objects contained in this group and all subgroups.

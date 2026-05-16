@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Localization.UnitSystemName
+Gets localized unit system name.  Uses current application locale id.

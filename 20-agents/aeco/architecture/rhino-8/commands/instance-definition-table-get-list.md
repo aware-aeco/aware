@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceDefinitionTable.GetList
+Gets an array of instance definitions.

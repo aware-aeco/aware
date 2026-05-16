@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationServiceButton.GetConditionName
+Gets the name of the specified condition on the fabrication service button.

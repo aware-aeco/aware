@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadUniform.Select
+Selects a load uniform from the model database. The ID must be set.

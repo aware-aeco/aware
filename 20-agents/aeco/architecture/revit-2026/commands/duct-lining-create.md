@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DuctLining.Create
+Creates a new instance of duct lining.

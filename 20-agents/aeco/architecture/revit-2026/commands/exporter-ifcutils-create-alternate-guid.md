@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.CreateAlternateGUID
+Creates a GUID for the given element.

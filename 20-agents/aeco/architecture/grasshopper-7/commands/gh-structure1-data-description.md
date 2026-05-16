@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Structure`1.DataDescription
+Gets a description of the data contained in this structure.

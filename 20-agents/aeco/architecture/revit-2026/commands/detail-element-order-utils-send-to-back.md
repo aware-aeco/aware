@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DetailElementOrderUtils.SendToBack
+Places the given detail instances behind all other detail instances in the view, while keeping    the order of the given ones.

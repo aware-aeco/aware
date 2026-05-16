@@ -6,4 +6,6 @@ description: API reference for namespace Tekla.Structures.Model.Internal.BimMode
 # Tekla.Structures.Model.Internal.BimModelDataProduct.Types
 
 - **UploadProgress**
+  - Represents the progress for a file upload operation.
 - **VersionBranchState**
+  - Represents the state of the branch for a model version.

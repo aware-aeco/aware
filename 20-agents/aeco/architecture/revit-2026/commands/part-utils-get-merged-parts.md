@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PartUtils.GetMergedParts
+Retrieves the element ids of the source elements of a merged part.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Attributes`1.AppendToAttributeTree
+Recursively append these attributes and all child attributes to the attribute list.

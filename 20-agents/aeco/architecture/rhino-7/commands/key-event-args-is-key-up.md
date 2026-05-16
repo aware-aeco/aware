@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-KeyEventArgs.IsKeyUp
+Determines whether the specified key and modifier was released

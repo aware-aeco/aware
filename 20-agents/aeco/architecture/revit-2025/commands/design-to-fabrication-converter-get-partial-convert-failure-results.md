@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DesignToFabricationConverter.GetPartialConvertFailureResults
+Gets the partial failure results.

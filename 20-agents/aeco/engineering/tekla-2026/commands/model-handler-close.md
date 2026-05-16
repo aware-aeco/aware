@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelHandler.Close
+Closes current model.

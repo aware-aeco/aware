@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContent.FromXml
+Creates a new content from the XML data.  The resulting content will not be attached to the document.

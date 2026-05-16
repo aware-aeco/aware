@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationRodInfo.GetRodStructureExtension
+Gets the length of the rod's top extension into structure.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndexBuffer.Unmap
+Unmaps the buffer so that it can be used for rendering.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormattedText.GetSuperscriptStatus
+Returns whether ,  or a  of characters in the entire text are superscripted.

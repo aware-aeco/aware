@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.RemoveClippingPlane
+Remove a clipping plane from the pipeline for this frame

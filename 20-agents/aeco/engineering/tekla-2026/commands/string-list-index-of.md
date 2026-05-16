@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StringList.IndexOf
+Gets the index of the specified string.

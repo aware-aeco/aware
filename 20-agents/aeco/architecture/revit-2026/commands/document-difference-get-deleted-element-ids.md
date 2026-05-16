@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DocumentDifference.GetDeletedElementIds
+Deleted element id collection.    For non-worksharing models, this will always be an empty collection.

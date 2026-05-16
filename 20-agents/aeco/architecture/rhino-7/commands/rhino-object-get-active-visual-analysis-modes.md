@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.GetActiveVisualAnalysisModes
+Gets a list of currently enabled analysis modes for this object.

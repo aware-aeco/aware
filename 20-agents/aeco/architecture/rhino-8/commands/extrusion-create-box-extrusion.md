@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Extrusion.CreateBoxExtrusion
+Gets an extrusion from a box.

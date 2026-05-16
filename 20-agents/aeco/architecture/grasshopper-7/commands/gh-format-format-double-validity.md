@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Format.FormatDoubleValidity
+If the number is invalid, return a string describing why.

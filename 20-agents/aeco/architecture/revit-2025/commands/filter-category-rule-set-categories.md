@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterCategoryRule.SetCategories
+Sets the rule's categories.

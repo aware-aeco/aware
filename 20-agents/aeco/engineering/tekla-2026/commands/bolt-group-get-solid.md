@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoltGroup.GetSolid
+Method for getting the solid information of the bolt group.

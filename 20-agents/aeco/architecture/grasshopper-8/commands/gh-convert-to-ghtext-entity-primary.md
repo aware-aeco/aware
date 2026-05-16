@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHTextEntity_Primary
+Converts similar data into a GH_TextEntity instance.  Data is not guaranteed to be duplicated.

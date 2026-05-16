@@ -6,32 +6,62 @@ description: API reference for namespace Autodesk.Revit.UI.Events from RevitAPIU
 # Autodesk.Revit.UI.Events
 
 - **ApplicationClosingEventArgs**
+  - The event arguments used by the ApplicationClosing event.
 - **BeforeExecutedEventArgs**
+  - The event arguments used by AddInCommandBinding's BeforeExecuted event.
 - **CanExecuteEventArgs**
+  - The event arguments used by AddInCommandBinding's CanExecute event.
 - **ComboBoxCurrentChangedEventArgs**
+  - The event arguments used by ComboBox's CurrentChanged event.
 - **ComboBoxDropDownClosedEventArgs**
+  - The event arguments used by ComboBox's DropDownClosed event.
 - **ComboBoxDropDownOpenedEventArgs**
+  - The event arguments used by ComboBox's DropDownOpened event.
 - **CommandEventArgs**
+  - The base class of the command Executed and CanExecute event arguments.
 - **DialogBoxData**
+  - An object that is passed to your application when a dialog is displayed in Revit.
 - **DialogBoxShowingEventArgs**
+  - The base class for the event arguments used by the DialogBoxShowing event.
 - **DisplayingOptionsDialogEventArgs**
+  - The event arguments used by DisplayingOptionDialog event.
 - **DockableFrameFocusChangedEventArgs**
+  - The event arguments used by the DockableFrameActivatedChanged event.
 - **DockableFrameVisibilityChangedEventArgs**
+  - The event arguments used by the DockableFrameVisibilityChanged event.
 - **ExecutedEventArgs**
+  - The event arguments used by AddInCommandBinding's Executed event.
 - **ExternalDataManagerChangedEventArgs**
+  - The event arguments used by the ExternalDataManager changed event.
 - **FabricationPartBrowserChangedEventArgs**
+  - The event arguments used by the FabricationPartBrowserChangedEventArgs event.
 - **FabricationPartBrowserOperation**
+  - Operations for the FabricationPartBrowserChangedEventArgs Event
 - **FormulaEditingEventArgs**
+  - The event arguments used by the DocumentSaving event.
 - **IdlingEventArgs**
+  - The event arguments used by the Idling event.
 - **MacroUpdatedEventArgs**
+  - The event arguments used by the MacroUpdated event.
 - **MessageBoxData**
+  - An object that represents a simple message box that prompts the user for some action.
 - **MessageBoxShowingEventArgs**
+  - The event arguments used by the DialogBoxShowing event when a Windows message box is about to be displayed in Revit.
 - **RibbonItemEventArgs**
+  - The base class of the RibbonItem event arguments which have UIApplication property.
 - **SelectionChangedEventArgs**
+  - The event arguments used by the SelectionChanged event.
 - **TaskDialogShowingEventArgs**
+  - The event arguments used by the DialogBoxShowing event when a Revit task dialog that prompts the user for some action is shown.
 - **TextBoxEnterPressedEventArgs**
+  - The event arguments used by TextBox's EnterPressed event.
 - **ThemeChangedEventArgs**
+  - The event arguments used by the ThemeChanged event.
 - **TransferredProjectStandardsEventArgs**
+  - The event arguments used by the TransferredProjectStandards event.
 - **TransferringProjectStandardsEventArgs**
+  - The event arguments used by the TransferringProjectStandards event.
 - **ViewActivatedEventArgs**
+  - The event arguments used by the ViewActivated event.
 - **ViewActivatingEventArgs**
+  - The event arguments used by the ViewActivating event.

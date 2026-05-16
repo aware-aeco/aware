@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MenuItemCollection.Trim
+Trims the items in this collection and all submenus.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GridSurface.Modify
+Modifies the grid surface with the given ID.

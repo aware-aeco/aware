@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelComponent.LockIndex
+Locks the component Index property.

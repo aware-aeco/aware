@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCExtrusionCreationData.GetOpenings
+Gets a collection of all of the openings stored in this data.

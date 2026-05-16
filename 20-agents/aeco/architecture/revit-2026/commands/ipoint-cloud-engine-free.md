@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IPointCloudEngine.Free
+Revit will call this method when done using the engine.

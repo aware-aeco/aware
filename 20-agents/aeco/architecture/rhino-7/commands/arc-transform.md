@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Arc.Transform
+Transforms the arc using a Transformation matrix.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_SanityXForm.CreateSanityXForms
+Create xform modifiers to scale / translate geometry to a sane unit system.

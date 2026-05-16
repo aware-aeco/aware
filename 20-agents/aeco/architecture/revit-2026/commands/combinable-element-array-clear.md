@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CombinableElementArray.Clear
+Removes every CombinableElement from the array, rendering it empty.

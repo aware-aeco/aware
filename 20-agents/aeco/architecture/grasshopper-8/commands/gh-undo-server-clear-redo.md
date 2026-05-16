@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_UndoServer.ClearRedo
+Clear the undo list.

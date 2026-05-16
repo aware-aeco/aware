@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightManagerSupport.LightFromId
+Get Rhino.Geometry.Light object associated to Guig uuid

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewCamera.Modify
+Updates the camera to the application view.

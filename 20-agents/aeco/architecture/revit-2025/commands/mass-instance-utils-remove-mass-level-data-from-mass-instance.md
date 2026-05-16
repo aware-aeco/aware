@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MassInstanceUtils.RemoveMassLevelDataFromMassInstance
+Delete the MassLevelData (Mass Floor) that associates a Level with a mass instance.

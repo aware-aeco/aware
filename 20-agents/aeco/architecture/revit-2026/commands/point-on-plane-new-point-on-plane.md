@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointOnPlane.NewPointOnPlane
+Construct a PointOnPlane given a reference and a location in space.

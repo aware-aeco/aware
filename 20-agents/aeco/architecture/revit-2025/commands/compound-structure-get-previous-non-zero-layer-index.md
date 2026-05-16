@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.GetPreviousNonZeroLayerIndex
+Returns the index of the nearest non-zero width layer before this layer.

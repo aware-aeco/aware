@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DynamicLayout.BeginGroup
+Begins a the group section in the dynamic layout with a title.

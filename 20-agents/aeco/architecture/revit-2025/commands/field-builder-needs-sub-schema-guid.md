@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FieldBuilder.NeedsSubSchemaGUID
+Checks whether the SubSchema GUID needs to be explicitly specified for this field type.

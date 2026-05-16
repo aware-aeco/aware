@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FieldDictionary.TryGetValue
+Find a field with the specified key and get its value if found.

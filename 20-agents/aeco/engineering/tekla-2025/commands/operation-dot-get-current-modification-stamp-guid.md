@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotGetCurrentModificationStampGuid
+Gets the current modification stamp from the model, in form of Guid.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyDataSettings.CheckRangeOfShadeDepth
+Checks that the shade depth is greater than or equal to zero.

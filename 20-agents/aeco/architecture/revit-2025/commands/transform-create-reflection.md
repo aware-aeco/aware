@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform.CreateReflection
+Creates a transform that represents a reflection across the given plane.

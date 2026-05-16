@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SelectionFilterElement.GetElementIds
+Returns the set of ElementIds contained by this filter.

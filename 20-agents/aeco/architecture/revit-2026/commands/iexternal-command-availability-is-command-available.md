@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExternalCommandAvailability.IsCommandAvailable
+Implement this method to provide control over whether your external command is enabled or disabled.

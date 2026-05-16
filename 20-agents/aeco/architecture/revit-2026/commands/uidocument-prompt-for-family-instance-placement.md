@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIDocument.PromptForFamilyInstancePlacement
+Prompts the user to place instances of the specified FamilySymbol.

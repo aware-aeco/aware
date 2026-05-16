@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_IndexRuleSet.AddRangeRule
+Append a single range rule.

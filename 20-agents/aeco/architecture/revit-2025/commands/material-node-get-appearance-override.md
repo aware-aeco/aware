@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MaterialNode.GetAppearanceOverride
+Returns appearance properties that override the preset appearance of the material.

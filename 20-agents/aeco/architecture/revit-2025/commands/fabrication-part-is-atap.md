@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.IsATap
+Checks if it is any sort of tap.

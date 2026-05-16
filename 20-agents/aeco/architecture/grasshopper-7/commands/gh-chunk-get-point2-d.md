@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Chunk.GetPoint2D
+Gets the value of the item with the specified name.              Name comparison is not case-sensitive.

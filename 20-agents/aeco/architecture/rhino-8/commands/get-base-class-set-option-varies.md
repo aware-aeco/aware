@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetBaseClass.SetOptionVaries
+Sets a command line option value to print "Varies" instead of the regular value.

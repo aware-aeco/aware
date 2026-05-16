@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rectangle2.MakeIncreasing
+Ensure the limits are all increasing.

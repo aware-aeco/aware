@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DimensionStyle.ScaleLengthValues
+Scales all length values by 'scale'

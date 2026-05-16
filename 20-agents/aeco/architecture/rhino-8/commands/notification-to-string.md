@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Notification.ToString
+Returns a readable string representation of the instance.

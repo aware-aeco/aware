@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_FormShepard.RegisterForm
+Add a sheep form to the flock. This form will be affected by the location and size of the main form.

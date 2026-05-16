@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RibbonPanel.AddItem
+Adds a new item to the content.

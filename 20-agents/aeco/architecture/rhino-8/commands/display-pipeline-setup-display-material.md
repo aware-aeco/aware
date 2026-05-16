@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.SetupDisplayMaterial
+Sets up a display material.

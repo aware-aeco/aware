@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.HighlightPen
+Gets a new pen object that can be used to draw the edges of hover and focus rectangles.   Caller is responsible for disposing the pen.

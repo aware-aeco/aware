@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHSubD_Primary
+Converts similar data into a GH_SubD instance.  Data is not quaranteed to be duplicated.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_IconObjectGrip.RenderGrip
+Draw this grip inside the specified graphics surface.

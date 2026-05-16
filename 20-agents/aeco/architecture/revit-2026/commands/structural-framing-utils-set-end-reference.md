@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralFramingUtils.SetEndReference
+Sets the end reference of a framing element.

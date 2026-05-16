@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshFaceList.ConvertNonPlanarQuadsToTriangles
+Splits non-planar quads into two triangles based on given parameters.

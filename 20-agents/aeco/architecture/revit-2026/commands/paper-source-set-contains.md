@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PaperSourceSet.Contains
+Tests for the existence of an item within the set.

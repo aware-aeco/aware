@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentObject.DocumentContextChanged
+This method will be called when the document that owns this object moves into a different context.

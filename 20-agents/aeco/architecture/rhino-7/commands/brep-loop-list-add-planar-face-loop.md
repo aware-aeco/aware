@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepLoopList.AddPlanarFaceLoop
+Add a planar trimming loop to a planar face

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexColorList.Clear
+Clears the vertex color list on the mesh.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Interval.Duplicate
+Create a duplicate of this interval.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewUV
+Creates a UV object at the origin.

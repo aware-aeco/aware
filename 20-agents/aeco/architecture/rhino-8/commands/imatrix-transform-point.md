@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IMatrix.TransformPoint
+Transforms the specified point using this matrix transform

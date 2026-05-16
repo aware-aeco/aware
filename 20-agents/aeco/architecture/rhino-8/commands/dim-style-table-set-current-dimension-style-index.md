@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DimStyleTable.SetCurrentDimensionStyleIndex
+Do not use. Use the  method.

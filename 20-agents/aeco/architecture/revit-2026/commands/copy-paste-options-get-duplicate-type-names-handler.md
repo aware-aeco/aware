@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CopyPasteOptions.GetDuplicateTypeNamesHandler
+Returns current duplicate type names handler or  if none is set.

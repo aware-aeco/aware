@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ExpressionParser.ClearVariables
+Destroy the variable cache.

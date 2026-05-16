@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormatOptions.GetValidSymbols
+Gets the identifiers of all valid symbols for the unit in this FormatOptions.

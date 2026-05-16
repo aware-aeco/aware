@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyItemFactory.NewExtrusion
+Add a new Extrusion instance into the Autodesk Revit family document.

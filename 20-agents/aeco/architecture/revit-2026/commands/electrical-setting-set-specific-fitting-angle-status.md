@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalSetting.SetSpecificFittingAngleStatus
+Sets the status of given specific angle.

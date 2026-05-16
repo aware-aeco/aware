@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPAnalyticalModelData.GetNumberOfNodes
+Returns the number of analytical nodes.

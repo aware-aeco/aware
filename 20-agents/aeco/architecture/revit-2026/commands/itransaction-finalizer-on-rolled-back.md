@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ITransactionFinalizer.OnRolledBack
+This method is called at the end of rolling back a transaction

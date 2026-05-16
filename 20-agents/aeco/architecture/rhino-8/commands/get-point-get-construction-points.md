@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetPoint.GetConstructionPoints
+Gets current construction points.

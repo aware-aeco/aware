@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HatchPatternTable.Rename
+Renames a hatch pattern in the table.

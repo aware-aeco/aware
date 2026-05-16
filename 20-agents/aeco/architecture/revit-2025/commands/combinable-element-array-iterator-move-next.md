@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CombinableElementArrayIterator.MoveNext
+Move the iterator one item forward.

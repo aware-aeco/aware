@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCExportOptions.AddOption
+Adds a new named option to the options structure.

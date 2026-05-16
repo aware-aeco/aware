@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaBasedLoadData.ConnectToUpstreamNode
+Connects to an upstream electrical analytical node.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.GetReferenceModelObjectFaces
+DO NOT USE! For internal usage only!

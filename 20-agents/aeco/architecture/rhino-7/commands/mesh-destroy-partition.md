@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.DestroyPartition
+Destroys mesh partition.

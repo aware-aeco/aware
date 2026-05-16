@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IntList.Add
+Adds a new integer to the end of the string list.

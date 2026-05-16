@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedPositionTable.Rename
+Rename a Named Position.

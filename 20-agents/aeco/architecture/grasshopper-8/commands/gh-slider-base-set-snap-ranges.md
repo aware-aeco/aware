@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_SliderBase.SetSnapRanges
+Assign a collection of snap ranges to this slider.

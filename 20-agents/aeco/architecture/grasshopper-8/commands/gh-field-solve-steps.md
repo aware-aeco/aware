@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Field.SolveSteps
+Move a point through a succession of steps.

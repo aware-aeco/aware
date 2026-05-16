@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BendSpaceMorph.MorphPoint
+Morphs an Euclidean point.

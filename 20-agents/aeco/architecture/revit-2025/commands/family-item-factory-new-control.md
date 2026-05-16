@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyItemFactory.NewControl
+Add a new control into the Autodesk Revit family document.

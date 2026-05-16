@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Form.IsBeginningFace
+Given a face, tell if it is a beginning cap face.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportSelectGrid
+DO NOT USE! For internal usage only!

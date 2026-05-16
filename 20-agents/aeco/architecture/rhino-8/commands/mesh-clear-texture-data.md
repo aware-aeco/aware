@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.ClearTextureData
+Removes all texture coordinate information from this mesh.

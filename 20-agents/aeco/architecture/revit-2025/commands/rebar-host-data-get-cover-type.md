@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarHostData.GetCoverType
+Gets the CoverType associated with a face of the element.

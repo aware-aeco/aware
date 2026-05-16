@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CollectionChangedHandler`2.ReplaceRange
+Replaces a range of items starting at the specified index.

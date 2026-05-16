@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Layer.DeletePerViewportSettings
+Deletes per viewport layer settings.

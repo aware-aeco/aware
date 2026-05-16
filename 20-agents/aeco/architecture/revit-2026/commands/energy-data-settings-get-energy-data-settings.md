@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyDataSettings.GetEnergyDataSettings
+Gets the energy data settings element in the document.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Layer.IsValidName
+Determines if a given string is valid for a layer name.

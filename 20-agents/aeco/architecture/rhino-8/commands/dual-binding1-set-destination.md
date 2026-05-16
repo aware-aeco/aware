@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DualBinding`1.SetDestination
+Sets the destination object's property with the value of the source

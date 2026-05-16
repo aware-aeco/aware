@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilteredElementCollector.GetElementCount
+Gets the number of elements in your current filter.

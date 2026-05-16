@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Viewport.GetBoxOutline
+Returns the outline of the viewport on the sheet, excluding the viewport label.

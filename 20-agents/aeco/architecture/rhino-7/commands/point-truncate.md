@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point.Truncate
+Truncates the X and Y components of the specified  to a

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplacementElement.CanCategoryBeDisplaced
+Indicates whether elements of the specified category are eligible as displaced elements.

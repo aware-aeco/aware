@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AppearanceAssetEditScope.Cancel
+Cancels the edit scope.

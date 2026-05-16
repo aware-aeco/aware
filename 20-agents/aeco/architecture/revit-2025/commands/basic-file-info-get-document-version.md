@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BasicFileInfo.GetDocumentVersion
+Gets the DocumentVersion for the file.

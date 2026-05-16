@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.Rebuild
+Rebuilds an existing surface to a given degree and point count.

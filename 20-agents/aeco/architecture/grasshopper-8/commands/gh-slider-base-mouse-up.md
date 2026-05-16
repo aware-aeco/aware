@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_SliderBase.MouseUp
+Respond to mouse-up events.

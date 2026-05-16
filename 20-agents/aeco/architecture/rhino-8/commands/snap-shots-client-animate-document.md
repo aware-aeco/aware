@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SnapShotsClient.AnimateDocument
+Called for each frame. Starting at 0.0.

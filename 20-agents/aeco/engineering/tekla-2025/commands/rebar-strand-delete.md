@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarStrand.Delete
+Deletes the strand instance with the given identifier from the model database.

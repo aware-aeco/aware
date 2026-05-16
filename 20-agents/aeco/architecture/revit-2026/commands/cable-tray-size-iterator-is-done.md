@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableTraySizeIterator.IsDone
+Identifies if the iteration has completed.

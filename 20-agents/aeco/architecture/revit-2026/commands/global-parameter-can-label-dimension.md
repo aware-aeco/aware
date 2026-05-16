@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GlobalParameter.CanLabelDimension
+Tests whether a dimension can be labeled by the global parameter.

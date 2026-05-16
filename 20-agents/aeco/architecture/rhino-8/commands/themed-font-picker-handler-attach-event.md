@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedFontPickerHandler.AttachEvent
+Attaches control events.

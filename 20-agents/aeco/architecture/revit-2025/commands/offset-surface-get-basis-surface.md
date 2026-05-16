@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OffsetSurface.GetBasisSurface
+Returns a copy of basis surface of this OffsetSurface.

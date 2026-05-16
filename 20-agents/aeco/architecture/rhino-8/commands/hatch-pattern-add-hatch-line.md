@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HatchPattern.AddHatchLine
+Add a HatchLine to the pattern.

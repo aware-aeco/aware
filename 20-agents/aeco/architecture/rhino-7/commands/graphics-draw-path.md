@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Graphics.DrawPath
+Draws a 1 pixel outline of the specified

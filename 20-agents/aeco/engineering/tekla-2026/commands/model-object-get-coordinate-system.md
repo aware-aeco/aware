@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObject.GetCoordinateSystem
+Returns the coordinate system for the given model object.

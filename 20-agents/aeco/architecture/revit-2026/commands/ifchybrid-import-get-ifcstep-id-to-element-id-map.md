@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCHybridImport.GetIFCStepIdToElementIdMap
+Retrieves the association between the original IFC STEP identifiers and the created or updated Elements.

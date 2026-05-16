@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OptionalFunctionalityUtils.IsDGNExportAvailable
+Checks whether the DGN Export functionality is available in the installed Revit.

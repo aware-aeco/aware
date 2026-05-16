@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Assembly.CompareTo
+Compares the instantiated assembly with another one.

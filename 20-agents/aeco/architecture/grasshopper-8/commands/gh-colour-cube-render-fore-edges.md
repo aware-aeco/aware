@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourCube.RenderForeEdges
+Render the edges of the fore face creases.

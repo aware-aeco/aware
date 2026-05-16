@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Squisher.Get2dMesh
+Get the 2d mesh that results from the squish operation

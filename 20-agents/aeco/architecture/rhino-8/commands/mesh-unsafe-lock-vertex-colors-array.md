@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshUnsafeLock.VertexColorsArray
+Retrieves a pointer to the raw mesh vertex colors array, which uses RGBA integers             or throws an exception if none is available.

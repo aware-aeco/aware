@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilePdf.PdfDocumentImplementation
+Get actual implementation of PdfDocument class

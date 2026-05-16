@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Color.Parse
+Converts a string into a new instance of a Color

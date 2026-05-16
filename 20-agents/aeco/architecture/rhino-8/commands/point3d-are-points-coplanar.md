@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point3d.ArePointsCoplanar
+Determines whether a set of points is coplanar within a given tolerance.

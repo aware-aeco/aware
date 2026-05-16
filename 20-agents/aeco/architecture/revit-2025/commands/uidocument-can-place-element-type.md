@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIDocument.CanPlaceElementType
+Verifies that the user can be prompted to place the input element type interactively.

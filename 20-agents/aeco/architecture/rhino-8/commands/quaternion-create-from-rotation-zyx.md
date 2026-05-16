@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Quaternion.CreateFromRotationZYX
+Constructs a quaternion defined by Tait-Byran angles, also loosely known as Euler angles.

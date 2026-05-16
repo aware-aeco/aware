@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DefinitionBindingMap.Contains
+Tests for the existence of a definition within the map.

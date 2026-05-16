@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.PostReviewableWarningsForBadConnections
+Reviewable warnings are created for all entries contained in the connection validation information.

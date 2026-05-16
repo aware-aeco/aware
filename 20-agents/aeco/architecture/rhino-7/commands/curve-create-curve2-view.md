@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.CreateCurve2View
+Creates a third curve from two curves that are planar in different construction planes.              The new curve looks the same as each of the original curves when viewed in each plane.

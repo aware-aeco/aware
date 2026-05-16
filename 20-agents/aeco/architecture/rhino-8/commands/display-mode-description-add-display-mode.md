@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayModeDescription.AddDisplayMode
+Adds a new display mode.

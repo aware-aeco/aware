@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoDoc.GetRenderPrimitiveList
+Build custom render mesh(es) for this document (i.e. - GH meshes).

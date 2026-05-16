@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstrainedHandle.Move
+Moves the handle with the specified vector. This function applies only for shape driven rebar.

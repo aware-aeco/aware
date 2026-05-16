@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewSpaceSet
+Creates a new instance of a space set.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraint.SetToUseClearBarSpacing
+Sets whether the RebarConstrainedHandle to target offset is the clear bar distance, or is measured between bar centers.

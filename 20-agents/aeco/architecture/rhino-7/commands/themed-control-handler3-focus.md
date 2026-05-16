@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedControlHandler`3.Focus
+Attempts to set the keyboard input focus to this control, or the first child that accepts focus

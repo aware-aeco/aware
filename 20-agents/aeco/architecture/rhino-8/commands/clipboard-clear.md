@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Clipboard.Clear
+Clears the clipboard completely of all values

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinearArray.Create
+Creates a new linear array element from a single element.

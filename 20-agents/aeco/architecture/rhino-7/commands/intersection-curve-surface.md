@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.CurveSurface
+Intersects a curve and a surface.

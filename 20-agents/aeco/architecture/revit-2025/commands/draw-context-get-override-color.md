@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DrawContext.GetOverrideColor
+Returns override color that will be applied to geometry during rendering.

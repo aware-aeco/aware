@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorRGBA.Equals
+Determines whether the specified ColorRGBA has the same values as the present color.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawMeshVertices
+Draws all the vertices in a given mesh.

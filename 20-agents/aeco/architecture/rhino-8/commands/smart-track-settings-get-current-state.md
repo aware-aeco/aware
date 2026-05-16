@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SmartTrackSettings.GetCurrentState
+Gets the current settings.

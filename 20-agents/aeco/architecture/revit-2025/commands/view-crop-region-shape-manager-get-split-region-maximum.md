@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewCropRegionShapeManager.GetSplitRegionMaximum
+Returns the proportional location of the maximum boundary of the specified split crop region.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderMeshes.GetEnumerator
+Return an object to iterator over the instances in the collection

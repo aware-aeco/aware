@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExportContext.OnLinkEnd
+This method marks the end of a link instance being exported.

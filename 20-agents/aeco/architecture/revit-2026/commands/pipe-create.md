@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Pipe.Create
+Creates a new pipe that connects to two connectors.

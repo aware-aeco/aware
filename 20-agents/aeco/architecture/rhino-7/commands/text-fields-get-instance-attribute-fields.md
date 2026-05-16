@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextFields.GetInstanceAttributeFields
+Gets an array of block attribute definitions associated with a             TextObject.

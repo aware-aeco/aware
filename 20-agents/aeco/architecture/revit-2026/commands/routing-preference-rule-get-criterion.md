@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RoutingPreferenceRule.GetCriterion
+Gets the specified criteria.

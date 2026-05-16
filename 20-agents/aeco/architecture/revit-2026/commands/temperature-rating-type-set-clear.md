@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TemperatureRatingTypeSet.Clear
+Removes every TemperatureRating type from the set, rendering it empty.

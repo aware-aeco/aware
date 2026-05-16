@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateFromTaperedExtrude
+Extrude a curve to a taper making a brep (potentially more than 1)

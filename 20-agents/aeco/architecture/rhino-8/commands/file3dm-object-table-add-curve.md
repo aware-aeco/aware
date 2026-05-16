@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObjectTable.AddCurve
+Adds a curve object to the table.

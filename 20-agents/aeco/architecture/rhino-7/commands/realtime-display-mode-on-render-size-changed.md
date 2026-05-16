@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RealtimeDisplayMode.OnRenderSizeChanged
+Override to restart your render engine

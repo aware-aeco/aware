@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyAnalysisOpening.GetPolyloop
+Gets the planar polygon describing the opening geometry.

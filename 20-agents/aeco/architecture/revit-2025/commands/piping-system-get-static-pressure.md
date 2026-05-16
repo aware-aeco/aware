@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PipingSystem.GetStaticPressure
+Gets the static pressure of this piping system.

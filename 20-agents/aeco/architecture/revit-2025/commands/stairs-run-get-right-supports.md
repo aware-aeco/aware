@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StairsRun.GetRightSupports
+Retrieves all supports on the right side of run boundaries.

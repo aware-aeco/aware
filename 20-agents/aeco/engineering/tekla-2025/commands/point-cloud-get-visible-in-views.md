@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.GetVisibleInViews
+Gets the views in which this point cloud is visible.

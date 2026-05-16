@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainerType.CreateDefaultRebarContainerType
+Creates a new RebarContainerType object with a default name.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScopedCDelegateSetter.Dispose
+Restores the DelegateProxy.Delegate to what it was before this class was constructed.

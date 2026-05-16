@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Circle.ToString
+Format the circle using default grasshopper formatting logic.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Circle.ClosestParameter
+Gets the parameter on the circle which is closest to a test point.

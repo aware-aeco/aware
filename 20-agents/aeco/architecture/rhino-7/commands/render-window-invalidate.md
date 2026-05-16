@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderWindow.Invalidate
+Invalidate the entire view window so that the pixels get painted.

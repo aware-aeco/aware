@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FillPatternElement.Create
+Creates a new FillPatternElement.

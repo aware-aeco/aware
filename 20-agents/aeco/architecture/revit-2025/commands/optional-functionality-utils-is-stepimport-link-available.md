@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OptionalFunctionalityUtils.IsSTEPImportLinkAvailable
+Checks whether the STEP Import/Link functionality is available in the installed Revit.

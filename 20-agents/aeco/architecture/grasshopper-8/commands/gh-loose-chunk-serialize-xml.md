@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_LooseChunk.Serialize_Xml
+Serializes the data tree into an Xml string.

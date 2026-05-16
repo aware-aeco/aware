@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubD.CreateFromMesh
+Create a new SubD from a mesh.

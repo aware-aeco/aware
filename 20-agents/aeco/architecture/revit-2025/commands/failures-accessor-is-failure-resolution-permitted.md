@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailuresAccessor.IsFailureResolutionPermitted
+Checks if resolution of failures is permitted.

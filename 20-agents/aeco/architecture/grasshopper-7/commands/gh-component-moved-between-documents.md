@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Component.MovedBetweenDocuments
+Overrides the MovedBetweenDocuments method and delegates the call to all parameters.

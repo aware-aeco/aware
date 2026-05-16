@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitLinkGraphicsSettings.GetDisciplineType
+The discipline type of RevitLinkGraphicsSettings.

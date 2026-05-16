@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayStyle.SetLegendSettings
+Set legend settings object for the style.

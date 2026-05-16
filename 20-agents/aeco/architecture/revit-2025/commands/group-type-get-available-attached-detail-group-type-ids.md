@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroupType.GetAvailableAttachedDetailGroupTypeIds
+Returns the attached detail groups available for this element group type.

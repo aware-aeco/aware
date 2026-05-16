@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TransmissionData.WriteTransmissionData
+Writes the given TransmissionData into the Revit file at the    given location.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.RenderIcon
+Render an icon into a frame. The icon is positioned in the center and will  be drawn at its own size multiplied by the system UiScale, provided it doesn't exceed the frame.

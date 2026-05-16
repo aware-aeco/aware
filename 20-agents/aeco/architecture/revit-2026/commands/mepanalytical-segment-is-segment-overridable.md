@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPAnalyticalSegment.IsSegmentOverridable
+Verifies if the segment can be overridden (e.g., the pressure drop of the pump and curve segments are calculated from the network and cannot be overridden).

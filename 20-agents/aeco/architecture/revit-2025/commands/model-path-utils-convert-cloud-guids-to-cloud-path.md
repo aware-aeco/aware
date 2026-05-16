@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelPathUtils.ConvertCloudGUIDsToCloudPath
+Converts a pair of cloud project and model GUIDs to a valid cloud path.

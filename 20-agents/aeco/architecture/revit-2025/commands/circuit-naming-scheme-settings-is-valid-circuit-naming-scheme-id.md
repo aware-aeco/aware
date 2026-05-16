@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CircuitNamingSchemeSettings.IsValidCircuitNamingSchemeId
+Verifies that the circuit naming scheme id can be used with CircuitNamingSchemeSettings.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Pens.Cached
+Gets a cached pen with the specified  and

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableType.GetCableTypeIds
+Gets all the Cable Types in the given document, sorted by name.

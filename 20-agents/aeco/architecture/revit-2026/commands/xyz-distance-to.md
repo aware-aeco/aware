@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-XYZ.DistanceTo
+Returns the distance from this point to the specified point.

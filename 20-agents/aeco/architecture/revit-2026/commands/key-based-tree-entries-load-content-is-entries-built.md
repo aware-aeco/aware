@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-KeyBasedTreeEntriesLoadContent.IsEntriesBuilt
+Verifies that the KeyBasedTreeEntries object owned by a KeyBasedTreeEntriesLoadContent object is built.

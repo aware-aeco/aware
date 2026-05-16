@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Extrusion.SetOuterProfile
+Sets the outer profile of the extrusion.

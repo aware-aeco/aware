@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IValueCommand`1.GetValue
+Gets the current value in the command.

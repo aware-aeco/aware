@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.MoveSlotTo
+Move the circuits in the source slot to the specific slot.

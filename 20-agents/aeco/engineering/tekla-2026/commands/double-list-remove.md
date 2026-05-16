@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DoubleList.Remove
+Removes the first occurence of the double from the list.

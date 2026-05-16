@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedLayerStateTable.Rename
+Renames an existing named layer state.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewProjectPosition
+Creates a new project position object.

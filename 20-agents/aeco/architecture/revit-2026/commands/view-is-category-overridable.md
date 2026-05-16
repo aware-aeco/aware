@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.IsCategoryOverridable
+Checks whether the category can have graphic overrides in this view.

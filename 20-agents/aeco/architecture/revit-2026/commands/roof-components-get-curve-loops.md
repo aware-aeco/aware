@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RoofComponents.GetCurveLoops
+The CurveLoops of roof slabs.

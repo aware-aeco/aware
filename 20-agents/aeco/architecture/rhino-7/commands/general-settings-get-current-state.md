@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeneralSettings.GetCurrentState
+Gets the current settings.

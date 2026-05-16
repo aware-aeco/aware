@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Toposolid.IsCutVoidStabilityEnabled
+Identifies if the setting for stability of Boolean operations for Toposolid elements is enabled or disabled.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CreateContourCurves
+(Old call maintained for compatibility.)

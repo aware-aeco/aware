@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetOverlayModelSelectedEntityGuids
+Gets the external reference model selections.

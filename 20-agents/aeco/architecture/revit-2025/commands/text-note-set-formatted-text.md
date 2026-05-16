@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextNote.SetFormattedText
+Sets the text and associated formatting of the text of in this text note with    a given FormattedText object.

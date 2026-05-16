@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ScriptEditor.FindScriptEditor
+Find the editor that is already associated with an object.

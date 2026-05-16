@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmRenderMaterial.ToMaterial
+Get a simulated material that approximates this material's appearance.

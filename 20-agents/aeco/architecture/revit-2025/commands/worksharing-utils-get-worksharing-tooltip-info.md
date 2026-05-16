@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WorksharingUtils.GetWorksharingTooltipInfo
+Gets worksharing information about an element to display in an in-canvas tooltip.

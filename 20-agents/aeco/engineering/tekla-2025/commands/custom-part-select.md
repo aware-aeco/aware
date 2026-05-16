@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CustomPart.Select
+Selects a custom part from the model database. The custom part identifier must be set.

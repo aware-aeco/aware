@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObjectVisualization.UnhideParts
+Unide all parts in the model.

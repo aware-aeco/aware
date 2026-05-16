@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EffectInstance.SetGlossiness
+Sets the glossiness parameter of the effect instance.

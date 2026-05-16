@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.SetUserStrings
+Attach a user string (key,value combination) to this viewport.

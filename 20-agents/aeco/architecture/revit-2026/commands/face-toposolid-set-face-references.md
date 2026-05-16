@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FaceToposolid.SetFaceReferences
+Sets the referenced faces of the face toposolid

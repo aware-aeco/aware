@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextureMapping.CreateBoxMapping
+Create a box projection texture mapping.

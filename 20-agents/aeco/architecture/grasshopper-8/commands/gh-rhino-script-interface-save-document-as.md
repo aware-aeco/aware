@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RhinoScriptInterface.SaveDocumentAs
+Save the currently active Grasshopper document in a specific location.   If there is no active document, nothing will happen.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetFabricationConnectorShape
+Gets the fabrication connector shape from its identifier.

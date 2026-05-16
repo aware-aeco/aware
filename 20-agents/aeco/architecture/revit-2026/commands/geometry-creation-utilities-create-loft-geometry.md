@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryCreationUtilities.CreateLoftGeometry
+Creates a solid or open shell geometry by lofting between a sequence of curve loops.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReplayHistoryData.GetRhinoObjRef
+In ReplayHistory, use GetRhinoObjRef to convert the information             in a history record into the ObjRef that has up to date             RhinoObject pointers

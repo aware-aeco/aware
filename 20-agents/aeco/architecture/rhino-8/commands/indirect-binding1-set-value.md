@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndirectBinding`1.SetValue
+Sets the specified value to an object using this binding

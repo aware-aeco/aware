@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_TimeSpan.Layout
+Layout this span panel and any file entries it contains.

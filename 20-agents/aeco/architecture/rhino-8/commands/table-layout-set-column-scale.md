@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableLayout.SetColumnScale
+Sets the scale for the specified column.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewDWFExportOptions
+Creates DWF Export options.

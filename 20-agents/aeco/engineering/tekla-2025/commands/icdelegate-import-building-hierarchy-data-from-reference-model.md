@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ImportBuildingHierarchyDataFromReferenceModel
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HatchPattern.GetUserString
+Gets user string from this geometry.

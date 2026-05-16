@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetPoint.ClearSnapPoints
+Remove all snap points.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CssStyleSheet.IsStyleDefined
+Test to see whether a style has already been defined.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportCommitChanges
+DO NOT USE! For internal usage only!

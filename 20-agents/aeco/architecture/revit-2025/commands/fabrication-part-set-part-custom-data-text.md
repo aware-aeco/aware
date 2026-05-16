@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.SetPartCustomDataText
+Set the custom data real value for the specified custom data.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotCheckMaterialDefinitionsModified
+Check if material definitions been modified after modification stamp.

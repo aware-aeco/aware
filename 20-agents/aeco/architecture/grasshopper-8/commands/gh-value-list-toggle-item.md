@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ValueList.ToggleItem
+Safe method of toggling the item at the specified index.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableSize.Duplicate
+Duplicates this Cable Size.

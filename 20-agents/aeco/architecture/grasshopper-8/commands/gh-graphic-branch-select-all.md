@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicBranch.SelectAll
+Select or deselect this branch and all child branches.

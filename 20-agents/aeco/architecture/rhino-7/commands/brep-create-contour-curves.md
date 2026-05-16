@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateContourCurves
+Constructs the contour curves for a brep at a specified interval.

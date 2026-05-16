@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoundaryConditions.GetLoops
+Returns curve loops that define geometry of the area boundary conditions.

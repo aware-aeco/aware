@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContentSerializer.Write
+Called to save a custom RenderContent object as an external file.

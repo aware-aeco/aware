@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndependentTag.IsLeaderVisible
+Returns if leader that points to specified reference is visible or not.

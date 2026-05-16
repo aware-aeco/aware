@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.RemoveEmbeddedSchedule
+Removes the embedded ScheduleDefinition.

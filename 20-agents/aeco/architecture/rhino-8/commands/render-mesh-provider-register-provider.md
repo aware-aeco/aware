@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderMeshProvider.RegisterProvider
+Register RenderMeshProvider without relying on the auto-plug-in registration.

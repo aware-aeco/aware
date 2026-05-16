@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotCheckDrawingOptionsModified
+Check if drawing options have been modified after modification stamp.

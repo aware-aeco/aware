@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportModel
+DO NOT USE! For internal usage only!

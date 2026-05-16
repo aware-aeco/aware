@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraintsManager.HasValidRebar
+Checks whether the Manager's Rebar is still valid.

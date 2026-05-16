@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_TextDot.DuplicateGeometry
+Create a duplicate of this text dot.

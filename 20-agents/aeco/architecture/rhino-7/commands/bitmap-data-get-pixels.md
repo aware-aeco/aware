@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BitmapData.GetPixels
+Gets an enumerable of pixels for each scan line from top to bottom.

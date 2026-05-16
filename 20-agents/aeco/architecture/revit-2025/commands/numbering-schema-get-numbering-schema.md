@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NumberingSchema.GetNumberingSchema
+Returns an instance of the specified Numbering Schema in the given document.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourCube.RenderDropShadow
+Render the drop shadow of the cube.

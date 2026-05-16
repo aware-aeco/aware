@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterableValueProvider.GetElementIdValue
+Gets an ElementId value from the given element.

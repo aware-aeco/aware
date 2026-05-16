@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataStoreVirtualCollection`1.Contains
+Determines whether the current collection contains a specific value.

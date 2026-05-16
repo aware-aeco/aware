@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightManagerSupport.LightsInSoloStorage
+Returns the number of lights in solo storage - any number other than 0 means "in solo mode"

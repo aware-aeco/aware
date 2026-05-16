@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshTopologyEdgeList.GetTopologyVertices
+Gets the two topology vertices for a given topology edge.

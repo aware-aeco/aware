@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedConstructionPlaneTable.Find
+Finds a named construction plane.

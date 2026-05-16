@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AddInId.GetAddInNameFromDocument
+name of application associated with this ApplicationId    First attempts to obtain the name from AddInIds stored in the document.    If unsuccessful, attempts to obtain the name from loaded Third Party AddIns.

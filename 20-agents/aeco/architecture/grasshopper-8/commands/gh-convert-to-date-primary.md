@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToDate_Primary
+Performs a direct cast from DateTime or GH_DateTime.

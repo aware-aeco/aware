@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalResourceServerUtils.IsValidShortName
+Checks whether the name is a valid short name for the external resource server.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterCategoryRule.GetCategories
+Gets the rule's categories.

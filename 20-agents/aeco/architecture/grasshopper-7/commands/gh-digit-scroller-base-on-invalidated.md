@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DigitScrollerBase.OnInvalidated
+Raise the Invalidated event.

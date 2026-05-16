@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.IsExternalFileReference
+Determines whether this Element represents an external    file.

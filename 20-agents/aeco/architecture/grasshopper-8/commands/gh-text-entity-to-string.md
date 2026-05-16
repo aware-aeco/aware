@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_TextEntity.ToString
+Format the text entity using default grasshopper formatting logic.

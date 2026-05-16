@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HiddenLineDrawingParameters.AddGeometryAndPlanes
+Add geometry and its active clipping planes to be included in the calculation

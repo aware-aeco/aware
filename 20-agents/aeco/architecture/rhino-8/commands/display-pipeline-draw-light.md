@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawLight
+Draws a light.

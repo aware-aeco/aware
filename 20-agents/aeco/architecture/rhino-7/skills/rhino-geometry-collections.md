@@ -6,26 +6,50 @@ description: API reference for namespace Rhino.Geometry.Collections from RhinoCo
 # Rhino.Geometry.Collections
 
 - **BrepCurveList**
+  - Provides access to all the underlying curves in a Brep object.
 - **BrepEdgeList**
+  - Provides access to all the Edges in a Brep object.
 - **BrepFaceList**
+  - Provides access to all the Faces in a Brep object.
 - **BrepLoopList**
+  - Provides access to all the Loops in a Brep object.
 - **BrepSurfaceList**
+  - Provides access to all the underlying surfaces in a Brep object.
 - **BrepTrimList**
+  - Provides access to all the Trims in a Brep object
 - **BrepVertexList**
+  - Provides access to all the Vertices in a Brep object
 - **MeshFaceList**
+  - Provides access to the faces and Face related functionality of a Mesh.
 - **MeshFaceNormalList**
+  - Provides access to the Face normals of a Mesh.
 - **MeshNgonList**
+  - Provides access to the ngons and ngon-related functionality of a Mesh.             See also the  property for Ngon functionality details.
 - **MeshTextureCoordinateList**
+  - Provides access to the Vertex Texture coordinates of a Mesh.
 - **MeshTopologyEdgeList**
+  - Represents an entry point to the list of edges in a mesh topology.
 - **MeshTopologyVertexList**
+  - Provides access to the mesh topology vertices of a mesh. Topology vertices are             sets of vertices in the MeshVertexList that can topologically be considered the             same vertex.
 - **MeshVertexColorList**
+  - Provides access to the vertex colors of a mesh object.
 - **MeshVertexList**
+  - Provides access to the vertices and vertex-related functionality of a mesh.
 - **MeshVertexNormalList**
+  - Provides access to the Vertex Normals of a Mesh.
 - **MeshVertexStatusList**
+  - Provides access to status information relative to components of a mesh.
 - **NurbsCurveKnotList**
+  - Provides access to the knot vector of a NURBS curve.
 - **NurbsCurvePointList**
+  - Provides access to the control points of a NURBS curve.
 - **NurbsSurfaceKnotList**
+  - Provides access to the knot vector of a NURBS surface.
 - **NurbsSurfacePointList**
+  - Provides access to the control points of a NURBS surface.
 - **SubDEdgeList**
+  - All edges in a SubD
 - **SubDFaceList**
+  - All faces in a SubD
 - **SubDVertexList**
+  - Provides access to the vertices and vertex-related functionality of a SubD

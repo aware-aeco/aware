@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CreateBooleanDifference
+Computes the solid difference of two sets of Meshes.

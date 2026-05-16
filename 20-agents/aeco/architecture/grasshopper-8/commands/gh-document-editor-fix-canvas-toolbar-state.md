@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentEditor.FixCanvasToolbarState
+Enabled/Disables the appropriate buttons depending on whether there   is a document loaded on the canvas.

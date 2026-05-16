@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadedFamilyIntegrityCheck.CheckAllFamiliesSlow
+Check integrity of content documents of all families loaded in the host document.

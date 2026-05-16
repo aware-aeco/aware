@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetBaseClass.Number
+Gets a number if GetPoint.Get(), GetObject.GetObjects(), etc., returns GetResult.Number.

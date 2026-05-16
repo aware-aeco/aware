@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StairsLanding.CanCreateAutomaticLanding
+Checks whether automatic landing(s) can be created between the given two stairs runs and    logically join(s) with the stairs runs.

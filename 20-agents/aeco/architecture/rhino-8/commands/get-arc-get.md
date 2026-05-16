@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetArc.Get
+Perform the 'get' operation.

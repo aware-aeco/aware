@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlumbingUtils.HasOpenConnector
+Checks if there is open piping connector for the given element - object of pipe curve, pipe fitting or pipe accessory.

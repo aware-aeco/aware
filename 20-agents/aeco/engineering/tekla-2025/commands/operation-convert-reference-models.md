@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.ConvertReferenceModels
+Converts Reference models as TS native objects.

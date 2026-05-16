@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.ClearAllBreakpointsAsync
+Remove all breakpoints

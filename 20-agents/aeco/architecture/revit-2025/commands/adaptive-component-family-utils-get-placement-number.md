@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AdaptiveComponentFamilyUtils.GetPlacementNumber
+Gets Placement number of an Adaptive Placement Point.

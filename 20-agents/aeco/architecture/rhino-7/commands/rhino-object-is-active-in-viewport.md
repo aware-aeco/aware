@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.IsActiveInViewport
+Determine if this object is active in a particular viewport.

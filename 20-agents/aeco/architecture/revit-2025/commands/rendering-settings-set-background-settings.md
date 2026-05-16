@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderingSettings.SetBackgroundSettings
+Changes the rendering background settings details for the current background style.

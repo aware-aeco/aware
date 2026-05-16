@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExtElemChangeBeamSectionRegistry.RegisterInterface
+Registers a IExtElemChangeBeamSection

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IntList.LastIndexOf
+Searches for the last occurence of the integer in the list.

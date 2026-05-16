@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricSheet.PlaceInHost
+Inserts the single Fabric Sheet instance into the host element.

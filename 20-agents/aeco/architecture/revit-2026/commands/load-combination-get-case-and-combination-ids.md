@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadCombination.GetCaseAndCombinationIds
+Returns collection of the load combination case and combination IDs.

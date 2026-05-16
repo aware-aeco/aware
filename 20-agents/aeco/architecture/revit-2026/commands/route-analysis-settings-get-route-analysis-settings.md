@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RouteAnalysisSettings.GetRouteAnalysisSettings
+Returns the RouteAnalysisSettings element for a given document.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObject.TryReadUserData
+Attempts to read a Rhino plug-in's custom userdata from the  object.

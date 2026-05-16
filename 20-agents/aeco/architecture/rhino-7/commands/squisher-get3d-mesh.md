@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Squisher.Get3dMesh
+Get the 3d mesh that was used for squish operation

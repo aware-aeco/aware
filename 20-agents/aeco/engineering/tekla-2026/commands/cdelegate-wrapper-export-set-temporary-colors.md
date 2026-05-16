@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportSetTemporaryColors
+DO NOT USE! For internal usage only!

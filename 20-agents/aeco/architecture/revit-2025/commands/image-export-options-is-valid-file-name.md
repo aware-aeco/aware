@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ImageExportOptions.IsValidFileName
+Verify if File name is valid

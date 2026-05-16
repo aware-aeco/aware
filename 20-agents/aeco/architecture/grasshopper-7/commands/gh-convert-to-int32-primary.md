@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToInt32_Primary
+Performs a direct cast from Int32 or GH_Integer.

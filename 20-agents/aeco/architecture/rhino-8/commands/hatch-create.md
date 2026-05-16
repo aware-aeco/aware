@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Hatch.Create
+Create a hatch with a given set of outer and inner loops

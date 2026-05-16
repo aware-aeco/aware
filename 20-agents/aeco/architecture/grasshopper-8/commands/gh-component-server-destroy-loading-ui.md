@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentServer.DestroyLoadingUI
+Destroy the loading UI (the banner and the progress bar).

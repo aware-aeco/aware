@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayClippingPlaneObjectPointer.Add
+Adds a clipping plane to the list.

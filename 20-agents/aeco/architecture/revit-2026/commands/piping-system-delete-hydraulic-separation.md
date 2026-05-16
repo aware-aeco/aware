@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PipingSystem.DeleteHydraulicSeparation
+Deletes hydraulically separated systems and merges the system components into the connected system.

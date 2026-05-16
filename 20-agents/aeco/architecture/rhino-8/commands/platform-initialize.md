@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Platform.Initialize
+Initializes the specified  as the current generator, for the current thread

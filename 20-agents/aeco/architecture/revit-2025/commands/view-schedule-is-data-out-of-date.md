@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.IsDataOutOfDate
+Indicates whether the schedule data is out of date.

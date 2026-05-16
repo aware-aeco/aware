@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WireMaterialTypeSet.Contains
+Tests for the existence of a wire material type within the set.

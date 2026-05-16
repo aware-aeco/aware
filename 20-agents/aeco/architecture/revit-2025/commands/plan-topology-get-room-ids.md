@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlanTopology.GetRoomIds
+Retrieves room ElementIds of the PlanTopology in the last phase.

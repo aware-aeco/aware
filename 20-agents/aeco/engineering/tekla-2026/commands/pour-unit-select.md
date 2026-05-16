@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PourUnit.Select
+Selects the pour unit instance from the model. The identifier of the instance must be set.

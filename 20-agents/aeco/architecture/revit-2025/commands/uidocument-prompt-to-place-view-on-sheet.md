@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIDocument.PromptToPlaceViewOnSheet
+Prompts the user to place a specified view onto a sheet.

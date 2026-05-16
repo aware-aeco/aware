@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Curve.EmitProxy
+Returns a proxy that represents this curve. Do not call this function unless you're

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Size.Min
+Returns the minimum width and height of two sizes

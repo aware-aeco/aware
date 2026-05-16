@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.Draw2dText
+Draws 2D text on the viewport.

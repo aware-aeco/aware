@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentObject.Menu_MoveItem
+Utility function for moving menu items.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileTxt.Write
+Write a Txt file based on the contents of a RhinoDoc

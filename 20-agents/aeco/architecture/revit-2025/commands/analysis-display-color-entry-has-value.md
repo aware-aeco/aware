@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayColorEntry.HasValue
+Check if color entry has associated value.

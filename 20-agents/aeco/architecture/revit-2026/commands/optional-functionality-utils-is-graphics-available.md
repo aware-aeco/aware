@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OptionalFunctionalityUtils.IsGraphicsAvailable
+Checks whether the graphics functionality is available to support display, print, and export functionality.

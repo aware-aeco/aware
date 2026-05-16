@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Field.GetSpecTypeId
+Gets the spec describing the values stored in this field.

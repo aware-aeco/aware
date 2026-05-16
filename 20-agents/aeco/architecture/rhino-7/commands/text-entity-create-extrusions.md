@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextEntity.CreateExtrusions
+Creates extrusions from the outline curves with specified height.

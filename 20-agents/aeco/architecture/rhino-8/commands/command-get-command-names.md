@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Command.GetCommandNames
+Gets list of command names in Rhino. This list does not include Test, Alpha, or System commands.

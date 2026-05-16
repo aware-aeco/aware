@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectContext3DHandleSettings.Assign
+Assigns values of the source settings to this object.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.SetCellStyle
+Sets a section's style

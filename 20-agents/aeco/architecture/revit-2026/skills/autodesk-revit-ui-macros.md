@@ -6,3 +6,4 @@ description: API reference for namespace Autodesk.Revit.UI.Macros from RevitAPIU
 # Autodesk.Revit.UI.Macros
 
 - **ApplicationEntryPoint**
+  - For Revit Macros use only.

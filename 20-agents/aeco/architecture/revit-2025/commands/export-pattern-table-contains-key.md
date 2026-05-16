@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportPatternTable.ContainsKey
+Checks whether a pattern key exists in the table.

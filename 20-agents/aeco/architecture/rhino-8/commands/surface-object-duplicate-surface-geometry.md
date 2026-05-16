@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SurfaceObject.DuplicateSurfaceGeometry
+Constructs a new deep copy of the surface geometry.

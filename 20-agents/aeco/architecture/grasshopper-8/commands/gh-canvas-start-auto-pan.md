@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Canvas.StartAutoPan
+Start the auto-panning timer.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateFromCylinder
+Constructs a Brep definition of a cylinder.

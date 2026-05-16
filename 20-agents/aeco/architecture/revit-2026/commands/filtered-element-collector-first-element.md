@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilteredElementCollector.FirstElement
+Returns the first element to pass the filter(s).

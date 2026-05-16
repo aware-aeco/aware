@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AdaptiveComponentInstanceUtils.IsAdaptiveComponentInstance
+Verifies if a FamilyInstance is an Adaptive Component Instance.

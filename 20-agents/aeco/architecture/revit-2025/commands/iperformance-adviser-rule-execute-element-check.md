@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IPerformanceAdviserRule.ExecuteElementCheck
+Invoked by performance advisor for each element to be checked.

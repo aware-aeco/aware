@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interop.FontFromPointer
+Create managed Font from native ON_Font*

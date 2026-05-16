@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIMacroManager.RemoveModule
+Removes a MacroModule.

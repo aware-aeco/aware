@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToDouble
+Convert data into Doubles.

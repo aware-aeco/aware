@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Node2List.Sort
+Sort the list using a sorting type.

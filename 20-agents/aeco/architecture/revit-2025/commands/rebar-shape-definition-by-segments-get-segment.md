@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDefinitionBySegments.GetSegment
+Return a reference to one of the segments in the definition.

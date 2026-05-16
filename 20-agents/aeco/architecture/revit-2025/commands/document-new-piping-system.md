@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.NewPipingSystem
+Creates a new MEP piping system element.

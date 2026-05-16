@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ExpressionParam`1.ReplaceExpressionVariable
+Replace one variable name with another in an expression.

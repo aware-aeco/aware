@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilledRegionType.IsValidMasking
+Check that in a family the FillRegionType is always masking.

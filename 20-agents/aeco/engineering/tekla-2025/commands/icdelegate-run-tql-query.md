@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.RunTqlQuery
+DO NOT USE! For internal usage only!

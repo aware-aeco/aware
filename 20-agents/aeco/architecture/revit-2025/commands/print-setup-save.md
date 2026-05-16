@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PrintSetup.Save
+Save the changes for the current print setting.

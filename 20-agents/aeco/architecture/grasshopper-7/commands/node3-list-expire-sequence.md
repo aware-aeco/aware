@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Node3List.ExpireSequence
+Call this method when you made a change that potentially invalidates the sorting flags and caches.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PhaseArrayIterator.MoveNext
+Move the iterator one item forward.

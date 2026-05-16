@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObjectTable.AddAngularDimension
+Adds a angular dimension object to the 3dm file object table.

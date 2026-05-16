@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BezierCurve.GetControlVertex4d
+Gets the homogeneous (4D) value of a control vertex at the specified index.

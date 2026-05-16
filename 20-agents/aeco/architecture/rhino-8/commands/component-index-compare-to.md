@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ComponentIndex.CompareTo
+Compares this  with another .

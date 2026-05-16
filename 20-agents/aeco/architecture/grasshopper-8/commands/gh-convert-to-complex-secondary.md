@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToComplex_Secondary
+Performs indirect casts from other data types into Complex.

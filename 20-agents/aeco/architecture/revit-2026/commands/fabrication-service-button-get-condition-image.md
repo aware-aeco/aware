@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationServiceButton.GetConditionImage
+Gets the image for the specified fabrication service button condition.

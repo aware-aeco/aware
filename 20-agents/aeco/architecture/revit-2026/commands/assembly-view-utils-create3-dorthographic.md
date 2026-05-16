@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssemblyViewUtils.Create3DOrthographic
+Creates a new orthographic 3D assembly view for the assembly instance.    The view will have the same orientation as the Default 3D view.    The document must be regenerated before using the 3D view.

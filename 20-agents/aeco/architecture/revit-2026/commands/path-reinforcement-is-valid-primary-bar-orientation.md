@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PathReinforcement.IsValidPrimaryBarOrientation
+Checks if orientation for primary bars is valid.

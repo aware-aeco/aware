@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilteredElementIterator.GetCurrent
+The current element found by the iterator.

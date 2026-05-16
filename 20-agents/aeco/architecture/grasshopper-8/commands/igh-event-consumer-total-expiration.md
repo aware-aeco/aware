@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_EventConsumer.TotalExpiration
+This method will be called by the GH_CustomEventServer to indicate all   interesting object events can now be processed.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Gradient.OnGradientChangedIntermediate
+Raise the GradientChanged event.

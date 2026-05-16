@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interop.FromOnSurface
+Copies a Rhino_DotNet surface to a RhinoCommon Surface class.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentServer.GetCategoryIcon
+Get the icon for a specific category. If the icon hasn't been defined,   this method will return the default icon.

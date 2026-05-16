@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View3D.ShowGridsOnLevel
+This method displays the grid lines in this 3DView on the given Level.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextFields.PageWidth
+Return the current layout page width in the layout units

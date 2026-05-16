@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportModifyClipPlane
+DO NOT USE! For internal usage only!

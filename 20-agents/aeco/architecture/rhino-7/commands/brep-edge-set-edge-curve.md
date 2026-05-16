@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepEdge.SetEdgeCurve
+Set 3d curve geometry used by a b-rep edge.

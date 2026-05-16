@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderPipeline.ResumeRendering
+Implement to resume current render session

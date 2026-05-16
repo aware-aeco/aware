@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoltArray.Insert
+Inserts the bolt array into the model database.

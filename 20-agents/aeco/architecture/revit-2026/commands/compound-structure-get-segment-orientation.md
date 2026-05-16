@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.GetSegmentOrientation
+Gets the orientation of a segment.

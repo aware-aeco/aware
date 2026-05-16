@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationDrawingsServiceExtractor.GetDrawingsDescriptionJsonFile
+Get the filename where the drawings description is stored.

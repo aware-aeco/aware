@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IconFrame.FromControlObject
+Creates an instance of the  with the specified native control object.

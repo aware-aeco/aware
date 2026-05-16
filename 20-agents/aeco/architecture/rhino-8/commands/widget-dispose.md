@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Widget.Dispose
+Disposes of this widget, supressing the finalizer

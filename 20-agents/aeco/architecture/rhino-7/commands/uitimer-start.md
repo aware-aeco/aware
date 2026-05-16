@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UITimer.Start
+Starts the timer

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarInSystem.CanEditIndividualBars
+Checks if individual bars can be moved, excluded or included.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConnectorElement.AssignAsPrimary
+Assign a connector as a primary connector.

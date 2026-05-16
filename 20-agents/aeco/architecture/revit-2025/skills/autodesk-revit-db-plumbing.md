@@ -6,31 +6,60 @@ description: API reference for namespace Autodesk.Revit.DB.Plumbing from RevitAP
 # Autodesk.Revit.DB.Plumbing
 
 - **FlexPipe**
+  - A flex pipe in the Autodesk Revit MEP product.
 - **FlexPipeType**
+  - A flex pipe type in the Autodesk Revit MEP product.
 - **FlowConversionMode**
+  - Enumerated type listing possible flow conversion modes for piping calculations.
 - **FluidTemperature**
+  - Represents the dynamic viscosity and density properties as defined at a certain temperature.
 - **FluidTemperatureSetIterator**
+  - An iterator to a set of FluidTemperature from FluidType.
 - **FluidType**
+  - Has been extended to provide read and write access to a collection of FluidTemperature objects which represent the fluid's properties at various temperatures.
 - **IPipeFittingAndAccessoryPressureDropServer**
+  - Interface class for external servers implementing pipe fitting and pipe accessory coefficient calculation.
 - **IPipePlumbingFixtureFlowServer**
+  - Interface class for external servers implementing Pipe plumbing fixture flow calculation.
 - **IPipePressureDropServer**
+  - Interface for external servers implementing pipe pressure drop calculation.
 - **Pipe**
+  - A pipe in the Autodesk Revit MEP product.
 - **PipeFittingAndAccessoryConnectorData**
+  - The input data used by external servers for calculation of the pipe fitting and pipe accessory coefficient.
 - **PipeFittingAndAccessoryData**
+  - The input data used by external servers for calculation of the pipe fitting and pipe accessory coefficient.
 - **PipeFittingAndAccessoryPressureDropData**
+  - The input and output data used by external servers for calculation of the pipe fitting and pipe accessory pressure drop.
 - **PipeFittingAndAccessoryPressureDropItem**
+  - A flow path of the pipe/pipe fitting and accessory. It is defined by the begin connector and end connector
 - **PipeFlowConfigurationType**
+  - An enumerated type listing all connector flow configuration
 - **PipeFlowState**
+  - An enumerated type listing all the pipe flow states for a pipe
 - **PipeInsulation**
+  - Represents insulation applied to the outside of a given pipe, fitting or content.
 - **PipeInsulationType**
+  - This class represents a pipe insulation type in Autodesk Revit.
 - **PipeLossMethodType**
+  - An enumerated type listing all pipe loss method types for a connector
 - **PipePlumbingFixtureFlowData**
+  - The input and output data used by external servers for calculation of the pipe plumbing fixture flow.
 - **PipePressureDropData**
+  - The input and output data used by external servers for calculation of the pipe pressure drop.
 - **PipeScheduleType**
+  - Represents a pipe schedule type in the Autodesk Revit MEP product.
 - **PipeSegment**
+  - The PipeSegment class represents an instance of pipe segment which has the design    data for routing preference.
 - **PipeSettings**
+  - The pipe setting class.
 - **PipeSystemType**
+  - An enumerated type listing all the possible pipe system types for a connector object.
 - **PipeType**
+  - A pipe type element.
 - **PipingSystem**
+  - A piping system element.
 - **PipingSystemType**
+  - Base class for piping system types
 - **PlumbingUtils**
+  - General utility methods in the Autodesk Revit MEP product.

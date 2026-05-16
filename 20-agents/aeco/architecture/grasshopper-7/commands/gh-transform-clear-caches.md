@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Transform.ClearCaches
+Erase the compound transformation caches.

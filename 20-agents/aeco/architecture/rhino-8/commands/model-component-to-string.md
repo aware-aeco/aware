@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelComponent.ToString
+Returns the name of the model component type, and then its name and index.

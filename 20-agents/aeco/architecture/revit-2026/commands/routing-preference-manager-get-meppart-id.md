@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RoutingPreferenceManager.GetMEPPartId
+Gets a fitting or segment id of given routing preference group that meets the specified routing conditions.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConductorMaterial.Create
+Creates a Conductor Material.

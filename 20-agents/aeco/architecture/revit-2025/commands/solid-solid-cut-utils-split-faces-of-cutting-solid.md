@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SolidSolidCutUtils.SplitFacesOfCuttingSolid
+Causes the faces of the cutting element where it intersects the element it is cutting to be split or unsplit.

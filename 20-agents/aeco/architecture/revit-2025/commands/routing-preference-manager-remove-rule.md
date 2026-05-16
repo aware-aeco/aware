@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RoutingPreferenceManager.RemoveRule
+Removes an existing routing preference rule.    Thrown if the index is out of bounds.

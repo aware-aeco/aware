@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHMesh_Secondary
+Converts similar data into a GH_Mesh instance.  Data is not quaranteed to be duplicated.

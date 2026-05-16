@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterFilterElement.ClearRules
+Removes all rules from this filter.

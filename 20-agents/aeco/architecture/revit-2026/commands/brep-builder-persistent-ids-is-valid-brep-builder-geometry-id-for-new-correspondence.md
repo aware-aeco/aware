@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BRepBuilderPersistentIds.IsValidBRepBuilderGeometryIdForNewCorrespondence
+Validates the input BRepBuilderGeometryId that will be used to create a correspondence.    In order to be valid, a correspondence for the input BRepBuilderGeometryId must not already exist.

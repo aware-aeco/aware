@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Format.FormatMeshValidity
+If the mesh is invalid, return a string describing why.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBarType.SetBarTypeDiameters
+Sets all input diameters from diametersOptions in current RebarBarType.

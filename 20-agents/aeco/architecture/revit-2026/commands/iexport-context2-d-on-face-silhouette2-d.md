@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExportContext2D.OnFaceSilhouette2D
+This method is called when a Face silhouette is being output.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementRecord.GetCategoryId
+Gets the category id of the element record.

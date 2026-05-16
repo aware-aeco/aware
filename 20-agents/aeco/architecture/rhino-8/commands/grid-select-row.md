@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Grid.SelectRow
+Selects the row to the specified , clearing other selections

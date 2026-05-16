@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IZooClientUtilities.GetCurrentTime
+Gets the current time, trying to access an NTP server before using local time.

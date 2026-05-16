@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.LineLine
+Intersects two lines.

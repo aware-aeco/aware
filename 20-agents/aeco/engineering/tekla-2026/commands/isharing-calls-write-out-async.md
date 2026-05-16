@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ISharingCalls.WriteOutAsync
+Implements  and .             Automatically release the next write-out reservation if there is one.

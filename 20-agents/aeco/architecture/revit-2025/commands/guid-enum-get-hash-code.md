@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GuidEnum.GetHashCode
+Generates a hash code for this Guid-based enum object.

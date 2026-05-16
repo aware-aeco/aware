@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalDemandFactorDefinition.Create
+Creates a new instance of a demand factor definition.

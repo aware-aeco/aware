@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CursorServer.ReferenceCursors
+Reference all the cursor files in a given directory.

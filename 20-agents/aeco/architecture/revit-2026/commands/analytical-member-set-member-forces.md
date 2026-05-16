@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalMember.SetMemberForces
+Sets Member Forces to Analytical Member.

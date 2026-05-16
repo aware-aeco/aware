@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.GetWireframe
+Constructs all the Wireframe curves for this Brep.

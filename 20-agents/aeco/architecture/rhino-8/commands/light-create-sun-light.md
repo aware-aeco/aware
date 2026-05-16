@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Light.CreateSunLight
+Constructs a light that represents the Sun.

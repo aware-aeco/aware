@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalResourceLoadContext.GetCurrentlyLoadedReference
+Returns a copy of the ExternalResourceReference currently    in use by the containing element.

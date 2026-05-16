@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IHeaderButtonHandler.ButtonRect
+Implement this method to get the rectangle of a button on the header window.

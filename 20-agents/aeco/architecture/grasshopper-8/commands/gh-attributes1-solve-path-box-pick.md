@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Attributes`1.SolvePathBoxPick
+Utility function for testing window selections with freeform Graphics paths.

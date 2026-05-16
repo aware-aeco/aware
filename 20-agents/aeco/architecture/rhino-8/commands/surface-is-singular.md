@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.IsSingular
+true if surface side is collapsed to a point.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetAncillaryGroupName
+Gets the fabrication ancillary group and name for the specified fabrication ancillary identifier.

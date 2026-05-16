@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaReinforcement.ConvertRebarInSystemToRebars
+Converts all RebarInSystem elements owned by the input AreaReinforcement to equivalent Rebar elements.

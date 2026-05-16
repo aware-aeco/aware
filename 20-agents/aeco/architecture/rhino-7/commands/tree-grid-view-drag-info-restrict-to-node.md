@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TreeGridViewDragInfo.RestrictToNode
+Restricts the drop to an item or a child within the specified number of levels.

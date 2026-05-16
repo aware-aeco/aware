@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportDisplayAutoDefaultSettings
+DO NOT USE! For internal usage only!

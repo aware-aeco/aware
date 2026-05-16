@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Dialogs.ShowColorDialog
+Display Rhino's color selection dialog.

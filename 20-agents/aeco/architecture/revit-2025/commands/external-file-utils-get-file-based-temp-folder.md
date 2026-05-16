@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalFileUtils.GetFileBasedTempFolder
+Gets a temp folder based on the given file name

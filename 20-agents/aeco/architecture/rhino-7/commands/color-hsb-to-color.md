@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorHSB.ToColor
+Converts this instance to an equivalent RGB

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_VariableParameterComponent.CanInsertParameter
+This function will get called before an attempt is made to insert a parameter.   Since this method is potentially called on Canvas redraws, it must be fast.

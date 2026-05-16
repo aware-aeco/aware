@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightGroupManager.GetLightDimmer
+Gets the dimmer value for the given light for rendering the given view

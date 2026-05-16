@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Segment.AddSize
+Adds a new MEPSize to the segment.

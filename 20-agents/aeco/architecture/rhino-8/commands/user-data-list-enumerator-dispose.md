@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UserDataListEnumerator.Dispose
+Implement Dispose(). NOP.

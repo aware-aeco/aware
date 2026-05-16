@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceDefinitionTable.GetUnusedInstanceDefinitionName
+Gets unused instance definition name used as default when creating             new instance definitions.

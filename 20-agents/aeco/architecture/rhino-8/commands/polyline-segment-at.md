@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Polyline.SegmentAt
+Gets the line segment at the given index.

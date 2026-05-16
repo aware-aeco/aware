@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BasePoint.GetSurveyPoint
+Gets the survey point for the document.

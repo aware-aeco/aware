@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilteredWorksetCollector.WherePasses
+Applies a workset filter to the collector.

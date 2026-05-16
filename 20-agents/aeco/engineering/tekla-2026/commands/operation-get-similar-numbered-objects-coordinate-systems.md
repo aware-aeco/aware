@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetSimilarNumberedObjectsCoordinateSystems
+Get similar numbered objects coordinate systems

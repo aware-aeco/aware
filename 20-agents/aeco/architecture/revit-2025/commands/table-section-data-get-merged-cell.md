@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.GetMergedCell
+Gets the whole merged cell that this cell is a part of.

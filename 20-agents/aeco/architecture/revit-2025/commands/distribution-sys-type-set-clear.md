@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DistributionSysTypeSet.Clear
+Removes every DistributionSys type from the set, rendering it empty.

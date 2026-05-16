@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Point.ReferencesCurve
+Returns true if this point is based on a curve reference

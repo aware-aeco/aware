@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WrongUserException.GetObjectData
+Retrieves data needed to serialize the target object.

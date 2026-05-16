@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.Evaluate
+Evaluates a surface mathematically.

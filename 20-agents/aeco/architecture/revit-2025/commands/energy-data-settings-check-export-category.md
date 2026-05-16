@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyDataSettings.CheckExportCategory
+Checks whether the export category falls within the list:    OST_RoomsOST_MEPSpaces

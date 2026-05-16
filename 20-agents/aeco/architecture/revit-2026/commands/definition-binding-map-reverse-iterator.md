@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DefinitionBindingMap.ReverseIterator
+Retrieve a backward moving iterator to the map.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-KeyBasedTreeEntriesLoadContent.CanAddEntry
+Verifies if the KeyBasedTreeEntry could be added in this KeyBasedTreeEntriesLoadContent.

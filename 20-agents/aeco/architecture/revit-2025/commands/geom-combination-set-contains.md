@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeomCombinationSet.Contains
+Tests for the existence of an GeomCombination within the set.

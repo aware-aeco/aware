@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.CreateControlPointCurve
+Constructs a curve from a set of control-point locations.

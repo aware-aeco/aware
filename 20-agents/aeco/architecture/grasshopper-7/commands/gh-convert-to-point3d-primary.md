@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToPoint3d_Primary
+Performs a direct cast from On3dPoint or GH_Point.   Data is not quaranteed to be duplicated.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitLinkType.GetConversionData
+Returns the optional data that is necessary to generate the Revit file for this link.

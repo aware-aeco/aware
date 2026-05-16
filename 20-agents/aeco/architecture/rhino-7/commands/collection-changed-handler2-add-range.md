@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CollectionChangedHandler`2.AddRange
+Adds multiple items to the end of the collection

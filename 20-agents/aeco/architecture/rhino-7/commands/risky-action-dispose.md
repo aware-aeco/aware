@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RiskyAction.Dispose
+IDisposable implementation

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawBrepWires
+Draws all the wireframe curves of a brep object.

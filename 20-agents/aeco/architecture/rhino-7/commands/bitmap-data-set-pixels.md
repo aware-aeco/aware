@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BitmapData.SetPixels
+Use this to set the pixels of the bitmap from an array or other source.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToPointCloud_Primary
+Performs a direct cast from Rhino.Geometry.PointCloud or GH_PointCloud.   Data is not guaranteed to be duplicated.

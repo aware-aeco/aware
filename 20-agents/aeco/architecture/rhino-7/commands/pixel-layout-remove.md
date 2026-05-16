@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PixelLayout.Remove
+Remove the specified child control.

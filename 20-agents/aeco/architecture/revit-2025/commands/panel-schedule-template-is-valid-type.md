@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleTemplate.IsValidType
+Checks if given type is valid for this panel schedule template element.

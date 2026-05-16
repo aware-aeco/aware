@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShape.AreOptionsValidForTransientDirectShape
+Validates that the given DirectShapeOptions are allowed if this DirectShape is transient.

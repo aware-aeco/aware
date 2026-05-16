@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Schema.ReadAccessGranted
+Checks whether Entities of this Schema may be retrieved by the current add-in.

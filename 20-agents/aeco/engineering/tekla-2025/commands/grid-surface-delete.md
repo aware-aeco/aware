@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GridSurface.Delete
+Deletes the grid surface with the given ID.

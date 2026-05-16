@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StackedDialogPage.OnHelp
+Called when the parent dialog requests help for this page.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.AddPartCustomData
+Add custom data type to the fabrication part. The new data gets the default value defined by the fabrication configuration.

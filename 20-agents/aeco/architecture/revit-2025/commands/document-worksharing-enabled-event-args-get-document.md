@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DocumentWorksharingEnabledEventArgs.GetDocument
+Returns document associated with this event

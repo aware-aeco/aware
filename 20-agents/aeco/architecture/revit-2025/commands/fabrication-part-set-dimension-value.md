@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.SetDimensionValue
+Sets the fabrication dimension value. The value is in Revit internal units.

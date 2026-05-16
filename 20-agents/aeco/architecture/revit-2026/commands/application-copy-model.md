@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.CopyModel
+Copies an existing model to a new file. Overwriting a file of the same name is allowed.

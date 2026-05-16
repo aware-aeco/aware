@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DimStyleTable.Modify
+Modifies dimension style settings.

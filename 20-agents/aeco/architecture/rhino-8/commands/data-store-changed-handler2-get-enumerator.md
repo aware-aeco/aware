@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataStoreChangedHandler`2.GetEnumerator
+Gets the enumerator.

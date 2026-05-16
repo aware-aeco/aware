@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.BoxFurthestPoint
+Find the furthest point on or in a box given a test point.

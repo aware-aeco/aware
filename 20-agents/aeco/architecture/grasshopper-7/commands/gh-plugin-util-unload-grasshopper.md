@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PluginUtil.UnloadGrasshopper
+Performs all steps required during Grasshopper unloading.

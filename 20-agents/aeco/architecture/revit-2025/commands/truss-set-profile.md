@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Truss.SetProfile
+Add or modify the profile of a truss.

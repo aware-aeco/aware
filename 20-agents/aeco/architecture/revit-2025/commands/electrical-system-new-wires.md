@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalSystem.NewWires
+Create a bunch of wires for the electrical system.

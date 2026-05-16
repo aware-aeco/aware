@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PartUtils.GetAssociatedParts
+Returns all Parts that are associated with the given element.

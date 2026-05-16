@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmRenderTexture.ToTexture
+Get a simulated texture that approximates this texture's appearance.

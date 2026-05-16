@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Centermark.DuplicateCentermark
+Create a duplicate of this centermark.

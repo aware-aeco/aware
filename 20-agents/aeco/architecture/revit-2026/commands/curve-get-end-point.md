@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.GetEndPoint
+Returns the 3D point at the start or end of this curve.

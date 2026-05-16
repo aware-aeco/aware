@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalSetting.AddWireType
+Add a new wire type to project.

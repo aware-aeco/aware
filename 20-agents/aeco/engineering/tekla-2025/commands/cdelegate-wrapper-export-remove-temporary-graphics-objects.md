@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportRemoveTemporaryGraphicsObjects
+DO NOT USE! For internal usage only!

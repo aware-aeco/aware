@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Material.MaterialBestGuess
+Gets the best guess RenderMaterial for this shader.

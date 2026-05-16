@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilySymbol.SetThermalProperties
+Sets the thermal properties for the given FamilySymbol.

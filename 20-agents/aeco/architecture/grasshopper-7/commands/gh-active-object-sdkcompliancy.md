@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ActiveObject.SDKCompliancy
+Test whether this object is compliant with a given Rhino version.

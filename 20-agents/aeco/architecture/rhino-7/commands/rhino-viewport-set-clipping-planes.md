@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.SetClippingPlanes
+Sets optimal clipping planes to view objects in a world coordinate 3d bounding box.

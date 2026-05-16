@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayLinetypePointer.Dispose
+Actively reclaims unmanaged resources that this instance uses.

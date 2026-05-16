@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.AddRadialDimension
+Adds a radial dimension object to the document.

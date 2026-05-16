@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.GetWorksetTable
+Get the WorksetTable of this document.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PartUtils.IsValidForCreateParts
+Identifies if the given element can be used to create parts.

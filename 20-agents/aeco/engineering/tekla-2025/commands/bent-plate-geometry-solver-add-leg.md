@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BentPlateGeometrySolver.AddLeg
+Appends a polygon section to ConnectiveGeometry, using the maximal radius for the cylindrical connection, or             the maximum cone aperture for conical connection.

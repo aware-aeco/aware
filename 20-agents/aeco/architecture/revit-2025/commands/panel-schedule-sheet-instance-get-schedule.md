@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleSheetInstance.GetSchedule
+Gets the panel schedule view.

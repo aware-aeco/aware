@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Circle.DuplicateGeometry
+Create a duplicate of this circle.

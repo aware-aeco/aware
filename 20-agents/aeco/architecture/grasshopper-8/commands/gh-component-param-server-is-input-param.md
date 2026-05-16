@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentParamServer.IsInputParam
+Returns True if this parameter is an input child of the component

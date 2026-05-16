@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraint.GetSurfaceForConstraintToSurface
+This method retrieves the surface for a constraint of 'To Surface' type.

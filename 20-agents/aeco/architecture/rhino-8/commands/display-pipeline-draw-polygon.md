@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawPolygon
+Draws a filled, convex polygon from a collection of points.

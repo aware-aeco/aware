@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Segment.GetSizes
+Gets the defined sizes of the segment.

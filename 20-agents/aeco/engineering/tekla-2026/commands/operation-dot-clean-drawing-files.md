@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotCleanDrawingFiles
+Cleans drawing files.

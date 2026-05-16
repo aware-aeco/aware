@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PageCurl.RenderTopology
+Draw debugging topology information about the page-curl into a graphics context.

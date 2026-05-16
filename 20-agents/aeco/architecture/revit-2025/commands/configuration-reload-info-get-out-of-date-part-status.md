@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConfigurationReloadInfo.GetOutOfDatePartStatus
+Access reload information for out of date part.

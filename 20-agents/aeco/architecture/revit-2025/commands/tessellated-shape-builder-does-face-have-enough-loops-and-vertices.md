@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TessellatedShapeBuilder.DoesFaceHaveEnoughLoopsAndVertices
+Checks whether 'face' has enough loops and vertcies to be valid.

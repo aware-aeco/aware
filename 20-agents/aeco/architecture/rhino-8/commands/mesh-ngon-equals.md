@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshNgon.Equals
+Determines if this ngon and otherNgon are identical.

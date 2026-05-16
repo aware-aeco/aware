@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableLayout.HorizontalScaled
+Creates a horizontal table layout with the specified cells scaled equally.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshFaceList.GetClashingFacePairs
+Gets an array of pairs of mesh faces that clash.

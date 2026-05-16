@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Sun.ShowDialog
+Show the modal sun dialog.

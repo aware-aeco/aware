@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Animator`1.AdjustAnimation
+Adjust the animation.

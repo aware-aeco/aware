@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterUtils.GetBuiltInParameterGroupTypeId
+The parameter group identifier corresponding to the given built-in parameter identifier.

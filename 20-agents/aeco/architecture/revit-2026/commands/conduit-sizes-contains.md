@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConduitSizes.Contains
+Checks whether a conduit size with the nominal diameter exists.

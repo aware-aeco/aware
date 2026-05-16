@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Grid.SelectAll
+Selects all rows

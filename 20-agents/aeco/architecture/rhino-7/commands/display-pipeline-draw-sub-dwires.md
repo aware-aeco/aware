@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawSubDWires
+Draws all the wireframe curves of a SubD object

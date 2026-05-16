@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point3dList.GetHashCode
+Creates a hash code for this object.

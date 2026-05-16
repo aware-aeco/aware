@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.SolveArc
+Create a GDI circular arc definition from start-point, end-point and tangent direction.

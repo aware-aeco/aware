@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CapsuleRenderEngine.RenderBoundaryDots
+Render a collection of boundary dots along the top edge of the capsule.

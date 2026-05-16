@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.RemoveHoles
+Remove all inner loops, or holes, in a Brep.

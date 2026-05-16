@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateBooleanDifference
+Compute the Solid Difference of two sets of Breps.

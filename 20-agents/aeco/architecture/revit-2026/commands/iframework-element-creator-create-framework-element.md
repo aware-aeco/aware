@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFrameworkElementCreator.CreateFrameworkElement
+Method called to create the FrameworkElement.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternallyTaggedGeometryValidation.IsNonSolid
+Makes sure that the input geometry object is not a Solid.

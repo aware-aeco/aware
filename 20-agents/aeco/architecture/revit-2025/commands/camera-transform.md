@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Camera.Transform
+Transforms the camera

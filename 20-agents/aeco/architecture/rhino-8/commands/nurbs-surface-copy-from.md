@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsSurface.CopyFrom
+Copies this NURBS surface from another NURBS surface.

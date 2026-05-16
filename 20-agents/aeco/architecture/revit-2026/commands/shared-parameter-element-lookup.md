@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SharedParameterElement.Lookup
+Finds the shared parameter element that corresponds to the given Guid.

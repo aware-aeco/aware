@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DrawingUtilities.ImageFromResource
+Load a Image from an embedded resource.

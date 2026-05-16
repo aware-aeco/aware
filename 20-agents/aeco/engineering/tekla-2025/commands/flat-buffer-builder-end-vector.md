@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FlatBufferBuilder.EndVector
+Writes data necessary to finish a vector construction.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormatValueOptions.SetFormatOptions
+Sets the FormatOptions to optionally override the default settings in the Units class.

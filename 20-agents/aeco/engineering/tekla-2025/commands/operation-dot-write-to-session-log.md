@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotWriteToSessionLog
+Writes a message in the TeklaStructures Session Log file.

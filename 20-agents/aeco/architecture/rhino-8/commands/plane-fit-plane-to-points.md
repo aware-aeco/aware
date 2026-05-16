@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Plane.FitPlaneToPoints
+Fit a plane through a collection of points.

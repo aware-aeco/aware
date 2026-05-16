@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurvatureGraphSettings.GetDefaultState
+Gets the factory settings of the application.

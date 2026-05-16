@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolygonNode.AcceptVisitor
+Entry method for the visitor pattern

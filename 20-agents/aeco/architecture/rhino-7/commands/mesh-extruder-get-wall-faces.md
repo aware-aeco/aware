@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshExtruder.GetWallFaces
+Return list of faces that were added to connect transformed edges/faces to non-transformed edges/faces.

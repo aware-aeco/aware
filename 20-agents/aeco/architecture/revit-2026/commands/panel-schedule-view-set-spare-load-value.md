@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.SetSpareLoadValue
+Sets the value of the apparent load parameter for a spare

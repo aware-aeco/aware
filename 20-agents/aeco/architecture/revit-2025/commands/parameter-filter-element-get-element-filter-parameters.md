@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterFilterElement.GetElementFilterParameters
+Retrieves a list of the parameters associated with each rule in the filter.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshFaceList.GetTopologicalVertices
+Gets the topology vertex indices of a face.

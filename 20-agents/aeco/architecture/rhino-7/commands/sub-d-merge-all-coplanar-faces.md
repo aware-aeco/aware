@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubD.MergeAllCoplanarFaces
+Merges adjacent coplanar faces into single faces.

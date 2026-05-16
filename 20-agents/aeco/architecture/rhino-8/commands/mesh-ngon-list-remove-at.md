@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshNgonList.RemoveAt
+Removes an ngon from the mesh.

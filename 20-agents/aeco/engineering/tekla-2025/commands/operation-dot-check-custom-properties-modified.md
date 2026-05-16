@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotCheckCustomPropertiesModified
+Check if any custom property plugins have been modified after modification stamp.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NavisworksExportOptions.GetSelectedElementIds
+Returns the element ids of the elements to export. Empty by default.

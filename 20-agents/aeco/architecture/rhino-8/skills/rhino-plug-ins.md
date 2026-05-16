@@ -7,32 +7,57 @@ description: API reference for namespace Rhino.PlugIns from RhinoCommon.dll
 
 - **CustomRenderSaveFileTypes**
 - **DescriptionType**
+  - Rhino plug-in developer information fields.
 - **DigitizerPlugIn**
+  - A Rhino plug-in that interfaces with 3-D digitizing or input devices.
 - **FileExportPlugIn**
+  - Rhino plug-in that exports data from Rhino to other file formats; can support more than one format.
 - **FileImportPlugIn**
+  - Rhino plug-in that imports data from other file formats into Rhino; can support more that one format.
 - **FileTypeList**
 - **LicenseBuildType**
+  - License build contentType enumerations.
 - **LicenseCapabilities**
+  - Controls the buttons that will appear on the license notification window             that is displayed if a license for the requesting product is not found.             Note, the "Close" button will always be displayed.
 - **LicenseChangedEventArgs**
 - **LicenseData**
+  - Zoo plug-in license data.
 - **LicenseIdAttribute**
 - **LicenseLease**
+  - LicenseLease represents a lease returned from the Cloud Zoo
 - **LicenseLeaseChangedEventArgs**
+  - Arguments for OnLeaseChangedDelegate
 - **LicenseStatus**
+  - LicenseStatus class.
 - **LicenseType**
+  - LicenseType enumeration.
 - **LicenseUtils**
+  - License Manager Utilities.
 - **LoadPlugInResult**
+  - Result of attempting to load a plug-in
 - **LoadReturnCode**
+  - Rhino plug-in loading return codes.
 - **OnLeaseChangedDelegate**
+  - Called by Rhino to signal that a lease from Rhino Accounts has changed. If LicenseLeaseChangedEventArgs.Lease             is null, then the server has signaled that this product is no longer licensed. Your plug-in must change behavior to behave             appropriately.
 - **PlugIn**
+  - A general purpose utility plug-in that can contain one or more commands.
 - **PlugInDescriptionAttribute**
+  - Rhino plug-in developer information attributes.
 - **PlugInInfo**
+  - Contains detailed information about a Rhino plug-in.
 - **PlugInLoadTime**
+  - Rhino plug-in load time enumeration.
 - **PlugInType**
+  - Rhino plug-in type enumeration.
 - **PreviewNotification**
 - **RenderPlugIn**
+  - A Rhino rendering plugin; applies materials, textures, and lights to a scene to produce rendered images.
 - **ValidateProductKeyDelegate**
+  - Validates a product key or license.
 - **ValidateResult**
+  - ValidateProductKeyDelegate result code.
 - **VerifyLicenseKeyDelegate**
+  - Called by Rhino to verify a license key. For details, see http://developer.rhino3d.com/guides/rhinocommon/rhinocommon-zoo-plugins/
 - **VerifyPreviousVersionLicenseDelegate**
+  - Called by GetLicense/AskUserForLicense to verify that a previous version license.
 - **WriteFileResult**

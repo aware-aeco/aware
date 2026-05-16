@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FaceToposolid.GetReferencedFaces
+Gets the referenced faces of the face toposolid

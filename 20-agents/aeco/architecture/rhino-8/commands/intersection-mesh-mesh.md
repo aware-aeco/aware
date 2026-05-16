@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.MeshMesh
+Intersects meshes. Overlaps and perforations are provided in the output list.

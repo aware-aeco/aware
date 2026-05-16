@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.ComputeDerivatives
+Returns the vectors describing the curve at the specified parameter.

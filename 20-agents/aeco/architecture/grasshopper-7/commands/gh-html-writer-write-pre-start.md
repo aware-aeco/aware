@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_HtmlWriter.WritePreStart
+Write the start of a Preformatted text block.

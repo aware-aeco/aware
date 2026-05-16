@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorFillSchemeEntry.GetDoubleValue
+Gets the Double value stored within the entry.

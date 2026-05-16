@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BasePoint.ConvertFromBasePoint
+Converts the given point from this base point to local point.

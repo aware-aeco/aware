@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform.CreateRotationAtPoint
+Creates a transform that represents a rotation about the given axis at the specified point.

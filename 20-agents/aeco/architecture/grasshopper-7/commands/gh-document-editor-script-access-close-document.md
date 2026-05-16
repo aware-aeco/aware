@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentEditor.ScriptAccess_CloseDocument
+Closes the currently active document and loads the next available document into the canvas.   Changes will not be saved.

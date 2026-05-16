@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostUtils.IsRhinoFileExtension
+Check to see if the file extension is a valid Rhino file extension.

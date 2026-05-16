@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderingSettings.SetRenderingQualitySettings
+Change rendering quality settings.

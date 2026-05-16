@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ChangeQueue.GetQueueSceneBoundingBox
+Get the scene bounding box

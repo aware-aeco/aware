@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleField.CanDisplayMinMax
+Indicates if this field can display minimum and maximum values.

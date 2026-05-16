@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterStringRuleEvaluator.Evaluate
+Derived classes override this method to implement the test that determines    whether the two given string values satisfy the desired condition or not.

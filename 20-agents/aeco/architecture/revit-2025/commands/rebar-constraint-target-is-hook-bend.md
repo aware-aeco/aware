@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraint.TargetIsHookBend
+Returns true if the RebarTargetConstraintType of the RebarConstraint is 'HookBend'.

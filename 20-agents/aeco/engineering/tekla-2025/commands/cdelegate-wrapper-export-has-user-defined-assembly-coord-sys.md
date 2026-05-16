@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportHasUserDefinedAssemblyCoordSys
+DO NOT USE! For internal usage only!

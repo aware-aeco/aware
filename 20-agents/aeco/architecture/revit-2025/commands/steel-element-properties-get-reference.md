@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SteelElementProperties.GetReference
+This method will return the reference for the given fabrication id.

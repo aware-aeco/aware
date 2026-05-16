@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalResourceServerUtils.ServerSupportsAssemblyCodeData
+Checks that the server referenced by the given ExternalResourceReference supports    AssemblyCodeData.

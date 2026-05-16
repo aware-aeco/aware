@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalyticalNodeData.GetAnalyticalNodeData
+Returns AnalyticalNodeData associated with this element, if it exists.

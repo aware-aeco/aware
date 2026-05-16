@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmViewTable.GetEnumerator
+Returns an enumerator that yields all views in the table.

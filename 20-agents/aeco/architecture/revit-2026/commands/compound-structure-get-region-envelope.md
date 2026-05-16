@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.GetRegionEnvelope
+Gets the envelope that a specified region spans.

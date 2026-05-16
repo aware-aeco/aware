@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TriangulatedShellComponent.GetVertices
+Returns the vertices of the triangulation.

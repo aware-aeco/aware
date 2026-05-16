@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.SetCategoryOverrides
+Sets graphic overrides for a category in view.

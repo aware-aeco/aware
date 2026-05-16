@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SchemaBuilder.SetWriteAccessLevel
+Sets top level write access (for entities)

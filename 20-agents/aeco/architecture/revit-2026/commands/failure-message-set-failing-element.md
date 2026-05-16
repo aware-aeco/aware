@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureMessage.SetFailingElement
+Sets the element that has caused the failure.

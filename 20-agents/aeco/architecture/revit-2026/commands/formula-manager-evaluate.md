@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormulaManager.Evaluate
+Evaluates value of the formula

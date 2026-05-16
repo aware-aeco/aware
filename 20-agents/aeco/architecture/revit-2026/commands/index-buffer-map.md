@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndexBuffer.Map
+Maps a portion of the index buffer into memory, so that indices can be written into it.    see .

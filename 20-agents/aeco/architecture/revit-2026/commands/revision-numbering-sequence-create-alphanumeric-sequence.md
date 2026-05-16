@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevisionNumberingSequence.CreateAlphanumericSequence
+Creates a new alphanumeric revision numbering sequence in the document.

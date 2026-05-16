@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FaceWall.IsValidFaceReferenceForFaceWall
+Identifies if a reference may be used as the parent of a face wall.

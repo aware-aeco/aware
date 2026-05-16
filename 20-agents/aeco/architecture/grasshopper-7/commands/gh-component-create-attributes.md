@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Component.CreateAttributes
+Create new attributes.

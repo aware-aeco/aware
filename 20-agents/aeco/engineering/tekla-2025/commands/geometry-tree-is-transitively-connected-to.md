@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryTree.IsTransitivelyConnectedTo
+Searches for a connected path between two nodes.

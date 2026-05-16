@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.WriteJournalComment
+Writes a comment to the Revit journal file.

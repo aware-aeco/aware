@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_IndexRuleSet.Evaluate
+Evaluate the index given the local rules.

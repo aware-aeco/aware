@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceDefinition.UsesDefinition
+Determines if this instance definition contains a reference to another instance definition.

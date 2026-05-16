@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPSpaceConstruction.DeleteConstruction
+Remove an existing construction from Space constructions.

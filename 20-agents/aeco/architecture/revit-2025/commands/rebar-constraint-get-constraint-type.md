@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraint.GetConstraintType
+Returns the RebarConstraintType of a RebarConstraint.

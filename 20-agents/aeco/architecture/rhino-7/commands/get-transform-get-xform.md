@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetTransform.GetXform
+Gets the Transformation.             Call this after having set up options and so on.

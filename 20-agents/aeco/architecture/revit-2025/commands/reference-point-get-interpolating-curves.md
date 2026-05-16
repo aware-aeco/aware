@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferencePoint.GetInterpolatingCurves
+The set of CurveByPoints elements that interpolate a ReferencePoint.

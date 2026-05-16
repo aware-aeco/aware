@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SnapShotsClient.SupportsObject
+Returns true if the client saves/restores object user data for the given object.

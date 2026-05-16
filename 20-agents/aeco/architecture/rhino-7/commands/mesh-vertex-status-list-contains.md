@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexStatusList.Contains
+Determines if some vertices are hidden or some are shown.

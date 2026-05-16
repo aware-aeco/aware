@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.IsColumnInLoadSummary
+Check if this column in the load summary

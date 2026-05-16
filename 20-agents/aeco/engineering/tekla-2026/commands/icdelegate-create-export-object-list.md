@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.CreateExportObjectList
+DO NOT USE! For internal usage only!

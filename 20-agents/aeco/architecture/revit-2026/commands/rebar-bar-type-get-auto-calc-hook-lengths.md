@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBarType.GetAutoCalcHookLengths
+Identifies if the hook lengths of a hook type are automatically calculated for this bar type

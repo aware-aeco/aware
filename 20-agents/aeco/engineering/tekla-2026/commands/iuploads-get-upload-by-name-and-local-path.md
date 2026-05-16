@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IUploads.GetUploadByNameAndLocalPath
+Gets an upload by name and local path.

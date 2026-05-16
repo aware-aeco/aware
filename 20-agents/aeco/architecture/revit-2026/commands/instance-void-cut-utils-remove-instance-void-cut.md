@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceVoidCutUtils.RemoveInstanceVoidCut
+Remove a cut applied to the element by a cutting instance with unattached voids.

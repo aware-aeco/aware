@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Layer.SetPerViewportVisible
+Controls layer visibility in specific viewports.

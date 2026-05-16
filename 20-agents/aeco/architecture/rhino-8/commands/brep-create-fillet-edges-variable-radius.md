@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateFilletEdgesVariableRadius
+Fillets, chamfers, or blends the edges of a brep.

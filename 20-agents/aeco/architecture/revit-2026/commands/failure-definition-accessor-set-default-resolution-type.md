@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailureDefinitionAccessor.SetDefaultResolutionType
+Sets the default resolution type for the failure.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.SetViewDisplayModel
+Sets the view display model settings for the view.

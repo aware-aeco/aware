@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBarType.GetCrankStraightLength
+Gets the crank straigth length taking into account the specified Rebar Crank Type.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetCoordinateSystem
+DO NOT USE! For internal usage only!

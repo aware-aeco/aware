@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFC.GetLayerNameForPresentationLayer
+Get the layer name associated with an element from the default layer mapping table.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSheet.Duplicate
+Duplicates this sheet to generate a new one.

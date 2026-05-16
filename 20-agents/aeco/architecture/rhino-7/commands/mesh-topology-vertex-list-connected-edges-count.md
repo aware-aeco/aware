@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshTopologyVertexList.ConnectedEdgesCount
+Gets the count of edges that are connected to a given vertex.

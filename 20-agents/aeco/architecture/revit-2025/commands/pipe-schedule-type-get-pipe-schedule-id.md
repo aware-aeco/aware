@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PipeScheduleType.GetPipeScheduleId
+Returns an existing pipe schedule type with the same name.

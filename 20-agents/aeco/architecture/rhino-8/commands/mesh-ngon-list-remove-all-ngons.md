@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshNgonList.RemoveAllNgons
+Removes all ngons from the mesh.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RhinoScriptInterface.LoadEditor
+Load the main Grasshopper Editor.   If the editor has already been loaded nothing will happen.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.GetLoadClassificationName
+Gets the name of the Load Classification at the given row/column

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.Flush
+Force the pipeline to immediately flush any cached geometry to the display

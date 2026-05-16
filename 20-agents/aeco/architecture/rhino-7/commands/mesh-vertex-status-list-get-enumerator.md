@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexStatusList.GetEnumerator
+Gets an enumerator that yields all flags in this collection.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicsUtil.EtchFadingHorizontal
+Draw an etched line with fading on the extremes.

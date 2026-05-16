@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PartUtils.GetPartMakerMethodToDivideVolumeFW
+Obtains the object allowing access to the divided volume    properties of the PartMaker.

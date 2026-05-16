@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailuresAccessor.CanCommitPendingTransaction
+Checks if pending failure processing can be finished by committing a pending transaction.

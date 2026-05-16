@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportCreateWeld
+DO NOT USE! For internal usage only!

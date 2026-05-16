@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PostEffectPipeline.ThreadEngine
+Get the post effect thread engine.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-VolumeMassProperties.Compute
+Compute the VolumeMassProperties for a single Mesh.

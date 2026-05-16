@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexList.IsHidden
+Gets a value indicating whether or not a vertex is hidden.

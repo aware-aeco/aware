@@ -9,6 +9,7 @@ description: API reference for namespace Grasshopper.Kernel.Expressions from Gra
 - **GH_CodeString**
 - **GH_CodeStringSegment**
 - **GH_ExpressionParser**
+  - Provides a run-time evaluator for Grasshopper expressions.
 - **GH_ExpressionString**
 - **GH_ExpressionSyntaxWriter**
 - **GH_OperatorType**
@@ -22,4 +23,6 @@ description: API reference for namespace Grasshopper.Kernel.Expressions from Gra
 - **GH_SolverException**
 - **GH_SyntaxException**
 - **GH_Variant**
+  - Variant data used in Grasshopper Expressions.
 - **GH_VariantType**
+  - Lists all possible variable types supported in the Grasshopper Expression Parser.

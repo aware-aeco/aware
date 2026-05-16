@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayStyle.GetDeformedShapeSettings
+Get deformed shape settings object from the style.

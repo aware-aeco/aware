@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointList.Insert
+Inserts the point to the specified index.

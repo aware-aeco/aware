@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Relay.ResolveDisplayName
+Determine the display name from first principles, and   cause all upstream and downstread relays to also resolve  their name.

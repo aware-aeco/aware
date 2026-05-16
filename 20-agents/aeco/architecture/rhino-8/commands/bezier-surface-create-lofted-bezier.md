@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BezierSurface.CreateLoftedBezier
+Loft a bezier surface through a list of bezier curves.

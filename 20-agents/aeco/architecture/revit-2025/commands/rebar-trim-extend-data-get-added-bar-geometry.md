@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarTrimExtendData.GetAddedBarGeometry
+Gets the added curves that will represent the bar at index barIndex.

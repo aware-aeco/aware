@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ApplicationEntryPoint.OnShutdownEO
+For Revit Macros internal use only.

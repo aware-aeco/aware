@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.MoveObjectMirror
+Mirrors the object in the plane defined by the given data is the current workplane.

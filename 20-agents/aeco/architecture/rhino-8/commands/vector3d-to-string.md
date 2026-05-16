@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Vector3d.ToString
+Returns the string representation of the current vector, in the form X,Y,Z.

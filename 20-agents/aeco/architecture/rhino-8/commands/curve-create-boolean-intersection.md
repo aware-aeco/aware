@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.CreateBooleanIntersection
+Calculates the boolean intersection of two closed, planar curves.              Note, curves must be co-planar.

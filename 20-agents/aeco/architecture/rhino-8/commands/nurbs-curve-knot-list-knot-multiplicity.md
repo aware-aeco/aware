@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurveKnotList.KnotMultiplicity
+Get knot multiplicity.

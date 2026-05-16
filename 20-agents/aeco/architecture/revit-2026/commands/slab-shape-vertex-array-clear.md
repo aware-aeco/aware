@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SlabShapeVertexArray.Clear
+Removes every item from the array, rendering it empty.

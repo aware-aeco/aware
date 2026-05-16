@@ -168,12 +168,17 @@ fn build_manifest_yaml(agent: &GeneratedAgent) -> Result<String, AwareError> {
 
 /// Quote a YAML scalar if it contains characters that would make it ambiguous (colons, special chars).
 fn quote_yaml_scalar(s: &str) -> String {
-    if s.contains(':')
-        || s.contains('#')
-        || s.starts_with('-')
-        || s.starts_with('?')
-        || s.contains('"')
-    {
+    // YAML "plain" scalars (no quotes) can't start with control characters
+    // that have special meaning. Vendor docstrings sometimes do — e.g.
+    // "**** This method is for proxies …" from RhinoCommon. Quote on any of
+    // these triggers to stay parseable.
+    let starts_special = s.chars().next().is_some_and(|c| {
+        matches!(
+            c,
+            '-' | '?' | '*' | '&' | '!' | '|' | '>' | '@' | '`' | '%' | '['
+        )
+    });
+    if s.contains(':') || s.contains('#') || starts_special || s.contains('"') {
         format!("\"{}\"", s.replace('\\', "\\\\").replace('"', "\\\""))
     } else {
         s.to_string()

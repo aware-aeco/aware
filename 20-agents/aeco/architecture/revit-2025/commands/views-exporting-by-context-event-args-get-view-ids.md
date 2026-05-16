@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewsExportingByContextEventArgs.GetViewIds
+Gets the views about to be exported by CustomExporter.

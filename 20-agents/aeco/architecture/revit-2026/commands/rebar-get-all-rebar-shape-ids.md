@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.GetAllRebarShapeIds
+Gets the ids of the RebarShapes elements that defines the shapes of the rebar.

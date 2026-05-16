@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DetailViewObject.TryGetPaperLength
+Converts a paper length into a model length.

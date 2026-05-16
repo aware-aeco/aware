@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudDataServices.GetPointCloudUrlAsync
+Retrieves the URL for a point cloud.

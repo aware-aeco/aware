@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportGetAttributeFilesWithPrefix
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ChangeDetectionInitInProgress
+DO NOT USE! For internal usage only!

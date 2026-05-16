@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Hatch.Explode
+Decomposes the hatch pattern into an array of geometry.

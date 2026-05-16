@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IDuplicateTypeNamesHandler.OnDuplicateTypeNamesFound
+Called when the destination document contains types with the same names as the types being copied.

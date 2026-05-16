@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitLinkType.GetLinkedFileStatus
+Returns the LinkedFileStatus of this link.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.ClearSurfaceData
+Removes surface parameters, curvature parameters and surface statistics from the mesh.

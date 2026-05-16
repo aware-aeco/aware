@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileDialog.GetSelectedModelPath
+Returns the selected file path chosen by the user.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AppearanceAssetElement.Create
+Creates a new AppearanceAssetElement from an existing rendering asset.

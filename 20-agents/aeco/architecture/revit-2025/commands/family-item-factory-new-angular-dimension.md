@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyItemFactory.NewAngularDimension
+Creates a new angular dimension object using the specified dimension type.

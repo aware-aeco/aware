@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CustomPart.GetAssembly
+Returns the assembly that the custom part belongs to.

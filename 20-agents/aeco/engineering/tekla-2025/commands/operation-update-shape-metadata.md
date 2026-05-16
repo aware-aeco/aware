@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.UpdateShapeMetadata
+Updates the value of an existing key in the shape metadata

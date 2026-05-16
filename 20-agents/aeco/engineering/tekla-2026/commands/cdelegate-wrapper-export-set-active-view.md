@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportSetActiveView
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetAllReportProperties
+DO NOT USE! For internal usage only!

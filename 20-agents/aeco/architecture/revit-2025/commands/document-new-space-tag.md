@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.NewSpaceTag
+Creates a new SpaceTag.

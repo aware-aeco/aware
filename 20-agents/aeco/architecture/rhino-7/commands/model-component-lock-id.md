@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelComponent.LockId
+Locks the component Id property.

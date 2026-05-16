@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloud.AppendNew
+Appends a new PointCloudItem to the end of this point cloud.

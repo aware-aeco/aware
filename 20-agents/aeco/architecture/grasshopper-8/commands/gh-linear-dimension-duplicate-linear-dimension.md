@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_LinearDimension.DuplicateLinearDimension
+Create a duplicate of this linear dimension.

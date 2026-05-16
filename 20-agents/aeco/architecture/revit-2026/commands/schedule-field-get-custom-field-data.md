@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleField.GetCustomFieldData
+Gets the data associated with this custom field. If this field isn't a  will return .

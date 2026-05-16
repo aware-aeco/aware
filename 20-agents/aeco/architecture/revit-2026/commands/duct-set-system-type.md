@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Duct.SetSystemType
+Updates the associated system type for the duct.

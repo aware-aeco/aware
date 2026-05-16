@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.UnweldEdge
+Adds creases to a smooth mesh by creating coincident vertices along selected edges.

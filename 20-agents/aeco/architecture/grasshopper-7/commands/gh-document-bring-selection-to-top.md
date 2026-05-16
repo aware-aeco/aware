@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.BringSelectionToTop
+Move the selection set to the top of the visible stack

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCProductWrapper.AddSite
+Adds a site (IfcObject) handle to associate with the IfcProduct in this wrapper.

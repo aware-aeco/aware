@@ -6,4 +6,6 @@ description: API reference for namespace Tekla.Structures.Model.Welding from Tek
 # Tekla.Structures.Model.Welding
 
 - **WeldGeometry**
+  - Class that represents weld seam specific geometry.
 - **WeldSeamPositionEnum**
+  - Weld seam position types.

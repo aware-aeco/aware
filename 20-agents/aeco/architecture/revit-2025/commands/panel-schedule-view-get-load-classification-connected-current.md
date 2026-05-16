@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.GetLoadClassificationConnectedCurrent
+Gets the Total Current for given Load Classification

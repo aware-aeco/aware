@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.PlaneCircle
+Intersects a plane with a circle using exact calculations.

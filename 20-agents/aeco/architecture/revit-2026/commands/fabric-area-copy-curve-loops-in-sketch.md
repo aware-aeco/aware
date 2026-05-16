@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricArea.CopyCurveLoopsInSketch
+Creates copies of the CurveLoops in the FabricArea sketch.

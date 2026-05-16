@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCAnyHandle.CreateAggregateAttribute
+Creates an attribute that is an aggregate. TODO: Rename to createAggregateByRef

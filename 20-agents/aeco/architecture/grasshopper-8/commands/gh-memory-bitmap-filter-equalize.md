@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MemoryBitmap.Filter_Equalize
+Set all the values in a specific channel to a specific value.

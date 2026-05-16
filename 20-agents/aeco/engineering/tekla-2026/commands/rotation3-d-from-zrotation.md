@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rotation3D.FromZRotation
+Creates  which represents rotation around the Z axis.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraintsManager.ApplyRebarConstraints
+Returns true if constraints were applied to rebar with success.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPSection.GetSegmentLength
+Get the length for the specified segment id in this section.

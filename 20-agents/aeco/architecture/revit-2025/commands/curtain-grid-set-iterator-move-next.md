@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurtainGridSetIterator.MoveNext
+Move the iterator one item forward.

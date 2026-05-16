@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToBrep_Primary
+Performs a direct cast from OnBrep or GH_Brep.   Data is not quaranteed to be duplicated.

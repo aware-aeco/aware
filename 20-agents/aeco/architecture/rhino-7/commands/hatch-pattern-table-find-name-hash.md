@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HatchPatternTable.FindNameHash
+Finds a HatchPattern given its name hash.

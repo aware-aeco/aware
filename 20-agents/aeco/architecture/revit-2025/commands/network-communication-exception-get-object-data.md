@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NetworkCommunicationException.GetObjectData
+Retrieves data needed to serialize the target object.

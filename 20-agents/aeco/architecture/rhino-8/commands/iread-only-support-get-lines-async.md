@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IReadOnlySupport.GetLinesAsync
+Gets individual lines with their read only state

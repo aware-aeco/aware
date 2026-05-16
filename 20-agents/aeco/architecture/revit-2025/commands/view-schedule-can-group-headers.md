@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.CanGroupHeaders
+Indicates if selected headers can be grouped for this schedule.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IntList.GetRange
+Gets a sub-list of the integer list.

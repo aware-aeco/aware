@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssemblyViewUtils.CreateMaterialTakeoff
+Creates a new material takeoff multicategory schedule assembly view for the assembly instance.

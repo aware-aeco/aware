@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_StateAwareObject.LoadState
+Override this function to load your state data.   DO NOT START A NEW SOLUTION. This will be handled by the state manager.

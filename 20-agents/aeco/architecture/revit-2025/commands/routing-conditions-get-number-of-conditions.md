@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RoutingConditions.GetNumberOfConditions
+Gets the number of included routing conditions.

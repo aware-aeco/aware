@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCExternalServiceUIData.GetRevitElementIds
+return the list of revit Element Ids

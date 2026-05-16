@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourWheelState.SetDefault
+Set all values to a fixed default.

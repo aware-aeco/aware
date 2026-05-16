@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.CompareTo
+Compare two documents. This function does not compare document content.

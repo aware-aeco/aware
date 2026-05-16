@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToLight_Secondary
+Attempts to convert other data types into an Rhino.Geometry.Light.   Data is not quaranteed to be duplicated.

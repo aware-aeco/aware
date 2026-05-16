@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroupTable.Show
+Shows, or unhides, all objects that are members of a group.

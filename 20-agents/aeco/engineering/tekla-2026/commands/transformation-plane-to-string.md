@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TransformationPlane.ToString
+Returns a string representation of the matrices that transform to local and global coordinates.

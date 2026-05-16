@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportModifyRebarSplitter
+DO NOT USE! For internal usage only.

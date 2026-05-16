@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudFilter.TestPoint
+Checks if a point is inside the volume of interest.

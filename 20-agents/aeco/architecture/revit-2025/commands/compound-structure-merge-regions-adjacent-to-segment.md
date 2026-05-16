@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.MergeRegionsAdjacentToSegment
+Merges the two regions which share the specified segment.

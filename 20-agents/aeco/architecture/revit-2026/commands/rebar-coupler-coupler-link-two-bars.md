@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarCoupler.CouplerLinkTwoBars
+returns true if the coupler sits on two rebar and false otherwise

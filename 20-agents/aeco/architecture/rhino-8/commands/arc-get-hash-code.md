@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Arc.GetHashCode
+Computes a hash code for the present arc.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RadioMenuItem.PerformClick
+Performs the click handler for this item which sets the check state to true.

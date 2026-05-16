@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarCurvesData.SetDistributionPath
+Sets a new distribution path to be applied to the rebar. This information is set to the rebar after the API execution is finished successfully.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interop.RhinoObjectFromPointer
+Constructs a RhinoCommon Rhino object from an unmanaged C++ RhinoObject pointer.

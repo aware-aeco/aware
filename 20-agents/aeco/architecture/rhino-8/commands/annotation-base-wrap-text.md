@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnnotationBase.WrapText
+Wrap text

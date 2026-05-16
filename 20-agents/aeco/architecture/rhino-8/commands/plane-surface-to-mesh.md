@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlaneSurface.ToMesh
+Computes a polygon mesh of the surface made of one quad.

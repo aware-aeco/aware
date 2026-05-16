@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudOverrides.Assign
+Assigns values of the source overrides to this object.

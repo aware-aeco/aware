@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OptionalFunctionalityUtils.IsShapeImporterAvailable
+Checks whether the ShapeImporter functionality and Material Library are available in the installed Revit.

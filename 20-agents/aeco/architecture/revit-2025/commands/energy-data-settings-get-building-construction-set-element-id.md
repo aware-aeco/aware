@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyDataSettings.GetBuildingConstructionSetElementId
+Id of the building construction set.

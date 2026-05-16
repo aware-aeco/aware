@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportHierarchicObjectChildrenOperation
+DO NOT USE! For internal usage only!

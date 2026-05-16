@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.SwitchPhases
+Switches the circuit phases at the slot.

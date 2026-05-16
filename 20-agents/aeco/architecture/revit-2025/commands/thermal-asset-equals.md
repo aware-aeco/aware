@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThermalAsset.Equals
+Determines whether this thermal asset is equal to another.

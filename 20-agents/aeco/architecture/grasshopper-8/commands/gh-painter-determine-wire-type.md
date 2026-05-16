@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Painter.DetermineWireType
+Utility method for determining wire display types.

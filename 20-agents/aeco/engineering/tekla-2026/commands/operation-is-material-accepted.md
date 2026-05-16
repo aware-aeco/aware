@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.IsMaterialAccepted
+Check if detailer has accepted a material that is against fabricator settings.

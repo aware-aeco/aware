@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalService.GetRegisteredServerIds
+Returns Ids of all servers registered for the service.

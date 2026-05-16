@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.GetMinSymbolWidth
+Obtains the minimum width of the given FamilySymbol.

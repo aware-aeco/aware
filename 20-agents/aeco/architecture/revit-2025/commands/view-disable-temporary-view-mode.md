@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.DisableTemporaryViewMode
+Disables the specified temporary view mode.

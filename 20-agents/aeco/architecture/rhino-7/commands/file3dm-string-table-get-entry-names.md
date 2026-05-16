@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmStringTable.GetEntryNames
+Return list of all entry names for a given section of document strings in the 3dm file.

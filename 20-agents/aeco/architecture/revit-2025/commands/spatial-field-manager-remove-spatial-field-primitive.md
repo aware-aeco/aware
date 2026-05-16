@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpatialFieldManager.RemoveSpatialFieldPrimitive
+Removes analysis results primitive identified by the unique index

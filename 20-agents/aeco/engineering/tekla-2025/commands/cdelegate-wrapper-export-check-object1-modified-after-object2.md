@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportCheckObject1ModifiedAfterObject2
+DO NOT USE! For internal usage only!

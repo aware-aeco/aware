@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScaleValue.Create
+Create from string

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PipeFittingAndAccessoryPressureDropData.SetDefaultEntity
+Stores the default entity in the data.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsSurfaceData.IsValid
+Check if the object contains a valid NurbsSurfaceData.

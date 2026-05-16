@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDDisplayParameters.Fine
+Parameters for a fine limit surface display mesh.             SubD display density = adaptive SubDDisplayParameters.Density.FineDensity.

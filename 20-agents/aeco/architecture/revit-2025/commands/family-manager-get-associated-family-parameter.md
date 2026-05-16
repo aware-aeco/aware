@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyManager.GetAssociatedFamilyParameter
+Gets the associated family parameter of an element parameter.

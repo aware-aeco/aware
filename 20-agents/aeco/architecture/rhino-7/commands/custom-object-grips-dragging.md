@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CustomObjectGrips.Dragging
+Determines if grips are currently being dragged.

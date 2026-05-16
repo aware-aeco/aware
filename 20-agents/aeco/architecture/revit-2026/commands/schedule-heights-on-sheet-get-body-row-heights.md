@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleHeightsOnSheet.GetBodyRowHeights
+Returns each row's height of schedule body on sheet view.

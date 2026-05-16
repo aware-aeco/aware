@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Notification.HideModal
+Tells Rhino to hide the notification if it is being currently shown as a modal.

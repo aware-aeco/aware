@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PathOfTravel.SetRevealObstaclesMode
+Sets Reveal Obstacles mode for the given view.

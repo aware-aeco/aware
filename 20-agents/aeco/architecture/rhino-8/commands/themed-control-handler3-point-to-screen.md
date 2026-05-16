@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedControlHandler`3.PointToScreen
+Converts a point from control space to screen space

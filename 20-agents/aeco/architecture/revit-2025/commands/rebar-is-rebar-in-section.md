@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.IsRebarInSection
+Identifies if this Rebar is cut by the view plane of the given view.

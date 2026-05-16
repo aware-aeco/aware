@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPAnalyticalModelData.GetNodeById
+Gets the analytical node with the specified id.

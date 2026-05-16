@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSection.IsSplitSection
+Sections can be split (jog) so that they cut at >1 plane.

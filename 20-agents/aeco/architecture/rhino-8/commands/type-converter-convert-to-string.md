@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TypeConverter.ConvertToString
+Converts to a string.

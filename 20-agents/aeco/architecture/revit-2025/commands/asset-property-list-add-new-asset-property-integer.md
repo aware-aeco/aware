@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssetPropertyList.AddNewAssetPropertyInteger
+Adds a new AssetPropertyInteger containing the input value to this list.

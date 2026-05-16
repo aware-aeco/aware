@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.Id
+Get the Object Guid this mesh is for.

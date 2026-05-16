@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CommonObject.FromJSON
+Create a CommonObject instance from a JSON string

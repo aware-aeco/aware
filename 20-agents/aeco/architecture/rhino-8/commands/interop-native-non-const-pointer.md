@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interop.NativeNonConstPointer
+Get a CRhinoPrintInfo* for a given ViewCaptureSettings class

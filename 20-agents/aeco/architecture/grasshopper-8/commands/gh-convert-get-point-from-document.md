@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.GetPointFromDocument
+Harvest a point object from a Rhino document.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnnotationSymbol.addLeader
+add a leader to this annotation symbol.

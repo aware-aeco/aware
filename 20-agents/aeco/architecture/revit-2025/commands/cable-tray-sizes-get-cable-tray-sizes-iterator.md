@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CableTraySizes.GetCableTraySizesIterator
+Returns a CableTraySizeIterator to the MEP cable tray sizes.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LicenseUtils.CheckInLicense
+Checks in a previously checked out license to             the Zoo server from which it was checked out.

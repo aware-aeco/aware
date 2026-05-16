@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Viewport.ProjectY
+Project a value along constant Y from canvas coordinates into control coordinates.

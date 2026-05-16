@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Parameter.SetMultiple
+Sets multiple parameters to new values.

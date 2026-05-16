@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FillPattern.ExportToPAT
+Export a list of FillPatterns to an AutoCAD PAT file.

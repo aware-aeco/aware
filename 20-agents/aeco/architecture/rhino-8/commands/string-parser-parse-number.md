@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StringParser.ParseNumber
+Parse a string expression to get a number

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshFaceList.MergeAdjacentFaces
+Merges two triangular mesh faces that share an edge into one quadrangular face.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportDrawTemporaryPolyLineWithId
+DO NOT USE! For internal usage only!

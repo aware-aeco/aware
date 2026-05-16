@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.Delete
+Deletes objref.Object(). The deletion can be undone by calling UndeleteObject().

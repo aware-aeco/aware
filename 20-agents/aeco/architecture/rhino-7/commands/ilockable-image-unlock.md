@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ILockableImage.Unlock
+Unlocks the previously locked data

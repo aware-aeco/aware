@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationServiceButton.IsValidConditionIndex
+Validates if the given condition index is valid or not.

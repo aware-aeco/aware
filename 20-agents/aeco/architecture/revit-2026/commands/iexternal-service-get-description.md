@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExternalService.GetDescription
+Implement this method to return a description of the service.

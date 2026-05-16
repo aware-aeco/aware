@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Model.GetModelObjectSelector
+Returns a ModelObjectSelector instance from which different kind of selections             can be made.

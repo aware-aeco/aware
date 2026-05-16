@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalDemandFactorDefinition.GetValuesCount
+Returns the number of values in the set.

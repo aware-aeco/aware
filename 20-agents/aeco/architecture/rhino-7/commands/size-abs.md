@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Size.Abs
+Returns the absolute width and height of the specified

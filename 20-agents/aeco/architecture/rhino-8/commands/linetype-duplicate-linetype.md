@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Linetype.DuplicateLinetype
+Duplicates a linetype, clears the name, id, and locked bits.

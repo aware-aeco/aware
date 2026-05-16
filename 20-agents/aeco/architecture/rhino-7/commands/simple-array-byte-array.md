@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayByte.Array
+Return the raw data.

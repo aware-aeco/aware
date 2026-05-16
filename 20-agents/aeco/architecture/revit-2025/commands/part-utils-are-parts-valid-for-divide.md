@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PartUtils.ArePartsValidForDivide
+Identifies if provided members are valid for dividing parts.

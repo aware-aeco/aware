@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoDoc.TryGetRenderPrimitiveBoundingBox
+Get the bounding box for the custom render meshes associated with this             document (i.e. - GH meshes).

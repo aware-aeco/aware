@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_UserObject.SetDataFromObject
+Set the Data field content of ths UserObject from a Document object instance.

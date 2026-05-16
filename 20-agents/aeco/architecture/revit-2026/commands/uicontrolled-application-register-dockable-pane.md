@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIControlledApplication.RegisterDockablePane
+Adds a new dockable pane to the Revit user interface.

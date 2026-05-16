@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelHandler.CreateNewSingleUserModel
+Creates a new single user model.

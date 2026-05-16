@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpatialElementBoundarySubface.GetSubface
+Returns a face that represents the portion of the room face bounded by the boundary element.

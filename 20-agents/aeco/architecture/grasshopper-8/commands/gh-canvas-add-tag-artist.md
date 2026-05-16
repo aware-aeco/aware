@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Canvas.AddTagArtist
+Add a Tag Artist instance to this canvas.

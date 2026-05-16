@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RadioButtonGroup.AddItem
+Adds a new ToggleButton to the RadioButtonGroup.

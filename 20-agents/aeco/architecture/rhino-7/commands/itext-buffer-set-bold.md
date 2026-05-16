@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ITextBuffer.SetBold
+Sets the bold flag for the specified text range.

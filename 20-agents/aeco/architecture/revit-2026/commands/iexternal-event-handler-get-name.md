@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExternalEventHandler.GetName
+String identification of the event handler.

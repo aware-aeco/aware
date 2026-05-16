@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EarthAnchorPoint.Dispose
+Actively reclaims unmanaged resources that this instance uses.

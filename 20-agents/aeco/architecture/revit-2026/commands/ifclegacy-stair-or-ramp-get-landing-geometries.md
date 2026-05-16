@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCLegacyStairOrRamp.GetLandingGeometries
+Gets the geometries of landings.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBendingDetail.GetHost
+Gets a reference to the reinforcement element that this bending detail represents.

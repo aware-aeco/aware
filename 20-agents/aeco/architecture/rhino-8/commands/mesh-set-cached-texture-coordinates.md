@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.SetCachedTextureCoordinates
+Set cached texture coordinates using the specified mapping.

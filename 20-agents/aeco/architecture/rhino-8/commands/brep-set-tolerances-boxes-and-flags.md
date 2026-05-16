@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.SetTolerancesBoxesAndFlags
+Set tolerances and flags in a Brep.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InternalDefinition.SetAllowVaryBetweenGroups
+Whether or not the parameter values can vary across group members.

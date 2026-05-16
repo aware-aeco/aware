@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Plane.Rotate
+Rotate the plane about its origin point.

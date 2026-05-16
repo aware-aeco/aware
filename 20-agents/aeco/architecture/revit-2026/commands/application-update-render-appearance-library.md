@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.UpdateRenderAppearanceLibrary
+Updates the stored render appearance library, giving the Revit session access to any new RPC content.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepFaceList.GetEnumerator
+Gets an enumerators that yields  objects.

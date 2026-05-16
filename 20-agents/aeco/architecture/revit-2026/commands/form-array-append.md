@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormArray.Append
+Add the form to the end of the array.

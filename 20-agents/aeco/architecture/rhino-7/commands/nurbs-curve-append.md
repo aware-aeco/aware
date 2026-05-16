@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsCurve.Append
+Appends a NURBS curve to this curve.

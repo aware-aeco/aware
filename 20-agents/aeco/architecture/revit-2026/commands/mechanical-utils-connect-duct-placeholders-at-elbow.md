@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MechanicalUtils.ConnectDuctPlaceholdersAtElbow
+Connects a pair of placeholders that can intersect in an Elbow connection.

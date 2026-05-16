@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DynamicLayout.AddSeparateColumn
+Adds a separate vertical column of items in a new vertical section

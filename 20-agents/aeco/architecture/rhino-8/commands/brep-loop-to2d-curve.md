@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepLoop.To2dCurve
+Create a 2d curve that traces the entire loop

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GraphicsPath.AddArc
+Adds an arc into the specified rectangle

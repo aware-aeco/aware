@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.IsProductList
+Gets whether or not the fabrication part is a product list.

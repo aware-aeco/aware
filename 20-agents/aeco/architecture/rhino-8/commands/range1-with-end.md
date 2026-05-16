@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Range`1.WithEnd
+Creates a copy of the current range with a different end value.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShapeReferenceOptions.IsValidExternalGeometryId
+Validates that the input ExternalGeometryId can be assigned to a direct shape reference.

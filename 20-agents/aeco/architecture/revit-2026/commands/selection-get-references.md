@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Selection.GetReferences
+Returns the references that are currently selected.

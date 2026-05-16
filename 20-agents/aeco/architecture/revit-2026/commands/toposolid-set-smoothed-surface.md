@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Toposolid.SetSmoothedSurface
+Sets smoothed surface setting of Toposolid.

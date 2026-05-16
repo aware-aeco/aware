@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExternalEventHandler.Execute
+This method is called to handle the external event.

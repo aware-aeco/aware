@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementRecord.GetOwnerViewId
+Gets the element id of the owner view record.

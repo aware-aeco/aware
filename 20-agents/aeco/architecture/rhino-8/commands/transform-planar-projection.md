@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform.PlanarProjection
+Constructs a projection transformation.

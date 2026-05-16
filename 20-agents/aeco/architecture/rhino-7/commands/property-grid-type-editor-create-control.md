@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PropertyGridTypeEditor.CreateControl
+Creates the control for editing (and viewing for platforms that support it)

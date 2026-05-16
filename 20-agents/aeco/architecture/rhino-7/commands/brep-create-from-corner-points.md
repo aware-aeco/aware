@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreateFromCornerPoints
+Makes a Brep with one face from three corner points.

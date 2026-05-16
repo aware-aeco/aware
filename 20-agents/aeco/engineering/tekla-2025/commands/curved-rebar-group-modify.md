@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurvedRebarGroup.Modify
+Modifies the existing curved rebar group in the model database to match the current one.

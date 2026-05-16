@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_SourceCodeEditor.DestroyManagedEditor
+Close, dispose and remove the editor with the given ID

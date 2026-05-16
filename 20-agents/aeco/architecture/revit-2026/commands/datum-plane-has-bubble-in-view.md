@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DatumPlane.HasBubbleInView
+Identifies if the DatumPlane has bubble or not.

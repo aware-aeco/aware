@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MacroModuleIterator.MoveNext
+Increments the iterator to the next item.

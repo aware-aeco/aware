@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Ellipse.ToNurbsCurve
+Constructs a nurbs curve representation of this ellipse.              This is equivalent to calling NurbsCurve.CreateFromEllipse().

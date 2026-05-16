@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dm.SetPreviewImage
+Preview image used for file explorer

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaBasedLoadBoundaryLineData.GetLevelIdsInRange
+Returns level ids between the top level and the bottom level (including the top level and the bottom level) of    the area based load boundary line.

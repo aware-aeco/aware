@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleField.IsValidCombinedParameters
+Checks if data is valid for combined parameters

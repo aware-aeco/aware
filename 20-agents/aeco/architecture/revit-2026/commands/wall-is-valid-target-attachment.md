@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Wall.IsValidTargetAttachment
+Says whether the element id can be used as a target for a new attachment.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyManager.ReorderParameters
+Reorders the family parameters by the specified parameters order.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDefinition.AddParameter
+Add a parameter to the shape definition.

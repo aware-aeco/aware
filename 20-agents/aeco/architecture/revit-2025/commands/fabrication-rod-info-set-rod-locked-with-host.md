@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationRodInfo.SetRodLockedWithHost
+Locks the rod with the host. The method is applicable only for bearer hanger.

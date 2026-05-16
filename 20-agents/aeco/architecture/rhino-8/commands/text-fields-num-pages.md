@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextFields.NumPages
+Number of layout pages in a document

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SymbolicCurveArray.Append
+Add the model curve to the end of the array.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.CreateExtrusionToPoint
+Constructs a surface by extruding a curve to a point.

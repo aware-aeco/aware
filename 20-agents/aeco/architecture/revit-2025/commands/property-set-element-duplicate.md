@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PropertySetElement.Duplicate
+Creates a duplicate of this PropertySetElement.

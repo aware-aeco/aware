@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetMaterialGUID
+Gets the material GUID by its identifier.

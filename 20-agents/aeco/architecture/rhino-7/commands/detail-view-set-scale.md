@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DetailView.SetScale
+Sets the detail viewport's projection so geometry is displayed at a certain scale.

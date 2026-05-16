@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIApplication.DoDragDrop
+Initiates a drag and drop operation with a custom drop implementation.

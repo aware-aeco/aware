@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Cluster.InstanceGuidsChanged
+Whenever the InstanceIDs of objects were changed, the cluster needs to be informed.

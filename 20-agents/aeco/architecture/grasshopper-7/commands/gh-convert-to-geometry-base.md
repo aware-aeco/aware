@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGeometryBase
+Attempt to convert an object into a Rhino.Geometry.GeometryBase instance.

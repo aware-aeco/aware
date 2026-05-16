@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Decal.VertSweep
+Gets the angles of the decal's arc of 'vertical sweep'. Replaces StartLongitude and EndLongitude.

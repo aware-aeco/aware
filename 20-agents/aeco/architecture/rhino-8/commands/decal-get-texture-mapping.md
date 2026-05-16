@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Decal.GetTextureMapping
+The TextureMapping of the decal.

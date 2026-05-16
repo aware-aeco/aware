@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadCase.IsLoadNatureId
+Checks whether provided element ID refer to LoadNature element.

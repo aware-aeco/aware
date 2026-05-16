@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterFilterRuleFactory.CreateSharedParameterApplicableRule
+Creates a filter rule that tests elements for support of a shared parameter.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfigurationInfo.GetProfiles
+Return the profiles in the fabrication configuration.

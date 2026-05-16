@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExtElemChangeBeamSectionRegistry.Unregister
+Unregisters IExtElemChangeBeamSection.

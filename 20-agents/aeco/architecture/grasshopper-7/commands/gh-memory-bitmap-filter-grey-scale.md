@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MemoryBitmap.Filter_GreyScale
+Convert the image to a greyscale shadow of its former self.

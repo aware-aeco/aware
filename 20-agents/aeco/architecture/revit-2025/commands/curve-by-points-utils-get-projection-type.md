@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveByPointsUtils.GetProjectionType
+Gets the projection type of the CurveElement.

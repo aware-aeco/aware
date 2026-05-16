@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadCombination.Create
+Creates a new LoadCombination.

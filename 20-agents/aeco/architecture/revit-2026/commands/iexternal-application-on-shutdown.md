@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExternalApplication.OnShutdown
+Implement this method to execute some tasks when Autodesk Revit shuts down.

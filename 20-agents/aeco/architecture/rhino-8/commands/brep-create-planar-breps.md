@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreatePlanarBreps
+Constructs a set of planar breps as outlines by the loops.

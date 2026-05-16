@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleTemplate.CopyFrom
+Copies all values from other element to this object.

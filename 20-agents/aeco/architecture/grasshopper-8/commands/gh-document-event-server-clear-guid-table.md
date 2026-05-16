@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentEventServer.ClearGuidTable
+Clear the entire ID table.

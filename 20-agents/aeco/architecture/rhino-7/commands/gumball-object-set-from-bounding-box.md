@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GumballObject.SetFromBoundingBox
+Sets the gumball bounding box with respect to a frame.

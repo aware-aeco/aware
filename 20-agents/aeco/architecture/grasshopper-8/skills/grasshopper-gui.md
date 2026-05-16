@@ -6,22 +6,34 @@ description: API reference for namespace Grasshopper.GUI from Grasshopper.dll
 # Grasshopper.GUI
 
 - **GH_ASSERT_DIALOG**
+  - Dialog used in Grasshopper ASSERT calls.
 - **GH_AlignWidgetSettingsUI**
 - **GH_AnimatedProcessPanel**
+  - Panel that displays an infinite animation.
 - **GH_AnimationPhase**
+  - Enumerates the possible phases in which an animation can occur.
 - **GH_Animator**
+  - Provides static methods and constructors GH_Animator(Of T).
 - **GH_Animator`1**
+  - Provides methods for animating values.
 - **GH_ArrowControl**
+  - Utility control for 2D Domain UI.
 - **GH_AssemblyInfoDialog**
+  - The dialog that shows Grasshopper exceptions and stack traces.
 - **GH_AsynchFileData**
+  - This class provides asynchronous methods to keep tabs on a file.
 - **GH_AuthorSettingsCategory**
 - **GH_AuthorSettingsUI**
 - **GH_AutoSaveLastChanceForm**
 - **GH_AutoSaveSettingsUI**
 - **GH_Banner**
+  - Grasshopper banner form.
 - **GH_BezierSolver**
+  - Class for evaluating four-point bezier curves as used in GDI+
 - **GH_CanvasMouseEvent**
+  - Class used in Canvas UI events.
 - **GH_CanvasObjectMouseDownEventArgs**
+  - Event arguments for the CanvasObjectMouseDown events.
 - **GH_CanvasOverlaySettingsUI**
 - **GH_CanvasZuiSettingsUI**
 - **GH_CapsuleDisabledPaletteSettingsUI**
@@ -30,207 +42,332 @@ description: API reference for namespace Grasshopper.GUI from Grasshopper.dll
 - **GH_CapsuleStandardPaletteSettingsUI**
 - **GH_CapsuleWarningPaletteSettingsUI**
 - **GH_ClusterGateWayProperties**
+  - This windows provides ways to change the Cluster input and output gateway properties.
 - **GH_ClusterPasswordWindow**
 - **GH_ClusterPropertiesEditor**
 - **GH_ColourPicker**
+  - Provides the standard Grasshopper Colour picker as a winforms Control.
 - **GH_ColourSwatchControl**
 - **GH_ColourSwatchEventArgs**
+  - Event arguments used in the GH_ColourSwatchControl.ColourChanged event.
 - **GH_CompassWidgetSettingsUI**
 - **GH_ComponentAggregateForm**
 - **GH_ComponentGuidConflictDialog**
+  - Dialog used when multiple objects with similar GUIDs are encountered during plugin loading.
 - **GH_ComponentInfoForm**
 - **GH_ComponentMenuSettingsUI**
 - **GH_Constraint**
+  - Constraints used during UI dragging operations.
 - **GH_ControlKnobOptionsForm**
 - **GH_ControlKnobValueEditor**
 - **GH_CreateStateDialog**
+  - Dialog used to save document states.
 - **GH_CursorServer**
+  - Class used to cache and set cursors.
 - **GH_CustomButton**
+  - The GH_CustomButton class maintains all information needed for   user-defined UI buttons.
 - **GH_CustomButtonRequireFilter**
+  - Utility class for custom button requirement filters.
 - **GH_CustomButtonRunCode**
+  - Utility class for custom button click events.
 - **GH_DataTreeBranchGraphic**
+  - Represents a single branch in a datatree graphic.
 - **GH_DataTreeGraphic**
+  - Represents a non-mutable graphic representation of a data tree.
 - **GH_DateTimePicker**
 - **GH_DebugLogForm**
 - **GH_DefaultPreviewSettingsUI**
 - **GH_DeveloperSettings**
+  - Window for editing the developer settings.
 - **GH_DigitScroller**
+  - Provides the standard Grasshopper Digit scroller as a winforms Control.
 - **GH_DisplaySettingsCategory**
 - **GH_DocumentEditor**
+  - The Grasshopper main window.
 - **GH_DocumentMdiItem**
 - **GH_DocumentPreviewSettings**
+  - Document preview settings colour picker.
 - **GH_DocumentPreviewSettingsUI**
 - **GH_DocumentPropertiesEditor**
+  - Window for editing the user properties of a grasshopper documents.
 - **GH_DoubleBufferedPanel**
+  - Derives from Windows.Forms.Panel but overrides certain flags that improve   on-screen rendering. Use panel if you want to have a custom drawn control   that is under the control of the owner form.
 - **GH_DragDropImageRenderer**
 - **GH_DragInfo**
+  - Contains data used for UI drag operations.
 - **GH_EtoUtil**
 - **GH_ExpressionEditor**
+  - The Grasshopper expression editor window.
 - **GH_ExternalFileConflictDialog**
 - **GH_ExternalFilePanel**
 - **GH_FadeAnimation**
+  - Utility class for animating fade ZUI events on the canvas.
 - **GH_FadePhase**
+  - Enumerates the possible states of a ZUI fade animation.
 - **GH_FileRecoveryAction**
+  - Enumerates the possible actions to undertake in case of a recovery file.
 - **GH_FilesSettingsCategory**
 - **GH_FindObjectDialog**
 - **GH_FolderPathBrowser**
+  - Utility control for developer friendly path browsers.
 - **GH_FontConsoleSettingsUI**
 - **GH_FontControl**
+  - Represents a control that offers both Font preview and Picking methods.
 - **GH_FontList**
+  - Represents the installed Font collection. This control allows   both navigation and selection of Font Families.
 - **GH_FontMappingDialog**
+  - Font Browser dialog.
 - **GH_FontPicker**
 - **GH_FontScriptSettingsUI**
 - **GH_FontScroller**
+  - Represents a panel with a scrolling collection of pangrams.
 - **GH_FontStandardSettingsUI**
 - **GH_FontsSettingsCategory**
 - **GH_FormShepard**
+  - A Form shepard is used to herde a bunch of floating forms.   Important forms that potentially spout child forms might choose to   implement one.
 - **GH_FormattingSettingsUI**
 - **GH_GDI_PolyArc**
+  - Represents a class which can handle both GDI and OpenNurbs Polyarcs.
 - **GH_GDI_Util**
+  - Contains some global function for filleting corners of GDI objects.
 - **GH_GHALoadSettingsUI**
 - **GH_GeometricFont**
+  - Exposes methods for drawing geometric characters.
 - **GH_GooProxyList**
 - **GH_GradientEditor**
+  - Editor control for Grasshopper gradients
 - **GH_GradientMenuItem**
+  - Previews a gradient in a menu strip.
 - **GH_GraphEditor**
+  - Editor control for Grasshopper Graphs
 - **GH_GraphicsUtil**
+  - Utility class with static (Shared) functions that help with colour, shape and text rendering.
 - **GH_GumballAndMeshingSettingsUI**
 - **GH_HiResExportForm**
+  - The dialog used in Hi-Res exports
 - **GH_HorizontalSeparator**
+  - GUI elements for creating visual separations.
 - **GH_IconLabel**
+  - A simple Icon with an icon overlay plus highlight rectangle.
 - **GH_IconPicker**
+  - Provides a standard icon selection interface.
 - **GH_IconTable**
+  - Utility class for caching 32BppPArgb icons with fast lookup.   Icons are hashed using a hashing algorithm to prevent identical entries.
 - **GH_IconVariations**
 - **GH_ImageSamplerSettingsDialog**
+  - Dialog used to adjust Image Sampler settings.
 - **GH_InfoTextBox**
+  - Provides a textbox control that displays a default message when the textbox is empty.
 - **GH_InfoTextBoxEventArgs**
 - **GH_InterfaceSettingsCategory**
 - **GH_Interpolation**
+  - Enumerates the possible animation progression types.
 - **GH_Interval2DPicker**
+  - Interval 2D picker control.
 - **GH_KernelAssemblyCopyLocalWarning**
 - **GH_Label**
+  - Label control that inherits from System.Windows.Forms.Label but incorporates   forced ClearType rendering.
 - **GH_LexerComboEditor**
+  - Editor for Lexer combos.
 - **GH_LexerMaskEditor**
 - **GH_ListScroller**
+  - Unfinished utility control.
 - **GH_ListScrollerChangedEventArgs**
+  - Unfinished utility control event arguments.
 - **GH_LoadProtectDialog**
 - **GH_LoadingError**
+  - Error message control used in the Banner.
 - **GH_LoadingExceptionBrowser**
 - **GH_MDSliderDialog**
 - **GH_MRUSettingsUI**
 - **GH_MarkerType**
 - **GH_MarkovWidgetSettingsUI**
 - **GH_MarkupAttributesDialog**
+  - Grasshopper sketch object attributes editor.
 - **GH_MaterialPreview**
+  - Class for generating Preview Material thumbnails.
 - **GH_MaterialPreviewControl**
+  - Offers a frontend for Grasshopper Material previews.
 - **GH_MenuCustomControl**
+  - Utility control for putting custom controls into menus.
 - **GH_MenuShortCutWrapper**
+  - Utility class for handling menu shortcuts in non-modal Windows.Forms dialogs.
 - **GH_MenuShortcut**
+  - Maintains information about context and dropdown menu shortcuts.
 - **GH_MenuShortcutEventArgs**
+  - Arguments used in the AggregateShortcutMenuItems event.
 - **GH_MenuShortcutSettingsUI**
 - **GH_MenuStrip**
+  - Derives from Windows.Forms.MenuStrip to supply ClickThrough behaviour.
 - **GH_MenuTextBox**
+  - Utility control for putting textboxes into menus.
 - **GH_MeshingParameterDialog**
+  - Exposes a UI for Rhino meshing parameters.
 - **GH_MeshingParametersEventArgs**
 - **GH_MeshingParametersFrontEnd**
 - **GH_MessageMustReadWindow**
 - **GH_MessagesWidgetSettingsUI**
 - **GH_MouseTracker**
+  - Record mouse-movements over time.
 - **GH_MultiDocSave**
 - **GH_MultiSaveDocumentEntry**
 - **GH_MultilineGooEditor**
+  - Utility class that adds certain multi-line features to standard windows Textboxes.
 - **GH_NamedViewMenuItem**
 - **GH_NickNameTextBox**
+  - Control for dispaying nicknames in menus.
 - **GH_NumberPresets**
+  - Maintains a collection of presets for use in numeric GUI.
 - **GH_NumberSliderPopup**
+  - Window for editing number sliders
 - **GH_NumberSliderSnappingEditor**
 - **GH_NumericScrollerValueEditor**
+  - Utility class that improves upon the standard windows numeric scroll control.
 - **GH_NumericTextBox**
+  - Utility control that improves upon the standard windows numeric text box.
 - **GH_ObjectExceptionDialog**
+  - Standard Grasshopper object exception dialog.
 - **GH_PageCurl**
+  - Provides methods for computing the shape and size of page curls, as well as the GDI paths and brushes required to draw them.
 - **GH_PaletteSettingsCategory**
 - **GH_PanelEditor**
+  - Window used for editing custom notes with TextPanels.
 - **GH_PanelEditorControl**
 - **GH_ParamViewerForm**
 - **GH_ParseAssemblyProgressDialog**
+  - Assembly progress dialog as used during plugin loading.
 - **GH_ParserFunctionViewer**
+  - Dialog showing all Expression functions.
 - **GH_PasswordBox**
 - **GH_PersistentDataEditor**
+  - Control for editing generic values.
 - **GH_PingMessageWindow**
 - **GH_PointCurveParamEditor**
+  - Window used to edit the point-on-curve parameters in Point object references.
 - **GH_PreviewPreset**
 - **GH_PreviewSettingsChangedEventArgs**
+  - Event arguments for Colour changes in GH_DocumentPreviewSettings.
 - **GH_ProfilerWidgetSettingsUI**
 - **GH_ProgressBar**
+  - General utility progress bar.
 - **GH_PruderyFilter**
+  - Enumerates the possible level of prudeness for the general User Interface.
 - **GH_PruderySettingsUI**
 - **GH_QuickImageEditor**
 - **GH_RemoteSliderControl**
+  - Slider control for remote panel population.
 - **GH_RemoteSwitchControl**
+  - Boolean toggle for remote panel population.
 - **GH_RevisionEditor**
+  - Editor window for revisions.
 - **GH_RhAttributesEditor**
+  - Editor window for Rhino Object Attributes.
 - **GH_RibbonLayoutEditor**
 - **GH_RibbonLayoutEditorDialog**
 - **GH_RibbonLayoutEditorUndoRedoEventArgs**
 - **GH_RibbonSettingsUI**
 - **GH_RotationalFrame**
+  - Represents a single frame in a rotational tuning history.
 - **GH_RotationalTuningData`1**
+  - Utility class for keeping track of rotational mouse events.
 - **GH_SamplingSphere**
+  - Represents a coloured sphere that can be sampled at various rotations.
 - **GH_ScribblePropertiesDialog**
 - **GH_SeparatorDisplay**
+  - Enumerates all possible display modes for horizontal and vertical separators.
 - **GH_SettingsCategory**
+  - Base implementation of IGH_SettingsCategory.   Derive from this class and provide an empty constructor to play ball.
 - **GH_SettingsGUI**
 - **GH_SettingsServerBrowser**
 - **GH_Slider**
+  - Provides a standard Grasshopper slider as a winforms control.
 - **GH_SliderAnimationSetup**
+  - Animation setup dialog.
 - **GH_SliderInputMode**
+  - Enumerates all possible slider text input modes.
 - **GH_Slider_Obsolete**
+  - General purpose numeric slider.
 - **GH_SolverSettingsCategory**
 - **GH_SolverSettingsUI**
 - **GH_SourceCodeBlock**
+  - Represents a continuous collection of source code lines with similar READONLY flags.
 - **GH_SourceCodeEditor**
+  - Default VB and C# editor for Grasshopper.
 - **GH_SourceCodeLine**
+  - Represents a single line of source code
 - **GH_SourceCodeLines**
+  - Represents a collection of source code lines.
 - **GH_Splitter**
+  - Splitter control.
 - **GH_StandardIcons**
+  - Provides access to a set of standard icons.
 - **GH_StateObjectFrontEnd**
+  - Frontend control for SaveStates
 - **GH_TemplatePathSettingsUI**
 - **GH_TextInputBaseControl**
 - **GH_TextRenderingConstants**
+  - Contains app wide text-rendering constants. When you are drawing your own texts   use these constants instead of TextRenderingHint::****
 - **GH_ToolTipForm**
+  - Grasshopper tooltip form.
 - **GH_Toolstrip**
+  - Inherits from System.Windows.Toolstrip and provides Clickthrough behaviour.
 - **GH_ToolstripItemKeyHandlerResult**
+  - Enumerates the possible responses a IGH_ToolstripItemKeyHandler control have have to a keypress.
 - **GH_Tooltip**
+  - Implements a custom Tooltip class with advanced functionality.  All methods and fields are Shared. There can never be more than one GH_Tooltip.
 - **GH_TooltipComponent**
+  - This component provides Grasshopper tooltip functionality through a winforms Component.
 - **GH_TooltipDisplayEventArgs**
+  - Event arguments used in the Tooltip Component.
 - **GH_TooltipPalette**
+  - Enumerates all Grasshopper tooltip colour palettes.
 - **GH_TooltipWiggleSettingsUI**
 - **GH_TrackerFrame**
+  - Represents a single frame in a mouse-tracker history.   A frame represents all relevant mouse and keyboard data at a given time.
 - **GH_UndoRecordBrowser**
+  - Undo browser.
 - **GH_UndoServerBrowser**
+  - Provides access to the Undo data inside a document.
 - **GH_UnrecognizedObjectsForm**
 - **GH_UpgradeComponentControl**
+  - Control used to display a collection of IGH_UpgradeObjects.
 - **GH_UpgradeComponentForm**
 - **GH_UpgradeUndoWarningDialog**
 - **GH_UserObjectDeleteConfirmationDialog**
 - **GH_UserObjectProperties**
+  - Exposes all GH_UserObject settings.
 - **GH_ValueListEditor**
 - **GH_VariableParamProxy**
+  - Proxy object for maintaining variable parameters.
 - **GH_VariableParameterManager**
+  - Editor for adding and subtracting variable parameters.
 - **GH_VersionHistoryForm**
+  - Dialog used for viewing the Grasshopper version history.
 - **GH_VersionHistoryRelease**
+  - Represents a single release block in the Grasshopper Version History.
 - **GH_VerticalScrollBar**
+  - Scroll bar control with floating point accuracy.
 - **GH_VerticalSeparator**
+  - GUI elements for creating visual separations.
 - **GH_ViewportSettingsCategory**
 - **GH_VoronoiWarningForm**
 - **GH_WidgetsSettingsCategory**
 - **GH_WindowsControlUtil**
+  - Exposes some static (Shared) utility functions for setting text-rendering properties en masse.
 - **GH_WindowsFormUtil**
+  - Exposes some static (Shared) utility functions for positioning custom windows.
 - **GH_YakDownloadFormEto**
 - **IGH_Embeddable**
+  - Implement this interface in your custom control if you want to be called before a menu commits or cancels.
 - **IGH_FileDropTarget**
+  - Implement this interface in your IGH_DocumentObject if you want to participate in Drag+Drop events.
 - **IGH_FixedSizeControl**
+  - Interface to implement
 - **IGH_SettingCategory**
+  - Represents a single category in the Settings UI.   Implement this interface or derive from GH_SettingsCategory   to add a new Category to the Grasshopper Settings interface.
 - **IGH_SettingFrontend**
+  - Represents a single setting in the Settings UI.   Implement this interface to participate in the Grasshopper Settings interface.
 - **IGH_ToolstripItemKeyHandler**
+  - Implement this interface if your control can be embedded in a context menu   and it needs to respond to Enter and Escape presses from said menu.
 - **IGH_Tooltip**
+  - Accessor interface for the Grasshopper Tooltip form.

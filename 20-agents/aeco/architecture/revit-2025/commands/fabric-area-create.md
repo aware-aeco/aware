@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricArea.Create
+Creates a FabricArea based on a host boundary.

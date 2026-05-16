@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Canvas.Navigate
+Perform a single navigation step.

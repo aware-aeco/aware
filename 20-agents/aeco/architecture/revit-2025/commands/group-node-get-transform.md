@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GroupNode.GetTransform
+A transformation matrix associated with the node.

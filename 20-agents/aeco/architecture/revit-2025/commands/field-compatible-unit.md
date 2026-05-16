@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Field.CompatibleUnit
+Checks if the specified unit is compatible with the field description.

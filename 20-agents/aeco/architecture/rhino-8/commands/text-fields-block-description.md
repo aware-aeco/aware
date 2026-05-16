@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextFields.BlockDescription
+Returns a block definition description

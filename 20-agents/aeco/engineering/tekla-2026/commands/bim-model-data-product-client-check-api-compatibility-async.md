@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BimModelDataProductClient.CheckApiCompatibilityAsync
+Checks the compatibility of a specified TS product version with the BIM Model Data Product API.

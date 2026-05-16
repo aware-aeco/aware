@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationNetworkChangeService.SetMapOfSizesForStraights
+Set the mapping for sizes of fabrication part straights to change the sizes to.

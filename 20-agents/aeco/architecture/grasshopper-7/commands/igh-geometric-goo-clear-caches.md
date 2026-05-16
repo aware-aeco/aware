@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_GeometricGoo.ClearCaches
+Clears all caches. Typically if the geometry is referenced, this will erase the local copy.

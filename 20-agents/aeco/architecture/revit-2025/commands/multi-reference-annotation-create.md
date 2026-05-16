@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultiReferenceAnnotation.Create
+Creates a new MultiReferenceAnnotation.

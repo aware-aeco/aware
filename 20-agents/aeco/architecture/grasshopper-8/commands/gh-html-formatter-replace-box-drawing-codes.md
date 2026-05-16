@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_HtmlFormatter.ReplaceBoxDrawingCodes
+Replaces Box Drawing chars from a string with HTML codes for those chars.   Tildes are replaced with Non-Breaking spaces.

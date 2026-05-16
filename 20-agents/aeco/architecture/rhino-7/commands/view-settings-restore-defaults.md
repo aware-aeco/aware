@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSettings.RestoreDefaults
+Updates from the default setting state.

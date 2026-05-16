@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoGet.GetBoxWithCounts
+Gets a 3d box with prompts for counts in X, Y and Z directions.

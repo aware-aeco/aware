@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BentPlateGeometrySolver.ModifyBendSurface
+Modifies the shape of a bend surface section, and updates related polygon sections accordingly.

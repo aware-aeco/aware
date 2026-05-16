@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexStatusList.Clear
+Clears the hidden vertex list on the mesh. This results in a fully visible mesh.

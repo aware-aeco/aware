@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DimensionStyle.IsChildOf
+Tests if this DimensionStyle is a child of a specific DimensionStyle

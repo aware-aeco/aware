@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DefinitionGroups.Contains
+Tests for the existence of a definition group within the collection.

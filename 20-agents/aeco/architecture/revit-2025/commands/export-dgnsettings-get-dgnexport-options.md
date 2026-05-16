@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportDGNSettings.GetDGNExportOptions
+Gets the options stored in the these settings.

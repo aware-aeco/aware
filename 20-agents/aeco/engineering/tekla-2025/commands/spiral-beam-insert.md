@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpiralBeam.Insert
+Inserts the spiral beam into the model database. All the attributes must be set.

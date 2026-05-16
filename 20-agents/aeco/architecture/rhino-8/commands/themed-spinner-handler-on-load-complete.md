@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedSpinnerHandler.OnLoadComplete
+Called after all other controls have been loaded

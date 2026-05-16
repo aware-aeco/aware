@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportModifyRebarStrand
+DO NOT USE! For internal usage only!

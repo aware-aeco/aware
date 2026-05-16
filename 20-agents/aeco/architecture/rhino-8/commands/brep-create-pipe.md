@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CreatePipe
+Creates a single walled pipe.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EnergyAnalysisSurface.GetPolyloop
+Gets the planar polygon describing the surface geometry.

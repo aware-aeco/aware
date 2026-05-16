@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Site.GetBuildings
+Gets all buildings belonging to this site.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.GetNextDiscontinuity
+Searches for a derivative, tangent, or curvature discontinuity.

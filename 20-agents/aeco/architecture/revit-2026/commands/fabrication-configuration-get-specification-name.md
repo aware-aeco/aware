@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetSpecificationName
+Gets the specification name from its identifier.

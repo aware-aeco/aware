@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToTextEntity_Primary
+Performs a direct cast from Rhino.Geometry.TextEntity or GH_TextEntity.   Data is not guaranteed to be duplicated.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDFace.EdgeAt
+Get an edge at a given index

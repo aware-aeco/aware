@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HermiteSurface.SetUParameterAt
+Sets the "u" parameter at an index. These parameters are strictly increasing.

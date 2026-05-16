@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IReadOnlySupport.SetLinesPartitionedByReadOnlyPropertyAsync
+Sets the lines grouped by their read only state

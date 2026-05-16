@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.ReplaceSelectedTextAsync
+Replace selected text

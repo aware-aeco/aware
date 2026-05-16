@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_DocumentObject.OnSolutionExpired
+Raises the SolutionExpired event on the toplevel object.

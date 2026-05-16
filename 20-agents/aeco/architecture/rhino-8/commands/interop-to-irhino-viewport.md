@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interop.ToIRhinoViewport
+Convert a Rhino.Display.Viewport to an RMA.Rhino.IRhinoViewport.

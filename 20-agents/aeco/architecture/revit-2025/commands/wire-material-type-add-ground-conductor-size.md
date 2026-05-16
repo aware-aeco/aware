@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WireMaterialType.AddGroundConductorSize
+Add new electrical ground conductor size type into this material type.

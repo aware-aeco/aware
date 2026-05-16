@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderWindow.SetIsRendering
+Set whether or not rendering is in progress. Added to support raytraced mode.

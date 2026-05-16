@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Cone.ToRevSurface
+Constructs a RevSurface representation of this Cone.              This is synonymous with calling RevSurface.CreateFromCone().

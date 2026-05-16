@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.CanDeleteSubelement
+Checks if given subelement can be removed from the element.

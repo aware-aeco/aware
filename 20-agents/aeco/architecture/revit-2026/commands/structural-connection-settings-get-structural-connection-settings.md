@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralConnectionSettings.GetStructuralConnectionSettings
+Obtains the StructuralConnectionSettings object for the specified project document.

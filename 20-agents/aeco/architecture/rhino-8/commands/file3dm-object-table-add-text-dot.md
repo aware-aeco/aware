@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObjectTable.AddTextDot
+Adds a text dot object to the table.

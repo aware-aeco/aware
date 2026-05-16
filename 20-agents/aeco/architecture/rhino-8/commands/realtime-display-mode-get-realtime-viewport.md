@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RealtimeDisplayMode.GetRealtimeViewport
+Retrieve RealtimeDisplayMode instance that the IntPtr refers to.

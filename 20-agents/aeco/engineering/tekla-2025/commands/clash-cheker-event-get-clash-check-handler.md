@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ClashChekerEvent.GetClashCheckHandler
+Returns a new clash check handler.

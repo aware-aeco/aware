@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TaskWorktype.Insert
+Inserts the task worktype instance in the model.

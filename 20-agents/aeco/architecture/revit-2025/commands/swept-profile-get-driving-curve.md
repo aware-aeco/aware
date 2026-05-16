@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SweptProfile.GetDrivingCurve
+Provides access to the curve that dictates the path of the swept profile.

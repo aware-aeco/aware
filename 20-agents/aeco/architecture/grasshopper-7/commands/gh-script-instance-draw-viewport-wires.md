@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ScriptInstance.DrawViewportWires
+Override this method to draw points and curves in the Rhino viewports.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GDLParser.ParseGDL
+Convert a GDL text into an actual document.

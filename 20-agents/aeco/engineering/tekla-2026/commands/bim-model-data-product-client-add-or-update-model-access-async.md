@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BimModelDataProductClient.AddOrUpdateModelAccessAsync
+Asynchronously adds or updates access for a specific principal to a BIM model in the Bim Model Data Product.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rectangle2.PointAt
+Get a point in rectangle space.

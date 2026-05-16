@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CylindricalHelix.Create
+Create a cylindrical helix.

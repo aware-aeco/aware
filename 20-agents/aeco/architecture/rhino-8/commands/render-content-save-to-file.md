@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContent.SaveToFile
+Saves content to a file - RMTL, RENV or RTEX.

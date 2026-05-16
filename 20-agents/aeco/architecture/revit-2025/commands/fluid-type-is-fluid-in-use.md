@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FluidType.IsFluidInUse
+Identifies if the fluid type is in use.

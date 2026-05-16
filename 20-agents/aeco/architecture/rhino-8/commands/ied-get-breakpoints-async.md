@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.GetBreakpointsAsync
+Get breakpoints and their enabled state

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Viewport.UnprojectX
+Project a value along constant X from control coordinates into canvas coordinates.

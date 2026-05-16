@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportSetViewPartRepresentationState
+DO NOT USE! For internal usage only!

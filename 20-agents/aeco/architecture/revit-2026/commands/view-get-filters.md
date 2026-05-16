@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetFilters
+Gets the filters applied to the view.

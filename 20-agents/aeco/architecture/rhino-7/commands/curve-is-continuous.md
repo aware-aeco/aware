@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.IsContinuous
+Test continuity at a curve parameter value.

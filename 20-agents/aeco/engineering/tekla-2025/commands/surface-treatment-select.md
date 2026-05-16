@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SurfaceTreatment.Select
+Selects the surface treatment with the given identifier.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Button.PerformClick
+Triggers the  event for the button, if the button is visible and enabled.

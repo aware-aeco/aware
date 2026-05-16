@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CompoundStructure.GetOffsetForLocationLine
+Returns the offset from the center of the compound structure to the given location line value.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarUpdateCurvesData.GetNumberOfBars
+Returns the number of bars currently in the rebar.

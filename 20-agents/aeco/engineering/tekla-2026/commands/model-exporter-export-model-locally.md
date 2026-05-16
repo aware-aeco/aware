@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelExporter.ExportModelLocally
+Creates local export (in TrimBM and Semantic TrimBIM formats) of the model

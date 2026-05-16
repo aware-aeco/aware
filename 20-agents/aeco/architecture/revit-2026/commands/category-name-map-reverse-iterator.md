@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CategoryNameMap.ReverseIterator
+Retrieve a backward moving iterator to the map.

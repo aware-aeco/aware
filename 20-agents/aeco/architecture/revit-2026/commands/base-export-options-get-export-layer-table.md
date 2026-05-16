@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BaseExportOptions.GetExportLayerTable
+Gets the layer table.

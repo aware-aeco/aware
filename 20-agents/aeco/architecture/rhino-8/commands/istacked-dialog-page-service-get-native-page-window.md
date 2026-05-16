@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IStackedDialogPageService.GetNativePageWindow
+Get the unmanaged pointer associated with the pages content control

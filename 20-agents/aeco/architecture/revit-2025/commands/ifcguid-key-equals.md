@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCGuidKey.Equals
+Determines whether this IFCGuidKey is equal to another.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CreateFromSubDControlNetWithTextureCoordinates
+Create a mesh from a SubD control net including texture coordinates

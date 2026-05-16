@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterElement.GetDefinition
+Get the definition representing this parameter element.

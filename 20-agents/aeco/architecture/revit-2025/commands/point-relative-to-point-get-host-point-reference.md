@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointRelativeToPoint.GetHostPointReference
+Get a copy of the host point reference.

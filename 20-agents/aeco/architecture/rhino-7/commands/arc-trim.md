@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Arc.Trim
+Sets arc's angle domain (in radians) as a sub-domain of the circle.

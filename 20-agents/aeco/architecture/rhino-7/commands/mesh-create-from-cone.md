@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CreateFromCone
+Constructs a solid mesh cone.

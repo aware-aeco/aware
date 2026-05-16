@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDVertex.SetControlNetPoint
+Change the location of the "control net" point that this SubDVertex represents

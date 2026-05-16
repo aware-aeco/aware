@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NumericRevisionSettings.IsEqual
+Determines whether a specified NumericRevisionSettings is the same as 'this'.

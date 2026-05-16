@@ -6,37 +6,62 @@ description: API reference for namespace Grasshopper.Kernel.Data from Grasshoppe
 # Grasshopper.Kernel.Data
 
 - **GH_BracketMismatchException**
+  - Exception used during Rule Set parsing.
 - **GH_DirtyCaster**
 - **GH_ExpandMode**
+  - Enumerates the possible expansion modes for structure paths.
 - **GH_GraftMode**
+  - Enumerates all predefined grafting modes.
 - **GH_GraphicBranch**
 - **GH_GraphicTreeDisplayArgs**
+  - A class that contains useful information used for drawing GH_GraphicTrees.
 - **GH_IndexRange**
+  - Represents a range of indices.
 - **GH_IndexRanges**
+  - Represents a sorted, non-colliding collection of index ranges.
 - **GH_IndexRuleSet**
+  - A collection of index rules.
 - **GH_Lexer**
+  - Represents a lexical mask for path operations.
 - **GH_LexerCombo**
+  - Contains both a source and a target lexer object.
 - **GH_Path**
+  - Describes the path in structure space of a data item or a list of items.   A path consists of a series of integers, each one of which represents an index in a branch structure.
 - **GH_PathOffset**
+  - Represents a relative offset within a data structure.
 - **GH_RuleAnyNumber**
 - **GH_RuleAnyNumbers**
 - **GH_RuleComplex**
 - **GH_RuleGroup**
 - **GH_RuleKind**
+  - Represents all possible element types in a Path Pattern.
 - **GH_RuleNumber**
 - **GH_RuleOperator**
+  - Enumerate the possible ways rules can be strung together.
 - **GH_RuleRange**
 - **GH_RuleResult**
+  - Enumerates the possible opinions a rule can have.
 - **GH_RuleSequence**
 - **GH_SimplificationMode**
+  - Enumerates the possible data structure simplification modes.
 - **GH_StringMismatchException**
+  - Exception used during Rule Set parsing.
 - **GH_Structure`1**
+  - Represents a data tree where each branch has a unique path
 - **GH_TreeBuilder**
 - **GH_TreeFilter**
+  - Represents a collection of rules for validating DataTree paths and indices.
 - **GH_TreeIndex**
+  - Represents a single unique location in a DataTree.
 - **GH_TreeRules**
+  - Represents an entire data tree rule set.
 - **IGH_DataTree**
+  - Utility interface for detection of DataTree generic instances.
 - **IGH_IndexRule**
+  - Interface for index rules. An index rule is a way to determine whether a specific integer   is considered valid, invalid or neutral. Index rules are used for selecting elements in DataTrees.
 - **IGH_Rule**
+  - Interface for individual pattern elements.
 - **IGH_Structure**
+  - Base interface for all GH_Structure types.
 - **IGH_StructureEnumerator**
+  - Defines a minimum interface for iterating over all data in an IGH_Structure.

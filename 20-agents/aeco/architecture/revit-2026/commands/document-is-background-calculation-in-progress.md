@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.IsBackgroundCalculationInProgress
+Indicates whether there are any background calculations in progress for this document.

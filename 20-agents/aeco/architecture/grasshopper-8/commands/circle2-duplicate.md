@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Circle2.Duplicate
+Create an exact duplicate of this circle.

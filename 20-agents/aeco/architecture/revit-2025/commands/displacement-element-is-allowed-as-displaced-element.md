@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplacementElement.IsAllowedAsDisplacedElement
+Indicates if the specified element is allowed to be displaced.

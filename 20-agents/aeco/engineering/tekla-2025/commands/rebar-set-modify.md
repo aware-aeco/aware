@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarSet.Modify
+Modifies the rebar set in the model database to match the current one.

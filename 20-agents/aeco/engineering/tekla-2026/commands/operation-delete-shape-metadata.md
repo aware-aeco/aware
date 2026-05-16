@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.DeleteShapeMetadata
+Delete the metadata by key

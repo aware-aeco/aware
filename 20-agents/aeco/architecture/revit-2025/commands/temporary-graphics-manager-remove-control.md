@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TemporaryGraphicsManager.RemoveControl
+Deletes the existing control identified by the unique index.

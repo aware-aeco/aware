@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplacementElement.GetAbsoluteDisplacement
+The absolute displacement applied to the displaced elements.

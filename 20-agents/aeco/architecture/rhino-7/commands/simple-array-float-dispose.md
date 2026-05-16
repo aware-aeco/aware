@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayFloat.Dispose
+Actively reclaims unmanaged resources that this instance uses.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DuctSettings.IsNetworkBasedCalculationsEnabled
+Indicates whether network based calculations for duct networks is enabled in the specified document.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyInstance.GetSubComponentIds
+Gets the sub component ElementIds of the current family instance.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjRef.Edge
+Gets the edge if this reference geometry is one.

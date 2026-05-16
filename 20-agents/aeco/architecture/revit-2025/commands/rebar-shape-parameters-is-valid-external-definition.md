@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeParameters.IsValidExternalDefinition
+Checks that an ExternalDefinition (shared parameter) may be used as a Rebar Shape parameter.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.LineCylinder
+Intersects a line with a cylinder using exact calculations.

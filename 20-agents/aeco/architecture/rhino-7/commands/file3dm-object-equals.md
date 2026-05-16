@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmObject.Equals
+Verified that two objects refer to the same object in a document.

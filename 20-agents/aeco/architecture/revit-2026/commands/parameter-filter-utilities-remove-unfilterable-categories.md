@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterFilterUtilities.RemoveUnfilterableCategories
+Removes from the given set the categories that are not filterable.

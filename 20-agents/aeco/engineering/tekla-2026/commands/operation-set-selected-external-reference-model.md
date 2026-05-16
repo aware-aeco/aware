@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.SetSelectedExternalReferenceModel
+Set external reference model as selected in model views.

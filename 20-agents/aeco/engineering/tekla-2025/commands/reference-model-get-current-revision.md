@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceModel.GetCurrentRevision
+Gets the current revision.

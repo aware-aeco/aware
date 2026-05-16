@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraint.IsReferenceValidForConstraint
+Checks if the reference provided can be used in creating Rebar constraints

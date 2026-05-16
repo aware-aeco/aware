@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepFaceList.ClearPerFaceColors
+Removes all per face color overrides on the active level.

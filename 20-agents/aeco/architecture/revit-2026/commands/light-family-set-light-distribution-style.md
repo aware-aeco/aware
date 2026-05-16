@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightFamily.SetLightDistributionStyle
+Set the light distribution style to the given shape distribution

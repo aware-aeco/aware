@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevisionNumberingSequence.GetAllRevisionNumberingSequences
+Gets all of the revision numbering sequences from the document.

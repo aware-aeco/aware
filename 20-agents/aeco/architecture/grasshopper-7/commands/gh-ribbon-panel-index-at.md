@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RibbonPanel.IndexAt
+Returns the index of the item that contains the location

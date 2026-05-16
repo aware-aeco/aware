@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayStyle.IsNameUnique
+Verify the uniqueness of the name among all analysis display style elements of the document.

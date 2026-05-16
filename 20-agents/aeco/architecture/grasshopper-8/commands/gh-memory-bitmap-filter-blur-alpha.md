@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MemoryBitmap.Filter_BlurAlpha
+Blur the alpha channel of the image N times in both directions.

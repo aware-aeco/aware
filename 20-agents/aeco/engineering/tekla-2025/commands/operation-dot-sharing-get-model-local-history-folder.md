@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotSharingGetModelLocalHistoryFolder
+Get folder for model local history.

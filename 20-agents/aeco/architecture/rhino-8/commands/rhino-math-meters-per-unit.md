@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoMath.MetersPerUnit
+Return number of meters per one unit of a given unit system

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DividedPath.AreCurveReferencesConnected
+This checks if the references represent a connected set of curves as required by the divided path.

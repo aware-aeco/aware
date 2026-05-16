@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPNetworkIterator.GetAnalyticalSegment
+Gets the analytical segment at the current iteration step.

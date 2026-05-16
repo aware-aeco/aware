@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dm.DumpSummary
+Prepares a text dump of model properties and settings.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalService.GetServer
+Returns the instance that provides implementation for a registered server.

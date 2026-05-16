@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Vector3d.VectorAngle
+Compute the angle between two vectors.             This operation is commutative.

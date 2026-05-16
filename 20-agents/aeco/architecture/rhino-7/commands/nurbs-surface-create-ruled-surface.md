@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsSurface.CreateRuledSurface
+Constructs a ruled surface between two curves. Curves must share the same knot-vector.

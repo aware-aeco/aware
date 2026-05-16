@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_AngularDimension.ToString
+Format the dimension using default grasshopper formatting logic.

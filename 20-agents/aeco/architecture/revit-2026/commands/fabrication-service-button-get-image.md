@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationServiceButton.GetImage
+Gets the image for fabrication service button.

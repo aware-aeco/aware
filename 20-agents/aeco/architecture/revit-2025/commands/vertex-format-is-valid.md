@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-VertexFormat.IsValid
+Tests whether the vertex format specification is valid for rendering.

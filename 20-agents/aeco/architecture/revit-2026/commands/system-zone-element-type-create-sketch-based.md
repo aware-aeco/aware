@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SystemZoneElementType.CreateSketchBased
+Creates a new element type for sketch-based system-zone elements and adds it to the document.

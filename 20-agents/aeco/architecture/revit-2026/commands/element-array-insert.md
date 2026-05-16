@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementArray.Insert
+Insert the specified element into the array.

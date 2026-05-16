@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelPathUtils.IsValidUserVisibleFullServerPath
+Determines whether the given string represents a valid    server path.

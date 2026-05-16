@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyManager.GetParameter
+Obtains the family parameter with the given built-in parameter identifier.

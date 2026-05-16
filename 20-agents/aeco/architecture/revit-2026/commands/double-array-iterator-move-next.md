@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DoubleArrayIterator.MoveNext
+Move the iterator one item forward.

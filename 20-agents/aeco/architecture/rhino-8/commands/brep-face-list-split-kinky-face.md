@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepFaceList.SplitKinkyFace
+Splits a single face into G1 pieces.

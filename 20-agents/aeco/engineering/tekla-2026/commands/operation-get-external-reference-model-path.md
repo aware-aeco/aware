@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetExternalReferenceModelPath
+Gets the external reference models path.

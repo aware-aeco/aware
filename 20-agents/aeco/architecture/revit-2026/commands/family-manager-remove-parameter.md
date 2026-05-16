@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyManager.RemoveParameter
+Remove an existing family parameter from the family.

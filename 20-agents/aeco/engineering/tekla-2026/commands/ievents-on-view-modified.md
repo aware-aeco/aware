@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEvents.OnViewModified
+Called when a view is modified.

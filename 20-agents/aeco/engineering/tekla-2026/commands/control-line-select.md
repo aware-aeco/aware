@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlLine.Select
+Selects the control line with the given Identifier.

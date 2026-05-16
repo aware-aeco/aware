@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PrintManager.SubmitPrint
+Print the views and sheets defined in the current local PrintManager settings.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IRhinoDocObserver.RhinoDocClosed
+When a document is closed

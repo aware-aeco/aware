@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElectricalSystem.AddToCircuit
+Add a set of exist components to the Electrical System.

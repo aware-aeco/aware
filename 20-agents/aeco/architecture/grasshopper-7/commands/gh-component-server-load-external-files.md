@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentServer.LoadExternalFiles
+Attempt to parse all external files.   This includes GHA libraries, GHUSER objects and GHCLUSTER files.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Polyloop.ComputeArea
+Gets the area for this polygon.

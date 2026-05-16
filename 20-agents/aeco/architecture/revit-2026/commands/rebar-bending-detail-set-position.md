@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBendingDetail.SetPosition
+Sets the position for this bending detail relative to its view.

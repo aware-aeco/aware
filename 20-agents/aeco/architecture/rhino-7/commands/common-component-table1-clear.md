@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CommonComponentTable`1.Clear
+Marks all items as deleted.

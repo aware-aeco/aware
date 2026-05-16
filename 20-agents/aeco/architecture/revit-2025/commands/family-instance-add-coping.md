@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyInstance.AddCoping
+Adds a coping (cut) to a steel beam.

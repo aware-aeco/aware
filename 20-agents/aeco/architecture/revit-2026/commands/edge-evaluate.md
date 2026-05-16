@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Edge.Evaluate
+Evaluates a parameter on the edge.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RibbonPanel.GetItems
+Gets a copy of the collection of RibbonItems assigned to the RibbonPanel.

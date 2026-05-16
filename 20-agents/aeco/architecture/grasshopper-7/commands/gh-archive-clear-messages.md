@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Archive.ClearMessages
+Remove all messages from the log.

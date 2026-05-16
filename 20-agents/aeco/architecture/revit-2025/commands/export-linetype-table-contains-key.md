@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLinetypeTable.ContainsKey
+Checks whether a pattern key exists in the table.

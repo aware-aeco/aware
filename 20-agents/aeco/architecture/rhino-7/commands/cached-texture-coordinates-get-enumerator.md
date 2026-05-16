@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CachedTextureCoordinates.GetEnumerator
+Returns an enumerator that iterates through this collection.

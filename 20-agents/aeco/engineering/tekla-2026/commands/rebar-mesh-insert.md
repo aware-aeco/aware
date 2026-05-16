@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarMesh.Insert
+Inserts the reinforcement mesh into the model database. All the attributes must be set.

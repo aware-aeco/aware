@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.ProjectToMesh
+Projects a curve to a mesh using a direction and tolerance.

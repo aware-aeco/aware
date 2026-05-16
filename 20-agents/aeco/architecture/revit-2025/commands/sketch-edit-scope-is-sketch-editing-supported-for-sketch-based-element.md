@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SketchEditScope.IsSketchEditingSupportedForSketchBasedElement
+Checks whether the element supports sketch editing.

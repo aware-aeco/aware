@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_UserObject.InstantiateObject
+Instantiate a new IGH_DocumentObject from this User Object.

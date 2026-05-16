@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DividedPath.GetIntersectingElements
+Get the elements whose intersection with path produces points.

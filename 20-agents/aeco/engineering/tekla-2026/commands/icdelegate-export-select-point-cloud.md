@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportSelectPointCloud
+DO NOT USE! For internal usage only!

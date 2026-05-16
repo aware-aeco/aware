@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Binding.ExecuteCommand
+Executes a command retrieved using the specified  from the .

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PropertyCellTypeNumber.OnConfigure
+Configures the content control for the given cell information.

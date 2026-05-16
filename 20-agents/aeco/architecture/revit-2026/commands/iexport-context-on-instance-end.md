@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExportContext.OnInstanceEnd
+This method marks the end of processing of an Instance Node (e.g. a family instance).

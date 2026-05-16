@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Localization.FormatNumber
+Get a string version of a number in a given unit system / display mode.

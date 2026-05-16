@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitLinkType.GetChildIds
+Gets the ids of the immediate children of this link.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ZoomViewToExternalReferenceModel
+DO NOT USE! For internal usage only!

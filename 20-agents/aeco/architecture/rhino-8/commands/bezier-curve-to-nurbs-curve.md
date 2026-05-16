@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BezierCurve.ToNurbsCurve
+Constructs a NURBS curve representation of this curve.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WallUtils.DisallowWallJoinAtEnd
+Sets the wall's end not to join to other walls.

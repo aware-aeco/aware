@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PartMakerMethodToDivideVolumes.GetSplitRefsOffsets
+Returns offsets for plane-defining splitters.

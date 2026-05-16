@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Vector3f.GetHashCode
+Computes a hash number that represents the current vector.

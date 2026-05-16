@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHRectangle
+Convert data into GH_Rectangles.

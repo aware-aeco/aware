@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Param.RemoveEffects
+Remove all post-process effects.

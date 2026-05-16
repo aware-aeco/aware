@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.NewAreaBoundaryConditions
+Creates a new Area BoundaryConditions element on a host element.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3ds.Read
+Read a 3ds file intof a RhinoDoc

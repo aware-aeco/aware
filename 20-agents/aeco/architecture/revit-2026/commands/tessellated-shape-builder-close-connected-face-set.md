@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TessellatedShapeBuilder.CloseConnectedFaceSet
+Closes the currently open connected face set.

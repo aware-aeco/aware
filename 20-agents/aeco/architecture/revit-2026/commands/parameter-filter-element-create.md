@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterFilterElement.Create
+Creates a new ParameterFilterElement in the given document.

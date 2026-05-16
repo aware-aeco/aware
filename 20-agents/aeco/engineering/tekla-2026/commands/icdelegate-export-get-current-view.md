@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportGetCurrentView
+DO NOT USE! For internal usage only!

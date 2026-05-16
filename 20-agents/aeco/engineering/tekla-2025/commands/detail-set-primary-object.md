@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Detail.SetPrimaryObject
+Sets the detail's primary object.

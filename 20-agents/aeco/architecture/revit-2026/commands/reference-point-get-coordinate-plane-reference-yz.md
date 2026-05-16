@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferencePoint.GetCoordinatePlaneReferenceYZ
+A reference for the YZ plane of the coordinate system.

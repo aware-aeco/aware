@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportCreateRebarGroup
+DO NOT USE! For internal usage only!

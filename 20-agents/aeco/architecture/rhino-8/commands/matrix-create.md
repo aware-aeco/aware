@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Matrix.Create
+Creates a new identity matrix

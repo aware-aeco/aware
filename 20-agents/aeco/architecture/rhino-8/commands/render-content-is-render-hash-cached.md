@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContent.IsRenderHashCached
+This method is deprecated and no longer called. For more information see

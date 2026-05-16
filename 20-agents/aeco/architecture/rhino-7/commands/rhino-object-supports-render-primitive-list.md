@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.SupportsRenderPrimitiveList
+Determines if custom render meshes will be built for a particular object.

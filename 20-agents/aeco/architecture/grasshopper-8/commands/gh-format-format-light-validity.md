@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Format.FormatLightValidity
+If the light is invalid, return a string describing why.

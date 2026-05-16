@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Skylight.ToString
+Textual representation of Skylight

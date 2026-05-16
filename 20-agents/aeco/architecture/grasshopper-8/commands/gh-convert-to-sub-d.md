@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToSubD
+Convert data into Rhino.Geometry.SubD.

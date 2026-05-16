@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Outline.Scale
+Scales the bounding box by given scale.

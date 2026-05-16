@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Panels.IsHiding
+Check to see if reason is equal to any of the show events

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DefaultStyleProvider.Clear
+Clears all styles from this provider

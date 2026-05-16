@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssemblyInstance.Create
+Creates a new assembly instance.

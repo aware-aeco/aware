@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Ed.RegisterProvideCompletionsWithCompletionItemKindsAsync
+register code completion provider

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StringList.LastIndexOf
+Searches for the last occurence of the string in the list.

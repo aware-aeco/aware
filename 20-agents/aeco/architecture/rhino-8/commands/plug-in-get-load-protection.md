@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlugIn.GetLoadProtection
+Get load protection state for a plug-in

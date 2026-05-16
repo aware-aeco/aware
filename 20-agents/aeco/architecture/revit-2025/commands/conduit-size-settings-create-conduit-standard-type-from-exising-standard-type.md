@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConduitSizeSettings.CreateConduitStandardTypeFromExisingStandardType
+Creates one conduit standard type with the new name and assign the conduit sizes to it from the existing standard type.

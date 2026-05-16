@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.GetTypeId
+Returns the identifier of this element's type.

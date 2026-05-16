@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BRepBuilder.SetFaceMaterialId
+Sets material id to a face.

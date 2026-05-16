@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Vector.ToString
+Format the vector using default grasshopper formatting logic.

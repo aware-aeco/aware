@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailuresAccessor.CommitPendingTransaction
+Finishes pending failures processing by committing the pending transaction.

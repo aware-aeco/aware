@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedPositionTable.Name
+Name of a Named Position.

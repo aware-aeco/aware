@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewHandler.GetVisibleViews
+Returns the visible views.

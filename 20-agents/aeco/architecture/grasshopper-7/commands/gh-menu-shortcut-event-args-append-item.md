@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_MenuShortcutEventArgs.AppendItem
+Use this method to append your own custom items.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AdaptiveComponentFamilyUtils.GetNumberOfAdaptivePoints
+Gets number of Adaptive Point Elements in Adaptive Component Family.

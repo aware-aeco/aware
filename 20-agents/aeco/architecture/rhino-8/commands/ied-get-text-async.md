@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.GetTextAsync
+Gets the text in the editor

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DividedPath.IsIntersectorValidForCreation
+This returns true if the intersector is an element that can be used to intersect with a newly created divided path.

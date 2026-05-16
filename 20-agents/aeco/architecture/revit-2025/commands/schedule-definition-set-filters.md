@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.SetFilters
+Replaces all filters in this ScheduleDefinition.

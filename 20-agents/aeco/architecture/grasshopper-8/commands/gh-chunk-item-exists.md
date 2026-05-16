@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Chunk.ItemExists
+Gets the occupancy for a specific item name. Only items without index qualifiers are considered.

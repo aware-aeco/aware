@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleField.ResetOverride
+Resets the override of this field.

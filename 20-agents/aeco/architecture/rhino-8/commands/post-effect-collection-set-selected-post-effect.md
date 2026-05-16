@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PostEffectCollection.SetSelectedPostEffect
+Sets the selected post effect for a certain type.

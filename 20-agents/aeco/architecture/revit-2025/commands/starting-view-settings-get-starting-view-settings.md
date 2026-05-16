@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StartingViewSettings.GetStartingViewSettings
+Returns the starting view settings for the specified document.

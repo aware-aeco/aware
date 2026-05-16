@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ChangeManager.AllowNumbering
+Sets a flag to inidcate whether the model should be numbered or not.

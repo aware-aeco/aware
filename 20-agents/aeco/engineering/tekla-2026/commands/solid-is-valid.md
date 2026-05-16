@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Solid.IsValid
+Returns if the solid is valid.

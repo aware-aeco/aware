@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewProjectTemplateDocument
+New project template document

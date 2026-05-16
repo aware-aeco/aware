@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewPosition.Create
+Creates a new view position element.

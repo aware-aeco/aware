@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderPipeline.SaveImage
+Saves the rendered image to a file. Does not prompt the user in any way.

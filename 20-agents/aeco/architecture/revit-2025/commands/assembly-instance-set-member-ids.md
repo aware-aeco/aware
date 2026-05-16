@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssemblyInstance.SetMemberIds
+Sets member element ids for the assembly instance. All existing members are cleared.

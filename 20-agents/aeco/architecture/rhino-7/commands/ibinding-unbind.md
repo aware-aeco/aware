@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IBinding.Unbind
+Unbind this instance from its parent.

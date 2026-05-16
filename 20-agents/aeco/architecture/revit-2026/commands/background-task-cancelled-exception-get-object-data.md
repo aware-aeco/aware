@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BackgroundTaskCancelledException.GetObjectData
+Retrieves data needed to serialize the target object.

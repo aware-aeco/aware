@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.DeleteAcceptedFinish
+Unaccept finish that is against fabricator settings.

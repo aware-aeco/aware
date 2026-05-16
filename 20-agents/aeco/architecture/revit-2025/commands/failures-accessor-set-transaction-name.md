@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FailuresAccessor.SetTransactionName
+Changes the name of the transaction for which failures are being processed.

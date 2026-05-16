@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHInteger
+Convert data into GH_Integer.

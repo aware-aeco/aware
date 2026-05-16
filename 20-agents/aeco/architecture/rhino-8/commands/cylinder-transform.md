@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Cylinder.Transform
+Transforms this cylinder. Note that non-similarity preserving transformations              cannot be applied to a cylinder.

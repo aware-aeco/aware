@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationItemFile.GetImage
+Gets the image for the fabrication item file.

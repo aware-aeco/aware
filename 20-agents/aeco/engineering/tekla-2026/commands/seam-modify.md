@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Seam.Modify
+Modifies the existing seam in the model database to match the current one.

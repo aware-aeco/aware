@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PanelScheduleView.AddSpare
+Add a spare at specific cell.

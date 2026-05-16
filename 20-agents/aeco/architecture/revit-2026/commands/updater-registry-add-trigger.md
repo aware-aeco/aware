@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UpdaterRegistry.AddTrigger
+Adds trigger with the specified element filter and ChangeType for all documents associated with this Updater

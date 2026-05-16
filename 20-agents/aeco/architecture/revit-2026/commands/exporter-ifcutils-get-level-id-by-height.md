@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.GetLevelIdByHeight
+Gets the level if by the height of the element.

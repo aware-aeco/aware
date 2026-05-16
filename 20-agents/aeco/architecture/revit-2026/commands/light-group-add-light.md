@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightGroup.AddLight
+Add a new light instance to the group

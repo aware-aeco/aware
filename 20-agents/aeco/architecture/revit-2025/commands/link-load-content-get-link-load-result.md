@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinkLoadContent.GetLinkLoadResult
+Retrieves the LinkLoadResult of the attempt to load or reload a Revit link.

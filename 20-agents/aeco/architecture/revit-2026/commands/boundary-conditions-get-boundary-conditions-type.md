@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoundaryConditions.GetBoundaryConditionsType
+Returns the boundary conditions type.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHInteger_Secondary
+Converts similar data into a GH_Integer instance.  Data is not quaranteed to be duplicated.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WorksharingUtils.GetModelUpdatesStatus
+Gets the status of a single element in the central model.

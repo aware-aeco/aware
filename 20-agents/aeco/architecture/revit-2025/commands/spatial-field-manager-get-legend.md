@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpatialFieldManager.GetLegend
+Returns legend element or NULL

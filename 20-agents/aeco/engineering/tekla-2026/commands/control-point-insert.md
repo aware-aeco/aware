@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlPoint.Insert
+Inserts the control point into the model.

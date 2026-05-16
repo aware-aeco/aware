@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubD.TransformComponents
+Transforms an enumerable of SubD components.

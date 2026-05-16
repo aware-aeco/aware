@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorFillScheme.UpdateEntry
+Updates the scheme entry with the same parameter value as the input entry.

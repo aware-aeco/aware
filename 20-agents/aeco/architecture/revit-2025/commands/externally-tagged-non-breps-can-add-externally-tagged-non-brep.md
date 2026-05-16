@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternallyTaggedNonBReps.CanAddExternallyTaggedNonBRep
+Checks if the input geometry could be added to this collection or not.

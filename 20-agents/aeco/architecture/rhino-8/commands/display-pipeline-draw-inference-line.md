@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawInferenceLine
+Draw an inference line used in gesture based snapping

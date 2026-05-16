@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CustomFieldData.GetCustomFieldId
+Gets an unique identifier of the custom field.

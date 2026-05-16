@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPHiddenLineSettings.GetMEPHiddenLineSettings
+Gets the MEP hidden line settings in the document.

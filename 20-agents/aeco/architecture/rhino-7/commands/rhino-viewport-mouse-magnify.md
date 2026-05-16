@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.MouseMagnify
+Moves the camera towards or away from the view.

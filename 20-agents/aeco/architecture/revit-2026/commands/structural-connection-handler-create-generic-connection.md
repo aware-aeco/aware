@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralConnectionHandler.CreateGenericConnection
+Creates a new instance of a Structural Connection Handler with a generic type, which defines the connection between given elements.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHGuid_Primary
+Converts similar data into a GH_Guid instance.  Data is not quaranteed to be duplicated.

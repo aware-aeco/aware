@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSheet.DeleteViewport
+Removes a viewport from the sheet by deleting it from the document.

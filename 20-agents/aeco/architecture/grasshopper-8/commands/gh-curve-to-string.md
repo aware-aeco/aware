@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Curve.ToString
+Format the curve using default grasshopper formatting logic.

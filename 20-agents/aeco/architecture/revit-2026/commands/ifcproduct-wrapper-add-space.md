@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCProductWrapper.AddSpace
+Adds an IfcSpace handle to associate with the IfcProduct in this wrapper.

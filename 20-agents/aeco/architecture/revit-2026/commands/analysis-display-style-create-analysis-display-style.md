@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AnalysisDisplayStyle.CreateAnalysisDisplayStyle
+Factory method - creates analysis display style object of type Deformed Shape for the given document.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HiddenLineDrawingParameters.AddGeometry
+Add geometry that should be included in the calculation

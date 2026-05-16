@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCData.CreateIFCAnyHandle
+Creates an IFCAnyHandle data object.

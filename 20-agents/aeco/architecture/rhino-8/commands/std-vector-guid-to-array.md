@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StdVectorGuid.ToArray
+Returns the managed counterpart of the unmanaged vector.

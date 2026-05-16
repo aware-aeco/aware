@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.ExportSlabAsExtrusion
+Attempts to export an IfcSlab using extrusions, clippings and openings by analyzing the geometry of the element.    Used for more advanced cases than the ExtrusionAnalyzer.

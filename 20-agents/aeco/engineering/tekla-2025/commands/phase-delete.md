@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Phase.Delete
+Deletes a phase. The current phase cannot be deleted.

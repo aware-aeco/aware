@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorFillScheme.GetEntries
+Retrieves copies of all entries.

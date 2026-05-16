@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentObject.Menu_AppendDigitScrollerItem
+Utility function for inserting a digit scroller into menus.

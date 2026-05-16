@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewportInfo.SetCameraUp
+Sets the camera up vector.

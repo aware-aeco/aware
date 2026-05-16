@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarConstraintsManager.AllowConstraintTargets
+Returns true if references are valid targets for handle, false otherwise.

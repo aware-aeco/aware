@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudColorSettings.Assign
+Assigns values of the source settings to this object.

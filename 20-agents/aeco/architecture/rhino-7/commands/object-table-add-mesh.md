@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.AddMesh
+Adds a mesh object to Rhino.

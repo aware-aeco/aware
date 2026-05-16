@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GHXHarvester.HarvestBoundingBoxes
+Harvest all attribute bounding boxes from a GHX/GH archive.

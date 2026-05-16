@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitLinkType.IsFromLocalPath
+Checks whether the Revit link uses a local path, such as a hard drive.

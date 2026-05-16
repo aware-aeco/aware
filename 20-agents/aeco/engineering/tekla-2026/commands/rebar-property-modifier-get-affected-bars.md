@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarPropertyModifier.GetAffectedBars
+Gets the virtual bars affected by this modifier.

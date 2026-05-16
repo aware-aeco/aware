@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilySizeTable.AsValueString
+Gets the table cell value as a string.

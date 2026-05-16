@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoObject.FromRuntimeSerialNumber
+Get a Rhino object for a unique runtime serial number

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.QuadRemesh
+Quad remesh this mesh.

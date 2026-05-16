@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHVector
+Convert data into GH_Vectors.

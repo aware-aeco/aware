@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightFamily.GetLightShapeStyle
+Returns a LightShapeStyle value for the light shape

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TopographySurface.ChangePointsElevation
+Changes the elevation value for points

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Color.FromPremultipliedArgb
+Creates a color from premultiplied 8-bit ARGB components

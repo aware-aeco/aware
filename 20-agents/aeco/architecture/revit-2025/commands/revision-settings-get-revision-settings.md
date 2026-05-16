@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevisionSettings.GetRevisionSettings
+Returns the RevisionSettings for the given project document.

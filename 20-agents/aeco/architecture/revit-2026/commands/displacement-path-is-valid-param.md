@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplacementPath.IsValidParam
+Is the specified value a valid edge or curve parameter.

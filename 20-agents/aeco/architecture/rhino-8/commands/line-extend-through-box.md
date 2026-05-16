@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Line.ExtendThroughBox
+Ensure the line extends all the way through a box.              Note, this does not result in the shortest possible line              that overlaps the box.

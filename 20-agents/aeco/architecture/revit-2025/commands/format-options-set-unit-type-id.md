@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormatOptions.SetUnitTypeId
+Sets the unit used to quantify values.

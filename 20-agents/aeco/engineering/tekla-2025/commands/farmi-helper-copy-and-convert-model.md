@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FarmiHelper.CopyAndConvertModel
+Copies the model, opens and saves the copy to convert it.

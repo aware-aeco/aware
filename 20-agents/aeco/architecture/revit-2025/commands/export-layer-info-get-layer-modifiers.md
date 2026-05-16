@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLayerInfo.GetLayerModifiers
+Gets all the project layer modifiers from the layer info.

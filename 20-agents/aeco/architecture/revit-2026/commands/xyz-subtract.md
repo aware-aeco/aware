@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-XYZ.Subtract
+Subtracts the specified vector from this vector and returns the result.

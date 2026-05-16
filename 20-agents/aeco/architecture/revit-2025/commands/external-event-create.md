@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalEvent.Create
+Creates an instance of external event.

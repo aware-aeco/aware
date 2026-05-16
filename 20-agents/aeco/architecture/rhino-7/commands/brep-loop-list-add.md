@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepLoopList.Add
+Create a new empty boundary loop. The new loop will not be part of a face and             will not include any trim curves.

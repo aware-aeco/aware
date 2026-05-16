@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToDimension_Primary
+Performs a direct cast from Rhino.Geometry.Dimension or GH_Dimension.   Data is not guaranteed to be duplicated.

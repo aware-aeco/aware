@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetServiceTypeName
+Gets the service type name.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Structure`1.Append
+Append a data item to the last branch in the structure.   If no branch exist yet, a new one will be created with [path = {0}]

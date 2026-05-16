@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GraphicTreeDisplayArgs.Distance
+Compute the distance between two points.

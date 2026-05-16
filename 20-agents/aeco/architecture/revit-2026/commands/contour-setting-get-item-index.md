@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ContourSetting.GetItemIndex
+Get the index of a contour setting item of the current contour setting

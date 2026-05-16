@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewportInfo.GetFrustum
+Gets the view frustum.

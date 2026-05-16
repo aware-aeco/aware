@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDDisplayParameters.SetAbsoluteDisplayDensity
+In almast all cases, you are better off using SetAdaptiveDisplayDensity().

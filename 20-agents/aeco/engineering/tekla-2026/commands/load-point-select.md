@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadPoint.Select
+Selects a load point from the model database. The ID must be set.

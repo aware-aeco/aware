@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryElement.GetEnumerator
+Returns an enumerator that iterates through the collection.

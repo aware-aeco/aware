@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Archive.Deserialize_Binary
+Deserializes an array of bytes.

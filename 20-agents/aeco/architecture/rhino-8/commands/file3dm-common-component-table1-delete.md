@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmCommonComponentTable`1.Delete
+Flags a component as deleted.

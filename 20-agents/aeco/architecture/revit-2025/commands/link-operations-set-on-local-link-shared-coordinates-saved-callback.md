@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinkOperations.SetOnLocalLinkSharedCoordinatesSavedCallback
+Sets the callback that will be called when the Revit user saves new shared coordinate    settings to a linked document obtained from an IExternalResourceServer.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToTextDot_Primary
+Performs a direct cast from Rhino.Geometry.TextDot or GH_TextDot.   Data is not guaranteed to be duplicated.

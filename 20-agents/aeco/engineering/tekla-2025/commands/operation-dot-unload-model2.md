@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotUnloadModel2
+Unload model2 manager.

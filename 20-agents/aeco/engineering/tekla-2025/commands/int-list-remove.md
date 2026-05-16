@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IntList.Remove
+Removes the first occurence of the integer from the list.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.FindByCrossingWindowRegion
+Finds objects bounded by a polyline region

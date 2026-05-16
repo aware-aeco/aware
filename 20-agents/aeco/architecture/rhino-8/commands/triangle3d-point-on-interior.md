@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Triangle3d.PointOnInterior
+Gets the point on the triangle using the AB and AC primary axes.

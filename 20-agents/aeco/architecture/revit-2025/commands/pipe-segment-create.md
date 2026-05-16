@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PipeSegment.Create
+Creates a new instance of a PipeSegment and adds it to the document.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PreviewBoundary.IsVisible
+Gets whether a specific object is visible within this boundary.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSystemsAnalysisReport.RequestSystemsAnalysis
+Requests a new systems analysis to be run in the background.

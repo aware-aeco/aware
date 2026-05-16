@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.DrawDottedLine
+Draws a single dotted line.

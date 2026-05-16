@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCData.AsLogical
+Gets storage value as IFCLogical when its PrimitiveType is logical.

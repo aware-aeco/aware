@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SSEPointVisibilitySettings.SetVisibility
+Sets the SSE point visibility for the given category.

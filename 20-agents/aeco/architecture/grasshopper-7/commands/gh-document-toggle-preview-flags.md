@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.TogglePreviewFlags
+Toggle the preview flags of all selected objects

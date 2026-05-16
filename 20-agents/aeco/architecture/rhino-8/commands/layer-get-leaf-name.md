@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Layer.GetLeafName
+Get a layer name's "leaf" level name

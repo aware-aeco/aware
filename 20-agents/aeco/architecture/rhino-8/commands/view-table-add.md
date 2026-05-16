@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewTable.Add
+Constructs a new Rhino view and, at the same time, adds it to the list.

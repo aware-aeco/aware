@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IPipePressureDropServer.Calculate
+Calculate the pipe pressure drop.

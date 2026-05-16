@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetSetModelInfo
+DO NOT USE! For internal usage only!

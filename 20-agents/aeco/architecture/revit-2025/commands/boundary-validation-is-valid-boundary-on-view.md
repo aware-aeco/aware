@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoundaryValidation.IsValidBoundaryOnView
+Indicates if the given curve loops compose a valid boundary on the view's detail sketch plane.

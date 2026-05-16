@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileCsv.Write
+Write a Csv file based on the contents of a RhinoDoc

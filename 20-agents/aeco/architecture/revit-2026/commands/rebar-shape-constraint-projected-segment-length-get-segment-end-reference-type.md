@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeConstraintProjectedSegmentLength.GetSegmentEndReferenceType
+Choice of two possibilities for the start and end references of the length constraint.

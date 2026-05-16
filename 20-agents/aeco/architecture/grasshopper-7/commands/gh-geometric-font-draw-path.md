@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GeometricFont.DrawPath
+Draw an entire path string at a specific location.

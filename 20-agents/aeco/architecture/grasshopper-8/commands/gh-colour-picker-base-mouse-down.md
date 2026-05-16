@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ColourPickerBase.MouseDown
+Respond to mouse-down events.

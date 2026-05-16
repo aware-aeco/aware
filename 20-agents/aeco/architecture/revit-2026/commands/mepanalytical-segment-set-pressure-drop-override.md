@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MEPAnalyticalSegment.SetPressureDropOverride
+Sets the overridden value of pressure drop.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.GetFrustumFarPlane
+Get far clipping plane.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.GetBackground
+Returns the current background set for the view.

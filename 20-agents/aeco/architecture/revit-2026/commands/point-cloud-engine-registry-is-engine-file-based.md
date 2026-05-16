@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudEngineRegistry.IsEngineFileBased
+Identifies if a given engine is file-based.

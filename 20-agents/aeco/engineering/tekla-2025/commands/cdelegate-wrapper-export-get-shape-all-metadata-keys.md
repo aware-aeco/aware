@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetShapeAllMetadataKeys
+DO NOT USE! For internal usage only!

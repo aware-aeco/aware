@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Duct.Create
+Creates a new duct that connects to two connectors.

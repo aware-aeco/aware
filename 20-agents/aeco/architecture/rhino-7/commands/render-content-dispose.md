@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContent.Dispose
+Dispose

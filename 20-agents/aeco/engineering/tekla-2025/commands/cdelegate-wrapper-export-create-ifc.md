@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportCreateIFC
+DO NOT USE! For internal usage only!

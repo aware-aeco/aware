@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LinkLoadResult.GetExternalResourceReference
+Gets a copy of the ExternalResourceReference corresponding    to the link.

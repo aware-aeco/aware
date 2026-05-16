@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ChangeDetectionInitInProgress
+DO NOT USE! For internal usage only!

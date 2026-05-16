@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.GetFieldCount
+Gets the number of fields in this ScheduleDefinition.

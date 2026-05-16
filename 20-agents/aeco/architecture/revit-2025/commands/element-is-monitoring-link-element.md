@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Element.IsMonitoringLinkElement
+Indicate whether an element is monitoring any elements in any linked models.

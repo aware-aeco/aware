@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SegmentedItemCollection.AddRange
+Adds an enumerable of items to the collection

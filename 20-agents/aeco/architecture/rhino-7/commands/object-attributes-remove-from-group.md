@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectAttributes.RemoveFromGroup
+removes object from the group with specified index.             If the object is not in the group, nothing is changed.

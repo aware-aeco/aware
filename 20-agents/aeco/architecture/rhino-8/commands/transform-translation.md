@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform.Translation
+Constructs a new translation (move) transformation.

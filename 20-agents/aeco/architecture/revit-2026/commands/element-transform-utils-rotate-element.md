@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementTransformUtils.RotateElement
+Rotates an element about the given axis and angle.

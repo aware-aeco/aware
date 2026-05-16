@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SelectableFilterCollection`1.Clear
+Clear this collection.

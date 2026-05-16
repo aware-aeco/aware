@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFC.GetFamilyInstanceAssemblyOffset
+Obtains Translation to adjust Family Instance within an Assembly, based on Family Symbol origin change.

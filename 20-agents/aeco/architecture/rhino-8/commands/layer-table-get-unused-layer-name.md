@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LayerTable.GetUnusedLayerName
+Gets the next unused layer name used as default when creating new layers.

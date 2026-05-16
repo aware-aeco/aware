@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarFreeFormAccessor.GetShapeIdAtIndex
+Gets the Rebar Shape id for the bar with index barPositionIndex.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Graphics.MeasureString
+Measures the string with the given

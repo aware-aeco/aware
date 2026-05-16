@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FlatBufferBuilder.AddOffset
+Adds an offset, relative to where it will be written.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InstanceDefinitionTable.Delete
+Deletes the instance definition.

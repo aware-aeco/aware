@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Document.NewRooms2
+Creates new unplaced rooms in the given phase.

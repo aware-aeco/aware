@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DocumentChangedEventArgs.GetAddedElementIds
+Returns set of elements newly added to the document.

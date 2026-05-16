@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.FindOutputParameter
+Search for output (downstream) parameters that contain the locus

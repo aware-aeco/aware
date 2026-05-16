@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-WireMaterialType.RemoveTemperatureRatingType
+Remove an existing temperature rating type from this material type.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InsufficientResourcesException.GetObjectData
+Retrieves data needed to serialize the target object.

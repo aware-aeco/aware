@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3dmRenderEnvironment.ToEnvironment
+Get a simulated environment that approximates this environment's appearance.

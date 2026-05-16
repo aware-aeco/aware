@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_DocumentObject.IsolateObject
+Destroy all connections to other objects.

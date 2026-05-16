@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitLinkGraphicsSettings.GetViewDetailLevel
+The linked document view detail level of RevitLinkGraphicsSettings.

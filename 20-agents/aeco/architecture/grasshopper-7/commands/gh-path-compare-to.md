@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Path.CompareTo
+Compare this path to another path. This function determines the Sorting behaviour of paths.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportInitFilterCache
+DO NOT USE! For internal usage only!

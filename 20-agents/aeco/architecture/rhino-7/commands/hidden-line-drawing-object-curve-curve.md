@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HiddenLineDrawingObjectCurve.Curve
+Returns the HiddenLineDrawingCurve object containing parameter 't'.

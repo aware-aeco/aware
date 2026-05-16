@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.SetUnobscuredInView
+Sets this rebar element to be shown unobscured in a view.

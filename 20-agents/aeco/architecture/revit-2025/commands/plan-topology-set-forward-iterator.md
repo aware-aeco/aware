@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PlanTopologySet.ForwardIterator
+Retrieve a forward moving iterator to the set.

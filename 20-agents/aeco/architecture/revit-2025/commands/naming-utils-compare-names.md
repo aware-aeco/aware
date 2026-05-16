@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamingUtils.CompareNames
+Compares two object name strings using Revit's comparison rules.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Squisher.GetMesh3dEdges
+Gets the edges of the mesh which correspond to the edges of the same indices resulting from GetMesh2dEdges

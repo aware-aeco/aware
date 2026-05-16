@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transaction.HasEnded
+Determines whether the transaction has ended already.

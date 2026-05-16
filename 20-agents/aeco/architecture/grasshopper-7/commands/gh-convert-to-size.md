@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToSize
+Convert a floating point GDI size structure to an integer rounded size.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementRecord.GetBoundingBox
+Gets the bounding box of the element record.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UpdaterData.GetDocument
+Returns document associated with this UpdaterData

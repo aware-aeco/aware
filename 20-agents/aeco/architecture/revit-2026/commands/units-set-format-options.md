@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Units.SetFormatOptions
+Sets the default FormatOptions for a spec.

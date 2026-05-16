@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BrepFace.AdjacentEdges
+Gets the indices of all the BrepEdges that delineate this Face.

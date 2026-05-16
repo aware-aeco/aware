@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Viewport.XFormMatrix
+Gets the display transformation cached by this viewport.

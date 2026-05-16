@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.Read
+Standard archiving function. Will deserialize the entire document.

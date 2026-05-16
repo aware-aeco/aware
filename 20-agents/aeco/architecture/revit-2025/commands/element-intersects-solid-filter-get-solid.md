@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ElementIntersectsSolidFilter.GetSolid
+Gets the target solid geometry.

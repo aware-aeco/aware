@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetMaterialGroup
+Gets material group from its identifier.

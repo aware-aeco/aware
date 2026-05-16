@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SolidSolidCutUtils.CanElementCutElement
+Verifies if the cutting element can add a solid cut to the target element.

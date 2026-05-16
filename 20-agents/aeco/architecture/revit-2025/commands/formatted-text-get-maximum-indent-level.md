@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormattedText.GetMaximumIndentLevel
+Returns the maximum allowed indent level

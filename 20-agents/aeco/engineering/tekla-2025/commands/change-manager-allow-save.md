@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ChangeManager.AllowSave
+Sets a flag to inidcate whether the model should be saved or not.

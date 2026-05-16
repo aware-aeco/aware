@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoApp.ClearCommandHistoryWindow
+Clear the text in Rhino's command history window.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ForgeTypeId.Empty
+Checks if the typeId is an empty string

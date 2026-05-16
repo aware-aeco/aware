@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorFillSchemeEntry.CanSetValue
+Checks whether  of entry is ElementId.

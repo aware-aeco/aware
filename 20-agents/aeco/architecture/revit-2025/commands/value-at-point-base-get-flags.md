@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ValueAtPointBase.GetFlags
+Returns flags for the given measurement.

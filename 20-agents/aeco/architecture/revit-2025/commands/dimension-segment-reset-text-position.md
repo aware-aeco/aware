@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DimensionSegment.ResetTextPosition
+Resets the text position of the segment to the initial position determined by its type and parameters.

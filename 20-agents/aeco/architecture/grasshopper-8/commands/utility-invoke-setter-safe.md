@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Utility.InvokeSetterSafe
+Call a setter property via its name.  No exceptions are thrown.

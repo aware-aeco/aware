@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshFaceList.GetDuplicateFaces
+Finds all of the duplicate faces.

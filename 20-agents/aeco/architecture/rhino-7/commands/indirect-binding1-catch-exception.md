@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndirectBinding`1.CatchException
+Catches any exceptions when setting the value of the binding

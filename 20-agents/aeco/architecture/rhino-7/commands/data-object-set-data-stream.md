@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataObject.SetDataStream
+Sets a data stream into the clipboard with the specified type identifier.

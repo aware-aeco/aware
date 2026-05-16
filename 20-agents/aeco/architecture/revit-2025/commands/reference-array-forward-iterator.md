@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceArray.ForwardIterator
+Retrieve a forward moving iterator to the array.

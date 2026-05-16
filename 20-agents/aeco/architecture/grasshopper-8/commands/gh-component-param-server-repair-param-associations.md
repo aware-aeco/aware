@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ComponentParamServer.RepairParamAssociations
+Makes sure all parameter attributes are a-ok.   If you stick to regular functions, you shouldn't have to call this.

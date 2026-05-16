@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssemblyViewUtils.CreatePartList
+Creates a new part list multicategory schedule assembly view for the assembly instance.

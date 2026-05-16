@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetObjectAssemblyPrimary
+Gets the object assembly's primary.

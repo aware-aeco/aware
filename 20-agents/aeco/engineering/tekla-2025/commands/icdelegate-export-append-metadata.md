@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportAppendMetadata
+DO NOT USE! For internal usage only!

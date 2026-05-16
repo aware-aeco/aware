@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCCategoryTemplate.ResetCategoryToDefault
+Reset one category, sub-category, or special category in the current mapping table to the default values defined in Revit

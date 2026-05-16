@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndependentTag.Create
+Places a tag on an element or subelement.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetHandlePoints
+Get the Shape Item Handle Points

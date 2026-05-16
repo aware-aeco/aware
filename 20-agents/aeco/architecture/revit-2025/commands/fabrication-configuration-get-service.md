@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetService
+Get the service based on the service identifier from the fabrication configuration in the current document.

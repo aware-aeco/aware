@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PythonScript.GetVariable
+Gets the object associated with a variable name in the main scripting context.

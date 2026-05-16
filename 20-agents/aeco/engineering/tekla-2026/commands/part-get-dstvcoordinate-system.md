@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Part.GetDSTVCoordinateSystem
+Get DSTV coordinate system.

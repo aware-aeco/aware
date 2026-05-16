@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GeometryInstance.GetInstanceGeometry
+Computes the geometric representation of the instance.

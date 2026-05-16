@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Form.DeleteSubElement
+Delete a face/edge/curve/vertex of the form, specified by a reference.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectContext3DHandleOverrides.SetDirectContext3DHandleSettings
+Assigns override settings associated with a DirectContext3D handle instance or type.

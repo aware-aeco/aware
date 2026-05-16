@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Quaternion.CreateFromRotationZYZ
+Constructs a quaternion defined by Euler angles.

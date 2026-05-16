@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.GetReferenceModelObjectFaces
+Gets the faces of the given reference model object.

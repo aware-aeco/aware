@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FileX_T.Write
+Write a X_T file based on the contents of a RhinoDoc

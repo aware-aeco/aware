@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolyBeam.GetPolybeamCoordinateSystems
+Returns a list of coordinate systems for the polybeam segments.

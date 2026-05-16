@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.IsValidCategoryForFilterBySheet
+Checks whether a schedule can be filtered by sheet.

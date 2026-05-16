@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CategorySet.Erase
+Removes a specified category from the set.

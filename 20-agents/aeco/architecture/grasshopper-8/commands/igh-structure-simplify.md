@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Structure.Simplify
+Simplify the data structure by removing path indices shared by all branches.

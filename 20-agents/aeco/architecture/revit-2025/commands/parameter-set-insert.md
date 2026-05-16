@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ParameterSet.Insert
+Insert the specified parameter into the set.

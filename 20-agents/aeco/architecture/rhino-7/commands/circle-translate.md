@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Circle.Translate
+Moves the circle.

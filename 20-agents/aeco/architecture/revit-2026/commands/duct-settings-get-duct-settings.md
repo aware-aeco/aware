@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DuctSettings.GetDuctSettings
+Get the duct settings of the project.

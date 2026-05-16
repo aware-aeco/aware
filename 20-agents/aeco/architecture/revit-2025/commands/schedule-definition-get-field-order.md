@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ScheduleDefinition.GetFieldOrder
+Gets the IDs of the current list of fields in order.

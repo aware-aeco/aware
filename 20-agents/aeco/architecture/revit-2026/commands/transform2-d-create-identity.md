@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transform2D.CreateIdentity
+Creates the identity transformation.

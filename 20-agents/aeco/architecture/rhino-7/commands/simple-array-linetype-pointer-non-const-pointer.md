@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayLinetypePointer.NonConstPointer
+Gets the non-constant pointer (for modification) of this array.

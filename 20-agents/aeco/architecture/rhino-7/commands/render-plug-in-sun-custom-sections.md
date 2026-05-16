@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderPlugIn.SunCustomSections
+Override this function to provide custom sections for the sun panel that are displayed             when your plug-in is the current render plug-in.

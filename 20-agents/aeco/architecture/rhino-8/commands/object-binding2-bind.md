@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectBinding`2.Bind
+Creates a new dual binding between the specified  and this binding.

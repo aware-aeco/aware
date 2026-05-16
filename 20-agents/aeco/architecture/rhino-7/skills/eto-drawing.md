@@ -6,73 +6,144 @@ description: API reference for namespace Eto.Drawing from Eto.dll
 # Eto.Drawing
 
 - **Bitmap**
+  - Represents an image
 - **BitmapData**
+  - Bitmap data information when accessing a 's data directly
 - **Brush**
+  - Base brush class to use when calling fill methods of a  object
 - **Brushes**
+  - List of brushes with common colors and brush cache for solid color brushes
 - **Color**
+  - Represents a color with RGBA (Red, Green, Blue, and Alpha) components
 - **ColorCMYK**
+  - Represents a color in the CMYK color model.
 - **ColorConverter**
+  - Converts instances of other types to and from a .
 - **ColorHSB**
+  - Color representation in HSB color model
 - **ColorHSL**
+  - Color representation in the HSL color model
 - **ColorStyles**
+  - Color styles when parsing or converting the Color struct
 - **Colors**
+  - List of common colors
 - **DashStyle**
+  - Dash style for a
 - **DashStyles**
+  - Common dash styles used for
 - **FillMode**
+  - Mode for how a closed  is filled
 - **Font**
+  - Defines a format for text
 - **FontDecoration**
+  - Decorations for a
 - **FontFamilies**
+  - Defines generic font families that can be used on all systems
 - **FontFamily**
+  - Specifies a family for a  object
 - **FontStyle**
+  - Syles for a
 - **FontTypeface**
+  - A font type that specifies the characteristics of a  variation
 - **Fonts**
+  - Methods to get information about current fonts installed the running system
 - **FormattedText**
+  - Low level object that provides drawing text with formatting.
 - **FormattedTextAlignment**
+  - Alignment mode for the
 - **FormattedTextTrimming**
+  - Trimming mode for the .
 - **FormattedTextWrapMode**
+  - Wrap mode for the .
 - **GradientWrapMode**
+  - Wrap mode for a gradient
 - **Graphics**
+  - Graphics context object for drawing operations
 - **GraphicsPath**
+  - Defines primitives that can be used to draw or fill a path on a  object
 - **GraphicsPathExtensions**
+  - Extensions for the
 - **IGraphicsPath**
+  - Graphics path to be used for drawing or filling using a  object
 - **ILockableImage**
+  - Interface for an image that can have its data locked for direct access
 - **IMatrix**
+  - Defines a matrix used for transforms in  and
 - **ITransformBrush**
+  - Interface for brushes with a transform
 - **Icon**
+  - Represents an icon which allows for multiple sizes and resolutions of an image
 - **IconFrame**
+  - Represents a frame in an .
 - **Image**
+  - Base class for images
 - **ImageConverter**
+  - Converter to convert a string to an
 - **ImageFormat**
+  - Format of the image to use when saving, loading, etc.
 - **ImageInterpolation**
+  - Interpolation modes when drawing images using the  object
 - **IndexedBitmap**
+  - Represents a bitmap where each pixel is specified as an index in a
 - **LinearGradientBrush**
+  - Brush with a linear gradient at an angle
 - **Matrix**
+  - Methods to create and manage an
 - **Padding**
+  - Represents an amount of padding to apply to an object at the top, left, right, and bottom.
 - **PaddingConverter**
+  - Converter for the  class
 - **PaddingF**
+  - Represents an amount of padding to apply to an object at the top, left, right, and bottom.
 - **Palette**
+  - Represents a collection of  objects
 - **Pen**
+  - Defines attributes for line drawing methods in
 - **PenLineCap**
+  - Specifies the line cap for a
 - **PenLineJoin**
+  - Specifies how lines are joined for a
 - **Pens**
+  - List of pens with common colors and pen cache for pens with a specified color/thickness
 - **PixelFormat**
+  - Format of bytes used in a
 - **PixelOffsetMode**
+  - Enumeration of the pixel offset modes of a
 - **Point**
+  - A struct representing X and Y co-ordinates as integer values
 - **PointConverter**
+  - Converter for the  class
 - **PointF**
+  - A struct representing X and Y co-ordinates as floating point values
 - **PointFConverter**
+  - Converter for the  class
 - **RadialGradientBrush**
+  - Brush with an elliptical radial gradient from a specified origin.
 - **Rectangle**
+  - Represents a rectangle with a location (X, Y) and size (Width, Height) components.
 - **RectangleConverter**
+  - Converter for the  class
 - **RectangleF**
+  - Represents a floating point rectangle with a location (X, Y) and size (Width, Height) components.
 - **RectangleFConverter**
+  - Converter for the  class
 - **Region**
+  - Defines a region to use for clipping
 - **Size**
+  - Represents a size with width and height components
 - **SizeConverter**
+  - Converter for the  class
 - **SizeF**
+  - Represents a floating point size with width and height components
 - **SizeFConverter**
+  - Converter for the  class
 - **SolidBrush**
+  - Defines a brush with a solid color for use with  fill operations
 - **SystemColors**
+  - Methods to get colors of system elements
 - **SystemFont**
+  - Enumeration of the different system fonts for a
 - **SystemFonts**
+  - Methods to get information about current fonts installed the running system
 - **TextureBrush**
+  - Defines a brush with an image texture for use with  fill operations

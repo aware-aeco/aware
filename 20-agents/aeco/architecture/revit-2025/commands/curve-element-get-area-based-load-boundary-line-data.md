@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveElement.GetAreaBasedLoadBoundaryLineData
+Gets the area based load boundary line data from this curve, if applicable.

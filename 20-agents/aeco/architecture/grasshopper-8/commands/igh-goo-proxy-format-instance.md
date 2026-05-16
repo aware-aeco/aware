@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_GooProxy.FormatInstance
+Returns a String description of the current value.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NamedLayerStateTable.FindName
+Returns the index of an existing named layer state.

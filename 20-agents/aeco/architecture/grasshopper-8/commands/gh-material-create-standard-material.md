@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Material.CreateStandardMaterial
+Creates a standard Grasshopper material from a colour.

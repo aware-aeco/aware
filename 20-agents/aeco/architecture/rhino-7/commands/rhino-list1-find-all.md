@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoList`1.FindAll
+Retrieves all the elements that match the conditions defined by the specified predicate.

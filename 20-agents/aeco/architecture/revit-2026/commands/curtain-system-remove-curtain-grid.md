@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurtainSystem.RemoveCurtainGrid
+Remove CurtainGrid from the specified face for the CurtainSystem.

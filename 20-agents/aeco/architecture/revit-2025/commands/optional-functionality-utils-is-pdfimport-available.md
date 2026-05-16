@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OptionalFunctionalityUtils.IsPDFImportAvailable
+Checks whether PDF import is available in the installed Revit.

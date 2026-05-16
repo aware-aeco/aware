@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AdaptiveComponentInstanceUtils.GetInstancePointElementRefIds
+Gets Adaptive Point Element Ref ids to which the instance geometry adapts.

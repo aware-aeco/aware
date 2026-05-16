@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Rebar.SetCrankStraightLengthOverride
+Sets the crank straight length at the indicated bar end as an override value.

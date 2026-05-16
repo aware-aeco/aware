@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_PanelProperties.DecreaseFont
+Decrease the font one level.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IRcpItem.Render
+Render this item into a graphics context.

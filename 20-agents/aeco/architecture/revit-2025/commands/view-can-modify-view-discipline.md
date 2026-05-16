@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.CanModifyViewDiscipline
+Indicates if the View Discipline can be modified

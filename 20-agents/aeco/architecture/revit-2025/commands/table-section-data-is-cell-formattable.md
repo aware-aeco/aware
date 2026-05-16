@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.IsCellFormattable
+Determines whether the cell is formattable or not

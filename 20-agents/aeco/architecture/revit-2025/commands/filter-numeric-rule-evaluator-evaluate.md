@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterNumericRuleEvaluator.Evaluate
+Derived classes should override this method to implement the desired test.

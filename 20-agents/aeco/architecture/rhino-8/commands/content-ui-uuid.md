@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ContentUI.Uuid
+Get the unique identifier of the UI.

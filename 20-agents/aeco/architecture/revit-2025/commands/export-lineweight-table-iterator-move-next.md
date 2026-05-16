@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportLineweightTableIterator.MoveNext
+Increments the iterator to the next item.

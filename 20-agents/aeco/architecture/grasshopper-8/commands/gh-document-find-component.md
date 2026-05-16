@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Document.FindComponent
+Search for components using an ID filter

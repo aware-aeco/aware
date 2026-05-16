@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextFields.ObjectLayer
+Return an object's layer name

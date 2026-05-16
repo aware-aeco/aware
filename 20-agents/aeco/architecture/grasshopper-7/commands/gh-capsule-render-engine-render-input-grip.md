@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_CapsuleRenderEngine.RenderInputGrip
+Static (Shared in VB) method to render a default input grip.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-EndTreatmentType.Create
+Creates a new EndTreatmentType in a document and adds the input string to the endTreatment parameter.

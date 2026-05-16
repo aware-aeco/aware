@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.FrameAt
+Returns a 3d frame at a parameter.

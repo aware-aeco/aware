@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IEd.FindMatchesAsync
+Search for text in the model

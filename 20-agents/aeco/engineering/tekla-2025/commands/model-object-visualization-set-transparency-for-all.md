@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObjectVisualization.SetTransparencyForAll
+Restores permanent representation settings and sets temporary transparency for all model objects

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetSolidMerged
+DO NOT USE! For internal usage only!

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interop.ViewCaptureFromPointer
+Create a ViewCaptureSettings class from a native const CRhinoPrintInfo*             The pointer values are copied

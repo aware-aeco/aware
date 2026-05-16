@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Attributes.RenderToCanvas
+Render these attributes into a Canvas control.

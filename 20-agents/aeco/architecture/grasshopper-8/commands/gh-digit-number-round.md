@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DigitNumber.Round
+Round the number by cancelling the offset in the proper direction.

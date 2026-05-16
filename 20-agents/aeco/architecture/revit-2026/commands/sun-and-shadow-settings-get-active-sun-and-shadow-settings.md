@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SunAndShadowSettings.GetActiveSunAndShadowSettings
+Returns the current SunAndShadowSettings element assigned to the active view for the    supplied document.

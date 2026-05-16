@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalServiceRegistry.RegisterService
+A method to register a mandatory, single-server service.

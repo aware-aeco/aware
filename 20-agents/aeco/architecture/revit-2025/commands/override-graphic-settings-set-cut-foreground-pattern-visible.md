@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OverrideGraphicSettings.SetCutForegroundPatternVisible
+Sets the visibility of the cut face foreground fill pattern.

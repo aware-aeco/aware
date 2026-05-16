@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HostUtils.GetPrinterNames
+Get list of printers available on this system

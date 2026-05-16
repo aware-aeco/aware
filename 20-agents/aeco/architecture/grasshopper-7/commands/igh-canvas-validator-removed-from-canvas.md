@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_CanvasValidator.RemovedFromCanvas
+This method will be called by the Canvas when this validator is removed from it.

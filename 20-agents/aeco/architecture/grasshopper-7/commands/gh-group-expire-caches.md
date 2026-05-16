@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Group.ExpireCaches
+Expire all display and instance caches. Call this function whenever you change the group.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportStartPolyLineInputGeometry
+DO NOT USE! For internal usage only!

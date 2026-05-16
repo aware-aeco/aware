@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ItemFactoryBase.NewReferencePlane
+Creates a new instance of ReferencePlane.

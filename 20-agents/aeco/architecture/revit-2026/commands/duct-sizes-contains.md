@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DuctSizes.Contains
+Checks whether a duct size with the nominal diameter exists.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralConnectionHandlerType.FindGenericConnectionType
+Finds StructuralConnectionHandlerType which is Generic Connection type.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DimensionSegmentArray.Insert
+Insert the specified item into the array.

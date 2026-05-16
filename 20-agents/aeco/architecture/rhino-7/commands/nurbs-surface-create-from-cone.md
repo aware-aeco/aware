@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsSurface.CreateFromCone
+Constructs a new NURBS surfaces from cone data.

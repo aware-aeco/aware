@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.ArcArc
+Intersects two arcs using exact calculations.

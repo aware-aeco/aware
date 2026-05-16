@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpatialElementGeometryCalculator.GetOptions
+The options that control the calculation.

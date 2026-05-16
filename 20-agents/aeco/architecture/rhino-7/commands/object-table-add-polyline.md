@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.AddPolyline
+Adds a polyline object to Rhino.

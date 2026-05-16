@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Linetype.SetSegment
+Sets the length and type of the segment at index.

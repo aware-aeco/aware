@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ChangeQueue.TextureForId
+Get RenderTexture for given RenderHash. Can return null.

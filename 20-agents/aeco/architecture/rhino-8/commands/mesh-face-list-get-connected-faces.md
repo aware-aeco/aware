@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshFaceList.GetConnectedFaces
+Find all connected face indices where adjacent face normals meet             the criteria of angleRadians and greaterThanAngle

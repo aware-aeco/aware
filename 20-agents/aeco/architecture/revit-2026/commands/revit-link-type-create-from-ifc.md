@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitLinkType.CreateFromIFC
+Creates a new Revit link type from an existing Revit file created via import by reference    of an asscoiated IFC file.

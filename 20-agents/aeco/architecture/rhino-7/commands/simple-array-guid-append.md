@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SimpleArrayGuid.Append
+Appends a new  at the end of this array.

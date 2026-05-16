@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PointCloudEngineRegistry.UnregisterPointCloudEngine
+Unregisters the point cloud engine associated to a particular identifier.

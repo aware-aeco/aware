@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.RemoveFins
+Recursively removes any Brep face with a naked edge. This function is only useful for non-manifold Breps.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorRGBA.CreateFromHSV
+Constructs the nearest RGBA equivalent of an HSL color.

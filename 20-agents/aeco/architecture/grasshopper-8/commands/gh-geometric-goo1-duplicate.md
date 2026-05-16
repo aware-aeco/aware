@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_GeometricGoo`1.Duplicate
+Make a complete duplicate of this instance. No shallow copies.

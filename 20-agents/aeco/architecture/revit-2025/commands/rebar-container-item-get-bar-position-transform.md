@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainerItem.GetBarPositionTransform
+Return a transform representing the relative position of any    individual bar in the set.

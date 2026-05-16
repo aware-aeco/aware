@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.RefreshData
+Rebuilds the data in this section if it is out of date.

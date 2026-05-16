@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.RemoveCalloutParent
+Replaces callout parent ID with InvalidElementId.

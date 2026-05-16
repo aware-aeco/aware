@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-HierarchicObject.Insert
+Inserts the hierarchical object instance in the model.

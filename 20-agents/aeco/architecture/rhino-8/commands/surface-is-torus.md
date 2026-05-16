@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Surface.IsTorus
+Determines if the surface is a portion of a torus within RhinoMath.ZeroTolerance.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayModeDescription.GetDisplayModes
+Gets all display mode descriptions that Rhino currently knows about.

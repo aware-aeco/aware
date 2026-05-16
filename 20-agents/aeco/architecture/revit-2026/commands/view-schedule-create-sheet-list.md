@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.CreateSheetList
+Creates a sheet list.

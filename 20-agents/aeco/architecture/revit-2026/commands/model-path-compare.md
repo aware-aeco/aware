@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelPath.Compare
+Compares this ModelPath with another

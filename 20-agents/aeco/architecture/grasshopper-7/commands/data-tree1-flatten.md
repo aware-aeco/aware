@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DataTree`1.Flatten
+Flattens the entire tree into a single path.

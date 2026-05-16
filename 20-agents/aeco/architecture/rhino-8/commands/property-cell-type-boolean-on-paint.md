@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PropertyCellTypeBoolean.OnPaint
+Paints the cell when  is false.

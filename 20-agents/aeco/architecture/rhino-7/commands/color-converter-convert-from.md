@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ColorConverter.ConvertFrom
+Converts the  to an instance of a

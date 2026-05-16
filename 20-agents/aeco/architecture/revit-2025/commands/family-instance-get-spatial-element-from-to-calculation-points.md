@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FamilyInstance.GetSpatialElementFromToCalculationPoints
+Gets the locations for the calculation points for this instance.

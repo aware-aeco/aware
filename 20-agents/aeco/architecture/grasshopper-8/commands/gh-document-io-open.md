@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_DocumentIO.Open
+Perform a default Open operation and store the result as the internal document.

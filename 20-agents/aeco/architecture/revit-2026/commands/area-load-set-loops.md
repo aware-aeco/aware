@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AreaLoad.SetLoops
+Sets curve loops that define geometry of the area load.

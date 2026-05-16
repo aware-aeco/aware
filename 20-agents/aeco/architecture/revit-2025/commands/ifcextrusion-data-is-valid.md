@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IFCExtrusionData.IsValid
+Determines if the extrusion data represents a valid extrusion.

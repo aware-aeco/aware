@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportResetTemporaryVisibility
+DO NOT USE! For internal usage only!

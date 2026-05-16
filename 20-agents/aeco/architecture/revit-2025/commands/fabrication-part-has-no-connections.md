@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.HasNoConnections
+Checks to see if all the fabrication part's connectors are open.

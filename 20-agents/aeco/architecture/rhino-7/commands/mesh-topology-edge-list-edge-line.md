@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshTopologyEdgeList.EdgeLine
+Gets the 3d line along an edge.

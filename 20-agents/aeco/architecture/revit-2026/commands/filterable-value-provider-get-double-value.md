@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterableValueProvider.GetDoubleValue
+Gets a double-precision numeric value from the given element.

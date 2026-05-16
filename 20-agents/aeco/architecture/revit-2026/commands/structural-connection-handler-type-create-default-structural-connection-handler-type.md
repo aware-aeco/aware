@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralConnectionHandlerType.CreateDefaultStructuralConnectionHandlerType
+Creates a new StructuralConnectionHandlerType object with a default name.

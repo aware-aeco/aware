@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GenericZone.ConvertSpaceBasedToSketchBased
+Converts a space-based generic zone to a sketch-based generic zone.

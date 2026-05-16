@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_FieldElement.Duplicate
+Create an exact copy of this element.

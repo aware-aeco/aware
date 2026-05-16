@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_UpgradeObject.Upgrade
+Upgrade an existing object.

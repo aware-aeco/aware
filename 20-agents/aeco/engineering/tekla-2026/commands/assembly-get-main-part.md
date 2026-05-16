@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Assembly.GetMainPart
+Selects and returns the main part of the assembly or null if none.

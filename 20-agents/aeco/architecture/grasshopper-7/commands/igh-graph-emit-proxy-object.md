@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IGH_Graph.EmitProxyObject
+Override this function if you want to be able to edit the graph through a PropertyGrid.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportClearAllTemporaryStates
+DO NOT USE! For internal usage only!

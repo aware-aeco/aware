@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderTabs.SidePaneUiIdFromTab
+Get the id of the side pane UI that a tab is in.

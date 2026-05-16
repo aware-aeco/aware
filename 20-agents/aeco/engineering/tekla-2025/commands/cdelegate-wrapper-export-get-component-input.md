@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportGetComponentInput
+DO NOT USE! For internal usage only!

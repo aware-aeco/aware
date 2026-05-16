@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Brep.CullUnusedTrims
+Culls trims with m_trim_index == -1.

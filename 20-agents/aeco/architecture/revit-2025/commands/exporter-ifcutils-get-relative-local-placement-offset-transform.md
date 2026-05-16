@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.GetRelativeLocalPlacementOffsetTransform
+Obtains the relative transform between two IfcLocalPlacement handles.

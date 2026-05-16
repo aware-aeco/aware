@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.ExportCreateControlPlane
+DO NOT USE! For internal usage only!

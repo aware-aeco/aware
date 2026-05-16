@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Transaction.SetName
+Sets the transaction's name.

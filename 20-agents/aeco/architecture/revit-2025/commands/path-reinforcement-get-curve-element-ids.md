@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PathReinforcement.GetCurveElementIds
+Retrieves the set of ElementIds of curves forming the boundary of the Path Reinforcement.

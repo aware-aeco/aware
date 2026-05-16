@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceModel.GetReferenceModelObjectGuidsByExternalGuids
+Gets reference model object guids by external guids.

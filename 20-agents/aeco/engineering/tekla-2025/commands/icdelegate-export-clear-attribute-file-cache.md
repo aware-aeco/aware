@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportClearAttributeFileCache
+DO NOT USE! For internal usage only!

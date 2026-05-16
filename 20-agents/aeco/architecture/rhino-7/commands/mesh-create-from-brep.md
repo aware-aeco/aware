@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.CreateFromBrep
+Constructs a mesh from a brep.

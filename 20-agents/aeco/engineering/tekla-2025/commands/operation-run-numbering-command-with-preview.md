@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.RunNumberingCommandWithPreview
+Execute the numbering command with preview functionality.

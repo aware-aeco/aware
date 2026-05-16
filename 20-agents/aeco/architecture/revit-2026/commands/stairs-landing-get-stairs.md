@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StairsLanding.GetStairs
+Returns the stairs to which the landing belongs.

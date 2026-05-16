@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSchedule.GetDefaultNameForViewList
+Gets the default view name that will be used when creating a view list.

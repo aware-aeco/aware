@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToGHBrep_Primary
+Converts similar data into a GH_Brep instance.  Data is not quaranteed to be duplicated.

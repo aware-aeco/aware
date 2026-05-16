@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Form.IsReferenceOnlyProfile
+Tell if the profile is made by referencing existing geometry in the Revit model.

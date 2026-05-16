@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-STLExportOptions.IsNormalToleranceSet
+Checks whether the NormalTolerance tessellation parameter is explicitly set.

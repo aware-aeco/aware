@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.SetColumnWidth
+Sets a column's width in feet

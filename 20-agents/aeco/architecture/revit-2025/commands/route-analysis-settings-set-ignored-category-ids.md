@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RouteAnalysisSettings.SetIgnoredCategoryIds
+Sets the ElementIds for Category elements which are ignored by route calculation.

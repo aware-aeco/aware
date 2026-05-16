@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SubDDisplayParameters.Default
+Parameters for the default limit surface display mesh.             SubD display density = adaptive SubDDisplayParameters.Density.DefaultDensity.

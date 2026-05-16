@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point.Abs
+Returns the absolute X and Y components of the specified

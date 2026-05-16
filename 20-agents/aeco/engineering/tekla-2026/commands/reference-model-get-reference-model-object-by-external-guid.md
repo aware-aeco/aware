@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceModel.GetReferenceModelObjectByExternalGuid
+Gets reference model object by external (IFC) guid from this reference model.

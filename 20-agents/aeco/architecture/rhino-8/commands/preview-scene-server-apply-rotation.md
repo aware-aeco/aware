@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PreviewSceneServer.ApplyRotation
+Set Scene Server Rotation

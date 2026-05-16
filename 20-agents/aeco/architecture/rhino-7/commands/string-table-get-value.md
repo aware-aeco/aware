@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StringTable.GetValue
+Gets a user data string from the document.

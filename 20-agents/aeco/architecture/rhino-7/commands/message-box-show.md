@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MessageBox.Show
+Shows a message box, blocking input to all windows of the application until closed

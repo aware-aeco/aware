@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Point.ReferencesEdge
+Returns True if this point is based on an edge reference

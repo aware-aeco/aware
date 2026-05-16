@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexNormalList.Destroy
+Releases all memory allocated to store vertex normals. The list capacity will be 0 after this call.             Subsequent calls can add new items.

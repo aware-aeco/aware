@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilledRegion.IsValidLineStyleIdForFilledRegion
+Indicates whether the given Id is a valid line style Id.

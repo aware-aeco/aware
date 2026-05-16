@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PropertyBinding`1.AddValueChangedHandler
+Wires an event handler to fire when the property of the dataItem is changed

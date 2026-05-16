@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point3f.CompareTo
+Compares this  with another .             Component evaluation priority is first X, then Y, then Z.

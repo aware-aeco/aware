@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshTopologyVertexList.IsHidden
+Returns true if the topological vertex is hidden. The mesh topology             vertex is hidden if and only if all the ON_Mesh vertices it represents is hidden.

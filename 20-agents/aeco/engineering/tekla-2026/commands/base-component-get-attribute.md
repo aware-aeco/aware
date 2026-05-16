@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BaseComponent.GetAttribute
+Retrieves the attribute with the given name.

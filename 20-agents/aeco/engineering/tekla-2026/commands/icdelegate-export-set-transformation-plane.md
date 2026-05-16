@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportSetTransformationPlane
+DO NOT USE! For internal usage only!

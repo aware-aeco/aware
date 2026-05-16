@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoGet.GetOneObject
+Easy to use object getter.

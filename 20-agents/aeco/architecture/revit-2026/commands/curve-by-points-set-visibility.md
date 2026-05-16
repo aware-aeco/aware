@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurveByPoints.SetVisibility
+Sets the visibility.

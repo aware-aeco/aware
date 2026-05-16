@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormattedText.SetUnderlineStatus
+Sets the characters in the entire text to be underlined or not underlined.

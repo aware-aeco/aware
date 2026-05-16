@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExternalFileReference.IsValidExternalFileReference
+Checks an ExternalFileReference to see if it is    properly created.

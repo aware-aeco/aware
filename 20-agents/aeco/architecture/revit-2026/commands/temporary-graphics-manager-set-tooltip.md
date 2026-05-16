@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TemporaryGraphicsManager.SetTooltip
+Sets the tooltip for the temporary graphics object.

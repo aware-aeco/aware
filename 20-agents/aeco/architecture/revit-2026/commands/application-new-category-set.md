@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewCategorySet
+Creates a new instance of a set specifically for holding category objects.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-UIFabricationUtils.SetOpenConnectorIndicatorAwayColor
+Sets the color of the open connector indicator in away direction

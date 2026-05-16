@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AddInsManagerAdminSettings.Get
+Returns  if such settings exist,  otherwise.

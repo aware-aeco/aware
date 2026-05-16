@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MacroModule.GetMacroModuleIterator
+Returns a Macro module iterator that iterates through the collection.

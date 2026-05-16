@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LicenseUtils.Initialize
+Initializes the license manager.

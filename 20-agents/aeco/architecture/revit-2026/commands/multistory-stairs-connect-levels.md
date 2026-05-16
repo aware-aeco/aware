@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MultistoryStairs.ConnectLevels
+Extends the multistory stairs by connecting input levels.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DrawContext.SetWorldTransform
+Sets the world transformation that will be applied to geometry during rendering.

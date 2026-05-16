@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewFamilySymbolProfile
+Creates a new FamilySymbolProfile object.

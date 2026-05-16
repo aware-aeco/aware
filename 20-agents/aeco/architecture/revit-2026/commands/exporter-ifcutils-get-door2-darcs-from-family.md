@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.GetDoor2DArcsFromFamily
+Gets the arcs associated with the plan view of a door.

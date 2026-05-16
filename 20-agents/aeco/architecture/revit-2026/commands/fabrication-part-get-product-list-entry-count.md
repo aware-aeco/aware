@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationPart.GetProductListEntryCount
+Gets the number of product entries for this part.

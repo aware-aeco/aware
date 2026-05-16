@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshVertexColorList.CreateMonotoneMesh
+Constructs a valid vertex color list consisting of a single color.

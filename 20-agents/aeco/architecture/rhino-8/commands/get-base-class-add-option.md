@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetBaseClass.AddOption
+Adds a command line option.

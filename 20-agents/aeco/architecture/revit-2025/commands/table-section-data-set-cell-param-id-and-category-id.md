@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TableSectionData.SetCellParamIdAndCategoryId
+Sets a column's category and parameter Id

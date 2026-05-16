@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilePdf.DrawBitmap
+Draw a bitmap

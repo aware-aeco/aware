@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_UndoServer.MergeRecords
+Attempt to merge the N most recent records into one.  The name of the merged record will be identical to the  name of the oldest record.

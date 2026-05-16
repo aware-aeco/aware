@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.GetNurbsFormParameterFromCurveParameter
+Convert a curve parameter to a NURBS curve parameter.

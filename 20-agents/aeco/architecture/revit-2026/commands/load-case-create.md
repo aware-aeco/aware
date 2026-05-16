@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadCase.Create
+Creates a new LoadCase.

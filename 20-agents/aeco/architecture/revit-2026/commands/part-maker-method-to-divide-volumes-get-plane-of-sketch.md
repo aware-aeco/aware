@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PartMakerMethodToDivideVolumes.GetPlaneOfSketch
+Gets the plane of the sketch.

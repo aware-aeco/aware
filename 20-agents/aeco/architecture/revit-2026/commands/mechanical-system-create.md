@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MechanicalSystem.Create
+Creates a new instance of a mechanical system and adds it to the document.

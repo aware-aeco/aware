@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.StopExternalReferenceModelChangeDetection
+DO NOT USE! For internal usage only!

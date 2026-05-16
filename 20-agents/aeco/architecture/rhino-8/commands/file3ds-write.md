@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-File3ds.Write
+Write a 3ds file based on the contents of a RhinoDoc

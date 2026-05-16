@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-OrdinateDimension.Create
+Initialize Dimension parameters

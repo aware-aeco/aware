@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarContainerParameterManager.SetOverriddenParameterReadonly
+Sets this overridden parameter to be readonly.

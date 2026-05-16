@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_ValueList.PrevItem
+Safe method of selecting the previous item.   The select prev logic depends on the ListMode, in that only Cycle and Sequence support PrevItem()

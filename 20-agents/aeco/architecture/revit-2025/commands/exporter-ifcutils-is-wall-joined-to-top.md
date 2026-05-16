@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExporterIFCUtils.IsWallJoinedToTop
+Checks if wall is joined to top.

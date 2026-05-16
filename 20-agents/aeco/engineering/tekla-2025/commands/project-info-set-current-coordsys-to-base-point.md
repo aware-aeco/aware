@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ProjectInfo.SetCurrentCoordsysToBasePoint
+Sets the current base point.

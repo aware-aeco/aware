@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSheet.CanBeDuplicated
+Identifies if this sheet can be duplicated.

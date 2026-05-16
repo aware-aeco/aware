@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.GetEndPointReference
+Returns a stable reference to the start point or the end point of the curve.

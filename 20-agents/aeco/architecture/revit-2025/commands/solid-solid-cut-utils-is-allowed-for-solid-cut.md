@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SolidSolidCutUtils.IsAllowedForSolidCut
+Validates that the element is eligible for a solid-solid cut.

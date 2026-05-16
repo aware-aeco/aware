@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToDouble_Primary
+Performs a direct cast from Double or GH_Number.

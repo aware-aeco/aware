@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Operation.dotTryGetSubdirectoryFromFileName
+Searches for subdirectory for the file.

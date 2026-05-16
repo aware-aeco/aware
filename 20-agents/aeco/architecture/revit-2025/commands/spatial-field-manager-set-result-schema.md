@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SpatialFieldManager.SetResultSchema
+Sets a new value for an existing result schema in the result registry

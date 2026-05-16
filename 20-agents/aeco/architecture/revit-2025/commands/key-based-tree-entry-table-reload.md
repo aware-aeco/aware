@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-KeyBasedTreeEntryTable.Reload
+Reloads KeyBasedTreeEntries from their currently-stored location into this KeyBasedTreeEntryTable.

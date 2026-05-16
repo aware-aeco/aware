@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TemperatureRatingType.RemoveCorrectionFactor
+Remove an existing correction factor from this temperature rating type in Revit MEP project.

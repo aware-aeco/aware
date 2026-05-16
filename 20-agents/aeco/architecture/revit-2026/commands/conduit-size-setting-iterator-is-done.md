@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConduitSizeSettingIterator.IsDone
+Identifies if the iteration has completed.

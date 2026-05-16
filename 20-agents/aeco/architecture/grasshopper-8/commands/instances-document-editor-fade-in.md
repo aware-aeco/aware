@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Instances.DocumentEditorFadeIn
+Calls the FadeIn() method on the DocumentEditor if it exists.

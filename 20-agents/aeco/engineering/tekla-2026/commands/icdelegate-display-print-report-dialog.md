@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.DisplayPrintReportDialog
+DO NOT USE! For internal usage only!

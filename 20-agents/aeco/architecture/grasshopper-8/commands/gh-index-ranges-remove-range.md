@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_IndexRanges.RemoveRange
+Remove an index range from the collection.

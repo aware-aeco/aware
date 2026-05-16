@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IDirectContext3DServer.GetApplicationId
+Reports this server's application ID.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-View.IsInTemporaryViewMode
+Returns true if the view is in a particular temporary view mode.

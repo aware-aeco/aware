@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AssemblyInstance.AddMemberIds
+Adds member element ids for the assembly instance.

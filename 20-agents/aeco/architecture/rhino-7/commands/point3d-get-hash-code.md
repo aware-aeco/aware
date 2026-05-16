@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Point3d.GetHashCode
+Computes a hash code for the present point.

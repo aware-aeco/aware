@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewSystemsAnalysisReport.GetLatestSystemsAnalysisReport
+Gets the latest report of systems analysis.

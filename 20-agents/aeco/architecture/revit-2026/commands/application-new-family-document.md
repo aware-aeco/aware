@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.NewFamilyDocument
+New family document, including family, titleblock, and annotation symbol

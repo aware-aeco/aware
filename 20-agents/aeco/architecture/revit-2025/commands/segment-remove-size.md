@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Segment.RemoveSize
+Remove the existing MEPSize with this nominal diameter from the segment.

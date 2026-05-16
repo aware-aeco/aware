@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-MeshNgonList.ReverseOuterBoundary
+Reverse the order of the m_vi[] array for an ngon

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RibbonDropdown.FindIconRectangle
+Finds the icon rectangle that belongs to the proxy with the given ComponentID.

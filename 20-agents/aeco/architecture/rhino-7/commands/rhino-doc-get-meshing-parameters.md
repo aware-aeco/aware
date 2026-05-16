@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoDoc.GetMeshingParameters
+Get MeshingParameters currently used by the document

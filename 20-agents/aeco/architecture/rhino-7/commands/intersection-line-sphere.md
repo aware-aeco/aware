@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Intersection.LineSphere
+Intersects a line with a sphere using exact calculations.

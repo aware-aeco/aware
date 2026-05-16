@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShape.AddReferenceCurve
+Adds a reference curve to the DirectShape.

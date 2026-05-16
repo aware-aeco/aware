@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.IsMacroRunning
+DO NOT USE! For internal usage only!

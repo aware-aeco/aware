@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ICDelegate.ExportGetReferenceModelRevisionIds
+DO NOT USE! For internal usage only!

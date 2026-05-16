@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Parameter.AsValueString
+Get the parameter value as a string with units.

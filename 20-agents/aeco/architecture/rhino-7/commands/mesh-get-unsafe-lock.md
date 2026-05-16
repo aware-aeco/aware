@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Mesh.GetUnsafeLock
+Allows to obtain unsafe pointers to the underlying unmanaged data structures of the mesh.

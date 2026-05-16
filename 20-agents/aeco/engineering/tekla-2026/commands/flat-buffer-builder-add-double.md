@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FlatBufferBuilder.AddDouble
+Add a `double` to the buffer (aligns the data and grows if necessary).

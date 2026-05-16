@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShape.IsValidCategoryId
+Test the category id to make sure the category is allowed for a DirectShape or DirectShapeType.

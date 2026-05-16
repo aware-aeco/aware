@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-BoundaryValidation.IsValidHorizontalBoundary
+Identifies whether the given curve loops compose a valid horizontal boundary.

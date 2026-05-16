@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Triangle3d.ClosestPointOnBoundary
+Gets the point on the triangle boundary closest to a test point.

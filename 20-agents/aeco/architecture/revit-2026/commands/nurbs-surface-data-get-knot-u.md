@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NurbsSurfaceData.GetKnotU
+Get the knot in the u-direction.

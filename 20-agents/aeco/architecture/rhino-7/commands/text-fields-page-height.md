@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextFields.PageHeight
+Return the current layout page height in the layout units

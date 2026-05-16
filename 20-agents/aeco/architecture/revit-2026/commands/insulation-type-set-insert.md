@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-InsulationTypeSet.Insert
+Insert the specified insulation type into the set.

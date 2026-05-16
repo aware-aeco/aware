@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Component.ClearData
+Clear the data inside this component and all output parameters.

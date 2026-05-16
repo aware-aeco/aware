@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Vector.DuplicateVector
+Create a duplicate of this vector.

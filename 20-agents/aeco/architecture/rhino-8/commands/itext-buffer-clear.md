@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ITextBuffer.Clear
+Clears the buffer of all text and formatting.

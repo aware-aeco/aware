@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Node2List.CullNullRefs
+Remove all null references from this list.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToPointCloud
+Convert data into Rhino.Geometry.PointCloud.

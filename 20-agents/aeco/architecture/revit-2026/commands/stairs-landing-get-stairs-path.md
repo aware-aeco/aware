@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StairsLanding.GetStairsPath
+Returns the stairs path curves on the landing. The curves are projected on the stairs base level.

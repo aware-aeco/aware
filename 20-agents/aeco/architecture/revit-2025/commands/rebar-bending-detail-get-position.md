@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarBendingDetail.GetPosition
+Gets the position of the bending detail relative to its view.

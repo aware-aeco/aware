@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FilterRule.GetRuleParameter
+Returns the ElementId of the parameter associated to this FilterRule if there is one,    or invalidElementId if there is no associated parameter.

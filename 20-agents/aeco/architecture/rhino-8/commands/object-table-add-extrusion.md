@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ObjectTable.AddExtrusion
+Adds an extrusion object to Rhino.

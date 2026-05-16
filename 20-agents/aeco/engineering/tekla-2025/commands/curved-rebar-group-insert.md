@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CurvedRebarGroup.Insert
+Inserts the curved rebar group into the model database. All the attributes must be set.

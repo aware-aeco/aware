@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-NonContinuousRailInfo.IsValidNonContinuousRailMaterial
+Checks whether an ElementId is a valid material Id of a non-continuous rail.

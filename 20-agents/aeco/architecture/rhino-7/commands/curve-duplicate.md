@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.Duplicate
+Constructs an exact duplicate of this Curve.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ModelObject.SetUserProperties
+Sets multiple properties for the model object.

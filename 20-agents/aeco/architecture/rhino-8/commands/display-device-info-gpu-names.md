@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayDeviceInfo.GpuNames
+Get a list with the names of all GPUs on this machine.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RebarShapeDrivenAccessor.SetLayoutAsMinimumClearSpacing
+Sets the Layout Rule property of rebar set to MinimumClearSpacing

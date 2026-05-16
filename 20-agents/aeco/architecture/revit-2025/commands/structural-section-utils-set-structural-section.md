@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StructuralSectionUtils.SetStructuralSection
+Set structural section in element.

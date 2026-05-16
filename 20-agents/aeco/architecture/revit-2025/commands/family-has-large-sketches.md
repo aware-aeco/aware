@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Family.HasLargeSketches
+Checks whether the family contains sketches with a large number of elements.

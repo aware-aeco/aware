@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CDelegateWrapper.GetOverlayModelSelectedEntityGuids
+DO NOT USE! For internal usage only!

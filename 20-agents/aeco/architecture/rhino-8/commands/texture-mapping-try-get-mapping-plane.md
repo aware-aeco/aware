@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-TextureMapping.TryGetMappingPlane
+Get plane mapping parameters from this texture mapping.

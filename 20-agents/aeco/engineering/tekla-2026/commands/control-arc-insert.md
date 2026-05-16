@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ControlArc.Insert
+Inserts the control arc into the model.

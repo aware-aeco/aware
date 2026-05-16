@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RevitLinkType.GetRootId
+Gets the id of the top-level link which this link is linked into.

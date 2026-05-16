@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContent.RenderHashExclude
+As RenderHash, but ignore parameter names given.

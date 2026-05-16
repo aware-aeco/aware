@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DynamicLayout.AddSpace
+Adds an empty space.  Equivalent to calling Add(null);

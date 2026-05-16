@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PartMaker.IsSourceElement
+Is the element a source for this PartMaker

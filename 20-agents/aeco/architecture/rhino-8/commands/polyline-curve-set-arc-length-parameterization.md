@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PolylineCurve.SetArcLengthParameterization
+Sets the polyline curve to use arc length parameterization for higher quality geometry.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LightFamily.GetLightFamily
+Creates a light family object from the given family document

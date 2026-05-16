@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Pipe.IsPipingSystemTypeId
+Checks if given type is valid piping system type.

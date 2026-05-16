@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Ribbon.FindAndDisplayProxy
+Iterates over all tabs and panels to try and find the icon with   the associated proxy id.

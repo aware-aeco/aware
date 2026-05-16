@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Application.PurgeReleasedAPIObjects
+Explicitly purges all API objects that have been released but are still awaiting to be finalized

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExportContext.IsCanceled
+This method is queried at the beginning of every element.

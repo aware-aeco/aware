@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IndependentTag.HasTagBehavior
+Checks if the IndependentTag has a tag behavior.

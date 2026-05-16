@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ThemedTextStepperHandler.AttachEvent
+Attaches the specified event to the platform-specific control

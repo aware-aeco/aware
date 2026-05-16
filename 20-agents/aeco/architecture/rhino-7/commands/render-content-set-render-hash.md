@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderContent.SetRenderHash
+This method is deprecated and no longer called. For more information             see

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-IExporterIFC.ExportIFC
+The method that Revit will invoke to perform an export to IFC.

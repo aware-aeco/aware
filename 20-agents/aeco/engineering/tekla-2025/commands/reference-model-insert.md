@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ReferenceModel.Insert
+Inserts the reference model into the model.

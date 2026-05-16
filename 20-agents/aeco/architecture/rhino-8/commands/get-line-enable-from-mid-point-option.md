@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GetLine.EnableFromMidPointOption
+If true, the "MidPoint" options shows up

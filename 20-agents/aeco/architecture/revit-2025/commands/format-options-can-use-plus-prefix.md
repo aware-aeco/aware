@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FormatOptions.CanUsePlusPrefix
+Checks whether a plus prefix can be displayed for the display unit in this FormatOptions.

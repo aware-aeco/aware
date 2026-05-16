@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoApp.GetDataDirectory
+Gets the data directory.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportFontTable.GetFontTableIterator
+Returns a FontTableIterator that iterates through the collection.

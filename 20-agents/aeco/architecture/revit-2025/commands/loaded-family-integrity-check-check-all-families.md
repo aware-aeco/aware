@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-LoadedFamilyIntegrityCheck.CheckAllFamilies
+Check that all families loaded in the host document have their content documents.

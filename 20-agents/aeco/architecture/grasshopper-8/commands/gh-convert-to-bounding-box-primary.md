@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Convert.ToBoundingBox_Primary
+Performs a direct cast from OnBoundingBox.   Data is not quaranteed to be duplicated.

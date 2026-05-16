@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Beam.Insert
+Inserts the beam into the model database. All the attributes must be set.

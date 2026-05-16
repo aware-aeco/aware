@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-SolidUtils.CreateTransformed
+Creates a new Solid which is the transformation of the input Solid.

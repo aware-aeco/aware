@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-FabricationConfiguration.GetFabricationConfiguration
+Gets the fabrication configuration element in the document.

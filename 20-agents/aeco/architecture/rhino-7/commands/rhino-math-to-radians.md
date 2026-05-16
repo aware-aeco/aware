@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoMath.ToRadians
+Convert an angle from degrees to radians.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ContinuousRail.GetSupports
+Returns all the railing supports attached to the rail.

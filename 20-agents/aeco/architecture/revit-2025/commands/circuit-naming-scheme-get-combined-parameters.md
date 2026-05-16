@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-CircuitNamingScheme.GetCombinedParameters
+Gets the combined parameters.

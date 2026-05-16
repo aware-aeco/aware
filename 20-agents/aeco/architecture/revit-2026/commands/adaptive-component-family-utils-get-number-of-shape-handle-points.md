@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AdaptiveComponentFamilyUtils.GetNumberOfShapeHandlePoints
+Gets number of Shape Handle Point Elements in Adaptive Component Family.

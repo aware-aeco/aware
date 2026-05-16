@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ViewportInfo.UnlockCamera
+Unlocks the camera vectors and location.

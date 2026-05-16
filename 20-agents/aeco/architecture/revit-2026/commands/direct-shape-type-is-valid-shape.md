@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DirectShapeType.IsValidShape
+Validates shape to be stored in a DirectShapeType.

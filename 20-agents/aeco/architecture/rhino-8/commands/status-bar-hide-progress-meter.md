@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-StatusBar.HideProgressMeter
+Ends, or hides, Rhino's status bar progress meter.

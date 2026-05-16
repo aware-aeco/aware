@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AlphanumericRevisionSettings.IsEqual
+Determines whether a specified AlphanumericRevisionSettings is the same as 'this'.

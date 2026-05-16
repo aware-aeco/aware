@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ConnectorElement.CreateDuctConnector
+Create a new duct ConnectorElement.

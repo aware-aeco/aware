@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RenderPlugIn.GetRenderSettingsSections
+This function returns a list of Guids for the render settings pages that should be displayed.

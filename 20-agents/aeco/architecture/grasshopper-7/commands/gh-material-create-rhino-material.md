@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_Material.CreateRhinoMaterial
+Creates a standard Rhino material from a colour.

@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Material.MaterialChannelIdFromIndex
+Finds id of the material channel at given index.

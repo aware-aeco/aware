@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-AngularDimension.SetAngularRadius
+Set radius of an Angular Dimension arc.    The new radius of the arc.

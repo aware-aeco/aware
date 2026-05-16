@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Interop.ToOnMesh
+Constructs a Rhino_DotNet OnMesh that is a copy of a given mesh.

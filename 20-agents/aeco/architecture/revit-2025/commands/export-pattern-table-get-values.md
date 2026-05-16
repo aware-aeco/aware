@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-ExportPatternTable.GetValues
+Returns all the values stored in the map.

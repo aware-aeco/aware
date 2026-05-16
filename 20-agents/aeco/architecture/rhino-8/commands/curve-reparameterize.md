@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-Curve.Reparameterize
+Reparameterizes a curve using automatic parameterization.

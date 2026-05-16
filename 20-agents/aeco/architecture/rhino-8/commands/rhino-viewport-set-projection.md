@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-RhinoViewport.SetProjection
+Set viewport to a defined projection.

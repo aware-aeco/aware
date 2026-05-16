@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-DisplayPipeline.Measure2dText
+Determines screen rectangle that would be drawn to using the Draw2dText(..) function             with the same parameters.

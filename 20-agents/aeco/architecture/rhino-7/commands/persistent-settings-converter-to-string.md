@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-PersistentSettingsConverter.ToString
+Converts a string array to a properly formatted string list XML string.

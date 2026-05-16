@@ -2,4 +2,4 @@
 
 Lifecycle: single
 
-GH_RadialDimension.DuplicateRadialDimension
+Create a duplicate of this radial dimension.
