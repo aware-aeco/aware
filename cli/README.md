@@ -6,46 +6,53 @@ This folder houses the Rust implementation. The contract it satisfies is in [`10
 
 ## Install
 
-**Linux / macOS (curl + bash):**
+**Recommended — Node package manager (Windows / Linux / macOS):**
+
+```bash
+npm  install -g @aware-aeco/cli      # npm
+pnpm add     -g @aware-aeco/cli      # pnpm
+yarn global add  @aware-aeco/cli     # yarn (classic)
+bun  install -g @aware-aeco/cli      # bun
+
+aware --version
+```
+
+All four read from the same npm registry and run the same `postinstall` script (Node built-ins only — no manager-specific deps). Pick whichever you already have.
+
+The package itself is ~2 KB; the `postinstall` fetches the platform binary (~10 MB) from the [GitHub Release](https://github.com/aware-aeco/aware/releases) matching the version.
+
+**Curl-pipe (Linux / macOS, no Node required):**
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/aware-aeco/aware/main/scripts/install.sh | bash
 ```
 
-Drops `aware` and `aware-sidecar` into `~/.local/bin/`. Override with
-`AWARE_INSTALL_DIR=<path>`.
-
-**Windows (PowerShell):**
+**PowerShell (Windows, no Node required):**
 
 ```powershell
 iex (irm https://raw.githubusercontent.com/aware-aeco/aware/main/scripts/install.ps1)
 ```
 
-Drops both binaries into `%LOCALAPPDATA%\aware\bin\`. Override with
-`$env:AWARE_INSTALL_DIR`.
-
 **Pinned version:**
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/aware-aeco/aware/main/scripts/install.sh | bash -s -- --version 0.6.0
-# PowerShell
-$env:AWARE_VERSION = "0.6.0"; iex (irm https://raw.githubusercontent.com/aware-aeco/aware/main/scripts/install.ps1)
-```
+- npm / pnpm / yarn / bun: append `@0.7.0` to the package name (e.g. `pnpm add -g @aware-aeco/cli@0.7.0`)
+- curl: `... | bash -s -- --version 0.7.0`
+- PowerShell: `$env:AWARE_VERSION = "0.7.0"; iex (...)`
 
 **From source:**
 
 ```bash
 git clone https://github.com/aware-aeco/aware
 cd aware
-cargo build --release -p aware --manifest-path cli/Cargo.toml
+cargo build --release --manifest-path cli/Cargo.toml
 dotnet publish cli-sidecar -c Release -r <rid> -p:PublishAot=true
 ```
 
-**Tracked for v0.6.1+:**
-- Code-signed binaries (Authenticode + Apple Developer ID)
-- winget package (`winget install aware-aeco.aware`)
+**Tracked for v0.7.1+:**
+- MSI installer (`winget install aware-aeco.aware`)
 - Homebrew formula (`brew install aware-aeco/tap/aware`)
-- ARM Linux + Intel macOS in the release matrix
+- Code-signed binaries (Microsoft Authenticode + Apple Developer ID)
+- ARM Linux (linux-arm64) + Intel macOS (osx-x64)
 
 ## Status
 
