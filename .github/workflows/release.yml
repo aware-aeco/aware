@@ -85,7 +85,7 @@ jobs:
         if: matrix.archive == 'zip'
         shell: pwsh
         run: |
-          Compress-Archive -Path "${{ env.STAGE_DIR }}\*" -DestinationPath "${{ env.STAGE_DIR }}.zip"
+          Compress-Archive -Path "${{ env.STAGE_DIR }}" -DestinationPath "${{ env.STAGE_DIR }}.zip"
           Get-ChildItem *.zip
           "ARTIFACT=${{ env.STAGE_DIR }}.zip" | Out-File -FilePath $env:GITHUB_ENV -Append
 
