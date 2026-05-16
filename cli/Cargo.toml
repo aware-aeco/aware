@@ -1,6 +1,6 @@
 [package]
 name        = "aware"
-version     = "0.1.0-dev"
+version     = "0.6.0"
 edition     = "2024"
 authors     = ["AWARE contributors"]
 license     = "Apache-2.0"
