@@ -138,6 +138,13 @@ path = "tests/app_logs.rs"
 name = "plugins_cmd_test"
 path = "tests/plugins_cmd.rs"
 
+[[test]]
+# Source is tests/build_agent.rs.
+# "build" is safe on Windows AppCompat — no UAC heuristic applies.
+# Using "build_agent_test" for consistency with the naming convention above.
+name = "build_agent_test"
+path = "tests/build_agent.rs"
+
 [profile.release]
 lto           = "thin"
 codegen-units = 1
