@@ -6,10 +6,7 @@
 //! Public API consumed by:
 //! - Task 6  (`agent validate` command)
 //! - Task 14 (`app validate` command)
-//! - Task 17 (install pre-flight checks)
-//!
-//! Until those tasks land the public symbols are unused at the binary level.
-#![allow(dead_code)]
+//! - install pre-flight (Task 10+)
 
 use std::collections::{BTreeMap, HashSet};
 use std::path::Path;
@@ -120,6 +117,7 @@ pub fn validate_agent_on_disk(agent: &Agent, agent_root: &Path) -> Vec<Validatio
 }
 
 /// Validate an `App` manifest: cycles, dangling refs, unique node ids, inline-glue descriptions.
+#[allow(dead_code)] // consumed by Task 14 (`aware app validate`)
 pub fn validate_app(app: &App) -> Vec<ValidationIssue> {
     let mut out = Vec::new();
     if app.app.trim().is_empty() {
@@ -192,6 +190,7 @@ pub fn validate_app(app: &App) -> Vec<ValidationIssue> {
     out
 }
 
+#[allow(dead_code)] // called by validate_app above
 fn has_cycle<'a>(
     node: &'a str,
     graph: &BTreeMap<&'a str, Vec<&'a str>>,

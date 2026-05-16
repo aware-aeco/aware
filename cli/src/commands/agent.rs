@@ -54,12 +54,49 @@ pub fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError> {
         AgentCommand::List => list(ctx),
         AgentCommand::Describe { agent } => describe(ctx, &agent),
         AgentCommand::Skill { agent, skill } => skill_cmd(ctx, &agent, &skill),
-        AgentCommand::Install { .. } => Err(AwareError::NotYetImplemented("agent install")),
+        AgentCommand::Install { spec } => install(ctx, &spec),
         AgentCommand::Uninstall { .. } => Err(AwareError::NotYetImplemented("agent uninstall")),
         AgentCommand::Update { .. } => Err(AwareError::NotYetImplemented("agent update")),
         AgentCommand::Validate { .. } => Err(AwareError::NotYetImplemented("agent validate")),
         AgentCommand::Publish { .. } => Err(AwareError::NotYetImplemented("agent publish")),
     }
+}
+
+fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
+    use std::path::PathBuf;
+    let path = PathBuf::from(spec);
+    if path.is_dir() {
+        let installed = crate::install::install_agent_from_path(&path, &ctx.paths)?;
+        println!("✓ installed {installed} from {}", path.display());
+        return Ok(());
+    }
+
+    // Otherwise: treat as registry id [@version] or bundle name.
+    let index = crate::registry::fetch::fetch_index(&ctx.paths.cache_dir())?;
+    if index.bundles.contains_key(spec) {
+        let report = crate::install::install_bundle(spec, &ctx.paths, &index)?;
+        println!(
+            "✓ bundle {}: {} installed, {} failed",
+            report.bundle,
+            report.installed.len(),
+            report.failed.len()
+        );
+        for s in &report.installed {
+            println!("  ✓ {s}");
+        }
+        for (s, e) in &report.failed {
+            println!("  ✗ {s}: {e}");
+        }
+        return Ok(());
+    }
+    let (id, version_pin) = match spec.split_once('@') {
+        Some((i, v)) => (i, Some(v)),
+        None => (spec, None),
+    };
+    let installed =
+        crate::install::install_agent_from_registry(id, version_pin, &ctx.paths, &index)?;
+    println!("✓ installed {installed}");
+    Ok(())
 }
 
 #[derive(Serialize)]

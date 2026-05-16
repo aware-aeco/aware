@@ -35,7 +35,6 @@ impl Paths {
         self.aware_home.join("config.yaml")
     }
 
-    #[allow(dead_code)] // consumed by Task 5+ (registry::fetch via commands)
     pub fn cache_dir(&self) -> PathBuf {
         self.aware_home.join("cache")
     }

@@ -2,8 +2,6 @@
 //!
 //! Consumed by Task 11 (aware agent install <bundle>).
 
-#![allow(dead_code)]
-
 use crate::error::AwareError;
 use crate::install::registry::install_agent_from_registry;
 use crate::paths::Paths;

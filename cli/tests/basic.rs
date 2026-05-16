@@ -1,9 +1,13 @@
 //! Top-level smoke tests for the `aware` binary.
 //!
 //! These exercise the clap-derived argument surface without depending on
-//! any subcommand's implementation. Every subcommand stub returns
-//! `NotYetImplemented` in v0.1-dev; the smoke tests verify routing,
-//! help-text generation, version reporting, and exit-code mapping.
+//! any subcommand's implementation. Commands still stubbed with
+//! `NotYetImplemented` return exit code 1 with the message in stderr;
+//! this file verifies routing, help-text, version reporting, and exit-code
+//! mapping.
+//!
+//! NOTE: `agent install` is implemented as of v0.2 Task 10.
+//! The unimplemented-smoke test now uses `agent uninstall` (still stubbed).
 
 use assert_cmd::Command;
 use predicates::prelude::*;
@@ -63,13 +67,15 @@ fn app_subcommand_help_works() {
 
 #[test]
 fn unimplemented_subcommand_exits_nonzero_with_message() {
+    // `agent install` is now implemented (v0.2 Task 10).
+    // Use `agent uninstall` which remains stubbed until a later task.
     Command::cargo_bin("aware")
         .unwrap()
-        .args(["agent", "install", "tekla"])
+        .args(["agent", "uninstall", "tekla"])
         .assert()
         .failure()
         .stderr(predicate::str::contains("not yet implemented"))
-        .stderr(predicate::str::contains("agent install"));
+        .stderr(predicate::str::contains("agent uninstall"));
 }
 
 #[test]

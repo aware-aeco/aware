@@ -37,6 +37,13 @@ assert_cmd  = "2.0"
 predicates  = "3.1"
 tempfile    = "3.14"
 
+[[test]]
+# Source is tests/agent_install.rs.
+# Windows auto-elevates any exe whose name contains "install" (AppCompat heuristic);
+# giving the binary a different name avoids the UAC prompt in CI / local runs.
+name = "agent_inst_test"
+path = "tests/agent_install.rs"
+
 [profile.release]
 lto           = "thin"
 codegen-units = 1

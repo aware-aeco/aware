@@ -1,7 +1,5 @@
 //! Fetch the registry index from HTTPS or a `file://` URL, with TTL-based caching.
 
-#![allow(dead_code)]
-
 use std::path::Path;
 use std::time::{Duration, SystemTime};
 

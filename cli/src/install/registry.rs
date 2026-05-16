@@ -2,8 +2,6 @@
 //! fetching the tarball, extracting the agent's subdirectory, then handing
 //! off to `local::install_agent_from_path`.
 
-#![allow(dead_code)]
-
 use std::path::Path;
 
 use flate2::read::GzDecoder;
