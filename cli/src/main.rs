@@ -11,6 +11,7 @@ mod commands;
 mod context;
 mod envelope;
 mod error;
+mod install;
 mod lockfile;
 mod manifest;
 mod paths;
