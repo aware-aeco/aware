@@ -18,4 +18,14 @@
     <Version>0.5.1</Version>
   </PropertyGroup>
 
+  <ItemGroup>
+    <!-- MetadataLoadContext: safe for AOT (loads metadata only, no IL execution) -->
+    <PackageReference Include="System.Reflection.MetadataLoadContext" Version="9.0.0" />
+  </ItemGroup>
+
+  <!-- Exclude test project files from the main build -->
+  <ItemGroup>
+    <Compile Remove="Tests\**\*.cs" />
+  </ItemGroup>
+
 </Project>
