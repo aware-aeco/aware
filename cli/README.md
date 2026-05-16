@@ -6,19 +6,78 @@ This folder houses the Rust implementation. The contract it satisfies is in [`10
 
 ## Status
 
-**v0.3 — runtime.** Nineteen surfaces shipped (sixteen from v0.1+v0.2 plus three new):
+**v0.4 — auth + host plugins.** Twenty-three surfaces shipped (nineteen from v0.1-v0.3 plus four new):
 
 - `aware --version` / `aware --help`
-- `aware doctor` (now includes Integrity + Running checks)
+- `aware doctor` (now includes Integrity, Running, **and Credentials** checks)
 - `aware agent list` / `agent describe <id>` / `agent skill <id> <skill>`
-- `aware agent install <path|id[@version]|bundle>` / `agent uninstall <id>` / `agent update <id>` / `agent validate <path>`
+- `aware agent install <path|id[@version]|bundle>` / `agent uninstall <id>` / `agent update <id>` / `agent validate <path>` (auto-regenerates host plugins on install/uninstall)
 - `aware app list` / `app show <id>`
 - `aware app install <path>` / `app uninstall <id>` / `app validate <path>` / `app export <id> <output>`
-- `aware app run <app>` — execute the topology (one-shot or long-running) ← v0.3
-- `aware app stop <app>` — terminate a running long-running app ← v0.3
-- `aware app logs <app> [--tail | --replay [--run-id <id>]]` — read execution traces ← v0.3
+- `aware app run <app>` / `app stop <app>` / `app logs <app> [--tail | --replay]`
+- `aware connect <integration>` — PKCE OAuth flow + encrypted token storage ← v0.4
+- `aware connect <integration> --refresh` — force refresh ← v0.4
+- `aware disconnect <integration>` ← v0.4
+- `aware plugins regenerate` — rebuild host plugin folders from installed agents ← v0.4
 
-Still stubbed: `agent publish` (v0.2+), `connect / disconnect` (v0.4), `build agent`, `skill ...` (v0.5).
+Still stubbed: `agent publish` (registry-write), `build agent` (v0.5), `skill ...` (v0.5).
+
+### Connect to an integration (v0.4)
+
+```bash
+# PKCE OAuth flow — opens your browser, listens on localhost:7421, stores the token encrypted
+aware connect trimble-connect
+
+# Multiple accounts of the same integration
+aware connect google-workspace --as personal
+aware connect google-workspace --as work
+
+# Force refresh (refresh_token must exist)
+aware connect trimble-connect --refresh
+
+# Add extra scopes beyond the defaults
+aware connect microsoft-365 --scopes Calendars.Read,Mail.Send
+
+# Remove credentials
+aware disconnect trimble-connect
+aware disconnect google-workspace --as personal
+```
+
+**Encryption.** Tokens are encrypted at rest by the OS keychain (Windows DPAPI / macOS Keychain / Linux libsecret) under service `aware-aeco`. Never written to logs.
+
+**Refresh.** When the runtime reads a credential, it lazily refreshes if the token expires within 60 seconds. Transparent.
+
+**Client IDs.** v0.4 ships with placeholder client IDs. To run a real OAuth flow against Trimble/Microsoft/Google, set:
+
+```
+$env:AWARE_OAUTH_TRIMBLE_CLIENT_ID = "your-registered-client-id"
+$env:AWARE_OAUTH_M365_CLIENT_ID    = "your-registered-client-id"
+$env:AWARE_OAUTH_GOOGLE_CLIENT_ID  = "your-registered-client-id"
+```
+
+### Host plugins (v0.4)
+
+The `aware-aeco` plugin bundle is auto-generated from installed agents whenever you run `agent install` or `agent uninstall`. It lands under:
+
+- `~/.claude/plugins/aware-aeco/` (first-class — full plugin manifest + per-command markdown)
+- `~/.codex/plugins/aware-aeco/` (scaffold — format pending)
+- `~/.opencode/plugins/aware-aeco/` (scaffold — format pending)
+
+Force a rebuild anytime:
+
+```bash
+aware plugins regenerate
+```
+
+Regeneration is idempotent — re-running produces byte-identical output, so you can safely version-control the plugin directories.
+
+For non-default plugin locations (CI, test fixtures, custom setups), override:
+
+```
+$env:AWARE_PLUGINS_CLAUDE   = "C:\test\.claude\plugins"
+$env:AWARE_PLUGINS_CODEX    = "C:\test\.codex\plugins"
+$env:AWARE_PLUGINS_OPENCODE = "C:\test\.opencode\plugins"
+```
 
 ## Build
 
