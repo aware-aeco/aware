@@ -1,0 +1,5 @@
+# input-geometry-events-un-register
+
+Lifecycle: single
+
+Unregisters the instance from listening to events.

@@ -1,0 +1,5 @@
+# direct-shape-remove-all-reference-objects
+
+Lifecycle: single
+
+Removes all reference objects (if any) from the DirectShape.

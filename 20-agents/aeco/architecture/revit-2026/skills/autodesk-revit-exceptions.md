@@ -1,0 +1,126 @@
+---
+name: revit-api-autodesk-revit-exceptions
+description: API reference for namespace Autodesk.Revit.Exceptions from RevitAPI.dll
+---
+
+# Autodesk.Revit.Exceptions
+
+- **AccessDeniedException**
+- **ApplicationException**
+  - The exception that is thrown when a non-fatal application error occurs.
+- **ArgumentException**
+  - The exception that is thrown when one of the arguments provided to a method is not valid.
+- **ArgumentNullException**
+  - The exception that is thrown when  is passed to a method that does not accept it as a valid argument.
+- **ArgumentOutOfRangeException**
+  - The exception that is thrown when the value of an argument is outside the allowable range of values as defined by the invoked method.
+- **ArgumentsInconsistentException**
+  - The exception that is thrown when each individual argument is OK, but a joint constraint is violated.
+- **AutoJoinFailedException**
+  - The exception that is thrown when an autojoin operation failed.
+- **BackgroundTaskCancelledException**
+  - The exception thrown when Revit cancels a background operation. Third-party  developers are not expected to catch and handle this exception. Instead, if allowed to propagate back to Revit code, it will be handled by Revit.
+- **CannotOpenBothCentralAndLocalException**
+  - The exception thrown when both a central model and also a local file for the same central model are opened in the same session.
+- **CentralFileCommunicationException**
+  - The exception thrown when there is a network communication error involving a file-based central model.
+- **CentralModelAccessDeniedException**
+  - The exceptions thrown when a central model can be reached but  access is denied due to a lack of access privileges.
+- **CentralModelAlreadyExistsException**
+  - Exception is thrown when the central model already exists at the specified location.
+- **CentralModelContentionException**
+  - The exception thrown when a central model is busy (locked)  and the operation is canceled.
+- **CentralModelException**
+  - The base class for exceptions that are  common to both file-based and server-based central models or  specific to just file-based central models.
+- **CentralModelVersionArchivedException**
+  - Exception is thrown when last central version merged into the local model has been archived in the central model. Reload Latest or Synchronized with Central needs to be conducted before the current failed operation is retried.
+- **CheckoutElementsRequestTooLargeException**
+  - Exception is thrown when too many elements are requested for checkout
+- **CorruptModelException**
+  - The exception that is thrown when the model is or seems corrupt.
+- **DefaultValueException**
+  - The exception thrown when Revit cannot initialize a default value for a family parameter.
+- **DirectoryNotEmptyException**
+  - The exception that is thrown when a method received a directory as an argument and requires that the directory be empty but the directory is not empty.
+- **DirectoryNotFoundException**
+  - The exception that is thrown when the specified directory could not be found.
+- **DisabledDisciplineException**
+  - The exception that is thrown when the function cannot execute because a discipline is disabled. The exception specifies which discipline(s) would let  the operation succeed.
+- **ExternalApplicationException**
+  - The exception that is thrown when an issue in the Add-Ins resulted in an unexpected error.
+- **FamilyContextException**
+  - The exception that is thrown when an operation is invalid in the current family document, because of the type of family.
+- **FileAccessException**
+  - The exception that is thrown when the specified file could not be accessed, e.g. read-only, locked by the OS etc.
+- **FileArgumentAlreadyExistsException**
+  - The exception that is thrown when the specified file exists.
+- **FileArgumentNotFoundException**
+  - The exception that is thrown when a method received a filename as an argument and requires it to exist as a precondition.
+- **FileNotFoundException**
+  - The exception that is thrown when the specified file could not be found.
+- **ForbiddenForDynamicUpdateException**
+  - The exception that is thrown when making or attempting to make changes that are forbidden during dynamic updates to the model.
+- **FunctionId**
+  - The information of a function throwing an exception.
+- **IOException**
+  - The exception that is thrown when an I/O error occurs.
+- **InapplicableDataException**
+  - The exception that is thrown when attempting to access a piece of data that is structurally not part of an object at the moment.
+- **InsufficientResourcesException**
+  - The exception that is thrown when the OS runs out of resources,  e.g. memory, disk space, or USER or GDI objects.
+- **InternalException**
+  - The exception that is thrown when an issue in the Revit code resulted in an unexpected error.
+- **InvalidDataStreamException**
+  - The exception that is thrown when the reading or saving operation failed due to parsing error.
+- **InvalidObjectException**
+  - The exception that is thrown when referencing an object that is no longer valid.
+- **InvalidOperationException**
+  - The exception that is thrown when a method call is invalid for the object's current state.
+- **InvalidPathArgumentException**
+  - The exception that is thrown when a method received a pathname as an argument, but the pathname is  illegal: too long, invalid characters, etc.
+- **ModificationForbiddenException**
+  - The exception that is thrown by the undo transaction framework when a modification operation is not allowed.
+- **ModificationOutsideTransactionException**
+  - The exception that is thrown by the undo transaction framework when the modification operation to the model is outside of a transaction.
+- **NetworkCommunicationException**
+- **NotTransmittedModelException**
+  - The exception thrown when OpenOptions were provided to deal with a transmitted model, but the model is not transmitted.
+- **ObjectAccessException**
+  - The exception that is thrown when an operation is denied, e.g. an attempt was made to set a read-only property.
+- **OperationCanceledException**
+  - The exception that is thrown when an operation is unexpectedly cancelled.
+- **OptionalFunctionalityNotAvailableException**
+  - The exception that is thrown when the optional functionality is not available in the installed Revit
+- **OutdatedDirectlyOpenedCentralException**
+  - The exception thrown when a central model is opened directly and its copy in the session is  outdated.  If the operation is supported for local files, first resave as local, and try again.
+- **RegenerationFailedException**
+  - The exception that is thrown when a regeneration operation failed.
+- **ResourceNotFoundException**
+- **RevitServerCollaborationNotAvailableException**
+  - The exception that is thrown when Collaboration fails because of an external resource (e.g., Amazon S3) failure.
+- **RevitServerCommunicationException**
+  - The exception that is thrown when there is any network communication error happening.
+- **RevitServerException**
+  - The exception that is base class for all exceptions originating from the Revit server.
+- **RevitServerInternalException**
+  - The exception that is thrown when there is any server internal error happening.
+- **RevitServerModelAlreadyExistsException**
+  - The exception that is thrown when there is a model with the same name already exist.
+- **RevitServerModelNameBreaksConventionException**
+  - The exception that is thrown when the model is breaking the project naming convention.
+- **RevitServerUnauthenticatedUserException**
+  - The exception that is thrown when an unauthenticated user attempts to initiate a call to RevitServer.
+- **RevitServerUnauthorizedException**
+  - The exception that is thrown when a call to the server is unauthorized.
+- **SchemaException**
+  - The exception thrown when Revit cannot interpret a data structure described by a schema.
+- **ServerInternalException**
+- **ServerModelCorruptedException**
+  - The exception thrown when the model is corrupted.
+- **TransientElementCreationException**
+  - The exception that is thrown when TransientElementCreationScope is used incorrectly.
+- **TransmittedModelException**
+  - The exception thrown when model was transmitted (sent by eTransmit) and insufficient OpenOptions were provided to handle its transmitted flag.
+- **UnauthenticatedException**
+- **WrongUserException**
+  - The exception thrown when a local model is manipulated under  a different username than it was created with.

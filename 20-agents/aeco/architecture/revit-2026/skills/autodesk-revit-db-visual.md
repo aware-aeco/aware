@@ -1,0 +1,211 @@
+---
+name: revit-api-autodesk-revit-db-visual
+description: API reference for namespace Autodesk.Revit.DB.Visual from RevitAPI.dll
+---
+
+# Autodesk.Revit.DB.Visual
+
+- **AdvancedGlazing**
+  - A static class that provides access to the property names that appear in the AdvancedGlazing visual asset schema.
+- **AdvancedLayered**
+  - A static class that provides access to the property names that appear in the AdvancedLayered visual asset schema.
+- **AdvancedMetal**
+  - A static class that provides access to the property names that appear in the AdvancedMetal visual asset schema.
+- **AdvancedOpaque**
+  - A static class that provides access to the property names that appear in the AdvancedOpaque visual asset schema.
+- **AdvancedTransparent**
+  - A static class that provides access to the property names that appear in the AdvancedTransparent visual asset schema.
+- **AdvancedWood**
+  - A static class that provides access to the property names that appear in the AdvancedWood visual asset schema.
+- **AppearanceAssetEditScope**
+  - A scope object that provides special access and limitations related to editing appearance assets and their related elements.
+- **Asset**
+  - Represents a connected property of material.
+- **AssetProperties**
+  - Represents a set of asset property(s).
+- **AssetProperty**
+  - Represents a property of material.
+- **AssetPropertyBoolean**
+  - Represents a property of material.
+- **AssetPropertyDistance**
+  - Represents a property of material.
+- **AssetPropertyDouble**
+  - Represents a property of material.
+- **AssetPropertyDoubleArray2d**
+  - Represents a property consisting of an array of double values.
+- **AssetPropertyDoubleArray3d**
+  - Represents a vector or point property.
+- **AssetPropertyDoubleArray4d**
+  - Represents a color property of material.
+- **AssetPropertyDoubleMatrix44**
+  - Represents a property consisting of an array of double values.
+- **AssetPropertyEnum**
+  - Represents a property of material.
+- **AssetPropertyFloat**
+  - Represents a property of material.
+- **AssetPropertyFloatArray**
+  - Represents a property consisting of an array of float values.
+- **AssetPropertyInt64**
+  - Represents a property of Int64 value.
+- **AssetPropertyInteger**
+  - Represents a property of material.
+- **AssetPropertyList**
+  - Represents a list of AssetProperty(s).
+- **AssetPropertyReference**
+  - Represents a connected property of material.
+- **AssetPropertyString**
+  - Represents a property of material.
+- **AssetPropertyTime**
+  - Represents a connected property of material.
+- **AssetPropertyType**
+  - Enumerated type listing the type of asset property
+- **AssetPropertyUInt64**
+  - Represents a property of UInt64 value.
+- **AssetSet**
+- **AssetSetIterator**
+- **AssetType**
+  - Enumerated asset types
+- **BumpMap**
+  - A static class that provides access to the property names that appear in the BumpMap visual asset schema.
+- **BumpmapType**
+  - The enumerated type representing the permitted values for the asset property "BumpmapType" from the "BumpMap" schema.
+- **Ceramic**
+  - A static class that provides access to the property names that appear in the Ceramic visual asset schema.
+- **CeramicApplicationType**
+  - The enumerated type representing the permitted values for the asset property "CeramicApplication" from the "Ceramic" schema.
+- **CeramicBumpType**
+  - The enumerated type representing the permitted values for the asset property "CeramicBump" from the "Ceramic" schema.
+- **CeramicPatternType**
+  - The enumerated type representing the permitted values for the asset property "CeramicPattern" from the "Ceramic" schema.
+- **CeramicType**
+  - The enumerated type representing the permitted values for the asset property "CeramicType" from the "Ceramic" schema.
+- **Checker**
+  - A static class that provides access to the property names that appear in the Checker visual asset schema.
+- **CommonSharedAssetType**
+  - The enumerated type representing the permitted values for the asset property "CommonSharedAsset" from the "Ceramic" schema.
+- **Concrete**
+  - A static class that provides access to the property names that appear in the Concrete visual asset schema.
+- **ConcreteBrightmodeType**
+  - The enumerated type representing the permitted values for the asset property "ConcreteBrightmode" from the "Concrete" schema.
+- **ConcreteFinishType**
+  - The enumerated type representing the permitted values for the asset property "ConcreteFinish" from the "Concrete" schema.
+- **ConcreteSealantType**
+  - The enumerated type representing the permitted values for the asset property "ConcreteSealant" from the "Concrete" schema.
+- **Generic**
+  - A static class that provides access to the property names that appear in the Generic visual asset schema.
+- **Glazing**
+  - A static class that provides access to the property names that appear in the Glazing visual asset schema.
+- **GlazingTransmittanceColorType**
+  - The enumerated type representing the permitted values for the asset property "GlazingTransmittanceColor" from the "Glazing" schema.
+- **Gradient**
+  - A static class that provides access to the property names that appear in the Gradient visual asset schema.
+- **GradientInterpolationType**
+  - The enumerated type representing the permitted values for the asset property "GradientInterpolation" from the "Gradient" schema.
+- **GradientNoiseType**
+  - The enumerated type representing the permitted values for the asset property "GradientNoise" from the "Gradient" schema.
+- **GradientType**
+  - The enumerated type representing the permitted values for the asset property "GradientType" from the "Gradient" schema.
+- **Hardwood**
+  - A static class that provides access to the property names that appear in the Hardwood visual asset schema.
+- **HardwoodApplicationType**
+  - The enumerated type representing the permitted values for the asset property "HardwoodApplication" from the "Hardwood" schema.
+- **HardwoodFinishType**
+  - The enumerated type representing the permitted values for the asset property "HardwoodFinish" from the "Hardwood" schema.
+- **HardwoodImperfectionsType**
+  - The enumerated type representing the permitted values for the asset property "HardwoodImperfections" from the "Hardwood" schema.
+- **HardwoodTintEnabledType**
+  - The enumerated type representing the permitted values for the asset property "HardwoodTintEnabled" from the "Hardwood" schema.
+- **LayeredNdfType**
+  - The enumerated type representing the permitted values for the asset property "LayeredNdfType" from the "AdvancedLayered" schema.
+- **Marble**
+  - A static class that provides access to the property names that appear in the Marble visual asset schema.
+- **MasonryCMU**
+  - A static class that provides access to the property names that appear in the MasonryCMU visual asset schema.
+- **MasonryCMUApplicationType**
+  - The enumerated type representing the permitted values for the asset property "MasonryCMUApplication" from the "MasonryCMU" schema.
+- **MasonryCMUPatternType**
+  - The enumerated type representing the permitted values for the asset property "MasonryCMUPattern" from the "MasonryCMU" schema.
+- **MasonryCMUType**
+  - The enumerated type representing the permitted values for the asset property "MasonryCMUType" from the "MasonryCMU" schema.
+- **Metal**
+  - A static class that provides access to the property names that appear in the Metal visual asset schema.
+- **MetalFinishType**
+  - The enumerated type representing the permitted values for the asset property "MetalFinish" from the "Metal" schema.
+- **MetalPatternType**
+  - The enumerated type representing the permitted values for the asset property "MetalPattern" from the "Metal" schema.
+- **MetalPerforationsType**
+  - The enumerated type representing the permitted values for the asset property "MetalPerforations" from the "Metal" schema.
+- **MetalType**
+  - The enumerated type representing the permitted values for the asset property "MetalType" from the "Metal" schema.
+- **MetallicPaint**
+  - A static class that provides access to the property names that appear in the MetallicPaint visual asset schema.
+- **MetallicpaintFinishType**
+  - The enumerated type representing the permitted values for the asset property "MetallicpaintFinish" from the "MetallicPaint" schema.
+- **MetallicpaintFlecksType**
+  - The enumerated type representing the permitted values for the asset property "MetallicpaintFlecks" from the "MetallicPaint" schema.
+- **MetallicpaintPearlType**
+  - The enumerated type representing the permitted values for the asset property "MetallicpaintPearl" from the "MetallicPaint" schema.
+- **MetallicpaintTopcoatType**
+  - The enumerated type representing the permitted values for the asset property "MetallicpaintTopcoat" from the "MetallicPaint" schema.
+- **Mirror**
+  - A static class that provides access to the property names that appear in the Mirror visual asset schema.
+- **Noise**
+  - A static class that provides access to the property names that appear in the Noise visual asset schema.
+- **NoiseType**
+  - The enumerated type representing the permitted values for the asset property "NoiseType" from the "Noise" schema.
+- **PlasticVinyl**
+  - A static class that provides access to the property names that appear in the PlasticVinyl visual asset schema.
+- **PlasticvinylApplicationType**
+  - The enumerated type representing the permitted values for the asset property "PlasticvinylApplication" from the "PlasticVinyl" schema.
+- **PlasticvinylBumpType**
+  - The enumerated type representing the permitted values for the asset property "PlasticvinylBump" from the "PlasticVinyl" schema.
+- **PlasticvinylPatternType**
+  - The enumerated type representing the permitted values for the asset property "PlasticvinylPattern" from the "PlasticVinyl" schema.
+- **PlasticvinylType**
+  - The enumerated type representing the permitted values for the asset property "PlasticvinylType" from the "PlasticVinyl" schema.
+- **SchemaCommon**
+  - A static class that provides access to the property names that appear in all the visual Asset types.
+- **SolidGlass**
+  - A static class that provides access to the property names that appear in the SolidGlass visual asset schema.
+- **SolidglassBumpEnableType**
+  - The enumerated type representing the permitted values for the asset property "SolidglassBumpEnable" from the "SolidGlass" schema.
+- **SolidglassTransmittanceType**
+  - The enumerated type representing the permitted values for the asset property "SolidglassTransmittance" from the "SolidGlass" schema.
+- **Speckle**
+  - A static class that provides access to the property names that appear in the Speckle visual asset schema.
+- **Stone**
+  - A static class that provides access to the property names that appear in the Stone visual asset schema.
+- **StoneApplicationType**
+  - The enumerated type representing the permitted values for the asset property "StoneApplication" from the "Stone" schema.
+- **StoneBumpType**
+  - The enumerated type representing the permitted values for the asset property "StoneBump" from the "Stone" schema.
+- **StonePatternType**
+  - The enumerated type representing the permitted values for the asset property "StonePattern" from the "Stone" schema.
+- **SurfaceNdfType**
+  - The enumerated type representing the permitted values for the asset property "SurfaceNdfType" from the "AdvancedLayered" schema.
+- **Tile**
+  - A static class that provides access to the property names that appear in the Tile visual asset schema.
+- **TileBrickType**
+  - The enumerated type representing the permitted values for the asset property "TileBrickType" from the "Tile" schema.
+- **UnifiedBitmap**
+  - A static class that provides access to the property names that appear in the UnifiedBitmap visual asset schema.
+- **WallPaint**
+  - A static class that provides access to the property names that appear in the WallPaint visual asset schema.
+- **WallpaintApplicationType**
+  - The enumerated type representing the permitted values for the asset property "WallpaintApplication" from the "WallPaint" schema.
+- **WallpaintFinishType**
+  - The enumerated type representing the permitted values for the asset property "WallpaintFinish" from the "WallPaint" schema.
+- **Water**
+  - A static class that provides access to the property names that appear in the Water visual asset schema.
+- **WaterTintEnableType**
+  - The enumerated type representing the permitted values for the asset property "WaterTintEnable" from the "Water" schema.
+- **WaterType**
+  - The enumerated type representing the permitted values for the asset property "WaterType" from the "Water" schema.
+- **Wave**
+  - A static class that provides access to the property names that appear in the Wave visual asset schema.
+- **WaveDistributionType**
+  - The enumerated type representing the permitted values for the asset property "WaveDistribution" from the "Wave" schema.
+- **Wood**
+  - A static class that provides access to the property names that appear in the Wood visual asset schema.
+- **WoodPoreType**
+  - The enumerated type representing the permitted values for the asset property "WoodPoreType" from the "AdvancedLayered" schema.

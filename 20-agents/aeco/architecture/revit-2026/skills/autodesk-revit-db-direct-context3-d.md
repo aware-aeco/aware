@@ -1,0 +1,71 @@
+---
+name: revit-api-autodesk-revit-db-direct-context3-d
+description: API reference for namespace Autodesk.Revit.DB.DirectContext3D from RevitAPI.dll
+---
+
+# Autodesk.Revit.DB.DirectContext3D
+
+- **Camera**
+  - A collection of camera settings for the current view.
+- **ClipPlane**
+  - A set of parameters representing a clip plane in DirectContext3D.
+- **DirectContext3DDocumentUtils**
+  - The methods provided by this utility class support the use of DirectContext3D and storage of DirectContext3D handle elements in Revit documents.
+- **DirectContext3DHandleOverrides**
+  - A set of DirectContext3DHandleSettings that are stored by a view.
+- **DirectContext3DHandleSettings**
+  - Overriding settings applied to DirectContext3DHandles through the Visibility dialog.
+- **DrawContext**
+  - A class that provides drawing functionality for use by  servers
+- **EffectInstance**
+  - An effect instance that controls the appearance of geometry.
+- **IDirectContext3DServer**
+  - The interface to be implemented by a server of the DirectContext3D external service.
+- **IndexBuffer**
+  - A buffer that stores vertex indices for rendering.
+- **IndexLine**
+  - A line segment primitive consisting of two indices.
+- **IndexPoint**
+  - A point primitive consisting of one index.
+- **IndexPrimitive**
+  - The base class for index buffer primitives.
+- **IndexStream**
+  - The base class for DirectContext3D index streams, which are used to write vertex indices into buffers.
+- **IndexStreamLine**
+  - A stream that can be used to write     primitives into an
+- **IndexStreamPoint**
+  - A stream that can be used to write     primitives into an
+- **IndexStreamTriangle**
+  - A stream that can be used to write     primitives into an
+- **IndexTriangle**
+  - A triangle primitive consisting of three indices.
+- **PrimitiveType**
+  - Type of geometry primitive represented as a number.
+- **ProjectionMethod**
+  - Projection method
+- **Vertex**
+  - The base class for DirectContext3D vertices.
+- **VertexBuffer**
+  - A buffer that stores vertex data for rendering.
+- **VertexFormat**
+  - A specification of the format of vertex data contained in a piece of geometry.
+- **VertexFormatBits**
+  - Vertex format (i.e., the type of data associated with a vertex) represented as a number.
+- **VertexPosition**
+  - A geometry vertex specified as a position in space.
+- **VertexPositionColored**
+  - A geometry vertex specified as a position in space with a color.
+- **VertexPositionNormal**
+  - A geometry vertex specified as a position in space with a normal vector.
+- **VertexPositionNormalColored**
+  - A geometry vertex specified as a position in space with a normal vector and a color.
+- **VertexStream**
+  - The base class for DirectContext3D vertex streams, which are used to write vertex data into buffers.
+- **VertexStreamPosition**
+  - A stream that can be used to write vertices of type     into a buffer (see ).
+- **VertexStreamPositionColored**
+  - A stream that can be used to write vertices of type     into a buffer (see ).
+- **VertexStreamPositionNormal**
+  - A stream that can be used to write vertices of type     into a buffer (see ).
+- **VertexStreamPositionNormalColored**
+  - A stream that can be used to write vertices of type     into a buffer (see ).
