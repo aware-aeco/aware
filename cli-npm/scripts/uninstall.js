@@ -1,2 +1,8 @@
 #!/usr/bin/env node
-console.log('[aware-npm] uninstall stub — real cleanup logic lands in Task 3');
+const fs = require('fs');
+const path = require('path');
+const dir = path.join(__dirname, '..', 'binaries');
+if (fs.existsSync(dir)) {
+  fs.rmSync(dir, { recursive: true, force: true });
+  console.log(`[aware-npm] removed ${dir}`);
+}
