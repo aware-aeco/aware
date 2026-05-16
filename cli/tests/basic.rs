@@ -6,8 +6,9 @@
 //! this file verifies routing, help-text, version reporting, and exit-code
 //! mapping.
 //!
-//! NOTE: All v0.2 commands are now implemented. The unimplemented-smoke test
-//! uses `app run` which remains stubbed until v0.3.
+//! NOTE: All v0.2 commands are now implemented, and `app run` (one-shot) is
+//! wired in v0.3. The unimplemented-smoke test uses `app stop` which remains
+//! stubbed until a later v0.3 task.
 
 use assert_cmd::Command;
 use predicates::prelude::*;
@@ -67,15 +68,15 @@ fn app_subcommand_help_works() {
 
 #[test]
 fn unimplemented_subcommand_exits_nonzero_with_message() {
-    // All v0.2 commands are implemented. Use `app run` which remains stubbed
-    // until v0.3 (runtime phase).
+    // `app run` (one-shot) is wired in v0.3 Task 13. Use `app stop` which
+    // remains stubbed until a later task.
     Command::cargo_bin("aware")
         .unwrap()
-        .args(["app", "run", "some-app"])
+        .args(["app", "stop", "some-app"])
         .assert()
         .failure()
         .stderr(predicate::str::contains("not yet implemented"))
-        .stderr(predicate::str::contains("app run"));
+        .stderr(predicate::str::contains("app stop"));
 }
 
 #[test]
