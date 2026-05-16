@@ -17,6 +17,7 @@ mod manifest;
 mod paths;
 mod registry;
 mod render;
+mod runtime;
 mod validate;
 
 use clap::{Parser, Subcommand};

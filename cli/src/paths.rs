@@ -43,6 +43,16 @@ impl Paths {
     pub fn credentials_dir(&self) -> PathBuf {
         self.aware_home.join("credentials")
     }
+
+    #[allow(dead_code)] // consumed by Task 13 (aware app run)
+    pub fn logs_dir(&self) -> PathBuf {
+        self.aware_home.join("logs")
+    }
+
+    #[allow(dead_code)] // consumed by Task 14 (aware app run long-running)
+    pub fn app_instance_dir(&self, app: &str, instance: &str) -> PathBuf {
+        self.apps_dir().join(app).join("instances").join(instance)
+    }
 }
 
 #[cfg(test)]
@@ -78,5 +88,18 @@ mod tests {
     #[test]
     fn credentials_dir_appends_credentials() {
         assert_eq!(p("/x").credentials_dir(), PathBuf::from("/x/credentials"));
+    }
+
+    #[test]
+    fn logs_dir_appends_logs() {
+        assert_eq!(p("/x").logs_dir(), PathBuf::from("/x/logs"));
+    }
+
+    #[test]
+    fn app_instance_dir_nests_correctly() {
+        assert_eq!(
+            p("/x").app_instance_dir("myapp", "prod"),
+            PathBuf::from("/x/apps/myapp/instances/prod"),
+        );
     }
 }
