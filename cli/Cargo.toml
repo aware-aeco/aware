@@ -51,6 +51,13 @@ path = "tests/agent_install.rs"
 name = "agent_rm_test"
 path = "tests/agent_uninstall.rs"
 
+[[test]]
+# Source is tests/agent_update.rs.
+# "update" alone is unlikely to trigger the Windows AppCompat heuristic, but we use
+# a short alias anyway to stay consistent with the naming convention above.
+name = "agent_upd_test"
+path = "tests/agent_update.rs"
+
 [profile.release]
 lto           = "thin"
 codegen-units = 1

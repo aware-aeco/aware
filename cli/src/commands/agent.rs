@@ -60,7 +60,7 @@ pub fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError> {
             println!("✓ uninstalled {agent}");
             Ok(())
         }
-        AgentCommand::Update { .. } => Err(AwareError::NotYetImplemented("agent update")),
+        AgentCommand::Update { agent } => update(ctx, &agent),
         AgentCommand::Validate { .. } => Err(AwareError::NotYetImplemented("agent validate")),
         AgentCommand::Publish { .. } => Err(AwareError::NotYetImplemented("agent publish")),
     }
@@ -100,6 +100,15 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
     let installed =
         crate::install::install_agent_from_registry(id, version_pin, &ctx.paths, &index)?;
     println!("✓ installed {installed}");
+    Ok(())
+}
+
+fn update(ctx: &Context, id: &str) -> Result<(), AwareError> {
+    let index = crate::registry::fetch::fetch_index(&ctx.paths.cache_dir())?;
+    // Best-effort: remove existing installation (ignore NotFound).
+    let _ = crate::install::uninstall_agent(id, &ctx.paths);
+    let installed = crate::install::install_agent_from_registry(id, None, &ctx.paths, &index)?;
+    println!("✓ updated {installed}");
     Ok(())
 }
 
