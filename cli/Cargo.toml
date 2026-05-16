@@ -64,6 +64,13 @@ path = "tests/agent_update.rs"
 name = "agent_val_test"
 path = "tests/agent_validate.rs"
 
+[[test]]
+# Source is tests/app_install.rs.
+# "install" in the binary name triggers the Windows AppCompat UAC heuristic;
+# use a different name so CI / local runs don't require elevation.
+name = "app_inst_test"
+path = "tests/app_install.rs"
+
 [profile.release]
 lto           = "thin"
 codegen-units = 1
