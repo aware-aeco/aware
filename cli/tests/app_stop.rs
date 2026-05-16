@@ -22,6 +22,8 @@ fn stop_with_pidfile_removes_pidfile_even_if_process_gone() {
     std::fs::create_dir_all(&instance_dir).unwrap();
     // Write a fake pidfile pointing at PID 999999 (which we don't have permission to signal —
     // that's fine; the test just verifies the pidfile gets removed after the stop call regardless).
+    // pidfile.yaml uses serde_yaml which respects the struct's `rename` attributes:
+    // `started_at` → `started-at`, `run_id` → `run-id` (from the Pidfile struct renames).
     std::fs::write(
         instance_dir.join("pidfile.yaml"),
         r#"app: myapp
