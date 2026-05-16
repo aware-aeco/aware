@@ -1,0 +1,64 @@
+---
+name: rhino-common-rhino-ui
+description: API reference for namespace Rhino.UI from RhinoCommon.dll
+---
+
+# Rhino.UI
+
+- **CursorStyle**
+- **Dialogs**
+- **DistanceDisplayMode**
+- **DrawingUtilities**
+- **Fonts**
+- **GetColorEventArgs**
+- **IDialogService**
+- **IHelp**
+- **ILocalizationService**
+- **IPanel**
+- **IPanelsService**
+- **IRhinoUiDialogService**
+- **IStackedDialogPageService**
+- **KeyboardKey**
+- **LOC**
+- **Localization**
+- **LocalizeStringPair**
+- **ModifierKey**
+- **MouseButton**
+- **MouseCallback**
+- **MouseCallbackEventArgs**
+- **MouseCursor**
+- **NamedColor**
+- **NamedColorList**
+- **ObjectPropertiesPage**
+- **ObjectPropertiesPageCollection**
+- **ObjectPropertiesPageEventArgs**
+- **OpenFileDialog**
+- **OptionPageButtons**
+- **OptionsDialogPage**
+- **PanelEventArgs**
+- **PanelIds**
+- **PanelType**
+- **Panels**
+- **PropertyPageType**
+- **RhinoGetPlotWidthArgs**
+- **RhinoHelp**
+- **RhinoPageInterop**
+- **RhinoPlotWidthType**
+- **RhinoPlotWidthValue**
+- **RuiUpdateUi**
+- **SaveFileDialog**
+- **ShowMessageButton**
+- **ShowMessageDefaultButton**
+- **ShowMessageIcon**
+- **ShowMessageMode**
+- **ShowMessageOptions**
+- **ShowMessageResult**
+- **ShowPanelEventArgs**
+- **ShowPanelReason**
+- **StackedDialogPage**
+- **StatusBar**
+- **Toolbar**
+- **ToolbarFile**
+- **ToolbarFileCollection**
+- **ToolbarGroup**
+- **WaitCursor**
