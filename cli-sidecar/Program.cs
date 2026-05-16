@@ -1,91 +1,89 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using AwareSidecar.Protocol;
 
 namespace AwareSidecar;
 
-// ---------------------------------------------------------------------------
-// Source-generation context — required for NativeAOT / trim-safe serialization.
-// Add every top-level response/error type here.
-// ---------------------------------------------------------------------------
-[JsonSerializable(typeof(OkResponse))]
-[JsonSerializable(typeof(ErrorResponse))]
-[JsonSourceGenerationOptions(WriteIndented = false, PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase)]
-internal partial class SidecarJsonContext : JsonSerializerContext { }
-
-// ---------------------------------------------------------------------------
-// Wire types
-// ---------------------------------------------------------------------------
-internal sealed class OkResponse
-{
-    public bool Ok { get; init; } = true;
-    public string Version { get; init; } = Program.Version;
-    public string Op { get; init; } = "";
-    public EchoData Data { get; init; } = new();
-}
-
-internal sealed class EchoData
-{
-    public string Note { get; init; } = "";
-    // Raw JSON element — serialized as-is; JsonElement is handled natively by STJ.
-    public JsonElement Input { get; init; }
-}
-
-internal sealed class ErrorResponse
-{
-    public bool Ok { get; init; } = false;
-    public string Version { get; init; } = Program.Version;
-    public string Error { get; init; } = "";
-}
-
-// ---------------------------------------------------------------------------
-// Entry point
-// ---------------------------------------------------------------------------
 internal static class Program
 {
-    internal const string Version = "0.5.1";
+    private const string Version = "0.5.1";
 
     public static int Main(string[] args)
     {
+        string? line = null;
         try
         {
-            // Read one JSON line from stdin
-            string? line = Console.In.ReadLine();
+            line = Console.In.ReadLine();
             if (string.IsNullOrWhiteSpace(line))
             {
-                WriteError("stdin closed with no input");
+                EmitError(null, "stdin closed with no input");
                 return 2;
             }
 
-            // For Task 1: parse the input as a JSON object and echo it back inside a response envelope.
-            // Real op dispatch comes in Tasks 2-5.
-            using JsonDocument doc = JsonDocument.Parse(line);
-            string op = doc.RootElement.TryGetProperty("op", out JsonElement opEl)
-                ? (opEl.GetString() ?? "unknown")
-                : "unknown";
-
-            OkResponse response = new()
+            var envelope = JsonSerializer.Deserialize(line, SidecarJsonContext.Default.RequestEnvelope);
+            if (envelope is null)
             {
-                Op = op,
-                Data = new EchoData
-                {
-                    Note = "task-1 scaffold: echoing input. Real handlers land in tasks 2-5.",
-                    Input = doc.RootElement.Clone(),
-                },
-            };
+                EmitError(null, "could not parse request envelope");
+                return 2;
+            }
 
-            Console.WriteLine(JsonSerializer.Serialize(response, SidecarJsonContext.Default.OkResponse));
-            return 0;
+            switch (envelope.Op)
+            {
+                case "reflect-dlls":
+                {
+                    var argsObj = envelope.Args.Deserialize(SidecarJsonContext.Default.ReflectDllsArgs);
+                    if (argsObj is null) { EmitError(envelope.Op, "missing args"); return 2; }
+                    // Task 3 implements DllReflector.Reflect(...)
+                    EmitError(envelope.Op, "reflect-dlls handler lands in Task 3");
+                    return 1;
+                }
+                case "decompile":
+                {
+                    var argsObj = envelope.Args.Deserialize(SidecarJsonContext.Default.DecompileArgs);
+                    if (argsObj is null) { EmitError(envelope.Op, "missing args"); return 2; }
+                    // Task 4 implements IlspyShell.Decompile(...)
+                    EmitError(envelope.Op, "decompile handler lands in Task 4");
+                    return 1;
+                }
+                default:
+                {
+                    EmitError(envelope.Op, $"unknown op: {envelope.Op}");
+                    return 2;
+                }
+            }
+        }
+        catch (JsonException ex)
+        {
+            EmitError(null, $"invalid JSON: {ex.Message}");
+            return 2;
         }
         catch (Exception ex)
         {
-            WriteError($"unhandled: {ex.Message}");
+            EmitError(null, $"unhandled: {ex.Message}");
             return 1;
         }
     }
 
-    private static void WriteError(string message)
+    private static void EmitOk(string op, ResponseData data)
     {
-        ErrorResponse resp = new() { Error = message };
+        var resp = new OkResponse { Ok = true, Version = Version, Op = op, Data = data };
+        Console.WriteLine(JsonSerializer.Serialize(resp, SidecarJsonContext.Default.OkResponse));
+    }
+
+    private static void EmitError(string? op, string message)
+    {
+        var resp = new ErrorResponse { Ok = false, Version = Version, Op = op, Error = message };
         Console.WriteLine(JsonSerializer.Serialize(resp, SidecarJsonContext.Default.ErrorResponse));
     }
 }
+
+[JsonSerializable(typeof(RequestEnvelope))]
+[JsonSerializable(typeof(ReflectDllsArgs))]
+[JsonSerializable(typeof(DecompileArgs))]
+[JsonSerializable(typeof(OkResponse))]
+[JsonSerializable(typeof(ErrorResponse))]
+[JsonSerializable(typeof(ResponseData))]
+[JsonSerializable(typeof(GeneratedAgent))]
+[JsonSerializable(typeof(GeneratedCommand))]
+[JsonSerializable(typeof(GeneratedSkill))]
+internal partial class SidecarJsonContext : JsonSerializerContext { }
