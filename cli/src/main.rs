@@ -21,6 +21,7 @@ mod plugins;
 mod registry;
 mod render;
 mod runtime;
+mod sidecar;
 mod skill_builder;
 mod validate;
 
