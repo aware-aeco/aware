@@ -138,9 +138,75 @@ async fn run(
     });
 
     if is_long_running {
-        return Err(AwareError::NotYetImplemented(
-            "app run (long-running) — wired in Task 14",
-        ));
+        use crate::runtime::lifecycle::{install_ctrl_c_handler, stop_channel};
+        use crate::runtime::pidfile;
+
+        let log_path = log_path_for(&ctx.paths.logs_dir(), app_id, &instance, &run_id);
+        let provenance = ProvenanceWriter::open(&log_path).await?;
+        let invoker = std::sync::Arc::new(CliInvoker {
+            agents_dir: ctx.paths.agents_dir(),
+        });
+
+        let mut rt_ctx = RuntimeContext {
+            inputs: serde_json::Value::Object(inputs.clone()),
+            ..Default::default()
+        };
+        let creds_dir = ctx.paths.credentials_dir();
+        if creds_dir.is_dir()
+            && let Ok(read) = std::fs::read_dir(&creds_dir)
+        {
+            for entry in read.flatten() {
+                let p = entry.path();
+                if let Some(stem) = p.file_stem().and_then(|s| s.to_str()) {
+                    let _ = crate::runtime::context::load_secret(&mut rt_ctx, &creds_dir, stem);
+                }
+            }
+        }
+
+        let orch = Orchestrator {
+            app,
+            agents_dir: ctx.paths.agents_dir(),
+            run_id: run_id.clone(),
+            instance: instance.clone(),
+            invoker,
+            provenance,
+            ctx: rt_ctx,
+            inputs: serde_json::Value::Object(serde_json::Map::new()),
+            fan_in: Default::default(),
+        };
+
+        // Write pidfile.
+        let instance_dir = ctx.paths.app_instance_dir(app_id, &instance);
+        let pf = pidfile::Pidfile {
+            app: app_id.to_string(),
+            instance: instance.clone(),
+            pid: std::process::id(),
+            started_at: crate::runtime::provenance::now_iso(),
+            run_id: run_id.clone(),
+        };
+        pidfile::write(&pf, &instance_dir)?;
+
+        // Set up stop channel + Ctrl+C handler.
+        let (stop_tx, stop_rx) = stop_channel();
+        let _ctrl_handle = install_ctrl_c_handler(stop_tx);
+
+        println!("\u{25b6} run {app_id} (instance {instance}, run-id {run_id})");
+        println!(
+            "  long-running \u{2014} press Ctrl+C to stop, or run `aware app stop {app_id}` from another terminal"
+        );
+
+        let result = orch.run_long_running(stop_rx).await;
+
+        // Always remove pidfile on exit (success or interrupt).
+        pidfile::remove(&instance_dir);
+
+        return match result {
+            Ok(()) => {
+                println!("\u{2713} run ended; trace at {}", log_path.display());
+                Ok(())
+            }
+            Err(e) => Err(e),
+        };
     }
 
     // One-shot path.
