@@ -8,6 +8,7 @@
 //! implements them per the roadmap, one phase at a time.
 
 mod auth;
+mod builder;
 mod commands;
 mod context;
 mod envelope;
@@ -20,6 +21,7 @@ mod plugins;
 mod registry;
 mod render;
 mod runtime;
+mod skill_builder;
 mod validate;
 
 use clap::{Parser, Subcommand};

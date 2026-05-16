@@ -8,8 +8,9 @@
 //!
 //! NOTE: All v0.2 commands are now implemented, and all v0.3 runtime commands
 //! (`app run`, `app stop`, `app logs`) are wired. All v0.4 commands (`connect`,
-//! `disconnect`) are wired. The unimplemented-smoke test uses `build agent`
-//! which is stubbed until v0.5.
+//! `disconnect`) are wired. All v0.5 tier-A and tier-B build sources and all
+//! skill commands are wired. The unimplemented-smoke test uses `build agent
+//! --from-dlls` which is a tier-C stub pending the v0.5.1 C# NativeAOT sidecar.
 
 use assert_cmd::Command;
 use predicates::prelude::*;
@@ -69,10 +70,11 @@ fn app_subcommand_help_works() {
 
 #[test]
 fn unimplemented_subcommand_exits_nonzero_with_message() {
-    // `build agent` is stubbed until v0.5. Use it as the "not yet implemented" sentinel.
+    // `--from-dlls` is a tier-C stub (needs C# NativeAOT sidecar). Use it as
+    // the "not yet implemented" sentinel now that --from-cli is fully wired in v0.5.
     Command::cargo_bin("aware")
         .unwrap()
-        .args(["build", "agent", "--from-cli", "something"])
+        .args(["build", "agent", "--from-dlls", "C:/nonexistent"])
         .assert()
         .failure()
         .stderr(predicate::str::contains("not yet implemented"));
