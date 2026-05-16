@@ -1,0 +1,76 @@
+{
+  "version": "1.0",
+  "updated-at": "2026-05-16T00:00:00Z",
+  "agents": {
+    "tekla": {
+      "versions": {
+        "2025.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/engineering/tekla"
+        }
+      }
+    },
+    "trimble-connect": {
+      "versions": {
+        "2.4.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/construction/trimble-connect"
+        }
+      }
+    },
+    "microsoft-365": {
+      "versions": {
+        "1.0.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/cross-cutting/microsoft-365"
+        }
+      }
+    },
+    "google-workspace": {
+      "versions": {
+        "1.0.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/cross-cutting/google-workspace"
+        }
+      }
+    },
+    "html-report": {
+      "versions": {
+        "1.0.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/_core/html-report"
+        }
+      }
+    },
+    "aware-agent-builder": {
+      "versions": {
+        "0.1.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/_core/aware-agent-builder"
+        }
+      }
+    },
+    "aware-skill-builder": {
+      "versions": {
+        "0.1.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/_core/aware-skill-builder"
+        }
+      }
+    }
+  },
+  "bundles": {
+    "aware-aeco": {
+      "description": "All first-party AECO agents (engineering, construction, cross-cutting, utilities, meta).",
+      "agents": [
+        "tekla@2025.0.1",
+        "trimble-connect@2.4.0",
+        "microsoft-365@1.0.0",
+        "google-workspace@1.0.0",
+        "html-report@1.0.0",
+        "aware-agent-builder@0.1.0",
+        "aware-skill-builder@0.1.0"
+      ]
+    }
+  }
+}
