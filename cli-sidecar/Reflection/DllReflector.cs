@@ -29,19 +29,83 @@ public static class DllReflector
             throw new InvalidOperationException($"no dlls matched globs: {string.Join(", ", globs)}");
         }
 
-        // Locate the .NET runtime/reference DLLs for MetadataLoadContext.
-        // In a NativeAOT binary Assembly.Location is empty (IL3000 suppressed on this method).
-        // RuntimeEnvironment.GetRuntimeDirectory() is also not reliable in NativeAOT — it may
-        // return the binary's directory or a system path with no managed DLLs.
-        // Strategy: try Assembly.Location → RuntimeEnvironment.GetRuntimeDirectory() → dotnet
-        // shared runtime → dotnet reference packs. Use the first that contains *.dll files.
-        var runtimeDir = FindReferenceAssemblyDir();
+        // Build a comprehensive resolver search path so that MetadataLoadContext can
+        // resolve cross-assembly references without executing any managed code.
+        //
+        // Three categories of assemblies are needed:
+        //   1. The input DLLs themselves.
+        //   2. Sibling DLLs in the same directory as each input (e.g. Tekla.Structures.dll
+        //      lives next to Tekla.Structures.Model.dll).
+        //   3. .NET runtime DLLs and reference-pack DLLs for any installed SDK version
+        //      (covers System.Drawing.Common and other assemblies that differ between
+        //      .NET versions and are absent from the current runtime's directory).
+        //
+        // IMPORTANT: PathAssemblyResolver uses file name (without extension) as the assembly
+        // identity key. Having two paths with the same filename causes a FileLoadException
+        // ("already loaded") when the resolver tries to load both.  We therefore deduplicate
+        // by filename, keeping the first (highest-priority) path seen for each name.  Priority
+        // order: input DLLs → sibling DLLs → current runtime dir → ref packs.
+        var seenNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var resolverPaths = new List<string>();
 
-        var resolver = new PathAssemblyResolver(
-            dllPaths.Concat(Directory.GetFiles(runtimeDir, "*.dll"))
-                    .Distinct(StringComparer.OrdinalIgnoreCase)
-                    .ToList()
-        );
+        void AddIfNew(string path)
+        {
+            var name = Path.GetFileName(path);
+            if (seenNames.Add(name))
+                resolverPaths.Add(path);
+        }
+
+        // 1. Input DLLs themselves (highest priority — override everything).
+        foreach (var p in dllPaths)
+            AddIfNew(p);
+
+        // 2. Sibling DLLs in each input's directory (e.g. Tekla.Structures.dll next to
+        //    Tekla.Structures.Model.dll).
+        foreach (var dir in dllPaths
+                     .Select(Path.GetDirectoryName)
+                     .Distinct(StringComparer.OrdinalIgnoreCase))
+        {
+            if (dir == null) continue;
+            try
+            {
+                foreach (var sibling in Directory.EnumerateFiles(dir, "*.dll"))
+                    AddIfNew(sibling);
+            }
+            catch { /* skip directories we cannot read */ }
+        }
+
+        // 3. Current runtime directory (covers System.Runtime, mscorlib compat stub, etc.).
+        var runtimeDir = FindReferenceAssemblyDir();
+        foreach (var f in Directory.EnumerateFiles(runtimeDir, "*.dll"))
+            AddIfNew(f);
+
+        // 4. All installed .NET reference packs (covers assemblies absent from the current
+        //    runtime, e.g. System.Drawing.Common 7.0 when running on net9.0).
+        //    We walk newest version first so that a higher SDK version's ref DLL wins over
+        //    an older one — OrderByDescending(Ordinal) approximates semantic ordering for the
+        //    dotnet packs naming convention.
+        foreach (var packsRoot in GetRefPackRoots())
+        {
+            if (!Directory.Exists(packsRoot)) continue;
+            try
+            {
+                // Layout: <packsRoot>/<PackName>/<Version>/ref/<tfm>/*.dll
+                foreach (var packName in Directory.EnumerateDirectories(packsRoot))
+                foreach (var versionDir in Directory.EnumerateDirectories(packName)
+                             .OrderByDescending(d => d, StringComparer.Ordinal))
+                {
+                    var refDir = Path.Combine(versionDir, "ref");
+                    if (!Directory.Exists(refDir)) continue;
+                    foreach (var tfmDir in Directory.EnumerateDirectories(refDir)
+                                 .OrderByDescending(d => d, StringComparer.Ordinal))
+                    foreach (var f in Directory.EnumerateFiles(tfmDir, "*.dll"))
+                        AddIfNew(f);
+                }
+            }
+            catch { /* skip packs we cannot read (permission errors, broken layouts) */ }
+        }
+
+        var resolver = new PathAssemblyResolver(resolverPaths);
 
         var commands = new List<GeneratedCommand>();
         var skills = new List<GeneratedSkill>();
@@ -214,6 +278,43 @@ public static class DllReflector
                 return tfm;
         }
         return null;
+    }
+
+    /// <summary>
+    /// Returns candidate root directories that may contain .NET reference pack subdirectories.
+    /// Each root, when it exists, has the layout:
+    ///   <root>/<PackName>/<Version>/ref/<tfm>/*.dll
+    /// </summary>
+    private static IEnumerable<string> GetRefPackRoots()
+    {
+        // Try DOTNET_ROOT first so non-standard installs are respected.
+        var dotnetRoot = Environment.GetEnvironmentVariable("DOTNET_ROOT");
+
+        if (OperatingSystem.IsWindows())
+        {
+            // Custom DOTNET_ROOT takes priority.
+            if (!string.IsNullOrEmpty(dotnetRoot))
+                yield return Path.Combine(dotnetRoot, "packs");
+
+            // Standard 64-bit and 32-bit program-files locations.
+            yield return @"C:\Program Files\dotnet\packs";
+            yield return @"C:\Program Files (x86)\dotnet\packs";
+        }
+        else if (OperatingSystem.IsLinux())
+        {
+            if (!string.IsNullOrEmpty(dotnetRoot))
+                yield return Path.Combine(dotnetRoot, "packs");
+
+            yield return "/usr/share/dotnet/packs";
+            yield return "/usr/lib/dotnet/packs";
+        }
+        else if (OperatingSystem.IsMacOS())
+        {
+            if (!string.IsNullOrEmpty(dotnetRoot))
+                yield return Path.Combine(dotnetRoot, "packs");
+
+            yield return "/usr/local/share/dotnet/packs";
+        }
     }
 
     private static List<string> ResolveGlobs(string[] globs)
