@@ -6,14 +6,20 @@ This folder houses the Rust implementation. The contract it satisfies is in [`10
 
 ## Install
 
-**Recommended — npm (Windows / Linux / macOS):**
+**Recommended — Node package manager (Windows / Linux / macOS):**
 
 ```bash
-npm install -g @aware-aeco/cli
+npm  install -g @aware-aeco/cli      # npm
+pnpm add     -g @aware-aeco/cli      # pnpm
+yarn global add  @aware-aeco/cli     # yarn (classic)
+bun  install -g @aware-aeco/cli      # bun
+
 aware --version
 ```
 
-(Wraps the Rust + C# binaries; postinstall fetches them from GitHub Releases.)
+All four read from the same npm registry and run the same `postinstall` script (Node built-ins only — no manager-specific deps). Pick whichever you already have.
+
+The package itself is ~2 KB; the `postinstall` fetches the platform binary (~10 MB) from the [GitHub Release](https://github.com/aware-aeco/aware/releases) matching the version.
 
 **Curl-pipe (Linux / macOS, no Node required):**
 
@@ -29,7 +35,7 @@ iex (irm https://raw.githubusercontent.com/aware-aeco/aware/main/scripts/install
 
 **Pinned version:**
 
-- npm: `npm install -g @aware-aeco/cli@0.7.0`
+- npm / pnpm / yarn / bun: append `@0.7.0` to the package name (e.g. `pnpm add -g @aware-aeco/cli@0.7.0`)
 - curl: `... | bash -s -- --version 0.7.0`
 - PowerShell: `$env:AWARE_VERSION = "0.7.0"; iex (...)`
 
