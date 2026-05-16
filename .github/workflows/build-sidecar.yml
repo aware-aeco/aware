@@ -1,0 +1,42 @@
+name: Build sidecar
+
+on:
+  push:
+    tags:
+      - 'v0.5.1*'
+      - 'v0.5.2*'
+      - 'v0.6*'
+      - 'v1.*'
+  workflow_dispatch: {}
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+      - name: Publish NativeAOT (win-x64)
+        run: dotnet publish cli-sidecar -c Release -r win-x64 -p:PublishAot=true
+      - name: Smoke test the published binary
+        shell: pwsh
+        run: |
+          dotnet build cli-sidecar/Tests/FixtureAssembly
+          $bin = "cli-sidecar/bin/Release/net9.0/win-x64/publish/aware-sidecar.exe"
+          $fixture = "cli-sidecar/Tests/FixtureAssembly/bin/Debug/net9.0/FixtureAssembly.dll"
+          $req = ('{"op":"reflect-dlls","args":{"globs":["' + $fixture.Replace("\","/") + '"],"agent_id":"ci-smoke"}}')
+          $resp = $req | & $bin
+          if (-not $resp.Contains('"ok":true')) {
+            Write-Error "sidecar smoke failed: $resp"
+            exit 1
+          }
+          Write-Host "sidecar smoke passed"
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aware-sidecar-win-x64
+          path: cli-sidecar/bin/Release/net9.0/win-x64/publish/aware-sidecar.exe
+
+  # Linux + macOS sidecars are tracked for v0.5.2 (their NativeAOT paths need
+  # platform-specific toolchain setup); not blocking v0.5.1.

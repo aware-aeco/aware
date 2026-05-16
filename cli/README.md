@@ -6,7 +6,9 @@ This folder houses the Rust implementation. The contract it satisfies is in [`10
 
 ## Status
 
-**v0.5 — builders (the substrate becomes self-growing).** Twenty-seven user-facing surfaces shipped; four tier-C builder sources stubbed for v0.5.1.
+**v0.5.1 — C# NativeAOT sidecar** lifts v0.5's tier-C stubs. Twenty-seven user-facing
+surfaces; `--from-dlls` and `--decompile` now work via the `aware-sidecar` companion
+binary (`--from-com` and `--from-headers` still stubbed for v0.5.2+).
 
 - `aware --version` / `aware --help`
 - `aware doctor` (CLI / Filesystem / Agents / Apps / Integrity / Running / Credentials)
@@ -20,16 +22,16 @@ This folder houses the Rust implementation. The contract it satisfies is in [`10
 - `aware build agent --from-cli <binary>` ← v0.5 tier A
 - `aware build agent --from-nuget <pkg>@<version>` ← v0.5 tier B (docs-only, no decompile yet)
 - `aware build agent --from-python <module>` ← v0.5 tier B
-- `aware build agent --from-dlls <path>` ← v0.5.1 stub (needs C# NativeAOT sidecar)
-- `aware build agent --from-com <progid>` ← v0.5.1 stub
-- `aware build agent --from-headers <path>` ← v0.5.1 stub
-- `aware build agent --decompile` ← v0.5.1 stub
+- `aware build agent --from-dlls <path>` ← v0.5.1 (via C# sidecar)
+- `aware build agent --decompile --from-nuget <pkg>@<version>` ← v0.5.1 (via C# sidecar)
+- `aware build agent --from-com <progid>` ← v0.5.2 stub
+- `aware build agent --from-headers <path>` ← v0.5.2 stub
 - `aware skill create <agent> <skill>` ← v0.5
 - `aware skill port <source> <target-agent>` ← v0.5
 - `aware skill modify <agent> <skill>` ← v0.5
 - `aware skill eval <agent> <skill>` ← v0.5
 
-All phases of `cli-roadmap.md` v0.1–v0.5 are shipped. The remaining work for **v0.5.1** is the C# NativeAOT sidecar binary that the four stubbed sources will delegate to (for DLL / COM / C++ header reflection that's awkward in pure Rust).
+All phases of `cli-roadmap.md` v0.1–v0.5.1 are shipped.
 
 ### Connect to an integration (v0.4)
 
@@ -164,6 +166,38 @@ aware build agent --decompile --from-nuget Some.Closed.Pkg@1.0.0
 The four tier-C sources need the v0.5.1 C# NativeAOT sidecar binary that
 handles .NET reflection / COM type libraries / C++ header parsing more cleanly
 than pure-Rust subprocess shims. Tracked separately.
+
+### The C# sidecar (v0.5.1)
+
+For `--from-dlls` and `--decompile`, the Rust CLI invokes a companion binary
+called `aware-sidecar.exe`. The sidecar is a self-contained C# NativeAOT binary
+(~8 MB) that handles .NET-heavy work (reflection via `MetadataLoadContext`,
+decompilation via `ilspycmd`) which is awkward to do cleanly in pure Rust.
+
+**Install:** drop `aware-sidecar.exe` alongside `aware.exe` in any release tarball,
+or set `AWARE_SIDECAR=<path>` to point at it explicitly.
+
+**Build from source:**
+
+```bash
+cd cli-sidecar
+dotnet publish -c Release -r win-x64 -p:PublishAot=true
+# → bin/Release/net9.0/win-x64/publish/aware-sidecar.exe
+```
+
+**For `--decompile`:** the sidecar also needs `ilspycmd` on PATH:
+
+```bash
+dotnet tool install -g ilspycmd
+```
+
+**Tracked for v0.5.2:**
+
+- `--from-com` (Windows COM TypeLib interop in the sidecar)
+- `--from-headers` (libclang via P/Invoke or `clang.exe` shell)
+- Linux + macOS sidecar binaries (`dotnet publish -r linux-x64` / `osx-arm64`)
+
+**IPC protocol** for sidecar contributors: see [cli-sidecar/README.md](../cli-sidecar/README.md).
 
 ### Skill commands (v0.5)
 

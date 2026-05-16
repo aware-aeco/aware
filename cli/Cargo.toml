@@ -151,6 +151,14 @@ path = "tests/build_agent.rs"
 name = "skill_cmds_test"
 path = "tests/skill_cmds.rs"
 
+[[test]]
+# Source is tests/sidecar_integration.rs.
+# End-to-end test that spawns the NativeAOT sidecar binary and verifies the
+# full IPC chain. Skips gracefully if the published sidecar binary is absent
+# (fresh clone / CI without the publish step).
+name = "sidecar_integration_test"
+path = "tests/sidecar_integration.rs"
+
 [profile.release]
 lto           = "thin"
 codegen-units = 1

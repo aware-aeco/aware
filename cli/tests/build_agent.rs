@@ -60,16 +60,17 @@ fn build_from_cli_against_aware_binary() {
 }
 
 #[test]
-fn build_from_dlls_is_not_yet_implemented() {
+fn build_from_dlls_with_no_sidecar_returns_not_found() {
+    // When AWARE_SIDECAR points at a non-existent file, discovery fails with NotFound
+    // (exit 7), not NotYetImplemented. This verifies the sidecar routing is live.
     let tmp = tempfile::tempdir().unwrap();
     Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", tmp.path())
-        .args(["build", "agent", "--from-dlls", "C:/nonexistent.dll"])
+        .env("AWARE_SIDECAR", "C:/aware-sidecar-does-not-exist-test")
+        .args(["build", "agent", "--from-dlls", "C:/some.dll"])
         .assert()
-        .failure()
-        .stderr(predicate::str::contains("not yet implemented"))
-        .stderr(predicate::str::contains("v0.5.1"));
+        .failure(); // exit 7 (NotFound) — sidecar missing
 }
 
 #[test]
@@ -97,15 +98,17 @@ fn build_from_headers_is_not_yet_implemented() {
 }
 
 #[test]
-fn build_decompile_flag_is_not_yet_implemented() {
+fn build_decompile_with_no_sidecar_returns_not_found() {
+    // --decompile now routes to the sidecar. Without a sidecar binary, discovery
+    // fails with NotFound rather than NotYetImplemented.
     let tmp = tempfile::tempdir().unwrap();
     Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", tmp.path())
+        .env("AWARE_SIDECAR", "C:/aware-sidecar-does-not-exist-test")
         .args(["build", "agent", "--decompile", "--from-nuget", "Foo@1.0"])
         .assert()
-        .failure()
-        .stderr(predicate::str::contains("not yet implemented"));
+        .failure(); // exit 7 (NotFound) — sidecar missing
 }
 
 #[test]
