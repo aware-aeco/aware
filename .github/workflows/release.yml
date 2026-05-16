@@ -1,0 +1,123 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v0.6.*'
+      - 'v0.7.*'
+      - 'v1.*'
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            rid: win-x64
+            ext: .exe
+            archive: zip
+            archive_ext: .zip
+          - os: ubuntu-latest
+            rid: linux-x64
+            ext: ""
+            archive: tar
+            archive_ext: .tar.gz
+          - os: macos-latest
+            rid: osx-arm64
+            ext: ""
+            archive: tar
+            archive_ext: .tar.gz
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install .NET 9
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Install clang on Linux
+        if: matrix.os == 'ubuntu-latest'
+        run: sudo apt-get update && sudo apt-get install -y clang libsecret-1-dev
+
+      - name: Build Rust CLI (release)
+        working-directory: cli
+        run: cargo build --release
+
+      - name: Publish C# sidecar (NativeAOT)
+        run: dotnet publish cli-sidecar -c Release -r ${{ matrix.rid }} -p:PublishAot=true
+
+      - name: Stage artifacts
+        shell: bash
+        run: |
+          set -e
+          version="${GITHUB_REF_NAME#v}"
+          if [ -z "$version" ] || [[ ! "$version" =~ ^[0-9] ]]; then
+            version="0.0.0-dev"
+          fi
+          stage="aware-${version}-${{ matrix.rid }}"
+          mkdir -p "$stage"
+          cp "cli/target/release/aware${{ matrix.ext }}" "$stage/"
+          cp "cli-sidecar/bin/Release/net9.0/${{ matrix.rid }}/publish/aware-sidecar${{ matrix.ext }}" "$stage/"
+          cp LICENSE "$stage/" 2>/dev/null || echo "(no LICENSE file)" > "$stage/LICENSE"
+          cp cli/README.md "$stage/README.md"
+          echo "$version" > "$stage/VERSION"
+          ls -la "$stage/"
+          echo "STAGE_DIR=$stage" >> $GITHUB_ENV
+          echo "VERSION=$version" >> $GITHUB_ENV
+
+      - name: Archive (Linux/macOS — tar.gz)
+        if: matrix.archive == 'tar'
+        shell: bash
+        run: |
+          tar -czf "${{ env.STAGE_DIR }}.tar.gz" "${{ env.STAGE_DIR }}"
+          ls -la *.tar.gz
+          echo "ARTIFACT=${{ env.STAGE_DIR }}.tar.gz" >> $GITHUB_ENV
+
+      - name: Archive (Windows — zip)
+        if: matrix.archive == 'zip'
+        shell: pwsh
+        run: |
+          Compress-Archive -Path "${{ env.STAGE_DIR }}\*" -DestinationPath "${{ env.STAGE_DIR }}.zip"
+          Get-ChildItem *.zip
+          "ARTIFACT=${{ env.STAGE_DIR }}.zip" | Out-File -FilePath $env:GITHUB_ENV -Append
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aware-${{ env.VERSION }}-${{ matrix.rid }}
+          path: ${{ env.ARTIFACT }}
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+
+      - name: List downloaded artifacts
+        run: ls -la dist/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          generate_release_notes: true
+          fail_on_unmatched_files: false
+          draft: false
+          prerelease: ${{ contains(github.ref_name, '-') }}

@@ -4,13 +4,56 @@ The runtime binary for the AWARE substrate.
 
 This folder houses the Rust implementation. The contract it satisfies is in [`10-core/cli-spec.md`](../10-core/cli-spec.md); the phased delivery plan is in [`10-core/cli-roadmap.md`](../10-core/cli-roadmap.md); the engineering rules that apply across every session are in [`CLAUDE.md`](../CLAUDE.md) at the repo root.
 
+## Install
+
+**Linux / macOS (curl + bash):**
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/aware-aeco/aware/main/scripts/install.sh | bash
+```
+
+Drops `aware` and `aware-sidecar` into `~/.local/bin/`. Override with
+`AWARE_INSTALL_DIR=<path>`.
+
+**Windows (PowerShell):**
+
+```powershell
+iex (irm https://raw.githubusercontent.com/aware-aeco/aware/main/scripts/install.ps1)
+```
+
+Drops both binaries into `%LOCALAPPDATA%\aware\bin\`. Override with
+`$env:AWARE_INSTALL_DIR`.
+
+**Pinned version:**
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/aware-aeco/aware/main/scripts/install.sh | bash -s -- --version 0.6.0
+# PowerShell
+$env:AWARE_VERSION = "0.6.0"; iex (irm https://raw.githubusercontent.com/aware-aeco/aware/main/scripts/install.ps1)
+```
+
+**From source:**
+
+```bash
+git clone https://github.com/aware-aeco/aware
+cd aware
+cargo build --release -p aware --manifest-path cli/Cargo.toml
+dotnet publish cli-sidecar -c Release -r <rid> -p:PublishAot=true
+```
+
+**Tracked for v0.6.1+:**
+- Code-signed binaries (Authenticode + Apple Developer ID)
+- winget package (`winget install aware-aeco.aware`)
+- Homebrew formula (`brew install aware-aeco/tap/aware`)
+- ARM Linux + Intel macOS in the release matrix
+
 ## Status
 
-**v0.5.3 — macOS sidecar + C++ class methods + decompile UX.** All eight
-`aware build agent --from-*` flags are real, all three target platforms
-(Windows x64, Linux x64, **macOS arm64**) build in CI, `--from-headers`
-covers C++ class methods, and `--decompile` skills include a `next-action`
-hint so your AI tooling can summarize them via `aware skill modify`.
+**v0.6.0 — distribution release.** The `aware` binary is now installable
+via a single curl command on Linux/macOS or a PowerShell one-liner on
+Windows. A GitHub Actions release workflow cross-builds for win-x64,
+linux-x64, and osx-arm64 on every `v0.6.*` tag and publishes signed
+archives to GitHub Releases.
 
 [Full surface list — see prior v0.5 status; nothing new added at the CLI level.]
 

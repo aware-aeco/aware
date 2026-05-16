@@ -33,14 +33,14 @@ fn top_level_help_works() {
 }
 
 #[test]
-fn version_prints_dev_version() {
+fn version_prints_version() {
     Command::cargo_bin("aware")
         .unwrap()
         .arg("--version")
         .assert()
         .success()
         .stdout(predicate::str::contains("aware"))
-        .stdout(predicate::str::contains("0.1.0"));
+        .stdout(predicate::str::contains("0.6.0"));
 }
 
 #[test]
