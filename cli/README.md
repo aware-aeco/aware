@@ -35,9 +35,9 @@ iex (irm https://raw.githubusercontent.com/aware-aeco/aware/main/scripts/install
 
 **Pinned version:**
 
-- npm / pnpm / yarn / bun: append `@0.7.0` to the package name (e.g. `pnpm add -g @aware-aeco/cli@0.7.0`)
-- curl: `... | bash -s -- --version 0.7.0`
-- PowerShell: `$env:AWARE_VERSION = "0.7.0"; iex (...)`
+- npm / pnpm / yarn / bun: append `@0.7.1` to the package name (e.g. `pnpm add -g @aware-aeco/cli@0.7.1`)
+- curl: `... | bash -s -- --version 0.7.1`
+- PowerShell: `$env:AWARE_VERSION = "0.7.1"; iex (...)`
 
 **From source:**
 
@@ -48,9 +48,10 @@ cargo build --release --manifest-path cli/Cargo.toml
 dotnet publish cli-sidecar -c Release -r <rid> -p:PublishAot=true
 ```
 
-**Tracked for v0.7.1+:**
-- MSI installer (`winget install aware-aeco.aware`)
-- Homebrew formula (`brew install aware-aeco/tap/aware`)
+**Tracked as follow-up phases:**
+- MSI installer — prerequisite for `winget install aware-aeco`
+- Homebrew formula — `brew install aware-aeco/tap/aware`
+- Submit winget manifest to [`microsoft/winget-pkgs`](https://github.com/microsoft/winget-pkgs) (needs the MSI above + a code-signing cert)
 - Code-signed binaries (Microsoft Authenticode + Apple Developer ID)
 - ARM Linux (linux-arm64) + Intel macOS (osx-x64)
 
@@ -450,11 +451,11 @@ See [`CLAUDE.md`](../CLAUDE.md). Non-negotiable:
 
 | Reason | |
 |---|---|
-| Single static binary | Works on every OS without a runtime. `winget install aware-aeco`, done. |
+| Single static binary | Works on every OS without a runtime. Today: npm wrapper + curl-pipe + PowerShell; queued: MSI / winget / brew. |
 | Cross-platform native | Windows-first matters for AECO; Rust's Windows story is excellent. |
 | Decalog alignment | "No vendor in the loop." A statically-linked binary outlives its build environment. |
 | Type safety for manifests | `serde` deserializes YAML → typed structs; schema bugs are compile errors. |
 | Async runtime | `tokio` handles the long-running stateful-agent case cleanly (v0.3). |
-| Distribution | `cargo install` works for devs; `winget` / `brew` / `curl-pipe` for users. |
+| Distribution | `cargo install` for devs; `npm install -g @aware-aeco/cli` (or pnpm/yarn/bun) + curl-pipe for users. `winget` / `brew` queued behind MSI + Homebrew formula. |
 
 If `cargo build` ever takes too long, consider splitting the runtime (`v0.3`) into a separate crate.

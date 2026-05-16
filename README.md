@@ -9,12 +9,13 @@
 ## 60-second install demo
 
 ```bash
-$ winget install aware-aeco      # Windows
-$ brew install aware-aeco        # Mac
-$ curl -fsSL https://aware-aeco.dev/install | sh   # Linux / WSL
+$ npm install -g @aware-aeco/cli                       # any OS — recommended
+  # alternatives that work today:
+  #   curl ... install.sh | bash             # Linux / Mac, no Node
+  #   iex (irm ... install.ps1)              # Windows PowerShell, no Node
 
 $ claude-code                    # or codex, or opencode
-  ✓ plugin: aware-aeco v0.1 · 7 agents · 58 skills
+  ✓ plugin: aware-aeco · 11 agents · 58 curated + 133 raw skills
 
 > Watch this Tekla model. When a welded assembly appears,
 > upload its drawing to my Trimble Connect fab folder.
@@ -26,6 +27,8 @@ $ aware app run welded-to-tc
 ```
 
 That's the whole thing. One sentence in your terminal, one plain-text file, one command to run.
+
+> `winget install aware-aeco` and `brew install aware-aeco` are queued. They need an MSI installer (Windows) and a Homebrew formula (Mac) plus a code-signing cert, all tracked as follow-up phases. The npm + curl-pipe + PowerShell paths above are what works today.
 
 ---
 
