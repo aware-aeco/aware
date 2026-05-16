@@ -46,7 +46,7 @@ fn default_layout() -> Layout {
     Layout::Linear
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct Node {
     pub id: String,
     pub agent: Option<String>,
@@ -62,7 +62,7 @@ pub struct Node {
     pub inputs: Value,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct Inline {
     pub kind: String,
     #[allow(dead_code)]
@@ -71,7 +71,7 @@ pub struct Inline {
     pub code: Option<String>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct Connection {
     pub from: String,
     pub to: String,

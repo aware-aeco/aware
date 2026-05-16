@@ -27,10 +27,14 @@ tar           = "0.4"
 chrono        = { version = "0.4", default-features = false, features = ["clock", "serde"] }
 tempfile      = "3.14"
 
-# v0.3+ runtime additions (commented until needed; uncomment in phase):
-# tokio       = { version = "1.43", features = ["full"] }
+# v0.3 runtime additions
+tokio       = { version = "1", features = ["full"] }
+minijinja   = "2"
+uuid        = { version = "1", features = ["v4"] }
+async-trait = "0.1"
+
+# v0.4+ (commented until needed):
 # reqwest     = { version = "0.12", features = ["json", "rustls-tls"] }
-# minijinja   = "2.6"
 
 [dev-dependencies]
 assert_cmd  = "2.0"
@@ -93,6 +97,25 @@ path = "tests/app_export.rs"
 # "doctor" is safe on Windows AppCompat — no UAC heuristic applies.
 name = "doctor_integrity"
 path = "tests/doctor_integrity.rs"
+
+[[test]]
+# Source is tests/app_run.rs.
+# "run" is safe on Windows AppCompat — no UAC heuristic applies.
+# Using "app_run_test" for consistency with the naming convention above.
+name = "app_run_test"
+path = "tests/app_run.rs"
+
+[[test]]
+# Source is tests/app_stop.rs.
+# "stop" is safe on Windows AppCompat — no UAC heuristic applies.
+name = "app_stop_test"
+path = "tests/app_stop.rs"
+
+[[test]]
+# Source is tests/app_logs.rs.
+# Covers both the default print path (Task 16) and the --replay flag (Task 17).
+name = "app_logs_test"
+path = "tests/app_logs.rs"
 
 [profile.release]
 lto           = "thin"

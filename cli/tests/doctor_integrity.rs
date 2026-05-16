@@ -50,3 +50,47 @@ skills:
         .stdout(predicate::str::contains("E_SKILL_FILE_MISSING"))
         .stdout(predicate::str::contains("missing.md"));
 }
+
+#[test]
+fn doctor_lists_running_instances() {
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+
+    // Create a fake pidfile
+    let instance_dir = aware.join("apps/welded-to-tc/instances/default");
+    std::fs::create_dir_all(&instance_dir).unwrap();
+    std::fs::write(
+        instance_dir.join("pidfile.yaml"),
+        r#"app: welded-to-tc
+instance: default
+pid: 99999
+started-at: 2026-05-16T14:23:00Z
+run-id: r_abc123
+"#,
+    )
+    .unwrap();
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .arg("doctor")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("Running:"))
+        .stdout(predicate::str::contains("welded-to-tc/default"))
+        .stdout(predicate::str::contains("99999"))
+        .stdout(predicate::str::contains("r_abc123"));
+}
+
+#[test]
+fn doctor_reports_no_running_instances_when_empty() {
+    let tmp = tempfile::tempdir().unwrap();
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", tmp.path())
+        .arg("doctor")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("Running:"))
+        .stdout(predicate::str::contains("no running instances"));
+}

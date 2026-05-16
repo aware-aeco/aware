@@ -77,5 +77,36 @@ pub fn run(ctx: &Context) -> Result<(), AwareError> {
     if total_issues == 0 {
         println!("  \u{2713} all installed agents pass validation");
     }
+
+    println!();
+    println!("Running:");
+    let mut found_any = false;
+    if let Ok(read) = std::fs::read_dir(&apps_dir) {
+        for app_entry in read.flatten() {
+            let app_path = app_entry.path();
+            if !app_path.is_dir() {
+                continue;
+            }
+            let instances_dir = app_path.join("instances");
+            if let Ok(instance_read) = std::fs::read_dir(&instances_dir) {
+                for inst_entry in instance_read.flatten() {
+                    let inst_path = inst_entry.path();
+                    if !inst_path.is_dir() {
+                        continue;
+                    }
+                    if let Ok(pid) = crate::runtime::pidfile::read(&inst_path) {
+                        found_any = true;
+                        println!(
+                            "  \u{25b6} {}/{} (pid {}, run-id {}, started {})",
+                            pid.app, pid.instance, pid.pid, pid.run_id, pid.started_at
+                        );
+                    }
+                }
+            }
+        }
+    }
+    if !found_any {
+        println!("  \u{00b7} no running instances");
+    }
     Ok(())
 }

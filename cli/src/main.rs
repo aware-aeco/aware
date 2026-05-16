@@ -17,6 +17,7 @@ mod manifest;
 mod paths;
 mod registry;
 mod render;
+mod runtime;
 mod validate;
 
 use clap::{Parser, Subcommand};
@@ -79,7 +80,8 @@ enum Command {
     Doctor,
 }
 
-fn main() -> anyhow::Result<()> {
+#[tokio::main]
+async fn main() -> anyhow::Result<()> {
     let cli = Cli::parse();
 
     let paths = match crate::paths::Paths::from_env() {
@@ -96,7 +98,7 @@ fn main() -> anyhow::Result<()> {
 
     let result: Result<(), AwareError> = match cli.command {
         Command::Agent { action } => commands::agent::dispatch(action, &ctx),
-        Command::App { action } => commands::app::dispatch(action, &ctx),
+        Command::App { action } => commands::app::dispatch(action, &ctx).await,
         Command::Connect(args) => commands::connect::run_connect(args, &ctx),
         Command::Disconnect(args) => commands::connect::run_disconnect(args, &ctx),
         Command::Skill { action } => commands::skill::dispatch(action, &ctx),
