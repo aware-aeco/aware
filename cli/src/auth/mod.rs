@@ -6,5 +6,6 @@
 
 pub mod config;
 pub mod keychain;
+pub mod paste;
 pub mod pkce; // Task 4
 pub mod refresh; // Task 5
