@@ -1,0 +1,189 @@
+---
+name: three-top-level
+description: TopLevel declarations from three
+---
+
+# TopLevel
+
+## Methods
+
+- `findSpan(p: number, u: number, U: readonly number[])`
+- `calcBasisFunctions(span: number, u: number, p: number, U: readonly number[])`
+- `calcBSplinePoint(p: number, U: readonly number[], P: readonly Vector4[], u: number)`
+- `calcBasisFunctionDerivatives()`
+- `calcBSplineDerivatives()`
+- `calcKoverI(k: number, i: number)`
+- `calcRationalCurveDerivatives(Pders: readonly Vector4[])`
+- `calcNURBSDerivatives()`
+- `calcSurfacePoint()`
+- `calcVolumePoint()`
+- `klein(v: number, u: number, target: Vector3)`
+- `plane(u: number, v: number, target: Vector3)`
+- `mobius(u: number, t: number, target: Vector3)`
+- `mobius3d(u: number, t: number, target: Vector3)`
+- `normalizeColorString(string: unknown)`
+- `buildMesh(chunk: Chunk)`
+- `buildData3DTexture(chunk: Chunk)`
+- `GetWoodPreset(genus: WoodGenus, finish: WoodFinish)`
+- `initSplineTexture(numberOfCurves?: number)`
+- `updateSplineTexture(texture: DataTexture, splineCurve: Curve<Vector3>, offset?: number)`
+- `getUniforms(splineTexture: DataTexture)`
+- `modifyShader(material: Material, uniforms: SplineUniform, numberOfCurves?: number)`
+- `initSplineTexture(numberOfCurves?: number)`
+- `updateSplineTexture(texture: DataTexture, splineCurve: Curve<Vector3>, offset?: number)`
+- `getUniforms(splineTexture: DataTexture)`
+- `modifyShader(material: Material, uniforms: SplineUniform, numberOfCurves: number)`
+- `AmmoPhysics()`
+- `JoltPhysics()`
+- `RapierPhysics()`
+- `generateMagicSquareNoise(samples?: number)`
+- `generatePdSamplePointInitializer(samples: number, rings: number, radiusExponent: number)`
+- `deepCloneAttribute(attribute: BufferAttribute)`
+- `mergeGeometries(geometries: BufferGeometry[], useGroups?: boolean)`
+- `mergeAttributes(attributes: BufferAttribute[])`
+- `interleaveAttributes(attributes: BufferAttribute[])`
+- `estimateBytesUsed(geometry: BufferGeometry)`
+- `mergeVertices(geometry: BufferGeometry, tolerance?: number)`
+- `toTrianglesDrawMode(geometry: BufferGeometry, drawMode: TrianglesDrawModes)`
+- `computeMorphedAttributes(object: Mesh | Line | Points)`
+- `computeMikkTSpaceTangents()`
+- `mergeGroups(geometry: BufferGeometry)`
+- `deinterleaveAttribute(geometry: BufferGeometry)`
+- `deinterleaveGeometry(geometry: BufferGeometry)`
+- `toCreasedNormals(geometry: BufferGeometry, creaseAngle?: number)`
+- `frameCorners()`
+- `setKelvin(color: Color, kelvin: number)`
+- `compressNormals()`
+- `compressPositions(geometry: BufferGeometry)`
+- `compressUvs(geometry: BufferGeometry)`
+- `hilbert2D()`
+- `hilbert3D()`
+- `gosper(size?: number)`
+- `createMeshesFromInstancedMesh(instancedMesh: InstancedMesh)`
+- `createMultiMaterialObject(geometry: BufferGeometry, materials: Material[])`
+- `detach(child: Object3D, parent: Object3D, scene: Scene)`
+- `attach(child: Object3D, scene: Scene, parent: Object3D)`
+- `createMeshesFromMultiMaterialMesh(mesh: Mesh)`
+- `sortInstancedMesh(mesh: InstancedMesh, compareFn: (a: number, b: number) => number)`
+- `reduceVertices()`
+- `traverseGenerator(object: Object3D)`
+- `traverseVisibleGenerator(object: Object3D)`
+- `traverseAncestorsGenerator(object: Object3D)`
+- `retarget(target: Object3D | Skeleton, source: Object3D | Skeleton, options?: RetargetOptions)`
+- `retargetClip()`
+- `clone(source: Object3D)`
+- `UVsDebug(geometry: BufferGeometry, size?: number)`
+- `decompress(texture: Texture, maxTextureSize?: number, renderer?: WebGLRenderer)`
+- `decompress(blitTexture: Texture, maxTextureSize?: number, renderer?: WebGPURenderer)`
+- `createText(message: string, height: number)`
+- `convertArray(array: TypedArray | number[], type: TypedArrayConstructor)`
+- `getKeyframeOrder(times: Array<number>)`
+- `sortedArray(values: Array<number>, stride: number, order: Array<number>)`
+- `flattenJSON()`
+- `subclip()`
+- `makeClipAdditive()`
+- `toHalfFloat(val: number)`
+- `fromHalfFloat(val: number)`
+- `contain(texture: Texture, aspect: number)`
+- `cover(texture: Texture, aspect: number)`
+- `fill(texture: Texture)`
+- `getByteLength()`
+- `CatmullRom(t: number, p0: number, p1: number, p2: number, p3: number)`
+- `QuadraticBezier(t: number, p0: number, p1: number, p2: number)`
+- `CubicBezier(t: number, p0: number, p1: number, p2: number, p3: number)`
+- `SRGBToLinear(c: number)`
+- `LinearToSRGB(c: number)`
+- `generateUUID()`
+- `clamp(value: number, min: number, max: number)`
+- `euclideanModulo(n: number, m: number)`
+- `mapLinear(x: number, a1: number, a2: number, b1: number, b2: number)`
+- `inverseLerp(x: number, y: number, t: number)`
+- `lerp(x: number, y: number, t: number)`
+- `damp(x: number, y: number, lambda: number, dt: number)`
+- `pingpong(x: number, length?: number)`
+- `smoothstep(x: number, min: number, max: number)`
+- `smootherstep(x: number, min: number, max: number)`
+- `randInt(low: number, high: number)`
+- `randFloat(low: number, high: number)`
+- `randFloatSpread(range: number)`
+- `seededRandom(seed?: number)`
+- `degToRad(degrees: number)`
+- `radToDeg(radians: number)`
+- `isPowerOfTwo(value: number)`
+- `ceilPowerOfTwo(value: number)`
+- `floorPowerOfTwo(value: number)`
+- `setQuaternionFromProperEuler(q: Quaternion, a: number, b: number, c: number, order: string)`
+- `denormalize()`
+- `normalize()`
+- `lightShadowMatrix(light: Light)`
+- `lightProjectionUV(light: Light, position?: Node)`
+- `lightPosition(light: Light)`
+- `lightTargetPosition(light: Light)`
+- `lightViewPosition(light: Light)`
+- `builtinShadowContext(shadowNode: Node, light: Light, node?: Node | null)`
+- `builtinAOContext(aoNode: Node, node?: Node | null)`
+- `label(node: Node<TNodeType>, label: string)`
+- `inspector(node: T, name?: string, callback?: (node: T) => Node)`
+- `getTextureIndex(textures: ReadonlyArray<Texture>, name: string)`
+- `getTypeFromLength(length: number)`
+- `getLengthFromType(type: string)`
+- `getMemoryLengthFromType(type: string)`
+- `getAlignmentFromType(type: string)`
+- `getValueType(value: unknown)`
+- `getValueFromType()`
+- `getColorSpaceMethod()`
+- `rangeFog()`
+- `densityFog()`
+- `mx_worley_noise_float()`
+- `mx_worley_noise_vec2()`
+- `mx_worley_noise_vec3()`
+- `mx_cell_noise_float(texcoord?: Node)`
+- `mx_fractal_noise_float()`
+- `mx_fractal_noise_vec2()`
+- `mx_fractal_noise_vec3()`
+- `mx_fractal_noise_vec4()`
+- `addNodeElement(name: string)`
+- `addMethodChaining(name: string, nodeElement: unknown)`
+- `nodeObject(obj: T)`
+- `nodeObjectIntent(obj: T)`
+- `nodeObjects(obj: T)`
+- `nodeArray(obj: readonly [...T])`
+- `nodeProxy()`
+- `nodeProxy()`
+- `nodeProxy()`
+- `nodeImmutable()`
+- `nodeProxyIntent()`
+- `nodeProxyIntent()`
+- `nodeProxyIntent()`
+- `Fn()`
+- `Fn()`
+- `Fn()`
+- `Stack(node: Node)`
+- `replaceDefaultUV()`
+- `getFloatLength(floatLength: number)`
+- `getVectorLength(count: number, vectorLength?: number)`
+- `getStrideLength(vectorLength: number)`
+- `getCacheKey(renderContext: RenderContext)`
+- `saveRendererState(renderer: Renderer, state?: RendererState)`
+- `resetRendererState(renderer: Renderer, state: RendererState)`
+- `restoreRendererState(renderer: Renderer, state: RendererState)`
+- `saveSceneState(scene: Scene, state?: SceneState)`
+- `resetSceneState(scene: Scene, state: SceneState)`
+- `restoreSceneState(scene: Scene, state: SceneState)`
+- `saveRendererAndSceneState()`
+- `resetRendererAndSceneState(renderer: Renderer, state: RendererAndSceneState)`
+- `restoreRendererAndSceneState(renderer: Renderer, state: RendererAndSceneState)`
+- `cloneUniforms(uniformsSrc: T)`
+- `mergeUniforms(uniforms: Array<{ [uniform: string]: IUniform }>)`
+- `cloneUniformsGroups(src: UniformsGroup[])`
+- `WebGLShader(gl: WebGLRenderingContext, type: string, string: string)`
+- `WebGLUniformsGroups()`
+- `isTypedArray(object: unknown)`
+- `createCanvasElement()`
+- `setConsoleFunction()`
+- `getConsoleFunction()`
+- `log(...params: unknown[])`
+- `warn(...params: unknown[])`
+- `error(...params: unknown[])`
+- `warnOnce(...params: unknown[])`
+- `probeAsync(gl: WebGLRenderingContext, sync: WebGLSync, interval: number)`

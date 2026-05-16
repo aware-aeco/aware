@@ -1,0 +1,5 @@
+# denormalize
+
+Lifecycle: single
+
+denormalize()

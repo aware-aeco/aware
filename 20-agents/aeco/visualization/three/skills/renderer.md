@@ -1,0 +1,83 @@
+---
+name: three-renderer
+description: Renderer declarations from three
+---
+
+# Renderer
+
+## Methods
+
+- `init()`
+- `compileAsync(scene: Object3D, camera: Camera, targetScene?: Scene | null)`
+- `renderAsync(scene: Object3D, camera: Camera)`
+- `waitForGPU()`
+- `setMRT(mrt: MRTNode | null)`
+- `getMRT()`
+- `getOutputBufferType()`
+- `getColorBufferType()`
+- `render(scene: Object3D, camera: Camera)`
+- `_setXRLayerSize(width: number, height: number)`
+- `getMaxAnisotropy()`
+- `getActiveCubeFace()`
+- `getActiveMipmapLevel()`
+- `setAnimationLoop(callback: ((time: DOMHighResTimeStamp, frame?: XRFrame) => void) | null)`
+- `getAnimationLoop()`
+- `getArrayBufferAsync()`
+- `getArrayBufferAsync()`
+- `getContext()`
+- `getPixelRatio()`
+- `getDrawingBufferSize(target: Vector2)`
+- `getSize(target: Vector2)`
+- `setPixelRatio(value?: number)`
+- `setDrawingBufferSize(width: number, height: number, pixelRatio: number)`
+- `setSize(width: number, height: number, updateStyle?: boolean)`
+- `setOpaqueSort(method: ((a: RenderItem, b: RenderItem) => number) | null)`
+- `setTransparentSort(method: ((a: RenderItem, b: RenderItem) => number) | null)`
+- `getScissor(target: Vector4)`
+- `setScissor(x: Vector4)`
+- `setScissor(x: number, y: number, width: number, height: number)`
+- `getScissorTest()`
+- `setScissorTest(boolean: boolean)`
+- `getViewport(target: Vector4)`
+- `setViewport(x: Vector4)`
+- `setViewport(x: number, y: number, width: number, height: number, minDepth?: number, maxDepth?: number)`
+- `getClearColor(target: Color4)`
+- `setClearColor(color: ColorRepresentation, alpha?: number)`
+- `getClearAlpha()`
+- `setClearAlpha(alpha: number)`
+- `getClearDepth()`
+- `setClearDepth(depth: number)`
+- `getClearStencil()`
+- `setClearStencil(stencil: number)`
+- `isOccluded(object: Object3D)`
+- `clear(color?: boolean, depth?: boolean, stencil?: boolean)`
+- `clearColor()`
+- `clearDepth()`
+- `clearStencil()`
+- `clearAsync(color?: boolean, depth?: boolean, stencil?: boolean)`
+- `clearColorAsync()`
+- `clearDepthAsync()`
+- `clearStencilAsync()`
+- `dispose()`
+- `setRenderTarget(renderTarget: RenderTarget | null, activeCubeFace?: number, activeMipmapLevel?: number)`
+- `getRenderTarget()`
+- `setOutputRenderTarget(renderTarget: RenderTarget | null)`
+- `getOutputRenderTarget()`
+- `setCanvasTarget(canvasTarget: CanvasTarget)`
+- `getCanvasTarget()`
+- `setRenderObjectFunction()`
+- `getRenderObjectFunction()`
+- `compute()`
+- `computeAsync()`
+- `hasFeatureAsync(name: string)`
+- `resolveTimestampsAsync(type?: TimestampQuery)`
+- `hasFeature(name: string)`
+- `hasInitialized()`
+- `initTextureAsync(texture: Texture)`
+- `initTexture(texture: Texture)`
+- `initRenderTarget(renderTarget: RenderTarget)`
+- `copyFramebufferToTexture(framebufferTexture: FramebufferTexture, rectangle?: (Vector2 | Vector4) | null)`
+- `copyTextureToTexture()`
+- `readRenderTargetPixelsAsync()`
+- `renderObject()`
+- `hasCompatibility(name: string)`
