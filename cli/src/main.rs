@@ -89,6 +89,12 @@ enum Command {
         #[command(subcommand)]
         action: commands::plugins::PluginsCommand,
     },
+
+    /// Regenerate the master Mermaid diagram from installed agents.
+    Diagram {
+        #[command(subcommand)]
+        action: commands::diagram::DiagramCommand,
+    },
 }
 
 #[tokio::main]
@@ -116,6 +122,7 @@ async fn main() -> anyhow::Result<()> {
         Command::Build { action } => commands::build::dispatch(action, &ctx),
         Command::Doctor => commands::doctor::run(&ctx),
         Command::Plugins { action } => commands::plugins::dispatch(action, &ctx),
+        Command::Diagram { action } => commands::diagram::dispatch(action, &ctx),
     };
 
     match result {
