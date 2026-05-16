@@ -145,6 +145,12 @@ path = "tests/plugins_cmd.rs"
 name = "build_agent_test"
 path = "tests/build_agent.rs"
 
+[[test]]
+# Source is tests/skill_cmds.rs.
+# "skill" is safe on Windows AppCompat — no UAC heuristic applies.
+name = "skill_cmds_test"
+path = "tests/skill_cmds.rs"
+
 [profile.release]
 lto           = "thin"
 codegen-units = 1
