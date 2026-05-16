@@ -70,4 +70,18 @@ public class HeaderParserTests
         Assert.Throws<InvalidOperationException>(() =>
             HeaderParser.Parse(new[] { "C:/this-pattern-matches-nothing-*.h" }, null));
     }
+
+    [Fact]
+    public void ParsesCppClassMethodsWhenClangPresent()
+    {
+        if (!ClangAvailable()) return;
+        var here = Path.GetDirectoryName(typeof(HeaderParserTests).Assembly.Location)!;
+        var fixture = Path.Combine(here, "fixtures", "sample.hpp");
+        Assert.True(File.Exists(fixture), $"fixture not at {fixture}");
+        var agent = HeaderParser.Parse(new[] { fixture }, agentIdOverride: "sample-cpp");
+        var commandNames = agent.Commands.Select(c => c.Name).ToList();
+        Assert.Contains("greeter-greet", commandNames);
+        Assert.Contains("greeter-counter", commandNames);
+        Assert.Contains("sample-add-cpp", commandNames);
+    }
 }
