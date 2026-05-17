@@ -1,0 +1,14 @@
+id: kebab-to-pascal
+kind: map
+description: |
+  Convert `kebab-case` → `PascalCase`. Used by code generators +
+  command-name normalisation.
+inputs:
+  - name: text
+    type: string
+output:
+  type: string
+code: |
+  (text) => String(text || '').split('-').map(p =>
+    p ? p[0].toUpperCase() + p.slice(1) : ''
+  ).join('')

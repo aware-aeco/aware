@@ -1,0 +1,12 @@
+id: phase-name
+kind: map
+description: |
+  Pad a Tekla phase number with the conventional "Phase " prefix.
+inputs:
+  - name: phase
+    type: any
+    description: Integer or string phase id.
+output:
+  type: string
+code: |
+  (phase) => `Phase ${phase}`

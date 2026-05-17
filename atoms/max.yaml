@@ -1,0 +1,14 @@
+id: max
+kind: reduce
+description: Maximum value of a numeric field. Returns null for empty arrays.
+inputs:
+  - name: items
+    type: array
+  - name: field
+    type: string
+output:
+  type: number
+code: |
+  (items, field) => items.length
+    ? Math.max(...items.map(i => Number(i[field]) || 0))
+    : null

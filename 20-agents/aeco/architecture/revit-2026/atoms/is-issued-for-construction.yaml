@@ -1,0 +1,16 @@
+id: is-issued-for-construction
+kind: predicate
+description: |
+  Returns true for Revit sheets whose `Sheet Issued For` parameter is
+  exactly "Issued for Construction" (the canonical CSI / RIBA value).
+  Match is case-insensitive + trims whitespace.
+inputs:
+  - name: sheet
+    type: object
+output:
+  type: boolean
+code: |
+  (sheet) => {
+    const v = (sheet['issued-for'] || sheet['Sheet Issued For'] || '').trim().toLowerCase();
+    return v === 'issued for construction';
+  }

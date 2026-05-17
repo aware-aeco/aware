@@ -1,0 +1,16 @@
+id: sheet-number-format
+kind: map
+description: |
+  Validate + normalise a Revit sheet number against the typical
+  `<discipline>-<level>-<number>` pattern (e.g. `A-100`, `S-2.01`).
+  Returns the input uppercased + trimmed, or null if it doesn't match.
+inputs:
+  - name: input
+    type: string
+output:
+  type: string
+code: |
+  (input) => {
+    const s = String(input || '').trim().toUpperCase();
+    return /^[A-Z]+-?\d+(\.\d+)?$/.test(s) ? s : null;
+  }

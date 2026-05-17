@@ -162,6 +162,33 @@ For tiny operations (filters, maps, reshapes) that don't deserve a dedicated age
 
 Inline glue lives in the app file. It is visible in the topology and inspectable in the canvas — **no hidden logic.**
 
+### Atom references (v0.20)
+
+The persona audit unanimously flagged inline JavaScript lambdas (`code: | e => e.type == "Welded"`) as "not no-code." v0.20 ships a **named atom library** — typed, versioned, reusable predicates / maps / reduces that an inline-glue block can reference instead of inlining code.
+
+```yaml
+- id: recent-issues
+  inline:
+    kind: predicate
+    description: Issues newer than last Friday
+    atom: 'atom://generic/is-newer-than'
+    inputs:
+      item:      '{{ upstream }}'
+      threshold: '{{ last-friday.iso }}'
+```
+
+URI resolution:
+
+| URI shape | Resolves to |
+|---|---|
+| `atom://generic/<id>` | `atoms/<id>.yaml` in the substrate root (cross-cutting library) |
+| `atom://<agent>/<id>` | `20-agents/.../<agent>/atoms/<id>.yaml` (agent-specific) |
+| `atom://app/<id>` | `<app-dir>/atoms/<id>.yaml` (app-local; resolved at runtime against the running app's directory) |
+
+When `atom:` is set, `code:` MUST be omitted. The `inputs:` block under `inline:` binds the atom's named parameters to app-context expressions; `aware app validate` checks that every required atom input has a binding and that no unknown inputs are passed.
+
+The substrate ships **33 atoms** in v0.20 — 20 cross-cutting (`is-newer-than`, `group-by`, `sort-by`, `unique`, `pluck`, `count`, `sum`, `avg`, `min`, `max`, `at-least`, `at-most`, `format-date`, `path-join`, `naming-template`, `kebab-to-pascal`, `pascal-to-kebab`, `csv-row-build`, `json-path`, `regex-match`) + 5 Tekla-specific + 8 Revit-specific. See `atoms/README.md` for authoring guidance.
+
 ---
 
 ## Substrate primitives (v0.19)

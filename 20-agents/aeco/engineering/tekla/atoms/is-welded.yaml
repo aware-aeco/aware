@@ -1,0 +1,12 @@
+id: is-welded
+kind: predicate
+description: |
+  Returns true if a Tekla assembly's type is Welded. Replaces the
+  inline-glue `e => e.type == "Welded"` that everyone copy-pastes.
+inputs:
+  - name: assembly
+    type: object
+output:
+  type: boolean
+code: |
+  (assembly) => assembly.type === 'Welded' || assembly.AssemblyType === 'Welded'

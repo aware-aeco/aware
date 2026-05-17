@@ -1,0 +1,16 @@
+id: naming-template
+kind: map
+description: |
+  Resolve a naming template against a values object. Placeholders
+  use `{name}` syntax. Used by sheet-export / drawing-issue verbs to
+  generate consistent filenames.
+inputs:
+  - name: template
+    type: string
+    description: 'e.g. "{project}-{phase}-{sheet}-Rev{rev}.pdf"'
+  - name: values
+    type: object
+output:
+  type: string
+code: |
+  (template, values) => template.replace(/\{(\w+)\}/g, (_, key) => values[key] ?? '')

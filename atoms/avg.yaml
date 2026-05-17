@@ -1,0 +1,16 @@
+id: avg
+kind: reduce
+description: Mean of a numeric field across an array. Returns null for empty arrays.
+inputs:
+  - name: items
+    type: array
+  - name: field
+    type: string
+output:
+  type: number
+code: |
+  (items, field) => {
+    if (!items.length) return null;
+    const total = items.reduce((s, i) => s + (Number(i[field]) || 0), 0);
+    return total / items.length;
+  }

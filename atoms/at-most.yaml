@@ -1,0 +1,12 @@
+id: at-most
+kind: predicate
+description: Returns true if a numeric field is less than or equal to a threshold.
+inputs:
+  - name: value
+    type: number
+  - name: threshold
+    type: number
+output:
+  type: boolean
+code: |
+  (value, threshold) => Number(value) <= Number(threshold)

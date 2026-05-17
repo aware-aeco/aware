@@ -1,0 +1,18 @@
+id: csv-row-build
+kind: map
+description: |
+  Build a CSV row string from an object + column order. Quotes fields
+  containing commas / newlines / quotes per RFC 4180.
+inputs:
+  - name: row
+    type: object
+  - name: columns
+    type: array
+    description: Column names in output order.
+output:
+  type: string
+code: |
+  (row, columns) => columns.map(c => {
+    const v = String(row[c] ?? '');
+    return /[,\"\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v;
+  }).join(',')

@@ -1,0 +1,16 @@
+id: count
+kind: reduce
+description: Count items matching a condition. Pass `predicate: null` for total count.
+inputs:
+  - name: items
+    type: array
+  - name: predicate
+    type: string
+    description: Field name to test for truthiness, or null for total count.
+    default: null
+output:
+  type: number
+code: |
+  (items, predicate) => predicate
+    ? items.filter(i => !!i[predicate]).length
+    : items.length

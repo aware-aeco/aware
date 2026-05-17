@@ -1,0 +1,14 @@
+id: pluck
+kind: map
+description: |
+  Extract a single field from each object in an array, returning a flat
+  array of values.
+inputs:
+  - name: items
+    type: array
+  - name: field
+    type: string
+output:
+  type: array
+code: |
+  (items, field) => items.map(item => item[field])
