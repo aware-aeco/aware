@@ -95,6 +95,12 @@ enum Command {
         #[command(subcommand)]
         action: commands::diagram::DiagramCommand,
     },
+
+    /// Print a text tree of an agent's commands grouped by owning class.
+    Tree(commands::tree::TreeArgs),
+
+    /// Search command names + descriptions across installed agents.
+    Search(commands::search::SearchArgs),
 }
 
 #[tokio::main]
@@ -123,6 +129,8 @@ async fn main() -> anyhow::Result<()> {
         Command::Doctor => commands::doctor::run(&ctx),
         Command::Plugins { action } => commands::plugins::dispatch(action, &ctx),
         Command::Diagram { action } => commands::diagram::dispatch(action, &ctx),
+        Command::Tree(args) => commands::tree::run(&ctx, &args),
+        Command::Search(args) => commands::search::run(&ctx, &args),
     };
 
     match result {
