@@ -1,0 +1,151 @@
+---
+name: web-ifc-ifc-a-p-i
+description: IfcAPI declarations from web-ifc
+---
+
+# IfcAPI
+
+## Methods
+
+- `Init(customLocateFileHandler?: LocateFileHandlerFn, forceSingleThread?: boolean)`
+- `OpenModels(dataSets: Array<Uint8Array>, settings?: LoaderSettings)`
+- `OpenModel(data: Uint8Array, settings?: LoaderSettings)`
+- `OpenModelFromCallback(callback: ModelLoadCallback, settings?: LoaderSettings)`
+- `GetModelSchema(modelID: number)`
+- `CreateModel(model: NewIfcModel, settings?: LoaderSettings)`
+- `SaveModel(modelID: number)`
+- `SaveModelToCallback(modelID: number, callback: ModelSaveCallback)`
+- `GetGeometry(modelID: number, geometryExpressID: number)`
+- `CreateAABB()`
+- `CreateExtrusion()`
+- `CreateSweep()`
+- `CreateCircularSweep()`
+- `CreateRevolution()`
+- `CreateCylindricalRevolution()`
+- `CreateParabola()`
+- `CreateClothoid()`
+- `CreateArc()`
+- `CreateAlignment()`
+- `CreateBooleanOperator()`
+- `CreateProfile()`
+- `GetHeaderLine(modelID: number, headerType: number)`
+- `GetAllTypesOfModel(modelID: number)`
+- `GetLine(modelID: number, expressID: number, flatten?: boolean, inverse?: boolean, inversePropKey?: string | null | undefined)`
+- `GetLines(modelID: number, expressIDs: Array<number>, flatten?: boolean, inverse?: boolean, inversePropKey?: string | null | undefined)`
+- `GetNextExpressID(modelID: number, expressID: number)`
+- `CreateIfcEntity(modelID: number, type: number, ...args: any[])`
+- `CreateIFCGloballyUniqueId(modelID: number)`
+- `CreateIfcType(modelID: number, type: number, value: any)`
+- `GetNameFromTypeCode(type: number)`
+- `GetTypeCodeFromName(typeName: string)`
+- `IsIfcElement(type: number)`
+- `GetIfcEntityList(modelID: number)`
+- `DeleteLine(modelID: number, expressID: number)`
+- `WriteLines(modelID: number, lineObjects: Array<Type>)`
+- `WriteLine(modelID: number, lineObject: Type)`
+- `FlattenLine(modelID: number, line: any)`
+- `GetRawLinesData(modelID: number, expressIDs: Array<number>)`
+- `GetRawLineData(modelID: number, expressID: number)`
+- `WriteRawLineData(modelID: number, data: RawLineData)`
+- `WriteRawLinesData(modelID: number, data: Array<RawLineData>)`
+- `GetLineIDsWithType(modelID: number, type: number, includeInherited?: boolean)`
+- `GetAllLines(modelID: number)`
+- `GetAllCrossSections2D(modelID: number)`
+- `GetAllCrossSections3D(modelID: number)`
+- `GetAllAlignments(modelID: number)`
+- `SetGeometryTransformation(modelID: number, transformationMatrix: Array<number>)`
+- `GetCoordinationMatrix(modelID: number)`
+- `GetWorldTransformMatrix(modelID: number, placementExpressId: number)`
+- `GetVertexArray(ptr: number, size: number)`
+- `GetIndexArray(ptr: number, size: number)`
+- `getSubArray(heap: any, startPtr: number, sizeBytes: number)`
+- `CloseModel(modelID: number)`
+- `Dispose()`
+- `StreamMeshes(modelID: number, expressIDs: Array<number>, meshCallback: (mesh: FlatMesh, index: number, total: number) => void)`
+- `StreamAllMeshes(modelID: number, meshCallback: (mesh: FlatMesh, index: number, total: number) => void)`
+- `StreamAllMeshesWithTypes(modelID: number, types: Array<number>, meshCallback: (mesh: FlatMesh, index: number, total: number) => void)`
+- `IsModelOpen(modelID: number)`
+- `LoadAllGeometry(modelID: number)`
+- `GetFlatMesh(modelID: number, expressID: number)`
+- `GetMaxExpressID(modelID: number)`
+- `GetLineType(modelID: number, expressID: number)`
+- `GetVersion()`
+- `GetExpressIdFromGuid(modelID: number, guid: string)`
+- `GetGuidFromExpressId(modelID: number, expressID: number)`
+- `CreateIfcGuidToExpressIdMapping(modelID: number)`
+- `SetWasmPath(path: string, absolute?: boolean)`
+- `SetLogLevel(level: LogLevel)`
+- `EncodeText(text: string)`
+- `DecodeText(text: string)`
+- `ResetCache(modelID: number)`
+- `Init(customLocateFileHandler?: LocateFileHandlerFn, forceSingleThread?: boolean)`
+- `OpenModels(dataSets: Array<Uint8Array>, settings?: LoaderSettings)`
+- `OpenModel(data: Uint8Array, settings?: LoaderSettings)`
+- `OpenModelFromCallback(callback: ModelLoadCallback, settings?: LoaderSettings)`
+- `GetModelSchema(modelID: number)`
+- `CreateModel(model: NewIfcModel, settings?: LoaderSettings)`
+- `SaveModel(modelID: number)`
+- `SaveModelToCallback(modelID: number, callback: ModelSaveCallback)`
+- `GetGeometry(modelID: number, geometryExpressID: number)`
+- `CreateAABB()`
+- `CreateExtrusion()`
+- `CreateSweep()`
+- `CreateCircularSweep()`
+- `CreateRevolution()`
+- `CreateCylindricalRevolution()`
+- `CreateParabola()`
+- `CreateClothoid()`
+- `CreateArc()`
+- `CreateAlignment()`
+- `CreateBooleanOperator()`
+- `CreateProfile()`
+- `GetHeaderLine(modelID: number, headerType: number)`
+- `GetAllTypesOfModel(modelID: number)`
+- `GetLine(modelID: number, expressID: number, flatten?: boolean, inverse?: boolean, inversePropKey?: string | null | undefined)`
+- `GetLines(modelID: number, expressIDs: Array<number>, flatten?: boolean, inverse?: boolean, inversePropKey?: string | null | undefined)`
+- `GetNextExpressID(modelID: number, expressID: number)`
+- `CreateIfcEntity(modelID: number, type: number, ...args: any[])`
+- `CreateIFCGloballyUniqueId(modelID: number)`
+- `CreateIfcType(modelID: number, type: number, value: any)`
+- `GetNameFromTypeCode(type: number)`
+- `GetTypeCodeFromName(typeName: string)`
+- `IsIfcElement(type: number)`
+- `GetIfcEntityList(modelID: number)`
+- `DeleteLine(modelID: number, expressID: number)`
+- `WriteLines(modelID: number, lineObjects: Array<Type>)`
+- `WriteLine(modelID: number, lineObject: Type)`
+- `FlattenLine(modelID: number, line: any)`
+- `GetRawLinesData(modelID: number, expressIDs: Array<number>)`
+- `GetRawLineData(modelID: number, expressID: number)`
+- `WriteRawLineData(modelID: number, data: RawLineData)`
+- `WriteRawLinesData(modelID: number, data: Array<RawLineData>)`
+- `GetLineIDsWithType(modelID: number, type: number, includeInherited?: boolean)`
+- `GetAllLines(modelID: number)`
+- `GetAllCrossSections2D(modelID: number)`
+- `GetAllCrossSections3D(modelID: number)`
+- `GetAllAlignments(modelID: number)`
+- `SetGeometryTransformation(modelID: number, transformationMatrix: Array<number>)`
+- `GetCoordinationMatrix(modelID: number)`
+- `GetWorldTransformMatrix(modelID: number, placementExpressId: number)`
+- `GetVertexArray(ptr: number, size: number)`
+- `GetIndexArray(ptr: number, size: number)`
+- `getSubArray(heap: any, startPtr: number, sizeBytes: number)`
+- `CloseModel(modelID: number)`
+- `Dispose()`
+- `StreamMeshes(modelID: number, expressIDs: Array<number>, meshCallback: (mesh: FlatMesh, index: number, total: number) => void)`
+- `StreamAllMeshes(modelID: number, meshCallback: (mesh: FlatMesh, index: number, total: number) => void)`
+- `StreamAllMeshesWithTypes(modelID: number, types: Array<number>, meshCallback: (mesh: FlatMesh, index: number, total: number) => void)`
+- `IsModelOpen(modelID: number)`
+- `LoadAllGeometry(modelID: number)`
+- `GetFlatMesh(modelID: number, expressID: number)`
+- `GetMaxExpressID(modelID: number)`
+- `GetLineType(modelID: number, expressID: number)`
+- `GetVersion()`
+- `GetExpressIdFromGuid(modelID: number, guid: string)`
+- `GetGuidFromExpressId(modelID: number, expressID: number)`
+- `CreateIfcGuidToExpressIdMapping(modelID: number)`
+- `SetWasmPath(path: string, absolute?: boolean)`
+- `SetLogLevel(level: LogLevel)`
+- `EncodeText(text: string)`
+- `DecodeText(text: string)`
+- `ResetCache(modelID: number)`
