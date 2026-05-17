@@ -1,0 +1,269 @@
+agent:        tekla-epm
+version:      24.2.0
+display-name: Tekla EPM (PowerFab)
+description: |
+  The fabricator's ERP — production schedule, material yard, heat
+  treatment tracker, paint shop, shipping manifest, cost roll-up.
+  Wraps the Trimble Tekla EPM REST API.
+
+  Persona audit (detailer, **dealbreaker**): "Tekla EPM / PowerFab —
+  no agent. This is the *fabricator's ERP*. Without an EPM agent,
+  AWARE cannot reach the production schedule, the heat treatment
+  tracker, the shipping schedule, the painting station, the cost
+  roll-up. This is the single biggest gap. An aware-aeco substrate
+  without an EPM hook is missing 40% of the fabricator's day."
+
+  This agent closes that gap. Scope: jobs, BOMs, production status,
+  shipments. Costing surfaces are intentionally out of scope here
+  (separate `tekla-epm-cost` agent if/when needed).
+
+stateful: false
+
+vendor:   trimble
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/engineering/tekla-epm
+keywords: [aware, tekla, epm, powerfab, fabrication, erp, production, shop-floor, engineering]
+
+provenance:
+  generated-by:     hand-curated
+  generator-version: 0.15.0
+  refined-by:       [pawellisowski]
+  generated-at:     2026-05-17T18:25:00Z
+
+requires:
+  network:
+    - https://api.tekla.com
+  secrets:
+    - tekla-epm
+  filesystem:
+    - read:  '*.csv,*.xlsx,*.kss,*.kis'
+    - write: '*.csv,*.xlsx'
+
+transport:
+  cli:
+    binary: aware-tekla-epm
+
+commands:
+
+  # ---- Job context -----------------------------------------------------
+
+  jobs.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List jobs in the EPM database, optionally filtered by status /
+      customer / project number. Read-only.
+    inputs:
+      status:
+        type: enum
+        values: [bidding, in-detailing, in-production, shipped, archived, any]
+        default: any
+      customer:
+        type: string
+        description: Optional customer name match.
+    outputs:
+      type: single
+      schema:
+        jobs:
+          type: array
+          items:
+            id:           string
+            job-number:   string
+            description:  string
+            customer:     string
+            status:       string
+            start-date:   string
+            ship-date:    string
+
+  # ---- BOM (material take-off) -----------------------------------------
+
+  bom.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List BOM items for a job, grouped by section profile + grade +
+      length. The detailer mill-order-prep verb. Read-only.
+    inputs:
+      job-id: string
+      include-shipped:
+        type: boolean
+        default: false
+    outputs:
+      type: single
+      schema:
+        items:
+          type: array
+          items:
+            piece-mark: string
+            profile:    string
+            grade:      string
+            length-mm:  number
+            quantity:   number
+            weight-kg:  number
+            status:     string
+
+  bom.import-tekla:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Import a BOM from a Tekla Structures model — feeds the EPM job's
+      material lists. The Tekla → EPM bridge that the detailer audit
+      named as the #1 missing flow.
+    inputs:
+      job-id:    string
+      tekla-bom-csv:
+        type: string
+        description: Path to BOM CSV exported from Tekla.
+    outputs:
+      type: single
+      schema:
+        imported-count: number
+        warnings:
+          type: array
+          items: string
+
+  bom.import-ifc:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Import a BOM derived from an IFC model — for projects detailed in
+      Allplan / Advance Steel / SDS/2 (non-Tekla). Pairs with
+      `ifc-inspector.psets.export` to source the data.
+    inputs:
+      job-id:   string
+      ifc-bom-csv: string
+    outputs:
+      type: single
+      schema:
+        imported-count: number
+        warnings:
+          type: array
+          items: string
+
+  # ---- Production status -----------------------------------------------
+
+  production.status:
+    lifecycle: single
+    category: curated
+    description: |
+      Per-piece production status — where every piece in the job
+      currently sits in the shop (saw / drill / weld / paint / ship).
+      The "what's holding up the truck?" verb. Read-only.
+    inputs:
+      job-id: string
+      mark:
+        type: string
+        description: Optional filter to one piece mark.
+    outputs:
+      type: single
+      schema:
+        pieces:
+          type: array
+          items:
+            piece-mark:   string
+            station:      string
+            status:       string
+            updated-at:   string
+            operator:     string
+
+  production.advance:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Advance a piece (or batch of pieces) to the next production
+      station. The shop-floor "tick the box" verb. Used by station
+      tablets / barcode scanners.
+    inputs:
+      job-id:    string
+      piece-marks:
+        type: array
+        items: string
+      to-station:
+        type: enum
+        values: [received, sawing, drilling, welding, painting, qc, shipping, shipped]
+    outputs:
+      type: single
+      schema:
+        advanced:    number
+        skipped:     number
+        timestamps:  array
+
+  # ---- Shipping --------------------------------------------------------
+
+  shipments.list:
+    lifecycle: single
+    category: curated
+    description: List shipments for a job. Read-only.
+    inputs:
+      job-id: string
+      status:
+        type: enum
+        values: [planned, loaded, in-transit, delivered, any]
+        default: any
+    outputs:
+      type: single
+      schema:
+        shipments:
+          type: array
+          items:
+            id:               string
+            shipment-number:  string
+            status:           string
+            piece-count:      number
+            tonnage:          number
+            ship-date:        string
+            carrier:          string
+
+  shipments.create:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Create a shipment record + assign pieces. The detailer / yard-mgr
+      "ready for truck" verb.
+    inputs:
+      job-id:     string
+      piece-marks:
+        type: array
+        items: string
+      ship-date:  string
+      carrier:    string
+    outputs:
+      type: single
+      schema:
+        shipment-id:     string
+        shipment-number: string
+
+  # ---- Material yard ---------------------------------------------------
+
+  yard.stock-by-profile:
+    lifecycle: single
+    category: curated
+    description: |
+      Query material yard stock by section profile. The "do we have a
+      W12x26 in stock or do we order?" verb. Read-only.
+    inputs:
+      profile:
+        type: string
+        description: Section profile (e.g. "UB 305x165x40", "W12x26").
+      grade:
+        type: string
+        description: Optional grade filter (e.g. "S355", "A992").
+    outputs:
+      type: single
+      schema:
+        on-hand:
+          type: array
+          items:
+            piece-id:   string
+            profile:    string
+            grade:      string
+            length-mm:  number
+            location:   string
+
+skills:
+  - tekla-to-epm-bridge.md
+  - production-tracking-workflow.md

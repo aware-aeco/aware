@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-05-17T18:15:00Z",
+  "updated-at": "2026-05-17T18:30:00Z",
   "agents": {
     "tekla": {
       "versions": {
@@ -377,6 +377,22 @@
           "subdir": "aware-main/20-agents/aeco/construction/acc-docs"
         }
       }
+    },
+    "tekla-epm": {
+      "versions": {
+        "24.2.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/engineering/tekla-epm"
+        }
+      }
+    },
+    "peddinghaus-translator": {
+      "versions": {
+        "1.0.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/engineering/peddinghaus-translator"
+        }
+      }
     }
   },
   "bundles": {
@@ -429,7 +445,9 @@
         "bluebeam-studio@1.0.0",
         "procore@3.0.0",
         "aconex@1.0.0",
-        "acc-docs@1.0.0"
+        "acc-docs@1.0.0",
+        "tekla-epm@24.2.0",
+        "peddinghaus-translator@1.0.0"
       ]
     }
   }

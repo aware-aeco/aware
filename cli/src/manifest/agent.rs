@@ -347,7 +347,7 @@ commands: {}
         let a: Agent = serde_yaml::from_str(&text).unwrap();
         assert_eq!(a.agent, "tekla");
         assert_eq!(a.skill_count(), 31);
-        assert_eq!(a.command_count(), 3);
+        assert_eq!(a.command_count(), 20);
         assert!(a.stateful);
     }
 
@@ -361,7 +361,7 @@ commands: {}
             .join("20-agents/aeco/engineering/tekla/manifest.yaml");
         let text = std::fs::read_to_string(&path).unwrap();
         let a: Agent = serde_yaml::from_str(&text).unwrap();
-        assert_eq!(a.curated_count(), 3);
+        assert_eq!(a.curated_count(), 20);
         assert_eq!(a.reflected_count(), 0);
         for (_name, cmd) in &a.commands {
             assert_eq!(cmd.category, Some(Category::Curated));
