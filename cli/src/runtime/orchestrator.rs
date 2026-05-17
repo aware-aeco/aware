@@ -45,6 +45,11 @@ pub struct Orchestrator {
     pub ctx: RuntimeContext,
     pub inputs: Value,
     pub fan_in: FanInState,
+    /// When `true`, write-mode nodes skip the agent transport and emit a
+    /// `would-write:` provenance event instead of mutating state. Read-mode
+    /// nodes execute normally. See `10-core/app-spec.md § Safety contract`
+    /// for the full semantics.
+    pub dry_run: bool,
 }
 
 impl Orchestrator {
@@ -467,6 +472,23 @@ impl Orchestrator {
         self.provenance.write(&event).await
     }
 
+    /// Resolve the read/write mode of a command by loading the agent's
+    /// manifest. Falls back to `Mode::Write` for unknown agents/commands in
+    /// dry-run contexts — i.e. err on the side of caution: an unknown
+    /// command is treated as write-mode, so dry-run will short-circuit it
+    /// rather than calling an unknown transport.
+    fn lookup_command_mode(&self, agent_id: &str, command: &str) -> crate::manifest::agent::Mode {
+        let mp = self.agents_dir.join(agent_id).join("manifest.yaml");
+        match crate::manifest::loader::load_agent(&mp) {
+            Ok(agent) => agent
+                .commands
+                .get(command)
+                .map(|c| agent.mode_of(command, c))
+                .unwrap_or(crate::manifest::agent::Mode::Write),
+            Err(_) => crate::manifest::agent::Mode::Write,
+        }
+    }
+
     async fn execute_node(&mut self, node: &Node) -> Result<NodeResult, AwareError> {
         self.emit(RunEvent::NodeStart {
             ts: now_iso(),
@@ -482,6 +504,37 @@ impl Orchestrator {
             // Convert serde_yaml::Value config to serde_json::Value, then render templates.
             let config_json = yaml_to_json(node.config.clone())?;
             let args = render_config(&config_json, &self.ctx)?;
+
+            // Dry-run safety short-circuit: if the command resolves to
+            // Mode::Write, emit a `would-write:` event and return a
+            // placeholder NodeOutput-shaped value. Read-mode commands still
+            // execute (they don't mutate external state).
+            if self.dry_run {
+                let mode = self.lookup_command_mode(agent_id, command);
+                if mode == crate::manifest::agent::Mode::Write {
+                    let safety_block = node
+                        .safety
+                        .as_ref()
+                        .and_then(|s| serde_json::to_value(s).ok())
+                        .unwrap_or(serde_json::json!(null));
+                    self.emit(RunEvent::WouldWrite {
+                        ts: now_iso(),
+                        run_id: self.run_id.clone(),
+                        node: node.id.clone(),
+                        agent: agent_id.clone(),
+                        command: command.to_string(),
+                        proposed_inputs: args.clone(),
+                        safety: safety_block,
+                    })
+                    .await?;
+                    // Downstream nodes get a `{ "dry-run": true }` placeholder so the
+                    // DAG can keep flowing — they typically only act on real data,
+                    // so this should be a no-op for honest dry-runs.
+                    let placeholder = serde_json::json!({ "dry-run": true });
+                    return Ok(NodeResult::Output(placeholder));
+                }
+            }
+
             let output = self.invoker.invoke_single(agent_id, command, args).await?;
             self.emit(RunEvent::NodeOutput {
                 ts: now_iso(),
@@ -650,6 +703,7 @@ mod tests {
             ctx: RuntimeContext::default(),
             inputs: serde_json::json!({}),
             fan_in: FanInState::default(),
+            dry_run: false,
         };
         (orch, tmp, log_path)
     }

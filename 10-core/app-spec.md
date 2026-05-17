@@ -228,6 +228,82 @@ Templating happens at composition time (when the orchestrator prepares to run a 
 
 The shape is **inferred** from the agents in `nodes:`. If any node's agent is `stateful: true`, the app is long-running.
 
+---
+
+## Safety contract (write-mode nodes)
+
+The 2026-05-17 persona audit unanimously identified live-model writes as the highest-risk surface in AWARE. The architect, structural engineer, BIM manager, and detailer all refused live writes until the substrate has a *structural* safety contract — not policy. v0.11 introduces one.
+
+### The rule
+
+Any node that mutates state outside the app — Revit model, Tekla model, cloud CDE folder, OAuth-protected API that writes — **MUST** declare a `safety:` block. `aware app validate` refuses to install an app missing `safety:` on a write-mode node. `aware app run` refuses to execute one.
+
+A node is *write-mode* if either:
+- the underlying command declares `mode: write` in its manifest entry, OR
+- the command's name conventionally implies a write (e.g. `*.create`, `*.update`, `*.delete`, `*.bump`, `*.stamp`, `*.reload-all`, `*.bulk-write`, `*.insert`).
+
+Pure-read nodes (e.g. `sheet.list`, `view.capture-bitmap`, `element.by-parameter-value`) do not need `safety:`.
+
+### The block
+
+```yaml
+- id: bump-rev
+  agent: revit-2026
+  command: revision.bump
+  inputs:
+    sheet-numbers: ["A-100","A-101"]
+    description: "Issued for Tender"
+  safety:
+    transaction-group: tender-bump          # rollback boundary
+    snapshot: true                           # eTransmit/save-as before write
+    snapshot-path: ~/.aware/snapshots/{{ run.id }}/  # default; override here
+    worksharing:
+      check: true                            # pre-flight: model is checked out by current user
+      fail-if-other-user: true               # abort if any touched element is owned by someone else
+    audit-stamp:
+      uda-prefix: AWARE_                     # write AWARE_RUN_ID / AWARE_APP / AWARE_OPERATOR UDAs on touched objects
+    rollback-token: "{{ revit-2026.tx.token }}"  # token returned by the write — feeds `aware app rollback`
+```
+
+### Field semantics
+
+| Field | Type | Required | Notes |
+|---|---|---|---|
+| `transaction-group` | string | yes | Names the rollback boundary. Multiple write nodes sharing a `transaction-group` rollback together. |
+| `snapshot` | boolean | yes | If `true`, the agent's transport binary MUST save a snapshot of the target document/folder before mutating. If `false`, the app author has explicitly acknowledged the no-undo risk. |
+| `snapshot-path` | path | no | Override the default. Defaults to `~/.aware/snapshots/<app>/<run-id>/<node-id>/`. |
+| `worksharing.check` | boolean | no | Pre-flight check that the document is in a writable state by the current user. Default `true` for Revit / Tekla / Allplan agents; `false` otherwise. |
+| `worksharing.fail-if-other-user` | boolean | no | Default `true`. Set `false` only if you want concurrent writes with another active user (almost never). |
+| `audit-stamp.uda-prefix` | string | no | Per-object UDA / property prefix recording the run. Default `AWARE_`. Agents that support UDA writes (Revit, Tekla, Allplan, IDEA) MUST honor this. |
+| `audit-stamp.fields` | array | no | Subset of `{run-id, app, operator, timestamp}` to write. Default: all four. |
+| `rollback-token` | template-expr | no | Records the token returned by the write — used by `aware app rollback <app> --run-id <id>` to undo. |
+
+### `--dry-run` mode
+
+`aware app run <app> --dry-run` exercises the full DAG **without** committing any write-mode side effects. Each write-mode node emits a structured `would-write:` block in the trace instead of calling the agent's mutation transport. The dry-run trace is replayable but rolls back nothing (because nothing was written).
+
+Dry-run is mandatory **before** any production write run against a real Revit / Tekla central file. The CLI prints a one-line summary at the end:
+
+```
+$ aware app run tender-issue --dry-run
+✓ dry-run complete: would write 47 sheets to PDF, would bump 47 Revit revisions, would post 1 Teams message
+  no model touched; nothing to rollback
+```
+
+### Rollback
+
+`aware app rollback <app> --run-id <id>` walks the JSONL provenance trace in reverse, replaying each write-mode node's `rollback-token` against its agent. Agents that don't support rollback (e.g. one-way external posts like Slack messages) MUST declare `rollback: unsupported` on the command — apps using such a node cannot be rolled back automatically.
+
+### What this does NOT promise
+
+- It does **not** guarantee that a vendor tool's transactional semantics are perfectly mirrored. If Revit's `TransactionGroup.Assimilate()` silently dropped a transaction, AWARE inherits that bug.
+- It does **not** prevent a misconfigured app from doing damage — it makes the configuration *visible at validation time*.
+- It does **not** sign the engineer's stamp. That's v0.21 (engineering envelope).
+
+### Why this exists
+
+The architect persona wrote (audit, section H): *"You don't need to solve this with policy. You solve it with structure: make write-mode nodes require an explicit `safety:` block declaring the transaction group, the snapshot path, and the rollback strategy — and refuse to run a write node that doesn't declare it. That single rule would make AWARE the first AI-for-AEC tool I'd recommend without caveat."* This section is that rule.
+
 ### Instances
 
 ```bash
