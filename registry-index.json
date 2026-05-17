@@ -106,6 +106,22 @@
         }
       }
     },
+    "slack": {
+      "versions": {
+        "1.7.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/construction/slack"
+        }
+      }
+    },
+    "csi-api": {
+      "versions": {
+        "2.12.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/engineering/csi-api"
+        }
+      }
+    },
     "trimble-connect": {
       "versions": {
         "2.4.0": {
@@ -172,6 +188,8 @@
         "sketchup-2026@2026.0.0",
         "xeokit@2.6.109",
         "three@0.184.1",
+        "slack@1.7.0",
+        "csi-api@2.12.0",
         "trimble-connect@2.4.0",
         "microsoft-365@1.0.0",
         "google-workspace@1.0.0",

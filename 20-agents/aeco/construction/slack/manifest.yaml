@@ -1,0 +1,557 @@
+agent:        slack
+version:      1.7.0
+display-name: Slack Web API (raw)
+description: |
+  Auto-generated agent from Slack's public OpenAPI specification
+  (`https://api.slack.com/specs/openapi/v2/slack_web.json`) via
+  `aware build agent --from-openapi`. Reflects the vendor-published
+  REST endpoint contract — 172 endpoints covering messaging
+  (chat.postMessage, files.upload, conversations.create, …),
+  workflow automation, app/admin operations, and audit trails.
+
+  AECO use cases: notify channels on Tekla model events, post BCF
+  issues from Trimble Connect, alert site PMs on Procore RFI updates,
+  daily build summaries from Revit Coordinator workflows.
+
+  Auth via `aware connect slack` (browser-paste OAuth user token or
+  bot token). Slack workspace tokens carry the OAuth scopes that
+  decide which endpoints the agent can call — match scopes to the
+  workflow rather than over-requesting.
+
+  Marked `stateful: false` — every endpoint is request/response.
+
+stateful: false
+
+vendor:   slack
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/construction/slack
+keywords: [aeco, construction, collaboration, messaging, slack, generated, raw, openapi, rest]
+
+provenance:
+  generated-by: aware-agent-builder
+  generator-version: 0.8.1
+  source:
+    input: https://api.slack.com/specs/openapi/v2/slack_web.json
+    license: UNKNOWN
+    type: openapi
+  generated-at: 2026-05-17T05:04:25.773045200+00:00
+transport:
+  cli:
+    binary: aware-slack
+commands:
+  admin-apps-approve:
+    lifecycle: single
+    description: POST /admin.apps.approve — Approve an app for installation on a workspace.
+  admin-apps-approved-list:
+    lifecycle: single
+    description: GET /admin.apps.approved.list — List approved apps for an org or workspace.
+  admin-apps-requests-list:
+    lifecycle: single
+    description: GET /admin.apps.requests.list — List app requests for a team/workspace.
+  admin-apps-restrict:
+    lifecycle: single
+    description: POST /admin.apps.restrict — Restrict an app for installation on a workspace.
+  admin-apps-restricted-list:
+    lifecycle: single
+    description: GET /admin.apps.restricted.list — List restricted apps for an org or workspace.
+  admin-conversations-archive:
+    lifecycle: single
+    description: POST /admin.conversations.archive — Archive a public or private channel.
+  admin-conversations-convert-to-private:
+    lifecycle: single
+    description: POST /admin.conversations.convertToPrivate — Convert a public channel to a private channel.
+  admin-conversations-create:
+    lifecycle: single
+    description: POST /admin.conversations.create — Create a public or private channel-based conversation.
+  admin-conversations-delete:
+    lifecycle: single
+    description: POST /admin.conversations.delete — Delete a public or private channel.
+  admin-conversations-disconnect-shared:
+    lifecycle: single
+    description: POST /admin.conversations.disconnectShared — Disconnect a connected channel from one or more workspaces.
+  admin-conversations-ekm-list-original-connected-channel-info:
+    lifecycle: single
+    description: GET /admin.conversations.ekm.listOriginalConnectedChannelInfo — List all disconnected channels—i.e., channels that were once connected to other workspaces and then disconnected—and the corresponding original channel IDs for key revocation with EKM.
+  admin-conversations-get-conversation-prefs:
+    lifecycle: single
+    description: GET /admin.conversations.getConversationPrefs — Get conversation preferences for a public or private channel.
+  admin-conversations-get-teams:
+    lifecycle: single
+    description: GET /admin.conversations.getTeams — Get all the workspaces a given public or private channel is connected to within this Enterprise org.
+  admin-conversations-invite:
+    lifecycle: single
+    description: POST /admin.conversations.invite — Invite a user to a public or private channel.
+  admin-conversations-rename:
+    lifecycle: single
+    description: POST /admin.conversations.rename — Rename a public or private channel.
+  admin-conversations-restrict-access-add-group:
+    lifecycle: single
+    description: POST /admin.conversations.restrictAccess.addGroup — Add an allowlist of IDP groups for accessing a channel
+  admin-conversations-restrict-access-list-groups:
+    lifecycle: single
+    description: GET /admin.conversations.restrictAccess.listGroups — List all IDP Groups linked to a channel
+  admin-conversations-restrict-access-remove-group:
+    lifecycle: single
+    description: POST /admin.conversations.restrictAccess.removeGroup — Remove a linked IDP group linked from a private channel
+  admin-conversations-search:
+    lifecycle: single
+    description: GET /admin.conversations.search — Search for public or private channels in an Enterprise organization.
+  admin-conversations-set-conversation-prefs:
+    lifecycle: single
+    description: POST /admin.conversations.setConversationPrefs — Set the posting permissions for a public or private channel.
+  admin-conversations-set-teams:
+    lifecycle: single
+    description: POST /admin.conversations.setTeams — Set the workspaces in an Enterprise grid org that connect to a public or private channel.
+  admin-conversations-unarchive:
+    lifecycle: single
+    description: POST /admin.conversations.unarchive — Unarchive a public or private channel.
+  admin-emoji-add:
+    lifecycle: single
+    description: POST /admin.emoji.add — Add an emoji.
+  admin-emoji-add-alias:
+    lifecycle: single
+    description: POST /admin.emoji.addAlias — Add an emoji alias.
+  admin-emoji-list:
+    lifecycle: single
+    description: GET /admin.emoji.list — List emoji for an Enterprise Grid organization.
+  admin-emoji-remove:
+    lifecycle: single
+    description: POST /admin.emoji.remove — Remove an emoji across an Enterprise Grid organization
+  admin-emoji-rename:
+    lifecycle: single
+    description: POST /admin.emoji.rename — Rename an emoji.
+  admin-invite-requests-approve:
+    lifecycle: single
+    description: POST /admin.inviteRequests.approve — Approve a workspace invite request.
+  admin-invite-requests-approved-list:
+    lifecycle: single
+    description: GET /admin.inviteRequests.approved.list — List all approved workspace invite requests.
+  admin-invite-requests-denied-list:
+    lifecycle: single
+    description: GET /admin.inviteRequests.denied.list — List all denied workspace invite requests.
+  admin-invite-requests-deny:
+    lifecycle: single
+    description: POST /admin.inviteRequests.deny — Deny a workspace invite request.
+  admin-invite-requests-list:
+    lifecycle: single
+    description: GET /admin.inviteRequests.list — List all pending workspace invite requests.
+  admin-teams-admins-list:
+    lifecycle: single
+    description: GET /admin.teams.admins.list — List all of the admins on a given workspace.
+  admin-teams-create:
+    lifecycle: single
+    description: POST /admin.teams.create — Create an Enterprise team.
+  admin-teams-list:
+    lifecycle: single
+    description: GET /admin.teams.list — List all teams on an Enterprise organization
+  admin-teams-owners-list:
+    lifecycle: single
+    description: GET /admin.teams.owners.list — List all of the owners on a given workspace.
+  admin-teams-settings-info:
+    lifecycle: single
+    description: GET /admin.teams.settings.info — Fetch information about settings in a workspace
+  admin-teams-settings-set-default-channels:
+    lifecycle: single
+    description: POST /admin.teams.settings.setDefaultChannels — Set the default channels of a workspace.
+  admin-teams-settings-set-description:
+    lifecycle: single
+    description: POST /admin.teams.settings.setDescription — Set the description of a given workspace.
+  admin-teams-settings-set-discoverability:
+    lifecycle: single
+    description: POST /admin.teams.settings.setDiscoverability — An API method that allows admins to set the discoverability of a given workspace
+  admin-teams-settings-set-icon:
+    lifecycle: single
+    description: POST /admin.teams.settings.setIcon — Sets the icon of a workspace.
+  admin-teams-settings-set-name:
+    lifecycle: single
+    description: POST /admin.teams.settings.setName — Set the name of a given workspace.
+  admin-usergroups-add-channels:
+    lifecycle: single
+    description: POST /admin.usergroups.addChannels — Add one or more default channels to an IDP group.
+  admin-usergroups-add-teams:
+    lifecycle: single
+    description: POST /admin.usergroups.addTeams — Associate one or more default workspaces with an organization-wide IDP group.
+  admin-usergroups-list-channels:
+    lifecycle: single
+    description: GET /admin.usergroups.listChannels — List the channels linked to an org-level IDP group (user group).
+  admin-usergroups-remove-channels:
+    lifecycle: single
+    description: POST /admin.usergroups.removeChannels — Remove one or more default channels from an org-level IDP group (user group).
+  admin-users-assign:
+    lifecycle: single
+    description: POST /admin.users.assign — Add an Enterprise user to a workspace.
+  admin-users-invite:
+    lifecycle: single
+    description: POST /admin.users.invite — Invite a user to a workspace.
+  admin-users-list:
+    lifecycle: single
+    description: GET /admin.users.list — List users on a workspace
+  admin-users-remove:
+    lifecycle: single
+    description: POST /admin.users.remove — Remove a user from a workspace.
+  admin-users-session-invalidate:
+    lifecycle: single
+    description: POST /admin.users.session.invalidate — Invalidate a single session for a user by session_id
+  admin-users-session-reset:
+    lifecycle: single
+    description: POST /admin.users.session.reset — Wipes all valid sessions on all devices for a given user
+  admin-users-set-admin:
+    lifecycle: single
+    description: POST /admin.users.setAdmin — Set an existing guest, regular user, or owner to be an admin user.
+  admin-users-set-expiration:
+    lifecycle: single
+    description: POST /admin.users.setExpiration — Set an expiration for a guest user
+  admin-users-set-owner:
+    lifecycle: single
+    description: POST /admin.users.setOwner — Set an existing guest, regular user, or admin user to be a workspace owner.
+  admin-users-set-regular:
+    lifecycle: single
+    description: POST /admin.users.setRegular — Set an existing guest user, admin user, or owner to be a regular user.
+  api-test:
+    lifecycle: single
+    description: GET /api.test — Checks API calling code.
+  apps-event-authorizations-list:
+    lifecycle: single
+    description: GET /apps.event.authorizations.list — Get a list of authorizations for the given event context. Each authorization represents an app installation that the event is visible to.
+  apps-permissions-info:
+    lifecycle: single
+    description: GET /apps.permissions.info — Returns list of permissions this app has on a team.
+  apps-permissions-request:
+    lifecycle: single
+    description: GET /apps.permissions.request — Allows an app to request additional scopes
+  apps-permissions-resources-list:
+    lifecycle: single
+    description: GET /apps.permissions.resources.list — Returns list of resource grants this app has on a team.
+  apps-permissions-scopes-list:
+    lifecycle: single
+    description: GET /apps.permissions.scopes.list — Returns list of scopes this app has on a team.
+  apps-uninstall:
+    lifecycle: single
+    description: GET /apps.uninstall — Uninstalls your app from a workspace.
+  auth-revoke:
+    lifecycle: single
+    description: GET /auth.revoke — Revokes a token.
+  auth-test:
+    lifecycle: single
+    description: GET /auth.test — Checks authentication & identity.
+  bots-info:
+    lifecycle: single
+    description: GET /bots.info — Gets information about a bot user.
+  calls-add:
+    lifecycle: single
+    description: POST /calls.add — Registers a new Call.
+  calls-end:
+    lifecycle: single
+    description: POST /calls.end — Ends a Call.
+  calls-info:
+    lifecycle: single
+    description: GET /calls.info — Returns information about a Call.
+  calls-participants-add:
+    lifecycle: single
+    description: POST /calls.participants.add — Registers new participants added to a Call.
+  calls-participants-remove:
+    lifecycle: single
+    description: POST /calls.participants.remove — Registers participants removed from a Call.
+  calls-update:
+    lifecycle: single
+    description: POST /calls.update — Updates information about a Call.
+  chat-delete:
+    lifecycle: single
+    description: POST /chat.delete — Deletes a message.
+  chat-delete-scheduled-message:
+    lifecycle: single
+    description: POST /chat.deleteScheduledMessage — Deletes a pending scheduled message from the queue.
+  chat-get-permalink:
+    lifecycle: single
+    description: GET /chat.getPermalink — Retrieve a permalink URL for a specific extant message
+  chat-me-message:
+    lifecycle: single
+    description: POST /chat.meMessage — Share a me message into a channel.
+  chat-post-ephemeral:
+    lifecycle: single
+    description: POST /chat.postEphemeral — Sends an ephemeral message to a user in a channel.
+  chat-post-message:
+    lifecycle: single
+    description: POST /chat.postMessage — Sends a message to a channel.
+  chat-schedule-message:
+    lifecycle: single
+    description: POST /chat.scheduleMessage — Schedules a message to be sent to a channel.
+  chat-scheduled-messages-list:
+    lifecycle: single
+    description: GET /chat.scheduledMessages.list — Returns a list of scheduled messages.
+  chat-unfurl:
+    lifecycle: single
+    description: POST /chat.unfurl — Provide custom unfurl behavior for user-posted URLs
+  chat-update:
+    lifecycle: single
+    description: POST /chat.update — Updates a message.
+  conversations-archive:
+    lifecycle: single
+    description: POST /conversations.archive — Archives a conversation.
+  conversations-close:
+    lifecycle: single
+    description: POST /conversations.close — Closes a direct message or multi-person direct message.
+  conversations-create:
+    lifecycle: single
+    description: POST /conversations.create — Initiates a public or private channel-based conversation
+  conversations-history:
+    lifecycle: single
+    description: GET /conversations.history — Fetches a conversation's history of messages and events.
+  conversations-info:
+    lifecycle: single
+    description: GET /conversations.info — Retrieve information about a conversation.
+  conversations-invite:
+    lifecycle: single
+    description: POST /conversations.invite — Invites users to a channel.
+  conversations-join:
+    lifecycle: single
+    description: POST /conversations.join — Joins an existing conversation.
+  conversations-kick:
+    lifecycle: single
+    description: POST /conversations.kick — Removes a user from a conversation.
+  conversations-leave:
+    lifecycle: single
+    description: POST /conversations.leave — Leaves a conversation.
+  conversations-list:
+    lifecycle: single
+    description: GET /conversations.list — Lists all channels in a Slack team.
+  conversations-mark:
+    lifecycle: single
+    description: POST /conversations.mark — Sets the read cursor in a channel.
+  conversations-members:
+    lifecycle: single
+    description: GET /conversations.members — Retrieve members of a conversation.
+  conversations-open:
+    lifecycle: single
+    description: POST /conversations.open — Opens or resumes a direct message or multi-person direct message.
+  conversations-rename:
+    lifecycle: single
+    description: POST /conversations.rename — Renames a conversation.
+  conversations-replies:
+    lifecycle: single
+    description: GET /conversations.replies — Retrieve a thread of messages posted to a conversation
+  conversations-set-purpose:
+    lifecycle: single
+    description: POST /conversations.setPurpose — Sets the purpose for a conversation.
+  conversations-set-topic:
+    lifecycle: single
+    description: POST /conversations.setTopic — Sets the topic for a conversation.
+  conversations-unarchive:
+    lifecycle: single
+    description: POST /conversations.unarchive — Reverses conversation archival.
+  dialog-open:
+    lifecycle: single
+    description: GET /dialog.open — Open a dialog with a user
+  dnd-end-dnd:
+    lifecycle: single
+    description: POST /dnd.endDnd — Ends the current user's Do Not Disturb session immediately.
+  dnd-end-snooze:
+    lifecycle: single
+    description: POST /dnd.endSnooze — Ends the current user's snooze mode immediately.
+  dnd-info:
+    lifecycle: single
+    description: GET /dnd.info — Retrieves a user's current Do Not Disturb status.
+  dnd-set-snooze:
+    lifecycle: single
+    description: POST /dnd.setSnooze — Turns on Do Not Disturb mode for the current user, or changes its duration.
+  dnd-team-info:
+    lifecycle: single
+    description: GET /dnd.teamInfo — Retrieves the Do Not Disturb status for up to 50 users on a team.
+  emoji-list:
+    lifecycle: single
+    description: GET /emoji.list — Lists custom emoji for a team.
+  files-comments-delete:
+    lifecycle: single
+    description: POST /files.comments.delete — Deletes an existing comment on a file.
+  files-delete:
+    lifecycle: single
+    description: POST /files.delete — Deletes a file.
+  files-info:
+    lifecycle: single
+    description: GET /files.info — Gets information about a file.
+  files-list:
+    lifecycle: single
+    description: GET /files.list — List for a team, in a channel, or from a user with applied filters.
+  files-remote-add:
+    lifecycle: single
+    description: POST /files.remote.add — Adds a file from a remote service
+  files-remote-info:
+    lifecycle: single
+    description: GET /files.remote.info — Retrieve information about a remote file added to Slack
+  files-remote-list:
+    lifecycle: single
+    description: GET /files.remote.list — Retrieve information about a remote file added to Slack
+  files-remote-remove:
+    lifecycle: single
+    description: POST /files.remote.remove — Remove a remote file.
+  files-remote-share:
+    lifecycle: single
+    description: GET /files.remote.share — Share a remote file into a channel.
+  files-remote-update:
+    lifecycle: single
+    description: POST /files.remote.update — Updates an existing remote file.
+  files-revoke-public-url:
+    lifecycle: single
+    description: POST /files.revokePublicURL — Revokes public/external sharing access for a file
+  files-shared-public-url:
+    lifecycle: single
+    description: POST /files.sharedPublicURL — Enables a file for public/external sharing.
+  files-upload:
+    lifecycle: single
+    description: POST /files.upload — Uploads or creates a file.
+  migration-exchange:
+    lifecycle: single
+    description: GET /migration.exchange — For Enterprise Grid workspaces, map local user IDs to global user IDs
+  oauth-access:
+    lifecycle: single
+    description: GET /oauth.access — Exchanges a temporary OAuth verifier code for an access token.
+  oauth-token:
+    lifecycle: single
+    description: GET /oauth.token — Exchanges a temporary OAuth verifier code for a workspace token.
+  oauth-v2-access:
+    lifecycle: single
+    description: GET /oauth.v2.access — Exchanges a temporary OAuth verifier code for an access token.
+  pins-add:
+    lifecycle: single
+    description: POST /pins.add — Pins an item to a channel.
+  pins-list:
+    lifecycle: single
+    description: GET /pins.list — Lists items pinned to a channel.
+  pins-remove:
+    lifecycle: single
+    description: POST /pins.remove — Un-pins an item from a channel.
+  reactions-add:
+    lifecycle: single
+    description: POST /reactions.add — Adds a reaction to an item.
+  reactions-get:
+    lifecycle: single
+    description: GET /reactions.get — Gets reactions for an item.
+  reactions-list:
+    lifecycle: single
+    description: GET /reactions.list — Lists reactions made by a user.
+  reactions-remove:
+    lifecycle: single
+    description: POST /reactions.remove — Removes a reaction from an item.
+  reminders-add:
+    lifecycle: single
+    description: POST /reminders.add — Creates a reminder.
+  reminders-complete:
+    lifecycle: single
+    description: POST /reminders.complete — Marks a reminder as complete.
+  reminders-delete:
+    lifecycle: single
+    description: POST /reminders.delete — Deletes a reminder.
+  reminders-info:
+    lifecycle: single
+    description: GET /reminders.info — Gets information about a reminder.
+  reminders-list:
+    lifecycle: single
+    description: GET /reminders.list — Lists all reminders created by or for a given user.
+  rtm-connect:
+    lifecycle: single
+    description: GET /rtm.connect — Starts a Real Time Messaging session.
+  search-messages:
+    lifecycle: single
+    description: GET /search.messages — Searches for messages matching a query.
+  stars-add:
+    lifecycle: single
+    description: POST /stars.add — Adds a star to an item.
+  stars-list:
+    lifecycle: single
+    description: GET /stars.list — Lists stars for a user.
+  stars-remove:
+    lifecycle: single
+    description: POST /stars.remove — Removes a star from an item.
+  team-access-logs:
+    lifecycle: single
+    description: GET /team.accessLogs — Gets the access logs for the current team.
+  team-billable-info:
+    lifecycle: single
+    description: GET /team.billableInfo — Gets billable users information for the current team.
+  team-info:
+    lifecycle: single
+    description: GET /team.info — Gets information about the current team.
+  team-integration-logs:
+    lifecycle: single
+    description: GET /team.integrationLogs — Gets the integration logs for the current team.
+  team-profile-get:
+    lifecycle: single
+    description: GET /team.profile.get — Retrieve a team's profile.
+  usergroups-create:
+    lifecycle: single
+    description: POST /usergroups.create — Create a User Group
+  usergroups-disable:
+    lifecycle: single
+    description: POST /usergroups.disable — Disable an existing User Group
+  usergroups-enable:
+    lifecycle: single
+    description: POST /usergroups.enable — Enable a User Group
+  usergroups-list:
+    lifecycle: single
+    description: GET /usergroups.list — List all User Groups for a team
+  usergroups-update:
+    lifecycle: single
+    description: POST /usergroups.update — Update an existing User Group
+  usergroups-users-list:
+    lifecycle: single
+    description: GET /usergroups.users.list — List all users in a User Group
+  usergroups-users-update:
+    lifecycle: single
+    description: POST /usergroups.users.update — Update the list of users for a User Group
+  users-conversations:
+    lifecycle: single
+    description: GET /users.conversations — List conversations the calling user may access.
+  users-delete-photo:
+    lifecycle: single
+    description: POST /users.deletePhoto — Delete the user profile photo
+  users-get-presence:
+    lifecycle: single
+    description: GET /users.getPresence — Gets user presence information.
+  users-identity:
+    lifecycle: single
+    description: GET /users.identity — Get a user's identity.
+  users-info:
+    lifecycle: single
+    description: GET /users.info — Gets information about a user.
+  users-list:
+    lifecycle: single
+    description: GET /users.list — Lists all users in a Slack team.
+  users-lookup-by-email:
+    lifecycle: single
+    description: GET /users.lookupByEmail — Find a user with an email address.
+  users-profile-get:
+    lifecycle: single
+    description: GET /users.profile.get — Retrieves a user's profile information.
+  users-profile-set:
+    lifecycle: single
+    description: POST /users.profile.set — Set the profile information for a user.
+  users-set-active:
+    lifecycle: single
+    description: POST /users.setActive — Marked a user as active. Deprecated and non-functional.
+  users-set-photo:
+    lifecycle: single
+    description: POST /users.setPhoto — Set the user profile photo
+  users-set-presence:
+    lifecycle: single
+    description: POST /users.setPresence — Manually sets user presence.
+  views-open:
+    lifecycle: single
+    description: GET /views.open — Open a view for a user.
+  views-publish:
+    lifecycle: single
+    description: GET /views.publish — Publish a static view for a User.
+  views-push:
+    lifecycle: single
+    description: GET /views.push — Push a view onto the stack of a root view.
+  views-update:
+    lifecycle: single
+    description: GET /views.update — Update an existing view.
+  workflows-step-completed:
+    lifecycle: single
+    description: GET /workflows.stepCompleted — Indicate that an app's step in a workflow completed execution.
+  workflows-step-failed:
+    lifecycle: single
+    description: GET /workflows.stepFailed — Indicate that an app's step in a workflow failed to execute.
+  workflows-update-step:
+    lifecycle: single
+    description: GET /workflows.updateStep — Update the configuration for a workflow extension step.
