@@ -35,6 +35,348 @@ transport:
   cli:
     binary: aware-rhino-8
 commands:
+  # ---- Curated workflow verbs (v0.17 first wave) -----------------------
+  # These are the designer's mental units — promoted from the reflected
+  # 6,954-command API surface below into typed, composable workflow
+  # commands per the curation pattern in 10-core/agent-spec.md.
+
+  view.list-named:
+    lifecycle: single
+    category: curated
+    description: |
+      List every named view in the active Rhino document. The foundation
+      for every consistent-camera workflow the designer audit named.
+      Read-only.
+    inputs: {}
+    outputs:
+      type: single
+      schema:
+        views:
+          type: array
+          items:
+            name:        string
+            projection:  string
+
+  view.capture:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Render a named view to PNG / JPEG at target resolution. Honors
+      the named view's camera + clipping + display mode. Write-mode
+      (filesystem only).
+    inputs:
+      view-name:
+        type: string
+      output-path:
+        type: string
+      width-pixels:
+        type: number
+        default: 1920
+      height-pixels:
+        type: number
+        default: 1080
+      format:
+        type: enum
+        values: [png, jpeg]
+        default: png
+      transparent:
+        type: boolean
+        default: false
+    outputs:
+      type: single
+      schema:
+        path:          string
+        width-pixels:  number
+        height-pixels: number
+
+  view.set-camera:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Set the active viewport's camera position + target + up explicitly.
+      Used when an app needs an exact camera not represented as a named
+      view (e.g. matching a Twinmotion still). Write-mode against the
+      Rhino UI state.
+    inputs:
+      eye:
+        type: array
+      target:
+        type: array
+      up:
+        type: array
+        default: [0, 0, 1]
+      lens-mm:
+        type: number
+        default: 50
+    outputs:
+      type: single
+      schema:
+        applied: boolean
+
+  layer.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List layers + visibility + locked status. Read-only.
+    inputs: {}
+    outputs:
+      type: single
+      schema:
+        layers:
+          type: array
+          items:
+            name:    string
+            visible: boolean
+            locked:  boolean
+
+  layer.list-states:
+    lifecycle: single
+    category: curated
+    description: |
+      List saved layer states. (Rhino's LayerStateManager.) Read-only.
+    inputs: {}
+    outputs:
+      type: single
+      schema:
+        states:
+          type: array
+          items:
+            name: string
+
+  layer.set-state:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Load a saved layer state — toggles layer visibility / lock / color
+      en-masse. Used by the "capture As-Built layers only" then "capture
+      Proposed layers only" comparison flow.
+    inputs:
+      state-name: string
+    outputs:
+      type: single
+      schema:
+        applied: boolean
+
+  layer.set-visibility:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Set layer visibility by name pattern. Use when no named state
+      exists for the desired combination.
+    inputs:
+      pattern:
+        type: string
+        description: Glob (e.g. "Site::*", "*Trees*").
+      visible:
+        type: boolean
+    outputs:
+      type: single
+      schema:
+        affected: number
+
+  gh.solve:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Execute a Grasshopper definition with input parameters. Returns
+      the baked output objects' GUIDs + any Data Output panel values.
+      The designer-parametric-study workhorse.
+    inputs:
+      gh-file:
+        type: string
+        description: Path to .gh / .ghx.
+      inputs:
+        type: object
+        description: |
+          Map of slider/panel name → value. Slider names must match the
+          GH definition exactly.
+      bake-output:
+        type: boolean
+        default: true
+    outputs:
+      type: single
+      schema:
+        baked-guids:
+          type: array
+          items: string
+        outputs:
+          type: object
+
+  gh.sweep:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Parametric sweep over a Grasshopper input range — captures the
+      output (geometry + viewport screenshot) for each step. The
+      Grasshopper-Colibri / Galapagos primitive without the plugin.
+    inputs:
+      gh-file: string
+      sweep-input:
+        type: string
+        description: Name of the GH slider/panel to sweep.
+      values:
+        type: array
+        description: Concrete values to iterate over.
+      capture-view:
+        type: string
+        description: Named view to capture per step (optional).
+      output-dir:
+        type: string
+        description: Directory to write per-step screenshots / data.
+    outputs:
+      type: single
+      schema:
+        steps:
+          type: array
+          items:
+            value:           number
+            screenshot-path: string
+            outputs:         object
+
+  make-2d:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Rhino Make2D — generate plan / elevation / section line drawings
+      from the active 3D model. The designer-to-AutoCAD bridge.
+    inputs:
+      view-name:
+        type: string
+        description: Named view defining the projection.
+      output-layer:
+        type: string
+        default: "Make2D"
+      include-hidden:
+        type: boolean
+        default: true
+      show-tangent-edges:
+        type: boolean
+        default: false
+    outputs:
+      type: single
+      schema:
+        curve-guids:
+          type: array
+          items: string
+
+  area.compute-by-layer:
+    lifecycle: single
+    category: curated
+    description: |
+      Sum surface areas grouped by layer — the fee-proposal area-takeoff
+      verb. Returns area in m² and ft² (project units). Read-only.
+    inputs:
+      layer-pattern:
+        type: string
+        description: Glob (e.g. "Floor::*", "Glazing::*").
+    outputs:
+      type: single
+      schema:
+        groups:
+          type: array
+          items:
+            layer:        string
+            area-m2:      number
+            area-ft2:     number
+            object-count: number
+
+  mass-properties:
+    lifecycle: single
+    category: curated
+    description: |
+      Compute mass properties (volume, surface area, centroid) for
+      selected objects. Read-only.
+    inputs:
+      object-guids:
+        type: array
+        items: string
+        description: Empty = whole document.
+    outputs:
+      type: single
+      schema:
+        volume-m3:        number
+        surface-area-m2:  number
+        centroid:
+          x: number
+          y: number
+          z: number
+
+  export-ifc:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Export the Rhino model (or a layer-scoped subset) as IFC. The
+      designer-to-consultant handoff verb. Pair with `ifc-inspector`
+      to validate after export.
+    inputs:
+      output-path: string
+      layer-pattern:
+        type: string
+        description: Optional layer-scope (glob). Empty = whole document.
+      ifc-version:
+        type: enum
+        values: [IFC2X3, IFC4]
+        default: IFC4
+    outputs:
+      type: single
+      schema:
+        path:          string
+        entity-count:  number
+
+  export-dwg:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Export DWG for AutoCAD round-trips. Honors the layer mapping +
+      schema-version flags.
+    inputs:
+      output-path: string
+      schema:
+        type: enum
+        values: ["2007","2010","2013","2018","2024"]
+        default: "2018"
+      layer-pattern:
+        type: string
+    outputs:
+      type: single
+      schema:
+        path: string
+
+  screenshot:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Capture the active viewport as PNG. The lowest-friction "just give
+      me a picture" verb — no named view required. Use `view.capture`
+      for repeatable consistency.
+    inputs:
+      output-path:  string
+      width-pixels:
+        type: number
+        default: 1920
+      height-pixels:
+        type: number
+        default: 1080
+    outputs:
+      type: single
+      schema:
+        path: string
+
+  # ---- Reflected commands (auto-generated from RhinoCommon SDK) --------
+  # 6,954 entries — escape hatch for ops not yet promoted to curated.
+  # Use `aware tree rhino-8 --curated` for the workflow surface,
+  # `--reflected` for the full API.
+
   add-remove-button-insert-button:
     lifecycle: single
     description: AddRemoveButton.InsertButton
