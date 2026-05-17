@@ -7,6 +7,7 @@
 //! `Err(AwareError::NotYetImplemented(<command>))`. The fresh session
 //! implements them per the roadmap, one phase at a time.
 
+mod app_lock;
 mod auth;
 mod builder;
 mod commands;

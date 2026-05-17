@@ -50,6 +50,12 @@ pub enum AppCommand {
     /// Print a one-screen summary of an app's reads, writes, and external
     /// posts, plus the union of required permissions. (v0.11)
     Explain { app: String },
+    /// Compile an app to its deterministic `<app>.lock` sidecar.
+    /// Engineers read the lockfile; the AI reads the source. (v0.24)
+    Compile { path: std::path::PathBuf },
+    /// Open Glass Box — a single-file HTML viewer of the lockfile —
+    /// in the user's default browser. (v0.24)
+    Inspect { path: std::path::PathBuf },
     /// Stop a running app. (v0.3)
     Stop {
         app: String,
@@ -92,6 +98,8 @@ pub async fn dispatch(cmd: AppCommand, ctx: &Context) -> Result<(), AwareError> 
             dry_run,
         } => run(ctx, &app, instance.as_deref(), &config, dry_run).await,
         AppCommand::Explain { app } => explain(ctx, &app),
+        AppCommand::Compile { path } => compile_cmd(ctx, &path),
+        AppCommand::Inspect { path } => inspect_cmd(ctx, &path),
         AppCommand::Stop { app, instance } => stop(ctx, &app, instance.as_deref()),
         AppCommand::Logs {
             app,
@@ -670,6 +678,154 @@ fn explain(ctx: &Context, app_id: &str) -> Result<(), AwareError> {
         }
     }
     Ok(())
+}
+
+/// `aware app compile <path>` — emit the deterministic `<app-name>.lock`
+/// sidecar (per `10-core/app-spec.md § Lockfile sidecar`, v0.24).
+fn compile_cmd(ctx: &Context, path: &std::path::Path) -> Result<(), AwareError> {
+    let source = crate::app_lock::find_app_source(path).ok_or_else(|| {
+        AwareError::Validation(format!(
+            "no app source file (.flo / .app / .flow / .aware) at {}",
+            path.display()
+        ))
+    })?;
+    let lock_path = crate::app_lock::compile_to_disk(&source, &ctx.paths)?;
+    println!(
+        "\u{2713} compiled {} \u{2192} {}",
+        source.display(),
+        lock_path.display()
+    );
+    Ok(())
+}
+
+/// `aware app inspect <path>` — open Glass Box (single-file HTML viewer)
+/// of the lockfile in the user's default browser.
+fn inspect_cmd(ctx: &Context, path: &std::path::Path) -> Result<(), AwareError> {
+    let source = crate::app_lock::find_app_source(path).ok_or_else(|| {
+        AwareError::Validation(format!(
+            "no app source file (.flo / .app / .flow / .aware) at {}",
+            path.display()
+        ))
+    })?;
+    // Compile first so the viewer renders the freshly-resolved lockfile.
+    let lock_path = crate::app_lock::compile_to_disk(&source, &ctx.paths)?;
+    let app = crate::manifest::loader::load_app(&source)?;
+    let agents = crate::manifest::loader::discover_agents(&ctx.paths)?;
+    let lock = crate::app_lock::compile(&app, &agents, &source)?;
+
+    let html_path = glass_box_html_path(&lock_path);
+    let html = render_glass_box_html(&lock);
+    std::fs::write(&html_path, &html)
+        .map_err(|e| AwareError::Internal(format!("write {}: {e}", html_path.display())))?;
+    println!(
+        "\u{2713} compiled {} \u{2192} {}\n\u{2713} wrote Glass Box \u{2192} {}",
+        source.display(),
+        lock_path.display(),
+        html_path.display()
+    );
+
+    if let Err(e) = open_in_browser(&html_path) {
+        println!("  (couldn't auto-open browser: {e}; open the file above manually)");
+    }
+    Ok(())
+}
+
+fn glass_box_html_path(lock_path: &std::path::Path) -> std::path::PathBuf {
+    let stem = lock_path
+        .file_stem()
+        .and_then(|s| s.to_str())
+        .unwrap_or("app");
+    let dir = lock_path
+        .parent()
+        .unwrap_or_else(|| std::path::Path::new("."));
+    dir.join(format!("{stem}.glass-box.html"))
+}
+
+fn open_in_browser(path: &std::path::Path) -> Result<(), std::io::Error> {
+    #[cfg(target_os = "windows")]
+    {
+        std::process::Command::new("cmd")
+            .args(["/C", "start", "", path.to_str().unwrap_or("")])
+            .spawn()?;
+    }
+    #[cfg(target_os = "macos")]
+    {
+        std::process::Command::new("open").arg(path).spawn()?;
+    }
+    #[cfg(all(unix, not(target_os = "macos")))]
+    {
+        std::process::Command::new("xdg-open").arg(path).spawn()?;
+    }
+    Ok(())
+}
+
+/// Render the Glass Box single-file HTML viewer for a compiled lockfile.
+/// Pure-string concatenation; no external deps.
+fn render_glass_box_html(lock: &crate::app_lock::LockFile) -> String {
+    let mut nodes_html = String::new();
+    for node in &lock.nodes {
+        let mode_class = if node.mode == "write" {
+            "node-write"
+        } else {
+            "node-read"
+        };
+        let cmd_str = match (&node.agent, &node.command) {
+            (Some(a), Some(c)) => format!("<code>{}.{}</code>", html_escape_local(a), html_escape_local(c)),
+            _ => format!("<em>{}</em>", html_escape_local(&node.kind)),
+        };
+        let safety_badge = if node.safety.is_some() {
+            "<span class=\"badge badge-safety\">safety \u{2713}</span>"
+        } else if node.mode == "write" {
+            "<span class=\"badge badge-warn\">safety MISSING</span>"
+        } else {
+            ""
+        };
+        nodes_html.push_str(&format!(
+            "<div class=\"node {mode_class}\"><div class=\"node-id\">{id}</div><div class=\"node-cmd\">{cmd}</div><div class=\"node-meta\"><span class=\"badge badge-{mode}\">{mode}</span> {safety}</div></div>",
+            id = html_escape_local(&node.id),
+            cmd = cmd_str,
+            mode = node.mode,
+            safety = safety_badge,
+        ));
+    }
+
+    let mut pins_html = String::new();
+    for (k, v) in &lock.agent_pins {
+        pins_html.push_str(&format!(
+            "<li><code>{}</code> &rarr; <code>{}</code></li>",
+            html_escape_local(k),
+            html_escape_local(v)
+        ));
+    }
+
+    format!(
+        "<!DOCTYPE html>\n<html lang=\"en\"><head>\n<meta charset=\"utf-8\">\n<title>Glass Box \u{2014} {app}</title>\n<style>\n  body {{ font: 14px -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif; margin: 0; padding: 24px; background: #fafafa; color: #1a1a1a; }}\n  h1 {{ margin: 0 0 6px; font-size: 22px; }}\n  h2 {{ margin: 24px 0 8px; font-size: 15px; color: #555; text-transform: uppercase; letter-spacing: 0.04em; }}\n  .meta {{ color: #6b7280; font-size: 12px; }}\n  .nodes {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 8px; margin-top: 12px; }}\n  .node {{ background: white; border: 1px solid #ddd; border-radius: 6px; padding: 10px 14px; }}\n  .node-read {{ border-left: 4px solid #6b7280; }}\n  .node-write {{ border-left: 4px solid #dc2626; }}\n  .node-id {{ font-weight: 600; font-size: 13px; }}\n  .node-cmd {{ font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; color: #444; margin-top: 4px; }}\n  .node-meta {{ margin-top: 8px; font-size: 11px; }}\n  .badge {{ display: inline-block; padding: 1px 6px; border-radius: 3px; font-family: ui-monospace, monospace; font-size: 11px; }}\n  .badge-read {{ background: #eef2ff; color: #4338ca; }}\n  .badge-write {{ background: #fee2e2; color: #991b1b; }}\n  .badge-safety {{ background: #dcfce7; color: #166534; }}\n  .badge-warn {{ background: #fef3c7; color: #92400e; }}\n  ul {{ margin: 0; padding-left: 18px; }}\n  li {{ margin: 2px 0; font-family: ui-monospace, monospace; font-size: 12px; }}\n  .source {{ font-family: ui-monospace, monospace; font-size: 11px; color: #6b7280; word-break: break-all; }}\n</style>\n</head>\n<body>\n  <h1>{app} <small style=\"font-weight:400;color:#6b7280;\">v{version}</small></h1>\n  <div class=\"meta\">compiled {compiled} \u{2022} compiler {compiler}</div>\n  <div class=\"source\">source-hash: {hash}</div>\n\n  <h2>Agent pins ({pin_count})</h2>\n  <ul>{pins}</ul>\n\n  <h2>Nodes ({node_count}) <small style=\"font-weight:400;color:#6b7280;\">\u{2014} red = write-mode, gray = read-mode</small></h2>\n  <div class=\"nodes\">{nodes}</div>\n</body></html>",
+        app = html_escape_local(&lock.app),
+        version = html_escape_local(&lock.version),
+        compiled = html_escape_local(&lock.compiled_at),
+        compiler = html_escape_local(&lock.compiler_version),
+        hash = html_escape_local(&lock.source_hash),
+        pin_count = lock.agent_pins.len(),
+        pins = if pins_html.is_empty() {
+            "<li><em>(none)</em></li>".to_string()
+        } else {
+            pins_html
+        },
+        node_count = lock.nodes.len(),
+        nodes = if nodes_html.is_empty() {
+            "<em>(no nodes)</em>".to_string()
+        } else {
+            nodes_html
+        },
+    )
+}
+
+fn html_escape_local(s: &str) -> String {
+    s.replace('&', "&amp;")
+        .replace('<', "&lt;")
+        .replace('>', "&gt;")
+        .replace('"', "&quot;")
+        .replace('\'', "&#39;")
 }
 
 fn export(ctx: &Context, app_id: &str, output: &std::path::Path) -> Result<(), AwareError> {
