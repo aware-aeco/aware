@@ -5,6 +5,7 @@
 #![allow(dead_code)]
 
 pub mod config;
+pub mod device; // v0.13 — RFC 8628 device-code flow
 pub mod keychain;
 pub mod paste;
 pub mod pkce; // Task 4

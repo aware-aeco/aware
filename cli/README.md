@@ -6,7 +6,9 @@ This folder houses the Rust implementation. The contract it satisfies is in [`10
 
 ## Install
 
-**Recommended — Node package manager (Windows / Linux / macOS):**
+AWARE ships five install paths. Pick by what's already on your machine and what your IT department allows. **For enterprise rollouts where IT controls software installs, prefer the npm or curl-pipe paths** — they don't trigger the SmartScreen warning that blocks unsigned MSIs.
+
+### 1. Node package manager (recommended — Windows / Linux / macOS)
 
 ```bash
 npm  install -g @aware-aeco/cli      # npm
@@ -17,13 +19,31 @@ bun  install -g @aware-aeco/cli      # bun
 aware --version
 ```
 
-All four read from the same npm registry and run the same `postinstall` script (Node built-ins only — no manager-specific deps). Pick whichever you already have.
+All four read from the same npm registry and run the same `postinstall` script (Node built-ins only — no manager-specific deps). Pick whichever you already have. The package itself is ~2 KB; the `postinstall` fetches the platform binary (~10 MB) from the [GitHub Release](https://github.com/aware-aeco/aware/releases) matching the version.
 
-The package itself is ~2 KB; the `postinstall` fetches the platform binary (~10 MB) from the [GitHub Release](https://github.com/aware-aeco/aware/releases) matching the version.
+**Why this is the IT-friendly path:** npm/pnpm/yarn/bun are already on most developer workstations and don't require admin rights. No SmartScreen warning, no `--installer-allowed` policy override.
 
-**MSI installer (Windows, no Node required):**
+### 2. Curl-pipe (Linux / macOS, no Node required)
 
-Download `aware-<version>-win-x64.msi` from the [latest GitHub Release](https://github.com/aware-aeco/aware/releases/latest) and run it. Installs to `C:\Program Files\AWARE\` and adds itself to the system PATH. SmartScreen will warn "unknown publisher" on first run (the MSI is currently unsigned) — click *More info → Run anyway*. Uninstall via Apps & Features or `msiexec /x aware-<version>-win-x64.msi`.
+```bash
+curl -fsSL https://raw.githubusercontent.com/aware-aeco/aware/main/scripts/install.sh | bash
+```
+
+Drops the binary at `~/.local/bin/aware` (or `/usr/local/bin/` if writable). No package-manager dependency.
+
+### 3. PowerShell (Windows, no Node required)
+
+```powershell
+iex (irm https://raw.githubusercontent.com/aware-aeco/aware/main/scripts/install.ps1)
+```
+
+Drops the binary at `%LOCALAPPDATA%\aware\bin\aware.exe` and adds it to the user PATH. No admin rights needed.
+
+### 4. MSI installer (Windows enterprise)
+
+Download `aware-<version>-win-x64.msi` from the [latest GitHub Release](https://github.com/aware-aeco/aware/releases/latest) and run it. Installs system-wide to `C:\Program Files\AWARE\` and adds itself to the system PATH. Uninstall via Apps & Features or `msiexec /x aware-<version>-win-x64.msi`.
+
+**SmartScreen warning:** the MSI is currently unsigned (open-source project; signing an MSI requires a paid Authenticode cert). On first run Windows will warn "unknown publisher" — click *More info → Run anyway*, or pre-stage the cert hash via IT policy. **If your IT department blocks unsigned MSIs at the gate, use path #1 (npm) instead** — it bypasses MSI entirely.
 
 Silent install for IT departments:
 
@@ -31,25 +51,7 @@ Silent install for IT departments:
 msiexec /i aware-<version>-win-x64.msi /qn
 ```
 
-**Curl-pipe (Linux / macOS, no Node required):**
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/aware-aeco/aware/main/scripts/install.sh | bash
-```
-
-**PowerShell (Windows, no Node required):**
-
-```powershell
-iex (irm https://raw.githubusercontent.com/aware-aeco/aware/main/scripts/install.ps1)
-```
-
-**Pinned version:**
-
-- npm / pnpm / yarn / bun: append `@0.12.0` to the package name (e.g. `pnpm add -g @aware-aeco/cli@0.12.0`)
-- curl: `... | bash -s -- --version 0.12.0`
-- PowerShell: `$env:AWARE_VERSION = "0.12.0"; iex (...)`
-
-**From source:**
+### 5. From source
 
 ```bash
 git clone https://github.com/aware-aeco/aware
@@ -58,11 +60,40 @@ cargo build --release --manifest-path cli/Cargo.toml
 dotnet publish cli-sidecar -c Release -r <rid> -p:PublishAot=true
 ```
 
-**Tracked as follow-up phases:**
-- Submit winget manifest to [`microsoft/winget-pkgs`](https://github.com/microsoft/winget-pkgs) (the MSI above now exists, so this is unblocked once we have a code-signed build)
+### Pinned version
+
+- npm / pnpm / yarn / bun: append `@0.13.0` to the package name (e.g. `pnpm add -g @aware-aeco/cli@0.13.0`)
+- curl: `... | bash -s -- --version 0.13.0`
+- PowerShell: `$env:AWARE_VERSION = "0.13.0"; iex (...)`
+
+### Tracked as follow-up
+
+- Submit winget manifest to [`microsoft/winget-pkgs`](https://github.com/microsoft/winget-pkgs) (requires a code-signed MSI — deferred; open-source projects routinely ship unsigned and the npm path covers most users)
 - Homebrew formula — `brew install aware-aeco/tap/aware`
-- Code-signed binaries (Microsoft Authenticode for MSI + Apple Developer ID for macOS)
 - ARM Linux (linux-arm64) + Intel macOS (osx-x64)
+
+## Authentication (`aware connect`)
+
+Four flows for getting credentials in. Use the lowest-friction one your provider supports.
+
+| Flow | Flag | When to use |
+|---|---|---|
+| Browser-paste | `aware connect <integration>` (default) | First-time setup, no OAuth app registered yet. CLI opens the provider's authorize URL; user grants, copy-pastes the access token back. |
+| PKCE | `--oauth` | Production. Loopback redirect, no manual paste. Requires `AWARE_OAUTH_<INTEGRATION>_CLIENT_ID` env var pointing at a registered OAuth app. |
+| **Device code** (v0.13) | `--device-code` | Headless / IT-managed / restricted-browser workstations. CLI prints a URL + short code; user opens it on any device (phone, separate machine), enters the code, CLI polls until authorization completes. RFC 8628. |
+| Token paste | `--from-file <path>` or `--from-env` | Service accounts / CI. Token already obtained out-of-band. |
+
+**Tenant-restricted M365 tenants:** add `--tenant <tenant-id-or-domain>` to substitute the Microsoft `common` endpoint with a tenant-specific one. Required by IT departments that block cross-tenant identity.
+
+```bash
+# Standard:
+aware connect microsoft-365 --oauth
+
+# Tenant-restricted (M365):
+aware connect microsoft-365 --device-code --tenant acme.onmicrosoft.com
+```
+
+Tokens encrypt at rest via the OS keychain (Windows DPAPI / macOS Keychain / Linux libsecret).
 
 ## Status
 
