@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-05-17T17:50:00Z",
+  "updated-at": "2026-05-17T18:15:00Z",
   "agents": {
     "tekla": {
       "versions": {
@@ -345,6 +345,38 @@
           "subdir": "aware-main/20-agents/aeco/construction/ifc-inspector"
         }
       }
+    },
+    "bluebeam-studio": {
+      "versions": {
+        "1.0.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/construction/bluebeam-studio"
+        }
+      }
+    },
+    "procore": {
+      "versions": {
+        "3.0.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/construction/procore"
+        }
+      }
+    },
+    "aconex": {
+      "versions": {
+        "1.0.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/construction/aconex"
+        }
+      }
+    },
+    "acc-docs": {
+      "versions": {
+        "1.0.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/construction/acc-docs"
+        }
+      }
     }
   },
   "bundles": {
@@ -393,7 +425,11 @@
         "navisworks-2026@2026.0.0",
         "solibri@9.13.0",
         "bcf-file@1.0.0",
-        "ifc-inspector@1.0.0"
+        "ifc-inspector@1.0.0",
+        "bluebeam-studio@1.0.0",
+        "procore@3.0.0",
+        "aconex@1.0.0",
+        "acc-docs@1.0.0"
       ]
     }
   }

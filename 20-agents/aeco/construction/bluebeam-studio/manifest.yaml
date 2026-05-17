@@ -1,0 +1,254 @@
+agent:        bluebeam-studio
+version:      1.0.0
+display-name: Bluebeam Revu Studio
+description: |
+  PDF mark-up + Studio Session collaboration for AECO. Wraps the
+  Bluebeam Studio Prime REST API (https://studioapi.bluebeam.com/v1).
+  Studio is where every redline lives, every owner markup arrives, every
+  consultant comment on a PDF set is captured.
+
+  Persona audit (architect, #1 missing tool): "Bluebeam Revu / Bluebeam
+  Cloud (Studio Sessions). Every redline I do, every owner markup I
+  receive, every consultant comment on a PDF set lives here."
+
+  This agent gives AWARE access to Studio Sessions + Studio Projects:
+  list sessions, pull markups + their dispositions, upload new PDFs,
+  invite users, archive a finished session.
+
+stateful: false
+
+vendor:   bluebeam
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/construction/bluebeam-studio
+keywords: [aware, bluebeam, studio, pdf, markup, redline, document-control, construction]
+
+provenance:
+  generated-by:     hand-curated
+  generator-version: 0.14.0
+  refined-by:       [pawellisowski]
+  generated-at:     2026-05-17T18:00:00Z
+
+requires:
+  network:
+    - https://studioapi.bluebeam.com
+    - https://accounts.bluebeam.com
+  secrets:
+    - bluebeam-studio
+  filesystem:
+    - read:  '*.pdf'
+    - write: '*.pdf,*.csv,*.json'
+
+transport:
+  cli:
+    binary: aware-bluebeam-studio
+
+commands:
+
+  # ---- Studio Sessions -------------------------------------------------
+
+  session.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List Studio Sessions the user has access to. Read-only.
+    inputs:
+      status:
+        type: enum
+        values: [active, finished, any]
+        default: active
+    outputs:
+      type: single
+      schema:
+        sessions:
+          type: array
+          items:
+            id:           string
+            name:         string
+            status:       string
+            owner:        string
+            created-at:   string
+            file-count:   number
+
+  session.create:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Create a new Studio Session and upload an initial set of PDFs.
+      Returns the session id + per-file ids.
+    inputs:
+      name:
+        type: string
+      pdf-paths:
+        type: array
+        items: string
+      invitees:
+        type: array
+        items: string
+        description: Optional emails to invite immediately.
+      restrictions:
+        type: object
+        description: |
+          Optional Studio access restrictions (default-permissions etc.).
+          See https://studioapi.bluebeam.com/docs/restrictions.
+    outputs:
+      type: single
+      schema:
+        session-id: string
+        files:
+          type: array
+          items:
+            file-id:   string
+            filename:  string
+
+  session.archive:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Archive a Studio Session — locks markups, exports a flattened
+      PDF set with all annotations baked in. The handover-to-record
+      step at the end of a comment cycle.
+    inputs:
+      session-id: string
+      output-dir:
+        type: string
+        description: Where to save the flattened PDFs.
+    outputs:
+      type: single
+      schema:
+        archived-path: string
+        file-count:    number
+
+  # ---- Markups ---------------------------------------------------------
+
+  markups.pull:
+    lifecycle: single
+    category: curated
+    description: |
+      Pull every markup (comment + redline) from a Studio Session.
+      The "what did consultants flag this week?" verb. Read-only.
+    inputs:
+      session-id: string
+      file-id:
+        type: string
+        description: Optional — restrict to one file in the session.
+      since:
+        type: string
+        description: Optional ISO 8601 — only markups created after.
+    outputs:
+      type: single
+      schema:
+        markups:
+          type: array
+          items:
+            id:            string
+            file-id:       string
+            page:          number
+            author:        string
+            subject:       string
+            comment:       string
+            status:        string      # None / Accepted / Rejected / Cancelled / Completed
+            checkmark:     boolean
+            created-at:    string
+            modified-at:   string
+
+  markups.set-status:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Update the disposition status of one or more markups (Accepted /
+      Rejected / Cancelled / Completed). The architect's RFI-disposition
+      verb.
+    inputs:
+      session-id: string
+      markup-ids:
+        type: array
+        items: string
+      status:
+        type: enum
+        values: [None, Accepted, Rejected, Cancelled, Completed]
+    outputs:
+      type: single
+      schema:
+        updated: number
+
+  markups.export-csv:
+    lifecycle: single
+    category: curated
+    description: |
+      Export all markups from a Session as a CSV (suitable for the
+      architect's punch-list spreadsheet). Read-only.
+    inputs:
+      session-id: string
+      output-path: string
+    outputs:
+      type: single
+      schema:
+        path:      string
+        row-count: number
+
+  # ---- Files (Studio Projects, not Sessions) ---------------------------
+
+  file.upload:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Upload a PDF to a Studio Project (persistent storage, vs Session
+      which is a comment cycle). Used by the architect Friday-issue
+      flow — stamped PDFs to the Project for record.
+    inputs:
+      project-id: string
+      folder-id:
+        type: string
+        description: Optional. Defaults to project root.
+      filename:   string
+      path:       string
+    outputs:
+      type: single
+      schema:
+        file-id: string
+        web-url: string
+
+  file.download:
+    lifecycle: single
+    category: curated
+    description: Download a PDF from a Studio Project. Read-only.
+    inputs:
+      project-id: string
+      file-id:    string
+      output-path: string
+    outputs:
+      type: single
+      schema:
+        path:       string
+        size-bytes: number
+
+  # ---- Users -----------------------------------------------------------
+
+  users.invite:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Invite users to a Studio Session — typically consultants joining
+      a comment cycle. Sends Bluebeam-native invite emails.
+    inputs:
+      session-id: string
+      emails:
+        type: array
+        items: string
+      role:
+        type: enum
+        values: [attendee, host]
+        default: attendee
+    outputs:
+      type: single
+      schema:
+        invited: number
+
+skills:
+  - sessions-vs-projects.md
+  - markup-disposition-workflow.md

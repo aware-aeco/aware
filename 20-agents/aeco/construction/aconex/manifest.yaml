@@ -1,0 +1,286 @@
+agent:        aconex
+version:      1.0.0
+display-name: Oracle Aconex
+description: |
+  UK + international document control + correspondence management.
+  Wraps the Aconex REST API (https://api.aconex.com/v1).
+
+  Persona audit (architect, #5 missing tool): "Aconex (Oracle). UK and
+  international document control. Whole BD-funded UK projects run on
+  Aconex."
+
+  Scope: documents (drawings, specs, reports), mail (formal project
+  correspondence — distinct from email), workflows. Larger surfaces
+  (Bid Documents, Tenders, Cost) get separate agents.
+
+stateful: false
+
+vendor:   oracle
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/construction/aconex
+keywords: [aware, aconex, oracle, cde, document-control, correspondence, construction, uk]
+
+provenance:
+  generated-by:     hand-curated
+  generator-version: 0.14.0
+  refined-by:       [pawellisowski]
+  generated-at:     2026-05-17T18:10:00Z
+
+requires:
+  network:
+    - https://api.aconex.com
+    - https://login.aconex.com
+  secrets:
+    - aconex
+  filesystem:
+    - read:  '*.pdf,*.dwg,*.docx,*.xlsx,*.csv'
+    - write: '*.pdf,*.csv,*.xlsx'
+
+transport:
+  cli:
+    binary: aware-aconex
+
+commands:
+
+  # ---- Project context -------------------------------------------------
+
+  project.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List Aconex projects the user has access to. Read-only.
+    inputs: {}
+    outputs:
+      type: single
+      schema:
+        projects:
+          type: array
+          items:
+            id:                string
+            name:              string
+            project-number:    string
+            organization-id:   string
+
+  # ---- Documents -------------------------------------------------------
+
+  documents.list:
+    lifecycle: single
+    category: curated
+    description: |
+      Search documents within an Aconex project. Filterable by document
+      type (Drawing, Specification, Report), discipline, revision status.
+      Read-only.
+    inputs:
+      project-id:    string
+      document-type:
+        type: string
+        description: Aconex doc-type code (e.g. "DR" for Drawing, "SP" for Specification).
+      discipline:
+        type: string
+        description: e.g. "A" (Architecture), "S" (Structural), "M" (Mechanical).
+      revision-status:
+        type: enum
+        values: [current, any]
+        default: current
+    outputs:
+      type: single
+      schema:
+        documents:
+          type: array
+          items:
+            id:               string
+            document-number:  string
+            title:            string
+            revision:         string
+            revision-date:    string
+            discipline:       string
+            issued-by:        string
+
+  documents.upload:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Upload a document file with metadata (number, title, revision,
+      discipline). Aconex enforces strict metadata schemas — the
+      `metadata` object MUST include every required field configured
+      for the project's document-control policy.
+    inputs:
+      project-id:    string
+      file-path:     string
+      metadata:
+        type: object
+        description: |
+          Document metadata. Required fields are project-specific —
+          query `documents.required-fields` for the schema.
+    outputs:
+      type: single
+      schema:
+        document-id:     string
+        document-number: string
+        revision:        string
+        web-url:         string
+
+  documents.download:
+    lifecycle: single
+    category: curated
+    description: Download a document file from Aconex. Read-only.
+    inputs:
+      project-id:  string
+      document-id: string
+      output-path: string
+    outputs:
+      type: single
+      schema:
+        path:       string
+        filename:   string
+        size-bytes: number
+
+  documents.required-fields:
+    lifecycle: single
+    category: curated
+    description: |
+      Query the document metadata schema required by the project's
+      document-control policy. Use this before `documents.upload` to
+      learn which fields the upload must include. Read-only.
+    inputs:
+      project-id: string
+    outputs:
+      type: single
+      schema:
+        required:
+          type: array
+          items:
+            field-name: string
+            field-type: string
+            description: string
+
+  # ---- Mail (Aconex correspondence) ------------------------------------
+
+  mail.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List Aconex Mail items — the formal project correspondence
+      register. Filterable by type (Drawing Submission, RFI, Technical
+      Query etc.) / status / date range. Read-only.
+
+      Aconex Mail is **not email** — it's the contractually-binding
+      correspondence record. Every mail item has an id auditable in
+      court.
+    inputs:
+      project-id:   string
+      mail-type:
+        type: string
+        description: Aconex mail-type code.
+      status:
+        type: enum
+        values: [outstanding, closed, any]
+        default: outstanding
+      since:
+        type: string
+        description: ISO date.
+    outputs:
+      type: single
+      schema:
+        mails:
+          type: array
+          items:
+            id:           string
+            number:       string
+            subject:      string
+            mail-type:    string
+            status:       string
+            from:         string
+            to:           array
+            sent-at:      string
+            due-date:     string
+
+  mail.send:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Send an Aconex mail item — the legally-binding project-correspondence
+      send verb (vs Outlook's casual email). Returns the mail id +
+      auto-generated mail number.
+    inputs:
+      project-id:  string
+      mail-type:
+        type: string
+        description: Aconex mail-type code. Required.
+      subject:     string
+      body:        string
+      to:
+        type: array
+        items: string
+        description: Recipient organization-id list.
+      cc:
+        type: array
+        items: string
+      attachments:
+        type: array
+        items:
+          path:     string
+          filename: string
+      due-date:
+        type: string
+        description: ISO date.
+    outputs:
+      type: single
+      schema:
+        mail-id:     string
+        mail-number: string
+        web-url:     string
+
+  mail.respond:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Respond to an Aconex Mail item — preserves the original mail-id
+      chain so the correspondence thread is intact for auditing.
+    inputs:
+      mail-id:     string
+      response:    string
+      attachments:
+        type: array
+        items:
+          path:     string
+          filename: string
+      close:
+        type: boolean
+        default: false
+    outputs:
+      type: single
+      schema:
+        response-mail-id: string
+
+  # ---- Workflows -------------------------------------------------------
+
+  workflows.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List active Aconex Workflows (review cycles attached to documents).
+      Filterable by document / participant. Read-only.
+    inputs:
+      project-id: string
+      participant:
+        type: string
+        description: Optional user/role to filter by.
+    outputs:
+      type: single
+      schema:
+        workflows:
+          type: array
+          items:
+            id:           string
+            document-id:  string
+            name:         string
+            status:       string
+            current-step: string
+
+skills:
+  - mail-vs-email.md
+  - document-metadata-schema.md

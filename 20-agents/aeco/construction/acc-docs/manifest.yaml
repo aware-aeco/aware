@@ -1,0 +1,330 @@
+agent:        acc-docs
+version:      1.0.0
+display-name: Autodesk Construction Cloud — Docs
+description: |
+  The files side of ACC — sheets, files, folders, version control,
+  permissions, transmittals. The companion to `acc-issues` (issues
+  side) and `aps-data-management` (the lower-level Forge API).
+
+  Persona audit (BIM manager, #3 missing tool): "BIM 360 / ACC Docs —
+  the *files* side of ACC. The repo has `acc-issues` and `acc-account-admin`
+  but no Docs (publish, version, attribute, folder permissions, transfer).
+  That's where 90% of the actual files live."
+
+  This agent wraps the high-level ACC Docs APIs. For low-level
+  raw-folder/version manipulation, use `aps-data-management`.
+
+stateful: false
+
+vendor:   autodesk
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/construction/acc-docs
+keywords: [aware, acc, autodesk, docs, sheets, cde, document-control, construction]
+
+provenance:
+  generated-by:     hand-curated
+  generator-version: 0.14.0
+  refined-by:       [pawellisowski]
+  generated-at:     2026-05-17T18:15:00Z
+
+requires:
+  network:
+    - https://developer.api.autodesk.com
+    - https://acc.autodesk.com
+  secrets:
+    - acc
+  filesystem:
+    - read:  '*.pdf,*.dwg,*.rvt,*.ifc,*.nwd,*.zip'
+    - write: '*.pdf,*.csv,*.xlsx,*.zip'
+
+transport:
+  cli:
+    binary: aware-acc-docs
+
+commands:
+
+  # ---- Project + folder context ----------------------------------------
+
+  project.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List ACC projects the user has access to. Read-only.
+    inputs:
+      hub-id:
+        type: string
+        description: Optional. Defaults to the user's primary hub.
+    outputs:
+      type: single
+      schema:
+        projects:
+          type: array
+          items:
+            id:           string
+            name:         string
+            project-number: string
+            active:       boolean
+
+  folders.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List folders (children of a parent folder, or the project root).
+      Read-only.
+    inputs:
+      project-id: string
+      parent-folder-id:
+        type: string
+        description: Optional. Empty = project root.
+    outputs:
+      type: single
+      schema:
+        folders:
+          type: array
+          items:
+            id:           string
+            name:         string
+            web-url:      string
+
+  folders.create:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Create a new folder under a parent. Used to set up project
+      structure programmatically (e.g. "Tender / IFC / Record" subdirs
+      per project).
+    inputs:
+      project-id: string
+      parent-folder-id: string
+      name:       string
+    outputs:
+      type: single
+      schema:
+        folder-id: string
+        web-url:   string
+
+  # ---- Files + versions ------------------------------------------------
+
+  files.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List files in a folder. Returns file metadata + current version
+      info. Read-only.
+    inputs:
+      project-id:  string
+      folder-id:   string
+      since:
+        type: string
+        description: ISO date — only files modified after.
+    outputs:
+      type: single
+      schema:
+        files:
+          type: array
+          items:
+            id:               string
+            filename:         string
+            current-version:  string
+            modified-at:      string
+            modified-by:      string
+            size-bytes:       number
+            web-url:          string
+
+  files.upload:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Upload a new file to a folder. Creates version 1. To append a new
+      version to an existing file, use `files.upload-version` instead.
+    inputs:
+      project-id:  string
+      folder-id:   string
+      file-path:   string
+      filename:
+        type: string
+        description: Optional override. Defaults to the source filename.
+    outputs:
+      type: single
+      schema:
+        file-id:         string
+        version:         string
+        web-url:         string
+        size-bytes:      number
+
+  files.upload-version:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Append a new version to an existing file. Bumps the version number
+      and preserves history. The Friday-issue update verb.
+    inputs:
+      project-id: string
+      file-id:    string
+      file-path:  string
+    outputs:
+      type: single
+      schema:
+        file-id: string
+        version: string
+        web-url: string
+
+  files.download:
+    lifecycle: single
+    category: curated
+    description: |
+      Download a file's current version. Use `version-id` to download
+      a historical version. Read-only.
+    inputs:
+      project-id: string
+      file-id:    string
+      version-id:
+        type: string
+        description: Optional. Empty = current version.
+      output-path: string
+    outputs:
+      type: single
+      schema:
+        path:       string
+        size-bytes: number
+
+  # ---- Sheets (PDFs surfaced as project sheets) ------------------------
+
+  sheets.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List sheets in ACC Docs (vs files — sheets are PDF pages surfaced
+      to the team with cross-PDF navigation). Includes current revision +
+      issue date. Read-only.
+    inputs:
+      project-id: string
+      issued-for:
+        type: string
+        description: Optional filter (e.g. "Issued for Construction").
+      since:
+        type: string
+        description: Optional ISO date.
+    outputs:
+      type: single
+      schema:
+        sheets:
+          type: array
+          items:
+            id:               string
+            sheet-number:     string
+            title:            string
+            current-revision: string
+            issue-date:       string
+            issued-for:       string
+            web-url:          string
+
+  sheets.upload-set:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Upload a set of PDF drawings as a new sheet revision. Honors the
+      project's sheet-numbering convention (auto-detects from PDF
+      metadata, or via mapping CSV).
+    inputs:
+      project-id: string
+      pdf-paths:
+        type: array
+        items: string
+      revision-letter: string
+      issued-for: string
+      issue-date:
+        type: string
+        description: ISO date — defaults to today.
+      mapping-csv:
+        type: string
+        description: Optional `path,sheet-number,title,revision` CSV.
+    outputs:
+      type: single
+      schema:
+        uploaded:
+          type: array
+          items:
+            sheet-number: string
+            revision:     string
+            sheet-id:     string
+
+  # ---- Permissions -----------------------------------------------------
+
+  permissions.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List permission grants on a folder. The "who can see this folder?"
+      verb the BIM-manager audit named. Read-only.
+    inputs:
+      project-id: string
+      folder-id:  string
+    outputs:
+      type: single
+      schema:
+        grants:
+          type: array
+          items:
+            subject-id:   string
+            subject-name: string
+            subject-type: string  # USER | COMPANY | ROLE
+            role:         string  # viewer | editor | manager
+
+  permissions.grant:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Grant a permission on a folder to a user / company / role. Used
+      to share the tender folder with consultants at issue time.
+    inputs:
+      project-id: string
+      folder-id:  string
+      subject-id: string
+      subject-type:
+        type: enum
+        values: [USER, COMPANY, ROLE]
+      role:
+        type: enum
+        values: [viewer, editor, manager]
+        default: viewer
+    outputs:
+      type: single
+      schema:
+        grant-id: string
+
+  # ---- Transmittals ----------------------------------------------------
+
+  transmittals.create:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Create an ACC Docs Transmittal — a formal package of files sent
+      to a list of recipients with a cover letter. The end-of-issue
+      verb (sheet set uploaded + folder permissions granted + transmittal
+      sent for the audit trail).
+    inputs:
+      project-id: string
+      title:      string
+      body:       string
+      file-ids:
+        type: array
+        items: string
+      recipient-emails:
+        type: array
+        items: string
+    outputs:
+      type: single
+      schema:
+        transmittal-id: string
+        web-url:        string
+
+skills:
+  - acc-docs-vs-aps-data-management.md
+  - sheets-vs-files.md
