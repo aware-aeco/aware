@@ -1,6 +1,6 @@
 # The AWARE Decalog
 
-Eight structural truths AWARE is built on. They are short on purpose — short enough to fit in your head, blunt enough to argue with. Every design decision can be checked against this list. If a decision contradicts one of these, the decision is wrong, not the rule.
+Nine structural truths AWARE is built on. They are short on purpose — short enough to fit in your head, blunt enough to argue with. Every design decision can be checked against this list. If a decision contradicts one of these, the decision is wrong, not the rule.
 
 If AWARE ever ships something that breaks one of these, this document becomes a lie and the project is over.
 
@@ -54,6 +54,29 @@ Closed-source apps that wrap an LLM and gate it behind a UI are **training their
 
 AWARE apps don't have this problem by construction: the composition is plain text, the model is visible, the wrapper is the file. There is nothing hidden to defend, so there is no replacement to train.
 
+## 9. AI composes the plan; deterministic code is the plan
+
+The 2026-05-17 persona audit surfaced this as the single most important boundary an AECO substrate must hold. The structural engineer named it as a walk-away condition; the BIM manager named it as the dealbreaker that prevents any production adoption:
+
+> "If AWARE's pitch is 'AI is the runtime' (decalog #2), and that means an LLM is in the validator path for *'is this drawing's tolerance within 5%'*, then I will not adopt it under any circumstance. PE seals and steel deliveries do not survive hallucinations. For any AECO write-back, the runtime must be deterministic, traceable, and testable. **The LLM can compose the *plan*. It cannot *be* the plan.**"
+
+Truth #9 is that distinction.
+
+**Composing the plan** — an LLM authors the `.flo`, picks the agents, wires the topology. Non-deterministic, conversational, iterative.
+
+**Being the plan** — the `.flo` runs. Every node is a typed agent invocation, a deterministic atom, or a substrate primitive (`for-each` / `compare` / `assert` / `snapshot` / `model-lock`). The runtime walks the DAG; no LLM is in the loop.
+
+**Hard rules this implies:**
+
+- Validators (`assert:` nodes) must be deterministic — atoms, agent commands, or inline glue. **No `think-node` / `smart-node` allowed.** Truth #9 makes this constraint structural, not stylistic.
+- Approval gates (`approve:` nodes) post to a human channel; the *decision* is human, the *gating* is deterministic. An LLM may compose the message body but may not be the approver.
+- Safety-contract pre-flight checks (worksharing, snapshot, transaction-group, audit-stamp) execute as Rust code in the runtime — never delegated to an LLM.
+- The engineering envelope's `signed-output` receipt is produced by deterministic hashing + signing. An LLM may produce the *report* the receipt seals; it never produces the receipt itself.
+
+What this leaves to AI: composition, summarisation, natural-language answers, suggestion. What this denies AI: validation, approval, sealing, gating, code-check decisions.
+
+This is the rule that lets a structural engineer carry an AWARE-produced calc package into a court hearing. Without it, AWARE is a productivity tool; with it, AWARE is a deliverable.
+
 ---
 
-These eight are the decalog. They are not goals to be balanced against other goals. They are constraints. Anything that breaks one is rejected, regardless of how clever, profitable, or popular the alternative looks.
+These nine are the decalog. They are not goals to be balanced against other goals. They are constraints. Anything that breaks one is rejected, regardless of how clever, profitable, or popular the alternative looks.

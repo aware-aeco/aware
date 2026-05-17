@@ -307,6 +307,14 @@ Pre-flight gate — abort the run if a condition is false. Pairs with the v0.11 
 
 If the expression evaluates false: the run halts with the `on-fail` message as the error, downstream nodes skip. Used liberally in BIM-manager audit apps.
 
+**Decalog truth #9 constraint** — *AI composes the plan; deterministic code is the plan.* The `expr:` in an `assert:` block MUST be:
+
+- a deterministic expression in the substrate's inline-glue engine (the same engine used by `inline.kind: predicate` blocks), OR
+- a named atom reference (`atom://generic/at-least`, `atom://app/is-stable`), OR
+- a typed agent command (`compare`, `ifc-inspector.validate.schema`, etc.).
+
+It MUST NOT be a `think-node` / `smart-node` call. `aware app validate` enforces this. Truth #9 is structural: an LLM may *compose* an assert (write the expression in the first place), but the *evaluation* at run time is always deterministic. PE seals and steel deliveries do not survive hallucinations.
+
 ### `snapshot`
 
 Freeze model state to an immutable artifact. Pairs with the v0.11 safety contract's `snapshot:` flag but operates at the topology level — the artifact is *named* in the topology and addressable by downstream nodes.
