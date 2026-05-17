@@ -12,13 +12,23 @@ aware
 │
 ├── agent ...                           manage installed agents
 │   ├── list                            print installed agents (table)
-│   ├── describe <agent>                manifest summary + skill index
+│   ├── describe <agent>                manifest summary + skill index (curated/reflected counts)
 │   ├── skill <agent> <skill-name>      print a skill's content
 │   ├── install <agent>[@version]       fetch from registry or local path
 │   ├── uninstall <agent>
 │   ├── update <agent>                  re-pull latest matching version
 │   ├── validate <path>                 schema + structure checks
 │   └── publish <path>                  open a PR to the GitHub registry
+│
+├── tree <agent>[/<class>]              text tree of an agent's commands grouped by class
+│   ├── --curated                       filter to hand-written workflow verbs only
+│   └── --reflected                     filter to auto-generated API methods only
+│
+├── search <term>                       cross-agent substring search over command names + descriptions
+│   ├── --limit <n>                     max results per agent (default 5; 0 = unlimited)
+│   ├── --agent <id>                    restrict to one agent
+│   ├── --curated                       filter to curated workflow verbs only
+│   └── --reflected                     filter to reflected API methods only
 │
 ├── app ...                             manage installed apps
 │   ├── list                            print installed apps (table)

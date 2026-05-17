@@ -111,6 +111,10 @@ pub struct Command {
     pub inputs: Value,
     #[allow(dead_code)]
     pub outputs: Option<Value>,
+    /// Explicit per-command category. If `None`, the agent-level provenance
+    /// is used to infer the default (see `Agent::default_category`).
+    #[serde(default)]
+    pub category: Option<Category>,
 }
 
 #[derive(Debug, Deserialize, PartialEq, Eq, Clone, Copy)]
@@ -121,6 +125,21 @@ pub enum Lifecycle {
     Single,
 }
 
+/// Whether a command is a hand-curated workflow verb (`Curated`) or an
+/// auto-generated leaf-level API method (`Reflected`).
+///
+/// Per `10-core/agent-spec.md § Commands § Curated vs reflected commands`,
+/// curated commands have typed `inputs:`/`outputs:`, examples, and a skill
+/// that says when to use them. Reflected commands are auto-generated from a
+/// vendor SDK / OpenAPI / decompile — wide coverage as an escape hatch but no
+/// curation contract.
+#[derive(Debug, Deserialize, PartialEq, Eq, Clone, Copy)]
+#[serde(rename_all = "lowercase")]
+pub enum Category {
+    Curated,
+    Reflected,
+}
+
 impl Agent {
     pub fn skill_count(&self) -> usize {
         self.skills.len()
@@ -128,6 +147,44 @@ impl Agent {
 
     pub fn command_count(&self) -> usize {
         self.commands.len()
+    }
+
+    /// Default category for commands that don't declare one explicitly.
+    ///
+    /// Inference rule (per spec): if the manifest has a `provenance.generated-by`
+    /// block (i.e. the agent was machine-generated from a vendor source),
+    /// commands without explicit category default to `Reflected`. Otherwise
+    /// they default to `Curated`.
+    pub fn default_category(&self) -> Category {
+        let machine_generated = self
+            .provenance
+            .as_ref()
+            .and_then(|p| p.generated_by.as_deref())
+            .is_some();
+        if machine_generated {
+            Category::Reflected
+        } else {
+            Category::Curated
+        }
+    }
+
+    /// Resolve the effective category for a command — explicit if present,
+    /// otherwise the agent's default.
+    pub fn category_of(&self, cmd: &Command) -> Category {
+        cmd.category.unwrap_or_else(|| self.default_category())
+    }
+
+    /// Number of commands resolving to `Curated`.
+    pub fn curated_count(&self) -> usize {
+        self.commands
+            .values()
+            .filter(|c| self.category_of(c) == Category::Curated)
+            .count()
+    }
+
+    /// Number of commands resolving to `Reflected`.
+    pub fn reflected_count(&self) -> usize {
+        self.commands.len().saturating_sub(self.curated_count())
     }
 
     /// Human-readable kind label for the `agent list` table: lowercased
@@ -237,5 +294,80 @@ commands: {}
         assert_eq!(a.skill_count(), 31);
         assert_eq!(a.command_count(), 3);
         assert!(a.stateful);
+    }
+
+    #[test]
+    fn tekla_commands_are_explicitly_curated() {
+        // The Tekla curated agent is the gold-standard category: curated agent.
+        // All 3 commands declare `category: curated` explicitly.
+        let path = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .parent()
+            .unwrap()
+            .join("20-agents/aeco/engineering/tekla/manifest.yaml");
+        let text = std::fs::read_to_string(&path).unwrap();
+        let a: Agent = serde_yaml::from_str(&text).unwrap();
+        assert_eq!(a.curated_count(), 3);
+        assert_eq!(a.reflected_count(), 0);
+        for (_name, cmd) in &a.commands {
+            assert_eq!(cmd.category, Some(Category::Curated));
+        }
+    }
+
+    #[test]
+    fn revit_manifest_mixes_curated_and_reflected() {
+        // The Revit-2026 manifest is machine-generated (provenance has
+        // generated-by), so the inference rule makes unmarked commands
+        // default to Reflected. The first wave of curated workflow verbs
+        // explicitly carry `category: curated`.
+        let path = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .parent()
+            .unwrap()
+            .join("20-agents/aeco/architecture/revit-2026/manifest.yaml");
+        let text = std::fs::read_to_string(&path).unwrap();
+        let a: Agent = serde_yaml::from_str(&text).unwrap();
+        assert!(
+            a.curated_count() >= 10,
+            "expected ≥10 curated, got {}",
+            a.curated_count()
+        );
+        assert!(
+            a.reflected_count() > 7000,
+            "expected ≫7000 reflected, got {}",
+            a.reflected_count()
+        );
+        assert!(matches!(a.default_category(), Category::Reflected));
+    }
+
+    #[test]
+    fn category_inference_falls_back_to_curated_without_provenance() {
+        // No provenance block in the minimal Tekla fixture → default is Curated.
+        let a: Agent = serde_yaml::from_str(TEKLA_MIN).unwrap();
+        assert!(matches!(a.default_category(), Category::Curated));
+        // Both commands have no explicit category → both resolve to Curated.
+        assert_eq!(a.curated_count(), 2);
+        assert_eq!(a.reflected_count(), 0);
+    }
+
+    #[test]
+    fn category_inference_falls_back_to_reflected_with_provenance() {
+        let yaml = r#"
+agent: ex
+version: 1.0
+description: x
+stateful: false
+license: MIT
+provenance:
+  generated-by: aware-agent-builder
+  generator-version: 0.8.0
+transport: { cli: { binary: x } }
+commands:
+  ex-foo:
+    lifecycle: single
+    description: x
+"#;
+        let a: Agent = serde_yaml::from_str(yaml).unwrap();
+        assert!(matches!(a.default_category(), Category::Reflected));
+        assert_eq!(a.reflected_count(), 1);
+        assert_eq!(a.curated_count(), 0);
     }
 }

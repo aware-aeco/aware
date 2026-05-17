@@ -172,6 +172,297 @@ The phases compound. Phase N requires everything Phase N−1 shipped. Don't skip
 
 ---
 
+# Post-v0.5 — Practitioner-driven phases
+
+After v0.5 shipped, five practitioners (BIM manager, designer, architect, structural engineer, detailer) audited the substrate end-to-end on 2026-05-17. Their consolidated feedback lives in [`99-feedback/2026-05-17-persona-audit/CONSOLIDATED.md`](../99-feedback/2026-05-17-persona-audit/CONSOLIDATED.md). The phases below are derived from that audit, ordered by which gaps block adoption hardest.
+
+The bones (text composition, decalog discipline, CLI ergonomics, hand-curated Tekla agent) are sound. The catalogue is ~25% done relative to the manifesto's pitch, the architecture-side agents are reflection-grade not workflow-grade, the runtime has no safety contract for live-model writes, and the fabricator-downstream half of AECO is invisible. These phases close those gaps.
+
+---
+
+## v0.10 — Curation framework + first wave (Revit)
+
+**Goal:** establish the `category: curated | reflected` distinction so the catalogue can hold both hand-written workflow verbs and auto-generated API-method coverage without diluting search. Hand-curate ~10 Revit workflow verbs as the exemplary pattern.
+
+**Why first:** unanimous audit finding #1. Auto-generated agents with 7,647 commands are unusable as shipped; the Tekla curated agent (31 craft skills) proves curation works.
+
+**Spec changes:**
+- Extend `agent-spec.md` with a `category: curated | reflected` field on commands
+- Define `inputs:` / `outputs:` schema requirement for curated commands (so AI composes deterministically)
+- Document the curation pattern + how to promote a reflected command to curated
+
+**CLI changes:**
+- `aware tree <agent> --curated` filters to curated commands only
+- `aware search <term> --curated` same
+- `aware agent describe <id>` highlights curated count vs reflected count
+
+**Content (first wave on revit-2026):**
+- `sheet.list` — filter by IssuedFor / Revision / Discipline
+- `sheet.export-pdfs` — batch PDF export with naming template + PDF/A
+- `sheet.stamp` — date / revision / transmittal stamp on PDF set
+- `revision.bump` — next revision per sheet, sets dates, locks revision
+- `view.capture-bitmap` — named view → PNG at resolution
+- `schedule.export` — schedule to CSV/Excel
+- `schedule.find-rows-missing` — QA pass for missing field values
+- `element.by-parameter-value` — typed filter over `FilteredElementCollector`
+- `parameter.bulk-write` — Excel-keyed-by-mark write
+- `link.reload-all` — reload-all-links-and-report-status
+
+**Realistic effort:** 3–4 days.
+
+---
+
+## v0.11 — Safety contract for live-model writes
+
+**Goal:** make write-mode nodes refuse to run unless they declare an explicit `safety:` block — transaction-group, snapshot-before-write, rollback strategy, worksharing pre-flight, UDA audit stamp. Add `--dry-run` mode.
+
+**Why second:** unanimous audit finding #2. Five out of five personas refused live writes today. Without this, AWARE stays read-only.
+
+**Spec changes:**
+- Extend `app-spec.md` with `safety:` block on write-mode nodes (required for any node that mutates external state)
+- `safety.transaction-group: <name>` — wrap all writes in one rollback-able transaction
+- `safety.snapshot: <path>` — eTransmit / save-as before any write
+- `safety.worksharing: { check: true, fail-if-other-user: true }` — Revit-style pre-flight
+- `safety.audit-stamp: { uda-prefix: AWARE_ }` — touched objects get `AWARE_RUN_ID`, `AWARE_APP`, `AWARE_OPERATOR` UDAs
+- `safety.rollback-token: <expr>` — destructive commands return tokens; CLI can replay-in-reverse
+
+**CLI changes:**
+- `aware app run <app> --dry-run` — preview proposed transactions without committing
+- `aware app rollback <app> --run-id <id>` — undo a previous run using the rollback token chain
+- `aware app explain <app>` — pretty-print: reads X, writes Y, sends to Z, requires permissions [...]
+
+**Engine changes:**
+- Reject write nodes missing `safety:` at validation time
+- Pre-flight worksharing checks before any write attempt
+- Snapshot to `~/.aware/snapshots/<app>/<timestamp>/` before write nodes run
+
+**Realistic effort:** 4–5 days. Heavy spec + engine work.
+
+---
+
+## v0.12 — Cross-cutting comms depth (Microsoft-365 + Google-Workspace)
+
+**Goal:** every persona's Monday-morning report flows through Teams / Outlook / Planner / Calendar / SharePoint / Excel ranges / Gmail / Drive / Sheets / Chat. Current `microsoft-365` agent has 4 commands; expand to ~30. Mirror on `google-workspace`.
+
+**Why third:** unanimous audit finding #3. Universal across personas — the comms layer every killer app needs.
+
+**Content (microsoft-365):**
+- Teams: `chat.post-message`, `channel.post-message`, `channel.post-with-card`, `channel.post-with-screenshot`
+- Outlook: `mail.send`, `mail.send-with-attachment`, `mail.search`, `calendar.create-event`, `calendar.find-availability`
+- Planner: `task.create`, `task.list`, `task.assign`, `task.complete`
+- SharePoint: `list.read`, `list.write`, `folder.list`, `folder.upload`
+- Excel: `range.read`, `range.write`, `worksheet.list`, `table.append-row`
+
+**Content (google-workspace):** parallel set — Gmail, Drive, Sheets, Chat, Calendar, Tasks.
+
+**Realistic effort:** 2–3 days. Mostly OpenAPI-driven scaffolding + curated commands.
+
+---
+
+## v0.13 — SSO-friendly auth + honest install story
+
+**Goal:** make `aware connect` survive enterprise SSO flows. Document the install paths honestly so enterprise IT understands which one to use.
+
+**Why:** half of the audit's "IT department blocks adoption" finding. The other half — Authenticode-signed MSI — is **deferred** at user's direction: AWARE is an open-source project and the npm / curl-pipe install paths already bypass MSI entirely. Code-signing the MSI is operationally expensive (cert procurement) and not strictly required for the project to work. Tracked as a parked follow-up; if it ever becomes blocking, SignPath.io's free OSS tier is the route.
+
+**Code changes:**
+- `aware connect <integration>` adds `--tenant-sso` flag that opens default browser to the tenant SSO endpoint, bypasses dev-console requirement
+- New `aware connect <integration> --device-code` for headless / IT-managed workstations (RFC 8628 device authorization grant)
+- Document the SSO patterns per integration (M365, Google Workspace, ACC, Trimble Connect) in `cli-spec.md`
+
+**Doc changes:**
+- `cli/README.md` ranks install paths: **npm/pnpm/yarn/bun (recommended)** → curl-pipe → PowerShell → MSI (last; mention SmartScreen warning + click-through)
+- Manifesto links to the curl-pipe install for "enterprise without IT escalation"
+
+**Realistic effort:** 1–2 days. Pure code + docs.
+
+---
+
+## v0.14 — Coordination toolchain
+
+**Goal:** Navisworks Manage 2026 + Solibri Office + BCF 3.0 file format + IFC inspector (IfcOpenShell-style). Half of BIM-manager day-to-day.
+
+**Why:** BIM-manager dealbreaker.
+
+**Agents to add:**
+- `navisworks-2026` — built via `aware build agent --from-nuget Autodesk.Navisworks.Api@2026`
+- `solibri-office` — REST API (Solibri Anywhere has docs); plus curated rule-set workflow verbs
+- `bcf-file` — file-format agent (read+write BCF-XML 2.1 / 3.0). Pure Rust, no host software needed.
+- `ifc-inspector` — wraps `web-ifc`'s parser for entity-count, GUID list, Psets extraction (separate from `web-ifc` viewer agent)
+
+**Realistic effort:** 3–4 days.
+
+---
+
+## v0.15 — Document control
+
+**Goal:** Bluebeam Revu Studio + Procore (architect side) + Aconex + ACC Docs (not just Issues).
+
+**Why:** architect + BIM-manager dealbreakers.
+
+**Agents to add:**
+- `bluebeam-studio` — REST API (Bluebeam Studio Prime)
+- `procore-architect` — REST API, Drawings + Submittals + RFIs + ASIs surfaces
+- `aconex` — Oracle Aconex REST API
+- `acc-docs` — Autodesk Construction Cloud Docs API (mirror of `acc-issues`, but files surface)
+
+**Realistic effort:** 3–4 days.
+
+---
+
+## v0.16 — Fabricator downstream
+
+**Goal:** Tekla EPM (PowerFab) + Peddinghaus Direct Tools / Peddimat translator + curated NC-export-phase verb on Tekla.
+
+**Why:** detailer dealbreaker. Without EPM, AWARE is missing 40% of the fabricator's day.
+
+**Agents to add:**
+- `tekla-epm` — REST API (Trimble Tekla EPM has a documented API; some surfaces require paid subscription)
+- `peddinghaus-translator` — file-format agent, DSTV `.nc1` → Peddimat `.asc` conversion + manifest CSV
+
+**Curation added to existing `tekla` agent:**
+- `drawing-issue-pack` — top detailer requested verb
+- `nc-export-phase` — DSTV / Peddimat / DXF
+- `bolt-list` / `weld-list` / `part-list` / `assembly-list`
+- `drawings-by-status`, `drawings-affected-by-revision`
+- `uda-set` / `uda-get` / `uda-copy`
+
+**Realistic effort:** 4–5 days.
+
+---
+
+## v0.17 — Visualization (honest answer)
+
+**Goal:** address the designer dealbreaker without inventing fictional APIs. Enscape + Twinmotion + V-Ray have no public scriptable APIs. The honest answer: AWARE prepares the model + routes frames; user renders outside.
+
+**Spec changes:**
+- Manifesto + docs explicitly state which viz tools AWARE drives directly vs prepares-for (the latter is fine; just say so)
+
+**Content:**
+- Curate Rhino-8 + Grasshopper-8 (cut from 6,954 / 5,181 raw commands to 50 each):
+  - `view.capture-named` — named view → PNG with consistent settings
+  - `layer.set-state` — load a saved layer state for consistent rendering
+  - `make-2d` — flatten to 2D for diagrams
+  - `gh.solve` — execute a Grasshopper definition with input parameters
+  - `gh.sweep` — parametric sweep over a GH input range
+- New `render-queue` primitive in app-spec — long-running heavy compute with progress, retry, resource hints
+
+**Agents to add:**
+- `enscape-prep` — drives Rhino/Revit to prep a scene for Enscape; user opens Enscape and renders
+- `twinmotion-prep` — same shape for Twinmotion
+
+**Realistic effort:** 3–4 days.
+
+---
+
+## v0.18 — Spec authoring
+
+**Goal:** NBS Chorus + Avitru SpecLink + CSI MasterFormat primitives.
+
+**Why:** architect gap. Half the deliverable for US firms; UK firms run NBS.
+
+**Agents to add:**
+- `nbs-chorus` — REST API
+- `avitru-speclink` — REST API
+- `csi-masterformat` — file-format agent for spec section identification + cross-referencing
+
+**Realistic effort:** 2–3 days.
+
+---
+
+## v0.19 — Substrate primitives
+
+**Goal:** add the workflow primitives every persona asked for. These extend the app-spec, not the agents.
+
+**Spec changes:**
+- `for-each: <list-expr>` — iterate over a static list (vs stream-watch)
+- `compare: { a, b, by }` — diff two snapshots, emit changes
+- `sweep: { var, range, capture }` — parametric sweep
+- `approve: { gate, channel, timeout }` — human-in-the-loop pause
+- `schedule: { cron, timezone }` — time-triggered runs (not just event-watch)
+- `assert: { expr, on-fail }` — pre-flight gate, abort on false
+- `snapshot: { path }` — freeze model state to immutable artifact
+- `model-lock: { acquire-timeout, write-budget }` — single-writer with rate limit
+
+**Engine changes:**
+- All eight primitives implemented in `cli::runtime::orchestrator`
+- Each primitive has a worked test against the reference apps
+- `aware app run --dry-run` exercises gates without committing
+
+**Realistic effort:** 5–6 days. The substrate's biggest extension since v0.3.
+
+---
+
+## v0.20 — Named reusable atoms
+
+**Goal:** replace inline JavaScript glue with named, reusable, auditable atoms. "No-code" becomes honest.
+
+**Spec changes:**
+- `atoms/` subfolder per agent (and at substrate level for cross-cutting)
+- Each atom: `id`, `kind: predicate|map|reduce`, `inputs`, `outputs`, `code` (typed; not free-text)
+- App `.flo` references atoms by ID: `filter: atom://tekla/is-ready-for-issue`
+
+**Content:**
+- 20 cross-cutting atoms: `is-newer-than`, `group-by`, `sort-by`, `unique`, `pluck`, `count`, `sum`, `avg`, `min`, `max`, `at-least`, `at-most`, `format-date`, `path-join`, `naming-template`, `kebab-to-pascal`, `pascal-to-kebab`, `csv-row-build`, `json-path`, `regex-match`
+- 10 Tekla atoms: `is-ready-for-issue`, `is-welded`, `is-bolted`, `mark-format`, `phase-name`, etc.
+- 10 Revit atoms: `is-issued-for-construction`, `sheet-number-format`, `revision-letter-next`, etc.
+
+**Realistic effort:** 2–3 days.
+
+---
+
+## v0.21 — Engineering envelope
+
+**Goal:** code-revision pinning, solver-build hashing, model-schema-version pin, digital-seal hooks, typed units. Unlock PE-stamped deliverables.
+
+**Why:** structural-engineer dealbreaker.
+
+**Spec changes:**
+- Agent manifest gains `engineering:` block declaring code revision, NA, solver build hash, section catalogue revision
+- Lockfile pins all of the above alongside agent versions
+- New `units:` type on templating — numbers carry dimension (`4.0 kN/m²`, not `4.0`)
+- `signed-output:` directive on app — hash + sign + append to JSONL
+
+**CLI changes:**
+- `aware app reproduce <app> --run-id <id>` — re-run a frozen run against the pinned engineering envelope
+- `aware app sign-output <run-id> --seal <pe-credential>` — chain-of-custody for engineer's stamp
+
+**Realistic effort:** 4–5 days.
+
+---
+
+## v0.22 — Per-persona reference apps + first-hour guides
+
+**Goal:** every persona has a worked end-to-end app that runs against their installed tools, plus a 60-second demo in the manifesto.
+
+**Content:**
+- `30-apps/_examples/bim-monday-audit.flo` — Revit + ACC + M365 + html-report
+- `30-apps/_examples/designer-monday-shots.flo` — Rhino + M365 + html-report
+- `30-apps/_examples/architect-sheet-status.flo` — Revit + ACC + M365
+- `30-apps/_examples/engineer-peer-review-delta.flo` — TSD + snapshot + html-report + M365
+- `30-apps/_examples/detailer-issue-pack.flo` — Tekla + Trimble Connect + M365
+
+**Docs:**
+- `cli/README.md` gains a 60-second demo per persona
+- `00-vision/manifesto.md` adds 4 more demos beside the fabricator one
+
+**Realistic effort:** 3–4 days.
+
+---
+
+## v0.23 — Decalog amendment
+
+**Goal:** add an 11th structural truth.
+
+**Spec changes:**
+- `00-vision/decalog.md` — add truth #11: **"AI composes the plan; deterministic code is the plan."**
+- Restrict `think-node` / `smart-node` from validation, approval, code-check, or safety-critical paths in apps
+- App-spec `safety:` block refuses AI-runtime nodes
+
+**Realistic effort:** 1 day.
+
+---
+
 ## v1.0 — Stable
 
 After v0.5, all five spec documents (decalog, manifesto, agent-spec, app-spec, cli-spec) and the CLI implementation are frozen for at least one major version.

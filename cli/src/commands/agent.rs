@@ -173,6 +173,7 @@ fn describe(ctx: &Context, agent_id: &str) -> Result<(), AwareError> {
         struct CommandRow {
             name: String,
             lifecycle: String,
+            category: String,
             description: String,
         }
         #[derive(Serialize)]
@@ -188,6 +189,8 @@ fn describe(ctx: &Context, agent_id: &str) -> Result<(), AwareError> {
             skills: &'a [String],
             skill_count: usize,
             command_count: usize,
+            curated_count: usize,
+            reflected_count: usize,
         }
 
         let cmds: Vec<CommandRow> = d
@@ -197,6 +200,7 @@ fn describe(ctx: &Context, agent_id: &str) -> Result<(), AwareError> {
             .map(|(n, c)| CommandRow {
                 name: n.clone(),
                 lifecycle: format!("{:?}", c.lifecycle).to_lowercase(),
+                category: format!("{:?}", d.manifest.category_of(c)).to_lowercase(),
                 description: c.description.clone(),
             })
             .collect();
@@ -211,6 +215,8 @@ fn describe(ctx: &Context, agent_id: &str) -> Result<(), AwareError> {
             vendor: d.manifest.vendor.as_deref(),
             command_count: d.manifest.command_count(),
             skill_count: d.manifest.skill_count(),
+            curated_count: d.manifest.curated_count(),
+            reflected_count: d.manifest.reflected_count(),
             commands: cmds,
             skills: &d.manifest.skills,
         };
@@ -237,11 +243,21 @@ fn describe(ctx: &Context, agent_id: &str) -> Result<(), AwareError> {
         println!("transport:    cli ({})", t.binary);
     }
     println!();
-    println!("commands:");
+    let curated = m.curated_count();
+    let reflected = m.reflected_count();
+    if reflected > 0 {
+        println!("commands ({} curated · {} reflected):", curated, reflected);
+    } else {
+        println!("commands ({} curated):", curated);
+    }
     for (name, c) in &m.commands {
         let lc = format!("{:?}", c.lifecycle).to_lowercase();
+        let cat = match m.category_of(c) {
+            crate::manifest::agent::Category::Curated => "★",
+            crate::manifest::agent::Category::Reflected => " ",
+        };
         let desc = c.description.lines().next().unwrap_or("").trim();
-        println!("  {name:<18} {lc:<8} {desc}");
+        println!("  {cat} {name:<18} {lc:<8} {desc}");
     }
     println!();
     println!("skills ({}):", m.skill_count());

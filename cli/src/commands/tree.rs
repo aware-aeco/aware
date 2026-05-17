@@ -14,6 +14,7 @@ use serde::Serialize;
 use crate::context::Context;
 use crate::envelope;
 use crate::error::AwareError;
+use crate::manifest::agent::Category;
 use crate::manifest::loader::discover_agents;
 
 #[derive(Args, Debug)]
@@ -21,6 +22,14 @@ pub struct TreeArgs {
     /// Agent id, optionally followed by `/Class` to drill into a single group.
     /// Examples: `tekla`, `revit-2026/Document`, `itwin-5-9/Viewport`.
     pub agent: String,
+
+    /// Show only curated workflow verbs (hide auto-generated reflected commands).
+    #[arg(long)]
+    pub curated: bool,
+
+    /// Show only reflected commands (the escape hatch — auto-generated API methods).
+    #[arg(long, conflicts_with = "curated")]
+    pub reflected: bool,
 }
 
 pub fn run(ctx: &Context, args: &TreeArgs) -> Result<(), AwareError> {
@@ -36,8 +45,21 @@ pub fn run(ctx: &Context, args: &TreeArgs) -> Result<(), AwareError> {
         .find(|d| d.manifest.agent == agent_id)
         .ok_or_else(|| AwareError::NotFound(format!("agent: {agent_id}")))?;
 
+    let category_filter: Option<Category> = if args.curated {
+        Some(Category::Curated)
+    } else if args.reflected {
+        Some(Category::Reflected)
+    } else {
+        None
+    };
+
     let mut groups: BTreeMap<String, Vec<(String, String)>> = BTreeMap::new();
     for (name, cmd) in &agent.manifest.commands {
+        if let Some(want) = category_filter
+            && agent.manifest.category_of(cmd) != want
+        {
+            continue;
+        }
         let group = extract_group(&cmd.description);
         groups
             .entry(group)
@@ -75,15 +97,20 @@ pub fn run(ctx: &Context, args: &TreeArgs) -> Result<(), AwareError> {
         return Ok(());
     }
 
+    let cat_suffix = match category_filter {
+        Some(Category::Curated) => " · curated only",
+        Some(Category::Reflected) => " · reflected only",
+        None => "",
+    };
     let header = match agent.manifest.display_name.as_deref() {
         Some(d) => format!(
-            "{} ({d} · {} skills · {} cmds)",
+            "{} ({d} · {} skills · {} cmds{cat_suffix})",
             agent.manifest.agent,
             agent.manifest.skill_count(),
             agent.manifest.command_count()
         ),
         None => format!(
-            "{} ({} skills · {} cmds)",
+            "{} ({} skills · {} cmds{cat_suffix})",
             agent.manifest.agent,
             agent.manifest.skill_count(),
             agent.manifest.command_count()
