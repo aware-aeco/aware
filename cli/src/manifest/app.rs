@@ -33,6 +33,20 @@ pub struct App {
     #[allow(dead_code)]
     #[serde(default)]
     pub skills: Vec<String>,
+    /// App-level `schedule:` block — registers a cron-style trigger
+    /// with the runtime. See `10-core/app-spec.md § Substrate primitives`.
+    #[serde(default)]
+    pub schedule: Option<ScheduleBlock>,
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone)]
+pub struct ScheduleBlock {
+    pub cron: String,
+    pub timezone: String,
+    #[serde(rename = "start-date", default)]
+    pub start_date: Option<String>,
+    #[serde(rename = "end-date", default)]
+    pub end_date: Option<String>,
 }
 
 #[derive(Debug, Deserialize, PartialEq, Eq, Clone, Copy)]
@@ -65,6 +79,102 @@ pub struct Node {
     /// `aware app run` refuses to execute one.
     #[serde(default)]
     pub safety: Option<Safety>,
+
+    // ---- v0.19 substrate primitives (10-core/app-spec.md § Substrate primitives) ----
+    /// `for-each` — iterate over a static list, run `do:` per item.
+    #[serde(rename = "for-each", default)]
+    pub for_each: Option<String>,
+
+    /// `compare` — diff two snapshots / lists by an identity key.
+    #[serde(default)]
+    pub compare: Option<CompareBlock>,
+
+    /// `sweep` — parametric sweep over a variable.
+    #[serde(default)]
+    pub sweep: Option<SweepBlock>,
+
+    /// `approve` — human-in-the-loop pause.
+    #[serde(default)]
+    pub approve: Option<ApproveBlock>,
+
+    /// `assert` — pre-flight gate; halt on false.
+    #[serde(default)]
+    pub assert: Option<AssertBlock>,
+
+    /// `snapshot` — freeze model state to an immutable artifact.
+    #[serde(default)]
+    pub snapshot: Option<SnapshotBlock>,
+
+    /// `model-lock` — single-writer guarantee on a host model.
+    #[serde(rename = "model-lock", default)]
+    pub model_lock: Option<ModelLockBlock>,
+
+    /// Nested topology for `for-each`, `sweep`, `schedule`-scoped nodes.
+    /// `do:` is the body that runs per-iteration.
+    #[serde(default, rename = "do")]
+    pub do_: Option<Vec<Node>>,
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone)]
+pub struct CompareBlock {
+    pub a: Option<String>,
+    pub b: Option<String>,
+    #[serde(rename = "a-snapshot")]
+    pub a_snapshot: Option<String>,
+    #[serde(rename = "b-snapshot")]
+    pub b_snapshot: Option<String>,
+    pub by: String,
+    #[serde(default)]
+    pub track: Vec<String>,
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone)]
+pub struct SweepBlock {
+    pub var: String,
+    pub values: Vec<Value>,
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone)]
+pub struct ApproveBlock {
+    pub channel: String,
+    pub prompt: String,
+    #[serde(rename = "timeout-minutes", default)]
+    pub timeout_minutes: Option<u64>,
+    #[serde(default)]
+    pub approvers: Vec<String>,
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone)]
+pub struct AssertBlock {
+    pub expr: String,
+    #[serde(rename = "on-fail", default)]
+    pub on_fail: Option<String>,
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone)]
+pub struct SnapshotBlock {
+    pub of: SnapshotTarget,
+    pub name: String,
+    #[serde(rename = "keep-days", default)]
+    pub keep_days: Option<u32>,
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone)]
+pub struct SnapshotTarget {
+    pub agent: String,
+    pub target: String,
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone)]
+pub struct ModelLockBlock {
+    pub agent: String,
+    pub target: String,
+    #[serde(rename = "acquire-timeout-seconds", default)]
+    pub acquire_timeout_seconds: Option<u64>,
+    #[serde(rename = "write-budget-per-second", default)]
+    pub write_budget_per_second: Option<u64>,
+    #[serde(rename = "on-conflict", default)]
+    pub on_conflict: Option<String>,
 }
 
 /// Safety contract block — declared on write-mode nodes.
@@ -218,5 +328,183 @@ mod tests {
         let inline = a.nodes.iter().find(|n| n.id == "filter-welded").unwrap();
         assert!(inline.inline.is_some());
         assert_eq!(inline.inline.as_ref().unwrap().kind, "predicate");
+    }
+
+    // ---- v0.19 substrate-primitive parsing tests ----
+
+    #[test]
+    fn parses_assert_primitive() {
+        let yaml = r#"
+app: x
+version: 0.0.1
+description: x
+nodes:
+  - id: gate
+    assert:
+      expr: '{{ x > 0 }}'
+      on-fail: 'x must be positive'
+requires: []
+"#;
+        let app: App = serde_yaml::from_str(yaml).unwrap();
+        let n = &app.nodes[0];
+        assert!(n.assert.is_some());
+        let a = n.assert.as_ref().unwrap();
+        assert_eq!(a.expr, "{{ x > 0 }}");
+        assert_eq!(a.on_fail.as_deref(), Some("x must be positive"));
+    }
+
+    #[test]
+    fn parses_for_each_primitive() {
+        let yaml = r#"
+app: x
+version: 0.0.1
+description: x
+nodes:
+  - id: each
+    for-each: '{{ projects.items }}'
+    do:
+      - id: inner
+        agent: revit-2026
+        command: sheet.list
+requires: []
+"#;
+        let app: App = serde_yaml::from_str(yaml).unwrap();
+        let n = &app.nodes[0];
+        assert_eq!(n.for_each.as_deref(), Some("{{ projects.items }}"));
+        let inner = n.do_.as_ref().unwrap();
+        assert_eq!(inner.len(), 1);
+        assert_eq!(inner[0].id, "inner");
+    }
+
+    #[test]
+    fn parses_compare_primitive() {
+        let yaml = r#"
+app: x
+version: 0.0.1
+description: x
+nodes:
+  - id: diff
+    compare:
+      a: '{{ snap-a.rows }}'
+      b: '{{ snap-b.rows }}'
+      by: mark
+      track: [profile, length-mm]
+requires: []
+"#;
+        let app: App = serde_yaml::from_str(yaml).unwrap();
+        let c = app.nodes[0].compare.as_ref().unwrap();
+        assert_eq!(c.by, "mark");
+        assert_eq!(c.track, vec!["profile", "length-mm"]);
+    }
+
+    #[test]
+    fn parses_sweep_primitive() {
+        let yaml = r#"
+app: x
+version: 0.0.1
+description: x
+nodes:
+  - id: storeys
+    sweep:
+      var: n
+      values: [4, 5, 6, 7, 8]
+    do:
+      - id: inner
+        agent: tsd-26
+        command: analysis.run
+requires: []
+"#;
+        let app: App = serde_yaml::from_str(yaml).unwrap();
+        let s = app.nodes[0].sweep.as_ref().unwrap();
+        assert_eq!(s.var, "n");
+        assert_eq!(s.values.len(), 5);
+    }
+
+    #[test]
+    fn parses_approve_primitive() {
+        let yaml = r#"
+app: x
+version: 0.0.1
+description: x
+nodes:
+  - id: gate
+    approve:
+      channel: 'teams://Acme/coord'
+      prompt: 'Ship?'
+      timeout-minutes: 60
+      approvers: [pm@acme.com]
+requires: []
+"#;
+        let app: App = serde_yaml::from_str(yaml).unwrap();
+        let a = app.nodes[0].approve.as_ref().unwrap();
+        assert_eq!(a.channel, "teams://Acme/coord");
+        assert_eq!(a.timeout_minutes, Some(60));
+        assert_eq!(a.approvers, vec!["pm@acme.com"]);
+    }
+
+    #[test]
+    fn parses_snapshot_primitive() {
+        let yaml = r#"
+app: x
+version: 0.0.1
+description: x
+nodes:
+  - id: snap
+    snapshot:
+      of:
+        agent: revit-2026
+        target: '{{ project.path }}'
+      name: 'pre-tender-2026-05-17'
+      keep-days: 90
+requires: []
+"#;
+        let app: App = serde_yaml::from_str(yaml).unwrap();
+        let s = app.nodes[0].snapshot.as_ref().unwrap();
+        assert_eq!(s.of.agent, "revit-2026");
+        assert_eq!(s.name, "pre-tender-2026-05-17");
+        assert_eq!(s.keep_days, Some(90));
+    }
+
+    #[test]
+    fn parses_model_lock_primitive() {
+        let yaml = r#"
+app: x
+version: 0.0.1
+description: x
+nodes:
+  - id: lock
+    model-lock:
+      agent: revit-2026
+      target: '{{ project.path }}'
+      acquire-timeout-seconds: 60
+      write-budget-per-second: 10
+      on-conflict: abort
+requires: []
+"#;
+        let app: App = serde_yaml::from_str(yaml).unwrap();
+        let l = app.nodes[0].model_lock.as_ref().unwrap();
+        assert_eq!(l.agent, "revit-2026");
+        assert_eq!(l.acquire_timeout_seconds, Some(60));
+        assert_eq!(l.on_conflict.as_deref(), Some("abort"));
+    }
+
+    #[test]
+    fn parses_app_level_schedule() {
+        let yaml = r#"
+app: x
+version: 0.0.1
+description: x
+schedule:
+  cron: '0 7 * * MON'
+  timezone: 'Europe/London'
+  start-date: '2026-06-01'
+nodes: []
+requires: []
+"#;
+        let app: App = serde_yaml::from_str(yaml).unwrap();
+        let s = app.schedule.as_ref().unwrap();
+        assert_eq!(s.cron, "0 7 * * MON");
+        assert_eq!(s.timezone, "Europe/London");
+        assert_eq!(s.start_date.as_deref(), Some("2026-06-01"));
     }
 }

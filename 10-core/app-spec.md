@@ -164,6 +164,184 @@ Inline glue lives in the app file. It is visible in the topology and inspectable
 
 ---
 
+## Substrate primitives (v0.19)
+
+The 2026-05-17 persona audit asked for eight workflow primitives every persona reached for and that the agent surface alone couldn't express. These are **node-level** constructs — they live in the topology, not inside an agent.
+
+### `for-each`
+
+Iterate over a static list. The agent surface is event-driven (streams from `tekla.watch`); for-each handles the "I have 7 active projects, walk all of them" case.
+
+```yaml
+- id: rollup
+  for-each: '{{ projects.items }}'
+  do:
+    - agent: revit-2026
+      command: sheet.list
+      inputs:
+        filter-issued-for: '{{ item.target-issued-for }}'
+```
+
+Inside `do:`, the `{{ item }}` template variable refers to the current iteration's value. Outputs are collected into an array under the for-each node's id.
+
+### `compare`
+
+Diff two snapshots — model state, sheet list, BOM, anything. Returns added / removed / changed records.
+
+```yaml
+- id: changes
+  compare:
+    a: '{{ last-friday-snapshot.rows }}'
+    b: '{{ today-export.rows }}'
+    by: mark             # the identity key
+    track: [profile, length-mm, weight-kg]
+```
+
+Output:
+
+```yaml
+added:    [...]    # in b, not in a
+removed:  [...]    # in a, not in b
+changed:
+  - mark: 'A-100-1'
+    diffs:
+      profile:   { from: 'UB 305x165x40', to: 'UB 305x165x46' }
+      length-mm: { from: 6200, to: 6500 }
+```
+
+### `sweep`
+
+Parametric sweep over a range — engineer storey-count study, designer panel-depth options.
+
+```yaml
+- id: storey-sweep
+  sweep:
+    var: storeys
+    values: [4, 5, 6, 7, 8]
+  do:
+    - agent: tsd-26
+      command: model.set-parameter
+      inputs:
+        name: TotalStoreys
+        value: '{{ var }}'
+    - agent: tsd-26
+      command: analysis.run
+    - agent: tsd-26
+      command: utilisation.summary
+```
+
+Output: per-step record collected into an array under the sweep node's id.
+
+### `approve`
+
+Human-in-the-loop pause. The runtime posts to a channel + waits for explicit approval before the next node runs.
+
+```yaml
+- id: gate
+  approve:
+    channel: 'teams://Project Acme/coordination'
+    prompt: |
+      {{ tender-pdfs.written.length }} sheets exported to PDF.
+      Approve to upload to ACC Docs?
+    timeout-minutes: 240   # 4 hours, then fail
+    approvers:
+      - principal@acme.com
+      - pm@acme.com
+```
+
+The runtime posts an Adaptive Card with Approve / Reject buttons. The first approver wins. Timeout = fail (downstream nodes skip).
+
+### `schedule`
+
+Time-triggered runs. The app declares a cron + timezone; the runtime takes over.
+
+```yaml
+schedule:
+  cron: "0 7 * * MON"     # Mondays at 7am
+  timezone: "Europe/London"
+  start-date: "2026-06-01"
+  end-date: "2027-06-01"
+```
+
+The runtime registers a OS-level scheduled task (cron / launchd / Task Scheduler) on first install + clears it on uninstall. Compatible with the `aware app run` command for ad-hoc triggers.
+
+### `assert`
+
+Pre-flight gate — abort the run if a condition is false. Pairs with the v0.11 safety contract.
+
+```yaml
+- id: file-size-check
+  assert:
+    expr: '{{ revit-info.file-size-bytes < 500000000 }}'
+    on-fail: |
+      Revit file is {{ revit-info.file-size-bytes / 1000000 }} MB.
+      Refuses to run automation against files > 500 MB.
+```
+
+If the expression evaluates false: the run halts with the `on-fail` message as the error, downstream nodes skip. Used liberally in BIM-manager audit apps.
+
+### `snapshot`
+
+Freeze model state to an immutable artifact. Pairs with the v0.11 safety contract's `snapshot:` flag but operates at the topology level — the artifact is *named* in the topology and addressable by downstream nodes.
+
+```yaml
+- id: pre-issue-snapshot
+  snapshot:
+    of:
+      agent: revit-2026
+      target: '{{ project.path }}'
+    name: 'pre-tender-{{ run.date }}'
+    keep-days: 90
+```
+
+Output: snapshot id + path. The downstream `compare` node can reference a prior snapshot by name:
+
+```yaml
+- id: delta
+  compare:
+    a-snapshot: 'pre-tender-2026-05-10'
+    b-snapshot: 'pre-tender-{{ run.date }}'
+    by: element-id
+```
+
+### `model-lock`
+
+Single-writer guarantee on a host model (Revit Central, Tekla model, ArchiCAD Teamwork). Acquired before write nodes; released on completion or failure.
+
+```yaml
+- id: lock
+  model-lock:
+    agent: revit-2026
+    target: '{{ project.path }}'
+    acquire-timeout-seconds: 60
+    write-budget-per-second: 10   # rate-limit writes
+    on-conflict: abort            # abort | wait-and-retry
+```
+
+If a human user has the model open: `abort` fails fast; `wait-and-retry` polls every 30s up to `acquire-timeout-seconds`. The lock releases automatically when the topology completes (success or failure).
+
+### Composition
+
+Primitives compose: a `for-each` containing an `approve` gate inside a `sweep` is valid. The runtime enforces the v0.11 safety contract on any write-mode node anywhere in the tree.
+
+```yaml
+- id: weekly-rollup
+  schedule:
+    cron: "0 7 * * MON"
+    timezone: "Europe/London"
+  do:
+    - id: each-project
+      for-each: '{{ projects.items }}'
+      do:
+        - id: gate
+          assert:
+            expr: '{{ item.active }}'
+        - id: rollup
+          # ... agent invocations ...
+```
+
+---
+
 ## Connections
 
 A connection is a directed edge between two node ids, with an optional label naming the data type flowing through it.
