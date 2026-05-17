@@ -41,7 +41,15 @@ pub enum AppCommand {
         /// Override app input as `key=value`. Repeatable.
         #[arg(long, action = clap::ArgAction::Append)]
         config: Vec<String>,
+        /// Preview the run without committing any write-mode side effects.
+        /// Each write-mode node emits a `would-write:` block in the trace
+        /// instead of calling the agent's mutation transport. (v0.11)
+        #[arg(long)]
+        dry_run: bool,
     },
+    /// Print a one-screen summary of an app's reads, writes, and external
+    /// posts, plus the union of required permissions. (v0.11)
+    Explain { app: String },
     /// Stop a running app. (v0.3)
     Stop {
         app: String,
@@ -81,7 +89,9 @@ pub async fn dispatch(cmd: AppCommand, ctx: &Context) -> Result<(), AwareError> 
             app,
             instance,
             config,
-        } => run(ctx, &app, instance.as_deref(), &config).await,
+            dry_run,
+        } => run(ctx, &app, instance.as_deref(), &config, dry_run).await,
+        AppCommand::Explain { app } => explain(ctx, &app),
         AppCommand::Stop { app, instance } => stop(ctx, &app, instance.as_deref()),
         AppCommand::Logs {
             app,
@@ -108,6 +118,7 @@ async fn run(
     app_id: &str,
     instance: Option<&str>,
     configs: &[String],
+    dry_run: bool,
 ) -> Result<(), AwareError> {
     use crate::runtime::context::RuntimeContext;
     use crate::runtime::invoker::CliInvoker;
@@ -133,6 +144,24 @@ async fn run(
         })
         .ok_or_else(|| AwareError::Validation(format!("app {app_id} has no .flo/.app file")))?;
     let app = crate::manifest::loader::load_app(&manifest_path)?;
+
+    // Safety-contract pre-flight: refuse to run an app whose write-mode
+    // nodes are missing `safety:` blocks. Skipped in --dry-run (a dry-run
+    // is precisely how you'd test an app's safety contract before adding
+    // the blocks). See `10-core/app-spec.md § Safety contract`.
+    if !dry_run {
+        let agents = crate::manifest::loader::discover_agents(&ctx.paths)?;
+        let safety_issues = crate::validate::validate_app_safety(&app, &agents);
+        if !safety_issues.is_empty() {
+            eprintln!("error: app failed safety pre-flight (use --dry-run to preview):");
+            for issue in &safety_issues {
+                eprintln!("  \u{2717} [{}] {}", issue.code, issue.message);
+            }
+            return Err(AwareError::Validation(
+                "write-mode node(s) missing `safety:` block".into(),
+            ));
+        }
+    }
 
     // Parse k=v config overrides.
     let mut inputs = serde_json::Map::new();
@@ -195,6 +224,7 @@ async fn run(
             ctx: rt_ctx,
             inputs: serde_json::Value::Object(serde_json::Map::new()),
             fan_in: Default::default(),
+            dry_run,
         };
 
         // Write pidfile.
@@ -266,9 +296,15 @@ async fn run(
         ctx: rt_ctx,
         inputs: serde_json::Value::Object(serde_json::Map::new()),
         fan_in: Default::default(),
+        dry_run,
     };
 
-    println!("\u{25b6} run {app_id} (instance {instance}, run-id {run_id})");
+    if dry_run {
+        println!("\u{25b6} dry-run {app_id} (instance {instance}, run-id {run_id})");
+        println!("  write-mode nodes will emit `would-write:` events instead of mutating state");
+    } else {
+        println!("\u{25b6} run {app_id} (instance {instance}, run-id {run_id})");
+    }
     orch.run_one_shot().await?;
     println!("\u{2713} run complete; trace at {}", log_path.display());
     Ok(())
@@ -331,6 +367,17 @@ async fn logs(
                     ts, node, reason, ..
                 } => {
                     println!("[{ts}] \u{25fc} {node}  stop: {reason}");
+                }
+                RunEvent::WouldWrite {
+                    ts,
+                    node,
+                    agent,
+                    command,
+                    ..
+                } => {
+                    println!(
+                        "[{ts}] \u{26a0} {node}  would-write {agent}.{command} (dry-run; no side effects)"
+                    );
                 }
                 RunEvent::RunEnd { ts, status, .. } => {
                     let mark = match status.as_str() {
@@ -452,7 +499,7 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
     Ok(())
 }
 
-fn validate_cmd(_ctx: &Context, path: &std::path::Path) -> Result<(), AwareError> {
+fn validate_cmd(ctx: &Context, path: &std::path::Path) -> Result<(), AwareError> {
     // Find .flo/.app in the dir
     let manifest_path = std::fs::read_dir(path)?
         .flatten()
@@ -468,7 +515,15 @@ fn validate_cmd(_ctx: &Context, path: &std::path::Path) -> Result<(), AwareError
         })?;
 
     let app = crate::manifest::loader::load_app(&manifest_path)?;
-    let issues = crate::validate::validate_app(&app);
+    let mut issues = crate::validate::validate_app(&app);
+
+    // Safety-contract check requires the agent catalogue. Best-effort — if
+    // the agents aren't discovered we skip rather than fail (the caller may
+    // be validating an app before installing its agents).
+    if let Ok(agents) = crate::manifest::loader::discover_agents(&ctx.paths) {
+        issues.extend(crate::validate::validate_app_safety(&app, &agents));
+    }
+
     if issues.is_empty() {
         println!("\u{2713} {} is valid", manifest_path.display());
         return Ok(());
@@ -482,6 +537,137 @@ fn validate_cmd(_ctx: &Context, path: &std::path::Path) -> Result<(), AwareError
     }
     if crate::validate::has_errors(&issues) {
         return Err(AwareError::Validation("app failed validation".into()));
+    }
+    Ok(())
+}
+
+/// Print a one-screen summary of an app's reads, writes, and external
+/// posts plus the union of required permissions. Implements
+/// `aware app explain <app>` (v0.11).
+fn explain(ctx: &Context, app_id: &str) -> Result<(), AwareError> {
+    use crate::manifest::agent::Mode;
+    use std::collections::BTreeSet;
+
+    let app_dir = ctx.paths.apps_dir().join(app_id);
+    if !app_dir.is_dir() {
+        return Err(AwareError::NotFound(format!("app: {app_id}")));
+    }
+    let manifest_path = std::fs::read_dir(&app_dir)?
+        .flatten()
+        .map(|e| e.path())
+        .find(|p| {
+            matches!(
+                p.extension().and_then(|e| e.to_str()),
+                Some("flo") | Some("app")
+            )
+        })
+        .ok_or_else(|| AwareError::Validation(format!("app {app_id} has no .flo/.app file")))?;
+    let app = crate::manifest::loader::load_app(&manifest_path)?;
+    let agents = crate::manifest::loader::discover_agents(&ctx.paths)?;
+
+    let mut reads: Vec<(String, String, String)> = Vec::new();
+    let mut writes: Vec<(String, String, String, bool)> = Vec::new(); // bool = safety declared
+    let mut hosts: BTreeSet<String> = BTreeSet::new();
+    let mut software: BTreeSet<String> = BTreeSet::new();
+    let mut secrets: BTreeSet<String> = BTreeSet::new();
+
+    for node in &app.nodes {
+        let (Some(agent_id), Some(cmd_name)) = (node.agent.as_ref(), node.command.as_ref()) else {
+            continue;
+        };
+        let Some(d) = agents.iter().find(|d| d.manifest.agent == *agent_id) else {
+            continue;
+        };
+        if let Some(req) = &d.manifest.requires {
+            for h in &req.network {
+                hosts.insert(h.clone());
+            }
+            for s in &req.software {
+                software.insert(s.clone());
+            }
+            for s in &req.secrets {
+                secrets.insert(s.clone());
+            }
+        }
+        let Some(cmd) = d.manifest.commands.get(cmd_name.as_str()) else {
+            continue;
+        };
+        let mode = d.manifest.mode_of(cmd_name, cmd);
+        let desc = cmd.description.lines().next().unwrap_or("").trim().to_string();
+        match mode {
+            Mode::Read => reads.push((node.id.clone(), format!("{agent_id}.{cmd_name}"), desc)),
+            Mode::Write => writes.push((
+                node.id.clone(),
+                format!("{agent_id}.{cmd_name}"),
+                desc,
+                node.safety.is_some(),
+            )),
+        }
+    }
+
+    if ctx.json {
+        use serde::Serialize;
+        #[derive(Serialize)]
+        struct ExplainData {
+            app: String,
+            reads: Vec<(String, String, String)>,
+            writes: Vec<(String, String, String, bool)>,
+            hosts: Vec<String>,
+            software: Vec<String>,
+            secrets: Vec<String>,
+        }
+        let data = ExplainData {
+            app: app_id.to_string(),
+            reads,
+            writes,
+            hosts: hosts.into_iter().collect(),
+            software: software.into_iter().collect(),
+            secrets: secrets.into_iter().collect(),
+        };
+        crate::envelope::print_ok("app explain", data, std::time::Instant::now()).ok();
+        return Ok(());
+    }
+
+    println!("app: {app_id}");
+    println!();
+    println!("reads ({}):", reads.len());
+    for (node, cmd, desc) in &reads {
+        println!("  {node:<20} {cmd:<40} {desc}");
+    }
+    println!();
+    println!("writes ({}):", writes.len());
+    if writes.is_empty() {
+        println!("  (none — read-only app)");
+    }
+    for (node, cmd, desc, safety_declared) in &writes {
+        let marker = if *safety_declared { "\u{2713}" } else { "\u{2717}" };
+        println!("  {marker} {node:<20} {cmd:<40} {desc}");
+    }
+    if writes.iter().any(|(_, _, _, s)| !s) {
+        println!(
+            "  ✗ = write-mode node missing `safety:` block (refused by `aware app run` per app-spec § Safety contract)"
+        );
+    }
+    println!();
+    if !hosts.is_empty() {
+        println!("network hosts ({}):", hosts.len());
+        for h in &hosts {
+            println!("  - {h}");
+        }
+        println!();
+    }
+    if !software.is_empty() {
+        println!("required software ({}):", software.len());
+        for s in &software {
+            println!("  - {s}");
+        }
+        println!();
+    }
+    if !secrets.is_empty() {
+        println!("required secrets ({}):", secrets.len());
+        for s in &secrets {
+            println!("  - {s}");
+        }
     }
     Ok(())
 }

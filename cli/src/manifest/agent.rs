@@ -115,6 +115,18 @@ pub struct Command {
     /// is used to infer the default (see `Agent::default_category`).
     #[serde(default)]
     pub category: Option<Category>,
+    /// Explicit read/write mode. If `None`, inferred from the command name
+    /// per the convention in `10-core/app-spec.md § Safety contract`.
+    #[serde(default)]
+    pub mode: Option<Mode>,
+}
+
+/// Read/write mode for a command — drives the safety-contract enforcement.
+#[derive(Debug, Deserialize, PartialEq, Eq, Clone, Copy)]
+#[serde(rename_all = "lowercase")]
+pub enum Mode {
+    Read,
+    Write,
 }
 
 #[derive(Debug, Deserialize, PartialEq, Eq, Clone, Copy)]
@@ -187,6 +199,24 @@ impl Agent {
         self.commands.len().saturating_sub(self.curated_count())
     }
 
+    /// Resolve the effective mode for a command — explicit if present,
+    /// otherwise inferred from the command name per the convention in
+    /// `10-core/app-spec.md § Safety contract`.
+    ///
+    /// A command is `Write` if its name matches any of:
+    /// `*.create`, `*.update`, `*.delete`, `*.bump`, `*.stamp`, `*.reload-all`,
+    /// `*.bulk-write`, `*.insert`, `*.save`, `*.publish`. Otherwise `Read`.
+    pub fn mode_of(&self, name: &str, cmd: &Command) -> Mode {
+        if let Some(m) = cmd.mode {
+            return m;
+        }
+        if is_write_by_convention(name) {
+            Mode::Write
+        } else {
+            Mode::Read
+        }
+    }
+
     /// Human-readable kind label for the `agent list` table: lowercased
     /// `display-name`, falling back to `agent` id, truncated to 17 chars.
     pub fn kind(&self) -> String {
@@ -203,6 +233,31 @@ impl Agent {
             raw
         }
     }
+}
+
+/// Names matching this convention default to `Mode::Write`.
+///
+/// See `10-core/app-spec.md § Safety contract (write-mode nodes)`.
+fn is_write_by_convention(name: &str) -> bool {
+    const SUFFIXES: &[&str] = &[
+        ".create",
+        ".update",
+        ".delete",
+        ".bump",
+        ".stamp",
+        ".reload-all",
+        ".bulk-write",
+        ".insert",
+        ".save",
+        ".publish",
+        ".export-pdfs",
+        ".export",
+    ];
+    SUFFIXES.iter().any(|s| name.ends_with(s))
+        // The Tekla curated agent's write commands don't match the dotted
+        // namespace convention because they predate it.
+        || name == "insert"
+        || name == "save-attributes"
 }
 
 #[cfg(test)]

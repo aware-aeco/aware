@@ -41,6 +41,19 @@ pub enum RunEvent {
         node: String,
         reason: String,
     },
+    /// Emitted in `--dry-run` mode in place of `NodeOutput` for write-mode
+    /// nodes — records exactly what *would* be written, including the
+    /// safety-contract block the live run would honor. See
+    /// `10-core/app-spec.md § Safety contract`.
+    WouldWrite {
+        ts: String,
+        run_id: String,
+        node: String,
+        agent: String,
+        command: String,
+        proposed_inputs: serde_json::Value,
+        safety: serde_json::Value,
+    },
     RunEnd {
         ts: String,
         run_id: String,

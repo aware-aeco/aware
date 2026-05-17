@@ -190,6 +190,46 @@ pub fn validate_app(app: &App) -> Vec<ValidationIssue> {
     out
 }
 
+/// Validate the safety contract for write-mode nodes against the installed
+/// agent catalogue.
+///
+/// Per `10-core/app-spec.md § Safety contract (write-mode nodes)`:
+/// any node whose command resolves to `Mode::Write` MUST declare a `safety:`
+/// block. Apps missing `safety:` on a write-mode node are rejected by
+/// `aware app validate` and refused by `aware app run`.
+///
+/// Agents referenced by the app but not installed are skipped (not an
+/// error here — caught by lockfile resolution earlier).
+#[allow(dead_code)] // wired by `aware app validate` + `aware app run` in v0.11
+pub fn validate_app_safety(
+    app: &App,
+    agents: &[crate::manifest::loader::DiscoveredAgent],
+) -> Vec<ValidationIssue> {
+    use crate::manifest::agent::Mode;
+    let mut out = Vec::new();
+    for node in &app.nodes {
+        let (Some(agent_id), Some(cmd_name)) = (node.agent.as_ref(), node.command.as_ref()) else {
+            continue;
+        };
+        let Some(agent) = agents.iter().find(|d| d.manifest.agent == *agent_id) else {
+            continue;
+        };
+        let Some(cmd) = agent.manifest.commands.get(cmd_name.as_str()) else {
+            continue;
+        };
+        if agent.manifest.mode_of(cmd_name, cmd) == Mode::Write && node.safety.is_none() {
+            out.push(ValidationIssue::error(
+                "E_APP_WRITE_WITHOUT_SAFETY",
+                format!(
+                    "node {:?} calls write-mode command {}.{} without a `safety:` block (required per app-spec § Safety contract)",
+                    node.id, agent_id, cmd_name
+                ),
+            ));
+        }
+    }
+    out
+}
+
 #[allow(dead_code)] // called by validate_app above
 fn has_cycle<'a>(
     node: &'a str,
@@ -342,5 +382,207 @@ skills:
         let a: Agent = serde_yaml::from_str(manifest).unwrap();
         let issues = validate_agent_on_disk(&a, tmp.path());
         assert!(issues.iter().any(|i| i.code == "E_SKILL_FILE_MISSING"));
+    }
+
+    /// Build a `DiscoveredAgent` for the safety-contract tests below.
+    fn discovered(agent_yaml: &str) -> crate::manifest::loader::DiscoveredAgent {
+        let a: Agent = serde_yaml::from_str(agent_yaml).unwrap();
+        crate::manifest::loader::DiscoveredAgent {
+            manifest: a,
+            root: std::path::PathBuf::from("/dev/null"),
+        }
+    }
+
+    #[test]
+    fn safety_check_rejects_write_node_without_safety_block() {
+        let agent = discovered(
+            r#"
+agent: tekla
+version: 1.0
+description: x
+stateful: false
+license: Apache-2.0
+transport: { cli: { binary: aware-tekla } }
+commands:
+  insert:
+    lifecycle: single
+    category: curated
+    description: Insert a connection.
+"#,
+        );
+        let app: App = serde_yaml::from_str(
+            r#"
+app: write-no-safety
+version: 0.0.1
+description: x
+nodes:
+  - id: t
+    agent: tekla
+    command: insert
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let issues = validate_app_safety(&app, &[agent]);
+        assert_eq!(issues.len(), 1);
+        assert_eq!(issues[0].code, "E_APP_WRITE_WITHOUT_SAFETY");
+    }
+
+    #[test]
+    fn safety_check_passes_when_write_node_has_safety_block() {
+        let agent = discovered(
+            r#"
+agent: tekla
+version: 1.0
+description: x
+stateful: false
+license: Apache-2.0
+transport: { cli: { binary: aware-tekla } }
+commands:
+  insert:
+    lifecycle: single
+    category: curated
+    description: Insert a connection.
+"#,
+        );
+        let app: App = serde_yaml::from_str(
+            r#"
+app: write-with-safety
+version: 0.0.1
+description: x
+nodes:
+  - id: t
+    agent: tekla
+    command: insert
+    safety:
+      transaction-group: my-tx
+      snapshot: true
+      worksharing:
+        check: true
+        fail-if-other-user: true
+      audit-stamp:
+        uda-prefix: AWARE_
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let issues = validate_app_safety(&app, &[agent]);
+        assert!(issues.is_empty(), "unexpected issues: {issues:?}");
+    }
+
+    #[test]
+    fn safety_check_skips_read_mode_nodes() {
+        let agent = discovered(
+            r#"
+agent: ex
+version: 1.0
+description: x
+stateful: false
+license: Apache-2.0
+transport: { cli: { binary: aware-ex } }
+commands:
+  list:
+    lifecycle: single
+    category: curated
+    description: List items.
+"#,
+        );
+        let app: App = serde_yaml::from_str(
+            r#"
+app: read-only
+version: 0.0.1
+description: x
+nodes:
+  - id: l
+    agent: ex
+    command: list
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let issues = validate_app_safety(&app, &[agent]);
+        assert!(issues.is_empty(), "unexpected issues: {issues:?}");
+    }
+
+    #[test]
+    fn safety_check_honors_explicit_mode_write_field() {
+        let agent = discovered(
+            r#"
+agent: x
+version: 1.0
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: aware-x } }
+commands:
+  unusual-name-not-matching-convention:
+    lifecycle: single
+    mode: write
+    description: Writes despite the name not matching the convention.
+"#,
+        );
+        let app: App = serde_yaml::from_str(
+            r#"
+app: explicit-write
+version: 0.0.1
+description: x
+nodes:
+  - id: n
+    agent: x
+    command: unusual-name-not-matching-convention
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let issues = validate_app_safety(&app, &[agent]);
+        assert_eq!(issues.len(), 1);
+        assert_eq!(issues[0].code, "E_APP_WRITE_WITHOUT_SAFETY");
+    }
+
+    #[test]
+    fn safety_check_honors_explicit_mode_read_override() {
+        // A command that names itself like a write (.insert suffix) but
+        // declares mode: read explicitly is treated as read-mode. Lets
+        // curators override the naming-convention default.
+        let agent = discovered(
+            r#"
+agent: x
+version: 1.0
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: aware-x } }
+commands:
+  thing.insert:
+    lifecycle: single
+    mode: read
+    description: Looks like a write but actually a read.
+"#,
+        );
+        let app: App = serde_yaml::from_str(
+            r#"
+app: misleading-name
+version: 0.0.1
+description: x
+nodes:
+  - id: n
+    agent: x
+    command: thing.insert
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let issues = validate_app_safety(&app, &[agent]);
+        assert!(issues.is_empty(), "unexpected issues: {issues:?}");
     }
 }
