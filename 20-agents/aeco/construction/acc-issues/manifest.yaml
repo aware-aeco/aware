@@ -1,0 +1,86 @@
+agent:        acc-issues
+version:      1.0
+display-name: Autodesk Construction Cloud — Issues (raw)
+description: |
+  Auto-generated agent from Autodesk Platform Services'
+  Issues OpenAPI spec via `aware build agent --from-openapi`.
+  Source: `Autodesk-Platform-Services/aps-sdk-openapi` on GitHub
+  (vendor-published, the canonical APS SDK spec).
+
+  ACC Issues is the issue-tracking API surface inside Autodesk
+  Construction Cloud — covers RFIs, observations, punch-list
+  items, design issues, safety reports, commissioning. 14
+  endpoints across issue creation, lookup, attachments, history,
+  and the issue-type taxonomy.
+
+  AECO use cases: auto-create a BCF-flavored issue when Tekla
+  detects a clash; export Procore RFIs into ACC; close-loop
+  punch list from a Trimble Connect viewpoint; aggregate weekly
+  issue rollup for site PMs.
+
+  Auth via `aware connect autodesk` (3-legged OAuth — most ACC
+  endpoints need a user-context token, not a 2-legged app token).
+
+  Marked `stateful: false` — every endpoint is request/response.
+
+stateful: false
+
+vendor:   autodesk
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/construction/acc-issues
+keywords: [aeco, construction, acc, autodesk-construction-cloud, issues, rfi, bcf, autodesk, generated, raw, openapi, rest]
+
+provenance:
+  generated-by: aware-agent-builder
+  generator-version: 0.8.1
+  source:
+    input: https://raw.githubusercontent.com/Autodesk-Platform-Services/aps-sdk-openapi/main/construction/issues/Issues.yaml
+    license: UNKNOWN
+    type: openapi
+  generated-at: 2026-05-17T12:09:52.212483800+00:00
+transport:
+  cli:
+    binary: aware-acc-issues
+commands:
+  add-attachments:
+    lifecycle: single
+    description: POST /construction/issues/v1/projects/{projectId}/attachments — Add attachments to an issue
+  create-comments:
+    lifecycle: single
+    description: POST /construction/issues/v1/projects/{projectId}/issues/{issueId}/comments — 
+  create-issue:
+    lifecycle: single
+    description: POST /construction/issues/v1/projects/{projectId}/issues — 
+  delete-attachment:
+    lifecycle: single
+    description: DELETE /construction/issues/v1/projects/{projectId}/attachments/{issueId}/items/{attachmentId} — Delete an attachment from an issue
+  get-attachments:
+    lifecycle: single
+    description: GET /construction/issues/v1/projects/{projectId}/attachments/{issueId}/items — Get all attachments for an issue
+  get-attribute-definitions:
+    lifecycle: single
+    description: GET /construction/issues/v1/projects/{projectId}/issue-attribute-definitions — Your GET endpoint
+  get-attribute-mappings:
+    lifecycle: single
+    description: GET /construction/issues/v1/projects/{projectId}/issue-attribute-mappings — Your GET endpoint
+  get-comments:
+    lifecycle: single
+    description: GET /construction/issues/v1/projects/{projectId}/issues/{issueId}/comments — Your GET endpoint
+  get-issue-details:
+    lifecycle: single
+    description: GET /construction/issues/v1/projects/{projectId}/issues/{issueId} — Your GET endpoint
+  get-issues:
+    lifecycle: single
+    description: GET /construction/issues/v1/projects/{projectId}/issues — Your GET endpoint
+  get-issues-types:
+    lifecycle: single
+    description: GET /construction/issues/v1/projects/{projectId}/issue-types — Your GET endpoint
+  get-root-cause-categories:
+    lifecycle: single
+    description: GET /construction/issues/v1/projects/{projectId}/issue-root-cause-categories — Your GET endpoint
+  get-user-profile:
+    lifecycle: single
+    description: GET /construction/issues/v1/projects/{projectId}/users/me — Your GET endpoint
+  patch-issue-details:
+    lifecycle: single
+    description: PATCH /construction/issues/v1/projects/{projectId}/issues/{issueId} — 

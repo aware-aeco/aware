@@ -1,0 +1,60 @@
+---
+name: dynamo-applications-dynamo-graph-workspaces
+description: API reference for namespace Dynamo.Graph.Workspaces from DynamoCore.dll
+---
+
+# Dynamo.Graph.Workspaces
+
+- **ConnectorConverter**
+  - The ConnectorConverter is used to serialize and deserialize ConnectorModels.             The Start and End of a ConnectorModel are references to PortModels, but             we want the serialized representation of a Connector to reference these              ports by Id. This converter resolves the reference to the correct NodeModel             instance by id, and constructs the ConnectorModel.
+- **CustomNodeWorkspaceModel**
+  - This class contains methods and properties that defines a customnodeworkspace.
+- **DescriptionConverter**
+- **DummyNodeWriteConverter**
+  - DummyNodeWriteConverter is used for serializing DummyNodes to JSON.             Note that the DummyNode objects serialize as their original content and not as a DummyNode.
+- **ExtraAnnotationViewInfo**
+  - Non view-specific container for additional annotation view information              required to fully construct a WorkspaceModel from JSON
+- **ExtraConnectorPinInfo**
+  - Container for connector pin view information              required to fully construct a WorkspaceViewModel from JSON
+- **ExtraNodeViewInfo**
+  - Non view-specific container for additional node view information              required to fully construct a WorkspaceModel from JSON
+- **ExtraNoteViewInfo**
+  - Non view-specific container for additional note view information              required to fully construct a WorkspaceModel from JSON
+- **ExtraWorkspaceViewInfo**
+  - Non view-specific container for additional view information required to             fully construct a WorkspaceModel from JSON
+- **HomeWorkspaceModel**
+  - This class contains methods and properties that defines a .
+- **ICustomNodeWorkspaceModel**
+- **IPackageInfo**
+  - Interface for types containing info about a package
+- **IWorkspaceModel**
+  - Exposes workspace model.
+- **IdReferenceResolver**
+  - The IdReferenceResolver class allows us to use the Guid of             an object as the reference id during serialization.
+- **IdToGuidConverter**
+  - This converter is used to attempt to convert an id string to a guid - if the id             is not a guid string, it will create a UUID based on the string.
+- **LayoutExtensions**
+  - Layout class contains methods for organizing graphs.
+- **LinterManagerConverter**
+- **NodeLibraryDependencyConverter**
+  - Is used to serialize and deserialize graph workspace node library references
+- **NodeReadConverter**
+  - The NodeModelConverter is used to serialize and deserialize NodeModels.             These nodes require a CustomNodeDefinition which can only be supplied             by looking it up in the CustomNodeManager.
+- **PackageDependencyState**
+  - Enum containing the different types of package dependency states.
+- **PackageInfo**
+  - Class containing info about a package
+- **PresetExtensions**
+  - Extension methods for adding and removing Presets to Workspaces.
+- **SerializationExtensions**
+  - Contains methods for serializing a WorkspaceModel to json.
+- **TypedParameterConverter**
+  - This converter is used to attempt to convert TypedParameter into a json object
+- **WorkspaceInfo**
+  - Contains sufficient data to create a  object
+- **WorkspaceModel**
+  - Represents base class for all kind of workspaces which contains general data             such as Name, collections of nodes, notes, annotations, etc.
+- **WorkspaceReadConverter**
+  - The WorkspaceConverter is used to serialize and deserialize WorkspaceModels.             Construction of a WorkspaceModel requires things like an EngineController,             a NodeFactory, and a Scheduler. These must be supplied at the time of              construction and should not be serialized.
+- **WorkspaceWriteConverter**
+  - WorkspaceWriteConverter is used for serializing Workspaces to JSON.

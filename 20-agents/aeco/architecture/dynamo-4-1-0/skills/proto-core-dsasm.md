@@ -1,0 +1,64 @@
+---
+name: dynamo-applications-proto-core-dsasm
+description: API reference for namespace ProtoCore.DSASM from ProtoCore.dll
+---
+
+# ProtoCore.DSASM
+
+- **AddressType**
+- **ArgumentInfo**
+- **AttributeEntry**
+- **BiDictionaryOneToOne`2**
+  - This is a dictionary guaranteed to have only one of each value and key.              It may be searched either by TFirst or by TSecond, giving a unique answer because it is 1 to 1.
+- **ClassNode**
+- **ClassTable**
+- **CodeBlock**
+- **CodeBlockType**
+- **Constants**
+- **DSArray**
+- **DSObject**
+- **DSString**
+- **DebugInfo**
+- **DyanmicVariableNode**
+- **DynamicFunction**
+  - It represents an unresolved function in the code. For any unresolved             function, a DynamicFunction instance will be created and be added to             DynamicFunctionTable. At runtime, callr will fetch the corresponding             DynamicFunction instance from DynamicFunctionTable, and based on its              name/argument number/class scope to resolves function dynamically.
+- **DynamicFunctionTable**
+- **DynamicVariableTable**
+- **Executable**
+  - Executable holds the body of code that will be executed along with associated             meta-information
+- **Executive**
+- **ExecutiveProvider**
+- **FunctionPointerNode**
+- **FunctionPointerTable**
+- **Heap**
+- **HeapElement**
+- **IExecutiveProvider**
+- **Instruction**
+- **InstructionStream**
+  - InstructionStream holds the executable dsasm code and relevant information
+- **Interpreter**
+- **InterpreterMode**
+- **Literal**
+- **MemoryRegion**
+- **MetaData**
+- **Op**
+  - Translate an operator to other representations.
+- **OpCode**
+- **Operator**
+- **ProcedureDistance**
+- **ProcedureNode**
+- **ProcedureTable**
+- **RangeStepOperator**
+- **Registers**
+- **StackAlignToFramePointerRestorer**
+- **StackFrame**
+  - Stack frame.
+- **StackFrameType**
+  - Stack frame type.
+- **StackUtils**
+- **StackValue**
+- **StackValueComparer**
+- **SymbolNode**
+- **SymbolTable**
+- **UnaryOperator**
+- **kw**
