@@ -571,9 +571,55 @@ impl Orchestrator {
                     "inline kind {other:?} not supported in v0.3 (only 'predicate')"
                 ))),
             }
+        } else if let Some(assert) = &node.assert {
+            // v0.19 — `assert:` primitive. Evaluate the expr; abort the run if false.
+            let pass = eval_predicate(&assert.expr, &serde_json::json!({}))?;
+            self.emit(RunEvent::NodeOutput {
+                ts: now_iso(),
+                run_id: self.run_id.clone(),
+                node: node.id.clone(),
+                data: serde_json::json!({ "asserted": pass }),
+            })
+            .await?;
+            if pass {
+                Ok(NodeResult::Output(serde_json::json!({ "asserted": true })))
+            } else {
+                let msg = assert
+                    .on_fail
+                    .clone()
+                    .unwrap_or_else(|| format!("assertion failed: {}", assert.expr));
+                Err(AwareError::Validation(msg))
+            }
+        } else if node.for_each.is_some()
+            || node.compare.is_some()
+            || node.sweep.is_some()
+            || node.approve.is_some()
+            || node.snapshot.is_some()
+            || node.model_lock.is_some()
+        {
+            // Substrate primitives parsed by v0.19 — runtime implementation
+            // lands phase-by-phase in v0.19.x patches. For now, return a
+            // clear "not yet implemented" error pointing at the spec section.
+            let primitive = if node.for_each.is_some() {
+                "for-each"
+            } else if node.compare.is_some() {
+                "compare"
+            } else if node.sweep.is_some() {
+                "sweep"
+            } else if node.approve.is_some() {
+                "approve"
+            } else if node.snapshot.is_some() {
+                "snapshot"
+            } else {
+                "model-lock"
+            };
+            Err(AwareError::Validation(format!(
+                "substrate primitive `{primitive}` in node {} — parsing works (spec § Substrate primitives); runtime execution lands in v0.19.x patches",
+                node.id
+            )))
         } else {
             Err(AwareError::Validation(format!(
-                "node {} has no agent and no inline block",
+                "node {} has no agent, no inline block, and no substrate primitive",
                 node.id
             )))
         }
