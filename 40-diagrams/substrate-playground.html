@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>AWARE substrate — force-directed graph playground</title>
+<style>
+:root {
+  --bg: #0a0a0a;
+  --panel: #141414;
+  --border: #262626;
+  --text: #e5e5e5;
+  --muted: #71717a;
+  --accent: #4ade80;
+  --link: #2563eb;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; height: 100%; background: var(--bg); color: var(--text); font: 13px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+.app { display: grid; grid-template-columns: 280px 1fr; grid-template-rows: 1fr 200px; height: 100vh; gap: 1px; background: var(--border); }
+.sidebar { background: var(--panel); padding: 16px; overflow-y: auto; grid-row: 1 / 3; }
+.canvas-wrap { background: var(--bg); position: relative; overflow: hidden; }
+canvas { display: block; }
+.prompt-pane { background: var(--panel); padding: 12px 16px; grid-column: 2; overflow: auto; border-top: 1px solid var(--border); }
+h1 { font-size: 14px; font-weight: 600; margin: 0 0 12px; letter-spacing: 0.02em; }
+h2 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 16px 0 6px; }
+label { display: block; font-size: 12px; margin: 8px 0 4px; color: var(--muted); }
+input[type=range] { width: 100%; }
+.row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; font-size: 12px; }
+.row input[type=checkbox] { margin: 0; }
+.row .swatch { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.row .label { flex: 1; }
+.row .count { color: var(--muted); font-variant-numeric: tabular-nums; }
+.presets { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+.presets button { background: var(--border); color: var(--text); border: 0; padding: 4px 8px; font-size: 11px; border-radius: 3px; cursor: pointer; }
+.presets button:hover { background: #404040; }
+.value { color: var(--accent); font-variant-numeric: tabular-nums; }
+.tooltip { position: absolute; background: var(--panel); border: 1px solid var(--border); padding: 8px 10px; border-radius: 4px; font-size: 12px; pointer-events: none; display: none; max-width: 280px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
+.tooltip .t-title { font-weight: 600; color: var(--accent); margin-bottom: 4px; }
+.tooltip .t-meta { color: var(--muted); font-size: 11px; }
+.prompt-text { font-family: monospace; font-size: 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 10px; white-space: pre-wrap; word-break: break-word; min-height: 80px; }
+.copy-btn { margin-top: 8px; background: var(--link); color: white; border: 0; padding: 6px 14px; font-size: 12px; border-radius: 3px; cursor: pointer; }
+.copy-btn:hover { opacity: 0.9; }
+.copy-btn.copied { background: var(--accent); color: #0a0a0a; }
+.legend { position: absolute; bottom: 12px; left: 12px; background: rgba(20,20,20,0.9); border: 1px solid var(--border); border-radius: 4px; padding: 8px 10px; font-size: 11px; }
+.stats { color: var(--muted); margin: 8px 0; font-size: 11px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <h1>AWARE substrate · force graph</h1>
+    <div class="stats" id="stats"></div>
+
+    <h2>Presets</h2>
+    <div class="presets">
+      <button data-preset="all">All</button>
+      <button data-preset="bim">BIM stack</button>
+      <button data-preset="cad">CAD stack</button>
+      <button data-preset="viz">Visualization</button>
+      <button data-preset="structural">Structural</button>
+    </div>
+
+    <h2>Edge threshold</h2>
+    <label>min shared method stems: <span class="value" id="thr-v">5</span></label>
+    <input id="thr" type="range" min="3" max="50" value="5" />
+
+    <h2>Forces</h2>
+    <label>repulsion: <span class="value" id="rep-v">1000</span></label>
+    <input id="rep" type="range" min="100" max="4000" value="1000" />
+    <label>edge stiffness: <span class="value" id="link-v">0.01</span></label>
+    <input id="link" type="range" min="1" max="50" value="10" />
+
+    <h2>Verticals</h2>
+    <div id="verticals"></div>
+
+    <h2>Vendors</h2>
+    <div id="vendors"></div>
+  </aside>
+
+  <div class="canvas-wrap">
+    <canvas id="cv"></canvas>
+    <div id="tip" class="tooltip"></div>
+    <div class="legend"><b>Node size</b> = skill count<br/><b>Edge weight</b> = shared command stems</div>
+  </div>
+
+  <div class="prompt-pane">
+    <h2>Prompt — copy back to Claude</h2>
+    <div class="prompt-text" id="prompt"></div>
+    <button class="copy-btn" id="copy">Copy</button>
+  </div>
+</div>
+
+<script>
+const RAW_AGENTS = [{"id": "aware-agent-builder", "displayName": "AWARE Agent Builder", "vendor": "aware", "vertical": "Meta", "skills": 5, "commands": 1, "color": "#6b7280"}, {"id": "aware-skill-builder", "displayName": "AWARE Skill Builder", "vendor": "aware", "vertical": "Meta", "skills": 6, "commands": 4, "color": "#6b7280"}, {"id": "html-report", "displayName": "HTML Report", "vendor": "aware", "vertical": "Other", "skills": 1, "commands": 1, "color": "#6b7280"}, {"id": "itwin-5-8", "displayName": "Bentley iTwin 5.8 (raw \u2014 core-frontend)", "vendor": "bentley", "vertical": "Visualization", "skills": 598, "commands": 4553, "color": "#ea580c"}, {"id": "itwin-5-9", "displayName": "Bentley iTwin 5.9 (raw \u2014 core-frontend)", "vendor": "bentley", "vertical": "Visualization", "skills": 598, "commands": 4561, "color": "#ea580c"}, {"id": "speckle-viewer", "displayName": "Speckle Viewer (raw)", "vendor": "speckle", "vertical": "Visualization", "skills": 124, "commands": 942, "color": "#3b82f6"}, {"id": "thatopen-components", "displayName": "That Open Components (modern IFC.js \u2014 raw)", "vendor": "thatopen", "vertical": "Visualization", "skills": 80, "commands": 337, "color": "#22d3ee"}, {"id": "three", "displayName": "three.js (raw)", "vendor": "mrdoob", "vertical": "Visualization", "skills": 511, "commands": 2860, "color": "#a855f7"}, {"id": "web-ifc", "displayName": "web-ifc (WebAssembly IFC parser \u2014 raw)", "vendor": "thatopen", "vertical": "Visualization", "skills": 19, "commands": 120, "color": "#22d3ee"}, {"id": "xeokit", "displayName": "xeokit SDK (BIM/IFC web viewer)", "vendor": "creoox", "vertical": "Visualization", "skills": 98, "commands": 361, "color": "#06b6d4"}, {"id": "csi-api", "displayName": "CSi API (SAP2000 / ETABS / SAFE / CSiBridge \u2014 raw)", "vendor": "computers-and-structures", "vertical": "Engineering", "skills": 2, "commands": 4282, "color": "#84cc16"}, {"id": "idea-statica-25", "displayName": "IDEA StatiCa 25 (raw \u2014 OpenModel)", "vendor": "idea-statica", "vertical": "Engineering", "skills": 18, "commands": 111, "color": "#9333ea"}, {"id": "idea-statica-26", "displayName": "IDEA StatiCa 26 (raw \u2014 OpenModel)", "vendor": "idea-statica", "vertical": "Engineering", "skills": 18, "commands": 116, "color": "#9333ea"}, {"id": "tekla", "displayName": "Tekla Structures", "vendor": "trimble", "vertical": "Engineering", "skills": 31, "commands": 3, "color": "#0067a6"}, {"id": "tekla-2025", "displayName": "Tekla Structures 2025 (raw)", "vendor": "trimble", "vertical": "Engineering", "skills": 18, "commands": 2999, "color": "#0067a6"}, {"id": "tekla-2026", "displayName": "Tekla Structures 2026 (raw)", "vendor": "trimble", "vertical": "Engineering", "skills": 22, "commands": 3179, "color": "#0067a6"}, {"id": "tsd-25", "displayName": "Tekla Structural Designer 25 (raw \u2014 Remoting API)", "vendor": "trimble", "vertical": "Engineering", "skills": 42, "commands": 440, "color": "#0067a6"}, {"id": "tsd-26", "displayName": "Tekla Structural Designer 26 (raw \u2014 Remoting API)", "vendor": "trimble", "vertical": "Engineering", "skills": 42, "commands": 440, "color": "#0067a6"}, {"id": "google-workspace", "displayName": "Google Workspace", "vendor": "google", "vertical": "Cross-cutting", "skills": 4, "commands": 5, "color": "#6b7280"}, {"id": "microsoft-365", "displayName": "Microsoft 365 (Graph API)", "vendor": "microsoft", "vertical": "Cross-cutting", "skills": 4, "commands": 4, "color": "#6b7280"}, {"id": "acc-account-admin", "displayName": "Autodesk Construction Cloud \u2014 Account Admin (raw)", "vendor": "autodesk", "vertical": "Construction", "skills": 0, "commands": 30, "color": "#2e8b57"}, {"id": "acc-issues", "displayName": "Autodesk Construction Cloud \u2014 Issues (raw)", "vendor": "autodesk", "vertical": "Construction", "skills": 0, "commands": 14, "color": "#2e8b57"}, {"id": "aps-data-management", "displayName": "Autodesk APS \u2014 Data Management (raw)", "vendor": "autodesk", "vertical": "Construction", "skills": 0, "commands": 41, "color": "#2e8b57"}, {"id": "slack", "displayName": "Slack Web API (raw)", "vendor": "slack", "vertical": "Construction", "skills": 0, "commands": 172, "color": "#4a154b"}, {"id": "trimble-connect", "displayName": "Trimble Connect", "vendor": "trimble", "vertical": "Construction", "skills": 7, "commands": 3, "color": "#0067a6"}, {"id": "allplan-2024", "displayName": "Allplan 2024 (raw)", "vendor": "nemetschek", "vertical": "Architecture", "skills": 87, "commands": 1162, "color": "#ff8c00"}, {"id": "allplan-2025", "displayName": "Allplan 2025 (raw)", "vendor": "nemetschek", "vertical": "Architecture", "skills": 89, "commands": 1200, "color": "#ff8c00"}, {"id": "autocad-2025", "displayName": "AutoCAD 2025 (raw)", "vendor": "autodesk", "vertical": "Architecture", "skills": 73, "commands": 4398, "color": "#2e8b57"}, {"id": "autocad-2026", "displayName": "AutoCAD 2026 (raw)", "vendor": "autodesk", "vertical": "Architecture", "skills": 71, "commands": 4413, "color": "#2e8b57"}, {"id": "dynamo-4-1-0", "displayName": "Dynamo Core 4.1.0 (raw)", "vendor": "autodesk", "vertical": "Architecture", "skills": 75, "commands": 1713, "color": "#2e8b57"}, {"id": "dynamo-4-1-1", "displayName": "Dynamo Core 4.1.1 (raw)", "vendor": "autodesk", "vertical": "Architecture", "skills": 75, "commands": 1713, "color": "#2e8b57"}, {"id": "grasshopper-7", "displayName": "Grasshopper 7 (raw)", "vendor": "mcneel", "vertical": "Architecture", "skills": 50, "commands": 4506, "color": "#dc143c"}, {"id": "grasshopper-8", "displayName": "Grasshopper 8 (raw)", "vendor": "mcneel", "vertical": "Architecture", "skills": 64, "commands": 5181, "color": "#dc143c"}, {"id": "revit-2025", "displayName": "Autodesk Revit 2025 (raw)", "vendor": "autodesk", "vertical": "Architecture", "skills": 46, "commands": 7430, "color": "#2e8b57"}, {"id": "revit-2026", "displayName": "Autodesk Revit 2026 (raw)", "vendor": "autodesk", "vertical": "Architecture", "skills": 47, "commands": 7647, "color": "#2e8b57"}, {"id": "rhino-7", "displayName": "Rhino 7 (raw)", "vendor": "mcneel", "vertical": "Architecture", "skills": 54, "commands": 5859, "color": "#dc143c"}, {"id": "rhino-8", "displayName": "Rhino 8 (raw)", "vendor": "mcneel", "vertical": "Architecture", "skills": 61, "commands": 6954, "color": "#dc143c"}, {"id": "sketchup-2025", "displayName": "SketchUp 2025 Ruby API (raw)", "vendor": "trimble", "vertical": "Architecture", "skills": 155, "commands": 1684, "color": "#0067a6"}, {"id": "sketchup-2026", "displayName": "SketchUp 2026 Ruby API (raw)", "vendor": "trimble", "vertical": "Architecture", "skills": 156, "commands": 1713, "color": "#0067a6"}];
+const RAW_EDGES = [{"source": "acc-account-admin", "target": "allplan-2024", "weight": 3}, {"source": "acc-account-admin", "target": "allplan-2025", "weight": 3}, {"source": "acc-issues", "target": "allplan-2024", "weight": 3}, {"source": "acc-issues", "target": "allplan-2025", "weight": 3}, {"source": "allplan-2024", "target": "allplan-2025", "weight": 626}, {"source": "allplan-2024", "target": "autocad-2025", "weight": 38}, {"source": "allplan-2024", "target": "autocad-2026", "weight": 39}, {"source": "allplan-2024", "target": "csi-api", "weight": 7}, {"source": "allplan-2024", "target": "dynamo-4-1-0", "weight": 23}, {"source": "allplan-2024", "target": "dynamo-4-1-1", "weight": 23}, {"source": "allplan-2024", "target": "grasshopper-7", "weight": 30}, {"source": "allplan-2024", "target": "grasshopper-8", "weight": 30}, {"source": "allplan-2024", "target": "idea-statica-25", "weight": 3}, {"source": "allplan-2024", "target": "idea-statica-26", "weight": 3}, {"source": "allplan-2024", "target": "itwin-5-8", "weight": 11}, {"source": "allplan-2024", "target": "itwin-5-9", "weight": 11}, {"source": "allplan-2024", "target": "revit-2025", "weight": 49}, {"source": "allplan-2024", "target": "revit-2026", "weight": 51}, {"source": "allplan-2024", "target": "rhino-7", "weight": 63}, {"source": "allplan-2024", "target": "rhino-8", "weight": 65}, {"source": "allplan-2024", "target": "sketchup-2025", "weight": 9}, {"source": "allplan-2024", "target": "sketchup-2026", "weight": 9}, {"source": "allplan-2024", "target": "speckle-viewer", "weight": 11}, {"source": "allplan-2024", "target": "tekla-2025", "weight": 26}, {"source": "allplan-2024", "target": "tekla-2026", "weight": 28}, {"source": "allplan-2024", "target": "three", "weight": 25}, {"source": "allplan-2024", "target": "tsd-25", "weight": 4}, {"source": "allplan-2024", "target": "tsd-26", "weight": 4}, {"source": "allplan-2024", "target": "web-ifc", "weight": 4}, {"source": "allplan-2025", "target": "autocad-2025", "weight": 38}, {"source": "allplan-2025", "target": "autocad-2026", "weight": 39}, {"source": "allplan-2025", "target": "csi-api", "weight": 7}, {"source": "allplan-2025", "target": "dynamo-4-1-0", "weight": 22}, {"source": "allplan-2025", "target": "dynamo-4-1-1", "weight": 22}, {"source": "allplan-2025", "target": "grasshopper-7", "weight": 31}, {"source": "allplan-2025", "target": "grasshopper-8", "weight": 31}, {"source": "allplan-2025", "target": "idea-statica-25", "weight": 3}, {"source": "allplan-2025", "target": "idea-statica-26", "weight": 3}, {"source": "allplan-2025", "target": "itwin-5-8", "weight": 12}, {"source": "allplan-2025", "target": "itwin-5-9", "weight": 12}, {"source": "allplan-2025", "target": "revit-2025", "weight": 49}, {"source": "allplan-2025", "target": "revit-2026", "weight": 51}, {"source": "allplan-2025", "target": "rhino-7", "weight": 65}, {"source": "allplan-2025", "target": "rhino-8", "weight": 67}, {"source": "allplan-2025", "target": "sketchup-2025", "weight": 9}, {"source": "allplan-2025", "target": "sketchup-2026", "weight": 9}, {"source": "allplan-2025", "target": "speckle-viewer", "weight": 11}, {"source": "allplan-2025", "target": "tekla-2025", "weight": 26}, {"source": "allplan-2025", "target": "tekla-2026", "weight": 28}, {"source": "allplan-2025", "target": "three", "weight": 24}, {"source": "allplan-2025", "target": "tsd-25", "weight": 4}, {"source": "allplan-2025", "target": "tsd-26", "weight": 4}, {"source": "allplan-2025", "target": "web-ifc", "weight": 4}, {"source": "autocad-2025", "target": "autocad-2026", "weight": 2324}, {"source": "autocad-2025", "target": "csi-api", "weight": 17}, {"source": "autocad-2025", "target": "dynamo-4-1-0", "weight": 51}, {"source": "autocad-2025", "target": "dynamo-4-1-1", "weight": 51}, {"source": "autocad-2025", "target": "grasshopper-7", "weight": 94}, {"source": "autocad-2025", "target": "grasshopper-8", "weight": 96}, {"source": "autocad-2025", "target": "idea-statica-25", "weight": 5}, {"source": "autocad-2025", "target": "idea-statica-26", "weight": 5}, {"source": "autocad-2025", "target": "itwin-5-8", "weight": 83}, {"source": "autocad-2025", "target": "itwin-5-9", "weight": 83}, {"source": "autocad-2025", "target": "revit-2025", "weight": 364}, {"source": "autocad-2025", "target": "revit-2026", "weight": 366}, {"source": "autocad-2025", "target": "rhino-7", "weight": 168}, {"source": "autocad-2025", "target": "rhino-8", "weight": 179}, {"source": "autocad-2025", "target": "sketchup-2025", "weight": 40}, {"source": "autocad-2025", "target": "sketchup-2026", "weight": 42}, {"source": "autocad-2025", "target": "slack", "weight": 3}, {"source": "autocad-2025", "target": "speckle-viewer", "weight": 16}, {"source": "autocad-2025", "target": "tekla-2025", "weight": 48}, {"source": "autocad-2025", "target": "tekla-2026", "weight": 49}, {"source": "autocad-2025", "target": "thatopen-components", "weight": 10}, {"source": "autocad-2025", "target": "three", "weight": 47}, {"source": "autocad-2025", "target": "tsd-25", "weight": 6}, {"source": "autocad-2025", "target": "tsd-26", "weight": 6}, {"source": "autocad-2025", "target": "web-ifc", "weight": 5}, {"source": "autocad-2025", "target": "xeokit", "weight": 8}, {"source": "autocad-2026", "target": "csi-api", "weight": 17}, {"source": "autocad-2026", "target": "dynamo-4-1-0", "weight": 51}, {"source": "autocad-2026", "target": "dynamo-4-1-1", "weight": 51}, {"source": "autocad-2026", "target": "grasshopper-7", "weight": 95}, {"source": "autocad-2026", "target": "grasshopper-8", "weight": 97}, {"source": "autocad-2026", "target": "idea-statica-25", "weight": 5}, {"source": "autocad-2026", "target": "idea-statica-26", "weight": 5}, {"source": "autocad-2026", "target": "itwin-5-8", "weight": 84}, {"source": "autocad-2026", "target": "itwin-5-9", "weight": 84}, {"source": "autocad-2026", "target": "revit-2025", "weight": 364}, {"source": "autocad-2026", "target": "revit-2026", "weight": 366}, {"source": "autocad-2026", "target": "rhino-7", "weight": 170}, {"source": "autocad-2026", "target": "rhino-8", "weight": 182}, {"source": "autocad-2026", "target": "sketchup-2025", "weight": 40}, {"source": "autocad-2026", "target": "sketchup-2026", "weight": 42}, {"source": "autocad-2026", "target": "slack", "weight": 3}, {"source": "autocad-2026", "target": "speckle-viewer", "weight": 16}, {"source": "autocad-2026", "target": "tekla-2025", "weight": 48}, {"source": "autocad-2026", "target": "tekla-2026", "weight": 49}, {"source": "autocad-2026", "target": "thatopen-components", "weight": 10}, {"source": "autocad-2026", "target": "three", "weight": 48}, {"source": "autocad-2026", "target": "tsd-25", "weight": 6}, {"source": "autocad-2026", "target": "tsd-26", "weight": 6}, {"source": "autocad-2026", "target": "web-ifc", "weight": 5}, {"source": "autocad-2026", "target": "xeokit", "weight": 8}, {"source": "csi-api", "target": "dynamo-4-1-0", "weight": 5}, {"source": "csi-api", "target": "dynamo-4-1-1", "weight": 5}, {"source": "csi-api", "target": "grasshopper-7", "weight": 26}, {"source": "csi-api", "target": "grasshopper-8", "weight": 26}, {"source": "csi-api", "target": "idea-statica-25", "weight": 4}, {"source": "csi-api", "target": "idea-statica-26", "weight": 4}, {"source": "csi-api", "target": "itwin-5-8", "weight": 13}, {"source": "csi-api", "target": "itwin-5-9", "weight": 13}, {"source": "csi-api", "target": "revit-2025", "weight": 31}, {"source": "csi-api", "target": "revit-2026", "weight": 32}, {"source": "csi-api", "target": "rhino-7", "weight": 38}, {"source": "csi-api", "target": "rhino-8", "weight": 41}, {"source": "csi-api", "target": "sketchup-2025", "weight": 11}, {"source": "csi-api", "target": "sketchup-2026", "weight": 11}, {"source": "csi-api", "target": "speckle-viewer", "weight": 4}, {"source": "csi-api", "target": "tekla-2025", "weight": 25}, {"source": "csi-api", "target": "tekla-2026", "weight": 25}, {"source": "csi-api", "target": "thatopen-components", "weight": 5}, {"source": "csi-api", "target": "three", "weight": 15}, {"source": "csi-api", "target": "web-ifc", "weight": 4}, {"source": "csi-api", "target": "xeokit", "weight": 5}, {"source": "dynamo-4-1-0", "target": "dynamo-4-1-1", "weight": 925}, {"source": "dynamo-4-1-0", "target": "grasshopper-7", "weight": 41}, {"source": "dynamo-4-1-0", "target": "grasshopper-8", "weight": 44}, {"source": "dynamo-4-1-0", "target": "idea-statica-25", "weight": 3}, {"source": "dynamo-4-1-0", "target": "idea-statica-26", "weight": 3}, {"source": "dynamo-4-1-0", "target": "itwin-5-8", "weight": 31}, {"source": "dynamo-4-1-0", "target": "itwin-5-9", "weight": 31}, {"source": "dynamo-4-1-0", "target": "revit-2025", "weight": 62}, {"source": "dynamo-4-1-0", "target": "revit-2026", "weight": 63}, {"source": "dynamo-4-1-0", "target": "rhino-7", "weight": 57}, {"source": "dynamo-4-1-0", "target": "rhino-8", "weight": 62}, {"source": "dynamo-4-1-0", "target": "sketchup-2025", "weight": 19}, {"source": "dynamo-4-1-0", "target": "sketchup-2026", "weight": 19}, {"source": "dynamo-4-1-0", "target": "speckle-viewer", "weight": 6}, {"source": "dynamo-4-1-0", "target": "tekla-2025", "weight": 26}, {"source": "dynamo-4-1-0", "target": "tekla-2026", "weight": 26}, {"source": "dynamo-4-1-0", "target": "thatopen-components", "weight": 8}, {"source": "dynamo-4-1-0", "target": "three", "weight": 30}, {"source": "dynamo-4-1-0", "target": "tsd-25", "weight": 5}, {"source": "dynamo-4-1-0", "target": "tsd-26", "weight": 5}, {"source": "dynamo-4-1-1", "target": "grasshopper-7", "weight": 41}, {"source": "dynamo-4-1-1", "target": "grasshopper-8", "weight": 44}, {"source": "dynamo-4-1-1", "target": "idea-statica-25", "weight": 3}, {"source": "dynamo-4-1-1", "target": "idea-statica-26", "weight": 3}, {"source": "dynamo-4-1-1", "target": "itwin-5-8", "weight": 31}, {"source": "dynamo-4-1-1", "target": "itwin-5-9", "weight": 31}, {"source": "dynamo-4-1-1", "target": "revit-2025", "weight": 62}, {"source": "dynamo-4-1-1", "target": "revit-2026", "weight": 63}, {"source": "dynamo-4-1-1", "target": "rhino-7", "weight": 57}, {"source": "dynamo-4-1-1", "target": "rhino-8", "weight": 62}, {"source": "dynamo-4-1-1", "target": "sketchup-2025", "weight": 19}, {"source": "dynamo-4-1-1", "target": "sketchup-2026", "weight": 19}, {"source": "dynamo-4-1-1", "target": "speckle-viewer", "weight": 6}, {"source": "dynamo-4-1-1", "target": "tekla-2025", "weight": 26}, {"source": "dynamo-4-1-1", "target": "tekla-2026", "weight": 26}, {"source": "dynamo-4-1-1", "target": "thatopen-components", "weight": 8}, {"source": "dynamo-4-1-1", "target": "three", "weight": 30}, {"source": "dynamo-4-1-1", "target": "tsd-25", "weight": 5}, {"source": "dynamo-4-1-1", "target": "tsd-26", "weight": 5}, {"source": "grasshopper-7", "target": "grasshopper-8", "weight": 2333}, {"source": "grasshopper-7", "target": "idea-statica-25", "weight": 4}, {"source": "grasshopper-7", "target": "idea-statica-26", "weight": 4}, {"source": "grasshopper-7", "target": "itwin-5-8", "weight": 46}, {"source": "grasshopper-7", "target": "itwin-5-9", "weight": 46}, {"source": "grasshopper-7", "target": "revit-2025", "weight": 107}, {"source": "grasshopper-7", "target": "revit-2026", "weight": 108}, {"source": "grasshopper-7", "target": "rhino-7", "weight": 190}, {"source": "grasshopper-7", "target": "rhino-8", "weight": 199}, {"source": "grasshopper-7", "target": "sketchup-2025", "weight": 38}, {"source": "grasshopper-7", "target": "sketchup-2026", "weight": 38}, {"source": "grasshopper-7", "target": "speckle-viewer", "weight": 17}, {"source": "grasshopper-7", "target": "tekla-2025", "weight": 49}, {"source": "grasshopper-7", "target": "tekla-2026", "weight": 49}, {"source": "grasshopper-7", "target": "thatopen-components", "weight": 10}, {"source": "grasshopper-7", "target": "three", "weight": 44}, {"source": "grasshopper-7", "target": "tsd-25", "weight": 6}, {"source": "grasshopper-7", "target": "tsd-26", "weight": 6}, {"source": "grasshopper-7", "target": "web-ifc", "weight": 7}, {"source": "grasshopper-7", "target": "xeokit", "weight": 6}, {"source": "grasshopper-8", "target": "idea-statica-25", "weight": 4}, {"source": "grasshopper-8", "target": "idea-statica-26", "weight": 4}, {"source": "grasshopper-8", "target": "itwin-5-8", "weight": 52}, {"source": "grasshopper-8", "target": "itwin-5-9", "weight": 52}, {"source": "grasshopper-8", "target": "revit-2025", "weight": 117}, {"source": "grasshopper-8", "target": "revit-2026", "weight": 118}, {"source": "grasshopper-8", "target": "rhino-7", "weight": 217}, {"source": "grasshopper-8", "target": "rhino-8", "weight": 229}, {"source": "grasshopper-8", "target": "sketchup-2025", "weight": 38}, {"source": "grasshopper-8", "target": "sketchup-2026", "weight": 38}, {"source": "grasshopper-8", "target": "speckle-viewer", "weight": 18}, {"source": "grasshopper-8", "target": "tekla-2025", "weight": 50}, {"source": "grasshopper-8", "target": "tekla-2026", "weight": 50}, {"source": "grasshopper-8", "target": "thatopen-components", "weight": 10}, {"source": "grasshopper-8", "target": "three", "weight": 49}, {"source": "grasshopper-8", "target": "tsd-25", "weight": 6}, {"source": "grasshopper-8", "target": "tsd-26", "weight": 6}, {"source": "grasshopper-8", "target": "web-ifc", "weight": 7}, {"source": "grasshopper-8", "target": "xeokit", "weight": 6}, {"source": "idea-statica-25", "target": "idea-statica-26", "weight": 93}, {"source": "idea-statica-25", "target": "itwin-5-8", "weight": 3}, {"source": "idea-statica-25", "target": "itwin-5-9", "weight": 3}, {"source": "idea-statica-25", "target": "revit-2025", "weight": 5}, {"source": "idea-statica-25", "target": "revit-2026", "weight": 5}, {"source": "idea-statica-25", "target": "rhino-7", "weight": 7}, {"source": "idea-statica-25", "target": "rhino-8", "weight": 7}, {"source": "idea-statica-26", "target": "itwin-5-8", "weight": 3}, {"source": "idea-statica-26", "target": "itwin-5-9", "weight": 3}, {"source": "idea-statica-26", "target": "revit-2025", "weight": 5}, {"source": "idea-statica-26", "target": "revit-2026", "weight": 5}, {"source": "idea-statica-26", "target": "rhino-7", "weight": 7}, {"source": "idea-statica-26", "target": "rhino-8", "weight": 7}, {"source": "itwin-5-8", "target": "itwin-5-9", "weight": 2383}, {"source": "itwin-5-8", "target": "revit-2025", "weight": 122}, {"source": "itwin-5-8", "target": "revit-2026", "weight": 122}, {"source": "itwin-5-8", "target": "rhino-7", "weight": 123}, {"source": "itwin-5-8", "target": "rhino-8", "weight": 128}, {"source": "itwin-5-8", "target": "sketchup-2025", "weight": 37}, {"source": "itwin-5-8", "target": "sketchup-2026", "weight": 37}, {"source": "itwin-5-8", "target": "speckle-viewer", "weight": 25}, {"source": "itwin-5-8", "target": "tekla-2025", "weight": 33}, {"source": "itwin-5-8", "target": "tekla-2026", "weight": 34}, {"source": "itwin-5-8", "target": "thatopen-components", "weight": 12}, {"source": "itwin-5-8", "target": "three", "weight": 90}, {"source": "itwin-5-8", "target": "tsd-25", "weight": 3}, {"source": "itwin-5-8", "target": "tsd-26", "weight": 3}, {"source": "itwin-5-8", "target": "web-ifc", "weight": 4}, {"source": "itwin-5-8", "target": "xeokit", "weight": 11}, {"source": "itwin-5-9", "target": "revit-2025", "weight": 122}, {"source": "itwin-5-9", "target": "revit-2026", "weight": 122}, {"source": "itwin-5-9", "target": "rhino-7", "weight": 123}, {"source": "itwin-5-9", "target": "rhino-8", "weight": 128}, {"source": "itwin-5-9", "target": "sketchup-2025", "weight": 37}, {"source": "itwin-5-9", "target": "sketchup-2026", "weight": 37}, {"source": "itwin-5-9", "target": "speckle-viewer", "weight": 25}, {"source": "itwin-5-9", "target": "tekla-2025", "weight": 33}, {"source": "itwin-5-9", "target": "tekla-2026", "weight": 34}, {"source": "itwin-5-9", "target": "thatopen-components", "weight": 12}, {"source": "itwin-5-9", "target": "three", "weight": 90}, {"source": "itwin-5-9", "target": "tsd-25", "weight": 3}, {"source": "itwin-5-9", "target": "tsd-26", "weight": 3}, {"source": "itwin-5-9", "target": "web-ifc", "weight": 4}, {"source": "itwin-5-9", "target": "xeokit", "weight": 11}, {"source": "revit-2025", "target": "revit-2026", "weight": 4050}, {"source": "revit-2025", "target": "rhino-7", "weight": 245}, {"source": "revit-2025", "target": "rhino-8", "weight": 264}, {"source": "revit-2025", "target": "sketchup-2025", "weight": 76}, {"source": "revit-2025", "target": "sketchup-2026", "weight": 76}, {"source": "revit-2025", "target": "speckle-viewer", "weight": 24}, {"source": "revit-2025", "target": "tekla-2025", "weight": 90}, {"source": "revit-2025", "target": "tekla-2026", "weight": 90}, {"source": "revit-2025", "target": "thatopen-components", "weight": 25}, {"source": "revit-2025", "target": "three", "weight": 92}, {"source": "revit-2025", "target": "tsd-25", "weight": 10}, {"source": "revit-2025", "target": "tsd-26", "weight": 10}, {"source": "revit-2025", "target": "web-ifc", "weight": 5}, {"source": "revit-2025", "target": "xeokit", "weight": 12}, {"source": "revit-2026", "target": "rhino-7", "weight": 248}, {"source": "revit-2026", "target": "rhino-8", "weight": 268}, {"source": "revit-2026", "target": "sketchup-2025", "weight": 77}, {"source": "revit-2026", "target": "sketchup-2026", "weight": 77}, {"source": "revit-2026", "target": "speckle-viewer", "weight": 24}, {"source": "revit-2026", "target": "tekla-2025", "weight": 91}, {"source": "revit-2026", "target": "tekla-2026", "weight": 91}, {"source": "revit-2026", "target": "thatopen-components", "weight": 23}, {"source": "revit-2026", "target": "three", "weight": 94}, {"source": "revit-2026", "target": "tsd-25", "weight": 11}, {"source": "revit-2026", "target": "tsd-26", "weight": 11}, {"source": "revit-2026", "target": "web-ifc", "weight": 6}, {"source": "revit-2026", "target": "xeokit", "weight": 12}, {"source": "rhino-7", "target": "rhino-8", "weight": 3567}, {"source": "rhino-7", "target": "sketchup-2025", "weight": 110}, {"source": "rhino-7", "target": "sketchup-2026", "weight": 110}, {"source": "rhino-7", "target": "slack", "weight": 3}, {"source": "rhino-7", "target": "speckle-viewer", "weight": 37}, {"source": "rhino-7", "target": "tekla-2025", "weight": 80}, {"source": "rhino-7", "target": "tekla-2026", "weight": 81}, {"source": "rhino-7", "target": "thatopen-components", "weight": 21}, {"source": "rhino-7", "target": "three", "weight": 112}, {"source": "rhino-7", "target": "tsd-25", "weight": 5}, {"source": "rhino-7", "target": "tsd-26", "weight": 5}, {"source": "rhino-7", "target": "web-ifc", "weight": 6}, {"source": "rhino-7", "target": "xeokit", "weight": 10}, {"source": "rhino-8", "target": "sketchup-2025", "weight": 120}, {"source": "rhino-8", "target": "sketchup-2026", "weight": 120}, {"source": "rhino-8", "target": "slack", "weight": 4}, {"source": "rhino-8", "target": "speckle-viewer", "weight": 38}, {"source": "rhino-8", "target": "tekla-2025", "weight": 80}, {"source": "rhino-8", "target": "tekla-2026", "weight": 81}, {"source": "rhino-8", "target": "thatopen-components", "weight": 22}, {"source": "rhino-8", "target": "three", "weight": 119}, {"source": "rhino-8", "target": "tsd-25", "weight": 8}, {"source": "rhino-8", "target": "tsd-26", "weight": 8}, {"source": "rhino-8", "target": "web-ifc", "weight": 6}, {"source": "rhino-8", "target": "xeokit", "weight": 11}, {"source": "sketchup-2025", "target": "sketchup-2026", "weight": 1417}, {"source": "sketchup-2025", "target": "speckle-viewer", "weight": 15}, {"source": "sketchup-2025", "target": "tekla-2025", "weight": 34}, {"source": "sketchup-2025", "target": "tekla-2026", "weight": 34}, {"source": "sketchup-2025", "target": "thatopen-components", "weight": 9}, {"source": "sketchup-2025", "target": "three", "weight": 33}, {"source": "sketchup-2025", "target": "web-ifc", "weight": 4}, {"source": "sketchup-2025", "target": "xeokit", "weight": 4}, {"source": "sketchup-2026", "target": "speckle-viewer", "weight": 15}, {"source": "sketchup-2026", "target": "tekla-2025", "weight": 34}, {"source": "sketchup-2026", "target": "tekla-2026", "weight": 34}, {"source": "sketchup-2026", "target": "thatopen-components", "weight": 9}, {"source": "sketchup-2026", "target": "three", "weight": 33}, {"source": "sketchup-2026", "target": "web-ifc", "weight": 4}, {"source": "sketchup-2026", "target": "xeokit", "weight": 4}, {"source": "speckle-viewer", "target": "tekla-2025", "weight": 14}, {"source": "speckle-viewer", "target": "tekla-2026", "weight": 14}, {"source": "speckle-viewer", "target": "thatopen-components", "weight": 19}, {"source": "speckle-viewer", "target": "three", "weight": 68}, {"source": "speckle-viewer", "target": "xeokit", "weight": 6}, {"source": "tekla-2025", "target": "tekla-2026", "weight": 1170}, {"source": "tekla-2025", "target": "thatopen-components", "weight": 10}, {"source": "tekla-2025", "target": "three", "weight": 27}, {"source": "tekla-2025", "target": "web-ifc", "weight": 4}, {"source": "tekla-2026", "target": "thatopen-components", "weight": 10}, {"source": "tekla-2026", "target": "three", "weight": 28}, {"source": "tekla-2026", "target": "tsd-25", "weight": 3}, {"source": "tekla-2026", "target": "tsd-26", "weight": 3}, {"source": "tekla-2026", "target": "web-ifc", "weight": 4}, {"source": "thatopen-components", "target": "three", "weight": 30}, {"source": "three", "target": "tsd-25", "weight": 4}, {"source": "three", "target": "tsd-26", "weight": 4}, {"source": "three", "target": "web-ifc", "weight": 3}, {"source": "three", "target": "xeokit", "weight": 22}, {"source": "tsd-25", "target": "tsd-26", "weight": 210}];
+
+// ---- Layout / state ----
+const state = {
+  threshold: 5,
+  repulsion: 1000,
+  linkStiffness: 0.01,
+  verticals: {},
+  vendors: {},
+};
+
+// Initialize filter state from data
+new Set(RAW_AGENTS.map(a => a.vertical)).forEach(v => state.verticals[v] = true);
+new Set(RAW_AGENTS.map(a => a.vendor)).forEach(v => state.vendors[v] = true);
+
+const canvas = document.getElementById('cv');
+const ctx = canvas.getContext('2d');
+function fit() {
+  const w = canvas.parentElement.clientWidth;
+  const h = canvas.parentElement.clientHeight;
+  canvas.width = w * devicePixelRatio;
+  canvas.height = h * devicePixelRatio;
+  canvas.style.width = w + 'px';
+  canvas.style.height = h + 'px';
+  ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+}
+fit();
+window.addEventListener('resize', fit);
+
+// Position store
+const positions = new Map();
+function W() { return canvas.width / devicePixelRatio; }
+function H() { return canvas.height / devicePixelRatio; }
+RAW_AGENTS.forEach((a, i) => {
+  const angle = (i / RAW_AGENTS.length) * Math.PI * 2;
+  positions.set(a.id, {
+    x: W()/2 + Math.cos(angle) * 200,
+    y: H()/2 + Math.sin(angle) * 200,
+    vx: 0, vy: 0,
+  });
+});
+
+// ---- Filtering ----
+function visibleAgents() {
+  return RAW_AGENTS.filter(a => state.verticals[a.vertical] && state.vendors[a.vendor]);
+}
+function visibleEdges(agents) {
+  const ids = new Set(agents.map(a => a.id));
+  return RAW_EDGES.filter(e => ids.has(e.source) && ids.has(e.target) && e.weight >= state.threshold);
+}
+
+// ---- Force simulation ----
+function step() {
+  const agents = visibleAgents();
+  const edges = visibleEdges(agents);
+  const cx = W()/2, cy = H()/2;
+
+  // Repulsion (only between visible nodes — O(n^2) but n is small)
+  for (let i = 0; i < agents.length; i++) {
+    const a = positions.get(agents[i].id);
+    for (let j = i+1; j < agents.length; j++) {
+      const b = positions.get(agents[j].id);
+      let dx = a.x - b.x, dy = a.y - b.y;
+      const d2 = Math.max(100, dx*dx + dy*dy);
+      const force = state.repulsion / d2;
+      const d = Math.sqrt(d2);
+      const fx = (dx/d) * force, fy = (dy/d) * force;
+      a.vx += fx; a.vy += fy;
+      b.vx -= fx; b.vy -= fy;
+    }
+    // Centering force
+    a.vx += (cx - a.x) * 0.001;
+    a.vy += (cy - a.y) * 0.001;
+  }
+  // Edge attraction
+  for (const e of edges) {
+    const a = positions.get(e.source);
+    const b = positions.get(e.target);
+    if (!a || !b) continue;
+    const dx = b.x - a.x, dy = b.y - a.y;
+    const d = Math.sqrt(dx*dx + dy*dy) || 1;
+    const target = 120 + Math.max(0, 80 - e.weight);
+    const force = state.linkStiffness * (d - target) * Math.log(1 + e.weight);
+    const fx = (dx/d) * force, fy = (dy/d) * force;
+    a.vx += fx; a.vy += fy;
+    b.vx -= fx; b.vy -= fy;
+  }
+  // Integrate + damp
+  for (const a of agents) {
+    const p = positions.get(a.id);
+    if (p.dragging) continue;
+    p.vx *= 0.85; p.vy *= 0.85;
+    p.x += p.vx; p.y += p.vy;
+    // Keep within bounds
+    p.x = Math.max(40, Math.min(W()-40, p.x));
+    p.y = Math.max(40, Math.min(H()-40, p.y));
+  }
+}
+
+function nodeRadius(a) {
+  return 5 + Math.sqrt(a.skills || 1) * 1.2;
+}
+
+function draw() {
+  ctx.clearRect(0, 0, W(), H());
+  const agents = visibleAgents();
+  const edges = visibleEdges(agents);
+
+  // Edges
+  for (const e of edges) {
+    const a = positions.get(e.source);
+    const b = positions.get(e.target);
+    if (!a || !b) continue;
+    const opacity = Math.min(0.7, 0.1 + e.weight / 100);
+    ctx.strokeStyle = `rgba(96,165,250,${opacity})`;
+    ctx.lineWidth = Math.min(3, 0.3 + Math.log(1 + e.weight) / 2);
+    ctx.beginPath();
+    ctx.moveTo(a.x, a.y);
+    ctx.lineTo(b.x, b.y);
+    ctx.stroke();
+  }
+  // Nodes
+  for (const a of agents) {
+    const p = positions.get(a.id);
+    const r = nodeRadius(a);
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, r, 0, Math.PI*2);
+    ctx.fillStyle = a.color;
+    ctx.fill();
+    ctx.strokeStyle = '#0a0a0a';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    // Label
+    ctx.fillStyle = '#e5e5e5';
+    ctx.font = '11px monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.fillText(a.id, p.x, p.y + r + 4);
+  }
+}
+
+let animFrame;
+function loop() {
+  step();
+  draw();
+  animFrame = requestAnimationFrame(loop);
+}
+loop();
+
+// ---- Interaction ----
+const tip = document.getElementById('tip');
+canvas.addEventListener('mousemove', (e) => {
+  const rect = canvas.getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+  let hit = null;
+  for (const a of visibleAgents()) {
+    const p = positions.get(a.id);
+    const dx = p.x - mx, dy = p.y - my;
+    if (dx*dx + dy*dy <= nodeRadius(a) * nodeRadius(a)) { hit = a; break; }
+  }
+  if (drag.id) {
+    const p = positions.get(drag.id);
+    p.x = mx; p.y = my; p.vx = 0; p.vy = 0;
+    p.dragging = true;
+  }
+  if (hit) {
+    tip.style.display = 'block';
+    tip.style.left = (mx + 16) + 'px';
+    tip.style.top = (my + 16) + 'px';
+    tip.innerHTML = `<div class="t-title">${hit.displayName}</div>
+      <div class="t-meta">${hit.id} · ${hit.vendor} · ${hit.vertical}</div>
+      <div class="t-meta">${hit.skills} skills · ${hit.commands} cmds</div>`;
+  } else {
+    tip.style.display = 'none';
+  }
+});
+const drag = { id: null };
+canvas.addEventListener('mousedown', (e) => {
+  const rect = canvas.getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+  for (const a of visibleAgents()) {
+    const p = positions.get(a.id);
+    const dx = p.x - mx, dy = p.y - my;
+    if (dx*dx + dy*dy <= nodeRadius(a) * nodeRadius(a)) {
+      drag.id = a.id;
+      break;
+    }
+  }
+});
+canvas.addEventListener('mouseup', () => {
+  if (drag.id) {
+    const p = positions.get(drag.id);
+    p.dragging = false;
+  }
+  drag.id = null;
+});
+
+// ---- Controls ----
+function updateRange(id, key, fmt) {
+  const el = document.getElementById(id);
+  const out = document.getElementById(id + '-v');
+  el.addEventListener('input', () => {
+    state[key] = parseFloat(el.value) * (key === 'linkStiffness' ? 0.001 : 1);
+    out.textContent = fmt ? fmt(state[key]) : el.value;
+    updatePrompt();
+  });
+}
+updateRange('thr', 'threshold');
+updateRange('rep', 'repulsion');
+updateRange('link', 'linkStiffness', v => v.toFixed(3));
+
+function buildFilterList(containerId, items, stateKey) {
+  const c = document.getElementById(containerId);
+  c.innerHTML = '';
+  items.forEach(({key, label, color, count}) => {
+    const row = document.createElement('label');
+    row.className = 'row';
+    row.innerHTML = `<input type="checkbox" ${state[stateKey][key] ? 'checked' : ''}>
+      ${color ? `<span class="swatch" style="background:${color}"></span>` : ''}
+      <span class="label">${label}</span>
+      <span class="count">${count}</span>`;
+    row.querySelector('input').addEventListener('change', (e) => {
+      state[stateKey][key] = e.target.checked;
+      updatePrompt();
+    });
+    c.appendChild(row);
+  });
+}
+
+function rebuildFilters() {
+  const vertCounts = {};
+  const vendorCounts = {};
+  RAW_AGENTS.forEach(a => {
+    vertCounts[a.vertical] = (vertCounts[a.vertical] || 0) + 1;
+    vendorCounts[a.vendor] = (vendorCounts[a.vendor] || 0) + 1;
+  });
+  buildFilterList('verticals',
+    Object.entries(vertCounts).sort().map(([k, c]) => ({key: k, label: k, count: c})),
+    'verticals');
+  buildFilterList('vendors',
+    Object.entries(vendorCounts).sort().map(([k, c]) => {
+      const a = RAW_AGENTS.find(a => a.vendor === k);
+      return {key: k, label: k, color: a?.color, count: c};
+    }),
+    'vendors');
+}
+rebuildFilters();
+
+// ---- Presets ----
+function applyPreset(name) {
+  const allVerts = Object.keys(state.verticals);
+  const allVendors = Object.keys(state.vendors);
+  allVerts.forEach(v => state.verticals[v] = true);
+  allVendors.forEach(v => state.vendors[v] = true);
+
+  if (name === 'bim') {
+    state.threshold = 10;
+    document.getElementById('thr').value = 10;
+    document.getElementById('thr-v').textContent = 10;
+  } else if (name === 'cad') {
+    Object.keys(state.verticals).forEach(v => state.verticals[v] = (v === 'Architecture'));
+  } else if (name === 'viz') {
+    Object.keys(state.verticals).forEach(v => state.verticals[v] = (v === 'Visualization'));
+  } else if (name === 'structural') {
+    Object.keys(state.verticals).forEach(v => state.verticals[v] = (v === 'Engineering'));
+  }
+  rebuildFilters();
+  updatePrompt();
+}
+document.querySelectorAll('[data-preset]').forEach(btn => {
+  btn.addEventListener('click', () => applyPreset(btn.dataset.preset));
+});
+
+// ---- Stats ----
+function updateStats() {
+  const agents = visibleAgents();
+  const edges = visibleEdges(agents);
+  const totalCmds = agents.reduce((a, b) => a + b.commands, 0);
+  document.getElementById('stats').innerHTML =
+    `${agents.length}/${RAW_AGENTS.length} agents · ${edges.length} edges · ${totalCmds.toLocaleString()} cmds in view`;
+}
+
+// ---- Prompt output ----
+function updatePrompt() {
+  updateStats();
+  const visibleVerts = Object.entries(state.verticals).filter(([_, v]) => v).map(([k]) => k);
+  const visibleVendors = Object.entries(state.vendors).filter(([_, v]) => v).map(([k]) => k);
+  const allVerts = visibleVerts.length === Object.keys(state.verticals).length;
+  const allVendors = visibleVendors.length === Object.keys(state.vendors).length;
+  const parts = [];
+  if (!allVerts) parts.push(`only the ${visibleVerts.join(' + ')} vertical${visibleVerts.length > 1 ? 's' : ''}`);
+  if (!allVendors) parts.push(`only vendor${visibleVendors.length > 1 ? 's' : ''} ${visibleVendors.join(' + ')}`);
+  if (state.threshold !== 5) parts.push(`edge threshold ${state.threshold} shared method-stems`);
+
+  let text;
+  if (parts.length === 0) {
+    text = `Show me how the AWARE substrate's 39 agents connect across all 5 verticals. Default threshold (5 shared command-name stems).`;
+  } else {
+    text = `Show me the AWARE substrate force-graph view restricted to ${parts.join('; ')}. Highlight which agents are tightly coupled by shared API surface — those are the candidates for cross-vendor composition in an aware app.`;
+  }
+  document.getElementById('prompt').textContent = text;
+}
+updatePrompt();
+
+// ---- Copy ----
+document.getElementById('copy').addEventListener('click', async () => {
+  const btn = document.getElementById('copy');
+  await navigator.clipboard.writeText(document.getElementById('prompt').textContent);
+  btn.textContent = 'Copied!';
+  btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+});
+</script>
+</body>
+</html>
