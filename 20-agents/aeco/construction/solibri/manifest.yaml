@@ -1,0 +1,215 @@
+agent:        solibri
+version:      9.13.0
+display-name: Solibri Office
+description: |
+  Rule-based IFC model checking — the credible BEP-enforcement and
+  building-code-compliance engine in AECO. Wraps the Solibri REST API
+  (Solibri Anywhere / Solibri Inside Desktop) for headless rule-set
+  execution + checking-result extraction + BCF report generation.
+
+  Persona audit (BIM manager): "Solibri Office — rule-based model
+  checking (the only credible IFC validator that actually does code/BEP
+  checks). My BEPs reference Solibri rulesets. Without it, 'validate
+  against BEP' is impossible."
+
+  This agent does not embed Solibri's rule library — it triggers
+  rulesets already installed in the user's Solibri instance.
+
+stateful: false
+
+vendor:   solibri
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/construction/solibri
+keywords: [aware, solibri, ifc, validation, bep, model-checking, construction]
+
+provenance:
+  generated-by:     hand-curated
+  generator-version: 0.13.0
+  refined-by:       [pawellisowski]
+  generated-at:     2026-05-17T17:35:00Z
+
+requires:
+  software:
+    - solibri-office@9.13.x
+  network:
+    - http://localhost:10876        # Solibri local REST API
+  secrets:
+    - solibri                       # API key
+  filesystem:
+    - read:  '*.ifc,*.ifczip,*.smc'
+    - write: '*.bcf,*.bcfzip,*.csv,*.xlsx'
+
+transport:
+  cli:
+    binary: aware-solibri
+
+commands:
+
+  # ---- Model + ruleset open --------------------------------------------
+
+  model.open:
+    lifecycle: single
+    category: curated
+    description: |
+      Open an IFC (or Solibri Model `.smc`) into Solibri. Required
+      pre-flight for every check-running verb.
+    inputs:
+      path:
+        type: string
+        description: Absolute or workspace-relative path.
+    outputs:
+      type: single
+      schema:
+        model-id: string
+        ifc-schema: string
+        entity-count: number
+
+  ruleset.load:
+    lifecycle: single
+    category: curated
+    description: |
+      Load a Solibri ruleset (`.cset`) — the BEP-encoded checks. The
+      ruleset must already exist in the Solibri ruleset library
+      (managed via the Solibri UI).
+    inputs:
+      name:
+        type: string
+        description: Ruleset display name.
+    outputs:
+      type: single
+      schema:
+        ruleset-id:  string
+        rule-count:  number
+
+  # ---- Checking --------------------------------------------------------
+
+  check.run:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Run a loaded ruleset against an opened model. Returns the count by
+      severity (critical / moderate / low / accepted / unchecked).
+    inputs:
+      model-id:   string
+      ruleset-id: string
+    outputs:
+      type: single
+      schema:
+        results-id: string
+        summary:
+          critical: number
+          moderate: number
+          low:      number
+          accepted: number
+          unchecked: number
+
+  check.list-results:
+    lifecycle: single
+    category: curated
+    description: |
+      List individual checking results. Optional filter by severity /
+      ruleset / rule. Read-only.
+    inputs:
+      results-id: string
+      severity:
+        type: enum
+        values: [any, critical, moderate, low, accepted, unchecked]
+        default: any
+      rule-uuid:
+        type: string
+        description: Optional — filter to a single rule.
+    outputs:
+      type: single
+      schema:
+        results:
+          type: array
+          items:
+            issue-id:     string
+            rule-name:    string
+            severity:     string
+            element-guid: string
+            description:  string
+
+  # ---- Export ----------------------------------------------------------
+
+  check.export-bcf:
+    lifecycle: single
+    category: curated
+    description: |
+      Export checking results to BCF 2.1 / 3.0 — one topic per issue,
+      with viewpoint + severity-mapped status. Read-only against the
+      Solibri checking database.
+    inputs:
+      results-id: string
+      output-path: string
+      bcf-version:
+        type: enum
+        values: [2.1, 3.0]
+        default: 2.1
+      severity:
+        type: enum
+        values: [any, critical, moderate, low]
+        default: any
+    outputs:
+      type: single
+      schema:
+        path:        string
+        issue-count: number
+
+  check.export-csv:
+    lifecycle: single
+    category: curated
+    description: |
+      Export checking results as CSV — for QA dashboards / Excel
+      reports / Power BI ingestion. Read-only.
+    inputs:
+      results-id: string
+      output-path: string
+    outputs:
+      type: single
+      schema:
+        path:      string
+        row-count: number
+
+  # ---- Cross-discipline + classification -------------------------------
+
+  classification.export:
+    lifecycle: single
+    category: curated
+    description: |
+      Export Solibri's classification of model elements (e.g. by IFC
+      class, by Solibri-derived discipline) as CSV. Used by BEP-compliance
+      audits: which elements are tagged Walls? Floors? Spaces? Read-only.
+    inputs:
+      model-id: string
+      classification:
+        type: enum
+        values: [ifc, discipline, layer, custom]
+        default: ifc
+      output-path: string
+    outputs:
+      type: single
+      schema:
+        path:      string
+        row-count: number
+
+  cobie.export:
+    lifecycle: single
+    category: curated
+    description: |
+      Export a COBie spreadsheet from the model using Solibri's COBie
+      mapping. The handover deliverable for facilities-management
+      consumers (asset registers, maintenance schedules). Read-only.
+    inputs:
+      model-id: string
+      output-path: string
+    outputs:
+      type: single
+      schema:
+        path:       string
+        sheet-count: number
+
+skills:
+  - rulesets-and-beps.md
+  - cobie-and-handover.md

@@ -1,0 +1,318 @@
+agent:        navisworks-2026
+version:      2026.0.0
+display-name: Autodesk Navisworks Manage 2026
+description: |
+  Federation + clash detection + 4D simulation for AECO models. Wraps the
+  Autodesk.Navisworks.Api .NET assemblies (Autodesk.Navisworks.Api,
+  Autodesk.Navisworks.Clash, Autodesk.Navisworks.Saved, Autodesk.Navisworks.Timeliner)
+  via the Roamer plugin host.
+
+  The BIM-manager's daily tool — Monday clash digest, Friday federation
+  publish, BCF round-trip, viewpoint capture for ACC Issues. Persona
+  audit (2026-05-17) named this as the #1 missing agent.
+
+  This is the **curated workflow surface** — 12 verbs covering the 80%
+  of BIM-coordination workflows. The full 3,500+ method API is exposed
+  separately as `navisworks-2026-raw` (machine-generated from NuGet,
+  not bundled yet — `aware build agent --from-nuget Autodesk.Navisworks.Api`
+  produces it on demand).
+
+stateful: false
+
+vendor:   autodesk
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/construction/navisworks-2026
+keywords: [aware, navisworks, autodesk, federation, clash-detection, bim-coordination, construction, bcf]
+
+provenance:
+  generated-by:     hand-curated
+  generator-version: 0.13.0
+  refined-by:       [pawellisowski]
+  generated-at:     2026-05-17T17:30:00Z
+
+requires:
+  software:
+    - autodesk-navisworks-manage@2026.x
+  filesystem:
+    - read: '*.nwf,*.nwd,*.nwc,*.ifc,*.rvt,*.dgn'
+    - write: '*.nwf,*.nwd,*.bcf,*.bcfzip,*.xml,*.csv'
+
+transport:
+  cli:
+    binary: aware-navisworks-2026
+
+commands:
+
+  # ---- Federation ------------------------------------------------------
+
+  federation.open:
+    lifecycle: single
+    category: curated
+    description: |
+      Open a Navisworks federation document (.nwf, .nwd, .nwc). Required
+      pre-flight for every other Navisworks verb in a run.
+    inputs:
+      path:
+        type: string
+        description: Absolute or workspace-relative path.
+    outputs:
+      type: single
+      schema:
+        document-id: string
+        model-count: number
+        item-count:  number
+        version:     string
+
+  federation.append-model:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Append a reference model (.rvt / .ifc / .dwg / .dgn / .nwc) to the
+      active federation. Honors shared coordinates if the source format
+      carries them.
+    inputs:
+      document-id: string
+      path:        string
+      mode:
+        type: enum
+        values: [append, merge, replace]
+        default: append
+    outputs:
+      type: single
+      schema:
+        added-model: string
+        item-count-delta: number
+
+  federation.save:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Save the active federation. Choose .nwf (federation reference,
+      models stay external) or .nwd (consolidated, single file).
+    inputs:
+      document-id: string
+      path:
+        type: string
+        description: Output path. Extension determines format.
+      format:
+        type: enum
+        values: [nwf, nwd]
+        default: nwf
+    outputs:
+      type: single
+      schema:
+        path:       string
+        size-bytes: number
+
+  # ---- Clash detection -------------------------------------------------
+
+  clash.run-test:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Run a single named clash test. The test must already be defined
+      in the federation (typically via the Clash Detective UI). Returns
+      the count by status (new / active / reviewed / approved / resolved).
+    inputs:
+      document-id: string
+      test-name:
+        type: string
+        description: |
+          Name of the ClashTest. Use clash.list-tests if uncertain.
+    outputs:
+      type: single
+      schema:
+        test-name: string
+        results:
+          new:      number
+          active:   number
+          reviewed: number
+          approved: number
+          resolved: number
+
+  clash.run-all:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Run every defined ClashTest in the federation. The Monday-morning
+      coordination pass.
+    inputs:
+      document-id: string
+    outputs:
+      type: single
+      schema:
+        tests:
+          type: array
+          items:
+            test-name: string
+            results:
+              new:      number
+              active:   number
+              reviewed: number
+              approved: number
+              resolved: number
+
+  clash.list-tests:
+    lifecycle: single
+    category: curated
+    description: List every ClashTest defined in the federation. Read-only.
+    inputs:
+      document-id: string
+    outputs:
+      type: single
+      schema:
+        tests:
+          type: array
+          items:
+            test-name:    string
+            test-type:    string  # Hard | Hard (Conservative) | Clearance | Duplicate | TimeBased
+            last-run-at:  string
+
+  clash.export:
+    lifecycle: single
+    category: curated
+    description: |
+      Export clash results to a structured file. The "ACC Issues
+      attachment" / "consultant deliverable" primitive. Supports BCF
+      (preferred for round-trip), XML (Navisworks legacy), HTML, CSV.
+    inputs:
+      document-id: string
+      test-names:
+        type: array
+        items: string
+        description: Optional. Empty = all tests.
+      format:
+        type: enum
+        values: [bcf, xml, html, csv]
+        default: bcf
+      output-path: string
+    outputs:
+      type: single
+      schema:
+        path:        string
+        clash-count: number
+        size-bytes:  number
+
+  # ---- Viewpoints ------------------------------------------------------
+
+  viewpoint.capture-current:
+    lifecycle: single
+    category: curated
+    description: |
+      Capture the current Navisworks view as a PNG. Used by the BIM-
+      manager Monday-clash-digest flow to attach a screenshot to a Teams
+      post or ACC Issue.
+    inputs:
+      document-id:  string
+      output-path:  string
+      width-pixels:
+        type: number
+        default: 1920
+      height-pixels:
+        type: number
+        default: 1080
+    outputs:
+      type: single
+      schema:
+        path:         string
+        width-pixels:  number
+        height-pixels: number
+
+  viewpoint.from-clash:
+    lifecycle: single
+    category: curated
+    description: |
+      Capture a viewpoint focused on a specific clash result, with the
+      two clashing elements highlighted and other items dimmed. Used to
+      generate the per-issue screenshot in a BCF export.
+    inputs:
+      document-id:  string
+      test-name:    string
+      clash-result-name: string
+      output-path:  string
+    outputs:
+      type: single
+      schema:
+        path:        string
+        camera:
+          eye:    array
+          target: array
+          up:     array
+
+  viewpoint.list-saved:
+    lifecycle: single
+    category: curated
+    description: List every saved viewpoint in the federation. Read-only.
+    inputs:
+      document-id: string
+    outputs:
+      type: single
+      schema:
+        viewpoints:
+          type: array
+          items:
+            name:   string
+            folder: string
+            guid:   string
+
+  # ---- Search / selection ---------------------------------------------
+
+  selection.by-property:
+    lifecycle: single
+    category: curated
+    description: |
+      Find every ModelItem where a property matches a value. The
+      coordination-side equivalent of the Revit element.by-parameter-value
+      verb. Read-only.
+    inputs:
+      document-id: string
+      category:
+        type: string
+        description: e.g. "Element", "LcOaNode". Optional.
+      property-name:
+        type: string
+        description: Display name (e.g. "Material", "Family").
+      operator:
+        type: enum
+        values: [equals, contains, is-null, is-not-null]
+        default: equals
+      value:
+        type: string
+    outputs:
+      type: single
+      schema:
+        items:
+          type: array
+          items:
+            path:       string
+            display-name: string
+
+  # ---- 4D / Timeliner --------------------------------------------------
+
+  timeliner.export-schedule:
+    lifecycle: single
+    category: curated
+    description: |
+      Export the Timeliner (4D) schedule as MS Project XML, CSV, or
+      Primavera P6 XML. Read-only.
+    inputs:
+      document-id: string
+      format:
+        type: enum
+        values: [msproject-xml, csv, p6-xml]
+        default: csv
+      output-path: string
+    outputs:
+      type: single
+      schema:
+        path:       string
+        task-count: number
+
+skills:
+  - federation-and-coordinates.md
+  - clash-detection-workflow.md
+  - bcf-roundtrip.md

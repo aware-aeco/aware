@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-05-16T16:40:00Z",
+  "updated-at": "2026-05-17T17:50:00Z",
   "agents": {
     "tekla": {
       "versions": {
@@ -313,6 +313,38 @@
           "subdir": "aware-main/20-agents/_core/aware-skill-builder"
         }
       }
+    },
+    "navisworks-2026": {
+      "versions": {
+        "2026.0.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/construction/navisworks-2026"
+        }
+      }
+    },
+    "solibri": {
+      "versions": {
+        "9.13.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/construction/solibri"
+        }
+      }
+    },
+    "bcf-file": {
+      "versions": {
+        "1.0.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/construction/bcf-file"
+        }
+      }
+    },
+    "ifc-inspector": {
+      "versions": {
+        "1.0.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/construction/ifc-inspector"
+        }
+      }
     }
   },
   "bundles": {
@@ -357,7 +389,11 @@
         "google-workspace@1.0.0",
         "html-report@1.0.0",
         "aware-agent-builder@0.1.0",
-        "aware-skill-builder@0.1.0"
+        "aware-skill-builder@0.1.0",
+        "navisworks-2026@2026.0.0",
+        "solibri@9.13.0",
+        "bcf-file@1.0.0",
+        "ifc-inspector@1.0.0"
       ]
     }
   }

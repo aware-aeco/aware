@@ -1,0 +1,259 @@
+agent:        ifc-inspector
+version:      1.0.0
+display-name: IFC Inspector (web-ifc parser)
+description: |
+  Headless IFC analysis — entity counts, GUID lists, Psets extraction,
+  georeferencing checks, validation against IFC 4 / IFC 4.3 schemas.
+  Wraps the `web-ifc` WASM parser (the same engine the `web-ifc`
+  visualization agent uses for rendering) but exposes data-only ops
+  with no viewer concerns.
+
+  Persona audit (BIM manager): "IfcOpenShell or BIMServer-style IFC
+  inspector — `web-ifc` exists in `visualization/` but that's a
+  renderer, not an IFC validator/extractor. I need to query IFC files:
+  count IfcSpace, list GUIDs, check IfcSite georeferencing, extract
+  Psets for COBie."
+
+  This agent solves that need. Pair with `solibri` for rule-based
+  checking and `bcf-file` for round-trips.
+
+stateful: false
+
+vendor:   aware-aeco
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/construction/ifc-inspector
+keywords: [aware, ifc, validation, inspection, model-checking, construction, cobie]
+
+provenance:
+  generated-by:     hand-curated
+  generator-version: 0.13.0
+  refined-by:       [pawellisowski]
+  generated-at:     2026-05-17T17:50:00Z
+
+requires:
+  filesystem:
+    - read:  '*.ifc,*.ifczip'
+    - write: '*.csv,*.json'
+
+transport:
+  cli:
+    binary: aware-ifc-inspector
+
+commands:
+
+  # ---- Basic file info -------------------------------------------------
+
+  file.info:
+    lifecycle: single
+    category: curated
+    description: |
+      Read the IFC header without loading the full geometry — fast.
+      Returns schema version, source application, total entity count,
+      file size. The "is this IFC valid enough to bother federating?"
+      pre-flight verb. Read-only.
+    inputs:
+      path:
+        type: string
+        description: Absolute or workspace-relative path.
+    outputs:
+      type: single
+      schema:
+        path:           string
+        schema:         string  # IFC2X3 | IFC4 | IFC4X3
+        source-app:     string  # FILE_NAME's "OriginatingSystem"
+        timestamp:      string  # FILE_NAME's "TimeStamp"
+        entity-count:   number
+        size-bytes:     number
+
+  # ---- Entity-level queries -------------------------------------------
+
+  entities.count-by-class:
+    lifecycle: single
+    category: curated
+    description: |
+      Count entities grouped by IFC class. The "is this model what
+      I expect?" sanity check — should the architectural IFC have 5000
+      IfcWalls or 50? Read-only.
+    inputs:
+      path: string
+      filter:
+        type: string
+        description: |
+          Optional substring match against the class name
+          (e.g. `Ifc` matches all; `IfcSpace` only spaces).
+    outputs:
+      type: single
+      schema:
+        counts:
+          type: array
+          items:
+            class: string
+            count: number
+
+  entities.list-guids:
+    lifecycle: single
+    category: curated
+    description: |
+      List GUIDs of every entity of a given class. The "do my MEP IFC
+      GUIDs match the architect's room IDs?" cross-tool verb. Read-only.
+    inputs:
+      path:  string
+      class: string
+    outputs:
+      type: single
+      schema:
+        class: string
+        guids:
+          type: array
+          items:
+            guid: string
+            name: string
+
+  entities.get-by-guid:
+    lifecycle: single
+    category: curated
+    description: |
+      Resolve a single GUID to its full entity record (class, Psets,
+      placement, geometry summary). Used for spot-checks before clash
+      reports. Read-only.
+    inputs:
+      path: string
+      guid: string
+    outputs:
+      type: single
+      schema:
+        class:        string
+        name:         string
+        description:  string
+        placement:
+          x: number
+          y: number
+          z: number
+        psets:
+          type: array
+          items:
+            name:        string
+            properties:  object
+
+  # ---- Property sets ---------------------------------------------------
+
+  psets.export:
+    lifecycle: single
+    category: curated
+    description: |
+      Export all Psets for every entity of a given class as CSV. The
+      door-schedule / window-schedule / fire-rating extraction verb.
+      Required for COBie deliverables. Read-only.
+    inputs:
+      path:        string
+      class:       string
+      pset-names:
+        type: array
+        items: string
+        description: Optional — empty = all Psets on the class.
+      output-csv:  string
+    outputs:
+      type: single
+      schema:
+        path:      string
+        row-count: number
+        columns:   array
+
+  psets.find-missing:
+    lifecycle: single
+    category: curated
+    description: |
+      For every entity of a given class, report which required Psets /
+      properties are missing or empty. The "BEP-compliance pre-check"
+      verb (lightweight alternative to Solibri when you just need a
+      yes/no on Psets). Read-only.
+    inputs:
+      path:  string
+      class: string
+      required:
+        type: array
+        items:
+          pset:       string
+          properties: array
+    outputs:
+      type: single
+      schema:
+        missing:
+          type: array
+          items:
+            guid:    string
+            class:   string
+            gaps:
+              type: array
+              items:
+                pset:    string
+                missing: array
+
+  # ---- Georeferencing --------------------------------------------------
+
+  georef.check:
+    lifecycle: single
+    category: curated
+    description: |
+      Inspect the IfcSite + IfcMapConversion + IfcProjectedCRS triple.
+      Returns the survey point, project north, and any of the four
+      common errors:
+
+        - missing IfcMapConversion (no real-world coordinates)
+        - IfcSite at (0,0,0) (model origin = world origin — wrong unless
+          intentional)
+        - IfcProjectedCRS undefined (no CRS attached)
+        - IfcProject != IfcSite ContextOfItems (rare, but breaks
+          downstream federation)
+
+      Read-only.
+    inputs:
+      path: string
+    outputs:
+      type: single
+      schema:
+        ifc-site-origin:
+          x: number
+          y: number
+          z: number
+        map-conversion:
+          easting:  number
+          northing: number
+          height:   number
+          rotation: number
+        crs:
+          name:        string
+          description: string
+          geodetic-datum: string
+        warnings:
+          type: array
+          items: string
+
+  # ---- Validation ------------------------------------------------------
+
+  validate.schema:
+    lifecycle: single
+    category: curated
+    description: |
+      Validate the IFC against its declared schema (IFC2x3 / IFC4 /
+      IFC4X3). Reports schema-level errors (missing required attributes,
+      type mismatches, orphan references). Read-only.
+
+      For rule-based BEP checking (vs schema-only), use the `solibri`
+      agent instead.
+    inputs:
+      path: string
+    outputs:
+      type: single
+      schema:
+        schema: string
+        valid:  boolean
+        errors:
+          type: array
+          items:
+            line:     number
+            severity: string
+            message:  string
+
+skills:
+  - what-this-agent-does.md
