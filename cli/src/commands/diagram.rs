@@ -31,6 +31,12 @@ pub struct RegenerateArgs {
     /// Without this flag, prints the standalone diagram to stdout.
     #[arg(long = "in-place")]
     pub in_place: Option<String>,
+    /// Render only one AECO vertical's diagram (engineering / architecture /
+    /// construction / visualization / cross-cutting / operations / meta).
+    /// Output is a focused per-vertical mermaid graph with the agents in
+    /// that bucket as nodes + a per-agent skill+command count.
+    #[arg(long)]
+    pub vertical: Option<String>,
 }
 
 pub fn dispatch(cmd: DiagramCommand, ctx: &Context) -> Result<(), AwareError> {
@@ -41,8 +47,15 @@ pub fn dispatch(cmd: DiagramCommand, ctx: &Context) -> Result<(), AwareError> {
 
 fn regenerate(ctx: &Context, args: &RegenerateArgs) -> Result<(), AwareError> {
     let agents = discover_agents(&ctx.paths)?;
-    let agents_block = render_agents_block(&agents);
 
+    // --vertical takes precedence over --in-place — they're separate modes.
+    if let Some(v) = &args.vertical {
+        let body = render_vertical(&agents, v)?;
+        println!("{body}");
+        return Ok(());
+    }
+
+    let agents_block = render_agents_block(&agents);
     if let Some(target) = &args.in_place {
         let path = std::path::PathBuf::from(target);
         let original = std::fs::read_to_string(&path)
@@ -60,6 +73,106 @@ fn regenerate(ctx: &Context, args: &RegenerateArgs) -> Result<(), AwareError> {
         println!("{}", render_standalone(&agents, &agents_block));
     }
     Ok(())
+}
+
+/// Render a single-vertical diagram. Each agent becomes its own node with
+/// skill + command counts. Useful for a focused view when the master
+/// diagram's per-vertical bucket gets crowded.
+fn render_vertical(agents: &[DiscoveredAgent], vertical: &str) -> Result<String, AwareError> {
+    let normalized = vertical.to_lowercase();
+    let allowed = [
+        "engineering",
+        "architecture",
+        "construction",
+        "visualization",
+        "cross-cutting",
+        "operations",
+        "meta",
+    ];
+    if !allowed.contains(&normalized.as_str()) {
+        return Err(AwareError::Validation(format!(
+            "unknown vertical '{vertical}' — expected one of: {}",
+            allowed.join(", ")
+        )));
+    }
+
+    let in_vertical: Vec<&DiscoveredAgent> = agents
+        .iter()
+        .filter(|a| {
+            let kws: Vec<&str> = a.manifest.keywords.iter().map(|s| s.as_str()).collect();
+            kws.contains(&normalized.as_str())
+        })
+        .collect();
+
+    let label = match normalized.as_str() {
+        "engineering" => "Engineering",
+        "architecture" => "Architecture",
+        "construction" => "Construction",
+        "visualization" => "Visualization",
+        "cross-cutting" => "Cross-cutting",
+        "operations" => "Operations",
+        _ => "Meta",
+    };
+
+    let mut out = String::new();
+    out.push_str("%%{init: {'theme':'neutral'}}%%\n");
+    out.push_str("graph TB\n\n");
+    out.push_str(
+        "  classDef poc        fill:#4ade80,stroke:#16a34a,color:#0f172a,stroke-width:2px\n",
+    );
+    out.push_str("  classDef future     fill:#f1f5f9,stroke:#94a3b8,color:#475569\n");
+    out.push_str(
+        "  classDef substrate  fill:#dbeafe,stroke:#2563eb,color:#0f172a,stroke-width:2px\n\n",
+    );
+
+    let total_skills: usize = in_vertical.iter().map(|a| a.manifest.skill_count()).sum();
+    let total_cmds: usize = in_vertical.iter().map(|a| a.manifest.command_count()).sum();
+    out.push_str(&format!(
+        "  Header[\"AWARE {label}<br/>{n} agents · {total_skills} skills · {total_cmds} cmds\"]:::substrate\n\n",
+        n = in_vertical.len()
+    ));
+
+    if in_vertical.is_empty() {
+        out.push_str(&format!(
+            "  Empty[\"(no installed agents in {label})\"]:::future\n  Header --> Empty\n"
+        ));
+        return Ok(out);
+    }
+
+    // Group agents by vendor for color/cluster
+    let mut by_vendor: std::collections::BTreeMap<String, Vec<&&DiscoveredAgent>> =
+        std::collections::BTreeMap::new();
+    for a in &in_vertical {
+        let vendor = a
+            .manifest
+            .vendor
+            .clone()
+            .unwrap_or_else(|| "unknown".into());
+        by_vendor.entry(vendor).or_default().push(a);
+    }
+
+    for (vendor, agents_v) in &by_vendor {
+        let safe_vendor = vendor.replace('-', "_");
+        out.push_str(&format!(
+            "  subgraph V_{safe_vendor}[\"{vendor}\"]\n    direction TB\n"
+        ));
+        for a in agents_v {
+            let id = a.manifest.agent.replace('-', "_");
+            let display = a
+                .manifest
+                .display_name
+                .as_deref()
+                .unwrap_or(a.manifest.agent.as_str());
+            out.push_str(&format!(
+                "    {id}[\"{display}<br/>{skills} skills · {cmds} cmds\"]:::poc\n",
+                skills = a.manifest.skill_count(),
+                cmds = a.manifest.command_count()
+            ));
+        }
+        out.push_str("  end\n");
+        out.push_str(&format!("  Header --> V_{safe_vendor}\n"));
+    }
+    Ok(out)
 }
 
 const MARKER_BEGIN: &str = "%% AWARE-AUTOGEN-AGENTS-BEGIN";
