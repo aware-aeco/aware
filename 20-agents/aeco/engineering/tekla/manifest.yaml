@@ -86,6 +86,409 @@ commands:
       schema:
         path: string
 
+  # ---- v0.16 curated workflow verbs (detailer audit) -------------------
+
+  drawing-list:
+    lifecycle: single
+    category: curated
+    description: |
+      Filter drawings in the active model by status / phase / lot /
+      IsReadyForIssue. Read-only. The foundation for every other
+      drawing-side workflow.
+    inputs:
+      status:
+        type: enum
+        values: [any, in-progress, for-checking, issued, issued-but-modified]
+        default: any
+      phase:
+        type: string
+        description: Optional Tekla phase number / name.
+      lot:
+        type: string
+        description: Optional fab lot identifier.
+    outputs:
+      type: single
+      schema:
+        drawings:
+          type: array
+          items:
+            id:                string
+            mark:              string
+            title:             string
+            up-to-date-status: string
+            is-ready-for-issue: boolean
+            is-issued:         boolean
+            current-revision:  string
+
+  drawing-export:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Batch-export drawings to PDF + DWG with a naming-template. Replaces
+      the 30-line `Operation.RunMacro("ExportDrawing")` dance. Honors
+      the project's drawing-number standard. Write-mode (filesystem).
+    inputs:
+      marks:
+        type: array
+        items: string
+        description: Drawing marks to export (e.g. ["A-100","A-101"]).
+      formats:
+        type: array
+        items: string
+        default: [pdf, dwg]
+      output-dir: string
+      naming-template:
+        type: string
+        default: "{project}-{phase}-{mark}-Rev{rev}.{ext}"
+    outputs:
+      type: single
+      schema:
+        written:
+          type: array
+          items:
+            mark:        string
+            format:      string
+            path:        string
+
+  drawing-issue:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Set IsReadyForIssue → true, set IssuingDate, stamp revision, mark
+      prior revision superseded. Write-mode against the Tekla drawing
+      database — requires `safety:` block (per v0.11 contract).
+    inputs:
+      marks:
+        type: array
+        items: string
+      revision: string                # e.g. "E"
+      issued-for:
+        type: string                  # e.g. "Issued for Construction"
+      issued-by:
+        type: string
+      revision-date:
+        type: string                  # ISO; defaults to today
+    outputs:
+      type: single
+      schema:
+        issued:
+          type: array
+          items:
+            mark:     string
+            revision: string
+
+  drawings-affected-by-revision:
+    lifecycle: single
+    category: curated
+    description: |
+      Given a model change (delta from previous save / IFC diff), report
+      which drawings reference the affected GUIDs. The revision-cloud
+      propagation primitive. Read-only.
+    inputs:
+      changed-guids:
+        type: array
+        items: string
+    outputs:
+      type: single
+      schema:
+        affected-drawings:
+          type: array
+          items:
+            mark:    string
+            reason:  string
+
+  nc-export:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Export NC files (DSTV `.nc1`) for selected parts. The detailer
+      Friday-afternoon "saw-line for Monday" verb. Pair with
+      `peddinghaus-translator.to-peddimat` if the controller wants
+      Peddimat dialect.
+    inputs:
+      phase:
+        type: string
+        description: Optional Tekla phase filter.
+      part-types:
+        type: array
+        items: string
+        default: [beam, column, brace, plate, bent-plate]
+      output-dir: string
+    outputs:
+      type: single
+      schema:
+        written:
+          type: array
+          items:
+            part-mark:  string
+            profile:    string
+            length-mm:  number
+            path:       string
+
+  nc-export-phase:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Convenience wrapper: nc-export scoped to one phase, with the
+      bucket-by-machine output structure the shop floor expects.
+      Combines `nc-export` + `peddinghaus-translator.group-by-machine`
+      in one verb.
+    inputs:
+      phase:       string
+      output-dir:  string
+      kerf-mm:
+        type: number
+        default: 3.0
+    outputs:
+      type: single
+      schema:
+        manifest-csv: string
+        piece-count:  number
+
+  report-create:
+    lifecycle: single
+    category: curated
+    description: |
+      Generate a Tekla report from a `.tpl` template against selected /
+      all model objects. Wraps `Operation.CreateReportFromAll` /
+      `CreateReportFromSelected`. The bolt-list / weld-list / part-list /
+      assembly-list source verb. Read-only.
+    inputs:
+      template:
+        type: string
+        description: Template name (`.tpl` in `XS_TEMPLATE_DIRECTORY`).
+      selection:
+        type: enum
+        values: [all, selected, phase]
+        default: all
+      phase:
+        type: string
+        description: Required if selection=phase.
+      output-path: string
+    outputs:
+      type: single
+      schema:
+        path:        string
+        row-count:   number
+
+  bolt-list:
+    lifecycle: single
+    category: curated
+    description: |
+      Export bolt schedule grouped by diameter / length / grade.
+      Specialised wrapper around report-create with the standard
+      `bolt-list.tpl` template. Read-only.
+    inputs:
+      scope:
+        type: enum
+        values: [all, selected, phase]
+        default: all
+      phase:
+        type: string
+      output-path: string
+    outputs:
+      type: single
+      schema:
+        path:       string
+        row-count:  number
+        total-bolts: number
+
+  weld-list:
+    lifecycle: single
+    category: curated
+    description: |
+      Export weld schedule (type, length, throat, AWS code symbol) per
+      assembly. Specialised wrapper around report-create with the
+      standard `weld-list.tpl`. Read-only.
+    inputs:
+      scope:
+        type: enum
+        values: [all, selected, phase]
+        default: all
+      phase:
+        type: string
+      output-path: string
+    outputs:
+      type: single
+      schema:
+        path:       string
+        row-count:  number
+
+  part-list:
+    lifecycle: single
+    category: curated
+    description: Per-part schedule (profile / length / grade). Read-only.
+    inputs:
+      scope:
+        type: enum
+        values: [all, selected, phase]
+        default: all
+      phase:
+        type: string
+      output-path: string
+    outputs:
+      type: single
+      schema:
+        path:      string
+        row-count: number
+
+  assembly-list:
+    lifecycle: single
+    category: curated
+    description: Per-assembly schedule (mark / type / weight / piece-count). Read-only.
+    inputs:
+      scope:
+        type: enum
+        values: [all, selected, phase]
+        default: all
+      phase:
+        type: string
+      output-path: string
+    outputs:
+      type: single
+      schema:
+        path:      string
+        row-count: number
+
+  ifc-export:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Export the model (or a phase) to IFC. Used for MEP-clash federation
+      and consultant deliveries. Write-mode (filesystem).
+    inputs:
+      output-path: string
+      scope:
+        type: enum
+        values: [all, selected, phase]
+        default: all
+      phase:
+        type: string
+      ifc-version:
+        type: enum
+        values: [IFC2x3, IFC4, IFC4X3]
+        default: IFC4
+      reference-only:
+        type: boolean
+        default: false
+        description: If true, exports outline only (no internal detail).
+    outputs:
+      type: single
+      schema:
+        path:       string
+        entity-count: number
+
+  numbering-run:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Run Tekla's numbering operation. Choose `modified-only` (fast,
+      typical) or `all` (forced renumber). Write-mode — changes
+      assembly + part marks across the model.
+    inputs:
+      mode:
+        type: enum
+        values: [modified-only, all]
+        default: modified-only
+    outputs:
+      type: single
+      schema:
+        renumbered: number
+        warnings:
+          type: array
+          items: string
+
+  uda-get:
+    lifecycle: single
+    category: curated
+    description: |
+      Read a user-defined attribute from one or more model objects.
+      Read-only.
+    inputs:
+      guids:
+        type: array
+        items: string
+      uda-name:
+        type: string
+    outputs:
+      type: single
+      schema:
+        values:
+          type: array
+          items:
+            guid:  string
+            value: string
+
+  uda-set:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Write a user-defined attribute on one or more model objects.
+      Used by safety-stamp audit-stamp blocks (writes AWARE_RUN_ID etc.).
+    inputs:
+      guids:
+        type: array
+        items: string
+      uda-name:  string
+      value:     string
+    outputs:
+      type: single
+      schema:
+        updated: number
+
+  uda-copy:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Copy a UDA value from one object to another (or from a UDA to a
+      different UDA on the same object). Useful for migrating phase /
+      lot / shipping-week attributes.
+    inputs:
+      source-guids:
+        type: array
+        items: string
+      target-guids:
+        type: array
+        items: string
+      source-uda: string
+      target-uda: string
+    outputs:
+      type: single
+      schema:
+        copied: number
+
+  clash-check:
+    lifecycle: single
+    category: curated
+    description: |
+      Run Tekla's built-in clash check. Returns clashes grouped by
+      severity. For external federation clash, use the
+      `navisworks-2026.clash.run-all` agent instead. Read-only.
+    inputs:
+      scope:
+        type: enum
+        values: [all, selected, phase]
+        default: all
+      phase:
+        type: string
+    outputs:
+      type: single
+      schema:
+        clashes:
+          type: array
+          items:
+            mark-a:   string
+            mark-b:   string
+            severity: string
+
 skills:
   - drawing-identity.md
   - event-threading.md

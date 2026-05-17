@@ -1,0 +1,169 @@
+agent:        peddinghaus-translator
+version:      1.0.0
+display-name: Peddinghaus Translator (DSTV ↔ Peddimat)
+description: |
+  File-format agent: convert between DSTV `.nc1` (the industry-standard
+  CNC format Tekla emits) and Peddimat `.asc` (the Peddinghaus
+  controller's vendor dialect with extensions for saw / drill / plasma
+  / coper lines).
+
+  Persona audit (detailer): "Peddinghaus Direct Tools / Peddimat — no
+  agent. The saw line and the drill line speak Peddimat (a DSTV dialect
+  with vendor extensions). Tekla's NC export produces DSTV; the
+  Peddinghaus controller wants Peddimat. The conversion is non-trivial.
+  A `peddinghaus` agent that takes a folder of `.nc1` files and emits
+  `.asc` for the saw line is one Monday-morning win."
+
+  Pure Rust translator — no Peddinghaus software required to convert.
+  Verified output against Peddinghaus PCD-Plus, Direct Tools 4.x, and
+  Peddimat 12.x format specs.
+
+stateful: false
+
+vendor:   aware-aeco
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/engineering/peddinghaus-translator
+keywords: [aware, peddinghaus, dstv, peddimat, nc1, cnc, fabrication, saw, drill, plasma]
+
+provenance:
+  generated-by:     hand-curated
+  generator-version: 0.15.0
+  refined-by:       [pawellisowski]
+  generated-at:     2026-05-17T18:30:00Z
+
+requires:
+  filesystem:
+    - read:  '*.nc1,*.nc,*.asc,*.csv'
+    - write: '*.nc1,*.asc,*.csv,*.json'
+
+transport:
+  cli:
+    binary: aware-peddinghaus-translator
+
+commands:
+
+  # ---- DSTV → Peddimat -------------------------------------------------
+
+  to-peddimat:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Convert a folder of DSTV `.nc1` files to Peddimat `.asc` format.
+      Preserves the IK / AK / BO / SI / KO / EN block structure;
+      translates the vendor-extension lines (PE, FB, M1, M2) that
+      Peddinghaus controllers expect.
+    inputs:
+      input-dir:  string
+      output-dir: string
+      machine-type:
+        type: enum
+        values: [saw, drill, plasma, coper, beam-line]
+        description: |
+          Drives which Peddimat extensions are emitted. Saw lines need
+          M1/M2 (saw-specific); drill lines need DC (drill-controller).
+          A `beam-line` is the combined saw+drill (e.g. Peddinghaus
+          PCD-Plus) — both extension sets emitted.
+      kerf-mm:
+        type: number
+        default: 3.0
+        description: |
+          Kerf width for the saw line. Added to length calculations.
+    outputs:
+      type: single
+      schema:
+        converted:
+          type: array
+          items:
+            input:      string
+            output:     string
+            piece-mark: string
+        manifest-csv:
+          type: string
+          description: Auto-generated per-machine CSV manifest at output-dir/manifest.csv
+
+  # ---- Peddimat → DSTV (round-trip) ------------------------------------
+
+  to-dstv:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Convert Peddimat `.asc` back to standard DSTV `.nc1`. Used when
+      shop-floor changes (e.g. operator added a slot via the controller
+      UI) need to flow back to the detailer's source-of-truth.
+    inputs:
+      input-dir:  string
+      output-dir: string
+    outputs:
+      type: single
+      schema:
+        converted:
+          type: array
+          items:
+            input:  string
+            output: string
+
+  # ---- Inspection ------------------------------------------------------
+
+  inspect:
+    lifecycle: single
+    category: curated
+    description: |
+      Parse a DSTV or Peddimat file and return the structured contents
+      without writing anything. Used for sanity-checking exports before
+      sending to the saw line. Read-only.
+    inputs:
+      path: string
+    outputs:
+      type: single
+      schema:
+        format:       string  # "dstv" or "peddimat"
+        piece-mark:   string
+        profile:      string
+        grade:        string
+        length-mm:    number
+        weight-kg:    number
+        operations:
+          type: array
+          items:
+            kind:     string  # IK (header), AK (outer contour), BO (hole), SI (mark), KO (notch), EN (end)
+            details:  object
+
+  # ---- Grouping for machine queues -------------------------------------
+
+  group-by-machine:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Read a folder of NC files and write per-machine subfolders. The
+      saw line gets one queue; the drill line a parallel queue; the
+      plasma line a third. Includes a `manifest.csv` mapping
+      piece-mark → file → machine.
+
+      Used by the detailer Friday-afternoon "issue to the shop floor"
+      flow — one command, then walk away.
+    inputs:
+      input-dir:    string
+      output-dir:   string
+      machines:
+        type: array
+        items: string
+        description: |
+          List of machines to bucket for, e.g.
+          `["saw","drill","plasma"]`. Default: all four.
+    outputs:
+      type: single
+      schema:
+        manifest-csv: string
+        buckets:
+          type: array
+          items:
+            machine:    string
+            file-count: number
+            output-dir: string
+
+skills:
+  - dstv-vs-peddimat.md
+  - machine-bucket-strategy.md

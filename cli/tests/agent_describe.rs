@@ -50,5 +50,5 @@ fn json_describe_returns_envelope() {
     assert_eq!(v["ok"], true);
     assert_eq!(v["data"]["agent"], "tekla");
     assert_eq!(v["data"]["skill_count"], 31);
-    assert_eq!(v["data"]["command_count"], 3);
+    assert_eq!(v["data"]["command_count"], 20);
 }
