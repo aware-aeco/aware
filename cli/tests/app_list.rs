@@ -28,7 +28,7 @@ fn stdout_contains_version() -> predicates::str::ContainsPredicate {
 }
 
 #[test]
-fn json_output_has_two_apps() {
+fn json_output_has_seven_apps() {
     let home = common::aware_home();
     let out = Command::cargo_bin("aware")
         .unwrap()
@@ -41,5 +41,5 @@ fn json_output_has_two_apps() {
         .clone();
     let v: serde_json::Value = serde_json::from_slice(&out).unwrap();
     assert_eq!(v["ok"], true);
-    assert_eq!(v["data"]["apps"].as_array().unwrap().len(), 2);
+    assert_eq!(v["data"]["apps"].as_array().unwrap().len(), 7);
 }
