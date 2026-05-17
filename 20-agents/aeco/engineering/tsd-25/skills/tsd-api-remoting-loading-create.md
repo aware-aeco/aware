@@ -1,0 +1,77 @@
+---
+name: tsd-api-remoting-tsd-api-remoting-loading-create
+description: API reference for namespace TSD.API.Remoting.Loading.Create from TSD.API.Remoting.dll
+---
+
+# TSD.API.Remoting.Loading.Create
+
+- **CombinationParams**
+  - Represents parameters required to create a combination
+- **ConstructionPlaneLoadParams**
+  - Represents parameters of a load on an
+- **DiaphragmLoadParams**
+  - Represents parameters required to create a diaphragm load
+- **EnvelopeParams**
+  - Represents parameters required to create an envelope
+- **ICombinationAttributeSet**
+  - Represents parameters required to create a combination
+- **ILoadcaseAttributeSet**
+  - Represents parameters required to create a loadcase
+- **LoadParams**
+  - Represents base class of all load parameter classes
+- **LoadcaseFactorsParams**
+  - Represents parameters required to add factored loadcase to a combination
+- **LoadcaseParams**
+  - Represents parameters required to create a loadcase
+- **MemberForceLoadParams**
+  - Represents parameters of a force load on a member span
+- **MemberFullUniformlyDistributedLoadParams**
+  - Represents parameters of a uniformly distributed load on a whole member span
+- **MemberFullUniformlyDistributedTorsionMomentLoadParams**
+  - Represents parameters of a uniformly distributed torsion moment load on a whole member span
+- **MemberLoadParams**
+  - Represent base class of parameters of a load on a member span
+- **MemberMomentLoadParams**
+  - Represents parameters of a moment load on a member span
+- **MemberTrapezoidalLoadParams**
+  - Represents parameters of a trapezoidal load on a whole member span
+- **MemberUniformlyDistributedLoadParams**
+  - Represents parameters of a uniformly distributed load on a member span
+- **MemberUniformlyDistributedTorsionMomentLoadParams**
+  - Represents parameters of a uniformly distributed torsion moment load on a member span
+- **MemberVariablyDistributedLoadParams**
+  - Represents parameters of a variably distributed load on a member span
+- **MemberVariablyDistributedTorsionMomentLoadParams**
+  - Represents parameters of a variably distributed torsion moment load on a member span
+- **NodalLoadParams**
+  - Represents parameters required to create a nodal load
+- **PerimeterLoadParams**
+  - Represents parameters required to create a perimeter load
+- **PlanarAreaElementLoadParams**
+  - Represents base class of all planar area element load parameter classes
+- **PlanarLoadParams**
+  - Represents base class of all planar load parameter classes
+- **PlanarLoadWithReferenceParams**
+  - Represents base class of all planar load parameter classes with reference
+- **PointLoadParams**
+  - Represents parameters of a point load
+- **PolygonalLoadParams**
+  - Represents base class of all planar polygonal load parameter classes
+- **SettlementLoadParams**
+  - Represents parameters required to create a settlement load
+- **SlabLoadParams**
+  - Represents parameters of a load on an
+- **TemperatureLoadParams**
+  - Represents parameters required to create a temperature load
+- **UniformAreaElementLoadParams**
+  - Represents parameters of a uniform load on an
+- **UniformLineLoadParams**
+  - Represents parameters of a uniform line load
+- **UniformPolygonalLoadParams**
+  - Represents parameters of a uniform polygonal load
+- **UniformRectangularLoadParams**
+  - Represents parameters of a uniform rectangular load
+- **VariableAreaElementLoadParams**
+  - Represents parameters of a variable load on an
+- **VariablePolygonalLoadParams**
+  - Represents parameters of a variable polygonal load

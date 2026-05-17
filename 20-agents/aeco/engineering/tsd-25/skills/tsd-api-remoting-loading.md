@@ -1,0 +1,191 @@
+---
+name: tsd-api-remoting-tsd-api-remoting-loading
+description: API reference for namespace TSD.API.Remoting.Loading from TSD.API.Remoting.dll
+---
+
+# TSD.API.Remoting.Loading
+
+- **AustralianLoadingCategory**
+  - Represents Australian Loading Category
+- **CombinationClass**
+  - Represents the class of a combination
+- **CombinationItemFactorPurpose**
+  - Represents the purpose of a combination item factor
+- **CombinationSpeciality**
+  - Represents the speciality of a combination
+- **DistanceMeasuring**
+  - Represents measuring type
+- **Ec3FormulaType**
+  - Represents EC3 formula type
+- **Ec3LoadingCategory**
+  - Represents EC3 Loading Category
+- **EquipmentLoadApplyMode**
+  - Represents equipment load apply mode
+- **FactoringType**
+  - Represents a factoring type
+- **IAustralianCombinationFactors**
+  - Represents combination factors specific to Australian head code
+- **ICombination**
+  - Represents a combination of loadcases
+- **IConstructionPlaneLoad**
+  - Represents a construction plane load
+- **IDiaphragmLoad**
+  - Represents a diaphragm load
+- **IDisplacement**
+  - Represents a displacements in 3D space
+- **IDisplacementValueWithSource**
+  - Represents a displacement value with information about its source
+- **IEcCombinationFactors**
+  - Represents combination factors specific to EC head code
+- **IEnvelope**
+  - Represents an envelope
+- **IEquipmentLoad**
+  - Represents an equipment load
+- **IForce3DGlobal**
+  - Represents forces in global coordinate system
+- **IForce3DLocal**
+  - Represents forces at element point with respect to element local coordinate system
+- **IForce3d**
+  - Represents 3D forces
+- **ILineAncillaryLoad**
+  - Represents a line ancillary load
+- **ILoad**
+  - Represents a load
+- **ILoadcase**
+  - Represents a loadcase
+- **ILoadcaseFactors**
+  - Represents loadcase factors in a combination
+- **ILoadingCase**
+  - Represents a common interface for ,  and
+- **ILoadingValue**
+  - Represents a loading value
+- **IMemberEccentricityMomentLoad**
+  - Represents an eccentricity moment load on a member
+- **IMemberForceLoad**
+  - Represents a force load on a member
+- **IMemberFullUniformlyDistributedLoad**
+  - Represents a full uniformly distributed load on a member
+- **IMemberFullUniformlyDistributedTorsionMomentLoad**
+  - Represents a full uniformly distributed torsion moment load on a member
+- **IMemberLoad**
+  - Represents a load on a member
+- **IMemberLoading**
+  - Represents member loading
+- **IMemberMomentLoad**
+  - Represents a moment load on a member
+- **IMemberTrapezoidalLoad**
+  - Represents a trapezoidal load on a member
+- **IMemberUniformlyDistributedLoad**
+  - Represents a uniformly distributed load on a member
+- **IMemberUniformlyDistributedTorsionMomentLoad**
+  - Represents a uniformly distributed torsion moment load on a member
+- **IMemberVariablyDistributedLoad**
+  - Represents a variably distributed load on a member
+- **IMemberVariablyDistributedTorsionMomentLoad**
+  - Represents a variably distributed torsion moment load on a member
+- **INodalLoad**
+  - Represents a nodal load
+- **IPerimeterLoad**
+  - Represents a perimeter load
+- **IPlanarAreaElementLoad**
+  - Represents common properties of area element based loads
+- **IPlanarLoad**
+  - Represents common properties of planar loads
+- **IPlanarLoadWithReference**
+  - Represents common properties of planar loads with reference
+- **IPointLoad**
+  - Represents a point load
+- **IPointOfInterest**
+  - Represents a point of interest
+- **IPolygonalLoad**
+  - Represents common properties of polygonal loads
+- **ISettlementLoad**
+  - Represents a settlement load
+- **ISlabLoad**
+  - Represents a slab load
+- **ISnowLoad**
+  - Represents a snow load
+- **ISnowLoadDataBalanced**
+  - Represents load data of balanced snow load for US code
+- **ISnowLoadDataBase**
+  - Represents common snow load data
+- **ISnowLoadDataDrift**
+  - Represents load data of snow drift load for US code
+- **ISnowLoadDataDriftedSingleSlope**
+  - Represents load data of drifted snow load on single sloped roof for EC code
+- **ISnowLoadDataDriftedValley**
+  - Represents load data of drifted snow load on valley formed by a roof pair for EC code
+- **ISnowLoadDataLocalDrift**
+  - Represents load data of snow local drift load for EC code
+- **ISnowLoadDataMinimum**
+  - Represents load data of minimum snow load for US code
+- **ISnowLoadDataRainOnSnow**
+  - Represents load data of rain on snow load for US code
+- **ISnowLoadDataUnbalanced**
+  - Represents load data of unbalanced snow load on a roof for US code
+- **ISnowLoadDataUnbalancedValley**
+  - Represents load data of unbalanced snow load on valley formed by a roof pair for US code
+- **ISnowLoadDataUndrifted**
+  - Represents load data of undrifted snow load for EC code
+- **ITemperatureLoad**
+  - Represents a temperature load
+- **IUniformAreaElementLoad**
+  - Represents a uniform load on an area element
+- **IUniformLineLoad**
+  - Represent a uniform line load
+- **IUniformPolygonalLoad**
+  - Represents a uniform polygonal load
+- **IUniformRectangularLoad**
+  - Represents a uniform rectangular load
+- **IVariableAreaElementLoad**
+  - Represents a variable load on an area element
+- **IVariablePolygonalLoad**
+  - Represents a variable polygonal load
+- **KAmplifierSource**
+  - Represents the source how k amplifier will be calculated
+- **KAmplifierTarget**
+  - Represents the targets for k amplifier
+- **LayerType**
+  - Represents the type of a reinforcement layer
+- **LoadDirection**
+  - Represents a direction of loading
+- **LoadSourceType**
+  - Represents the type of load source
+- **LoadType**
+  - Represents type of load
+- **LoadcaseGeneralType**
+  - Represents a type of loadcase
+- **LoadcaseSpeciality**
+  - Represents loadcase speciality
+- **LoadcaseType**
+  - Represents extended loadcase type
+- **LoadingCaseType**
+  - Represents loading case type
+- **LoadingDirection**
+  - Represents loading direction
+- **LoadingResultType**
+  - Represents type of loading results
+- **LoadingValueLocation**
+  - Represents location of loading value towards its position (is a flag enum!)
+- **LoadingValueOptions**
+  - Represents options of a loading value
+- **LoadingValueType**
+  - Represents loading value type
+- **MemberLoadType**
+  - Represents type of member load
+- **PointOfInterestType**
+  - Represents type of a point of interest
+- **Projection**
+  - Represents a projection mode
+- **RoofHeatCharacteristic**
+  - Represents a roof heat characteristic for snow loading in US code
+- **SeismicCombinationValueType**
+  - Represents the type of seismic combination value
+- **SnowDriftType**
+  - Represents a type of drift for snow loading in US code
+- **SnowLoadDataType**
+  - Represents type of snow load data
+- **SnowLocalDriftType**
+  - Represents a type of drift for snow loading in EC code
+- **SnowRoofType**
+  - Represents a type of roof for snow loading

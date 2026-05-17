@@ -1,0 +1,175 @@
+---
+name: idea-rs-open-model-idea-rs-open-model-material
+description: API reference for namespace IdeaRS.OpenModel.Material from IdeaRS.OpenModel.dll
+---
+
+# IdeaRS.OpenModel.Material
+
+- **BoltAssembly**
+  - Bolt assembly
+- **ConcAggregateType**
+  - Concrete aggreage type
+- **ConcAggregateTypeSIA**
+  - Concrete aggreage type
+- **ConcCementClass**
+  - Cement class
+- **ConcCementClassSIA**
+  - Cement class
+- **ConcDiagramType**
+  - Concrete stress-strain diagram
+- **ConcFireDiagramType**
+  - Concrete stress-strain diagram for fire
+- **CrackWidthRequirementsSIA**
+  - crack width requirement
+- **DuctilityClass**
+  - Ductility class
+- **MatAnchorProperties**
+  - Anchor custom data
+- **MatConcrete**
+  - Material concrete base class
+- **MatConcreteACI**
+  - Material concrete ACI
+- **MatConcreteAUS**
+  - Material concrete AUS
+- **MatConcreteCAN**
+  - Material concrete CAN
+- **MatConcreteCHN**
+  - Material concrete CHN
+- **MatConcreteEc2**
+  - Material concrete Ec2
+- **MatConcreteHKG**
+  - Material concrete HKG
+- **MatConcreteIND**
+  - Material concrete IND
+- **MatConcreteRUS**
+  - Material concrete CAN
+- **MatConcreteSIA**
+  - Material concrete SIA
+- **MatPrestressSteel**
+  - Material prestressing steel base class
+- **MatPrestressSteelEc2**
+  - Material prestressing steel Ec2
+- **MatPrestressSteelSIA**
+  - Material prestressing steel SIA
+- **MatReinforcement**
+  - Material reinforcement base class
+- **MatReinforcementACI**
+  - Material reinforcement ACI
+- **MatReinforcementAUS**
+  - Material reinforcement AUS
+- **MatReinforcementCAN**
+  - Material reinforcement CAN
+- **MatReinforcementCHN**
+  - Material reinforcement CHN
+- **MatReinforcementEc2**
+  - Material reinforcement Ec2
+- **MatReinforcementHKG**
+  - Material reinforcement HKG
+- **MatReinforcementIND**
+  - Material reinforcement IND
+- **MatReinforcementRUS**
+  - Material reinforcement RUS
+- **MatSteel**
+  - Material steel base class
+- **MatSteelAISC**
+  - Material steel AISC
+- **MatSteelAUS**
+  - Material steel AISC
+- **MatSteelCHN**
+  - Material steel CHN
+- **MatSteelCISC**
+  - Material steel CISC
+- **MatSteelEc2**
+  - Material steel Ec2
+- **MatSteelHKG**
+  - Material steel HKG
+- **MatSteelIND**
+  - Material steel IND
+- **MatSteelRUS**
+  - Material steel RUS
+- **MatWelding**
+  - Welding material base class
+- **MatWeldingAISC**
+  - Welding material for AISC
+- **MatWeldingAUS**
+  - Welding material for australian code
+- **MatWeldingCHN**
+  - Welding material for chinese code
+- **MatWeldingCISC**
+  - Welding material for CISC
+- **MatWeldingEc2**
+  - Welding material for ECEN
+- **MatWeldingHKG**
+  - Welding material for hong kongese code
+- **MatWeldingIS**
+  - Welding material for indian code
+- **MatWeldingRUS**
+  - Welding material for russian code
+- **Material**
+  - Material base class
+- **MaterialBoltGrade**
+  - Material bolt grade
+- **MaterialBoltGradeAISC**
+  - Material bolt grade
+- **MaterialBoltGradeAUS**
+  - Material bolt grade
+- **MaterialBoltGradeCHN**
+  - Material bolt grade
+- **MaterialBoltGradeCISC**
+  - Material bolt grade
+- **MaterialBoltGradeEc2**
+  - Material bolt grade
+- **MaterialBoltGradeHKG**
+  - Material bolt grade
+- **MaterialBoltGradeIND**
+  - Material bolt grade
+- **MaterialBoltGradeRUS**
+  - Material bolt grade
+- **MaterialHeadedStudGrade**
+  - Material headed stud grade
+- **MaterialHeadedStudGradeAISC**
+  - Material headed stud grade
+- **MaterialHeadedStudGradeAUS**
+  - Material headed stud grade
+- **MaterialHeadedStudGradeEc2**
+  - Material headed stud grade
+- **MaterialStrength**
+  - Strength of material with specific thickness range
+- **MaterialStrengthProperty**
+  - Class defines the strength of material acc. to materieal thickness
+- **Pin**
+  - Pin
+- **PrestressSteelType**
+  - Type of prestress steel
+- **PrestressSteelTypeSIA**
+  - Type of prestress steel
+- **ProductionType**
+  - Production type
+- **ReinfBarSurface**
+  - Reinforcement bar surface
+- **ReinfClass**
+  - Reinforcement class type
+- **ReinfDiagramType**
+  - Reinforcement stress-strain diagram
+- **ReinfFabrication**
+  - Reinforcement fabrication
+- **ReinfFireDiagramType**
+  - Stress-strain reeinforcemnt diagram for fire
+- **ReinfType**
+  - Type of reinforcement
+- **SteelDiagramType**
+  - Steel stress-strain diagram
+- **SurfaceCharacteristicType**
+  - Surface characteristic
+- **SurfaceCharacteristicTypeSIA**
+  - Surface characteristic
+- **ThermalConductivityState**
+  - Type of curvature - thermal conductivity
+- **ThermalExpansionState**
+  - Type of curvature -  thermal expansion
+- **ThermalSpecificHeatState**
+  - Type of curvature - thermal specific heat
+- **ThermalStrainState**
+  - Type of curvature - thermal strain curvature
+- **ThermalStressStrainState**
+  - Type of curvature - thermal stress-strain curvature

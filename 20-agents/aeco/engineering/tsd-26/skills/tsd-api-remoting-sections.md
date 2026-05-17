@@ -1,0 +1,181 @@
+---
+name: tsd-api-remoting-tsd-api-remoting-sections
+description: API reference for namespace TSD.API.Remoting.Sections from TSD.API.Remoting.dll
+---
+
+# TSD.API.Remoting.Sections
+
+- **ColdRolledType**
+  - The type of cold rolled section
+- **ConcreteFabrication**
+  - The concrete fabrication
+- **ExtendedSectionType**
+  - The type of an extended section
+- **IAnalysisElementSection**
+  - Represents an analysis element section
+- **IAsymmetricBeamSection**
+  - Represents an asymmetric beam section
+- **IBar**
+  - Represents a bar section (square or flat)
+- **IBoxSection**
+  - Represents a box section
+- **IChannel**
+  - Represents a channel
+- **ICircularHollowSection**
+  - Represents a circular hollow section
+- **ICircularSectionHole**
+  - Represents a circular section hole
+- **IColdRolledCSectionWithCurvedLip**
+  - Represents a cold-rolled C section with a curved lip
+- **IColdRolledCSectionWithLip**
+  - Represents a cold-rolled C section with a lip
+- **IColdRolledEavesBeamSection**
+  - Represents cold-rolled eaves beam section
+- **IColdRolledSection**
+  - Represents a cold-rolled section
+- **IColdRolledSectionBase**
+  - Contains common properties for cold-rolled sections
+- **ICompoundChannel**
+  - Represents a compound channel
+- **ICompoundSection**
+  - Represents a compound section
+- **ICompoundSectionWithSource**
+  - Represents a compound section which uses a source section
+- **ICompoundSectionWithTaperedSource**
+  - Represents a compound section which uses a tapered source section
+- **IConcreteFilledSection**
+  - Represents a concrete-filled section
+- **IDoubleAngleSection**
+  - Represents a double angle section
+- **IDoubleAngleStarSection**
+  - Represents a double angle star section
+- **IDoubleISection**
+  - Represents a double I section
+- **IDoubleISectionWithPlates**
+  - Represents a double I section with plates
+- **IDoublePlatedSection**
+  - Represents a double plated section
+- **IElementSection**
+  - Represents an element section
+- **IEncasedSection**
+  - Represents an encased section
+- **IJoistCapacityData**
+  - Contains capacity data for each design code variant (ASD, LRFD)
+- **IJoistGirderSection**
+  - Represents a joist girder section
+- **ILinearAxialSpringSection**
+  - Represents a linear axial spring section
+- **ILinearTorsionalSpringSection**
+  - Represents a linear torsional spring section
+- **ILinkElementSection**
+  - Represents a section of a link element
+- **IMemberSection**
+  - Represents a member section
+- **INonLinearAxialSpringSection**
+  - Represents a non-linear axial spring section
+- **INonLinearTorsionalSpringSection**
+  - Represents a non-linear torsional spring section
+- **INonParametricSection**
+  - Contains common properties for non-parametric sections
+- **IParametricCSection**
+  - Represents a parametric C section
+- **IParametricCircularSection**
+  - Represents a parametric circular section
+- **IParametricElbowSection**
+  - Represents a parametric elbow section
+- **IParametricISection**
+  - Represents a parametric I section
+- **IParametricLSection**
+  - Represents a parametric L section
+- **IParametricLozengeSection**
+  - Represents a parametric lozenge section
+- **IParametricParallelogramSection**
+  - Represents a parametric parallelogram section
+- **IParametricPolygonSection**
+  - Represents a parametric polygon section
+- **IParametricRectangularSection**
+  - Represents a parametric rectangular section
+- **IParametricSection**
+  - Contains common properties for parametric sections
+- **IParametricTSection**
+  - Represents a parametric T section
+- **IParametricTrapeziumSection**
+  - Represents a parametric trapezium section
+- **IPlatedBackToBackChannel**
+  - Represents a plated back-to-back channel
+- **IPlatedBackToBackChannelWithPlates**
+  - Represents a channel in back-to-back arrangement with both horizontal and vertical plates
+- **IPlatedFrontToFrontChannel**
+  - Represents a plated front-to-front channel
+- **IPlatedFrontToFrontChannelWithHorizontalPlates**
+  - Represents a channel in front-to-front arrangement with horizontal plates
+- **IPlatedFrontToFrontChannelWithVerticalPlates**
+  - Represents a channel in front-to-front arrangement with vertical plates
+- **IPlatedISectionV2**
+  - Represents a plated I section
+- **IPlatedISectionWithPlates**
+  - Represents a plated I section with plates
+- **IPlatedIStarSection**
+  - Represents a plated I star section
+- **IRectangularHollowSection**
+  - Represents a rectangular hollow section
+- **IRectangularSectionHole**
+  - Represents a rectangular section hole
+- **IRod**
+  - Represents a rod
+- **IRolledISectionWithPlates**
+  - Represents a rolled I section with plates
+- **IRolledSteelJoist**
+  - Represents a rolled steel joist
+- **ISection**
+  - Represents a section
+- **ISectionFactory**
+  - Contains methods for obtaining sections
+- **ISectionHole**
+  - Contains common properties for section holes
+- **ISingleAngleSection**
+  - Represents a single angle section
+- **ISlimflorFabricatedBeamSection**
+  - Represents a section in Slimflor fabricated beams
+- **ISolverElementSection**
+  - Represents a solver element section
+- **ISpringSection**
+  - Represents a spring section
+- **ISquareHollowSection**
+  - Represents a square hollow section
+- **ISteelJoist**
+  - Represents a steel joist
+- **ISymmetricISection**
+  - Represents a symmetric I section
+- **ITaperedISectionWithPlates**
+  - Represents a tapered I section with plates
+- **ITee**
+  - Represents a tee
+- **ITimberBeamSection**
+  - Represents a timber beam section
+- **IVirtualJoist**
+  - Represents a virtual steel joist
+- **IWallElementSection**
+  - Represents a wall element section
+- **IWestokCellularSection**
+  - Represents a Westok cellular section
+- **IWestokDesignData**
+  - Represents the design data for a Westok beam
+- **InitialOrientation**
+  - The initial orientation of a polygon section shape
+- **JoistSeries**
+  - The series of a joist
+- **JoistType**
+  - The type of joist
+- **SectionGeometry**
+  - The geometry of section
+- **SectionGroup**
+  - Represents a section group (i.e. database table the section is saved in)
+- **SectionType**
+  - The type of section
+- **WestokBeamLocation**
+  - Represents a location of a Westok beam
+- **WestokBeamType**
+  - Represents a type of a Westok beam
+- **WestokDesignParameterState**
+  - Represents a state of a Westok design parameter

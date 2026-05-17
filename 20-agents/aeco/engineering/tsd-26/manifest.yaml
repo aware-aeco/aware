@@ -1,0 +1,1399 @@
+agent:        tsd-26
+version:      26.0.1
+display-name: Tekla Structural Designer 26 (raw — Remoting API)
+description: |
+  Auto-generated agent from `TeklaStructuralDesigner.RemotingAPI@26.0.1`
+  on NuGet via `aware build agent --from-nuget`. Reflects the .NET
+  Remoting bridge for TSD 26. Companion to `tsd-25`.
+
+  Covers 42 classes × 440 commands across model authoring, loads,
+  analysis runs, design checks, and report generation.
+
+  Vendor-proprietary library; AWARE-generated text is Apache-2.0.
+  Users need their own TSD installation + license.
+
+  Marked `stateful: false` — remoting calls are request/response.
+
+stateful: false
+
+vendor:   trimble
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/engineering/tsd-26
+keywords: [aeco, engineering, structural, analysis, design, tsd, tekla-structural-designer, trimble, generated, raw, 26, nuget]
+
+provenance:
+  generated-by: aware-agent-builder
+  generator-version: 0.8.1
+  source:
+    license: EULA.txt
+    package: TeklaStructuralDesigner.RemotingAPI
+    type: nuget
+    version: 26.0.1
+  generated-at: 2026-05-17T06:34:38.931569400+00:00
+transport:
+  cli:
+    binary: aware-tsd-26
+commands:
+  application-factory-connect-to-running-application-async:
+    lifecycle: single
+    description: Connects to Tekla Structural Designer application specified by given descriptor
+  application-factory-create-connection-info:
+    lifecycle: single
+    description: Creates a connection info from its XML representation
+  application-factory-get-first-running-application-async:
+    lifecycle: single
+    description: Returns first applications that is compatible with current API version
+  application-factory-get-installed-application-versions:
+    lifecycle: single
+    description: Returns versions of installed Tekla Structural Designer application
+  application-factory-get-running-application-infos-async:
+    lifecycle: single
+    description: Returns descriptors of all applications that are compatible with current API version running on a local machine
+  application-factory-get-running-applications-async:
+    lifecycle: single
+    description: Returns all applications that are compatible with current API version
+  application-factory-securely-connect-to-running-application-async:
+    lifecycle: single
+    description: Establishes secure connection to Tekla Structural Designer application specified by the given connection info
+  application-factory-start-new-application-async:
+    lifecycle: single
+    description: Starts new instance of Tekla Structural Designer application and connects to it
+  attribute-set-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  axis-triad-create:
+    lifecycle: single
+    description: Creates a new instance of  struct
+  circular-slab-opening-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  combination-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  construction-plane-load-params-along-plane-normal:
+    lifecycle: single
+    description: Creates a new instance of  class for a load in a direction of plane's normal vector
+  construction-plane-load-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class for a load in a given direction
+  create-attribute-definition-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  create-attribute-definition-params-from:
+    lifecycle: single
+    description: Creates a new instance of  class based on given attribute definition
+  cubical-point-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  diaphragm-load-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  entity-filter-collection-create:
+    lifecycle: single
+    description: Creates a new instance of  with the given filters
+  entity-type-filter-filter-out:
+    lifecycle: single
+    description: Creates a new filter that will filter out the given values (and keep the rest)
+  entity-type-filter-keep:
+    lifecycle: single
+    description: Creates a new filter that will keep the given values (and filter out the rest)
+  enum-filter1-set-as-invalid:
+    lifecycle: single
+    description: Sets the given value as invalid (i.e. to be filtered out)
+  enum-filter1-set-as-valid:
+    lifecycle: single
+    description: Sets the given value as valid (i.e. not to be filtered out)
+  envelope-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  horizontal-construction-plane-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  ianalysis-condition-get-status:
+    lifecycle: single
+    description: Gets the  of an analysis
+  ianalysis-results-get-analysis3-dasync:
+    lifecycle: single
+    description: Returns the results of a 3D analysis
+  ianalysis-results-get-buckling-async:
+    lifecycle: single
+    description: Returns the results of a buckling analysis
+  ianalysis-results-get-rsa-seismic-async:
+    lifecycle: single
+    description: Returns the seismic results of a response spectrum analysis
+  ianalysis-results-get-rsa-torque-async:
+    lifecycle: single
+    description: Returns the torque results of a response spectrum analysis
+  ianalysis-results-get-seismic-vibration-async:
+    lifecycle: single
+    description: Returns the results of a seismic vibration analysis
+  ianalysis-results-get-slab-sequential-loading-async:
+    lifecycle: single
+    description: Returns the results of a slab sequential loading analysis
+  ianalysis-results-get-vibration-async:
+    lifecycle: single
+    description: Returns the results of a vibration analysis
+  ianalysis-tabular-results-accessor-get-foundation-reactions-async:
+    lifecycle: single
+    description: Returns a collection of foundation reactions for the given parameters
+  ianalysis-tabular-results-accessor-get-line-element-end-forces-sets-async:
+    lifecycle: single
+    description: Returns a collection of line element end forces sets for the given parameters
+  ianalysis3-dresults-get-drift-check-async:
+    lifecycle: single
+    description: Returns drift check for an entity
+  ianalysis3-dresults-get-end-forces-async:
+    lifecycle: single
+    description: Returns end forces for a loading ID and a result type
+  ianalysis3-dresults-get-global-extreme-nodal-displacements-async:
+    lifecycle: single
+    description: Returns the global extreme nodal displacements for the given loading ID
+  ianalysis3-dresults-get-maximum-mesh-forces-async:
+    lifecycle: single
+    description: Returns the maximum mesh node forces for a loading ID
+  ianalysis3-dresults-get-minimum-mesh-forces-async:
+    lifecycle: single
+    description: Returns the minimum mesh node forces for a loading ID
+  ianalysis3-dresults-get-nodal-displacements-async:
+    lifecycle: single
+    description: Returns nodal displacements for a loading ID and a result type
+  ianalysis3-dresults-get-nodal-mesh-forces-async:
+    lifecycle: single
+    description: Returns nodal mesh forces for a loading ID
+  ianalysis3-dresults-get-nodal-reactions-async:
+    lifecycle: single
+    description: Returns nodal reactions for a loading ID and a result type
+  ianalysis3-dresults-get-nodal-slab-forces-async:
+    lifecycle: single
+    description: Returns nodal slab forces for a loading ID and a result type
+  ianalysis3-dresults-get-nodal-wall-forces-async:
+    lifecycle: single
+    description: Returns nodal wall forces for a loading ID and a result type
+  ianalysis3-dresults-get-offset-displacements-async:
+    lifecycle: single
+    description: Returns displacements at element offsets for a loading ID and a result type
+  ianalysis3-dresults-get-offset-forces-async:
+    lifecycle: single
+    description: Returns offset forces for a loading ID and a result type
+  ianalysis3-dresults-get-result-line-forces-async:
+    lifecycle: single
+    description: Returns result line forces for a loading ID and a result type
+  ianalysis3-dresults-get-solved-loading-ids-async:
+    lifecycle: single
+    description: Returns a collection of IDs of solved loading
+  ianalysis3-dresults-get-wall-line-forces-async:
+    lifecycle: single
+    description: Returns wall line forces for a loading ID and a result type
+  iapplication-create-document-async:
+    lifecycle: single
+    description: Creates a new document
+  iapplication-disconnect-async:
+    lifecycle: single
+    description: Disconnects from the Tekla Structural Designer application
+  iapplication-get-application-title-async:
+    lifecycle: single
+    description: Returns Tekla Structural Designer application main window title
+  iapplication-get-document-async:
+    lifecycle: single
+    description: Gets the document
+  iapplication-get-version-string-async:
+    lifecycle: single
+    description: Returns string representation of Tekla Structural Designer application version
+  iapplication-open-document-async:
+    lifecycle: single
+    description: Opens a document
+  iapplication-stop-async:
+    lifecycle: single
+    description: Stops the Tekla Structural Designer application             This action is only valid if the application was started from API
+  ibuckling-results-get-loading-buckling-async:
+    lifecycle: single
+    description: Returns the buckling results for a loading with given ID
+  ibuckling-results-get-solved-loading-ids-async:
+    lifecycle: single
+    description: Returns a collection of IDs of solved loading
+  ican-be-updated-update-async:
+    lifecycle: single
+    description: Updates this object
+  ican-provide-bim-data-get-bim-data-async:
+    lifecycle: single
+    description: Returns the  associated with this object
+  icarbon-source-get-total-mass-async:
+    lifecycle: single
+    description: Gets the total mass of carbon embodied in the entity
+  icollector1-add:
+    lifecycle: single
+    description: Adds the given item to the collector
+  icollector1-add-range:
+    lifecycle: single
+    description: Adds the given items to the collector
+  icollector1-apply-items-async:
+    lifecycle: single
+    description: Applies modified items back to the Tekla Structural Designer model
+  icollector1-remove:
+    lifecycle: single
+    description: Removes the given item from the collector
+  icollector1-remove-range:
+    lifecycle: single
+    description: Removes the given items from the collector
+  icombination-add-loadcase-async:
+    lifecycle: single
+    description: Adds an  to this combination
+  icombination-add-loadcases-async:
+    lifecycle: single
+    description: Adds the given factored loadcases to this combination
+  icombination-get-loadcase-async:
+    lifecycle: single
+    description: Returns a loadcase from the combination at the given index
+  icombination-remove-loadcases-async:
+    lifecycle: single
+    description: Removes the loadcases with the given IDs from this combination
+  iconnection-get-connected-members-async:
+    lifecycle: single
+    description: Returns a collection of connected members
+  iconstruction-plane-get-construction-helpers-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  icreep-coefficients-get-result-count:
+    lifecycle: single
+    description: Gets the count of results for an event
+  icreep-coefficients-get-value:
+    lifecycle: single
+    description: Gets the creep coefficient
+  idesign-condition-get-result:
+    lifecycle: single
+    description: Gets the overall result of a design
+  idesign-condition-get-status:
+    lifecycle: single
+    description: Gets the  of a design
+  idictionary-property-extensions-try-get-value:
+    lifecycle: single
+    description: IDictionaryPropertyExtensions.TryGetValue
+  idictionary-property3-contains-key:
+    lifecycle: single
+    description: Returns a value indicating whether an entry with given key is present in the dictionary
+  idocument-close-async:
+    lifecycle: single
+    description: Closes the document
+  idocument-get-model-async:
+    lifecycle: single
+    description: Returns the currently active structure model
+  idocument-get-sessions-async:
+    lifecycle: single
+    description: Returns a collection of sessions in the document (sorted from newest to oldest)
+  idocument-save-to-async:
+    lifecycle: single
+    description: Saves the document to given path
+  ieffective-moduli-get-result-count:
+    lifecycle: single
+    description: Gets the count of results for an event
+  ieffective-moduli-get-value:
+    lifecycle: single
+    description: Gets the effective modulus
+  ielement1-d-get-degree-of-freedom:
+    lifecycle: single
+    description: Returns the degree of freedom at the end of the element with given index
+  ielement1-d-get-node-index:
+    lifecycle: single
+    description: Returns the node index at the end of the element with given index
+  ielement1-d-get-rigid-offset:
+    lifecycle: single
+    description: Returns the rigid offset at the end of the element with given index
+  ielement1-d-get-rigid-zone:
+    lifecycle: single
+    description: Returns the rigid zone at the end of the element with given index
+  iembedded-file-meta-data-get-attribute-definition-async:
+    lifecycle: single
+    description: Returns the attribute definition the user defined embedded file attribute is defined by
+  ienum-filter1-set-as-invalid:
+    lifecycle: single
+    description: Sets the given value as invalid (i.e. to be filtered out)
+  ienum-filter1-set-as-valid:
+    lifecycle: single
+    description: Sets the given value as valid (i.e. not to be filtered out)
+  ienvelope-add-combination-async:
+    lifecycle: single
+    description: Adds an  to this envelope
+  ifloor-analysis-model-get-solver-model-async:
+    lifecycle: single
+    description: Returns the solver model associated with this floor analysis model
+  ifloor-analysis-solver-model-get-mode-shapes-by-node-async:
+    lifecycle: single
+    description: Returns mode shapes for a loading with given ID and specified mode
+  ifloor-analysis-solver-model-get-vibration-modes-async:
+    lifecycle: single
+    description: Returns vibration modes for a loading with given ID
+  igauge-factory-get-default-gauge-async:
+    lifecycle: single
+    description: Returns the default gauge for the given profile
+  igauge-factory-get-gauges-async:
+    lifecycle: single
+    description: Returns a collection of gauges compatible with the given profile
+  ihave-calculations-get-calculations-async:
+    lifecycle: single
+    description: Returns a root node of the tree with calculations
+  ihave-user-defined-attributes-create-set-attribute-params:
+    lifecycle: single
+    description: Creates a parameters for setting a user defined text attribute
+  ihave-user-defined-attributes-get-user-defined-attributes-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  ihave-user-defined-attributes-set-user-defined-attribute-async:
+    lifecycle: single
+    description: Sets an user defined text attribute
+  ihave-user-defined-attributes-set-user-defined-attributes-async:
+    lifecycle: single
+    description: Sets user defined attributes
+  ihave-user-defined-attributes-set-user-defined-embedded-file-attribute-async:
+    lifecycle: single
+    description: Sets an user defined embedded file attribute
+  ihave-web-openings-get-web-openings-async:
+    lifecycle: single
+    description: Returns a collection of web openings associated with this object
+  iisolated-foundation-get-bottom-reinforcement-async:
+    lifecycle: single
+    description: Returns the bottom slab reinforcement
+  iisolated-foundation-get-reinforcement-async:
+    lifecycle: single
+    description: Returns the reinforcement of this isolated foundation
+  iisolated-foundation-get-top-reinforcement-async:
+    lifecycle: single
+    description: Returns the top slab reinforcement
+  iloadcase-create-load-async:
+    lifecycle: single
+    description: Creates new loads
+  iloadcase-get-loads-async:
+    lifecycle: single
+    description: Returns a collection of loads with given types
+  iloading-rsa-seismic-get-end-forces-async:
+    lifecycle: single
+    description: Returns a collection of end forces
+  iloading-rsa-seismic-get-nodal-displacements-async:
+    lifecycle: single
+    description: Returns a collection of nodal displacements
+  iloading-rsa-seismic-get-nodal-forces-async:
+    lifecycle: single
+    description: Returns a collection of nodal forces
+  iloading-rsa-seismic-get-nodal-mesh-forces-async:
+    lifecycle: single
+    description: Returns a collection of nodal mesh forces
+  iloading-rsa-seismic-get-offset-displacements-async:
+    lifecycle: single
+    description: Returns a collection of displacements at element offsets
+  iloading-rsa-seismic-get-result-line-forces-async:
+    lifecycle: single
+    description: Returns a collection of result line forces
+  iloading-rsa-seismic-get-wall-line-forces-async:
+    lifecycle: single
+    description: Returns a collection of wall line forces
+  imanage-user-defined-attributes-add-user-defined-attribute-repository-item-async:
+    lifecycle: single
+    description: Adds an item to the repository of the user defined attributes
+  imanage-user-defined-attributes-create-attribute-definition-async:
+    lifecycle: single
+    description: Creates new attribute definition
+  imanage-user-defined-attributes-get-attribute-definitions-by-names-async:
+    lifecycle: single
+    description: Returns a collection of  instances corresponding to the given attribute definition names
+  imanage-user-defined-attributes-remove-attribute-definitions-async:
+    lifecycle: single
+    description: Removes attribute definitions
+  imanage-user-defined-attributes-set-attribute-definition-async:
+    lifecycle: single
+    description: Sets the given attribute definition
+  imanage-user-defined-attributes-set-user-defined-attributes-async:
+    lifecycle: single
+    description: Sets a collection of user defined attributes
+  imaterial-factory-get-default-material-async:
+    lifecycle: single
+    description: Returns the default material for the given head code and type
+  imaterial-factory-get-materials-async:
+    lifecycle: single
+    description: Returns a collection of materials compatible with the given head code and type
+  imember-get-loading-async:
+    lifecycle: single
+    description: Returns a loading of the member for a specific  and
+  imember-get-reinforcement-async:
+    lifecycle: single
+    description: Returns a collection of reinforcement in this member
+  imember-get-span-async:
+    lifecycle: single
+    description: Returns the spans from the given indices
+  imember-loading-get-points-of-interest:
+    lifecycle: single
+    description: Returns the points of interest
+  imember-loading-get-value-async:
+    lifecycle: single
+    description: Returns the value of loading
+  imember-span-get-end-force-async:
+    lifecycle: single
+    description: Returns the end force for given loading case
+  imember-span-get-solver-elements-async:
+    lifecycle: single
+    description: Returns the chain of  of this member span from solver model for specific analysis type
+  imember-span-get-support-reaction-async:
+    lifecycle: single
+    description: Returns support reactions for a loading case at given end
+  imodel-apply-attribute-set-async:
+    lifecycle: single
+    description: Applies modified attribute sets back to the Tekla Structural Designer model
+  imodel-apply-entity-async:
+    lifecycle: single
+    description: Applies modified entities back to the Tekla Structural Designer model
+  imodel-apply-haunch-async:
+    lifecycle: single
+    description: Applies modified haunches back to the Tekla Structural Designer model
+  imodel-apply-portal-frame-member-async:
+    lifecycle: single
+    description: Applies modified portal frame members back to the Tekla Structural Designer model
+  imodel-apply-sub-entity-async:
+    lifecycle: single
+    description: Applies modified sub-entities back to the Tekla Structural Designer model
+  imodel-base-get-diaphragms-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-base-get-elements1-dasync:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-base-get-elements2-dasync:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-base-get-entity-collection-async:
+    lifecycle: single
+    description: Returns a collection of model entities of given entity type
+  imodel-base-get-nodes-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-base-get-panels-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-base-get-result-lines-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-base-get-wall-lines-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-create-analysis-element-attribute-set-async:
+    lifecycle: single
+    description: Creates a new  instance
+  imodel-create-attribute-sets-async:
+    lifecycle: single
+    description: Creates attribute sets based on the given collection of parameters
+  imodel-create-combination-attribute-set-async:
+    lifecycle: single
+    description: Creates a new  instance
+  imodel-create-concrete-beam-attribute-set-async:
+    lifecycle: single
+    description: Creates a new  instance
+  imodel-create-concrete-column-attribute-set-async:
+    lifecycle: single
+    description: Creates a new  instance
+  imodel-create-entity-async:
+    lifecycle: single
+    description: Creates new entities
+  imodel-create-entity-collector:
+    lifecycle: single
+    description: Creates an instance of
+  imodel-create-loadcase-attribute-set-async:
+    lifecycle: single
+    description: Creates a new  instance
+  imodel-create-member-attribute-set-async:
+    lifecycle: single
+    description: Creates a new  instance
+  imodel-create-pad-base-attribute-set-async:
+    lifecycle: single
+    description: Creates a new  instance for
+  imodel-create-pile-cap-attribute-set-async:
+    lifecycle: single
+    description: Creates a new  instance for
+  imodel-create-pile-type-async:
+    lifecycle: single
+    description: Creates new pile type
+  imodel-create-roof-attribute-set-async:
+    lifecycle: single
+    description: Creates a new  instance
+  imodel-create-slab-item-attribute-set-async:
+    lifecycle: single
+    description: Creates a new  instance
+  imodel-create-structural-wall-attribute-set-async:
+    lifecycle: single
+    description: Creates a new  instance
+  imodel-create-sub-entity-collector:
+    lifecycle: single
+    description: Creates an instance of
+  imodel-create-support-attribute-set-async:
+    lifecycle: single
+    description: Creates a new  instance
+  imodel-create-wind-wall-attribute-set-async:
+    lifecycle: single
+    description: Creates a new  instance
+  imodel-get-analysis-condition-async:
+    lifecycle: single
+    description: Gets the analysis condition data
+  imodel-get-analysis-types-for-element-design-async:
+    lifecycle: single
+    description: Returns a collection of analysis types to be used in element design
+  imodel-get-architectural-grids-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-get-carbon-info-async:
+    lifecycle: single
+    description: Returns the embodied carbon information for a collection of sources
+  imodel-get-carbon-sources-async:
+    lifecycle: single
+    description: Returns a collection of identifiers of carbon sources
+  imodel-get-centre-of-mass-and-rigidity-results-async:
+    lifecycle: single
+    description: Returns the centre of mass and rigidity results for a specific loading
+  imodel-get-combinations-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-get-connections-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-get-construction-point-groups-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-get-construction-points-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-get-design-condition-async:
+    lifecycle: single
+    description: Gets the design condition data
+  imodel-get-element-groups-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-get-entity-collection-async:
+    lifecycle: single
+    description: Returns a model entity collection according to the given entity type
+  imodel-get-entity-node-collection-async:
+    lifecycle: single
+    description: Returns a model entity node collection according to the given entity type and entity index
+  imodel-get-entity-span-collection-async:
+    lifecycle: single
+    description: Returns a model entity span collection according to the given entity type and entity index
+  imodel-get-envelopes-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-get-floor-analysis-models-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-get-frames-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-get-levels-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-get-loadcases-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-get-members-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-get-pad-bases-async:
+    lifecycle: single
+    description: Returns a collection of  instances with data of type
+  imodel-get-pile-caps-async:
+    lifecycle: single
+    description: Returns a collection of  instances with data of type
+  imodel-get-pile-type-by-name-async:
+    lifecycle: single
+    description: Queries a pile type by the given name
+  imodel-get-piles-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-get-portal-frames-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-get-project-details-async:
+    lifecycle: single
+    description: Returns the project details
+  imodel-get-results-async:
+    lifecycle: single
+    description: Returns the analysis results
+  imodel-get-roofs-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-get-selected-analysis-type-async:
+    lifecycle: single
+    description: Returns the currently selected analysis type
+  imodel-get-selected-entities-async:
+    lifecycle: single
+    description: Returns a collection of  instances representing currently active selection
+  imodel-get-settings-async:
+    lifecycle: single
+    description: Returns the settings specific to this model
+  imodel-get-slab-items-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-get-slab-openings-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-get-slab-patches-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-get-slabs-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-get-slopes-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-get-solver-errors-async:
+    lifecycle: single
+    description: Returns a collection of solver errors for given analysis types
+  imodel-get-solver-models-async:
+    lifecycle: single
+    description: Returns a collection of solver models for given analysis types
+  imodel-get-structural-wall-patches-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-get-structural-walls-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-get-sub-entities-async:
+    lifecycle: single
+    description: Returns sub-entities of the given entities
+  imodel-get-sub-models-async:
+    lifecycle: single
+    description: Returns the  instance
+  imodel-get-supports-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-get-total-carbon-mass-async:
+    lifecycle: single
+    description: Returns the total mass of embodied carbon in the whole model (in [kg])
+  imodel-get-validation-data-async:
+    lifecycle: single
+    description: Returns the  instance
+  imodel-get-wall-openings-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-get-wind-walls-async:
+    lifecycle: single
+    description: Returns a collection of  instances
+  imodel-import-cxl:
+    lifecycle: single
+    description: Imports the CXL from given file
+  imodel-remove-entity-async:
+    lifecycle: single
+    description: Removes the given entities from the model
+  imodel-run-analyse-all-rsa-async:
+    lifecycle: single
+    description: Performs complete response spectrum analysis
+  imodel-run-analyse-all-static-async:
+    lifecycle: single
+    description: Performs complete static analysis
+  imodel-run-analysis-async:
+    lifecycle: single
+    description: Performs an analysis of requested type over a requested selection of combinations and loadcases
+  imodel-run-design-async:
+    lifecycle: single
+    description: Performs design
+  imodel-validate-async:
+    lifecycle: single
+    description: Performs model validation
+  inode-get-direction-constraint:
+    lifecycle: single
+    description: Returns an index of constraining node in a given direction
+  inode-get-support-async:
+    lifecycle: single
+    description: Returns a support of given type at the node
+  inode-get-support-data-async:
+    lifecycle: single
+    description: Returns the support data of the node
+  inode-get-support-reaction-async:
+    lifecycle: single
+    description: Calculates support reaction for ordinary loading case
+  inode-has-support:
+    lifecycle: single
+    description: Returns a value indicating whether the node carries a support of given type
+  intersection-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  ipile-cap-data-set-user-defined-pile-arrangement-async:
+    lifecycle: single
+    description: Sets a user defined arrangement of piles
+  ipile-cap-data-update-piles-async:
+    lifecycle: single
+    description: Updates the piles of the pile cap
+  iplane-global2-local:
+    lifecycle: single
+    description: Transforms a global point to a local plane coordinates
+  iplane-local2-global:
+    lifecycle: single
+    description: Transforms a local plane point to global coordinates
+  iportal-frame-get-span-async:
+    lifecycle: single
+    description: Returns the spans from the given indices
+  iportal-frame-get-valley-async:
+    lifecycle: single
+    description: Returns the valleys from the given indices
+  iportal-frame-span-get-haunch-async:
+    lifecycle: single
+    description: Returns the haunches from the given positions
+  iportal-frame-span-get-haunch-state-async:
+    lifecycle: single
+    description: Returns the states of haunches from the given positions
+  iportal-frame-span-get-prop-async:
+    lifecycle: single
+    description: Returns the prop
+  iportal-frame-span-get-rafter-async:
+    lifecycle: single
+    description: Returns the rafters from the given positions
+  iportal-frame-span-get-tie-async:
+    lifecycle: single
+    description: Returns the tie
+  iportal-frame-span-set-geometry-async:
+    lifecycle: single
+    description: Sets the geometry of the span
+  iportal-frame-span-set-haunches-async:
+    lifecycle: single
+    description: Sets the haunches of the portal frame span
+  iportal-frame-span-set-prop-base-async:
+    lifecycle: single
+    description: Sets the prop base
+  iportal-frame-span-set-tie-async:
+    lifecycle: single
+    description: Sets the tie
+  iportal-frame-valley-get-column-async:
+    lifecycle: single
+    description: Returns the valley column
+  iportal-frame-valley-get-parapet-async:
+    lifecycle: single
+    description: Returns the valley parapet
+  iportal-frame-valley-set-async:
+    lifecycle: single
+    description: Sets the valley
+  iportal-frame-valley-set-column-base-async:
+    lifecycle: single
+    description: Sets the column base
+  iportal-frame-valley-set-parapet-async:
+    lifecycle: single
+    description: Sets the parapet of the valley
+  iprofile-factory-get-default-profile-async:
+    lifecycle: single
+    description: Returns the default profile for the given country
+  iprofile-factory-get-profiles-async:
+    lifecycle: single
+    description: Returns a collection of profiles compatible with the given country
+  iproperty1-set-value-and-update-async:
+    lifecycle: single
+    description: Sets the given value and asynchronously updates the object this property belongs to
+  ireinforcement-bar-get-anchorage-length:
+    lifecycle: single
+    description: Returns the anchorage length of the bar at requested location on element (in [mm])
+  ireinforcement-bar-get-lap-length:
+    lifecycle: single
+    description: Returns the lap length of the bar at requested location on element (in [mm])
+  ireinforcement-mesh-size-get-area-per-length:
+    lifecycle: single
+    description: Returns the area per length of bars in the given direction (in [mm²])
+  ireinforcement-mesh-size-get-diameter:
+    lifecycle: single
+    description: Returns the diameter of bars in the given direction (in [mm])
+  ireinforcement-mesh-size-get-spacing:
+    lifecycle: single
+    description: Returns the spacing of bars in the given direction (in [mm])
+  iresult-line-get-element1-dinfo:
+    lifecycle: single
+    description: Returns the information about  at a given
+  iresult-line-get-element2-dinfo:
+    lifecycle: single
+    description: Returns the information about  at a given
+  ireview-tabular-results-accessor-get-material-quantities-async:
+    lifecycle: single
+    description: Returns material quantities for the given parameters
+  irsa-mode-get-end-forces-async:
+    lifecycle: single
+    description: Returns a collection of end forces
+  irsa-mode-get-nodal-displacements-async:
+    lifecycle: single
+    description: Returns a collection of nodal displacements
+  irsa-mode-get-nodal-forces-async:
+    lifecycle: single
+    description: Returns a collection of nodal forces
+  irsa-mode-get-nodal-mesh-forces-async:
+    lifecycle: single
+    description: Returns a collection of nodal mesh forces
+  irsa-mode-get-offset-displacements-async:
+    lifecycle: single
+    description: Returns a collection of displacements at element offsets
+  irsa-mode-get-result-line-forces-async:
+    lifecycle: single
+    description: Returns a collection of result line forces
+  irsa-mode-get-wall-line-forces-async:
+    lifecycle: single
+    description: Returns a collection of wall line forces
+  irsa-seismic-results-get-loading-rsa-async:
+    lifecycle: single
+    description: Returns the RSA results for a loading with given ID
+  irsa-seismic-results-get-solved-loading-ids-async:
+    lifecycle: single
+    description: Returns a collection of IDs of solved loading
+  irsa-torque-results-get-loading-rsa-async:
+    lifecycle: single
+    description: Returns the RSA results for a loading with given ID
+  irsa-torque-results-get-solved-loading-ids-async:
+    lifecycle: single
+    description: Returns a collection of IDs of solved loading
+  isection-factory-get-default-section-async:
+    lifecycle: single
+    description: Returns the default section for the given parameters
+  isection-factory-get-non-parametric-sections-async:
+    lifecycle: single
+    description: Returns a collection of non-parametric sections from given group
+  isection-factory-get-parametric-circular-section-async:
+    lifecycle: single
+    description: Returns a parametric circular section with given parameters
+  isection-factory-get-parametric-csection-async:
+    lifecycle: single
+    description: Returns a parametric C section with given parameters
+  isection-factory-get-parametric-elbow-section-async:
+    lifecycle: single
+    description: Returns a parametric elbow section with given parameters
+  isection-factory-get-parametric-isection-async:
+    lifecycle: single
+    description: Returns a parametric I section with given parameters
+  isection-factory-get-parametric-lozenge-section-async:
+    lifecycle: single
+    description: Returns a parametric lozenge section with given parameters
+  isection-factory-get-parametric-lsection-async:
+    lifecycle: single
+    description: Returns a parametric L section with given parameters
+  isection-factory-get-parametric-parallelogram-section-async:
+    lifecycle: single
+    description: Returns a parametric parallelogram section with given parameters
+  isection-factory-get-parametric-polygon-section-async:
+    lifecycle: single
+    description: Returns a parametric polygon section with given parameters
+  isection-factory-get-parametric-rectangular-section-async:
+    lifecycle: single
+    description: Returns a parametric rectangular section with given parameters
+  isection-factory-get-parametric-trapezium-section-async:
+    lifecycle: single
+    description: Returns a parametric trapezium section with given parameters
+  isection-factory-get-parametric-tsection-async:
+    lifecycle: single
+    description: Returns a parametric T section with given parameters
+  isection-factory-get-section-groups-async:
+    lifecycle: single
+    description: Returns a collection of section groups compatible with the given head code and geometry
+  isegment2-d-get-point:
+    lifecycle: single
+    description: Returns a point on the segment at given location
+  isegment3-d-get-lcs:
+    lifecycle: single
+    description: Returns the local coordinate system at the given position along the segment
+  isegment3-d-get-point:
+    lifecycle: single
+    description: Returns a point on the segment at given location
+  isimple-web-opening-add-stiffener-async:
+    lifecycle: single
+    description: Adds a stiffener
+  isimple-web-opening-remove-stiffener-async:
+    lifecycle: single
+    description: Removes the current stiffener
+  islab-item-get-bottom-reinforcement-async:
+    lifecycle: single
+    description: Returns the bottom slab reinforcement
+  islab-item-get-contours-async:
+    lifecycle: single
+    description: Returns a sequence of  representing a slab item contour of the given slab contour type
+  islab-item-get-top-reinforcement-async:
+    lifecycle: single
+    description: Returns the top slab reinforcement
+  islab-sequential-loading-results-get-age-adjusted-tensile-strengths-async:
+    lifecycle: single
+    description: Returns age adjusted tensile strengths of slab items
+  islab-sequential-loading-results-get-applied-moments-async:
+    lifecycle: single
+    description: Returns applied moments for an event ID
+  islab-sequential-loading-results-get-composite-moduli-async:
+    lifecycle: single
+    description: Returns composite moduli of slab items
+  islab-sequential-loading-results-get-cracking-moments-async:
+    lifecycle: single
+    description: Returns cracking moments for an event ID
+  islab-sequential-loading-results-get-creep-coefficients-async:
+    lifecycle: single
+    description: Gets creep coefficients of slab items
+  islab-sequential-loading-results-get-distance-to-effective-reinforcement-async:
+    lifecycle: single
+    description: Returns distance to effective reinforcement of 2D elements
+  islab-sequential-loading-results-get-effective-moduli-async:
+    lifecycle: single
+    description: Gets effective moduli of slab items
+  islab-sequential-loading-results-get-effective-reinforcement-async:
+    lifecycle: single
+    description: Returns effective reinforcement of 2D elements
+  islab-sequential-loading-results-get-equivalent-load-factors-async:
+    lifecycle: single
+    description: Returns equivalent load factors of slab items
+  islab-sequential-loading-results-get-events-async:
+    lifecycle: single
+    description: Gets ordered collection of event IDs
+  islab-sequential-loading-results-get-extents-of-cracking-async:
+    lifecycle: single
+    description: Returns extents of cracking for an event ID
+  islab-sequential-loading-results-get-instantaneous-deflections-async:
+    lifecycle: single
+    description: Returns instantaneous nodal displacements for an event ID
+  islab-sequential-loading-results-get-percentages-of-original-stiffness-async:
+    lifecycle: single
+    description: Returns percentages of original stiffness
+  islab-sequential-loading-results-get-percentages-of-original-stiffness-static-async:
+    lifecycle: single
+    description: Returns static (not event based) percentages of original stiffness
+  islab-sequential-loading-results-get-temperature-adjusted-ages-async:
+    lifecycle: single
+    description: Returns temperature adjusted ages
+  islab-sequential-loading-results-get-total-deflections-async:
+    lifecycle: single
+    description: Returns total nodal displacements for an event ID
+  isolated-foundation-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  istructural-wall-calculate-automatic-extension-async:
+    lifecycle: single
+    description: Calculates automatic extensions in this wall
+  istructural-wall-get-reinforcement-async:
+    lifecycle: single
+    description: Returns the collection of reinforcement in this wall
+  istructural-wall-get-span-async:
+    lifecycle: single
+    description: Returns the spans from the given indices
+  istructural-wall-panel-get-openings-async:
+    lifecycle: single
+    description: Returns a collection of  instances affecting this panel
+  isub-model-get-solver-models-async:
+    lifecycle: single
+    description: Returns a collection of solver models for given analysis types
+  isub-models-get-sub-model-async:
+    lifecycle: single
+    description: Returns the sub-models from the given indices
+  isupport-data-get-rotational-stiffness:
+    lifecycle: single
+    description: Returns the rotational  for the given direction
+  isupport-data-get-stiffness:
+    lifecycle: single
+    description: Returns the translational  for the given direction
+  iunit-converter-from-base-async:
+    lifecycle: single
+    description: Converts a collection of values in the base unit to values in given unit (= factored and shifted)
+  iunit-converter-get-units-async:
+    lifecycle: single
+    description: Returns units associated with given quantity and system type
+  iunit-converter-get-units-v2-async:
+    lifecycle: single
+    description: Returns units associated with the given quantity and system type
+  iunit-converter-to-base-async:
+    lifecycle: single
+    description: Converts a collection of values in given unit (= factored and shifted) to values in the base unit
+  iunit-settings-get-units-async:
+    lifecycle: single
+    description: Returns units currently used for the given quantities
+  iunit-settings-get-units-v2-async:
+    lifecycle: single
+    description: Returns units currently used for the given quantities
+  iuser-defined-attribute-get-attribute-definition-async:
+    lifecycle: single
+    description: Returns the attribute definition the user defined attribute is defined by
+  iuser-defined-embedded-file-attribute-get-embedded-file-async:
+    lifecycle: single
+    description: Returns the associated embedded file
+  ivalid-values1-is-valid-value:
+    lifecycle: single
+    description: Returns a value indicating whether given value is valid
+  ivalidation-data-get-analysis-validation-errors-async:
+    lifecycle: single
+    description: Gets validation errors related to specific
+  ivibration-results-get-loading-vibration-async:
+    lifecycle: single
+    description: Returns the vibration results for a loading with given ID
+  ivibration-results-get-solved-loading-ids-async:
+    lifecycle: single
+    description: Returns a collection of IDs of solved loading
+  iwestok-circular-web-opening-add-stiffener-async:
+    lifecycle: single
+    description: Adds a stiffener
+  iwestok-circular-web-opening-remove-stiffener-async:
+    lifecycle: single
+    description: Removes the current stiffener
+  iwestok-elongated-web-opening-add-stiffener-async:
+    lifecycle: single
+    description: Adds a stiffener
+  iwestok-elongated-web-opening-remove-stiffener-async:
+    lifecycle: single
+    description: Removes the current stiffener
+  iwestok-elongated-web-opening-stiffener-zone-activate-async:
+    lifecycle: single
+    description: Activates the stiffener zone
+  iwestok-elongated-web-opening-stiffener-zone-deactivate-async:
+    lifecycle: single
+    description: Deactivates the stiffener in the zone
+  line-element-construction-filter-filter-out:
+    lifecycle: single
+    description: Creates a new filter that will filter out the given values (and keep the rest)
+  line-element-construction-filter-keep:
+    lifecycle: single
+    description: Creates a new filter that will keep the given values (and filter out the rest)
+  line-element-fabrication-filter-filter-out:
+    lifecycle: single
+    description: Creates a new filter that will filter out the given values (and keep the rest)
+  line-element-fabrication-filter-keep:
+    lifecycle: single
+    description: Creates a new filter that will keep the given values (and filter out the rest)
+  line-element-filter-collection-create:
+    lifecycle: single
+    description: Creates a new instance of  with the given filters
+  line-element-type-filter-filter-out:
+    lifecycle: single
+    description: Creates a new filter that will filter out the given values (and keep the rest)
+  line-element-type-filter-keep:
+    lifecycle: single
+    description: Creates a new filter that will keep the given values (and filter out the rest)
+  loadcase-factors-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  loadcase-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  loading-value-options-combination-value:
+    lifecycle: single
+    description: Creates a new instance of  class for seismic combination value
+  loading-value-options-loadcase-value:
+    lifecycle: single
+    description: Creates a new instance of  class for modal seismic/vibration loadcase value
+  loading-value-options-static-value:
+    lifecycle: single
+    description: Creates a new instance of  class for static or combined seismic value
+  material-type-filter-filter-out:
+    lifecycle: single
+    description: Creates a new filter that will filter out the given values (and keep the rest)
+  material-type-filter-keep:
+    lifecycle: single
+    description: Creates a new filter that will keep the given values (and filter out the rest)
+  member-attribute-set-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  member-force-load-params-global:
+    lifecycle: single
+    description: Creates a new instance of  class for the global direction
+  member-force-load-params-local:
+    lifecycle: single
+    description: Creates a new instance of  class for the local direction
+  member-full-uniformly-distributed-load-params-global:
+    lifecycle: single
+    description: Creates a new instance of  class for the global direction
+  member-full-uniformly-distributed-load-params-local:
+    lifecycle: single
+    description: Creates a new instance of  class for the local direction
+  member-full-uniformly-distributed-torsion-moment-load-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  member-moment-load-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  member-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  member-trapezoidal-load-params-global:
+    lifecycle: single
+    description: Creates a new instance of  class for the global direction
+  member-trapezoidal-load-params-local:
+    lifecycle: single
+    description: Creates a new instance of  class for the local direction
+  member-uniformly-distributed-load-params-global:
+    lifecycle: single
+    description: Creates a new instance of  class for the global direction
+  member-uniformly-distributed-load-params-local:
+    lifecycle: single
+    description: Creates a new instance of  class for the local direction
+  member-uniformly-distributed-torsion-moment-load-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  member-variably-distributed-load-params-global:
+    lifecycle: single
+    description: Creates a new instance of  class for the global direction
+  member-variably-distributed-load-params-local:
+    lifecycle: single
+    description: Creates a new instance of  class for the local direction
+  member-variably-distributed-torsion-moment-load-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  nodal-load-params-force:
+    lifecycle: single
+    description: Creates a new instance of  class for force
+  nodal-load-params-force-and-moment:
+    lifecycle: single
+    description: Creates a new instance of  class for force and moment
+  parallelogram-grid-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  perimeter-load-params-along-global-z:
+    lifecycle: single
+    description: Creates a new instance of  class for a load on an  in global Z direction
+  perimeter-load-params-along-plane-normal:
+    lifecycle: single
+    description: Creates a new instance of  class for a load on an  in direction of plane's normal
+  pile-cap-attribute-set-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  pile-cap-user-defined-pile-arrangement-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  pile-cap-user-defined-pile-arrangement-params-create-from:
+    lifecycle: single
+    description: Creates a new instance of  class
+  pile-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  pile-type-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  planar-point-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  point-load-params-along-plane-normal:
+    lifecycle: single
+    description: Creates a new instance of  class for a load in a direction of the plane's normal
+  point-load-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class for a load in a given global direction
+  portal-frame-base-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class for portal frame base parameters
+  portal-frame-base-params-from:
+    lifecycle: single
+    description: Creates a new instance of  class based on given portal frame base
+  portal-frame-end-plate-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  portal-frame-end-plate-params-from:
+    lifecycle: single
+    description: Creates a new instance of  class based on given end plate
+  portal-frame-haunch-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  portal-frame-haunch-params-from:
+    lifecycle: single
+    description: Creates a new instance of  class based on given haunch
+  portal-frame-params-irregular-spacing:
+    lifecycle: single
+    description: Returns a new  instance defined for irregular spacing
+  portal-frame-params-regular-spacing:
+    lifecycle: single
+    description: Returns a new  instance defined for regular spacing
+  portal-frame-span-geometry-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  portal-frame-span-geometry-params-from:
+    lifecycle: single
+    description: Creates a new instance of  class based on given portal frame span
+  portal-frame-span-haunches-params-create-async:
+    lifecycle: single
+    description: Returns parameters for creating haunches of a portal frame span initialized by the given portal frame span
+  portal-frame-span-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  portal-frame-span-tie-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  portal-frame-span-tie-params-from:
+    lifecycle: single
+    description: Creates a new instance of  class based on given portal frame span
+  portal-frame-support-data-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  portal-frame-support-data-params-from:
+    lifecycle: single
+    description: Creates a new instance of  class based on given portal frame support data
+  portal-frame-valley-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  portal-frame-valley-params-from:
+    lifecycle: single
+    description: Creates a new instance of  class based on given portal frame valley
+  portal-frame-valley-parapet-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  portal-frame-valley-parapet-params-from:
+    lifecycle: single
+    description: Creates a new instance of  class based on given portal frame valley
+  rafter-haunches-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  rafter-haunches-params-create-async:
+    lifecycle: single
+    description: Returns parameters for creating haunches for a rafter initialized by the given position in the given portal frame span
+  rectangular-slab-opening-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  roof-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  sector-grid-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class with both directions
+  sector-grid-params-with-angular-lines:
+    lifecycle: single
+    description: Creates a new instance of  class for a grid with angular lines only
+  sector-grid-params-with-radial-lines:
+    lifecycle: single
+    description: Creates a new instance of  class for grid with radial lines only
+  set-attribute-definition-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  set-attribute-definition-params-from:
+    lifecycle: single
+    description: Creates a new instance of  class based on given attribute definition
+  settlement-load-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  simple-web-opening-stiffener-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  slab-item-attribute-set-params-column-drop:
+    lifecycle: single
+    description: Returns a new  instance for creating attribute set for a column drop
+  slab-item-attribute-set-params-general:
+    lifecycle: single
+    description: Returns a new  instance for creating attribute set for a general slab item
+  slab-item-attribute-set-params-overhang:
+    lifecycle: single
+    description: Returns a new  instance for creating attribute set for a slab overhang
+  slab-item-params-add-to-slab:
+    lifecycle: single
+    description: Returns a new  instance defined to add the slab items to the given existing slab
+  slab-item-params-force-new-slab:
+    lifecycle: single
+    description: Returns a new  instance defined to force creating new slab
+  slab-item-params-search-for-slab:
+    lifecycle: single
+    description: Returns a new  instance defined to search for an compatible slab in a plane defined by the given construction points
+  slab-load-params-along-slab-normal:
+    lifecycle: single
+    description: Creates a new instance of  class for a load in a direction of slab's normal vector
+  slab-load-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class for a load in a given direction
+  structural-wall-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  support-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  temperature-load-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class for a temperature load on an
+  uniform-area-element-load-params-along-element-normal:
+    lifecycle: single
+    description: Creates a new instance of  class for a load in a direction of area element's normal vector
+  uniform-area-element-load-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class for a load in a given direction
+  uniform-line-load-params-global:
+    lifecycle: single
+    description: Creates a new instance of  class for a load in a given global direction
+  uniform-line-load-params-local:
+    lifecycle: single
+    description: Creates a new instance of  class for a load in a given local direction
+  uniform-polygonal-load-params-global:
+    lifecycle: single
+    description: Creates a new instance of  class for a load in a given direction
+  uniform-polygonal-load-params-local:
+    lifecycle: single
+    description: Creates a new instance of  class for a load in a direction of plane's normal vector
+  uniform-rectangular-load-params-global:
+    lifecycle: single
+    description: Creates a new instance of  class for a load in a given direction
+  uniform-rectangular-load-params-local:
+    lifecycle: single
+    description: Creates a new instance of  class for a load in a direction of plane's normal vector
+  variable-area-element-load-params-along-element-normal:
+    lifecycle: single
+    description: Creates a new instance of  class for a load in a direction of area element's normal vector
+  variable-area-element-load-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class for a load in a given direction
+  variable-polygonal-load-params-along-plane-normal:
+    lifecycle: single
+    description: Creates a new instance of  class for a load in a direction of plane's normal vector
+  variable-polygonal-load-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class for a load in a given direction
+  wall-opening-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  web-opening-stiffening-extensions-has-bottom-stiffening:
+    lifecycle: single
+    description: Returns a value indicating whether the opening has any stiffening on the bottom side
+  web-opening-stiffening-extensions-has-left-stiffening:
+    lifecycle: single
+    description: Returns a value indicating whether the opening has any stiffening on the left side
+  web-opening-stiffening-extensions-has-right-stiffening:
+    lifecycle: single
+    description: Returns a value indicating whether the opening has any stiffening on the right side
+  web-opening-stiffening-extensions-has-top-stiffening:
+    lifecycle: single
+    description: Returns a value indicating whether the opening has any stiffening on the top side
+  westok-circular-web-opening-stiffener-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  westok-elongated-web-opening-stiffener-params-both-zones:
+    lifecycle: single
+    description: Creates a new instance of  class with stiffener on both the top and the bottom side
+  westok-elongated-web-opening-stiffener-params-bottom-zone-only:
+    lifecycle: single
+    description: Creates a new instance of  class with stiffener only on the bottom side
+  westok-elongated-web-opening-stiffener-params-top-zone-only:
+    lifecycle: single
+    description: Creates a new instance of  class with stiffener only on the top side
+  westok-elongated-web-opening-stiffener-zone-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+  wind-wall-params-create:
+    lifecycle: single
+    description: Creates a new instance of  class
+skills:
+  - tsd-api-remoting-bim-enums.md
+  - tsd-api-remoting-bim.md
+  - tsd-api-remoting-common-interfaces.md
+  - tsd-api-remoting-common-properties.md
+  - tsd-api-remoting-common.md
+  - tsd-api-remoting-connections.md
+  - tsd-api-remoting-decking.md
+  - tsd-api-remoting-document.md
+  - tsd-api-remoting-enums.md
+  - tsd-api-remoting-filtering.md
+  - tsd-api-remoting-floor-analysis.md
+  - tsd-api-remoting-foundations-create.md
+  - tsd-api-remoting-foundations.md
+  - tsd-api-remoting-geometry.md
+  - tsd-api-remoting-loading-create.md
+  - tsd-api-remoting-loading.md
+  - tsd-api-remoting-materials.md
+  - tsd-api-remoting-portal-frames-create.md
+  - tsd-api-remoting-portal-frames.md
+  - tsd-api-remoting-reinforcement.md
+  - tsd-api-remoting-report.md
+  - tsd-api-remoting-sections.md
+  - tsd-api-remoting-service.md
+  - tsd-api-remoting-settings.md
+  - tsd-api-remoting-solver.md
+  - tsd-api-remoting-structure-analysis.md
+  - tsd-api-remoting-structure-create.md
+  - tsd-api-remoting-structure-design.md
+  - tsd-api-remoting-structure-enums.md
+  - tsd-api-remoting-structure-validation.md
+  - tsd-api-remoting-structure-web-openings-create.md
+  - tsd-api-remoting-structure-web-openings.md
+  - tsd-api-remoting-structure.md
+  - tsd-api-remoting-tabular-results-analysis.md
+  - tsd-api-remoting-tabular-results-review.md
+  - tsd-api-remoting-tabular-results.md
+  - tsd-api-remoting-units.md
+  - tsd-api-remoting-user-defined-attributes-create.md
+  - tsd-api-remoting-user-defined-attributes.md
+  - tsd-api-remoting.md
+  - tsd-attributes.md
+  - tsd-core-rpc-service.md

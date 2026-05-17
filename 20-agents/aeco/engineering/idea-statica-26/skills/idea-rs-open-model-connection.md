@@ -1,0 +1,90 @@
+---
+name: idea-rs-open-model-idea-rs-open-model-connection
+description: API reference for namespace IdeaRS.OpenModel.Connection from IdeaRS.OpenModel.dll
+---
+
+# IdeaRS.OpenModel.Connection
+
+- **AnchorGrid**
+  - Data of the anchor grid
+- **ApplyConnTemplateSetting**
+  - Defaults which are used for applying template
+- **BeamData**
+  - Provides data of the connected beam
+- **BeamLoadsImportMappingData**
+  - BeamLoadsImportMappingData
+- **BendData**
+  - Provides data of bend
+- **BoltGrid**
+- **BucklingRes**
+  - Results of the buckling analysis
+- **CheckResAnchor**
+  - Check value for Anchor
+- **CheckResBolt**
+  - Check value for Bolts.             Bolt identification: Bolt identifiers (used as dictionary keys in raw CBFEM results             and reflected in ) are opaque internal solver identifiers. They may start at any number,             are not necessarily sequential, and may contain gaps. When a bolt group is exploded or bolt positions             are modified, the identifiers may shift. Do not perform arithmetic on bolt identifiers or assume             they correspond to a zero-based or one-based index. To map bolts to sequential positions,             sort the bolt keys numerically and use the resulting order.
+- **CheckResConcreteBlock**
+  - Check value for Concrete Block
+- **CheckResPlate**
+  - Check value for Plate
+- **CheckResSummary**
+  - Check summary
+- **CheckResWeld**
+  - Check value for Weld
+- **ConProjectInfo**
+  - Provides informationabout
+- **ConcreteBlock**
+  - Data of concrete block
+- **ConcreteBlockData**
+  - Provides data of the single concrete block
+- **ConnectedMember**
+  - ConnectedMember
+- **ConnectionCheckRes**
+  - Results for connection in project
+- **ConnectionData**
+  - Provides data of the connection
+- **ConnectionInfo**
+  - Provides information about connection
+- **ConnectionLoadInfo**
+  - Information about connection load update
+- **ConnectionPoint**
+  - ConnectedDesignMemeber
+- **ConnectionResultsData**
+  - Results for all connections in project
+- **CutBeamByBeamData**
+  - Provides data of the cut objec by object
+- **CutData**
+  - Provides data of the cut beam
+- **CutMethod**
+  - Cut method
+- **CutOrientation**
+  - Represents the type of the cut
+- **CutPart**
+- **DistanceComparison**
+  - Represents the result of comparison of distances of two object from the same point
+- **FastenerGridBase**
+- **FoldedPlateData**
+  - Provides data of the folded plate
+- **FormulasType**
+  - Type formulas output
+- **IdeaConImportSettings**
+  - Represents settings of improt options into Idea Connections
+- **IdeaSMemberImportSettings**
+  - Represents settings of improt options into Idea Connections
+- **InstallationProcessTypeEnum**
+- **OpenProjectResult**
+- **PinGrid**
+  - Data of the pin grid
+- **PlateData**
+  - Provides data of the single plate
+- **ReportSettings**
+  - Report settings for IDEA connections.
+- **ReportType**
+  - Defines a report type.
+- **UnitType**
+  - Defines a unit type.
+- **WeldData**
+  - Provides data of the single weld
+- **WeldDefinition**
+  - Weld definition for cut operations (web or flange weld).
+- **WeldType**
+  - enum of weld types

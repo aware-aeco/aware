@@ -1,0 +1,92 @@
+---
+name: idea-rs-open-model-idea-rs-open-model-model
+description: API reference for namespace IdeaRS.OpenModel.Model from IdeaRS.OpenModel.dll
+---
+
+# IdeaRS.OpenModel.Model
+
+- **Alignment**
+- **BondedTendon**
+  - Bonded tendon
+- **CheckMember**
+  - Check member base class
+- **CheckMember1D**
+  - Check meber 1D
+- **DesignMember**
+  - DesignMember
+- **DesignMemberInSubStructure**
+  - DesignMemberInSubStructure
+- **EccentricityReference**
+- **Element1D**
+  - Representation of element1D
+- **Element2D**
+  - Representation of element2D
+- **Element2DType**
+  - Analysis Type of 2D IOM element
+- **HingeElement1D**
+  - Representation of hinge element 1D
+- **HingeTypeInDirrection**
+  - Type of hinge in the direction
+- **InitialImperfectionOfPoint**
+  - Initial deformation of point - geometry nonlinear calculation
+- **InsertionPoints**
+- **LineSupportSegment**
+  - Line support on segment
+- **Member1D**
+  - Representation of member1D
+- **Member1DType**
+  - Type of Member 1D
+- **Member2D**
+  - Representation of member2D
+- **PointSupportNode**
+  - Point support in point
+- **PretensionedTendonGroup**
+  - The Pretensioned tendon group
+- **PretensionedTendonGroupItem**
+  - The pretensionede tendon group item
+- **RebarBase**
+  - Represents a base class for Rebars in 3D space.
+- **RebarGeneral**
+  - Represents a single main rebar in 3D space.             Holds data from generated rebar or rebar imported from Tekla.             the rebarShape is in global coordinates and it is not possible to prject it along Member1D, Polyline, ... (referenceLine)
+- **RebarGeneralType**
+  - Determine type of rebar General
+- **RebarHookBase**
+  - Represents a base class for rebar hook in 3D.
+- **RebarHookBend**
+  - Represents a bend rebar hook in 3D.
+- **RebarPatternBase**
+  - Represents a base class for Rebar Pattern
+- **RebarPoint3D**
+  - Represents a Point in 3D.             Defines an Arc segment by radius.
+- **RebarPolyLine3D**
+  - Represents a polyline in 3D space.
+- **RebarSegment3DArc3Pts**
+  - Represents an arc segment in 3D space defined by 3 points             Start, End and a Point between start and end point.
+- **RebarSegment3DBase**
+  - Represents a segment in 3D space.
+- **RebarSegment3DLine**
+  - Represents a line segment in 3D space.
+- **RebarShape**
+  - Represents a geometrical shape for Rebar in 3D space.
+- **RebarSingle**
+  - Represents a single main rebar in 3D space.
+- **RebarStirrupPattern**
+  - Represents a pattern of rebar
+- **RebarStirrups**
+  - Represents a rebar grouping in 3D space.
+- **RigidLink**
+  - Rigid link between nodes
+- **Span**
+  - Span allows specifying haunched member.                          Both cross-section must be of the same type. Spans must not overlap.
+- **SubStructure**
+  - SubStructure
+- **SubStructureGeometry**
+  - SubStructureGeometry
+- **SubStructureLoading**
+  - SubStructureLoading
+- **SupportTypeInDirrection**
+  - Type opf support in the direction
+- **Taper**
+  - Defines haunches (variyng cross-sections) along the member.                          One  may be assigned to multiple Members.             Sections of the member not covered by a span will use the member's cross-section.
+- **Tendon**
+  - Tendon base class

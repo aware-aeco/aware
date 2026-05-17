@@ -1,0 +1,81 @@
+---
+name: tsd-api-remoting-tsd-api-remoting-reinforcement
+description: API reference for namespace TSD.API.Remoting.Reinforcement from TSD.API.Remoting.dll
+---
+
+# TSD.API.Remoting.Reinforcement
+
+- **BeamReinforcementGroupPosition**
+  - The position of a reinforcement group in a beam span
+- **BeamReinforcementZoneType**
+  - The reinforcement zone in a concrete beam
+- **BobPositionType**
+  - Specifies the position of bobs on a bar
+- **IIsolatedFoundationReinforcement**
+  - Represents isolated foundation reinforcement
+- **ILinkDetailingGroup**
+  - Represents a group of link reinforcement bars for use in detailing
+- **ILinkSchedulingGroup**
+  - Represents a group of link reinforcement bars for use in scheduling
+- **ILongitudinalBarDetailingGroup**
+  - Represents a reinforcement detailing group of longitudinal bars
+- **ILongitudinalBarSchedulingGroup**
+  - Represents a group of longitudinal reinforcement bars for use in scheduling
+- **IMasonryWallReinforcement**
+  - Represents reinforcement of a masonry wall in a single direction
+- **IReinforcement**
+  - Represents a reinforcement object (bar or mesh)
+- **IReinforcementBar**
+  - Describes an entire reinforcement bar (size, shape and the numeric shape parameters)
+- **IReinforcementBarDetailingGroup**
+  - Represents a detailing group of reinforcement bars
+- **IReinforcementBarGeometry**
+  - Represents the geometry of a reinforcement bar
+- **IReinforcementBarHook**
+  - Represents a start or end hook of a reinforcement bar
+- **IReinforcementBarList**
+  - Represents a list of reinforcement bars
+- **IReinforcementBarSize**
+  - Represents a single size of a reinforcement bar
+- **IReinforcementCollection**
+  - Represents a collection of reinforcement bars and meshes
+- **IReinforcementGrade**
+  - Represents a reinforcement grade
+- **IReinforcementMesh**
+  - Represents a reinforcement mesh
+- **IReinforcementMeshDetailingGroup**
+  - Represents a detailing group of meshes
+- **IReinforcementMeshList**
+  - Represents a list of reinforcement meshes
+- **IReinforcementMeshSize**
+  - Represents a single size of a reinforcement mesh
+- **IReinforcementShape**
+  - Represents a shape of a reinforcement bar (not its numeric parameters)
+- **IReinforcementSize**
+  - Represents a single reinforcement size
+- **IReinforcementWireSize**
+  - Represents a single size of a reinforcement wire
+- **ISlabReinforcement**
+  - Represents slab reinforcement
+- **IStructuralWallMasonryReinforcement**
+  - Represents reinforcement data for a masonry wall span that uses Tedds design
+- **IStructuralWallPatchMasonryReinforcement**
+  - Represents reinforcement data for masonry wall patch that uses Tedds design
+- **LinkDetailingGroupType**
+  - Specifies the type of a link detailing group
+- **ReinforcementBarDirection**
+  - Specifies the direction of reinforcement bar
+- **ReinforcementBarLocation**
+  - Represents the location of a reinforcement bar in a section
+- **ReinforcementGeometry**
+  - The geometry of reinforcement
+- **ReinforcementRibType**
+  - The surface/rib type for bar reinforcement
+- **ReinforcementShapeType**
+  - The type of a reinforcement shape
+- **ReinforcementType**
+  - The type of reinforcement
+- **ShearWallReinforcementLayoutType**
+  - The type of reinforcement layout in a shear wall
+- **UsedReinforcement**
+  - Represents the type of reinforcement which has been used

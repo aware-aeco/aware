@@ -1,0 +1,57 @@
+---
+name: allplan-oidc-bim-plus-sdk-data-db-core-building
+description: API reference for namespace BimPlus.Sdk.Data.DbCore.Building from BimPlus.Sdk.Data.dll
+---
+
+# BimPlus.Sdk.Data.DbCore.Building
+
+- **Beam**
+- **Body**
+- **BuildingElement**
+- **BuildingElementPart**
+- **BuildingSystem**
+- **Chimney**
+- **Column**
+- **CurtainWall**
+- **Foundation**
+- **HyperWall**
+- **Lintel**
+- **MaterialLayer**
+- **Member**
+- **Pier**
+- **Pile**
+- **Plate**
+- **Railing**
+- **Ramp**
+- **RampFlight**
+- **RollerBlindHousing**
+- **Roof**
+- **RoofCovering**
+- **RoofLayer**
+- **RootElement**
+- **Slab**
+- **SlabElementedCase**
+- **SlabLayer**
+- **SlabPart**
+- **Stair**
+- **StairCenterCarriage**
+- **StairCenterFreeComponent**
+- **StairCenterHandrail**
+- **StairCenterStringer**
+- **StairFlight**
+- **StairInnerCarriage**
+- **StairInnerFreeComponent**
+- **StairInnerHandrail**
+- **StairInnerStringer**
+- **StairOuterCarriage**
+- **StairOuterFreeComponent**
+- **StairOuterHandrail**
+- **StairOuterStringer**
+- **SurfaceFeature**
+- **Tendon**
+- **TendonAnchor**
+- **Upstand**
+- **UpstandLayer**
+- **VoidingFeature**
+- **Wall**
+- **WallElementedCase**
