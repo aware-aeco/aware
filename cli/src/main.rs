@@ -101,6 +101,12 @@ enum Command {
 
     /// Search command names + descriptions across installed agents.
     Search(commands::search::SearchArgs),
+
+    /// Render reports about the substrate (HTML, etc.).
+    Report {
+        #[command(subcommand)]
+        action: commands::report::ReportCommand,
+    },
 }
 
 #[tokio::main]
@@ -131,6 +137,7 @@ async fn main() -> anyhow::Result<()> {
         Command::Diagram { action } => commands::diagram::dispatch(action, &ctx),
         Command::Tree(args) => commands::tree::run(&ctx, &args),
         Command::Search(args) => commands::search::run(&ctx, &args),
+        Command::Report { action } => commands::report::dispatch(action, &ctx),
     };
 
     match result {

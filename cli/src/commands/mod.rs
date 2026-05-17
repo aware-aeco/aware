@@ -11,6 +11,7 @@ pub mod connect;
 pub mod diagram;
 pub mod doctor;
 pub mod plugins;
+pub mod report;
 pub mod search;
 pub mod skill;
 pub mod tree;
