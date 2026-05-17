@@ -37,6 +37,37 @@ pub struct App {
     /// with the runtime. See `10-core/app-spec.md § Substrate primitives`.
     #[serde(default)]
     pub schedule: Option<ScheduleBlock>,
+    /// App-level `engineering:` block — pins code revisions / catalogues /
+    /// solver builds for reproducible engineer-signed deliverables (v0.21).
+    /// See `10-core/agent-spec.md § Engineering envelope`.
+    #[serde(default)]
+    pub engineering: Option<EngineeringBinding>,
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone)]
+pub struct EngineeringBinding {
+    /// Map of pin-id → pin-value (e.g. `code-of-practice: "eurocode-3@2022+uk-na"`).
+    /// Validated at install time against the engineering agent's declared
+    /// pinnable set.
+    #[serde(default)]
+    pub pins: std::collections::BTreeMap<String, String>,
+    /// Optional output-seal block — produces an `.aware-receipt.json`
+    /// chain-of-custody record next to the named artifact.
+    #[serde(rename = "output-seal", default)]
+    pub output_seal: Option<OutputSeal>,
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone)]
+pub struct OutputSeal {
+    /// Template expression resolving to the artifact path
+    /// (e.g. `'{{ calc-pack.path }}'`).
+    pub artifact: String,
+    /// Template expression resolving to the operator's id
+    /// (e.g. CEng/PE reference).
+    pub operator: String,
+    /// Optional template expression resolving to a digital-signing
+    /// credential (e.g. `'{{ secrets.ceng-seal }}'`).
+    pub credential: Option<String>,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone)]

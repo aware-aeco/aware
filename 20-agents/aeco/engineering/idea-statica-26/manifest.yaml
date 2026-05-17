@@ -31,6 +31,28 @@ provenance:
     type: nuget
     version: 26.0.1.2450
   generated-at: 2026-05-17T06:34:27.747231500+00:00
+engineering:
+  pinnable:
+    - id: code-of-practice
+      description: Connection-design code (EC3-1-8, AISC 360, etc.) + revision
+      required: true
+      example: 'eurocode-3-1-8@2005+uk-na'
+    - id: bolt-catalogue
+      description: Bolt grade catalogue + revision (EN 14399, ASTM F3125)
+      required: true
+      example: 'en-14399@2018'
+    - id: weld-electrode-catalogue
+      description: Weld electrode catalogue (EN ISO 14341, AWS A5.1)
+      required: false
+      example: 'en-iso-14341@2020'
+    - id: gamma-factors
+      description: Partial factors for connection-design checks
+      required: false
+      example: 'en-1993-1-8@2005+uk-na-gamma-m2-1.25'
+    - id: solver-build
+      description: IDEA solver binary hash (auto-resolved by transport)
+      required: true
+      example: 'idea-26.0.1.2450-build-XX'
 transport:
   cli:
     binary: aware-idea-statica-26
