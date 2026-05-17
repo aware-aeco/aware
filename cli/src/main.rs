@@ -108,6 +108,12 @@ enum Command {
         #[command(subcommand)]
         action: commands::report::ReportCommand,
     },
+
+    /// Manage voice packs for panel review (v0.25).
+    Voice {
+        #[command(subcommand)]
+        action: commands::voice::VoiceCommand,
+    },
 }
 
 #[tokio::main]
@@ -139,6 +145,7 @@ async fn main() -> anyhow::Result<()> {
         Command::Tree(args) => commands::tree::run(&ctx, &args),
         Command::Search(args) => commands::search::run(&ctx, &args),
         Command::Report { action } => commands::report::dispatch(action, &ctx),
+        Command::Voice { action } => commands::voice::dispatch(action, &ctx),
     };
 
     match result {

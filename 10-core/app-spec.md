@@ -460,6 +460,129 @@ This is the foundation for v0.25 (panel review on write-mode nodes) and v0.26 (s
 
 ---
 
+## Panel review (v0.25)
+
+The 4-agent verification brainstorm + the persona audit converged on a single insight no existing AI-for-AEC tool delivers: **N different models, in N different domain hats, must agree before any write-mode commit happens.** A structural engineer's killer demo is watching GPT-5 (in a UK code-compliance hat) dissent against Claude (in a structural-engineer hat) with a specific BS 9999 §6.2 citation. Today that flow exists nowhere.
+
+v0.25 ships it as a substrate primitive.
+
+### `panel:` block
+
+Any write-mode node can declare a `panel:` block. When the runtime reaches the node, it convenes the panel; each voice produces a verdict + rationale; if the `require:` quorum isn't met (default `unanimous`), the runtime halts with the dissents recorded in the receipt.
+
+```yaml
+- id: bump-revisions
+  agent: revit-2026
+  command: revision.bump
+  inputs:
+    sheet-numbers: '{{ sheet-list.sheets[*].sheet-number }}'
+    description:   'Issued for Tender'
+  safety:
+    transaction-group: tender-bump
+    snapshot: true
+    worksharing: { check: true, fail-if-other-user: true }
+  panel:
+    require: unanimous              # unanimous | majority | quorum-N
+    on-dissent: halt                # halt | log-only | warn
+    voices:
+      - id: structural-engineer
+        model: claude-opus-4-7
+        voice-pack: 'atom://voices/aware-aeco/structural-engineer@2026'
+      - id: code-compliance
+        model: gpt-5
+        voice-pack: '@ise/uk-structural-reviewer@2025'
+        jurisdiction: UK
+      - id: detailer
+        model: gemini-2-5-pro
+        voice-pack: 'atom://voices/aware-aeco/steel-detailer@2026'
+      - id: building-physics
+        model: llama-4-405b
+        voice-pack: 'atom://voices/aware-aeco/building-physics@2026'
+```
+
+### Voice packs — a new distribution primitive
+
+Decalog #6 says "ship agents, not apps." v0.25 generalises: **ship voices.**
+
+A voice pack is a markdown system-prompt + reference-codes folder published by an institution / authoring engineer / firm. Forkable. Version-pinnable. Citable. Independently auditable.
+
+```bash
+aware voice install @ise/uk-structural-reviewer@2025
+# Resolves @ise → Institution of Structural Engineers (UK)
+# Pulls system-prompt.md + reference-codes/*.md
+# Stores at ~/.aware/voices/ise/uk-structural-reviewer/2025/
+```
+
+Voice pack folder layout:
+
+```
+~/.aware/voices/ise/uk-structural-reviewer/2025/
+  manifest.yaml           # pack metadata + version
+  system-prompt.md        # the LLM's instructions
+  references/
+    BS-9999-2017.md       # cited code reference
+    BS-EN-1993-1-1-2022.md
+    ...
+  examples/               # optional — sample dissents + rationales
+    fire-strategy-gap.md
+```
+
+Voice packs compose with the v0.20 atom library: a voice pack can reference atoms (`atom://generic/at-least`) inside its system prompt to enforce deterministic checks during reasoning.
+
+### Receipt artifact
+
+Every panel-gated commit emits a JSONL receipt next to the trace:
+
+```
+~/.aware/receipts/<app>/<run-id>.jsonl
+```
+
+Each receipt contains:
+
+```jsonl
+{"kind":"panel-convened","node":"bump-revisions","ts":"2026-05-17T17:00:01Z","voices":["structural-engineer","code-compliance","detailer","building-physics"]}
+{"kind":"voice-verdict","voice":"structural-engineer","model":"claude-opus-4-7","verdict":"approve","rationale":"Revision bump on 47 sheets..."}
+{"kind":"voice-verdict","voice":"code-compliance","model":"gpt-5","verdict":"dissent","rationale":"Revision bump to 'Issued for Tender' on A-100 precedes the fire-strategy approval gate per BS 9999 §6.2. ...","citations":["BS 9999:2017 §6.2"]}
+{"kind":"panel-halted","reason":"non-unanimous (3 approve, 1 dissent)","ts":"2026-05-17T17:00:14Z"}
+```
+
+When the engineer (or their insurer, building-control officer) needs to reconstruct *why* a write committed (or didn't), they read the receipt. Every dissent is logged forever — even resolved ones — so a post-incident audit can answer "did anyone object?" with a yes/no/transcript.
+
+If the app declares `engineering.output-seal` (v0.21), the JSONL receipt is referenced from the seal's chain-of-custody record.
+
+### CLI
+
+| Command | What it does |
+|---|---|
+| `aware voice install <pack>` | Install a voice pack from the registry or a local path |
+| `aware voice list` | List installed voice packs |
+| `aware voice describe <pack>` | Show pack metadata + system prompt + references |
+| `aware voice uninstall <pack>` | Remove a voice pack |
+| `aware app run <app>` | When a panel-gated node fires, prints each voice's verdict live |
+| `aware app explain <app>` | Now also surfaces which nodes have panels + their voice composition |
+
+### Composition
+
+The panel doesn't replace the v0.11 safety contract, v0.19 substrate primitives, v0.21 engineering envelope, or v0.23 deterministic-validator boundary. It's the **multi-voice review layer** that runs *before* the deterministic write executes:
+
+```
+write-mode node
+  ↓
+v0.11 safety pre-flight (worksharing, snapshot, transaction-group)
+  ↓
+v0.25 panel review (N voices, must agree)
+  ↓
+v0.19 primitive checks (assert, model-lock)
+  ↓
+the actual deterministic write
+  ↓
+v0.21 output-seal receipt (audit artefact)
+```
+
+The panel is the **human-in-the-loop slot, automated**. A panel of LLMs in different domain hats is the closest substitute to a real four-eyes review that doesn't require four humans available at app-run time.
+
+---
+
 ## Connections
 
 A connection is a directed edge between two node ids, with an optional label naming the data type flowing through it.

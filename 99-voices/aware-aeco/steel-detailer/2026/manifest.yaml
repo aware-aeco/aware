@@ -1,0 +1,15 @@
+id:       steel-detailer
+scope:    aware-aeco
+version:  2026
+name:     Steel Detailer
+description: |
+  First-party reference voice pack — a steel-detailer hat. Reviews
+  write-mode operations against the fabrication-shop floor's reality.
+  Pair with structural-engineer + code-compliance voices for full
+  coverage.
+license: Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/99-voices/aware-aeco/steel-detailer
+references-folder: references
+system-prompt-file: system-prompt.md
+authored-by: aware-aeco
+authored-at: 2026-05-17

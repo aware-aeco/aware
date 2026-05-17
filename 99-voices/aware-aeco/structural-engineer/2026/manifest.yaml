@@ -1,0 +1,15 @@
+id:       structural-engineer
+scope:    aware-aeco
+version:  2026
+name:     Structural Engineer (generic)
+description: |
+  First-party reference voice pack — a structural-engineer hat.
+  Reviews write-mode operations through a structural-design lens.
+  Generic (not jurisdiction-specific); pair with a code-compliance
+  voice for region-specific code checks.
+license: Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/99-voices/aware-aeco/structural-engineer
+references-folder: references
+system-prompt-file: system-prompt.md
+authored-by: aware-aeco
+authored-at: 2026-05-17
