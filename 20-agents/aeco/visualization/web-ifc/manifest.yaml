@@ -1,0 +1,427 @@
+agent:        web-ifc
+version:      0.0.77
+display-name: web-ifc (WebAssembly IFC parser — raw)
+description: |
+  Auto-generated agent from `web-ifc@0.0.77` on npm via
+  `aware build agent --from-npm`. Reflects the TypeScript public-API
+  declarations of the WebAssembly-backed IFC parser used as the
+  foundation under both `@thatopen/components` and many AECO web
+  apps.
+
+  Covers 19 classes × 120 methods: IfcAPI (Open/Close model, read
+  property sets, iterate geometry), property-by-handle / -by-type
+  lookups, geometry tessellation streams, IFC4 / IFC2x3 entity
+  navigation.
+
+  Use when you want a thin, fast IFC reader without the React /
+  Three.js abstractions of `thatopen-components`. Common workflows:
+  IFC → JSON conversion pipelines, server-side property extraction,
+  custom geometry processing.
+
+  Library is **MPL-2.0** (Mozilla Public License — permissive with
+  file-level copyleft on modifications to the library itself).
+  AWARE-generated text here is Apache-2.0. The library is not
+  redistributed; users install `web-ifc` themselves.
+
+stateful: false
+
+vendor:   thatopen
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/visualization/web-ifc
+keywords: [aeco, visualization, bim, ifc, wasm, web-ifc, thatopen, generated, raw, npm, typescript, mpl-2.0]
+
+provenance:
+  generated-by: aware-agent-builder
+  generator-version: 0.8.1
+  source:
+    dts_files: 5
+    homepage: ''
+    license: MPL-2.0
+    package: web-ifc
+    type: npm
+    version: 0.0.77
+  generated-at: 2026-05-17T05:18:54.521574600+00:00
+transport:
+  cli:
+    binary: aware-web-ifc
+commands:
+  a-a-b-b-get-buffers:
+    lifecycle: single
+    description: AABB.GetBuffers()
+  a-a-b-b-set-values:
+    lifecycle: single
+    description: "AABB.SetValues(minX: number, minY: number, minZ: number, maxX: number, maxY: number, maxZ: number)"
+  alignment-get-buffers:
+    lifecycle: single
+    description: Alignment.GetBuffers()
+  alignment-set-values:
+    lifecycle: single
+    description: "Alignment.SetValues(horizontal: Array<number>, vertical: Array<number>)"
+  arc-get-buffers:
+    lifecycle: single
+    description: Arc.GetBuffers()
+  arc-set-values:
+    lifecycle: single
+    description: "Arc.SetValues(radiusX: number, radiusY: number, numSegments: number, placement: Array<number>, startRad?: number, endRad?: number, swap?: boolean, normalToCenterEnding?: boolean)"
+  boolean-operator-clear:
+    lifecycle: single
+    description: BooleanOperator.clear()
+  boolean-operator-get-buffers:
+    lifecycle: single
+    description: BooleanOperator.GetBuffers()
+  boolean-operator-set-second:
+    lifecycle: single
+    description: "BooleanOperator.SetSecond(triangles_: Array<number>)"
+  boolean-operator-set-values:
+    lifecycle: single
+    description: "BooleanOperator.SetValues(triangles_: Array<number>, type_: string)"
+  circular-sweep-get-buffers:
+    lifecycle: single
+    description: CircularSweep.GetBuffers()
+  circular-sweep-set-values:
+    lifecycle: single
+    description: "CircularSweep.SetValues(scaling: number, closed: boolean, profile: Array<number>, radius: number, directrix: Array<number>, initialNormal?: Array<number>, rotate90?: boolean)"
+  clothoid-get-buffers:
+    lifecycle: single
+    description: Clothoid.GetBuffers()
+  clothoid-set-values:
+    lifecycle: single
+    description: "Clothoid.SetValues(segments: number, startPointX: number, startPointY: number, startPointZ: number, ifcStartDirection: number, StartRadiusOfCurvature: number, EndRadiusOfCurvature: number, SegmentLength: number)"
+  cylindrical-revolve-get-buffers:
+    lifecycle: single
+    description: CylindricalRevolve.GetBuffers()
+  cylindrical-revolve-set-values:
+    lifecycle: single
+    description: "CylindricalRevolve.SetValues(transform_: Array<number>, startDegrees_: number, endDegrees_: number, minZ_: number, maxZ_: number, numRots_: number, radius_: number)"
+  extrusion-clear-holes:
+    lifecycle: single
+    description: Extrusion.ClearHoles()
+  extrusion-get-buffers:
+    lifecycle: single
+    description: Extrusion.GetBuffers()
+  extrusion-set-holes:
+    lifecycle: single
+    description: "Extrusion.SetHoles(profile_: Array<number>)"
+  extrusion-set-values:
+    lifecycle: single
+    description: "Extrusion.SetValues(profile_: Array<number>, dir_: Array<number>, len_: number, cuttingPlaneNormal_: Array<number>, cuttingPlanePos_: Array<number>, cap_: boolean)"
+  flat-mesh-delete:
+    lifecycle: single
+    description: FlatMesh.delete()
+  ifc-a-p-i-close-model:
+    lifecycle: single
+    description: "IfcAPI.CloseModel(modelID: number)"
+  ifc-a-p-i-create-a-a-b-b:
+    lifecycle: single
+    description: IfcAPI.CreateAABB()
+  ifc-a-p-i-create-alignment:
+    lifecycle: single
+    description: IfcAPI.CreateAlignment()
+  ifc-a-p-i-create-arc:
+    lifecycle: single
+    description: IfcAPI.CreateArc()
+  ifc-a-p-i-create-boolean-operator:
+    lifecycle: single
+    description: IfcAPI.CreateBooleanOperator()
+  ifc-a-p-i-create-circular-sweep:
+    lifecycle: single
+    description: IfcAPI.CreateCircularSweep()
+  ifc-a-p-i-create-clothoid:
+    lifecycle: single
+    description: IfcAPI.CreateClothoid()
+  ifc-a-p-i-create-cylindrical-revolution:
+    lifecycle: single
+    description: IfcAPI.CreateCylindricalRevolution()
+  ifc-a-p-i-create-extrusion:
+    lifecycle: single
+    description: IfcAPI.CreateExtrusion()
+  ifc-a-p-i-create-i-f-c-globally-unique-id:
+    lifecycle: single
+    description: "IfcAPI.CreateIFCGloballyUniqueId(modelID: number)"
+  ifc-a-p-i-create-ifc-entity:
+    lifecycle: single
+    description: "IfcAPI.CreateIfcEntity(modelID: number, type: number, ...args: any[])"
+  ifc-a-p-i-create-ifc-guid-to-express-id-mapping:
+    lifecycle: single
+    description: "IfcAPI.CreateIfcGuidToExpressIdMapping(modelID: number)"
+  ifc-a-p-i-create-ifc-type:
+    lifecycle: single
+    description: "IfcAPI.CreateIfcType(modelID: number, type: number, value: any)"
+  ifc-a-p-i-create-model:
+    lifecycle: single
+    description: "IfcAPI.CreateModel(model: NewIfcModel, settings?: LoaderSettings)"
+  ifc-a-p-i-create-parabola:
+    lifecycle: single
+    description: IfcAPI.CreateParabola()
+  ifc-a-p-i-create-profile:
+    lifecycle: single
+    description: IfcAPI.CreateProfile()
+  ifc-a-p-i-create-revolution:
+    lifecycle: single
+    description: IfcAPI.CreateRevolution()
+  ifc-a-p-i-create-sweep:
+    lifecycle: single
+    description: IfcAPI.CreateSweep()
+  ifc-a-p-i-decode-text:
+    lifecycle: single
+    description: "IfcAPI.DecodeText(text: string)"
+  ifc-a-p-i-delete-line:
+    lifecycle: single
+    description: "IfcAPI.DeleteLine(modelID: number, expressID: number)"
+  ifc-a-p-i-dispose:
+    lifecycle: single
+    description: IfcAPI.Dispose()
+  ifc-a-p-i-encode-text:
+    lifecycle: single
+    description: "IfcAPI.EncodeText(text: string)"
+  ifc-a-p-i-flatten-line:
+    lifecycle: single
+    description: "IfcAPI.FlattenLine(modelID: number, line: any)"
+  ifc-a-p-i-get-all-alignments:
+    lifecycle: single
+    description: "IfcAPI.GetAllAlignments(modelID: number)"
+  ifc-a-p-i-get-all-cross-sections2-d:
+    lifecycle: single
+    description: "IfcAPI.GetAllCrossSections2D(modelID: number)"
+  ifc-a-p-i-get-all-cross-sections3-d:
+    lifecycle: single
+    description: "IfcAPI.GetAllCrossSections3D(modelID: number)"
+  ifc-a-p-i-get-all-lines:
+    lifecycle: single
+    description: "IfcAPI.GetAllLines(modelID: number)"
+  ifc-a-p-i-get-all-types-of-model:
+    lifecycle: single
+    description: "IfcAPI.GetAllTypesOfModel(modelID: number)"
+  ifc-a-p-i-get-coordination-matrix:
+    lifecycle: single
+    description: "IfcAPI.GetCoordinationMatrix(modelID: number)"
+  ifc-a-p-i-get-express-id-from-guid:
+    lifecycle: single
+    description: "IfcAPI.GetExpressIdFromGuid(modelID: number, guid: string)"
+  ifc-a-p-i-get-flat-mesh:
+    lifecycle: single
+    description: "IfcAPI.GetFlatMesh(modelID: number, expressID: number)"
+  ifc-a-p-i-get-geometry:
+    lifecycle: single
+    description: "IfcAPI.GetGeometry(modelID: number, geometryExpressID: number)"
+  ifc-a-p-i-get-guid-from-express-id:
+    lifecycle: single
+    description: "IfcAPI.GetGuidFromExpressId(modelID: number, expressID: number)"
+  ifc-a-p-i-get-header-line:
+    lifecycle: single
+    description: "IfcAPI.GetHeaderLine(modelID: number, headerType: number)"
+  ifc-a-p-i-get-ifc-entity-list:
+    lifecycle: single
+    description: "IfcAPI.GetIfcEntityList(modelID: number)"
+  ifc-a-p-i-get-index-array:
+    lifecycle: single
+    description: "IfcAPI.GetIndexArray(ptr: number, size: number)"
+  ifc-a-p-i-get-line:
+    lifecycle: single
+    description: "IfcAPI.GetLine(modelID: number, expressID: number, flatten?: boolean, inverse?: boolean, inversePropKey?: string | null | undefined)"
+  ifc-a-p-i-get-line-i-ds-with-type:
+    lifecycle: single
+    description: "IfcAPI.GetLineIDsWithType(modelID: number, type: number, includeInherited?: boolean)"
+  ifc-a-p-i-get-line-type:
+    lifecycle: single
+    description: "IfcAPI.GetLineType(modelID: number, expressID: number)"
+  ifc-a-p-i-get-lines:
+    lifecycle: single
+    description: "IfcAPI.GetLines(modelID: number, expressIDs: Array<number>, flatten?: boolean, inverse?: boolean, inversePropKey?: string | null | undefined)"
+  ifc-a-p-i-get-max-express-i-d:
+    lifecycle: single
+    description: "IfcAPI.GetMaxExpressID(modelID: number)"
+  ifc-a-p-i-get-model-schema:
+    lifecycle: single
+    description: "IfcAPI.GetModelSchema(modelID: number)"
+  ifc-a-p-i-get-name-from-type-code:
+    lifecycle: single
+    description: "IfcAPI.GetNameFromTypeCode(type: number)"
+  ifc-a-p-i-get-next-express-i-d:
+    lifecycle: single
+    description: "IfcAPI.GetNextExpressID(modelID: number, expressID: number)"
+  ifc-a-p-i-get-raw-line-data:
+    lifecycle: single
+    description: "IfcAPI.GetRawLineData(modelID: number, expressID: number)"
+  ifc-a-p-i-get-raw-lines-data:
+    lifecycle: single
+    description: "IfcAPI.GetRawLinesData(modelID: number, expressIDs: Array<number>)"
+  ifc-a-p-i-get-sub-array:
+    lifecycle: single
+    description: "IfcAPI.getSubArray(heap: any, startPtr: number, sizeBytes: number)"
+  ifc-a-p-i-get-type-code-from-name:
+    lifecycle: single
+    description: "IfcAPI.GetTypeCodeFromName(typeName: string)"
+  ifc-a-p-i-get-version:
+    lifecycle: single
+    description: IfcAPI.GetVersion()
+  ifc-a-p-i-get-vertex-array:
+    lifecycle: single
+    description: "IfcAPI.GetVertexArray(ptr: number, size: number)"
+  ifc-a-p-i-get-world-transform-matrix:
+    lifecycle: single
+    description: "IfcAPI.GetWorldTransformMatrix(modelID: number, placementExpressId: number)"
+  ifc-a-p-i-init:
+    lifecycle: single
+    description: "IfcAPI.Init(customLocateFileHandler?: LocateFileHandlerFn, forceSingleThread?: boolean)"
+  ifc-a-p-i-is-ifc-element:
+    lifecycle: single
+    description: "IfcAPI.IsIfcElement(type: number)"
+  ifc-a-p-i-is-model-open:
+    lifecycle: single
+    description: "IfcAPI.IsModelOpen(modelID: number)"
+  ifc-a-p-i-load-all-geometry:
+    lifecycle: single
+    description: "IfcAPI.LoadAllGeometry(modelID: number)"
+  ifc-a-p-i-open-model:
+    lifecycle: single
+    description: "IfcAPI.OpenModel(data: Uint8Array, settings?: LoaderSettings)"
+  ifc-a-p-i-open-model-from-callback:
+    lifecycle: single
+    description: "IfcAPI.OpenModelFromCallback(callback: ModelLoadCallback, settings?: LoaderSettings)"
+  ifc-a-p-i-open-models:
+    lifecycle: single
+    description: "IfcAPI.OpenModels(dataSets: Array<Uint8Array>, settings?: LoaderSettings)"
+  ifc-a-p-i-reset-cache:
+    lifecycle: single
+    description: "IfcAPI.ResetCache(modelID: number)"
+  ifc-a-p-i-save-model:
+    lifecycle: single
+    description: "IfcAPI.SaveModel(modelID: number)"
+  ifc-a-p-i-save-model-to-callback:
+    lifecycle: single
+    description: "IfcAPI.SaveModelToCallback(modelID: number, callback: ModelSaveCallback)"
+  ifc-a-p-i-set-geometry-transformation:
+    lifecycle: single
+    description: "IfcAPI.SetGeometryTransformation(modelID: number, transformationMatrix: Array<number>)"
+  ifc-a-p-i-set-log-level:
+    lifecycle: single
+    description: "IfcAPI.SetLogLevel(level: LogLevel)"
+  ifc-a-p-i-set-wasm-path:
+    lifecycle: single
+    description: "IfcAPI.SetWasmPath(path: string, absolute?: boolean)"
+  ifc-a-p-i-stream-all-meshes:
+    lifecycle: single
+    description: "IfcAPI.StreamAllMeshes(modelID: number, meshCallback: (mesh: FlatMesh, index: number, total: number) => void)"
+  ifc-a-p-i-stream-all-meshes-with-types:
+    lifecycle: single
+    description: "IfcAPI.StreamAllMeshesWithTypes(modelID: number, types: Array<number>, meshCallback: (mesh: FlatMesh, index: number, total: number) => void)"
+  ifc-a-p-i-stream-meshes:
+    lifecycle: single
+    description: "IfcAPI.StreamMeshes(modelID: number, expressIDs: Array<number>, meshCallback: (mesh: FlatMesh, index: number, total: number) => void)"
+  ifc-a-p-i-write-line:
+    lifecycle: single
+    description: "IfcAPI.WriteLine(modelID: number, lineObject: Type)"
+  ifc-a-p-i-write-lines:
+    lifecycle: single
+    description: "IfcAPI.WriteLines(modelID: number, lineObjects: Array<Type>)"
+  ifc-a-p-i-write-raw-line-data:
+    lifecycle: single
+    description: "IfcAPI.WriteRawLineData(modelID: number, data: RawLineData)"
+  ifc-a-p-i-write-raw-lines-data:
+    lifecycle: single
+    description: "IfcAPI.WriteRawLinesData(modelID: number, data: Array<RawLineData>)"
+  ifc-geometry-delete:
+    lifecycle: single
+    description: IfcGeometry.delete()
+  ifc-geometry-get-index-data:
+    lifecycle: single
+    description: IfcGeometry.GetIndexData()
+  ifc-geometry-get-index-data-size:
+    lifecycle: single
+    description: IfcGeometry.GetIndexDataSize()
+  ifc-geometry-get-swept-disk-solid:
+    lifecycle: single
+    description: IfcGeometry.GetSweptDiskSolid()
+  ifc-geometry-get-vertex-data:
+    lifecycle: single
+    description: IfcGeometry.GetVertexData()
+  ifc-geometry-get-vertex-data-size:
+    lifecycle: single
+    description: IfcGeometry.GetVertexDataSize()
+  log-debug:
+    lifecycle: single
+    description: "Log.debug(msg: string, ...args: any[])"
+  log-error:
+    lifecycle: single
+    description: "Log.error(msg: string, ...args: any[])"
+  log-log:
+    lifecycle: single
+    description: "Log.log(msg: string, ...args: any[])"
+  log-set-log-level:
+    lifecycle: single
+    description: "Log.setLogLevel(level: number)"
+  log-warn:
+    lifecycle: single
+    description: "Log.warn(msg: string, ...args: any[])"
+  ms:
+    lifecycle: single
+    description: ms()
+  parabola-get-buffers:
+    lifecycle: single
+    description: Parabola.GetBuffers()
+  parabola-set-values:
+    lifecycle: single
+    description: "Parabola.SetValues(segments: number, startPointX: number, startPointY: number, startPointZ: number, horizontalLength: number, startHeight: number, startGradient: number, endGradient: number)"
+  profile-section-get-buffers:
+    lifecycle: single
+    description: ProfileSection.GetBuffers()
+  profile-section-set-values:
+    lifecycle: single
+    description: "ProfileSection.SetValues(pType: number, width: number, depth: number, webThickness: number, flangeThickness: number, hasFillet: boolean, filletRadius: number, radius: number, slope: number, circleSegments: number, placement: Array<number>)"
+  properties-get-item-properties:
+    lifecycle: single
+    description: "Properties.getItemProperties(modelID: number, id: number, recursive?: boolean, inverse?: boolean)"
+  properties-get-materials-properties:
+    lifecycle: single
+    description: "Properties.getMaterialsProperties(modelID: number, elementID?: number, recursive?: boolean, includeTypeMaterials?: boolean)"
+  properties-get-property-sets:
+    lifecycle: single
+    description: "Properties.getPropertySets(modelID: number, elementID?: number, recursive?: boolean, includeTypeProperties?: boolean)"
+  properties-get-spatial-structure:
+    lifecycle: single
+    description: "Properties.getSpatialStructure(modelID: number, includeProperties?: boolean)"
+  properties-get-type-properties:
+    lifecycle: single
+    description: "Properties.getTypeProperties(modelID: number, elementID?: number, recursive?: boolean)"
+  properties-set-materials-properties:
+    lifecycle: single
+    description: "Properties.setMaterialsProperties(modelID: number, elementID: number | number[], materialID: number | number[])"
+  properties-set-property-sets:
+    lifecycle: single
+    description: "Properties.setPropertySets(modelID: number, elementID: number | number[], psetID: number | number[])"
+  revolution-get-buffers:
+    lifecycle: single
+    description: Revolution.GetBuffers()
+  revolution-set-values:
+    lifecycle: single
+    description: "Revolution.SetValues(profile_: Array<number>, transform_: Array<number>, startDegrees_: number, endDegrees_: number, numRots_: number)"
+  sweep-get-buffers:
+    lifecycle: single
+    description: Sweep.GetBuffers()
+  sweep-set-values:
+    lifecycle: single
+    description: "Sweep.SetValues(scaling: number, closed: boolean, profile: Array<number>, directrix: Array<number>, initialNormal?: Array<number>, rotate90?: boolean, optimize?: boolean)"
+  vector-size:
+    lifecycle: single
+    description: Vector.size()
+skills:
+  - a-a-b-b.md
+  - alignment.md
+  - arc.md
+  - boolean-operator.md
+  - circular-sweep.md
+  - clothoid.md
+  - cylindrical-revolve.md
+  - extrusion.md
+  - flat-mesh.md
+  - ifc-a-p-i.md
+  - ifc-geometry.md
+  - log.md
+  - parabola.md
+  - profile-section.md
+  - properties.md
+  - revolution.md
+  - sweep.md
+  - top-level.md
+  - vector.md

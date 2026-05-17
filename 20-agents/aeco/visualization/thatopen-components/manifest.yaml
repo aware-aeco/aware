@@ -1,0 +1,1143 @@
+agent:        thatopen-components
+version:      3.4.6
+display-name: That Open Components (modern IFC.js — raw)
+description: |
+  Auto-generated agent from `@thatopen/components@3.4.6` on npm via
+  `aware build agent --from-npm`. Reflects the TypeScript public-API
+  declarations of That Open Engine's component library — the modern
+  open-source successor to IFC.js, the de-facto stack for building
+  custom BIM/IFC web applications.
+
+  Covers 80 classes × 337 methods: World / Scene / Camera / Renderer
+  abstractions, IFC loaders + relations + properties, classifier &
+  fragments management, viewpoints (BCF-compat), measurement /
+  dimension / clipping tools, exclusion management.
+
+  Companion to `xeokit` (BIM-focused viewer) and `three` (low-level
+  WebGL). Pick `thatopen-components` when you want batteries-included
+  IFC handling with React-friendly component composition; `xeokit`
+  for performance-tuned IFC viewing of huge models; `three` for raw
+  WebGL with no BIM assumptions.
+
+  Library is **MIT-licensed**. AWARE-generated text is Apache-2.0.
+  Neither the library nor the types package is redistributed — users
+  install `@thatopen/components` themselves via npm.
+
+  Marked `stateful: false` — typical usage is build-world → load-ifc
+  → render → query. Long-running viewer apps could curate the
+  `new Components()` / `new World()` init paths as `start` later.
+
+stateful: false
+
+vendor:   thatopen
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/visualization/thatopen-components
+keywords: [aeco, visualization, viewer, bim, ifc, web, react, thatopen, generated, raw, npm, typescript, mit]
+
+provenance:
+  generated-by: aware-agent-builder
+  generator-version: 0.8.1
+  source:
+    dts_files: 1
+    homepage: https://github.com/ThatOpen/engine_components/tree/main/packages/components#readme
+    license: MIT
+    package: '@thatopen/components'
+    type: npm
+    version: 3.4.6
+  generated-at: 2026-05-17T05:18:51.459163400+00:00
+transport:
+  cli:
+    binary: aware-thatopen-components
+commands:
+  angle-annotations-build-group:
+    lifecycle: single
+    description: "AngleAnnotations._buildGroup(dim: AngleAnnotation, style: AngleAnnotationStyle)"
+  angle-annotations-on-dispose:
+    lifecycle: single
+    description: AngleAnnotations._onDispose()
+  angle-annotations-pick-handle:
+    lifecycle: single
+    description: "AngleAnnotations.pickHandle(_drawing: TechnicalDrawing, _ray: THREE.Ray, _threshold?: number)"
+  angle-annotations-send-machine-event:
+    lifecycle: single
+    description: "AngleAnnotations.sendMachineEvent(event: AngleAnnotationEvent)"
+  angle-annotations-update-preview:
+    lifecycle: single
+    description: AngleAnnotations._updatePreview()
+  angle-dimension-machine:
+    lifecycle: single
+    description: "angleDimensionMachine(state: AngleAnnotationState, event: AngleAnnotationEvent)"
+  annotation-system-add:
+    lifecycle: single
+    description: "AnnotationSystem.add(drawing: TechnicalDrawing, data: TSystem[\"data\"])"
+  annotation-system-build-group:
+    lifecycle: single
+    description: "AnnotationSystem._buildGroup(item: TSystem[\"item\"], style: TSystem[\"style\"])"
+  annotation-system-clear:
+    lifecycle: single
+    description: "AnnotationSystem.clear(drawings?: TechnicalDrawing[])"
+  annotation-system-clear-preview:
+    lifecycle: single
+    description: AnnotationSystem._clearPreview()
+  annotation-system-delete:
+    lifecycle: single
+    description: "AnnotationSystem.delete(drawing: TechnicalDrawing, uuids: string[])"
+  annotation-system-dispose:
+    lifecycle: single
+    description: AnnotationSystem.dispose()
+  annotation-system-dispose-group:
+    lifecycle: single
+    description: "AnnotationSystem._disposeGroup(group: THREE.Group)"
+  annotation-system-get-material:
+    lifecycle: single
+    description: "AnnotationSystem._getMaterial(styleName: string)"
+  annotation-system-get-mesh-material:
+    lifecycle: single
+    description: "AnnotationSystem._getMeshMaterial(styleName: string)"
+  annotation-system-on-after-persist:
+    lifecycle: single
+    description: "AnnotationSystem._onAfterPersist(_item: TSystem[\"item\"], _group: THREE.Group)"
+  annotation-system-on-dispose:
+    lifecycle: single
+    description: AnnotationSystem._onDispose()
+  annotation-system-persist:
+    lifecycle: single
+    description: "AnnotationSystem._persist(drawing: TechnicalDrawing, item: TSystem[\"item\"])"
+  annotation-system-pick:
+    lifecycle: single
+    description: "AnnotationSystem.pick(ray: THREE.Ray, threshold?: number)"
+  annotation-system-pick-handle:
+    lifecycle: single
+    description: "AnnotationSystem.pickHandle(drawing: TechnicalDrawing, ray: THREE.Ray, threshold?: number)"
+  annotation-system-redraw:
+    lifecycle: single
+    description: "AnnotationSystem._redraw(item: TSystem[\"item\"], group: THREE.Group)"
+  annotation-system-resolve-style:
+    lifecycle: single
+    description: "AnnotationSystem._resolveStyle(styleName: string)"
+  annotation-system-track-drawing:
+    lifecycle: single
+    description: "AnnotationSystem._trackDrawing(drawing: TechnicalDrawing)"
+  annotation-system-update:
+    lifecycle: single
+    description: "AnnotationSystem.update(drawing: TechnicalDrawing, uuids: string[], changes: Partial<TSystem[\"data\"]>)"
+  annotation-system-update-preview:
+    lifecycle: single
+    description: AnnotationSystem._updatePreview()
+  async-event-add:
+    lifecycle: single
+    description: AsyncEvent.add()
+  async-event-remove:
+    lifecycle: single
+    description: AsyncEvent.remove()
+  async-event-reset:
+    lifecycle: single
+    description: AsyncEvent.reset()
+  axis-gizmo-like-add-event-listener:
+    lifecycle: single
+    description: "AxisGizmoLike.addEventListener(type: string, listener: () => void)"
+  axis-gizmo-like-attach:
+    lifecycle: single
+    description: "AxisGizmoLike.attach(object: THREE.Object3D)"
+  axis-gizmo-like-get-helper:
+    lifecycle: single
+    description: AxisGizmoLike.getHelper()
+  axis-gizmo-like-set-space:
+    lifecycle: single
+    description: "AxisGizmoLike.setSpace(space: \"world\" | \"local\")"
+  b-c-f-topics-create:
+    lifecycle: single
+    description: "BCFTopics.create(data?: Partial<BCFTopic>)"
+  b-c-f-topics-dispose:
+    lifecycle: single
+    description: BCFTopics.dispose()
+  b-c-f-topics-export:
+    lifecycle: single
+    description: "BCFTopics.export(topics?: Iterable<Topic>)"
+  b-c-f-topics-load:
+    lifecycle: single
+    description: "BCFTopics.load(data: Uint8Array)"
+  b-c-f-topics-setup:
+    lifecycle: single
+    description: "BCFTopics.setup(config?: Partial<BCFTopicsConfig>)"
+  b-c-f-topics-update-extensions:
+    lifecycle: single
+    description: BCFTopics.updateExtensions()
+  b-c-f-topics-update-viewpoint-references:
+    lifecycle: single
+    description: BCFTopics.updateViewpointReferences()
+  base-renderer-dispose:
+    lifecycle: single
+    description: BaseRenderer.dispose()
+  base-renderer-get-size:
+    lifecycle: single
+    description: BaseRenderer.getSize()
+  base-renderer-resize:
+    lifecycle: single
+    description: "BaseRenderer.resize(size: Vector2 | undefined)"
+  base-renderer-set-plane:
+    lifecycle: single
+    description: "BaseRenderer.setPlane(active: boolean, plane: THREE.Plane, isLocal?: boolean)"
+  base-renderer-update:
+    lifecycle: single
+    description: "BaseRenderer.update(delta?: number)"
+  base-renderer-update-clipping-planes:
+    lifecycle: single
+    description: BaseRenderer.updateClippingPlanes()
+  base-scene-delete-all-lights:
+    lifecycle: single
+    description: BaseScene.deleteAllLights()
+  base-scene-dispose:
+    lifecycle: single
+    description: BaseScene.dispose()
+  block-annotations-build-group:
+    lifecycle: single
+    description: "BlockAnnotations._buildGroup(ins: BlockInsertion, _style: BlockStyle)"
+  block-annotations-define:
+    lifecycle: single
+    description: "BlockAnnotations.define(name: string, definition: BlockDefinition)"
+  block-annotations-on-after-persist:
+    lifecycle: single
+    description: "BlockAnnotations._onAfterPersist(ins: BlockInsertion, group: THREE.Group)"
+  block-annotations-on-dispose:
+    lifecycle: single
+    description: BlockAnnotations._onDispose()
+  block-annotations-pick:
+    lifecycle: single
+    description: "BlockAnnotations.pick(ray: THREE.Ray, threshold?: number)"
+  block-annotations-pick-handle:
+    lifecycle: single
+    description: "BlockAnnotations.pickHandle(_drawing: TechnicalDrawing, _ray: THREE.Ray, _threshold?: number)"
+  bounding-boxer-add-from-model-id-map:
+    lifecycle: single
+    description: "BoundingBoxer.addFromModelIdMap(items: ModelIdMap)"
+  bounding-boxer-add-from-models:
+    lifecycle: single
+    description: "BoundingBoxer.addFromModels(modelIds?: RegExp[])"
+  bounding-boxer-dispose:
+    lifecycle: single
+    description: "BoundingBoxer.dispose(full?: boolean)"
+  bounding-boxer-get-camera-orientation:
+    lifecycle: single
+    description: "BoundingBoxer.getCameraOrientation(orientation: \"front\" | \"back\" | \"left\" | \"right\" | \"top\" | \"bottom\", offsetFactor?: number)"
+  bounding-boxer-get-center:
+    lifecycle: single
+    description: "BoundingBoxer.getCenter(modelIdMap: ModelIdMap)"
+  build-angle-positions:
+    lifecycle: single
+    description: "buildAnglePositions(dim: AngleAnnotation, style: AngleAnnotationStyle)"
+  build-angle-preview-positions:
+    lifecycle: single
+    description: "buildAnglePreviewPositions(pointA: THREE.Vector3, vertex: THREE.Vector3, pointB: THREE.Vector3, cursor: THREE.Vector3 | null, style: AngleAnnotationStyle, flipped?: boolean)"
+  build-callout-positions:
+    lifecycle: single
+    description: "buildCalloutPositions(ann: CalloutAnnotation, style: CalloutAnnotationStyle)"
+  build-callout-preview-positions:
+    lifecycle: single
+    description: "buildCalloutPreviewPositions(kind: \"awaitingRadius\" | \"awaitingElbow\" | \"awaitingExtension\", center: THREE.Vector3, halfW: number, halfH: number, elbow: THREE.Vector3 | null, cursor: THREE.Vector3 | null, style: CalloutAnnotationStyle)"
+  build-dimension-positions:
+    lifecycle: single
+    description: "buildDimensionPositions(dim: LinearAnnotation, style: LinearAnnotationStyle)"
+  build-dimensions:
+    lifecycle: single
+    description: "buildDimensions(points: THREE.Vector3[], offset: number)"
+  build-leader-positions:
+    lifecycle: single
+    description: "buildLeaderPositions(ann: LeaderAnnotation, style: LeaderAnnotationStyle)"
+  build-leader-preview-positions:
+    lifecycle: single
+    description: "buildLeaderPreviewPositions(kind: \"placingElbow\" | \"placingExtension\", arrowTip: THREE.Vector3, elbow: THREE.Vector3 | null, cursor: THREE.Vector3 | null, style: LeaderAnnotationStyle)"
+  build-preview-positions:
+    lifecycle: single
+    description: "buildPreviewPositions(kind: \"placingPoints\" | \"positioningOffset\", points: THREE.Vector3[], cursor: THREE.Vector3 | null, style: LinearAnnotationStyle)"
+  build-slope-positions:
+    lifecycle: single
+    description: "buildSlopePositions(ann: SlopeAnnotation, style: SlopeAnnotationStyle)"
+  callout-annotation-machine:
+    lifecycle: single
+    description: "calloutAnnotationMachine(state: CalloutAnnotationState, event: CalloutAnnotationEvent)"
+  callout-annotations-build-group:
+    lifecycle: single
+    description: "CalloutAnnotations._buildGroup(ann: CalloutAnnotation, style: CalloutAnnotationStyle)"
+  callout-annotations-pick-handle:
+    lifecycle: single
+    description: "CalloutAnnotations.pickHandle(_drawing: TechnicalDrawing, _ray: THREE.Ray, _threshold?: number)"
+  callout-annotations-send-machine-event:
+    lifecycle: single
+    description: "CalloutAnnotations.sendMachineEvent(event: CalloutAnnotationEvent)"
+  callout-annotations-update-preview:
+    lifecycle: single
+    description: CalloutAnnotations._updatePreview()
+  classifier-add-group-items:
+    lifecycle: single
+    description: "Classifier.addGroupItems(classification: string, group: string, items: ModelIdMap)"
+  classifier-aggregate-item-relations:
+    lifecycle: single
+    description: "Classifier.aggregateItemRelations(classification: string, query: FRAGS.ItemsQueryParams, relation: string, config?: ClassifyItemRelationsConfig)"
+  classifier-aggregate-items:
+    lifecycle: single
+    description: Classifier.aggregateItems()
+  classifier-by-category:
+    lifecycle: single
+    description: "Classifier.byCategory(config?: AddClassificationConfig)"
+  classifier-by-ifc-building-storey:
+    lifecycle: single
+    description: "Classifier.byIfcBuildingStorey(config?: AddClassificationConfig)"
+  classifier-by-model:
+    lifecycle: single
+    description: "Classifier.byModel(config?: AddClassificationConfig)"
+  classifier-dispose:
+    lifecycle: single
+    description: Classifier.dispose()
+  classifier-find:
+    lifecycle: single
+    description: "Classifier.find(data: ClassifierIntersectionInput)"
+  classifier-get-group-data:
+    lifecycle: single
+    description: "Classifier.getGroupData(classification: string, group: string)"
+  classifier-remove-items:
+    lifecycle: single
+    description: "Classifier.removeItems(modelIdMap: ModelIdMap, config?: RemoveClassifierItemsConfig)"
+  classifier-set-group-query:
+    lifecycle: single
+    description: "Classifier.setGroupQuery(classification: string, group: string, query: ClassificationGroupQuery)"
+  clipper-create:
+    lifecycle: single
+    description: "Clipper.create(world: World)"
+  clipper-create-from-normal-and-coplanar-point:
+    lifecycle: single
+    description: "Clipper.createFromNormalAndCoplanarPoint(world: World, normal: THREE.Vector3, point: THREE.Vector3)"
+  clipper-delete:
+    lifecycle: single
+    description: "Clipper.delete(world: World, planeId?: string)"
+  clipper-delete-all:
+    lifecycle: single
+    description: "Clipper.deleteAll(types?: Set<string>)"
+  clipper-dispose:
+    lifecycle: single
+    description: Clipper.dispose()
+  clipper-setup:
+    lifecycle: single
+    description: "Clipper.setup(config?: Partial<ClipperConfig>)"
+  comment-2-to-j-s-o-n:
+    lifecycle: single
+    description: Comment_2.toJSON()
+  components-add:
+    lifecycle: single
+    description: "Components.add(uuid: string, instance: Component)"
+  components-dispose:
+    lifecycle: single
+    description: Components.dispose()
+  components-init:
+    lifecycle: single
+    description: Components.init()
+  compute-alignment-matrix:
+    lifecycle: single
+    description: "computeAlignmentMatrix(drawingPoints: THREE.Vector3[], worldPoints: THREE.Vector3[])"
+  compute-angle:
+    lifecycle: single
+    description: "computeAngle(dim: AngleAnnotation)"
+  compute-bisector-angle:
+    lifecycle: single
+    description: "computeBisectorAngle(dim: AngleAnnotation)"
+  compute-offset:
+    lifecycle: single
+    description: "computeOffset(points: THREE.Vector3[], cursor: THREE.Vector3)"
+  configurator-export:
+    lifecycle: single
+    description: "Configurator.export(controls?: ControlsSchema, exported?: any)"
+  configurator-import:
+    lifecycle: single
+    description: "Configurator.import(exported: any, imported?: any, first?: boolean)"
+  controls-utils-copy-entry:
+    lifecycle: single
+    description: "ControlsUtils.copyEntry(controlEntry: ControlEntry)"
+  controls-utils-copy-schema:
+    lifecycle: single
+    description: "ControlsUtils.copySchema(schema: T, copy?: ControlsSchema)"
+  controls-utils-is-entry:
+    lifecycle: single
+    description: "ControlsUtils.isEntry(item: any)"
+  data-map-add:
+    lifecycle: single
+    description: "DataMap.add(value: V)"
+  data-map-clear:
+    lifecycle: single
+    description: DataMap.clear()
+  data-map-delete:
+    lifecycle: single
+    description: "DataMap.delete(key: K)"
+  data-map-dispose:
+    lifecycle: single
+    description: DataMap.dispose()
+  data-set-add:
+    lifecycle: single
+    description: "DataSet.add(...value: T[])"
+  data-set-clear:
+    lifecycle: single
+    description: DataSet.clear()
+  data-set-delete:
+    lifecycle: single
+    description: "DataSet.delete(value: T)"
+  data-set-dispose:
+    lifecycle: single
+    description: DataSet.dispose()
+  disposer-destroy:
+    lifecycle: single
+    description: "Disposer.destroy(object: THREE.Object3D, materials?: boolean, recursive?: boolean)"
+  disposer-dispose-geometry:
+    lifecycle: single
+    description: "Disposer.disposeGeometry(geometry: THREE.BufferGeometry)"
+  distance-renderer-dispose:
+    lifecycle: single
+    description: DistanceRenderer.dispose()
+  drawing-annotations-get-by-system:
+    lifecycle: single
+    description: DrawingAnnotations.getBySystem()
+  drawing-layers-assign:
+    lifecycle: single
+    description: "DrawingLayers.assign(object: THREE.Object3D, name: string)"
+  drawing-layers-create:
+    lifecycle: single
+    description: DrawingLayers.create()
+  drawing-layers-set-color:
+    lifecycle: single
+    description: "DrawingLayers.setColor(name: string, color: number)"
+  drawing-layers-set-material:
+    lifecycle: single
+    description: "DrawingLayers.setMaterial(name: string, material: THREE.LineBasicMaterial)"
+  drawing-layers-set-visibility:
+    lifecycle: single
+    description: "DrawingLayers.setVisibility(name: string, visible: boolean)"
+  drawing-viewport-clip-line:
+    lifecycle: single
+    description: "DrawingViewport.clipLine(line: THREE.Line3)"
+  drawing-viewport-dispose:
+    lifecycle: single
+    description: DrawingViewport.dispose()
+  drawing-viewport-helper-dispose:
+    lifecycle: single
+    description: DrawingViewportHelper.dispose()
+  drawing-viewport-helper-on-pointer-down:
+    lifecycle: single
+    description: "DrawingViewportHelper.onPointerDown(ray: THREE.Ray)"
+  drawing-viewport-helper-on-pointer-move:
+    lifecycle: single
+    description: "DrawingViewportHelper.onPointerMove(ray: THREE.Ray)"
+  drawing-viewport-helper-on-pointer-up:
+    lifecycle: single
+    description: DrawingViewportHelper.onPointerUp()
+  drawing-viewport-helper-update:
+    lifecycle: single
+    description: DrawingViewportHelper.update()
+  drawing-viewports-create:
+    lifecycle: single
+    description: "DrawingViewports.create(config: DrawingViewportConfig)"
+  dxf-exporter-export:
+    lifecycle: single
+    description: "DxfExporter.export(entries: DxfDrawingEntry[], paper?: DxfPaperOptions)"
+  dxf-write-context-hex-to-aci:
+    lifecycle: single
+    description: "DxfWriteContext.hexToAci(hex: number)"
+  dxf-write-context-text-angle:
+    lifecycle: single
+    description: "DxfWriteContext.textAngle(dx: number, dz: number)"
+  dxf-write-context-write-line:
+    lifecycle: single
+    description: "DxfWriteContext.writeLine(x1: number, y1: number, x2: number, y2: number, layer?: string, aciColor?: number)"
+  dxf-write-context-write-mesh-triangles:
+    lifecycle: single
+    description: "DxfWriteContext.writeMeshTriangles(triangles: number[], layer?: string, aciColor?: number)"
+  dxf-write-context-write-pairs:
+    lifecycle: single
+    description: "DxfWriteContext.writePairs(positions: ArrayLike<number>, layer?: string, aciColor?: number)"
+  dxf-write-context-write-text:
+    lifecycle: single
+    description: "DxfWriteContext.writeText(text: string, x: number, y: number, height: number, options?: DxfTextOptions)"
+  edge-projector-dispose:
+    lifecycle: single
+    description: EdgeProjector.dispose()
+  event-2-add:
+    lifecycle: single
+    description: Event_2.add()
+  event-2-remove:
+    lifecycle: single
+    description: Event_2.remove()
+  event-2-reset:
+    lifecycle: single
+    description: Event_2.reset()
+  event-manager-add:
+    lifecycle: single
+    description: "EventManager.add(events: Iterable<Event_2<any> | AsyncEvent<any>>)"
+  event-manager-remove:
+    lifecycle: single
+    description: "EventManager.remove(events: Iterable<Event_2<any> | AsyncEvent<any>>)"
+  event-manager-reset:
+    lifecycle: single
+    description: EventManager.reset()
+  fast-model-picker-dispose:
+    lifecycle: single
+    description: FastModelPicker.dispose()
+  fast-model-picker-get-full-pick:
+    lifecycle: single
+    description: "FastModelPicker.getFullPick(position?: THREE.Vector2)"
+  fast-model-picker-get-item-at:
+    lifecycle: single
+    description: "FastModelPicker.getItemAt(position?: THREE.Vector2)"
+  fast-model-picker-get-model-at:
+    lifecycle: single
+    description: "FastModelPicker.getModelAt(position?: THREE.Vector2)"
+  fast-model-picker-get-normal-at:
+    lifecycle: single
+    description: "FastModelPicker.getNormalAt(position?: THREE.Vector2)"
+  fast-model-picker-get-point-at:
+    lifecycle: single
+    description: "FastModelPicker.getPointAt(position?: THREE.Vector2)"
+  fast-model-picker-set-debug-mode:
+    lifecycle: single
+    description: "FastModelPicker.setDebugMode(enabled: boolean)"
+  fast-model-pickers-delete:
+    lifecycle: single
+    description: "FastModelPickers.delete(world: World)"
+  fast-model-pickers-dispose:
+    lifecycle: single
+    description: FastModelPickers.dispose()
+  finder-query-clear-cache:
+    lifecycle: single
+    description: FinderQuery.clearCache()
+  finder-query-from-j-s-o-n:
+    lifecycle: single
+    description: "FinderQuery.fromJSON(data: SerializedFinderQuery)"
+  finder-query-test:
+    lifecycle: single
+    description: "FinderQuery.test(config?: QueryTestConfig)"
+  finder-query-to-j-s-o-n:
+    lifecycle: single
+    description: FinderQuery.toJSON()
+  format-slope:
+    lifecycle: single
+    description: "formatSlope(slope: number, format: SlopeFormat)"
+  fragments-manager-apply-base-coordinate-system:
+    lifecycle: single
+    description: "FragmentsManager.applyBaseCoordinateSystem(object: THREE.Object3D | THREE.Vector3, originalCoordinateSystem?: THREE.Matrix4)"
+  fragments-manager-dispose:
+    lifecycle: single
+    description: FragmentsManager.dispose()
+  fragments-manager-get-b-boxes:
+    lifecycle: single
+    description: "FragmentsManager.getBBoxes(items: ModelIdMap)"
+  fragments-manager-get-data:
+    lifecycle: single
+    description: "FragmentsManager.getData(items: ModelIdMap, config?: Partial<FRAGS.ItemsDataConfig>)"
+  fragments-manager-get-positions:
+    lifecycle: single
+    description: "FragmentsManager.getPositions(items: ModelIdMap)"
+  fragments-manager-get-worker:
+    lifecycle: single
+    description: FragmentsManager.getWorker()
+  fragments-manager-guids-to-model-id-map:
+    lifecycle: single
+    description: "FragmentsManager.guidsToModelIdMap(guids: Iterable<string>)"
+  fragments-manager-highlight:
+    lifecycle: single
+    description: "FragmentsManager.highlight(style: FRAGS.MaterialDefinition, items?: ModelIdMap)"
+  fragments-manager-init:
+    lifecycle: single
+    description: FragmentsManager.init()
+  fragments-manager-model-id-map-to-guids:
+    lifecycle: single
+    description: "FragmentsManager.modelIdMapToGuids(modelIdMap: ModelIdMap)"
+  fragments-manager-raycast:
+    lifecycle: single
+    description: FragmentsManager.raycast()
+  fragments-manager-reset-highlight:
+    lifecycle: single
+    description: "FragmentsManager.resetHighlight(items?: ModelIdMap)"
+  get-angle-tick-endpoints:
+    lifecycle: single
+    description: "getAngleTickEndpoints(dim: AngleAnnotation)"
+  get-dimension-tick-endpoints:
+    lifecycle: single
+    description: "getDimensionTickEndpoints(dim: LinearAnnotation)"
+  get-slope-tip:
+    lifecycle: single
+    description: "getSlopeTip(ann: SlopeAnnotation, length: number)"
+  grids-create:
+    lifecycle: single
+    description: "Grids.create(world: World)"
+  grids-delete:
+    lifecycle: single
+    description: "Grids.delete(world: World)"
+  grids-dispose:
+    lifecycle: single
+    description: Grids.dispose()
+  hider-get-visibility-map:
+    lifecycle: single
+    description: "Hider.getVisibilityMap(state: boolean, modelIds?: string[])"
+  hider-isolate:
+    lifecycle: single
+    description: "Hider.isolate(modelIdMap: ModelIdMap)"
+  hider-toggle:
+    lifecycle: single
+    description: "Hider.toggle(modelIdMap: ModelIdMap)"
+  i-d-s-attribute-get-entities:
+    lifecycle: single
+    description: IDSAttribute.getEntities()
+  i-d-s-attribute-serialize:
+    lifecycle: single
+    description: "IDSAttribute.serialize(type: \"applicability\" | \"requirement\")"
+  i-d-s-attribute-test:
+    lifecycle: single
+    description: IDSAttribute.test()
+  i-d-s-classification-get-entities:
+    lifecycle: single
+    description: "IDSClassification.getEntities(_modelIds: RegExp[], _collector: ModelIdMap)"
+  i-d-s-classification-serialize:
+    lifecycle: single
+    description: "IDSClassification.serialize(type: \"applicability\" | \"requirement\")"
+  i-d-s-classification-test:
+    lifecycle: single
+    description: "IDSClassification.test(_items: ModelIdMap, _collector: ModelIdDataMap<IDSItemCheckResult>)"
+  i-d-s-entity-eval-name:
+    lifecycle: single
+    description: "IDSEntity.evalName(category: string, checks?: IDSCheck[])"
+  i-d-s-entity-eval-predefined-type:
+    lifecycle: single
+    description: "IDSEntity.evalPredefinedType(modelId: string, itemData: FRAGS.ItemData, checks?: IDSCheck[])"
+  i-d-s-entity-get-entities:
+    lifecycle: single
+    description: "IDSEntity.getEntities(modelIds: RegExp[], collector: ModelIdMap)"
+  i-d-s-entity-serialize:
+    lifecycle: single
+    description: "IDSEntity.serialize(type: \"applicability\" | \"requirement\")"
+  i-d-s-entity-test:
+    lifecycle: single
+    description: IDSEntity.test()
+  i-d-s-facet-add-check-result:
+    lifecycle: single
+    description: "IDSFacet.addCheckResult(check: IDSCheck, checks: IDSCheck[])"
+  i-d-s-facet-get-entities:
+    lifecycle: single
+    description: "IDSFacet.getEntities(modelIds: RegExp[], collector: ModelIdMap)"
+  i-d-s-facet-get-item-checks:
+    lifecycle: single
+    description: "IDSFacet.getItemChecks(collector: ModelIdDataMap<IDSItemCheckResult>, modelId: string, item: FRAGS.ItemData, skipIfFails: boolean)"
+  i-d-s-facet-serialize:
+    lifecycle: single
+    description: "IDSFacet.serialize(type: \"applicability\" | \"requirement\")"
+  i-d-s-facet-test:
+    lifecycle: single
+    description: IDSFacet.test()
+  i-d-s-material-get-entities:
+    lifecycle: single
+    description: "IDSMaterial.getEntities(modelIds: RegExp[], collector: ModelIdMap)"
+  i-d-s-material-serialize:
+    lifecycle: single
+    description: "IDSMaterial.serialize(type: \"applicability\" | \"requirement\")"
+  i-d-s-material-test:
+    lifecycle: single
+    description: IDSMaterial.test()
+  i-d-s-part-of-get-entities:
+    lifecycle: single
+    description: "IDSPartOf.getEntities(_modelIds: RegExp[], _collector: ModelIdMap)"
+  i-d-s-part-of-serialize:
+    lifecycle: single
+    description: IDSPartOf.serialize()
+  i-d-s-part-of-test:
+    lifecycle: single
+    description: "IDSPartOf.test(_items: ModelIdMap)"
+  i-d-s-property-get-entities:
+    lifecycle: single
+    description: "IDSProperty.getEntities(modelIds: RegExp[], collector: ModelIdMap)"
+  i-d-s-property-serialize:
+    lifecycle: single
+    description: "IDSProperty.serialize(type: \"applicability\" | \"requirement\")"
+  i-d-s-property-test:
+    lifecycle: single
+    description: IDSProperty.test()
+  i-d-s-specification-serialize:
+    lifecycle: single
+    description: IDSSpecification.serialize()
+  i-d-s-specification-test:
+    lifecycle: single
+    description: IDSSpecification.test()
+  i-d-s-specifications-create:
+    lifecycle: single
+    description: "IDSSpecifications.create(name: string, ifcVersion: IfcVersion[], identifier?: string)"
+  i-d-s-specifications-export:
+    lifecycle: single
+    description: "IDSSpecifications.export(info: IDSInfo, specifications?: Iterable<IDSSpecification>)"
+  i-d-s-specifications-get-model-id-map:
+    lifecycle: single
+    description: "IDSSpecifications.getModelIdMap(result: IDSCheckResult)"
+  i-d-s-specifications-load:
+    lifecycle: single
+    description: "IDSSpecifications.load(data: string)"
+  ifc-loader-clean-up:
+    lifecycle: single
+    description: IfcLoader.cleanUp()
+  ifc-loader-dispose:
+    lifecycle: single
+    description: IfcLoader.dispose()
+  ifc-loader-load:
+    lifecycle: single
+    description: IfcLoader.load()
+  ifc-loader-read-ifc-file:
+    lifecycle: single
+    description: "IfcLoader.readIfcFile(data: Uint8Array)"
+  ifc-loader-setup:
+    lifecycle: single
+    description: "IfcLoader.setup(config?: Partial<IfcFragmentSettings>)"
+  items-finder-add-from-categories:
+    lifecycle: single
+    description: "ItemsFinder.addFromCategories(modelIds?: RegExp[])"
+  items-finder-create:
+    lifecycle: single
+    description: "ItemsFinder.create(name: string, queries: FRAGS.ItemsQueryParams[])"
+  items-finder-export:
+    lifecycle: single
+    description: ItemsFinder.export()
+  items-finder-get-items:
+    lifecycle: single
+    description: ItemsFinder.getItems()
+  items-finder-import:
+    lifecycle: single
+    description: "ItemsFinder.import(result: SerializationResult<SerializedFinderQuery>)"
+  leader-annotation-machine:
+    lifecycle: single
+    description: "leaderAnnotationMachine(state: LeaderAnnotationState, event: LeaderAnnotationEvent)"
+  leader-annotations-build-group:
+    lifecycle: single
+    description: "LeaderAnnotations._buildGroup(ann: LeaderAnnotation, style: LeaderAnnotationStyle)"
+  leader-annotations-clear-preview:
+    lifecycle: single
+    description: LeaderAnnotations._clearPreview()
+  leader-annotations-on-dispose:
+    lifecycle: single
+    description: LeaderAnnotations._onDispose()
+  leader-annotations-pick-handle:
+    lifecycle: single
+    description: "LeaderAnnotations.pickHandle(drawing: TechnicalDrawing, ray: THREE.Ray, threshold?: number)"
+  leader-annotations-send-machine-event:
+    lifecycle: single
+    description: "LeaderAnnotations.sendMachineEvent(event: LeaderAnnotationEvent)"
+  leader-annotations-update-preview:
+    lifecycle: single
+    description: LeaderAnnotations._updatePreview()
+  linear-annotations-build-group:
+    lifecycle: single
+    description: "LinearAnnotations._buildGroup(dim: LinearAnnotation, style: LinearAnnotationStyle)"
+  linear-annotations-pick-handle:
+    lifecycle: single
+    description: "LinearAnnotations.pickHandle(drawing: TechnicalDrawing, ray: THREE.Ray, threshold?: number)"
+  linear-annotations-send-machine-event:
+    lifecycle: single
+    description: "LinearAnnotations.sendMachineEvent(event: LinearAnnotationEvent)"
+  linear-annotations-update-preview:
+    lifecycle: single
+    description: LinearAnnotations._updatePreview()
+  linear-dimension-machine:
+    lifecycle: single
+    description: "linearDimensionMachine(state: LinearAnnotationState, event: LinearAnnotationEvent)"
+  measurement-utils-convert-units:
+    lifecycle: single
+    description: "MeasurementUtils.convertUnits(value: number, fromUnit: string, toUnit: string, precision?: number)"
+  measurement-utils-distance-from-point-to-line:
+    lifecycle: single
+    description: "MeasurementUtils.distanceFromPointToLine(point: THREE.Vector3, lineStart: THREE.Vector3, lineEnd: THREE.Vector3, clamp?: boolean)"
+  measurement-utils-get-items-volume:
+    lifecycle: single
+    description: "MeasurementUtils.getItemsVolume(modelIdMap: ModelIdMap)"
+  measurement-utils-get-volume-from-fragments:
+    lifecycle: single
+    description: "MeasurementUtils.getVolumeFromFragments(modelIdMap: ModelIdMap)"
+  measurement-utils-round:
+    lifecycle: single
+    description: "MeasurementUtils.round(vector: THREE.Vector3)"
+  model-id-map-utils-add:
+    lifecycle: single
+    description: "ModelIdMapUtils.add(target: ModelIdMap, source: ModelIdMap, clone?: boolean)"
+  model-id-map-utils-append:
+    lifecycle: single
+    description: "ModelIdMapUtils.append(target: ModelIdMap, modelId: string, ...localIds: number[])"
+  model-id-map-utils-clone:
+    lifecycle: single
+    description: "ModelIdMapUtils.clone(source: ModelIdMap)"
+  model-id-map-utils-from-raw:
+    lifecycle: single
+    description: ModelIdMapUtils.fromRaw()
+  model-id-map-utils-intersect:
+    lifecycle: single
+    description: "ModelIdMapUtils.intersect(maps: ModelIdMap[])"
+  model-id-map-utils-is-empty:
+    lifecycle: single
+    description: "ModelIdMapUtils.isEmpty(map: ModelIdMap)"
+  model-id-map-utils-is-equal:
+    lifecycle: single
+    description: "ModelIdMapUtils.isEqual(a: ModelIdMap, b: ModelIdMap)"
+  model-id-map-utils-join:
+    lifecycle: single
+    description: "ModelIdMapUtils.join(maps: ModelIdMap[])"
+  model-id-map-utils-remove:
+    lifecycle: single
+    description: "ModelIdMapUtils.remove(target: ModelIdMap, source: ModelIdMap, clone?: boolean)"
+  model-id-map-utils-to-raw:
+    lifecycle: single
+    description: "ModelIdMapUtils.toRaw(map: ModelIdMap)"
+  mouse-dispose:
+    lifecycle: single
+    description: Mouse.dispose()
+  ortho-perspective-camera-add-custom-navigation-mode:
+    lifecycle: single
+    description: "OrthoPerspectiveCamera.addCustomNavigationMode(mode: NavigationMode)"
+  ortho-perspective-camera-dispose:
+    lifecycle: single
+    description: OrthoPerspectiveCamera.dispose()
+  ortho-perspective-camera-fit:
+    lifecycle: single
+    description: "OrthoPerspectiveCamera.fit(meshes: Iterable<THREE.Mesh>, offset?: number)"
+  ortho-perspective-camera-set-user-input:
+    lifecycle: single
+    description: "OrthoPerspectiveCamera.setUserInput(active: boolean)"
+  projection-manager-toggle:
+    lifecycle: single
+    description: ProjectionManager.toggle()
+  raycasters-delete:
+    lifecycle: single
+    description: "Raycasters.delete(world: World)"
+  raycasters-dispose:
+    lifecycle: single
+    description: Raycasters.dispose()
+  shadowed-scene-dispose:
+    lifecycle: single
+    description: ShadowedScene.dispose()
+  shadowed-scene-setup:
+    lifecycle: single
+    description: "ShadowedScene.setup(config?: Partial<ShadowedSceneConfig>)"
+  shadowed-scene-update-shadows:
+    lifecycle: single
+    description: ShadowedScene.updateShadows()
+  simple-camera-dispose:
+    lifecycle: single
+    description: SimpleCamera.dispose()
+  simple-camera-fit-to-items:
+    lifecycle: single
+    description: "SimpleCamera.fitToItems(items?: ModelIdMap)"
+  simple-camera-set-orbit-to-items:
+    lifecycle: single
+    description: "SimpleCamera.setOrbitToItems(items?: ModelIdMap)"
+  simple-camera-update:
+    lifecycle: single
+    description: "SimpleCamera.update(_delta: number)"
+  simple-grid-dispose:
+    lifecycle: single
+    description: SimpleGrid.dispose()
+  simple-grid-setup:
+    lifecycle: single
+    description: "SimpleGrid.setup(config?: Partial<SimpleGridConfig>)"
+  simple-plane-dispose:
+    lifecycle: single
+    description: SimplePlane.dispose()
+  simple-plane-set-from-normal-and-coplanar-point:
+    lifecycle: single
+    description: "SimplePlane.setFromNormalAndCoplanarPoint(normal: THREE.Vector3, point: THREE.Vector3)"
+  simple-plane-toggle-controls:
+    lifecycle: single
+    description: "SimplePlane.toggleControls(state: boolean)"
+  simple-raycaster-cast-ray:
+    lifecycle: single
+    description: SimpleRaycaster.castRay()
+  simple-raycaster-cast-ray-from-vector:
+    lifecycle: single
+    description: "SimpleRaycaster.castRayFromVector(origin: THREE.Vector3, direction: THREE.Vector3, items?: THREE.Mesh<THREE.BufferGeometry<THREE.NormalBufferAttributes, THREE.BufferGeometryEventMap>, THREE.Material<THREE.MaterialEventMap> | THREE.Material<THREE.MaterialEventMap>[], THREE.Object3DEventMap>[])"
+  simple-raycaster-cast-ray-to-objects:
+    lifecycle: single
+    description: "SimpleRaycaster.castRayToObjects(items?: THREE.Object3D[], position?: THREE.Vector2)"
+  simple-raycaster-dispose:
+    lifecycle: single
+    description: SimpleRaycaster.dispose()
+  simple-renderer-dispose:
+    lifecycle: single
+    description: SimpleRenderer.dispose()
+  simple-renderer-get-size:
+    lifecycle: single
+    description: SimpleRenderer.getSize()
+  simple-renderer-setup-events:
+    lifecycle: single
+    description: "SimpleRenderer.setupEvents(active: boolean)"
+  simple-renderer-update:
+    lifecycle: single
+    description: SimpleRenderer.update()
+  simple-scene-dispose:
+    lifecycle: single
+    description: SimpleScene.dispose()
+  simple-scene-setup:
+    lifecycle: single
+    description: "SimpleScene.setup(config?: Partial<SimpleSceneConfig>)"
+  simple-world-dispose:
+    lifecycle: single
+    description: "SimpleWorld.dispose(disposeResources?: boolean)"
+  simple-world-update:
+    lifecycle: single
+    description: "SimpleWorld.update(delta?: number)"
+  simple-world-use-default-camera:
+    lifecycle: single
+    description: SimpleWorld.useDefaultCamera()
+  slope-annotations-build-group:
+    lifecycle: single
+    description: "SlopeAnnotations._buildGroup(ann: SlopeAnnotation, style: SlopeAnnotationStyle)"
+  slope-annotations-pick-handle:
+    lifecycle: single
+    description: "SlopeAnnotations.pickHandle(_drawing: TechnicalDrawing, _ray: THREE.Ray, _threshold?: number)"
+  snap-resolver-clear:
+    lifecycle: single
+    description: SnapResolver.clear()
+  snap-resolver-dispose:
+    lifecycle: single
+    description: SnapResolver.dispose()
+  snap-resolver-invalidate:
+    lifecycle: single
+    description: "SnapResolver.invalidate(modelId: string, itemId: number)"
+  snap-resolver-prefetch:
+    lifecycle: single
+    description: "SnapResolver.prefetch(modelId: string, itemId: number)"
+  snap-resolver-resolve:
+    lifecycle: single
+    description: SnapResolver.resolve()
+  snap-resolvers-dispose:
+    lifecycle: single
+    description: SnapResolvers.dispose()
+  technical-drawing-add-projection-from-items:
+    lifecycle: single
+    description: TechnicalDrawing.addProjectionFromItems()
+  technical-drawing-add-projection-lines:
+    lifecycle: single
+    description: "TechnicalDrawing.addProjectionLines(ls: THREE.LineSegments, layer?: string)"
+  technical-drawing-align-to:
+    lifecycle: single
+    description: "TechnicalDrawing.alignTo(drawingPoints: THREE.Vector3[], worldPoints: THREE.Vector3[])"
+  technical-drawing-dispose:
+    lifecycle: single
+    description: TechnicalDrawing.dispose()
+  technical-drawing-helper-attach-far-gizmo:
+    lifecycle: single
+    description: "TechnicalDrawingHelper.attachFarGizmo(gizmo: AxisGizmoLike)"
+  technical-drawing-helper-attach-height-gizmo:
+    lifecycle: single
+    description: "TechnicalDrawingHelper.attachHeightGizmo(gizmo: AxisGizmoLike)"
+  technical-drawing-helper-attach-width-gizmo:
+    lifecycle: single
+    description: "TechnicalDrawingHelper.attachWidthGizmo(gizmo: AxisGizmoLike)"
+  technical-drawing-helper-dispose:
+    lifecycle: single
+    description: TechnicalDrawingHelper.dispose()
+  technical-drawing-helper-update:
+    lifecycle: single
+    description: TechnicalDrawingHelper.update()
+  technical-drawing-orient-to:
+    lifecycle: single
+    description: "TechnicalDrawing.orientTo(direction: THREE.Vector3)"
+  technical-drawing-raycast:
+    lifecycle: single
+    description: "TechnicalDrawing.raycast(ray: THREE.Ray, viewport?: DrawingViewport | null)"
+  technical-drawing-to-drawing-space:
+    lifecycle: single
+    description: "TechnicalDrawing.toDrawingSpace(ls: THREE.LineSegments, drawing: TechnicalDrawing)"
+  technical-drawings-create:
+    lifecycle: single
+    description: "TechnicalDrawings.create(world: World)"
+  technical-drawings-dispose:
+    lifecycle: single
+    description: TechnicalDrawings.dispose()
+  topic-create-comment:
+    lifecycle: single
+    description: "Topic.createComment(text: string, viewpoint?: string)"
+  topic-serialize:
+    lifecycle: single
+    description: Topic.serialize()
+  topic-to-j-s-o-n:
+    lifecycle: single
+    description: Topic.toJSON()
+  transitionable-send-machine-event:
+    lifecycle: single
+    description: "Transitionable.sendMachineEvent(event: TEvent)"
+  u-u-i-d-create:
+    lifecycle: single
+    description: UUID.create()
+  u-u-i-d-validate:
+    lifecycle: single
+    description: "UUID.validate(uuid: string)"
+  updateable-update:
+    lifecycle: single
+    description: "Updateable.update(delta?: number)"
+  vertex-picker-dispose:
+    lifecycle: single
+    description: VertexPicker.dispose()
+  view-dispose:
+    lifecycle: single
+    description: View.dispose()
+  view-flip:
+    lifecycle: single
+    description: View.flip()
+  view-update:
+    lifecycle: single
+    description: View.update()
+  viewpoint-apply-visibility:
+    lifecycle: single
+    description: Viewpoint.applyVisibility()
+  viewpoint-get-exception-map:
+    lifecycle: single
+    description: Viewpoint.getExceptionMap()
+  viewpoint-get-selection-map:
+    lifecycle: single
+    description: Viewpoint.getSelectionMap()
+  viewpoint-go:
+    lifecycle: single
+    description: Viewpoint.go()
+  viewpoint-serialize:
+    lifecycle: single
+    description: "Viewpoint.serialize(version?: string)"
+  viewpoint-set-clipping-state:
+    lifecycle: single
+    description: "Viewpoint.setClippingState(state: boolean)"
+  viewpoint-set-clipping-visibility:
+    lifecycle: single
+    description: "Viewpoint.setClippingVisibility(visibility: boolean)"
+  viewpoint-set-colorization-state:
+    lifecycle: single
+    description: "Viewpoint.setColorizationState(state: boolean)"
+  viewpoint-take-snapshot:
+    lifecycle: single
+    description: Viewpoint.takeSnapshot()
+  viewpoint-to-j-s-o-n:
+    lifecycle: single
+    description: Viewpoint.toJSON()
+  viewpoint-update-camera:
+    lifecycle: single
+    description: "Viewpoint.updateCamera(takeSnapshot?: boolean)"
+  viewpoint-update-clipping-planes:
+    lifecycle: single
+    description: Viewpoint.updateClippingPlanes()
+  viewpoints-create:
+    lifecycle: single
+    description: "Viewpoints.create(data?: Partial<BCFViewpoint>)"
+  viewpoints-dispose:
+    lifecycle: single
+    description: Viewpoints.dispose()
+  viewpoints-get-snapshot-extension:
+    lifecycle: single
+    description: "Viewpoints.getSnapshotExtension(name: string)"
+  viewpoints-setup:
+    lifecycle: single
+    description: Viewpoints.setup()
+  views-close:
+    lifecycle: single
+    description: "Views.close(id?: string)"
+  views-create:
+    lifecycle: single
+    description: "Views.create(normal: THREE.Vector3, point: THREE.Vector3, config?: CreateViewConfig)"
+  views-create-elevations:
+    lifecycle: single
+    description: Views.createElevations()
+  views-create-from-ifc-storeys:
+    lifecycle: single
+    description: "Views.createFromIfcStoreys(config?: CreateViewFromIfcStoreysConfig)"
+  views-create-from-plane:
+    lifecycle: single
+    description: "Views.createFromPlane(plane: THREE.Plane, config?: CreateViewConfig)"
+  views-open:
+    lifecycle: single
+    description: "Views.open(id: string)"
+  worlds-create:
+    lifecycle: single
+    description: Worlds.create()
+  worlds-delete:
+    lifecycle: single
+    description: "Worlds.delete(world: World)"
+  worlds-dispose:
+    lifecycle: single
+    description: Worlds.dispose()
+  worlds-update:
+    lifecycle: single
+    description: "Worlds.update(delta?: number)"
+skills:
+  - angle-annotations.md
+  - annotation-system.md
+  - async-event.md
+  - axis-gizmo-like.md
+  - b-c-f-topics.md
+  - base-renderer.md
+  - base-scene.md
+  - block-annotations.md
+  - bounding-boxer.md
+  - callout-annotations.md
+  - classifier.md
+  - clipper.md
+  - comment-2.md
+  - components.md
+  - configurator.md
+  - controls-utils.md
+  - data-map.md
+  - data-set.md
+  - disposer.md
+  - distance-renderer.md
+  - drawing-annotations.md
+  - drawing-layers.md
+  - drawing-viewport-helper.md
+  - drawing-viewport.md
+  - drawing-viewports.md
+  - dxf-exporter.md
+  - dxf-write-context.md
+  - edge-projector.md
+  - event-2.md
+  - event-manager.md
+  - fast-model-picker.md
+  - fast-model-pickers.md
+  - finder-query.md
+  - fragments-manager.md
+  - grids.md
+  - hider.md
+  - i-d-s-attribute.md
+  - i-d-s-classification.md
+  - i-d-s-entity.md
+  - i-d-s-facet.md
+  - i-d-s-material.md
+  - i-d-s-part-of.md
+  - i-d-s-property.md
+  - i-d-s-specification.md
+  - i-d-s-specifications.md
+  - ifc-loader.md
+  - items-finder.md
+  - leader-annotations.md
+  - linear-annotations.md
+  - measurement-utils.md
+  - model-id-map-utils.md
+  - mouse.md
+  - ortho-perspective-camera.md
+  - projection-manager.md
+  - raycasters.md
+  - shadowed-scene.md
+  - simple-camera.md
+  - simple-grid.md
+  - simple-plane.md
+  - simple-raycaster.md
+  - simple-renderer.md
+  - simple-scene.md
+  - simple-world.md
+  - slope-annotations.md
+  - snap-resolver.md
+  - snap-resolvers.md
+  - technical-drawing-helper.md
+  - technical-drawing.md
+  - technical-drawings.md
+  - top-level.md
+  - topic.md
+  - transitionable.md
+  - u-u-i-d.md
+  - updateable.md
+  - vertex-picker.md
+  - view.md
+  - viewpoint.md
+  - viewpoints.md
+  - views.md
+  - worlds.md
