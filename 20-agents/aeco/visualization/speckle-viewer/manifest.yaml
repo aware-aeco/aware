@@ -1,0 +1,3006 @@
+agent:        speckle-viewer
+version:      2.28.0
+display-name: Speckle Viewer (raw)
+description: |
+  Auto-generated agent from `@speckle/viewer@2.28.0` on npm via
+  `aware build agent --from-npm`. Reflects the TypeScript public-API
+  declarations of Speckle's 3D viewer — the visualization layer of
+  the open-source AECO data platform that aggregates models / data /
+  changes across Revit, Rhino, Grasshopper, Tekla, IFC, GIS, and
+  everything else AECO touches.
+
+  Covers 124 classes × 942 methods: Viewer / SpeckleViewer / model
+  loaders (.speckle streams via the Speckle API + commit / branch /
+  object refs), pipeline (passes / postprocessing — SAO, FXAA, SSAO),
+  filtering (color / isolate / hide by property), cameras
+  (perspective + orthographic + section box), measurements, point
+  cloud + mesh / line / pointcloud / text rendering primitives.
+
+  Companion to the rest of the visualization vertical:
+  - `xeokit`             — heavy BIM viewer SDK
+  - `three`              — low-level WebGL
+  - `thatopen-components` — modern IFC.js stack
+  - `web-ifc`            — WASM IFC parser
+  - `speckle-viewer`     — open AECO data platform viewer (you)
+
+  Speckle is **Apache-2.0** — the most permissive of the bunch.
+  AWARE-generated text here is also Apache-2.0. The library is not
+  redistributed; users install `@speckle/viewer` themselves via npm.
+
+  Marked `stateful: false` — typical Speckle workflow is
+  load-stream → render → query. Long-running speckle apps could later
+  curate the `new Viewer(canvas)` init path as `start`.
+
+stateful: false
+
+vendor:   speckle
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/visualization/speckle-viewer
+keywords: [aeco, visualization, viewer, bim, speckle, open-aeco, generated, raw, npm, typescript, apache-2.0]
+
+provenance:
+  generated-by: aware-agent-builder
+  generator-version: 0.8.1
+  source:
+    dts_files: 178
+    homepage: https://speckle.systems
+    license: Apache-2.0
+    package: '@speckle/viewer'
+    type: npm
+    version: 2.28.0
+  generated-at: 2026-05-17T05:31:36.565988400+00:00
+transport:
+  cli:
+    binary: aware-speckle-viewer
+commands:
+  acceleration-structure-build-b-v-h:
+    lifecycle: single
+    description: "AccelerationStructure.buildBVH(indices: Uint16Array | Uint32Array | undefined, position: Float32Array | Float64Array | undefined, options?: BVHOptions, transform?: Matrix4)"
+  acceleration-structure-get-bounding-box:
+    lifecycle: single
+    description: "AccelerationStructure.getBoundingBox(target?: Box3)"
+  acceleration-structure-get-vertex-at-index:
+    lifecycle: single
+    description: "AccelerationStructure.getVertexAtIndex(index: number)"
+  acceleration-structure-raycast:
+    lifecycle: single
+    description: "AccelerationStructure.raycast(ray: Ray, materialOrSide?: Side | Material | Material[])"
+  acceleration-structure-raycast-first:
+    lifecycle: single
+    description: "AccelerationStructure.raycastFirst(ray: Ray, materialOrSide?: Side | Material | Material[])"
+  acceleration-structure-shapecast:
+    lifecycle: single
+    description: AccelerationStructure.shapecast()
+  acceleration-structure-transform-input:
+    lifecycle: single
+    description: "AccelerationStructure.transformInput(input: T)"
+  acceleration-structure-transform-output:
+    lifecycle: single
+    description: "AccelerationStructure.transformOutput(output: T)"
+  angle-damper-set-decay-time:
+    lifecycle: single
+    description: "AngleDamper.setDecayTime(decayMilliseconds: number)"
+  angle-damper-update:
+    lifecycle: single
+    description: "AngleDamper.update(x: number, xGoal: number, timeStepMilliseconds: number, xNormalization: number)"
+  angle-damper-wrap-angle:
+    lifecycle: single
+    description: "AngleDamper.wrapAngle(angle: number)"
+  apply-mixins:
+    lifecycle: single
+    description: "applyMixins(derivedCtor: any, constructors: any[])"
+  area-measurement-add-point:
+    lifecycle: single
+    description: "AreaMeasurement.addPoint(point: Vector3)"
+  area-measurement-auto-finish:
+    lifecycle: single
+    description: AreaMeasurement.autoFinish()
+  area-measurement-frame-update:
+    lifecycle: single
+    description: "AreaMeasurement.frameUpdate(camera: Camera, size: Vector2, bounds: Box3)"
+  area-measurement-from-measurement-data:
+    lifecycle: single
+    description: "AreaMeasurement.fromMeasurementData(data: MeasurementData)"
+  area-measurement-highlight:
+    lifecycle: single
+    description: "AreaMeasurement.highlight(value: boolean)"
+  area-measurement-location-selected:
+    lifecycle: single
+    description: AreaMeasurement.locationSelected()
+  area-measurement-location-updated:
+    lifecycle: single
+    description: "AreaMeasurement.locationUpdated(point: Vector3, normal: Vector3)"
+  area-measurement-raycast:
+    lifecycle: single
+    description: "AreaMeasurement.raycast(raycaster: Raycaster, intersects: Array<Intersection>)"
+  area-measurement-remove-point:
+    lifecycle: single
+    description: AreaMeasurement.removePoint()
+  area-measurement-snap:
+    lifecycle: single
+    description: "AreaMeasurement.snap(ndcPoint: Vector2, _intersection: ExtendedMeshIntersection, outPoint: Vector3, outNormal: Vector3)"
+  area-measurement-to-measurement-data:
+    lifecycle: single
+    description: AreaMeasurement.toMeasurementData()
+  area-measurement-update:
+    lifecycle: single
+    description: AreaMeasurement.update()
+  area-measurement-update-clipping-planes:
+    lifecycle: single
+    description: "AreaMeasurement.updateClippingPlanes(planes: Plane[])"
+  assets-generate-discreet-ramp-texture:
+    lifecycle: single
+    description: "Assets.generateDiscreetRampTexture(hexColors: number[])"
+  assets-generate-gradient-ramp-texture:
+    lifecycle: single
+    description: "Assets.generateGradientRampTexture(fromColor: string, toColor: string, steps: number)"
+  assets-get-environment:
+    lifecycle: single
+    description: "Assets.getEnvironment(asset: Asset, renderer: WebGLRenderer)"
+  assets-get-font:
+    lifecycle: single
+    description: "Assets.getFont(asset: Asset | string)"
+  assets-get-texture:
+    lifecycle: single
+    description: "Assets.getTexture(asset: Asset)"
+  assets-get-texture-data:
+    lifecycle: single
+    description: "Assets.getTextureData(asset: Asset)"
+  async-pause-tick:
+    lifecycle: single
+    description: "AsyncPause.tick(maxDelta: number)"
+  async-pause-wait:
+    lifecycle: single
+    description: "AsyncPause.wait(waitTime: number)"
+  base-g-pass-apply-layers:
+    lifecycle: single
+    description: "BaseGPass.applyLayers(camera: Camera | null)"
+  base-g-pass-clear:
+    lifecycle: single
+    description: "BaseGPass.clear(renderer: WebGLRenderer)"
+  base-g-pass-enable-layer:
+    lifecycle: single
+    description: "BaseGPass.enableLayer(layer: ObjectLayers, value: boolean)"
+  base-g-pass-render:
+    lifecycle: single
+    description: "BaseGPass.render(renderer: WebGLRenderer, camera?: PerspectiveCamera | OrthographicCamera | null, scene?: Scene)"
+  base-g-pass-set-clear-color:
+    lifecycle: single
+    description: "BaseGPass.setClearColor(color: number, alpha: number)"
+  base-g-pass-set-clear-flags:
+    lifecycle: single
+    description: "BaseGPass.setClearFlags(flags: number)"
+  base-g-pass-set-jitter:
+    lifecycle: single
+    description: "BaseGPass.setJitter(value: boolean)"
+  base-g-pass-set-layers:
+    lifecycle: single
+    description: "BaseGPass.setLayers(layers: ObjectLayers[])"
+  base-g-pass-set-size:
+    lifecycle: single
+    description: "BaseGPass.setSize(width: number, height: number)"
+  base-g-pass-set-visibility:
+    lifecycle: single
+    description: "BaseGPass.setVisibility(objectVisibility: ObjectVisibility | null, visibilityFunction?: (renderer: SpeckleRenderer) => Record<string, BatchUpdateRange>)"
+  batch-build-batch:
+    lifecycle: single
+    description: Batch.buildBatch()
+  batch-get-count:
+    lifecycle: single
+    description: Batch.getCount()
+  batch-get-depth:
+    lifecycle: single
+    description: Batch.getDepth()
+  batch-get-material:
+    lifecycle: single
+    description: "Batch.getMaterial(rv: NodeRenderView)"
+  batch-get-material-at-index:
+    lifecycle: single
+    description: "Batch.getMaterialAtIndex(index: number)"
+  batch-get-opaque:
+    lifecycle: single
+    description: Batch.getOpaque()
+  batch-get-render-view:
+    lifecycle: single
+    description: "Batch.getRenderView(index: number)"
+  batch-get-stencil:
+    lifecycle: single
+    description: Batch.getStencil()
+  batch-get-transparent:
+    lifecycle: single
+    description: Batch.getTransparent()
+  batch-get-visible-range:
+    lifecycle: single
+    description: Batch.getVisibleRange()
+  batch-object-build-acceleration-structure:
+    lifecycle: single
+    description: "BatchObject.buildAccelerationStructure(bvh: MeshBVH)"
+  batch-object-transform-t-r-s:
+    lifecycle: single
+    description: "BatchObject.transformTRS(translation: Vector3Like, euler?: Vector3Like, scale?: Vector3Like, pivot?: Vector3Like)"
+  batch-on-update:
+    lifecycle: single
+    description: "Batch.onUpdate(deltaTime?: number)"
+  batch-purge:
+    lifecycle: single
+    description: Batch.purge()
+  batch-reset-draw-ranges:
+    lifecycle: single
+    description: Batch.resetDrawRanges()
+  batch-set-batch-buffers:
+    lifecycle: single
+    description: "Batch.setBatchBuffers(range: BatchUpdateRange[])"
+  batch-set-batch-material:
+    lifecycle: single
+    description: "Batch.setBatchMaterial(material: Material)"
+  batch-set-draw-ranges:
+    lifecycle: single
+    description: "Batch.setDrawRanges(ranges: BatchUpdateRange[])"
+  batch-set-visible-range:
+    lifecycle: single
+    description: "Batch.setVisibleRange(range: BatchUpdateRange[])"
+  batcher-apply-visibility:
+    lifecycle: single
+    description: "Batcher.applyVisibility(ranges: Record<string, BatchUpdateRange>)"
+  batcher-get-batch:
+    lifecycle: single
+    description: "Batcher.getBatch(rv: NodeRenderView)"
+  batcher-get-batches:
+    lifecycle: single
+    description: "Batcher.getBatches(subtreeId?: string, geometryType?: Array<K>)"
+  batcher-get-depth:
+    lifecycle: single
+    description: Batcher.getDepth()
+  batcher-get-opaque:
+    lifecycle: single
+    description: Batcher.getOpaque()
+  batcher-get-render-view:
+    lifecycle: single
+    description: "Batcher.getRenderView(batchId: string, index: number)"
+  batcher-get-render-view-material:
+    lifecycle: single
+    description: "Batcher.getRenderViewMaterial(batchId: string, index: number)"
+  batcher-get-stencil:
+    lifecycle: single
+    description: Batcher.getStencil()
+  batcher-get-transparent:
+    lifecycle: single
+    description: Batcher.getTransparent()
+  batcher-get-visibility:
+    lifecycle: single
+    description: "Batcher.getVisibility(objectVisibility: ObjectVisibility)"
+  batcher-isolate-batch:
+    lifecycle: single
+    description: "Batcher.isolateBatch(batchId: string)"
+  batcher-make-batches:
+    lifecycle: single
+    description: "Batcher.makeBatches(worldTree: WorldTree, renderTree: RenderTree, speckleType: SpeckleType[], batchType?: GeometryType)"
+  batcher-override-batch-material:
+    lifecycle: single
+    description: "Batcher.overrideBatchMaterial(ranges: Record<string, BatchUpdateRange>, material: Material)"
+  batcher-override-material:
+    lifecycle: single
+    description: "Batcher.overrideMaterial(ranges: Record<string, BatchUpdateRange>, material: Material)"
+  batcher-purge-batches:
+    lifecycle: single
+    description: "Batcher.purgeBatches(subtreeId: string)"
+  batcher-render:
+    lifecycle: single
+    description: "Batcher.render(renderer: WebGLRenderer)"
+  batcher-reset-batches-draw-ranges:
+    lifecycle: single
+    description: Batcher.resetBatchesDrawRanges()
+  batcher-restore-batch-material:
+    lifecycle: single
+    description: "Batcher.restoreBatchMaterial(ranges: Record<string, BatchUpdateRange>)"
+  batcher-restore-material:
+    lifecycle: single
+    description: "Batcher.restoreMaterial(ranges: Record<string, BatchUpdateRange>)"
+  batcher-save-visiblity:
+    lifecycle: single
+    description: Batcher.saveVisiblity()
+  batcher-update:
+    lifecycle: single
+    description: "Batcher.update(deltaTime: number)"
+  blend-pass-render:
+    lifecycle: single
+    description: "BlendPass.render(renderer: WebGLRenderer)"
+  blend-pass-set-texture:
+    lifecycle: single
+    description: "BlendPass.setTexture(uName: string, texture: Texture | undefined)"
+  camera-controller-compute-near-camera-plane-accurate:
+    lifecycle: single
+    description: "CameraController.computeNearCameraPlaneAccurate(targetVolume?: Box3, offsetScale?: number, fallback?: number)"
+  camera-controller-compute-near-camera-plane-empiric:
+    lifecycle: single
+    description: "CameraController.computeNearCameraPlaneEmpiric(targetVolume?: Box3, offsetScale?: number)"
+  camera-controller-default:
+    lifecycle: single
+    description: CameraController.default()
+  camera-controller-disable-rotations:
+    lifecycle: single
+    description: CameraController.disableRotations()
+  camera-controller-enable-rotations:
+    lifecycle: single
+    description: CameraController.enableRotations()
+  camera-controller-fit-to-radius:
+    lifecycle: single
+    description: "CameraController.fitToRadius(radius: number)"
+  camera-controller-get-closest-geometry-distance:
+    lifecycle: single
+    description: "CameraController.getClosestGeometryDistance(fallback?: number)"
+  camera-controller-get-position:
+    lifecycle: single
+    description: CameraController.getPosition()
+  camera-controller-get-target:
+    lifecycle: single
+    description: CameraController.getTarget()
+  camera-controller-is-box3:
+    lifecycle: single
+    description: "CameraController.isBox3(view: CanonicalView | SpeckleView | InlineView | PolarView | Box3)"
+  camera-controller-is-canonical-view:
+    lifecycle: single
+    description: "CameraController.isCanonicalView(view: CanonicalView | SpeckleView | InlineView | PolarView)"
+  camera-controller-is-inline-view:
+    lifecycle: single
+    description: "CameraController.isInlineView(view: CanonicalView | SpeckleView | InlineView | PolarView)"
+  camera-controller-is-polar-view:
+    lifecycle: single
+    description: "CameraController.isPolarView(view: CanonicalView | SpeckleView | InlineView | PolarView)"
+  camera-controller-is-speckle-view:
+    lifecycle: single
+    description: "CameraController.isSpeckleView(view: CanonicalView | SpeckleView | InlineView | PolarView)"
+  camera-controller-on:
+    lifecycle: single
+    description: "CameraController.on(eventType: T, listener: (arg: CameraEventPayload[T]) => void)"
+  camera-controller-on-early-update:
+    lifecycle: single
+    description: "CameraController.onEarlyUpdate(_delta?: number)"
+  camera-controller-on-late-update:
+    lifecycle: single
+    description: CameraController.onLateUpdate()
+  camera-controller-on-resize:
+    lifecycle: single
+    description: CameraController.onResize()
+  camera-controller-set-camera-view:
+    lifecycle: single
+    description: "CameraController.setCameraView(bounds: Box3, transition: boolean | undefined, fit?: number)"
+  camera-controller-set-ortho-camera-on:
+    lifecycle: single
+    description: CameraController.setOrthoCameraOn()
+  camera-controller-set-perspective-camera-on:
+    lifecycle: single
+    description: CameraController.setPerspectiveCameraOn()
+  camera-controller-set-view:
+    lifecycle: single
+    description: "CameraController.setView(view: CanonicalView | SpeckleView | InlineView | PolarView, transition?: boolean)"
+  camera-controller-set-view-canonical:
+    lifecycle: single
+    description: "CameraController.setViewCanonical(side: string, transition?: boolean)"
+  camera-controller-set-view-inline:
+    lifecycle: single
+    description: "CameraController.setViewInline(view: InlineView, transition?: boolean)"
+  camera-controller-set-view-speckle:
+    lifecycle: single
+    description: "CameraController.setViewSpeckle(view: SpeckleView, transition?: boolean)"
+  camera-controller-setup-ortho-camera:
+    lifecycle: single
+    description: CameraController.setupOrthoCamera()
+  camera-controller-setup-perspective-camera:
+    lifecycle: single
+    description: CameraController.setupPerspectiveCamera()
+  camera-controller-toggle-cameras:
+    lifecycle: single
+    description: CameraController.toggleCameras()
+  camera-controller-toggle-controls:
+    lifecycle: single
+    description: CameraController.toggleControls()
+  camera-controller-update-camera-planes:
+    lifecycle: single
+    description: "CameraController.updateCameraPlanes(targetVolume?: Box3, offsetScale?: number)"
+  camera-controller-update-far-camera-plane:
+    lifecycle: single
+    description: CameraController.updateFarCameraPlane()
+  camera-controller-zoom:
+    lifecycle: single
+    description: "CameraController.zoom(objectIds?: string[], fit?: number, transition?: boolean)"
+  camera-controller-zoom-extents:
+    lifecycle: single
+    description: "CameraController.zoomExtents(fit?: number, transition?: boolean)"
+  camera-controller-zoom-to-box:
+    lifecycle: single
+    description: "CameraController.zoomToBox(box: Box3, fit?: number, transition?: boolean)"
+  chunk-array-compute-box3:
+    lifecycle: single
+    description: ChunkArray.computeBox3()
+  chunk-array-copy-to-buffer:
+    lifecycle: single
+    description: "ChunkArray.copyToBuffer(buffer: TypedArray, offset: number)"
+  chunk-array-get-flat-array:
+    lifecycle: single
+    description: ChunkArray.getFlatArray()
+  chunk-array-get-float32-array:
+    lifecycle: single
+    description: ChunkArray.getFloat32Array()
+  chunk-array-get-float64-array:
+    lifecycle: single
+    description: ChunkArray.getFloat64Array()
+  chunk-array-get-int16-array:
+    lifecycle: single
+    description: ChunkArray.getInt16Array()
+  chunk-array-get-int32-array:
+    lifecycle: single
+    description: ChunkArray.getInt32Array()
+  chunk-array-get-uint16-array:
+    lifecycle: single
+    description: ChunkArray.getUint16Array()
+  chunk-array-get-uint32-array:
+    lifecycle: single
+    description: ChunkArray.getUint32Array()
+  chunk-array-new:
+    lifecycle: single
+    description: "ChunkArray.new(length: number)"
+  chunk-array-slice:
+    lifecycle: single
+    description: ChunkArray.slice()
+  compute-orthographic-size:
+    lifecycle: single
+    description: "computeOrthographicSize(distance: number, fov: number, aspect: number)"
+  controls-connect:
+    lifecycle: single
+    description: Controls.connect()
+  controls-disconnect:
+    lifecycle: single
+    description: Controls.disconnect()
+  controls-dispose:
+    lifecycle: single
+    description: Controls.dispose()
+  controls-update:
+    lifecycle: single
+    description: Controls.update()
+  damper-set-decay-time:
+    lifecycle: single
+    description: "Damper.setDecayTime(decayMilliseconds: number)"
+  damper-update:
+    lifecycle: single
+    description: "Damper.update(x: number, xGoal: number, timeStepMilliseconds: number, xNormalization: number)"
+  depth-normal-pass-render:
+    lifecycle: single
+    description: "DepthNormalPass.render(renderer: WebGLRenderer, camera: PerspectiveCamera | OrthographicCamera | null, scene?: Scene)"
+  depth-normal-pass-set-clipping-planes:
+    lifecycle: single
+    description: "DepthNormalPass.setClippingPlanes(planes: Plane[])"
+  depth-normal-pass-set-size:
+    lifecycle: single
+    description: "DepthNormalPass.setSize(width: number, height: number)"
+  depth-normal-pass-update:
+    lifecycle: single
+    description: "DepthNormalPass.update(camera: PerspectiveCamera | OrthographicCamera)"
+  depth-pass-update:
+    lifecycle: single
+    description: "DepthPass.update(camera: PerspectiveCamera | OrthographicCamera)"
+  diff-extension-diff:
+    lifecycle: single
+    description: "DiffExtension.diff(urlA: string, urlB: string, mode: VisualDiffMode, authToken?: string)"
+  diff-extension-undiff:
+    lifecycle: single
+    description: DiffExtension.undiff()
+  diff-extension-update-visual-diff:
+    lifecycle: single
+    description: "DiffExtension.updateVisualDiff(time?: number, mode?: VisualDiffMode)"
+  draw-ranges-integrate-ranges:
+    lifecycle: single
+    description: "DrawRanges.integrateRanges(groups: Array<DrawGroup>, materials: Array<Material>, ranges: BatchUpdateRange[])"
+  edges-pass-render:
+    lifecycle: single
+    description: "EdgesPass.render(renderer: WebGLRenderer)"
+  edges-pass-set-size:
+    lifecycle: single
+    description: "EdgesPass.setSize(width: number, height: number)"
+  edges-pass-set-texture:
+    lifecycle: single
+    description: "EdgesPass.setTexture(uName: string, texture: Texture | undefined)"
+  edges-pass-update:
+    lifecycle: single
+    description: "EdgesPass.update(camera: PerspectiveCamera | OrthographicCamera)"
+  edges-pipeline-depth-normal-id-pass-visibility:
+    lifecycle: single
+    description: "EdgesPipeline.depthNormalIdPassVisibility(renderer: SpeckleRenderer)"
+  edges-pipeline-m-r-t-pipeline:
+    lifecycle: single
+    description: "EdgesPipeline.MRTPipeline(options: EdgesPipelineOptions)"
+  edges-pipeline-s-r-t-pipeline:
+    lifecycle: single
+    description: "EdgesPipeline.SRTPipeline(options: EdgesPipelineOptions)"
+  event-emitter-dispose:
+    lifecycle: single
+    description: EventEmitter.dispose()
+  event-emitter-emit:
+    lifecycle: single
+    description: "EventEmitter.emit(name: string, ...args: unknown[])"
+  event-emitter-on:
+    lifecycle: single
+    description: "EventEmitter.on(name: string, listener: Function)"
+  event-emitter-remove-listener:
+    lifecycle: single
+    description: "EventEmitter.removeListener(name: string, listenerToRemove: Function)"
+  explode-extension-on-early-update:
+    lifecycle: single
+    description: ExplodeExtension.onEarlyUpdate()
+  explode-extension-set-explode:
+    lifecycle: single
+    description: "ExplodeExtension.setExplode(time: number)"
+  extension-on-early-update:
+    lifecycle: single
+    description: "Extension.onEarlyUpdate(deltaTime?: number)"
+  extension-on-late-update:
+    lifecycle: single
+    description: "Extension.onLateUpdate(deltaTime?: number)"
+  extension-on-render:
+    lifecycle: single
+    description: Extension.onRender()
+  extension-on-resize:
+    lifecycle: single
+    description: Extension.onResize()
+  filtering-extension-hide-objects:
+    lifecycle: single
+    description: "FilteringExtension.hideObjects(objectIds: string[], stateKey?: string | undefined, includeDescendants?: boolean, ghost?: boolean)"
+  filtering-extension-isolate-objects:
+    lifecycle: single
+    description: "FilteringExtension.isolateObjects(objectIds: string[], stateKey?: string | undefined, includeDescendants?: boolean, ghost?: boolean)"
+  filtering-extension-remove-color-filter:
+    lifecycle: single
+    description: FilteringExtension.removeColorFilter()
+  filtering-extension-remove-user-object-colors:
+    lifecycle: single
+    description: FilteringExtension.removeUserObjectColors()
+  filtering-extension-reset-filters:
+    lifecycle: single
+    description: FilteringExtension.resetFilters()
+  filtering-extension-set-color-filter:
+    lifecycle: single
+    description: "FilteringExtension.setColorFilter(prop: PropertyInfo, ghost?: boolean)"
+  filtering-extension-set-user-object-colors:
+    lifecycle: single
+    description: FilteringExtension.setUserObjectColors()
+  filtering-extension-show-objects:
+    lifecycle: single
+    description: "FilteringExtension.showObjects(objectIds: string[], stateKey?: string | undefined, includeDescendants?: boolean)"
+  filtering-extension-un-isolate-objects:
+    lifecycle: single
+    description: "FilteringExtension.unIsolateObjects(objectIds: string[], stateKey?: string | undefined, includeDescendants?: boolean, ghost?: boolean)"
+  fly-controls-cancel-move:
+    lifecycle: single
+    description: FlyControls.cancelMove()
+  fly-controls-connect:
+    lifecycle: single
+    description: FlyControls.connect()
+  fly-controls-disconnect:
+    lifecycle: single
+    description: FlyControls.disconnect()
+  fly-controls-dispose:
+    lifecycle: single
+    description: FlyControls.dispose()
+  fly-controls-fit-to-sphere:
+    lifecycle: single
+    description: "FlyControls.fitToSphere(sphere: Sphere)"
+  fly-controls-from-position-and-target:
+    lifecycle: single
+    description: "FlyControls.fromPositionAndTarget(position: Vector3, target: Vector3)"
+  fly-controls-get-current-position:
+    lifecycle: single
+    description: FlyControls.getCurrentPosition()
+  fly-controls-get-current-target:
+    lifecycle: single
+    description: FlyControls.getCurrentTarget()
+  fly-controls-get-position:
+    lifecycle: single
+    description: FlyControls.getPosition()
+  fly-controls-get-target:
+    lifecycle: single
+    description: FlyControls.getTarget()
+  fly-controls-is-stationary:
+    lifecycle: single
+    description: FlyControls.isStationary()
+  fly-controls-jump-to-goal:
+    lifecycle: single
+    description: FlyControls.jumpToGoal()
+  fly-controls-move-by:
+    lifecycle: single
+    description: "FlyControls.moveBy(amount: Vector3)"
+  fly-controls-rotate:
+    lifecycle: single
+    description: "FlyControls.rotate(euler: Euler)"
+  fly-controls-rotate-by:
+    lifecycle: single
+    description: "FlyControls.rotateBy(amount: Vector2)"
+  fly-controls-set-damper-decay-time:
+    lifecycle: single
+    description: "FlyControls.setDamperDecayTime(decayMilliseconds: number)"
+  fly-controls-update:
+    lifecycle: single
+    description: "FlyControls.update(delta?: number)"
+  fly-controls-update-position-rotation:
+    lifecycle: single
+    description: "FlyControls.updatePositionRotation(delta: number)"
+  g-pass-set-clear-color:
+    lifecycle: single
+    description: "GPass.setClearColor(color: number, alpha: number)"
+  g-pass-set-clear-flags:
+    lifecycle: single
+    description: "GPass.setClearFlags(flags: number)"
+  g-pass-set-jitter:
+    lifecycle: single
+    description: "GPass.setJitter(value: boolean)"
+  geometry-compute-vertex-normals:
+    lifecycle: single
+    description: "Geometry.computeVertexNormals(buffer: BufferGeometry, positions: Float64Array | Float32Array)"
+  geometry-compute-vertex-normals-buffer:
+    lifecycle: single
+    description: "Geometry.computeVertexNormalsBuffer(buffer: number[], position: number[], index: number[])"
+  geometry-compute-vertex-normals-buffer-virtual:
+    lifecycle: single
+    description: "Geometry.computeVertexNormalsBufferVirtual(buffer: number[], position: ChunkArray, index: ChunkArray, flip?: boolean)"
+  geometry-converter-convert-node-to-geometry-data:
+    lifecycle: single
+    description: "GeometryConverter.convertNodeToGeometryData(node: NodeData)"
+  geometry-converter-dispose-node-geometry-data:
+    lifecycle: single
+    description: "GeometryConverter.disposeNodeGeometryData(node: NodeData)"
+  geometry-converter-get-speckle-type:
+    lifecycle: single
+    description: "GeometryConverter.getSpeckleType(node: NodeData)"
+  geometry-double-to-high-low-buffer:
+    lifecycle: single
+    description: "Geometry.DoubleToHighLowBuffer(input: ArrayLike<number>, position_low: number[] | Float32Array, position_high: number[] | Float32Array)"
+  geometry-double-to-high-low-vector:
+    lifecycle: single
+    description: "Geometry.DoubleToHighLowVector(input: Vector3, low: Vector3, high: Vector3)"
+  geometry-flip-normals-buffer:
+    lifecycle: single
+    description: "Geometry.flipNormalsBuffer(buffer: Float32Array)"
+  geometry-get-f-p32-projection-delta:
+    lifecycle: single
+    description: "Geometry.getFP32ProjectionDelta(point: Vector3, projection: Matrix4, screenSize: Vector2, relativeOffset?: number)"
+  geometry-is-matrix4-identity:
+    lifecycle: single
+    description: "Geometry.isMatrix4Identity(matrix: Matrix4)"
+  geometry-merge-geometry-attribute:
+    lifecycle: single
+    description: "Geometry.mergeGeometryAttribute(attributes: ChunkArray[], target: Float32Array | Float64Array)"
+  geometry-merge-geometry-data:
+    lifecycle: single
+    description: "Geometry.mergeGeometryData(geometries: GeometryData[])"
+  geometry-merge-index-attribute:
+    lifecycle: single
+    description: "Geometry.mergeIndexAttribute(indexAttributes: ChunkArray[], positionAttributes: ChunkArray[])"
+  geometry-needs-r-t-e:
+    lifecycle: single
+    description: "Geometry.needsRTE(bounds: Box3)"
+  geometry-pass-render:
+    lifecycle: single
+    description: "GeometryPass.render(renderer: WebGLRenderer, camera: PerspectiveCamera | OrthographicCamera | null, scene?: Scene)"
+  geometry-pass-set-clipping-planes:
+    lifecycle: single
+    description: "GeometryPass.setClippingPlanes(planes: Plane[])"
+  geometry-transform-array:
+    lifecycle: single
+    description: "Geometry.transformArray(array: number[] | Float32Array | Float64Array, m: Matrix4 | null, offset?: number, count?: number)"
+  geometry-transform-geometry-data:
+    lifecycle: single
+    description: "Geometry.transformGeometryData(geometryData: GeometryData, m: Matrix4 | null)"
+  geometry-triangulate-polygon:
+    lifecycle: single
+    description: "Geometry.triangulatePolygon(points: Vector2[])"
+  geometry-unpack-colors:
+    lifecycle: single
+    description: "Geometry.unpackColors(int32Colors: number[])"
+  geometry-update-r-t-e-geometry:
+    lifecycle: single
+    description: "Geometry.updateRTEGeometry(geometry: BufferGeometry, doublePositions: Float64Array | Float32Array)"
+  get-conversion-factor:
+    lifecycle: single
+    description: "getConversionFactor(from: any, to?: string)"
+  get-pointer:
+    lifecycle: single
+    description: "getPointer(event: any)"
+  get-relative-offset:
+    lifecycle: single
+    description: "getRelativeOffset(referenceBox: Box3, offsetAmount?: number)"
+  get-resource-urls:
+    lifecycle: single
+    description: "getResourceUrls(url: string, authToken?: string)"
+  hybrid-camera-controller-cancel-move:
+    lifecycle: single
+    description: HybridCameraController.cancelMove()
+  hybrid-camera-controller-on-context-menu:
+    lifecycle: single
+    description: HybridCameraController.onContextMenu()
+  hybrid-camera-controller-on-early-update:
+    lifecycle: single
+    description: "HybridCameraController.onEarlyUpdate(_delta?: number)"
+  hybrid-camera-controller-on-key-down:
+    lifecycle: single
+    description: "HybridCameraController.onKeyDown(event: KeyboardEvent)"
+  hybrid-camera-controller-on-key-up:
+    lifecycle: single
+    description: "HybridCameraController.onKeyUp(event: KeyboardEvent)"
+  i-viewer-cancel-load:
+    lifecycle: single
+    description: "IViewer.cancelLoad(url: string, unload?: boolean)"
+  i-viewer-create-extension:
+    lifecycle: single
+    description: "IViewer.createExtension(type: Constructor<T>)"
+  i-viewer-dispose:
+    lifecycle: single
+    description: IViewer.dispose()
+  i-viewer-get-canvas:
+    lifecycle: single
+    description: IViewer.getCanvas()
+  i-viewer-get-container:
+    lifecycle: single
+    description: IViewer.getContainer()
+  i-viewer-get-extension:
+    lifecycle: single
+    description: "IViewer.getExtension(type: Constructor<T>)"
+  i-viewer-get-object-properties:
+    lifecycle: single
+    description: "IViewer.getObjectProperties(resourceURL?: string, bypassCache?: boolean)"
+  i-viewer-get-renderer:
+    lifecycle: single
+    description: IViewer.getRenderer()
+  i-viewer-get-views:
+    lifecycle: single
+    description: IViewer.getViews()
+  i-viewer-get-world-tree:
+    lifecycle: single
+    description: IViewer.getWorldTree()
+  i-viewer-has-extension:
+    lifecycle: single
+    description: "IViewer.hasExtension(type: Constructor<T>)"
+  i-viewer-init:
+    lifecycle: single
+    description: IViewer.init()
+  i-viewer-load-object:
+    lifecycle: single
+    description: "IViewer.loadObject(loader: Loader, zoomToObject?: boolean)"
+  i-viewer-on:
+    lifecycle: single
+    description: "IViewer.on(eventType: T, handler: (arg: ViewerEventPayload[T]) => void)"
+  i-viewer-query:
+    lifecycle: single
+    description: "IViewer.query(query: T)"
+  i-viewer-request-render:
+    lifecycle: single
+    description: "IViewer.requestRender(flags?: UpdateFlags)"
+  i-viewer-resize:
+    lifecycle: single
+    description: IViewer.resize()
+  i-viewer-screenshot:
+    lifecycle: single
+    description: IViewer.screenshot()
+  i-viewer-set-light-configuration:
+    lifecycle: single
+    description: "IViewer.setLightConfiguration(config: LightConfiguration)"
+  i-viewer-unload-all:
+    lifecycle: single
+    description: IViewer.unloadAll()
+  i-viewer-unload-object:
+    lifecycle: single
+    description: "IViewer.unloadObject(url: string)"
+  input-dispose:
+    lifecycle: single
+    description: Input.dispose()
+  input-get-normalised-click-position:
+    lifecycle: single
+    description: "Input._getNormalisedClickPosition(e: MouseEvent | Touch)"
+  input-on:
+    lifecycle: single
+    description: "Input.on(eventType: T, listener: (arg: InputEventPayload[T]) => void)"
+  instanced-batch-object-transform-t-r-s:
+    lifecycle: single
+    description: "InstancedBatchObject.transformTRS(translation: Vector3Like, euler: Vector3Like, scale: Vector3Like, pivot: Vector3Like)"
+  instanced-mesh-batch-build-batch:
+    lifecycle: single
+    description: InstancedMeshBatch.buildBatch()
+  instanced-mesh-batch-get-count:
+    lifecycle: single
+    description: InstancedMeshBatch.getCount()
+  instanced-mesh-batch-get-depth:
+    lifecycle: single
+    description: InstancedMeshBatch.getDepth()
+  instanced-mesh-batch-get-material:
+    lifecycle: single
+    description: "InstancedMeshBatch.getMaterial(rv: NodeRenderView)"
+  instanced-mesh-batch-get-material-at-index:
+    lifecycle: single
+    description: "InstancedMeshBatch.getMaterialAtIndex(index: number)"
+  instanced-mesh-batch-get-opaque:
+    lifecycle: single
+    description: InstancedMeshBatch.getOpaque()
+  instanced-mesh-batch-get-render-view:
+    lifecycle: single
+    description: "InstancedMeshBatch.getRenderView(index: number)"
+  instanced-mesh-batch-get-stencil:
+    lifecycle: single
+    description: InstancedMeshBatch.getStencil()
+  instanced-mesh-batch-get-transparent:
+    lifecycle: single
+    description: InstancedMeshBatch.getTransparent()
+  instanced-mesh-batch-get-visible-range:
+    lifecycle: single
+    description: InstancedMeshBatch.getVisibleRange()
+  instanced-mesh-batch-on-render:
+    lifecycle: single
+    description: "InstancedMeshBatch.onRender(renderer: WebGLRenderer)"
+  instanced-mesh-batch-on-update:
+    lifecycle: single
+    description: "InstancedMeshBatch.onUpdate(deltaTime: number)"
+  instanced-mesh-batch-purge:
+    lifecycle: single
+    description: InstancedMeshBatch.purge()
+  instanced-mesh-batch-reset-draw-ranges:
+    lifecycle: single
+    description: InstancedMeshBatch.resetDrawRanges()
+  instanced-mesh-batch-set-batch-buffers:
+    lifecycle: single
+    description: "InstancedMeshBatch.setBatchBuffers(ranges: BatchUpdateRange[])"
+  instanced-mesh-batch-set-batch-material:
+    lifecycle: single
+    description: "InstancedMeshBatch.setBatchMaterial(material: Material)"
+  instanced-mesh-batch-set-draw-ranges:
+    lifecycle: single
+    description: "InstancedMeshBatch.setDrawRanges(ranges: BatchUpdateRange[])"
+  instanced-mesh-batch-set-visible-range:
+    lifecycle: single
+    description: "InstancedMeshBatch.setVisibleRange(ranges: BatchUpdateRange[])"
+  intersect-object-with-ray:
+    lifecycle: single
+    description: "intersectObjectWithRay(object: any, raycaster: any, includeInvisible: any)"
+  intersection-query-solver-set-context:
+    lifecycle: single
+    description: "IntersectionQuerySolver.setContext(renderer: SpeckleRenderer)"
+  intersection-query-solver-solve:
+    lifecycle: single
+    description: "IntersectionQuerySolver.solve(query: IntersectionQuery)"
+  intersections-intersect:
+    lifecycle: single
+    description: "Intersections.intersect(scene: Scene, camera: Camera, point: Vector2, castLayers?: Array<ObjectLayers>, nearest?: boolean, bounds?: Box3 | OBB, firstOnly?: boolean, tasOnly?: boolean)"
+  intersections-intersect-ray:
+    lifecycle: single
+    description: "Intersections.intersectRay(scene: Scene, camera: Camera, ray: Ray, castLayers?: Array<ObjectLayers>, nearest?: boolean, bounds?: Box3 | OBB, firstOnly?: boolean, tasOnly?: boolean)"
+  intersections-on-object-intersection:
+    lifecycle: single
+    description: "Intersections.onObjectIntersection(obj: Object3D)"
+  is-accelerated-batch-type:
+    lifecycle: single
+    description: "isAcceleratedBatchType(batch: Batch)"
+  is-all-batch-update-range:
+    lifecycle: single
+    description: "isAllBatchUpdateRange(range: BatchUpdateRange, totalCount?: number)"
+  is-none-batch-update-range:
+    lifecycle: single
+    description: "isNoneBatchUpdateRange(range: BatchUpdateRange)"
+  is-orthographic-camera:
+    lifecycle: single
+    description: "isOrthographicCamera(camera: Camera)"
+  is-perspective-camera:
+    lifecycle: single
+    description: "isPerspectiveCamera(camera: Camera)"
+  jitter-quad-render:
+    lifecycle: single
+    description: "JitterQuad.render(renderer: WebGLRenderer)"
+  legacy-viewer-diff:
+    lifecycle: single
+    description: "LegacyViewer.diff(urlA: string, urlB: string, mode: VisualDiffMode, authToken?: string)"
+  legacy-viewer-dispose:
+    lifecycle: single
+    description: LegacyViewer.dispose()
+  legacy-viewer-enable-measurements:
+    lifecycle: single
+    description: "LegacyViewer.enableMeasurements(value: boolean)"
+  legacy-viewer-explode:
+    lifecycle: single
+    description: "LegacyViewer.explode(time: number)"
+  legacy-viewer-get-current-section-box:
+    lifecycle: single
+    description: LegacyViewer.getCurrentSectionBox()
+  legacy-viewer-get-data-tree:
+    lifecycle: single
+    description: LegacyViewer.getDataTree()
+  legacy-viewer-get-objects:
+    lifecycle: single
+    description: "LegacyViewer.getObjects(id: string)"
+  legacy-viewer-get-renderer:
+    lifecycle: single
+    description: LegacyViewer.getRenderer()
+  legacy-viewer-get-views:
+    lifecycle: single
+    description: LegacyViewer.getViews()
+  legacy-viewer-get-world-tree:
+    lifecycle: single
+    description: LegacyViewer.getWorldTree()
+  legacy-viewer-hide-objects:
+    lifecycle: single
+    description: "LegacyViewer.hideObjects(objectIds: string[], stateKey?: string | undefined, includeDescendants?: boolean, ghost?: boolean)"
+  legacy-viewer-highlight-objects:
+    lifecycle: single
+    description: "LegacyViewer.highlightObjects(objectIds: string[])"
+  legacy-viewer-init:
+    lifecycle: single
+    description: LegacyViewer.init()
+  legacy-viewer-isolate-objects:
+    lifecycle: single
+    description: "LegacyViewer.isolateObjects(objectIds: string[], stateKey?: string | undefined, includeDescendants?: boolean, ghost?: boolean)"
+  legacy-viewer-load-object-async:
+    lifecycle: single
+    description: "LegacyViewer.loadObjectAsync(url: string, token?: string | undefined, enableCaching?: boolean, zoomToObject?: boolean)"
+  legacy-viewer-query:
+    lifecycle: single
+    description: "LegacyViewer.query(query: T)"
+  legacy-viewer-query-async:
+    lifecycle: single
+    description: "LegacyViewer.queryAsync(query: Query)"
+  legacy-viewer-remove-color-filter:
+    lifecycle: single
+    description: LegacyViewer.removeColorFilter()
+  legacy-viewer-remove-measurement:
+    lifecycle: single
+    description: LegacyViewer.removeMeasurement()
+  legacy-viewer-reset-filters:
+    lifecycle: single
+    description: LegacyViewer.resetFilters()
+  legacy-viewer-reset-highlight:
+    lifecycle: single
+    description: LegacyViewer.resetHighlight()
+  legacy-viewer-reset-selection:
+    lifecycle: single
+    description: LegacyViewer.resetSelection()
+  legacy-viewer-screenshot:
+    lifecycle: single
+    description: LegacyViewer.screenshot()
+  legacy-viewer-section-box-off:
+    lifecycle: single
+    description: LegacyViewer.sectionBoxOff()
+  legacy-viewer-section-box-on:
+    lifecycle: single
+    description: LegacyViewer.sectionBoxOn()
+  legacy-viewer-select-objects:
+    lifecycle: single
+    description: "LegacyViewer.selectObjects(objectIds: string[])"
+  legacy-viewer-set-color-filter:
+    lifecycle: single
+    description: "LegacyViewer.setColorFilter(property: PropertyInfo, ghost?: boolean)"
+  legacy-viewer-set-diff-time:
+    lifecycle: single
+    description: "LegacyViewer.setDiffTime(_diffResult: DiffResult, time: number)"
+  legacy-viewer-set-light-configuration:
+    lifecycle: single
+    description: "LegacyViewer.setLightConfiguration(config: SunLightConfiguration)"
+  legacy-viewer-set-measurement-options:
+    lifecycle: single
+    description: "LegacyViewer.setMeasurementOptions(options: MeasurementOptions)"
+  legacy-viewer-set-ortho-camera-on:
+    lifecycle: single
+    description: LegacyViewer.setOrthoCameraOn()
+  legacy-viewer-set-perspective-camera-on:
+    lifecycle: single
+    description: LegacyViewer.setPerspectiveCameraOn()
+  legacy-viewer-set-section-box:
+    lifecycle: single
+    description: "LegacyViewer.setSectionBox(boxData?: SpeckleViewer.ViewerState.SectionBoxData, offset?: number)"
+  legacy-viewer-set-user-object-colors:
+    lifecycle: single
+    description: LegacyViewer.setUserObjectColors()
+  legacy-viewer-set-view:
+    lifecycle: single
+    description: "LegacyViewer.setView(view: CanonicalView | SpeckleView | InlineView | PolarView, transition?: boolean)"
+  legacy-viewer-set-visual-diff-mode:
+    lifecycle: single
+    description: "LegacyViewer.setVisualDiffMode(_diffResult: DiffResult, mode: VisualDiffMode)"
+  legacy-viewer-show-objects:
+    lifecycle: single
+    description: "LegacyViewer.showObjects(objectIds: string[], stateKey?: string | undefined, includeDescendants?: boolean)"
+  legacy-viewer-toggle-camera-projection:
+    lifecycle: single
+    description: LegacyViewer.toggleCameraProjection()
+  legacy-viewer-toggle-section-box:
+    lifecycle: single
+    description: LegacyViewer.toggleSectionBox()
+  legacy-viewer-un-isolate-objects:
+    lifecycle: single
+    description: "LegacyViewer.unIsolateObjects(objectIds: string[], stateKey?: string | undefined, includeDescendants?: boolean)"
+  legacy-viewer-undiff:
+    lifecycle: single
+    description: LegacyViewer.undiff()
+  legacy-viewer-zoom:
+    lifecycle: single
+    description: "LegacyViewer.zoom(objectIds?: string[], fit?: number, transition?: boolean)"
+  line-batch-build-batch:
+    lifecycle: single
+    description: LineBatch.buildBatch()
+  line-batch-get-count:
+    lifecycle: single
+    description: LineBatch.getCount()
+  line-batch-get-depth:
+    lifecycle: single
+    description: LineBatch.getDepth()
+  line-batch-get-material:
+    lifecycle: single
+    description: "LineBatch.getMaterial(rv: NodeRenderView)"
+  line-batch-get-material-at-index:
+    lifecycle: single
+    description: "LineBatch.getMaterialAtIndex(index: number)"
+  line-batch-get-opaque:
+    lifecycle: single
+    description: LineBatch.getOpaque()
+  line-batch-get-render-view:
+    lifecycle: single
+    description: "LineBatch.getRenderView(index: number)"
+  line-batch-get-stencil:
+    lifecycle: single
+    description: LineBatch.getStencil()
+  line-batch-get-transparent:
+    lifecycle: single
+    description: LineBatch.getTransparent()
+  line-batch-get-visible-range:
+    lifecycle: single
+    description: LineBatch.getVisibleRange()
+  line-batch-on-render:
+    lifecycle: single
+    description: "LineBatch.onRender(renderer: WebGLRenderer)"
+  line-batch-on-update:
+    lifecycle: single
+    description: "LineBatch.onUpdate(deltaTime: number)"
+  line-batch-purge:
+    lifecycle: single
+    description: LineBatch.purge()
+  line-batch-reset-draw-ranges:
+    lifecycle: single
+    description: LineBatch.resetDrawRanges()
+  line-batch-set-batch-buffers:
+    lifecycle: single
+    description: "LineBatch.setBatchBuffers(ranges: BatchUpdateRange[])"
+  line-batch-set-batch-material:
+    lifecycle: single
+    description: "LineBatch.setBatchMaterial(material: SpeckleLineMaterial)"
+  line-batch-set-draw-ranges:
+    lifecycle: single
+    description: "LineBatch.setDrawRanges(ranges: BatchUpdateRange[])"
+  line-batch-set-visible-range:
+    lifecycle: single
+    description: "LineBatch.setVisibleRange(ranges: BatchUpdateRange[])"
+  loader-cancel:
+    lifecycle: single
+    description: Loader.cancel()
+  loader-dispose:
+    lifecycle: single
+    description: Loader.dispose()
+  loader-load:
+    lifecycle: single
+    description: Loader.load()
+  loader-on:
+    lifecycle: single
+    description: "Loader.on(eventType: T, listener: (arg: LoaderEventPayload[T]) => void)"
+  make-perspective-projection:
+    lifecycle: single
+    description: "makePerspectiveProjection(screenSize: Vector2, fov: number, near: number, far: number)"
+  materials-color-material-from-node:
+    lifecycle: single
+    description: "Materials.colorMaterialFromNode(node: TreeNode | null)"
+  materials-create-default-materials:
+    lifecycle: single
+    description: Materials.createDefaultMaterials()
+  materials-display-style-from-node:
+    lifecycle: single
+    description: "Materials.displayStyleFromNode(node: TreeNode | null)"
+  materials-fast-copy:
+    lifecycle: single
+    description: "Materials.fastCopy(from: Material, to: Material)"
+  materials-get-colored-material:
+    lifecycle: single
+    description: "Materials.getColoredMaterial(renderView: NodeRenderView, filterMaterial?: FilterMaterial)"
+  materials-get-data-material:
+    lifecycle: single
+    description: "Materials.getDataMaterial(renderView: NodeRenderView, materialData: RenderMaterial & DisplayStyle & MaterialOptions)"
+  materials-get-filter-material:
+    lifecycle: single
+    description: "Materials.getFilterMaterial(renderView: NodeRenderView, filterMaterial: FilterMaterial)"
+  materials-get-filter-material-options:
+    lifecycle: single
+    description: "Materials.getFilterMaterialOptions(filterMaterial: FilterMaterial)"
+  materials-get-ghost-material:
+    lifecycle: single
+    description: "Materials.getGhostMaterial(renderView: NodeRenderView, filterMaterial?: FilterMaterial)"
+  materials-get-gradient-material:
+    lifecycle: single
+    description: "Materials.getGradientMaterial(renderView: NodeRenderView, filterMaterial?: FilterMaterial)"
+  materials-get-hidden-material:
+    lifecycle: single
+    description: "Materials.getHiddenMaterial(renderView: NodeRenderView, filterMaterial?: FilterMaterial)"
+  materials-get-material:
+    lifecycle: single
+    description: "Materials.getMaterial(hash: number, material: RenderMaterial | DisplayStyle | MinimalMaterial | null, type: GeometryType)"
+  materials-get-material-hash:
+    lifecycle: single
+    description: "Materials.getMaterialHash(renderView: NodeRenderView, materialData?: RenderMaterial | DisplayStyle | MaterialOptions | null)"
+  materials-is-display-style:
+    lifecycle: single
+    description: "Materials.isDisplayStyle(materialData: Material | FilterMaterial | RenderMaterial | DisplayStyle | MaterialOptions)"
+  materials-is-filter-material:
+    lifecycle: single
+    description: "Materials.isFilterMaterial(material: Material | FilterMaterial | RenderMaterial | DisplayStyle)"
+  materials-is-material-instance:
+    lifecycle: single
+    description: "Materials.isMaterialInstance(material: Material | FilterMaterial | RenderMaterial | DisplayStyle)"
+  materials-is-opaque:
+    lifecycle: single
+    description: "Materials.isOpaque(material: Material)"
+  materials-is-render-material:
+    lifecycle: single
+    description: "Materials.isRenderMaterial(materialData: Material | FilterMaterial | RenderMaterial | DisplayStyle | MaterialOptions)"
+  materials-is-speckle-material:
+    lifecycle: single
+    description: "Materials.isSpeckleMaterial(material: Material)"
+  materials-is-transparent:
+    lifecycle: single
+    description: "Materials.isTransparent(material: Material)"
+  materials-purge:
+    lifecycle: single
+    description: Materials.purge()
+  materials-render-material-from-node:
+    lifecycle: single
+    description: "Materials.renderMaterialFromNode(materialNode: TreeNode | null, geometryNode: TreeNode | null)"
+  measurement-frame-update:
+    lifecycle: single
+    description: "Measurement.frameUpdate(camera: Camera | null, size: Vector2, _bounds?: Box3)"
+  measurement-from-measurement-data:
+    lifecycle: single
+    description: "Measurement.fromMeasurementData(data: MeasurementData)"
+  measurement-highlight:
+    lifecycle: single
+    description: "Measurement.highlight(_value: boolean)"
+  measurement-location-selected:
+    lifecycle: single
+    description: "Measurement.locationSelected(point?: Vector3, normal?: Vector3, ndcScreen?: Vector2)"
+  measurement-location-updated:
+    lifecycle: single
+    description: "Measurement.locationUpdated(point?: Vector3, normal?: Vector3, ndcScreen?: Vector2)"
+  measurement-point-gizmo-enable:
+    lifecycle: single
+    description: "MeasurementPointGizmo.enable(normalIndicator: boolean, line: boolean, point: boolean, text: boolean)"
+  measurement-point-gizmo-frame-update:
+    lifecycle: single
+    description: "MeasurementPointGizmo.frameUpdate(camera: Camera, size: Vector2)"
+  measurement-point-gizmo-raycast:
+    lifecycle: single
+    description: "MeasurementPointGizmo.raycast(raycaster: Raycaster, intersects: Array<Intersection>)"
+  measurement-point-gizmo-update-clipping-planes:
+    lifecycle: single
+    description: "MeasurementPointGizmo.updateClippingPlanes(planes: Plane[])"
+  measurement-point-gizmo-update-line:
+    lifecycle: single
+    description: "MeasurementPointGizmo.updateLine(points: Vector3[])"
+  measurement-point-gizmo-update-normal-indicator:
+    lifecycle: single
+    description: "MeasurementPointGizmo.updateNormalIndicator(position: Vector3, normal: Vector3)"
+  measurement-point-gizmo-update-point:
+    lifecycle: single
+    description: "MeasurementPointGizmo.updatePoint(position: Vector3)"
+  measurement-point-gizmo-update-style:
+    lifecycle: single
+    description: MeasurementPointGizmo.updateStyle()
+  measurement-point-gizmo-update-text:
+    lifecycle: single
+    description: "MeasurementPointGizmo.updateText(value: string, position?: Vector3, quaternion?: Quaternion, scale?: Vector3)"
+  measurement-raycast:
+    lifecycle: single
+    description: "Measurement.raycast(_raycaster: Raycaster, _intersects: Array<Intersection>)"
+  measurement-to-measurement-data:
+    lifecycle: single
+    description: Measurement.toMeasurementData()
+  measurement-update:
+    lifecycle: single
+    description: Measurement.update()
+  measurement-update-clipping-planes:
+    lifecycle: single
+    description: "Measurement.updateClippingPlanes(_planes: Plane[])"
+  measurements-extension-add-measurement:
+    lifecycle: single
+    description: "MeasurementsExtension.addMeasurement(measurementData: MeasurementData)"
+  measurements-extension-apply-options:
+    lifecycle: single
+    description: MeasurementsExtension.applyOptions()
+  measurements-extension-auto-lazer-measure:
+    lifecycle: single
+    description: "MeasurementsExtension.autoLazerMeasure(data: Vector2)"
+  measurements-extension-cancel-measurement:
+    lifecycle: single
+    description: MeasurementsExtension.cancelMeasurement()
+  measurements-extension-clear-measurements:
+    lifecycle: single
+    description: MeasurementsExtension.clearMeasurements()
+  measurements-extension-find-measurement-from-data:
+    lifecycle: single
+    description: "MeasurementsExtension.findMeasurementFromData(measurementData: MeasurementData)"
+  measurements-extension-finish-measurement:
+    lifecycle: single
+    description: MeasurementsExtension.finishMeasurement()
+  measurements-extension-flash-measurement:
+    lifecycle: single
+    description: MeasurementsExtension.flashMeasurement()
+  measurements-extension-on:
+    lifecycle: single
+    description: "MeasurementsExtension.on(eventType: T, listener: (arg: MeasurementEventPayload[T]) => void)"
+  measurements-extension-on-late-update:
+    lifecycle: single
+    description: MeasurementsExtension.onLateUpdate()
+  measurements-extension-on-pointer-click:
+    lifecycle: single
+    description: MeasurementsExtension.onPointerClick()
+  measurements-extension-on-pointer-double-click:
+    lifecycle: single
+    description: MeasurementsExtension.onPointerDoubleClick()
+  measurements-extension-on-pointer-move:
+    lifecycle: single
+    description: MeasurementsExtension.onPointerMove()
+  measurements-extension-on-resize:
+    lifecycle: single
+    description: MeasurementsExtension.onResize()
+  measurements-extension-pick-measurement:
+    lifecycle: single
+    description: "MeasurementsExtension.pickMeasurement(data: Vector2)"
+  measurements-extension-push-measurement:
+    lifecycle: single
+    description: "MeasurementsExtension.pushMeasurement(measurement: Measurement)"
+  measurements-extension-remove-measurement:
+    lifecycle: single
+    description: "MeasurementsExtension.removeMeasurement(measurementData?: MeasurementData)"
+  measurements-extension-select-measurement:
+    lifecycle: single
+    description: "MeasurementsExtension.selectMeasurement(measurement: Measurement, value: boolean)"
+  measurements-extension-set-measurements:
+    lifecycle: single
+    description: "MeasurementsExtension.setMeasurements(measurements: MeasurementData[])"
+  measurements-extension-snap:
+    lifecycle: single
+    description: "MeasurementsExtension.snap(intersection: ExtendedMeshIntersection, outPoint: Vector3, outNormal: Vector3)"
+  measurements-extension-start-measurement:
+    lifecycle: single
+    description: MeasurementsExtension.startMeasurement()
+  measurements-extension-to-measurement-data:
+    lifecycle: single
+    description: MeasurementsExtension.toMeasurementData()
+  measurements-extension-update-clipping-planes:
+    lifecycle: single
+    description: "MeasurementsExtension.updateClippingPlanes(planes: Plane[])"
+  mesh-batch-build-batch:
+    lifecycle: single
+    description: MeshBatch.buildBatch()
+  mesh-batch-get-current-index-buffer:
+    lifecycle: single
+    description: MeshBatch.getCurrentIndexBuffer()
+  mesh-batch-get-material-at-index:
+    lifecycle: single
+    description: "MeshBatch.getMaterialAtIndex(index: number)"
+  mesh-batch-get-next-index-buffer:
+    lifecycle: single
+    description: MeshBatch.getNextIndexBuffer()
+  mesh-batch-get-render-view:
+    lifecycle: single
+    description: "MeshBatch.getRenderView(index: number)"
+  mesh-batch-make-mesh-geometry:
+    lifecycle: single
+    description: "MeshBatch.makeMeshGeometry(indices: Uint32Array | Uint16Array, position: Float64Array | Float32Array, normals: Float32Array, batchIndices: Float32Array, color?: Float32Array)"
+  mesh-batch-reset-draw-ranges:
+    lifecycle: single
+    description: MeshBatch.resetDrawRanges()
+  mesh-batch-set-draw-ranges:
+    lifecycle: single
+    description: "MeshBatch.setDrawRanges(ranges: BatchUpdateRange[])"
+  mesh-batch-shuffle-material-order:
+    lifecycle: single
+    description: "MeshBatch.shuffleMaterialOrder(a: DrawGroup, b: DrawGroup)"
+  mesh-batch-update-gradient-index-buffer-data:
+    lifecycle: single
+    description: "MeshBatch.updateGradientIndexBufferData(start: number, end: number, value: number)"
+  mesh-triangulation-helper-triangulate-face:
+    lifecycle: single
+    description: "MeshTriangulationHelper.triangulateFace(faceIndex: number, faces: number[], vertices: number[], _inout_targetArray: any, _in_offset: any)"
+  node-map-add-node:
+    lifecycle: single
+    description: "NodeMap.addNode(node: TreeNode)"
+  node-map-get-node-by-id:
+    lifecycle: single
+    description: "NodeMap.getNodeById(id: string)"
+  node-map-get-subtree-by-id:
+    lifecycle: single
+    description: "NodeMap.getSubtreeById(id: string)"
+  node-map-has-id:
+    lifecycle: single
+    description: "NodeMap.hasId(id: string)"
+  node-map-has-instance-id:
+    lifecycle: single
+    description: "NodeMap.hasInstanceId(id: string)"
+  node-map-has-node-id:
+    lifecycle: single
+    description: "NodeMap.hasNodeId(id: string)"
+  node-map-purge:
+    lifecycle: single
+    description: NodeMap.purge()
+  node-map-remove-node:
+    lifecycle: single
+    description: "NodeMap.removeNode(node: TreeNode)"
+  node-render-view-compute-a-a-b-b:
+    lifecycle: single
+    description: "NodeRenderView.computeAABB(transform?: Matrix4)"
+  node-render-view-dispose-geometry:
+    lifecycle: single
+    description: NodeRenderView.disposeGeometry()
+  node-render-view-set-batch-data:
+    lifecycle: single
+    description: "NodeRenderView.setBatchData(id: string, start: number, count: number, vertStart?: number, vertEnd?: number)"
+  normalise-name:
+    lifecycle: single
+    description: "normaliseName(unit: any)"
+  obj-converter-async-pause:
+    lifecycle: single
+    description: ObjConverter.asyncPause()
+  obj-converter-traverse:
+    lifecycle: single
+    description: "ObjConverter.traverse(objectURL: string, object: Object3D, callback: ConverterResultDelegate, node?: TreeNode | null)"
+  obj-geometry-converter-block-instance-to-geometry-data:
+    lifecycle: single
+    description: "ObjGeometryConverter.BlockInstanceToGeometryData(node: NodeData)"
+  obj-geometry-converter-convert-node-to-geometry-data:
+    lifecycle: single
+    description: "ObjGeometryConverter.convertNodeToGeometryData(node: NodeData)"
+  obj-geometry-converter-dispose-node-geometry-data:
+    lifecycle: single
+    description: "ObjGeometryConverter.disposeNodeGeometryData(node: NodeData)"
+  obj-geometry-converter-get-speckle-type:
+    lifecycle: single
+    description: "ObjGeometryConverter.getSpeckleType(node: NodeData)"
+  obj-geometry-converter-mesh-to-geometry-data:
+    lifecycle: single
+    description: "ObjGeometryConverter.MeshToGeometryData(node: NodeData)"
+  obj-loader-cancel:
+    lifecycle: single
+    description: ObjLoader.cancel()
+  obj-loader-dispose:
+    lifecycle: single
+    description: ObjLoader.dispose()
+  obj-loader-load:
+    lifecycle: single
+    description: ObjLoader.load()
+  on-pointer-down:
+    lifecycle: single
+    description: "onPointerDown(event: any)"
+  on-pointer-hover:
+    lifecycle: single
+    description: "onPointerHover(event: any)"
+  on-pointer-move:
+    lifecycle: single
+    description: "onPointerMove(event: any)"
+  on-pointer-up:
+    lifecycle: single
+    description: "onPointerUp(event: any)"
+  output-pass-render:
+    lifecycle: single
+    description: "OutputPass.render(renderer: WebGLRenderer)"
+  output-pass-set-input-type:
+    lifecycle: single
+    description: "OutputPass.setInputType(type: InputType)"
+  output-pass-set-texture:
+    lifecycle: single
+    description: "OutputPass.setTexture(uName: string, texture: Texture | undefined)"
+  perpendicular-measurement-frame-update:
+    lifecycle: single
+    description: "PerpendicularMeasurement.frameUpdate(camera: Camera, size: Vector2, bounds: Box3)"
+  perpendicular-measurement-from-measurement-data:
+    lifecycle: single
+    description: "PerpendicularMeasurement.fromMeasurementData(data: MeasurementData)"
+  perpendicular-measurement-highlight:
+    lifecycle: single
+    description: "PerpendicularMeasurement.highlight(value: boolean)"
+  perpendicular-measurement-location-selected:
+    lifecycle: single
+    description: PerpendicularMeasurement.locationSelected()
+  perpendicular-measurement-location-updated:
+    lifecycle: single
+    description: "PerpendicularMeasurement.locationUpdated(point: Vector3, normal: Vector3)"
+  perpendicular-measurement-raycast:
+    lifecycle: single
+    description: "PerpendicularMeasurement.raycast(raycaster: Raycaster, intersects: Array<Intersection>)"
+  perpendicular-measurement-to-measurement-data:
+    lifecycle: single
+    description: PerpendicularMeasurement.toMeasurementData()
+  perpendicular-measurement-update:
+    lifecycle: single
+    description: PerpendicularMeasurement.update()
+  perpendicular-measurement-update-clipping-planes:
+    lifecycle: single
+    description: "PerpendicularMeasurement.updateClippingPlanes(planes: Plane[])"
+  pipeline-create-multiple-render-target:
+    lifecycle: single
+    description: "Pipeline.createMultipleRenderTarget(count: number, options?: WebGLRenderTargetOptions, width?: number, height?: number)"
+  pipeline-create-render-target:
+    lifecycle: single
+    description: "Pipeline.createRenderTarget(options?: WebGLRenderTargetOptions, width?: number, height?: number)"
+  pipeline-generate-halton-jiters:
+    lifecycle: single
+    description: "Pipeline.generateHaltonJiters(length: number)"
+  pipeline-get-pass:
+    lifecycle: single
+    description: "Pipeline.getPass(name: string)"
+  pipeline-halton-number:
+    lifecycle: single
+    description: "Pipeline.haltonNumber(base: number, index: number)"
+  pipeline-on-after-pipeline-render:
+    lifecycle: single
+    description: Pipeline.onAfterPipelineRender()
+  pipeline-on-before-pipeline-render:
+    lifecycle: single
+    description: Pipeline.onBeforePipelineRender()
+  pipeline-render:
+    lifecycle: single
+    description: Pipeline.render()
+  pipeline-reset:
+    lifecycle: single
+    description: Pipeline.reset()
+  pipeline-resize:
+    lifecycle: single
+    description: "Pipeline.resize(width: number, height: number)"
+  pipeline-set-clipping-planes:
+    lifecycle: single
+    description: "Pipeline.setClippingPlanes(planes: Plane[])"
+  pipeline-update:
+    lifecycle: single
+    description: "Pipeline.update(camera: PerspectiveCamera | OrthographicCamera)"
+  point-batch-build-batch:
+    lifecycle: single
+    description: PointBatch.buildBatch()
+  point-batch-get-current-index-buffer:
+    lifecycle: single
+    description: PointBatch.getCurrentIndexBuffer()
+  point-batch-get-material-at-index:
+    lifecycle: single
+    description: "PointBatch.getMaterialAtIndex(index: number)"
+  point-batch-get-next-index-buffer:
+    lifecycle: single
+    description: PointBatch.getNextIndexBuffer()
+  point-batch-get-render-view:
+    lifecycle: single
+    description: "PointBatch.getRenderView(index: number)"
+  point-batch-make-point-geometry:
+    lifecycle: single
+    description: "PointBatch.makePointGeometry(index: Uint32Array | Uint16Array, position: Float64Array | Float32Array, color: Float32Array)"
+  point-batch-reset-draw-ranges:
+    lifecycle: single
+    description: PointBatch.resetDrawRanges()
+  point-batch-set-draw-ranges:
+    lifecycle: single
+    description: "PointBatch.setDrawRanges(ranges: BatchUpdateRange[])"
+  point-batch-shuffle-material-order:
+    lifecycle: single
+    description: "PointBatch.shuffleMaterialOrder(a: DrawGroup, b: DrawGroup)"
+  point-batch-update-gradient-index-buffer-data:
+    lifecycle: single
+    description: "PointBatch.updateGradientIndexBufferData(start: number, end: number, value: number)"
+  point-measurement-frame-update:
+    lifecycle: single
+    description: "PointMeasurement.frameUpdate(camera: Camera, size: Vector2, bounds: Box3)"
+  point-measurement-highlight:
+    lifecycle: single
+    description: "PointMeasurement.highlight(value: boolean)"
+  point-measurement-location-selected:
+    lifecycle: single
+    description: PointMeasurement.locationSelected()
+  point-measurement-location-updated:
+    lifecycle: single
+    description: "PointMeasurement.locationUpdated(point: Vector3, normal: Vector3)"
+  point-measurement-raycast:
+    lifecycle: single
+    description: "PointMeasurement.raycast(raycaster: Raycaster, intersects: Array<Intersection>)"
+  point-measurement-update:
+    lifecycle: single
+    description: PointMeasurement.update()
+  point-measurement-update-clipping-planes:
+    lifecycle: single
+    description: "PointMeasurement.updateClippingPlanes(planes: Plane[])"
+  point-measurement-update-label-positions:
+    lifecycle: single
+    description: PointMeasurement.updateLabelPositions()
+  point-query-solver-set-context:
+    lifecycle: single
+    description: "PointQuerySolver.setContext(renderer: SpeckleRenderer)"
+  point-query-solver-solve:
+    lifecycle: single
+    description: "PointQuerySolver.solve(query: PointQuery)"
+  point-to-point-measurement-frame-update:
+    lifecycle: single
+    description: "PointToPointMeasurement.frameUpdate(camera: Camera, size: Vector2, bounds: Box3)"
+  point-to-point-measurement-highlight:
+    lifecycle: single
+    description: "PointToPointMeasurement.highlight(value: boolean)"
+  point-to-point-measurement-location-selected:
+    lifecycle: single
+    description: PointToPointMeasurement.locationSelected()
+  point-to-point-measurement-location-updated:
+    lifecycle: single
+    description: "PointToPointMeasurement.locationUpdated(point: Vector3, normal: Vector3)"
+  point-to-point-measurement-raycast:
+    lifecycle: single
+    description: "PointToPointMeasurement.raycast(raycaster: Raycaster, intersects: Array<Intersection>)"
+  point-to-point-measurement-update:
+    lifecycle: single
+    description: PointToPointMeasurement.update()
+  point-to-point-measurement-update-clipping-planes:
+    lifecycle: single
+    description: "PointToPointMeasurement.updateClippingPlanes(planes: Plane[])"
+  primitive-batch-build-batch:
+    lifecycle: single
+    description: PrimitiveBatch.buildBatch()
+  primitive-batch-clean-materials:
+    lifecycle: single
+    description: PrimitiveBatch.cleanMaterials()
+  primitive-batch-get-count:
+    lifecycle: single
+    description: PrimitiveBatch.getCount()
+  primitive-batch-get-current-index-buffer:
+    lifecycle: single
+    description: PrimitiveBatch.getCurrentIndexBuffer()
+  primitive-batch-get-depth:
+    lifecycle: single
+    description: PrimitiveBatch.getDepth()
+  primitive-batch-get-material:
+    lifecycle: single
+    description: "PrimitiveBatch.getMaterial(rv: NodeRenderView)"
+  primitive-batch-get-material-at-index:
+    lifecycle: single
+    description: "PrimitiveBatch.getMaterialAtIndex(index: number)"
+  primitive-batch-get-next-index-buffer:
+    lifecycle: single
+    description: PrimitiveBatch.getNextIndexBuffer()
+  primitive-batch-get-opaque:
+    lifecycle: single
+    description: PrimitiveBatch.getOpaque()
+  primitive-batch-get-render-view:
+    lifecycle: single
+    description: "PrimitiveBatch.getRenderView(index: number)"
+  primitive-batch-get-stencil:
+    lifecycle: single
+    description: PrimitiveBatch.getStencil()
+  primitive-batch-get-transparent:
+    lifecycle: single
+    description: PrimitiveBatch.getTransparent()
+  primitive-batch-get-visible-range:
+    lifecycle: single
+    description: PrimitiveBatch.getVisibleRange()
+  primitive-batch-on-update:
+    lifecycle: single
+    description: PrimitiveBatch.onUpdate()
+  primitive-batch-purge:
+    lifecycle: single
+    description: PrimitiveBatch.purge()
+  primitive-batch-reset-draw-ranges:
+    lifecycle: single
+    description: PrimitiveBatch.resetDrawRanges()
+  primitive-batch-set-batch-buffers:
+    lifecycle: single
+    description: "PrimitiveBatch.setBatchBuffers(ranges: BatchUpdateRange[])"
+  primitive-batch-set-batch-material:
+    lifecycle: single
+    description: "PrimitiveBatch.setBatchMaterial(material: Material)"
+  primitive-batch-set-draw-ranges:
+    lifecycle: single
+    description: "PrimitiveBatch.setDrawRanges(ranges: BatchUpdateRange[])"
+  primitive-batch-set-visible-range:
+    lifecycle: single
+    description: "PrimitiveBatch.setVisibleRange(ranges: BatchUpdateRange[])"
+  primitive-batch-shuffle-material-order:
+    lifecycle: single
+    description: "PrimitiveBatch.shuffleMaterialOrder(a: DrawGroup, b: DrawGroup)"
+  primitive-batch-update-gradient-index-buffer:
+    lifecycle: single
+    description: "PrimitiveBatch.updateGradientIndexBuffer(rangeMin?: number, rangeMax?: number)"
+  primitive-batch-update-gradient-index-buffer-data:
+    lifecycle: single
+    description: "PrimitiveBatch.updateGradientIndexBufferData(start: number, end: number, value: number)"
+  progressive-a-o-pass-generate-random-kernel-rotations:
+    lifecycle: single
+    description: "ProgressiveAOPass.generateRandomKernelRotations(frameIndex: number)"
+  progressive-a-o-pass-generate-sample-kernel:
+    lifecycle: single
+    description: "ProgressiveAOPass.generateSampleKernel(frameIndex: number)"
+  progressive-a-o-pass-render:
+    lifecycle: single
+    description: "ProgressiveAOPass.render(renderer: WebGLRenderer)"
+  progressive-a-o-pass-set-size:
+    lifecycle: single
+    description: "ProgressiveAOPass.setSize(width: number, height: number)"
+  progressive-a-o-pass-set-texture:
+    lifecycle: single
+    description: "ProgressiveAOPass.setTexture(uName: string, texture: Texture | undefined)"
+  progressive-a-o-pass-update:
+    lifecycle: single
+    description: "ProgressiveAOPass.update(camera: PerspectiveCamera | OrthographicCamera)"
+  progressive-g-pass-render:
+    lifecycle: single
+    description: "ProgressiveGPass.render(renderer: WebGLRenderer, camera?: PerspectiveCamera | OrthographicCamera | null, scene?: Scene)"
+  progressive-pipeline-get-pass:
+    lifecycle: single
+    description: "ProgressivePipeline.getPass(name: string)"
+  progressive-pipeline-on-accumulation-complete:
+    lifecycle: single
+    description: ProgressivePipeline.onAccumulationComplete()
+  progressive-pipeline-on-stationary-begin:
+    lifecycle: single
+    description: ProgressivePipeline.onStationaryBegin()
+  progressive-pipeline-on-stationary-end:
+    lifecycle: single
+    description: ProgressivePipeline.onStationaryEnd()
+  progressive-pipeline-render:
+    lifecycle: single
+    description: ProgressivePipeline.render()
+  progressive-pipeline-reset:
+    lifecycle: single
+    description: ProgressivePipeline.reset()
+  progressive-pipeline-resize:
+    lifecycle: single
+    description: "ProgressivePipeline.resize(width: number, height: number)"
+  progressive-pipeline-set-clipping-planes:
+    lifecycle: single
+    description: "ProgressivePipeline.setClippingPlanes(planes: Plane[])"
+  progressive-pipeline-update:
+    lifecycle: single
+    description: "ProgressivePipeline.update(camera: PerspectiveCamera | OrthographicCamera)"
+  property-manager-get-properties:
+    lifecycle: single
+    description: "PropertyManager.getProperties(tree: WorldTree, resourceUrl?: string | null, bypassCache?: boolean)"
+  queries-is-intersection-query:
+    lifecycle: single
+    description: "Queries.isIntersectionQuery(query: Query)"
+  queries-is-point-query:
+    lifecycle: single
+    description: "Queries.isPointQuery(query: Query)"
+  r-t-e-buffers-copy:
+    lifecycle: single
+    description: "RTEBuffers.copy(from: RTEBuffers, to: RTEBuffers)"
+  r-t-e-buffers-pop:
+    lifecycle: single
+    description: RTEBuffers.pop()
+  r-t-e-buffers-push:
+    lifecycle: single
+    description: RTEBuffers.push()
+  render-tree-build-render-tree:
+    lifecycle: single
+    description: "RenderTree.buildRenderTree(geometryConverter: GeometryConverter, countCallback?: (count: number) => void)"
+  render-tree-cancel-build:
+    lifecycle: single
+    description: RenderTree.cancelBuild()
+  render-tree-compute-transform:
+    lifecycle: single
+    description: "RenderTree.computeTransform(node: TreeNode)"
+  render-tree-get-atomic-parent:
+    lifecycle: single
+    description: "RenderTree.getAtomicParent(node: TreeNode)"
+  render-tree-get-duplicates:
+    lifecycle: single
+    description: RenderTree.getDuplicates()
+  render-tree-get-instances:
+    lifecycle: single
+    description: RenderTree.getInstances()
+  render-tree-get-render-view-nodes-for-node:
+    lifecycle: single
+    description: "RenderTree.getRenderViewNodesForNode(node: TreeNode)"
+  render-tree-get-render-views-for-node:
+    lifecycle: single
+    description: "RenderTree.getRenderViewsForNode(node: TreeNode)"
+  render-tree-get-render-views-for-node-id:
+    lifecycle: single
+    description: "RenderTree.getRenderViewsForNodeId(id: string, subtreeId?: number)"
+  render-tree-get-renderable-nodes:
+    lifecycle: single
+    description: "RenderTree.getRenderableNodes(...types: SpeckleType[])"
+  render-tree-get-renderable-render-views:
+    lifecycle: single
+    description: "RenderTree.getRenderableRenderViews(...types: SpeckleType[])"
+  render-tree-purge:
+    lifecycle: single
+    description: RenderTree.purge()
+  rendering-stats-frame-end:
+    lifecycle: single
+    description: RenderingStats.frameEnd()
+  rendering-stats-frame-start:
+    lifecycle: single
+    description: RenderingStats.frameStart()
+  rotatable-p-m-r-e-m-generator-compile-proper-equirect-shader:
+    lifecycle: single
+    description: "RotatablePMREMGenerator.compileProperEquirectShader(rotationMatrix?: Matrix4)"
+  section-outlines-request-update:
+    lifecycle: single
+    description: "SectionOutlines.requestUpdate(force?: boolean)"
+  section-outlines-section-updated:
+    lifecycle: single
+    description: "SectionOutlines.sectionUpdated(planes: Plane[])"
+  section-tool-apply-obb-state:
+    lifecycle: single
+    description: "SectionTool.applyObbState(state: OBB)"
+  section-tool-change-handler:
+    lifecycle: single
+    description: SectionTool.changeHandler()
+  section-tool-click-handler:
+    lifecycle: single
+    description: SectionTool.clickHandler()
+  section-tool-create-cube-geometry:
+    lifecycle: single
+    description: SectionTool.createCubeGeometry()
+  section-tool-create-face-plane:
+    lifecycle: single
+    description: SectionTool.createFacePlane()
+  section-tool-create-obb-state:
+    lifecycle: single
+    description: SectionTool.createObbState()
+  section-tool-create-outline:
+    lifecycle: single
+    description: SectionTool.createOutline()
+  section-tool-dispose:
+    lifecycle: single
+    description: SectionTool.dispose()
+  section-tool-dragging-handler:
+    lifecycle: single
+    description: "SectionTool.draggingHandler(event: any)"
+  section-tool-get-box:
+    lifecycle: single
+    description: SectionTool.getBox()
+  section-tool-get-obb-transform:
+    lifecycle: single
+    description: SectionTool.getObbTransform()
+  section-tool-is-a-a-b-b:
+    lifecycle: single
+    description: SectionTool.isAABB()
+  section-tool-is-o-b-b:
+    lifecycle: single
+    description: SectionTool.isOBB()
+  section-tool-on:
+    lifecycle: single
+    description: "SectionTool.on(eventType: T, listener: (arg: SectionToolEventPayload[T]) => void)"
+  section-tool-on-early-update:
+    lifecycle: single
+    description: SectionTool.onEarlyUpdate()
+  section-tool-redo-section-box:
+    lifecycle: single
+    description: SectionTool.redoSectionBox()
+  section-tool-reset:
+    lifecycle: single
+    description: SectionTool.reset()
+  section-tool-save-to-history:
+    lifecycle: single
+    description: SectionTool.saveToHistory()
+  section-tool-set-box:
+    lifecycle: single
+    description: SectionTool.setBox()
+  section-tool-setup-controls:
+    lifecycle: single
+    description: SectionTool.setupControls()
+  section-tool-setup-keyboard-listeners:
+    lifecycle: single
+    description: SectionTool.setupKeyboardListeners()
+  section-tool-snap-quaternion-to-grid:
+    lifecycle: single
+    description: "SectionTool.snapQuaternionToGrid(q: Quaternion)"
+  section-tool-toggle:
+    lifecycle: single
+    description: SectionTool.toggle()
+  section-tool-undo-section-box:
+    lifecycle: single
+    description: SectionTool.undoSectionBox()
+  section-tool-update-face-controls:
+    lifecycle: single
+    description: "SectionTool.updateFaceControls(face: Face | null)"
+  section-tool-update-outline:
+    lifecycle: single
+    description: SectionTool.updateOutline()
+  section-tool-update-planes:
+    lifecycle: single
+    description: SectionTool.updatePlanes()
+  section-tool-update-visual:
+    lifecycle: single
+    description: SectionTool.updateVisual()
+  selection-extension-apply-hover:
+    lifecycle: single
+    description: "SelectionExtension.applyHover(renderView: NodeRenderView | null)"
+  selection-extension-apply-selection:
+    lifecycle: single
+    description: SelectionExtension.applySelection()
+  selection-extension-clear-selection:
+    lifecycle: single
+    description: "SelectionExtension.clearSelection(nodes?: Array<TreeNode>)"
+  selection-extension-get-selected-nodes:
+    lifecycle: single
+    description: SelectionExtension.getSelectedNodes()
+  selection-extension-get-selected-objects:
+    lifecycle: single
+    description: SelectionExtension.getSelectedObjects()
+  selection-extension-on-object-clicked:
+    lifecycle: single
+    description: "SelectionExtension.onObjectClicked(selection: SelectionEvent | null)"
+  selection-extension-on-object-double-click:
+    lifecycle: single
+    description: "SelectionExtension.onObjectDoubleClick(selectionInfo: SelectionEvent | null)"
+  selection-extension-on-pointer-move:
+    lifecycle: single
+    description: SelectionExtension.onPointerMove()
+  selection-extension-remove-hover:
+    lifecycle: single
+    description: SelectionExtension.removeHover()
+  selection-extension-remove-selection:
+    lifecycle: single
+    description: "SelectionExtension.removeSelection(rvs?: Array<NodeRenderView>)"
+  selection-extension-select-objects:
+    lifecycle: single
+    description: "SelectionExtension.selectObjects(ids: Array<string>, multiSelect?: boolean)"
+  selection-extension-unselect-objects:
+    lifecycle: single
+    description: "SelectionExtension.unselectObjects(ids: Array<string>)"
+  shaded-pass-apply-color-indices:
+    lifecycle: single
+    description: ShadedPass.applyColorIndices()
+  shaded-pass-build-materials:
+    lifecycle: single
+    description: ShadedPass.buildMaterials()
+  shaded-pass-override-materials:
+    lifecycle: single
+    description: ShadedPass.overrideMaterials()
+  shaded-pass-render:
+    lifecycle: single
+    description: "ShadedPass.render(renderer: WebGLRenderer, camera: PerspectiveCamera | OrthographicCamera | null, scene?: Scene)"
+  shaded-pass-restore-materials:
+    lifecycle: single
+    description: ShadedPass.restoreMaterials()
+  shaded-pass-set-clipping-planes:
+    lifecycle: single
+    description: "ShadedPass.setClippingPlanes(planes: Plane[])"
+  shadowcatcher-bake:
+    lifecycle: single
+    description: "Shadowcatcher.bake(worldBox: Box3, maxTexSize: number, force?: boolean)"
+  shadowcatcher-pass-render:
+    lifecycle: single
+    description: "ShadowcatcherPass.render(_renderer: WebGLRenderer)"
+  shadowcatcher-pass-set-output-size:
+    lifecycle: single
+    description: "ShadowcatcherPass.setOutputSize(width: number, height: number)"
+  shadowcatcher-pass-set-size:
+    lifecycle: single
+    description: "ShadowcatcherPass.setSize(width: number, height: number)"
+  shadowcatcher-pass-set-weights:
+    lifecycle: single
+    description: ShadowcatcherPass.setWeights()
+  shadowcatcher-pass-update:
+    lifecycle: single
+    description: "ShadowcatcherPass.update(scene: Scene)"
+  shadowcatcher-pass-update-camera:
+    lifecycle: single
+    description: "ShadowcatcherPass.updateCamera(planeBox: Box3, near: number, far: number)"
+  shadowcatcher-pass-update-clipping-planes:
+    lifecycle: single
+    description: "ShadowcatcherPass.updateClippingPlanes(planes: Plane[])"
+  shadowcatcher-pass-update-config:
+    lifecycle: single
+    description: "ShadowcatcherPass.updateConfig(config: ShadowcatcherConfig)"
+  shadowcatcher-render:
+    lifecycle: single
+    description: "Shadowcatcher.render(renderer: SpeckleWebGLRenderer)"
+  shadowcatcher-update:
+    lifecycle: single
+    description: "Shadowcatcher.update(scene: Scene)"
+  shadowcatcher-update-clipping-planes:
+    lifecycle: single
+    description: "Shadowcatcher.updateClippingPlanes(planes: Plane[])"
+  smooth-orbit-controls-adjust-orbit:
+    lifecycle: single
+    description: "SmoothOrbitControls.adjustOrbit(deltaTheta: number, deltaPhi: number, deltaZoom: number)"
+  smooth-orbit-controls-apply-options:
+    lifecycle: single
+    description: "SmoothOrbitControls.applyOptions(_options: SmoothOrbitControlsOptions)"
+  smooth-orbit-controls-compute-min-max-radius:
+    lifecycle: single
+    description: SmoothOrbitControls.computeMinMaxRadius()
+  smooth-orbit-controls-disable-interaction:
+    lifecycle: single
+    description: SmoothOrbitControls.disableInteraction()
+  smooth-orbit-controls-dispose:
+    lifecycle: single
+    description: SmoothOrbitControls.dispose()
+  smooth-orbit-controls-enable-interaction:
+    lifecycle: single
+    description: SmoothOrbitControls.enableInteraction()
+  smooth-orbit-controls-filter-orbit-to-cursor-hits:
+    lifecycle: single
+    description: "SmoothOrbitControls.filterOrbitToCursorHits(hit: ExtendedMeshIntersection)"
+  smooth-orbit-controls-fit-to-sphere:
+    lifecycle: single
+    description: "SmoothOrbitControls.fitToSphere(sphere: Sphere)"
+  smooth-orbit-controls-from-position-and-target:
+    lifecycle: single
+    description: "SmoothOrbitControls.fromPositionAndTarget(position: Vector3, target: Vector3)"
+  smooth-orbit-controls-get-current-position:
+    lifecycle: single
+    description: SmoothOrbitControls.getCurrentPosition()
+  smooth-orbit-controls-get-current-target:
+    lifecycle: single
+    description: SmoothOrbitControls.getCurrentTarget()
+  smooth-orbit-controls-get-pivotal-origin:
+    lifecycle: single
+    description: "SmoothOrbitControls.getPivotalOrigin(pivotPoint: Vector3, position: Vector3, quaternion: Quaternion)"
+  smooth-orbit-controls-get-position:
+    lifecycle: single
+    description: SmoothOrbitControls.getPosition()
+  smooth-orbit-controls-get-target:
+    lifecycle: single
+    description: SmoothOrbitControls.getTarget()
+  smooth-orbit-controls-handle-single-pointer-move:
+    lifecycle: single
+    description: "SmoothOrbitControls.handleSinglePointerMove(dx: number, dy: number)"
+  smooth-orbit-controls-initialize-pan:
+    lifecycle: single
+    description: SmoothOrbitControls.initializePan()
+  smooth-orbit-controls-is-stationary:
+    lifecycle: single
+    description: SmoothOrbitControls.isStationary()
+  smooth-orbit-controls-jump-to-goal:
+    lifecycle: single
+    description: SmoothOrbitControls.jumpToGoal()
+  smooth-orbit-controls-move-camera:
+    lifecycle: single
+    description: SmoothOrbitControls.moveCamera()
+  smooth-orbit-controls-move-pan:
+    lifecycle: single
+    description: "SmoothOrbitControls.movePan(dx: number, dy: number)"
+  smooth-orbit-controls-on-mouse-down:
+    lifecycle: single
+    description: "SmoothOrbitControls.onMouseDown(event: MouseEvent)"
+  smooth-orbit-controls-on-touch-change:
+    lifecycle: single
+    description: "SmoothOrbitControls.onTouchChange(event: PointerEvent)"
+  smooth-orbit-controls-pixel-length-to-spherical-angle:
+    lifecycle: single
+    description: "SmoothOrbitControls.pixelLengthToSphericalAngle(pixelLength: number)"
+  smooth-orbit-controls-polar-from-pivotal:
+    lifecycle: single
+    description: "SmoothOrbitControls.polarFromPivotal(position: Vector3)"
+  smooth-orbit-controls-position-from-pivotal:
+    lifecycle: single
+    description: "SmoothOrbitControls.positionFromPivotal(origin: Vector3, quaternion: Quaternion)"
+  smooth-orbit-controls-position-from-spherical:
+    lifecycle: single
+    description: "SmoothOrbitControls.positionFromSpherical(spherical: Spherical, origin?: Vector3)"
+  smooth-orbit-controls-quaternion-from-spherical:
+    lifecycle: single
+    description: "SmoothOrbitControls.quaternionFromSpherical(spherical: Spherical)"
+  smooth-orbit-controls-set-damper-decay-time:
+    lifecycle: single
+    description: "SmoothOrbitControls.setDamperDecayTime(decayMilliseconds: number)"
+  smooth-orbit-controls-set-field-of-view:
+    lifecycle: single
+    description: "SmoothOrbitControls.setFieldOfView(fov: number)"
+  smooth-orbit-controls-set-orbit:
+    lifecycle: single
+    description: "SmoothOrbitControls.setOrbit(goalTheta?: number, goalPhi?: number, goalRadius?: number)"
+  smooth-orbit-controls-set-radius:
+    lifecycle: single
+    description: "SmoothOrbitControls.setRadius(radius: number)"
+  smooth-orbit-controls-set-target:
+    lifecycle: single
+    description: "SmoothOrbitControls.setTarget(x: number, y: number, z: number)"
+  smooth-orbit-controls-two-touch-distance:
+    lifecycle: single
+    description: "SmoothOrbitControls.twoTouchDistance(touchOne: Pointer, touchTwo: Pointer)"
+  smooth-orbit-controls-update:
+    lifecycle: single
+    description: "SmoothOrbitControls.update(delta?: number)"
+  smooth-orbit-controls-user-adjust-orbit:
+    lifecycle: single
+    description: "SmoothOrbitControls.userAdjustOrbit(deltaTheta: number, deltaPhi: number, deltaZoom: number)"
+  smooth-orbit-controls-wrap-angle:
+    lifecycle: single
+    description: "SmoothOrbitControls.wrapAngle(radians: number)"
+  speckle-basic-material-copy:
+    lifecycle: single
+    description: "SpeckleBasicMaterial.copy(source: Material)"
+  speckle-basic-material-custom-program-cache-key:
+    lifecycle: single
+    description: SpeckleBasicMaterial.customProgramCacheKey()
+  speckle-basic-material-fast-copy:
+    lifecycle: single
+    description: "SpeckleBasicMaterial.fastCopy(from: Material, to: Material)"
+  speckle-basic-material-on-before-render:
+    lifecycle: single
+    description: "SpeckleBasicMaterial.onBeforeRender(_this: SpeckleWebGLRenderer, _scene: Scene, camera: Camera, _geometry: BufferGeometry, object: Object3D)"
+  speckle-basic-material-set-billboarding:
+    lifecycle: single
+    description: "SpeckleBasicMaterial.setBillboarding(type: BillboardingType | null)"
+  speckle-batched-text-add-text:
+    lifecycle: single
+    description: "SpeckleBatchedText.addText(text: Text)"
+  speckle-batched-text-build-t-a-s:
+    lifecycle: single
+    description: SpeckleBatchedText.buildTAS()
+  speckle-batched-text-get-batch-object-material:
+    lifecycle: single
+    description: "SpeckleBatchedText.getBatchObjectMaterial(batchObject: BatchObject)"
+  speckle-batched-text-get-cached-material:
+    lifecycle: single
+    description: "SpeckleBatchedText.getCachedMaterial(material: Material, copy?: boolean)"
+  speckle-batched-text-on-before-render:
+    lifecycle: single
+    description: "SpeckleBatchedText.onBeforeRender(renderer: SpeckleWebGLRenderer, scene: Scene, camera: Camera, geometry: BufferGeometry, material: Material, group: unknown)"
+  speckle-batched-text-prepare-for-render:
+    lifecycle: single
+    description: "SpeckleBatchedText._prepareForRender(material: SpeckleTextMaterial)"
+  speckle-batched-text-raycast:
+    lifecycle: single
+    description: "SpeckleBatchedText.raycast(raycaster: SpeckleRaycaster, intersects: Array<Intersection>)"
+  speckle-batched-text-set-batch-material:
+    lifecycle: single
+    description: "SpeckleBatchedText.setBatchMaterial(material: Material)"
+  speckle-batched-text-set-batch-objects:
+    lifecycle: single
+    description: "SpeckleBatchedText.setBatchObjects(batchObjects: BatchObject[], textObjects: Text[])"
+  speckle-batched-text-set-gradient-texture:
+    lifecycle: single
+    description: "SpeckleBatchedText.setGradientTexture(texture: Texture)"
+  speckle-batched-text-update-bounds:
+    lifecycle: single
+    description: SpeckleBatchedText.updateBounds()
+  speckle-batched-text-update-material-transforms-uniform:
+    lifecycle: single
+    description: "SpeckleBatchedText.updateMaterialTransformsUniform(material: Material)"
+  speckle-batched-text-update-transforms-uniform:
+    lifecycle: single
+    description: SpeckleBatchedText.updateTransformsUniform()
+  speckle-camera-on:
+    lifecycle: single
+    description: "SpeckleCamera.on(eventType: T, listener: (arg: CameraEventPayload[T]) => void)"
+  speckle-camera-update-camera-planes:
+    lifecycle: single
+    description: "SpeckleCamera.updateCameraPlanes(targetVolume?: Box3, offsetScale?: number)"
+  speckle-controls-dispose:
+    lifecycle: single
+    description: SpeckleControls.dispose()
+  speckle-controls-fit-to-sphere:
+    lifecycle: single
+    description: "SpeckleControls.fitToSphere(sphere: Sphere)"
+  speckle-controls-from-position-and-target:
+    lifecycle: single
+    description: "SpeckleControls.fromPositionAndTarget(position: Vector3, target: Vector3)"
+  speckle-controls-get-current-position:
+    lifecycle: single
+    description: SpeckleControls.getCurrentPosition()
+  speckle-controls-get-current-target:
+    lifecycle: single
+    description: SpeckleControls.getCurrentTarget()
+  speckle-controls-get-position:
+    lifecycle: single
+    description: SpeckleControls.getPosition()
+  speckle-controls-get-target:
+    lifecycle: single
+    description: SpeckleControls.getTarget()
+  speckle-controls-is-stationary:
+    lifecycle: single
+    description: SpeckleControls.isStationary()
+  speckle-controls-jump-to-goal:
+    lifecycle: single
+    description: SpeckleControls.jumpToGoal()
+  speckle-controls-update:
+    lifecycle: single
+    description: "SpeckleControls.update(delta?: number)"
+  speckle-converter-apply-materials:
+    lifecycle: single
+    description: SpeckleConverter.applyMaterials()
+  speckle-converter-convert-instances:
+    lifecycle: single
+    description: SpeckleConverter.convertInstances()
+  speckle-converter-handle-duplicates:
+    lifecycle: single
+    description: SpeckleConverter.handleDuplicates()
+  speckle-converter-traverse:
+    lifecycle: single
+    description: "SpeckleConverter.traverse(objectURL: string, obj: SpeckleObject, callback: ConverterResultDelegate, node?: TreeNode | null)"
+  speckle-depth-material-copy:
+    lifecycle: single
+    description: "SpeckleDepthMaterial.copy(source: Material)"
+  speckle-depth-material-custom-program-cache-key:
+    lifecycle: single
+    description: SpeckleDepthMaterial.customProgramCacheKey()
+  speckle-depth-material-fast-copy:
+    lifecycle: single
+    description: "SpeckleDepthMaterial.fastCopy(from: Material, to: Material)"
+  speckle-depth-material-on-before-render:
+    lifecycle: single
+    description: "SpeckleDepthMaterial.onBeforeRender(_this: SpeckleWebGLRenderer, _scene: Scene, _camera: Camera, _geometry: BufferGeometry, object: Object3D)"
+  speckle-depth-normal-id-material-on-before-render:
+    lifecycle: single
+    description: "SpeckleDepthNormalIdMaterial.onBeforeRender(_this: SpeckleWebGLRenderer, _scene: Scene, _camera: Camera, _geometry: BufferGeometry, object: Object3D)"
+  speckle-displace-material-fast-copy:
+    lifecycle: single
+    description: "SpeckleDisplaceMaterial.fastCopy(from: Material, to: Material)"
+  speckle-geometry-converter-arc-to-geometry-data:
+    lifecycle: single
+    description: "SpeckleGeometryConverter.ArcToGeometryData(node: NodeData)"
+  speckle-geometry-converter-block-instance-to-geometry-data:
+    lifecycle: single
+    description: "SpeckleGeometryConverter.BlockInstanceToGeometryData(node: NodeData)"
+  speckle-geometry-converter-box-to-geometry-data:
+    lifecycle: single
+    description: "SpeckleGeometryConverter.BoxToGeometryData(node: NodeData)"
+  speckle-geometry-converter-brep-to-geometry-data:
+    lifecycle: single
+    description: "SpeckleGeometryConverter.BrepToGeometryData(node: NodeData)"
+  speckle-geometry-converter-chunk-array-has-data:
+    lifecycle: single
+    description: "SpeckleGeometryConverter.chunkArrayHasData(chunks: Array<DataChunk>)"
+  speckle-geometry-converter-circle-to-geometry-data:
+    lifecycle: single
+    description: "SpeckleGeometryConverter.CircleToGeometryData(node: NodeData)"
+  speckle-geometry-converter-convert-node-to-geometry-data:
+    lifecycle: single
+    description: "SpeckleGeometryConverter.convertNodeToGeometryData(node: NodeData)"
+  speckle-geometry-converter-curve-to-geometry-data:
+    lifecycle: single
+    description: "SpeckleGeometryConverter.CurveToGeometryData(node: NodeData)"
+  speckle-geometry-converter-dispose-node-geometry-data:
+    lifecycle: single
+    description: "SpeckleGeometryConverter.disposeNodeGeometryData(node: NodeData)"
+  speckle-geometry-converter-ellipse-to-geometry-data:
+    lifecycle: single
+    description: "SpeckleGeometryConverter.EllipseToGeometryData(node: NodeData)"
+  speckle-geometry-converter-flatten-vector3-array:
+    lifecycle: single
+    description: "SpeckleGeometryConverter.FlattenVector3Array(input: Vector3[] | Vector2[])"
+  speckle-geometry-converter-get-circular-curve-points:
+    lifecycle: single
+    description: SpeckleGeometryConverter.getCircularCurvePoints()
+  speckle-geometry-converter-get-speckle-type:
+    lifecycle: single
+    description: "SpeckleGeometryConverter.getSpeckleType(node: NodeData)"
+  speckle-geometry-converter-instance-proxy-to-geomety-data:
+    lifecycle: single
+    description: "SpeckleGeometryConverter.InstanceProxyToGeometyData(node: NodeData)"
+  speckle-geometry-converter-line-to-geometry-data:
+    lifecycle: single
+    description: "SpeckleGeometryConverter.LineToGeometryData(node: NodeData)"
+  speckle-geometry-converter-mesh-to-geometry-data:
+    lifecycle: single
+    description: "SpeckleGeometryConverter.MeshToGeometryData(node: NodeData)"
+  speckle-geometry-converter-point-to-float-array:
+    lifecycle: single
+    description: SpeckleGeometryConverter.PointToFloatArray()
+  speckle-geometry-converter-point-to-geometry-data:
+    lifecycle: single
+    description: "SpeckleGeometryConverter.PointToGeometryData(node: NodeData)"
+  speckle-geometry-converter-point-to-vector3:
+    lifecycle: single
+    description: SpeckleGeometryConverter.PointToVector3()
+  speckle-geometry-converter-pointcloud-to-geometry-data:
+    lifecycle: single
+    description: "SpeckleGeometryConverter.PointcloudToGeometryData(node: NodeData)"
+  speckle-geometry-converter-polycurve-to-geometry-data:
+    lifecycle: single
+    description: "SpeckleGeometryConverter.PolycurveToGeometryData(node: NodeData)"
+  speckle-geometry-converter-polyline-to-geometry-data:
+    lifecycle: single
+    description: "SpeckleGeometryConverter.PolylineToGeometryData(node: NodeData)"
+  speckle-geometry-converter-region-geomety-data:
+    lifecycle: single
+    description: "SpeckleGeometryConverter.RegionGeometyData(node: NodeData)"
+  speckle-geometry-converter-revit-instance-to-geometry-data:
+    lifecycle: single
+    description: "SpeckleGeometryConverter.RevitInstanceToGeometryData(node: NodeData)"
+  speckle-geometry-converter-srgb-to-linear:
+    lifecycle: single
+    description: "SpeckleGeometryConverter.srgbToLinear(x: number)"
+  speckle-geometry-converter-text-to-geometry-data:
+    lifecycle: single
+    description: "SpeckleGeometryConverter.TextToGeometryData(node: NodeData)"
+  speckle-geometry-converter-transform-to-geometry-data:
+    lifecycle: single
+    description: "SpeckleGeometryConverter.TransformToGeometryData(node: NodeData)"
+  speckle-geometry-converter-unpack-colors:
+    lifecycle: single
+    description: "SpeckleGeometryConverter.unpackColors(int32Colors: ChunkArray, tolinear?: boolean)"
+  speckle-geometry-converter-view3-d-to-geometry-data:
+    lifecycle: single
+    description: "SpeckleGeometryConverter.View3DToGeometryData(node: NodeData)"
+  speckle-instanced-mesh-build-t-a-s:
+    lifecycle: single
+    description: SpeckleInstancedMesh.buildTAS()
+  speckle-instanced-mesh-get-batch-object-material:
+    lifecycle: single
+    description: "SpeckleInstancedMesh.getBatchObjectMaterial(batchObject: BatchObject)"
+  speckle-instanced-mesh-get-cached-material:
+    lifecycle: single
+    description: "SpeckleInstancedMesh.getCachedMaterial(material: Material, copy?: boolean)"
+  speckle-instanced-mesh-raycast:
+    lifecycle: single
+    description: "SpeckleInstancedMesh.raycast(raycaster: SpeckleRaycaster, intersects: Array<Intersection>)"
+  speckle-instanced-mesh-restore-batch-material:
+    lifecycle: single
+    description: SpeckleInstancedMesh.restoreBatchMaterial()
+  speckle-instanced-mesh-restore-material:
+    lifecycle: single
+    description: SpeckleInstancedMesh.restoreMaterial()
+  speckle-instanced-mesh-set-batch-material:
+    lifecycle: single
+    description: "SpeckleInstancedMesh.setBatchMaterial(material: Material)"
+  speckle-instanced-mesh-set-batch-objects:
+    lifecycle: single
+    description: "SpeckleInstancedMesh.setBatchObjects(batchObjects: BatchObject[])"
+  speckle-instanced-mesh-set-override-batch-material:
+    lifecycle: single
+    description: "SpeckleInstancedMesh.setOverrideBatchMaterial(material: Material)"
+  speckle-instanced-mesh-set-override-material:
+    lifecycle: single
+    description: "SpeckleInstancedMesh.setOverrideMaterial(material: Material)"
+  speckle-instanced-mesh-update-draw-groups:
+    lifecycle: single
+    description: "SpeckleInstancedMesh.updateDrawGroups(transformBuffer: Float32Array, gradientBuffer: Float32Array, objectIndexBuffer?: Float32Array)"
+  speckle-instanced-mesh-update-material-transforms-uniform:
+    lifecycle: single
+    description: "SpeckleInstancedMesh.updateMaterialTransformsUniform(material: Material)"
+  speckle-instanced-mesh-update-transforms-uniform:
+    lifecycle: single
+    description: SpeckleInstancedMesh.updateTransformsUniform()
+  speckle-line-material-copy:
+    lifecycle: single
+    description: "SpeckleLineMaterial.copy(source: Material)"
+  speckle-line-material-custom-program-cache-key:
+    lifecycle: single
+    description: SpeckleLineMaterial.customProgramCacheKey()
+  speckle-line-material-fast-copy:
+    lifecycle: single
+    description: "SpeckleLineMaterial.fastCopy(from: Material, to: Material)"
+  speckle-line-material-on-before-render:
+    lifecycle: single
+    description: "SpeckleLineMaterial.onBeforeRender(_this: SpeckleWebGLRenderer, _scene: Scene, _camera: Camera, _geometry: BufferGeometry, object: Object3D)"
+  speckle-loader-cancel:
+    lifecycle: single
+    description: SpeckleLoader.cancel()
+  speckle-loader-dispose:
+    lifecycle: single
+    description: SpeckleLoader.dispose()
+  speckle-loader-init-object-loader:
+    lifecycle: single
+    description: "SpeckleLoader.initObjectLoader(resource: string, authToken?: string, _enableCaching?: boolean, resourceData?: unknown, attributeMask?: ObjectAttributeMask, objectTypeMask?: string[])"
+  speckle-loader-load:
+    lifecycle: single
+    description: SpeckleLoader.load()
+  speckle-matcap-material-copy:
+    lifecycle: single
+    description: "SpeckleMatcapMaterial.copy(source: Material)"
+  speckle-matcap-material-custom-program-cache-key:
+    lifecycle: single
+    description: SpeckleMatcapMaterial.customProgramCacheKey()
+  speckle-matcap-material-fast-copy:
+    lifecycle: single
+    description: "SpeckleMatcapMaterial.fastCopy(from: Material, to: Material)"
+  speckle-matcap-material-on-before-render:
+    lifecycle: single
+    description: "SpeckleMatcapMaterial.onBeforeRender(_this: SpeckleWebGLRenderer, _scene: Scene, _camera: Camera, _geometry: BufferGeometry, object: Object3D)"
+  speckle-material-bind-uniforms:
+    lifecycle: single
+    description: SpeckleMaterial.bindUniforms()
+  speckle-material-copy-from:
+    lifecycle: single
+    description: "SpeckleMaterial.copyFrom(source: Material)"
+  speckle-material-copy-uniforms:
+    lifecycle: single
+    description: "SpeckleMaterial.copyUniforms(material: Material)"
+  speckle-material-fast-copy:
+    lifecycle: single
+    description: "SpeckleMaterial.fastCopy(from: Material, to: Material)"
+  speckle-material-init:
+    lifecycle: single
+    description: "SpeckleMaterial.init(defines?: Array<string>)"
+  speckle-material-on-compile:
+    lifecycle: single
+    description: "SpeckleMaterial.onCompile(shader: Shader)"
+  speckle-material-set-defines:
+    lifecycle: single
+    description: "SpeckleMaterial.setDefines(defines?: Array<string>)"
+  speckle-material-set-material-options:
+    lifecycle: single
+    description: "SpeckleMaterial.setMaterialOptions(options: MaterialOptions)"
+  speckle-material-set-uniforms:
+    lifecycle: single
+    description: "SpeckleMaterial.setUniforms(def: Uniforms)"
+  speckle-mesh-build-t-a-s:
+    lifecycle: single
+    description: SpeckleMesh.buildTAS()
+  speckle-mesh-get-batch-object-material:
+    lifecycle: single
+    description: "SpeckleMesh.getBatchObjectMaterial(batchObject: BatchObject)"
+  speckle-mesh-get-cached-material:
+    lifecycle: single
+    description: "SpeckleMesh.getCachedMaterial(material: Material, copy?: boolean)"
+  speckle-mesh-raycast:
+    lifecycle: single
+    description: "SpeckleMesh.raycast(raycaster: SpeckleRaycaster, intersects: Array<Intersection>)"
+  speckle-mesh-restore-batch-material:
+    lifecycle: single
+    description: SpeckleMesh.restoreBatchMaterial()
+  speckle-mesh-restore-material:
+    lifecycle: single
+    description: SpeckleMesh.restoreMaterial()
+  speckle-mesh-set-batch-material:
+    lifecycle: single
+    description: "SpeckleMesh.setBatchMaterial(material: Material)"
+  speckle-mesh-set-batch-objects:
+    lifecycle: single
+    description: "SpeckleMesh.setBatchObjects(batchObjects: BatchObject[], transformStorage: TransformStorage)"
+  speckle-mesh-set-override-batch-material:
+    lifecycle: single
+    description: "SpeckleMesh.setOverrideBatchMaterial(material: Material)"
+  speckle-mesh-set-override-material:
+    lifecycle: single
+    description: "SpeckleMesh.setOverrideMaterial(material: Material)"
+  speckle-mesh-update-material-transforms-uniform:
+    lifecycle: single
+    description: "SpeckleMesh.updateMaterialTransformsUniform(material: Material)"
+  speckle-mesh-update-transforms-uniform:
+    lifecycle: single
+    description: SpeckleMesh.updateTransformsUniform()
+  speckle-normal-material-copy:
+    lifecycle: single
+    description: "SpeckleNormalMaterial.copy(source: Material)"
+  speckle-normal-material-custom-program-cache-key:
+    lifecycle: single
+    description: SpeckleNormalMaterial.customProgramCacheKey()
+  speckle-normal-material-on-before-render:
+    lifecycle: single
+    description: "SpeckleNormalMaterial.onBeforeRender(_this: SpeckleWebGLRenderer, _scene: Scene, _camera: Camera, _geometry: BufferGeometry, object: Object3D)"
+  speckle-offline-loader-init-object-loader:
+    lifecycle: single
+    description: "SpeckleOfflineLoader.initObjectLoader(_resource: string, _authToken?: string, _enableCaching?: boolean, resourceData?: unknown)"
+  speckle-offline-loader-load:
+    lifecycle: single
+    description: SpeckleOfflineLoader.load()
+  speckle-point-coloured-material-fast-copy:
+    lifecycle: single
+    description: "SpecklePointColouredMaterial.fastCopy(from: Material, to: Material)"
+  speckle-point-coloured-material-set-gradient-texture:
+    lifecycle: single
+    description: "SpecklePointColouredMaterial.setGradientTexture(texture: Texture)"
+  speckle-point-material-copy:
+    lifecycle: single
+    description: "SpecklePointMaterial.copy(source: Material)"
+  speckle-point-material-custom-program-cache-key:
+    lifecycle: single
+    description: SpecklePointMaterial.customProgramCacheKey()
+  speckle-point-material-fast-copy:
+    lifecycle: single
+    description: "SpecklePointMaterial.fastCopy(from: Material, to: Material)"
+  speckle-point-material-on-before-render:
+    lifecycle: single
+    description: "SpecklePointMaterial.onBeforeRender(_this: SpeckleWebGLRenderer, _scene: Scene, _camera: Camera, _geometry: BufferGeometry, object: Object3D)"
+  speckle-raycaster-intersect-objects:
+    lifecycle: single
+    description: "SpeckleRaycaster.intersectObjects(objects: Array<Object3D>, recursive?: boolean, intersects?: never[])"
+  speckle-renderer-add-render-tree:
+    lifecycle: single
+    description: "SpeckleRenderer.addRenderTree(renderTree: RenderTree)"
+  speckle-renderer-box-from-objects:
+    lifecycle: single
+    description: "SpeckleRenderer.boxFromObjects(objectIds: string[])"
+  speckle-renderer-cancel-render-tree:
+    lifecycle: single
+    description: "SpeckleRenderer.cancelRenderTree(subtreeId: string)"
+  speckle-renderer-create:
+    lifecycle: single
+    description: "SpeckleRenderer.create(container: HTMLElement)"
+  speckle-renderer-debug-show-batches:
+    lifecycle: single
+    description: SpeckleRenderer.debugShowBatches()
+  speckle-renderer-enable-layers:
+    lifecycle: single
+    description: "SpeckleRenderer.enableLayers(layers: ObjectLayers[], value: boolean)"
+  speckle-renderer-get-batch:
+    lifecycle: single
+    description: "SpeckleRenderer.getBatch(id: string)"
+  speckle-renderer-get-batch-ids:
+    lifecycle: single
+    description: SpeckleRenderer.getBatchIds()
+  speckle-renderer-get-batch-material:
+    lifecycle: single
+    description: "SpeckleRenderer.getBatchMaterial(rv: NodeRenderView)"
+  speckle-renderer-get-batch-size:
+    lifecycle: single
+    description: "SpeckleRenderer.getBatchSize(batchId: string)"
+  speckle-renderer-get-material:
+    lifecycle: single
+    description: "SpeckleRenderer.getMaterial(rv: NodeRenderView)"
+  speckle-renderer-get-object:
+    lifecycle: single
+    description: "SpeckleRenderer.getObject(rv: NodeRenderView)"
+  speckle-renderer-get-objects:
+    lifecycle: single
+    description: SpeckleRenderer.getObjects()
+  speckle-renderer-isolate-batch:
+    lifecycle: single
+    description: "SpeckleRenderer.isolateBatch(batchId: string)"
+  speckle-renderer-n-d-c-to-screen:
+    lifecycle: single
+    description: "SpeckleRenderer.NDCToScreen(clientX: number, clientY: number, width?: number, height?: number)"
+  speckle-renderer-query-hit-ids:
+    lifecycle: single
+    description: "SpeckleRenderer.queryHitIds(results: Array<ExtendedIntersection>)"
+  speckle-renderer-query-hits:
+    lifecycle: single
+    description: "SpeckleRenderer.queryHits(results: Array<ExtendedIntersection>)"
+  speckle-renderer-remove-render-tree:
+    lifecycle: single
+    description: "SpeckleRenderer.removeRenderTree(subtreeId: string)"
+  speckle-renderer-render:
+    lifecycle: single
+    description: SpeckleRenderer.render()
+  speckle-renderer-render-view-from-intersection:
+    lifecycle: single
+    description: "SpeckleRenderer.renderViewFromIntersection(intersection: ExtendedIntersection)"
+  speckle-renderer-reset-materials:
+    lifecycle: single
+    description: SpeckleRenderer.resetMaterials()
+  speckle-renderer-reset-pipeline:
+    lifecycle: single
+    description: SpeckleRenderer.resetPipeline()
+  speckle-renderer-resize:
+    lifecycle: single
+    description: "SpeckleRenderer.resize(width?: number, height?: number)"
+  speckle-renderer-screen-to-n-d-c:
+    lifecycle: single
+    description: "SpeckleRenderer.screenToNDC(clientX: number, clientY: number, width?: number, height?: number)"
+  speckle-renderer-set-material:
+    lifecycle: single
+    description: "SpeckleRenderer.setMaterial(rvs: NodeRenderView[], material: FilterMaterial)"
+  speckle-renderer-set-sun-light-configuration:
+    lifecycle: single
+    description: "SpeckleRenderer.setSunLightConfiguration(config: SunLightConfiguration)"
+  speckle-renderer-update:
+    lifecycle: single
+    description: "SpeckleRenderer.update(deltaTime: number)"
+  speckle-renderer-update-clipping-planes:
+    lifecycle: single
+    description: SpeckleRenderer.updateClippingPlanes()
+  speckle-renderer-update-shadow-catcher:
+    lifecycle: single
+    description: "SpeckleRenderer.updateShadowCatcher(force?: boolean)"
+  speckle-standard-colored-material-set-gradient-texture:
+    lifecycle: single
+    description: "SpeckleStandardColoredMaterial.setGradientTexture(texture: Texture)"
+  speckle-standard-material-copy:
+    lifecycle: single
+    description: "SpeckleStandardMaterial.copy(source: Material)"
+  speckle-standard-material-custom-program-cache-key:
+    lifecycle: single
+    description: SpeckleStandardMaterial.customProgramCacheKey()
+  speckle-standard-material-fast-copy:
+    lifecycle: single
+    description: "SpeckleStandardMaterial.fastCopy(from: Material, to: Material)"
+  speckle-standard-material-on-before-render:
+    lifecycle: single
+    description: "SpeckleStandardMaterial.onBeforeRender(_this: SpeckleWebGLRenderer, _scene: Scene, _camera: Camera, _geometry: BufferGeometry, object: Object3D)"
+  speckle-standard-material-update-artificial-roughness:
+    lifecycle: single
+    description: "SpeckleStandardMaterial.updateArtificialRoughness(artificialRougness?: number)"
+  speckle-text-colored-material-update-gradient-index-map:
+    lifecycle: single
+    description: "SpeckleTextColoredMaterial.updateGradientIndexMap(index: number, value: number)"
+  speckle-text-material-copy-custom-uniforms:
+    lifecycle: single
+    description: "SpeckleTextMaterial.copyCustomUniforms(material: Material)"
+  speckle-text-material-custom-program-cache-key:
+    lifecycle: single
+    description: SpeckleTextMaterial.customProgramCacheKey()
+  speckle-text-material-fast-copy:
+    lifecycle: single
+    description: "SpeckleTextMaterial.fastCopy(from: Material, to: Material)"
+  speckle-text-material-get-derived-batched-material:
+    lifecycle: single
+    description: SpeckleTextMaterial.getDerivedBatchedMaterial()
+  speckle-text-material-get-derived-material:
+    lifecycle: single
+    description: SpeckleTextMaterial.getDerivedMaterial()
+  speckle-text-material-set-gradient-texture:
+    lifecycle: single
+    description: "SpeckleTextMaterial.setGradientTexture(texture: Texture)"
+  speckle-user-data-to-j-s-o-n:
+    lifecycle: single
+    description: SpeckleUserData.toJSON()
+  speckle-viewport-material-fast-copy:
+    lifecycle: single
+    description: "SpeckleViewportMaterial.fastCopy(from: Material, to: Material)"
+  speckle-web-g-l-renderer-update-r-t-e-view-model:
+    lifecycle: single
+    description: "SpeckleWebGLRenderer.updateRTEViewModel(camera: Camera)"
+  stencil-mask-pass-set-size:
+    lifecycle: single
+    description: "StencilMaskPass.setSize(width: number, height: number)"
+  stencil-pass-set-size:
+    lifecycle: single
+    description: "StencilPass.setSize(width: number, height: number)"
+  t-a-a-pass-render:
+    lifecycle: single
+    description: "TAAPass.render(renderer: WebGLRenderer)"
+  t-a-a-pass-set-size:
+    lifecycle: single
+    description: "TAAPass.setSize(width: number, height: number)"
+  t-a-a-pipeline-render:
+    lifecycle: single
+    description: TAAPipeline.render()
+  text-batch-alignment-x-to-anchor-x:
+    lifecycle: single
+    description: "TextBatch.alignmentXToAnchorX(value: number)"
+  text-batch-alignment-y-to-anchor-y:
+    lifecycle: single
+    description: "TextBatch.alignmentYToAnchorY(value: number)"
+  text-batch-build-batch:
+    lifecycle: single
+    description: TextBatch.buildBatch()
+  text-batch-get-count:
+    lifecycle: single
+    description: TextBatch.getCount()
+  text-batch-get-depth:
+    lifecycle: single
+    description: TextBatch.getDepth()
+  text-batch-get-material:
+    lifecycle: single
+    description: "TextBatch.getMaterial(rv: NodeRenderView)"
+  text-batch-get-material-at-index:
+    lifecycle: single
+    description: "TextBatch.getMaterialAtIndex(index: number)"
+  text-batch-get-opaque:
+    lifecycle: single
+    description: TextBatch.getOpaque()
+  text-batch-get-render-view:
+    lifecycle: single
+    description: "TextBatch.getRenderView(index: number)"
+  text-batch-get-stencil:
+    lifecycle: single
+    description: TextBatch.getStencil()
+  text-batch-get-transparent:
+    lifecycle: single
+    description: TextBatch.getTransparent()
+  text-batch-get-visible-range:
+    lifecycle: single
+    description: TextBatch.getVisibleRange()
+  text-batch-object-transform-t-r-s:
+    lifecycle: single
+    description: "TextBatchObject.transformTRS(translation: Vector3Like, euler: Vector3Like, scale: Vector3Like, pivot: Vector3Like)"
+  text-batch-on-render:
+    lifecycle: single
+    description: "TextBatch.onRender(renderer: WebGLRenderer)"
+  text-batch-on-update:
+    lifecycle: single
+    description: "TextBatch.onUpdate(deltaTime: number)"
+  text-batch-purge:
+    lifecycle: single
+    description: TextBatch.purge()
+  text-batch-reset-draw-ranges:
+    lifecycle: single
+    description: TextBatch.resetDrawRanges()
+  text-batch-set-batch-buffers:
+    lifecycle: single
+    description: "TextBatch.setBatchBuffers(ranges: BatchUpdateRange[])"
+  text-batch-set-batch-material:
+    lifecycle: single
+    description: "TextBatch.setBatchMaterial(material: Material)"
+  text-batch-set-draw-ranges:
+    lifecycle: single
+    description: "TextBatch.setDrawRanges(ranges: BatchUpdateRange[])"
+  text-batch-set-visible-range:
+    lifecycle: single
+    description: "TextBatch.setVisibleRange(ranges: BatchUpdateRange[])"
+  text-label-raycast:
+    lifecycle: single
+    description: "TextLabel.raycast(raycaster: Raycaster, intersects: Array<Intersection>)"
+  text-label-update-params:
+    lifecycle: single
+    description: "TextLabel.updateParams(params: TextLabelParams, onUpdateComplete?: () => void)"
+  top-level-acceleration-structure-closest-point-to-point:
+    lifecycle: single
+    description: "TopLevelAccelerationStructure.closestPointToPoint(point: Vector3)"
+  top-level-acceleration-structure-closest-point-to-point-halfplane:
+    lifecycle: single
+    description: "TopLevelAccelerationStructure.closestPointToPointHalfplane(point: Vector3, planeNormal: Vector3, fallback?: number, target?: HitPointInfo, minThreshold?: number, maxThreshold?: number)"
+  top-level-acceleration-structure-get-bounding-box:
+    lifecycle: single
+    description: "TopLevelAccelerationStructure.getBoundingBox(target: Box3)"
+  top-level-acceleration-structure-raycast:
+    lifecycle: single
+    description: "TopLevelAccelerationStructure.raycast(ray: Ray, tasOnly?: boolean, materialOrSide?: Side | Material | Material[])"
+  top-level-acceleration-structure-raycast-first:
+    lifecycle: single
+    description: "TopLevelAccelerationStructure.raycastFirst(ray: Ray, tasOnly?: boolean, materialOrSide?: Side | Material | Material[])"
+  top-level-acceleration-structure-refit:
+    lifecycle: single
+    description: TopLevelAccelerationStructure.refit()
+  top-level-acceleration-structure-shapecast:
+    lifecycle: single
+    description: "TopLevelAccelerationStructure.shapecast(callbacks: ExtendedShapeCastCallbacks)"
+  transform-controls-attach:
+    lifecycle: single
+    description: "TransformControls.attach(object: Object3D)"
+  transform-controls-detach:
+    lifecycle: single
+    description: TransformControls.detach()
+  transform-controls-get-helper:
+    lifecycle: single
+    description: TransformControls.getHelper()
+  transform-controls-get-mode:
+    lifecycle: single
+    description: TransformControls.getMode()
+  transform-controls-get-raycaster:
+    lifecycle: single
+    description: TransformControls.getRaycaster()
+  transform-controls-gizmo-update-matrix-world:
+    lifecycle: single
+    description: "TransformControlsGizmo.updateMatrixWorld(force: any)"
+  transform-controls-plane-update-matrix-world:
+    lifecycle: single
+    description: "TransformControlsPlane.updateMatrixWorld(force: any)"
+  transform-controls-pointer-down:
+    lifecycle: single
+    description: "TransformControls.pointerDown(pointer: any)"
+  transform-controls-pointer-hover:
+    lifecycle: single
+    description: "TransformControls.pointerHover(pointer: any)"
+  transform-controls-pointer-move:
+    lifecycle: single
+    description: "TransformControls.pointerMove(pointer: any)"
+  transform-controls-pointer-up:
+    lifecycle: single
+    description: "TransformControls.pointerUp(pointer: any)"
+  transform-controls-reset:
+    lifecycle: single
+    description: TransformControls.reset()
+  transform-controls-root-dispose:
+    lifecycle: single
+    description: TransformControlsRoot.dispose()
+  transform-controls-root-update-matrix-world:
+    lifecycle: single
+    description: "TransformControlsRoot.updateMatrixWorld(force: any)"
+  transform-controls-set-mode:
+    lifecycle: single
+    description: "TransformControls.setMode(mode: \"translate\" | \"rotate\" | \"scale\")"
+  transform-controls-set-rotation-snap:
+    lifecycle: single
+    description: "TransformControls.setRotationSnap(rotationSnap: number | null)"
+  transform-controls-set-scale-snap:
+    lifecycle: single
+    description: "TransformControls.setScaleSnap(scaleSnap: number | null)"
+  transform-controls-set-size:
+    lifecycle: single
+    description: "TransformControls.setSize(size: number)"
+  transform-controls-set-space:
+    lifecycle: single
+    description: "TransformControls.setSpace(space: \"world\" | \"local\")"
+  transform-controls-set-translation-snap:
+    lifecycle: single
+    description: "TransformControls.setTranslationSnap(translationSnap: number | null)"
+  utils-n-d-c-to-screen:
+    lifecycle: single
+    description: "Utils.NDCToScreen(x: number, y: number, width?: number, height?: number)"
+  utils-screen-to-n-d-c:
+    lifecycle: single
+    description: "Utils.screenToNDC(x: number, y: number, width?: number, height?: number)"
+  view-modes-on:
+    lifecycle: single
+    description: "ViewModes.on(eventType: T, listener: (arg: ViewModeEventPayload[T]) => void)"
+  view-modes-set-view-mode:
+    lifecycle: single
+    description: "ViewModes.setViewMode(viewMode: ViewMode, options?: ViewModeOptions)"
+  view-modes-update-view-mode-options:
+    lifecycle: single
+    description: "ViewModes.updateViewModeOptions(options?: ViewModeOptions)"
+  view-modes-update-view-modes:
+    lifecycle: single
+    description: "ViewModes.updateViewModes(viewMode: ViewMode, options?: ViewModeOptions)"
+  viewer-cancel-load:
+    lifecycle: single
+    description: "Viewer.cancelLoad(resource: string, unload?: boolean)"
+  viewer-create-extension:
+    lifecycle: single
+    description: "Viewer.createExtension(type: Constructor<T>)"
+  viewer-dispose:
+    lifecycle: single
+    description: Viewer.dispose()
+  viewer-frame:
+    lifecycle: single
+    description: Viewer.frame()
+  viewer-get-canvas:
+    lifecycle: single
+    description: Viewer.getCanvas()
+  viewer-get-container:
+    lifecycle: single
+    description: Viewer.getContainer()
+  viewer-get-data-tree:
+    lifecycle: single
+    description: Viewer.getDataTree()
+  viewer-get-extension:
+    lifecycle: single
+    description: "Viewer.getExtension(type: Constructor<T>)"
+  viewer-get-object-properties:
+    lifecycle: single
+    description: "Viewer.getObjectProperties(resourceURL?: string | null, bypassCache?: boolean)"
+  viewer-get-renderer:
+    lifecycle: single
+    description: Viewer.getRenderer()
+  viewer-get-views:
+    lifecycle: single
+    description: Viewer.getViews()
+  viewer-get-world-tree:
+    lifecycle: single
+    description: Viewer.getWorldTree()
+  viewer-has-extension:
+    lifecycle: single
+    description: "Viewer.hasExtension(type: Constructor<T>)"
+  viewer-init:
+    lifecycle: single
+    description: Viewer.init()
+  viewer-load-object:
+    lifecycle: single
+    description: "Viewer.loadObject(loader: Loader, zoomToObject?: boolean)"
+  viewer-on:
+    lifecycle: single
+    description: "Viewer.on(eventType: T, listener: (arg: ViewerEventPayload[T]) => void)"
+  viewer-query:
+    lifecycle: single
+    description: "Viewer.query(query: T)"
+  viewer-render:
+    lifecycle: single
+    description: Viewer.render()
+  viewer-request-render:
+    lifecycle: single
+    description: "Viewer.requestRender(flags?: UpdateFlags)"
+  viewer-resize:
+    lifecycle: single
+    description: Viewer.resize()
+  viewer-screenshot:
+    lifecycle: single
+    description: Viewer.screenshot()
+  viewer-set-light-configuration:
+    lifecycle: single
+    description: "Viewer.setLightConfiguration(config: SunLightConfiguration)"
+  viewer-unload-all:
+    lifecycle: single
+    description: Viewer.unloadAll()
+  viewer-unload-object:
+    lifecycle: single
+    description: "Viewer.unloadObject(resource: string)"
+  viewer-update:
+    lifecycle: single
+    description: Viewer.update()
+  viewport-pass-render:
+    lifecycle: single
+    description: "ViewportPass.render(renderer: WebGLRenderer, camera: PerspectiveCamera | OrthographicCamera | null, scene?: Scene)"
+  viewport-pass-set-matcap-texture:
+    lifecycle: single
+    description: "ViewportPass.setMatcapTexture(asset: Asset | null)"
+  virtual-array-find-chunk-index:
+    lifecycle: single
+    description: "VirtualArray.findChunkIndex(index: number)"
+  virtual-array-update-offsets:
+    lifecycle: single
+    description: VirtualArray.updateOffsets()
+  web-xr-viewer-init:
+    lifecycle: single
+    description: WebXrViewer.init()
+  web-xr-viewer-render:
+    lifecycle: single
+    description: WebXrViewer.render()
+  web-xr-viewer-xr-wrapped-render:
+    lifecycle: single
+    description: WebXrViewer.xrWrappedRender()
+  world-expand-box-relative:
+    lifecycle: single
+    description: "World.expandBoxRelative(box: T, offsetAmount?: number)"
+  world-expand-world:
+    lifecycle: single
+    description: "World.expandWorld(box: Box3)"
+  world-get-relative-offset:
+    lifecycle: single
+    description: "World.getRelativeOffset(offsetAmount?: number)"
+  world-get-relative-offset-box:
+    lifecycle: single
+    description: "World.getRelativeOffsetBox(box: Box3, offsetAmount?: number)"
+  world-reduce-world:
+    lifecycle: single
+    description: "World.reduceWorld(box: Box3)"
+  world-reset-world:
+    lifecycle: single
+    description: World.resetWorld()
+  world-tree-add-node:
+    lifecycle: single
+    description: "WorldTree.addNode(node: TreeNode, parent: TreeNode | null)"
+  world-tree-add-subtree:
+    lifecycle: single
+    description: "WorldTree.addSubtree(node: TreeNode)"
+  world-tree-find-all:
+    lifecycle: single
+    description: "WorldTree.findAll(predicate: SearchPredicate, node?: TreeNode)"
+  world-tree-find-id:
+    lifecycle: single
+    description: "WorldTree.findId(id: string, subtreeId?: number)"
+  world-tree-find-subtree:
+    lifecycle: single
+    description: "WorldTree.findSubtree(id: string)"
+  world-tree-get-ancestors:
+    lifecycle: single
+    description: "WorldTree.getAncestors(node: TreeNode)"
+  world-tree-get-duplicates:
+    lifecycle: single
+    description: "WorldTree.getDuplicates(subtreeId: string)"
+  world-tree-get-instances:
+    lifecycle: single
+    description: "WorldTree.getInstances(subtreeId: string)"
+  world-tree-get-render-tree:
+    lifecycle: single
+    description: "WorldTree.getRenderTree(subtreeId: string)"
+  world-tree-has-id:
+    lifecycle: single
+    description: "WorldTree.hasId(id: string, subtreeId?: number)"
+  world-tree-has-instance-id:
+    lifecycle: single
+    description: "WorldTree.hasInstanceId(id: string, subtreeId?: number)"
+  world-tree-has-node-id:
+    lifecycle: single
+    description: "WorldTree.hasNodeId(id: string, subtreeId?: number)"
+  world-tree-is-root:
+    lifecycle: single
+    description: "WorldTree.isRoot(node: TreeNode)"
+  world-tree-is-subtree-root:
+    lifecycle: single
+    description: "WorldTree.isSubtreeRoot(node: TreeNode)"
+  world-tree-parse:
+    lifecycle: single
+    description: "WorldTree.parse(model: Model<NodeData>)"
+  world-tree-purge:
+    lifecycle: single
+    description: "WorldTree.purge(subtreeId?: string)"
+  world-tree-remove-node:
+    lifecycle: single
+    description: "WorldTree.removeNode(node: TreeNode, removeChildren: boolean)"
+  world-tree-walk:
+    lifecycle: single
+    description: "WorldTree.walk(predicate: SearchPredicate, node?: TreeNode)"
+  world-tree-walk-async:
+    lifecycle: single
+    description: "WorldTree.walkAsync(predicate: SearchPredicate, node?: TreeNode)"
+  world-update-world:
+    lifecycle: single
+    description: World.updateWorld()
+skills:
+  - acceleration-structure.md
+  - angle-damper.md
+  - area-measurement.md
+  - assets.md
+  - async-pause.md
+  - base-g-pass.md
+  - batch-object.md
+  - batch.md
+  - batcher.md
+  - blend-pass.md
+  - camera-controller.md
+  - chunk-array.md
+  - controls.md
+  - damper.md
+  - depth-normal-pass.md
+  - depth-pass.md
+  - diff-extension.md
+  - draw-ranges.md
+  - edges-pass.md
+  - edges-pipeline.md
+  - event-emitter.md
+  - explode-extension.md
+  - extension.md
+  - filtering-extension.md
+  - fly-controls.md
+  - g-pass.md
+  - geometry-converter.md
+  - geometry-pass.md
+  - geometry.md
+  - hybrid-camera-controller.md
+  - i-viewer.md
+  - input.md
+  - instanced-batch-object.md
+  - instanced-mesh-batch.md
+  - intersection-query-solver.md
+  - intersections.md
+  - jitter-quad.md
+  - legacy-viewer.md
+  - line-batch.md
+  - loader.md
+  - materials.md
+  - measurement-point-gizmo.md
+  - measurement.md
+  - measurements-extension.md
+  - mesh-batch.md
+  - mesh-triangulation-helper.md
+  - node-map.md
+  - node-render-view.md
+  - obj-converter.md
+  - obj-geometry-converter.md
+  - obj-loader.md
+  - output-pass.md
+  - perpendicular-measurement.md
+  - pipeline.md
+  - point-batch.md
+  - point-measurement.md
+  - point-query-solver.md
+  - point-to-point-measurement.md
+  - primitive-batch.md
+  - progressive-a-o-pass.md
+  - progressive-g-pass.md
+  - progressive-pipeline.md
+  - property-manager.md
+  - queries.md
+  - r-t-e-buffers.md
+  - render-tree.md
+  - rendering-stats.md
+  - rotatable-p-m-r-e-m-generator.md
+  - section-outlines.md
+  - section-tool.md
+  - selection-extension.md
+  - shaded-pass.md
+  - shadowcatcher-pass.md
+  - shadowcatcher.md
+  - smooth-orbit-controls.md
+  - speckle-basic-material.md
+  - speckle-batched-text.md
+  - speckle-camera.md
+  - speckle-controls.md
+  - speckle-converter.md
+  - speckle-depth-material.md
+  - speckle-depth-normal-id-material.md
+  - speckle-displace-material.md
+  - speckle-geometry-converter.md
+  - speckle-instanced-mesh.md
+  - speckle-line-material.md
+  - speckle-loader.md
+  - speckle-matcap-material.md
+  - speckle-material.md
+  - speckle-mesh.md
+  - speckle-normal-material.md
+  - speckle-offline-loader.md
+  - speckle-point-coloured-material.md
+  - speckle-point-material.md
+  - speckle-raycaster.md
+  - speckle-renderer.md
+  - speckle-standard-colored-material.md
+  - speckle-standard-material.md
+  - speckle-text-colored-material.md
+  - speckle-text-material.md
+  - speckle-user-data.md
+  - speckle-viewport-material.md
+  - speckle-web-g-l-renderer.md
+  - stencil-mask-pass.md
+  - stencil-pass.md
+  - t-a-a-pass.md
+  - t-a-a-pipeline.md
+  - text-batch-object.md
+  - text-batch.md
+  - text-label.md
+  - top-level-acceleration-structure.md
+  - top-level.md
+  - transform-controls-gizmo.md
+  - transform-controls-plane.md
+  - transform-controls-root.md
+  - transform-controls.md
+  - utils.md
+  - view-modes.md
+  - viewer.md
+  - viewport-pass.md
+  - virtual-array.md
+  - web-xr-viewer.md
+  - world-tree.md
+  - world.md
