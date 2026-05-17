@@ -138,6 +138,14 @@
         }
       }
     },
+    "speckle-viewer": {
+      "versions": {
+        "2.28.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/visualization/speckle-viewer"
+        }
+      }
+    },
     "trimble-connect": {
       "versions": {
         "2.4.0": {
@@ -208,6 +216,7 @@
         "csi-api@2.12.0",
         "thatopen-components@3.4.6",
         "web-ifc@0.0.77",
+        "speckle-viewer@2.28.0",
         "trimble-connect@2.4.0",
         "microsoft-365@1.0.0",
         "google-workspace@1.0.0",
