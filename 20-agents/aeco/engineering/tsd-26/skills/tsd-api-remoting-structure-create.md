@@ -1,0 +1,73 @@
+---
+name: tsd-api-remoting-tsd-api-remoting-structure-create
+description: API reference for namespace TSD.API.Remoting.Structure.Create from TSD.API.Remoting.dll
+---
+
+# TSD.API.Remoting.Structure.Create
+
+- **CircularSlabOpeningParams**
+  - Represents parameters required to create a circular slab opening
+- **ConstructionPointParams**
+  - Represents parameters required to create a construction point
+- **CubicalPointParams**
+  - Represents parameters required to create a cubical construction point
+- **GridParams**
+  - The base class of  and
+- **HorizontalConstructionPlaneParams**
+  - Represents parameters required to create a horizontal construction plane
+- **IAnalysisElementAttributeSet**
+  - Represents parameters required to create an analysis element
+- **IAreaElementAttributeSet**
+  - Represents an area element attribute set
+- **IConcreteBeamAttributeSet**
+  - Represents parameters required to create a concrete beam
+- **IConcreteColumnAttributeSet**
+  - Represents parameters required to create a concrete column
+- **IMemberAttributeSet**
+  - Represents parameters required to create a member
+- **IMemberAttributeSetBase**
+  - Contains base data parameters required to create a new member
+- **IRoofAttributeSet**
+  - Represents parameters required to create a roof
+- **ISlabItemAttributeSet**
+  - Represents parameters required to create a slab item
+- **ISteelBraceAttributeSet**
+  - Represents parameters required to create a steel brace
+- **ISteelColumnAttributeSet**
+  - Represents parameters required to create a steel column
+- **IStructuralWallAttributeSet**
+  - Represents parameters required to create a structural wall
+- **ISupportAttributeSet**
+  - Represents parameters required to create a support
+- **IWindWallAttributeSet**
+  - Represents parameters required to create a wind wall
+- **IntersectionParams**
+  - Represents parameters required to create an intersection of construction helpers
+- **MemberAttributeSetParams**
+  - Represents parameters required to create a member attribute set
+- **MemberParams**
+  - Represents parameters required to create a member
+- **ParallelogramGridParams**
+  - Represents parameters required to create a parallelogram grid
+- **PlanarPointParams**
+  - Represents parameters required to create a planar construction point
+- **RectangularSlabOpeningParams**
+  - Represents parameters required to create a rectangular slab opening
+- **RoofParams**
+  - Represents parameters required to create a roof
+- **SectorGridParams**
+  - Represents parameters required to create a sector grid
+- **SlabItemAttributeSetParams**
+  - Represents parameters required to create a slab item attribute set
+- **SlabItemParams**
+  - Represents parameters required to create a slab item
+- **SlabOpeningParams**
+  - Represents parameters required to create a slab opening
+- **StructuralWallParams**
+  - Represents parameters required to create a structural wall
+- **SupportParams**
+  - Represents parameters required to create a support
+- **WallOpeningParams**
+  - Represents parameters required to create a wall opening
+- **WindWallParams**
+  - Represents parameters required to create a wind wall

@@ -146,6 +146,54 @@
         }
       }
     },
+    "allplan-2024": {
+      "versions": {
+        "2024.0.1.35": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/architecture/allplan-2024"
+        }
+      }
+    },
+    "allplan-2025": {
+      "versions": {
+        "2025.0.0.15": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/architecture/allplan-2025"
+        }
+      }
+    },
+    "idea-statica-25": {
+      "versions": {
+        "25.1.5.1431": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/engineering/idea-statica-25"
+        }
+      }
+    },
+    "idea-statica-26": {
+      "versions": {
+        "26.0.1.2450": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/engineering/idea-statica-26"
+        }
+      }
+    },
+    "tsd-25": {
+      "versions": {
+        "25.3.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/engineering/tsd-25"
+        }
+      }
+    },
+    "tsd-26": {
+      "versions": {
+        "26.0.1": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/engineering/tsd-26"
+        }
+      }
+    },
     "trimble-connect": {
       "versions": {
         "2.4.0": {
@@ -217,6 +265,12 @@
         "thatopen-components@3.4.6",
         "web-ifc@0.0.77",
         "speckle-viewer@2.28.0",
+        "allplan-2024@2024.0.1.35",
+        "allplan-2025@2025.0.0.15",
+        "idea-statica-25@25.1.5.1431",
+        "idea-statica-26@26.0.1.2450",
+        "tsd-25@25.3.0",
+        "tsd-26@26.0.1",
         "trimble-connect@2.4.0",
         "microsoft-365@1.0.0",
         "google-workspace@1.0.0",

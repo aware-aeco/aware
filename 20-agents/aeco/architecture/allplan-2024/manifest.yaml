@@ -1,0 +1,3624 @@
+agent:        allplan-2024
+version:      2024.0.1.35
+display-name: Allplan 2024 (raw)
+description: |
+  Auto-generated agent from `Allplan.BIF.Core@2024.0.1.35` on NuGet
+  via `aware build agent --from-nuget`. Reflects the public-API
+  surface of Nemetschek's BIM+ Integration Framework — the .NET
+  bridge that custom plugins use to drive Allplan 2024.
+
+  Allplan is Nemetschek's architecture + engineering BIM authoring
+  tool — sibling to Revit, ArchiCAD, Vectorworks (also Nemetschek).
+  Strong in European AECO markets.
+
+  Covers 87 classes × 1,162 commands: model element creation
+  (walls, slabs, columns, beams, openings), parametric attributes,
+  geometric primitives, materials, layers, project-context access,
+  reinforcement modeling, and the BimPlus cloud integration layer
+  (SSO + REST exchange between Allplan and the BimPlus collaboration
+  cloud).
+
+  Library is **MIT-licensed** (the open BIF wrapper); Allplan itself
+  is vendor-proprietary and not redistributed. AWARE-generated text
+  here is Apache-2.0. Users need their own Allplan installation +
+  license to actually execute the agent's commands.
+
+  Marked `stateful: false` — Allplan plugin code is typically
+  request/response against the running document. Curators of
+  long-running session-aware workflows would later flag a
+  `new Document(...)` path as `lifecycle: start`.
+
+stateful: false
+
+vendor:   nemetschek
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/architecture/allplan-2024
+keywords: [aeco, architecture, bim, allplan, nemetschek, bimplus, generated, raw, 2024, nuget]
+
+provenance:
+  generated-by: aware-agent-builder
+  generator-version: 0.8.1
+  source:
+    license: MIT
+    package: Allplan.BIF.Core
+    type: nuget
+    version: 2024.0.1.35
+  generated-at: 2026-05-17T06:34:22.846487700+00:00
+transport:
+  cli:
+    binary: aware-allplan-2024
+commands:
+  abstract-property-set-elementtyp:
+    lifecycle: single
+    description: AbstractProperty.SetElementtyp
+  abstract-property-set-object-name:
+    lifecycle: single
+    description: AbstractProperty.SetObjectName
+  access-types-rights-right-nameby-access:
+    lifecycle: single
+    description: AccessTypesRights.RightNamebyAccess
+  alignment-curve-get-alignment-as-poly-line:
+    lifecycle: single
+    description: AlignmentCurve.GetAlignmentAsPolyLine
+  alignment-curve-get-axis:
+    lifecycle: single
+    description: AlignmentCurve.GetAxis
+  alignment-curve-get-element-by-station:
+    lifecycle: single
+    description: AlignmentCurve.GetElementByStation
+  analysis-geometry-extensions-arrow:
+    lifecycle: single
+    description: AnalysisGeometryExtensions.Arrow
+  analysis-geometry-extensions-convert:
+    lifecycle: single
+    description: AnalysisGeometryExtensions.Convert
+  analysis-geometry-extensions-moment:
+    lifecycle: single
+    description: AnalysisGeometryExtensions.Moment
+  analysis-geometry-extensions-pin:
+    lifecycle: single
+    description: AnalysisGeometryExtensions.Pin
+  analysis-geometry-extensions-pin2:
+    lifecycle: single
+    description: AnalysisGeometryExtensions.Pin2
+  analysis-geometry-extensions-triangle:
+    lifecycle: single
+    description: AnalysisGeometryExtensions.Triangle
+  attachment-enum-extensions-external-attachment-types:
+    lifecycle: single
+    description: AttachmentEnumExtensions.ExternalAttachmentTypes
+  attachment-enum-extensions-is-external:
+    lifecycle: single
+    description: AttachmentEnumExtensions.IsExternal
+  attachment-enum-extensions-to-attachment-type:
+    lifecycle: single
+    description: AttachmentEnumExtensions.ToAttachmentType
+  attachment-enum-extensions-to-controltype:
+    lifecycle: single
+    description: AttachmentEnumExtensions.ToControltype
+  attachment-enum-extensions-to-guid:
+    lifecycle: single
+    description: AttachmentEnumExtensions.ToGuid
+  attachment-enum-extensions-to-import-return-code:
+    lifecycle: single
+    description: AttachmentEnumExtensions.ToImportReturnCode
+  attachments-delete-attachment:
+    lifecycle: single
+    description: Attachments.DeleteAttachment
+  attachments-download-attachment:
+    lifecycle: single
+    description: Attachments.DownloadAttachment
+  attachments-get-attachments:
+    lifecycle: single
+    description: Attachments.GetAttachments
+  attachments-update-attachment:
+    lifecycle: single
+    description: Attachments.UpdateAttachment
+  attachments-upload-attachment:
+    lifecycle: single
+    description: Attachments.UploadAttachment
+  attributes-delete:
+    lifecycle: single
+    description: Attributes.Delete
+  attributes-get:
+    lifecycle: single
+    description: Attributes.Get
+  attributes-get-all:
+    lifecycle: single
+    description: Attributes.GetAll
+  attributes-post:
+    lifecycle: single
+    description: Attributes.Post
+  attributes-put:
+    lifecycle: single
+    description: Attributes.Put
+  auth-token-repository-fetch-async:
+    lifecycle: single
+    description: AuthTokenRepository.FetchAsync
+  auth-token-repository-reset-async:
+    lifecycle: single
+    description: AuthTokenRepository.ResetAsync
+  auth-token-repository-save-async:
+    lifecycle: single
+    description: AuthTokenRepository.SaveAsync
+  authenticator-get-access-token-async:
+    lifecycle: single
+    description: Authenticator.GetAccessTokenAsync
+  authenticator-logout-async:
+    lifecycle: single
+    description: Authenticator.LogoutAsync
+  authenticator-refresh-token-async:
+    lifecycle: single
+    description: Authenticator.RefreshTokenAsync
+  axis-deserialize-from-xml-string:
+    lifecycle: single
+    description: Axis.DeserializeFromXmlString
+  axis-serialize-to-xml:
+    lifecycle: single
+    description: Axis.SerializeToXml
+  base-array-get-selected:
+    lifecycle: single
+    description: BaseArray.GetSelected
+  base-array-objects-with-id:
+    lifecycle: single
+    description: BaseArray.ObjectsWithID
+  base-matrix-multiply:
+    lifecycle: single
+    description: BaseMatrix.Multiply
+  bim-plus-event-handler-begin-invoke:
+    lifecycle: single
+    description: BimPlusEventHandler.BeginInvoke
+  bim-plus-event-handler-end-invoke:
+    lifecycle: single
+    description: BimPlusEventHandler.EndInvoke
+  bim-plus-event-handler-invoke:
+    lifecycle: single
+    description: BimPlusEventHandler.Invoke
+  bim-plus-user-control-process-js-event-handler-begin-invoke:
+    lifecycle: single
+    description: BimPlusUserControlProcessJsEventHandler.BeginInvoke
+  bim-plus-user-control-process-js-event-handler-end-invoke:
+    lifecycle: single
+    description: BimPlusUserControlProcessJsEventHandler.EndInvoke
+  bim-plus-user-control-process-js-event-handler-invoke:
+    lifecycle: single
+    description: BimPlusUserControlProcessJsEventHandler.Invoke
+  bim-property-validation-attribute-error-message:
+    lifecycle: single
+    description: BimPropertyValidationAttribute.ErrorMessage
+  bim-property-validation-attribute-is-valid:
+    lifecycle: single
+    description: BimPropertyValidationAttribute.IsValid
+  bimplus-client-events-client-events:
+    lifecycle: single
+    description: BimplusClientEvents.ClientEvents
+  bimplus-client-events-critical:
+    lifecycle: single
+    description: BimplusClientEvents.Critical
+  bimplus-client-events-error:
+    lifecycle: single
+    description: BimplusClientEvents.Error
+  bimplus-client-events-informational:
+    lifecycle: single
+    description: BimplusClientEvents.Informational
+  bimplus-client-events-log-always:
+    lifecycle: single
+    description: BimplusClientEvents.LogAlways
+  bimplus-client-events-verbose:
+    lifecycle: single
+    description: BimplusClientEvents.Verbose
+  bimplus-client-events-warning:
+    lifecycle: single
+    description: BimplusClientEvents.Warning
+  bloss-curve-element-initialize:
+    lifecycle: single
+    description: BlossCurveElement.Initialize
+  bloss-curve-element-local-k:
+    lifecycle: single
+    description: BlossCurveElement.LocalK
+  bloss-curve-element-local-r:
+    lifecycle: single
+    description: BlossCurveElement.LocalR
+  bloss-curve-element-local-theta:
+    lifecycle: single
+    description: BlossCurveElement.LocalTheta
+  bloss-curve-element-local-x:
+    lifecycle: single
+    description: BlossCurveElement.LocalX
+  bloss-curve-element-local-y:
+    lifecycle: single
+    description: BlossCurveElement.LocalY
+  bloss-curve-element-position-at-station:
+    lifecycle: single
+    description: BlossCurveElement.PositionAtStation
+  bounding-box-contains:
+    lifecycle: single
+    description: BoundingBox.Contains
+  bounding-box-extend:
+    lifecycle: single
+    description: BoundingBox.Extend
+  bounding-box-intersects:
+    lifecycle: single
+    description: BoundingBox.Intersects
+  camera-builder-calculate-allplan-view:
+    lifecycle: single
+    description: CameraBuilder.CalculateAllplanView
+  camera-builder-create-dto-scene-camera-from-perspective-camera:
+    lifecycle: single
+    description: CameraBuilder.CreateDtoSceneCameraFromPerspectiveCamera
+  camera-builder-create-perspective-camera-from-dto-scene-camera:
+    lifecycle: single
+    description: CameraBuilder.CreatePerspectiveCameraFromDtoSceneCamera
+  camera-builder-cross-vectors:
+    lifecycle: single
+    description: CameraBuilder.CrossVectors
+  camera-builder-euler-from-matrix:
+    lifecycle: single
+    description: CameraBuilder.EulerFromMatrix
+  catalogs-delete:
+    lifecycle: single
+    description: Catalogs.Delete
+  catalogs-delete-content:
+    lifecycle: single
+    description: Catalogs.DeleteContent
+  catalogs-delete-item:
+    lifecycle: single
+    description: Catalogs.DeleteItem
+  catalogs-get:
+    lifecycle: single
+    description: Catalogs.Get
+  catalogs-get-all:
+    lifecycle: single
+    description: Catalogs.GetAll
+  catalogs-get-all-catalog-items:
+    lifecycle: single
+    description: Catalogs.GetAllCatalogItems
+  catalogs-get-catalog-item:
+    lifecycle: single
+    description: Catalogs.GetCatalogItem
+  catalogs-get-content:
+    lifecycle: single
+    description: Catalogs.GetContent
+  catalogs-post:
+    lifecycle: single
+    description: Catalogs.Post
+  catalogs-post-content:
+    lifecycle: single
+    description: Catalogs.PostContent
+  catalogs-post-item:
+    lifecycle: single
+    description: Catalogs.PostItem
+  cbase-create-copy:
+    lifecycle: single
+    description: CBase.CreateCopy
+  cbase-csg-union-object-clone:
+    lifecycle: single
+    description: CBaseCSG_Union_Object.Clone
+  cbase-csg-union-object-copy-tree-hierarchy:
+    lifecycle: single
+    description: CBaseCSG_Union_Object.CopyTreeHierarchy
+  cbase-csg-union-object-create-polyeder-from-csg-geometry:
+    lifecycle: single
+    description: CBaseCSG_Union_Object.CreatePolyederFromCSG_Geometry
+  cbase-csg-union-object-create-polyeder-from-csg-union-object:
+    lifecycle: single
+    description: CBaseCSG_Union_Object.CreatePolyederFromCsgUnionObject
+  cbase-csg-union-object-set-minor-major:
+    lifecycle: single
+    description: CBaseCSG_Union_Object.SetMinorMajor
+  cbase-element-polyeder-add-base-polyeder:
+    lifecycle: single
+    description: CBaseElementPolyeder.AddBasePolyeder
+  cbase-element-polyeder-add-bendingrolle:
+    lifecycle: single
+    description: CBaseElementPolyeder.AddBendingrolle
+  cbase-element-polyeder-add-radius:
+    lifecycle: single
+    description: CBaseElementPolyeder.AddRadius
+  cbase-element-polyeder-all-bendinrolle-are-equal:
+    lifecycle: single
+    description: CBaseElementPolyeder.AllBendinrolleAreEqual
+  cbase-element-polyeder-all-diameter-are-equal:
+    lifecycle: single
+    description: CBaseElementPolyeder.AllDiameterAreEqual
+  cbase-element-polyeder-append-edge:
+    lifecycle: single
+    description: CBaseElementPolyeder.AppendEdge
+  cbase-element-polyeder-base-clone:
+    lifecycle: single
+    description: CBaseElementPolyeder.BaseClone
+  cbase-element-polyeder-check-polyeder:
+    lifecycle: single
+    description: CBaseElementPolyeder.CheckPolyeder
+  cbase-element-polyeder-clone:
+    lifecycle: single
+    description: CBaseElementPolyeder.Clone
+  cbase-element-polyeder-copy-special-color:
+    lifecycle: single
+    description: CBaseElementPolyeder.CopySpecialColor
+  cbase-element-polyeder-create-list-of-bars-from-polyeder:
+    lifecycle: single
+    description: CBaseElementPolyeder.CreateListOfBarsFromPolyeder
+  cbase-element-polyeder-get-bendingrolle:
+    lifecycle: single
+    description: CBaseElementPolyeder.GetBendingrolle
+  cbase-element-polyeder-get-radius:
+    lifecycle: single
+    description: CBaseElementPolyeder.GetRadius
+  cbase-element-polyeder-get-smoothing:
+    lifecycle: single
+    description: CBaseElementPolyeder.GetSmoothing
+  cbase-element-polyeder-get-special-color:
+    lifecycle: single
+    description: CBaseElementPolyeder.GetSpecialColor
+  cbase-element-polyeder-half-special-color:
+    lifecycle: single
+    description: CBaseElementPolyeder.HalfSpecialColor
+  cbase-element-polyeder-is-bending-rolle-defined:
+    lifecycle: single
+    description: CBaseElementPolyeder.IsBendingRolleDefined
+  cbase-element-polyeder-is-bendingrolle:
+    lifecycle: single
+    description: CBaseElementPolyeder.IsBendingrolle
+  cbase-element-polyeder-is-every-edge-in-two-faces:
+    lifecycle: single
+    description: CBaseElementPolyeder.IsEveryEdgeInTwoFaces
+  cbase-element-polyeder-is-radius:
+    lifecycle: single
+    description: CBaseElementPolyeder.IsRadius
+  cbase-element-polyeder-is-smoothing-defined:
+    lifecycle: single
+    description: CBaseElementPolyeder.IsSmoothingDefined
+  cbase-element-polyeder-is-special-color-defined:
+    lifecycle: single
+    description: CBaseElementPolyeder.IsSpecialColorDefined
+  cbase-element-polyeder-multiply-with-matrix:
+    lifecycle: single
+    description: CBaseElementPolyeder.MultiplyWithMatrix
+  cbase-element-polyeder-save-polyeder-to-file:
+    lifecycle: single
+    description: CBaseElementPolyeder.SavePolyederToFile
+  cbase-element-polyeder-set-min-max-box:
+    lifecycle: single
+    description: CBaseElementPolyeder.SetMinMaxBox
+  cbase-element-polyeder-set-radius:
+    lifecycle: single
+    description: CBaseElementPolyeder.SetRadius
+  cbase-element-polyeder-set-smoothing:
+    lifecycle: single
+    description: CBaseElementPolyeder.SetSmoothing
+  cbase-element-polyeder-set-special-color:
+    lifecycle: single
+    description: CBaseElementPolyeder.SetSpecialColor
+  cbase-element-polyeder-shallow-clone:
+    lifecycle: single
+    description: CBaseElementPolyeder.ShallowClone
+  cbase-get-bounding-rect:
+    lifecycle: single
+    description: CBase.GetBoundingRect
+  cbase-get-selected:
+    lifecycle: single
+    description: CBase.GetSelected
+  ccsg-geometry-add-extrusion-radius:
+    lifecycle: single
+    description: CCSG_Geometry.AddExtrusionRadius
+  ccsg-geometry-add-original-point-geometry-attributes:
+    lifecycle: single
+    description: CCSG_Geometry.AddOriginalPointGeometryAttributes
+  ccsg-geometry-add-point:
+    lifecycle: single
+    description: CCSG_Geometry.AddPoint
+  ccsg-geometry-add-radius:
+    lifecycle: single
+    description: CCSG_Geometry.AddRadius
+  ccsg-geometry-add-rotation:
+    lifecycle: single
+    description: CCSG_Geometry.AddRotation
+  ccsg-geometry-append:
+    lifecycle: single
+    description: CCSG_Geometry.Append
+  ccsg-geometry-attributes-clone:
+    lifecycle: single
+    description: CCSG_Geometry_Attributes.Clone
+  ccsg-geometry-attributes-compare-to:
+    lifecycle: single
+    description: CCSG_Geometry_Attributes.CompareTo
+  ccsg-geometry-clone:
+    lifecycle: single
+    description: CCSG_Geometry.Clone
+  ccsg-geometry-clone-without-rounding:
+    lifecycle: single
+    description: CCSG_Geometry.CloneWithoutRounding
+  ccsg-geometry-set-minor-major:
+    lifecycle: single
+    description: CCSG_Geometry.SetMinorMajor
+  ccsg-parametrized-geometry-attributes-clone:
+    lifecycle: single
+    description: CCSG_Parametrized_Geometry_Attributes.Clone
+  ccsg-parametrized-geometry-attributes-compare-to:
+    lifecycle: single
+    description: CCSG_Parametrized_Geometry_Attributes.CompareTo
+  ccsg-parametrized-geometry-clone:
+    lifecycle: single
+    description: CCSG_ParametrizedGeometry.Clone
+  ccsg-parametrized-geometry-set-minor-major:
+    lifecycle: single
+    description: CCSG_ParametrizedGeometry.SetMinorMajor
+  cdb-serialize-get-buffer:
+    lifecycle: single
+    description: CDbSerialize.GetBuffer
+  cdb-serialize-read:
+    lifecycle: single
+    description: CDbSerialize.Read
+  cdb-serialize-write:
+    lifecycle: single
+    description: CDbSerialize.Write
+  celement-edge-clone:
+    lifecycle: single
+    description: CElementEdge.Clone
+  celement-face-add:
+    lifecycle: single
+    description: CElementFace.Add
+  celement-face-clone:
+    lifecycle: single
+    description: CElementFace.Clone
+  celement-face-dispose:
+    lifecycle: single
+    description: CElementFace.Dispose
+  celement-face-get-enumerator:
+    lifecycle: single
+    description: CElementFace.GetEnumerator
+  celement-face-point-index:
+    lifecycle: single
+    description: CElementFace.PointIndex
+  celement-point-clone:
+    lifecycle: single
+    description: CElementPoint.Clone
+  celement-point-det-clone:
+    lifecycle: single
+    description: CElementPointDet.Clone
+  celement-point-distance-to:
+    lifecycle: single
+    description: CElementPoint.DistanceTo
+  celement-point-equal-vector:
+    lifecycle: single
+    description: CElementPoint.EqualVector
+  celement-point-equals:
+    lifecycle: single
+    description: CElementPoint.Equals
+  celement-point-get-hash-code:
+    lifecycle: single
+    description: CElementPoint.GetHashCode
+  celement-point-get-length:
+    lifecycle: single
+    description: CElementPoint.GetLength
+  celement-point-max-point:
+    lifecycle: single
+    description: CElementPoint.MaxPoint
+  celement-point-min-point:
+    lifecycle: single
+    description: CElementPoint.MinPoint
+  celement-point-multiply-with-matrix:
+    lifecycle: single
+    description: CElementPoint.MultiplyWithMatrix
+  celement-point-set-max-point:
+    lifecycle: single
+    description: CElementPoint.SetMaxPoint
+  celement-point-set-min-point:
+    lifecycle: single
+    description: CElementPoint.SetMinPoint
+  check-email-attribute-error-message:
+    lifecycle: single
+    description: CheckEmailAttribute.ErrorMessage
+  check-email-attribute-is-valid:
+    lifecycle: single
+    description: CheckEmailAttribute.IsValid
+  check-is-enum-attribute-is-valid:
+    lifecycle: single
+    description: CheckIsEnumAttribute.IsValid
+  check-is-not-null-attribute-is-valid:
+    lifecycle: single
+    description: CheckIsNotNullAttribute.IsValid
+  check-is-not-null-or-empty-attribute-is-valid:
+    lifecycle: single
+    description: CheckIsNotNullOrEmptyAttribute.IsValid
+  check-minimum-count-attribute-error-message:
+    lifecycle: single
+    description: CheckMinimumCountAttribute.ErrorMessage
+  check-minimum-count-attribute-is-valid:
+    lifecycle: single
+    description: CheckMinimumCountAttribute.IsValid
+  check-range-attribute-error-message:
+    lifecycle: single
+    description: CheckRangeAttribute.ErrorMessage
+  check-range-attribute-is-valid:
+    lifecycle: single
+    description: CheckRangeAttribute.IsValid
+  circular-horizontal-element-position-at-station:
+    lifecycle: single
+    description: CircularHorizontalElement.PositionAtStation
+  clash-filter-type-builder-compile-result-type:
+    lifecycle: single
+    description: ClashFilterTypeBuilder.CompileResultType
+  client-authentication-adapter-login-async:
+    lifecycle: single
+    description: ClientAuthenticationAdapter.LoginAsync
+  client-authentication-adapter-logout-async:
+    lifecycle: single
+    description: ClientAuthenticationAdapter.LogoutAsync
+  client-authentication-adapter-refresh-token-async:
+    lifecycle: single
+    description: ClientAuthenticationAdapter.RefreshTokenAsync
+  client-configuration-assign-client:
+    lifecycle: single
+    description: ClientConfiguration.AssignClient
+  client-configuration-clone:
+    lifecycle: single
+    description: ClientConfiguration.Clone
+  client-configuration-create-default-configuration:
+    lifecycle: single
+    description: ClientConfiguration.CreateDefaultConfiguration
+  client-connection-clone:
+    lifecycle: single
+    description: ClientConnection.Clone
+  client-connection-get-http-client:
+    lifecycle: single
+    description: ClientConnection.GetHttpClient
+  client-connection-store-tokens:
+    lifecycle: single
+    description: ClientConnection.StoreTokens
+  client-connection-store-tokens-async:
+    lifecycle: single
+    description: ClientConnection.StoreTokensAsync
+  clothoid-element-position-at-station:
+    lifecycle: single
+    description: ClothoidElement.PositionAtStation
+  cmatrix-clear:
+    lifecycle: single
+    description: CMatrix.Clear
+  cmatrix-equals:
+    lifecycle: single
+    description: CMatrix.Equals
+  cmatrix-get-hash-code:
+    lifecycle: single
+    description: CMatrix.GetHashCode
+  cmatrix-to-string:
+    lifecycle: single
+    description: CMatrix.ToString
+  collision-add-collision-element:
+    lifecycle: single
+    description: Collision.AddCollisionElement
+  common-db-object-type-builder-compile-result-type:
+    lifecycle: single
+    description: CommonDbObjectTypeBuilder.CompileResultType
+  connection-authorize-via-access-token-async:
+    lifecycle: single
+    description: Connection.AuthorizeViaAccessTokenAsync
+  connection-authorize-via-login-password-async:
+    lifecycle: single
+    description: Connection.AuthorizeViaLoginPasswordAsync
+  connection-authorize-via-single-sign-on-async:
+    lifecycle: single
+    description: Connection.AuthorizeViaSingleSignOnAsync
+  connection-close-all-connections:
+    lifecycle: single
+    description: Connection.CloseAllConnections
+  connection-create-team-session:
+    lifecycle: single
+    description: Connection.CreateTeamSession
+  connection-disconnect-async:
+    lifecycle: single
+    description: Connection.DisconnectAsync
+  connection-exception-get-object-data:
+    lifecycle: single
+    description: ConnectionException.GetObjectData
+  connection-get-divisions:
+    lifecycle: single
+    description: Connection.GetDivisions
+  connection-get-team:
+    lifecycle: single
+    description: Connection.GetTeam
+  connection-get-teams:
+    lifecycle: single
+    description: Connection.GetTeams
+  connection-get-token-info:
+    lifecycle: single
+    description: Connection.GetTokenInfo
+  connection-get-user-id:
+    lifecycle: single
+    description: Connection.GetUserId
+  connection-get-user-info:
+    lifecycle: single
+    description: Connection.GetUserInfo
+  connection-request-cross-token:
+    lifecycle: single
+    description: Connection.RequestCrossToken
+  connection-search-division:
+    lifecycle: single
+    description: Connection.SearchDivision
+  connection-search-divisions:
+    lifecycle: single
+    description: Connection.SearchDivisions
+  conversions-convert-matrix-to-traditional:
+    lifecycle: single
+    description: Conversions.ConvertMatrixToTraditional
+  conversions-convert-screen-to-traditional:
+    lifecycle: single
+    description: Conversions.ConvertScreenToTraditional
+  conversions-convert-to-singleprecision:
+    lifecycle: single
+    description: Conversions.ConvertToSingleprecision
+  core-connect-with-access-token-async:
+    lifecycle: single
+    description: Core.ConnectWithAccessTokenAsync
+  core-connect-with-single-sign-on-async:
+    lifecycle: single
+    description: Core.ConnectWithSingleSignOnAsync
+  core-disconnect-async:
+    lifecycle: single
+    description: Core.DisconnectAsync
+  core-get-account-settings:
+    lifecycle: single
+    description: Core.GetAccountSettings
+  core-get-attribute:
+    lifecycle: single
+    description: Core.GetAttribute
+  core-get-attributes:
+    lifecycle: single
+    description: Core.GetAttributes
+  core-get-divisions:
+    lifecycle: single
+    description: Core.GetDivisions
+  core-get-projects:
+    lifecycle: single
+    description: Core.GetProjects
+  core-get-subscriptions:
+    lifecycle: single
+    description: Core.GetSubscriptions
+  core-get-team:
+    lifecycle: single
+    description: Core.GetTeam
+  core-get-teams:
+    lifecycle: single
+    description: Core.GetTeams
+  core-get-token-info:
+    lifecycle: single
+    description: Core.GetTokenInfo
+  core-get-user-info:
+    lifecycle: single
+    description: Core.GetUserInfo
+  core-request-cross-token:
+    lifecycle: single
+    description: Core.RequestCrossToken
+  core-search-division:
+    lifecycle: single
+    description: Core.SearchDivision
+  core-search-divisions:
+    lifecycle: single
+    description: Core.SearchDivisions
+  core-set-team:
+    lifecycle: single
+    description: Core.SetTeam
+  core-validate-subscription:
+    lifecycle: single
+    description: Core.ValidateSubscription
+  core-validate-token:
+    lifecycle: single
+    description: Core.ValidateToken
+  count-array-add-count-object:
+    lifecycle: single
+    description: CountArray.AddCountObject
+  count-array-add-object-list:
+    lifecycle: single
+    description: CountArray.AddObjectList
+  count-array-all-object-are-equal:
+    lifecycle: single
+    description: CountArray.AllObjectAreEqual
+  count-array-clone:
+    lifecycle: single
+    description: CountArray.Clone
+  count-array-dispose:
+    lifecycle: single
+    description: CountArray.Dispose
+  count-array-get-counter-object:
+    lifecycle: single
+    description: CountArray.GetCounterObject
+  count-array-get-list-of-all-values:
+    lifecycle: single
+    description: CountArray.GetListOfAllValues
+  count-array-get-object:
+    lifecycle: single
+    description: CountArray.GetObject
+  count-array-get-special-object:
+    lifecycle: single
+    description: CountArray.GetSpecialObject
+  count-array-is-special-object:
+    lifecycle: single
+    description: CountArray.IsSpecialObject
+  count-array-set-object:
+    lifecycle: single
+    description: CountArray.SetObject
+  csgcomponent-add-child:
+    lifecycle: single
+    description: CSGComponent.AddChild
+  csgcomponent-get-child:
+    lifecycle: single
+    description: CSGComponent.GetChild
+  csgcomponent-is-leaf:
+    lifecycle: single
+    description: CSGComponent.isLeaf
+  csgcomposit-add-child:
+    lifecycle: single
+    description: CSGComposit.AddChild
+  csgcomposit-clone:
+    lifecycle: single
+    description: CSGComposit.Clone
+  csgcomposit-get-child:
+    lifecycle: single
+    description: CSGComposit.GetChild
+  csgcomposit-is-leaf:
+    lifecycle: single
+    description: CSGComposit.isLeaf
+  csgdefinition-comparer-compare:
+    lifecycle: single
+    description: CSGDefinitionComparer.Compare
+  csggeometry-serialization-deserialize-csggeometry:
+    lifecycle: single
+    description: CSGGeometrySerialization.DeserializeCSGGeometry
+  csggeometry-serialization-deserialize-param-csggeometry:
+    lifecycle: single
+    description: CSGGeometrySerialization.DeserializeParamCSGGeometry
+  csggeometry-serialization-serialize-csggeometry:
+    lifecycle: single
+    description: CSGGeometrySerialization.SerializeCSGGeometry
+  csggeometry-serialization-serialize-csgparam-geometry:
+    lifecycle: single
+    description: CSGGeometrySerialization.SerializeCSGParamGeometry
+  csgobject-element-clone:
+    lifecycle: single
+    description: CSGObjectElement.Clone
+  csgobject-serialization-deserialize-csgobject:
+    lifecycle: single
+    description: CSGObjectSerialization.DeserializeCSGObject
+  csgobject-serialization-serialize-csgobject:
+    lifecycle: single
+    description: CSGObjectSerialization.SerializeCSGObject
+  csgobject-serialization-serialize-csgobject-as-csg-geometry:
+    lifecycle: single
+    description: CSGObjectSerialization.SerializeCSGObjectAsCSG_Geometry
+  csgtrace-clone:
+    lifecycle: single
+    description: CSGTrace.Clone
+  csgtrace-reverse-csgtrace:
+    lifecycle: single
+    description: CSGTrace.ReverseCSGTrace
+  csgtree-deserialize:
+    lifecycle: single
+    description: CSGTree.Deserialize
+  csgtree-serialize:
+    lifecycle: single
+    description: CSGTree.Serialize
+  curved-vertical-element-elevation-at-station:
+    lifecycle: single
+    description: CurvedVerticalElement.ElevationAtStation
+  custom-collision-set-custom-element-type:
+    lifecycle: single
+    description: CustomCollision.SetCustomElementType
+  custom-collision-set-object-name:
+    lifecycle: single
+    description: CustomCollision.SetObjectName
+  custom-serialization-binder-bind-to-type:
+    lifecycle: single
+    description: CustomSerializationBinder.BindToType
+  data-for-dividing-find-ifc-file-type-for-element:
+    lifecycle: single
+    description: DataForDividing.FindIfcFileTypeForElement
+  data-for-dividing-ifc-element-name-from-type:
+    lifecycle: single
+    description: DataForDividing.IfcElementNameFromType
+  data-for-parallel-import-find-ifc-element-relation-type-for-element:
+    lifecycle: single
+    description: DataForParallelImport.FindIfcElementRelationTypeForElement
+  data-for-parallel-import-find-index-list-for-relation-element:
+    lifecycle: single
+    description: DataForParallelImport.FindIndexListForRelationElement
+  date-time-extensions-to-date-time-offset:
+    lifecycle: single
+    description: DateTimeExtensions.ToDateTimeOffset
+  db-geometry-deserialize:
+    lifecycle: single
+    description: DbGeometry.Deserialize
+  db-geometry-serialize:
+    lifecycle: single
+    description: DbGeometry.Serialize
+  db-layer-handler-get-discipline:
+    lifecycle: single
+    description: DbLayerHandler.GetDiscipline
+  db-layer-handler-get-hierrarchy-id:
+    lifecycle: single
+    description: DbLayerHandler.GetHierrarchyId
+  db-layer-handler-get-layer:
+    lifecycle: single
+    description: DbLayerHandler.GetLayer
+  db-layer-handler-is-internal:
+    lifecycle: single
+    description: DbLayerHandler.IsInternal
+  db-layer-handler-is-structural-analysis-domain:
+    lifecycle: single
+    description: DbLayerHandler.IsStructuralAnalysisDomain
+  db-object-attribute-convert-back:
+    lifecycle: single
+    description: DbObjectAttribute.ConvertBack
+  db-object-attribute-ignore-or-convert:
+    lifecycle: single
+    description: DbObjectAttribute.IgnoreOrConvert
+  db-object-handler-get-discipline:
+    lifecycle: single
+    description: DbObjectHandler.GetDiscipline
+  db-object-handler-get-object-type:
+    lifecycle: single
+    description: DbObjectHandler.GetObjectType
+  db-object-list-create:
+    lifecycle: single
+    description: DbObjectList.Create
+  db-object-list-discipline-layer:
+    lifecycle: single
+    description: DbObjectList.DisciplineLayer
+  db-object-list-discpline:
+    lifecycle: single
+    description: DbObjectList.Discpline
+  db-object-list-element-list:
+    lifecycle: single
+    description: DbObjectList.ElementList
+  db-object-list-element-type:
+    lifecycle: single
+    description: DbObjectList.ElementType
+  db-object-list-exist-type-id:
+    lifecycle: single
+    description: DbObjectList.ExistTypeId
+  db-object-list-exist-type-name:
+    lifecycle: single
+    description: DbObjectList.ExistTypeName
+  db-object-list-get-element:
+    lifecycle: single
+    description: DbObjectList.GetElement
+  db-object-list-get-key:
+    lifecycle: single
+    description: DbObjectList.GetKey
+  db-object-list-get-name:
+    lifecycle: single
+    description: DbObjectList.GetName
+  db-object-list-get-type:
+    lifecycle: single
+    description: DbObjectList.GetType
+  db-object-list-objectname:
+    lifecycle: single
+    description: DbObjectList.Objectname
+  db-property-attribute-id:
+    lifecycle: single
+    description: DbPropertyAttribute.Id
+  db-property-ref-company-attribute-id:
+    lifecycle: single
+    description: DbPropertyRefCompanyAttribute.Id
+  db-property-ref-name-attribute-id:
+    lifecycle: single
+    description: DbPropertyRefNameAttribute.Id
+  default-json-string-converter-can-convert:
+    lifecycle: single
+    description: DefaultJsonStringConverter.CanConvert
+  default-json-string-converter-read-json:
+    lifecycle: single
+    description: DefaultJsonStringConverter.ReadJson
+  default-json-string-converter-write-json:
+    lifecycle: single
+    description: DefaultJsonStringConverter.WriteJson
+  deserialize-varbinary-max-deserialize-double-array:
+    lifecycle: single
+    description: DeserializeVarbinaryMax.DeserializeDoubleArray
+  deserialize-varbinary-max-deserialize-guid-array:
+    lifecycle: single
+    description: DeserializeVarbinaryMax.DeserializeGuidArray
+  deserialize-varbinary-max-deserialize-matrix:
+    lifecycle: single
+    description: DeserializeVarbinaryMax.DeserializeMatrix
+  deserialize-varbinary-max-deserialize-polyeder:
+    lifecycle: single
+    description: DeserializeVarbinaryMax.DeserializePolyeder
+  deserialize-varbinary-max-deserialize-polyeder-color-dictionary:
+    lifecycle: single
+    description: DeserializeVarbinaryMax.DeserializePolyederColorDictionary
+  deserialize-varbinary-max-serialize-double-array:
+    lifecycle: single
+    description: DeserializeVarbinaryMax.SerializeDoubleArray
+  deserialize-varbinary-max-serialize-matrix:
+    lifecycle: single
+    description: DeserializeVarbinaryMax.SerializeMatrix
+  deserialize-varbinary-max-serialize-polyeder:
+    lifecycle: single
+    description: DeserializeVarbinaryMax.SerializePolyeder
+  deserialize-varbinary-max-serialize-polyeder-color-dictionary:
+    lifecycle: single
+    description: DeserializeVarbinaryMax.SerializePolyederColorDictionary
+  direct-access-grant-authentication-adapter-impersonate-async:
+    lifecycle: single
+    description: DirectAccessGrantAuthenticationAdapter.ImpersonateAsync
+  direct-access-grant-authentication-adapter-login-async:
+    lifecycle: single
+    description: DirectAccessGrantAuthenticationAdapter.LoginAsync
+  direct-access-grant-authentication-adapter-logout-async:
+    lifecycle: single
+    description: DirectAccessGrantAuthenticationAdapter.LogoutAsync
+  direct-access-grant-authentication-adapter-refresh-token-async:
+    lifecycle: single
+    description: DirectAccessGrantAuthenticationAdapter.RefreshTokenAsync
+  direct-access-grant-authentication-adapter-set-credentials:
+    lifecycle: single
+    description: DirectAccessGrantAuthenticationAdapter.SetCredentials
+  divisions-create-model:
+    lifecycle: single
+    description: Divisions.CreateModel
+  divisions-create-revision:
+    lifecycle: single
+    description: Divisions.CreateRevision
+  divisions-delete-dto-division:
+    lifecycle: single
+    description: Divisions.DeleteDtoDivision
+  divisions-download-ifc-model:
+    lifecycle: single
+    description: Divisions.DownloadIfcModel
+  divisions-download-model-resource:
+    lifecycle: single
+    description: Divisions.DownloadModelResource
+  divisions-get:
+    lifecycle: single
+    description: Divisions.Get
+  divisions-get-project-divisions:
+    lifecycle: single
+    description: Divisions.GetProjectDivisions
+  divisions-get-revisions:
+    lifecycle: single
+    description: Divisions.GetRevisions
+  divisions-update:
+    lifecycle: single
+    description: Divisions.Update
+  divisions-upload-ifc-model:
+    lifecycle: single
+    description: Divisions.UploadIfcModel
+  divisions-upload-model:
+    lifecycle: single
+    description: Divisions.UploadModel
+  divisions-upload-project-division:
+    lifecycle: single
+    description: Divisions.UploadProjectDivision
+  divisions-uplod-revit-model:
+    lifecycle: single
+    description: Divisions.UplodRevitModel
+  dt-curve-reference-list-create:
+    lifecycle: single
+    description: DtCurveReferenceList.Create
+  dt-curve-reference-list-get-type:
+    lifecycle: single
+    description: DtCurveReferenceList.GetType
+  dt-geometry-reference-list-create:
+    lifecycle: single
+    description: DtGeometryReferenceList.Create
+  dt-geometry-reference-list-get-type:
+    lifecycle: single
+    description: DtGeometryReferenceList.GetType
+  dt-object-add-child:
+    lifecycle: single
+    description: DtObject.AddChild
+  dt-object-add-property:
+    lifecycle: single
+    description: DtObject.AddProperty
+  dt-object-add-property-table:
+    lifecycle: single
+    description: DtObject.AddPropertyTable
+  dt-object-delete-property:
+    lifecycle: single
+    description: DtObject.DeleteProperty
+  dt-object-delete-property-table:
+    lifecycle: single
+    description: DtObject.DeletePropertyTable
+  dt-object-exist-property:
+    lifecycle: single
+    description: DtObject.ExistProperty
+  dt-object-exist-property-table:
+    lifecycle: single
+    description: DtObject.ExistPropertyTable
+  dt-object-get-boolean-property:
+    lifecycle: single
+    description: DtObject.GetBooleanProperty
+  dt-object-get-byte-array-property:
+    lifecycle: single
+    description: DtObject.GetByteArrayProperty
+  dt-object-get-date-time-property:
+    lifecycle: single
+    description: DtObject.GetDateTimeProperty
+  dt-object-get-discipline:
+    lifecycle: single
+    description: DtObject.GetDiscipline
+  dt-object-get-double-property:
+    lifecycle: single
+    description: DtObject.GetDoubleProperty
+  dt-object-get-guid-property:
+    lifecycle: single
+    description: DtObject.GetGuidProperty
+  dt-object-get-int-property:
+    lifecycle: single
+    description: DtObject.GetIntProperty
+  dt-object-get-int16-property:
+    lifecycle: single
+    description: DtObject.GetInt16Property
+  dt-object-get-int64-property:
+    lifecycle: single
+    description: DtObject.GetInt64Property
+  dt-object-get-layer:
+    lifecycle: single
+    description: DtObject.GetLayer
+  dt-object-get-property:
+    lifecycle: single
+    description: DtObject.GetProperty
+  dt-object-get-raw-boolean-property:
+    lifecycle: single
+    description: DtObject.GetRawBooleanProperty
+  dt-object-get-real-bool-property:
+    lifecycle: single
+    description: DtObject.GetRealBoolProperty
+  dt-object-get-real-double-property:
+    lifecycle: single
+    description: DtObject.GetRealDoubleProperty
+  dt-object-get-real-int-property:
+    lifecycle: single
+    description: DtObject.GetRealIntProperty
+  dt-object-get-string-property:
+    lifecycle: single
+    description: DtObject.GetStringProperty
+  dt-object-object-type:
+    lifecycle: single
+    description: DtObject.ObjectType
+  dt-object-property-table:
+    lifecycle: single
+    description: DtObject.PropertyTable
+  dt-object-remove-child:
+    lifecycle: single
+    description: DtObject.RemoveChild
+  dt-object-set-id:
+    lifecycle: single
+    description: DtObject.SetId
+  dt-objects-alter-object-async:
+    lifecycle: single
+    description: DtObjects.AlterObjectAsync
+  dt-objects-create-connection:
+    lifecycle: single
+    description: DtObjects.CreateConnection
+  dt-objects-delete-child-objects:
+    lifecycle: single
+    description: DtObjects.DeleteChildObjects
+  dt-objects-delete-connections:
+    lifecycle: single
+    description: DtObjects.DeleteConnections
+  dt-objects-delete-lock:
+    lifecycle: single
+    description: DtObjects.DeleteLock
+  dt-objects-delete-object:
+    lifecycle: single
+    description: DtObjects.DeleteObject
+  dt-objects-get-attachment-data:
+    lifecycle: single
+    description: DtObjects.GetAttachmentData
+  dt-objects-get-attribute:
+    lifecycle: single
+    description: DtObjects.GetAttribute
+  dt-objects-get-attribute-values:
+    lifecycle: single
+    description: DtObjects.GetAttributeValues
+  dt-objects-get-chunk-glb-geometry:
+    lifecycle: single
+    description: DtObjects.GetChunkGlbGeometry
+  dt-objects-get-connections:
+    lifecycle: single
+    description: DtObjects.GetConnections
+  dt-objects-get-dt-objects-by-id:
+    lifecycle: single
+    description: DtObjects.GetDtObjectsById
+  dt-objects-get-dt-objects-with-properties-by-id:
+    lifecycle: single
+    description: DtObjects.GetDtObjectsWithPropertiesById
+  dt-objects-get-element-types:
+    lifecycle: single
+    description: DtObjects.GetElementTypes
+  dt-objects-get-elements-by-type-id:
+    lifecycle: single
+    description: DtObjects.GetElementsByTypeId
+  dt-objects-get-glb-geometry:
+    lifecycle: single
+    description: DtObjects.GetGlbGeometry
+  dt-objects-get-layer-object-geometry:
+    lifecycle: single
+    description: DtObjects.GetLayerObjectGeometry
+  dt-objects-get-locks:
+    lifecycle: single
+    description: DtObjects.GetLocks
+  dt-objects-get-object:
+    lifecycle: single
+    description: DtObjects.GetObject
+  dt-objects-get-object-async:
+    lifecycle: single
+    description: DtObjects.GetObjectAsync
+  dt-objects-get-object-geometry:
+    lifecycle: single
+    description: DtObjects.GetObjectGeometry
+  dt-objects-get-object-geometry-as-three-js:
+    lifecycle: single
+    description: DtObjects.GetObjectGeometryAsThreeJs
+  dt-objects-get-object-geometry-as-three-js-mesh:
+    lifecycle: single
+    description: DtObjects.GetObjectGeometryAsThreeJsMesh
+  dt-objects-get-object-geometry-async:
+    lifecycle: single
+    description: DtObjects.GetObjectGeometryAsync
+  dt-objects-get-object-internal:
+    lifecycle: single
+    description: DtObjects.GetObjectInternal
+  dt-objects-get-object-tree:
+    lifecycle: single
+    description: DtObjects.GetObjectTree
+  dt-objects-get-objects:
+    lifecycle: single
+    description: DtObjects.GetObjects
+  dt-objects-get-paged-meshblob:
+    lifecycle: single
+    description: DtObjects.GetPagedMeshblob
+  dt-objects-get-paged-meshblob-async:
+    lifecycle: single
+    description: DtObjects.GetPagedMeshblobAsync
+  dt-objects-get-property-sets:
+    lifecycle: single
+    description: DtObjects.GetPropertySets
+  dt-objects-get-tattribute-values:
+    lifecycle: single
+    description: DtObjects.GetTAttributeValues
+  dt-objects-is-property-set-updtodate:
+    lifecycle: single
+    description: DtObjects.IsPropertySetUpdtodate
+  dt-objects-lock:
+    lifecycle: single
+    description: DtObjects.Lock
+  dt-objects-object-exists:
+    lifecycle: single
+    description: DtObjects.ObjectExists
+  dt-objects-post-object:
+    lifecycle: single
+    description: DtObjects.PostObject
+  dt-objects-post-object-async:
+    lifecycle: single
+    description: DtObjects.PostObjectAsync
+  dt-objects-put-alter-object:
+    lifecycle: single
+    description: DtObjects.PutAlterObject
+  dt-objects-put-object:
+    lifecycle: single
+    description: DtObjects.PutObject
+  dt-objects-put-object-async:
+    lifecycle: single
+    description: DtObjects.PutObjectAsync
+  dt-objects-update-attribute-values:
+    lifecycle: single
+    description: DtObjects.UpdateAttributeValues
+  dt-objects-validate-object:
+    lifecycle: single
+    description: DtObjects.ValidateObject
+  dto-administration-team-member-get-unknown-user:
+    lifecycle: single
+    description: DtoAdministrationTeamMember.GetUnknownUser
+  dto-annotation-get-cusom-attributes:
+    lifecycle: single
+    description: DtoAnnotation.GetCusomAttributes
+  dto-attribut-definition-clone:
+    lifecycle: single
+    description: DtoAttributDefinition.Clone
+  dto-attribut-definition-group-name:
+    lifecycle: single
+    description: DtoAttributDefinition.GroupName
+  dto-attribut-definition-property-name:
+    lifecycle: single
+    description: DtoAttributDefinition.PropertyName
+  dto-attribute-topology-add:
+    lifecycle: single
+    description: DtoAttributeTopology.Add
+  dto-attribute-topology-erase-empty-nodes:
+    lifecycle: single
+    description: DtoAttributeTopology.EraseEmptyNodes
+  dto-attributes-group-add-property:
+    lifecycle: single
+    description: DtoAttributesGroup.AddProperty
+  dto-attributes-group-delete-property:
+    lifecycle: single
+    description: DtoAttributesGroup.DeleteProperty
+  dto-attributes-group-equals:
+    lifecycle: single
+    description: DtoAttributesGroup.Equals
+  dto-attributes-group-exist-property:
+    lifecycle: single
+    description: DtoAttributesGroup.ExistProperty
+  dto-attributes-group-get-boolean-property:
+    lifecycle: single
+    description: DtoAttributesGroup.GetBooleanProperty
+  dto-attributes-group-get-byte-array-property:
+    lifecycle: single
+    description: DtoAttributesGroup.GetByteArrayProperty
+  dto-attributes-group-get-byte-property:
+    lifecycle: single
+    description: DtoAttributesGroup.GetByteProperty
+  dto-attributes-group-get-date-time-property:
+    lifecycle: single
+    description: DtoAttributesGroup.GetDateTimeProperty
+  dto-attributes-group-get-double-property:
+    lifecycle: single
+    description: DtoAttributesGroup.GetDoubleProperty
+  dto-attributes-group-get-guid:
+    lifecycle: single
+    description: DtoAttributesGroup.GetGuid
+  dto-attributes-group-get-guid-property:
+    lifecycle: single
+    description: DtoAttributesGroup.GetGuidProperty
+  dto-attributes-group-get-int-property:
+    lifecycle: single
+    description: DtoAttributesGroup.GetIntProperty
+  dto-attributes-group-get-int16-property:
+    lifecycle: single
+    description: DtoAttributesGroup.GetInt16Property
+  dto-attributes-group-get-int64-property:
+    lifecycle: single
+    description: DtoAttributesGroup.GetInt64Property
+  dto-attributes-group-get-property:
+    lifecycle: single
+    description: DtoAttributesGroup.GetProperty
+  dto-attributes-group-get-raw-boolean-property:
+    lifecycle: single
+    description: DtoAttributesGroup.GetRawBooleanProperty
+  dto-attributes-group-get-real-bool-property:
+    lifecycle: single
+    description: DtoAttributesGroup.GetRealBoolProperty
+  dto-attributes-group-get-real-double-property:
+    lifecycle: single
+    description: DtoAttributesGroup.GetRealDoubleProperty
+  dto-attributes-group-get-real-int-property:
+    lifecycle: single
+    description: DtoAttributesGroup.GetRealIntProperty
+  dto-attributes-group-get-string-property:
+    lifecycle: single
+    description: DtoAttributesGroup.GetStringProperty
+  dto-attributes-group-join:
+    lifecycle: single
+    description: DtoAttributesGroup.Join
+  dto-bcf-api-project-extension-service-initialize-default-value:
+    lifecycle: single
+    description: DtoBcfApiProjectExtensionService.InitializeDefaultValue
+  dto-bcf-error-messages-add-issue-error-message:
+    lifecycle: single
+    description: DtoBcfErrorMessages.AddIssueErrorMessage
+  dto-bcf-error-messages-add-issue-error-message-list:
+    lifecycle: single
+    description: DtoBcfErrorMessages.AddIssueErrorMessageList
+  dto-bcf-issues-to-short-bcf-issue:
+    lifecycle: single
+    description: DtoBcfIssues.ToShortBcfIssue
+  dto-compared-element-add-property:
+    lifecycle: single
+    description: DtoComparedElement.AddProperty
+  dto-connection-create-connection:
+    lifecycle: single
+    description: DtoConnection.CreateConnection
+  dto-connection-delete-connections:
+    lifecycle: single
+    description: DtoConnection.DeleteConnections
+  dto-connection-get-connections:
+    lifecycle: single
+    description: DtoConnection.GetConnections
+  dto-connection-put-connections:
+    lifecycle: single
+    description: DtoConnection.PutConnections
+  dto-cross-section-definition-deep-copy:
+    lifecycle: single
+    description: DtoCrossSectionDefinition.DeepCopy
+  dto-cross-section-definition-equals:
+    lifecycle: single
+    description: DtoCrossSectionDefinition.Equals
+  dto-cross-section-definition-get-hash-code:
+    lifecycle: single
+    description: DtoCrossSectionDefinition.GetHashCode
+  dto-cross-section-equals:
+    lifecycle: single
+    description: DtoCrossSection.Equals
+  dto-cross-section-get-hash-code:
+    lifecycle: single
+    description: DtoCrossSection.GetHashCode
+  dto-cross-section-parameter-equals:
+    lifecycle: single
+    description: DtoCrossSectionParameter.Equals
+  dto-cross-section-parameter-get-hash-code:
+    lifecycle: single
+    description: DtoCrossSectionParameter.GetHashCode
+  dto-csg-parameter-command-equals:
+    lifecycle: single
+    description: DtoCsgParameterCommand.Equals
+  dto-csg-parameter-command-get-hash-code:
+    lifecycle: single
+    description: DtoCsgParameterCommand.GetHashCode
+  dto-curve-get-direction:
+    lifecycle: single
+    description: DtoCurve.GetDirection
+  dto-data-column-set-data-column:
+    lifecycle: single
+    description: DtoDataColumn.SetDataColumn
+  dto-data-row-set-data-row:
+    lifecycle: single
+    description: DtoDataRow.SetDataRow
+  dto-data-table-set-data-table:
+    lifecycle: single
+    description: DtoDataTable.SetDataTable
+  dto-data-table-set-data-table-columns:
+    lifecycle: single
+    description: DtoDataTable.SetDataTableColumns
+  dto-data-table-set-data-table-rows:
+    lifecycle: single
+    description: DtoDataTable.SetDataTableRows
+  dto-dimension-line-get-cusom-attributes:
+    lifecycle: single
+    description: DtoDimensionLine.GetCusomAttributes
+  dto-elements-initialize-values:
+    lifecycle: single
+    description: DtoElements.InitializeValues
+  dto-free-attribute-validate-inputs:
+    lifecycle: single
+    description: DtoFreeAttribute.ValidateInputs
+  dto-geometry-face-count:
+    lifecycle: single
+    description: DtoGeometry.FaceCount
+  dto-geometry-get-face:
+    lifecycle: single
+    description: DtoGeometry.GetFace
+  dto-geometry-get-min-max:
+    lifecycle: single
+    description: DtoGeometry.GetMinMax
+  dto-geometry-multiply-with-matrix:
+    lifecycle: single
+    description: DtoGeometry.MultiplyWithMatrix
+  dto-hierarchy-node-topology-fill-values:
+    lifecycle: single
+    description: DtoHierarchyNodeTopology.FillValues
+  dto-hierarchy-node-topology-get-count:
+    lifecycle: single
+    description: DtoHierarchyNodeTopology.GetCount
+  dto-hierarchy-topology-fill-values:
+    lifecycle: single
+    description: DtoHierarchyTopology.FillValues
+  dto-issue-to-short-issue:
+    lifecycle: single
+    description: DtoIssue.ToShortIssue
+  dto-legend-get-cusom-attributes:
+    lifecycle: single
+    description: DtoLegend.GetCusomAttributes
+  dto-material-surface-init-argb:
+    lifecycle: single
+    description: DtoMaterialSurface.InitArgb
+  dto-medium-user-to-short-user:
+    lifecycle: single
+    description: DtoMediumUser.ToShortUser
+  dto-object-response-prepare-multi-status-code:
+    lifecycle: single
+    description: DtoObjectResponse.PrepareMultiStatusCode
+  dto-one-element-initialize-values:
+    lifecycle: single
+    description: DtoOneElement.InitializeValues
+  dto-project-user-rights-full-project-rights:
+    lifecycle: single
+    description: DtoProjectUserRights.FullProjectRights
+  dto-properties-get-cusom-attributes:
+    lifecycle: single
+    description: DtoProperties.GetCusomAttributes
+  dto-properties-group-get-data-table:
+    lifecycle: single
+    description: DtoPropertiesGroup.GetDataTable
+  dto-properties-group-set-properties-group:
+    lifecycle: single
+    description: DtoPropertiesGroup.SetPropertiesGroup
+  dto-property-group-resources-set-property-values:
+    lifecycle: single
+    description: DtoPropertyGroupResources.SetPropertyValues
+  dto-property-settings-get-properties-as-list:
+    lifecycle: single
+    description: DtoPropertySettings.GetPropertiesAsList
+  dto-scene-camera-initialize-values:
+    lifecycle: single
+    description: DtoSceneCamera.InitializeValues
+  dto-scene-check-and-initialize-scene-camera-values:
+    lifecycle: single
+    description: DtoScene.CheckAndInitializeSceneCameraValues
+  dto-scene-initialize-values:
+    lifecycle: single
+    description: DtoScene.InitializeValues
+  dto-scene-objects-initialize-empty-field:
+    lifecycle: single
+    description: DtoSceneObjects.InitializeEmptyField
+  dto-scene-view-mode-diagonal-length:
+    lifecycle: single
+    description: DtoSceneViewMode.DiagonalLength
+  dto-scene-view-mode-initialize-values:
+    lifecycle: single
+    description: DtoSceneViewMode.InitializeValues
+  dto-scene-view-mode-maximal-size:
+    lifecycle: single
+    description: DtoSceneViewMode.MaximalSize
+  dto-scene3-dpoint-get-normalized-dto3-dpoint:
+    lifecycle: single
+    description: DtoScene3DPoint.GetNormalizedDto3DPoint
+  dto-section-cut-settings-initialize-default-values:
+    lifecycle: single
+    description: DtoSectionCutSettings.InitializeDefaultValues
+  dto-short-user-equals:
+    lifecycle: single
+    description: DtoShortUser.Equals
+  dto-storage-statistics-sum-of-the-used-storage-mb:
+    lifecycle: single
+    description: DtoStorageStatistics.SumOfTheUsedStorageMb
+  dto-user-equals:
+    lifecycle: single
+    description: DtoUser.Equals
+  dto-user-get-unknown-user:
+    lifecycle: single
+    description: DtoUser.GetUnknownUser
+  dto-user-invitation-is-valid:
+    lifecycle: single
+    description: DtoUserInvitation.IsValid
+  element-collision-set-object-name:
+    lifecycle: single
+    description: ElementCollision.SetObjectName
+  element-types-is-architect-object:
+    lifecycle: single
+    description: ElementTypes.IsArchitectObject
+  element-types-is-bar-reinforcement:
+    lifecycle: single
+    description: ElementTypes.IsBarReinforcement
+  element-types-is-bounding-box:
+    lifecycle: single
+    description: ElementTypes.IsBoundingBox
+  element-types-is-fixture:
+    lifecycle: single
+    description: ElementTypes.IsFixture
+  element-types-is-mesh-reinforcement:
+    lifecycle: single
+    description: ElementTypes.IsMeshReinforcement
+  element-types-is-non-element-bound-mesh:
+    lifecycle: single
+    description: ElementTypes.IsNonElementBoundMesh
+  element-types-is-reinforcement:
+    lifecycle: single
+    description: ElementTypes.IsReinforcement
+  email-validator-is-valid-email:
+    lifecycle: single
+    description: EmailValidator.IsValidEmail
+  email-validator-is-valid-format:
+    lifecycle: single
+    description: EmailValidator.IsValidFormat
+  etag-delegate-begin-invoke:
+    lifecycle: single
+    description: ETagDelegate.BeginInvoke
+  etag-delegate-end-invoke:
+    lifecycle: single
+    description: ETagDelegate.EndInvoke
+  etag-delegate-invoke:
+    lifecycle: single
+    description: ETagDelegate.Invoke
+  event-handler-core-add-event:
+    lifecycle: single
+    description: EventHandlerCore.AddEvent
+  event-handler-core-get-used-event-handler:
+    lifecycle: single
+    description: EventHandlerCore.GetUsedEventHandler
+  event-handler-core-on-client-connected:
+    lifecycle: single
+    description: EventHandlerCore.OnClientConnected
+  event-handler-core-on-create-issue:
+    lifecycle: single
+    description: EventHandlerCore.OnCreateIssue
+  event-handler-core-on-current-object-selected:
+    lifecycle: single
+    description: EventHandlerCore.OnCurrentObjectSelected
+  event-handler-core-on-data-loaded:
+    lifecycle: single
+    description: EventHandlerCore.OnDataLoaded
+  event-handler-core-on-expired-accesstoken:
+    lifecycle: single
+    description: EventHandlerCore.OnExpiredAccesstoken
+  event-handler-core-on-export-started:
+    lifecycle: single
+    description: EventHandlerCore.OnExportStarted
+  event-handler-core-on-filter-node-selected:
+    lifecycle: single
+    description: EventHandlerCore.OnFilterNodeSelected
+  event-handler-core-on-filter-node-toggled:
+    lifecycle: single
+    description: EventHandlerCore.OnFilterNodeToggled
+  event-handler-core-on-filter-selected:
+    lifecycle: single
+    description: EventHandlerCore.OnFilterSelected
+  event-handler-core-on-issue-deleted:
+    lifecycle: single
+    description: EventHandlerCore.OnIssueDeleted
+  event-handler-core-on-issue-selected:
+    lifecycle: single
+    description: EventHandlerCore.OnIssueSelected
+  event-handler-core-on-issue-updated:
+    lifecycle: single
+    description: EventHandlerCore.OnIssueUpdated
+  event-handler-core-on-issue-view-selected:
+    lifecycle: single
+    description: EventHandlerCore.OnIssueViewSelected
+  event-handler-core-on-model-layer-toggled:
+    lifecycle: single
+    description: EventHandlerCore.OnModelLayerToggled
+  event-handler-core-on-model-modified:
+    lifecycle: single
+    description: EventHandlerCore.OnModelModified
+  event-handler-core-on-model-toggled:
+    lifecycle: single
+    description: EventHandlerCore.OnModelToggled
+  event-handler-core-on-module-selected:
+    lifecycle: single
+    description: EventHandlerCore.OnModuleSelected
+  event-handler-core-on-object-selected:
+    lifecycle: single
+    description: EventHandlerCore.OnObjectSelected
+  event-handler-core-on-object-structure-selected:
+    lifecycle: single
+    description: EventHandlerCore.OnObjectStructureSelected
+  event-handler-core-on-objects-selected:
+    lifecycle: single
+    description: EventHandlerCore.OnObjectsSelected
+  event-handler-core-on-pin-selected:
+    lifecycle: single
+    description: EventHandlerCore.OnPinSelected
+  event-handler-core-on-project-changed:
+    lifecycle: single
+    description: EventHandlerCore.OnProjectChanged
+  event-handler-core-on-signal-r-issue-changed:
+    lifecycle: single
+    description: EventHandlerCore.OnSignalR_IssueChanged
+  event-handler-core-on-signal-r-issue-created:
+    lifecycle: single
+    description: EventHandlerCore.OnSignalR_IssueCreated
+  event-handler-core-on-signal-r-issue-deleted:
+    lifecycle: single
+    description: EventHandlerCore.OnSignalR_IssueDeleted
+  event-handler-core-on-signal-r-structure-changed:
+    lifecycle: single
+    description: EventHandlerCore.OnSignalR_StructureChanged
+  event-handler-core-on-signal-r-structure-created:
+    lifecycle: single
+    description: EventHandlerCore.OnSignalR_StructureCreated
+  event-handler-core-on-signal-r-structure-deleted:
+    lifecycle: single
+    description: EventHandlerCore.OnSignalR_StructureDeleted
+  event-handler-core-on-signal-rimport-progress-changed:
+    lifecycle: single
+    description: EventHandlerCore.OnSignalRImportProgressChanged
+  event-handler-core-on-signal-rproject-issue-changed:
+    lifecycle: single
+    description: EventHandlerCore.OnSignalRProjectIssueChanged
+  event-handler-core-on-signal-rproject-item-changed:
+    lifecycle: single
+    description: EventHandlerCore.OnSignalRProjectItemChanged
+  event-handler-core-on-signal-rproject-lock-changed:
+    lifecycle: single
+    description: EventHandlerCore.OnSignalRProjectLockChanged
+  event-handler-core-on-structure-node-selected:
+    lifecycle: single
+    description: EventHandlerCore.OnStructureNodeSelected
+  event-handler-core-on-structure-node-toggled:
+    lifecycle: single
+    description: EventHandlerCore.OnStructureNodeToggled
+  event-handler-core-on-structure-selected:
+    lifecycle: single
+    description: EventHandlerCore.OnStructureSelected
+  event-handler-core-on-team-changed:
+    lifecycle: single
+    description: EventHandlerCore.OnTeamChanged
+  event-handler-core-on-topology-node-toggled:
+    lifecycle: single
+    description: EventHandlerCore.OnTopologyNodeToggled
+  event-handler-core-remove-event:
+    lifecycle: single
+    description: EventHandlerCore.RemoveEvent
+  event-handler-core-show-message:
+    lifecycle: single
+    description: EventHandlerCore.ShowMessage
+  free-attrib-type-converter-guid-to-name:
+    lifecycle: single
+    description: FreeAttribTypeConverter.GuidToName
+  free-attrib-type-converter-guid-to-type:
+    lifecycle: single
+    description: FreeAttribTypeConverter.GuidToType
+  free-attrib-type-converter-name-to-guid:
+    lifecycle: single
+    description: FreeAttribTypeConverter.NameToGuid
+  generic-proxies-get-http-client:
+    lifecycle: single
+    description: GenericProxies.GetHttpClient
+  generic-proxies-rest-delete:
+    lifecycle: single
+    description: GenericProxies.RestDelete
+  generic-proxies-rest-delete-async:
+    lifecycle: single
+    description: GenericProxies.RestDeleteAsync
+  generic-proxies-rest-get:
+    lifecycle: single
+    description: GenericProxies.RestGet
+  generic-proxies-rest-get-as-stream:
+    lifecycle: single
+    description: GenericProxies.RestGetAsStream
+  generic-proxies-rest-get-as-stream-async:
+    lifecycle: single
+    description: GenericProxies.RestGetAsStreamAsync
+  generic-proxies-rest-get-async:
+    lifecycle: single
+    description: GenericProxies.RestGetAsync
+  generic-proxies-rest-get-non-query:
+    lifecycle: single
+    description: GenericProxies.RestGetNonQuery
+  generic-proxies-rest-get-non-query-async:
+    lifecycle: single
+    description: GenericProxies.RestGetNonQueryAsync
+  generic-proxies-rest-get-stream:
+    lifecycle: single
+    description: GenericProxies.RestGetStream
+  generic-proxies-rest-get-stream-async:
+    lifecycle: single
+    description: GenericProxies.RestGetStreamAsync
+  generic-proxies-rest-head:
+    lifecycle: single
+    description: GenericProxies.RestHead
+  generic-proxies-rest-head-async:
+    lifecycle: single
+    description: GenericProxies.RestHeadAsync
+  generic-proxies-rest-post:
+    lifecycle: single
+    description: GenericProxies.RestPost
+  generic-proxies-rest-post-async:
+    lifecycle: single
+    description: GenericProxies.RestPostAsync
+  generic-proxies-rest-post-non-query:
+    lifecycle: single
+    description: GenericProxies.RestPostNonQuery
+  generic-proxies-rest-post-non-query-async:
+    lifecycle: single
+    description: GenericProxies.RestPostNonQueryAsync
+  generic-proxies-rest-put:
+    lifecycle: single
+    description: GenericProxies.RestPut
+  generic-proxies-rest-put-async:
+    lifecycle: single
+    description: GenericProxies.RestPutAsync
+  generic-proxies-rest-put-non-query:
+    lifecycle: single
+    description: GenericProxies.RestPutNonQuery
+  generic-proxies-rest-put-non-query-async:
+    lifecycle: single
+    description: GenericProxies.RestPutNonQueryAsync
+  generic-proxies-rest-puton-query-async:
+    lifecycle: single
+    description: GenericProxies.RestPutonQueryAsync
+  geometry-polyeders-difference-exception-get-error-nr:
+    lifecycle: single
+    description: GeometryPolyedersDifferenceException.GetErrorNr
+  geometry-template-create:
+    lifecycle: single
+    description: GeometryTemplate.Create
+  geometry-template-get:
+    lifecycle: single
+    description: GeometryTemplate.Get
+  health-check-context-get-jobs-by-servers:
+    lifecycle: single
+    description: HealthCheckContext.GetJobsByServers
+  health-check-context-get-or-prepare-data:
+    lifecycle: single
+    description: HealthCheckContext.GetOrPrepareData
+  horizontal-alignment-get-element-by-station:
+    lifecycle: single
+    description: HorizontalAlignment.GetElementByStation
+  horizontal-alignment-position-at-station:
+    lifecycle: single
+    description: HorizontalAlignment.PositionAtStation
+  horizontal-alignment-reference-list-create:
+    lifecycle: single
+    description: HorizontalAlignmentReferenceList.Create
+  horizontal-alignment-reference-list-get-type:
+    lifecycle: single
+    description: HorizontalAlignmentReferenceList.GetType
+  horizontal-element-get-delta:
+    lifecycle: single
+    description: HorizontalElement.GetDelta
+  horizontal-element-position-at-station:
+    lifecycle: single
+    description: HorizontalElement.PositionAtStation
+  horizontal-element-rotate:
+    lifecycle: single
+    description: HorizontalElement.Rotate
+  http-rest-exception-get-status-code:
+    lifecycle: single
+    description: HttpRestException.GetStatusCode
+  ialignment-curve-get-alignment-as-poly-line:
+    lifecycle: single
+    description: IAlignmentCurve.GetAlignmentAsPolyLine
+  ialignment-curve-get-axis:
+    lifecycle: single
+    description: IAlignmentCurve.GetAxis
+  iauth-token-repository-fetch-async:
+    lifecycle: single
+    description: IAuthTokenRepository.FetchAsync
+  iauth-token-repository-reset-async:
+    lifecycle: single
+    description: IAuthTokenRepository.ResetAsync
+  iauth-token-repository-save-async:
+    lifecycle: single
+    description: IAuthTokenRepository.SaveAsync
+  iauthentication-adapter-login-async:
+    lifecycle: single
+    description: IAuthenticationAdapter.LoginAsync
+  iauthentication-adapter-logout-async:
+    lifecycle: single
+    description: IAuthenticationAdapter.LogoutAsync
+  iauthentication-adapter-refresh-token-async:
+    lifecycle: single
+    description: IAuthenticationAdapter.RefreshTokenAsync
+  iauthenticator-get-access-token-async:
+    lifecycle: single
+    description: IAuthenticator.GetAccessTokenAsync
+  iauthenticator-logout-async:
+    lifecycle: single
+    description: IAuthenticator.LogoutAsync
+  iauthenticator-refresh-token-async:
+    lifecycle: single
+    description: IAuthenticator.RefreshTokenAsync
+  iconnection-close-all-connections:
+    lifecycle: single
+    description: IConnection.CloseAllConnections
+  iconnection-create-team-session:
+    lifecycle: single
+    description: IConnection.CreateTeamSession
+  iconnection-disconnect-async:
+    lifecycle: single
+    description: IConnection.DisconnectAsync
+  iconnection-get-divisions:
+    lifecycle: single
+    description: IConnection.GetDivisions
+  iconnection-get-teams:
+    lifecycle: single
+    description: IConnection.GetTeams
+  iconnection-get-token-info:
+    lifecycle: single
+    description: IConnection.GetTokenInfo
+  iconnection-get-user-id:
+    lifecycle: single
+    description: IConnection.GetUserId
+  iconnection-get-user-info:
+    lifecycle: single
+    description: IConnection.GetUserInfo
+  iconnection-request-cross-token:
+    lifecycle: single
+    description: IConnection.RequestCrossToken
+  iconnection-search-division:
+    lifecycle: single
+    description: IConnection.SearchDivision
+  iconnection-search-divisions:
+    lifecycle: single
+    description: IConnection.SearchDivisions
+  idb-serialize-read:
+    lifecycle: single
+    description: IDbSerialize.Read
+  idb-serialize-write:
+    lifecycle: single
+    description: IDbSerialize.Write
+  ifc-geometry-types-get-ifc-geometry-name:
+    lifecycle: single
+    description: IfcGeometryTypes.GetIfcGeometryName
+  ifc-geometry-types-get-ifc-geometry-type-name:
+    lifecycle: single
+    description: IfcGeometryTypes.GetIfcGeometryTypeName
+  ifc-static-data-exist-ifc4-add2-element:
+    lifecycle: single
+    description: IfcStaticData.ExistIfc4Add2Element
+  ifc-static-data-get-all-ifc-objects:
+    lifecycle: single
+    description: IfcStaticData.GetAllIfcObjects
+  ifc-static-data-get-dtb-clash-element:
+    lifecycle: single
+    description: IfcStaticData.GetDtbClashElement
+  ifc-static-data-get-dtb-cont-free-attrib-column-name-element:
+    lifecycle: single
+    description: IfcStaticData.GetDtbContFreeAttribColumnNameElement
+  ifc-static-data-get-dtb-cont-free-attrib-element:
+    lifecycle: single
+    description: IfcStaticData.GetDtbContFreeAttribElement
+  ifc-static-data-get-dtb-cont-free-attrib-name-element:
+    lifecycle: single
+    description: IfcStaticData.GetDtbContFreeAttribNameElement
+  ifc-static-data-get-dtb-element:
+    lifecycle: single
+    description: IfcStaticData.GetDtbElement
+  ifc-static-data-get-ifc-element:
+    lifecycle: single
+    description: IfcStaticData.GetIfcElement
+  ifc-static-data-get-ifc-element-id:
+    lifecycle: single
+    description: IfcStaticData.GetIfcElementId
+  ifc-static-data-get-ifc-element-id-ex:
+    lifecycle: single
+    description: IfcStaticData.GetIfcElementIdEx
+  ifc-static-data-get-ifc-element-parameters-count:
+    lifecycle: single
+    description: IfcStaticData.GetIfcElementParametersCount
+  ifc-static-data-get-ifc-element-predef-type-order:
+    lifecycle: single
+    description: IfcStaticData.GetIfcElementPredefTypeOrder
+  ifc-static-data-get-ifc-element-representation:
+    lifecycle: single
+    description: IfcStaticData.GetIfcElementRepresentation
+  ifc-static-data-get-ifc-guid-from-guid:
+    lifecycle: single
+    description: IfcStaticData.GetIfcGuidFromGuid
+  ifc-static-data-get-ifc-predef-type-enum-list:
+    lifecycle: single
+    description: IfcStaticData.GetIfcPredefTypeEnumList
+  ifc-static-data-get-ifc4-add2-element:
+    lifecycle: single
+    description: IfcStaticData.GetIfc4Add2Element
+  ifc-static-data-get-ordered-ifc-predef-type-enum-list:
+    lifecycle: single
+    description: IfcStaticData.GetOrderedIfcPredefTypeEnumList
+  ifc-static-data-get-rel-connects-element:
+    lifecycle: single
+    description: IfcStaticData.GetRelConnectsElement
+  ijob-callback-finalize-job:
+    lifecycle: single
+    description: IJobCallback.FinalizeJob
+  ijob-callback-report-progress:
+    lifecycle: single
+    description: IJobCallback.ReportProgress
+  ijob-callback-switch-job:
+    lifecycle: single
+    description: IJobCallback.SwitchJob
+  ijob-callback-switch-server:
+    lifecycle: single
+    description: IJobCallback.SwitchServer
+  ijob-engine-execute-health-check:
+    lifecycle: single
+    description: IJobEngine.ExecuteHealthCheck
+  ijob-engine-execute-job:
+    lifecycle: single
+    description: IJobEngine.ExecuteJob
+  ijob-engine-get-next-job:
+    lifecycle: single
+    description: IJobEngine.GetNextJob
+  ijob-engine-register-handlers:
+    lifecycle: single
+    description: IJobEngine.RegisterHandlers
+  ijob-engine-reporting-get-job-report:
+    lifecycle: single
+    description: IJobEngineReporting.GetJobReport
+  ijob-engine-reporting-report-job-progress:
+    lifecycle: single
+    description: IJobEngineReporting.ReportJobProgress
+  ijob-engine-reporting-set-job-finished:
+    lifecycle: single
+    description: IJobEngineReporting.SetJobFinished
+  ijob-execution-criteria-can-execute:
+    lifecycle: single
+    description: IJobExecutionCriteria.CanExecute
+  ijob-execution-criteria-initialize:
+    lifecycle: single
+    description: IJobExecutionCriteria.Initialize
+  ijob-executor-can-execute:
+    lifecycle: single
+    description: IJobExecutor.CanExecute
+  ijob-executor-execute:
+    lifecycle: single
+    description: IJobExecutor.Execute
+  ijob-health-checker-execute-custom-health-check:
+    lifecycle: single
+    description: IJobHealthChecker.ExecuteCustomHealthCheck
+  ijob-independent-health-checker-execute-custom-health-check:
+    lifecycle: single
+    description: IJobIndependentHealthChecker.ExecuteCustomHealthCheck
+  ijob-notify-provider-get-finish-notification:
+    lifecycle: single
+    description: IJobNotifyProvider.GetFinishNotification
+  ijob-notify-provider-get-progress-notification:
+    lifecycle: single
+    description: IJobNotifyProvider.GetProgressNotification
+  ijob-report-provider-get-execution-report:
+    lifecycle: single
+    description: IJobReportProvider.GetExecutionReport
+  ijoin-split-join:
+    lifecycle: single
+    description: IJoinSplit.Join
+  ijoin-split-split:
+    lifecycle: single
+    description: IJoinSplit.Split
+  in-memory-token-repository-fetch-async:
+    lifecycle: single
+    description: InMemoryTokenRepository.FetchAsync
+  in-memory-token-repository-reset-async:
+    lifecycle: single
+    description: InMemoryTokenRepository.ResetAsync
+  in-memory-token-repository-save-async:
+    lifecycle: single
+    description: InMemoryTokenRepository.SaveAsync
+  integration-base-connect-with-access-token-and-server-name:
+    lifecycle: single
+    description: IntegrationBase.ConnectWithAccessTokenAndServerName
+  integration-base-connect-with-access-token-and-server-name-async:
+    lifecycle: single
+    description: IntegrationBase.ConnectWithAccessTokenAndServerNameAsync
+  integration-base-connect-with-single-sign-on:
+    lifecycle: single
+    description: IntegrationBase.ConnectWithSingleSignOn
+  integration-base-connect-with-single-sign-on-async:
+    lifecycle: single
+    description: IntegrationBase.ConnectWithSingleSignOnAsync
+  integration-base-disconnect:
+    lifecycle: single
+    description: IntegrationBase.Disconnect
+  integration-base-disconnect-async:
+    lifecycle: single
+    description: IntegrationBase.DisconnectAsync
+  integration-base-log-message:
+    lifecycle: single
+    description: IntegrationBase.LogMessage
+  integration-base-set-team:
+    lifecycle: single
+    description: IntegrationBase.SetTeam
+  iserializer-adapter-deserialize:
+    lifecycle: single
+    description: ISerializerAdapter.Deserialize
+  iserializer-adapter-serialize:
+    lifecycle: single
+    description: ISerializerAdapter.Serialize
+  iservice-execute:
+    lifecycle: single
+    description: IService.Execute
+  issues-add-selected-object:
+    lifecycle: single
+    description: Issues.AddSelectedObject
+  issues-add-selected-objects:
+    lifecycle: single
+    description: Issues.AddSelectedObjects
+  issues-delete-issue:
+    lifecycle: single
+    description: Issues.DeleteIssue
+  issues-get-dto-issue:
+    lifecycle: single
+    description: Issues.GetDtoIssue
+  issues-get-dto-issues-by-id:
+    lifecycle: single
+    description: Issues.GetDtoIssuesById
+  issues-get-issue-attachments:
+    lifecycle: single
+    description: Issues.GetIssueAttachments
+  issues-get-issue-comments:
+    lifecycle: single
+    description: Issues.GetIssueComments
+  issues-get-issue-editable-properties:
+    lifecycle: single
+    description: Issues.GetIssueEditableProperties
+  issues-get-issue-editable-properties-object:
+    lifecycle: single
+    description: Issues.GetIssueEditablePropertiesObject
+  issues-get-issue-history:
+    lifecycle: single
+    description: Issues.GetIssueHistory
+  issues-get-issue-image:
+    lifecycle: single
+    description: Issues.GetIssueImage
+  issues-get-issue-pins:
+    lifecycle: single
+    description: Issues.GetIssuePins
+  issues-get-perspective-camera:
+    lifecycle: single
+    description: Issues.GetPerspectiveCamera
+  issues-get-project-dto-issues:
+    lifecycle: single
+    description: Issues.GetProjectDtoIssues
+  issues-get-selected-objects:
+    lifecycle: single
+    description: Issues.GetSelectedObjects
+  issues-get-short-issues:
+    lifecycle: single
+    description: Issues.GetShortIssues
+  issues-post-issue-attachment:
+    lifecycle: single
+    description: Issues.PostIssueAttachment
+  issues-post-issue-comment:
+    lifecycle: single
+    description: Issues.PostIssueComment
+  issues-post-issue-pin:
+    lifecycle: single
+    description: Issues.PostIssuePin
+  issues-post-project-short-issue:
+    lifecycle: single
+    description: Issues.PostProjectShortIssue
+  issues-put-dto-issue:
+    lifecycle: single
+    description: Issues.PutDtoIssue
+  issues-put-issue:
+    lifecycle: single
+    description: Issues.PutIssue
+  issues-put-issue-image:
+    lifecycle: single
+    description: Issues.PutIssueImage
+  issues-put-short-issue:
+    lifecycle: single
+    description: Issues.PutShortIssue
+  issues-remove-selected-object:
+    lifecycle: single
+    description: Issues.RemoveSelectedObject
+  issues-set-perspective-camera:
+    lifecycle: single
+    description: Issues.SetPerspectiveCamera
+  iteam-session-alter-object-async:
+    lifecycle: single
+    description: ITeamSession.AlterObjectAsync
+  iteam-session-assign-structure-element:
+    lifecycle: single
+    description: ITeamSession.AssignStructureElement
+  iteam-session-convert-geometry:
+    lifecycle: single
+    description: ITeamSession.ConvertGeometry
+  iteam-session-copy-structure:
+    lifecycle: single
+    description: ITeamSession.CopyStructure
+  iteam-session-create-connection:
+    lifecycle: single
+    description: ITeamSession.CreateConnection
+  iteam-session-create-object-view:
+    lifecycle: single
+    description: ITeamSession.CreateObjectView
+  iteam-session-create-project:
+    lifecycle: single
+    description: ITeamSession.CreateProject
+  iteam-session-create-template:
+    lifecycle: single
+    description: ITeamSession.CreateTemplate
+  iteam-session-delete-attachment:
+    lifecycle: single
+    description: ITeamSession.DeleteAttachment
+  iteam-session-delete-child-objects:
+    lifecycle: single
+    description: ITeamSession.DeleteChildObjects
+  iteam-session-delete-child-objects-async:
+    lifecycle: single
+    description: ITeamSession.DeleteChildObjectsAsync
+  iteam-session-delete-comment:
+    lifecycle: single
+    description: ITeamSession.DeleteComment
+  iteam-session-delete-connections:
+    lifecycle: single
+    description: ITeamSession.DeleteConnections
+  iteam-session-delete-dto-division:
+    lifecycle: single
+    description: ITeamSession.DeleteDtoDivision
+  iteam-session-delete-hyperlink:
+    lifecycle: single
+    description: ITeamSession.DeleteHyperlink
+  iteam-session-delete-issue:
+    lifecycle: single
+    description: ITeamSession.DeleteIssue
+  iteam-session-delete-lock:
+    lifecycle: single
+    description: ITeamSession.DeleteLock
+  iteam-session-delete-object:
+    lifecycle: single
+    description: ITeamSession.DeleteObject
+  iteam-session-delete-object-views:
+    lifecycle: single
+    description: ITeamSession.DeleteObjectViews
+  iteam-session-delete-pin:
+    lifecycle: single
+    description: ITeamSession.DeletePin
+  iteam-session-delete-selection:
+    lifecycle: single
+    description: ITeamSession.DeleteSelection
+  iteam-session-delete-structure:
+    lifecycle: single
+    description: ITeamSession.DeleteStructure
+  iteam-session-delete-user-settings-hierarchy-list-api:
+    lifecycle: single
+    description: ITeamSession.DeleteUserSettingsHierarchyList_API
+  iteam-session-download-attachments:
+    lifecycle: single
+    description: ITeamSession.DownloadAttachments
+  iteam-session-download-attachments-as-stream:
+    lifecycle: single
+    description: ITeamSession.DownloadAttachmentsAsStream
+  iteam-session-download-data:
+    lifecycle: single
+    description: ITeamSession.DownloadData
+  iteam-session-etag:
+    lifecycle: single
+    description: ITeamSession.ETag
+  iteam-session-execute-service:
+    lifecycle: single
+    description: ITeamSession.ExecuteService
+  iteam-session-get-account-settings:
+    lifecycle: single
+    description: ITeamSession.GetAccountSettings
+  iteam-session-get-all-object-view-columnnames:
+    lifecycle: single
+    description: ITeamSession.GetAllObjectViewColumnnames
+  iteam-session-get-all-user-settings-hierarchy-api:
+    lifecycle: single
+    description: ITeamSession.GetAllUserSettingsHierarchy_API
+  iteam-session-get-allplan-id:
+    lifecycle: single
+    description: ITeamSession.GetAllplanId
+  iteam-session-get-attachment-data:
+    lifecycle: single
+    description: ITeamSession.GetAttachmentData
+  iteam-session-get-attribute:
+    lifecycle: single
+    description: ITeamSession.GetAttribute
+  iteam-session-get-attribute-values:
+    lifecycle: single
+    description: ITeamSession.GetAttributeValues
+  iteam-session-get-bim-plus-id:
+    lifecycle: single
+    description: ITeamSession.GetBimPlusId
+  iteam-session-get-cache:
+    lifecycle: single
+    description: ITeamSession.GetCache
+  iteam-session-get-chunk-glb-geometry:
+    lifecycle: single
+    description: ITeamSession.GetChunkGlbGeometry
+  iteam-session-get-comment:
+    lifecycle: single
+    description: ITeamSession.GetComment
+  iteam-session-get-division:
+    lifecycle: single
+    description: ITeamSession.GetDivision
+  iteam-session-get-dt-objects-by-id:
+    lifecycle: single
+    description: ITeamSession.GetDtObjectsById
+  iteam-session-get-dt-objects-with-properties-by-id:
+    lifecycle: single
+    description: ITeamSession.GetDtObjectsWithPropertiesById
+  iteam-session-get-dto-issue:
+    lifecycle: single
+    description: ITeamSession.GetDtoIssue
+  iteam-session-get-element-types:
+    lifecycle: single
+    description: ITeamSession.GetElementTypes
+  iteam-session-get-elements-by-type-id:
+    lifecycle: single
+    description: ITeamSession.GetElementsByTypeId
+  iteam-session-get-export-object:
+    lifecycle: single
+    description: ITeamSession.GetExportObject
+  iteam-session-get-export-selection:
+    lifecycle: single
+    description: ITeamSession.GetExportSelection
+  iteam-session-get-export-selections:
+    lifecycle: single
+    description: ITeamSession.GetExportSelections
+  iteam-session-get-glb-geometry:
+    lifecycle: single
+    description: ITeamSession.GetGlbGeometry
+  iteam-session-get-hyperlink:
+    lifecycle: single
+    description: ITeamSession.GetHyperlink
+  iteam-session-get-ifc-id:
+    lifecycle: single
+    description: ITeamSession.GetIfcId
+  iteam-session-get-issue-attachments:
+    lifecycle: single
+    description: ITeamSession.GetIssueAttachments
+  iteam-session-get-issue-comments:
+    lifecycle: single
+    description: ITeamSession.GetIssueComments
+  iteam-session-get-issue-editable-properties:
+    lifecycle: single
+    description: ITeamSession.GetIssueEditableProperties
+  iteam-session-get-issue-editable-properties-object:
+    lifecycle: single
+    description: ITeamSession.GetIssueEditablePropertiesObject
+  iteam-session-get-issue-hyperlinks:
+    lifecycle: single
+    description: ITeamSession.GetIssueHyperlinks
+  iteam-session-get-issue-pins:
+    lifecycle: single
+    description: ITeamSession.GetIssuePins
+  iteam-session-get-issue-reports:
+    lifecycle: single
+    description: ITeamSession.GetIssueReports
+  iteam-session-get-layout-structure:
+    lifecycle: single
+    description: ITeamSession.GetLayoutStructure
+  iteam-session-get-locks:
+    lifecycle: single
+    description: ITeamSession.GetLocks
+  iteam-session-get-object:
+    lifecycle: single
+    description: ITeamSession.GetObject
+  iteam-session-get-object-async:
+    lifecycle: single
+    description: ITeamSession.GetObjectAsync
+  iteam-session-get-object-attachment:
+    lifecycle: single
+    description: ITeamSession.GetObjectAttachment
+  iteam-session-get-object-attachments:
+    lifecycle: single
+    description: ITeamSession.GetObjectAttachments
+  iteam-session-get-object-comments:
+    lifecycle: single
+    description: ITeamSession.GetObjectComments
+  iteam-session-get-object-geometry:
+    lifecycle: single
+    description: ITeamSession.GetObjectGeometry
+  iteam-session-get-object-geometry-as-three-js:
+    lifecycle: single
+    description: ITeamSession.GetObjectGeometryAsThreeJs
+  iteam-session-get-object-geometry-as-three-js-mesh:
+    lifecycle: single
+    description: ITeamSession.GetObjectGeometryAsThreeJsMesh
+  iteam-session-get-object-geometry-async:
+    lifecycle: single
+    description: ITeamSession.GetObjectGeometryAsync
+  iteam-session-get-object-hyperlinks:
+    lifecycle: single
+    description: ITeamSession.GetObjectHyperlinks
+  iteam-session-get-object-internal:
+    lifecycle: single
+    description: ITeamSession.GetObjectInternal
+  iteam-session-get-object-topology:
+    lifecycle: single
+    description: ITeamSession.GetObjectTopology
+  iteam-session-get-object-tree:
+    lifecycle: single
+    description: ITeamSession.GetObjectTree
+  iteam-session-get-object-view-content:
+    lifecycle: single
+    description: ITeamSession.GetObjectViewContent
+  iteam-session-get-object-views:
+    lifecycle: single
+    description: ITeamSession.GetObjectViews
+  iteam-session-get-objects:
+    lifecycle: single
+    description: ITeamSession.GetObjects
+  iteam-session-get-paged-meshblob:
+    lifecycle: single
+    description: ITeamSession.GetPagedMeshblob
+  iteam-session-get-paged-meshblob-async:
+    lifecycle: single
+    description: ITeamSession.GetPagedMeshblobAsync
+  iteam-session-get-pin:
+    lifecycle: single
+    description: ITeamSession.GetPin
+  iteam-session-get-project-divisions:
+    lifecycle: single
+    description: ITeamSession.GetProjectDivisions
+  iteam-session-get-project-dto-issues:
+    lifecycle: single
+    description: ITeamSession.GetProjectDtoIssues
+  iteam-session-get-project-element-types:
+    lifecycle: single
+    description: ITeamSession.GetProjectElementTypes
+  iteam-session-get-project-issues:
+    lifecycle: single
+    description: ITeamSession.GetProjectIssues
+  iteam-session-get-project-issues-with-rights:
+    lifecycle: single
+    description: ITeamSession.GetProjectIssuesWithRights
+  iteam-session-get-project-layers:
+    lifecycle: single
+    description: ITeamSession.GetProjectLayers
+  iteam-session-get-project-members:
+    lifecycle: single
+    description: ITeamSession.GetProjectMembers
+  iteam-session-get-project-properties:
+    lifecycle: single
+    description: ITeamSession.GetProjectProperties
+  iteam-session-get-project-structures:
+    lifecycle: single
+    description: ITeamSession.GetProjectStructures
+  iteam-session-get-project-thumbnail:
+    lifecycle: single
+    description: ITeamSession.GetProjectThumbnail
+  iteam-session-get-project-topology:
+    lifecycle: single
+    description: ITeamSession.GetProjectTopology
+  iteam-session-get-projects:
+    lifecycle: single
+    description: ITeamSession.GetProjects
+  iteam-session-get-property-sets:
+    lifecycle: single
+    description: ITeamSession.GetPropertySets
+  iteam-session-get-revisions:
+    lifecycle: single
+    description: ITeamSession.GetRevisions
+  iteam-session-get-selected-objects:
+    lifecycle: single
+    description: ITeamSession.GetSelectedObjects
+  iteam-session-get-structure:
+    lifecycle: single
+    description: ITeamSession.GetStructure
+  iteam-session-get-structure-topology:
+    lifecycle: single
+    description: ITeamSession.GetStructureTopology
+  iteam-session-get-structure-types:
+    lifecycle: single
+    description: ITeamSession.GetStructureTypes
+  iteam-session-get-subscriptions:
+    lifecycle: single
+    description: ITeamSession.GetSubscriptions
+  iteam-session-get-tattribute-values:
+    lifecycle: single
+    description: ITeamSession.GetTAttributeValues
+  iteam-session-get-team-members:
+    lifecycle: single
+    description: ITeamSession.GetTeamMembers
+  iteam-session-get-teams:
+    lifecycle: single
+    description: ITeamSession.GetTeams
+  iteam-session-get-template:
+    lifecycle: single
+    description: ITeamSession.GetTemplate
+  iteam-session-get-topology-structure:
+    lifecycle: single
+    description: ITeamSession.GetTopologyStructure
+  iteam-session-is-property-set-uptodate:
+    lifecycle: single
+    description: ITeamSession.IsPropertySetUptodate
+  iteam-session-move-topology-node:
+    lifecycle: single
+    description: ITeamSession.MoveTopologyNode
+  iteam-session-object-exists:
+    lifecycle: single
+    description: ITeamSession.ObjectExists
+  iteam-session-post-attachment:
+    lifecycle: single
+    description: ITeamSession.PostAttachment
+  iteam-session-post-cache:
+    lifecycle: single
+    description: ITeamSession.PostCache
+  iteam-session-post-issue-attachment:
+    lifecycle: single
+    description: ITeamSession.PostIssueAttachment
+  iteam-session-post-issue-comment:
+    lifecycle: single
+    description: ITeamSession.PostIssueComment
+  iteam-session-post-issue-hyperlink:
+    lifecycle: single
+    description: ITeamSession.PostIssueHyperlink
+  iteam-session-post-issue-pin:
+    lifecycle: single
+    description: ITeamSession.PostIssuePin
+  iteam-session-post-object:
+    lifecycle: single
+    description: ITeamSession.PostObject
+  iteam-session-post-object-async:
+    lifecycle: single
+    description: ITeamSession.PostObjectAsync
+  iteam-session-post-object-attachment:
+    lifecycle: single
+    description: ITeamSession.PostObjectAttachment
+  iteam-session-post-object-comment:
+    lifecycle: single
+    description: ITeamSession.PostObjectComment
+  iteam-session-post-object-hyperlink:
+    lifecycle: single
+    description: ITeamSession.PostObjectHyperlink
+  iteam-session-post-project-division:
+    lifecycle: single
+    description: ITeamSession.PostProjectDivision
+  iteam-session-post-project-dto-issue:
+    lifecycle: single
+    description: ITeamSession.PostProjectDtoIssue
+  iteam-session-post-project-issue:
+    lifecycle: single
+    description: ITeamSession.PostProjectIssue
+  iteam-session-post-project-structure:
+    lifecycle: single
+    description: ITeamSession.PostProjectStructure
+  iteam-session-post-revision:
+    lifecycle: single
+    description: ITeamSession.PostRevision
+  iteam-session-post-structure:
+    lifecycle: single
+    description: ITeamSession.PostStructure
+  iteam-session-post-structure-element:
+    lifecycle: single
+    description: ITeamSession.PostStructureElement
+  iteam-session-post-sub-structure:
+    lifecycle: single
+    description: ITeamSession.PostSubStructure
+  iteam-session-put-alter-object:
+    lifecycle: single
+    description: ITeamSession.PutAlterObject
+  iteam-session-put-comment:
+    lifecycle: single
+    description: ITeamSession.PutComment
+  iteam-session-put-division:
+    lifecycle: single
+    description: ITeamSession.PutDivision
+  iteam-session-put-dto-issue:
+    lifecycle: single
+    description: ITeamSession.PutDtoIssue
+  iteam-session-put-issue:
+    lifecycle: single
+    description: ITeamSession.PutIssue
+  iteam-session-put-object:
+    lifecycle: single
+    description: ITeamSession.PutObject
+  iteam-session-put-object-async:
+    lifecycle: single
+    description: ITeamSession.PutObjectAsync
+  iteam-session-put-structure:
+    lifecycle: single
+    description: ITeamSession.PutStructure
+  iteam-session-remove-structure-element:
+    lifecycle: single
+    description: ITeamSession.RemoveStructureElement
+  iteam-session-reorder-structure:
+    lifecycle: single
+    description: ITeamSession.ReorderStructure
+  iteam-session-reset-topology-structure:
+    lifecycle: single
+    description: ITeamSession.ResetTopologyStructure
+  iteam-session-set-current-team:
+    lifecycle: single
+    description: ITeamSession.SetCurrentTeam
+  iteam-session-set-lock:
+    lifecycle: single
+    description: ITeamSession.SetLock
+  iteam-session-update-attachment:
+    lifecycle: single
+    description: ITeamSession.UpdateAttachment
+  iteam-session-update-attribute-values:
+    lifecycle: single
+    description: ITeamSession.UpdateAttributeValues
+  iteam-session-update-changed-values-in-database-api:
+    lifecycle: single
+    description: ITeamSession.UpdateChangedValuesInDatabase_API
+  iteam-session-update-user-settings-hierarchy-list-api:
+    lifecycle: single
+    description: ITeamSession.UpdateUserSettingsHierarchyList_API
+  iteam-session-validate:
+    lifecycle: single
+    description: ITeamSession.Validate
+  iteam-session-validate-subscription:
+    lifecycle: single
+    description: ITeamSession.ValidateSubscription
+  job-execution-context-can-execute:
+    lifecycle: single
+    description: JobExecutionContext.CanExecute
+  job-finish-notification-info-default:
+    lifecycle: single
+    description: JobFinishNotificationInfo.Default
+  job-finish-notification-info-generate-additional-data:
+    lifecycle: single
+    description: JobFinishNotificationInfo.GenerateAdditionalData
+  job-timeouts-helper-get-minimum-timeout:
+    lifecycle: single
+    description: JobTimeoutsHelper.GetMinimumTimeout
+  job-timeouts-helper-min:
+    lifecycle: single
+    description: JobTimeoutsHelper.Min
+  json-blob-converter-can-convert-from:
+    lifecycle: single
+    description: JsonBlobConverter.CanConvertFrom
+  json-blob-converter-can-convert-to:
+    lifecycle: single
+    description: JsonBlobConverter.CanConvertTo
+  json-blob-converter-convert-from:
+    lifecycle: single
+    description: JsonBlobConverter.ConvertFrom
+  json-blob-converter-convert-to:
+    lifecycle: single
+    description: JsonBlobConverter.ConvertTo
+  json-blob-converter-to-byte:
+    lifecycle: single
+    description: JsonBlobConverter.ToByte
+  json-creation-converter1-can-convert:
+    lifecycle: single
+    description: JsonCreationConverter`1.CanConvert
+  json-creation-converter1-read-json:
+    lifecycle: single
+    description: JsonCreationConverter`1.ReadJson
+  json-creation-converter1-write-json:
+    lifecycle: single
+    description: JsonCreationConverter`1.WriteJson
+  lane-width-lane-items:
+    lifecycle: single
+    description: LaneWidth.LaneItems
+  lane-width-lane-types:
+    lifecycle: single
+    description: LaneWidth.LaneTypes
+  lkpoint-abstand-punktvon-linie:
+    lifecycle: single
+    description: LKPoint.AbstandPunktvonLinie
+  lkpoint-is-point-in-polygon:
+    lifecycle: single
+    description: LKPoint.IsPointInPolygon
+  matrix-converter-can-convert-from:
+    lifecycle: single
+    description: MatrixConverter.CanConvertFrom
+  matrix-converter-can-convert-to:
+    lifecycle: single
+    description: MatrixConverter.CanConvertTo
+  matrix-converter-convert-from:
+    lifecycle: single
+    description: MatrixConverter.ConvertFrom
+  matrix-converter-convert-to:
+    lifecycle: single
+    description: MatrixConverter.ConvertTo
+  newton-soft-additional-serialize-adapter-deserialize:
+    lifecycle: single
+    description: NewtonSoftAdditionalSerializeAdapter.Deserialize
+  newton-soft-additional-serialize-adapter-serialize:
+    lifecycle: single
+    description: NewtonSoftAdditionalSerializeAdapter.Serialize
+  newton-soft-serialize-adapter-deserialize:
+    lifecycle: single
+    description: NewtonSoftSerializeAdapter.Deserialize
+  newton-soft-serialize-adapter-serialize:
+    lifecycle: single
+    description: NewtonSoftSerializeAdapter.Serialize
+  obj-list-requested-group-validate:
+    lifecycle: single
+    description: ObjListRequestedGroup.Validate
+  objects-create-selection:
+    lifecycle: single
+    description: Objects.CreateSelection
+  objects-delete-pin:
+    lifecycle: single
+    description: Objects.DeletePin
+  objects-delete-selection:
+    lifecycle: single
+    description: Objects.DeleteSelection
+  objects-get-allplan-id:
+    lifecycle: single
+    description: Objects.GetAllplanId
+  objects-get-cache:
+    lifecycle: single
+    description: Objects.GetCache
+  objects-get-export-object:
+    lifecycle: single
+    description: Objects.GetExportObject
+  objects-get-export-selection:
+    lifecycle: single
+    description: Objects.GetExportSelection
+  objects-get-export-selections:
+    lifecycle: single
+    description: Objects.GetExportSelections
+  objects-get-exported-objects:
+    lifecycle: single
+    description: Objects.GetExportedObjects
+  objects-get-hyper-links:
+    lifecycle: single
+    description: Objects.GetHyperLinks
+  objects-get-ifc-id:
+    lifecycle: single
+    description: Objects.GetIfcId
+  objects-get-pin:
+    lifecycle: single
+    description: Objects.GetPin
+  objects-get-teams:
+    lifecycle: single
+    description: Objects.GetTeams
+  objects-get-topology:
+    lifecycle: single
+    description: Objects.GetTopology
+  objects-post-cache:
+    lifecycle: single
+    description: Objects.PostCache
+  objects-post-issue-hyperlink:
+    lifecycle: single
+    description: Objects.PostIssueHyperlink
+  objects-set-current-team:
+    lifecycle: single
+    description: Objects.SetCurrentTeam
+  octree-node1-add:
+    lifecycle: single
+    description: OctreeNode`1.Add
+  octree-node1-get-colliding:
+    lifecycle: single
+    description: OctreeNode`1.GetColliding
+  octree-node1-is-colliding:
+    lifecycle: single
+    description: OctreeNode`1.IsColliding
+  octree-node1-remove:
+    lifecycle: single
+    description: OctreeNode`1.Remove
+  octree-node1-set-children:
+    lifecycle: single
+    description: OctreeNode`1.SetChildren
+  octree-node1-shrink-if-possible:
+    lifecycle: single
+    description: OctreeNode`1.ShrinkIfPossible
+  octree1-add:
+    lifecycle: single
+    description: Octree`1.Add
+  octree1-get-colliding:
+    lifecycle: single
+    description: Octree`1.GetColliding
+  octree1-is-colliding:
+    lifecycle: single
+    description: Octree`1.IsColliding
+  octree1-remove:
+    lifecycle: single
+    description: Octree`1.Remove
+  oidc-admin-api-client-create-user-async:
+    lifecycle: single
+    description: OidcAdminApiClient.CreateUserAsync
+  oidc-admin-api-client-delete-user-async:
+    lifecycle: single
+    description: OidcAdminApiClient.DeleteUserAsync
+  oidc-admin-api-client-get-user-by-email-async:
+    lifecycle: single
+    description: OidcAdminApiClient.GetUserByEmailAsync
+  oidc-admin-api-client-get-user-by-user-name-async:
+    lifecycle: single
+    description: OidcAdminApiClient.GetUserByUserNameAsync
+  oidc-admin-api-client-update-user-async:
+    lifecycle: single
+    description: OidcAdminApiClient.UpdateUserAsync
+  oidc-provider-information-convert-to-provider-information-async:
+    lifecycle: single
+    description: OidcProviderInformation.ConvertToProviderInformationAsync
+  oidc-provider-information-get-json-web-key-set-async:
+    lifecycle: single
+    description: OidcProviderInformation.GetJsonWebKeySetAsync
+  parabolic-vertical-element-elevation-at-station:
+    lifecycle: single
+    description: ParabolicVerticalElement.ElevationAtStation
+  polyeder-function-create-picture:
+    lifecycle: single
+    description: PolyederFunction.CreatePicture
+  polyeder-function-polyeder-addition:
+    lifecycle: single
+    description: PolyederFunction.PolyederAddition
+  polyeder-function-remove-holes:
+    lifecycle: single
+    description: PolyederFunction.RemoveHoles
+  polyeder-function-remove-holes1:
+    lifecycle: single
+    description: PolyederFunction.RemoveHoles1
+  polyeder-function-tessellation-array-dimensions:
+    lifecycle: single
+    description: PolyederFunction.TessellationArrayDimensions
+  project-issue-changed-handler-begin-invoke:
+    lifecycle: single
+    description: ProjectIssueChangedHandler.BeginInvoke
+  project-issue-changed-handler-end-invoke:
+    lifecycle: single
+    description: ProjectIssueChangedHandler.EndInvoke
+  project-issue-changed-handler-invoke:
+    lifecycle: single
+    description: ProjectIssueChangedHandler.Invoke
+  project-item-changed-handler-begin-invoke:
+    lifecycle: single
+    description: ProjectItemChangedHandler.BeginInvoke
+  project-item-changed-handler-end-invoke:
+    lifecycle: single
+    description: ProjectItemChangedHandler.EndInvoke
+  project-item-changed-handler-invoke:
+    lifecycle: single
+    description: ProjectItemChangedHandler.Invoke
+  projects-convert-geometry:
+    lifecycle: single
+    description: Projects.ConvertGeometry
+  projects-create-project:
+    lifecycle: single
+    description: Projects.CreateProject
+  projects-get-bim-plus-id:
+    lifecycle: single
+    description: Projects.GetBimPlusId
+  projects-get-divisions:
+    lifecycle: single
+    description: Projects.GetDivisions
+  projects-get-document-structure:
+    lifecycle: single
+    description: Projects.GetDocumentStructure
+  projects-get-dto-issues:
+    lifecycle: single
+    description: Projects.GetDtoIssues
+  projects-get-dto-project:
+    lifecycle: single
+    description: Projects.GetDtoProject
+  projects-get-layers:
+    lifecycle: single
+    description: Projects.GetLayers
+  projects-get-members:
+    lifecycle: single
+    description: Projects.GetMembers
+  projects-get-project:
+    lifecycle: single
+    description: Projects.GetProject
+  projects-get-project-element-types:
+    lifecycle: single
+    description: Projects.GetProjectElementTypes
+  projects-get-project-material-surfaces:
+    lifecycle: single
+    description: Projects.GetProjectMaterialSurfaces
+  projects-get-project-structures:
+    lifecycle: single
+    description: Projects.GetProjectStructures
+  projects-get-short-projects:
+    lifecycle: single
+    description: Projects.GetShortProjects
+  projects-get-thumbnail:
+    lifecycle: single
+    description: Projects.GetThumbnail
+  projects-get-topology:
+    lifecycle: single
+    description: Projects.GetTopology
+  projects-get-topology-structure:
+    lifecycle: single
+    description: Projects.GetTopologyStructure
+  projects-post-division:
+    lifecycle: single
+    description: Projects.PostDivision
+  projects-post-dto-issue:
+    lifecycle: single
+    description: Projects.PostDtoIssue
+  projects-post-short-issue:
+    lifecycle: single
+    description: Projects.PostShortIssue
+  projects-post-structure:
+    lifecycle: single
+    description: Projects.PostStructure
+  projects-reset-topology-structure:
+    lifecycle: single
+    description: Projects.ResetTopologyStructure
+  projects-upload-thumbnail:
+    lifecycle: single
+    description: Projects.UploadThumbnail
+  protobuf-create-buffer:
+    lifecycle: single
+    description: Protobuf.CreateBuffer
+  protobuf-deserialize:
+    lifecycle: single
+    description: Protobuf.Deserialize
+  remote-job-executor-can-execute:
+    lifecycle: single
+    description: RemoteJobExecutor.CanExecute
+  remote-job-executor-execute:
+    lifecycle: single
+    description: RemoteJobExecutor.Execute
+  remote-runner1-execute:
+    lifecycle: single
+    description: RemoteRunner`1.Execute
+  remote-runner1-inject-job-callback:
+    lifecycle: single
+    description: RemoteRunner`1.InjectJobCallback
+  rest-call-back-non-query-begin-invoke:
+    lifecycle: single
+    description: RestCallBackNonQuery.BeginInvoke
+  rest-call-back-non-query-end-invoke:
+    lifecycle: single
+    description: RestCallBackNonQuery.EndInvoke
+  rest-call-back-non-query-invoke:
+    lifecycle: single
+    description: RestCallBackNonQuery.Invoke
+  rest-call-back-status-code-begin-invoke:
+    lifecycle: single
+    description: RestCallBackStatusCode.BeginInvoke
+  rest-call-back-status-code-end-invoke:
+    lifecycle: single
+    description: RestCallBackStatusCode.EndInvoke
+  rest-call-back-status-code-invoke:
+    lifecycle: single
+    description: RestCallBackStatusCode.Invoke
+  rest-call-back1-begin-invoke:
+    lifecycle: single
+    description: RestCallBack`1.BeginInvoke
+  rest-call-back1-end-invoke:
+    lifecycle: single
+    description: RestCallBack`1.EndInvoke
+  rest-call-back1-invoke:
+    lifecycle: single
+    description: RestCallBack`1.Invoke
+  secure-json-string-converter-can-convert:
+    lifecycle: single
+    description: SecureJsonStringConverter.CanConvert
+  secure-json-string-converter-read-json:
+    lifecycle: single
+    description: SecureJsonStringConverter.ReadJson
+  secure-json-string-converter-write-json:
+    lifecycle: single
+    description: SecureJsonStringConverter.WriteJson
+  services-execute-service:
+    lifecycle: single
+    description: Services.ExecuteService
+  signal-rcore-disconnect:
+    lifecycle: single
+    description: SignalRCore.Disconnect
+  signal-rcore-reconnect:
+    lifecycle: single
+    description: SignalRCore.Reconnect
+  signal-rimport-progress-handler-begin-invoke:
+    lifecycle: single
+    description: SignalRImportProgressHandler.BeginInvoke
+  signal-rimport-progress-handler-end-invoke:
+    lifecycle: single
+    description: SignalRImportProgressHandler.EndInvoke
+  signal-rimport-progress-handler-invoke:
+    lifecycle: single
+    description: SignalRImportProgressHandler.Invoke
+  signal-rproject-issue-changed-handler-begin-invoke:
+    lifecycle: single
+    description: SignalRProjectIssueChangedHandler.BeginInvoke
+  signal-rproject-issue-changed-handler-end-invoke:
+    lifecycle: single
+    description: SignalRProjectIssueChangedHandler.EndInvoke
+  signal-rproject-issue-changed-handler-invoke:
+    lifecycle: single
+    description: SignalRProjectIssueChangedHandler.Invoke
+  signal-rproject-item-changed-event-handler-begin-invoke:
+    lifecycle: single
+    description: SignalRProjectItemChangedEventHandler.BeginInvoke
+  signal-rproject-item-changed-event-handler-end-invoke:
+    lifecycle: single
+    description: SignalRProjectItemChangedEventHandler.EndInvoke
+  signal-rproject-item-changed-event-handler-invoke:
+    lifecycle: single
+    description: SignalRProjectItemChangedEventHandler.Invoke
+  signal-rproject-lock-event-handler-begin-invoke:
+    lifecycle: single
+    description: SignalRProjectLockEventHandler.BeginInvoke
+  signal-rproject-lock-event-handler-end-invoke:
+    lifecycle: single
+    description: SignalRProjectLockEventHandler.EndInvoke
+  signal-rproject-lock-event-handler-invoke:
+    lifecycle: single
+    description: SignalRProjectLockEventHandler.Invoke
+  straight-horizontal-element-position-at-station:
+    lifecycle: single
+    description: StraightHorizontalElement.PositionAtStation
+  straight-vertical-element-elevation-at-station:
+    lifecycle: single
+    description: StraightVerticalElement.ElevationAtStation
+  string-enumeration-create-string-enumeration:
+    lifecycle: single
+    description: StringEnumeration.CreateStringEnumeration
+  structure-add-property:
+    lifecycle: single
+    description: Structure.AddProperty
+  structures-add-structure-element:
+    lifecycle: single
+    description: Structures.AddStructureElement
+  structures-assign-element:
+    lifecycle: single
+    description: Structures.AssignElement
+  structures-copy-structure:
+    lifecycle: single
+    description: Structures.CopyStructure
+  structures-delete-structure:
+    lifecycle: single
+    description: Structures.DeleteStructure
+  structures-download-attachments:
+    lifecycle: single
+    description: Structures.DownloadAttachments
+  structures-get-structure:
+    lifecycle: single
+    description: Structures.GetStructure
+  structures-get-structures-by-project-id:
+    lifecycle: single
+    description: Structures.GetStructuresByProjectId
+  structures-get-topology:
+    lifecycle: single
+    description: Structures.GetTopology
+  structures-get-types:
+    lifecycle: single
+    description: Structures.GetTypes
+  structures-post-structure:
+    lifecycle: single
+    description: Structures.PostStructure
+  structures-post-structure-element:
+    lifecycle: single
+    description: Structures.PostStructureElement
+  structures-post-sub-structure:
+    lifecycle: single
+    description: Structures.PostSubStructure
+  structures-put-structure:
+    lifecycle: single
+    description: Structures.PutStructure
+  structures-remove-element:
+    lifecycle: single
+    description: Structures.RemoveElement
+  structures-reorder:
+    lifecycle: single
+    description: Structures.Reorder
+  structures-trigger-notification:
+    lifecycle: single
+    description: Structures.TriggerNotification
+  superelevations-lane-items:
+    lifecycle: single
+    description: Superelevations.LaneItems
+  superelevations-lane-types:
+    lifecycle: single
+    description: Superelevations.LaneTypes
+  system-browser-invoke-async:
+    lifecycle: single
+    description: SystemBrowser.InvokeAsync
+  table-names-get-db-table-class-name:
+    lifecycle: single
+    description: TableNames.GetDbTableClassName
+  table-names-get-group-name:
+    lifecycle: single
+    description: TableNames.GetGroupName
+  table-names-get-table-name:
+    lifecycle: single
+    description: TableNames.GetTableName
+  task-helpers-run-sync:
+    lifecycle: single
+    description: TaskHelpers.RunSync
+  team-session-alter-object-async:
+    lifecycle: single
+    description: TeamSession.AlterObjectAsync
+  team-session-assign-structure-element:
+    lifecycle: single
+    description: TeamSession.AssignStructureElement
+  team-session-convert-geometry:
+    lifecycle: single
+    description: TeamSession.ConvertGeometry
+  team-session-copy-structure:
+    lifecycle: single
+    description: TeamSession.CopyStructure
+  team-session-create-connection:
+    lifecycle: single
+    description: TeamSession.CreateConnection
+  team-session-create-object-view:
+    lifecycle: single
+    description: TeamSession.CreateObjectView
+  team-session-create-project:
+    lifecycle: single
+    description: TeamSession.CreateProject
+  team-session-create-template:
+    lifecycle: single
+    description: TeamSession.CreateTemplate
+  team-session-delete-attachment:
+    lifecycle: single
+    description: TeamSession.DeleteAttachment
+  team-session-delete-child-objects:
+    lifecycle: single
+    description: TeamSession.DeleteChildObjects
+  team-session-delete-child-objects-async:
+    lifecycle: single
+    description: TeamSession.DeleteChildObjectsAsync
+  team-session-delete-comment:
+    lifecycle: single
+    description: TeamSession.DeleteComment
+  team-session-delete-connections:
+    lifecycle: single
+    description: TeamSession.DeleteConnections
+  team-session-delete-dto-division:
+    lifecycle: single
+    description: TeamSession.DeleteDtoDivision
+  team-session-delete-hyperlink:
+    lifecycle: single
+    description: TeamSession.DeleteHyperlink
+  team-session-delete-issue:
+    lifecycle: single
+    description: TeamSession.DeleteIssue
+  team-session-delete-lock:
+    lifecycle: single
+    description: TeamSession.DeleteLock
+  team-session-delete-object:
+    lifecycle: single
+    description: TeamSession.DeleteObject
+  team-session-delete-object-views:
+    lifecycle: single
+    description: TeamSession.DeleteObjectViews
+  team-session-delete-pin:
+    lifecycle: single
+    description: TeamSession.DeletePin
+  team-session-delete-selection:
+    lifecycle: single
+    description: TeamSession.DeleteSelection
+  team-session-delete-structure:
+    lifecycle: single
+    description: TeamSession.DeleteStructure
+  team-session-delete-user-settings-hierarchy-list-api:
+    lifecycle: single
+    description: TeamSession.DeleteUserSettingsHierarchyList_API
+  team-session-download-attachments:
+    lifecycle: single
+    description: TeamSession.DownloadAttachments
+  team-session-download-attachments-as-stream:
+    lifecycle: single
+    description: TeamSession.DownloadAttachmentsAsStream
+  team-session-download-data:
+    lifecycle: single
+    description: TeamSession.DownloadData
+  team-session-etag:
+    lifecycle: single
+    description: TeamSession.ETag
+  team-session-execute-service:
+    lifecycle: single
+    description: TeamSession.ExecuteService
+  team-session-export-selection:
+    lifecycle: single
+    description: TeamSession.ExportSelection
+  team-session-get-account-settings:
+    lifecycle: single
+    description: TeamSession.GetAccountSettings
+  team-session-get-all-object-view-columnnames:
+    lifecycle: single
+    description: TeamSession.GetAllObjectViewColumnnames
+  team-session-get-all-user-settings-hierarchy-api:
+    lifecycle: single
+    description: TeamSession.GetAllUserSettingsHierarchy_API
+  team-session-get-allplan-id:
+    lifecycle: single
+    description: TeamSession.GetAllplanId
+  team-session-get-attachment-data:
+    lifecycle: single
+    description: TeamSession.GetAttachmentData
+  team-session-get-attribute:
+    lifecycle: single
+    description: TeamSession.GetAttribute
+  team-session-get-attribute-values:
+    lifecycle: single
+    description: TeamSession.GetAttributeValues
+  team-session-get-bim-plus-id:
+    lifecycle: single
+    description: TeamSession.GetBimPlusId
+  team-session-get-cache:
+    lifecycle: single
+    description: TeamSession.GetCache
+  team-session-get-chunk-glb-geometry:
+    lifecycle: single
+    description: TeamSession.GetChunkGlbGeometry
+  team-session-get-comment:
+    lifecycle: single
+    description: TeamSession.GetComment
+  team-session-get-connections:
+    lifecycle: single
+    description: TeamSession.GetConnections
+  team-session-get-division:
+    lifecycle: single
+    description: TeamSession.GetDivision
+  team-session-get-dt-objects-by-id:
+    lifecycle: single
+    description: TeamSession.GetDtObjectsById
+  team-session-get-dt-objects-with-properties-by-id:
+    lifecycle: single
+    description: TeamSession.GetDtObjectsWithPropertiesById
+  team-session-get-dto-issue:
+    lifecycle: single
+    description: TeamSession.GetDtoIssue
+  team-session-get-element-types:
+    lifecycle: single
+    description: TeamSession.GetElementTypes
+  team-session-get-elements-by-type-id:
+    lifecycle: single
+    description: TeamSession.GetElementsByTypeId
+  team-session-get-export-object:
+    lifecycle: single
+    description: TeamSession.GetExportObject
+  team-session-get-export-selection:
+    lifecycle: single
+    description: TeamSession.GetExportSelection
+  team-session-get-export-selections:
+    lifecycle: single
+    description: TeamSession.GetExportSelections
+  team-session-get-glb-geometry:
+    lifecycle: single
+    description: TeamSession.GetGlbGeometry
+  team-session-get-hyperlink:
+    lifecycle: single
+    description: TeamSession.GetHyperlink
+  team-session-get-ifc-id:
+    lifecycle: single
+    description: TeamSession.GetIfcId
+  team-session-get-issue-attachments:
+    lifecycle: single
+    description: TeamSession.GetIssueAttachments
+  team-session-get-issue-comments:
+    lifecycle: single
+    description: TeamSession.GetIssueComments
+  team-session-get-issue-editable-properties:
+    lifecycle: single
+    description: TeamSession.GetIssueEditableProperties
+  team-session-get-issue-editable-properties-object:
+    lifecycle: single
+    description: TeamSession.GetIssueEditablePropertiesObject
+  team-session-get-issue-hyperlinks:
+    lifecycle: single
+    description: TeamSession.GetIssueHyperlinks
+  team-session-get-issue-pins:
+    lifecycle: single
+    description: TeamSession.GetIssuePins
+  team-session-get-issue-reports:
+    lifecycle: single
+    description: TeamSession.GetIssueReports
+  team-session-get-layout-structure:
+    lifecycle: single
+    description: TeamSession.GetLayoutStructure
+  team-session-get-locks:
+    lifecycle: single
+    description: TeamSession.GetLocks
+  team-session-get-object:
+    lifecycle: single
+    description: TeamSession.GetObject
+  team-session-get-object-async:
+    lifecycle: single
+    description: TeamSession.GetObjectAsync
+  team-session-get-object-attachment:
+    lifecycle: single
+    description: TeamSession.GetObjectAttachment
+  team-session-get-object-attachments:
+    lifecycle: single
+    description: TeamSession.GetObjectAttachments
+  team-session-get-object-comments:
+    lifecycle: single
+    description: TeamSession.GetObjectComments
+  team-session-get-object-geometry:
+    lifecycle: single
+    description: TeamSession.GetObjectGeometry
+  team-session-get-object-geometry-as-three-js:
+    lifecycle: single
+    description: TeamSession.GetObjectGeometryAsThreeJs
+  team-session-get-object-geometry-as-three-js-mesh:
+    lifecycle: single
+    description: TeamSession.GetObjectGeometryAsThreeJsMesh
+  team-session-get-object-geometry-async:
+    lifecycle: single
+    description: TeamSession.GetObjectGeometryAsync
+  team-session-get-object-hyperlinks:
+    lifecycle: single
+    description: TeamSession.GetObjectHyperlinks
+  team-session-get-object-internal:
+    lifecycle: single
+    description: TeamSession.GetObjectInternal
+  team-session-get-object-topology:
+    lifecycle: single
+    description: TeamSession.GetObjectTopology
+  team-session-get-object-tree:
+    lifecycle: single
+    description: TeamSession.GetObjectTree
+  team-session-get-object-view-content:
+    lifecycle: single
+    description: TeamSession.GetObjectViewContent
+  team-session-get-object-views:
+    lifecycle: single
+    description: TeamSession.GetObjectViews
+  team-session-get-objects:
+    lifecycle: single
+    description: TeamSession.GetObjects
+  team-session-get-paged-meshblob:
+    lifecycle: single
+    description: TeamSession.GetPagedMeshblob
+  team-session-get-paged-meshblob-async:
+    lifecycle: single
+    description: TeamSession.GetPagedMeshblobAsync
+  team-session-get-paged-objects-async:
+    lifecycle: single
+    description: TeamSession.GetPagedObjectsAsync
+  team-session-get-pin:
+    lifecycle: single
+    description: TeamSession.GetPin
+  team-session-get-project-divisions:
+    lifecycle: single
+    description: TeamSession.GetProjectDivisions
+  team-session-get-project-dto-issues:
+    lifecycle: single
+    description: TeamSession.GetProjectDtoIssues
+  team-session-get-project-element-types:
+    lifecycle: single
+    description: TeamSession.GetProjectElementTypes
+  team-session-get-project-issues:
+    lifecycle: single
+    description: TeamSession.GetProjectIssues
+  team-session-get-project-issues-with-rights:
+    lifecycle: single
+    description: TeamSession.GetProjectIssuesWithRights
+  team-session-get-project-layers:
+    lifecycle: single
+    description: TeamSession.GetProjectLayers
+  team-session-get-project-material-surfaces:
+    lifecycle: single
+    description: TeamSession.GetProjectMaterialSurfaces
+  team-session-get-project-members:
+    lifecycle: single
+    description: TeamSession.GetProjectMembers
+  team-session-get-project-properties:
+    lifecycle: single
+    description: TeamSession.GetProjectProperties
+  team-session-get-project-structures:
+    lifecycle: single
+    description: TeamSession.GetProjectStructures
+  team-session-get-project-thumbnail:
+    lifecycle: single
+    description: TeamSession.GetProjectThumbnail
+  team-session-get-project-topology:
+    lifecycle: single
+    description: TeamSession.GetProjectTopology
+  team-session-get-projects:
+    lifecycle: single
+    description: TeamSession.GetProjects
+  team-session-get-property-sets:
+    lifecycle: single
+    description: TeamSession.GetPropertySets
+  team-session-get-revisions:
+    lifecycle: single
+    description: TeamSession.GetRevisions
+  team-session-get-selected-objects:
+    lifecycle: single
+    description: TeamSession.GetSelectedObjects
+  team-session-get-structure:
+    lifecycle: single
+    description: TeamSession.GetStructure
+  team-session-get-structure-by-project-id:
+    lifecycle: single
+    description: TeamSession.GetStructureByProjectId
+  team-session-get-structure-topology:
+    lifecycle: single
+    description: TeamSession.GetStructureTopology
+  team-session-get-structure-types:
+    lifecycle: single
+    description: TeamSession.GetStructureTypes
+  team-session-get-subscriptions:
+    lifecycle: single
+    description: TeamSession.GetSubscriptions
+  team-session-get-tattribute-values:
+    lifecycle: single
+    description: TeamSession.GetTAttributeValues
+  team-session-get-team-members:
+    lifecycle: single
+    description: TeamSession.GetTeamMembers
+  team-session-get-teams:
+    lifecycle: single
+    description: TeamSession.GetTeams
+  team-session-get-template:
+    lifecycle: single
+    description: TeamSession.GetTemplate
+  team-session-get-topology-structure:
+    lifecycle: single
+    description: TeamSession.GetTopologyStructure
+  team-session-get-v2-team-url:
+    lifecycle: single
+    description: TeamSession.GetV2TeamUrl
+  team-session-is-property-set-uptodate:
+    lifecycle: single
+    description: TeamSession.IsPropertySetUptodate
+  team-session-move-topology-node:
+    lifecycle: single
+    description: TeamSession.MoveTopologyNode
+  team-session-object-exists:
+    lifecycle: single
+    description: TeamSession.ObjectExists
+  team-session-post-attachment:
+    lifecycle: single
+    description: TeamSession.PostAttachment
+  team-session-post-cache:
+    lifecycle: single
+    description: TeamSession.PostCache
+  team-session-post-issue-attachment:
+    lifecycle: single
+    description: TeamSession.PostIssueAttachment
+  team-session-post-issue-comment:
+    lifecycle: single
+    description: TeamSession.PostIssueComment
+  team-session-post-issue-hyperlink:
+    lifecycle: single
+    description: TeamSession.PostIssueHyperlink
+  team-session-post-issue-pin:
+    lifecycle: single
+    description: TeamSession.PostIssuePin
+  team-session-post-object:
+    lifecycle: single
+    description: TeamSession.PostObject
+  team-session-post-object-async:
+    lifecycle: single
+    description: TeamSession.PostObjectAsync
+  team-session-post-object-attachment:
+    lifecycle: single
+    description: TeamSession.PostObjectAttachment
+  team-session-post-object-comment:
+    lifecycle: single
+    description: TeamSession.PostObjectComment
+  team-session-post-object-hyperlink:
+    lifecycle: single
+    description: TeamSession.PostObjectHyperlink
+  team-session-post-project-division:
+    lifecycle: single
+    description: TeamSession.PostProjectDivision
+  team-session-post-project-dto-issue:
+    lifecycle: single
+    description: TeamSession.PostProjectDtoIssue
+  team-session-post-project-issue:
+    lifecycle: single
+    description: TeamSession.PostProjectIssue
+  team-session-post-project-structure:
+    lifecycle: single
+    description: TeamSession.PostProjectStructure
+  team-session-post-revision:
+    lifecycle: single
+    description: TeamSession.PostRevision
+  team-session-post-structure:
+    lifecycle: single
+    description: TeamSession.PostStructure
+  team-session-post-structure-element:
+    lifecycle: single
+    description: TeamSession.PostStructureElement
+  team-session-post-sub-structure:
+    lifecycle: single
+    description: TeamSession.PostSubStructure
+  team-session-put-alter-object:
+    lifecycle: single
+    description: TeamSession.PutAlterObject
+  team-session-put-comment:
+    lifecycle: single
+    description: TeamSession.PutComment
+  team-session-put-connections:
+    lifecycle: single
+    description: TeamSession.PutConnections
+  team-session-put-division:
+    lifecycle: single
+    description: TeamSession.PutDivision
+  team-session-put-dto-issue:
+    lifecycle: single
+    description: TeamSession.PutDtoIssue
+  team-session-put-issue:
+    lifecycle: single
+    description: TeamSession.PutIssue
+  team-session-put-object:
+    lifecycle: single
+    description: TeamSession.PutObject
+  team-session-put-object-async:
+    lifecycle: single
+    description: TeamSession.PutObjectAsync
+  team-session-put-structure:
+    lifecycle: single
+    description: TeamSession.PutStructure
+  team-session-remove-structure-element:
+    lifecycle: single
+    description: TeamSession.RemoveStructureElement
+  team-session-reorder-structure:
+    lifecycle: single
+    description: TeamSession.ReorderStructure
+  team-session-reset-topology-structure:
+    lifecycle: single
+    description: TeamSession.ResetTopologyStructure
+  team-session-set-current-team:
+    lifecycle: single
+    description: TeamSession.SetCurrentTeam
+  team-session-set-lock:
+    lifecycle: single
+    description: TeamSession.SetLock
+  team-session-update-attachment:
+    lifecycle: single
+    description: TeamSession.UpdateAttachment
+  team-session-update-attribute-values:
+    lifecycle: single
+    description: TeamSession.UpdateAttributeValues
+  team-session-update-changed-values-in-database-api:
+    lifecycle: single
+    description: TeamSession.UpdateChangedValuesInDatabase_API
+  team-session-update-user-settings-hierarchy-list-api:
+    lifecycle: single
+    description: TeamSession.UpdateUserSettingsHierarchyList_API
+  team-session-upload-ifc-file:
+    lifecycle: single
+    description: TeamSession.UploadIfcFile
+  team-session-upload-model-resource:
+    lifecycle: single
+    description: TeamSession.UploadModelResource
+  team-session-upload-project-thumbnail:
+    lifecycle: single
+    description: TeamSession.UploadProjectThumbnail
+  team-session-validate:
+    lifecycle: single
+    description: TeamSession.Validate
+  team-session-validate-subscription:
+    lifecycle: single
+    description: TeamSession.ValidateSubscription
+  three-js-view-box-assign:
+    lifecycle: single
+    description: ThreeJsViewBox.Assign
+  three-js-view-box-get-min-max:
+    lifecycle: single
+    description: ThreeJsViewBox.GetMinMax
+  tmp-matrix-clear:
+    lifecycle: single
+    description: TmpMatrix.Clear
+  tmp-matrix-to-string:
+    lifecycle: single
+    description: TmpMatrix.ToString
+  token-extensions-application-id:
+    lifecycle: single
+    description: TokenExtensions.ApplicationId
+  token-extensions-client-id:
+    lifecycle: single
+    description: TokenExtensions.ClientId
+  token-extensions-impersonate-user-id:
+    lifecycle: single
+    description: TokenExtensions.ImpersonateUserId
+  token-extensions-info-user-id:
+    lifecycle: single
+    description: TokenExtensions.InfoUserId
+  token-extensions-oauth-client-id:
+    lifecycle: single
+    description: TokenExtensions.OAuthClientId
+  token-extensions-resource-id:
+    lifecycle: single
+    description: TokenExtensions.ResourceId
+  token-extensions-scopes:
+    lifecycle: single
+    description: TokenExtensions.Scopes
+  token-extensions-session-id:
+    lifecycle: single
+    description: TokenExtensions.SessionId
+  token-extensions-user-name:
+    lifecycle: single
+    description: TokenExtensions.UserName
+  token-result-extensions-to-auth-token:
+    lifecycle: single
+    description: TokenResultExtensions.ToAuthToken
+  token-validator-get-expiration-date-time:
+    lifecycle: single
+    description: TokenValidator.GetExpirationDateTime
+  token-validator-get-token-parameters-async:
+    lifecycle: single
+    description: TokenValidator.GetTokenParametersAsync
+  token-validator-is-token-active-async:
+    lifecycle: single
+    description: TokenValidator.IsTokenActiveAsync
+  token-validator-validate-token-async:
+    lifecycle: single
+    description: TokenValidator.ValidateTokenAsync
+  token-validator-validate-token-based-on-oidc-specification:
+    lifecycle: single
+    description: TokenValidator.ValidateTokenBasedOnOidcSpecification
+  transitional-vertical-element-elevation-at-station:
+    lifecycle: single
+    description: TransitionalVerticalElement.ElevationAtStation
+  type-converter-convert-to:
+    lifecycle: single
+    description: TypeConverter.ConvertTo
+  unknown-horizontal-element-position-at-station:
+    lifecycle: single
+    description: UnknownHorizontalElement.PositionAtStation
+  user-role-id-access-folder-role:
+    lifecycle: single
+    description: UserRoleID.AccessFolderRole
+  user-role-id-is-minimal-project-admin:
+    lifecycle: single
+    description: UserRoleID.IsMinimalProjectAdmin
+  user-role-id-is-minimal-project-editor:
+    lifecycle: single
+    description: UserRoleID.IsMinimalProjectEditor
+  user-role-id-is-minimal-team-admin:
+    lifecycle: single
+    description: UserRoleID.IsMinimalTeamAdmin
+  vertical-alignment-distance:
+    lifecycle: single
+    description: VerticalAlignment.Distance
+  vertical-alignment-elevation-at-station:
+    lifecycle: single
+    description: VerticalAlignment.ElevationAtStation
+  vertical-alignment-get-element-by-station:
+    lifecycle: single
+    description: VerticalAlignment.GetElementByStation
+  vertical-alignment-reference-list-create:
+    lifecycle: single
+    description: VerticalAlignmentReferenceList.Create
+  vertical-alignment-reference-list-get-type:
+    lifecycle: single
+    description: VerticalAlignmentReferenceList.GetType
+  vertical-element-elevation-at-station:
+    lifecycle: single
+    description: VerticalElement.ElevationAtStation
+  vertical-element-get-delta:
+    lifecycle: single
+    description: VerticalElement.GetDelta
+  web-authentication-adapter-login-async:
+    lifecycle: single
+    description: WebAuthenticationAdapter.LoginAsync
+  web-authentication-adapter-logout-async:
+    lifecycle: single
+    description: WebAuthenticationAdapter.LogoutAsync
+  web-authentication-adapter-refresh-token-async:
+    lifecycle: single
+    description: WebAuthenticationAdapter.RefreshTokenAsync
+skills:
+  - allplan-oidc-common.md
+  - allplan-oidc-direct-access-grant.md
+  - allplan-oidc-http-handler.md
+  - allplan-oidc-oidc-api.md
+  - allplan-oidc-web.md
+  - bim-plus-client-logging.md
+  - bim-plus-client-signal-r.md
+  - bim-plus-client.md
+  - bim-plus-jobs-api.md
+  - bim-plus-jobs-remote-runner.md
+  - bim-plus-light-case-client-support.md
+  - bim-plus-light-case-client.md
+  - bim-plus-sdk-api-wrapper.md
+  - bim-plus-sdk-api.md
+  - bim-plus-sdk-data-administration.md
+  - bim-plus-sdk-data-allplan-shop.md
+  - bim-plus-sdk-data-analysis-geometry-objects.md
+  - bim-plus-sdk-data-analysis-geometry-reference.md
+  - bim-plus-sdk-data-authentication.md
+  - bim-plus-sdk-data-bcf.md
+  - bim-plus-sdk-data-content.md
+  - bim-plus-sdk-data-converter.md
+  - bim-plus-sdk-data-csg.md
+  - bim-plus-sdk-data-data-table-dto.md
+  - bim-plus-sdk-data-db-core-analysis.md
+  - bim-plus-sdk-data-db-core-bridge.md
+  - bim-plus-sdk-data-db-core-building.md
+  - bim-plus-sdk-data-db-core-collision.md
+  - bim-plus-sdk-data-db-core-connection.md
+  - bim-plus-sdk-data-db-core-csg.md
+  - bim-plus-sdk-data-db-core-division.md
+  - bim-plus-sdk-data-db-core-document.md
+  - bim-plus-sdk-data-db-core-finishings.md
+  - bim-plus-sdk-data-db-core-fire-rating.md
+  - bim-plus-sdk-data-db-core-gis.md
+  - bim-plus-sdk-data-db-core-help.md
+  - bim-plus-sdk-data-db-core-hyperlink.md
+  - bim-plus-sdk-data-db-core-inventory.md
+  - bim-plus-sdk-data-db-core-issue.md
+  - bim-plus-sdk-data-db-core-mep-function.md
+  - bim-plus-sdk-data-db-core-precast.md
+  - bim-plus-sdk-data-db-core-recess.md
+  - bim-plus-sdk-data-db-core-reinforcement.md
+  - bim-plus-sdk-data-db-core-revision.md
+  - bim-plus-sdk-data-db-core-road.md
+  - bim-plus-sdk-data-db-core-snap-shot.md
+  - bim-plus-sdk-data-db-core-space.md
+  - bim-plus-sdk-data-db-core-steel.md
+  - bim-plus-sdk-data-db-core-structure.md
+  - bim-plus-sdk-data-db-core-terrain.md
+  - bim-plus-sdk-data-db-core-timber.md
+  - bim-plus-sdk-data-db-core-workflow.md
+  - bim-plus-sdk-data-db-core.md
+  - bim-plus-sdk-data-definitions.md
+  - bim-plus-sdk-data-dto-properties-group.md
+  - bim-plus-sdk-data-external-services.md
+  - bim-plus-sdk-data-geometry-templates.md
+  - bim-plus-sdk-data-geometry.md
+  - bim-plus-sdk-data-hello.md
+  - bim-plus-sdk-data-interfaces.md
+  - bim-plus-sdk-data-job.md
+  - bim-plus-sdk-data-messages.md
+  - bim-plus-sdk-data-monitoring.md
+  - bim-plus-sdk-data-notification.md
+  - bim-plus-sdk-data-octree.md
+  - bim-plus-sdk-data-paging.md
+  - bim-plus-sdk-data-road.md
+  - bim-plus-sdk-data-setting.md
+  - bim-plus-sdk-data-structural-load-resource.md
+  - bim-plus-sdk-data-system-backup.md
+  - bim-plus-sdk-data-tenant-dto.md
+  - bim-plus-sdk-data-user-administration.md
+  - bim-plus-sdk-data-validation.md
+  - bim-plus-sdk-data-viewer-dto.md
+  - bim-plus-sdk-data-work-flow.md
+  - bim-plus-sdk-data.md
+  - bim-plus-sdk-ifc-data-express-ifc-types.md
+  - bim-plus-sdk-ifc-data.md
+  - bim-plus-sdk-utilities-v2.md
+  - bim-plus-sdk-utilities.md
+  - bim-plus-server-data-attributes.md
+  - bim-plus-server-data-tenant-web-hook.md
+  - nemetschek-allready-logistics-db-core.md
+  - nemetschek-bim-plus-csg.md
+  - nemetschek-nbase-geometry2-d.md
+  - nemetschek-nbase-objects.md
+  - nemetschek-nutil-library.md

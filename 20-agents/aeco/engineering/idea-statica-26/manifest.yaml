@@ -1,0 +1,404 @@
+agent:        idea-statica-26
+version:      26.0.1.2450
+display-name: IDEA StatiCa 26 (raw — OpenModel)
+description: |
+  Auto-generated agent from `IdeaStatiCa.OpenModel@26.0.1.2450` on
+  NuGet via `aware build agent --from-nuget`. Reflects the public-API
+  surface of the IDEA Open Model for IDEA StatiCa 26. Companion to
+  `idea-statica-25`.
+
+  Covers 18 classes × 116 commands across connection geometry,
+  member definitions, loads, materials, and code-check results.
+
+  Vendor-proprietary library; AWARE-generated text is Apache-2.0.
+  Users need their own IDEA StatiCa installation + license.
+
+  Marked `stateful: false` — OpenModel construction is request/response.
+
+stateful: false
+
+vendor:   idea-statica
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/engineering/idea-statica-26
+keywords: [aeco, engineering, structural, connection-design, steel, idea-statica, generated, raw, 26, nuget]
+
+provenance:
+  generated-by: aware-agent-builder
+  generator-version: 0.8.1
+  source:
+    license: UNKNOWN
+    package: IdeaStatiCa.OpenModel
+    type: nuget
+    version: 26.0.1.2450
+  generated-at: 2026-05-17T06:34:27.747231500+00:00
+transport:
+  cli:
+    binary: aware-idea-statica-26
+commands:
+  connection-setup-init-by-code:
+    lifecycle: single
+    description: Inicialize by setted code
+  cross-section-factory-fill-box-web:
+    lifecycle: single
+    description: CrossSectionFactory.FillBoxWeb
+  cross-section-factory-fill-box2:
+    lifecycle: single
+    description: CrossSectionFactory.FillBox2
+  cross-section-factory-fill-box2-i:
+    lifecycle: single
+    description: Box 2I - steel shape
+  cross-section-factory-fill-box2-l:
+    lifecycle: single
+    description: Box 2L - steel shape
+  cross-section-factory-fill-box4-l:
+    lifecycle: single
+    description: Box 4L - steel shape
+  cross-section-factory-fill-chspar:
+    lifecycle: single
+    description: CrossSectionFactory.FillCHSPar
+  cross-section-factory-fill-circle:
+    lifecycle: single
+    description: Circular shape - for steel or concrete shape
+  cross-section-factory-fill-cold-formed-c:
+    lifecycle: single
+    description: Fill parameters for cold formed C section
+  cross-section-factory-fill-cold-formed-cf2-co:
+    lifecycle: single
+    description: Cold-formed 2C closed section (back-to-back C sections)
+  cross-section-factory-fill-cold-formed-cf2-cpo:
+    lifecycle: single
+    description: Cold-formed 2C+ open section (back-to-back C+ sections)
+  cross-section-factory-fill-cold-formed-channel:
+    lifecycle: single
+    description: Fill parameters for cold formed C channel
+  cross-section-factory-fill-cold-formed-cp:
+    lifecycle: single
+    description: Cold-formed C+ section
+  cross-section-factory-fill-cold-formed-general:
+    lifecycle: single
+    description: Fill center line for general cold formed css
+  cross-section-factory-fill-cold-formed-l:
+    lifecycle: single
+    description: Fill parameters for cold formed L section
+  cross-section-factory-fill-cold-formed-lgen:
+    lifecycle: single
+    description: Fill parameters for cold formed L - gen section
+  cross-section-factory-fill-cold-formed-omega:
+    lifecycle: single
+    description: Fill parameters for cold formed Omega section
+  cross-section-factory-fill-cold-formed-regular-polygon:
+    lifecycle: single
+    description: Fill parameters for cold formed Regular polygon section
+  cross-section-factory-fill-cold-formed-rhs:
+    lifecycle: single
+    description: Fill parameters for cold formed RHS section
+  cross-section-factory-fill-cold-formed-sigma:
+    lifecycle: single
+    description: Fill parameters for cold formed sigma section
+  cross-section-factory-fill-cold-formed-z:
+    lifecycle: single
+    description: Fill parameters for cold formed Z section
+  cross-section-factory-fill-cold-formed-zed:
+    lifecycle: single
+    description: Fill parameters for cold formed Z-ed section
+  cross-section-factory-fill-composed-dbl-lt:
+    lifecycle: single
+    description: Creates a new L shape css
+  cross-section-factory-fill-composed-dbl-lu:
+    lifecycle: single
+    description: Creates a new L shape css.
+  cross-section-factory-fill-composed-dbl-uc:
+    lifecycle: single
+    description: Fills a double channel steel section. They form an closed/back-to-back [] shape.
+  cross-section-factory-fill-composed-dbl-uo:
+    lifecycle: single
+    description: Fills a double channel steel section. They form an open/front-to-front ][ shape.
+  cross-section-factory-fill-css-iarc:
+    lifecycle: single
+    description: CrossSectionFactory.FillCssIarc
+  cross-section-factory-fill-css-rectangle-hollow:
+    lifecycle: single
+    description: Fill cross-section of shape rectangular for concrete sections
+  cross-section-factory-fill-css-steel-angle:
+    lifecycle: single
+    description: CrossSectionFactory.FillCssSteelAngle
+  cross-section-factory-fill-css-steel-channel:
+    lifecycle: single
+    description: CrossSectionFactory.FillCssSteelChannel
+  cross-section-factory-fill-css-steel-circular-hollow:
+    lifecycle: single
+    description: CrossSectionFactory.FillCssSteelCircularHollow
+  cross-section-factory-fill-css-steel-rectangular-hollow:
+    lifecycle: single
+    description: CrossSectionFactory.FillCssSteelRectangularHollow
+  cross-section-factory-fill-css-tarc:
+    lifecycle: single
+    description: CrossSectionFactory.FillCssTarc
+  cross-section-factory-fill-general-shape:
+    lifecycle: single
+    description: Fill general shape
+  cross-section-factory-fill-library-shape:
+    lifecycle: single
+    description: CrossSectionFactory.FillLibraryShape
+  cross-section-factory-fill-ohollow:
+    lifecycle: single
+    description: Fill massive pipe shape
+  cross-section-factory-fill-rectangle:
+    lifecycle: single
+    description: Rectangle shape - massive concrete shape
+  cross-section-factory-fill-rolled-angle:
+    lifecycle: single
+    description: Rolled steel angle
+  cross-section-factory-fill-rolled-channel:
+    lifecycle: single
+    description: Rolled steel channel
+  cross-section-factory-fill-rolled-chs:
+    lifecycle: single
+    description: Steel circular hollow section
+  cross-section-factory-fill-rolled-double-i:
+    lifecycle: single
+    description: Rolled steel double I section
+  cross-section-factory-fill-rolled-i:
+    lifecycle: single
+    description: Rolled steel I section
+  cross-section-factory-fill-rolled-rhs:
+    lifecycle: single
+    description: Steel rectangular hollow section
+  cross-section-factory-fill-rolled-t:
+    lifecycle: single
+    description: Rolled steel T section
+  cross-section-factory-fill-rolled-tfrom-i:
+    lifecycle: single
+    description: Rolled steel T section (I-cut)
+  cross-section-factory-fill-shape-dbl-l:
+    lifecycle: single
+    description: CrossSectionFactory.FillShapeDblL
+  cross-section-factory-fill-shape-dbl-lu:
+    lifecycle: single
+    description: CrossSectionFactory.FillShapeDblLu
+  cross-section-factory-fill-shape-dbl-u:
+    lifecycle: single
+    description: CrossSectionFactory.FillShapeDblU
+  cross-section-factory-fill-shape-i:
+    lifecycle: single
+    description: I shape - massive concrete shape
+  cross-section-factory-fill-shape-ibase:
+    lifecycle: single
+    description: I shape base - massive concrete shape
+  cross-section-factory-fill-shape-l:
+    lifecycle: single
+    description: Creates a new L shape css - massive concrete shape
+  cross-section-factory-fill-shape-t:
+    lifecycle: single
+    description: T shape  - massive concrete shape
+  cross-section-factory-fill-shape-trapezoid1:
+    lifecycle: single
+    description: Trapezoid shape
+  cross-section-factory-fill-shape-trev:
+    lifecycle: single
+    description: T turned shape - massive concrete shape
+  cross-section-factory-fill-shape-trev1:
+    lifecycle: single
+    description: T turned shape - massive concrete shape
+  cross-section-factory-fill-shape-tt:
+    lifecycle: single
+    description: TT shape  - massive concrete shape
+  cross-section-factory-fill-shape-twh:
+    lifecycle: single
+    description: T shape  - massive concrete shape
+  cross-section-factory-fill-shape-u:
+    lifecycle: single
+    description: Creates a U shape of css.
+  cross-section-factory-fill-steel-ti:
+    lifecycle: single
+    description: CrossSectionFactory.FillSteelTI
+  cross-section-factory-fill-steel-tube:
+    lifecycle: single
+    description: CrossSectionFactory.FillSteelTube
+  cross-section-factory-fill-triangle:
+    lifecycle: single
+    description: CrossSectionFactory.FillTriangle
+  cross-section-factory-fill-welded-asym-i:
+    lifecycle: single
+    description: Welded I asymetrical - steel shape
+  cross-section-factory-fill-welded-box-delta:
+    lifecycle: single
+    description: CrossSectionFactory.FillWeldedBoxDelta
+  cross-section-factory-fill-welded-box-flange:
+    lifecycle: single
+    description: Box 2 - steel shape
+  cross-section-factory-fill-welded-box-web:
+    lifecycle: single
+    description: CrossSectionFactory.FillWeldedBoxWeb
+  cross-section-factory-fill-welded-i:
+    lifecycle: single
+    description: Fill steel section of welded I
+  cross-section-factory-fill-welded-t:
+    lifecycle: single
+    description: Fill steel section of welded T
+  cross-section-factory-fill-welded-triangle:
+    lifecycle: single
+    description: CrossSectionFactory.FillWeldedTriangle
+  cross-section-factory-fill-welded-u:
+    lifecycle: single
+    description: CrossSectionFactory.FillWeldedU
+  cross-section-factory-fill-welded2-lt:
+    lifecycle: single
+    description: CrossSectionFactory.FillWelded2Lt
+  cross-section-factory-fill-welded2-lu:
+    lifecycle: single
+    description: CrossSectionFactory.FillWelded2Lu
+  cross-section-factory-fill-welded2-uc:
+    lifecycle: single
+    description: CrossSectionFactory.FillWelded2Uc
+  ideaprogress-report:
+    lifecycle: single
+    description: Report
+  list-of-result-of-member-get-schema:
+    lifecycle: single
+    description: Gets schema
+  list-of-result-of-member-read-xml:
+    lifecycle: single
+    description: Reads XML
+  list-of-result-of-member-write-xml:
+    lifecycle: single
+    description: Writes XML
+  member2-dreact-extensions-get-point-value-index:
+    lifecycle: single
+    description: Member2DReactExtensions.GetPointValueIndex
+  member2-dreact-extensions-get-section-value-index:
+    lifecycle: single
+    description: Member2DReactExtensions.GetSectionValueIndex
+  member2-dreact-extensions-get-value-in-point:
+    lifecycle: single
+    description: Member2DReactExtensions.GetValueInPoint
+  member2-dreact-extensions-get-value-in-section:
+    lifecycle: single
+    description: Member2DReactExtensions.GetValueInSection
+  member2-dreact-extensions-set-values-in-point:
+    lifecycle: single
+    description: Member2DReactExtensions.SetValuesInPoint
+  member2-dreact-extensions-set-values-in-section:
+    lifecycle: single
+    description: Member2DReactExtensions.SetValuesInSection
+  number-groups-create:
+    lifecycle: single
+    description: Creates new instance with list of ValueCount .
+  number-groups-create-groups:
+    lifecycle: single
+    description: Creates new instance with groups with with one value in group.
+  open-message-create:
+    lifecycle: single
+    description: Creating message
+  open-messages-add:
+    lifecycle: single
+    description: Add a message
+  open-messages-remove:
+    lifecycle: single
+    description: Remove a message
+  open-model-add-object:
+    lifecycle: single
+    description: Add new atribute object into collections
+  open-model-get-existing-object:
+    lifecycle: single
+    description: Add new object into collections
+  open-model-get-max-id:
+    lifecycle: single
+    description: Get max Id value for specified type
+  open-model-get-object:
+    lifecycle: single
+    description: Gets the Open element object from the Reference element
+  open-model-load-from-stream:
+    lifecycle: single
+    description: Creates the instance of Open Model from the stream
+  open-model-load-from-string:
+    lifecycle: single
+    description: Creates the instance of Open Model from xml string
+  open-model-load-from-xml-file:
+    lifecycle: single
+    description: Creates the instance of Open Model from the XML file
+  open-model-reference-elements-reconstruction:
+    lifecycle: single
+    description: Should be called after deserialization of the open model from xml
+  open-model-result-load-from-stream:
+    lifecycle: single
+    description: Creates the instance of Open Model Result  from the stream
+  open-model-result-load-from-xml-file:
+    lifecycle: single
+    description: Creates the instance of Open Model Result from the XML file
+  open-model-result-save-to-xml-file:
+    lifecycle: single
+    description: Saves content into file as a XML format
+  open-model-save-to-xml-file:
+    lifecycle: single
+    description: Saves content into file as a XML format
+  steel-setup-aus-friction-coefficient-pbolt-default:
+    lifecycle: single
+    description: Friction Coefficient Pbolt Default
+  steel-setup-friction-coefficient-pbolt-default:
+    lifecycle: single
+    description: Friction Coefficient Pbolt Default
+  steel-setup-hkg-friction-coefficient-pbolt-default:
+    lifecycle: single
+    description: Friction Coefficient Pbolt Default
+  steel-setup-ind-friction-coefficient-pbolt-default:
+    lifecycle: single
+    description: Friction Coefficient Pbolt Default
+  steel-setup-rus-friction-coefficient-pbolt-default:
+    lifecycle: single
+    description: Friction Coefficient Pbolt Default
+  tools-connection-data-from-xml:
+    lifecycle: single
+    description: Deserialize ConnectionData from xml
+  tools-connection-data-to-xml:
+    lifecycle: single
+    description: Serialize ConnectionData to xml
+  tools-deserialize-model:
+    lifecycle: single
+    description: Tools.DeserializeModel
+  tools-deserialize-model-from-file:
+    lifecycle: single
+    description: Tools.DeserializeModelFromFile
+  tools-deserialize-model-from-stream:
+    lifecycle: single
+    description: Tools.DeserializeModelFromStream
+  tools-open-model-container-from-file:
+    lifecycle: single
+    description: Deserialize OpenModelContainer from file
+  tools-open-model-container-from-xml:
+    lifecycle: single
+    description: Deserialize OpenModelContainer from Xml
+  tools-open-model-container-to-file:
+    lifecycle: single
+    description: Serialize OpenModelContainer to xml
+  tools-open-model-container-to-xml:
+    lifecycle: single
+    description: Serialize OpenModelContainer to Xml
+  tools-serialize-model:
+    lifecycle: single
+    description: Tools.SerializeModel
+  tools-serialize-model-to-file:
+    lifecycle: single
+    description: Tools.SerializeModelToFile
+  value-count-create:
+    lifecycle: single
+    description: Creates a new instance with specified value.
+skills:
+  - idea-rs-open-model-beam.md
+  - idea-rs-open-model-concrete-check-result.md
+  - idea-rs-open-model-concrete-load.md
+  - idea-rs-open-model-concrete.md
+  - idea-rs-open-model-connection.md
+  - idea-rs-open-model-cross-section.md
+  - idea-rs-open-model-detail-loading.md
+  - idea-rs-open-model-detail.md
+  - idea-rs-open-model-geometry2-d.md
+  - idea-rs-open-model-geometry3-d.md
+  - idea-rs-open-model-libraries-material.md
+  - idea-rs-open-model-loading.md
+  - idea-rs-open-model-material.md
+  - idea-rs-open-model-message.md
+  - idea-rs-open-model-model.md
+  - idea-rs-open-model-parameters.md
+  - idea-rs-open-model-result.md
+  - idea-rs-open-model.md

@@ -1,0 +1,65 @@
+---
+name: tsd-api-remoting-tsd-api-remoting-materials
+description: API reference for namespace TSD.API.Remoting.Materials from TSD.API.Remoting.dll
+---
+
+# TSD.API.Remoting.Materials
+
+- **CarbonSourceEntityInfo**
+  - Identifies an  entity
+- **ConcreteDensityClass**
+  - Represents class of concrete density
+- **ConcreteType**
+  - Represents type of concrete
+- **CrackedOption**
+  - Represents information whether to assume cracked
+- **ICarbonInfo**
+  - Contains information about a carbon source
+- **ICarbonSource**
+  - Represents an entity containing embodied carbon
+- **IColdFormed**
+  - Represents a cold formed material
+- **IColdRolled**
+  - Represents a cold rolled material
+- **IConcrete**
+  - Represents a concrete material
+- **IGeneralMaterial**
+  - Represents a general material
+- **IMasonry**
+  - Represents masonry material
+- **IMasonryTeddsData**
+  - Represents additional data for  material when it is defined by Tedds
+- **IMaterial**
+  - Holds common properties for materials
+- **IMaterialFactory**
+  - Contains methods for obtaining materials
+- **ISteel**
+  - Represents a steel material
+- **ISteelStrengthProperty**
+  - Encapsulates the yield strength, tensile strength and thickness change point values
+- **ITimber**
+  - Represents a timber material
+- **IUserDefinedColdFormed**
+  - Represents a user-defined cold formed material
+- **IUserDefinedColdRolled**
+  - Represents a user-defined cold rolled material
+- **IUserDefinedConcrete**
+  - Represents a user-defined concrete material
+- **IUserDefinedGeneralMaterial**
+  - Represents a user-defined general material
+- **IUserDefinedMaterial**
+  - Represents a user-defined material
+- **IUserDefinedSteel**
+  - Represents a user-defined steel material
+- **IUserDefinedSteelStrengthProperty**
+  - Encapsulates the user-defined yield strength, tensile strength and thickness change point values
+- **IUserDefinedTimber**
+  - Represents a user-defined timber material
+- **MasonryUnitType**
+  - Represents type of masonry unit
+- **MasonryWallGroutType**
+  - Represents grouting options for masonry walls
+- **MaterialType**
+  - Represents the type of material
+- **TimberFabrication**
+  - The fabrication type of timber grades and sections

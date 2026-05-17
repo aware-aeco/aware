@@ -1,0 +1,241 @@
+---
+name: tsd-api-remoting-tsd-api-remoting-structure
+description: API reference for namespace TSD.API.Remoting.Structure from TSD.API.Remoting.dll
+---
+
+# TSD.API.Remoting.Structure
+
+- **ConstructionHelperLineType**
+  - Represents the line type of a construction helper
+- **ConstructionHelperType**
+  - Represents type of construction helper
+- **ConstructionPointType**
+  - Represents the type of a construction point
+- **CurvedOption**
+  - Represents curvature
+- **DeckType**
+  - Represents deck type of slab
+- **DecompositionType**
+  - Represents type of decomposition
+- **DiaphragmOption**
+  - Represents diaphragm option
+- **ElementGroupType**
+  - Represents type of element group
+- **EncasementShape**
+  - Represents a shape of an encasement
+- **EndPlateOverlapOption**
+  - Represents an end plate overlap option
+- **ExposedSides**
+  - Represents type of side exposition
+- **GridLineNameType**
+  - Represents the type of a grid line name
+- **HaunchCutType**
+  - Represents a haunch cut type
+- **HaunchDepthOption**
+  - Represents a haunch depth option
+- **HaunchFabrication**
+  - Represents a haunch fabrication
+- **HaunchSectionDerivation**
+  - Represents a haunch section derivation
+- **IArchitecturalGrid**
+  - Represents an architectural grid
+- **IAreaElement**
+  - Represents common properties of area elements
+- **ICircularWebOpening**
+  - Represents a circular web opening
+- **IColumnDropData**
+  - Represents additional data of slab item if the slab item is column drop
+- **IConcreteBeamSpanData**
+  - Represents a data of a span of a concrete beam
+- **IConcreteColumnData**
+  - Represents the data of a concrete column
+- **IConcreteColumnStackData**
+  - Represents a data of a stack of a concrete column
+- **IConstructionHelper**
+  - Represents a construction helper
+- **IConstructionPlane**
+  - Represents a construction plane
+- **IConstructionPoint**
+  - Represents a single construction point
+- **IConstructionPointGroup**
+  - Represents a group of construction points
+- **IDeck**
+  - Represents a deck
+- **IElementGroup**
+  - Represents an element group
+- **IElongatedWebOpening**
+  - Represents an elongated web opening
+- **IEndPlate**
+  - Represents an end plate
+- **IFireCheckData**
+  - Contains data related to fire checks
+- **IHaunch**
+  - Represents a haunch
+- **IHaveWebOpenings**
+  - Represents an object that can contain web openings
+- **IHorizontalConstructionPlane**
+  - Represents a construction level
+- **ILateralRestraint**
+  - Represents a lateral restraint
+- **IMember**
+  - Represents a member (for all types of members, see )
+- **IMemberData**
+  - Represents the data of a member
+- **IMemberNaturalFrequency**
+  - Contains properties related to natural frequency
+- **IMemberNode**
+  - Represents a member node
+- **IMemberPrecamber**
+  - Contains information about precamber of a member
+- **IMemberSpan**
+  - Represents a span of a member
+- **IMemberSpanData**
+  - Represents a data of a span of a member
+- **IModel**
+  - Represents structure model
+- **IPlanarEntity**
+  - Represents a planar entity
+- **IRectangularWebOpening**
+  - Represents a rectangular web opening
+- **IRoof**
+  - Represents a roof
+- **IRoofData**
+  - Represents additional data of a roof
+- **IShearConnectorLayout**
+  - Represents a layout of shear connectors
+- **IShearConnectorLayoutGroup**
+  - Represents a group in a layout of shear connectors
+- **ISimpleCircularWebOpening**
+  - Represents a simple circular web opening
+- **ISimpleElongatedWebOpening**
+  - Represents a simple elongated web opening
+- **ISimpleRectangularWebOpening**
+  - Represents a simple rectangular web opening
+- **ISimpleSquareWebOpening**
+  - Represents a simple square web opening
+- **ISimpleWebOpening**
+  - Represents a simple web opening
+- **ISlab**
+  - Represents a slab
+- **ISlabConstructionPlane**
+  - Represents a construction plane for slabs
+- **ISlabData**
+  - Represents additional data of slab
+- **ISlabItem**
+  - Represents a slab item
+- **ISlabItemData**
+  - Represents additional data of a slab item
+- **ISlabItemEdge**
+  - Represents an edge of a
+- **ISlabItemOverhangData**
+  - Represents additional data of slab item if the slab item is overhang
+- **ISlabOpening**
+  - Represents an opening in slab
+- **ISlabPatch**
+  - Represents a slab patch
+- **ISlopedConstructionPlane**
+  - Represents a sloped construction plane
+- **ISpanAlignment**
+  - Represents member span alignment
+- **ISpanReleases**
+  - Represents member span end releases
+- **ISquareWebOpening**
+  - Represents a square web opening
+- **ISteelBeamSpanData**
+  - Represents a data of a span of a steel beam
+- **ISteelColumnData**
+  - Represents the data of a steel column
+- **ISteelColumnStackData**
+  - Represents data of a stack of a steel column
+- **IStrip**
+  - Represents the data of an individual strip
+- **IStructuralWall**
+  - Represents a structural wall
+- **IStructuralWallData**
+  - Represents additional data of a structural wall
+- **IStructuralWallPanel**
+  - Represents a panel in
+- **IStructuralWallPanelData**
+  - Represents data of panel in
+- **IStructuralWallPatch**
+  - Represents patch in
+- **IStructuralWallPatchData**
+  - Represents data of patch in
+- **ISubEntityCollection**
+  - Represents collection of  sub-entities
+- **ISubModel**
+  - Represents a sub-model
+- **ISubModels**
+  - Represents sub-models
+- **ISupport**
+  - Represents a support
+- **IVerticalConstructionPlane**
+  - Represents a frame
+- **IWallOpening**
+  - Represents a wall opening
+- **IWebOpening**
+  - Represents a web opening
+- **IWestokCircularWebOpening**
+  - Represents a circular Westok web opening
+- **IWestokElongatedWebOpening**
+  - Represents an elongated Westok web opening
+- **IWestokWebOpening**
+  - Represents a Westok web opening
+- **IWindWall**
+  - Represents a wind wall
+- **MemberConstruction**
+  - Represents member construction
+- **MemberFabrication**
+  - Represents member fabrication
+- **MemberSpanInfo**
+  - Represents an info about a span of a member
+- **MemberType**
+  - Represents the type of a
+- **MeshType**
+  - Represents a mesh type
+- **PlaneType**
+  - Defines the types of planes (Horizontal and Sloped)
+- **PrecamberMethod**
+  - Represents a precamber method
+- **RoofType**
+  - Represents type of roof
+- **RotationOption**
+  - Represents rotation option
+- **SectionSnapLevel**
+  - Represents section snap level
+- **ShearConnectionCondition**
+  - Shear connection condition
+- **SlabContourType**
+  - Represents a slab contour type (is a flag enum!)
+- **SlabSurface**
+  - Represents a face of a slab
+- **SlabType**
+  - Represents type of slab
+- **StructuralWallType**
+  - Represents a type of
+- **SubEntityInfo**
+  - Represents an info about a sub-entity
+- **TimeOfFireExposure**
+  - Represents a type of time of fire exposure
+- **ToppingOption**
+  - Represents types of topping
+- **WallPanelAlignment**
+  - Represents an alignment of
+- **WallPanelReleaseType**
+  - Represents a release type of
+- **WebOpeningInfillType**
+  - The type of infill in a Westok web opening
+- **WebOpeningInfillTypeExtensions**
+  - Contains extension methods for  enumeration
+- **WebOpeningShape**
+  - Represents the shape of a web opening
+- **WebOpeningStiffening**
+  - Represents the web opening stiffening
+- **WebOpeningStiffeningExtensions**
+  - Contains extension methods for  enumeration
+- **WestokElongatedWebOpeningStiffenerZoneType**
+  - Represents the type of an elongated Westok web opening stiffener zone
+- **WestokElongatedWebOpeningStiffenerZoneTypeExtensions**
+  - Contains extension methods for  enumeration
+- **WindDecompositionTarget**
+  - Represents a wind decomposition target

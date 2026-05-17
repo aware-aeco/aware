@@ -1,0 +1,109 @@
+---
+name: idea-rs-open-model-idea-rs-open-model-concrete
+description: API reference for namespace IdeaRS.OpenModel.Concrete from IdeaRS.OpenModel.dll
+---
+
+# IdeaRS.OpenModel.Concrete
+
+- **BeamDataEc2**
+  - Beam data Ec2
+- **CalculationSetup**
+  - Concrete calculation setup
+- **CheckSection**
+  - Check section base class
+- **CheckSectionExtreme**
+  - Check section extreme base class
+- **ColumnData**
+  - Column data base
+- **ColumnDataEc2**
+  - Column data Ec2
+- **ConcreteMemberData**
+  - Concrete member data base
+- **ConcreteMemberDataEc2**
+  - Concrete member data Ec2
+- **ConcreteMemberType**
+  - Member type
+- **ConcreteSetup**
+  - Concrete setup base class
+- **ConcreteSetupEc2**
+  - Concrete setup Ec2
+- **DeflectionRequirementEc2**
+  - deflection calculation requirements
+- **EffectConsideredType**
+  - Effect concidered types
+- **ExposureClassEc2**
+  - Type of exposure class
+- **ExposureClassesDataEc2**
+  - Exposure Classes Ec2
+- **ImperfectionDirection**
+  - direction of imperfection
+- **InputValue**
+  - Input value type
+- **MemberImportance**
+  - Member importance
+- **NadSetupValue**
+  - Setup value base
+- **NadSetupValueBool**
+  - Setup value bool
+- **NadSetupValueDouble**
+  - Setup value double
+- **NadSetupValueFloat**
+  - Setup value float
+- **NadSetupValueInt**
+  - Setup value int
+- **NadSetupValueLong**
+  - Setup value long
+- **NadSetupValueShort**
+  - Setup value bool
+- **NadStrategyConcrete**
+  - Nad strategy concrete
+- **NationalAnnexCode**
+  - Annex code
+- **ProjectDataConcrete**
+  - Project data concrete
+- **ProjectDataConcreteEc2**
+  - Project data concrete Ec2
+- **SecondOrderEffectMethodEc2**
+  - The type of method for calculation second order effect.
+- **SetupValue**
+  - Setup value base
+- **SetupValueBool**
+  - Setup value bool
+- **SetupValueDouble**
+  - Setup value double
+- **SetupValueEc2**
+  - Setup value types Ec2
+- **SetupValueFloat**
+  - Setup value float
+- **SetupValueInt**
+  - Setup value int
+- **SetupValueLong**
+  - Setup value long
+- **SetupValueShort**
+  - Setup value bool
+- **StagedCheckSection**
+  - Single check section
+- **StagedCheckSectionExtreme**
+  - Standard check section extreme
+- **StandardCheckSection**
+  - Single check section
+- **StandardCheckSectionExtreme**
+  - Standard check section extreme
+- **SupportType**
+  - Types of support
+- **TimeAxis**
+  - Time axis
+- **TimePoint**
+  - Point on time axis
+- **TwoWaySlabType**
+  - Two way slab types
+- **TypeDeflectionSheme**
+  - Scheme
+- **TypeOfCalculationDeflection**
+  - Define type of support conditions
+- **TypeOfSupportConditions**
+  - Define type of support conditions
+- **ValueTypec**
+  - Define type of c value
+- **ValueTypec0**
+  - Define type of c0 value

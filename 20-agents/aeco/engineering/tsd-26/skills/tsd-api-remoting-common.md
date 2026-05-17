@@ -1,0 +1,73 @@
+---
+name: tsd-api-remoting-tsd-api-remoting-common
+description: API reference for namespace TSD.API.Remoting.Common from TSD.API.Remoting.dll
+---
+
+# TSD.API.Remoting.Common
+
+- **AttributeSetParams**
+  - Base class of parameters required to create a new attribute set
+- **AutoDesignOption**
+  - Represents auto-design option
+- **BuildingDirection**
+  - Represents direction relative to building
+- **CheckResultType**
+  - Represents a check result type
+- **CheckStatus**
+  - Represents check status of a calculation
+- **Country**
+  - Represents a country
+- **EdgeEnd**
+  - Represents an edge end
+- **EntityInfo**
+  - Represents an info about an entity
+- **EntityParams**
+  - Base class of parameters required to create a new entity
+- **EntityType**
+  - Represents a type of
+- **FlangePosition**
+  - Represents a flange position
+- **HeadCode**
+  - The head code governing the choice of design codes
+- **IAttributeSet**
+  - Represents an attribute set
+- **ICanBeUpdated**
+  - Represents an object that can be updated
+- **ICheckResult**
+  - Represents a result of the check/design of an entity
+- **ICollector`1**
+  - Represents a collector of  instances
+- **IEntity**
+  - Represents common interface for entity
+- **IEntityCollection**
+  - Represents collection of  entities
+- **IHaveId**
+  - Represent an entity with ID
+- **IHaveIndex**
+  - Represent an indexed entity
+- **IHaveName**
+  - Represent an entity with a name
+- **IHaveUserName**
+  - Represent an entity with a user defined name
+- **IProjectDetails**
+  - Contains various information about a project
+- **ISubEntity**
+  - Represents common interface for sub-entity
+- **IUtilizationRatioLimit**
+  - Represents settings for applying the utilization ratio limit
+- **LocationOnElement**
+  - Represents the location on element
+- **Quantity**
+  - Represents a type of physical quantity
+- **RelativeDirection**
+  - Represents a relative direction
+- **SelectionType**
+  - Represents type of selection
+- **SubEntityType**
+  - Represents a sub-entity type
+- **SystemType**
+  - Represents a system type
+- **TestStatus**
+  - Represents test status of property
+- **Tristate**
+  - Represents a tristate

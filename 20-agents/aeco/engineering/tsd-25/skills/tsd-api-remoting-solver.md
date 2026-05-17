@@ -1,0 +1,143 @@
+---
+name: tsd-api-remoting-tsd-api-remoting-solver
+description: API reference for namespace TSD.API.Remoting.Solver from TSD.API.Remoting.dll
+---
+
+# TSD.API.Remoting.Solver
+
+- **AnalysisType**
+  - Represents various types of analysis
+- **DegreeOfFreedom**
+  - Represents degrees of freedom (is a flag enum!)
+- **Direction**
+  - Represents a direction
+- **ElementType**
+  - Represents the type of element
+- **IAnalysis3DResults**
+  - Represents results of a 3D analysis
+- **IAnalysisResults**
+  - Represents analysis results
+- **IBucklingMode**
+  - Represents buckling mode
+- **IBucklingResults**
+  - Represents results of buckling analysis
+- **ICentreOfMassAndRigidityResult**
+  - Represents centre of mass and rigidity results for a specific subset
+- **ICreepCoefficients**
+  - Represents creep coefficients of a slab item
+- **IDiaphragm**
+  - Represents a diaphragm
+- **IDisplacementExtreme**
+  - Contains extreme displacement values
+- **IDistanceToEffectiveReinforcement2D**
+  - Represents a distances from midplace to effective reinforcement of 2D element
+- **IDriftCheck**
+  - Represents a drift check
+- **IEffectiveModuli**
+  - Represents effective moduli of a slab item
+- **IEffectiveReinforcement2D**
+  - Represents an effective reinforcement of 2D element
+- **IElement1D**
+  - Represents a 1D solver element
+- **IElement2D**
+  - Represents a 2D solver element
+- **IElementEndForces**
+  - Represents forces acting on an element
+- **IElementOffsetDisplacements**
+  - Represents displacements at element offsets
+- **IEntityCollection**
+  - Represents collection of  entities
+- **IExtentOfCracking2D**
+  - Represents an extent of cracking of a 2D element
+- **ILoadingBuckling**
+  - Represents buckling results of a loading
+- **ILoadingRsaSeismic**
+  - Represents RSA seismic results of a loading
+- **ILoadingRsaTorque**
+  - Represents RSA torque results of a loading
+- **ILoadingVibration**
+  - Represents vibration results of a loading
+- **IMeshForces**
+  - Represents mesh forces
+- **IModel**
+  - Represents solver model of TSD
+- **IModelBase**
+  - Contains common functionality of Tekla Structural Designer solver models
+- **IMoment2D**
+  - Represents a moment on 2D element
+- **INodalDisplacement**
+  - Represents a displacement of a node
+- **INodalForce**
+  - Represents a force in a node
+- **INodalMeshForces**
+  - Represents nodal mesh forces
+- **INode**
+  - Represents a solver node
+- **INodeBuckling**
+  - Represents node buckling
+- **INodeVibration**
+  - Represents node vibration
+- **IPanel**
+  - Represents a solver panel
+- **IPercentagesOfOriginalStiffness2D**
+  - Represents percentages of original stiffness of a 2D element
+- **IPercentagesOfOriginalStiffnessStatic2D**
+  - Represents static (not event based) percentages of original stiffness of a 2D element
+- **IResultLine**
+  - Represents a result line
+- **IResultLineElement1DInfo**
+  - Represents an info about  associated with
+- **IResultLineElement2DInfo**
+  - Represents an info about  associated with
+- **IResultLineForces**
+  - Represents  forces
+- **IRsaAmplification**
+  - Represents RSA amplification
+- **IRsaMode**
+  - Represents response spectrum analysis mode
+- **IRsaSeismicResults**
+  - Represents seismic results of response spectrum analysis
+- **IRsaTorqueResults**
+  - Represents torque results of response spectrum analysis
+- **ISeismicVibrationResults**
+  - Represents results of seismic vibration analysis
+- **ISlabSequentialLoadingResults**
+  - Represents results of a Slab Sequential Loading Analysis
+- **IStation**
+  - Represents a station
+- **IStiffnessData**
+  - Represents stiffness data
+- **ISupportData**
+  - Represents additional data of a support
+- **ISupportUcs**
+  - Represents the user-defined coordinate system for a support
+- **ITemperatureAdjustedAges**
+  - Represents temperature adjusted ages
+- **IVibrationMass**
+  - Represents a vibration mass
+- **IVibrationMode**
+  - Represents a vibration mode
+- **IVibrationResults**
+  - Represents results of vibration analysis
+- **IWallLine**
+  - Represents a wall line
+- **IWallLineForces**
+  - Represents  forces
+- **IWallLineStationForces**
+  - Represents  forces at an
+- **ModalCombinationMethod**
+  - Represents modal combination method
+- **ModelEntityType**
+  - Represents types solver model entities
+- **PanelType**
+  - Represents types of solver panels
+- **PositionAroundResultLine**
+  - Represents the position around result line
+- **ResultLineSide**
+  - Represents side of a result line
+- **SpringStiffness**
+  - Represents the spring stiffness type
+- **SupportType**
+  - Represents support type
+- **SupportUcsDefinition**
+  - Represents type of definition of support UCS
