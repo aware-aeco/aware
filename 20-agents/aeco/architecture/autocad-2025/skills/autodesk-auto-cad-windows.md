@@ -1,0 +1,119 @@
+---
+name: acmgd-autodesk-auto-cad-windows
+description: API reference for namespace Autodesk.AutoCAD.Windows from AcMgd.dll
+---
+
+# Autodesk.AutoCAD.Windows
+
+- **ColorDialog**
+  - This class represents a dialog box that allows the user to choose a color.
+- **ContextMenuExtension**
+  - This type allows users to extend various context (shortcut) menus in AutoCAD.
+- **DefaultPane**
+  - This .NET enum wraps the AcDefaultPane ObjectARX enum.
+- **DockSides**
+  - This class represents values that indicate the current docked site or the potential dock sites for a window.
+- **DocumentWindow**
+  - Wrapper (wraps AcApDocWindow).
+- **DocumentWindowLoadedEventHandler**
+- **DocumentWindowUpdatedEventHandler**
+- **DrawingDocumentWindow**
+  - Wrapper (wraps AcApDwgDocWindow).
+- **DropTarget**
+  - Applications derive from this class to implement custom drag-and-drop behavior in AutoCAD.
+- **IconType**
+  - This .NET enum wraps the possible values returned by the AcTrayItemBubbleWindowControl.GetIconType() ObjectARX function.
+- **InfoCenter**
+  - This class manages the InfoCenter Manager and connects it with the InfoCenter toolbar.
+- **InfoToolbarMoveDelegate**
+- **InfoToolbarResizeTo**
+- **LayerTransparencyDialog**
+- **LineWeightDialog**
+  - This class represents a dialog box that allows the user to choose a lineweight.
+- **LinetypeDialog**
+  - This class represents a dialog box that allows the user to choose a linetype.
+- **Menu**
+  - This is the base class for various menu-like types.
+- **MenuItem**
+  - This class holds information related to a menu item.
+- **MenuItemCollection**
+  - This collection contains MenuItem objects.
+- **OpenFileDialog**
+  - This class represents a dialog box that allows the user to choose a file.
+- **OpenFileOrFolderDialog**
+  - This is class Autodesk.AutoCAD.Windows.OpenFileOrFolderDialog.
+- **Palette**
+  - This .NET class wraps the CAdUiPalette ObjectARX class.
+- **PaletteActivatedEventArgs**
+  - This class provides data for the PaletteActivated event.
+- **PaletteActivatedEventHandler**
+- **PaletteAddContextMenuEventArgs**
+  - This class provides data for the PaletteAddContextMenu event.
+- **PaletteAddContextMenuEventHandler**
+- **PaletteEnterSizeMoveEventArgs**
+  - This is class Autodesk.AutoCAD.Windows.PaletteEnterSizeMoveEventArgs.
+- **PaletteEnterSizeMoveEventHandler**
+- **PalettePersistEventArgs**
+  - This class provides data for the PalettePersist event.
+- **PalettePersistEventHandler**
+- **PaletteSet**
+  - This .NET class wraps the AduiPaletteSet ObjectARX class.
+- **PaletteSetDestroyEventHandler**
+- **PaletteSetDockSite**
+  - This is class Autodesk.AutoCAD.Windows.PaletteSetDockSite.
+- **PaletteSetFocusedEventArgs**
+  - This is class Autodesk.AutoCAD.Windows.PaletteSetFocusedEventArgs.
+- **PaletteSetFocusedEventHandler**
+- **PaletteSetHelpEventArgs**
+- **PaletteSetHelpEventHandler**
+- **PaletteSetMoveEventArgs**
+- **PaletteSetMoveEventHandler**
+- **PaletteSetShowDockBarEventHandler**
+- **PaletteSetSizeEventArgs**
+  - This class provides event parameters related to the size-setting events in the palette set.
+- **PaletteSetSizeEventHandler**
+- **PaletteSetStateEventArgs**
+  - This class provides data for the PaletteSetState event.
+- **PaletteSetStateEventHandler**
+- **PaletteSetStyles**
+  - This class represents palette set styles.
+- **PaletteSetTitleBarLocation**
+  - This enum represents values indicating the title bar location for a palette set.
+- **PaletteSetTitleBarLocationChangeEventHandler**
+- **PaletteShowDockBarEventArgs**
+- **Pane**
+  - This .NET class wraps the AcPane ObjectARX class.
+- **PaneCollection**
+  - This class represents a collection of panes.
+- **PaneStyles**
+  - This .NET enum wraps the possible values returned by the AcPane.GetStyle() ObjectARX function.
+- **PlotStyleDialog**
+  - This class represents a dialog box that allows the user to choose a plot style.
+- **SaveFileDialog**
+  - This class represents a dialog box that allows the user to choose a file.
+- **StateEventIndex**
+  - This enum indexes various palette set states.
+- **StatusBar**
+  - This .NET class wraps the AcApStatusBar ObjectARX class.
+- **StatusBarItem**
+  - This .NET class wraps the AcStatusBarItem ObjectARX class.
+- **StatusBarMouseDownEventArgs**
+  - This class provides event parameters related to the mouse-down events in the status bar area.
+- **StatusBarMouseDownEventHandler**
+- **TrayItem**
+  - This .NET class wraps the AcTrayItem ObjectARX class.
+- **TrayItemBubbleWindow**
+  - This .NET class wraps the AcTrayItemBubbleWindowControl ObjectARX class.
+- **TrayItemBubbleWindowCloseReason**
+  - This .NET enum wraps an AcTrayItemBubbleWindowControl ObjectARX enum.
+- **TrayItemBubbleWindowClosedEventArgs**
+  - This class provides data for the TrayItemBubbleWindow.Closed event.
+- **TrayItemBubbleWindowClosedEventHandler**
+- **TrayItemCollection**
+  - This class represents a collection of TrayItem objects.
+- **Visuals**
+  - This class represents various reusable visuals of the AutoCAD editor.
+- **WPFDocumentWindow**
+  - Class used for creating WPF based document window.
+- **WindowExtension**
+  - This is class Autodesk.AutoCAD.Windows.WindowExtension.

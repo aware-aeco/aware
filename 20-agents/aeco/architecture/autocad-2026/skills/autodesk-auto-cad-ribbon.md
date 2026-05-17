@@ -1,0 +1,123 @@
+---
+name: ad-uimgd-autodesk-auto-cad-ribbon
+description: API reference for namespace Autodesk.AutoCAD.Ribbon from AcWindows.dll
+---
+
+# Autodesk.AutoCAD.Ribbon
+
+- **AcadColorToWpfColorConverter**
+- **ArrayDataSource**
+  - This is class Autodesk.AutoCAD.Ribbon.ArrayDataSource.
+- **AssemblyReference**
+- **BlockImageCache**
+  - This is class Autodesk.AutoCAD.Ribbon.BlockImageCache.
+- **BothTrueSystemVariablesToIsEnableConverter**
+  - This is class Autodesk.AutoCAD.Ribbon.BothTrueSystemVariablesToIsEnableConverter.
+- **ByteToDoubleConverter**
+- **CachedImageConverter**
+  - This is class Autodesk.AutoCAD.Ribbon.CachedImageConverter.
+- **CachedImageMultiToSingleConverter**
+  - This is class Autodesk.AutoCAD.Ribbon.CachedImageMultiToSingleConverter.
+- **ColorImageConverter**
+- **ColorThemeConverter**
+  - This is class Autodesk.AutoCAD.Ribbon.ColorThemeConverter.
+- **Commands**
+- **ContextualTabEventArgs**
+- **CustomBindingExtension**
+- **DimStyleImageProvider**
+  - This is class Autodesk.AutoCAD.Ribbon.DimStyleImageProvider.
+- **DoubleToPercentageStringConverter**
+- **DoubleToStringConverter**
+- **DynamicLargeIconConverter**
+  - This is class Autodesk.AutoCAD.Ribbon.DynamicLargeIconConverter.
+- **EnableCenterLayerProperty**
+  - This class is used to determine whether the Center Layer control is available on the ribbon.
+- **EnableRevcloudLayerProperty**
+  - This class is used to determine whether the Revision Cloud Layer control is available on the ribbon.
+- **EnableViewportLayerProperty**
+  - This class is used to determine whether the Viewport Layer control is available on the ribbon.
+- **ExtensionMethod**
+  - This is class Autodesk.AutoCAD.Ribbon.ExtensionMethod.
+- **FixedRibbonSplitButton**
+- **FocusableDoubleToStringConverter**
+  - This is class Autodesk.AutoCAD.Ribbon.FocusableDoubleToStringConverter.
+- **GalleryImageCache**
+  - This is class Autodesk.AutoCAD.Ribbon.GalleryImageCache.
+- **GalleryNamedImage**
+  - This is class Autodesk.AutoCAD.Ribbon.GalleryNamedImage.
+- **GalleryNonCacheableImage**
+  - This is class Autodesk.AutoCAD.Ribbon.GalleryNonCacheableImage.
+- **GeomapRibbonDataBoundDropDown**
+  - This is class Autodesk.AutoCAD.Ribbon.GeomapRibbonDataBoundDropDown.
+- **GetFileName**
+  - This is class Autodesk.AutoCAD.Ribbon.GetFileName.
+- **GetFileNameWithExt**
+  - This is class Autodesk.AutoCAD.Ribbon.GetFileNameWithExt.
+- **GetFolderPath**
+  - This is class Autodesk.AutoCAD.Ribbon.GetFolderPath.
+- **HatchAllPatternImageConverter**
+- **HatchCurrentPatternConverter**
+- **HideableDialogSettingsDialog**
+- **HighlightVisibility**
+  - This is class Autodesk.AutoCAD.Ribbon.HighlightVisibility.
+- **IImageCache**
+  - This is class Autodesk.AutoCAD.Ribbon.IImageCache.
+- **ITabEvaluator**
+- **InactiveTextColorConverter**
+  - This is class Autodesk.AutoCAD.Ribbon.InactiveTextColorConverter.
+- **IntegerToStringConverter**
+- **KeepSelectionConverter**
+  - This is class Autodesk.AutoCAD.Ribbon.KeepSelectionConverter.
+- **LayerComboText**
+- **LineTypeImageConverter**
+- **LineWeightImageConverter**
+- **MLeaderStyleImageProvider**
+  - This is class Autodesk.AutoCAD.Ribbon.MLeaderStyleImageProvider.
+- **NegateIsDependentConverter**
+  - This is class Autodesk.AutoCAD.Ribbon.NegateIsDependentConverter.
+- **NullToBooleanConverter**
+- **NullToVariesConverter**
+  - This is class Autodesk.AutoCAD.Ribbon.NullToVariesConverter.
+- **NullToVisibilityConverter**
+  - This is class Autodesk.AutoCAD.Ribbon.NullToVisibilityConverter.
+- **QuickAccessRedoControl**
+- **QuickAccessUndoControl**
+- **RGBColorToColorStringConverter**
+  - This class is used to convert a color (RGB, AutoCAD, or OS) value to a named color string or convert a named color string back to a color (RGB, AutoCAD, or OS) value.
+- **RadianToAngleConverter**
+- **ReadOnlyPropertyBridge**
+  - This is class Autodesk.AutoCAD.Ribbon.ReadOnlyPropertyBridge.
+- **ReverseBooleanConverter**
+- **ReverseConverter**
+- **Ribbon2DViewStyleCombo**
+  - This is class Autodesk.AutoCAD.Ribbon.Ribbon2DViewStyleCombo.
+- **Ribbon2DViewStyleDropDown**
+- **RibbonCommandButton**
+  - This class represents command buttons within the ribbon.
+- **RibbonDataBoundDropDown**
+- **RibbonPaletteSet**
+  - This class represents a ribbon palette set.
+- **RibbonServices**
+  - This class creates an object which assists the ribbon palette class by providing event arguments.
+- **RibbonUtilContent**
+  - This class creates a utility object which assists with the ribbon palette class.
+- **Rule**
+- **ShowNewHighlights**
+  - Used to determine whether ribbon controls, associated with a command that was updated or added in a product update, have an orange dot on them to indicate "new or changed feature".
+- **SurfaceRules**
+- **TabSelectorRules**
+- **TableCellStyleImageProvider**
+  - This is class Autodesk.AutoCAD.Ribbon.TableCellStyleImageProvider.
+- **TableStyleImageProvider**
+  - This is class Autodesk.AutoCAD.Ribbon.TableStyleImageProvider.
+- **TextStyleImageConverter**
+- **UpdateArrayConverter**
+  - This is class Autodesk.AutoCAD.Ribbon.UpdateArrayConverter.
+- **VetoDetViewSelectionConverter**
+  - This is class Autodesk.AutoCAD.Ribbon.VetoDetViewSelectionConverter.
+- **VetoSecViewSelectionConverter**
+  - This is class Autodesk.AutoCAD.Ribbon.VetoSecViewSelectionConverter.
+- **View2DItemData2ImageConverter**
+- **ViewImageCache**
+  - This class is used to return the image of one or more named views.
+- **VisualStyleImageConverter**

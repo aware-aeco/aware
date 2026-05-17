@@ -1,0 +1,55 @@
+---
+name: acmgd-autodesk-private-info-center-lib
+description: API reference for namespace Autodesk.Private.InfoCenterLib from AdWindows.dll
+---
+
+# Autodesk.Private.InfoCenterLib
+
+- **CommCntrChannel**
+- **CommCntrChannelClass**
+- **CommCntrChannelCollection**
+- **CommCntrChannelCollectionClass**
+- **CommCntrContent**
+- **CommCntrContentClass**
+- **CommCntrContentCollection**
+- **CommCntrContentCollectionClass**
+- **CommCntrController**
+- **CommCntrControllerClass**
+- **CommCntrManager**
+- **CommCntrManagerClass**
+- **ICommCntrChannel**
+- **ICommCntrChannel2**
+- **ICommCntrChannelCollection**
+- **ICommCntrContent**
+- **ICommCntrContentCollection**
+- **ICommCntrController**
+- **ICommCntrMaintenancePatch**
+- **ICommCntrManager**
+- **ICommCntrProductExtension**
+- **IELearningCollection**
+- **IELearningCourse**
+- **IELearningModule**
+- **IERenewalCategory**
+- **IERenewalDownload**
+- **IERenewalNotify**
+- **IERenewalResponse**
+- **INetworkConnectionManager**
+- **IRssFeed**
+- **IRssFeedCollection**
+- **ISearchResultCollection**
+- **IWebSearchResult**
+- **IWebServiceManager**
+- **NetworkConnectionManager**
+- **NetworkConnectionManagerClass**
+- **WSChannelType**
+- **WSContentType**
+- **WSLUCheckStatus**
+- **WSNewDataType**
+- **WebServiceManager**
+- **WebServiceManagerClass**
+- **_ICommCntrManagerEvents**
+- **_ICommCntrManagerEvents_Event**
+- **_ICommCntrManagerEvents_NewDataStateEventHandler**
+- **_ICommCntrManagerEvents_OnDemandStateEventHandler**
+- **_ICommCntrManagerEvents_OnStateEventHandler**
+- **_ICommCntrManagerEvents_SinkHelper**

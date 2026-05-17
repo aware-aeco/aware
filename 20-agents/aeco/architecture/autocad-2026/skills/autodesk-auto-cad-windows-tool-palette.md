@@ -1,0 +1,97 @@
+---
+name: ad-uimgd-autodesk-auto-cad-windows-tool-palette
+description: API reference for namespace Autodesk.AutoCAD.Windows.ToolPalette from AcTcMgd.dll
+---
+
+# Autodesk.AutoCAD.Windows.ToolPalette
+
+- **AcTcSettings**
+- **AccessRight**
+  - This .NET class wraps the AccessRight ObjectARX class.
+- **Catalog**
+  - This .NET class wraps the AcTcCatalog ObjectARX class.
+- **CatalogItem**
+  - This .NET class wraps the AcTcCatalogItem ObjectARX class.
+- **CatalogItemCollection**
+  - This collection provides a container for catalog items.
+- **CatalogItemType**
+  - This .NET class wraps the CatalogItemType ObjectARX class.
+- **CatalogSet**
+  - This .NET class wraps the AcTcCatalogSet ObjectARX class.
+- **CatalogTypeFlags**
+  - This .NET enum wraps the AcTc::CatalogType ObjectARX enum.
+- **Category**
+  - This .NET class wraps the AcTcCategory ObjectARX class.
+- **DownloadFlags**
+  - This .NET enum wraps the AcTc.DownloadOption ObjectARX enum.
+- **DrawImageOption**
+  - This enum defines possible styles that can be used to render an image in a tool palette.
+- **IAcPiCategorizeProperties**
+  - This .NET class wraps the IAcPiCategorizeProperties ObjectARX class.
+- **IAcPiPropertyDisplay**
+  - This .NET class wraps the IAcPiPropertyDisplay ObjectARX class.
+- **IAcPiPropertyUnspecified**
+  - This .NET class wraps the IAcPiPropertyUnspecified ObjectARX class.
+- **IAcadStockTool**
+  - This .NET class wraps the IAcadStockTool ObjectARX class.
+- **IAcadTool**
+  - This .NET class wraps the IAcadTool ObjectARX class.
+- **IAcadToolContextMenu**
+  - This .NET class wraps the IAcadToolContextMenu ObjectARX class.
+- **IAcadToolDragSource**
+  - This .NET class wraps the IAcadToolDragSource ObjectARX class.
+- **IAcadToolDropTarget**
+  - This .NET class wraps the IAcadToolDropTarget ObjectARX class.
+- **IAcadToolFlyoutShape**
+  - This .NET class wraps the IAcadToolFlyoutShape ObjectARX class.
+- **IAcadToolProperties**
+  - This .NET class wraps the IAcadToolProperties ObjectARX class.
+- **IDropTarget**
+  - This class provides .NET access to the IDropTarget COM interface.
+- **IOPMPropertyDialog**
+  - This .NET class wraps the IOPMPropertyDialog ObjectARX class.
+- **IOPMPropertyExtension**
+  - This .NET class wraps the IOPMPropertyExtension ObjectARX class.
+- **IPerPropertyBrowsing**
+  - IPerPropertyBrowsing is a standard Microsoft interface.
+- **Image**
+  - This .NET class wraps the AcTcImage ObjectARX class.
+- **ImageInfo**
+  - This .NET class wraps the ACTC_IMAGE_INFO ObjectARX struct.
+- **ImageList**
+  - This .NET class wraps the AcTcImageList ObjectARX class.
+- **ImageOptionFlags**
+  - Image option flags.
+- **ImageType**
+  - This .NET enum wraps the ImageType ObjectARX enum.
+- **ItemOptionFlags**
+  - This .NET enum wraps the AcTc.ItemOption ObjectARX enum.
+- **LoadFlags**
+  - This .NET enum wraps the AcTc.LoadOption ObjectARX enum.
+- **POINTL**
+  - This .NET struct wraps the POINTL struct of the Windows API.
+- **Package**
+  - This .NET class wraps the AcTcPackage ObjectARX class.
+- **Palette**
+  - This .NET class wraps the AcTcPalette ObjectARX class.
+- **RefreshFlags**
+  - This .NET enum wraps the AcTc.RefreshOption ObjectARX enum.
+- **SaveFlags**
+  - This .NET enum wraps the AcTc.SaveOption ObjectARX enum.
+- **Scheme**
+  - This .NET class wraps the AcTcScheme ObjectARX class.
+- **SchemeCollection**
+  - This collection encapsulates the schemes currently owned by the ToolPaletteManager object.
+- **StockTool**
+  - This .NET class wraps the AcTcStockTool ObjectARX class.
+- **TargetProductInfo**
+  - This .NET class wraps the ACTC_TARGET_PRODUCT_INFO ObjectARX struct.
+- **Tool**
+  - This .NET class wraps the AcTcTool ObjectARX class.
+- **ToolPaletteManager**
+  - This .NET class wraps the AcTcManager ObjectARX class.
+- **ToolType**
+  - This .NET enum wraps the ToolType ObjectARX enum.
+- **Util**
+- **tagCADWORD**
+- **tagCALPOLESTR**
