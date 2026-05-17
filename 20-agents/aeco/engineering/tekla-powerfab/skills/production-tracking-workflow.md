@@ -24,7 +24,7 @@ Shop tablets typically scan piece barcodes and call:
 
 ```yaml
 - id: scan
-  agent: tekla-epm
+  agent: tekla-powerfab
   command: production.advance
   inputs:
     job-id: '{{ secrets.active-job-id }}'
@@ -45,7 +45,7 @@ station for > 24 hours?"
 
 ```yaml
 - id: status
-  agent: tekla-epm
+  agent: tekla-powerfab
   command: production.status
   inputs:
     job-id: '{{ secrets.active-job-id }}'

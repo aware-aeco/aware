@@ -1,0 +1,224 @@
+agent:        avitru-speclink
+version:      7.0.0
+display-name: Avitru SpecLink
+description: |
+  Cloud-based specification authoring (US MasterFormat). Wraps the
+  Avitru SpecLink REST API for spec creation, section management,
+  manufacturer selection, and CSI MasterFormat ↔ Revit assembly-code
+  round-trips.
+
+  Persona audit (architect, US-side spec gap): "NBS Chorus / NBS Source
+  / Avitru / SpecLink. Where my **specifications** live. CSI MasterFormat
+  50-division spec docs do not live in Revit, they live in spec
+  authoring tools."
+
+  This is the US-side fix (the sibling of `nbs-chorus`).
+
+stateful: false
+
+vendor:   avitru
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/architecture/avitru-speclink
+keywords: [aware, avitru, speclink, specifications, spec, us, masterformat, architecture]
+
+provenance:
+  generated-by:     hand-curated
+  generator-version: 0.17.0
+  refined-by:       [pawellisowski]
+  generated-at:     2026-05-17T19:05:00Z
+
+requires:
+  network:
+    - https://speclink.com
+    - https://api.speclink.com
+  secrets:
+    - avitru-speclink
+  filesystem:
+    - read:  '*.csv,*.xlsx,*.json,*.docx'
+    - write: '*.docx,*.pdf,*.json,*.csv'
+
+transport:
+  cli:
+    binary: aware-avitru-speclink
+
+commands:
+
+  # ---- Project + spec context ------------------------------------------
+
+  project.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List SpecLink projects the user has access to. Read-only.
+    inputs: {}
+    outputs:
+      type: single
+      schema:
+        projects:
+          type: array
+          items:
+            id:           string
+            name:         string
+            project-number: string
+
+  spec.list:
+    lifecycle: single
+    category: curated
+    description: List specs in a project. Read-only.
+    inputs:
+      project-id: string
+    outputs:
+      type: single
+      schema:
+        specs:
+          type: array
+          items:
+            id:            string
+            title:         string
+            phase:         string  # SD / DD / CD / Bid Set
+            section-count: number
+
+  spec.export-docx:
+    lifecycle: single
+    category: curated
+    description: Export a spec as Word document (CSI 3-part format). Read-only.
+    inputs:
+      spec-id:     string
+      output-path: string
+    outputs:
+      type: single
+      schema:
+        path:       string
+        size-bytes: number
+
+  spec.export-pdf:
+    lifecycle: single
+    category: curated
+    description: Export a spec as PDF. Read-only.
+    inputs:
+      spec-id:     string
+      output-path: string
+    outputs:
+      type: single
+      schema:
+        path:       string
+        page-count: number
+        size-bytes: number
+
+  # ---- MasterFormat sections + 3-part body -----------------------------
+
+  sections.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List MasterFormat sections within a spec — Division (e.g. 09 22 00).
+      Read-only.
+    inputs:
+      spec-id: string
+    outputs:
+      type: single
+      schema:
+        sections:
+          type: array
+          items:
+            id:                string
+            masterformat-code: string  # e.g. "09 22 16"
+            title:             string
+            part-1-status:     string  # complete / partial / empty
+            part-2-status:     string  # Products
+            part-3-status:     string  # Execution
+
+  section.export-csv:
+    lifecycle: single
+    category: curated
+    description: |
+      Export a section's CSI 3-part body to CSV (one row per clause).
+      Used by QA tooling — diff against prior version. Read-only.
+    inputs:
+      spec-id:     string
+      section-id:  string
+      output-path: string
+    outputs:
+      type: single
+      schema:
+        path:      string
+        row-count: number
+
+  # ---- Manufacturer selection ------------------------------------------
+
+  manufacturers.list-for-section:
+    lifecycle: single
+    category: curated
+    description: |
+      List manufacturers Avitru offers for a section (the "approved
+      equals" + "basis of design" pool). Read-only.
+    inputs:
+      section-id: string
+    outputs:
+      type: single
+      schema:
+        manufacturers:
+          type: array
+          items:
+            id:        string
+            name:      string
+            included-by-default: boolean
+
+  manufacturers.set-basis-of-design:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Set the basis-of-design manufacturer for a section. The
+      architect-side "we want Kohler for the lavs" verb. Write-mode.
+    inputs:
+      spec-id:        string
+      section-id:     string
+      manufacturer-id: string
+    outputs:
+      type: single
+      schema:
+        section-id:     string
+        manufacturer:   string
+
+  # ---- Revit round-trip ------------------------------------------------
+
+  revit-link.assemblies:
+    lifecycle: single
+    category: curated
+    description: |
+      List MasterFormat ↔ Revit assembly-code links for a spec. Read-only.
+    inputs:
+      spec-id: string
+    outputs:
+      type: single
+      schema:
+        links:
+          type: array
+          items:
+            masterformat-code: string
+            revit-assembly-code: string
+
+  revit-link.import:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Import MasterFormat ↔ Revit assembly-code links. Pairs with
+      `revit-2026.element.by-parameter-value` (read Revit's
+      "Assembly Code" parameter) + this verb to push into Avitru.
+    inputs:
+      spec-id: string
+      links:
+        type: array
+        items:
+          masterformat-code:    string
+          revit-assembly-code:  string
+    outputs:
+      type: single
+      schema:
+        linked: number
+
+skills:
+  - csi-3-part-structure.md
+  - basis-of-design-strategy.md

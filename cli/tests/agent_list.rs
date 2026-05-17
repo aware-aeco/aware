@@ -55,6 +55,6 @@ fn json_output_returns_envelope() {
     assert_eq!(v["ok"], true);
     assert_eq!(v["meta"]["command"], "agent list");
     let agents = v["data"]["agents"].as_array().unwrap();
-    assert_eq!(agents.len(), 51);
+    assert_eq!(agents.len(), 56);
     assert!(agents.iter().any(|a| a["id"] == "tekla"));
 }

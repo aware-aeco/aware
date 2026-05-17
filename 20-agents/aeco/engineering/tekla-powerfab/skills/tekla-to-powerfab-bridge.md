@@ -14,7 +14,7 @@ description: |
 
 requires:
   - tekla@2026.x
-  - tekla-epm@24.2.x
+  - tekla-powerfab@24.2.x
   - microsoft-365@1.x
 
 nodes:
@@ -33,7 +33,7 @@ nodes:
       output-path: '{{ run.tmp-dir }}/{{ tekla-watch.event-id }}.csv'
 
   - id: bom-import
-    agent: tekla-epm
+    agent: tekla-powerfab
     command: bom.import-tekla
     inputs:
       job-id: '{{ secrets.active-epm-job-id }}'

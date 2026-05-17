@@ -317,7 +317,7 @@ The bones (text composition, decalog discipline, CLI ergonomics, hand-curated Te
 **Why:** detailer dealbreaker. Without EPM, AWARE is missing 40% of the fabricator's day.
 
 **Agents to add:**
-- `tekla-epm` — REST API (Trimble Tekla EPM has a documented API; some surfaces require paid subscription)
+- `tekla-powerfab` — REST API per Trimble's official developer portal at developer.tekla.com/tekla-powerfab (free signup; product historically called "Tekla EPM")
 - `peddinghaus-translator` — file-format agent, DSTV `.nc1` → Peddimat `.asc` conversion + manifest CSV
 
 **Curation added to existing `tekla` agent:**
