@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-05-17T18:30:00Z",
+  "updated-at": "2026-05-17T18:50:00Z",
   "agents": {
     "tekla": {
       "versions": {
@@ -393,6 +393,22 @@
           "subdir": "aware-main/20-agents/aeco/engineering/peddinghaus-translator"
         }
       }
+    },
+    "enscape-prep": {
+      "versions": {
+        "1.0.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/visualization/enscape-prep"
+        }
+      }
+    },
+    "twinmotion-prep": {
+      "versions": {
+        "1.0.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/visualization/twinmotion-prep"
+        }
+      }
     }
   },
   "bundles": {
@@ -447,7 +463,9 @@
         "aconex@1.0.0",
         "acc-docs@1.0.0",
         "tekla-epm@24.2.0",
-        "peddinghaus-translator@1.0.0"
+        "peddinghaus-translator@1.0.0",
+        "enscape-prep@1.0.0",
+        "twinmotion-prep@1.0.0"
       ]
     }
   }

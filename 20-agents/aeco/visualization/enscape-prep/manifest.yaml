@@ -1,0 +1,154 @@
+agent:        enscape-prep
+version:      1.0.0
+display-name: Enscape Prep
+description: |
+  Honest agent — Enscape (Chaos) has no publicly scriptable API. This
+  agent drives the *upstream* tool (Rhino, Revit, SketchUp, ArchiCAD)
+  to prep a scene for Enscape, captures consistent view/material/lighting
+  state, then writes a small "ready-for-Enscape" marker file. The user
+  opens Enscape and renders.
+
+  Persona audit (designer): "Ship `enscape-4` and `twinmotion-2025`
+  and `vray-7` agents (or — more honestly — say 'we won't, because
+  they have no scriptable API; we'll route through Rhino's view-
+  capture-to-bitmap and let the user render outside' — that's an
+  acceptable answer **if you say it in the docs')."
+
+  This is that honest answer.
+
+stateful: false
+
+vendor:   aware-aeco
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/visualization/enscape-prep
+keywords: [aware, enscape, chaos, rendering, visualization, prep, designer]
+
+provenance:
+  generated-by:     hand-curated
+  generator-version: 0.16.0
+  refined-by:       [pawellisowski]
+  generated-at:     2026-05-17T18:45:00Z
+
+requires:
+  software:
+    - rhino@7.x|8.x
+    - revit@2024.x|2025.x|2026.x
+    - enscape@3.x|4.x
+  filesystem:
+    - read:  '*.3dm,*.rvt,*.skp,*.pln'
+    - write: '*.epx,*.epxd,*.json'
+
+transport:
+  cli:
+    binary: aware-enscape-prep
+
+commands:
+
+  scene.prep:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Stage the host model for an Enscape render: load a named view,
+      apply a layer state, set sun position for a target date+time,
+      apply a material override set (if requested), pre-compute proxy
+      assets. Writes a `.epx` Enscape preset file Enscape opens directly.
+    inputs:
+      host:
+        type: enum
+        values: [rhino, revit, sketchup, archicad]
+      host-file: string
+      named-view:
+        type: string
+        description: View to load. Use `view.list` (host-specific) first.
+      layer-state:
+        type: string
+        description: Optional Rhino layer-state name.
+      sun-date:
+        type: string
+        description: ISO date for the sun study (e.g. "2026-06-21").
+      sun-time:
+        type: string
+        description: HH:MM local time.
+      material-override-set:
+        type: string
+        description: Optional named override set (per project standard).
+      output-epx: string
+    outputs:
+      type: single
+      schema:
+        path: string
+
+  scene.capture-frame:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Capture a single Enscape still through the desktop control API
+      (the limited Windows-side automation Enscape does expose). Saves
+      a PNG / JPEG at target resolution + quality. Honors the active
+      Enscape session's settings (no in-Enscape state overrides — the
+      designer pre-configures Enscape).
+
+      The closest AWARE gets to *driving* Enscape. Read of Enscape's
+      state; write of the image file.
+    inputs:
+      output-path: string
+      width-pixels:
+        type: number
+        default: 3840
+      height-pixels:
+        type: number
+        default: 2160
+      quality:
+        type: enum
+        values: [draft, preview, production]
+        default: production
+    outputs:
+      type: single
+      schema:
+        path:        string
+        size-bytes:  number
+
+  scene.capture-panorama:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Capture a 360° equirectangular panorama from the active Enscape
+      session. Used by VR walkthroughs + client-demo panorama uploads.
+    inputs:
+      output-path: string
+      resolution:
+        type: enum
+        values: [4k, 6k, 8k]
+        default: 6k
+    outputs:
+      type: single
+      schema:
+        path:       string
+        size-bytes: number
+
+  view.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List named views in the host file. Read-only. Use to discover
+      view names before `scene.prep`.
+    inputs:
+      host:
+        type: enum
+        values: [rhino, revit, sketchup, archicad]
+      host-file: string
+    outputs:
+      type: single
+      schema:
+        views:
+          type: array
+          items:
+            name:        string
+            camera-type: string
+
+skills:
+  - what-this-agent-cannot-do.md
+  - consistent-render-output.md

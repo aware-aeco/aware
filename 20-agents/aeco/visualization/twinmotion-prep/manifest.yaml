@@ -1,0 +1,136 @@
+agent:        twinmotion-prep
+version:      1.0.0
+display-name: Twinmotion Prep
+description: |
+  Sibling of `enscape-prep` — drives Rhino / Revit / SketchUp / ArchiCAD
+  to stage a scene for Twinmotion, writes a Datasmith file + a
+  Twinmotion project preset, captures stills + walkthroughs via the
+  Twinmotion Movies pipeline (limited Windows automation).
+
+  Twinmotion's "Twinmotion Direct Link" plugin exposes more headless
+  control than Enscape but still requires the desktop app running. Like
+  `enscape-prep`, this is the honest answer: AWARE preps the scene + the
+  user (or a scheduled render farm) presses Render.
+
+stateful: false
+
+vendor:   aware-aeco
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/visualization/twinmotion-prep
+keywords: [aware, twinmotion, epic-games, rendering, visualization, prep, designer]
+
+provenance:
+  generated-by:     hand-curated
+  generator-version: 0.16.0
+  refined-by:       [pawellisowski]
+  generated-at:     2026-05-17T18:50:00Z
+
+requires:
+  software:
+    - twinmotion@2024.x|2025.x
+  filesystem:
+    - read:  '*.3dm,*.rvt,*.skp,*.udatasmith'
+    - write: '*.udatasmith,*.tm,*.png,*.mp4'
+
+transport:
+  cli:
+    binary: aware-twinmotion-prep
+
+commands:
+
+  scene.export-datasmith:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Export from the host (Rhino / Revit / SketchUp / ArchiCAD) to
+      Datasmith (.udatasmith) — the Twinmotion-native interop format.
+      Honors materials + named views + lights.
+    inputs:
+      host:
+        type: enum
+        values: [rhino, revit, sketchup, archicad]
+      host-file: string
+      output-path: string
+    outputs:
+      type: single
+      schema:
+        path:       string
+        size-bytes: number
+
+  scene.capture-still:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Capture a Twinmotion still through the Movies pipeline. Twinmotion
+      must be open with a loaded project — the transport drives via
+      Windows accessibility / pixel automation.
+    inputs:
+      output-path: string
+      width-pixels:
+        type: number
+        default: 3840
+      height-pixels:
+        type: number
+        default: 2160
+      quality:
+        type: enum
+        values: [draft, production, path-tracer]
+        default: production
+    outputs:
+      type: single
+      schema:
+        path:       string
+        size-bytes: number
+
+  scene.capture-walkthrough:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Record an MP4 walkthrough along a pre-defined Twinmotion path
+      (set in the desktop UI as a "Phase" or "Animation Path"). Useful
+      for client-deck B-roll, marketing reels, planning consultation
+      videos.
+    inputs:
+      path-name:
+        type: string
+        description: Named animation path in the Twinmotion project.
+      output-path: string
+      duration-seconds:
+        type: number
+        default: 30
+      fps:
+        type: number
+        default: 30
+      resolution:
+        type: enum
+        values: [1080p, 4k]
+        default: 1080p
+    outputs:
+      type: single
+      schema:
+        path:       string
+        size-bytes: number
+
+  view.list:
+    lifecycle: single
+    category: curated
+    description: List named views in the host file. Read-only.
+    inputs:
+      host:
+        type: enum
+        values: [rhino, revit, sketchup, archicad]
+      host-file: string
+    outputs:
+      type: single
+      schema:
+        views:
+          type: array
+          items:
+            name:        string
+            camera-type: string
+
+skills:
+  - datasmith-bridge.md
