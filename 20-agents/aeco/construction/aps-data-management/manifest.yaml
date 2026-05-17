@@ -1,0 +1,171 @@
+agent:        aps-data-management
+version:      1.0
+display-name: Autodesk APS — Data Management (raw)
+description: |
+  Auto-generated agent from Autodesk Platform Services'
+  Data Management OpenAPI spec via `aware build agent --from-openapi`.
+  Source: `Autodesk-Platform-Services/aps-sdk-openapi` on GitHub.
+
+  Data Management is the unified file/folder/version API across all
+  Autodesk cloud storage: BIM 360 Docs, ACC Docs, Fusion Team, OSS
+  (Object Storage Service). 41 endpoints covering hub / project /
+  folder navigation, file CRUD, version history, item locking,
+  search.
+
+  Companion to `acc-issues` + `acc-account-admin`. This is the
+  layer where AECO files actually live — upload a Revit model,
+  fetch the latest version of a drawing, attach a PDF to a folder,
+  create a new project folder structure.
+
+  AECO use cases: pipeline that uploads exported Tekla drawings to
+  the right ACC Docs folder daily, audit that finds outdated
+  versions of an IFC across folders, automated weekly export of
+  punch-list photos to a Slack channel.
+
+  Auth via `aware connect autodesk`. Both 2-legged (server-to-server)
+  and 3-legged (user-context) flows supported by different endpoints.
+
+  Marked `stateful: false` — every endpoint is request/response.
+
+stateful: false
+
+vendor:   autodesk
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/construction/aps-data-management
+keywords: [aeco, construction, aps, bim-360, acc-docs, fusion-team, file-management, autodesk, generated, raw, openapi, rest]
+
+provenance:
+  generated-by: aware-agent-builder
+  generator-version: 0.8.1
+  source:
+    input: https://raw.githubusercontent.com/Autodesk-Platform-Services/aps-sdk-openapi/main/datamanagement/datamanagement.yaml
+    license: UNKNOWN
+    type: openapi
+  generated-at: 2026-05-17T12:09:53.672126100+00:00
+transport:
+  cli:
+    binary: aware-aps-data-management
+commands:
+  create-download:
+    lifecycle: single
+    description: POST /data/v1/projects/{project_id}/downloads — Create Download
+  create-folder:
+    lifecycle: single
+    description: POST /data/v1/projects/{project_id}/folders — Create a Folder
+  create-folder-relationships-ref:
+    lifecycle: single
+    description: POST /data/v1/projects/{project_id}/folders/{folder_id}/relationships/refs — Create a Custom Relationship for a Folder
+  create-item:
+    lifecycle: single
+    description: POST /data/v1/projects/{project_id}/items — Create an Item
+  create-item-relationships-ref:
+    lifecycle: single
+    description: POST /data/v1/projects/{project_id}/items/{item_id}/relationships/refs — Create a Custom Relationship for an Item
+  create-storage:
+    lifecycle: single
+    description: POST /data/v1/projects/{project_id}/storage — Create a Storage Location in OSS
+  create-version:
+    lifecycle: single
+    description: POST /data/v1/projects/{project_id}/versions — Create a Version
+  create-version-relationships-ref:
+    lifecycle: single
+    description: POST /data/v1/projects/{project_id}/versions/{version_id}/relationships/refs — Create a Custom Relationship for a Version
+  execute-command:
+    lifecycle: single
+    description: POST /data/v1/projects/{project_id}/commands — Execute a Command
+  get-download:
+    lifecycle: single
+    description: GET /data/v1/projects/{project_id}/downloads/{download_id} — Get Download Details
+  get-download-job:
+    lifecycle: single
+    description: GET /data/v1/projects/{project_id}/jobs/{job_id} — Check Download Creation Progress
+  get-folder:
+    lifecycle: single
+    description: GET /data/v1/projects/{project_id}/folders/{folder_id} — Get a Folder
+  get-folder-contents:
+    lifecycle: single
+    description: GET /data/v1/projects/{project_id}/folders/{folder_id}/contents — List Folder Contents
+  get-folder-parent:
+    lifecycle: single
+    description: GET /data/v1/projects/{project_id}/folders/{folder_id}/parent — Get Parent of a Folder
+  get-folder-refs:
+    lifecycle: single
+    description: GET /data/v1/projects/{project_id}/folders/{folder_id}/refs — List Related Resources for a Folder
+  get-folder-relationships-links:
+    lifecycle: single
+    description: GET /data/v1/projects/{project_id}/folders/{folder_id}/relationships/links — List Relationship Links for a Folder
+  get-folder-relationships-refs:
+    lifecycle: single
+    description: GET /data/v1/projects/{project_id}/folders/{folder_id}/relationships/refs — List Custom Relationships for a Folder
+  get-folder-search:
+    lifecycle: single
+    description: GET /data/v1/projects/{project_id}/folders/{folder_id}/search — List Folder and Subfolder Contents
+  get-hub:
+    lifecycle: single
+    description: GET /project/v1/hubs/{hub_id} — Get a Hub
+  get-hub-projects:
+    lifecycle: single
+    description: GET /project/v1/hubs/{hub_id}/projects — Get Projects
+  get-hubs:
+    lifecycle: single
+    description: GET /project/v1/hubs — List Hubs
+  get-item:
+    lifecycle: single
+    description: GET /data/v1/projects/{project_id}/items/{item_id} — Get an Item
+  get-item-parent-folder:
+    lifecycle: single
+    description: GET /data/v1/projects/{project_id}/items/{item_id}/parent — Get Parent of an Item
+  get-item-refs:
+    lifecycle: single
+    description: GET /data/v1/projects/{project_id}/items/{item_id}/refs — List Related Resources for an Item
+  get-item-relationships-links:
+    lifecycle: single
+    description: GET /data/v1/projects/{project_id}/items/{item_id}/relationships/links — List Relationship Links for an Item
+  get-item-relationships-refs:
+    lifecycle: single
+    description: GET /data/v1/projects/{project_id}/items/{item_id}/relationships/refs — List Custom Relationships for an Item
+  get-item-tip:
+    lifecycle: single
+    description: GET /data/v1/projects/{project_id}/items/{item_id}/tip — Get Tip Version of an Item
+  get-item-versions:
+    lifecycle: single
+    description: GET /data/v1/projects/{project_id}/items/{item_id}/versions — List all Versions of an Item
+  get-project:
+    lifecycle: single
+    description: GET /project/v1/hubs/{hub_id}/projects/{project_id} — Get a Project
+  get-project-hub:
+    lifecycle: single
+    description: GET /project/v1/hubs/{hub_id}/projects/{project_id}/hub — Get Hub for Project
+  get-project-top-folders:
+    lifecycle: single
+    description: GET /project/v1/hubs/{hub_id}/projects/{project_id}/topFolders — List Top-level Project Folders
+  get-version:
+    lifecycle: single
+    description: GET /data/v1/projects/{project_id}/versions/{version_id} — Get a Version
+  get-version-download-formats:
+    lifecycle: single
+    description: GET /data/v1/projects/{project_id}/versions/{version_id}/downloadFormats — List Supported Download Formats
+  get-version-downloads:
+    lifecycle: single
+    description: GET /data/v1/projects/{project_id}/versions/{version_id}/downloads — List Available Download Formats
+  get-version-item:
+    lifecycle: single
+    description: GET /data/v1/projects/{project_id}/versions/{version_id}/item — Get Item by Version
+  get-version-refs:
+    lifecycle: single
+    description: GET /data/v1/projects/{project_id}/versions/{version_id}/refs — List Related Resources for a Version
+  get-version-relationships-links:
+    lifecycle: single
+    description: GET /projects/{project_id}/versions/{version_id}/relationships/links — List Links for a Version
+  get-version-relationships-refs:
+    lifecycle: single
+    description: GET /data/v1/projects/{project_id}/versions/{version_id}/relationships/refs — List Custom Relationships for a Version
+  patch-folder:
+    lifecycle: single
+    description: PATCH /data/v1/projects/{project_id}/folders/{folder_id} — Modify a Folder
+  patch-item:
+    lifecycle: single
+    description: PATCH /data/v1/projects/{project_id}/items/{item_id} — Update an Item
+  patch-version:
+    lifecycle: single
+    description: PATCH /data/v1/projects/{project_id}/versions/{version_id} — Update a Version

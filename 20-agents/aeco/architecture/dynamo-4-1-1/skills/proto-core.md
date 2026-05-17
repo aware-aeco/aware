@@ -1,0 +1,52 @@
+---
+name: dynamo-applications-proto-core
+description: API reference for namespace ProtoCore from ProtoCore.dll
+---
+
+# ProtoCore
+
+- **AtLevel**
+- **BackpatchNode**
+- **BackpatchTable**
+- **BuildHaltException**
+- **BuildStatus**
+- **CallSite**
+- **CodeGen**
+- **CodeGenDS**
+  - The code generator takes Abstract Syntax Tree and generates the DesignScript code
+- **Compiler**
+- **ConsoleOutputStream**
+- **Core**
+- **DebugFrame**
+- **DebugProperties**
+- **ExecutionMode**
+- **ExecutionStateEventArgs**
+- **Executive**
+- **FunctionEndPoint**
+- **FunctionGroup**
+  - A function group is a collection of overloads to the same method
+- **IOutputStream**
+- **InlineConditional**
+- **InternalAttributes**
+  - These are DS defined class attributes              These attributes are used internally by the compiler
+- **InterpreterProperties**
+- **Language**
+- **LanguageCodeBlock**
+- **MigrationRewriter**
+- **Options**
+- **OutputMessage**
+  - VM print out message
+- **ParseMode**
+- **PrimitiveType**
+- **ReasonForExecutionSuspend**
+- **ReplicationGuide**
+  - Represents a single replication guide entity that is associated with an argument to a function                          Given:                 a = f(i<1>, j<2L>)                                  <1> and <2L> are each represented by a ReplicationGuide instance
+- **Runmode**
+- **RuntimeCore**
+  - RuntimeCore is an object that is instantiated once across the lifecycle of the runtime             This is the entry point of the runtime VM and its input is a DS Executable format.              There will only be one instance of RuntimeCore regardless of how many times instances of a DSASM.Executive (runtime VM) is instantiated.             Its properties will be persistent and accessible across all instances of a DSASM.Executive
+- **RuntimeData**
+  - The RuntimeData is an object that contains properties that is consumed only by the runtime VM             It is instantiated prior to execution and is populated with information gathered from the CompileCore                          The runtime VM is designed to run independently from the front-end (UI, compiler)              and the only 2 properties it needs are the RuntimeData and the DSExecutable.                          The RuntimeData will also contain properties that are populated at runtime and consumed at runtime.
+- **RuntimeStatus**
+- **TextOutputStream**
+- **Type**
+- **TypeSystem**

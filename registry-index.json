@@ -226,6 +226,46 @@
         }
       }
     },
+    "acc-issues": {
+      "versions": {
+        "1.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/construction/acc-issues"
+        }
+      }
+    },
+    "acc-account-admin": {
+      "versions": {
+        "1.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/construction/acc-account-admin"
+        }
+      }
+    },
+    "aps-data-management": {
+      "versions": {
+        "1.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/construction/aps-data-management"
+        }
+      }
+    },
+    "dynamo-4-1-0": {
+      "versions": {
+        "4.1.0.4845": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/architecture/dynamo-4-1-0"
+        }
+      }
+    },
+    "dynamo-4-1-1": {
+      "versions": {
+        "4.1.1.4941": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/architecture/dynamo-4-1-1"
+        }
+      }
+    },
     "trimble-connect": {
       "versions": {
         "2.4.0": {
@@ -307,6 +347,11 @@
         "autocad-2026@26.0.0",
         "itwin-5-8@5.8.5",
         "itwin-5-9@5.9.3",
+        "acc-issues@1.0",
+        "acc-account-admin@1.0",
+        "aps-data-management@1.0",
+        "dynamo-4-1-0@4.1.0.4845",
+        "dynamo-4-1-1@4.1.1.4941",
         "trimble-connect@2.4.0",
         "microsoft-365@1.0.0",
         "google-workspace@1.0.0",

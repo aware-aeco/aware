@@ -1,0 +1,88 @@
+---
+name: dynamo-applications-dynamo-graph-nodes
+description: API reference for namespace Dynamo.Graph.Nodes from DynamoCore.dll
+---
+
+# Dynamo.Graph.Nodes
+
+- **AlsoKnownAsAttribute**
+  - The AlsoKnownAs attribute allows the node implementor to                 define an array of names that this node might have had                 in the past.
+- **BuiltinNodeCategories**
+  - Built-in Dynamo Categories. If you want your node to appear in one of the existing Dynamo             categories, then use these constants. This ensures that if the names of the categories             change down the road, your node will still be placed there.
+- **CodeBlockNodeModel**
+  - Represents codeblock node's functionality.
+- **CodeBlockUtils**
+  - Contains helper methods to adjust the contents of codeblock node.
+- **DoNotLoadOnPlatformsAttribute**
+  - The DoNotLoadOnPlatforms attribute allows the node implementer                 to define an array of contexts.
+- **DummyNode**
+  - DummyNode is used for tests or in case if node couldn't be loaded.
+- **ElementState**
+  - Represents nodes states.
+- **FunctionCallBase`2**
+  - Node base class for all nodes that produce a DS function call.
+- **FunctionCallNodeController`1**
+  - Controller for nodes that act as function calls.
+- **InPortDescriptionsAttribute**
+  - Indicates input ports' description
+- **InPortNamesAttribute**
+  - Indicates input ports' names.
+- **InPortTypesAttribute**
+  - Indicates input ports' types
+- **Info**
+- **IsDesignScriptCompatibleAttribute**
+  - The IsDesignScriptCompatibleAttribute indicates if the node is able                 to work with DesignScript evaluation engine.
+- **IsMetaNodeAttribute**
+  - The MetaNode attribute means this node shouldn't be added to the category,                 only its instances are allowed
+- **LacingStrategy**
+  - Defines Lacing strategy for nodes.             Learn more about lacing here: http://dynamoprimer.com/06_Designing-with-Lists/6-1_whats-a-list.html
+- **NodeDeprecatedAttribute**
+  - Flag to hide deprecated nodes in search, but allow in workflows
+- **NodeDescriptionAttribute**
+  - The NodeDescriptionAttribute attribute allows the node implementer                 to define node description.
+- **NodeInputData**
+  - Represents a node which acts as a UI input for the graph             - may also hold a value for that input
+- **NodeInputTypes**
+  - Possible graph input types.
+- **NodeModel**
+- **NodeModelExtensions**
+- **NodeNameAttribute**
+- **NodeObsoleteAttribute**
+  - The NodeObsoleteAttribute indicates this node is obsolete
+- **NodeOutputData**
+  - Represents a node which acts as a UI output for the graph             - may also hold a value for that output
+- **NodeOutputTypes**
+- **NodeSearchTagsAttribute**
+  - The NodeSearchTagsAttribute attribute allows the node implementer                 to define search tags.
+- **OutPortDescriptionsAttribute**
+  - Indicates output ports' description
+- **OutPortNamesAttribute**
+  - Indicates output ports' names.
+- **OutPortTypesAttribute**
+  - Indicates output ports' types
+- **PortData**
+  - PortData stores information for port. It's used for constructing PortModel.
+- **PortEventType**
+  - Defines Enum for Mouse events.             Used in port snapping.
+- **PortModel**
+  - PortModel represents Dynamo ports.
+- **PortType**
+  - Interaction logic for dynPort.xaml
+- **ScopedNodeModel**
+  - ScopedNodeModel will put its children in its scope so that they won't              get compiled in global scope.
+- **SnapExtensionEdges**
+  - Returns one of the possible values(none, top, bottom) where a port can be snapped.
+- **Statement**
+  - Statements are used in CBN in order to create output ports.
+- **TypeLoadData**
+  - This class represents data loaded from assembly for each type.             Based on this info node model is created.
+- **UIDispatcherEventArgs**
+  - This class represents the UIDIspatcher thread event arguments.
+- **Utilities**
+  - Service class for formatting node text data
+- **Variable**
+  - Represents variable in CBN.
+- **VariableInputNode**
+  - Base class for nodes that have dynamic incoming ports.             E.g. list.create.
+- **VariableInputNodeController**
+  - This is a helper class that processess inputs of VariableInputNode.

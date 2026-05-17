@@ -1,0 +1,133 @@
+agent:        acc-account-admin
+version:      1.0
+display-name: Autodesk Construction Cloud — Account Admin (raw)
+description: |
+  Auto-generated agent from Autodesk Platform Services'
+  Account Admin OpenAPI spec via `aware build agent --from-openapi`.
+  Source: `Autodesk-Platform-Services/aps-sdk-openapi` on GitHub.
+
+  ACC Account Admin is the project-management + user-management +
+  company-directory API surface of Autodesk Construction Cloud. 30
+  endpoints across project create / archive / restore, user assign /
+  remove / role-change, member + partner companies, and external-
+  system sync.
+
+  AECO use cases: onboard a new project from an HR/ERP system,
+  automate user provisioning across ACC + Tekla + Slack on hire,
+  audit who has access to what across a portfolio of projects, sync
+  company directory to a billing tool.
+
+  Auth via `aware connect autodesk`. Requires admin-level scopes
+  (account:read, account:write).
+
+  Marked `stateful: false` — every endpoint is request/response.
+
+stateful: false
+
+vendor:   autodesk
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/construction/acc-account-admin
+keywords: [aeco, construction, acc, autodesk-construction-cloud, project-management, autodesk, generated, raw, openapi, rest]
+
+provenance:
+  generated-by: aware-agent-builder
+  generator-version: 0.8.1
+  source:
+    input: https://raw.githubusercontent.com/Autodesk-Platform-Services/aps-sdk-openapi/main/construction/accountadmin/accountadmin.yaml
+    license: UNKNOWN
+    type: openapi
+  generated-at: 2026-05-17T12:09:52.881352+00:00
+transport:
+  cli:
+    binary: aware-acc-account-admin
+commands:
+  assign-project-user:
+    lifecycle: single
+    description: POST /construction/admin/v1/projects/{projectId}/users — Assigns a user to the specified project
+  create-business-units:
+    lifecycle: single
+    description: PUT /hq/v1/accounts/{account_id}/business_units_structure — Create Business Units
+  create-company:
+    lifecycle: single
+    description: POST /hq/v1/accounts/{account_id}/companies — Create a new partner company
+  create-project:
+    lifecycle: single
+    description: POST /construction/admin/v1/accounts/{accountId}/projects — Create new Project
+  create-project-image:
+    lifecycle: single
+    description: PATCH /hq/v1/accounts/{account_id}/projects/{project_id}/image — Create or update a project’s image
+  create-user:
+    lifecycle: single
+    description: POST /hq/v1/accounts/{account_id}/users — Create User
+  get-business-units:
+    lifecycle: single
+    description: GET /hq/v1/accounts/{account_id}/business_units_structure — Get Business Units
+  get-companies:
+    lifecycle: single
+    description: GET /hq/v1/accounts/{account_id}/companies — Get all companies in an account
+  get-companies-with-pagination:
+    lifecycle: single
+    description: GET /construction/admin/v1/accounts/{accountId}/companies — Get account companies
+  get-company:
+    lifecycle: single
+    description: GET /hq/v1/accounts/{account_id}/companies/{company_id} — Get details of a company
+  get-project:
+    lifecycle: single
+    description: GET /construction/admin/v1/projects/{projectId} — Get a project by ID
+  get-project-companies:
+    lifecycle: single
+    description: GET /hq/v1/accounts/{account_id}/projects/{project_id}/companies — Get all companies in a project
+  get-project-user:
+    lifecycle: single
+    description: GET /construction/admin/v1/projects/{projectId}/users/{userId} — Get project user
+  get-project-users:
+    lifecycle: single
+    description: GET /construction/admin/v1/projects/{projectId}/users — Get project users
+  get-projects:
+    lifecycle: single
+    description: GET /construction/admin/v1/accounts/{accountId}/projects — Get Project in account
+  get-user:
+    lifecycle: single
+    description: GET /hq/v1/accounts/{account_id}/users/{user_id} — Get the details of a user
+  get-user-products:
+    lifecycle: single
+    description: GET /construction/admin/v1/accounts/{accountId}/users/{userId}/products — Get user products
+  get-user-projects:
+    lifecycle: single
+    description: GET /construction/admin/v1/accounts/{accountId}/users/{userId}/projects — Get user projects
+  get-user-roles:
+    lifecycle: single
+    description: GET /construction/admin/v1/accounts/{accountId}/users/{userId}/roles — Get user roles
+  get-users:
+    lifecycle: single
+    description: GET /hq/v1/accounts/{account_id}/users — Get account users
+  import-companies:
+    lifecycle: single
+    description: POST /hq/v1/accounts/{account_id}/companies/import — Bulk import partner companies
+  import-project-users:
+    lifecycle: single
+    description: "POST /construction/admin/v2/projects/{projectId}/users:import — Assigns multiple users to a project"
+  import-users:
+    lifecycle: single
+    description: POST /hq/v1/accounts/{account_id}/users/import — Bulk import users
+  patch-company-details:
+    lifecycle: single
+    description: PATCH /hq/v1/accounts/{account_id}/companies/{company_id} — Update the properties of company
+  patch-company-image:
+    lifecycle: single
+    description: PATCH /hq/v1/accounts/{account_id}/companies/{company_id}/image — Create or update a company’s image
+  patch-user-details:
+    lifecycle: single
+    description: PATCH /hq/v1/accounts/{account_id}/users/{user_id} — Update User
+  remove-project-user:
+    lifecycle: single
+    description: DELETE /construction/admin/v1/projects/{projectId}/users/{userId} — Remove Project User
+  search-companies:
+    lifecycle: single
+    description: GET /hq/v1/accounts/{account_id}/companies/search — Search companies in account by name
+  search-users:
+    lifecycle: single
+    description: GET /hq/v1/accounts/{account_id}/users/search — Search Users
+  update-project-user:
+    lifecycle: single
+    description: PATCH /construction/admin/v1/projects/{projectId}/users/{userId} — Update user in project
