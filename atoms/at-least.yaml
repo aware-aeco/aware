@@ -1,0 +1,14 @@
+id: at-least
+kind: predicate
+description: |
+  Returns true if a numeric field is greater than or equal to a threshold.
+  Used for gating: "at-least 3 sheets ready before issuing."
+inputs:
+  - name: value
+    type: number
+  - name: threshold
+    type: number
+output:
+  type: boolean
+code: |
+  (value, threshold) => Number(value) >= Number(threshold)

@@ -257,6 +257,17 @@ pub struct Inline {
     pub description: String,
     #[allow(dead_code)]
     pub code: Option<String>,
+    /// `atom://` URI referencing a reusable atom in `atoms/`,
+    /// `20-agents/<agent>/atoms/`, or app-local atoms (v0.20).
+    /// Mutually exclusive with `code:`.
+    #[allow(dead_code)]
+    #[serde(default)]
+    pub atom: Option<String>,
+    /// When `atom:` is set, this map binds the atom's named inputs to
+    /// app-context expressions.
+    #[allow(dead_code)]
+    #[serde(default, rename = "inputs")]
+    pub inline_inputs: Value,
 }
 
 #[derive(Debug, Deserialize, Clone)]

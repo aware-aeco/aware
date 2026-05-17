@@ -1,0 +1,20 @@
+id: mark-format
+kind: map
+description: |
+  Build a Tekla piece mark from project / phase / sequential parts per
+  the project's standard. Default template matches the most common
+  UK steel-fab convention (e.g. `ACME-P2-A100-1`).
+inputs:
+  - name: project
+    type: string
+  - name: phase
+    type: string
+  - name: assembly
+    type: string
+  - name: piece
+    type: string
+output:
+  type: string
+code: |
+  (project, phase, assembly, piece) =>
+    [project, 'P' + phase, assembly, piece].filter(p => p != null && p !== '').join('-')

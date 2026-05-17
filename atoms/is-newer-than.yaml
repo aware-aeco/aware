@@ -1,0 +1,20 @@
+id: is-newer-than
+kind: predicate
+description: |
+  Returns true if the input's timestamp is more recent than the
+  threshold (ISO 8601). Used for "show me records since last Friday."
+inputs:
+  - name: item
+    type: object
+    description: Must carry a `timestamp` (or `created-at` / `modified-at`) field as an ISO 8601 string.
+  - name: threshold
+    type: string
+    description: ISO 8601 cutoff.
+output:
+  type: boolean
+code: |
+  (item, threshold) => {
+    const ts = item.timestamp || item['created-at'] || item['modified-at'];
+    if (!ts) return false;
+    return new Date(ts).getTime() > new Date(threshold).getTime();
+  }

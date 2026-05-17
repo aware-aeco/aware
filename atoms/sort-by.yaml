@@ -1,0 +1,22 @@
+id: sort-by
+kind: map
+description: |
+  Sort an array of objects by a named field (numeric or string).
+  Stable; ascending by default.
+inputs:
+  - name: items
+    type: array
+  - name: by
+    type: string
+  - name: descending
+    type: boolean
+    default: false
+output:
+  type: array
+code: |
+  (items, by, descending) => [...items].sort((a, b) => {
+    const av = a[by], bv = b[by];
+    if (av === bv) return 0;
+    const cmp = typeof av === 'number' ? av - bv : String(av).localeCompare(String(bv));
+    return descending ? -cmp : cmp;
+  })

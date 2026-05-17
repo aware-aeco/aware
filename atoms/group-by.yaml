@@ -1,0 +1,19 @@
+id: group-by
+kind: reduce
+description: |
+  Group an array of objects by a named field. Returns an object whose
+  keys are the field values and values are arrays of matching items.
+inputs:
+  - name: items
+    type: array
+  - name: by
+    type: string
+    description: Field name to group by.
+output:
+  type: object
+code: |
+  (items, by) => items.reduce((acc, item) => {
+    const k = item[by] ?? '<missing>';
+    (acc[k] = acc[k] || []).push(item);
+    return acc;
+  }, {})

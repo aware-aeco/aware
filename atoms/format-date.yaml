@@ -1,0 +1,30 @@
+id: format-date
+kind: map
+description: |
+  Format an ISO date string into a target shape. Supports basic
+  date-fns-like tokens: `YYYY MM DD HH mm`. Locale-aware month names
+  via `MMM` (Jan, Feb, …) and `MMMM` (January, February, …).
+inputs:
+  - name: iso
+    type: string
+  - name: format
+    type: string
+    description: Tokens YYYY MM DD HH mm MMM MMMM.
+    default: 'YYYY-MM-DD'
+output:
+  type: string
+code: |
+  (iso, format) => {
+    const d = new Date(iso);
+    const pad = n => String(n).padStart(2, '0');
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const monthsLong = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    return (format || 'YYYY-MM-DD')
+      .replace('YYYY', d.getFullYear())
+      .replace('MMMM', monthsLong[d.getMonth()])
+      .replace('MMM', months[d.getMonth()])
+      .replace('MM', pad(d.getMonth() + 1))
+      .replace('DD', pad(d.getDate()))
+      .replace('HH', pad(d.getHours()))
+      .replace('mm', pad(d.getMinutes()));
+  }

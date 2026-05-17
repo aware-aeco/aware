@@ -1,0 +1,15 @@
+id: path-join
+kind: map
+description: |
+  Join filesystem path segments with the platform-appropriate separator.
+  Normalises forward / backslashes; collapses double separators.
+inputs:
+  - name: segments
+    type: array
+output:
+  type: string
+code: |
+  (segments) => segments
+    .filter(s => s)
+    .map(s => String(s).replace(/[\\\/]+$/g, '').replace(/^[\\\/]+/g, ''))
+    .join('/')

@@ -1,0 +1,17 @@
+id: regex-match
+kind: predicate
+description: |
+  Test a string against a regex pattern. Pattern uses standard
+  JavaScript regex syntax (PCRE-compatible for common cases).
+inputs:
+  - name: text
+    type: string
+  - name: pattern
+    type: string
+  - name: flags
+    type: string
+    default: ''
+output:
+  type: boolean
+code: |
+  (text, pattern, flags) => new RegExp(pattern, flags || '').test(String(text || ''))

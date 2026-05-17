@@ -1,0 +1,17 @@
+id: json-path
+kind: map
+description: |
+  Read a value from an object via a dotted path (e.g. `user.address.city`).
+  Returns undefined if any segment is missing.
+inputs:
+  - name: object
+    type: object
+  - name: path
+    type: string
+output:
+  type: any
+code: |
+  (object, path) => String(path).split('.').reduce(
+    (acc, key) => (acc == null ? acc : acc[key]),
+    object
+  )

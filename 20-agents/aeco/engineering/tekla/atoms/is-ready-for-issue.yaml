@@ -1,0 +1,14 @@
+id: is-ready-for-issue
+kind: predicate
+description: |
+  Returns true for Tekla drawings whose IsReadyForIssue == true AND
+  IsIssued == false. The "in the queue for next issue" filter that
+  the detailer audit named.
+inputs:
+  - name: drawing
+    type: object
+    description: Drawing record (from `tekla.drawing-list`).
+output:
+  type: boolean
+code: |
+  (drawing) => !!drawing['is-ready-for-issue'] && !drawing['is-issued']

@@ -1,0 +1,24 @@
+id: unique
+kind: map
+description: |
+  Deduplicate an array. For arrays of objects, dedupe by a named field;
+  for primitives, by value. Preserves first occurrence order.
+inputs:
+  - name: items
+    type: array
+  - name: by
+    type: string
+    description: Optional field name; omit for primitives.
+    default: null
+output:
+  type: array
+code: |
+  (items, by) => {
+    const seen = new Set();
+    return items.filter(item => {
+      const key = by ? item[by] : item;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  }

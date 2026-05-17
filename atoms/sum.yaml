@@ -1,0 +1,12 @@
+id: sum
+kind: reduce
+description: Sum a numeric field across an array.
+inputs:
+  - name: items
+    type: array
+  - name: field
+    type: string
+output:
+  type: number
+code: |
+  (items, field) => items.reduce((s, i) => s + (Number(i[field]) || 0), 0)

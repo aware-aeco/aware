@@ -1,0 +1,10 @@
+id: is-bolted
+kind: predicate
+description: Sibling of `is-welded` — true for Bolted assemblies.
+inputs:
+  - name: assembly
+    type: object
+output:
+  type: boolean
+code: |
+  (assembly) => assembly.type === 'Bolted' || assembly.AssemblyType === 'Bolted'
