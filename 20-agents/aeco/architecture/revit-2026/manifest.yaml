@@ -36,6 +36,320 @@ transport:
   cli:
     binary: aware-revit-2026
 commands:
+  # ---- Curated workflow verbs (v0.10 first wave) -------------------------
+  # These are the architect's mental units — promoted from the reflected
+  # API surface below into typed, composable workflow commands per the
+  # curation pattern in 10-core/agent-spec.md.
+
+  sheet.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List ViewSheets in the active document, optionally filtered by
+      IssuedFor / current Revision / Discipline. Returns one row per sheet
+      with the identity, revision, sign-off, and ownership fields a sheet-
+      status report needs. Read-only.
+    inputs:
+      filter-issued-for:
+        type: string
+        description: Match SheetIssuedFor (e.g. "Issued for Construction"). Optional.
+      filter-revision:
+        type: string
+        description: Match current revision letter (e.g. "C"). Optional.
+      filter-discipline:
+        type: string
+        description: Match sheet discipline. Optional.
+    outputs:
+      type: single
+      schema:
+        sheets:
+          type: array
+          items:
+            sheet-number:    string
+            sheet-name:      string
+            current-revision: string
+            issue-date:      string         # SheetIssueDate
+            issued-for:      string         # SheetIssuedFor
+            drawn-by:        string         # DrawnBy
+            checked-by:      string         # CheckedBy
+            current-revision-on-sheet: string
+
+  sheet.export-pdfs:
+    lifecycle: single
+    category: curated
+    description: |
+      Batch-export a set of ViewSheets to PDF, with naming template + PDF/A
+      mode + embed-fonts. Wraps the PrintManager + PDFExportOptions dance.
+      WRITE-mode (filesystem only — no model writes). Requires `safety:`
+      block in the calling app (see app-spec § Safety contract).
+    inputs:
+      sheet-numbers:
+        type: array
+        items: string
+        description: Sheet numbers to export (e.g. ["A-100","A-101","A-200"]).
+      output-dir:
+        type: string
+        description: Output directory. Must exist and be writable.
+      naming-template:
+        type: string
+        description: Template for filename, e.g. "{project}-{phase}-{sheet}-Rev{rev}.pdf".
+        default: "{sheet}.pdf"
+      pdf-a:
+        type: boolean
+        default: false
+      embed-fonts:
+        type: boolean
+        default: true
+      color:
+        type: enum
+        values: [color, black-and-white, grays]
+        default: color
+    outputs:
+      type: single
+      schema:
+        written:
+          type: array
+          items:
+            sheet-number: string
+            path:         string
+            size-bytes:   number
+
+  sheet.stamp:
+    lifecycle: single
+    category: curated
+    description: |
+      Stamp a set of PDFs with date / project / revision / sheet number
+      overlay. Pure PDF mutation — does NOT touch the Revit model. Pairs
+      with sheet.export-pdfs to produce transmittal-ready stamped sets.
+    inputs:
+      pdf-paths:
+        type: array
+        items: string
+      stamp-template:
+        type: string
+        description: Template with {date}, {project}, {revision}, {sheet} placeholders.
+      position:
+        type: enum
+        values: [top-right, top-left, bottom-right, bottom-left]
+        default: bottom-right
+    outputs:
+      type: single
+      schema:
+        stamped:
+          type: array
+          items:
+            input:  string
+            output: string
+
+  revision.bump:
+    lifecycle: single
+    category: curated
+    description: |
+      Add the next revision letter to a set of sheets, set per-sheet
+      RevisionDate + IssuedTo + Description, mark the prior revision
+      as Issued (locked). Wraps Document.AddRevision + Revision.Issue.
+      WRITE-mode against the Revit model — requires `safety:` block.
+    inputs:
+      sheet-numbers:
+        type: array
+        items: string
+      description:
+        type: string
+        description: Free-text description of the change (visible in revision schedule).
+      revision-date:
+        type: string
+        description: ISO date (defaults to today if omitted).
+      issued-to:
+        type: string
+      issued-by:
+        type: string
+    outputs:
+      type: single
+      schema:
+        added-revision:
+          revision-letter: string
+          revision-date:   string
+        affected-sheets:
+          type: array
+          items: string
+
+  view.capture-bitmap:
+    lifecycle: single
+    category: curated
+    description: |
+      Render a named 3D view (or any RasterizableView) to a PNG / JPEG at
+      a target pixel resolution with named visual style + zoom-to-fit.
+      Read-only. Wraps Document.ExportImage with ImageExportOptions.
+    inputs:
+      view-name:
+        type: string
+        description: Name of the view to capture (use view.list to discover).
+      output-path:
+        type: string
+      width-pixels:
+        type: number
+        default: 1920
+      height-pixels:
+        type: number
+        default: 1080
+      format:
+        type: enum
+        values: [png, jpeg]
+        default: png
+      zoom-to-fit:
+        type: boolean
+        default: true
+    outputs:
+      type: single
+      schema:
+        path:         string
+        width-pixels:  number
+        height-pixels: number
+        size-bytes:   number
+
+  schedule.export:
+    lifecycle: single
+    category: curated
+    description: |
+      Export a ViewSchedule (door / window / room / equipment / ...) to
+      CSV or Excel. Preserves filter / sort / group order and headers
+      exactly as the schedule view defines them. Read-only.
+    inputs:
+      schedule-name:
+        type: string
+      output-path:
+        type: string
+      format:
+        type: enum
+        values: [csv, xlsx]
+        default: csv
+      include-totals:
+        type: boolean
+        default: true
+    outputs:
+      type: single
+      schema:
+        path:          string
+        row-count:     number
+        column-headers: array
+
+  schedule.find-rows-missing:
+    lifecycle: single
+    category: curated
+    description: |
+      QA pass over a ViewSchedule: find every row where one or more of
+      the specified parameters is empty / null. Used by architect schedule-
+      QA workflows (e.g. "find every door row missing fire rating").
+      Read-only.
+    inputs:
+      schedule-name:
+        type: string
+      parameters:
+        type: array
+        items: string
+        description: Parameter names that must be present (non-empty).
+    outputs:
+      type: single
+      schema:
+        missing:
+          type: array
+          items:
+            row-index:           number
+            element-id:          string
+            missing-parameters:  array
+
+  element.by-parameter-value:
+    lifecycle: single
+    category: curated
+    description: |
+      Typed filter over the active document — find every element where a
+      named parameter matches a value (or null / not-null). Wraps a
+      FilteredElementCollector + ElementParameterFilter without the user
+      having to compose the predicate. Read-only.
+    inputs:
+      parameter-name:
+        type: string
+      operator:
+        type: enum
+        values: [equals, not-equals, contains, is-null, is-not-null, greater-than, less-than]
+        default: equals
+      value:
+        type: string
+        description: Required for all operators except is-null / is-not-null.
+      category:
+        type: string
+        description: Restrict to a Revit category (e.g. "Walls", "Doors"). Optional.
+    outputs:
+      type: single
+      schema:
+        elements:
+          type: array
+          items:
+            element-id:       string
+            category:         string
+            type-name:        string
+            instance-marker:  string
+
+  parameter.bulk-write:
+    lifecycle: single
+    category: curated
+    description: |
+      Bulk-write a parameter across many elements keyed by an identity
+      column (Mark / ElementId / Type Name). Typical use is "update Fire
+      Rating from this Excel sheet keyed by Mark." WRITE-mode against
+      the Revit model — requires `safety:` block.
+    inputs:
+      key-parameter:
+        type: enum
+        values: [mark, element-id, type-name]
+        default: mark
+      target-parameter:
+        type: string
+        description: Name of the parameter to write.
+      rows:
+        type: array
+        items:
+          key:   string
+          value: string
+        description: One row per element. Missing keys are reported, not fatal.
+    outputs:
+      type: single
+      schema:
+        written:           number
+        skipped-missing:   array
+        skipped-read-only: array
+
+  link.reload-all:
+    lifecycle: single
+    category: curated
+    description: |
+      Reload every Revit link + linked CAD reference, report per-link
+      load status, and emit a single coordination summary. Equivalent to
+      the "Manage Links → Reload All" UI but logged + scriptable.
+      WRITE-mode against the host model — requires `safety:` block.
+    inputs:
+      include-cad-links:
+        type: boolean
+        default: true
+      include-pdf-links:
+        type: boolean
+        default: false
+    outputs:
+      type: single
+      schema:
+        reloaded:
+          type: array
+          items:
+            link-name:     string
+            link-type:     string
+            status:        string  # Loaded | NotFound | Unloaded
+            last-modified: string
+
+  # ---- Reflected commands (auto-generated from the SDK) -------------------
+  # The 7,647 entries below are the escape hatch — direct mappings to
+  # public Revit API methods. Use `aware tree revit-2026 --reflected` to
+  # explore them; use `--curated` to see only the workflow verbs above.
+
   access-denied-exception-get-object-data:
     lifecycle: single
     description: Retrieves data needed to serialize the target object.

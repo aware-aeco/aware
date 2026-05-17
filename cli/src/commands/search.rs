@@ -14,6 +14,7 @@ use serde::Serialize;
 use crate::context::Context;
 use crate::envelope;
 use crate::error::AwareError;
+use crate::manifest::agent::Category;
 use crate::manifest::loader::discover_agents;
 
 #[derive(Args, Debug)]
@@ -26,6 +27,12 @@ pub struct SearchArgs {
     /// Restrict search to a specific agent.
     #[arg(long)]
     pub agent: Option<String>,
+    /// Restrict search to curated workflow verbs (hide auto-generated reflected commands).
+    #[arg(long)]
+    pub curated: bool,
+    /// Restrict search to reflected commands (the escape hatch).
+    #[arg(long, conflicts_with = "curated")]
+    pub reflected: bool,
 }
 
 pub fn run(ctx: &Context, args: &SearchArgs) -> Result<(), AwareError> {
@@ -35,6 +42,14 @@ pub fn run(ctx: &Context, args: &SearchArgs) -> Result<(), AwareError> {
 
     let mut results: BTreeMap<String, Vec<Hit>> = BTreeMap::new();
 
+    let category_filter: Option<Category> = if args.curated {
+        Some(Category::Curated)
+    } else if args.reflected {
+        Some(Category::Reflected)
+    } else {
+        None
+    };
+
     for d in &discovered {
         if let Some(filter) = &args.agent
             && d.manifest.agent != *filter
@@ -43,6 +58,11 @@ pub fn run(ctx: &Context, args: &SearchArgs) -> Result<(), AwareError> {
         }
         let mut agent_hits: Vec<Hit> = Vec::new();
         for (name, cmd) in &d.manifest.commands {
+            if let Some(want) = category_filter
+                && d.manifest.category_of(cmd) != want
+            {
+                continue;
+            }
             let name_match = name.to_lowercase().contains(&term_lower);
             let desc_match = cmd.description.to_lowercase().contains(&term_lower);
             if name_match || desc_match {

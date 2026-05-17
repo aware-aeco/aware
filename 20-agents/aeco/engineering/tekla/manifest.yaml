@@ -37,6 +37,7 @@ transport:
 commands:
   watch:
     lifecycle: start
+    category: curated
     description: Subscribe to ModelObjectChanged events on the active Tekla model.
     inputs:
       filter:
@@ -53,6 +54,7 @@ commands:
 
   insert:
     lifecycle: single
+    category: curated
     description: Create a ConnectionPart at a world-space location.
     inputs:
       type:
@@ -74,6 +76,7 @@ commands:
 
   save-attributes:
     lifecycle: single
+    category: curated
     description: Persist the active dialog's values via the Akit save-as pattern.
     inputs:
       joint-id: string               # e.g. "144" for End plate 144
