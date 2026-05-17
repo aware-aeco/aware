@@ -1,0 +1,14 @@
+id:       building-physics
+scope:    aware-aeco
+version:  2026
+name:     Building Physics
+description: |
+  First-party reference voice pack — a building-physics hat. Reviews
+  write-mode operations against fire / acoustic / thermal / moisture
+  performance implications.
+license: Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/99-voices/aware-aeco/building-physics
+references-folder: references
+system-prompt-file: system-prompt.md
+authored-by: aware-aeco
+authored-at: 2026-05-17

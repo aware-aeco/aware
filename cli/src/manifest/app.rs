@@ -140,10 +140,57 @@ pub struct Node {
     #[serde(rename = "model-lock", default)]
     pub model_lock: Option<ModelLockBlock>,
 
+    /// `panel:` — multi-voice review on write-mode nodes (v0.25).
+    /// N voices in N domain hats must agree before the write commits.
+    /// See `10-core/app-spec.md § Panel review`.
+    #[serde(default)]
+    pub panel: Option<PanelBlock>,
+
     /// Nested topology for `for-each`, `sweep`, `schedule`-scoped nodes.
     /// `do:` is the body that runs per-iteration.
     #[serde(default, rename = "do")]
     pub do_: Option<Vec<Node>>,
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone)]
+pub struct PanelBlock {
+    /// Quorum policy: `unanimous`, `majority`, or `quorum-N` (e.g. `quorum-3`).
+    #[serde(default = "default_panel_require")]
+    pub require: String,
+
+    /// What to do when the quorum isn't met: `halt` (abort the run),
+    /// `log-only` (continue + record), `warn` (continue with stderr warn).
+    #[serde(rename = "on-dissent", default = "default_on_dissent")]
+    pub on_dissent: String,
+
+    /// Voices on the panel. Each is a model + voice-pack reference +
+    /// optional jurisdiction tag.
+    #[serde(default)]
+    pub voices: Vec<Voice>,
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone)]
+pub struct Voice {
+    /// Voice id — appears in the receipt next to verdicts.
+    pub id: String,
+    /// LLM model name (e.g. `claude-opus-4-7`, `gpt-5`, `gemini-2-5-pro`).
+    pub model: String,
+    /// Reference to a voice pack — `atom://voices/<scope>/<id>@<version>`
+    /// or shorthand `@<scope>/<id>@<version>`.
+    #[serde(rename = "voice-pack", default)]
+    pub voice_pack: Option<String>,
+    /// Optional jurisdiction tag (e.g. `UK`, `US-CA`, `AU-NSW`).
+    /// Surfaces in receipts; useful for filtering audits.
+    #[serde(default)]
+    pub jurisdiction: Option<String>,
+}
+
+fn default_panel_require() -> String {
+    "unanimous".to_string()
+}
+
+fn default_on_dissent() -> String {
+    "halt".to_string()
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone)]

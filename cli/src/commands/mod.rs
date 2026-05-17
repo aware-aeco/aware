@@ -15,3 +15,4 @@ pub mod report;
 pub mod search;
 pub mod skill;
 pub mod tree;
+pub mod voice;
