@@ -1,0 +1,344 @@
+agent:        archicad-28
+version:      28.0.0
+display-name: Graphisoft ArchiCAD 28
+description: |
+  Architectural authoring on the Nemetschek / Graphisoft side. Drives
+  ArchiCAD 28 (the 2024 release) via two complementary scriptable surfaces:
+
+  1. **Official Graphisoft API** — server-style JSON/HTTP, built into
+     ArchiCAD 23+ (free; no NDA gate). Default endpoint
+     `http://localhost:19723`. Commands grouped under Project /
+     Element / Library / Navigator / Selection / Teamwork.
+     Docs: https://archicadapi.graphisoft.com/
+
+  2. **Tapir community extension** — MIT-licensed add-on + Python /
+     REST client extending the official API surface with 100+
+     additional commands (element-by-classification, GDL object
+     introspection, view-set bulk ops). The richer path when
+     installed. Supports ArchiCAD 25-29 on Windows + macOS.
+     Source: https://github.com/ENZYME-APD/tapir-archicad-automation
+
+  This agent prefers Tapir when present and falls back to the official
+  Graphisoft API for ops Tapir doesn't extend. The transport binary
+  detects which is available at startup.
+
+stateful: false
+
+vendor:   graphisoft
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/architecture/archicad-28
+keywords: [aware, archicad, graphisoft, tapir, bim, architecture, nemetschek]
+
+provenance:
+  generated-by:     hand-curated
+  generator-version: 0.18.0
+  source:
+    type:    docs
+    primary: https://archicadapi.graphisoft.com/
+    extension: https://github.com/ENZYME-APD/tapir-archicad-automation
+  refined-by:       [pawellisowski]
+  generated-at:     2026-05-17T19:20:00Z
+
+requires:
+  software:
+    - archicad@28.x
+  network:
+    - http://localhost:19723       # default Graphisoft JSON endpoint
+  secrets:
+    - archicad-api-key             # ArchiCAD-side API key (prefs panel)
+  filesystem:
+    - read:  '*.pln,*.pla,*.tpl,*.bpn,*.mod'
+    - write: '*.pln,*.pdf,*.dwg,*.ifc,*.xlsx,*.csv,*.bcf,*.bcfzip'
+
+transport:
+  cli:
+    binary: aware-archicad-28
+
+commands:
+
+  # ---- Project context -------------------------------------------------
+
+  project.info:
+    lifecycle: single
+    category: curated
+    description: |
+      Returns project metadata: name, GUID, location, file format,
+      Teamwork state, current user. Required pre-flight before any
+      stateful operation. Read-only.
+    inputs: {}
+    outputs:
+      type: single
+      schema:
+        project-name:   string
+        project-guid:   string
+        file-format:    string  # solo / teamwork
+        teamwork-state: string  # null / connected / offline
+        current-user:   string
+
+  project.open:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Open a project file (.pln / .pla) in ArchiCAD. Write-mode against
+      the application state.
+    inputs:
+      path: string
+    outputs:
+      type: single
+      schema:
+        project-guid: string
+
+  # ---- Elements --------------------------------------------------------
+
+  elements.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List elements in the project, filterable by type / layer / story.
+      Read-only.
+    inputs:
+      element-type:
+        type: enum
+        values: [any, wall, slab, beam, column, door, window, opening, mesh, zone, label, dim]
+        default: any
+      layer:
+        type: string
+        description: Optional layer name match.
+      story-index:
+        type: number
+        description: Optional story filter (0 = ground).
+    outputs:
+      type: single
+      schema:
+        elements:
+          type: array
+          items:
+            guid:         string
+            element-type: string
+            layer:        string
+            story-index:  number
+
+  elements.get-properties:
+    lifecycle: single
+    category: curated
+    description: |
+      Read all properties (built-in + user-defined) for one or more
+      elements. Read-only.
+    inputs:
+      guids:
+        type: array
+        items: string
+      property-names:
+        type: array
+        items: string
+        description: Optional. Empty = all properties.
+    outputs:
+      type: single
+      schema:
+        results:
+          type: array
+          items:
+            guid:        string
+            properties:  object
+
+  elements.set-properties:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Bulk-write properties on elements. Used by the architect bulk-
+      parameter-write workflow (parallel to Revit's parameter.bulk-write).
+      Write-mode — needs `safety:` block.
+    inputs:
+      guids:
+        type: array
+        items: string
+      properties:
+        type: object
+        description: Map of property-name → value.
+    outputs:
+      type: single
+      schema:
+        updated:   number
+        warnings:  array
+
+  elements.by-classification:
+    lifecycle: single
+    category: curated
+    description: |
+      Filter elements by ArchiCAD Classification (e.g. Uniclass).
+      Requires Tapir extension. Read-only.
+    inputs:
+      classification:
+        type: string
+        description: Classification code (e.g. "EF_25_10_15").
+    outputs:
+      type: single
+      schema:
+        elements:
+          type: array
+          items:
+            guid:         string
+            element-type: string
+
+  # ---- Layers + views --------------------------------------------------
+
+  layers.list:
+    lifecycle: single
+    category: curated
+    description: List all layers + visibility / lock state. Read-only.
+    inputs: {}
+    outputs:
+      type: single
+      schema:
+        layers:
+          type: array
+          items:
+            name:     string
+            visible:  boolean
+            locked:   boolean
+
+  views.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List Navigator items (views, layouts, layout books). Read-only.
+    inputs:
+      kind:
+        type: enum
+        values: [view, layout, layout-book]
+        default: view
+    outputs:
+      type: single
+      schema:
+        items:
+          type: array
+          items:
+            id:    string
+            name:  string
+            path:  string
+
+  views.activate:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Activate a saved view in the Navigator — used before
+      `views.export-image` to set up consistent state.
+    inputs:
+      view-id: string
+    outputs:
+      type: single
+      schema:
+        activated: boolean
+
+  # ---- Exports ---------------------------------------------------------
+
+  publish.layout-set:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Publish a Layout Book / Publisher Set as PDF / DWG. The
+      architect-side Friday-issue verb. Write-mode (filesystem).
+    inputs:
+      publisher-set-name:
+        type: string
+        description: Name of the Publisher Set to run.
+      output-dir: string
+      format:
+        type: enum
+        values: [pdf, dwg, both]
+        default: pdf
+    outputs:
+      type: single
+      schema:
+        written:
+          type: array
+          items:
+            layout-name: string
+            format:      string
+            path:        string
+
+  export-ifc:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Export the model (or a layer-scoped subset) to IFC. Pair with
+      `ifc-inspector` to validate post-export.
+    inputs:
+      output-path: string
+      ifc-version:
+        type: enum
+        values: [IFC2X3, IFC4, IFC4X3]
+        default: IFC4
+      scope:
+        type: enum
+        values: [all, selected, story]
+        default: all
+      story-index:
+        type: number
+        description: Required if scope=story.
+    outputs:
+      type: single
+      schema:
+        path:         string
+        entity-count: number
+
+  export-bcf:
+    lifecycle: single
+    category: curated
+    description: |
+      Export issue markups attached to the project as BCF. Read-only
+      against the model.
+    inputs:
+      output-path: string
+      bcf-version:
+        type: enum
+        values: [2.1, 3.0]
+        default: 2.1
+    outputs:
+      type: single
+      schema:
+        path:        string
+        issue-count: number
+
+  # ---- Teamwork --------------------------------------------------------
+
+  teamwork.status:
+    lifecycle: single
+    category: curated
+    description: |
+      Report Teamwork connection state + reserved elements + pending
+      receives/sends. Read-only.
+    inputs: {}
+    outputs:
+      type: single
+      schema:
+        connected:        boolean
+        server:           string
+        reserved-count:   number
+        pending-receive:  number
+        pending-send:     number
+
+  teamwork.send-receive:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Trigger a Teamwork Send & Receive cycle. The Teamwork-aware
+      equivalent of "Save" in solo files. Write-mode against the
+      Teamwork server.
+    inputs: {}
+    outputs:
+      type: single
+      schema:
+        sent:     number
+        received: number
+
+skills:
+  - tapir-vs-official-api.md
+  - publisher-set-workflow.md
+  - teamwork-pitfalls.md

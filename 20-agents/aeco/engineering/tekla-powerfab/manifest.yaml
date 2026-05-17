@@ -1,10 +1,17 @@
-agent:        tekla-epm
+agent:        tekla-powerfab
 version:      24.2.0
-display-name: Tekla EPM (PowerFab)
+display-name: Tekla PowerFab
 description: |
   The fabricator's ERP — production schedule, material yard, heat
   treatment tracker, paint shop, shipping manifest, cost roll-up.
-  Wraps the Trimble Tekla EPM REST API.
+  Wraps the Trimble Tekla PowerFab REST API (the current branded
+  name; the product was historically called "Tekla EPM").
+
+  **Official developer docs:** https://developer.tekla.com/tekla-powerfab
+  (Trimble's developer portal — free signup, no NDA gate). The
+  transport binary references the REST endpoints documented there;
+  no NuGet package is required (PowerFab is server-hosted, not a
+  desktop SDK).
 
   Persona audit (detailer, **dealbreaker**): "Tekla EPM / PowerFab —
   no agent. This is the *fabricator's ERP*. Without an EPM agent,
@@ -15,33 +22,36 @@ description: |
 
   This agent closes that gap. Scope: jobs, BOMs, production status,
   shipments. Costing surfaces are intentionally out of scope here
-  (separate `tekla-epm-cost` agent if/when needed).
+  (separate `tekla-powerfab-cost` agent if/when needed).
 
 stateful: false
 
 vendor:   trimble
 license:  Apache-2.0
-homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/engineering/tekla-epm
-keywords: [aware, tekla, epm, powerfab, fabrication, erp, production, shop-floor, engineering]
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/engineering/tekla-powerfab
+keywords: [aware, tekla, epm, powerfab, tekla-powerfab, tekla-epm, fabrication, erp, production, shop-floor, engineering, trimble]
 
 provenance:
   generated-by:     hand-curated
-  generator-version: 0.15.0
+  generator-version: 0.18.0
+  source:
+    type:    docs
+    primary: https://developer.tekla.com/tekla-powerfab
   refined-by:       [pawellisowski]
-  generated-at:     2026-05-17T18:25:00Z
+  generated-at:     2026-05-17T19:30:00Z
 
 requires:
   network:
     - https://api.tekla.com
   secrets:
-    - tekla-epm
+    - tekla-powerfab
   filesystem:
     - read:  '*.csv,*.xlsx,*.kss,*.kis'
     - write: '*.csv,*.xlsx'
 
 transport:
   cli:
-    binary: aware-tekla-epm
+    binary: aware-tekla-powerfab
 
 commands:
 
@@ -265,5 +275,6 @@ commands:
             location:   string
 
 skills:
-  - tekla-to-epm-bridge.md
+  - official-rest-api.md
+  - tekla-to-powerfab-bridge.md
   - production-tracking-workflow.md

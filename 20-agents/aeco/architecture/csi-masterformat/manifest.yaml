@@ -1,0 +1,180 @@
+agent:        csi-masterformat
+version:      1.0.0
+display-name: CSI MasterFormat (file-format)
+description: |
+  Pure file-format agent for CSI MasterFormat classification — code
+  lookup, section-title resolution, cross-walks to Uniclass (UK) /
+  OmniClass / CAWS / OCCS. No external API, no host software.
+
+  Sits underneath the `nbs-chorus` and `avitru-speclink` agents — both
+  reference MasterFormat sections; this agent normalises classification
+  across them.
+
+  Persona audit (architect): "For a firm that runs MasterFormat-keyed
+  specs (every U.S. firm, basically), this is a hole the size of half
+  the deliverable."
+
+stateful: false
+
+vendor:   csi
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/architecture/csi-masterformat
+keywords: [aware, csi, masterformat, uniclass, omniclass, classification, architecture, specs]
+
+provenance:
+  generated-by:     hand-curated
+  generator-version: 0.17.0
+  refined-by:       [pawellisowski]
+  generated-at:     2026-05-17T19:10:00Z
+
+requires:
+  filesystem:
+    - read:  '*.csv,*.json,*.xlsx'
+    - write: '*.csv,*.json'
+
+transport:
+  cli:
+    binary: aware-csi-masterformat
+
+commands:
+
+  # ---- Section lookup --------------------------------------------------
+
+  section.lookup:
+    lifecycle: single
+    category: curated
+    description: |
+      Resolve a MasterFormat code (e.g. `09 22 16`) to its title +
+      division + parent group. Read-only.
+    inputs:
+      code:
+        type: string
+        description: Section code (e.g. "09 22 16" or "092216").
+    outputs:
+      type: single
+      schema:
+        code:             string
+        title:            string  # e.g. "Non-Structural Metal Framing"
+        division:         string  # e.g. "09 — Finishes"
+        parent-group:     string  # e.g. "09 22 — Supports for Plaster and Gypsum Board"
+
+  section.search:
+    lifecycle: single
+    category: curated
+    description: |
+      Search section titles by keyword. Used when you know "the
+      gypsum board" but not the exact code. Read-only.
+    inputs:
+      query:
+        type: string
+      division:
+        type: string
+        description: Optional 2-digit division filter (e.g. "09").
+      limit:
+        type: number
+        default: 20
+    outputs:
+      type: single
+      schema:
+        matches:
+          type: array
+          items:
+            code:  string
+            title: string
+            score: number
+
+  divisions.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List all 50 MasterFormat divisions with titles. Read-only.
+    inputs: {}
+    outputs:
+      type: single
+      schema:
+        divisions:
+          type: array
+          items:
+            code:  string  # "01"
+            title: string  # "General Requirements"
+
+  # ---- Cross-walk to other classifications -----------------------------
+
+  translate:
+    lifecycle: single
+    category: curated
+    description: |
+      Translate a MasterFormat code to its closest equivalent in another
+      classification system. Read-only. The "I have a MasterFormat
+      project, the client wants Uniclass output" verb.
+
+      Translations are best-effort — some MasterFormat sections have no
+      direct equivalent in Uniclass; the agent reports the closest
+      match + a confidence score.
+    inputs:
+      code:
+        type: string
+        description: MasterFormat section code.
+      target:
+        type: enum
+        values: [uniclass, omniclass, caws, occs]
+    outputs:
+      type: single
+      schema:
+        source-code: string
+        target-code: string
+        target-title: string
+        confidence:  number   # 0..1
+        notes:       string
+
+  translate-bulk:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Translate a CSV of MasterFormat codes to the target classification
+      and write a translation CSV. Used for client deliverable formatting.
+    inputs:
+      input-csv:   string
+      output-csv:  string
+      target:
+        type: enum
+        values: [uniclass, omniclass, caws, occs]
+      code-column:
+        type: string
+        default: "code"
+    outputs:
+      type: single
+      schema:
+        path:        string
+        row-count:   number
+        unmatched:   number   # rows where no equivalent found
+
+  # ---- Project-side ops ------------------------------------------------
+
+  audit-document:
+    lifecycle: single
+    category: curated
+    description: |
+      Audit a document (Word / PDF / CSV) for MasterFormat code
+      references — find every reference, flag bad codes (typos, retired
+      codes), report division coverage gaps. Read-only.
+    inputs:
+      path: string
+    outputs:
+      type: single
+      schema:
+        references:
+          type: array
+          items:
+            code:     string
+            location: string  # page / row / line ref
+            valid:    boolean
+        coverage-by-division:
+          type: array
+          items:
+            division:   string
+            ref-count:  number
+
+skills:
+  - format-vs-classification.md

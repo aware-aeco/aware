@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-05-17T18:50:00Z",
+  "updated-at": "2026-05-17T19:10:00Z",
   "agents": {
     "tekla": {
       "versions": {
@@ -378,11 +378,11 @@
         }
       }
     },
-    "tekla-epm": {
+    "tekla-powerfab": {
       "versions": {
         "24.2.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/engineering/tekla-epm"
+          "subdir": "aware-main/20-agents/aeco/engineering/tekla-powerfab"
         }
       }
     },
@@ -407,6 +407,46 @@
         "1.0.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
           "subdir": "aware-main/20-agents/aeco/visualization/twinmotion-prep"
+        }
+      }
+    },
+    "nbs-chorus": {
+      "versions": {
+        "4.0.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/architecture/nbs-chorus"
+        }
+      }
+    },
+    "avitru-speclink": {
+      "versions": {
+        "7.0.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/architecture/avitru-speclink"
+        }
+      }
+    },
+    "csi-masterformat": {
+      "versions": {
+        "1.0.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/architecture/csi-masterformat"
+        }
+      }
+    },
+    "archicad-28": {
+      "versions": {
+        "28.0.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/architecture/archicad-28"
+        }
+      }
+    },
+    "archicad-29": {
+      "versions": {
+        "29.0.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/architecture/archicad-29"
         }
       }
     }
@@ -462,10 +502,15 @@
         "procore@3.0.0",
         "aconex@1.0.0",
         "acc-docs@1.0.0",
-        "tekla-epm@24.2.0",
+        "tekla-powerfab@24.2.0",
         "peddinghaus-translator@1.0.0",
         "enscape-prep@1.0.0",
-        "twinmotion-prep@1.0.0"
+        "twinmotion-prep@1.0.0",
+        "nbs-chorus@4.0.0",
+        "avitru-speclink@7.0.0",
+        "csi-masterformat@1.0.0",
+        "archicad-28@28.0.0",
+        "archicad-29@29.0.0"
       ]
     }
   }

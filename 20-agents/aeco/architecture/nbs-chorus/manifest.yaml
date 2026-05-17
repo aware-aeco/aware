@@ -1,0 +1,223 @@
+agent:        nbs-chorus
+version:      4.0.0
+display-name: NBS Chorus
+description: |
+  Cloud-based specification authoring (UK + global). Wraps the NBS
+  Chorus REST API for spec creation, clause editing, model-linked
+  specs, BIM tag round-trips.
+
+  Persona audit (architect): "NBS Chorus / NBS Source / Avitru /
+  SpecLink. Where my **specifications** live. CSI MasterFormat 50-
+  division spec docs do not live in Revit, they live in spec authoring
+  tools. AWARE has **nothing** for specs."
+
+  This is the UK-side fix. Pair with `avitru-speclink` for the
+  US MasterFormat path, and `csi-masterformat` for the format-level
+  classification primitive that both sit on top of.
+
+stateful: false
+
+vendor:   nbs
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/architecture/nbs-chorus
+keywords: [aware, nbs, chorus, specifications, spec, uk, architecture, ribadrm]
+
+provenance:
+  generated-by:     hand-curated
+  generator-version: 0.17.0
+  refined-by:       [pawellisowski]
+  generated-at:     2026-05-17T19:00:00Z
+
+requires:
+  network:
+    - https://chorus.thenbs.com
+    - https://api.thenbs.com
+  secrets:
+    - nbs-chorus
+  filesystem:
+    - read:  '*.csv,*.xlsx,*.json,*.docx'
+    - write: '*.docx,*.pdf,*.json,*.csv'
+
+transport:
+  cli:
+    binary: aware-nbs-chorus
+
+commands:
+
+  # ---- Project + spec context ------------------------------------------
+
+  project.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List Chorus projects the user has access to. Read-only.
+    inputs: {}
+    outputs:
+      type: single
+      schema:
+        projects:
+          type: array
+          items:
+            id:           string
+            name:         string
+            project-number: string
+            stage:        string  # RIBA Stage 0-7
+
+  spec.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List specs in a project. Filterable by stage / discipline.
+      Read-only.
+    inputs:
+      project-id: string
+      stage:
+        type: string
+        description: Optional RIBA stage filter (0-7).
+    outputs:
+      type: single
+      schema:
+        specs:
+          type: array
+          items:
+            id:          string
+            title:       string
+            stage:       string
+            discipline:  string
+            section-count: number
+            last-modified: string
+
+  spec.export-pdf:
+    lifecycle: single
+    category: curated
+    description: |
+      Export a full spec as PDF. Used by issue flows — the spec PDF
+      goes alongside the drawing set. Read-only.
+    inputs:
+      spec-id:     string
+      output-path: string
+    outputs:
+      type: single
+      schema:
+        path:       string
+        page-count: number
+        size-bytes: number
+
+  spec.export-docx:
+    lifecycle: single
+    category: curated
+    description: Export a spec as Word document. Read-only.
+    inputs:
+      spec-id:     string
+      output-path: string
+    outputs:
+      type: single
+      schema:
+        path:       string
+        size-bytes: number
+
+  # ---- Sections + clauses ----------------------------------------------
+
+  sections.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List sections (Uniclass / CAWS / MasterFormat) within a spec.
+      Read-only.
+    inputs:
+      spec-id: string
+    outputs:
+      type: single
+      schema:
+        sections:
+          type: array
+          items:
+            id:              string
+            classification:  string  # e.g. "EF_25_10" (Uniclass)
+            title:           string
+            clause-count:    number
+
+  clauses.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List clauses within a section. Used for compliance audits.
+      Read-only.
+    inputs:
+      spec-id:    string
+      section-id: string
+    outputs:
+      type: single
+      schema:
+        clauses:
+          type: array
+          items:
+            id:    string
+            number: string
+            heading: string
+            body:   string
+
+  clauses.update:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Update the body of a clause. The architect-side "tighten the
+      spec" verb. Write-mode — needs `safety:` block.
+    inputs:
+      spec-id:    string
+      section-id: string
+      clause-id:  string
+      body:       string
+    outputs:
+      type: single
+      schema:
+        clause-id:     string
+        version:       number
+        last-modified: string
+
+  # ---- Model link ------------------------------------------------------
+
+  model-link.list-tags:
+    lifecycle: single
+    category: curated
+    description: |
+      List BIM-tagged elements in the spec (the Chorus-side equivalent
+      of Revit's CSI assembly codes). Used by spec-coordination audits.
+      Read-only.
+    inputs:
+      spec-id: string
+    outputs:
+      type: single
+      schema:
+        tags:
+          type: array
+          items:
+            element-class: string
+            section-id:    string
+            clause-count:  number
+
+  model-link.import-from-revit:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Import BIM tags from Revit (or any IFC source) — links spec
+      sections to specific model element classes. Pairs with
+      `revit-2026.element.by-parameter-value` (read Revit's "Assembly
+      Description" parameter) + this verb to push into Chorus.
+    inputs:
+      spec-id: string
+      tags:
+        type: array
+        items:
+          element-class: string
+          section-id:    string
+    outputs:
+      type: single
+      schema:
+        linked: number
+
+skills:
+  - chorus-vs-source.md
+  - riba-stage-spec-mapping.md
