@@ -37,6 +37,20 @@ A real Tekla → Trimble Connect integration. One sentence. Plain text. Sixty se
 
 For decades that integration was either *"buy a $40,000 plugin"* or *"hire two devs for six months."* AWARE removes the question.
 
+### Five 60-second demos — one per persona
+
+The fabricator pitch above is the canonical 60 seconds. The 2026-05-17 persona audit asked for one per discipline. Each composes to a `.flo` file in `30-apps/_examples/`:
+
+| Persona | Sentence to Claude / codex | Reference app |
+|---|---|---|
+| **BIM manager** | *"Every Monday 7am, walk our 4 active Revit projects and post a model-health rollup to Teams. File size, warnings, unplaced rooms, sheets changed this week. Email the PM the same as a PDF."* | [`bim-monday-audit.flo`](../30-apps/_examples/bim-monday-audit.flo) |
+| **Designer** | *"Every Monday, open the active Rhino model, capture the SE / NW / aerial named views at 4K, post them to the design-review Teams channel."* | [`designer-monday-shots.flo`](../30-apps/_examples/designer-monday-shots.flo) |
+| **Architect** | *"Every Monday 7am, walk all my active Revit projects + their ACC Issues + their Bluebeam Studio Sessions, post a single ball-in-court card to the principals-rollup channel."* | [`architect-sheet-status.flo`](../30-apps/_examples/architect-sheet-status.flo) |
+| **Structural engineer** | *"At each peer-review checkpoint, compare the current TSD model against the prior snapshot and produce a delta report with full reproducibility receipt. Pin EC3:2022 + UK NA + EN 10365."* | [`engineer-peer-review-delta.flo`](../30-apps/_examples/engineer-peer-review-delta.flo) |
+| **Detailer** | *"Given a list of drawing marks + a revision letter, issue the pack: stamp + export PDF + DWG + NC files (Peddinghaus routed) + bolt list + upload to Trimble Connect. Notify the shop floor Teams channel."* | [`detailer-issue-pack.flo`](../30-apps/_examples/detailer-issue-pack.flo) |
+
+Each runs in production via `aware app run <name>`. First-hour walk-throughs live in [`90-onboarding/`](../90-onboarding/) — one per persona.
+
 ---
 
 ## Why this changes everything (not just AECO)
