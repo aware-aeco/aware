@@ -1,0 +1,362 @@
+---
+name: ad-uimgd-autodesk-auto-cad-customization
+description: API reference for namespace Autodesk.AutoCAD.Customization from AcCui.dll
+---
+
+# Autodesk.AutoCAD.Customization
+
+- **AbstractRibbonSubPanel**
+  - This is the base class of RibbonRowPanel and RibbonFoldPanel.
+- **AcceleratorCollection**
+  - This class contains a collection of accelerators.
+- **AliasCollection**
+  - This class provides a collection for aliases.
+- **ApplicationAndDrawingStatusBarsToggle**
+  - An enum of possible values for application and drawing status bars.
+- **AscendingNameSorter**
+- **BUTTONPREFIX**
+  - This enum distinguishes a ButtonGroup as either an AUX (mouse button) or a BUTTONS (digitizer button) group.
+- **ButtonGroup**
+  - This class defines a group that contains button items.
+- **ButtonGroupCollection**
+  - This is the base class for collections of mouse and digitizer button groups.
+- **ButtonItem**
+  - This class represents a menu item that references a macro.
+- **ButtonItemCollection**
+  - This class provides a collection for ButtonItem objects.
+- **ClassNames**
+  - This class represents the constants used to reference the GUIDs for palettes.
+- **ContainerCloneAction**
+- **ContextualTabDisplayType**
+  - This enumeration defines the display of contextual tabs.
+- **ControlType**
+  - This enum lists available toolbar controls.
+- **CuiFileCollectionBase**
+  - This is the base class for CUI file collections.
+- **CustomizationCollection**
+  - This is the base class for all collections within the CUI file.
+- **CustomizationElement**
+  - This is the base class for CUISerializer elements that can be versioned.
+- **CustomizationReference**
+  - This is the base class for elements that reference MenuMacro objects.
+- **CustomizationSection**
+  - This class represents the root element of the CUI file.
+- **DefaultDisplay**
+  - This enum specifies the possible values for a default display: AddToWorkspace or DoNotAddToWorkspace.
+- **DigitizerButtonGroupCollection**
+  - This class provides a collection for digitizer buttons.
+- **DockableWindowOrient**
+  - This class provides an enum of possible values for a dockable window's orientation.
+- **DockedFloatingIgnoreToggle**
+  - This class provides an enum of dockable toolbar states.
+- **DoubleClickAction**
+  - This class provides access to the action that occurs on a double click.
+- **DoubleClickCmd**
+  - This class provides access to the command that is launched by a double click action.
+- **DoubleClickCollection**
+  - This class provides a collection of DoubleClickAction objects.
+- **DoubleClickDxfNameChangedEventArgs**
+  - This class encapsulates arguments provided to the event that is fired when the DXF name of a double click action is modified.
+- **DoubleClickDxfNameChangedEventHandler**
+- **DuplicateContainerException**
+- **ElementBase**
+  - This class provides an abstract base class from which all CUI elements are derived.
+- **EnumDescConverter**
+- **EnumDescConverterESWOrientLeftRight**
+- **EnumDescConverterKnownControlType**
+- **EnumDescConverterToolbarControlType**
+- **FileOpenException**
+  - This exception can be thrown when opening a CUI file under certain circumstances (for instance, when the user does not have permission to read the file, when the file is invalid, and so forth).
+- **FileSaveException**
+  - This exception can be thrown when saving a CUI file under certain circumstances (for instance, when the user does not have permission to write to that location, when the destination drive is full, and so forth).
+- **FileVersion**
+- **GalleryDisplayMode**
+  - This enum is used by the RibbonGallery control to determine the display mode of the gallery.
+- **HeaderSection**
+- **ICustomizationContainer**
+  - This interface implemented by all elements that contain a CustomizationCollection.
+- **IHostServices**
+  - This interface, which is used by AcCui.dll, lets stand-alone applications register methods that provide support similar to that provided by AutoCAD.
+- **IImageContainer**
+  - This interface is implemented by elements that need to send notification when their image is updated.
+- **IPropertyBag**
+- **IReference**
+  - This interface is implemented by all elements that reference a macro.
+- **IShortcutKeyCombo**
+  - This interface is implemented by shortcut keys ( MenuAccelerator and TemporaryOverride objects).
+- **IValidator**
+- **ImageMenu**
+  - This class contains ImageMenuItem objects in the ImageMenuItemCollection .
+- **ImageMenuCollection**
+  - This class provides a collection for ImageMenu objects.
+- **ImageMenuItem**
+  - This class represents a cell within an ImageMenu object.
+- **ImageMenuItemCollection**
+  - This class represents a collection of ImageMenuItem objects.
+- **ImageUpdatedEventArgs**
+  - This class provides arguments supplied to the event that is fired when a MenuMacro image is updated.
+- **ImageUpdatedEventHandler**
+- **KeyClassifier**
+- **LspFileCollection**
+  - This class provides a collection for LSP files that are loaded with the CUI file.
+- **Macro**
+- **MacroCollection**
+  - This class provides a collection for menu Macro objects.
+- **MacroGroup**
+  - This class contains a collection of macros within a MenuGroup.
+- **MacroGroupCollection**
+  - This class provides a collection of MacroGroup objects.
+- **MacroNameChangedEventArgs**
+  - This class represents arguments passed for the event that is fired when the name of a MenuMacro is updated.
+- **MacroNameChangedEventHandler**
+- **MacroType**
+  - This enum describes MenuMacro categories.
+- **MacroUIDChangedEventArgs**
+  - This class represents arguments passed for the event that fires when the ID of a Macro is updated.
+- **MacroUIDChangedEventHandler**
+- **MenuAccelerator**
+  - This class represents a keyboard shortcut.
+- **MenuBarToggle**
+- **MenuGroup**
+  - This class contains the collection of macro groups as well as all the sections of the menu file.
+- **MenuGroupItemsCollection**
+  - This is the base class for collections within the MenuGroup.
+- **MenuGroupNameChangedEventArgs**
+  - This class represents arguments passed for the event that is fired when a MenuGroup name changes.
+- **MenuGroupNameChangedEventHandler**
+- **MenuMacro**
+  - This class is referenced by all menu items that execute a command.
+- **MenuMacroCollection**
+  - This class provides a collection for MenuMacro objects.
+- **MenuPackage**
+- **ModelLayoutIgnoreToggle**
+  - This enum specifies the possible values for model/layout/ignore.
+- **MouseButtonGroupCollection**
+- **ObjectProperty**
+  - This class represents the properties of an object.
+- **ObjectPropertyBase**
+- **ObjectPropertyCategory**
+  - This class represents the category of an object property.
+- **ObjectSubtype**
+- **ObjectType**
+  - This class represents each object type that needs to be customized for quick properties.
+- **ObjectTypeCollection**
+  - This class provides a collection for ObjectType objects.
+- **OnOffIgnoreToggle**
+  - This class provides an enum of values on, off, and ignore.
+- **Orientation**
+  - An enum of possible values for orientation.
+- **OverrideItem**
+  - This class represents a temporary override item.
+- **OverrideKeyState**
+  - This enum elaborates the key state of a TemporaryOverride .
+- **Panel**
+  - The Panel class contains two ToolPanel reference, one is on the above of another.
+- **PanelCollection**
+  - This class represents a collection of Panels.
+- **PanelPosition**
+  - An enum of possible values for a toolbar's position in a dashboard panel.
+- **PanelSet**
+  - This class contains several Dashboard Panels to be shown.
+- **PartialCuiFileCollection**
+  - This class provides a collection for partial CUI files.
+- **PopMenu**
+  - This class is used to define pull-down and shortcut menus and submenus.
+- **PopMenuCollection**
+  - This is the root collection of PopMenu elements.
+- **PopMenuItem**
+  - This class represents items in pull-down menus that execute macros or are separators.
+- **PopMenuItemBase**
+  - This is the base class from which PopMenuItem objects derive.
+- **PopMenuItemCollection**
+  - A collection of PopMenuItems.
+- **PopMenuRef**
+  - This class is used to create a cascading submenu within another menu.
+- **PropertyCollection**
+  - This class represents a collection of properties.
+- **PropertyConverters**
+- **QuickAccessToolbar**
+  - Toolbar Class.
+- **QuickAccessToolbarCollection**
+  - QATToolbar Collection class.
+- **QuickAccessToolbarData**
+- **QuickAccessToolbarOrientation**
+  - An enum of possible values for the orientation (location) of the Quick Access Toolbar.
+- **QuickAccessToolbarStandardItem**
+- **QuickAccessToolbarUtil**
+- **RibbonAutoHideMode**
+  - Values of the Autodesk.AutoCAD.Customization.RibbonAutoHideMode enumeration.
+- **RibbonButton**
+  - This class creates a ribbon button.
+- **RibbonButtonStyle**
+  - This enum sets the display mode for the button to display: a large icon and text, a small icon and text, or a small icon without text.
+- **RibbonCommandButton**
+  - This class creates a ribbon button that references a menu macro.
+- **RibbonCommandHolder**
+- **RibbonControl**
+  - The RibbonControl class encapsulates the ribbon controls.
+- **RibbonControlBase**
+- **RibbonDataBoundDropDown**
+  - This class encapsulates the RibbonDataBoundDropDown custom controls.
+- **RibbonDialogBoxLauncher**
+  - This class contains the menu macro that is launched when clicking the Panel Dialog Box Launcher.
+- **RibbonFoldPanel**
+  - Encapsulates the ribbon fold panel.
+- **RibbonFoldPanelItemSize**
+  - This enum represents the size of the ribbon item in RibbonFoldPanel.
+- **RibbonFoldPanelResizeStyle**
+  - This enum is used to specify the resize style for ribbon fold panels.
+- **RibbonGalleryControl**
+  - The RibbonGalleryControl class encapsulates the ribbon gallery controls.
+- **RibbonItem**
+  - Base class from which all types of RibbonItem are derived.
+- **RibbonItemCollection**
+  - This class is a collection of RibbonItem.
+- **RibbonItemsCollectionBase`1**
+- **RibbonLockModes**
+  - Defines the way the ribbon is locked.
+- **RibbonPanelBreak**
+  - .
+- **RibbonPanelOrient**
+- **RibbonPanelResizeStyle**
+  - Values of the Autodesk.AutoCAD.Customization.RibbonPanelResizeStyle enumeration.
+- **RibbonPanelSource**
+  - This class contains the panel definition for the panels.
+- **RibbonPanelSourceCollection**
+  - Collection of RibbonPanelSource.
+- **RibbonPanelSourceReference**
+  - This class contains a reference to a RibbonPanelSource.
+- **RibbonPanelSourceReferenceCollection**
+  - This class contains a collection of RibbonPanelSourceReference.
+- **RibbonRoot**
+  - Contains the collection of RibbonTabSource, the collection of RibbonPanelSource, and the collection of RibbonTabSelector defined by a menu file.
+- **RibbonRow**
+- **RibbonRowPanel**
+  - This class is used to encapsulate a sub panel.
+- **RibbonRowPanelResizeStyle**
+  - This enum is used to specify the resize style for RibbonRowPanel.
+- **RibbonSeparator**
+  - This class creates a ribbon separator.
+- **RibbonSeparatorStyle**
+  - This enum defines the way ribbons are separated: Line or Spacer.
+- **RibbonSplitButton**
+  - This class contains collections of ribbon command buttons.
+- **RibbonSplitButtonBehavior**
+  - Enum of possible values for split button behavior.
+- **RibbonSplitButtonCommand**
+- **RibbonSplitButtonListStyle**
+  - Enum of possible values for split button list style.
+- **RibbonTabSelector**
+  - This class contains a collection of RibbonSelector tabs.
+- **RibbonTabSelectorCollection**
+  - This class contains a collection of RibbonTabSelector.
+- **RibbonTabSource**
+  - This class contains the panel definition for the ribbon tab.
+- **RibbonTabSourceCollection**
+  - This class contains a collection of RibbonTabSource.
+- **RibbonToggleButton**
+  - This class creates a ribbon toggle button.
+- **RibbonUtil**
+- **ScreenMenu**
+  - This class represents the AutoCAD screen menu.
+- **ScreenMenuCollection**
+  - This class provides a collection for ScreenMenu objects.
+- **ScreenMenuItem**
+  - This class represents an item in a screen menu that can be clicked to execute a macro.
+- **ScreenMenuItemCollection**
+  - This class represents a collection of ScreenMenuItem objects.
+- **ShortcutKeyChangeAction**
+  - This class represents the event that is fired when the name or the key of a shortcut key is changed.
+- **ShortcutKeyChangedEventArgs**
+  - This class encapsulates the arguments for a ShortcutKeyChanged event.
+- **ShortcutKeyChangedEventHandler**
+- **TabWorkspaceBehavior**
+- **TabletMenu**
+  - This class represents one of four possible TabletMenu areas on a digitizer.
+- **TabletMenuCollection**
+  - This class provides a collection of TabletMenu objects.
+- **TabletMenuItem**
+  - This class represents a cell, or item, in one of the four tablet menu areas.
+- **TabletMenuItemCollection**
+  - This class provides a collection for TabletMenuItem objects.
+- **TemporaryOverride**
+  - This class represents a temporary override in the tree view.
+- **TemporaryOverrideCollection**
+  - This class provides a collection for TemporaryOverride objects.
+- **ToolPanel**
+  - ToolbarItems is the collection within this class that contains all the components that make up the ToolPanel.
+- **ToolPanelCollection**
+  - This class represents a collection of ToolPanels.
+- **ToolPanelNameChangedEventArgs**
+  - These events are fired when a ToolPanel's name is updated.
+- **ToolPanelNameChangedEventHandler**
+- **ToolPanelRef**
+  - ToolPanelRef is used to refer to the upper tool panel or lower tool panel in a Dashboard panel.
+- **ToolTip**
+  - This class represents tooltip information for commands.
+- **ToolTipContent**
+  - Represents content in the ToolTip class.
+- **Toolbar**
+  - This class represents a toolbar.
+- **ToolbarButton**
+  - This class represents a toolbar button.
+- **ToolbarCollection**
+  - This class provides a collection for Toolbar objects.
+- **ToolbarControl**
+  - This class represents a control element in a toolbar.
+- **ToolbarFlyout**
+  - This class represents a toolbar flyout.
+- **ToolbarItemBase**
+  - This is the base class from which all toolbar items derive.
+- **ToolbarItemCollection**
+  - This class provides a collection for ToolbarItemBase.
+- **ToolbarNameChangedEventArgs**
+  - This class encapsulates arguments passed to the event that is fired when the name of a toolbar is updated.
+- **ToolbarNameChangedEventHandler**
+- **ToolbarOrient**
+  - This enum provides the possible values for the orientation of a toolbar.
+- **ToolbarVisible**
+  - This enum provides the possible values for the visibility of a toolbar.
+- **UpdateType**
+  - This is record Autodesk.AutoCAD.Customization.UpdateType.
+- **Util**
+  - This class contains simple utility methods.
+- **Version**
+  - A VersionableElement can be set to one of the release values in this enum with the exception of Unknown.
+- **VersionableElement**
+  - This is an abstract base class.
+- **WSQuickAccessToolbarChangedEventArgs**
+- **WSQuickAccessToolbarChangedEventHandler**
+- **WSRibbonPanelSourceReference**
+  - This class stores the panel settings within a workspace.
+- **WSRibbonRoot**
+  - Contains the Ribbon settings and the collection of WSRibbonTabSourceReference objects in the workspace.
+- **WSRibbonTabSourceReference**
+  - .
+- **WSToolbarChangedEventArgs**
+  - This class encapsulates arguments passed to the event that fires when settings are changed for a workspace toolbar.
+- **WSToolbarChangedEventHandler**
+- **Workspace**
+  - This class represents an AutoCAD workspace.
+- **WorkspaceCollection**
+  - This class provides a collection for Workspace objects.
+- **WorkspaceDockableWindow**
+  - This class encapsulates dockable window settings within a workspace.
+- **WorkspaceDockableWindowCollection**
+  - This class provides a collection for dockable window settings within a workspace.
+- **WorkspacePopMenu**
+  - This class encapsulates PopMenu settings within a workspace.
+- **WorkspacePopMenuCollection**
+  - This class provides a collection for PopMenu settings within a workspace.
+- **WorkspaceQuickAccessToolbar**
+  - QATToolbar settings within a workspace.
+- **WorkspaceRibbonPanelCollection**
+  - .
+- **WorkspaceRibbonTabCollection**
+  - Collection of WorkspaceRibbonTab.
+- **WorkspaceToolbar**
+  - This class contains settings for a toolbar within a workspace.
+- **WorkspaceToolbarCollection**
+  - This class provides a collection for WorkspaceToolbar objects.
+- **YesNoIgnoreToggle**
+  - This enum provides yes/no/ignore values.

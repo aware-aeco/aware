@@ -1,0 +1,67 @@
+---
+name: acmgd-autodesk-internal-windows
+description: API reference for namespace Autodesk.Internal.Windows from AdWindows.dll
+---
+
+# Autodesk.Internal.Windows
+
+- **AdornerPosition**
+- **ApplicationMenuTheme**
+- **Badge**
+- **BadgeAdorner**
+- **ColorToSolidColorBrushConverter**
+- **ControlToolTip**
+- **DropDownOpenedEventArgs**
+- **ErrorCodeConverter**
+- **FloatingFrame**
+- **FrameworkElementAdorner**
+- **HideableDialogSettings**
+- **HideableDialogSettingsControl**
+- **HideableDialogSettingsDictionary**
+- **HighlightMode**
+- **HighlightToVisibilityConverter**
+- **HostEventArgs**
+- **IRibbonControlHostWindow**
+- **IRibbonHighlightable**
+- **ISearchResults**
+- **ISearchable**
+- **ITaskDialogVerificationHandler**
+- **ImageAligner**
+- **ItemStyleProperties**
+- **MediaPlayerBase**
+- **MediaPlayerContainer**
+- **MediaPlayerFactory**
+- **NeedToolTipEventArgs**
+- **ProgressivePanel**
+- **ResourceDictionaryGettingValueEventArgs**
+- **RibbonAutoHideMode**
+- **RibbonAutoHideRule**
+- **RibbonCompositeItem**
+- **RibbonContextMenuEventArgs**
+- **RibbonContextMenuTarget**
+- **RibbonDock**
+- **RibbonDragDropOptions**
+- **RibbonHostEventTargets**
+- **RibbonHostWindowSizeEventArgs**
+- **RibbonItemAddedToQuickAccessToolBarEventArgs**
+- **RibbonItemExecutedEventArgs**
+- **RibbonItemHost**
+- **RibbonItemSelectionChangedEventArgs**
+- **RibbonItemStyle**
+- **RibbonLockModes**
+- **RibbonPanelAnimationMode**
+- **RibbonPanelFrame**
+- **RibbonPanelPreviewControl**
+- **RibbonTheme**
+- **SearchResult**
+- **SwfMediaPlayer**
+- **TabTheme**
+- **TabThemes**
+- **Theme**
+- **ThemeDictionary**
+- **Themes**
+- **ToolBarItemTheme**
+- **ToolTip**
+- **ToolTipOwnerType**
+- **ToolTipSettings**
+- **WpfMediaPlayer**

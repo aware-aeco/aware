@@ -1,0 +1,80 @@
+---
+name: ad-uimgd-autodesk-auto-cad-data-extraction
+description: API reference for namespace Autodesk.AutoCAD.DataExtraction from AcDx.dll
+---
+
+# Autodesk.AutoCAD.DataExtraction
+
+- **AdoOutput**
+  - This is a helper class for exporting a System.Data objects to various formats.
+- **BlockAttributePropertyDescriptor**
+- **DatabaseWrapper**
+- **DisplayOptions**
+- **DxColumn2**
+- **DxColumnFlags**
+- **DxCombineMode**
+- **DxDataAdapter**
+- **DxDataLinkAdapterProvider**
+- **DxDrawingDataExtractor**
+  - This class represents the actual data extraction engine.
+- **DxDrawingDataExtractorSettings**
+  - This class contains settings that will be used by the data extractor object.
+- **DxErrorEventArgs**
+- **DxErrorHandler**
+- **DxExtensionApplication**
+- **DxExtractionSettings**
+  - Represents the data extraction settings file (.DXE file).
+- **DxFileList**
+  - This class represents a collection of files, folders, and possible subfolders.
+- **DxFileReference**
+  - This class acts as a wrapper to a file reference.
+- **DxFolder**
+  - This class acts as a wrapper to a folder reference.
+- **DxNames**
+- **DxNotificationManager**
+- **DxOuputFlags**
+- **DxOutputSettings**
+- **DxProgressEventArgs**
+- **DxProgressHandler**
+- **DxPropertyDescriptor**
+- **DxReport**
+- **DxSubPropertyDescriptor**
+- **DxSubTotalMode**
+- **DxTableWrapper**
+- **DxTableWrapper2**
+- **DxTypeDescriptor**
+- **DxUtil**
+- **DynamicBlockPropertyDescriptor**
+- **ExtractFlags**
+- **FileFinderBase**
+- **FormatInfo**
+- **IDxColumn**
+- **IDxColumn2**
+- **IDxColumns**
+- **IDxDrawingDataExtractor**
+- **IDxDrawingDataExtractorSettings**
+- **IDxDrawingList**
+- **IDxDwgObjectEnumerator**
+- **IDxDwgObjectEnumerators**
+- **IDxExtractSettings**
+- **IDxExtractionSettings**
+- **IDxFileList**
+- **IDxFileReference**
+- **IDxFilter**
+- **IDxFolder**
+- **IDxOutputSettings**
+- **IDxProperty**
+- **IDxPropertyDescriptor**
+- **IDxPropertyExtractor**
+- **IDxPropertyExtractors**
+- **IDxReport**
+- **IDxSet**
+- **IDxTypeDescriptor**
+- **IDxValueFormatter**
+- **MergeSetting**
+- **PropertyFlags**
+- **ReadOnlyTransaction**
+- **SetCollection**
+- **Template**
+- **TypeDataView**
+- **WizardSettings**
