@@ -1,0 +1,265 @@
+agent:        bcf-file
+version:      1.0.0
+display-name: BCF (file format)
+description: |
+  Pure file-format agent for BCF-XML 2.1 / 3.0 — read, write, merge,
+  diff, transform. No external API, no host software required: it
+  parses and emits the format directly.
+
+  BCF (BIM Collaboration Format) is the IFC of coordination — every
+  serious clash / model-checking tool emits it (Navisworks, Solibri,
+  BIMcollab Zoom, Revizto, Trimble Connect). Persona audit (BIM
+  manager): "BCF (the file format) — read+write. Every coordination
+  tool emits BCF; without a BCF agent, 'BCF round-trip' is not
+  possible."
+
+  Use this agent when you need to bridge between two coordination tools
+  (e.g. Navisworks → BCF → BIMcollab → BCF → ACC Issues), filter topics
+  before forwarding, or extract topic + viewpoint metadata for reporting.
+
+stateful: false
+
+vendor:   building-smart
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/construction/bcf-file
+keywords: [aware, bcf, ifc, coordination, file-format, bcf-xml, bcfzip]
+
+provenance:
+  generated-by:     hand-curated
+  generator-version: 0.13.0
+  refined-by:       [pawellisowski]
+  generated-at:     2026-05-17T17:45:00Z
+
+requires:
+  filesystem:
+    - read:  '*.bcf,*.bcfzip,*.xml'
+    - write: '*.bcf,*.bcfzip,*.xml,*.csv'
+
+transport:
+  cli:
+    binary: aware-bcf-file
+
+commands:
+
+  read.topics:
+    lifecycle: single
+    category: curated
+    description: |
+      Parse a BCF file and return every topic with its metadata. Read-only.
+      Supports both `.bcfzip` (the on-the-wire format) and unpacked
+      directories.
+    inputs:
+      path:
+        type: string
+        description: Path to `.bcfzip` file or unpacked BCF folder.
+    outputs:
+      type: single
+      schema:
+        bcf-version: string
+        project-name: string
+        topics:
+          type: array
+          items:
+            guid:             string
+            title:            string
+            topic-status:     string
+            topic-type:       string
+            priority:         string
+            assigned-to:      string
+            creation-date:    string
+            creation-author:  string
+            stage:            string
+            labels:           array
+            description:      string
+
+  read.comments:
+    lifecycle: single
+    category: curated
+    description: |
+      Pull every comment from a BCF — for full audit trail. Filterable
+      by topic-guid. Read-only.
+    inputs:
+      path: string
+      topic-guid:
+        type: string
+        description: Optional. Omit for all comments across all topics.
+    outputs:
+      type: single
+      schema:
+        comments:
+          type: array
+          items:
+            topic-guid:   string
+            comment-guid: string
+            author:       string
+            date:         string
+            comment:      string
+
+  read.viewpoints:
+    lifecycle: single
+    category: curated
+    description: |
+      List viewpoints (camera + selection + colouring) from a BCF.
+      Used to extract screenshots into a per-issue gallery. Read-only.
+    inputs:
+      path: string
+      topic-guid:
+        type: string
+        description: Optional. Omit for all viewpoints.
+    outputs:
+      type: single
+      schema:
+        viewpoints:
+          type: array
+          items:
+            topic-guid:    string
+            viewpoint-guid: string
+            snapshot-path: string  # path of the embedded PNG (after extraction)
+            camera-type:   string
+            camera:
+              eye:    array
+              target: array
+              up:     array
+
+  filter.by-status:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Read a BCF and emit a new BCF containing only topics matching the
+      given status(es). The "split open vs closed before routing" verb.
+    inputs:
+      input-path:  string
+      output-path: string
+      statuses:
+        type: array
+        items: string
+        description: e.g. `["Open","ReOpened"]`
+    outputs:
+      type: single
+      schema:
+        path:        string
+        kept-count:  number
+        dropped-count: number
+
+  filter.by-priority:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Emit a new BCF containing only topics at-or-above a priority
+      threshold. The "high-priority-first" routing verb.
+    inputs:
+      input-path:  string
+      output-path: string
+      min-priority:
+        type: enum
+        values: [low, normal, high, critical]
+        default: high
+    outputs:
+      type: single
+      schema:
+        path:        string
+        kept-count:  number
+        dropped-count: number
+
+  merge:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Merge multiple BCF files into one. Topic GUIDs are de-duplicated
+      (later-source wins for conflicting fields). Used by federated
+      coordination — combine Architect's BCF + MEP's BCF into one
+      delivery package.
+    inputs:
+      input-paths:
+        type: array
+        items: string
+      output-path: string
+    outputs:
+      type: single
+      schema:
+        path:         string
+        topic-count:  number
+        deduped-count: number
+
+  diff:
+    lifecycle: single
+    category: curated
+    description: |
+      Diff two BCFs and report topic-level changes (added / removed /
+      status-changed / comments-added). Used by the weekly digest
+      "what changed since last Friday." Read-only.
+    inputs:
+      old-path: string
+      new-path: string
+    outputs:
+      type: single
+      schema:
+        added:
+          type: array
+          items: string  # topic GUIDs
+        removed:
+          type: array
+          items: string
+        status-changed:
+          type: array
+          items:
+            topic-guid: string
+            old-status: string
+            new-status: string
+        comments-added:
+          type: array
+          items:
+            topic-guid:    string
+            comment-count: number
+
+  convert:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Convert between BCF 2.1 ↔ BCF 3.0. 2.1→3.0 promotes labels to
+      `Stage`; 3.0→2.1 drops 3.0-only fields (e.g. extension schemas).
+    inputs:
+      input-path:  string
+      output-path: string
+      target-version:
+        type: enum
+        values: [2.1, 3.0]
+    outputs:
+      type: single
+      schema:
+        path: string
+        warnings:
+          type: array
+          items: string
+
+  write.from-csv:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Generate a BCF from a CSV of topics. Used when the source-of-truth
+      lives in Excel / Smartsheet / a custom tracker and you need to
+      land it in a BCF-consuming tool (ACC Issues, BIMcollab, Revizto).
+      No viewpoints (CSV can't carry geometry); produces a topic-only
+      BCF that downstream tools accept.
+    inputs:
+      input-csv: string
+      output-path: string
+      column-mapping:
+        type: object
+        description: |
+          Map CSV column names to BCF fields (title, description,
+          status, priority, assigned-to). Required.
+    outputs:
+      type: single
+      schema:
+        path:        string
+        topic-count: number
+
+skills:
+  - bcf-format-anatomy.md
+  - bcf-21-vs-30.md

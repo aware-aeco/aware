@@ -1,6 +1,6 @@
 {
   "name": "@aware-aeco/cli",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "description": "AWARE CLI — open-source agentic substrate for AECO",
   "homepage": "https://github.com/aware-aeco/aware",
   "repository": {
