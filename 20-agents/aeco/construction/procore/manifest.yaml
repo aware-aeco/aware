@@ -1,0 +1,294 @@
+agent:        procore
+version:      3.0.0
+display-name: Procore (architect side)
+description: |
+  Drawings + Submittals + RFIs + ASIs against the Procore platform. Wraps
+  the Procore REST API v1 (https://developers.procore.com/) — the GC-side
+  CDE that many North American projects run on, parallel to ACC.
+
+  Persona audit (architect, #4 missing tool): "Procore — architect side
+  (Drawings, Submittals, RFIs, ASIs). ACC Issues is in AWARE but Procore
+  isn't, and many GCs I work with run Procore, not ACC."
+
+  Scope of this v1: the four architect-touching surfaces (Drawings,
+  Submittals, RFIs, ASIs). Procore has dozens more (Daily Logs, T&M
+  Tickets, Punch Lists etc.) — those get separate agents (`procore-field`,
+  `procore-cost`) as audit demand surfaces them.
+
+stateful: false
+
+vendor:   procore-technologies
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/construction/procore
+keywords: [aware, procore, cde, drawings, submittals, rfi, asi, construction]
+
+provenance:
+  generated-by:     hand-curated
+  generator-version: 0.14.0
+  refined-by:       [pawellisowski]
+  generated-at:     2026-05-17T18:05:00Z
+
+requires:
+  network:
+    - https://api.procore.com
+    - https://login.procore.com
+  secrets:
+    - procore
+  filesystem:
+    - read:  '*.pdf,*.dwg,*.csv,*.xlsx'
+    - write: '*.pdf,*.csv,*.xlsx'
+
+transport:
+  cli:
+    binary: aware-procore
+
+commands:
+
+  # ---- Project context -------------------------------------------------
+
+  project.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List Procore projects the user has access to. Required pre-flight
+      for everything else (Procore's API scopes everything by project-id).
+      Read-only.
+    inputs:
+      company-id:
+        type: string
+        description: Optional. Defaults to user's primary company.
+      active-only:
+        type: boolean
+        default: true
+    outputs:
+      type: single
+      schema:
+        projects:
+          type: array
+          items:
+            id:           string
+            name:         string
+            project-number: string
+            active:       boolean
+
+  # ---- Drawings --------------------------------------------------------
+
+  drawings.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List drawings on a project, optionally filtered by drawing area /
+      discipline / current revision. Read-only.
+    inputs:
+      project-id: string
+      drawing-area:
+        type: string
+        description: e.g. "Architectural", "Structural", "MEP".
+    outputs:
+      type: single
+      schema:
+        drawings:
+          type: array
+          items:
+            id:               string
+            sheet-number:     string
+            title:            string
+            current-revision: string
+            issue-date:       string
+            web-url:          string
+
+  drawings.upload-set:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Upload a set of PDF drawings as a new revision. Procore auto-detects
+      sheet numbers from the PDF or accepts an explicit mapping CSV. The
+      architect Friday-issue flow's primary write verb.
+    inputs:
+      project-id: string
+      pdf-paths:
+        type: array
+        items: string
+      revision-letter:
+        type: string
+        description: e.g. "C"
+      issued-for:
+        type: string
+        description: e.g. "Issued for Construction"
+      issue-date:
+        type: string
+        description: ISO date — defaults to today.
+      mapping-csv:
+        type: string
+        description: |
+          Optional CSV mapping `path,sheet-number,title,revision`.
+          If omitted, Procore parses sheet numbers from PDF metadata.
+    outputs:
+      type: single
+      schema:
+        uploaded:
+          type: array
+          items:
+            sheet-number: string
+            revision:     string
+            drawing-id:   string
+
+  # ---- Submittals ------------------------------------------------------
+
+  submittals.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List submittals on a project, optionally filtered by spec section /
+      status / responsible contractor. Read-only.
+    inputs:
+      project-id: string
+      status:
+        type: enum
+        values: [draft, open, closed, any]
+        default: any
+      spec-section:
+        type: string
+        description: Optional, e.g. "09 22 00"
+    outputs:
+      type: single
+      schema:
+        submittals:
+          type: array
+          items:
+            id:                  string
+            number:              string
+            title:               string
+            spec-section:        string
+            status:              string
+            responsible:         string
+            due-date:            string
+            ball-in-court:       string
+
+  submittals.set-disposition:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Set the architect's disposition on a submittal (Approved / Approved-
+      as-Noted / Revise-and-Resubmit / Rejected). Returns the submittal id.
+    inputs:
+      submittal-id: string
+      disposition:
+        type: enum
+        values: [Approved, ApprovedAsNoted, ReviseAndResubmit, Rejected]
+      comments:
+        type: string
+    outputs:
+      type: single
+      schema:
+        submittal-id: string
+        disposition:  string
+
+  # ---- RFIs ------------------------------------------------------------
+
+  rfis.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List RFIs on a project, optionally filtered by status / ball-in-court /
+      spec section. Read-only.
+    inputs:
+      project-id: string
+      status:
+        type: enum
+        values: [draft, open, closed, any]
+        default: any
+      ball-in-court:
+        type: string
+        description: Optional — RFIs assigned to a specific party.
+    outputs:
+      type: single
+      schema:
+        rfis:
+          type: array
+          items:
+            id:              string
+            number:          string
+            subject:         string
+            status:          string
+            ball-in-court:   string
+            due-date:        string
+            days-open:       number
+
+  rfis.respond:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Post the architect's response to an RFI. Optionally attach a PDF
+      sketch / drawing reference. Returns updated RFI id.
+    inputs:
+      rfi-id:    string
+      response:  string
+      attachment-path:
+        type: string
+        description: Optional PDF / image.
+      close:
+        type: boolean
+        default: false
+        description: If true, sets RFI status to closed after responding.
+    outputs:
+      type: single
+      schema:
+        rfi-id:  string
+        status:  string
+
+  # ---- ASIs (Architect's Supplemental Instructions) --------------------
+
+  asis.create:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Create an ASI (Architect's Supplemental Instruction) — the formal
+      "do this without a cost / time impact" mechanism. Returns the ASI
+      number + id.
+    inputs:
+      project-id: string
+      subject:    string
+      body:       string
+      attachment-paths:
+        type: array
+        items: string
+        description: Optional PDFs / images.
+      reference-rfis:
+        type: array
+        items: string
+        description: Optional RFI ids this ASI supersedes / resolves.
+    outputs:
+      type: single
+      schema:
+        asi-id:     string
+        asi-number: string
+        web-url:    string
+
+  asis.list:
+    lifecycle: single
+    category: curated
+    description: List ASIs on a project, optionally filtered by date range. Read-only.
+    inputs:
+      project-id: string
+      since:
+        type: string
+        description: ISO date.
+    outputs:
+      type: single
+      schema:
+        asis:
+          type: array
+          items:
+            id:         string
+            number:     string
+            subject:    string
+            issued-at:  string
+
+skills:
+  - procore-vs-acc.md
+  - rfi-aging-workflow.md
