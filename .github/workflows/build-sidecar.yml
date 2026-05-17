@@ -30,9 +30,9 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: '9.0.x'
 
@@ -91,7 +91,7 @@ jobs:
           echo "✓ macOS sidecar smoke passed"
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.artifact }}
           path: cli-sidecar/bin/Release/net9.0/${{ matrix.rid }}/publish/${{ matrix.binary }}
