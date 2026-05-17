@@ -1,0 +1,549 @@
+---
+name: core-frontend-top-level
+description: TopLevel declarations from core-frontend
+---
+
+# TopLevel
+
+## Methods
+
+- `getFrustumPlaneIntersectionDepthRange(frustum: Frustum, plane: Plane3dByOriginAndUnitNormal)`
+- `calculateEcefToDbTransformAtLocation(originIn: Point3d, iModel: IModelConnection)`
+- `linePlaneIntersect(outP: Point3d, linePt: Point3d, lineNormal: Vector3d | undefined, planePt: Point3d, planeNormal: Vector3d, perpendicular: boolean)`
+- `getGoogle3dTilesUrl()`
+- `metersToRange(inputMeters: number, minimumOutput?: number, maximumOutput?: number, maximumInputMeters?: number)`
+- `queryTerrainElevationOffset(viewport: ScreenViewport, carto: Cartographic)`
+- `areaToEyeHeight(view3d: ViewState3d, area: GlobalLocationArea, offset?: number)`
+- `areaToEyeHeightFromGcs(view3d: ViewState3d, area: GlobalLocationArea, offset?: number)`
+- `rangeToCartographicArea(view3d: ViewState3d, range: Range3d)`
+- `eyeToCartographicOnGlobe(viewport: ScreenViewport, preserveHeight?: boolean)`
+- `eyeToCartographicOnGlobeFromGcs(viewport: ScreenViewport, preserveHeight?: boolean)`
+- `viewGlobalLocation(viewport: ScreenViewport, doAnimate: boolean, eyeHeight?: number, pitchAngleRadians?: number, location?: GlobalLocation)`
+- `connectViewports(viewports: Iterable<Viewport>, sync: (changedViewport: Viewport) => SynchronizeViewports)`
+- `synchronizeViewportViews(source: Viewport)`
+- `synchronizeViewportFrusta(source: Viewport)`
+- `connectViewportFrusta(viewports: Iterable<Viewport>)`
+- `connectViewportViews(viewports: Iterable<Viewport>)`
+- `canvasToResizedCanvasWithBars(canvasIn: HTMLCanvasElement, targetSize: Point2d, barSize?: Point2d, barStyle?: string)`
+- `imageBufferToCanvas(buffer: ImageBuffer, preserveAlpha?: boolean)`
+- `canvasToImageBuffer(canvas: HTMLCanvasElement, format?: ImageBufferFormat)`
+- `getImageSourceMimeType(format: ImageSourceFormat)`
+- `getImageSourceFormatForMimeType(mimeType: string)`
+- `imageElementFromImageSource(source: ImageSource)`
+- `imageBitmapFromImageSource(source: ImageSource)`
+- `imageElementFromUrl(url: string, skipCrossOriginCheck?: boolean)`
+- `tryImageElementFromUrl(url: string, skipCrossOriginCheck?: boolean)`
+- `extractImageSourceDimensions(source: ImageSource)`
+- `imageBufferToPngDataUrl(buffer: ImageBuffer, preserveAlpha?: boolean)`
+- `imageBufferToBase64EncodedPng(buffer: ImageBuffer, preserveAlpha?: boolean)`
+- `openImageDataUrlInNewWindow(url: string, title?: string)`
+- `getCenteredViewRect(viewRect: ViewRect, aspectRatio?: number)`
+- `getCompressedJpegFromCanvas(canvas: HTMLCanvasElement, maxBytes?: number, minCompressionQuality?: number)`
+- `createWorkerProxy(workerJsPath: string)`
+- `parseGltf(args: ParseGltfArgs)`
+- `gltfDictionaryIterator(dict: GltfDictionary<T>)`
+- `getGltfNodeMeshIds(node: GltfNode)`
+- `traverseGltfNodes(ids: Iterable<GltfId>, nodes: GltfDictionary<GltfNode>, traversed: Set<GltfId>)`
+- `isGltf1Material(material: GltfMaterial)`
+- `compactEdgeIterator(visibilityFlags: Uint8Array, normalPairs: Uint32Array | undefined, numIndices: number, decodeIndex: (index: number) => number)`
+- `indexedEdgeParamsFromCompactEdges(compact: CompactEdgeParams)`
+- `addPrimitiveTransferables(xfers: Set<Transferable>, primitive: ImdlModel.NodePrimitive)`
+- `collectTransferables(document: ImdlModel.Document)`
+- `toVertexTable(imdl: Imdl.VertexTable)`
+- `edgeParamsFromImdl(imdl: Imdl.EdgeParams)`
+- `edgeParamsToImdl(params: EdgeParams)`
+- `toMaterialParams(mat: Imdl.SurfaceMaterialParams)`
+- `convertFeatureTable(imdlFeatureTable: Imdl.FeatureTable, batchModelId: Id64String)`
+- `parseImdlDocument(options: ParseImdlDocumentArgs)`
+- `calculateEdgeTableParams(numSegmentEdges: number, numSilhouettes: number, maxSize: number)`
+- `createEdgeParams()`
+- `isGraphicDescription(description: GraphicDescription)`
+- `collectGraphicDescriptionTransferables(xfers: Set<Transferable>, description: GraphicDescription)`
+- `initializeLineCodeCapacity(maxTexSize: number)`
+- `initializeDefaultPatterns()`
+- `resetLineCodeState()`
+- `lineCodeFromLinePixels(pixels: LinePixels)`
+- `onLineCodeAssigned(listener: (args: LineCodeAssignmentArgs) => void)`
+- `getLineCodePatterns()`
+- `lineCodeTextureCapacity()`
+- `createPolylineArgs(mesh: Mesh)`
+- `createMeshArgs(mesh: Mesh)`
+- `createPointStringParams(args: PolylineArgs, maxTextureSize: number)`
+- `tesselatePolylineList()`
+- `tesselatePolyline(polylines: PolylineIndices[], points: QPoint3dList, doJointTriangles: boolean)`
+- `createPolylineParams(args: PolylineArgs, maxDimension: number)`
+- `wantJointTriangles(weight: number, is2d: boolean)`
+- `isValidSurfaceType(value: number)`
+- `createSurfaceMaterial(source: RenderMaterial | undefined)`
+- `computeDimensions(nEntries: number, nRgbaPerEntry: number, nExtraRgba: number, maxSize: number)`
+- `createMeshParams(args: MeshArgs, maxDimension: number, enableIndexedEdges: boolean)`
+- `splitPointStringParams(args: SplitPointStringArgs)`
+- `splitMeshParams(args: SplitMeshArgs)`
+- `splitPolylineParams(args: SplitPolylineArgs)`
+- `loadScript(jsUrl: string)`
+- `getCopyrights(vp: ScreenViewport)`
+- `getScriptDelta(prev: RenderSchedule.Script | undefined | null, next: RenderSchedule.Script)`
+- `createViewAttachmentRenderer()`
+- `formatAnimationBranchId(modelId: Id64String, branchId: number)`
+- `createGraphicTemplate()`
+- `queryVisibleFeatures(viewport: Viewport, options: QueryVisibleFeaturesOptions, callback: QueryVisibleFeaturesCallback)`
+- `createRenderInstancesParamsBuilder(args: CreateRenderInstancesParamsBuilderArgs)`
+- `collectRenderInstancesParamsTransferables(xfers: Set<Transferable>, inParams: RenderInstancesParams)`
+- `createEmptyRenderPlan()`
+- `createRenderPlanFromViewport(vp: Viewport)`
+- `upsampleRealityMeshParams(params: RealityMeshParams, uvSampleRange: Range2d)`
+- `qparams2dToArray(params: QParams2d)`
+- `qorigin3dToArray(qorigin: Point3d)`
+- `qscale3dToArray(qscale: Point3d)`
+- `qparams3dToArray(params: QParams3d)`
+- `createClippingProgram(builder: ProgramBuilder)`
+- `extractFlashedVolumeClassifierCommands(flashedId: Id64String, cmds: DrawCommands, numCmdsPerClassifier: number)`
+- `extractHilitedVolumeClassifierCommands(hilites: Hilites, cmds: DrawCommands)`
+- `isFeatureHilited(feature: PackedFeature, hilites: Hilites, isModelHilited: boolean)`
+- `fromSumOf(p: Point3d, v: Vector3d, scale: number, out?: Point3d)`
+- `isInstancedGraphicParams(params: any)`
+- `compareMapLayer(prevView: ViewState, newView: ViewState)`
+- `createMaterialInfo(source: SurfaceMaterial | undefined)`
+- `fromNormalizedCrossProduct(vec0: Vector3d, vec1: Vector3d)`
+- `normalizedDifference(target: Point3d, origin: Point3d)`
+- `isPlanar(order: RenderOrder)`
+- `collectTextureStatistics(texture: TextureHandle | undefined, stats: RenderMemory.Statistics)`
+- `collectGeometryStatistics(geom: CachedGeometry | undefined, stats: RenderMemory.Statistics)`
+- `getDrawParams(target: Target, geometry: CachedGeometry)`
+- `freeDrawParams()`
+- `createScreenSpaceEffectBuilder(params: ScreenSpaceEffectBuilderParams)`
+- `wantMaterials(vf: ViewFlags)`
+- `isSynchronized(target: SyncTarget, observer: SyncObserver)`
+- `sync(target: SyncTarget, observer: SyncObserver)`
+- `desync(target: SyncTarget)`
+- `computeCompositeTechniqueId(flags: CompositeFlags)`
+- `createAmbientOcclusionProgram(context: WebGL2RenderingContext)`
+- `addAnimation(vert: VertexShaderBuilder, isSurface: boolean)`
+- `addAtmosphericScatteringEffect(builder: ProgramBuilder, isSkyBox: boolean, perFragmentCompute: boolean)`
+- `createBlurProgram(context: WebGL2RenderingContext, type: BlurType)`
+- `createClearPickAndColorProgram(context: WebGL2RenderingContext)`
+- `createClearTranslucentProgram(context: WebGL2RenderingContext)`
+- `addClipping(prog: ProgramBuilder)`
+- `addColor(builder: ProgramBuilder)`
+- `addVaryingColor(builder: ProgramBuilder, computeVertexBase: string)`
+- `createCombine3TexturesProgram(context: WebGL2RenderingContext)`
+- `createCombineTexturesProgram(context: WebGL2RenderingContext)`
+- `addChooseVec2WithBitFlagsFunction(shader: ShaderBuilder)`
+- `addChooseVec3WithBitFlagFunction(shader: ShaderBuilder)`
+- `addShaderFlags(builder: ProgramBuilder)`
+- `addFrustum(builder: ProgramBuilder)`
+- `addEyeSpace(builder: ProgramBuilder)`
+- `addExtractNthBit(shader: ShaderBuilder)`
+- `createCompositeProgram(flags: CompositeFlags, context: WebGL2RenderingContext)`
+- `addApplyContours(builder: ProgramBuilder)`
+- `createCopyColorProgram(context: WebGL2RenderingContext, copyAlpha?: boolean)`
+- `createCopyPickBuffersProgram(context: WebGL2RenderingContext)`
+- `createVolClassColorUsingStencilProgram(context: WebGL2RenderingContext)`
+- `createVolClassCopyZProgram(context: WebGL2RenderingContext)`
+- `createVolClassSetBlendProgram(context: WebGL2RenderingContext)`
+- `createVolClassBlendProgram(context: WebGL2RenderingContext)`
+- `addUnpackAndNormalize2Bytes(builder: ShaderBuilder)`
+- `createEDLCalcBasicProgram(context: WebGL2RenderingContext)`
+- `createEDLCalcFullProgram(context: WebGL2RenderingContext)`
+- `createEDLFilterProgram(context: WebGL2RenderingContext)`
+- `createEDLMixProgram(context: WebGL2RenderingContext)`
+- `createEVSMProgram(context: WebGL2RenderingContext)`
+- `addEdgeContrast(vert: VertexShaderBuilder)`
+- `createEdgeBuilder(type: EdgeBuilderType, instanced: IsInstanced, isAnimated: IsAnimated, posType: PositionType)`
+- `addOvrFlagConstants(builder: ShaderBuilder)`
+- `addFeatureIndex(vert: VertexShaderBuilder)`
+- `addMaxAlpha(builder: ShaderBuilder)`
+- `addSurfaceHiliter(builder: ProgramBuilder, wantWeight?: boolean)`
+- `addHiliter(builder: ProgramBuilder, wantWeight?: boolean)`
+- `addRenderOrderConstants(builder: ShaderBuilder)`
+- `addRenderOrder(builder: ShaderBuilder)`
+- `addPixelWidthFactor(builder: ShaderBuilder)`
+- `addFeatureId(builder: ProgramBuilder, computeInFrag: boolean)`
+- `addSurfaceDiscard(builder: ProgramBuilder, flags: TechniqueFlags)`
+- `addClassifierFlash(frag: FragmentShaderBuilder)`
+- `addFeatureSymbology(builder: ProgramBuilder, feat: FeatureMode, opts: FeatureSymbologyOptions)`
+- `addUniformHiliter(builder: ProgramBuilder)`
+- `addUniformFeatureSymbology(builder: ProgramBuilder, addFeatureColor: boolean)`
+- `addWindowToTexCoords(frag: FragmentShaderBuilder)`
+- `addWhiteOnWhiteReversal(frag: FragmentShaderBuilder)`
+- `addPickBufferOutputs(frag: FragmentShaderBuilder)`
+- `addAltPickBufferOutputs(frag: FragmentShaderBuilder)`
+- `addFragColorWithPreMultipliedAlpha(frag: FragmentShaderBuilder)`
+- `addInstancedModelMatrixRTC(vert: VertexShaderBuilder)`
+- `addInstanceOverrides(vert: VertexShaderBuilder)`
+- `addInstanceColor(vert: VertexShaderBuilder)`
+- `addLighting(builder: ProgramBuilder)`
+- `addLogDepth(builder: ProgramBuilder)`
+- `addLookupTable(sb: VertexShaderBuilder, lutName: string, mult?: string, addInitializer?: boolean)`
+- `addApplySurfaceDraping(frag: FragmentShaderBuilder)`
+- `addUnlitMonochrome(frag: FragmentShaderBuilder)`
+- `addSurfaceMonochrome(frag: FragmentShaderBuilder)`
+- `addColorPlanarClassifier(builder: ProgramBuilder, translucent: boolean, isThematic: IsThematic)`
+- `addFeaturePlanarClassifier(builder: ProgramBuilder)`
+- `addHilitePlanarClassifier(builder: ProgramBuilder, supportTextures?: boolean)`
+- `addOverrideClassifierColor(builder: ProgramBuilder, isThematic: IsThematic)`
+- `createPlanarGridProgram(context: WebGL2RenderingContext)`
+- `createPointCloudBuilder(classified: IsClassified, featureMode: FeatureMode, thematic: IsThematic)`
+- `createPointCloudHiliter(classified: IsClassified)`
+- `createPointStringHiliter(instanced: IsInstanced, posType: PositionType)`
+- `createPointStringBuilder(instanced: IsInstanced, posType: PositionType)`
+- `addAdjustWidth(vert: VertexShaderBuilder)`
+- `addLineCodeTexture(frag: FragmentShaderBuilder)`
+- `addLineCode(prog: ProgramBuilder, args: string)`
+- `createPolylineBuilder(isInstanced: IsInstanced, positionType: PositionType)`
+- `createPolylineHiliter(isInstanced: IsInstanced, positionType: PositionType)`
+- `addColorOverrideMix(frag: ShaderBuilder)`
+- `createClassifierRealityMeshHiliter()`
+- `createRealityMeshHiliter()`
+- `createRealityMeshBuilder(flags: TechniqueFlags)`
+- `addRenderPass(builder: ShaderBuilder)`
+- `createScreenSpaceEffectProgramBuilder(params: ScreenSpaceEffectBuilderParams)`
+- `createSkyBoxProgram(context: WebGL2RenderingContext)`
+- `createSkySphereBuilder(isGradient: boolean, flags: TechniqueFlags)`
+- `addEvsmExponent(frag: FragmentShaderBuilder)`
+- `addSolarShadowMap(builder: ProgramBuilder, toTerrain?: boolean)`
+- `createSurfaceHiliter(instanced: IsInstanced, classified: IsClassified, posType: PositionType)`
+- `addSurfaceFlags(builder: ProgramBuilder, withFeatureOverrides: boolean, withFeatureColor: boolean)`
+- `addTexture(builder: ProgramBuilder, animated: IsAnimated, isThematic: IsThematic, isPointCloud: boolean, isHilite: boolean, isMaplayer: boolean)`
+- `createSurfaceBuilder(flags: TechniqueFlags)`
+- `addClassificationTranslucencyDiscard(builder: ProgramBuilder)`
+- `getComputeThematicIndex(instanced: boolean, skipSlopeAndHillShade: boolean, decodeNormal: boolean)`
+- `addThematicDisplay(builder: ProgramBuilder, isForPointClouds?: boolean, isForTerrainMesh?: boolean)`
+- `addTranslucency(prog: ProgramBuilder)`
+- `addSamplePosition(vert: VertexShaderBuilder)`
+- `addModelViewProjectionMatrix(vert: VertexShaderBuilder)`
+- `addProjectionMatrix(vert: VertexShaderBuilder)`
+- `addInstancedRtcMatrix(vert: VertexShaderBuilder)`
+- `addModelViewMatrix(vert: VertexShaderBuilder)`
+- `addNormalMatrix(vert: VertexShaderBuilder)`
+- `addPosition(vert: VertexShaderBuilder, fromLUT: boolean)`
+- `addAlpha(vert: VertexShaderBuilder)`
+- `addLineWeight(vert: VertexShaderBuilder)`
+- `replaceLineWeight(vert: VertexShaderBuilder, func: string)`
+- `addLineCode(vert: VertexShaderBuilder)`
+- `replaceLineCode(vert: VertexShaderBuilder, func: string)`
+- `addViewport(shader: ShaderBuilder)`
+- `addViewportTransformation(shader: ShaderBuilder)`
+- `addModelToWindowCoordinates(vert: VertexShaderBuilder)`
+- `createViewportQuadBuilder(textured: boolean, attrMapOverride?: Map<string, AttributeDetails>)`
+- `addWiremesh(builder: ProgramBuilder)`
+- `createClassifierTileTreeReference(classifiers: SpatialClassifiersState, classifiedTree: TileTreeReference, iModel: IModelConnection, source: ViewState | DisplayStyleState)`
+- `iModelTileParamsFromJSON(props: TileProps, parent: IModelTile | undefined)`
+- `iModelTileTreeParamsFromJSON(props: IModelTileTreeProps, iModel: IModelConnection, modelId: Id64String, options: IModelTileTreeOptions)`
+- `acquireImdlDecoder(args: AcquireImdlDecoderArgs)`
+- `decodeImdlGraphics(options: ImdlDecodeOptions)`
+- `createGraphicTemplateFromDescription(descr: GraphicDescription, context: GraphicDescriptionContext, system: RenderSystem)`
+- `createGraphicFromDescription(descr: GraphicDescription, context: GraphicDescriptionContext, system: RenderSystem)`
+- `acquireImdlParser(args: AcquireImdlParserArgs)`
+- `getMeshoptDecoder()`
+- `decodeMeshoptBuffer(source: Uint8Array, args: DecodeMeshoptBufferArgs)`
+- `createOrbitGtTileTreeReference(props: OrbitGtTileTree.ReferenceProps)`
+- `readPntsColors(stream: ByteStream, dataOffset: number, pnts: PntsProps)`
+- `readPointCloudTileContent(stream: ByteStream, iModel: IModelConnection, modelId: Id64String, _is3d: boolean, tile: RealityTile, system: RenderSystem)`
+- `disposeTileTreesForGeometricModels(modelIds: Set<Id64String>, iModel: IModelConnection)`
+- `createPrimaryTileTreeReference(view: ViewState, model: GeometricModelState, getBackgroundBase?: () => BaseLayerSettings, getBackgroundLayers?: () => MapLayerSettings[])`
+- `createMaskTreeReference(view: ViewState, model: GeometricModelState)`
+- `createModelMapLayerTileTreeReference(layerSettings: ModelMapLayerSettings, layerIndex: number, iModel: IModelConnection)`
+- `collectMaskRefs(view: SpatialViewState, modelIds: OrderedId64Iterable, excludedModelIds: Set<Id64String> | undefined, maskTreeRefs: TileTreeReference[], maskRange: Range3d)`
+- `createSpatialTileTreeReferences(view: SpatialViewState, excludedModels?: Set<Id64String>)`
+- `createRealityTileTreeReference(props: RealityModelTileTree.ReferenceProps)`
+- `createReaderPropsWithBaseUrl(streamBuffer: ByteStream, yAxisUp: boolean, baseUrl?: string)`
+- `createDefaultViewFlagOverrides()`
+- `deflateCoordinates(coordinates: number[][], flatCoordinates: number[], stride: number, offset: number)`
+- `appendQueryParams()`
+- `getDefaultAlternateUnitLabels()`
+- `getQuantityTypeKey(type: QuantityTypeArg)`
+- `isCustomQuantityTypeDefinition(item: QuantityTypeDefinition)`
+- `request(url: string, responseType: "arraybuffer", options?: RequestOptions)`
+- `request(url: string, responseType: "json", options?: RequestOptions)`
+- `request(url: string, responseType: "text", options?: RequestOptions)`
+- `headersIncludeAuthMethod(headers: Headers, query: string[])`
+- `setBasicAuthorization(headers: Headers, credentials: RequestBasicCredentials)`
+- `setBasicAuthorization(headers: Headers, user: string, password: string)`
+- `setRequestTimeout(opts: RequestInit, ms: number, abortController?: AbortController)`
+- `getMeshPrimitives(mesh: GltfMesh | undefined)`
+- `readGltfGraphics(args: ReadGltfGraphicsArgs)`
+- `readGltfTemplate(args: ReadGltfGraphicsArgs)`
+- `readGltf(args: ReadGltfGraphicsArgs)`
+- `readElementGraphics(bytes: Uint8Array, iModel: IModelConnection, modelId: Id64String, is3d: boolean, options?: BatchOptions | false)`
+- `readImdlContent()`
+- `tileTreeReferenceFromRenderGraphic(args: RenderGraphicTileTreeArgs)`
+- `addRangeGraphic(builder: GraphicBuilder, range: Range3d, is2d: boolean)`
+- `overrideRequestTileTreeProps(func: RequestTileTreePropsFunc | undefined)`
+- `getCesiumAssetUrl(osmAssetId: number, requestKey: string)`
+- `getCesiumOSMBuildingsUrl()`
+- `getCesiumAccessTokenAndEndpointUrl(assetId: string, requestKey?: string)`
+- `getCesiumTerrainProvider(opts: TerrainMeshProviderOptions)`
+- `createMapLayerTreeReference(layerSettings: MapLayerSettings, layerIndex: number, iModel: IModelConnection)`
+- `getGcsConverterAvailable(iModel: IModelConnection)`
+- `registerWorker(impl: WorkerImplementation<T>)`
+- `getFrustumPlaneIntersectionDepthRange(frustum: Frustum, plane: Plane3dByOriginAndUnitNormal)`
+- `calculateEcefToDbTransformAtLocation(originIn: Point3d, iModel: IModelConnection)`
+- `linePlaneIntersect(outP: Point3d, linePt: Point3d, lineNormal: Vector3d | undefined, planePt: Point3d, planeNormal: Vector3d, perpendicular: boolean)`
+- `getGoogle3dTilesUrl()`
+- `metersToRange(inputMeters: number, minimumOutput?: number, maximumOutput?: number, maximumInputMeters?: number)`
+- `queryTerrainElevationOffset(viewport: ScreenViewport, carto: Cartographic)`
+- `areaToEyeHeight(view3d: ViewState3d, area: GlobalLocationArea, offset?: number)`
+- `areaToEyeHeightFromGcs(view3d: ViewState3d, area: GlobalLocationArea, offset?: number)`
+- `rangeToCartographicArea(view3d: ViewState3d, range: Range3d)`
+- `eyeToCartographicOnGlobe(viewport: ScreenViewport, preserveHeight?: boolean)`
+- `eyeToCartographicOnGlobeFromGcs(viewport: ScreenViewport, preserveHeight?: boolean)`
+- `viewGlobalLocation(viewport: ScreenViewport, doAnimate: boolean, eyeHeight?: number, pitchAngleRadians?: number, location?: GlobalLocation)`
+- `connectViewports(viewports: Iterable<Viewport>, sync: (changedViewport: Viewport) => SynchronizeViewports)`
+- `synchronizeViewportViews(source: Viewport)`
+- `synchronizeViewportFrusta(source: Viewport)`
+- `connectViewportFrusta(viewports: Iterable<Viewport>)`
+- `connectViewportViews(viewports: Iterable<Viewport>)`
+- `canvasToResizedCanvasWithBars(canvasIn: HTMLCanvasElement, targetSize: Point2d, barSize?: Point2d, barStyle?: string)`
+- `imageBufferToCanvas(buffer: ImageBuffer, preserveAlpha?: boolean)`
+- `canvasToImageBuffer(canvas: HTMLCanvasElement, format?: ImageBufferFormat)`
+- `getImageSourceMimeType(format: ImageSourceFormat)`
+- `getImageSourceFormatForMimeType(mimeType: string)`
+- `imageElementFromImageSource(source: ImageSource)`
+- `imageBitmapFromImageSource(source: ImageSource)`
+- `imageElementFromUrl(url: string, skipCrossOriginCheck?: boolean)`
+- `tryImageElementFromUrl(url: string, skipCrossOriginCheck?: boolean)`
+- `extractImageSourceDimensions(source: ImageSource)`
+- `imageBufferToPngDataUrl(buffer: ImageBuffer, preserveAlpha?: boolean)`
+- `imageBufferToBase64EncodedPng(buffer: ImageBuffer, preserveAlpha?: boolean)`
+- `openImageDataUrlInNewWindow(url: string, title?: string)`
+- `getCenteredViewRect(viewRect: ViewRect, aspectRatio?: number)`
+- `getCompressedJpegFromCanvas(canvas: HTMLCanvasElement, maxBytes?: number, minCompressionQuality?: number)`
+- `createWorkerProxy(workerJsPath: string)`
+- `parseGltf(args: ParseGltfArgs)`
+- `gltfDictionaryIterator(dict: GltfDictionary<T>)`
+- `getGltfNodeMeshIds(node: GltfNode)`
+- `traverseGltfNodes(ids: Iterable<GltfId>, nodes: GltfDictionary<GltfNode>, traversed: Set<GltfId>)`
+- `isGltf1Material(material: GltfMaterial)`
+- `compactEdgeIterator(visibilityFlags: Uint8Array, normalPairs: Uint32Array | undefined, numIndices: number, decodeIndex: (index: number) => number)`
+- `indexedEdgeParamsFromCompactEdges(compact: CompactEdgeParams)`
+- `addPrimitiveTransferables(xfers: Set<Transferable>, primitive: ImdlModel.NodePrimitive)`
+- `collectTransferables(document: ImdlModel.Document)`
+- `toVertexTable(imdl: Imdl.VertexTable)`
+- `edgeParamsFromImdl(imdl: Imdl.EdgeParams)`
+- `edgeParamsToImdl(params: EdgeParams)`
+- `toMaterialParams(mat: Imdl.SurfaceMaterialParams)`
+- `convertFeatureTable(imdlFeatureTable: Imdl.FeatureTable, batchModelId: Id64String)`
+- `parseImdlDocument(options: ParseImdlDocumentArgs)`
+- `calculateEdgeTableParams(numSegmentEdges: number, numSilhouettes: number, maxSize: number)`
+- `createEdgeParams()`
+- `isGraphicDescription(description: GraphicDescription)`
+- `collectGraphicDescriptionTransferables(xfers: Set<Transferable>, description: GraphicDescription)`
+- `initializeLineCodeCapacity(maxTexSize: number)`
+- `initializeDefaultPatterns()`
+- `resetLineCodeState()`
+- `lineCodeFromLinePixels(pixels: LinePixels)`
+- `onLineCodeAssigned(listener: (args: LineCodeAssignmentArgs) => void)`
+- `getLineCodePatterns()`
+- `lineCodeTextureCapacity()`
+- `createPolylineArgs(mesh: Mesh)`
+- `createMeshArgs(mesh: Mesh)`
+- `createPointStringParams(args: PolylineArgs, maxTextureSize: number)`
+- `tesselatePolylineList()`
+- `tesselatePolyline(polylines: PolylineIndices[], points: QPoint3dList, doJointTriangles: boolean)`
+- `createPolylineParams(args: PolylineArgs, maxDimension: number)`
+- `wantJointTriangles(weight: number, is2d: boolean)`
+- `isValidSurfaceType(value: number)`
+- `createSurfaceMaterial(source: RenderMaterial | undefined)`
+- `computeDimensions(nEntries: number, nRgbaPerEntry: number, nExtraRgba: number, maxSize: number)`
+- `createMeshParams(args: MeshArgs, maxDimension: number, enableIndexedEdges: boolean)`
+- `splitPointStringParams(args: SplitPointStringArgs)`
+- `splitMeshParams(args: SplitMeshArgs)`
+- `splitPolylineParams(args: SplitPolylineArgs)`
+- `loadScript(jsUrl: string)`
+- `getCopyrights(vp: ScreenViewport)`
+- `getScriptDelta(prev: RenderSchedule.Script | undefined | null, next: RenderSchedule.Script)`
+- `createViewAttachmentRenderer()`
+- `formatAnimationBranchId(modelId: Id64String, branchId: number)`
+- `createGraphicTemplate()`
+- `queryVisibleFeatures(viewport: Viewport, options: QueryVisibleFeaturesOptions, callback: QueryVisibleFeaturesCallback)`
+- `createRenderInstancesParamsBuilder(args: CreateRenderInstancesParamsBuilderArgs)`
+- `collectRenderInstancesParamsTransferables(xfers: Set<Transferable>, inParams: RenderInstancesParams)`
+- `createEmptyRenderPlan()`
+- `createRenderPlanFromViewport(vp: Viewport)`
+- `upsampleRealityMeshParams(params: RealityMeshParams, uvSampleRange: Range2d)`
+- `qparams2dToArray(params: QParams2d)`
+- `qorigin3dToArray(qorigin: Point3d)`
+- `qscale3dToArray(qscale: Point3d)`
+- `qparams3dToArray(params: QParams3d)`
+- `createClippingProgram(builder: ProgramBuilder)`
+- `extractFlashedVolumeClassifierCommands(flashedId: Id64String, cmds: DrawCommands, numCmdsPerClassifier: number)`
+- `extractHilitedVolumeClassifierCommands(hilites: Hilites, cmds: DrawCommands)`
+- `isFeatureHilited(feature: PackedFeature, hilites: Hilites, isModelHilited: boolean)`
+- `fromSumOf(p: Point3d, v: Vector3d, scale: number, out?: Point3d)`
+- `isInstancedGraphicParams(params: any)`
+- `compareMapLayer(prevView: ViewState, newView: ViewState)`
+- `createMaterialInfo(source: SurfaceMaterial | undefined)`
+- `fromNormalizedCrossProduct(vec0: Vector3d, vec1: Vector3d)`
+- `normalizedDifference(target: Point3d, origin: Point3d)`
+- `isPlanar(order: RenderOrder)`
+- `collectTextureStatistics(texture: TextureHandle | undefined, stats: RenderMemory.Statistics)`
+- `collectGeometryStatistics(geom: CachedGeometry | undefined, stats: RenderMemory.Statistics)`
+- `getDrawParams(target: Target, geometry: CachedGeometry)`
+- `freeDrawParams()`
+- `createScreenSpaceEffectBuilder(params: ScreenSpaceEffectBuilderParams)`
+- `wantMaterials(vf: ViewFlags)`
+- `isSynchronized(target: SyncTarget, observer: SyncObserver)`
+- `sync(target: SyncTarget, observer: SyncObserver)`
+- `desync(target: SyncTarget)`
+- `computeCompositeTechniqueId(flags: CompositeFlags)`
+- `createAmbientOcclusionProgram(context: WebGL2RenderingContext)`
+- `addAnimation(vert: VertexShaderBuilder, isSurface: boolean)`
+- `addAtmosphericScatteringEffect(builder: ProgramBuilder, isSkyBox: boolean, perFragmentCompute: boolean)`
+- `createBlurProgram(context: WebGL2RenderingContext, type: BlurType)`
+- `createClearPickAndColorProgram(context: WebGL2RenderingContext)`
+- `createClearTranslucentProgram(context: WebGL2RenderingContext)`
+- `addClipping(prog: ProgramBuilder)`
+- `addColor(builder: ProgramBuilder)`
+- `addVaryingColor(builder: ProgramBuilder, computeVertexBase: string)`
+- `createCombine3TexturesProgram(context: WebGL2RenderingContext)`
+- `createCombineTexturesProgram(context: WebGL2RenderingContext)`
+- `addChooseVec2WithBitFlagsFunction(shader: ShaderBuilder)`
+- `addChooseVec3WithBitFlagFunction(shader: ShaderBuilder)`
+- `addShaderFlags(builder: ProgramBuilder)`
+- `addFrustum(builder: ProgramBuilder)`
+- `addEyeSpace(builder: ProgramBuilder)`
+- `addExtractNthBit(shader: ShaderBuilder)`
+- `createCompositeProgram(flags: CompositeFlags, context: WebGL2RenderingContext)`
+- `addApplyContours(builder: ProgramBuilder)`
+- `createCopyColorProgram(context: WebGL2RenderingContext, copyAlpha?: boolean)`
+- `createCopyPickBuffersProgram(context: WebGL2RenderingContext)`
+- `createVolClassColorUsingStencilProgram(context: WebGL2RenderingContext)`
+- `createVolClassCopyZProgram(context: WebGL2RenderingContext)`
+- `createVolClassSetBlendProgram(context: WebGL2RenderingContext)`
+- `createVolClassBlendProgram(context: WebGL2RenderingContext)`
+- `addUnpackAndNormalize2Bytes(builder: ShaderBuilder)`
+- `createEDLCalcBasicProgram(context: WebGL2RenderingContext)`
+- `createEDLCalcFullProgram(context: WebGL2RenderingContext)`
+- `createEDLFilterProgram(context: WebGL2RenderingContext)`
+- `createEDLMixProgram(context: WebGL2RenderingContext)`
+- `createEVSMProgram(context: WebGL2RenderingContext)`
+- `addEdgeContrast(vert: VertexShaderBuilder)`
+- `createEdgeBuilder(type: EdgeBuilderType, instanced: IsInstanced, isAnimated: IsAnimated, posType: PositionType)`
+- `addOvrFlagConstants(builder: ShaderBuilder)`
+- `addFeatureIndex(vert: VertexShaderBuilder)`
+- `addMaxAlpha(builder: ShaderBuilder)`
+- `addSurfaceHiliter(builder: ProgramBuilder, wantWeight?: boolean)`
+- `addHiliter(builder: ProgramBuilder, wantWeight?: boolean)`
+- `addRenderOrderConstants(builder: ShaderBuilder)`
+- `addRenderOrder(builder: ShaderBuilder)`
+- `addPixelWidthFactor(builder: ShaderBuilder)`
+- `addFeatureId(builder: ProgramBuilder, computeInFrag: boolean)`
+- `addSurfaceDiscard(builder: ProgramBuilder, flags: TechniqueFlags)`
+- `addClassifierFlash(frag: FragmentShaderBuilder)`
+- `addFeatureSymbology(builder: ProgramBuilder, feat: FeatureMode, opts: FeatureSymbologyOptions)`
+- `addUniformHiliter(builder: ProgramBuilder)`
+- `addUniformFeatureSymbology(builder: ProgramBuilder, addFeatureColor: boolean)`
+- `addWindowToTexCoords(frag: FragmentShaderBuilder)`
+- `addWhiteOnWhiteReversal(frag: FragmentShaderBuilder)`
+- `addPickBufferOutputs(frag: FragmentShaderBuilder)`
+- `addAltPickBufferOutputs(frag: FragmentShaderBuilder)`
+- `addFragColorWithPreMultipliedAlpha(frag: FragmentShaderBuilder)`
+- `addInstancedModelMatrixRTC(vert: VertexShaderBuilder)`
+- `addInstanceOverrides(vert: VertexShaderBuilder)`
+- `addInstanceColor(vert: VertexShaderBuilder)`
+- `addLighting(builder: ProgramBuilder)`
+- `addLogDepth(builder: ProgramBuilder)`
+- `addLookupTable(sb: VertexShaderBuilder, lutName: string, mult?: string, addInitializer?: boolean)`
+- `addApplySurfaceDraping(frag: FragmentShaderBuilder)`
+- `addUnlitMonochrome(frag: FragmentShaderBuilder)`
+- `addSurfaceMonochrome(frag: FragmentShaderBuilder)`
+- `addColorPlanarClassifier(builder: ProgramBuilder, translucent: boolean, isThematic: IsThematic)`
+- `addFeaturePlanarClassifier(builder: ProgramBuilder)`
+- `addHilitePlanarClassifier(builder: ProgramBuilder, supportTextures?: boolean)`
+- `addOverrideClassifierColor(builder: ProgramBuilder, isThematic: IsThematic)`
+- `createPlanarGridProgram(context: WebGL2RenderingContext)`
+- `createPointCloudBuilder(classified: IsClassified, featureMode: FeatureMode, thematic: IsThematic)`
+- `createPointCloudHiliter(classified: IsClassified)`
+- `createPointStringHiliter(instanced: IsInstanced, posType: PositionType)`
+- `createPointStringBuilder(instanced: IsInstanced, posType: PositionType)`
+- `addAdjustWidth(vert: VertexShaderBuilder)`
+- `addLineCodeTexture(frag: FragmentShaderBuilder)`
+- `addLineCode(prog: ProgramBuilder, args: string)`
+- `createPolylineBuilder(isInstanced: IsInstanced, positionType: PositionType)`
+- `createPolylineHiliter(isInstanced: IsInstanced, positionType: PositionType)`
+- `addColorOverrideMix(frag: ShaderBuilder)`
+- `createClassifierRealityMeshHiliter()`
+- `createRealityMeshHiliter()`
+- `createRealityMeshBuilder(flags: TechniqueFlags)`
+- `addRenderPass(builder: ShaderBuilder)`
+- `createScreenSpaceEffectProgramBuilder(params: ScreenSpaceEffectBuilderParams)`
+- `createSkyBoxProgram(context: WebGL2RenderingContext)`
+- `createSkySphereBuilder(isGradient: boolean, flags: TechniqueFlags)`
+- `addEvsmExponent(frag: FragmentShaderBuilder)`
+- `addSolarShadowMap(builder: ProgramBuilder, toTerrain?: boolean)`
+- `createSurfaceHiliter(instanced: IsInstanced, classified: IsClassified, posType: PositionType)`
+- `addSurfaceFlags(builder: ProgramBuilder, withFeatureOverrides: boolean, withFeatureColor: boolean)`
+- `addTexture(builder: ProgramBuilder, animated: IsAnimated, isThematic: IsThematic, isPointCloud: boolean, isHilite: boolean, isMaplayer: boolean)`
+- `createSurfaceBuilder(flags: TechniqueFlags)`
+- `addClassificationTranslucencyDiscard(builder: ProgramBuilder)`
+- `getComputeThematicIndex(instanced: boolean, skipSlopeAndHillShade: boolean, decodeNormal: boolean)`
+- `addThematicDisplay(builder: ProgramBuilder, isForPointClouds?: boolean, isForTerrainMesh?: boolean)`
+- `addTranslucency(prog: ProgramBuilder)`
+- `addSamplePosition(vert: VertexShaderBuilder)`
+- `addModelViewProjectionMatrix(vert: VertexShaderBuilder)`
+- `addProjectionMatrix(vert: VertexShaderBuilder)`
+- `addInstancedRtcMatrix(vert: VertexShaderBuilder)`
+- `addModelViewMatrix(vert: VertexShaderBuilder)`
+- `addNormalMatrix(vert: VertexShaderBuilder)`
+- `addPosition(vert: VertexShaderBuilder, fromLUT: boolean)`
+- `addAlpha(vert: VertexShaderBuilder)`
+- `addLineWeight(vert: VertexShaderBuilder)`
+- `replaceLineWeight(vert: VertexShaderBuilder, func: string)`
+- `addLineCode(vert: VertexShaderBuilder)`
+- `replaceLineCode(vert: VertexShaderBuilder, func: string)`
+- `addViewport(shader: ShaderBuilder)`
+- `addViewportTransformation(shader: ShaderBuilder)`
+- `addModelToWindowCoordinates(vert: VertexShaderBuilder)`
+- `createViewportQuadBuilder(textured: boolean, attrMapOverride?: Map<string, AttributeDetails>)`
+- `addWiremesh(builder: ProgramBuilder)`
+- `createClassifierTileTreeReference(classifiers: SpatialClassifiersState, classifiedTree: TileTreeReference, iModel: IModelConnection, source: ViewState | DisplayStyleState)`
+- `iModelTileParamsFromJSON(props: TileProps, parent: IModelTile | undefined)`
+- `iModelTileTreeParamsFromJSON(props: IModelTileTreeProps, iModel: IModelConnection, modelId: Id64String, options: IModelTileTreeOptions)`
+- `acquireImdlDecoder(args: AcquireImdlDecoderArgs)`
+- `decodeImdlGraphics(options: ImdlDecodeOptions)`
+- `createGraphicTemplateFromDescription(descr: GraphicDescription, context: GraphicDescriptionContext, system: RenderSystem)`
+- `createGraphicFromDescription(descr: GraphicDescription, context: GraphicDescriptionContext, system: RenderSystem)`
+- `acquireImdlParser(args: AcquireImdlParserArgs)`
+- `getMeshoptDecoder()`
+- `decodeMeshoptBuffer(source: Uint8Array, args: DecodeMeshoptBufferArgs)`
+- `createOrbitGtTileTreeReference(props: OrbitGtTileTree.ReferenceProps)`
+- `readPntsColors(stream: ByteStream, dataOffset: number, pnts: PntsProps)`
+- `readPointCloudTileContent(stream: ByteStream, iModel: IModelConnection, modelId: Id64String, _is3d: boolean, tile: RealityTile, system: RenderSystem)`
+- `disposeTileTreesForGeometricModels(modelIds: Set<Id64String>, iModel: IModelConnection)`
+- `createPrimaryTileTreeReference(view: ViewState, model: GeometricModelState, getBackgroundBase?: () => BaseLayerSettings, getBackgroundLayers?: () => MapLayerSettings[])`
+- `createMaskTreeReference(view: ViewState, model: GeometricModelState)`
+- `createModelMapLayerTileTreeReference(layerSettings: ModelMapLayerSettings, layerIndex: number, iModel: IModelConnection)`
+- `collectMaskRefs(view: SpatialViewState, modelIds: OrderedId64Iterable, excludedModelIds: Set<Id64String> | undefined, maskTreeRefs: TileTreeReference[], maskRange: Range3d)`
+- `createSpatialTileTreeReferences(view: SpatialViewState, excludedModels?: Set<Id64String>)`
+- `createRealityTileTreeReference(props: RealityModelTileTree.ReferenceProps)`
+- `createReaderPropsWithBaseUrl(streamBuffer: ByteStream, yAxisUp: boolean, baseUrl?: string)`
+- `createDefaultViewFlagOverrides()`
+- `deflateCoordinates(coordinates: number[][], flatCoordinates: number[], stride: number, offset: number)`
+- `appendQueryParams()`
+- `getDefaultAlternateUnitLabels()`
+- `getQuantityTypeKey(type: QuantityTypeArg)`
+- `isCustomQuantityTypeDefinition(item: QuantityTypeDefinition)`
+- `request(url: string, responseType: "arraybuffer", options?: RequestOptions)`
+- `request(url: string, responseType: "json", options?: RequestOptions)`
+- `request(url: string, responseType: "text", options?: RequestOptions)`
+- `headersIncludeAuthMethod(headers: Headers, query: string[])`
+- `setBasicAuthorization(headers: Headers, credentials: RequestBasicCredentials)`
+- `setBasicAuthorization(headers: Headers, user: string, password: string)`
+- `setRequestTimeout(opts: RequestInit, ms: number, abortController?: AbortController)`
+- `getMeshPrimitives(mesh: GltfMesh | undefined)`
+- `readGltfGraphics(args: ReadGltfGraphicsArgs)`
+- `readGltfTemplate(args: ReadGltfGraphicsArgs)`
+- `readGltf(args: ReadGltfGraphicsArgs)`
+- `readElementGraphics(bytes: Uint8Array, iModel: IModelConnection, modelId: Id64String, is3d: boolean, options?: BatchOptions | false)`
+- `readImdlContent()`
+- `tileTreeReferenceFromRenderGraphic(args: RenderGraphicTileTreeArgs)`
+- `addRangeGraphic(builder: GraphicBuilder, range: Range3d, is2d: boolean)`
+- `overrideRequestTileTreeProps(func: RequestTileTreePropsFunc | undefined)`
+- `getCesiumAssetUrl(osmAssetId: number, requestKey: string)`
+- `getCesiumOSMBuildingsUrl()`
+- `getCesiumAccessTokenAndEndpointUrl(assetId: string, requestKey?: string)`
+- `getCesiumTerrainProvider(opts: TerrainMeshProviderOptions)`
+- `createMapLayerTreeReference(layerSettings: MapLayerSettings, layerIndex: number, iModel: IModelConnection)`
+- `getGcsConverterAvailable(iModel: IModelConnection)`
+- `registerWorker(impl: WorkerImplementation<T>)`

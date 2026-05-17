@@ -1,0 +1,77 @@
+---
+name: core-frontend-tile-admin
+description: TileAdmin declarations from core-frontend
+---
+
+# TileAdmin
+
+## Methods
+
+- `create(props?: TileAdmin.Props)`
+- `resetStatistics()`
+- `getMaximumMajorTileFormatVersion(formatVersion?: number)`
+- `process()`
+- `getNumRequestsForViewport(vp: Viewport)`
+- `getNumRequestsForUser(user: TileUser)`
+- `getRequestsForUser(user: TileUser)`
+- `requestTiles(user: TileUser, tiles: Set<Tile>)`
+- `getTilesForUser(user: TileUser)`
+- `addTilesForUser(user: TileUser, selected: Tile[], ready: Set<Tile>, touched: Set<Tile>)`
+- `addExternalTilesForUser(user: TileUser, statistics: ExternalTileStatistics)`
+- `clearTilesForUser(user: TileUser)`
+- `forgetUser(user: TileUser)`
+- `registerUser(user: TileUser)`
+- `invalidateAllScenes()`
+- `onShutDown()`
+- `getTileUserSetForRequest(user: TileUser, users?: ReadonlyTileUserSet)`
+- `markTileUsed(marker: TileUsageMarker, user: TileUser)`
+- `isTileInUse(marker: TileUsageMarker)`
+- `clearUsageForUser(user: TileUser)`
+- `requestTileTreeProps(iModel: IModelConnection, treeId: string)`
+- `purgeTileTrees(iModel: IModelConnection, modelIds: Id64Array | undefined)`
+- `requestCachedTileContent()`
+- `generateTileContent()`
+- `getTileRequestProps()`
+- `requestElementGraphics(iModel: IModelConnection, requestProps: ElementGraphicsRequestProps)`
+- `queryVersionInfo()`
+- `onTilesElided(numElided: number)`
+- `onTileContentLoaded(tile: Tile)`
+- `onTileContentDisposed(tile: Tile)`
+- `terminateTileTreePropsRequest(request: TileTreePropsRequest)`
+- `addLoadListener(callback: (imodel: IModelConnection) => void)`
+- `getScriptInfoForTreeId(modelId: Id64String, script: RenderSchedule.ScriptReference | undefined)`
+- `freeMemory()`
+- `create(props?: TileAdmin.Props)`
+- `resetStatistics()`
+- `getMaximumMajorTileFormatVersion(formatVersion?: number)`
+- `process()`
+- `getNumRequestsForViewport(vp: Viewport)`
+- `getNumRequestsForUser(user: TileUser)`
+- `getRequestsForUser(user: TileUser)`
+- `requestTiles(user: TileUser, tiles: Set<Tile>)`
+- `getTilesForUser(user: TileUser)`
+- `addTilesForUser(user: TileUser, selected: Tile[], ready: Set<Tile>, touched: Set<Tile>)`
+- `addExternalTilesForUser(user: TileUser, statistics: ExternalTileStatistics)`
+- `clearTilesForUser(user: TileUser)`
+- `forgetUser(user: TileUser)`
+- `registerUser(user: TileUser)`
+- `invalidateAllScenes()`
+- `onShutDown()`
+- `getTileUserSetForRequest(user: TileUser, users?: ReadonlyTileUserSet)`
+- `markTileUsed(marker: TileUsageMarker, user: TileUser)`
+- `isTileInUse(marker: TileUsageMarker)`
+- `clearUsageForUser(user: TileUser)`
+- `requestTileTreeProps(iModel: IModelConnection, treeId: string)`
+- `purgeTileTrees(iModel: IModelConnection, modelIds: Id64Array | undefined)`
+- `requestCachedTileContent()`
+- `generateTileContent()`
+- `getTileRequestProps()`
+- `requestElementGraphics(iModel: IModelConnection, requestProps: ElementGraphicsRequestProps)`
+- `queryVersionInfo()`
+- `onTilesElided(numElided: number)`
+- `onTileContentLoaded(tile: Tile)`
+- `onTileContentDisposed(tile: Tile)`
+- `terminateTileTreePropsRequest(request: TileTreePropsRequest)`
+- `addLoadListener(callback: (imodel: IModelConnection) => void)`
+- `getScriptInfoForTreeId(modelId: Id64String, script: RenderSchedule.ScriptReference | undefined)`
+- `freeMemory()`

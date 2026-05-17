@@ -1,0 +1,83 @@
+---
+name: core-frontend-selection-tool
+description: SelectionTool declarations from core-frontend
+---
+
+# SelectionTool
+
+## Methods
+
+- `requireWriteableTarget()`
+- `autoLockTarget()`
+- `wantSelectionClearOnMiss(_ev: BeButtonEvent)`
+- `wantEditManipulators()`
+- `wantPickableDecorations()`
+- `wantToolSettings()`
+- `showPrompt(mode: SelectionMode, method: SelectionMethod)`
+- `initSelectTool()`
+- `processMiss(_ev: BeButtonEvent)`
+- `updateSelection(elementId: Id64Arg, process: SelectionProcessing)`
+- `processSelection(elementId: Id64Arg, process: SelectionProcessing)`
+- `useOverlapSelection(ev: BeButtonEvent)`
+- `selectByPointsProcess(origin: Point3d, corner: Point3d, ev: BeButtonEvent, method: SelectionMethod, overlap: boolean)`
+- `selectByPointsStart(ev: BeButtonEvent)`
+- `selectByPointsEnd(ev: BeButtonEvent)`
+- `onMouseMotion(ev: BeButtonEvent)`
+- `selectDecoration(ev: BeButtonEvent, currHit?: HitDetail)`
+- `processHit(ev: BeButtonEvent, hit: HitDetail)`
+- `onMouseStartDrag(ev: BeButtonEvent)`
+- `onMouseEndDrag(ev: BeButtonEvent)`
+- `onDataButtonUp(ev: BeButtonEvent)`
+- `onResetButtonUp(ev: BeButtonEvent)`
+- `onSuspend()`
+- `onUnsuspend()`
+- `onTouchMoveStart(ev: BeTouchEvent, startEv: BeTouchEvent)`
+- `onTouchMove(ev: BeTouchEvent)`
+- `onTouchComplete(ev: BeTouchEvent)`
+- `onTouchCancel(ev: BeTouchEvent)`
+- `decorate(context: DecorateContext)`
+- `onModifierKeyTransition(_wentDown: boolean, modifier: BeModifierKeys, _event: KeyboardEvent)`
+- `filterHit(hit: HitDetail, out?: LocateResponse)`
+- `onRestartTool()`
+- `onCleanup()`
+- `onPostInstall()`
+- `startTool()`
+- `supplyToolSettingsProperties()`
+- `applyToolSettingPropertyChange(updatedValue: DialogPropertySyncItem)`
+- `requireWriteableTarget()`
+- `autoLockTarget()`
+- `wantSelectionClearOnMiss(_ev: BeButtonEvent)`
+- `wantEditManipulators()`
+- `wantPickableDecorations()`
+- `wantToolSettings()`
+- `showPrompt(mode: SelectionMode, method: SelectionMethod)`
+- `initSelectTool()`
+- `processMiss(_ev: BeButtonEvent)`
+- `updateSelection(elementId: Id64Arg, process: SelectionProcessing)`
+- `processSelection(elementId: Id64Arg, process: SelectionProcessing)`
+- `useOverlapSelection(ev: BeButtonEvent)`
+- `selectByPointsProcess(origin: Point3d, corner: Point3d, ev: BeButtonEvent, method: SelectionMethod, overlap: boolean)`
+- `selectByPointsStart(ev: BeButtonEvent)`
+- `selectByPointsEnd(ev: BeButtonEvent)`
+- `onMouseMotion(ev: BeButtonEvent)`
+- `selectDecoration(ev: BeButtonEvent, currHit?: HitDetail)`
+- `processHit(ev: BeButtonEvent, hit: HitDetail)`
+- `onMouseStartDrag(ev: BeButtonEvent)`
+- `onMouseEndDrag(ev: BeButtonEvent)`
+- `onDataButtonUp(ev: BeButtonEvent)`
+- `onResetButtonUp(ev: BeButtonEvent)`
+- `onSuspend()`
+- `onUnsuspend()`
+- `onTouchMoveStart(ev: BeTouchEvent, startEv: BeTouchEvent)`
+- `onTouchMove(ev: BeTouchEvent)`
+- `onTouchComplete(ev: BeTouchEvent)`
+- `onTouchCancel(ev: BeTouchEvent)`
+- `decorate(context: DecorateContext)`
+- `onModifierKeyTransition(_wentDown: boolean, modifier: BeModifierKeys, _event: KeyboardEvent)`
+- `filterHit(hit: HitDetail, out?: LocateResponse)`
+- `onRestartTool()`
+- `onCleanup()`
+- `onPostInstall()`
+- `startTool()`
+- `supplyToolSettingsProperties()`
+- `applyToolSettingPropertyChange(updatedValue: DialogPropertySyncItem)`

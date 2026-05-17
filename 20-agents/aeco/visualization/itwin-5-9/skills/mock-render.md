@@ -1,0 +1,87 @@
+---
+name: core-frontend-mock-render
+description: MockRender declarations from core-frontend
+---
+
+# MockRender
+
+## Methods
+
+- `changeScene(_scene: Scene)`
+- `changeDynamics(_foreground: GraphicList | undefined, _overlay: GraphicList | undefined)`
+- `changeDecorations(_decs: Decorations)`
+- `changeRenderPlan(_plan: RenderPlan)`
+- `drawFrame(_sceneTime?: number)`
+- `updateViewRect()`
+- `readPixels(_rect: ViewRect, _selector: Pixel.Selector, receiver: Pixel.Receiver, _excludeNonLocatable: boolean)`
+- `setViewRect(_rect: ViewRect, _temp: boolean)`
+- `setViewRect(rect: ViewRect, _temp: boolean)`
+- `dispose()`
+- `collectStatistics(_stats: RenderMemory.Statistics)`
+- `unionRange()`
+- `dispose()`
+- `dispose()`
+- `dispose()`
+- `collectStatistics()`
+- `computeRange()`
+- `collectStatistics()`
+- `dispose()`
+- `doIdleWork()`
+- `createTarget(canvas: HTMLCanvasElement)`
+- `createOffscreenTarget(rect: ViewRect)`
+- `createGraphic(options: CustomGraphicBuilderOptions | ViewportGraphicBuilderOptions)`
+- `createGraphicList(primitives: RenderGraphic[])`
+- `createGraphicBranch(branch: GraphicBranch, transform: Transform, options?: GraphicBranchOptions)`
+- `createBatch(graphic: RenderGraphic, features: RenderFeatureTable, range: ElementAlignedBox3d)`
+- `createMesh(_params: MeshParams)`
+- `createPolyline(_params: PolylineParams)`
+- `createPointString(_params: PointStringParams)`
+- `createPointCloud(_args: PointCloudArgs, _imodel: IModelConnection)`
+- `createRenderGraphic()`
+- `createMeshGeometry()`
+- `createPolylineGeometry()`
+- `createPointStringGeometry()`
+- `createAreaPattern()`
+- `createGraphicFromTemplate()`
+- `startup(opts?: IModelAppOptions)`
+- `shutdown()`
+- `createDefaultRenderSystem()`
+- `changeScene(_scene: Scene)`
+- `changeDynamics(_foreground: GraphicList | undefined, _overlay: GraphicList | undefined)`
+- `changeDecorations(_decs: Decorations)`
+- `changeRenderPlan(_plan: RenderPlan)`
+- `drawFrame(_sceneTime?: number)`
+- `updateViewRect()`
+- `readPixels(_rect: ViewRect, _selector: Pixel.Selector, receiver: Pixel.Receiver, _excludeNonLocatable: boolean)`
+- `setViewRect(_rect: ViewRect, _temp: boolean)`
+- `setViewRect(rect: ViewRect, _temp: boolean)`
+- `dispose()`
+- `collectStatistics(_stats: RenderMemory.Statistics)`
+- `unionRange()`
+- `dispose()`
+- `dispose()`
+- `dispose()`
+- `collectStatistics()`
+- `computeRange()`
+- `collectStatistics()`
+- `dispose()`
+- `doIdleWork()`
+- `createTarget(canvas: HTMLCanvasElement)`
+- `createOffscreenTarget(rect: ViewRect)`
+- `createGraphic(options: CustomGraphicBuilderOptions | ViewportGraphicBuilderOptions)`
+- `createGraphicList(primitives: RenderGraphic[])`
+- `createGraphicBranch(branch: GraphicBranch, transform: Transform, options?: GraphicBranchOptions)`
+- `createBatch(graphic: RenderGraphic, features: RenderFeatureTable, range: ElementAlignedBox3d)`
+- `createMesh(_params: MeshParams)`
+- `createPolyline(_params: PolylineParams)`
+- `createPointString(_params: PointStringParams)`
+- `createPointCloud(_args: PointCloudArgs, _imodel: IModelConnection)`
+- `createRenderGraphic()`
+- `createMeshGeometry()`
+- `createPolylineGeometry()`
+- `createPointStringGeometry()`
+- `createAreaPattern()`
+- `createGraphicFromTemplate()`
+- `startup(opts?: IModelAppOptions)`
+- `shutdown()`
+- `createDefaultRenderSystem()`

@@ -1,0 +1,81 @@
+---
+name: core-frontend-accu-snap
+description: AccuSnap declarations from core-frontend
+---
+
+# AccuSnap
+
+## Methods
+
+- `onInitialized()`
+- `getCurrSnapDetail()`
+- `neverFlash(ids?: Id64Arg)`
+- `destroy()`
+- `getActiveSnapModes()`
+- `synchSnapMode()`
+- `clear()`
+- `setCurrHit(newHit?: HitDetail)`
+- `erase()`
+- `displayToolTip(viewPt: XAndY, vp: ScreenViewport, uorPt?: Point3d)`
+- `clearToolTip(ev?: BeButtonEvent)`
+- `adjustPointIfHot(pt: Point3d, view: Viewport)`
+- `onEnabledStateChange(_isEnabled: boolean, _wasEnabled: boolean)`
+- `getHitAndList(holder: HitListHolder)`
+- `suspend(doSuspend: boolean)`
+- `suppress(doSuppress: boolean)`
+- `enableSnap(yesNo: boolean)`
+- `intersectXY(tpSnap: SnapDetail, second: SnapDetail)`
+- `requestSnap(thisHit: HitDetail, snapModes: SnapMode[], hotDistanceInches: number, keypointDivisor: number, hitList?: HitList<HitDetail>, out?: LocateResponse)`
+- `doSnapRequest(hit: HitDetail, snapMode?: SnapMode)`
+- `resetButton()`
+- `onMotion(ev: BeButtonEvent)`
+- `onPreButtonEvent(ev: BeButtonEvent)`
+- `onTouchStart(ev: BeTouchEvent)`
+- `onTouchEnd(ev: BeTouchEvent)`
+- `onTouchCancel(ev: BeTouchEvent)`
+- `onTouchMove(ev: BeTouchEvent)`
+- `onTouchMoveStart(ev: BeTouchEvent, startEv: BeTouchEvent)`
+- `onTouchTap(ev: BeTouchEvent)`
+- `decorate(context: DecorateContext)`
+- `clearIfElement(sourceId: string)`
+- `enableLocate(yesNo: boolean)`
+- `onStartTool()`
+- `reEvaluate()`
+- `setFrom(other: ToolState)`
+- `clone()`
+- `onInitialized()`
+- `getCurrSnapDetail()`
+- `neverFlash(ids?: Id64Arg)`
+- `destroy()`
+- `getActiveSnapModes()`
+- `synchSnapMode()`
+- `clear()`
+- `setCurrHit(newHit?: HitDetail)`
+- `erase()`
+- `displayToolTip(viewPt: XAndY, vp: ScreenViewport, uorPt?: Point3d)`
+- `clearToolTip(ev?: BeButtonEvent)`
+- `adjustPointIfHot(pt: Point3d, view: Viewport)`
+- `onEnabledStateChange(_isEnabled: boolean, _wasEnabled: boolean)`
+- `getHitAndList(holder: HitListHolder)`
+- `suspend(doSuspend: boolean)`
+- `suppress(doSuppress: boolean)`
+- `enableSnap(yesNo: boolean)`
+- `intersectXY(tpSnap: SnapDetail, second: SnapDetail)`
+- `requestSnap(thisHit: HitDetail, snapModes: SnapMode[], hotDistanceInches: number, keypointDivisor: number, hitList?: HitList<HitDetail>, out?: LocateResponse)`
+- `doSnapRequest(hit: HitDetail, snapMode?: SnapMode)`
+- `resetButton()`
+- `onMotion(ev: BeButtonEvent)`
+- `onPreButtonEvent(ev: BeButtonEvent)`
+- `onTouchStart(ev: BeTouchEvent)`
+- `onTouchEnd(ev: BeTouchEvent)`
+- `onTouchCancel(ev: BeTouchEvent)`
+- `onTouchMove(ev: BeTouchEvent)`
+- `onTouchMoveStart(ev: BeTouchEvent, startEv: BeTouchEvent)`
+- `onTouchTap(ev: BeTouchEvent)`
+- `decorate(context: DecorateContext)`
+- `clearIfElement(sourceId: string)`
+- `enableLocate(yesNo: boolean)`
+- `onStartTool()`
+- `reEvaluate()`
+- `setFrom(other: ToolState)`
+- `clone()`

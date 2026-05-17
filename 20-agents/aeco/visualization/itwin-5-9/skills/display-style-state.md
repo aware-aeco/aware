@@ -1,0 +1,97 @@
+---
+name: core-frontend-display-style-state
+description: DisplayStyleState declarations from core-frontend
+---
+
+# DisplayStyleState
+
+## Methods
+
+- `overrideTerrainDisplay()`
+- `load()`
+- `queryRenderTimelineProps(timelineId: Id64String)`
+- `changeBackgroundMapProps(props: BackgroundMapProps)`
+- `changeBackgroundMapProvider(props: BackgroundMapProviderProps)`
+- `forEachRealityModel(func: (model: ContextRealityModelState) => void)`
+- `getTileTreeRefs()`
+- `equalState(other: DisplayStyleState)`
+- `changeRenderTimeline(timelineId: Id64String | undefined)`
+- `setScheduleEditing(newScript: RenderSchedule.Script)`
+- `commitScheduleEditing()`
+- `attachRealityModel(props: ContextRealityModelProps)`
+- `detachRealityModelByNameAndUrl(name: string, url: string)`
+- `getOSMBuildingRealityModel()`
+- `setOSMBuildingDisplay(options: OsmBuildingDisplayOptions)`
+- `hasAttachedRealityModel(name: string, url: string)`
+- `getMapLayers(isOverlay: boolean)`
+- `attachMapLayer()`
+- `attachMapLayerProps()`
+- `hasAttachedMapLayer(name: string, source: string, isOverlay: boolean)`
+- `detachMapLayerByNameAndSource(name: string, source: string, isOverlay: boolean)`
+- `detachMapLayerByIndex(mapLayerIndex: MapLayerIndex)`
+- `findMapLayerIndexByNameAndSource(name: string, source: string, isOverlay: boolean)`
+- `mapLayerAtIndex(mapLayerIndex: MapLayerIndex)`
+- `changeBaseMapTransparency(transparency: number)`
+- `changeMapLayerProps(props: Partial<MapLayerProps>, mapLayerIndex: MapLayerIndex)`
+- `changeMapLayerCredentials(mapLayerIndex: MapLayerIndex, userName?: string, password?: string)`
+- `changeMapSubLayerProps(props: Partial<MapSubLayerProps>, subLayerId: SubLayerId, mapLayerIndex: MapLayerIndex)`
+- `moveMapLayerToTop(mapLayerIndex: MapLayerIndex)`
+- `moveMapLayerToBottom(mapLayerIndex: MapLayerIndex)`
+- `moveMapLayerToIndex(fromIndex: number, toIndex: number, isOverlay: boolean)`
+- `anyMapLayersVisible(overlay: boolean)`
+- `getIsBackgroundMapVisible()`
+- `getBackgroundMapGeometry()`
+- `getGlobalGeometryAndHeightRange()`
+- `is3d()`
+- `overrideSubCategory(id: Id64String, ovr: SubCategoryOverride)`
+- `dropSubCategoryOverride(id: Id64String)`
+- `getSubCategoryOverride(id: Id64String)`
+- `enableAllLoadedSubCategories(categoryIds: Id64Arg)`
+- `setSubCategoryVisible(subCategoryId: Id64String, visible: boolean)`
+- `registerSettingsEventListeners()`
+- `createRealityModel(props: ContextRealityModelProps)`
+- `getPlanarClipMaskState(modelId: Id64String)`
+- `overrideTerrainDisplay()`
+- `load()`
+- `queryRenderTimelineProps(timelineId: Id64String)`
+- `changeBackgroundMapProps(props: BackgroundMapProps)`
+- `changeBackgroundMapProvider(props: BackgroundMapProviderProps)`
+- `forEachRealityModel(func: (model: ContextRealityModelState) => void)`
+- `getTileTreeRefs()`
+- `equalState(other: DisplayStyleState)`
+- `changeRenderTimeline(timelineId: Id64String | undefined)`
+- `setScheduleEditing(newScript: RenderSchedule.Script)`
+- `commitScheduleEditing()`
+- `attachRealityModel(props: ContextRealityModelProps)`
+- `detachRealityModelByNameAndUrl(name: string, url: string)`
+- `getOSMBuildingRealityModel()`
+- `setOSMBuildingDisplay(options: OsmBuildingDisplayOptions)`
+- `hasAttachedRealityModel(name: string, url: string)`
+- `getMapLayers(isOverlay: boolean)`
+- `attachMapLayer()`
+- `attachMapLayerProps()`
+- `hasAttachedMapLayer(name: string, source: string, isOverlay: boolean)`
+- `detachMapLayerByNameAndSource(name: string, source: string, isOverlay: boolean)`
+- `detachMapLayerByIndex(mapLayerIndex: MapLayerIndex)`
+- `findMapLayerIndexByNameAndSource(name: string, source: string, isOverlay: boolean)`
+- `mapLayerAtIndex(mapLayerIndex: MapLayerIndex)`
+- `changeBaseMapTransparency(transparency: number)`
+- `changeMapLayerProps(props: Partial<MapLayerProps>, mapLayerIndex: MapLayerIndex)`
+- `changeMapLayerCredentials(mapLayerIndex: MapLayerIndex, userName?: string, password?: string)`
+- `changeMapSubLayerProps(props: Partial<MapSubLayerProps>, subLayerId: SubLayerId, mapLayerIndex: MapLayerIndex)`
+- `moveMapLayerToTop(mapLayerIndex: MapLayerIndex)`
+- `moveMapLayerToBottom(mapLayerIndex: MapLayerIndex)`
+- `moveMapLayerToIndex(fromIndex: number, toIndex: number, isOverlay: boolean)`
+- `anyMapLayersVisible(overlay: boolean)`
+- `getIsBackgroundMapVisible()`
+- `getBackgroundMapGeometry()`
+- `getGlobalGeometryAndHeightRange()`
+- `is3d()`
+- `overrideSubCategory(id: Id64String, ovr: SubCategoryOverride)`
+- `dropSubCategoryOverride(id: Id64String)`
+- `getSubCategoryOverride(id: Id64String)`
+- `enableAllLoadedSubCategories(categoryIds: Id64Arg)`
+- `setSubCategoryVisible(subCategoryId: Id64String, visible: boolean)`
+- `registerSettingsEventListeners()`
+- `createRealityModel(props: ContextRealityModelProps)`
+- `getPlanarClipMaskState(modelId: Id64String)`

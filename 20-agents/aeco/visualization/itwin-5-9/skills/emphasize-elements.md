@@ -1,0 +1,81 @@
+---
+name: core-frontend-emphasize-elements
+description: EmphasizeElements declarations from core-frontend
+---
+
+# EmphasizeElements
+
+## Methods
+
+- `addFeatureOverrides(overrides: FeatureSymbology.Overrides, vp: Viewport)`
+- `createAppearanceFromKey(key: number)`
+- `createOverrideKey(color: ColorDef, override: FeatureOverrideType)`
+- `getOverrideFromKey(key: number)`
+- `createDefaultAppearance()`
+- `getNeverDrawnElements(vp: Viewport)`
+- `getAlwaysDrawnElements(vp: Viewport)`
+- `getHiddenElements(vp: Viewport)`
+- `getIsolatedElements(vp: Viewport)`
+- `getEmphasizedIsolatedElements()`
+- `getEmphasizedElements(vp: Viewport)`
+- `getOverriddenElements()`
+- `getOverriddenElementsByKey(key: number)`
+- `clearNeverDrawnElements(vp: Viewport)`
+- `clearAlwaysDrawnElements(vp: Viewport)`
+- `clearHiddenElements(vp: Viewport)`
+- `clearIsolatedElements(vp: Viewport)`
+- `clearEmphasizedElements(vp: Viewport)`
+- `clearEmphasizedIsolatedElements(vp: Viewport, setToAlwaysDrawn: boolean)`
+- `clearOverriddenElements(vp: Viewport, keyOrIds?: number | Id64Arg)`
+- `updateIdSet(ids: Id64Arg, replace: boolean, existingIds?: Id64Set)`
+- `setNeverDrawnElements(ids: Id64Arg, vp: Viewport, replace?: boolean)`
+- `setAlwaysDrawnElements(ids: Id64Arg, vp: Viewport, exclusive?: boolean, replace?: boolean)`
+- `hideElements(ids: Id64Arg, vp: Viewport, replace?: boolean)`
+- `hideSelectedElements(vp: Viewport, replace?: boolean, clearSelection?: boolean)`
+- `isolateElements(ids: Id64Arg, vp: Viewport, replace?: boolean)`
+- `isolateSelectedElements(vp: Viewport, replace?: boolean, clearSelection?: boolean)`
+- `emphasizeElements(ids: Id64Arg, vp: Viewport, defaultAppearance?: FeatureAppearance, replace?: boolean)`
+- `emphasizeSelectedElements(vp: Viewport, defaultAppearance?: FeatureAppearance, replace?: boolean, clearSelection?: boolean)`
+- `overrideElements(ids: Id64Arg, vp: Viewport, color: ColorDef, override?: FeatureOverrideType, replace?: boolean)`
+- `overrideSelectedElements(vp: Viewport, color: ColorDef, override?: FeatureOverrideType, replace?: boolean, clearSelection?: boolean)`
+- `isActive(vp: Viewport)`
+- `toJSON(vp: Viewport)`
+- `fromJSON(props: EmphasizeElementsProps, vp: Viewport)`
+- `getOrCreate(vp: Viewport)`
+- `clear(vp: Viewport, inactiveOnly?: boolean)`
+- `addFeatureOverrides(overrides: FeatureSymbology.Overrides, vp: Viewport)`
+- `createAppearanceFromKey(key: number)`
+- `createOverrideKey(color: ColorDef, override: FeatureOverrideType)`
+- `getOverrideFromKey(key: number)`
+- `createDefaultAppearance()`
+- `getNeverDrawnElements(vp: Viewport)`
+- `getAlwaysDrawnElements(vp: Viewport)`
+- `getHiddenElements(vp: Viewport)`
+- `getIsolatedElements(vp: Viewport)`
+- `getEmphasizedIsolatedElements()`
+- `getEmphasizedElements(vp: Viewport)`
+- `getOverriddenElements()`
+- `getOverriddenElementsByKey(key: number)`
+- `clearNeverDrawnElements(vp: Viewport)`
+- `clearAlwaysDrawnElements(vp: Viewport)`
+- `clearHiddenElements(vp: Viewport)`
+- `clearIsolatedElements(vp: Viewport)`
+- `clearEmphasizedElements(vp: Viewport)`
+- `clearEmphasizedIsolatedElements(vp: Viewport, setToAlwaysDrawn: boolean)`
+- `clearOverriddenElements(vp: Viewport, keyOrIds?: number | Id64Arg)`
+- `updateIdSet(ids: Id64Arg, replace: boolean, existingIds?: Id64Set)`
+- `setNeverDrawnElements(ids: Id64Arg, vp: Viewport, replace?: boolean)`
+- `setAlwaysDrawnElements(ids: Id64Arg, vp: Viewport, exclusive?: boolean, replace?: boolean)`
+- `hideElements(ids: Id64Arg, vp: Viewport, replace?: boolean)`
+- `hideSelectedElements(vp: Viewport, replace?: boolean, clearSelection?: boolean)`
+- `isolateElements(ids: Id64Arg, vp: Viewport, replace?: boolean)`
+- `isolateSelectedElements(vp: Viewport, replace?: boolean, clearSelection?: boolean)`
+- `emphasizeElements(ids: Id64Arg, vp: Viewport, defaultAppearance?: FeatureAppearance, replace?: boolean)`
+- `emphasizeSelectedElements(vp: Viewport, defaultAppearance?: FeatureAppearance, replace?: boolean, clearSelection?: boolean)`
+- `overrideElements(ids: Id64Arg, vp: Viewport, color: ColorDef, override?: FeatureOverrideType, replace?: boolean)`
+- `overrideSelectedElements(vp: Viewport, color: ColorDef, override?: FeatureOverrideType, replace?: boolean, clearSelection?: boolean)`
+- `isActive(vp: Viewport)`
+- `toJSON(vp: Viewport)`
+- `fromJSON(props: EmphasizeElementsProps, vp: Viewport)`
+- `getOrCreate(vp: Viewport)`
+- `clear(vp: Viewport, inactiveOnly?: boolean)`

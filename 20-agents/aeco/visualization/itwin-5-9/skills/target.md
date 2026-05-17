@@ -1,0 +1,121 @@
+---
+name: core-frontend-target
+description: Target declarations from core-frontend
+---
+
+# Target
+
+## Methods
+
+- `getPlanarClassifier(id: Id64String)`
+- `createPlanarClassifier(properties?: ActiveSpatialClassifier)`
+- `getTextureDrape(id: Id64String)`
+- `getWorldDecorations(decs: GraphicList)`
+- `modelToView(modelPt: XYZ, result?: Point3d)`
+- `allocateFbo()`
+- `disposeFbo()`
+- `pushBranch(branch: Branch)`
+- `pushState(state: BranchState)`
+- `popBranch()`
+- `pushViewClip()`
+- `popViewClip()`
+- `isRangeOutsideActiveVolume(range: Range3d)`
+- `isGeometryOutsideActiveVolume(geom: CachedGeometry)`
+- `pushBatch(batch: Batch)`
+- `popBatch()`
+- `addBatch(batch: Batch)`
+- `onBatchDisposed(batch: Batch)`
+- `updateSolarShadows(context: SceneContext | undefined)`
+- `changeDecorations(decs: Decorations)`
+- `changeScene(scene: Scene)`
+- `onBeforeRender(viewport: Viewport, setSceneNeedRedraw: (redraw: boolean) => void)`
+- `changeTextureDrapes(textureDrapes: TextureDrapeMap | undefined)`
+- `changePlanarClassifiers(planarClassifiers?: PlanarClassifierMap)`
+- `changeDynamics(foreground: GraphicList | undefined, overlay: GraphicList | undefined)`
+- `overrideFeatureSymbology(ovr: FeatureSymbology.Overrides)`
+- `setHiliteSet(hilite: HiliteSet)`
+- `setFlashed(id: Id64String, intensity: number)`
+- `changeFrustum(newFrustum: Frustum, newFraction: number, is3d: boolean)`
+- `changeRenderPlan(plan: RenderPlan)`
+- `drawFrame(sceneMilSecElapsed?: number)`
+- `drawOverlayDecorations()`
+- `reset(_realityMapLayerChanged?: boolean)`
+- `computeEdgeWeight(pass: RenderPass, baseWeight: number)`
+- `computeEdgeLineCode(pass: RenderPass, baseCode: number)`
+- `computeEdgeColor(baseColor: ColorInfo)`
+- `beginPerfMetricFrame(sceneMilSecElapsed?: number, readPixels?: boolean)`
+- `endPerfMetricFrame(readPixels?: boolean)`
+- `beginPerfMetricRecord(operation: string, readPixels?: boolean)`
+- `endPerfMetricRecord(readPixels?: boolean)`
+- `assignFrameStatsCollector(collector: FrameStatsCollector)`
+- `readPixels(rect: ViewRect, selector: Pixel.Selector, receiver: Pixel.Receiver, excludeNonLocatable: boolean, excludedElements?: Iterable<Id64String>)`
+- `queryVisibleTileFeatures(options: QueryTileFeaturesOptions, iModel: IModelConnection, callback: QueryVisibleFeaturesCallback)`
+- `readImagePixels(out: Uint8Array, x: number, y: number, w: number, h: number)`
+- `readImageBuffer(args?: ReadImageBufferArgs)`
+- `copyImageToCanvas(overlayCanvas?: HTMLCanvasElement)`
+- `drawPlanarClassifiers()`
+- `drawSolarShadowMap()`
+- `drawTextureDrapes()`
+- `getAnimationTransformNodeId(animationNodeId: number | undefined)`
+- `_assignDC()`
+- `_beginPaint(fbo: FrameBuffer)`
+- `_endPaint()`
+- `collectStatistics(stats: RenderMemory.Statistics)`
+- `cssViewRectToDeviceViewRect(rect: ViewRect)`
+- `getRenderCommands()`
+- `getPlanarClassifier(id: Id64String)`
+- `createPlanarClassifier(properties?: ActiveSpatialClassifier)`
+- `getTextureDrape(id: Id64String)`
+- `getWorldDecorations(decs: GraphicList)`
+- `modelToView(modelPt: XYZ, result?: Point3d)`
+- `allocateFbo()`
+- `disposeFbo()`
+- `pushBranch(branch: Branch)`
+- `pushState(state: BranchState)`
+- `popBranch()`
+- `pushViewClip()`
+- `popViewClip()`
+- `isRangeOutsideActiveVolume(range: Range3d)`
+- `isGeometryOutsideActiveVolume(geom: CachedGeometry)`
+- `pushBatch(batch: Batch)`
+- `popBatch()`
+- `addBatch(batch: Batch)`
+- `onBatchDisposed(batch: Batch)`
+- `updateSolarShadows(context: SceneContext | undefined)`
+- `changeDecorations(decs: Decorations)`
+- `changeScene(scene: Scene)`
+- `onBeforeRender(viewport: Viewport, setSceneNeedRedraw: (redraw: boolean) => void)`
+- `changeTextureDrapes(textureDrapes: TextureDrapeMap | undefined)`
+- `changePlanarClassifiers(planarClassifiers?: PlanarClassifierMap)`
+- `changeDynamics(foreground: GraphicList | undefined, overlay: GraphicList | undefined)`
+- `overrideFeatureSymbology(ovr: FeatureSymbology.Overrides)`
+- `setHiliteSet(hilite: HiliteSet)`
+- `setFlashed(id: Id64String, intensity: number)`
+- `changeFrustum(newFrustum: Frustum, newFraction: number, is3d: boolean)`
+- `changeRenderPlan(plan: RenderPlan)`
+- `drawFrame(sceneMilSecElapsed?: number)`
+- `drawOverlayDecorations()`
+- `reset(_realityMapLayerChanged?: boolean)`
+- `computeEdgeWeight(pass: RenderPass, baseWeight: number)`
+- `computeEdgeLineCode(pass: RenderPass, baseCode: number)`
+- `computeEdgeColor(baseColor: ColorInfo)`
+- `beginPerfMetricFrame(sceneMilSecElapsed?: number, readPixels?: boolean)`
+- `endPerfMetricFrame(readPixels?: boolean)`
+- `beginPerfMetricRecord(operation: string, readPixels?: boolean)`
+- `endPerfMetricRecord(readPixels?: boolean)`
+- `assignFrameStatsCollector(collector: FrameStatsCollector)`
+- `readPixels(rect: ViewRect, selector: Pixel.Selector, receiver: Pixel.Receiver, excludeNonLocatable: boolean, excludedElements?: Iterable<Id64String>)`
+- `queryVisibleTileFeatures(options: QueryTileFeaturesOptions, iModel: IModelConnection, callback: QueryVisibleFeaturesCallback)`
+- `readImagePixels(out: Uint8Array, x: number, y: number, w: number, h: number)`
+- `readImageBuffer(args?: ReadImageBufferArgs)`
+- `copyImageToCanvas(overlayCanvas?: HTMLCanvasElement)`
+- `drawPlanarClassifiers()`
+- `drawSolarShadowMap()`
+- `drawTextureDrapes()`
+- `getAnimationTransformNodeId(animationNodeId: number | undefined)`
+- `_assignDC()`
+- `_beginPaint(fbo: FrameBuffer)`
+- `_endPaint()`
+- `collectStatistics(stats: RenderMemory.Statistics)`
+- `cssViewRectToDeviceViewRect(rect: ViewRect)`
+- `getRenderCommands()`

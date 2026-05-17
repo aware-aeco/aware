@@ -1,0 +1,97 @@
+---
+name: core-frontend-element-set-tool
+description: ElementSetTool declarations from core-frontend
+---
+
+# ElementSetTool
+
+## Methods
+
+- `wantProcessAgenda(_ev: BeButtonEvent)`
+- `setPreferredElementSource()`
+- `getSelectionSetCandidates(ss: SelectionSet)`
+- `buildSelectionSetAgenda(ss: SelectionSet)`
+- `getGroupIds(id: Id64String)`
+- `getLocateCandidates(hit: HitDetail)`
+- `buildLocateAgenda(hit: HitDetail)`
+- `getAreaOrVolumeSelectionCandidates(vp: Viewport, origin: XAndY, corner: XAndY, method: SelectionMethod, allowOverlaps: boolean, filter?: (id: Id64String) => boolean, includeDecorationsForVolume?: boolean)`
+- `getDragSelectCandidates(vp: Viewport, origin: Point3d, corner: Point3d, method: SelectionMethod, overlap: boolean)`
+- `buildDragSelectAgenda(vp: Viewport, origin: Point3d, corner: Point3d, method: SelectionMethod, overlap: boolean)`
+- `isElementIdValid(id: Id64String, source: ModifyElementSource)`
+- `isElementValidForOperation(hit: HitDetail, _out?: LocateResponse)`
+- `filterHit(hit: HitDetail, out?: LocateResponse)`
+- `doLocate(ev: BeButtonEvent, newSearch: boolean)`
+- `useOverlapSelection(ev: BeButtonEvent)`
+- `selectByPointsStart(ev: BeButtonEvent)`
+- `selectByPointsEnd(ev: BeButtonEvent)`
+- `selectByPointsDecorate(context: DecorateContext)`
+- `decorate(context: DecorateContext)`
+- `onMouseMotion(ev: BeButtonEvent)`
+- `onMouseStartDrag(ev: BeButtonEvent)`
+- `onMouseEndDrag(ev: BeButtonEvent)`
+- `onModifierKeyTransition(_wentDown: boolean, modifier: BeModifierKeys, _event: KeyboardEvent)`
+- `chooseNextHit(ev: BeButtonEvent)`
+- `processResetButton(ev: BeButtonEvent)`
+- `onResetButtonUp(ev: BeButtonEvent)`
+- `onResetButtonDown(ev: BeButtonEvent)`
+- `gatherElements(ev: BeButtonEvent)`
+- `gatherInput(ev: BeButtonEvent)`
+- `processDataButton(ev: BeButtonEvent)`
+- `onDataButtonUp(ev: BeButtonEvent)`
+- `onDataButtonDown(ev: BeButtonEvent)`
+- `initAgendaDynamics()`
+- `onAgendaModified()`
+- `onProcessComplete()`
+- `processAgendaImmediate()`
+- `processAgenda(_ev: BeButtonEvent)`
+- `doProcessSelectionSetImmediate()`
+- `onPostInstall()`
+- `onCleanup()`
+- `onReinitialize()`
+- `onUnsuspend()`
+- `setupAndPromptForNextAction()`
+- `provideToolAssistance(mainInstrText?: string, additionalInstr?: ToolAssistanceInstruction[])`
+- `wantProcessAgenda(_ev: BeButtonEvent)`
+- `setPreferredElementSource()`
+- `getSelectionSetCandidates(ss: SelectionSet)`
+- `buildSelectionSetAgenda(ss: SelectionSet)`
+- `getGroupIds(id: Id64String)`
+- `getLocateCandidates(hit: HitDetail)`
+- `buildLocateAgenda(hit: HitDetail)`
+- `getAreaOrVolumeSelectionCandidates(vp: Viewport, origin: XAndY, corner: XAndY, method: SelectionMethod, allowOverlaps: boolean, filter?: (id: Id64String) => boolean, includeDecorationsForVolume?: boolean)`
+- `getDragSelectCandidates(vp: Viewport, origin: Point3d, corner: Point3d, method: SelectionMethod, overlap: boolean)`
+- `buildDragSelectAgenda(vp: Viewport, origin: Point3d, corner: Point3d, method: SelectionMethod, overlap: boolean)`
+- `isElementIdValid(id: Id64String, source: ModifyElementSource)`
+- `isElementValidForOperation(hit: HitDetail, _out?: LocateResponse)`
+- `filterHit(hit: HitDetail, out?: LocateResponse)`
+- `doLocate(ev: BeButtonEvent, newSearch: boolean)`
+- `useOverlapSelection(ev: BeButtonEvent)`
+- `selectByPointsStart(ev: BeButtonEvent)`
+- `selectByPointsEnd(ev: BeButtonEvent)`
+- `selectByPointsDecorate(context: DecorateContext)`
+- `decorate(context: DecorateContext)`
+- `onMouseMotion(ev: BeButtonEvent)`
+- `onMouseStartDrag(ev: BeButtonEvent)`
+- `onMouseEndDrag(ev: BeButtonEvent)`
+- `onModifierKeyTransition(_wentDown: boolean, modifier: BeModifierKeys, _event: KeyboardEvent)`
+- `chooseNextHit(ev: BeButtonEvent)`
+- `processResetButton(ev: BeButtonEvent)`
+- `onResetButtonUp(ev: BeButtonEvent)`
+- `onResetButtonDown(ev: BeButtonEvent)`
+- `gatherElements(ev: BeButtonEvent)`
+- `gatherInput(ev: BeButtonEvent)`
+- `processDataButton(ev: BeButtonEvent)`
+- `onDataButtonUp(ev: BeButtonEvent)`
+- `onDataButtonDown(ev: BeButtonEvent)`
+- `initAgendaDynamics()`
+- `onAgendaModified()`
+- `onProcessComplete()`
+- `processAgendaImmediate()`
+- `processAgenda(_ev: BeButtonEvent)`
+- `doProcessSelectionSetImmediate()`
+- `onPostInstall()`
+- `onCleanup()`
+- `onReinitialize()`
+- `onUnsuspend()`
+- `setupAndPromptForNextAction()`
+- `provideToolAssistance(mainInstrText?: string, additionalInstr?: ToolAssistanceInstruction[])`

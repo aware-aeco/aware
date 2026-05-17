@@ -1,0 +1,131 @@
+---
+name: core-frontend-system
+description: System declarations from core-frontend
+---
+
+# System
+
+## Methods
+
+- `setDrawBuffers(attachments: GLenum[])`
+- `doIdleWork()`
+- `waitForAllExternalTextures()`
+- `createContext(canvas: HTMLCanvasElement, useWebGL2: boolean, inputContextAttributes?: WebGLContextAttributes)`
+- `create(optionsIn?: RenderSystem.Options)`
+- `dispose()`
+- `onInitialized()`
+- `createTarget(canvas: HTMLCanvasElement)`
+- `createOffscreenTarget(rect: ViewRect)`
+- `createGraphic(options: CustomGraphicBuilderOptions | ViewportGraphicBuilderOptions)`
+- `createPlanarGrid(frustum: Frustum, grid: PlanarGridProps)`
+- `createTerrainMesh(params: RealityMeshParams, transform?: Transform, disableTextureDisposal?: boolean)`
+- `createRealityMeshGraphic(params: MeshMapLayerGraphicParams, disableTextureDisposal?: boolean)`
+- `createRealityMeshGeometry(realityMesh: RealityMeshParams, disableTextureDisposal?: boolean)`
+- `createMeshGeometry(params: MeshParams, viOrigin?: Point3d)`
+- `createPolylineGeometry(params: PolylineParams, viOrigin?: Point3d)`
+- `createPointStringGeometry(params: PointStringParams, viOrigin?: Point3d)`
+- `createAreaPattern(params: PatternGraphicParams)`
+- `createRenderInstances(params: RenderInstancesParams)`
+- `createGraphicFromTemplate(args: CreateGraphicFromTemplateArgs)`
+- `createRenderGraphic(geometry: RenderGeometry, instances?: InstancedGraphicParams | RenderAreaPattern | InstanceBuffers)`
+- `createPointCloudGeometry(args: PointCloudArgs)`
+- `createGraphicList(primitives: RenderGraphic[])`
+- `createGraphicBranch(branch: GraphicBranch, transform: Transform, options?: GraphicBranchOptions)`
+- `createAnimationTransformNode(graphic: RenderGraphic, nodeId: number)`
+- `createBatch(graphic: RenderGraphic, features: RenderFeatureTable, range: ElementAlignedBox3d, options?: BatchOptions)`
+- `createGraphicOwner(owned: RenderGraphic)`
+- `createGraphicLayer(graphic: RenderGraphic, layerId: string)`
+- `createGraphicLayerContainer(graphic: RenderGraphic, drawAsOverlay: boolean, transparency: number, elevation: number)`
+- `createSkyBox(params: RenderSkyBoxParams)`
+- `createScreenSpaceEffectBuilder(params: ScreenSpaceEffectBuilderParams)`
+- `applyRenderState(newState: RenderState)`
+- `createDepthBuffer(width: number, height: number, numSamples?: number)`
+- `createIModelMap(imodel: IModelConnection)`
+- `createRenderMaterial(args: CreateRenderMaterialArgs)`
+- `findMaterial(key: string, imodel: IModelConnection)`
+- `createTexture(args: CreateTextureArgs)`
+- `createTextureFromSource(args: CreateTextureFromSourceArgs)`
+- `createTextureFromElement(id: Id64String, imodel: IModelConnection, params: RenderTextureParams, format: ImageSourceFormat)`
+- `createTextureFromCubeImages(posX: HTMLImageElement, negX: HTMLImageElement, posY: HTMLImageElement, negY: HTMLImageElement, posZ: HTMLImageElement, negZ: HTMLImageElement, imodel: IModelConnection, params: RenderTextureParams)`
+- `getGradientTexture(symb: Gradient.Symb, iModel?: IModelConnection)`
+- `findTexture(key: TextureCacheKey, imodel: IModelConnection)`
+- `createClipVolume(clipVector: ClipVector)`
+- `createBackgroundMapDrape(drapedTree: TileTreeReference, mapTree: MapTileTreeReference)`
+- `getIdMap(imodel: IModelConnection)`
+- `bindTexture2d(unit: TextureUnit, texture: TextureBinding)`
+- `bindTextureCubeMap(unit: TextureUnit, texture: TextureBinding)`
+- `activateTexture2d(unit: TextureUnit, texture: TextureBinding)`
+- `activateTextureCubeMap(unit: TextureUnit, texture: TextureBinding)`
+- `ensureSamplerBound(uniform: UniformHandle, unit: TextureUnit)`
+- `disposeTexture(texture: WebGLTexture)`
+- `enableVertexAttribArray(id: number, instanced: boolean)`
+- `updateVertexAttribArrays()`
+- `vertexAttribDivisor(index: number, divisor: number)`
+- `drawArrays(type: GL.PrimitiveType, first: number, count: number, numInstances: number)`
+- `invalidateFrameBuffer(attachments: number[])`
+- `enableDiagnostics(enable: RenderDiagnostics | undefined)`
+- `loseContext()`
+- `compileAllShaders()`
+- `collectStatistics(stats: RenderMemory.Statistics)`
+- `setMaxAnisotropy(max: number | undefined)`
+- `setDrawBuffers(attachments: GLenum[])`
+- `doIdleWork()`
+- `waitForAllExternalTextures()`
+- `createContext(canvas: HTMLCanvasElement, useWebGL2: boolean, inputContextAttributes?: WebGLContextAttributes)`
+- `create(optionsIn?: RenderSystem.Options)`
+- `dispose()`
+- `onInitialized()`
+- `createTarget(canvas: HTMLCanvasElement)`
+- `createOffscreenTarget(rect: ViewRect)`
+- `createGraphic(options: CustomGraphicBuilderOptions | ViewportGraphicBuilderOptions)`
+- `createPlanarGrid(frustum: Frustum, grid: PlanarGridProps)`
+- `createTerrainMesh(params: RealityMeshParams, transform?: Transform, disableTextureDisposal?: boolean)`
+- `createRealityMeshGraphic(params: MeshMapLayerGraphicParams, disableTextureDisposal?: boolean)`
+- `createRealityMeshGeometry(realityMesh: RealityMeshParams, disableTextureDisposal?: boolean)`
+- `createMeshGeometry(params: MeshParams, viOrigin?: Point3d)`
+- `createPolylineGeometry(params: PolylineParams, viOrigin?: Point3d)`
+- `createPointStringGeometry(params: PointStringParams, viOrigin?: Point3d)`
+- `createAreaPattern(params: PatternGraphicParams)`
+- `createRenderInstances(params: RenderInstancesParams)`
+- `createGraphicFromTemplate(args: CreateGraphicFromTemplateArgs)`
+- `createRenderGraphic(geometry: RenderGeometry, instances?: InstancedGraphicParams | RenderAreaPattern | InstanceBuffers)`
+- `createPointCloudGeometry(args: PointCloudArgs)`
+- `createGraphicList(primitives: RenderGraphic[])`
+- `createGraphicBranch(branch: GraphicBranch, transform: Transform, options?: GraphicBranchOptions)`
+- `createAnimationTransformNode(graphic: RenderGraphic, nodeId: number)`
+- `createBatch(graphic: RenderGraphic, features: RenderFeatureTable, range: ElementAlignedBox3d, options?: BatchOptions)`
+- `createGraphicOwner(owned: RenderGraphic)`
+- `createGraphicLayer(graphic: RenderGraphic, layerId: string)`
+- `createGraphicLayerContainer(graphic: RenderGraphic, drawAsOverlay: boolean, transparency: number, elevation: number)`
+- `createSkyBox(params: RenderSkyBoxParams)`
+- `createScreenSpaceEffectBuilder(params: ScreenSpaceEffectBuilderParams)`
+- `applyRenderState(newState: RenderState)`
+- `createDepthBuffer(width: number, height: number, numSamples?: number)`
+- `createIModelMap(imodel: IModelConnection)`
+- `createRenderMaterial(args: CreateRenderMaterialArgs)`
+- `findMaterial(key: string, imodel: IModelConnection)`
+- `createTexture(args: CreateTextureArgs)`
+- `createTextureFromSource(args: CreateTextureFromSourceArgs)`
+- `createTextureFromElement(id: Id64String, imodel: IModelConnection, params: RenderTextureParams, format: ImageSourceFormat)`
+- `createTextureFromCubeImages(posX: HTMLImageElement, negX: HTMLImageElement, posY: HTMLImageElement, negY: HTMLImageElement, posZ: HTMLImageElement, negZ: HTMLImageElement, imodel: IModelConnection, params: RenderTextureParams)`
+- `getGradientTexture(symb: Gradient.Symb, iModel?: IModelConnection)`
+- `findTexture(key: TextureCacheKey, imodel: IModelConnection)`
+- `createClipVolume(clipVector: ClipVector)`
+- `createBackgroundMapDrape(drapedTree: TileTreeReference, mapTree: MapTileTreeReference)`
+- `getIdMap(imodel: IModelConnection)`
+- `bindTexture2d(unit: TextureUnit, texture: TextureBinding)`
+- `bindTextureCubeMap(unit: TextureUnit, texture: TextureBinding)`
+- `activateTexture2d(unit: TextureUnit, texture: TextureBinding)`
+- `activateTextureCubeMap(unit: TextureUnit, texture: TextureBinding)`
+- `ensureSamplerBound(uniform: UniformHandle, unit: TextureUnit)`
+- `disposeTexture(texture: WebGLTexture)`
+- `enableVertexAttribArray(id: number, instanced: boolean)`
+- `updateVertexAttribArrays()`
+- `vertexAttribDivisor(index: number, divisor: number)`
+- `drawArrays(type: GL.PrimitiveType, first: number, count: number, numInstances: number)`
+- `invalidateFrameBuffer(attachments: number[])`
+- `enableDiagnostics(enable: RenderDiagnostics | undefined)`
+- `loseContext()`
+- `compileAllShaders()`
+- `collectStatistics(stats: RenderMemory.Statistics)`
+- `setMaxAnisotropy(max: number | undefined)`

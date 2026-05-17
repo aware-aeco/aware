@@ -1,0 +1,71 @@
+---
+name: core-frontend-map-layer-imagery-provider
+description: MapLayerImageryProvider declarations from core-frontend
+---
+
+# MapLayerImageryProvider
+
+## Methods
+
+- `resetStatus()`
+- `initialize()`
+- `constructUrl(row: number, column: number, zoomLevel: number)`
+- `addLogoCards(_cards: HTMLTableElement, _viewport: ScreenViewport)`
+- `addAttributions(cards: HTMLTableElement, vp: ScreenViewport)`
+- `_areChildrenAvailable(_tile: ImageryMapTile)`
+- `getPotentialChildIds(quadId: QuadId)`
+- `_generateChildIds(quadId: QuadId, resolveChildren: (childIds: QuadId[]) => void)`
+- `generateChildIds(tile: ImageryMapTile, resolveChildren: (childIds: QuadId[]) => void)`
+- `getToolTip(strings: string[], quadId: QuadId, _carto: Cartographic, tree: ImageryMapTileTree)`
+- `getFeatureInfo(featureInfos: MapLayerFeatureInfo[], _quadId: QuadId, _carto: Cartographic, _tree: ImageryMapTileTree, _hit: HitDetail, _options?: MapFeatureInfoOptions)`
+- `decorate(_context: DecorateContext)`
+- `getImageFromTileResponse(tileResponse: Response, zoomLevel: number)`
+- `setStatus(status: MapLayerImageryProviderStatus)`
+- `onStatusUpdated(_newStatus: MapLayerImageryProviderStatus)`
+- `setRequestAuthorization(headers: Headers)`
+- `makeTileRequest(url: string, timeoutMs?: number, authorization?: string)`
+- `makeRequest(url: string, timeoutMs?: number, authorization?: string)`
+- `loadTile(row: number, column: number, zoomLevel: number)`
+- `toolTipFromUrl(strings: string[], url: string)`
+- `matchesMissingTile(tileData: Uint8Array)`
+- `getEPSG3857X(longitude: number)`
+- `getEPSG3857Y(latitude: number)`
+- `getEPSG4326Lon(x3857: number)`
+- `getEPSG4326Lat(y3857: number)`
+- `getEPSG4326Extent(row: number, column: number, zoomLevel: number)`
+- `getEPSG3857Extent(row: number, column: number, zoomLevel: number)`
+- `getEPSG3857ExtentString(row: number, column: number, zoomLevel: number)`
+- `getEPSG4326TileExtentString(row: number, column: number, zoomLevel: number, latLongAxisOrdering: boolean)`
+- `getEPSG4326ExtentString(tileExtent: WGS84Extent, latLongAxisOrdering: boolean)`
+- `appendCustomParams(url: string)`
+- `resetStatus()`
+- `initialize()`
+- `constructUrl(row: number, column: number, zoomLevel: number)`
+- `addLogoCards(_cards: HTMLTableElement, _viewport: ScreenViewport)`
+- `addAttributions(cards: HTMLTableElement, vp: ScreenViewport)`
+- `_areChildrenAvailable(_tile: ImageryMapTile)`
+- `getPotentialChildIds(quadId: QuadId)`
+- `_generateChildIds(quadId: QuadId, resolveChildren: (childIds: QuadId[]) => void)`
+- `generateChildIds(tile: ImageryMapTile, resolveChildren: (childIds: QuadId[]) => void)`
+- `getToolTip(strings: string[], quadId: QuadId, _carto: Cartographic, tree: ImageryMapTileTree)`
+- `getFeatureInfo(featureInfos: MapLayerFeatureInfo[], _quadId: QuadId, _carto: Cartographic, _tree: ImageryMapTileTree, _hit: HitDetail, _options?: MapFeatureInfoOptions)`
+- `decorate(_context: DecorateContext)`
+- `getImageFromTileResponse(tileResponse: Response, zoomLevel: number)`
+- `setStatus(status: MapLayerImageryProviderStatus)`
+- `onStatusUpdated(_newStatus: MapLayerImageryProviderStatus)`
+- `setRequestAuthorization(headers: Headers)`
+- `makeTileRequest(url: string, timeoutMs?: number, authorization?: string)`
+- `makeRequest(url: string, timeoutMs?: number, authorization?: string)`
+- `loadTile(row: number, column: number, zoomLevel: number)`
+- `toolTipFromUrl(strings: string[], url: string)`
+- `matchesMissingTile(tileData: Uint8Array)`
+- `getEPSG3857X(longitude: number)`
+- `getEPSG3857Y(latitude: number)`
+- `getEPSG4326Lon(x3857: number)`
+- `getEPSG4326Lat(y3857: number)`
+- `getEPSG4326Extent(row: number, column: number, zoomLevel: number)`
+- `getEPSG3857Extent(row: number, column: number, zoomLevel: number)`
+- `getEPSG3857ExtentString(row: number, column: number, zoomLevel: number)`
+- `getEPSG4326TileExtentString(row: number, column: number, zoomLevel: number, latLongAxisOrdering: boolean)`
+- `getEPSG4326ExtentString(tileExtent: WGS84Extent, latLongAxisOrdering: boolean)`
+- `appendCustomParams(url: string)`
