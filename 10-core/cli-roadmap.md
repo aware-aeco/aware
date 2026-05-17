@@ -452,14 +452,89 @@ The bones (text composition, decalog discipline, CLI ergonomics, hand-curated Te
 
 ## v0.23 — Decalog amendment
 
-**Goal:** add an 11th structural truth.
+**Goal:** add the 9th structural truth (the existing decalog has 8, not 10 — "decalog" is a naming convention, not a count).
 
 **Spec changes:**
-- `00-vision/decalog.md` — add truth #11: **"AI composes the plan; deterministic code is the plan."**
+- `00-vision/decalog.md` — add truth #9: **"AI composes the plan; deterministic code is the plan."**
 - Restrict `think-node` / `smart-node` from validation, approval, code-check, or safety-critical paths in apps
-- App-spec `safety:` block refuses AI-runtime nodes
+- App-spec `assert:` section calls out the constraint structurally
 
 **Realistic effort:** 1 day.
+
+---
+
+## v0.24 — Minimum Receipt (`<app>.lock` + Glass Box viewer)
+
+**Goal:** ship the artifact engineers actually read instead of the AI's prose. Compile every app to a deterministic, type-resolved, agent-version-pinned `<app>.lock` sidecar; render it visually via `aware app inspect`.
+
+**Why next:** the persona audit + the 4-agent verification brainstorm both converged on the same insight — engineers will never trust prose composed by an AI; they will trust a deterministic, signed, multi-voice-reviewed artifact the AI's prose compiled into. The lockfile is the foundation; v0.25 layers panel review on top.
+
+**Substrate-correct framing (mandatory):** the lockfile sidecar is named `<app-name>.lock`, never `.flo.lock`. The substrate is extension-agnostic — `.flo` is FloLess's extension; `.app`, `.flow`, `.aware`, and custom extensions all compile to the same lockfile shape.
+
+**Spec changes (`10-core/app-spec.md`):**
+- New "Lockfile sidecar" section defining the `.lock` format
+- Resolved fields: every template `{{ }}` → concrete value; every agent reference → pinned version; every node's input/output schema → resolved type; every write-mode node tagged
+- The lockfile is **the contract** — what the runtime executes, what the engineer reads, what the diff tool diffs
+
+**CLI changes:**
+- `aware app compile <app>` — explicit compile step; emits `<app>.lock` next to the source file
+- `aware app inspect <app>` — opens Glass Box (single-file HTML viewer) in the user's default browser
+- `aware app validate <app>` — runs compile + emits `<app>.lock` as a side effect (replaces the silent-pass behavior)
+- `aware app run <app>` — refuses to execute unless a fresh `.lock` matches the source app's content hash (no drift between read + execution)
+
+**Glass Box viewer (single HTML file, no external runtime):**
+- Topology rendered as a flowchart (vanilla JS + SVG; mirrors the `aware diagram` + force-graph playground)
+- Each edge labeled with the actual data shape that flows through it (`Stream<SheetId>`, `Object{rows: array}`, etc.)
+- Write-mode nodes glow red; read-mode nodes gray
+- Thumbnail panel showing which model elements get touched (per-agent integration)
+- Side panel: "47 elements touched, 1 workset (yours), 0 elements owned by other users, est. 4min"
+
+**Realistic effort:** 2–3 weeks.
+
+---
+
+## v0.25 — Reviewed Receipt (panel + voice packs)
+
+**Goal:** every write-mode node gets a `panel:` block — N voices, different models in different domain hats, all must agree before any commit happens. Voice packs become a new distribution primitive (forkable, version-pinnable, citable embodiments of institutional knowledge).
+
+**Why this is the killer demo:** the 60-second video that reshapes the industry is a structural engineer running an app + watching one model (GPT-5 wearing a UK code-compliance hat) dissent against another (Claude wearing a structural-engineer hat) with a specific BS 9999 §6.2 citation. Today no AI-for-AEC tool does that. With this primitive, "trust the AI" becomes "N different models, in N different domain hats, each owning one slice of the risk."
+
+**Spec changes:**
+- `panel:` block on any write-mode node in the app file
+- Required: `voices:` (list), `require:` (unanimous / majority / quorum-N), `on-dissent:` (halt / log-only / warn)
+- Each voice declares: `model`, `system-prompt` (or `voice-pack:` reference), `jurisdiction` (optional)
+
+**New primitive: voice packs.**
+- `aware voice install @ise/uk-structural-reviewer@2025` pulls a markdown system-prompt + reference-codes folder published by an institution / authoring engineer
+- Decalog #6 says "ship agents, not apps." This generalises: **ship voices.**
+- Voice packs live at `~/.aware/voices/<scope>/<id>/`
+- Forkable (git semantics), version-pinnable (`@2025`), citable (each pack has a DOI-like identifier)
+
+**Receipt artifact:**
+- Every panel-gated commit produces a JSONL receipt:
+  - lockfile hash
+  - panel transcripts (including any dissents)
+  - the actual writes that committed
+  - timestamp + operator signature
+- Receipts land at `~/.aware/receipts/<app>/<run-id>.jsonl`
+- Re-emitted next to the artifact if `engineering.output-seal` (v0.21) is set
+
+**CLI changes:**
+- `aware voice install <pack>` — same shape as agent install
+- `aware voice list` / `describe <pack>` / `uninstall <pack>`
+- `aware app run` — when a panel-gated node is hit, the CLI prints each voice's verdict live, halts on dissent (default)
+
+**Composes with v0.11 (safety contract) + v0.19 (substrate primitives) + v0.21 (engineering envelope) + v0.23 (decalog #9):** the panel doesn't replace those; it's the multi-voice review layer that runs *before* the deterministic write executes.
+
+**Realistic effort:** 3–4 weeks. Heavy on protocol design for voice-pack distribution + panel orchestration.
+
+---
+
+## v0.26 — Stamped Receipt (reference cases + signed JSONL) — *queued, ship when 2–3 firms pilot*
+
+Adds reference-cases-as-contract (engineers' existing `\\fileserver\Tender\2024\Q3\Final` folders become CI gates) + ed25519-signed JSONL receipt. PE-stamp-grade. Insurance-grade. Building-control-grade.
+
+Defer until adoption signals demand it. Don't ship the "stamped" tier until 2–3 engineering firms say "we'd pilot this if our last 5 tender packages still pass."
 
 ---
 
