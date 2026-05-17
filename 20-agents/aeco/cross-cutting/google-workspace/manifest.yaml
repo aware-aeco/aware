@@ -43,8 +43,11 @@ transport:
     sheets:   https://sheets.googleapis.com/v4/spreadsheets/
 
 commands:
+  # ---- Drive (the original 5) -------------------------------------------
+
   list-files:
     lifecycle: single
+    category: curated
     description: List files in Drive matching an optional query.
     inputs:
       query:
@@ -66,6 +69,7 @@ commands:
 
   download-file:
     lifecycle: single
+    category: curated
     description: Download a Drive file's bytes by id.
     inputs:
       file-id: string
@@ -77,6 +81,7 @@ commands:
 
   upload-file:
     lifecycle: single
+    category: curated
     description: Upload bytes to Drive. Uses simple (≤ 5MB) or resumable (large) upload.
     inputs:
       filename:  string
@@ -92,6 +97,7 @@ commands:
 
   read-sheet:
     lifecycle: single
+    category: curated
     description: Read a range of cells from a Google Sheet.
     inputs:
       spreadsheet-id: string
@@ -107,6 +113,8 @@ commands:
 
   write-sheet:
     lifecycle: single
+    category: curated
+    mode: write
     description: Write values to a range in a Google Sheet.
     inputs:
       spreadsheet-id: string
@@ -118,6 +126,315 @@ commands:
       type: single
       schema:
         updated-cells: int
+
+  # ---- Gmail ------------------------------------------------------------
+
+  gmail.send:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Send an email via Gmail. Plain text or HTML body, optional
+      cc / bcc / attachments. Requires the `gmail.send` OAuth scope.
+    inputs:
+      to:
+        type: array
+        items: string
+      cc:
+        type: array
+        items: string
+      bcc:
+        type: array
+        items: string
+      subject: string
+      body:    string
+      content-type:
+        type: enum
+        values: [text, html]
+        default: text
+      attachments:
+        type: array
+        items:
+          path:     string
+          filename: string
+    outputs:
+      type: single
+      schema:
+        message-id: string
+
+  gmail.search:
+    lifecycle: single
+    category: curated
+    description: |
+      Search the user's mailbox using Gmail's `q` search syntax.
+      Examples: `from:client@acme.com newer_than:7d`, `subject:RFI`.
+      Read-only.
+    inputs:
+      query:
+        type: string
+      max-results:
+        type: number
+        default: 25
+    outputs:
+      type: single
+      schema:
+        messages:
+          type: array
+          items:
+            id:          string
+            thread-id:   string
+            subject:     string
+            from:        string
+            received-at: string
+
+  # ---- Calendar ---------------------------------------------------------
+
+  calendar.create-event:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Create a Google Calendar event with attendees + optional Meet link.
+      Time zone is explicit (IANA name) to avoid client-locale ambiguity.
+    inputs:
+      calendar-id:
+        type: string
+        default: primary
+      summary:     string
+      description: string
+      start:
+        type: string
+        description: ISO 8601 with offset, e.g. `2026-05-20T14:00:00+01:00`.
+      end:
+        type: string
+      time-zone:
+        type: string
+        description: IANA name (e.g. `Europe/London`).
+      attendees:
+        type: array
+        items: string
+      location:
+        type: string
+      add-meet-link:
+        type: boolean
+        default: false
+    outputs:
+      type: single
+      schema:
+        event-id: string
+        web-url:  string
+
+  calendar.find-availability:
+    lifecycle: single
+    category: curated
+    description: |
+      Find free time across attendees within a window using freebusy.
+      Read-only. The "schedule next coordination meeting" primitive.
+    inputs:
+      attendees:
+        type: array
+        items: string
+      window-start:
+        type: string
+      window-end:
+        type: string
+      duration-minutes:
+        type: number
+        default: 30
+    outputs:
+      type: single
+      schema:
+        suggestions:
+          type: array
+          items:
+            start: string
+            end:   string
+
+  # ---- Google Chat ------------------------------------------------------
+
+  chat.post-message:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Post a message to a Google Chat space (room / DM). Plain text
+      or Card v2 format.
+    inputs:
+      space-id:
+        type: string
+      text:
+        type: string
+      card:
+        type: object
+        description: |
+          Optional Card v2 JSON. If provided, `text` becomes a fallback.
+    outputs:
+      type: single
+      schema:
+        message-name: string
+        web-url:      string
+
+  chat.post-with-screenshot:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Post a message with an attached image. Image is uploaded first then
+      referenced by URL.
+    inputs:
+      space-id:        string
+      text:            string
+      screenshot-path: string
+    outputs:
+      type: single
+      schema:
+        message-name: string
+        web-url:      string
+
+  # ---- Tasks ------------------------------------------------------------
+
+  tasks.create:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: Create a Google Task. Optional notes + due-date.
+    inputs:
+      tasklist-id:
+        type: string
+        default: '@default'
+      title:
+        type: string
+      notes:
+        type: string
+      due-date:
+        type: string
+        description: ISO 8601 (date-only, time ignored by Tasks API).
+    outputs:
+      type: single
+      schema:
+        task-id: string
+
+  tasks.list:
+    lifecycle: single
+    category: curated
+    description: List tasks in a Tasklist. Optional show-completed.
+    inputs:
+      tasklist-id:
+        type: string
+        default: '@default'
+      show-completed:
+        type: boolean
+        default: false
+    outputs:
+      type: single
+      schema:
+        tasks:
+          type: array
+          items:
+            task-id:  string
+            title:    string
+            status:   string
+            due:      string
+            notes:    string
+
+  tasks.complete:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: Mark a Google Task complete.
+    inputs:
+      task-id: string
+      tasklist-id:
+        type: string
+        default: '@default'
+    outputs:
+      type: single
+      schema:
+        task-id: string
+
+  # ---- Sheets (extended ops) --------------------------------------------
+
+  sheets.worksheet.list:
+    lifecycle: single
+    category: curated
+    description: List worksheet names + IDs in a spreadsheet. Read-only.
+    inputs:
+      spreadsheet-id: string
+    outputs:
+      type: single
+      schema:
+        worksheets:
+          type: array
+          items:
+            name:  string
+            id:    number
+
+  sheets.row.append:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Append a single row to the bottom of a sheet (vs. write-sheet which
+      replaces existing cells). The "log every QA run / RFI" primitive.
+    inputs:
+      spreadsheet-id: string
+      worksheet:      string
+      values:
+        type: array
+        description: Single row of values matching column order.
+    outputs:
+      type: single
+      schema:
+        row-index: number
+
+  # ---- Drive — folder ops + sharing -------------------------------------
+
+  drive.folder.create:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Create a Drive folder. Optional parent (defaults to root).
+      Useful for "create a new project folder structure" workflows.
+    inputs:
+      name: string
+      parent-folder-id:
+        type: string
+        description: Optional.
+    outputs:
+      type: single
+      schema:
+        folder-id: string
+        web-url:   string
+
+  drive.share:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Share a Drive file / folder with one or more users. Sets the
+      permission role (reader / writer / commenter). Default `send-email`
+      is `false` to avoid spamming consultants.
+    inputs:
+      file-id:    string
+      emails:
+        type: array
+        items: string
+      role:
+        type: enum
+        values: [reader, writer, commenter]
+        default: reader
+      send-email:
+        type: boolean
+        default: false
+    outputs:
+      type: single
+      schema:
+        permissions:
+          type: array
+          items:
+            email: string
+            role:  string
 
 skills:
   - auth.md
