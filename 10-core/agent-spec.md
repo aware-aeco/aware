@@ -223,6 +223,126 @@ If an agent tries to touch something it didn't declare, the orchestrator blocks 
 
 ---
 
+## Engineering envelope (v0.21)
+
+Persona audit (structural engineer, **dealbreaker**): *"There is no answer to 'who is liable when your app gets this wrong.' AWARE must produce a calculation package whose every input is auditable, every code-revision pinned, every solver build hashed, every assumption flagged, and every step replayable by a third party with no access to the running engineer's machine."*
+
+v0.21 introduces the **engineering envelope** — a manifest extension on agents (declares what they pin) + an app-spec extension (binds the pins to a run) + a `signed-output` primitive that produces a chain-of-custody record.
+
+### Agent-side declaration
+
+Engineering agents (`tsd-26`, `idea-statica-26`, `csi-api`, `allplan-2025`, etc.) MAY declare an `engineering:` block:
+
+```yaml
+engineering:
+  pinnable:
+    - id: code-of-practice
+      description: Design code + revision + national annex
+      required: true
+      example: 'eurocode-3@2022+uk-na'
+    - id: section-catalogue
+      description: Steel section catalogue revision
+      required: true
+      example: 'bs-4-1@2005'
+    - id: material-catalogue
+      description: Concrete / steel / timber grade catalogue revision
+      required: true
+      example: 'en-10025-2@2019'
+    - id: psi-factors
+      description: Eurocode combination factors (ψ_0, ψ_1, ψ_2)
+      required: false
+      example: 'en-1990@2002+uk-na-2002'
+    - id: solver-build
+      description: Underlying solver binary hash
+      required: true
+      example: 'tsd-26.0.3-build-19834'
+```
+
+The agent's transport binary is responsible for resolving these pins at runtime against the actual installed product. The values appear in the provenance log (per-run record).
+
+### App-side declaration
+
+Apps that produce engineer-signed deliverables MUST pin the envelope explicitly:
+
+```yaml
+engineering:
+  pins:
+    code-of-practice:    'eurocode-3@2022+uk-na'
+    section-catalogue:   'en-10365@2017'
+    material-catalogue:  'en-10025-2@2019'
+    psi-factors:         'en-1990@2002+uk-na-2002'
+    solver-build:        'tsd-26.0.3-build-19834'
+  output-seal:
+    artifact:    '{{ calc-pack.path }}'
+    operator:    '{{ run.operator }}'
+    credential:  '{{ secrets.ceng-seal }}'  # optional digital cert
+```
+
+At install time, `aware app install` resolves the pins against the installed engineering agent's declared pinnable values. Mismatch = install fails with a clear error pointing at which pin doesn't match.
+
+### Unit-typed numerics
+
+The `{{ ... }}` template engine gains optional unit tags. Values can carry SI units that the engine refuses to combine wrongly:
+
+```yaml
+- id: load
+  inline:
+    kind: map
+    description: Compute floor load (UK convention)
+    code: |
+      const dead = aware.units('4.0 kN/m^2');
+      const live = aware.units('2.5 kN/m^2');
+      return aware.units(dead.plus(live));   // returns "6.5 kN/m^2"
+```
+
+Mixing kN/m² with kN/m or m would throw at run time, not produce silent garbage. The expression engine ships with the SI base + derived units library; per-discipline conventions (kip, klf, kN/m) round-trip cleanly.
+
+### `signed-output` topology node
+
+The end-of-run step that produces a chain-of-custody record:
+
+```yaml
+- id: seal
+  signed-output:
+    artifact: '{{ calc-pack.path }}'
+    envelope: '{{ engineering.pins }}'
+    operator: '{{ run.operator }}'
+    credential: '{{ secrets.ceng-seal }}'
+```
+
+Output: a `*.aware-receipt.json` next to the artifact containing:
+- artifact SHA-256
+- envelope pins (all of them)
+- operator id (CEng/PE reference if provided)
+- credential signature (if cert present)
+- run id + timestamp
+- agent versions used
+- expression-engine version
+
+A checker years from now can re-create the receipt against a fresh AWARE install + the same `.flo` + the same pins. Mismatch = the calc is no longer reproducible; investigate.
+
+### What this guarantees
+
+- **Code revisions are visible.** No silent EC3:2005 → EC3:2022 drift.
+- **Section catalogues are visible.** No silent BS 4-1 → EN 10365 drift.
+- **Solver builds are hashed.** A patch release of TSD that quietly changed an LTB rule shows up as a different hash.
+- **Output is sealed.** The receipt JSON is the engineer's accountability artefact.
+
+### What this does NOT guarantee
+
+- That the engineer's assumptions were correct
+- That the loads input were the right loads
+- That the model topology matched the as-built structure
+- That an LLM-composed app didn't misinterpret a clause
+
+Those remain professional-judgment matters — AWARE's job is to make the inputs *visible*, not to make them *correct*.
+
+### Why this exists
+
+Engineer audit, section H: *"My insurer (Zurich, in my case) won't underwrite a calc whose decisive step ran in `aware app run`."* The engineering envelope is the answer — the receipt is what the underwriter sees if they ever ask, "what did this code, this section catalogue, this solver build produce?" and the answer is a SHA + a signed envelope, not "we don't know any more."
+
+---
+
 ## Versioning
 
 - **Semver.** `<major>.<minor>.<patch>`.

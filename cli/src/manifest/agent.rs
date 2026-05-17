@@ -46,11 +46,35 @@ pub struct Agent {
     pub provenance: Option<Provenance>,
     #[allow(dead_code)]
     pub requires: Option<Requires>,
+    /// `engineering:` block — declares pinnable inputs for the engineering
+    /// envelope (v0.21). Engineering agents (TSD, IDEA, CSi, etc.) declare
+    /// what their downstream apps MUST pin to produce reproducible
+    /// calculations. See `10-core/agent-spec.md § Engineering envelope`.
+    #[allow(dead_code)]
+    #[serde(default)]
+    pub engineering: Option<EngineeringDecl>,
     pub transport: Transport,
     #[serde(default)]
     pub commands: BTreeMap<String, Command>,
     #[serde(default)]
     pub skills: Vec<String>,
+}
+
+#[allow(dead_code)]
+#[derive(Debug, Deserialize)]
+pub struct EngineeringDecl {
+    #[serde(default)]
+    pub pinnable: Vec<EngineeringPin>,
+}
+
+#[allow(dead_code)]
+#[derive(Debug, Deserialize)]
+pub struct EngineeringPin {
+    pub id: String,
+    pub description: String,
+    #[serde(default)]
+    pub required: bool,
+    pub example: Option<String>,
 }
 
 #[allow(dead_code)]

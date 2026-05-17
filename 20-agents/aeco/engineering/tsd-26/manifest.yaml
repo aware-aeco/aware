@@ -30,6 +30,28 @@ provenance:
     type: nuget
     version: 26.0.1
   generated-at: 2026-05-17T06:34:38.931569400+00:00
+engineering:
+  pinnable:
+    - id: code-of-practice
+      description: Design code + revision + national annex
+      required: true
+      example: 'eurocode-3@2022+uk-na'
+    - id: section-catalogue
+      description: Steel section catalogue revision
+      required: true
+      example: 'en-10365@2017'
+    - id: material-catalogue
+      description: Concrete + steel grade catalogue revision
+      required: true
+      example: 'en-10025-2@2019'
+    - id: psi-factors
+      description: Eurocode combination factors per EN 1990 + applicable NA
+      required: false
+      example: 'en-1990@2002+uk-na-2002'
+    - id: solver-build
+      description: TSD solver binary hash (auto-resolved by transport)
+      required: true
+      example: 'tsd-26.0.3-build-19834'
 transport:
   cli:
     binary: aware-tsd-26
