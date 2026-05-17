@@ -3,11 +3,12 @@ name: Release
 on:
   push:
     tags:
-      - 'v0.6.*'
-      - 'v0.7.*'
-      - 'v0.8.*'
-      - 'v0.9.*'
-      - 'v1.*'
+      # All v0.x and v1+ versions. The first pattern matches v0.0.x through
+      # v0.99.x; the second matches v1.x and later majors. We used to enumerate
+      # each minor (v0.6.*, v0.7.*, ...) but that broke at v0.10.0 — the new
+      # patterns are forward-compatible.
+      - 'v0.[0-9]*.*'
+      - 'v[1-9]*.*.*'
   workflow_dispatch: {}
 
 jobs:
