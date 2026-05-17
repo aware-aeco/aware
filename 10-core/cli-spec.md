@@ -41,10 +41,15 @@ aware
 │   ├── export <app> <output-path>      copy .flo file out
 │   └── logs <app> [--instance <id>] [--tail]   read execution traces
 │
-├── connect <integration>               provision OAuth credentials (PKCE)
+├── connect <integration>               provision OAuth credentials (default: browser-paste)
 │   ├── --as <alias>                    named credential for multi-account
 │   ├── --refresh                       force refresh
-│   └── --scopes <s1,s2>                add scopes (Google etc.)
+│   ├── --scopes <s1,s2>                add scopes (Google etc.)
+│   ├── --from-file <path>              load token from file (CI / service accounts)
+│   ├── --from-env                      load token from AWARE_TOKEN_<INTEGRATION>
+│   ├── --oauth                         PKCE loopback flow (registered OAuth app)
+│   ├── --device-code                   RFC 8628 device-code flow (headless / IT-managed) (v0.13)
+│   └── --tenant <id-or-domain>         M365 tenant override (v0.13)
 │
 ├── disconnect <integration> [--as <alias>]    delete credential file
 │

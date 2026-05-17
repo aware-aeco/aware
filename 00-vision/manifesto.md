@@ -58,6 +58,8 @@ AECO is where we ship first because:
 - The tacit knowledge is deepest here (decades of structural-engineering intuition that dies with each retirement)
 - The integration pain is most acute (a single fab pipeline often touches 7+ vendors)
 
+The trajectory is well-documented. Big Data Construction's [history of BIM](https://bigdataconstruction.com/history-of-bim/) traces it: CAD → early BIM → open-vs-closed competition → Autodesk consolidation → an open "what now?" today. Their diagnosis matches the decalog: **construction's core problem is data monopoly and opacity, not missing software.** AWARE is the "what now?" — the layer above BIM where the data is text and the runtime is AI.
+
 If AWARE works in AECO, it works anywhere.
 
 ---

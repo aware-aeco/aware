@@ -35,6 +35,17 @@ pub struct ConnectArgs {
     /// Use the OAuth/PKCE flow instead of paste-form (requires AWARE_OAUTH_*_CLIENT_ID).
     #[arg(long)]
     pub oauth: bool,
+
+    /// Use the RFC 8628 device-code flow — for headless / IT-managed
+    /// workstations where browser-localhost loopback isn't available. (v0.13)
+    #[arg(long = "device-code")]
+    pub device_code: bool,
+
+    /// Microsoft tenant id (or onmicrosoft.com domain) — overrides the
+    /// `common` endpoint with a tenant-specific one. Required by IT
+    /// departments that enforce tenant restrictions. M365 only. (v0.13)
+    #[arg(long)]
+    pub tenant: Option<String>,
 }
 
 #[derive(Args, Debug)]
@@ -58,13 +69,23 @@ pub fn run_connect(args: ConnectArgs, _ctx: &Context) -> Result<(), AwareError> 
     }
 
     // Mutually exclusive: only one input source allowed
-    let modes_set = [args.from_file.is_some(), args.from_env, args.oauth]
-        .iter()
-        .filter(|b| **b)
-        .count();
+    let modes_set = [
+        args.from_file.is_some(),
+        args.from_env,
+        args.oauth,
+        args.device_code,
+    ]
+    .iter()
+    .filter(|b| **b)
+    .count();
     if modes_set > 1 {
         return Err(AwareError::Validation(
-            "at most one of --from-file, --from-env, --oauth may be set".into(),
+            "at most one of --from-file, --from-env, --oauth, --device-code may be set".into(),
+        ));
+    }
+    if args.tenant.is_some() && args.integration != "microsoft-365" {
+        return Err(AwareError::Validation(
+            "--tenant is only supported for microsoft-365 today".into(),
         ));
     }
 
@@ -72,6 +93,9 @@ pub fn run_connect(args: ConnectArgs, _ctx: &Context) -> Result<(), AwareError> 
         load_token_from_file(path, &args.integration)?
     } else if args.from_env {
         load_token_from_env(&args.integration)?
+    } else if args.device_code {
+        let extra_scopes = parse_scopes(args.scopes.as_deref());
+        crate::auth::device::run_device_code_flow(&cfg, args.tenant.as_deref(), &extra_scopes)?
     } else if args.oauth {
         let extra_scopes = parse_scopes(args.scopes.as_deref());
         crate::auth::pkce::run_pkce_flow(&cfg, &extra_scopes)?

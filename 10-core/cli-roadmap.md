@@ -495,6 +495,24 @@ These come up; the answer is no. Documented here so they don't keep coming up.
 
 ---
 
+## Parked / deferred ideas
+
+Logged here so they don't keep coming up, but not strictly rejected the way the anti-roadmap is. Each could revive when a concrete consumer asks for it.
+
+### Official Docker base image (`ghcr.io/aware-aeco/aware:0.x`)
+
+**Priority:** low — no concrete consumer today.
+
+**What:** Publish an official Docker image on each release. Downstream packagers (FloLess, third-party SaaS, internal IT) base their containers on it; demo / CI / "try-without-installing" use cases also benefit.
+
+**Cost:** ~1 day of CI work — Dockerfile + GitHub Actions release job. Near-zero ongoing maintenance.
+
+**Why parked:** Modest value with no concrete consumer today. Persona audit didn't flag it. v0.10–v0.23 catalogue gaps are higher leverage. Add it when FloLess (or another downstream product) starts shipping a containerized AWARE-based product and would actually consume the image.
+
+**Discussed:** 2026-05-17, during a "should AWARE support team deployment?" brainstorm. Conclusion: team deployment is overwhelmingly a downstream concern (FloLess et al), not an AWARE substrate concern. AWARE stays local-first per decalog #4; the Docker image is the only piece that might legitimately belong upstream. Host CAD software (Tekla / Revit / Rhino) can never run on the team box — it stays on the engineer's Windows machine — which further narrows what a team server would even be useful for.
+
+---
+
 ## Notes for the implementer
 
 Read [`cli-spec.md`](./cli-spec.md) before writing any command. Read the [`decalog`](../00-vision/decalog.md) when you're tempted to add a feature that "would be nice." Read the parent [CLAUDE.md](../CLAUDE.md) for the engineering rules that apply across every session.
