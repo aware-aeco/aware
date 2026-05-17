@@ -1,0 +1,285 @@
+---
+name: core-frontend-viewport
+description: Viewport declarations from core-frontend
+---
+
+# Viewport
+
+## Methods
+
+- `setRenderPlanValid()`
+- `setAllValid()`
+- `invalidateDecorations()`
+- `invalidateScene()`
+- `invalidateRenderPlan()`
+- `invalidateController()`
+- `setValidScene()`
+- `requestRedraw()`
+- `setLightSettings(settings: LightSettings)`
+- `setSolarShadowSettings(settings: SolarShadowSettings)`
+- `overrideDisplayStyle(overrides: DisplayStyleSettingsProps)`
+- `dropSubCategoryOverride(id: Id64String)`
+- `overrideSubCategory(id: Id64String, ovr: SubCategoryOverride)`
+- `getSubCategoryOverride(id: Id64String)`
+- `getSubCategoryAppearance(id: Id64String)`
+- `isSubCategoryVisible(id: Id64String)`
+- `overrideModelAppearance(id: Id64String, ovr: FeatureAppearance)`
+- `dropModelAppearanceOverride(id: Id64String)`
+- `changeCategoryDisplay(categories: Id64Arg, display: boolean, enableAllSubCategories?: boolean, batchNotify?: boolean)`
+- `getSubCategories(categoryId: Id64String)`
+- `changeSubCategoryDisplay(subCategoryId: Id64String, display: boolean)`
+- `changeBackgroundMapProps(props: BackgroundMapProps)`
+- `changeBackgroundMapProvider(props: BackgroundMapProviderProps)`
+- `getMapLayerImageryProvider(mapLayerIndex: MapLayerIndex)`
+- `getMapLayerScaleRangeVisibility(mapLayerIndex: MapLayerIndex)`
+- `getMapLayerIndexesFromIds(mapTreeId: Id64String, layerTreeId: Id64String)`
+- `getMapLayerRange(mapLayerIndex: MapLayerIndex)`
+- `viewMapLayerRange(mapLayerIndex: MapLayerIndex, vp: ScreenViewport)`
+- `resetMapLayer(mapLayerIndex: MapLayerIndex)`
+- `viewsModel(modelId: Id64String)`
+- `changeViewedModel2d(baseModelId: Id64String, options?: ChangeViewedModel2dOptions & ViewChangeOptions & MarginOptions)`
+- `changeViewedModels(modelIds: Id64Arg)`
+- `replaceViewedModels(modelIds: Id64Arg)`
+- `changeModelDisplay(models: Id64Arg, display: boolean)`
+- `addViewedModels(models: Id64Arg)`
+- `getToolTip(hit: HitDetail)`
+- `getMapFeatureInfo(hit: HitDetail, options?: MapFeatureInfoOptions)`
+- `initialize()`
+- `dispose()`
+- `attachToView()`
+- `detachFromView()`
+- `clearAlwaysDrawn()`
+- `clearNeverDrawn()`
+- `setNeverDrawn(ids: Id64Set)`
+- `setAlwaysDrawn(ids: Id64Set, exclusive?: boolean)`
+- `addModelSubCategoryVisibilityOverrides(fs: FeatureSymbology.Overrides, ovrs: Id64.Uint32Map<Id64.Uint32Set>)`
+- `addFeatureOverrideProvider(provider: FeatureOverrideProvider)`
+- `dropFeatureOverrideProvider(provider: FeatureOverrideProvider)`
+- `findFeatureOverrideProvider(predicate: (provider: FeatureOverrideProvider) => boolean)`
+- `findFeatureOverrideProviderOfType(type: Constructor<T>)`
+- `addFeatureOverrides(ovrs: FeatureSymbology.Overrides)`
+- `setFeatureOverrideProviderChanged()`
+- `invalidateSymbologyOverrides()`
+- `tiledGraphicsProviderRefs()`
+- `forEachMapTreeRef(func: (ref: TileTreeReference) => void)`
+- `forEachTileTreeRef(func: (ref: TileTreeReference) => void)`
+- `getTileTreeRefs()`
+- `discloseTileTrees(trees: DisclosedTileTreeSet)`
+- `addTiledGraphicsProvider(provider: TiledGraphicsProvider)`
+- `dropTiledGraphicsProvider(provider: TiledGraphicsProvider)`
+- `hasTiledGraphicsProvider(provider: TiledGraphicsProvider)`
+- `mapLayerFromHit(hit: HitDetail)`
+- `mapLayerFromIds(mapTreeId: Id64String, layerTreeId: Id64String)`
+- `getTerrainHeightRange()`
+- `setViewedCategoriesPerModelChanged()`
+- `markSelectionSetDirty()`
+- `changeDynamics(dynamics: GraphicList | undefined, overlay: GraphicList | undefined)`
+- `getAuxCoordRotation(result?: Matrix3d)`
+- `getAuxCoordOrigin(result?: Point3d)`
+- `toViewOrientation(from: XYZ, to?: XYZ)`
+- `fromViewOrientation(from: XYZ, to?: XYZ)`
+- `changeView(view: ViewState, _opts?: ViewChangeOptions)`
+- `isPointVisibleXY(point: Point3d, coordSys?: CoordSystem, borderPaddingFactor?: number)`
+- `determineVisibleDepthRange(rect?: ViewRect, result?: DepthRangeNpc)`
+- `turnCameraOff()`
+- `turnCameraOn(lensAngle?: Angle)`
+- `setStandardRotation(id: StandardViewId)`
+- `setupFromView(pose?: ViewPose)`
+- `synchWithView(_options?: ViewChangeOptions)`
+- `viewToNpcArray(pts: Point3d[])`
+- `npcToViewArray(pts: Point3d[])`
+- `viewToNpc(pt: Point3d, out?: Point3d)`
+- `npcToView(pt: Point3d, out?: Point3d)`
+- `worldToNpcArray(pts: Point3d[])`
+- `npcToWorldArray(pts: Point3d[])`
+- `worldToViewArray(pts: Point3d[])`
+- `worldToView4dArray(worldPts: Point3d[], viewPts: Point4d[])`
+- `viewToWorldArray(pts: Point3d[])`
+- `view4dToWorldArray(viewPts: Point4d[], worldPts: Point3d[])`
+- `worldToNpc(pt: XYAndZ, out?: Point3d)`
+- `npcToWorld(pt: XYAndZ, out?: Point3d)`
+- `worldToView(input: XYAndZ, out?: Point3d)`
+- `worldToView4d(input: XYAndZ, out?: Point4d)`
+- `viewToWorld(input: XYAndZ, out?: Point3d)`
+- `view4dToWorld(input: Point4d, out?: Point3d)`
+- `pixelsFromInches(inches: number)`
+- `getFrustum(sys?: CoordSystem, adjustedBox?: boolean, box?: Frustum)`
+- `getWorldFrustum(box?: Frustum)`
+- `scroll(screenDist: XAndY, options?: ViewChangeOptions)`
+- `zoom(newCenter: Point3d | undefined, factor: number, options?: ViewChangeOptions & MarginOptions & OnViewExtentsError)`
+- `zoomToPlacementProps(placementProps: PlacementProps[], options?: ViewChangeOptions & MarginOptions & ZoomToOptions)`
+- `zoomToPlacements(placements: Placement[], options?: ViewChangeOptions & MarginOptions & ZoomToOptions)`
+- `zoomToElementProps(elementProps: ElementProps[], options?: ViewChangeOptions & MarginOptions & ZoomToOptions)`
+- `zoomToElements(ids: Id64Arg, options?: ViewChangeOptions & MarginOptions & ZoomToOptions)`
+- `zoomToVolume(volume: LowAndHighXYZ | LowAndHighXY, options?: ViewChangeOptions & MarginOptions)`
+- `setupViewFromFrustum(inFrustum: Frustum)`
+- `computeViewRange()`
+- `setAnimator(animator?: Animator)`
+- `applyViewState(val: ViewState)`
+- `updateChangeFlags(newView: ViewState)`
+- `pointToGrid(point: Point3d)`
+- `getPixelSizeAtPoint(point?: Point3d)`
+- `getContrastToBackgroundColor()`
+- `createSceneContext()`
+- `createScene(context: SceneContext)`
+- `validateRenderPlan()`
+- `renderFrame()`
+- `addDecorations(_decorations: Decorations)`
+- `readPixels(rect: ViewRect, selector: Pixel.Selector, receiver: Pixel.Receiver, excludeNonLocatable?: boolean)`
+- `readPixels(args: ReadPixelsArgs)`
+- `isPixelSelectable(pixel: Pixel.Data)`
+- `readImageBuffer(args?: ReadImageBufferArgs)`
+- `readImageToCanvas()`
+- `readImageToCanvas(options: ReadImageToCanvasOptions)`
+- `hasAdditionalTiles()`
+- `waitForSceneCompletion()`
+- `getPixelDataNpcPoint(pixels: Pixel.Buffer, x: number, y: number, out?: Point3d)`
+- `getPixelDataWorldPoint(args: GetPixelDataWorldPointArgs)`
+- `queryVisibleFeatures(options: QueryVisibleFeaturesOptions, callback: QueryVisibleFeaturesCallback)`
+- `collectStatistics(stats: RenderMemory.Statistics)`
+- `refreshForModifiedModels(modelIds: Id64Arg | undefined)`
+- `setTileSizeModifier(modifier: number | undefined)`
+- `cssPixelsToDevicePixels(cssPixels: number)`
+- `setModelDisplayTransformProvider(provider: ModelDisplayTransformProvider)`
+- `addScreenSpaceEffect(effectName: string)`
+- `removeScreenSpaceEffects()`
+- `addOnAnalysisStyleChangedListener(listener: (newStyle: AnalysisStyle | undefined) => void)`
+- `onRequestStateChanged()`
+- `setRenderPlanValid()`
+- `setAllValid()`
+- `invalidateDecorations()`
+- `invalidateScene()`
+- `invalidateRenderPlan()`
+- `invalidateController()`
+- `setValidScene()`
+- `requestRedraw()`
+- `setLightSettings(settings: LightSettings)`
+- `setSolarShadowSettings(settings: SolarShadowSettings)`
+- `overrideDisplayStyle(overrides: DisplayStyleSettingsProps)`
+- `dropSubCategoryOverride(id: Id64String)`
+- `overrideSubCategory(id: Id64String, ovr: SubCategoryOverride)`
+- `getSubCategoryOverride(id: Id64String)`
+- `getSubCategoryAppearance(id: Id64String)`
+- `isSubCategoryVisible(id: Id64String)`
+- `overrideModelAppearance(id: Id64String, ovr: FeatureAppearance)`
+- `dropModelAppearanceOverride(id: Id64String)`
+- `changeCategoryDisplay(categories: Id64Arg, display: boolean, enableAllSubCategories?: boolean, batchNotify?: boolean)`
+- `getSubCategories(categoryId: Id64String)`
+- `changeSubCategoryDisplay(subCategoryId: Id64String, display: boolean)`
+- `changeBackgroundMapProps(props: BackgroundMapProps)`
+- `changeBackgroundMapProvider(props: BackgroundMapProviderProps)`
+- `getMapLayerImageryProvider(mapLayerIndex: MapLayerIndex)`
+- `getMapLayerScaleRangeVisibility(mapLayerIndex: MapLayerIndex)`
+- `getMapLayerIndexesFromIds(mapTreeId: Id64String, layerTreeId: Id64String)`
+- `getMapLayerRange(mapLayerIndex: MapLayerIndex)`
+- `viewMapLayerRange(mapLayerIndex: MapLayerIndex, vp: ScreenViewport)`
+- `resetMapLayer(mapLayerIndex: MapLayerIndex)`
+- `viewsModel(modelId: Id64String)`
+- `changeViewedModel2d(baseModelId: Id64String, options?: ChangeViewedModel2dOptions & ViewChangeOptions & MarginOptions)`
+- `changeViewedModels(modelIds: Id64Arg)`
+- `replaceViewedModels(modelIds: Id64Arg)`
+- `changeModelDisplay(models: Id64Arg, display: boolean)`
+- `addViewedModels(models: Id64Arg)`
+- `getToolTip(hit: HitDetail)`
+- `getMapFeatureInfo(hit: HitDetail, options?: MapFeatureInfoOptions)`
+- `initialize()`
+- `dispose()`
+- `attachToView()`
+- `detachFromView()`
+- `clearAlwaysDrawn()`
+- `clearNeverDrawn()`
+- `setNeverDrawn(ids: Id64Set)`
+- `setAlwaysDrawn(ids: Id64Set, exclusive?: boolean)`
+- `addModelSubCategoryVisibilityOverrides(fs: FeatureSymbology.Overrides, ovrs: Id64.Uint32Map<Id64.Uint32Set>)`
+- `addFeatureOverrideProvider(provider: FeatureOverrideProvider)`
+- `dropFeatureOverrideProvider(provider: FeatureOverrideProvider)`
+- `findFeatureOverrideProvider(predicate: (provider: FeatureOverrideProvider) => boolean)`
+- `findFeatureOverrideProviderOfType(type: Constructor<T>)`
+- `addFeatureOverrides(ovrs: FeatureSymbology.Overrides)`
+- `setFeatureOverrideProviderChanged()`
+- `invalidateSymbologyOverrides()`
+- `tiledGraphicsProviderRefs()`
+- `forEachMapTreeRef(func: (ref: TileTreeReference) => void)`
+- `forEachTileTreeRef(func: (ref: TileTreeReference) => void)`
+- `getTileTreeRefs()`
+- `discloseTileTrees(trees: DisclosedTileTreeSet)`
+- `addTiledGraphicsProvider(provider: TiledGraphicsProvider)`
+- `dropTiledGraphicsProvider(provider: TiledGraphicsProvider)`
+- `hasTiledGraphicsProvider(provider: TiledGraphicsProvider)`
+- `mapLayerFromHit(hit: HitDetail)`
+- `mapLayerFromIds(mapTreeId: Id64String, layerTreeId: Id64String)`
+- `getTerrainHeightRange()`
+- `setViewedCategoriesPerModelChanged()`
+- `markSelectionSetDirty()`
+- `changeDynamics(dynamics: GraphicList | undefined, overlay: GraphicList | undefined)`
+- `getAuxCoordRotation(result?: Matrix3d)`
+- `getAuxCoordOrigin(result?: Point3d)`
+- `toViewOrientation(from: XYZ, to?: XYZ)`
+- `fromViewOrientation(from: XYZ, to?: XYZ)`
+- `changeView(view: ViewState, _opts?: ViewChangeOptions)`
+- `isPointVisibleXY(point: Point3d, coordSys?: CoordSystem, borderPaddingFactor?: number)`
+- `determineVisibleDepthRange(rect?: ViewRect, result?: DepthRangeNpc)`
+- `turnCameraOff()`
+- `turnCameraOn(lensAngle?: Angle)`
+- `setStandardRotation(id: StandardViewId)`
+- `setupFromView(pose?: ViewPose)`
+- `synchWithView(_options?: ViewChangeOptions)`
+- `viewToNpcArray(pts: Point3d[])`
+- `npcToViewArray(pts: Point3d[])`
+- `viewToNpc(pt: Point3d, out?: Point3d)`
+- `npcToView(pt: Point3d, out?: Point3d)`
+- `worldToNpcArray(pts: Point3d[])`
+- `npcToWorldArray(pts: Point3d[])`
+- `worldToViewArray(pts: Point3d[])`
+- `worldToView4dArray(worldPts: Point3d[], viewPts: Point4d[])`
+- `viewToWorldArray(pts: Point3d[])`
+- `view4dToWorldArray(viewPts: Point4d[], worldPts: Point3d[])`
+- `worldToNpc(pt: XYAndZ, out?: Point3d)`
+- `npcToWorld(pt: XYAndZ, out?: Point3d)`
+- `worldToView(input: XYAndZ, out?: Point3d)`
+- `worldToView4d(input: XYAndZ, out?: Point4d)`
+- `viewToWorld(input: XYAndZ, out?: Point3d)`
+- `view4dToWorld(input: Point4d, out?: Point3d)`
+- `pixelsFromInches(inches: number)`
+- `getFrustum(sys?: CoordSystem, adjustedBox?: boolean, box?: Frustum)`
+- `getWorldFrustum(box?: Frustum)`
+- `scroll(screenDist: XAndY, options?: ViewChangeOptions)`
+- `zoom(newCenter: Point3d | undefined, factor: number, options?: ViewChangeOptions & MarginOptions & OnViewExtentsError)`
+- `zoomToPlacementProps(placementProps: PlacementProps[], options?: ViewChangeOptions & MarginOptions & ZoomToOptions)`
+- `zoomToPlacements(placements: Placement[], options?: ViewChangeOptions & MarginOptions & ZoomToOptions)`
+- `zoomToElementProps(elementProps: ElementProps[], options?: ViewChangeOptions & MarginOptions & ZoomToOptions)`
+- `zoomToElements(ids: Id64Arg, options?: ViewChangeOptions & MarginOptions & ZoomToOptions)`
+- `zoomToVolume(volume: LowAndHighXYZ | LowAndHighXY, options?: ViewChangeOptions & MarginOptions)`
+- `setupViewFromFrustum(inFrustum: Frustum)`
+- `computeViewRange()`
+- `setAnimator(animator?: Animator)`
+- `applyViewState(val: ViewState)`
+- `updateChangeFlags(newView: ViewState)`
+- `pointToGrid(point: Point3d)`
+- `getPixelSizeAtPoint(point?: Point3d)`
+- `getContrastToBackgroundColor()`
+- `createSceneContext()`
+- `createScene(context: SceneContext)`
+- `validateRenderPlan()`
+- `renderFrame()`
+- `addDecorations(_decorations: Decorations)`
+- `readPixels(rect: ViewRect, selector: Pixel.Selector, receiver: Pixel.Receiver, excludeNonLocatable?: boolean)`
+- `readPixels(args: ReadPixelsArgs)`
+- `isPixelSelectable(pixel: Pixel.Data)`
+- `readImageBuffer(args?: ReadImageBufferArgs)`
+- `readImageToCanvas()`
+- `readImageToCanvas(options: ReadImageToCanvasOptions)`
+- `hasAdditionalTiles()`
+- `waitForSceneCompletion()`
+- `getPixelDataNpcPoint(pixels: Pixel.Buffer, x: number, y: number, out?: Point3d)`
+- `getPixelDataWorldPoint(args: GetPixelDataWorldPointArgs)`
+- `queryVisibleFeatures(options: QueryVisibleFeaturesOptions, callback: QueryVisibleFeaturesCallback)`
+- `collectStatistics(stats: RenderMemory.Statistics)`
+- `refreshForModifiedModels(modelIds: Id64Arg | undefined)`
+- `setTileSizeModifier(modifier: number | undefined)`
+- `cssPixelsToDevicePixels(cssPixels: number)`
+- `setModelDisplayTransformProvider(provider: ModelDisplayTransformProvider)`
+- `addScreenSpaceEffect(effectName: string)`
+- `removeScreenSpaceEffects()`
+- `addOnAnalysisStyleChangedListener(listener: (newStyle: AnalysisStyle | undefined) => void)`
+- `onRequestStateChanged()`

@@ -1,0 +1,5 @@
+# texture-cube-handle-create-for-cube-images
+
+Lifecycle: single
+
+TextureCubeHandle.createForCubeImages(posX: HTMLImageElement, negX: HTMLImageElement, posY: HTMLImageElement, negY: HTMLImageElement, posZ: HTMLImageElement, negZ: HTMLImageElement)

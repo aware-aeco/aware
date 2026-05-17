@@ -1,0 +1,75 @@
+---
+name: core-frontend-screen-viewport
+description: ScreenViewport declarations from core-frontend
+---
+
+# ScreenViewport
+
+## Methods
+
+- `create(parentDiv: HTMLDivElement, view: ViewState)`
+- `invalidateScene()`
+- `invalidateCachedDecorations(decorator: ViewportDecorator)`
+- `markAllChildrenForRemoval(el: HTMLDivElement)`
+- `removeMarkedChildren(el: HTMLDivElement)`
+- `removeAllChildren(el: HTMLDivElement)`
+- `setToParentSize(div: HTMLElement)`
+- `addNewDiv(className: string, overflowHidden: boolean, z: number)`
+- `addLogo()`
+- `openToolTip(message: HTMLElement | string, location?: XAndY, options?: ToolTipOptions)`
+- `mousePosFromEvent(ev: MouseEvent)`
+- `mouseMovementFromEvent(ev: MouseEvent)`
+- `onViewManagerAdd()`
+- `onViewManagerDrop()`
+- `pickNearestVisibleGeometry(pickPoint: Point3d, radius?: number, allowNonLocatable?: boolean, out?: Point3d)`
+- `pickDepthPoint(pickPoint: Point3d, radius?: number, options?: DepthPointOptions)`
+- `animateFrustumChange(options?: ViewAnimationOptions)`
+- `animateToCurrent(_start: Frustum, options?: ViewAnimationOptions)`
+- `animateFlyoverToGlobalLocation(destination: GlobalLocation)`
+- `pickCanvasDecoration(pt: XAndY)`
+- `getClientRect()`
+- `addDecorations(decorations: Decorations)`
+- `setCursor(cursor?: string)`
+- `synchWithView(options?: ViewChangeOptions)`
+- `validateRenderPlan()`
+- `changeView(view: ViewState, opts?: ViewChangeOptions)`
+- `clearViewUndo()`
+- `saveViewUndo()`
+- `doUndo(animationTime?: BeDuration)`
+- `doRedo(animationTime?: BeDuration)`
+- `resetUndo()`
+- `drawLocateCursor(context: DecorateContext, viewPt: Point3d, aperture: number, isLocateCircleOn: boolean, hit?: HitDetail)`
+- `waitForSceneCompletion()`
+- `create(parentDiv: HTMLDivElement, view: ViewState)`
+- `invalidateScene()`
+- `invalidateCachedDecorations(decorator: ViewportDecorator)`
+- `markAllChildrenForRemoval(el: HTMLDivElement)`
+- `removeMarkedChildren(el: HTMLDivElement)`
+- `removeAllChildren(el: HTMLDivElement)`
+- `setToParentSize(div: HTMLElement)`
+- `addNewDiv(className: string, overflowHidden: boolean, z: number)`
+- `addLogo()`
+- `openToolTip(message: HTMLElement | string, location?: XAndY, options?: ToolTipOptions)`
+- `mousePosFromEvent(ev: MouseEvent)`
+- `mouseMovementFromEvent(ev: MouseEvent)`
+- `onViewManagerAdd()`
+- `onViewManagerDrop()`
+- `pickNearestVisibleGeometry(pickPoint: Point3d, radius?: number, allowNonLocatable?: boolean, out?: Point3d)`
+- `pickDepthPoint(pickPoint: Point3d, radius?: number, options?: DepthPointOptions)`
+- `animateFrustumChange(options?: ViewAnimationOptions)`
+- `animateToCurrent(_start: Frustum, options?: ViewAnimationOptions)`
+- `animateFlyoverToGlobalLocation(destination: GlobalLocation)`
+- `pickCanvasDecoration(pt: XAndY)`
+- `getClientRect()`
+- `addDecorations(decorations: Decorations)`
+- `setCursor(cursor?: string)`
+- `synchWithView(options?: ViewChangeOptions)`
+- `validateRenderPlan()`
+- `changeView(view: ViewState, opts?: ViewChangeOptions)`
+- `clearViewUndo()`
+- `saveViewUndo()`
+- `doUndo(animationTime?: BeDuration)`
+- `doRedo(animationTime?: BeDuration)`
+- `resetUndo()`
+- `drawLocateCursor(context: DecorateContext, viewPt: Point3d, aperture: number, isLocateCircleOn: boolean, hit?: HitDetail)`
+- `waitForSceneCompletion()`

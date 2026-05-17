@@ -1,0 +1,85 @@
+---
+name: core-frontend-quantity-formatter
+description: QuantityFormatter declarations from core-frontend
+---
+
+# QuantityFormatter
+
+## Methods
+
+- `setUnitFormattingSettingsProvider(provider: UnitFormattingSettingsProvider)`
+- `initializeQuantityTypesRegistry()`
+- `loadFormatAndParsingMapsForSystem(systemType?: UnitSystemKey)`
+- `onInitialized()`
+- `addAlternateLabels(key: UnitNameKey, ...labels: string[])`
+- `setUnitsProvider(unitsProvider: UnitsProvider)`
+- `resetToUseInternalUnitsProvider()`
+- `registerQuantityType(entry: CustomQuantityTypeDefinition, replace?: boolean)`
+- `reinitializeFormatAndParsingsMaps(overrideFormatPropsByUnitSystem: Map<UnitSystemKey, Map<QuantityTypeKey, FormatProps>>, unitSystemKey?: UnitSystemKey, fireUnitSystemChanged?: boolean, startDefaultTool?: boolean)`
+- `setActiveUnitSystem(isImperialOrUnitSystem: UnitSystemKey | boolean, restartActiveTool?: boolean)`
+- `clearOverrideFormats(type: QuantityTypeArg)`
+- `setOverrideFormats(type: QuantityTypeArg, overrideEntry: OverrideFormatEntry)`
+- `setOverrideFormat(type: QuantityTypeArg, overrideFormat: FormatProps)`
+- `clearAllOverrideFormats()`
+- `getQuantityTypeKey(type: QuantityTypeArg)`
+- `getQuantityDefinition(type: QuantityTypeArg)`
+- `findFormatterSpecByQuantityType(type: QuantityTypeArg, _unused?: boolean)`
+- `generateFormatterSpecByType(type: QuantityTypeArg, formatProps: FormatProps)`
+- `getFormatterSpecByQuantityTypeAndSystem(type: QuantityTypeArg, system?: UnitSystemKey)`
+- `getFormatterSpecByQuantityType(type: QuantityTypeArg, isImperial?: boolean)`
+- `findParserSpecByQuantityType(type: QuantityTypeArg)`
+- `getParserSpecByQuantityTypeAndSystem(type: QuantityTypeArg, system?: UnitSystemKey)`
+- `getParserSpecByQuantityType(type: QuantityTypeArg, isImperial?: boolean)`
+- `formatQuantity()`
+- `formatQuantity(magnitude: number, formatSpec?: FormatterSpec)`
+- `parseToQuantityValue()`
+- `parseToQuantityValue(inString: string, parserSpec?: ParserSpec)`
+- `getUnitSystemFromString(inputSystem: string, fallback?: UnitSystemKey)`
+- `hasActiveOverride(type: QuantityTypeArg, checkOnlyActiveUnitSystem?: boolean)`
+- `getFormatPropsByQuantityType(quantityType: QuantityTypeArg, requestedSystem?: UnitSystemKey, ignoreOverrides?: boolean)`
+- `findUnit(unitLabel: string, schemaName?: string, phenomenon?: string, unitSystem?: string)`
+- `getUnitsByFamily(phenomenon: string)`
+- `findUnitByName(unitName: string)`
+- `getConversion(fromUnit: UnitProps, toUnit: UnitProps)`
+- `createFormatterSpec(props: CreateFormattingSpecProps)`
+- `createParserSpec(props: CreateFormattingSpecProps)`
+- `getSpecsByName(name: string)`
+- `addFormattingSpecsToRegistry(name: string, persistenceUnitName: string, formatProps?: FormatProps)`
+- `setUnitFormattingSettingsProvider(provider: UnitFormattingSettingsProvider)`
+- `initializeQuantityTypesRegistry()`
+- `loadFormatAndParsingMapsForSystem(systemType?: UnitSystemKey)`
+- `onInitialized()`
+- `addAlternateLabels(key: UnitNameKey, ...labels: string[])`
+- `setUnitsProvider(unitsProvider: UnitsProvider)`
+- `resetToUseInternalUnitsProvider()`
+- `registerQuantityType(entry: CustomQuantityTypeDefinition, replace?: boolean)`
+- `reinitializeFormatAndParsingsMaps(overrideFormatPropsByUnitSystem: Map<UnitSystemKey, Map<QuantityTypeKey, FormatProps>>, unitSystemKey?: UnitSystemKey, fireUnitSystemChanged?: boolean, startDefaultTool?: boolean)`
+- `setActiveUnitSystem(isImperialOrUnitSystem: UnitSystemKey | boolean, restartActiveTool?: boolean)`
+- `clearOverrideFormats(type: QuantityTypeArg)`
+- `setOverrideFormats(type: QuantityTypeArg, overrideEntry: OverrideFormatEntry)`
+- `setOverrideFormat(type: QuantityTypeArg, overrideFormat: FormatProps)`
+- `clearAllOverrideFormats()`
+- `getQuantityTypeKey(type: QuantityTypeArg)`
+- `getQuantityDefinition(type: QuantityTypeArg)`
+- `findFormatterSpecByQuantityType(type: QuantityTypeArg, _unused?: boolean)`
+- `generateFormatterSpecByType(type: QuantityTypeArg, formatProps: FormatProps)`
+- `getFormatterSpecByQuantityTypeAndSystem(type: QuantityTypeArg, system?: UnitSystemKey)`
+- `getFormatterSpecByQuantityType(type: QuantityTypeArg, isImperial?: boolean)`
+- `findParserSpecByQuantityType(type: QuantityTypeArg)`
+- `getParserSpecByQuantityTypeAndSystem(type: QuantityTypeArg, system?: UnitSystemKey)`
+- `getParserSpecByQuantityType(type: QuantityTypeArg, isImperial?: boolean)`
+- `formatQuantity()`
+- `formatQuantity(magnitude: number, formatSpec?: FormatterSpec)`
+- `parseToQuantityValue()`
+- `parseToQuantityValue(inString: string, parserSpec?: ParserSpec)`
+- `getUnitSystemFromString(inputSystem: string, fallback?: UnitSystemKey)`
+- `hasActiveOverride(type: QuantityTypeArg, checkOnlyActiveUnitSystem?: boolean)`
+- `getFormatPropsByQuantityType(quantityType: QuantityTypeArg, requestedSystem?: UnitSystemKey, ignoreOverrides?: boolean)`
+- `findUnit(unitLabel: string, schemaName?: string, phenomenon?: string, unitSystem?: string)`
+- `getUnitsByFamily(phenomenon: string)`
+- `findUnitByName(unitName: string)`
+- `getConversion(fromUnit: UnitProps, toUnit: UnitProps)`
+- `createFormatterSpec(props: CreateFormattingSpecProps)`
+- `createParserSpec(props: CreateFormattingSpecProps)`
+- `getSpecsByName(name: string)`
+- `addFormattingSpecsToRegistry(name: string, persistenceUnitName: string, formatProps?: FormatProps)`

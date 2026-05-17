@@ -1,0 +1,71 @@
+---
+name: core-frontend-tile-tree-reference
+description: TileTreeReference declarations from core-frontend
+---
+
+# TileTreeReference
+
+## Methods
+
+- `resetTreeOwner()`
+- `discloseTileTrees(trees: DisclosedTileTreeSet)`
+- `addToScene(context: SceneContext)`
+- `draw(args: TileDrawArgs)`
+- `getToolTip(_hit: HitDetail)`
+- `canSupplyToolTip(_hit: HitDetail)`
+- `getToolTipPromise(hit: HitDetail)`
+- `getMapFeatureInfo(_hit: HitDetail, _options?: MapFeatureInfoOptions)`
+- `decorate(_context: DecorateContext)`
+- `unionFitRange(union: Range3d)`
+- `collectStatistics(stats: RenderMemory.Statistics)`
+- `createDrawArgs(context: SceneContext)`
+- `getTransformFromIModel()`
+- `getAnimationTransformNodeId(_tree: TileTree)`
+- `getGroupNodeId(_tree: TileTree)`
+- `getLocation()`
+- `computeTransform(tree: TileTree)`
+- `computeWorldContentRange()`
+- `getClipVolume(tree: TileTree)`
+- `getViewFlagOverrides(tree: TileTree)`
+- `getSymbologyOverrides(_tree: TileTree)`
+- `getAppearanceProvider(_tree: TileTree)`
+- `getHiddenLineSettings(_tree: TileTree)`
+- `accumulateTransformedRange(range: Range3d, matrix: Matrix4d, frustumPlanes?: FrustumPlanes)`
+- `getTerrainHeight(_terrainHeights: Range1d)`
+- `addLogoCards(_cards: HTMLTableElement, _vp: ScreenViewport)`
+- `addAttributions(cards: HTMLTableElement, vp: ScreenViewport)`
+- `_createGeometryTreeReference(_options?: GeometryTileTreeReferenceOptions)`
+- `_collectTileGeometry(collector: TileGeometryCollector)`
+- `createGeometryTreeReference(options?: GeometryTileTreeReferenceOptions)`
+- `createFromRenderGraphic(args: RenderGraphicTileTreeArgs)`
+- `resetTreeOwner()`
+- `discloseTileTrees(trees: DisclosedTileTreeSet)`
+- `addToScene(context: SceneContext)`
+- `draw(args: TileDrawArgs)`
+- `getToolTip(_hit: HitDetail)`
+- `canSupplyToolTip(_hit: HitDetail)`
+- `getToolTipPromise(hit: HitDetail)`
+- `getMapFeatureInfo(_hit: HitDetail, _options?: MapFeatureInfoOptions)`
+- `decorate(_context: DecorateContext)`
+- `unionFitRange(union: Range3d)`
+- `collectStatistics(stats: RenderMemory.Statistics)`
+- `createDrawArgs(context: SceneContext)`
+- `getTransformFromIModel()`
+- `getAnimationTransformNodeId(_tree: TileTree)`
+- `getGroupNodeId(_tree: TileTree)`
+- `getLocation()`
+- `computeTransform(tree: TileTree)`
+- `computeWorldContentRange()`
+- `getClipVolume(tree: TileTree)`
+- `getViewFlagOverrides(tree: TileTree)`
+- `getSymbologyOverrides(_tree: TileTree)`
+- `getAppearanceProvider(_tree: TileTree)`
+- `getHiddenLineSettings(_tree: TileTree)`
+- `accumulateTransformedRange(range: Range3d, matrix: Matrix4d, frustumPlanes?: FrustumPlanes)`
+- `getTerrainHeight(_terrainHeights: Range1d)`
+- `addLogoCards(_cards: HTMLTableElement, _vp: ScreenViewport)`
+- `addAttributions(cards: HTMLTableElement, vp: ScreenViewport)`
+- `_createGeometryTreeReference(_options?: GeometryTileTreeReferenceOptions)`
+- `_collectTileGeometry(collector: TileGeometryCollector)`
+- `createGeometryTreeReference(options?: GeometryTileTreeReferenceOptions)`
+- `createFromRenderGraphic(args: RenderGraphicTileTreeArgs)`

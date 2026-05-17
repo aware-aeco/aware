@@ -1,0 +1,89 @@
+---
+name: core-frontend-briefcase-txns
+description: BriefcaseTxns declarations from core-frontend
+---
+
+# BriefcaseTxns
+
+## Methods
+
+- `hasPendingTxns()`
+- `isUndoPossible()`
+- `isRedoPossible()`
+- `getUndoString()`
+- `getRedoString()`
+- `reverseSingleTxn()`
+- `reverseTxns(numOperations: number)`
+- `reverseAll()`
+- `reinstateTxn()`
+- `restartTxnSession()`
+- `notifyElementsChanged(changed: NotifyEntitiesChangedArgs)`
+- `notifyModelsChanged(changed: NotifyEntitiesChangedArgs)`
+- `notifyGeometryGuidsChanged(changes: ModelIdAndGeometryGuid[])`
+- `notifyCommit()`
+- `notifyCommitted(hasPendingTxns: boolean, time: number)`
+- `notifyReplayExternalTxns()`
+- `notifyReplayedExternalTxns()`
+- `notifyChangesApplied()`
+- `notifyBeforeUndoRedo(isUndo: boolean)`
+- `notifyAfterUndoRedo(isUndo: boolean)`
+- `notifyPulledChanges(parentChangeset: ChangesetIndexAndId)`
+- `notifyPushedChanges(parentChangeset: ChangesetIndexAndId)`
+- `notifyIModelNameChanged(name: string)`
+- `notifyRootSubjectChanged(subject: RootSubjectProps)`
+- `notifyProjectExtentsChanged(range: Range3dProps)`
+- `notifyGlobalOriginChanged(origin: XYZProps)`
+- `notifyEcefLocationChanged(ecef: EcefLocationProps | undefined)`
+- `notifyGeographicCoordinateSystemChanged(gcs: GeographicCRSProps | undefined)`
+- `notifyPullMergeBegin(changeset: ChangesetIdWithIndex)`
+- `notifyPullMergeEnd(changeset: ChangesetIdWithIndex)`
+- `notifyApplyIncomingChangesBegin(changes: ChangesetProps[])`
+- `notifyApplyIncomingChangesEnd(changes: ChangesetProps[])`
+- `notifyReverseLocalChangesBegin()`
+- `notifyReverseLocalChangesEnd(txns: TxnProps[])`
+- `notifyDownloadChangesetsBegin()`
+- `notifyDownloadChangesetsEnd()`
+- `notifyRebaseBegin(txns: TxnProps[])`
+- `notifyRebaseEnd(txns: TxnProps[])`
+- `notifyRebaseTxnBegin(txn: TxnProps)`
+- `notifyRebaseTxnEnd(txn: TxnProps)`
+- `hasPendingTxns()`
+- `isUndoPossible()`
+- `isRedoPossible()`
+- `getUndoString()`
+- `getRedoString()`
+- `reverseSingleTxn()`
+- `reverseTxns(numOperations: number)`
+- `reverseAll()`
+- `reinstateTxn()`
+- `restartTxnSession()`
+- `notifyElementsChanged(changed: NotifyEntitiesChangedArgs)`
+- `notifyModelsChanged(changed: NotifyEntitiesChangedArgs)`
+- `notifyGeometryGuidsChanged(changes: ModelIdAndGeometryGuid[])`
+- `notifyCommit()`
+- `notifyCommitted(hasPendingTxns: boolean, time: number)`
+- `notifyReplayExternalTxns()`
+- `notifyReplayedExternalTxns()`
+- `notifyChangesApplied()`
+- `notifyBeforeUndoRedo(isUndo: boolean)`
+- `notifyAfterUndoRedo(isUndo: boolean)`
+- `notifyPulledChanges(parentChangeset: ChangesetIndexAndId)`
+- `notifyPushedChanges(parentChangeset: ChangesetIndexAndId)`
+- `notifyIModelNameChanged(name: string)`
+- `notifyRootSubjectChanged(subject: RootSubjectProps)`
+- `notifyProjectExtentsChanged(range: Range3dProps)`
+- `notifyGlobalOriginChanged(origin: XYZProps)`
+- `notifyEcefLocationChanged(ecef: EcefLocationProps | undefined)`
+- `notifyGeographicCoordinateSystemChanged(gcs: GeographicCRSProps | undefined)`
+- `notifyPullMergeBegin(changeset: ChangesetIdWithIndex)`
+- `notifyPullMergeEnd(changeset: ChangesetIdWithIndex)`
+- `notifyApplyIncomingChangesBegin(changes: ChangesetProps[])`
+- `notifyApplyIncomingChangesEnd(changes: ChangesetProps[])`
+- `notifyReverseLocalChangesBegin()`
+- `notifyReverseLocalChangesEnd(txns: TxnProps[])`
+- `notifyDownloadChangesetsBegin()`
+- `notifyDownloadChangesetsEnd()`
+- `notifyRebaseBegin(txns: TxnProps[])`
+- `notifyRebaseEnd(txns: TxnProps[])`
+- `notifyRebaseTxnBegin(txn: TxnProps)`
+- `notifyRebaseTxnEnd(txn: TxnProps)`

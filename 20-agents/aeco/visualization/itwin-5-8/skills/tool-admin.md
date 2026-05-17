@@ -1,0 +1,131 @@
+---
+name: core-frontend-tool-admin
+description: ToolAdmin declarations from core-frontend
+---
+
+# ToolAdmin
+
+## Methods
+
+- `exceptionHandler(exception: any)`
+- `onInitialized()`
+- `onShutDown()`
+- `forgetViewport(vp: ScreenViewport)`
+- `addEvent(ev: Event, vp?: ScreenViewport)`
+- `processEvent()`
+- `filterViewport(vp: ScreenViewport)`
+- `onInstallTool(tool: InteractiveTool)`
+- `onPostInstallTool(tool: InteractiveTool)`
+- `wantToolTip(_hit: HitDetail)`
+- `getToolTip(hit: HitDetail)`
+- `onMouseLeave(vp: ScreenViewport)`
+- `updateDynamics(ev?: BeButtonEvent, useLastData?: boolean, adjustPoint?: boolean)`
+- `sendEndDragEvent(ev: BeButtonEvent)`
+- `adjustPointToACS(pointActive: Point3d, vp: Viewport, perpendicular: boolean)`
+- `adjustPointToGrid(pointActive: Point3d, vp: Viewport)`
+- `adjustPoint(pointActive: Point3d, vp: ScreenViewport, projectToACS?: boolean, applyLocks?: boolean)`
+- `adjustSnapPoint(perpendicular?: boolean)`
+- `onPreButtonEvent(_ev: BeButtonEvent)`
+- `sendButtonEvent(ev: BeButtonEvent)`
+- `onCtrlKeyPressed(keyEvent: KeyboardEvent)`
+- `processShortcutKey(_keyEvent: KeyboardEvent, _wentDown: boolean)`
+- `doUndoOperation()`
+- `doRedoOperation()`
+- `setInputCollector(newTool?: InputCollector)`
+- `exitInputCollector()`
+- `startInputCollector(newTool: InputCollector)`
+- `setViewTool(newTool?: ViewTool)`
+- `exitViewTool()`
+- `startViewTool(newTool: ViewTool)`
+- `setEditCommandHandler(handler?: EditCommandHandler)`
+- `setPrimitiveTool(newTool?: PrimitiveTool)`
+- `startPrimitiveTool(newTool?: PrimitiveTool)`
+- `syncToolSettingsProperties(toolId: string, syncProperties: DialogPropertySyncItem[])`
+- `reloadToolSettingsProperties()`
+- `bumpToolSetting(settingIndex?: number)`
+- `dispatchImmediateUiSyncEvent(specificSyncEventId?: string, toolId?: string)`
+- `dispatchUiSyncEvent(specificSyncEventId?: string, toolId?: string)`
+- `startDefaultTool()`
+- `restartPrimitiveTool()`
+- `setCursor(cursor: string | undefined)`
+- `testDecorationHit(id: string)`
+- `getDecorationGeometry(hit: HitDetail)`
+- `decorate(context: DecorateContext)`
+- `beginDynamics()`
+- `endDynamics()`
+- `fillEventFromCursorLocation(ev: BeButtonEvent, useSnap?: boolean)`
+- `fillEventFromLastDataButton(ev: BeButtonEvent)`
+- `setAdjustedDataPoint(ev: BeButtonEvent)`
+- `convertTouchTapToButtonDownAndUp(ev: BeTouchEvent, button?: BeButton)`
+- `convertTouchMoveStartToButtonDownAndMotion(startEv: BeTouchEvent, ev: BeTouchEvent, button?: BeButton)`
+- `convertTouchStartToButtonDown(ev: BeTouchEvent, button?: BeButton)`
+- `convertTouchEndToButtonUp(ev: BeTouchEvent, button?: BeButton)`
+- `convertTouchMoveToMotion(ev: BeTouchEvent)`
+- `simulateMotionEvent()`
+- `setIncompatibleViewportCursor(restore: boolean)`
+- `processWheelEvent(ev: BeWheelEvent, doUpdate: boolean)`
+- `onSelectedViewportChanged(previous: ScreenViewport | undefined, current: ScreenViewport | undefined)`
+- `setLocateCircleOn(locateOn: boolean)`
+- `setLocateCursor(enableLocate: boolean)`
+- `callOnCleanup()`
+- `exceptionHandler(exception: any)`
+- `onInitialized()`
+- `onShutDown()`
+- `forgetViewport(vp: ScreenViewport)`
+- `addEvent(ev: Event, vp?: ScreenViewport)`
+- `processEvent()`
+- `filterViewport(vp: ScreenViewport)`
+- `onInstallTool(tool: InteractiveTool)`
+- `onPostInstallTool(tool: InteractiveTool)`
+- `wantToolTip(_hit: HitDetail)`
+- `getToolTip(hit: HitDetail)`
+- `onMouseLeave(vp: ScreenViewport)`
+- `updateDynamics(ev?: BeButtonEvent, useLastData?: boolean, adjustPoint?: boolean)`
+- `sendEndDragEvent(ev: BeButtonEvent)`
+- `adjustPointToACS(pointActive: Point3d, vp: Viewport, perpendicular: boolean)`
+- `adjustPointToGrid(pointActive: Point3d, vp: Viewport)`
+- `adjustPoint(pointActive: Point3d, vp: ScreenViewport, projectToACS?: boolean, applyLocks?: boolean)`
+- `adjustSnapPoint(perpendicular?: boolean)`
+- `onPreButtonEvent(_ev: BeButtonEvent)`
+- `sendButtonEvent(ev: BeButtonEvent)`
+- `onCtrlKeyPressed(keyEvent: KeyboardEvent)`
+- `processShortcutKey(_keyEvent: KeyboardEvent, _wentDown: boolean)`
+- `doUndoOperation()`
+- `doRedoOperation()`
+- `setInputCollector(newTool?: InputCollector)`
+- `exitInputCollector()`
+- `startInputCollector(newTool: InputCollector)`
+- `setViewTool(newTool?: ViewTool)`
+- `exitViewTool()`
+- `startViewTool(newTool: ViewTool)`
+- `setEditCommandHandler(handler?: EditCommandHandler)`
+- `setPrimitiveTool(newTool?: PrimitiveTool)`
+- `startPrimitiveTool(newTool?: PrimitiveTool)`
+- `syncToolSettingsProperties(toolId: string, syncProperties: DialogPropertySyncItem[])`
+- `reloadToolSettingsProperties()`
+- `bumpToolSetting(settingIndex?: number)`
+- `dispatchImmediateUiSyncEvent(specificSyncEventId?: string, toolId?: string)`
+- `dispatchUiSyncEvent(specificSyncEventId?: string, toolId?: string)`
+- `startDefaultTool()`
+- `restartPrimitiveTool()`
+- `setCursor(cursor: string | undefined)`
+- `testDecorationHit(id: string)`
+- `getDecorationGeometry(hit: HitDetail)`
+- `decorate(context: DecorateContext)`
+- `beginDynamics()`
+- `endDynamics()`
+- `fillEventFromCursorLocation(ev: BeButtonEvent, useSnap?: boolean)`
+- `fillEventFromLastDataButton(ev: BeButtonEvent)`
+- `setAdjustedDataPoint(ev: BeButtonEvent)`
+- `convertTouchTapToButtonDownAndUp(ev: BeTouchEvent, button?: BeButton)`
+- `convertTouchMoveStartToButtonDownAndMotion(startEv: BeTouchEvent, ev: BeTouchEvent, button?: BeButton)`
+- `convertTouchStartToButtonDown(ev: BeTouchEvent, button?: BeButton)`
+- `convertTouchEndToButtonUp(ev: BeTouchEvent, button?: BeButton)`
+- `convertTouchMoveToMotion(ev: BeTouchEvent)`
+- `simulateMotionEvent()`
+- `setIncompatibleViewportCursor(restore: boolean)`
+- `processWheelEvent(ev: BeWheelEvent, doUpdate: boolean)`
+- `onSelectedViewportChanged(previous: ScreenViewport | undefined, current: ScreenViewport | undefined)`
+- `setLocateCircleOn(locateOn: boolean)`
+- `setLocateCursor(enableLocate: boolean)`
+- `callOnCleanup()`

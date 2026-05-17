@@ -1,0 +1,129 @@
+---
+name: core-frontend-render-system
+description: RenderSystem declarations from core-frontend
+---
+
+# RenderSystem
+
+## Methods
+
+- `dispose()`
+- `createTarget(canvas: HTMLCanvasElement)`
+- `createOffscreenTarget(rect: ViewRect)`
+- `doIdleWork()`
+- `findMaterial(_key: string, _imodel: IModelConnection)`
+- `createRenderMaterial(_args: CreateRenderMaterialArgs)`
+- `createGraphicBuilder(placement: Transform, type: GraphicType, viewport: Viewport, pickableId?: Id64String)`
+- `createGraphic(options: CustomGraphicBuilderOptions | ViewportGraphicBuilderOptions)`
+- `createScreenSpaceEffectBuilder(_params: ScreenSpaceEffectBuilderParams)`
+- `createTriMesh(args: MeshArgs, instances?: InstancedGraphicParams)`
+- `createTriMesh(args: MeshArgs, instances?: InstancedGraphicParams | RenderAreaPattern | Point3d)`
+- `createMeshGraphics(mesh: Mesh, instances?: InstancedGraphicParams | Point3d)`
+- `createGeometryFromMesh(mesh: Mesh, viOrigin: Point3d | undefined, tileData?: LayerTileData)`
+- `createIndexedPolylines(args: PolylineArgs, instances?: InstancedGraphicParams)`
+- `createIndexedPolylines(args: PolylineArgs, instances?: InstancedGraphicParams | RenderAreaPattern | Point3d)`
+- `createMeshGeometry(_params: MeshParams, _viewIndependentOrigin?: Point3d)`
+- `createPolylineGeometry(_params: PolylineParams, _viewIndependentOrigin?: Point3d)`
+- `createPointStringGeometry(_params: PointStringParams, _viewIndependentOrigin?: Point3d)`
+- `createPointCloudGeometry(_args: PointCloudArgs)`
+- `createRealityMeshGeometry(_params: RealityMeshParams, _disableTextureDisposal?: boolean)`
+- `createAreaPattern(_params: PatternGraphicParams)`
+- `createRenderInstances(_params: RenderInstancesParams)`
+- `createGraphicFromTemplate(args: CreateGraphicFromTemplateArgs)`
+- `createRenderGraphic(_geometry: RenderGeometry, instances?: InstancedGraphicParams | RenderAreaPattern)`
+- `createMesh(params: MeshParams, instances?: InstancedGraphicParams | RenderAreaPattern | Point3d)`
+- `createPolyline(params: PolylineParams, instances?: InstancedGraphicParams | RenderAreaPattern | Point3d)`
+- `createPointString(params: PointStringParams, instances?: InstancedGraphicParams | RenderAreaPattern | Point3d)`
+- `createTerrainMesh(_params: RealityMeshParams, _transform?: Transform, _disableTextureDisposal?: boolean)`
+- `createRealityMeshGraphic(_params: MeshMapLayerGraphicParams, _disableTextureDisposal?: boolean)`
+- `createRealityMesh(realityMesh: RealityMeshParams, disableTextureDisposal?: boolean)`
+- `createPointCloud(args: PointCloudArgs, _imodel: IModelConnection)`
+- `createClipVolume(_clipVector: ClipVector)`
+- `createPlanarGrid(_frustum: Frustum, _grid: PlanarGridProps)`
+- `createBackgroundMapDrape(_drapedTree: TileTreeReference, _mapTree: MapTileTreeReference)`
+- `createTile(tileTexture: RenderTexture, corners: Point3d[], featureIndex?: number)`
+- `createSkyBox(_params: RenderSkyBoxParams)`
+- `createGraphicList(primitives: RenderGraphic[])`
+- `createBranch(branch: GraphicBranch, transform: Transform, options?: GraphicBranchOptions)`
+- `createGraphicBranch(branch: GraphicBranch, transform: Transform, options?: GraphicBranchOptions)`
+- `createAnimationTransformNode(graphic: RenderGraphic, _nodeId: number)`
+- `createBatch(graphic: RenderGraphic, features: RenderFeatureTable, range: ElementAlignedBox3d, options?: BatchOptions)`
+- `waitForAllExternalTextures()`
+- `createGraphicOwner(ownedGraphic: RenderGraphic)`
+- `createGraphicLayer(graphic: RenderGraphic, _layerId: string)`
+- `createGraphicLayerContainer(graphic: RenderGraphic, _drawAsOverlay: boolean, _transparency: number, _elevation: number)`
+- `findTexture(_key: TextureCacheKey, _imodel: IModelConnection)`
+- `loadTexture(id: Id64String, iModel: IModelConnection)`
+- `loadTextureImage(id: Id64String, iModel: IModelConnection)`
+- `getGradientTexture(_symb: Gradient.Symb, _imodel?: IModelConnection)`
+- `createTextureFromSource(args: CreateTextureFromSourceArgs)`
+- `createTextureFromElement(_id: Id64String, _imodel: IModelConnection, _params: RenderTextureParams, _format: ImageSourceFormat)`
+- `createTexture(_args: CreateTextureArgs)`
+- `createTextureFromCubeImages(_posX: HTMLImageElement, _negX: HTMLImageElement, _posY: HTMLImageElement, _negY: HTMLImageElement, _posZ: HTMLImageElement, _negZ: HTMLImageElement, _imodel: IModelConnection, _params: RenderTextureParams)`
+- `onInitialized()`
+- `collectStatistics(_stats: RenderMemory.Statistics)`
+- `contextLossHandler()`
+- `createGraphicFromDescription(args: CreateGraphicFromDescriptionArgs)`
+- `createTemplateFromDescription(args: CreateGraphicFromDescriptionArgs)`
+- `createWorkerGraphicDescriptionContextProps(iModel: IModelConnection)`
+- `resolveGraphicDescriptionContext(props: GraphicDescriptionContextProps, iModel: IModelConnection)`
+- `dispose()`
+- `createTarget(canvas: HTMLCanvasElement)`
+- `createOffscreenTarget(rect: ViewRect)`
+- `doIdleWork()`
+- `findMaterial(_key: string, _imodel: IModelConnection)`
+- `createRenderMaterial(_args: CreateRenderMaterialArgs)`
+- `createGraphicBuilder(placement: Transform, type: GraphicType, viewport: Viewport, pickableId?: Id64String)`
+- `createGraphic(options: CustomGraphicBuilderOptions | ViewportGraphicBuilderOptions)`
+- `createScreenSpaceEffectBuilder(_params: ScreenSpaceEffectBuilderParams)`
+- `createTriMesh(args: MeshArgs, instances?: InstancedGraphicParams)`
+- `createTriMesh(args: MeshArgs, instances?: InstancedGraphicParams | RenderAreaPattern | Point3d)`
+- `createMeshGraphics(mesh: Mesh, instances?: InstancedGraphicParams | Point3d)`
+- `createGeometryFromMesh(mesh: Mesh, viOrigin: Point3d | undefined, tileData?: LayerTileData)`
+- `createIndexedPolylines(args: PolylineArgs, instances?: InstancedGraphicParams)`
+- `createIndexedPolylines(args: PolylineArgs, instances?: InstancedGraphicParams | RenderAreaPattern | Point3d)`
+- `createMeshGeometry(_params: MeshParams, _viewIndependentOrigin?: Point3d)`
+- `createPolylineGeometry(_params: PolylineParams, _viewIndependentOrigin?: Point3d)`
+- `createPointStringGeometry(_params: PointStringParams, _viewIndependentOrigin?: Point3d)`
+- `createPointCloudGeometry(_args: PointCloudArgs)`
+- `createRealityMeshGeometry(_params: RealityMeshParams, _disableTextureDisposal?: boolean)`
+- `createAreaPattern(_params: PatternGraphicParams)`
+- `createRenderInstances(_params: RenderInstancesParams)`
+- `createGraphicFromTemplate(args: CreateGraphicFromTemplateArgs)`
+- `createRenderGraphic(_geometry: RenderGeometry, instances?: InstancedGraphicParams | RenderAreaPattern)`
+- `createMesh(params: MeshParams, instances?: InstancedGraphicParams | RenderAreaPattern | Point3d)`
+- `createPolyline(params: PolylineParams, instances?: InstancedGraphicParams | RenderAreaPattern | Point3d)`
+- `createPointString(params: PointStringParams, instances?: InstancedGraphicParams | RenderAreaPattern | Point3d)`
+- `createTerrainMesh(_params: RealityMeshParams, _transform?: Transform, _disableTextureDisposal?: boolean)`
+- `createRealityMeshGraphic(_params: MeshMapLayerGraphicParams, _disableTextureDisposal?: boolean)`
+- `createRealityMesh(realityMesh: RealityMeshParams, disableTextureDisposal?: boolean)`
+- `createPointCloud(args: PointCloudArgs, _imodel: IModelConnection)`
+- `createClipVolume(_clipVector: ClipVector)`
+- `createPlanarGrid(_frustum: Frustum, _grid: PlanarGridProps)`
+- `createBackgroundMapDrape(_drapedTree: TileTreeReference, _mapTree: MapTileTreeReference)`
+- `createTile(tileTexture: RenderTexture, corners: Point3d[], featureIndex?: number)`
+- `createSkyBox(_params: RenderSkyBoxParams)`
+- `createGraphicList(primitives: RenderGraphic[])`
+- `createBranch(branch: GraphicBranch, transform: Transform, options?: GraphicBranchOptions)`
+- `createGraphicBranch(branch: GraphicBranch, transform: Transform, options?: GraphicBranchOptions)`
+- `createAnimationTransformNode(graphic: RenderGraphic, _nodeId: number)`
+- `createBatch(graphic: RenderGraphic, features: RenderFeatureTable, range: ElementAlignedBox3d, options?: BatchOptions)`
+- `waitForAllExternalTextures()`
+- `createGraphicOwner(ownedGraphic: RenderGraphic)`
+- `createGraphicLayer(graphic: RenderGraphic, _layerId: string)`
+- `createGraphicLayerContainer(graphic: RenderGraphic, _drawAsOverlay: boolean, _transparency: number, _elevation: number)`
+- `findTexture(_key: TextureCacheKey, _imodel: IModelConnection)`
+- `loadTexture(id: Id64String, iModel: IModelConnection)`
+- `loadTextureImage(id: Id64String, iModel: IModelConnection)`
+- `getGradientTexture(_symb: Gradient.Symb, _imodel?: IModelConnection)`
+- `createTextureFromSource(args: CreateTextureFromSourceArgs)`
+- `createTextureFromElement(_id: Id64String, _imodel: IModelConnection, _params: RenderTextureParams, _format: ImageSourceFormat)`
+- `createTexture(_args: CreateTextureArgs)`
+- `createTextureFromCubeImages(_posX: HTMLImageElement, _negX: HTMLImageElement, _posY: HTMLImageElement, _negY: HTMLImageElement, _posZ: HTMLImageElement, _negZ: HTMLImageElement, _imodel: IModelConnection, _params: RenderTextureParams)`
+- `onInitialized()`
+- `collectStatistics(_stats: RenderMemory.Statistics)`
+- `contextLossHandler()`
+- `createGraphicFromDescription(args: CreateGraphicFromDescriptionArgs)`
+- `createTemplateFromDescription(args: CreateGraphicFromDescriptionArgs)`
+- `createWorkerGraphicDescriptionContextProps(iModel: IModelConnection)`
+- `resolveGraphicDescriptionContext(props: GraphicDescriptionContextProps, iModel: IModelConnection)`

@@ -1,0 +1,139 @@
+---
+name: core-frontend-view-state3d
+description: ViewState3d declarations from core-frontend
+---
+
+# ViewState3d
+
+## Methods
+
+- `allow3dManipulations()`
+- `setAllow3dManipulations(allow: boolean)`
+- `getModelClip(modelId: Id64String)`
+- `savePose()`
+- `applyPose(val: ViewPose)`
+- `toJSON()`
+- `is3d()`
+- `isDrawingView()`
+- `globalViewTransition()`
+- `getCartographicHeight(point: XYAndZ)`
+- `getEyeCartographicHeight()`
+- `isEyePointGlobalView(eyePoint: XYAndZ)`
+- `lookAtGlobalLocation(eyeHeight: number, pitchAngleRadians?: number, location?: GlobalLocation, eyePoint?: Point3d)`
+- `lookAtGlobalLocationFromGcs(eyeHeight: number, pitchAngleRadians?: number, location?: GlobalLocation, eyePoint?: Point3d)`
+- `rootToCartographic(root: XYAndZ, result?: Cartographic)`
+- `cartographicToRoot(cartographic: Cartographic, result?: Point3d)`
+- `rootToCartographicFromGcs(root: XYAndZ, result?: Cartographic)`
+- `rootToCartographicUsingGcs(root: XYAndZ[])`
+- `cartographicToRootFromGcs(cartographic: Cartographic, result?: Point3d)`
+- `cartographicToRootUsingGcs(cartographic: Cartographic[])`
+- `setupFromFrustum(frustum: Frustum, opts?: OnViewExtentsError)`
+- `calculateMaxDepth(delta: Vector3d, zVec: Vector3d)`
+- `getOrigin()`
+- `getExtents()`
+- `getRotation()`
+- `setOrigin(origin: XYAndZ)`
+- `setExtents(extents: XYAndZ)`
+- `setRotation(rot: Matrix3d)`
+- `enableCamera()`
+- `supportsCamera()`
+- `minimumFrontDistance()`
+- `isEyePointAbove(elevation: number)`
+- `getDisplayStyle3d()`
+- `turnCameraOff()`
+- `calcLensAngle()`
+- `getTargetPoint(result?: Point3d)`
+- `lookAt(args: LookAtPerspectiveArgs | LookAtOrthoArgs | LookAtUsingLensAngle)`
+- `changeFocusDistance(newDist: number)`
+- `changeFocusFromPoint(pt: Point3d)`
+- `moveCameraLocal(distance: Vector3d)`
+- `moveCameraWorld(distance: Vector3d)`
+- `rotateCameraLocal(angle: Angle, axis: Vector3d, aboutPt?: Point3d)`
+- `rotateCameraWorld(angle: Angle, axis: Vector3d, aboutPt?: Point3d)`
+- `moveCameraGlobal(fromPoint: Point3d, toPoint: Point3d)`
+- `getFrontDistance()`
+- `getBackDistance()`
+- `centerEyePoint(backDistance?: number)`
+- `centerFocusDistance()`
+- `verifyFocusPlane()`
+- `getEyePoint()`
+- `getLensAngle()`
+- `setLensAngle(angle: Angle)`
+- `setEyePoint(pt: XYAndZ)`
+- `setFocusDistance(dist: number)`
+- `getFocusDistance()`
+- `getEyeOrOrthographicViewPoint()`
+- `createAuxCoordSystem(acsName: string)`
+- `decorate(context: DecorateContext)`
+- `getGroundElevation()`
+- `getGroundExtents(vp?: Viewport)`
+- `getModelElevation(modelId: Id64String)`
+- `getEarthFocalPoint()`
+- `alignToGlobe(target: Point3d, transition?: boolean)`
+- `attachToViewport(args: AttachToViewportArgs)`
+- `detachFromViewport()`
+- `allow3dManipulations()`
+- `setAllow3dManipulations(allow: boolean)`
+- `getModelClip(modelId: Id64String)`
+- `savePose()`
+- `applyPose(val: ViewPose)`
+- `toJSON()`
+- `is3d()`
+- `isDrawingView()`
+- `globalViewTransition()`
+- `getCartographicHeight(point: XYAndZ)`
+- `getEyeCartographicHeight()`
+- `isEyePointGlobalView(eyePoint: XYAndZ)`
+- `lookAtGlobalLocation(eyeHeight: number, pitchAngleRadians?: number, location?: GlobalLocation, eyePoint?: Point3d)`
+- `lookAtGlobalLocationFromGcs(eyeHeight: number, pitchAngleRadians?: number, location?: GlobalLocation, eyePoint?: Point3d)`
+- `rootToCartographic(root: XYAndZ, result?: Cartographic)`
+- `cartographicToRoot(cartographic: Cartographic, result?: Point3d)`
+- `rootToCartographicFromGcs(root: XYAndZ, result?: Cartographic)`
+- `rootToCartographicUsingGcs(root: XYAndZ[])`
+- `cartographicToRootFromGcs(cartographic: Cartographic, result?: Point3d)`
+- `cartographicToRootUsingGcs(cartographic: Cartographic[])`
+- `setupFromFrustum(frustum: Frustum, opts?: OnViewExtentsError)`
+- `calculateMaxDepth(delta: Vector3d, zVec: Vector3d)`
+- `getOrigin()`
+- `getExtents()`
+- `getRotation()`
+- `setOrigin(origin: XYAndZ)`
+- `setExtents(extents: XYAndZ)`
+- `setRotation(rot: Matrix3d)`
+- `enableCamera()`
+- `supportsCamera()`
+- `minimumFrontDistance()`
+- `isEyePointAbove(elevation: number)`
+- `getDisplayStyle3d()`
+- `turnCameraOff()`
+- `calcLensAngle()`
+- `getTargetPoint(result?: Point3d)`
+- `lookAt(args: LookAtPerspectiveArgs | LookAtOrthoArgs | LookAtUsingLensAngle)`
+- `changeFocusDistance(newDist: number)`
+- `changeFocusFromPoint(pt: Point3d)`
+- `moveCameraLocal(distance: Vector3d)`
+- `moveCameraWorld(distance: Vector3d)`
+- `rotateCameraLocal(angle: Angle, axis: Vector3d, aboutPt?: Point3d)`
+- `rotateCameraWorld(angle: Angle, axis: Vector3d, aboutPt?: Point3d)`
+- `moveCameraGlobal(fromPoint: Point3d, toPoint: Point3d)`
+- `getFrontDistance()`
+- `getBackDistance()`
+- `centerEyePoint(backDistance?: number)`
+- `centerFocusDistance()`
+- `verifyFocusPlane()`
+- `getEyePoint()`
+- `getLensAngle()`
+- `setLensAngle(angle: Angle)`
+- `setEyePoint(pt: XYAndZ)`
+- `setFocusDistance(dist: number)`
+- `getFocusDistance()`
+- `getEyeOrOrthographicViewPoint()`
+- `createAuxCoordSystem(acsName: string)`
+- `decorate(context: DecorateContext)`
+- `getGroundElevation()`
+- `getGroundExtents(vp?: Viewport)`
+- `getModelElevation(modelId: Id64String)`
+- `getEarthFocalPoint()`
+- `alignToGlobe(target: Point3d, transition?: boolean)`
+- `attachToViewport(args: AttachToViewportArgs)`
+- `detachFromViewport()`

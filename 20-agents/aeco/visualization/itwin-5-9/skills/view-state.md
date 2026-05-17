@@ -1,0 +1,181 @@
+---
+name: core-frontend-view-state
+description: ViewState declarations from core-frontend
+---
+
+# ViewState
+
+## Methods
+
+- `createFromProps(_props: ViewStateProps, _iModel: IModelConnection)`
+- `toProps()`
+- `equals(other: this)`
+- `toJSON()`
+- `preload(hydrateRequest: HydrateViewStateRequestProps)`
+- `load()`
+- `postload(hydrateResponse: HydrateViewStateResponseProps)`
+- `getSubCategoryOverride(id: Id64String)`
+- `getModelAppearanceOverride(id: Id64String)`
+- `isSubCategoryVisible(id: Id64String)`
+- `is3d()`
+- `is2d()`
+- `isSpatialView()`
+- `isDrawingView()`
+- `isSheetView()`
+- `allow3dManipulations()`
+- `createAuxCoordSystem(acsName: string)`
+- `getViewedExtents()`
+- `computeFitRange()`
+- `viewsModel(modelId: Id64String)`
+- `getOrigin()`
+- `getExtents()`
+- `getRotation()`
+- `setOrigin(viewOrg: XYAndZ)`
+- `setExtents(viewDelta: Vector3d)`
+- `setCenter(center: Point3d)`
+- `setRotation(viewRot: Matrix3d)`
+- `forEachModel(func: (model: GeometricModelState) => void)`
+- `getModelTreeRefs()`
+- `forEachTileTreeRef(func: (treeRef: TileTreeReference) => void)`
+- `getTileTreeRefs()`
+- `getRealityModelTreeRefs()`
+- `discloseTileTrees(trees: DisclosedTileTreeSet)`
+- `collectStatistics(stats: RenderMemory.Statistics)`
+- `collectNonTileTreeStatistics(_stats: RenderMemory.Statistics)`
+- `savePose()`
+- `applyPose(props: ViewPose)`
+- `createScene(context: SceneContext)`
+- `decorate(context: DecorateContext)`
+- `getStandardViewMatrix(id: StandardViewId)`
+- `setStandardRotation(id: StandardViewId)`
+- `setStandardGlobalRotation(id: StandardViewId)`
+- `getTargetPoint(result?: Point3d)`
+- `getCenter(result?: Point3d)`
+- `drawGrid(context: DecorateContext)`
+- `computeWorldToNpc(viewRot?: Matrix3d, inOrigin?: Point3d, delta?: Vector3d, enforceFrontToBackRatio?: boolean)`
+- `calculateFrustum(result?: Frustum)`
+- `calculateFocusCorners()`
+- `setupFromFrustum(inFrustum: Frustum, opts?: OnViewExtentsError)`
+- `resetExtentLimits()`
+- `setDisplayStyle(style: DisplayStyleState)`
+- `fixAspectRatio(windowAspect: number)`
+- `outputStatusMessage(status: ViewStatus)`
+- `adjustViewDelta(delta: Vector3d, origin: XYZ, rot: Matrix3d, aspect?: number, opts?: OnViewExtentsError)`
+- `adjustAspectRatio(aspect: number)`
+- `setCategorySelector(categories: CategorySelectorState)`
+- `getAuxiliaryCoordinateSystemId()`
+- `setAuxiliaryCoordinateSystem(acs?: AuxCoordSystemState)`
+- `viewsCategory(id: Id64String)`
+- `getAspectRatio()`
+- `getAspectRatioSkew()`
+- `setAspectRatioSkew(val: number)`
+- `getXVector(result?: Vector3d)`
+- `getYVector(result?: Vector3d)`
+- `getZVector(result?: Vector3d)`
+- `setViewClip(clip?: ClipVector)`
+- `getViewClip()`
+- `setGridSettings(orientation: GridOrientationType, spacing: Point2d, gridsPerRef: number)`
+- `getGridSettings(vp: Viewport, origin: Point3d, rMatrix: Matrix3d, orientation: GridOrientationType)`
+- `getGridOrientation()`
+- `getGridsPerRef()`
+- `getGridSpacing()`
+- `lookAtVolume(volume: LowAndHighXYZ | LowAndHighXY, aspect?: number, options?: MarginOptions & OnViewExtentsError)`
+- `lookAtViewAlignedVolume(volume: Range3d, aspect?: number, options?: MarginOptions & OnViewExtentsError)`
+- `setRotationAboutPoint(rotation: Matrix3d, point?: Point3d)`
+- `refreshForModifiedModels(modelIds: Id64Arg | undefined)`
+- `hasSameCoordinates(other: ViewState)`
+- `getUpVector(point: Point3d)`
+- `getIsViewingProject()`
+- `getGlobeRotation()`
+- `_updateMaxGlobalScopeFactor()`
+- `getModelElevation(_modelId: Id64String)`
+- `computeDisplayTransform(args: ComputeDisplayTransformArgs)`
+- `attachToViewport(_args: AttachToViewportArgs)`
+- `detachFromViewport()`
+- `getAttachmentViewport(_args: GetAttachmentViewportArgs)`
+- `createFromProps(_props: ViewStateProps, _iModel: IModelConnection)`
+- `toProps()`
+- `equals(other: this)`
+- `toJSON()`
+- `preload(hydrateRequest: HydrateViewStateRequestProps)`
+- `load()`
+- `postload(hydrateResponse: HydrateViewStateResponseProps)`
+- `getSubCategoryOverride(id: Id64String)`
+- `getModelAppearanceOverride(id: Id64String)`
+- `isSubCategoryVisible(id: Id64String)`
+- `is3d()`
+- `is2d()`
+- `isSpatialView()`
+- `isDrawingView()`
+- `isSheetView()`
+- `allow3dManipulations()`
+- `createAuxCoordSystem(acsName: string)`
+- `getViewedExtents()`
+- `computeFitRange()`
+- `viewsModel(modelId: Id64String)`
+- `getOrigin()`
+- `getExtents()`
+- `getRotation()`
+- `setOrigin(viewOrg: XYAndZ)`
+- `setExtents(viewDelta: Vector3d)`
+- `setCenter(center: Point3d)`
+- `setRotation(viewRot: Matrix3d)`
+- `forEachModel(func: (model: GeometricModelState) => void)`
+- `getModelTreeRefs()`
+- `forEachTileTreeRef(func: (treeRef: TileTreeReference) => void)`
+- `getTileTreeRefs()`
+- `getRealityModelTreeRefs()`
+- `discloseTileTrees(trees: DisclosedTileTreeSet)`
+- `collectStatistics(stats: RenderMemory.Statistics)`
+- `collectNonTileTreeStatistics(_stats: RenderMemory.Statistics)`
+- `savePose()`
+- `applyPose(props: ViewPose)`
+- `createScene(context: SceneContext)`
+- `decorate(context: DecorateContext)`
+- `getStandardViewMatrix(id: StandardViewId)`
+- `setStandardRotation(id: StandardViewId)`
+- `setStandardGlobalRotation(id: StandardViewId)`
+- `getTargetPoint(result?: Point3d)`
+- `getCenter(result?: Point3d)`
+- `drawGrid(context: DecorateContext)`
+- `computeWorldToNpc(viewRot?: Matrix3d, inOrigin?: Point3d, delta?: Vector3d, enforceFrontToBackRatio?: boolean)`
+- `calculateFrustum(result?: Frustum)`
+- `calculateFocusCorners()`
+- `setupFromFrustum(inFrustum: Frustum, opts?: OnViewExtentsError)`
+- `resetExtentLimits()`
+- `setDisplayStyle(style: DisplayStyleState)`
+- `fixAspectRatio(windowAspect: number)`
+- `outputStatusMessage(status: ViewStatus)`
+- `adjustViewDelta(delta: Vector3d, origin: XYZ, rot: Matrix3d, aspect?: number, opts?: OnViewExtentsError)`
+- `adjustAspectRatio(aspect: number)`
+- `setCategorySelector(categories: CategorySelectorState)`
+- `getAuxiliaryCoordinateSystemId()`
+- `setAuxiliaryCoordinateSystem(acs?: AuxCoordSystemState)`
+- `viewsCategory(id: Id64String)`
+- `getAspectRatio()`
+- `getAspectRatioSkew()`
+- `setAspectRatioSkew(val: number)`
+- `getXVector(result?: Vector3d)`
+- `getYVector(result?: Vector3d)`
+- `getZVector(result?: Vector3d)`
+- `setViewClip(clip?: ClipVector)`
+- `getViewClip()`
+- `setGridSettings(orientation: GridOrientationType, spacing: Point2d, gridsPerRef: number)`
+- `getGridSettings(vp: Viewport, origin: Point3d, rMatrix: Matrix3d, orientation: GridOrientationType)`
+- `getGridOrientation()`
+- `getGridsPerRef()`
+- `getGridSpacing()`
+- `lookAtVolume(volume: LowAndHighXYZ | LowAndHighXY, aspect?: number, options?: MarginOptions & OnViewExtentsError)`
+- `lookAtViewAlignedVolume(volume: Range3d, aspect?: number, options?: MarginOptions & OnViewExtentsError)`
+- `setRotationAboutPoint(rotation: Matrix3d, point?: Point3d)`
+- `refreshForModifiedModels(modelIds: Id64Arg | undefined)`
+- `hasSameCoordinates(other: ViewState)`
+- `getUpVector(point: Point3d)`
+- `getIsViewingProject()`
+- `getGlobeRotation()`
+- `_updateMaxGlobalScopeFactor()`
+- `getModelElevation(_modelId: Id64String)`
+- `computeDisplayTransform(args: ComputeDisplayTransformArgs)`
+- `attachToViewport(_args: AttachToViewportArgs)`
+- `detachFromViewport()`
+- `getAttachmentViewport(_args: GetAttachmentViewportArgs)`

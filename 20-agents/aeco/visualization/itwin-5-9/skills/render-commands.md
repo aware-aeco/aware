@@ -1,0 +1,71 @@
+---
+name: core-frontend-render-commands
+description: RenderCommands declarations from core-frontend
+---
+
+# RenderCommands
+
+## Methods
+
+- `hasCommands(pass: RenderPass)`
+- `isOpaquePass(pass: RenderPass)`
+- `reset(target: Target, stack: BranchStack, batchState: BatchState)`
+- `collectGraphicsForPlanarProjection(scene: GraphicList)`
+- `addGraphics(scene: GraphicList, forcedPass?: RenderPass)`
+- `addBackgroundMapGraphics(backgroundMapGraphics: GraphicList)`
+- `addOverlayGraphics(overlayGraphics: GraphicList)`
+- `addDecorations(dec: GraphicList, forcedPass?: RenderPass)`
+- `addWorldDecorations(decs: GraphicList)`
+- `addBackground(gf?: Graphic)`
+- `addSkyBox(gf?: Graphic)`
+- `addPrimitiveCommand(command: PrimitiveCommand, pass?: Pass)`
+- `getCommands(pass: RenderPass)`
+- `replaceCommands(pass: RenderPass, cmds: DrawCommands)`
+- `addHiliteBranch(branch: Branch, pass: RenderPass)`
+- `processLayers(container: LayerContainer)`
+- `addLayerCommands(layer: Layer)`
+- `addHiliteLayerCommands(graphic: Graphic, pass: RenderPass)`
+- `pushAndPopBranch(branch: Branch, func: () => void)`
+- `pushAndPopState(state: BranchState, func: () => void)`
+- `clear()`
+- `initForPickOverlays(sceneOverlays: GraphicList, worldOverlayDecorations: GraphicList | undefined, viewOverlayDecorations: GraphicList | undefined)`
+- `initForReadPixels(gfx: TargetGraphics)`
+- `initForRender(gfx: TargetGraphics)`
+- `addPrimitive(prim: Primitive)`
+- `addBranch(branch: Branch)`
+- `computeBatchHiliteRenderPass(batch: Batch)`
+- `addBatch(batch: Batch)`
+- `setCheckRange(frustum: Frustum)`
+- `clearCheckRange()`
+- `dump()`
+- `hasCommands(pass: RenderPass)`
+- `isOpaquePass(pass: RenderPass)`
+- `reset(target: Target, stack: BranchStack, batchState: BatchState)`
+- `collectGraphicsForPlanarProjection(scene: GraphicList)`
+- `addGraphics(scene: GraphicList, forcedPass?: RenderPass)`
+- `addBackgroundMapGraphics(backgroundMapGraphics: GraphicList)`
+- `addOverlayGraphics(overlayGraphics: GraphicList)`
+- `addDecorations(dec: GraphicList, forcedPass?: RenderPass)`
+- `addWorldDecorations(decs: GraphicList)`
+- `addBackground(gf?: Graphic)`
+- `addSkyBox(gf?: Graphic)`
+- `addPrimitiveCommand(command: PrimitiveCommand, pass?: Pass)`
+- `getCommands(pass: RenderPass)`
+- `replaceCommands(pass: RenderPass, cmds: DrawCommands)`
+- `addHiliteBranch(branch: Branch, pass: RenderPass)`
+- `processLayers(container: LayerContainer)`
+- `addLayerCommands(layer: Layer)`
+- `addHiliteLayerCommands(graphic: Graphic, pass: RenderPass)`
+- `pushAndPopBranch(branch: Branch, func: () => void)`
+- `pushAndPopState(state: BranchState, func: () => void)`
+- `clear()`
+- `initForPickOverlays(sceneOverlays: GraphicList, worldOverlayDecorations: GraphicList | undefined, viewOverlayDecorations: GraphicList | undefined)`
+- `initForReadPixels(gfx: TargetGraphics)`
+- `initForRender(gfx: TargetGraphics)`
+- `addPrimitive(prim: Primitive)`
+- `addBranch(branch: Branch)`
+- `computeBatchHiliteRenderPass(batch: Batch)`
+- `addBatch(batch: Batch)`
+- `setCheckRange(frustum: Frustum)`
+- `clearCheckRange()`
+- `dump()`

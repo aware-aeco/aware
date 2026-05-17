@@ -1,0 +1,71 @@
+---
+name: core-frontend-matrix4
+description: Matrix4 declarations from core-frontend
+---
+
+# Matrix4
+
+## Methods
+
+- `copyFrom(src: Matrix4)`
+- `clone(out?: Matrix4)`
+- `initIdentity()`
+- `fromIdentity(out?: Matrix4)`
+- `setValues(m00: number, m01: number, m02: number, m03: number, m10: number, m11: number, m12: number, m13: number, m20: number, m21: number, m22: number, m23: number, m30: number, m31: number, m32: number, m33: number)`
+- `fromValues(m00: number, m01: number, m02: number, m03: number, m10: number, m11: number, m12: number, m13: number, m20: number, m21: number, m22: number, m23: number, m30: number, m31: number, m32: number, m33: number, out?: Matrix4)`
+- `getRotation(out?: Matrix3)`
+- `initFromTransform(transform: Transform)`
+- `fromTransform(transform: Transform, out?: Matrix4)`
+- `toTransform()`
+- `initFromMatrix4d(mat: Matrix4d)`
+- `fromMatrix4d(mat: Matrix4d, out?: Matrix4)`
+- `toMatrix4d(result?: Matrix4d)`
+- `lookAt(eye: Point3d, center: Point3d, up: Vector3d)`
+- `fromLookAt(eye: Point3d, center: Point3d, up: Vector3d, out?: Matrix4)`
+- `frustum(l: number, r: number, b: number, t: number, n: number, f: number)`
+- `fromFrustum(l: number, r: number, b: number, t: number, n: number, f: number, out?: Matrix4)`
+- `perspective(fovY: number, aspectRatio: number, nearZ: number, farZ: number)`
+- `fromPerspective(fovY: number, aspectRatio: number, nearZ: number, farZ: number, out?: Matrix4)`
+- `ortho(l: number, r: number, b: number, t: number, n: number, f: number)`
+- `fromOrtho(l: number, r: number, b: number, t: number, n: number, f: number, out?: Matrix4)`
+- `invert()`
+- `fromInverse(src: Matrix4, out?: Matrix4)`
+- `swap(firstIndex: number, secondIndex: number)`
+- `transpose()`
+- `fromTranspose(src: Matrix4, out?: Matrix4)`
+- `multiplyBy(other: Matrix4)`
+- `fromProduct(a: Matrix4, b: Matrix4, out?: Matrix4)`
+- `multiplyByScalar(scalar: number)`
+- `at(row: number, col: number)`
+- `setAt(row: number, col: number, value: number)`
+- `copyFrom(src: Matrix4)`
+- `clone(out?: Matrix4)`
+- `initIdentity()`
+- `fromIdentity(out?: Matrix4)`
+- `setValues(m00: number, m01: number, m02: number, m03: number, m10: number, m11: number, m12: number, m13: number, m20: number, m21: number, m22: number, m23: number, m30: number, m31: number, m32: number, m33: number)`
+- `fromValues(m00: number, m01: number, m02: number, m03: number, m10: number, m11: number, m12: number, m13: number, m20: number, m21: number, m22: number, m23: number, m30: number, m31: number, m32: number, m33: number, out?: Matrix4)`
+- `getRotation(out?: Matrix3)`
+- `initFromTransform(transform: Transform)`
+- `fromTransform(transform: Transform, out?: Matrix4)`
+- `toTransform()`
+- `initFromMatrix4d(mat: Matrix4d)`
+- `fromMatrix4d(mat: Matrix4d, out?: Matrix4)`
+- `toMatrix4d(result?: Matrix4d)`
+- `lookAt(eye: Point3d, center: Point3d, up: Vector3d)`
+- `fromLookAt(eye: Point3d, center: Point3d, up: Vector3d, out?: Matrix4)`
+- `frustum(l: number, r: number, b: number, t: number, n: number, f: number)`
+- `fromFrustum(l: number, r: number, b: number, t: number, n: number, f: number, out?: Matrix4)`
+- `perspective(fovY: number, aspectRatio: number, nearZ: number, farZ: number)`
+- `fromPerspective(fovY: number, aspectRatio: number, nearZ: number, farZ: number, out?: Matrix4)`
+- `ortho(l: number, r: number, b: number, t: number, n: number, f: number)`
+- `fromOrtho(l: number, r: number, b: number, t: number, n: number, f: number, out?: Matrix4)`
+- `invert()`
+- `fromInverse(src: Matrix4, out?: Matrix4)`
+- `swap(firstIndex: number, secondIndex: number)`
+- `transpose()`
+- `fromTranspose(src: Matrix4, out?: Matrix4)`
+- `multiplyBy(other: Matrix4)`
+- `fromProduct(a: Matrix4, b: Matrix4, out?: Matrix4)`
+- `multiplyByScalar(scalar: number)`
+- `at(row: number, col: number)`
+- `setAt(row: number, col: number, value: number)`

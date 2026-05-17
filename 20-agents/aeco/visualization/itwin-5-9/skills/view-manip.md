@@ -1,0 +1,91 @@
+---
+name: core-frontend-view-manip
+description: ViewManip declarations from core-frontend
+---
+
+# ViewManip
+
+## Methods
+
+- `decorate(context: DecorateContext)`
+- `previewDepthPoint(context: DecorateContext)`
+- `getDepthPointGeometryId()`
+- `clearDepthPoint()`
+- `pickDepthPoint(ev: BeButtonEvent, isPreview?: boolean)`
+- `onReinitialize()`
+- `onDataButtonDown(ev: BeButtonEvent)`
+- `onDataButtonUp(_ev: BeButtonEvent)`
+- `onMouseWheel(inputEv: BeWheelEvent)`
+- `startHandleDrag(ev: BeButtonEvent, forcedHandle?: ViewHandleType)`
+- `onMouseStartDrag(ev: BeButtonEvent)`
+- `onMouseEndDrag(ev: BeButtonEvent)`
+- `onMouseMotion(ev: BeButtonEvent)`
+- `onTouchStart(ev: BeTouchEvent)`
+- `onTouchEnd(ev: BeTouchEvent)`
+- `onTouchComplete(ev: BeTouchEvent)`
+- `onTouchCancel(ev: BeTouchEvent)`
+- `onTouchMove(ev: BeTouchEvent)`
+- `onTouchMoveStart(ev: BeTouchEvent, startEv: BeTouchEvent)`
+- `onTouchTap(ev: BeTouchEvent)`
+- `onKeyTransition(wentDown: boolean, keyEvent: KeyboardEvent)`
+- `onModifierKeyTransition(wentDown: boolean, modifier: BeModifierKeys, event: KeyboardEvent)`
+- `onPostInstall()`
+- `provideToolAssistance(mainInstrKey: string, additionalInstr?: ToolAssistanceInstruction[])`
+- `provideInitialToolAssistance()`
+- `onCleanup()`
+- `setTargetCenterWorld(pt: Point3d, lockTarget: boolean, saveTarget: boolean)`
+- `updateTargetCenter()`
+- `processFirstPoint(ev: BeButtonEvent)`
+- `processPoint(ev: BeButtonEvent, inDynamics: boolean)`
+- `lensAngleMatches(angle: Angle, tolerance: number)`
+- `getFocusPlaneNpc(vp: Viewport)`
+- `getDefaultTargetPointWorld(vp: Viewport)`
+- `isPointVisible(testPt: Point3d)`
+- `computeFitRange(viewport: ScreenViewport)`
+- `fitView(viewport: ScreenViewport, animateFrustumChange: boolean, options?: ViewChangeOptions & MarginOptions)`
+- `fitViewWithGlobeAnimation(viewport: ScreenViewport, animateFrustumChange: boolean, options?: ViewChangeOptions & MarginOptions)`
+- `zoomToAlwaysDrawnExclusive(viewport: ScreenViewport, options?: ViewChangeOptions & MarginOptions)`
+- `setCameraLensAngle(lensAngle: Angle, retainEyePoint: boolean)`
+- `enforceZUp(pivotPoint: Point3d)`
+- `changeViewport(vp?: ScreenViewport)`
+- `decorate(context: DecorateContext)`
+- `previewDepthPoint(context: DecorateContext)`
+- `getDepthPointGeometryId()`
+- `clearDepthPoint()`
+- `pickDepthPoint(ev: BeButtonEvent, isPreview?: boolean)`
+- `onReinitialize()`
+- `onDataButtonDown(ev: BeButtonEvent)`
+- `onDataButtonUp(_ev: BeButtonEvent)`
+- `onMouseWheel(inputEv: BeWheelEvent)`
+- `startHandleDrag(ev: BeButtonEvent, forcedHandle?: ViewHandleType)`
+- `onMouseStartDrag(ev: BeButtonEvent)`
+- `onMouseEndDrag(ev: BeButtonEvent)`
+- `onMouseMotion(ev: BeButtonEvent)`
+- `onTouchStart(ev: BeTouchEvent)`
+- `onTouchEnd(ev: BeTouchEvent)`
+- `onTouchComplete(ev: BeTouchEvent)`
+- `onTouchCancel(ev: BeTouchEvent)`
+- `onTouchMove(ev: BeTouchEvent)`
+- `onTouchMoveStart(ev: BeTouchEvent, startEv: BeTouchEvent)`
+- `onTouchTap(ev: BeTouchEvent)`
+- `onKeyTransition(wentDown: boolean, keyEvent: KeyboardEvent)`
+- `onModifierKeyTransition(wentDown: boolean, modifier: BeModifierKeys, event: KeyboardEvent)`
+- `onPostInstall()`
+- `provideToolAssistance(mainInstrKey: string, additionalInstr?: ToolAssistanceInstruction[])`
+- `provideInitialToolAssistance()`
+- `onCleanup()`
+- `setTargetCenterWorld(pt: Point3d, lockTarget: boolean, saveTarget: boolean)`
+- `updateTargetCenter()`
+- `processFirstPoint(ev: BeButtonEvent)`
+- `processPoint(ev: BeButtonEvent, inDynamics: boolean)`
+- `lensAngleMatches(angle: Angle, tolerance: number)`
+- `getFocusPlaneNpc(vp: Viewport)`
+- `getDefaultTargetPointWorld(vp: Viewport)`
+- `isPointVisible(testPt: Point3d)`
+- `computeFitRange(viewport: ScreenViewport)`
+- `fitView(viewport: ScreenViewport, animateFrustumChange: boolean, options?: ViewChangeOptions & MarginOptions)`
+- `fitViewWithGlobeAnimation(viewport: ScreenViewport, animateFrustumChange: boolean, options?: ViewChangeOptions & MarginOptions)`
+- `zoomToAlwaysDrawnExclusive(viewport: ScreenViewport, options?: ViewChangeOptions & MarginOptions)`
+- `setCameraLensAngle(lensAngle: Angle, retainEyePoint: boolean)`
+- `enforceZUp(pivotPoint: Point3d)`
+- `changeViewport(vp?: ScreenViewport)`

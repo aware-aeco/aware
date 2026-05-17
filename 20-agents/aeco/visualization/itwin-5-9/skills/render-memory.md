@@ -1,0 +1,71 @@
+---
+name: core-frontend-render-memory
+description: RenderMemory declarations from core-frontend
+---
+
+# RenderMemory
+
+## Methods
+
+- `addConsumer(numBytes: number)`
+- `clear()`
+- `clear()`
+- `addBuffer(type: BufferType, numBytes: number)`
+- `create()`
+- `addBuffer(type: BufferType, numBytes: number)`
+- `addConsumer(type: ConsumerType, numBytes: number)`
+- `clear()`
+- `addTexture(numBytes: number)`
+- `addVertexTable(numBytes: number)`
+- `addEdgeTable(numBytes: number)`
+- `addFeatureTable(numBytes: number)`
+- `addThematicTexture(numBytes: number)`
+- `addFeatureOverrides(numBytes: number)`
+- `addContours(numBytes: number)`
+- `addClipVolume(numBytes: number)`
+- `addPlanarClassifier(numBytes: number)`
+- `addShadowMap(numBytes: number)`
+- `addTextureAttachment(numBytes: number)`
+- `addSurface(numBytes: number)`
+- `addVisibleEdges(numBytes: number)`
+- `addIndexedEdges(numBytes: number)`
+- `addSilhouetteEdges(numBytes: number)`
+- `addPolylineEdges(numBytes: number)`
+- `addPolyline(numBytes: number)`
+- `addPointString(numBytes: number)`
+- `addPointCloud(numBytes: number)`
+- `addTerrain(numBytes: number)`
+- `addRealityMesh(numBytes: number)`
+- `addInstances(numBytes: number)`
+- `collectStatistics(stats: Statistics)`
+- `addConsumer(numBytes: number)`
+- `clear()`
+- `clear()`
+- `addBuffer(type: BufferType, numBytes: number)`
+- `create()`
+- `addBuffer(type: BufferType, numBytes: number)`
+- `addConsumer(type: ConsumerType, numBytes: number)`
+- `clear()`
+- `addTexture(numBytes: number)`
+- `addVertexTable(numBytes: number)`
+- `addEdgeTable(numBytes: number)`
+- `addFeatureTable(numBytes: number)`
+- `addThematicTexture(numBytes: number)`
+- `addFeatureOverrides(numBytes: number)`
+- `addContours(numBytes: number)`
+- `addClipVolume(numBytes: number)`
+- `addPlanarClassifier(numBytes: number)`
+- `addShadowMap(numBytes: number)`
+- `addTextureAttachment(numBytes: number)`
+- `addSurface(numBytes: number)`
+- `addVisibleEdges(numBytes: number)`
+- `addIndexedEdges(numBytes: number)`
+- `addSilhouetteEdges(numBytes: number)`
+- `addPolylineEdges(numBytes: number)`
+- `addPolyline(numBytes: number)`
+- `addPointString(numBytes: number)`
+- `addPointCloud(numBytes: number)`
+- `addTerrain(numBytes: number)`
+- `addRealityMesh(numBytes: number)`
+- `addInstances(numBytes: number)`
+- `collectStatistics(stats: Statistics)`

@@ -1,0 +1,83 @@
+---
+name: core-frontend-accu-draw-shortcuts
+description: AccuDrawShortcuts declarations from core-frontend
+---
+
+# AccuDrawShortcuts
+
+## Methods
+
+- `sessionToggle()`
+- `suspendToggle()`
+- `rotateAxesByPoint(isSnapped: boolean, aboutCurrentZ: boolean)`
+- `updateACSByPoints(acs: AuxCoordSystemState, vp: Viewport, points: Point3d[], isDynamics: boolean)`
+- `processPendingHints()`
+- `requestInputFocus()`
+- `itemFieldNavigate(index: ItemField, str: string, forward: boolean)`
+- `itemFieldNewInput(index: ItemField)`
+- `itemFieldCompletedInput(index: ItemField)`
+- `itemFieldAcceptInput(index: ItemField, str: string)`
+- `itemFieldLockToggle(index: ItemField)`
+- `choosePreviousValue(index: ItemField)`
+- `chooseNextValue(index: ItemField)`
+- `clearSavedValues()`
+- `itemRotationModeChange(rotation: RotationMode)`
+- `setOrigin(explicitOrigin?: Point3d)`
+- `changeCompassMode()`
+- `lockSmart()`
+- `lockIndex()`
+- `lockX()`
+- `lockY()`
+- `lockZ()`
+- `lockDistance()`
+- `lockAngle()`
+- `setStandardRotation(rotation: RotationMode)`
+- `alignView()`
+- `rotateToBase()`
+- `rotateToACS()`
+- `rotateCycle()`
+- `rotate90(axis: number)`
+- `rotateAxes(aboutCurrentZ: boolean)`
+- `rotateToElement()`
+- `defineACSByElement()`
+- `defineACSByPoints()`
+- `getACS(acsName: string | undefined, useOrigin: boolean, useRotation: boolean)`
+- `writeACS(_acsName: string)`
+- `itemFieldUnlockAll()`
+- `sessionToggle()`
+- `suspendToggle()`
+- `rotateAxesByPoint(isSnapped: boolean, aboutCurrentZ: boolean)`
+- `updateACSByPoints(acs: AuxCoordSystemState, vp: Viewport, points: Point3d[], isDynamics: boolean)`
+- `processPendingHints()`
+- `requestInputFocus()`
+- `itemFieldNavigate(index: ItemField, str: string, forward: boolean)`
+- `itemFieldNewInput(index: ItemField)`
+- `itemFieldCompletedInput(index: ItemField)`
+- `itemFieldAcceptInput(index: ItemField, str: string)`
+- `itemFieldLockToggle(index: ItemField)`
+- `choosePreviousValue(index: ItemField)`
+- `chooseNextValue(index: ItemField)`
+- `clearSavedValues()`
+- `itemRotationModeChange(rotation: RotationMode)`
+- `setOrigin(explicitOrigin?: Point3d)`
+- `changeCompassMode()`
+- `lockSmart()`
+- `lockIndex()`
+- `lockX()`
+- `lockY()`
+- `lockZ()`
+- `lockDistance()`
+- `lockAngle()`
+- `setStandardRotation(rotation: RotationMode)`
+- `alignView()`
+- `rotateToBase()`
+- `rotateToACS()`
+- `rotateCycle()`
+- `rotate90(axis: number)`
+- `rotateAxes(aboutCurrentZ: boolean)`
+- `rotateToElement()`
+- `defineACSByElement()`
+- `defineACSByPoints()`
+- `getACS(acsName: string | undefined, useOrigin: boolean, useRotation: boolean)`
+- `writeACS(_acsName: string)`
+- `itemFieldUnlockAll()`

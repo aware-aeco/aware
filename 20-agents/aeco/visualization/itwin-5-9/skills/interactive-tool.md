@@ -1,0 +1,117 @@
+---
+name: core-frontend-interactive-tool
+description: InteractiveTool declarations from core-frontend
+---
+
+# InteractiveTool
+
+## Methods
+
+- `onInstall()`
+- `onPostInstall()`
+- `exitTool()`
+- `onReinitialize()`
+- `onCleanup()`
+- `onSuspend()`
+- `onUnsuspend()`
+- `testDecorationHit(_id: string)`
+- `getDecorationGeometry(_hit: HitDetail)`
+- `decorate(_context: DecorateContext)`
+- `decorateSuspended(_context: DecorateContext)`
+- `onResetButtonDown(_ev: BeButtonEvent)`
+- `onResetButtonUp(_ev: BeButtonEvent)`
+- `onDataButtonDown(_ev: BeButtonEvent)`
+- `onDataButtonUp(_ev: BeButtonEvent)`
+- `onMiddleButtonDown(_ev: BeButtonEvent)`
+- `onMiddleButtonUp(_ev: BeButtonEvent)`
+- `onMouseMotion(_ev: BeButtonEvent)`
+- `onMouseStartDrag(_ev: BeButtonEvent)`
+- `onMouseEndDrag(ev: BeButtonEvent)`
+- `onMouseWheel(_ev: BeWheelEvent)`
+- `onModifierKeyTransition(_wentDown: boolean, _modifier: BeModifierKeys, _event: KeyboardEvent)`
+- `onKeyTransition(_wentDown: boolean, _keyEvent: KeyboardEvent)`
+- `onTouchStart(_ev: BeTouchEvent)`
+- `onTouchEnd(_ev: BeTouchEvent)`
+- `onTouchComplete(_ev: BeTouchEvent)`
+- `onTouchCancel(_ev: BeTouchEvent)`
+- `onTouchMove(_ev: BeTouchEvent)`
+- `onTouchMoveStart(_ev: BeTouchEvent, _startEv: BeTouchEvent)`
+- `onTouchTap(_ev: BeTouchEvent)`
+- `isCompatibleViewport(_vp: ScreenViewport, _isSelectedViewChange: boolean)`
+- `isValidLocation(_ev: BeButtonEvent, _isButtonEvent: boolean)`
+- `onSelectedViewportChanged(_previous: ScreenViewport | undefined, _current: ScreenViewport | undefined)`
+- `getToolTip(_hit: HitDetail)`
+- `getCurrentButtonEvent(ev: BeButtonEvent)`
+- `beginDynamics()`
+- `endDynamics()`
+- `onDynamicFrame(_ev: BeButtonEvent, _context: DynamicsContext)`
+- `filterHit(_hit: HitDetail, _out?: LocateResponse)`
+- `changeLocateState(enableLocate: boolean, enableSnap?: boolean, cursor?: string, coordLockOvr?: CoordinateLockOverrides)`
+- `initLocateElements(enableLocate?: boolean, enableSnap?: boolean, cursor?: string, coordLockOvr?: CoordinateLockOverrides)`
+- `restoreToolSettingPropertyValue(property: DialogProperty<any>)`
+- `saveToolSettingPropertyValue(property: DialogProperty<any>, itemValue: DialogItemValue)`
+- `syncToolSettingPropertyValue(property: DialogProperty<any>, isDisabled?: boolean)`
+- `getToolSettingPropertyByName(propertyName: string)`
+- `getToolSettingPropertyLocked(_property: DialogProperty<any>)`
+- `getToolSettingLockProperty(_property: DialogProperty<any>)`
+- `changeToolSettingPropertyValue(syncItem: DialogPropertySyncItem)`
+- `initializeToolSettingPropertyValues(properties: DialogProperty<any>[])`
+- `supplyToolSettingsProperties()`
+- `applyToolSettingPropertyChange(_updatedValue: DialogPropertySyncItem)`
+- `syncToolSettingsProperties(syncData: DialogPropertySyncItem[])`
+- `reloadToolSettingsProperties()`
+- `bumpToolSetting(_settingIndex?: number)`
+- `onInstall()`
+- `onPostInstall()`
+- `exitTool()`
+- `onReinitialize()`
+- `onCleanup()`
+- `onSuspend()`
+- `onUnsuspend()`
+- `testDecorationHit(_id: string)`
+- `getDecorationGeometry(_hit: HitDetail)`
+- `decorate(_context: DecorateContext)`
+- `decorateSuspended(_context: DecorateContext)`
+- `onResetButtonDown(_ev: BeButtonEvent)`
+- `onResetButtonUp(_ev: BeButtonEvent)`
+- `onDataButtonDown(_ev: BeButtonEvent)`
+- `onDataButtonUp(_ev: BeButtonEvent)`
+- `onMiddleButtonDown(_ev: BeButtonEvent)`
+- `onMiddleButtonUp(_ev: BeButtonEvent)`
+- `onMouseMotion(_ev: BeButtonEvent)`
+- `onMouseStartDrag(_ev: BeButtonEvent)`
+- `onMouseEndDrag(ev: BeButtonEvent)`
+- `onMouseWheel(_ev: BeWheelEvent)`
+- `onModifierKeyTransition(_wentDown: boolean, _modifier: BeModifierKeys, _event: KeyboardEvent)`
+- `onKeyTransition(_wentDown: boolean, _keyEvent: KeyboardEvent)`
+- `onTouchStart(_ev: BeTouchEvent)`
+- `onTouchEnd(_ev: BeTouchEvent)`
+- `onTouchComplete(_ev: BeTouchEvent)`
+- `onTouchCancel(_ev: BeTouchEvent)`
+- `onTouchMove(_ev: BeTouchEvent)`
+- `onTouchMoveStart(_ev: BeTouchEvent, _startEv: BeTouchEvent)`
+- `onTouchTap(_ev: BeTouchEvent)`
+- `isCompatibleViewport(_vp: ScreenViewport, _isSelectedViewChange: boolean)`
+- `isValidLocation(_ev: BeButtonEvent, _isButtonEvent: boolean)`
+- `onSelectedViewportChanged(_previous: ScreenViewport | undefined, _current: ScreenViewport | undefined)`
+- `getToolTip(_hit: HitDetail)`
+- `getCurrentButtonEvent(ev: BeButtonEvent)`
+- `beginDynamics()`
+- `endDynamics()`
+- `onDynamicFrame(_ev: BeButtonEvent, _context: DynamicsContext)`
+- `filterHit(_hit: HitDetail, _out?: LocateResponse)`
+- `changeLocateState(enableLocate: boolean, enableSnap?: boolean, cursor?: string, coordLockOvr?: CoordinateLockOverrides)`
+- `initLocateElements(enableLocate?: boolean, enableSnap?: boolean, cursor?: string, coordLockOvr?: CoordinateLockOverrides)`
+- `restoreToolSettingPropertyValue(property: DialogProperty<any>)`
+- `saveToolSettingPropertyValue(property: DialogProperty<any>, itemValue: DialogItemValue)`
+- `syncToolSettingPropertyValue(property: DialogProperty<any>, isDisabled?: boolean)`
+- `getToolSettingPropertyByName(propertyName: string)`
+- `getToolSettingPropertyLocked(_property: DialogProperty<any>)`
+- `getToolSettingLockProperty(_property: DialogProperty<any>)`
+- `changeToolSettingPropertyValue(syncItem: DialogPropertySyncItem)`
+- `initializeToolSettingPropertyValues(properties: DialogProperty<any>[])`
+- `supplyToolSettingsProperties()`
+- `applyToolSettingPropertyChange(_updatedValue: DialogPropertySyncItem)`
+- `syncToolSettingsProperties(syncData: DialogPropertySyncItem[])`
+- `reloadToolSettingsProperties()`
+- `bumpToolSetting(_settingIndex?: number)`

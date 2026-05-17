@@ -1,0 +1,121 @@
+---
+name: core-frontend-i-model-connection
+description: IModelConnection declarations from core-frontend
+---
+
+# IModelConnection
+
+## Methods
+
+- `disableGCS(disable: boolean)`
+- `isBriefcaseConnection()`
+- `isCheckpointConnection()`
+- `isSnapshotConnection()`
+- `isBlankConnection()`
+- `loadFontMap()`
+- `findClassFor(className: string, defaultClass: T | undefined)`
+- `beforeClose()`
+- `close()`
+- `createQueryReader(ecsql: string, params?: QueryBinder, config?: QueryOptions)`
+- `querySubCategories(compressedCategoryIds: CompressedId64Set)`
+- `queryAllUsedSpatialSubCategories()`
+- `queryEntityIds(params: EntityQueryParams)`
+- `requestSnap(props: SnapRequestProps)`
+- `getToolTipMessage(id: Id64String)`
+- `getGeometryContainment(requestProps: GeometryContainmentRequestProps)`
+- `getGeometrySummary(requestProps: GeometrySummaryRequestProps)`
+- `queryTextureData(textureLoadProps: TextureLoadProps)`
+- `getMassProperties(requestProps: MassPropertiesRequestProps)`
+- `getMassPropertiesPerCandidate(requestProps: MassPropertiesPerCandidateRequestProps)`
+- `generateElementMeshes(requestProps: ElementMeshRequestProps)`
+- `spatialToCartographicFromGcs(spatial: XYAndZ, result?: Cartographic)`
+- `spatialToCartographic(spatial: XYAndZ, result?: Cartographic)`
+- `cartographicFromSpatial(spatial: XYAndZ[])`
+- `wgs84CartographicFromSpatial(spatial: XYAndZ[])`
+- `cartographicFromSpatialWithGcs(spatial: XYAndZ[], datumOrGCRS?: string | GeographicCRSProps)`
+- `cartographicToSpatialFromGcs(cartographic: Cartographic, result?: Point3d)`
+- `cartographicToSpatial(cartographic: Cartographic, result?: Point3d)`
+- `spatialFromCartographic(cartographic: Cartographic[])`
+- `toSpatialFromGcs(geoCoords: XYAndZ[], datumOrGCRS?: string | GeographicCRSProps)`
+- `getMapEcefToDb(bimElevationBias: number)`
+- `getDictionaryModel()`
+- `getProps(modelIds: Id64Arg)`
+- `getLoaded(id: string)`
+- `filterLoaded(modelIds: Id64Arg)`
+- `load(modelIds: Id64Arg)`
+- `updateLoadedWithModelProps(modelProps: ModelProps[])`
+- `unload(modelId: Id64String)`
+- `queryModelRanges(modelIds: Id64Arg)`
+- `queryExtents(modelIds: Id64String | Id64String[])`
+- `queryProps(queryParams: ModelQueryParams)`
+- `query(queryParams: ModelQueryParams)`
+- `queryIds(params: EntityQueryParams)`
+- `getProps(arg: Id64Arg)`
+- `loadProps(identifier: Id64String | GuidString | CodeProps, options?: ElementLoadOptions)`
+- `queryProps(params: EntityQueryParams)`
+- `getPlacements(elementIds: Iterable<Id64String>, options?: Readonly<GetPlacementsOptions>)`
+- `getById(codeSpecId: Id64String)`
+- `getByName(name: string)`
+- `queryProps(queryParams: ViewQueryParams)`
+- `getViewList(queryParams: ViewQueryParams)`
+- `queryDefaultViewId()`
+- `load(viewDefinitionId: ViewIdString)`
+- `convertViewStatePropsToViewState(viewProps: ViewStateProps)`
+- `getCategoryInfo(categoryIds: Iterable<Id64String>)`
+- `getSubCategoryInfo()`
+- `disableGCS(disable: boolean)`
+- `isBriefcaseConnection()`
+- `isCheckpointConnection()`
+- `isSnapshotConnection()`
+- `isBlankConnection()`
+- `loadFontMap()`
+- `findClassFor(className: string, defaultClass: T | undefined)`
+- `beforeClose()`
+- `close()`
+- `createQueryReader(ecsql: string, params?: QueryBinder, config?: QueryOptions)`
+- `querySubCategories(compressedCategoryIds: CompressedId64Set)`
+- `queryAllUsedSpatialSubCategories()`
+- `queryEntityIds(params: EntityQueryParams)`
+- `requestSnap(props: SnapRequestProps)`
+- `getToolTipMessage(id: Id64String)`
+- `getGeometryContainment(requestProps: GeometryContainmentRequestProps)`
+- `getGeometrySummary(requestProps: GeometrySummaryRequestProps)`
+- `queryTextureData(textureLoadProps: TextureLoadProps)`
+- `getMassProperties(requestProps: MassPropertiesRequestProps)`
+- `getMassPropertiesPerCandidate(requestProps: MassPropertiesPerCandidateRequestProps)`
+- `generateElementMeshes(requestProps: ElementMeshRequestProps)`
+- `spatialToCartographicFromGcs(spatial: XYAndZ, result?: Cartographic)`
+- `spatialToCartographic(spatial: XYAndZ, result?: Cartographic)`
+- `cartographicFromSpatial(spatial: XYAndZ[])`
+- `wgs84CartographicFromSpatial(spatial: XYAndZ[])`
+- `cartographicFromSpatialWithGcs(spatial: XYAndZ[], datumOrGCRS?: string | GeographicCRSProps)`
+- `cartographicToSpatialFromGcs(cartographic: Cartographic, result?: Point3d)`
+- `cartographicToSpatial(cartographic: Cartographic, result?: Point3d)`
+- `spatialFromCartographic(cartographic: Cartographic[])`
+- `toSpatialFromGcs(geoCoords: XYAndZ[], datumOrGCRS?: string | GeographicCRSProps)`
+- `getMapEcefToDb(bimElevationBias: number)`
+- `getDictionaryModel()`
+- `getProps(modelIds: Id64Arg)`
+- `getLoaded(id: string)`
+- `filterLoaded(modelIds: Id64Arg)`
+- `load(modelIds: Id64Arg)`
+- `updateLoadedWithModelProps(modelProps: ModelProps[])`
+- `unload(modelId: Id64String)`
+- `queryModelRanges(modelIds: Id64Arg)`
+- `queryExtents(modelIds: Id64String | Id64String[])`
+- `queryProps(queryParams: ModelQueryParams)`
+- `query(queryParams: ModelQueryParams)`
+- `queryIds(params: EntityQueryParams)`
+- `getProps(arg: Id64Arg)`
+- `loadProps(identifier: Id64String | GuidString | CodeProps, options?: ElementLoadOptions)`
+- `queryProps(params: EntityQueryParams)`
+- `getPlacements(elementIds: Iterable<Id64String>, options?: Readonly<GetPlacementsOptions>)`
+- `getById(codeSpecId: Id64String)`
+- `getByName(name: string)`
+- `queryProps(queryParams: ViewQueryParams)`
+- `getViewList(queryParams: ViewQueryParams)`
+- `queryDefaultViewId()`
+- `load(viewDefinitionId: ViewIdString)`
+- `convertViewStatePropsToViewState(viewProps: ViewStateProps)`
+- `getCategoryInfo(categoryIds: Iterable<Id64String>)`
+- `getSubCategoryInfo()`

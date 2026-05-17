@@ -1,0 +1,177 @@
+---
+name: core-frontend-accu-draw
+description: AccuDraw declarations from core-frontend
+---
+
+# AccuDraw
+
+## Methods
+
+- `onInitialized()`
+- `getRotation(rMatrix?: Matrix3d)`
+- `getFieldLock(index: ItemField)`
+- `getKeyinStatus(index: ItemField)`
+- `isDynamicKeyinStatus(index: ItemField)`
+- `grabInputFocus()`
+- `defaultFocusItem()`
+- `activate()`
+- `deactivate()`
+- `is3dCompass(viewport: Viewport)`
+- `setCompassMode(mode: CompassMode)`
+- `setRotationMode(mode: RotationMode)`
+- `setFieldLock(index: ItemField, locked: boolean)`
+- `setKeyinStatus(index: ItemField, status: KeyinStatus)`
+- `adjustPoint(pointActive: Point3d, vp: ScreenViewport, fromSnap: boolean)`
+- `isZLocked(vp: Viewport)`
+- `accountForAuxRotationPlane(rot: ThreeAxes, plane: RotationMode)`
+- `updateRotation(animate?: boolean, newRotationIn?: Matrix3d)`
+- `enableForSession()`
+- `disableForSession()`
+- `setLastPoint(pt: Point3d)`
+- `sendDataPoint(pt: Point3d, viewport: ScreenViewport)`
+- `clearTentative()`
+- `doAutoPoint(index: ItemField, mode: CompassMode)`
+- `getValueByIndex(index: ItemField)`
+- `setValueByIndex(index: ItemField, value: number)`
+- `getLengthParser()`
+- `getLengthFormatter()`
+- `getAngleParser()`
+- `getAngleFormatter()`
+- `getFormattedValueByIndex(index: ItemField)`
+- `unlockAllFields()`
+- `itemFieldInputIsValid(key: string, item: ItemField)`
+- `processFieldInput(index: ItemField, input: string, synchText: boolean)`
+- `updateFieldLock(index: ItemField, locked: boolean)`
+- `getSnapRotation(snap: SnapDetail, currentVp: Viewport | undefined, out?: Matrix3d)`
+- `getStandardRotation(nStandard: StandardViewId, vp: Viewport | undefined, useACS: boolean, out?: Matrix3d)`
+- `getCurrentOrientation(vp: Viewport, checkAccuDraw: boolean, checkACS: boolean, rMatrix?: Matrix3d)`
+- `updateAuxCoordinateSystem(acs: AuxCoordSystemState, vp: Viewport, allViews?: boolean)`
+- `distanceLock(synchText: boolean, saveInHistory: boolean)`
+- `angleLock()`
+- `doLockAngle(isSnapped: boolean)`
+- `saveCoordinate(index: ItemField, value: number)`
+- `getSavedValue(index: ItemField, next: boolean)`
+- `clearSavedValues()`
+- `changeCompassMode(animate?: boolean)`
+- `changeBaseRotationMode(mode: RotationMode)`
+- `setContextRotation(rMatrix: Matrix3d, locked: boolean, animate: boolean)`
+- `setContext(flags: AccuDrawFlags, originP?: Point3d, orientationP?: Matrix3d | Vector3d, deltaP?: Vector3d, distanceP?: number, angleP?: number, transP?: Transform)`
+- `onPrimitiveToolInstall()`
+- `onViewToolInstall()`
+- `onViewToolExit()`
+- `onInputCollectorInstall()`
+- `onInputCollectorExit()`
+- `saveState(stateBuffer: SavedState)`
+- `restoreState(stateBuffer: SavedState)`
+- `testDecorationHit(id: string)`
+- `getDecorationGeometry(hit: HitDetail)`
+- `decorate(context: DecorateContext)`
+- `onCompassDisplayChange(_state: "show" | "hide")`
+- `onCompassModeChange()`
+- `onRotationModeChange()`
+- `onFieldLockChange(_index: ItemField)`
+- `onFieldValueChange(_index: ItemField)`
+- `onFieldKeyinStatusChange(_index: ItemField)`
+- `setFocusItem(_index: ItemField)`
+- `getFocusItem()`
+- `softConstructionPlane(outPtP: Point3d, inPtP: Point3d, pointOnPlaneP: Point3d, normalVectorP: Vector3d, vp: Viewport, isSnap: boolean)`
+- `hardConstructionPlane(outPtP: Point3d, inPtP: Point3d, pointOnPlaneP: Point3d, normalVectorP: Vector3d, vp: Viewport, isSnap: boolean)`
+- `fixPointPolar(vp: Viewport)`
+- `fixPointRectangular(vp: Viewport)`
+- `refreshDecorationsAndDynamics()`
+- `upgradeToActiveState()`
+- `downgradeInactiveState()`
+- `onBeginDynamics()`
+- `onEndDynamics()`
+- `processMotion()`
+- `onMotion(_ev: BeButtonEvent)`
+- `onPreButtonEvent(ev: BeButtonEvent)`
+- `onPostButtonEvent(ev: BeButtonEvent)`
+- `onTentative()`
+- `onSnap(snap: SnapDetail)`
+- `onSelectedViewportChanged(previous: ScreenViewport | undefined, current: ScreenViewport | undefined)`
+- `processHints()`
+- `onInitialized()`
+- `getRotation(rMatrix?: Matrix3d)`
+- `getFieldLock(index: ItemField)`
+- `getKeyinStatus(index: ItemField)`
+- `isDynamicKeyinStatus(index: ItemField)`
+- `grabInputFocus()`
+- `defaultFocusItem()`
+- `activate()`
+- `deactivate()`
+- `is3dCompass(viewport: Viewport)`
+- `setCompassMode(mode: CompassMode)`
+- `setRotationMode(mode: RotationMode)`
+- `setFieldLock(index: ItemField, locked: boolean)`
+- `setKeyinStatus(index: ItemField, status: KeyinStatus)`
+- `adjustPoint(pointActive: Point3d, vp: ScreenViewport, fromSnap: boolean)`
+- `isZLocked(vp: Viewport)`
+- `accountForAuxRotationPlane(rot: ThreeAxes, plane: RotationMode)`
+- `updateRotation(animate?: boolean, newRotationIn?: Matrix3d)`
+- `enableForSession()`
+- `disableForSession()`
+- `setLastPoint(pt: Point3d)`
+- `sendDataPoint(pt: Point3d, viewport: ScreenViewport)`
+- `clearTentative()`
+- `doAutoPoint(index: ItemField, mode: CompassMode)`
+- `getValueByIndex(index: ItemField)`
+- `setValueByIndex(index: ItemField, value: number)`
+- `getLengthParser()`
+- `getLengthFormatter()`
+- `getAngleParser()`
+- `getAngleFormatter()`
+- `getFormattedValueByIndex(index: ItemField)`
+- `unlockAllFields()`
+- `itemFieldInputIsValid(key: string, item: ItemField)`
+- `processFieldInput(index: ItemField, input: string, synchText: boolean)`
+- `updateFieldLock(index: ItemField, locked: boolean)`
+- `getSnapRotation(snap: SnapDetail, currentVp: Viewport | undefined, out?: Matrix3d)`
+- `getStandardRotation(nStandard: StandardViewId, vp: Viewport | undefined, useACS: boolean, out?: Matrix3d)`
+- `getCurrentOrientation(vp: Viewport, checkAccuDraw: boolean, checkACS: boolean, rMatrix?: Matrix3d)`
+- `updateAuxCoordinateSystem(acs: AuxCoordSystemState, vp: Viewport, allViews?: boolean)`
+- `distanceLock(synchText: boolean, saveInHistory: boolean)`
+- `angleLock()`
+- `doLockAngle(isSnapped: boolean)`
+- `saveCoordinate(index: ItemField, value: number)`
+- `getSavedValue(index: ItemField, next: boolean)`
+- `clearSavedValues()`
+- `changeCompassMode(animate?: boolean)`
+- `changeBaseRotationMode(mode: RotationMode)`
+- `setContextRotation(rMatrix: Matrix3d, locked: boolean, animate: boolean)`
+- `setContext(flags: AccuDrawFlags, originP?: Point3d, orientationP?: Matrix3d | Vector3d, deltaP?: Vector3d, distanceP?: number, angleP?: number, transP?: Transform)`
+- `onPrimitiveToolInstall()`
+- `onViewToolInstall()`
+- `onViewToolExit()`
+- `onInputCollectorInstall()`
+- `onInputCollectorExit()`
+- `saveState(stateBuffer: SavedState)`
+- `restoreState(stateBuffer: SavedState)`
+- `testDecorationHit(id: string)`
+- `getDecorationGeometry(hit: HitDetail)`
+- `decorate(context: DecorateContext)`
+- `onCompassDisplayChange(_state: "show" | "hide")`
+- `onCompassModeChange()`
+- `onRotationModeChange()`
+- `onFieldLockChange(_index: ItemField)`
+- `onFieldValueChange(_index: ItemField)`
+- `onFieldKeyinStatusChange(_index: ItemField)`
+- `setFocusItem(_index: ItemField)`
+- `getFocusItem()`
+- `softConstructionPlane(outPtP: Point3d, inPtP: Point3d, pointOnPlaneP: Point3d, normalVectorP: Vector3d, vp: Viewport, isSnap: boolean)`
+- `hardConstructionPlane(outPtP: Point3d, inPtP: Point3d, pointOnPlaneP: Point3d, normalVectorP: Vector3d, vp: Viewport, isSnap: boolean)`
+- `fixPointPolar(vp: Viewport)`
+- `fixPointRectangular(vp: Viewport)`
+- `refreshDecorationsAndDynamics()`
+- `upgradeToActiveState()`
+- `downgradeInactiveState()`
+- `onBeginDynamics()`
+- `onEndDynamics()`
+- `processMotion()`
+- `onMotion(_ev: BeButtonEvent)`
+- `onPreButtonEvent(ev: BeButtonEvent)`
+- `onPostButtonEvent(ev: BeButtonEvent)`
+- `onTentative()`
+- `onSnap(snap: SnapDetail)`
+- `onSelectedViewportChanged(previous: ScreenViewport | undefined, current: ScreenViewport | undefined)`
+- `processHints()`

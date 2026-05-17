@@ -1,0 +1,79 @@
+---
+name: core-frontend-view-manager
+description: ViewManager declarations from core-frontend
+---
+
+# ViewManager
+
+## Methods
+
+- `onInitialized()`
+- `onShutDown()`
+- `hasViewport(viewport: ScreenViewport)`
+- `endDynamicsMode()`
+- `beginDynamicsMode()`
+- `clearSelectedView()`
+- `setSelectedView(vp: ScreenViewport | undefined)`
+- `notifySelectedViewportChanged(previous: ScreenViewport | undefined, current: ScreenViewport | undefined)`
+- `getFirstOpenView()`
+- `updateRenderToScreen()`
+- `addViewport(newVp: ScreenViewport)`
+- `dropViewport(vp: ScreenViewport, disposeOfViewport?: boolean)`
+- `invalidateCachedDecorationsAllViews(decorator: ViewportDecorator)`
+- `invalidateDecorationsAllViews()`
+- `invalidateSymbologyOverridesAllViews()`
+- `onSelectionSetChanged(_iModel: IModelConnection)`
+- `invalidateViewportScenes()`
+- `validateViewportScenes()`
+- `invalidateScenes()`
+- `renderLoop()`
+- `purgeTileTrees(olderThan: BeTimePoint)`
+- `getElementToolTip(hit: HitDetail)`
+- `addToolTipProvider(provider: ToolTipProvider)`
+- `dropToolTipProvider(provider: ToolTipProvider)`
+- `addDecorator(decorator: Decorator)`
+- `dropDecorator(decorator: Decorator)`
+- `getDecorationToolTip(hit: HitDetail)`
+- `onDecorationButtonEvent(hit: HitDetail, ev: BeButtonEvent)`
+- `getDecorationGeometry(hit: HitDetail)`
+- `overrideElementToolTip(hit: HitDetail)`
+- `overrideElementButtonEvent(hit: HitDetail, ev: BeButtonEvent)`
+- `overrideElementGeometry(hit: HitDetail)`
+- `setViewCursor(cursor?: string)`
+- `refreshForModifiedModels(modelIds: Id64Arg | undefined)`
+- `setAntialiasingAllViews(numSamples: number)`
+- `onInitialized()`
+- `onShutDown()`
+- `hasViewport(viewport: ScreenViewport)`
+- `endDynamicsMode()`
+- `beginDynamicsMode()`
+- `clearSelectedView()`
+- `setSelectedView(vp: ScreenViewport | undefined)`
+- `notifySelectedViewportChanged(previous: ScreenViewport | undefined, current: ScreenViewport | undefined)`
+- `getFirstOpenView()`
+- `updateRenderToScreen()`
+- `addViewport(newVp: ScreenViewport)`
+- `dropViewport(vp: ScreenViewport, disposeOfViewport?: boolean)`
+- `invalidateCachedDecorationsAllViews(decorator: ViewportDecorator)`
+- `invalidateDecorationsAllViews()`
+- `invalidateSymbologyOverridesAllViews()`
+- `onSelectionSetChanged(_iModel: IModelConnection)`
+- `invalidateViewportScenes()`
+- `validateViewportScenes()`
+- `invalidateScenes()`
+- `renderLoop()`
+- `purgeTileTrees(olderThan: BeTimePoint)`
+- `getElementToolTip(hit: HitDetail)`
+- `addToolTipProvider(provider: ToolTipProvider)`
+- `dropToolTipProvider(provider: ToolTipProvider)`
+- `addDecorator(decorator: Decorator)`
+- `dropDecorator(decorator: Decorator)`
+- `getDecorationToolTip(hit: HitDetail)`
+- `onDecorationButtonEvent(hit: HitDetail, ev: BeButtonEvent)`
+- `getDecorationGeometry(hit: HitDetail)`
+- `overrideElementToolTip(hit: HitDetail)`
+- `overrideElementButtonEvent(hit: HitDetail, ev: BeButtonEvent)`
+- `overrideElementGeometry(hit: HitDetail)`
+- `setViewCursor(cursor?: string)`
+- `refreshForModifiedModels(modelIds: Id64Arg | undefined)`
+- `setAntialiasingAllViews(numSamples: number)`

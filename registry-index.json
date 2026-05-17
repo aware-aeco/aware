@@ -210,6 +210,22 @@
         }
       }
     },
+    "itwin-5-8": {
+      "versions": {
+        "5.8.5": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/visualization/itwin-5-8"
+        }
+      }
+    },
+    "itwin-5-9": {
+      "versions": {
+        "5.9.3": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/visualization/itwin-5-9"
+        }
+      }
+    },
     "trimble-connect": {
       "versions": {
         "2.4.0": {
@@ -289,6 +305,8 @@
         "tsd-26@26.0.1",
         "autocad-2025@25.1.0",
         "autocad-2026@26.0.0",
+        "itwin-5-8@5.8.5",
+        "itwin-5-9@5.9.3",
         "trimble-connect@2.4.0",
         "microsoft-365@1.0.0",
         "google-workspace@1.0.0",
