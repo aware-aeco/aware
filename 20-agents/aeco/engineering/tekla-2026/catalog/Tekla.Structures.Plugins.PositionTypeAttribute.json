@@ -9,18 +9,32 @@
   "constructors": [
     {
       "name": "PositionTypeAttribute",
-      "signature": "PositionTypeAttribute(...)",
+      "signature": "public PositionTypeAttribute(int Type)",
       "summary": "The custom attribute [PositionType()] uses this to store the position type to the system. This is not to be used by itself.",
-      "params": [],
+      "params": [
+        {
+          "name": "Type",
+          "type": "System.Int32",
+          "doc": "The position type.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/36e2152e-276f-da8a-f0ac-f36c39129a6e"
     },
     {
       "name": "PositionTypeAttribute",
-      "signature": "PositionTypeAttribute(...)",
+      "signature": "public PositionTypeAttribute(PositionTypeEnum Type)",
       "summary": "The custom attribute [PositionType()] uses this to store the position type to the system. This is not to be used by itself.",
-      "params": [],
+      "params": [
+        {
+          "name": "Type",
+          "type": "Tekla.Structures.PositionTypeEnum",
+          "doc": "The position type.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5f6d7530-60a1-008f-378a-1cbedd8c5a2a"
@@ -30,9 +44,9 @@
   "properties": [
     {
       "name": "Type",
-      "type": "object",
+      "type": "PositionTypeEnum",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The custom attribute [PositionType()] uses this to store the position type to the system. This is not to be used by itself.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6063b3bf-6d52-e52f-1b07-535c11639f30"
     }

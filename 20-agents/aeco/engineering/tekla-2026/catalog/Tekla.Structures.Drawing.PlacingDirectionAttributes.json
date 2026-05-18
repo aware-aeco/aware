@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "PlacingDirectionAttributes",
-      "signature": "PlacingDirectionAttributes(...)",
+      "signature": "public PlacingDirectionAttributes()",
       "summary": "Creates a new placing direction attributes instance. The positive and negative directions are set to false by default.",
       "params": [],
       "throws": [],
@@ -18,9 +18,22 @@
     },
     {
       "name": "PlacingDirectionAttributes",
-      "signature": "PlacingDirectionAttributes(...)",
+      "signature": "public PlacingDirectionAttributes(bool positive, bool negative)",
       "summary": "Creates a new placing direction attributes instance.",
-      "params": [],
+      "params": [
+        {
+          "name": "positive",
+          "type": "System.Boolean",
+          "doc": "Sets the positive direction.",
+          "optional": false
+        },
+        {
+          "name": "negative",
+          "type": "System.Boolean",
+          "doc": "Sets the negative direction.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/15922e50-8d3e-034d-09c3-b89f028c0073"
@@ -29,9 +42,20 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9505e7d9-339c-5f35-f0bb-e40e256106e9"
@@ -40,7 +64,7 @@
   "properties": [
     {
       "name": "Negative",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "The negative direction of placing.",
@@ -48,7 +72,7 @@
     },
     {
       "name": "Positive",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "The positive direction of placing.",

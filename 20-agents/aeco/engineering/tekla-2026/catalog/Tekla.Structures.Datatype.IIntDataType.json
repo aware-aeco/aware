@@ -10,7 +10,7 @@
   "properties": [
     {
       "name": "Value",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The integer value of the field.",

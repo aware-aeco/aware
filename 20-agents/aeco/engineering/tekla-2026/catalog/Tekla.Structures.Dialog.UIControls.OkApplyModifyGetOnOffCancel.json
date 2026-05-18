@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "OkApplyModifyGetOnOffCancel",
-      "signature": "OkApplyModifyGetOnOffCancel(...)",
+      "signature": "public OkApplyModifyGetOnOffCancel()",
       "summary": "Initializes a new instance of the OkApplyModifyGetOnOffCancel class.",
       "params": [],
       "throws": [],
@@ -22,8 +22,8 @@
   "events": [
     {
       "name": "ApplyClicked",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler ApplyClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler ApplyClicked",
       "summary": "The ApplyClicked event is raised when the Apply button is clicked.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ae6b798c-8803-e71f-3de1-47785ae8a1c9",
       "handler_thread": "unknown",
@@ -31,8 +31,8 @@
     },
     {
       "name": "CancelClicked",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler CancelClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler CancelClicked",
       "summary": "The CancelClicked event is raised when the Cancel button is clicked.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9e1c49a8-987b-0423-b45b-dd812d26e4a9",
       "handler_thread": "unknown",
@@ -40,8 +40,8 @@
     },
     {
       "name": "GetClicked",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler GetClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler GetClicked",
       "summary": "The GetClicked event is raised when the Get button is clicked.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/08cd6705-d157-cea5-3ecb-e7d92eaa98dd",
       "handler_thread": "unknown",
@@ -49,8 +49,8 @@
     },
     {
       "name": "ModifyClicked",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler ModifyClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler ModifyClicked",
       "summary": "The ModifyClicked event is raised when the Modify button is clicked.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/88e52e71-d36c-efb4-4b36-b0cb266b7e48",
       "handler_thread": "unknown",
@@ -58,8 +58,8 @@
     },
     {
       "name": "OkClicked",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler OkClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler OkClicked",
       "summary": "The OkClicked event is raised when the Ok button is clicked.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1f905ac4-a3a0-f857-7973-9ca309152d37",
       "handler_thread": "unknown",
@@ -67,8 +67,8 @@
     },
     {
       "name": "OnOffClicked",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler OnOffClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler OnOffClicked",
       "summary": "The OnOffClicked event is raised when the On-Off button is clicked.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c4e95ecd-3feb-8310-8ce4-3436321b9d9f",
       "handler_thread": "unknown",

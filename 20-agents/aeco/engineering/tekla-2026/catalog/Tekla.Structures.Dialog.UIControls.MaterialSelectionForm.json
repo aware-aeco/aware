@@ -9,18 +9,38 @@
   "constructors": [
     {
       "name": "MaterialSelectionForm",
-      "signature": "MaterialSelectionForm(...)",
+      "signature": "public MaterialSelectionForm(List\u003CMaterialItem\u003E Materials)",
       "summary": "Creates a new instance of the MaterialSelectionForm.",
-      "params": [],
+      "params": [
+        {
+          "name": "Materials",
+          "type": "System.Collections.Generic.List\u003CMaterialItem\u003E",
+          "doc": "The materials to be added to the dialog.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/45c347cb-181a-a431-c824-3ccaa6f05a05"
     },
     {
       "name": "MaterialSelectionForm",
-      "signature": "MaterialSelectionForm(...)",
+      "signature": "public MaterialSelectionForm(List\u003CMaterialItem\u003E Materials, string Material)",
       "summary": "Creates a new instance of the MaterialSelectionForm, selecting the given material in the tree control.",
-      "params": [],
+      "params": [
+        {
+          "name": "Materials",
+          "type": "System.Collections.Generic.List\u003CMaterialItem\u003E",
+          "doc": "The materials to be added to the dialog.",
+          "optional": false
+        },
+        {
+          "name": "Material",
+          "type": "System.String",
+          "doc": "The material to be selected in the tree.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4599154a-2939-7aac-b798-85eb751acae6"
@@ -30,7 +50,7 @@
   "properties": [
     {
       "name": "SelectedMaterial",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The selected material in the control.",

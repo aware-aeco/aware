@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "RebarSpacing",
-      "signature": "RebarSpacing(...)",
+      "signature": "public RebarSpacing()",
       "summary": "Initializes a new instance of the RebarSpacing class.",
       "params": [],
       "throws": [],
@@ -20,45 +20,141 @@
   "methods": [
     {
       "name": "Clone",
-      "signature": "Clone(...)",
+      "signature": "public RebarSpacing Clone()",
       "summary": "Makes a copy of this object.",
       "params": [],
+      "returns": {
+        "type": "RebarSpacing",
+        "doc": "a new RebarSpacing instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c9fd9bc4-c7ec-bd90-7e3d-d7ce3564ffee"
     },
     {
       "name": "Create(RebarSpacing.Offset, RebarSpacing.Offset, Int32)",
-      "signature": "Create(RebarSpacing.Offset, RebarSpacing.Offset, Int32)(...)",
+      "signature": "public static RebarSpacing Create(RebarSpacing.Offset startOffset, RebarSpacing.Offset endOffset, int number)",
       "summary": "Craetes a spacing defined by number of bars.",
-      "params": [],
+      "params": [
+        {
+          "name": "startOffset",
+          "type": "Tekla.Structures.Model.RebarSpacing.Offset",
+          "doc": "The start offset.",
+          "optional": false
+        },
+        {
+          "name": "endOffset",
+          "type": "Tekla.Structures.Model.RebarSpacing.Offset",
+          "doc": "The end offset.",
+          "optional": false
+        },
+        {
+          "name": "number",
+          "type": "System.Int32",
+          "doc": "The number of bars.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RebarSpacing",
+        "doc": "A RebarSpacing instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e25e1d85-f2fd-c378-2d88-d0593f44ef8b"
     },
     {
       "name": "Create(RebarSpacing.Offset, RebarSpacing.Offset, IEnumerable.RebarSpacing.ExactSpacing.Element., RebarSpacing.ExactSpacing.Validation.)",
-      "signature": "Create(RebarSpacing.Offset, RebarSpacing.Offset, IEnumerable.RebarSpacing.ExactSpacing.Element., RebarSpacing.ExactSpacing.Validation.)(...)",
+      "signature": "public static RebarSpacing Create(RebarSpacing.Offset startOffset, RebarSpacing.Offset endOffset, IEnumerable\u003CRebarSpacing.ExactSpacing.Element\u003E elements, out RebarSpacing.ExactSpacing.Validation validation)",
       "summary": "Creates an exact spacing if the given elements are valid.",
-      "params": [],
+      "params": [
+        {
+          "name": "startOffset",
+          "type": "Tekla.Structures.Model.RebarSpacing.Offset",
+          "doc": "The start offset.",
+          "optional": false
+        },
+        {
+          "name": "endOffset",
+          "type": "Tekla.Structures.Model.RebarSpacing.Offset",
+          "doc": "The end offset.",
+          "optional": false
+        },
+        {
+          "name": "elements",
+          "type": "System.Collections.Generic.IEnumerable\u003CRebarSpacing.ExactSpacing.Element\u003E",
+          "doc": "The elements.",
+          "optional": false
+        },
+        {
+          "name": "validation",
+          "type": "Tekla.Structures.Model.RebarSpacing.ExactSpacing.Validation.",
+          "doc": "Returns a value indicating the validity of the elements.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RebarSpacing",
+        "doc": "A RebarSpacing instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5aad86a8-235d-3196-c3c3-a2b4726808d8"
     },
     {
       "name": "Create(RebarSpacing.SpacingType, RebarSpacing.Offset, RebarSpacing.Offset, Double)",
-      "signature": "Create(RebarSpacing.SpacingType, RebarSpacing.Offset, RebarSpacing.Offset, Double)(...)",
+      "signature": "public static RebarSpacing Create(RebarSpacing.SpacingType type, RebarSpacing.Offset startOffset, RebarSpacing.Offset endOffset, double distance)",
       "summary": "Create a spacing which is defined by a single distance.",
-      "params": [],
+      "params": [
+        {
+          "name": "type",
+          "type": "Tekla.Structures.Model.RebarSpacing.SpacingType",
+          "doc": "The type of spacing.",
+          "optional": false
+        },
+        {
+          "name": "startOffset",
+          "type": "Tekla.Structures.Model.RebarSpacing.Offset",
+          "doc": "The start offset.",
+          "optional": false
+        },
+        {
+          "name": "endOffset",
+          "type": "Tekla.Structures.Model.RebarSpacing.Offset",
+          "doc": "The end offset.",
+          "optional": false
+        },
+        {
+          "name": "distance",
+          "type": "System.Double",
+          "doc": "The spacing distance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RebarSpacing",
+        "doc": "A RebarSpacing instance if the given type and distance are valid."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/720eb400-0689-b240-5abe-1f6de1db595d"
     },
     {
       "name": "IsExactFlexibleType",
-      "signature": "IsExactFlexibleType(...)",
+      "signature": "public static bool IsExactFlexibleType(RebarSpacing.SpacingType type)",
       "summary": "Gets whether the spacing is an exact type with flexible space(s).",
-      "params": [],
+      "params": [
+        {
+          "name": "type",
+          "type": "Tekla.Structures.Model.RebarSpacing.SpacingType",
+          "doc": "The spacing type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if it is an exact flexible type spacing."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/53f65e5e-ad47-7e3a-64fe-6f4654c435ee"
@@ -67,7 +163,7 @@
   "properties": [
     {
       "name": "EndOffset",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the proposed offset to the last reinforcing bar from the end of the RebarGuideline.",
@@ -75,7 +171,7 @@
     },
     {
       "name": "EndOffsetIsAutomatic",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the end offset is automatic. When automatic the proposed end offset is calculated to be the concrete cover thickness plus half the reinforcing bar diameter.",
@@ -83,7 +179,7 @@
     },
     {
       "name": "EndOffsetType",
-      "type": "object",
+      "type": "RebarSpacing.OffsetEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the end offset is exact or minimum. If the end offset is minimum the spacing algorithm may determine a larger offset.",
@@ -91,7 +187,7 @@
     },
     {
       "name": "ExactElements",
-      "type": "object",
+      "type": "List\u003CRebarSpacing.ExactSpacing.Element\u003E",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the exact elements of the spacing.",
@@ -99,7 +195,7 @@
     },
     {
       "name": "ExactSpace",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the exact space.",
@@ -107,7 +203,7 @@
     },
     {
       "name": "ExcludeType",
-      "type": "object",
+      "type": "RebarSpacing.ExcludeTypeEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the exclusion of first and last bars.",
@@ -115,7 +211,7 @@
     },
     {
       "name": "InheritFromPrimary",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the secondary guideline inherits all its spacing properties from the primary guideline. This property is not applicable to a primary guideline.",
@@ -123,7 +219,7 @@
     },
     {
       "name": "InheritOffsetsFromPrimary",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the secondary guideline inherits its start and end offsets from the primary guideline. This property is not applicable to a primary guideline.",
@@ -131,7 +227,7 @@
     },
     {
       "name": "NumberOfBars",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the number of bars in the spacing object.",
@@ -139,7 +235,7 @@
     },
     {
       "name": "StartOffset",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the proposed offset to the first reinforcing bar from the start of the RebarGuideline.",
@@ -147,7 +243,7 @@
     },
     {
       "name": "StartOffsetIsAutomatic",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the start offset is automatic. When automatic the proposed start offset is calculated to be the concrete cover thickness plus half the reinforcing bar diameter.",
@@ -155,7 +251,7 @@
     },
     {
       "name": "StartOffsetType",
-      "type": "object",
+      "type": "RebarSpacing.OffsetEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the start offset is exact or minimum. If the start offset is minimum the spacing algorithm may determine a larger offset.",
@@ -163,7 +259,7 @@
     },
     {
       "name": "TargetSpace",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the target space.",
@@ -171,7 +267,7 @@
     },
     {
       "name": "Type",
-      "type": "object",
+      "type": "RebarSpacing.SpacingType",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of spacing. Does not allow change to exact spacing or number bars spacing.",
@@ -179,7 +275,7 @@
     },
     {
       "name": "Zones",
-      "type": "object",
+      "type": "List\u003CRebarSpacingZone\u003E",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the spacing zones.",

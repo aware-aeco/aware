@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "WpfReinforcementCatalog",
-      "signature": "WpfReinforcementCatalog(...)",
+      "signature": "public WpfReinforcementCatalog()",
       "summary": "Initiates a new instance of the control.",
       "params": [],
       "throws": [],
@@ -18,9 +18,28 @@
     },
     {
       "name": "WpfReinforcementCatalog",
-      "signature": "WpfReinforcementCatalog(...)",
+      "signature": "public WpfReinforcementCatalog(string Size, string Grade, double BendRadius)",
       "summary": "Creates a new instance of the ReinforcementCatalog and will select in the tree the rebar that contains the given parameters (if possible).",
-      "params": [],
+      "params": [
+        {
+          "name": "Size",
+          "type": "System.String",
+          "doc": "The size of the rebar to be selected.",
+          "optional": false
+        },
+        {
+          "name": "Grade",
+          "type": "System.String",
+          "doc": "The grade of the rebar to be selected.",
+          "optional": false
+        },
+        {
+          "name": "BendRadius",
+          "type": "System.Double",
+          "doc": "The bend radius of the rebar to be selected.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/78e30c25-ba67-6f0b-671c-70bf9fec2272"
@@ -29,7 +48,7 @@
   "methods": [
     {
       "name": "InitializeComponent",
-      "signature": "InitializeComponent(...)",
+      "signature": "public void InitializeComponent()",
       "summary": "InitializeComponent",
       "params": [],
       "throws": [],
@@ -38,9 +57,16 @@
     },
     {
       "name": "OnValueChanged",
-      "signature": "OnValueChanged(...)",
+      "signature": "public void OnValueChanged(Object data)",
       "summary": "Event handler for passing generic catalog data back to dialog",
-      "params": [],
+      "params": [
+        {
+          "name": "data",
+          "type": "System.Object",
+          "doc": "value data",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/75b7e280-d530-bad4-bfd3-5cfc3fdb61d5"
@@ -49,7 +75,7 @@
   "properties": [
     {
       "name": "ButtonHeight",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets and sets the height of the button control.",
@@ -57,7 +83,7 @@
     },
     {
       "name": "ButtonText",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets and sets the text of the button control.",
@@ -65,7 +91,7 @@
     },
     {
       "name": "ButtonWidth",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets and sets the width of the button control.",
@@ -73,7 +99,7 @@
     },
     {
       "name": "SelectedRebarBendingRadius",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets the selected rebar bending radius in the control.",
@@ -81,7 +107,7 @@
     },
     {
       "name": "SelectedRebarGrade",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets the selected rebar grade in the control.",
@@ -89,7 +115,7 @@
     },
     {
       "name": "SelectedRebarSize",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets the selected rebar size in the control.",
@@ -97,7 +123,7 @@
     },
     {
       "name": "SelectedUsage",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "Gets the selected rebar usage in the control.",
@@ -107,8 +133,8 @@
   "events": [
     {
       "name": "SelectClicked",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler SelectClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler SelectClicked",
       "summary": "The SelectClicked event is raised when the Select button is clicked.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/95d90edf-509d-15a6-a9f4-71f6eaf66be1",
       "handler_thread": "unknown",
@@ -116,8 +142,8 @@
     },
     {
       "name": "SelectionDone",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler SelectionDone",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler SelectionDone",
       "summary": "The SelectionDone event is raised when the selection has been done.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/323ecda0-3d15-0284-b95a-440d146262f9",
       "handler_thread": "unknown",

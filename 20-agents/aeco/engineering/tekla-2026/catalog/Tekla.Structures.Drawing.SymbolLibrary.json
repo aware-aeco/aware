@@ -10,18 +10,33 @@
   "methods": [
     {
       "name": "GetSymbolLibraries.",
-      "signature": "GetSymbolLibraries.(...)",
+      "signature": "public static StringList GetSymbolLibraries()",
       "summary": "Gets the names of the available symbol files in the current Tekla Structures environment, in the \u0022symbols\u0022 directory, without the suffix.",
       "params": [],
+      "returns": {
+        "type": "StringList",
+        "doc": "A list of symbol file names or null if failed."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1a52bc25-6891-60fb-c459-d8531a91f5ae"
     },
     {
       "name": "GetSymbolLibraries(Boolean)",
-      "signature": "GetSymbolLibraries(Boolean)(...)",
+      "signature": "public static StringList GetSymbolLibraries(bool forceRefresh)",
       "summary": "Gets the names of the available symbol files in the current Tekla Structures environment, in the \u0022symbols\u0022 directory, without the suffix.",
-      "params": [],
+      "params": [
+        {
+          "name": "forceRefresh",
+          "type": "System.Boolean",
+          "doc": "If set to true, always lists the files again (slower).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "StringList",
+        "doc": "A list of symbol file names or null if failed."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d0213ef2-9232-62f2-9c58-ba7b53e5f454"

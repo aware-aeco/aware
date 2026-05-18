@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "GeneralConnectiveGeometryException",
-      "signature": "GeneralConnectiveGeometryException(...)",
+      "signature": "public GeneralConnectiveGeometryException()",
       "summary": "Initializes a new instance of the GeneralConnectiveGeometryException class with \u0022Failed to create or modify connective geometry\u0022 message.",
       "params": [],
       "throws": [],

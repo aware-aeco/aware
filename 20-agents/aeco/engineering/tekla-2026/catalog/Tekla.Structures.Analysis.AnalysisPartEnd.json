@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisPartEnd",
-      "signature": "AnalysisPartEnd(...)",
+      "signature": "public AnalysisPartEnd()",
       "summary": "Initializes a new instance of the AnalysisPartEnd class",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "Condition",
-      "type": "object",
+      "type": "AnalysisPartEnd.ConditionEnum",
       "getter": true,
       "setter": true,
       "summary": "The condition of the part end.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "Connectivity",
-      "type": "object",
+      "type": "AnalysisConnectivity",
       "getter": true,
       "setter": true,
       "summary": "The connectivity of the part end.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "Eccentricity",
-      "type": "object",
+      "type": "Vector",
       "getter": true,
       "setter": true,
       "summary": "The eccentricity of the part end (in the local coordinate system).",
@@ -45,7 +45,7 @@
     },
     {
       "name": "EccentricityMode",
-      "type": "object",
+      "type": "AnalysisPartEnd.EccentricityModeEnum",
       "getter": true,
       "setter": true,
       "summary": "The eccentricity mode of the part end.",
@@ -53,7 +53,7 @@
     },
     {
       "name": "Support",
-      "type": "object",
+      "type": "AnalysisSupport",
       "getter": true,
       "setter": true,
       "summary": "The support of the part end.",
@@ -61,7 +61,7 @@
     },
     {
       "name": "SupportCoordSystem",
-      "type": "object",
+      "type": "CoordinateSystem",
       "getter": true,
       "setter": true,
       "summary": "The coordinate system of the support.",

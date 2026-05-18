@@ -9,9 +9,22 @@
   "constructors": [
     {
       "name": "PickerInputNPoints",
-      "signature": "PickerInputNPoints(...)",
+      "signature": "public PickerInputNPoints(ViewBase pickedView, PointList pickedPoints)",
       "summary": "Creates a new PickerInputNPoints instance representing N points selected in a view.",
-      "params": [],
+      "params": [
+        {
+          "name": "pickedView",
+          "type": "Tekla.Structures.Drawing.ViewBase",
+          "doc": "The view in which the pick occurred.",
+          "optional": false
+        },
+        {
+          "name": "pickedPoints",
+          "type": "Tekla.Structures.Drawing.PointList",
+          "doc": "The list of picked points in the view coordinates.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/fdda7adc-b146-49dd-d25e-d466a3814bb7"
@@ -20,9 +33,20 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0a458ed1-3080-d293-0f63-3e6346bb244b"
@@ -31,7 +55,7 @@
   "properties": [
     {
       "name": "PickedPoints",
-      "type": "object",
+      "type": "PointList",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the list of picked points in the view coordinates.",
@@ -39,7 +63,7 @@
     },
     {
       "name": "PickedView",
-      "type": "object",
+      "type": "ViewBase",
       "getter": true,
       "setter": true,
       "summary": "The view within which the pick occurred.",

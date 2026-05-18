@@ -9,9 +9,16 @@
   "constructors": [
     {
       "name": "TeklaStructuresDrawingsApplicationException",
-      "signature": "TeklaStructuresDrawingsApplicationException(...)",
+      "signature": "public TeklaStructuresDrawingsApplicationException(string Message)",
       "summary": "Creates a new exception instance.",
-      "params": [],
+      "params": [
+        {
+          "name": "Message",
+          "type": "System.String",
+          "doc": "The exception message.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ae11a188-775d-9af5-abf9-24392ab1b9be"

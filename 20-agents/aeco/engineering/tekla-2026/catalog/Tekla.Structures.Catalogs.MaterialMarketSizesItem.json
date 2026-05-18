@@ -11,17 +11,17 @@
   "properties": [
     {
       "name": "MarketSizes",
-      "type": "object",
+      "type": ".Double.",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Available MarketSizes for the particular material",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5d48b745-97d1-ab88-cb15-ac37b34761ef"
     },
     {
       "name": "MaterialName",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Material name",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6c908b41-a6b3-434a-c6a5-48d671b1497f"
     }

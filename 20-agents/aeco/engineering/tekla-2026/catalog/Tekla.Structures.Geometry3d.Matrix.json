@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Matrix",
-      "signature": "Matrix(...)",
+      "signature": "public Matrix()",
       "summary": "Creates a new indentity matrix.",
       "params": [],
       "throws": [],
@@ -18,9 +18,16 @@
     },
     {
       "name": "Matrix",
-      "signature": "Matrix(...)",
+      "signature": "public Matrix(Matrix m)",
       "summary": "Creates a new matrix which is a copy of the given matrix.",
-      "params": [],
+      "params": [
+        {
+          "name": "m",
+          "type": "Tekla.Structures.Geometry3d.Matrix",
+          "doc": "The matrix to copy from.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c53878b3-9c68-5e56-3b67-b7220e9634de"
@@ -29,43 +36,73 @@
   "methods": [
     {
       "name": "GetTranspose",
-      "signature": "GetTranspose(...)",
+      "signature": "public Matrix GetTranspose()",
       "summary": "Returns a new matrix which is a transpose of the current matrix. The transposed matrix is an inversion of the current matrix, if the current matrix was a valid rotation matrix.",
       "params": [],
+      "returns": {
+        "type": "Matrix",
+        "doc": "The new transposed matrix."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a4b57ab7-e31f-2043-abe8-e73b6acdd4b3"
     },
     {
       "name": "ToString",
-      "signature": "ToString(...)",
+      "signature": "public override string ToString()",
       "summary": "Returns a string that represents the current matrix.",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The string that represents the current matrix."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/da738b67-6880-722e-9732-116eae2286dc"
     },
     {
       "name": "Transform(IEnumerable.Point.)",
-      "signature": "Transform(IEnumerable.Point.)(...)",
+      "signature": "public IEnumerable\u003CPoint\u003E Transform(IEnumerable\u003CPoint\u003E Points)",
       "summary": "Transforms the given points using the current matrix.",
-      "params": [],
+      "params": [
+        {
+          "name": "Points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint\u003E",
+          "doc": "The points to be transformed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IEnumerable\u003CPoint\u003E",
+        "doc": "The new transformed points."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/abb1fdf5-d970-ae5f-7429-843be1235ce8"
     },
     {
       "name": "Transform(Point)",
-      "signature": "Transform(Point)(...)",
+      "signature": "public Point Transform(Point p)",
       "summary": "Transforms the given point using the current matrix.",
-      "params": [],
+      "params": [
+        {
+          "name": "p",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The point to be transformed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": "The new transformed point."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/473f82dc-4f16-3fc1-2b7c-7c673fcd2f1a"
     },
     {
       "name": "Transpose",
-      "signature": "Transpose(...)",
+      "signature": "public void Transpose()",
       "summary": "Transposes a matrix. The resulting matrix is an inversion of the current matrix, if the current matrix was a valid rotation matrix.",
       "params": [],
       "throws": [],

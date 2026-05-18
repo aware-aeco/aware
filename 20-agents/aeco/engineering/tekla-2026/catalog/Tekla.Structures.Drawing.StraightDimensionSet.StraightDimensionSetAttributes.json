@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "StraightDimensionSet.StraightDimensionSetAttributes",
-      "signature": "StraightDimensionSet.StraightDimensionSetAttributes(...)",
+      "signature": "[ObsoleteAttribute(\u0022This constructor is obsolete and may be removed in the future. Instead, use the constructor which takes a ModelObject.\u0022, false)] public StraightDimensionSetAttributes()",
       "summary": "Creates a default straight dimension set attributes instance that loads standard attributes.",
       "params": [],
       "throws": [],
@@ -18,27 +18,54 @@
     },
     {
       "name": "StraightDimensionSet.StraightDimensionSetAttributes",
-      "signature": "StraightDimensionSet.StraightDimensionSetAttributes(...)",
+      "signature": "[ObsoleteAttribute(\u0022This constructor is obsolete and may be removed in the future. Instead, use the constructor which takes a ModelObject and a string.\u0022, false)] public StraightDimensionSetAttributes(string AttributesFile)",
       "summary": "Creates a straight dimension set attributes instance that loads the specified attributes.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributesFile",
+          "type": "System.String",
+          "doc": "The filename of the attributes file.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/26f642dd-1220-2a47-2c85-41ce893777c2"
     },
     {
       "name": "StraightDimensionSet.StraightDimensionSetAttributes",
-      "signature": "StraightDimensionSet.StraightDimensionSetAttributes(...)",
+      "signature": "public StraightDimensionSetAttributes(ModelObject modelObject)",
       "summary": "Creates a default straight dimension set attributes instance that loads standard attributes.",
-      "params": [],
+      "params": [
+        {
+          "name": "modelObject",
+          "type": "Tekla.Structures.Drawing.ModelObject",
+          "doc": "The model object that the dimension set will be associated with.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c161e0cf-61d8-a23d-4f20-7559f147d81c"
     },
     {
       "name": "StraightDimensionSet.StraightDimensionSetAttributes",
-      "signature": "StraightDimensionSet.StraightDimensionSetAttributes(...)",
+      "signature": "public StraightDimensionSetAttributes(ModelObject modelObject, string AttributesFile)",
       "summary": "Creates a straight dimension set attributes instance that loads the specified attributes.",
-      "params": [],
+      "params": [
+        {
+          "name": "modelObject",
+          "type": "Tekla.Structures.Drawing.ModelObject",
+          "doc": "The model object that the dimension set will be associated with.",
+          "optional": false
+        },
+        {
+          "name": "AttributesFile",
+          "type": "System.String",
+          "doc": "The filename of the attributes file.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1cdc7eee-7cb2-672d-cca9-b721351b4cc0"
@@ -47,18 +74,40 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1af5065a-8f4d-e2a0-196f-d21a07480b5e"
     },
     {
       "name": "LoadAttributes",
-      "signature": "LoadAttributes(...)",
+      "signature": "public override bool LoadAttributes(string attributeFilename)",
       "summary": "Loads the attributes from the attribute file.",
-      "params": [],
+      "params": [
+        {
+          "name": "attributeFilename",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9aa1604e-5949-3a5a-2c9e-85648d2384b4"
@@ -67,7 +116,7 @@
   "properties": [
     {
       "name": "Arrowhead",
-      "type": "object",
+      "type": "ArrowheadAttributes",
       "getter": true,
       "setter": true,
       "summary": "The arrowhead attributes of the dimension.",
@@ -75,7 +124,7 @@
     },
     {
       "name": "Color",
-      "type": "object",
+      "type": "DrawingColors",
       "getter": true,
       "setter": true,
       "summary": "The color of the dimension line.",
@@ -83,7 +132,7 @@
     },
     {
       "name": "CombinedDimension",
-      "type": "object",
+      "type": "DimensionSetBaseAttributes.CombinedDimensionAttributes",
       "getter": true,
       "setter": true,
       "summary": "Combines the attributes of the dimension.",
@@ -91,7 +140,7 @@
     },
     {
       "name": "DimensionType",
-      "type": "object",
+      "type": "DimensionSetBaseAttributes.DimensionTypes",
       "getter": true,
       "setter": true,
       "summary": "The dimension type.",
@@ -99,7 +148,7 @@
     },
     {
       "name": "Exaggeration",
-      "type": "object",
+      "type": "DimensionSetBaseAttributes.DimensionExaggerationAttributes",
       "getter": true,
       "setter": true,
       "summary": "The exaggeration attributes of the dimension.",
@@ -107,7 +156,7 @@
     },
     {
       "name": "ExcludePartsAccordingToFilter",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Sets the filter to use for excluding parts from the tags. You may query the possible filters using StraightDimensionSet.GetAllExcludePartsAccordingToFilter()",
@@ -115,7 +164,7 @@
     },
     {
       "name": "ExtensionLine",
-      "type": "object",
+      "type": "DimensionSetBaseAttributes.ExtensionLineTypes",
       "getter": true,
       "setter": true,
       "summary": "The extension line presentation of the dimension.",
@@ -123,7 +172,7 @@
     },
     {
       "name": "Format",
-      "type": "object",
+      "type": "DimensionSetBaseAttributes.DimensionFormatAttributes",
       "getter": true,
       "setter": true,
       "summary": "The format attributes of the dimension.",
@@ -131,7 +180,7 @@
     },
     {
       "name": "IncludePartCountInTag",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets whether the part count is included in at least one of the tag position, or set part count flag for all tag positions.",
@@ -139,7 +188,7 @@
     },
     {
       "name": "IncludePartCountInTagA",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the part count is included in the tag A.",
@@ -147,7 +196,7 @@
     },
     {
       "name": "IncludePartCountInTagB",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the part count is included in the tag B.",
@@ -155,7 +204,7 @@
     },
     {
       "name": "IncludePartCountInTagC",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the part count is included in the tag C.",
@@ -163,7 +212,7 @@
     },
     {
       "name": "IncludePartCountInTagD",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the part count is included in the tag D.",
@@ -171,7 +220,7 @@
     },
     {
       "name": "IncludePartCountInTagE",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the part count is included in the tag E.",
@@ -179,7 +228,7 @@
     },
     {
       "name": "IncludePartCountInTagF",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the part count is included in the tag F.",
@@ -187,7 +236,7 @@
     },
     {
       "name": "IncludePartCountInTagG",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the part count is included in the tag G.",
@@ -195,7 +244,7 @@
     },
     {
       "name": "LeftLowerTag",
-      "type": "object",
+      "type": "ContainerElement",
       "getter": true,
       "setter": true,
       "summary": "The left lower dimension tag.",
@@ -203,7 +252,7 @@
     },
     {
       "name": "LeftMiddleTag",
-      "type": "object",
+      "type": "ContainerElement",
       "getter": true,
       "setter": true,
       "summary": "The left middle dimension tag.",
@@ -211,7 +260,7 @@
     },
     {
       "name": "LeftUpperTag",
-      "type": "object",
+      "type": "ContainerElement",
       "getter": true,
       "setter": true,
       "summary": "The left upper dimension tag.",
@@ -219,7 +268,7 @@
     },
     {
       "name": "Placing",
-      "type": "object",
+      "type": "DimensionSetBaseAttributes.DimensionPlacingAttributes",
       "getter": true,
       "setter": true,
       "summary": "The placing attributes of the dimension.",
@@ -227,7 +276,7 @@
     },
     {
       "name": "RightLowerTag",
-      "type": "object",
+      "type": "ContainerElement",
       "getter": true,
       "setter": true,
       "summary": "The right lower dimension tag.",
@@ -235,7 +284,7 @@
     },
     {
       "name": "RightMiddleTag",
-      "type": "object",
+      "type": "ContainerElement",
       "getter": true,
       "setter": true,
       "summary": "The right middle dimension tag.",
@@ -243,7 +292,7 @@
     },
     {
       "name": "RightUpperTag",
-      "type": "object",
+      "type": "ContainerElement",
       "getter": true,
       "setter": true,
       "summary": "The right upper dimension tag.",
@@ -251,7 +300,7 @@
     },
     {
       "name": "ShortDimension",
-      "type": "object",
+      "type": "DimensionSetBaseAttributes.ShortDimensionTypes",
       "getter": true,
       "setter": true,
       "summary": "How short dimensions are shown.",
@@ -259,7 +308,7 @@
     },
     {
       "name": "Text",
-      "type": "object",
+      "type": "DimensionSetBaseAttributes.DimensionTextAttributes",
       "getter": true,
       "setter": true,
       "summary": "The text attributes of the dimension.",
@@ -267,7 +316,7 @@
     },
     {
       "name": "TransparentBackground",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "The dimension text background transparency. (transparent/opaque)",
@@ -275,7 +324,7 @@
     },
     {
       "name": "TrueColor",
-      "type": "object",
+      "type": "TeklaDrawingColor",
       "getter": true,
       "setter": true,
       "summary": "The true color (RGB enabled) of the dimension line.",

@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "FormBase",
-      "signature": "FormBase(...)",
+      "signature": "public FormBase()",
       "summary": "The default constructor that does not need parameters. Initializes the form and registers property bindings.",
       "params": [],
       "throws": [],
@@ -20,52 +20,82 @@
   "methods": [
     {
       "name": "ApplyValues",
-      "signature": "ApplyValues(...)",
+      "signature": "public void ApplyValues(string FileName)",
       "summary": "Loads the dialog values from a file and performs Apply. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type\u0027s name.",
-      "params": [],
+      "params": [
+        {
+          "name": "FileName",
+          "type": "System.String",
+          "doc": "The name of the file.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c4096cdf-60d9-f7b8-1daf-e71de20cf47d"
     },
     {
       "name": "GetConnectionStatus",
-      "signature": "GetConnectionStatus(...)",
+      "signature": "public bool GetConnectionStatus()",
       "summary": "Returns true if a proper connection to the Tekla Structures process has been established. Currently, there\u0027s no way to re-establish the connection.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2ba6677a-b8a7-cbfa-2724-e58464054abe"
     },
     {
       "name": "GetUnitDecimals",
-      "signature": "GetUnitDecimals(...)",
+      "signature": "public static int GetUnitDecimals(dotdiaUnitTypes_e unit)",
       "summary": "Gets the number of decimals Tekla Structures uses with the specified unit type.",
-      "params": [],
+      "params": [
+        {
+          "name": "unit",
+          "type": "Tekla.Structures.Dialog.dotdiaUnitTypes_e",
+          "doc": "The specified unit type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of decimals used, 0 (no decimals or invalid unit type) or -1 (failed)."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f9d16d75-bcae-8cbd-7942-32d75e9596e6"
     },
     {
       "name": "InitializeAngleUnitDecimals",
-      "signature": "InitializeAngleUnitDecimals(...)",
+      "signature": "public static bool InitializeAngleUnitDecimals()",
       "summary": "Gets the number of decimals Tekla Structures uses for displaying the angle unit and initializes Angle class to use that.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful. False if failed."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/11346bd3-a37a-e8c2-b713-52b409b2cb0e"
     },
     {
       "name": "InitializeDistanceUnitDecimals",
-      "signature": "InitializeDistanceUnitDecimals(...)",
+      "signature": "public static bool InitializeDistanceUnitDecimals()",
       "summary": "Gets the number of decimals Tekla Structures uses for displaying the \u0022length\u0022 unit and initializes the distance datatype to use that.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful. False if failed."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/463b2b8f-138b-60aa-bf50-a29ec3518a43"
     },
     {
       "name": "InitializeForm",
-      "signature": "InitializeForm(...)",
+      "signature": "public void InitializeForm()",
       "summary": "Prepares the data storage for the dialog and scans through the fields.",
       "params": [],
       "throws": [],
@@ -74,52 +104,90 @@
     },
     {
       "name": "InitializeUnitDecimals",
-      "signature": "InitializeUnitDecimals(...)",
+      "signature": "public static bool InitializeUnitDecimals()",
       "summary": "Gets the number of decimals Tekla Structures uses for displaying its units and initializes the Tekla.Structures.Datatype classes to use them.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful. False if failed."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/956a00ac-ad50-6743-5071-6e8af6f88e9f"
     },
     {
       "name": "LoadValues",
-      "signature": "LoadValues(...)",
+      "signature": "public void LoadValues(string FileName)",
       "summary": "Loads the dialog values from a file. To match the files to a certain dialog, the file suffix is set as the dialog type\u0027s name.",
-      "params": [],
+      "params": [
+        {
+          "name": "FileName",
+          "type": "System.String",
+          "doc": "The name of the file.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/df11f56f-8372-2886-e011-b4fcad4ac3de"
     },
     {
       "name": "ModifyValues",
-      "signature": "ModifyValues(...)",
+      "signature": "public void ModifyValues(string FileName)",
       "summary": "Loads the dialog values from a file and performs Modify. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type\u0027s name.",
-      "params": [],
+      "params": [
+        {
+          "name": "FileName",
+          "type": "System.String",
+          "doc": "The name of the file.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d20a7c4e-e913-92e5-0925-44015cc68ebf"
     },
     {
       "name": "SaveValues",
-      "signature": "SaveValues(...)",
+      "signature": "public void SaveValues(string fileName)",
       "summary": "Serializes the dialog values to an xml file.",
-      "params": [],
+      "params": [
+        {
+          "name": "fileName",
+          "type": "System.String",
+          "doc": "The path of the file.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a817a258-86a2-8616-be00-eda92c7e5f8e"
     },
     {
       "name": "SetAttributeValue",
-      "signature": "SetAttributeValue(...)",
+      "signature": "public void SetAttributeValue(Control Ctrl, Object Value)",
       "summary": "Sets a value for the given control. When the dialog is not shown, setting a property directly for a control (such as textBox1.Text = \u0022text\u0022) will not work for controls that have a Tekla Structures AttributeTypeName set. This method is going to have to be used to set the value.",
-      "params": [],
+      "params": [
+        {
+          "name": "Ctrl",
+          "type": "System.Windows.Forms.Control",
+          "doc": "The control whose value to set.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.Object",
+          "doc": "The new value. It can be of any primitive datatype supported by the control\u0027s AttributeType (normally int, double or string).",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/30e56a80-1c86-4606-781c-2a91b7bb8884"
     },
     {
       "name": "ShowForm",
-      "signature": "ShowForm(...)",
+      "signature": "public void ShowForm()",
       "summary": "Displays the form.",
       "params": [],
       "throws": [],
@@ -128,7 +196,7 @@
     },
     {
       "name": "UpdateValues",
-      "signature": "UpdateValues(...)",
+      "signature": "[ObsoleteAttribute(\u0022Does currently nothing. Will be removed in near future.\u0022)] public void UpdateValues()",
       "summary": "Rereads and updates all the field values on the form.",
       "params": [],
       "throws": [],
@@ -139,9 +207,9 @@
   "properties": [
     {
       "name": "Localization",
-      "type": "object",
+      "type": "Localization",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The localization instance for the dialog. Each dialog has its own localization instance that has read the localization files needed for that dialog.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6528eb05-2f85-a621-b23e-fcb51797ab1b"
     }

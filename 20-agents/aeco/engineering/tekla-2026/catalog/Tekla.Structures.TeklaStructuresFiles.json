@@ -9,9 +9,16 @@
   "constructors": [
     {
       "name": "TeklaStructuresFiles",
-      "signature": "TeklaStructuresFiles(...)",
+      "signature": "public TeklaStructuresFiles(string modelpath = \u0022\u0022)",
       "summary": "Initializes a new instance of the TeklaStructuresFiles class.",
-      "params": [],
+      "params": [
+        {
+          "name": "modelpath",
+          "type": "System.String",
+          "doc": "The modelpath.",
+          "optional": true
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/533503cd-dac4-4839-bd5b-73c6706bef29"
@@ -20,45 +27,130 @@
   "methods": [
     {
       "name": "GetAttributeFile(String)",
-      "signature": "GetAttributeFile(String)(...)",
+      "signature": "public FileInfo GetAttributeFile(string fileName)",
       "summary": "Gets a file info representing the first match in the standard property file directories.",
-      "params": [],
+      "params": [
+        {
+          "name": "fileName",
+          "type": "System.String",
+          "doc": "The name of the file including the file extension.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "FileInfo",
+        "doc": "A file info for the first match in the directory list. Null if no match was found."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9a341c18-e6db-ebe1-2ab9-afcf2ec9ce15"
     },
     {
       "name": "GetAttributeFile(List.String., String)",
-      "signature": "GetAttributeFile(List.String., String)(...)",
+      "signature": "[ObsoleteAttribute(\u0022Use Generic Locate File\u0022)] public FileInfo GetAttributeFile(List\u003Cstring\u003E searchDirectories, string fileName)",
       "summary": "Gets a file info representing the first match in the search directories.",
-      "params": [],
+      "params": [
+        {
+          "name": "searchDirectories",
+          "type": "System.Collections.Generic.List\u003CString\u003E",
+          "doc": "The list of directories to be used for searching for the file.",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "System.String",
+          "doc": "The name of the file including the file extension.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "FileInfo",
+        "doc": "A file info for the first match in the directory list. Null if no match was found."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d5bb70ef-8c5c-698e-3c33-5121d54eee52"
     },
     {
       "name": "GetFileDictionaryByExtension",
-      "signature": "GetFileDictionaryByExtension(...)",
+      "signature": "public static Dictionary\u003Cstring, string\u003E GetFileDictionaryByExtension(string fileExtension, string modelPath)",
       "summary": "Retrieves a dictionary of file names and their corresponding paths from multiple directories.",
-      "params": [],
+      "params": [
+        {
+          "name": "fileExtension",
+          "type": "System.String",
+          "doc": "The file extension to filter the files by.",
+          "optional": false
+        },
+        {
+          "name": "modelPath",
+          "type": "System.String",
+          "doc": "The model path.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dictionary\u003CString,String\u003E",
+        "doc": "A dictionary containing file names without the extension and their paths."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a9bbbec7-6b73-ffcd-a2e0-1d3a249dfb05"
     },
     {
       "name": "GetMultiDirectoryFileList",
-      "signature": "GetMultiDirectoryFileList(...)",
+      "signature": "public List\u003Cstring\u003E GetMultiDirectoryFileList(string fileExtension, bool fullpath = false)",
       "summary": "Gets a list of files with the given extension from the default search directories.",
-      "params": [],
+      "params": [
+        {
+          "name": "fileExtension",
+          "type": "System.String",
+          "doc": "The file extension to be used.",
+          "optional": false
+        },
+        {
+          "name": "fullpath",
+          "type": "System.Boolean",
+          "doc": "If true, file with full path with extension is returned.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "List\u003CString\u003E",
+        "doc": "A list of files with the given extension."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/da0bbcb4-ea14-c355-cb9e-d98cbbbbf5c7"
     },
     {
       "name": "LocateFile",
-      "signature": "LocateFile(...)",
+      "signature": "public static bool LocateFile(List\u003Cstring\u003E searchDirectories, string fileName, out string absoluteFileName)",
       "summary": "This method locates a file in the specified search directories. The first found file will be returned. If the file is not found in the search directories, it will return false and the out parameter will be empty.",
-      "params": [],
+      "params": [
+        {
+          "name": "searchDirectories",
+          "type": "System.Collections.Generic.List\u003CString\u003E",
+          "doc": "list of search directories",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "System.String",
+          "doc": "filename to search",
+          "optional": false
+        },
+        {
+          "name": "absoluteFileName",
+          "type": "System.String.",
+          "doc": "output path if located",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if found, false if not"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b33077ea-aee2-425c-cf42-13145936849e"
@@ -67,7 +159,7 @@
   "properties": [
     {
       "name": "PropertyFileDirectories",
-      "type": "object",
+      "type": "List\u003CString\u003E",
       "getter": true,
       "setter": true,
       "summary": "The directories where to look for property files.",
@@ -75,9 +167,9 @@
     },
     {
       "name": "SessionLogFile",
-      "type": "object",
+      "type": "FileInfo",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the session history log file.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5369c205-e357-9abb-17a9-a2e8215ea239"
     }

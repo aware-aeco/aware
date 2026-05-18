@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "View.ViewMarkSymbolAttributes",
-      "signature": "View.ViewMarkSymbolAttributes(...)",
+      "signature": "public ViewMarkSymbolAttributes()",
       "summary": "Creates a new mark symbol attributes instance.",
       "params": [],
       "throws": [],
@@ -18,9 +18,34 @@
     },
     {
       "name": "View.ViewMarkSymbolAttributes",
-      "signature": "View.ViewMarkSymbolAttributes(...)",
+      "signature": "public ViewMarkSymbolAttributes(double size, MarkSymbolShape shape, View.LabelLineLengthType lineLengthType, double lineLength)",
       "summary": "Creates a new mark symbol attributes instance with the given size, shape, line length type and line length.",
-      "params": [],
+      "params": [
+        {
+          "name": "size",
+          "type": "System.Double",
+          "doc": "The size of the mark symbol to be used.",
+          "optional": false
+        },
+        {
+          "name": "shape",
+          "type": "Tekla.Structures.Drawing.MarkSymbolShape",
+          "doc": "The shape of the mark symbol to be used.",
+          "optional": false
+        },
+        {
+          "name": "lineLengthType",
+          "type": "Tekla.Structures.Drawing.View.LabelLineLengthType",
+          "doc": "The line length type of the mark symbol to be used.",
+          "optional": false
+        },
+        {
+          "name": "lineLength",
+          "type": "System.Double",
+          "doc": "The line length of the mark symbol to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/269cb718-a447-8a68-f805-b0594b68e211"
@@ -29,9 +54,20 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/55a27e06-da69-f6ab-6337-1b71216f247d"
@@ -40,7 +76,7 @@
   "properties": [
     {
       "name": "LineLength",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The label line length in the case of custom length.",
@@ -48,7 +84,7 @@
     },
     {
       "name": "LineLengthType",
-      "type": "object",
+      "type": "View.LabelLineLengthType",
       "getter": true,
       "setter": true,
       "summary": "The label line length type.",
@@ -56,7 +92,7 @@
     },
     {
       "name": "Shape",
-      "type": "object",
+      "type": "MarkSymbolShape",
       "getter": true,
       "setter": true,
       "summary": "The shape of the mark symbol.",
@@ -64,7 +100,7 @@
     },
     {
       "name": "Size",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The size of the mark symbol.",

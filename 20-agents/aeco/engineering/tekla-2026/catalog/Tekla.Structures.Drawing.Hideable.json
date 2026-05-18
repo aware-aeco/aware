@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Hideable",
-      "signature": "Hideable(...)",
+      "signature": "public Hideable()",
       "summary": "Initializes a new instance of the Hideable class",
       "params": [],
       "throws": [],
@@ -20,7 +20,7 @@
   "methods": [
     {
       "name": "HideFromDrawing",
-      "signature": "HideFromDrawing(...)",
+      "signature": "public void HideFromDrawing()",
       "summary": "Hides this object from the whole drawing. Calling Modify on the object is required to hide the object.",
       "params": [],
       "throws": [],
@@ -29,7 +29,7 @@
     },
     {
       "name": "HideFromDrawingView",
-      "signature": "HideFromDrawingView(...)",
+      "signature": "public void HideFromDrawingView()",
       "summary": "Hides this object from the drawing view. Calling Modify on the object is required to hide the object.",
       "params": [],
       "throws": [],
@@ -38,7 +38,7 @@
     },
     {
       "name": "ShowInDrawing",
-      "signature": "ShowInDrawing(...)",
+      "signature": "public void ShowInDrawing()",
       "summary": "Shows this object in the whole drawing. Calling Modify on the object is required to show the object.",
       "params": [],
       "throws": [],
@@ -47,7 +47,7 @@
     },
     {
       "name": "ShowInDrawingView",
-      "signature": "ShowInDrawingView(...)",
+      "signature": "public void ShowInDrawingView()",
       "summary": "Shows this object in the drawing view. Calling Modify on the object is required to show the object.",
       "params": [],
       "throws": [],
@@ -58,9 +58,9 @@
   "properties": [
     {
       "name": "IsHidden",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Retrieves the information if this object is hidden or not.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/43ccc663-215b-dcb6-e19f-bbd5e93b56dc"
     }

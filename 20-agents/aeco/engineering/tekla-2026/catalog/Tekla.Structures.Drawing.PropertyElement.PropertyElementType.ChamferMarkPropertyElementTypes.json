@@ -10,36 +10,52 @@
   "methods": [
     {
       "name": "DX",
-      "signature": "DX(...)",
+      "signature": "public static PropertyElement.PropertyElementType DX()",
       "summary": "Returns the change in the X direction property element type.",
       "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3e6d779e-10b6-33c1-df38-d198f6b996a9"
     },
     {
       "name": "DY",
-      "signature": "DY(...)",
+      "signature": "public static PropertyElement.PropertyElementType DY()",
       "summary": "Returns the change in the Y direction property element type.",
       "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2069df56-220d-7226-f530-32218e664b54"
     },
     {
       "name": "Length",
-      "signature": "Length(...)",
+      "signature": "public static PropertyElement.PropertyElementType Length()",
       "summary": "Returns the length property element type.",
       "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f81511c6-d604-52e2-aa1c-4f657fbe20ec"
     },
     {
       "name": "Name",
-      "signature": "Name(...)",
+      "signature": "public static PropertyElement.PropertyElementType Name()",
       "summary": "Returns the name property element type.",
       "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3d9eff2b-955a-6ac2-d9ab-ee5667787f28"

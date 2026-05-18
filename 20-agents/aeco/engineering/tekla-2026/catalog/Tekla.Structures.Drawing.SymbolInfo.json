@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "SymbolInfo",
-      "signature": "SymbolInfo(...)",
+      "signature": "public SymbolInfo()",
       "summary": "Creates a new symbol info instance.",
       "params": [],
       "throws": [],
@@ -18,10 +18,28 @@
     },
     {
       "name": "SymbolInfo",
-      "signature": "SymbolInfo(...)",
+      "signature": "public SymbolInfo(string SymbolFile, int SymbolIndex)",
       "summary": "Creates a new symbol info instance.",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "SymbolFile",
+          "type": "System.String",
+          "doc": "The symbol file to be used.",
+          "optional": false
+        },
+        {
+          "name": "SymbolIndex",
+          "type": "System.Int32",
+          "doc": "The symbol index to be used.",
+          "optional": false
+        }
+      ],
+      "throws": [
+        {
+          "type": "ArgumentOutOfRangeException",
+          "when": "Thrown if the symbol index is invalid."
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e34819cb-4777-06dd-5350-5db08ce8f96f"
     }
@@ -29,9 +47,20 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/93299518-9929-1413-753b-a96c1aa722bc"
@@ -40,7 +69,7 @@
   "properties": [
     {
       "name": "SymbolFile",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the symbol file. E.g. \u0022xsteel\u0022.",
@@ -48,7 +77,7 @@
     },
     {
       "name": "SymbolIndex",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the the symbol index. Throws an ArgumentOutOfRangeException if the symbol index is not in the range from 0 to 255.",

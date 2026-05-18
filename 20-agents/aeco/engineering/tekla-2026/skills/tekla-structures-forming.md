@@ -36,23 +36,25 @@ FormingStates class which contains different forming options.
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/798a3ceb-2766-0a5c-7853-023059f04b55)
 
 ### Constructors
-- `FormingStates(...)` — Initializes a new instance of the FormingStates class.
-- `FormingStates(...)` — Initializes a new instance of the FormingStates class.
-- `FormingStates(...)` — Initializes a new instance of the FormingStates class.
-- `FormingStates(...)` — Initializes a new instance of the FormingStates class.
-- `FormingStates(...)` — Initializes a new instance of the FormingStates class.
+- `public FormingStates()` — Initializes a new instance of the FormingStates class.
+- `public FormingStates(DeformingType deforming)` — Initializes a new instance of the FormingStates class.
+- `public FormingStates(FoldingType folding)` — Initializes a new instance of the FormingStates class.
+- `public FormingStates(WrappingType wrapping)` — Initializes a new instance of the FormingStates class.
+- `public FormingStates(DeformingType deforming, FoldingType folding, WrappingType wrapping)` — Initializes a new instance of the FormingStates class.
 
 ### Methods
-#### `Clone(...)`
+#### `public Object Clone()`
 
 Method for cloning the current object.
+
+**Returns:** `Object` — Cloned object.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/0798cc99-1eaa-efe0-401e-c789ae54bbf4)
 
 ### Properties
-- `Deforming` (object, get/set) — Gets or sets the deforming type.
-- `Folding` (object, get/set) — Gets or sets the folding type.
-- `Wrapping` (object, get/set) — Gets or sets the wrapping type.
+- `Deforming` (DeformingType, get/set) — Gets or sets the deforming type.
+- `Folding` (FoldingType, get/set) — Gets or sets the folding type.
+- `Wrapping` (WrappingType, get/set) — Gets or sets the wrapping type.
 
 ## WrappingType (enum)
 

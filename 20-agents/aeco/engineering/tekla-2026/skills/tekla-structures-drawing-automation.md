@@ -14,10 +14,10 @@ The AutoDrawingRule class contains the definition of a rule for the Tekla Struct
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/14fb0762-786d-a810-3a17-c47fa3e05982)
 
 ### Constructors
-- `AutoDrawingRule(...)` — Creates a new AutoDrawing rule by using an existing rule file.
+- `public AutoDrawingRule(string RuleFromFile)` — Creates a new AutoDrawing rule by using an existing rule file.
 
 ### Properties
-- `Filename` (object, get/set) — The filename of the AutoDrawing script.
+- `Filename` (String, get/set) — The filename of the AutoDrawing script.
 
 ## AutoDrawingsStatusEnum (enum)
 
@@ -38,21 +38,41 @@ The DrawingCreator class is for handling the creation of drawings using the buil
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/f976051e-3068-321a-e408-f370c1ac0bf5)
 
 ### Methods
-#### `CreateDrawings(AutoDrawingRule, Identifier)(...)`
+#### `public static bool CreateDrawings(AutoDrawingRule Rule, Identifier ModelObjectIdentifier)`
 
 Creates drawings using the AutoDrawing tool of Tekla Structures.
+
+**Parameters:**
+- `Rule` (Tekla.Structures.Drawing.Automation.AutoDrawingRule) — The AutoDrawing rule to be used.
+- `ModelObjectIdentifier` (Tekla.Structures.Identifier) — The model object identifier to be used. Part identifier to create single part drawing or assembly identifier to create assembly drawing.
+
+**Returns:** `Boolean` — True on success.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/76d514c8-aa1c-c10a-014a-62dd24b119ed)
 
-#### `CreateDrawings(AutoDrawingRule, Identifier, AutoDrawingsStatusEnum.)(...)`
+#### `public static bool CreateDrawings(AutoDrawingRule Rule, Identifier ModelObjectIdentifier, out AutoDrawingsStatusEnum OperationStatus)`
 
 Creates drawings using the AutoDrawing tool of Tekla Structures.
+
+**Parameters:**
+- `Rule` (Tekla.Structures.Drawing.Automation.AutoDrawingRule) — The AutoDrawing rule to be used.
+- `ModelObjectIdentifier` (Tekla.Structures.Identifier) — The model object identifier to be used. Part identifier to create single part drawing or assembly identifier to create assembly drawing.
+- `OperationStatus` (Tekla.Structures.Drawing.Automation.AutoDrawingsStatusEnum.) — The operation status to be used.
+
+**Returns:** `Boolean` — True on success.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/7eac6939-0fe3-e07b-3dc7-7bc1804527c8)
 
-#### `CreateDrawings(AutoDrawingRule, List.Identifier., AutoDrawingsStatusEnum.)(...)`
+#### `public static bool CreateDrawings(AutoDrawingRule Rule, List<Identifier> aModelObjectIdentifier, out AutoDrawingsStatusEnum OperationStatus)`
 
 Creates drawings using the AutoDrawing tool of Tekla Structures.
+
+**Parameters:**
+- `Rule` (Tekla.Structures.Drawing.Automation.AutoDrawingRule) — The AutoDrawing rule to be used.
+- `aModelObjectIdentifier` (System.Collections.Generic.List<Identifier>) — The model object identifier list to be used. Part identifiers to create single part drawings or assembly identifiers to create assembly drawings.
+- `OperationStatus` (Tekla.Structures.Drawing.Automation.AutoDrawingsStatusEnum.) — The operation status to be used.
+
+**Returns:** `Boolean` — True on success.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/be9b7c58-c015-fd84-1bb8-ec0094be3a92)
 

@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "PlacingDistanceAttributes",
-      "signature": "PlacingDistanceAttributes(...)",
+      "signature": "public PlacingDistanceAttributes()",
       "summary": "Initializes a new instance of the PlacingDistanceAttributes class. The default values are a 0.0 search margin and a 0.0 minimal distance.",
       "params": [],
       "throws": [],
@@ -18,18 +18,50 @@
     },
     {
       "name": "PlacingDistanceAttributes",
-      "signature": "PlacingDistanceAttributes(...)",
+      "signature": "public PlacingDistanceAttributes(double searchMargin, double minimalDistance)",
       "summary": "Creates a new placing distance attributes instance with the given search marginal and minimal distance.",
-      "params": [],
+      "params": [
+        {
+          "name": "searchMargin",
+          "type": "System.Double",
+          "doc": "The search marginal to be used.",
+          "optional": false
+        },
+        {
+          "name": "minimalDistance",
+          "type": "System.Double",
+          "doc": "The minimal distance to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2f0e28da-9fa3-686a-800a-9328cf1535f6"
     },
     {
       "name": "PlacingDistanceAttributes",
-      "signature": "PlacingDistanceAttributes(...)",
+      "signature": "public PlacingDistanceAttributes(double searchMargin, double minimalDistance, double maximalDistance)",
       "summary": "Creates a new placing distance attributes instance with the given search margin, minimal and maximal distance.",
-      "params": [],
+      "params": [
+        {
+          "name": "searchMargin",
+          "type": "System.Double",
+          "doc": "The search margin to be used.",
+          "optional": false
+        },
+        {
+          "name": "minimalDistance",
+          "type": "System.Double",
+          "doc": "The minimal distance to be used.",
+          "optional": false
+        },
+        {
+          "name": "maximalDistance",
+          "type": "System.Double",
+          "doc": "The maximal distance to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/91eae0c6-7997-0964-c668-75d4a59a14bb"
@@ -38,18 +70,33 @@
   "methods": [
     {
       "name": "Clone",
-      "signature": "Clone(...)",
+      "signature": "public Object Clone()",
       "summary": "Creates a new object that is a copy of the current instance.",
       "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "A new object that is a copy of the current instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b6d8d2ac-5201-c26c-4db8-c01199cdcdd4"
     },
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f6c990a4-f8d1-b02b-2b83-2f794879511e"
@@ -58,7 +105,7 @@
   "properties": [
     {
       "name": "MaximalDistance",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the maximal distance for placing.",
@@ -66,7 +113,7 @@
     },
     {
       "name": "MinimalDistance",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the minimal distance for placing.",
@@ -74,7 +121,7 @@
     },
     {
       "name": "SearchMargin",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the search marginal for placing.",

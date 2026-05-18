@@ -11,8 +11,8 @@
   "events": [
     {
       "name": "SharedModelStateChanged",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler SharedModelStateChanged",
+      "delegate": "System.EventHandler\u003CISharedModelState\u003E",
+      "signature": "event EventHandler\u003CISharedModelState\u003E SharedModelStateChanged",
       "summary": "Occurs when the sharing service state changes.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/fbd2c8c3-d153-63c7-70b4-42f0066be93b",
       "handler_thread": "unknown",

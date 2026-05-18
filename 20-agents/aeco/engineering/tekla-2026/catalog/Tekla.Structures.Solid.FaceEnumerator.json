@@ -10,16 +10,20 @@
   "methods": [
     {
       "name": "MoveNext",
-      "signature": "MoveNext(...)",
+      "signature": "public bool MoveNext()",
       "summary": "Moves to the next item in the enumerator.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "False on failure."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7cb685be-03b2-c801-d86b-76a8de3c24ec"
     },
     {
       "name": "Reset",
-      "signature": "Reset(...)",
+      "signature": "public void Reset()",
       "summary": "Resets the enumerator to the beginning.",
       "params": [],
       "throws": [],
@@ -30,9 +34,9 @@
   "properties": [
     {
       "name": "Current",
-      "type": "object",
+      "type": "Face",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Returns the current face.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d4f0ddb7-96f3-436a-0075-82e097ff32b7"
     }

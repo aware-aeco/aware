@@ -14,18 +14,32 @@ The AnalysisObjectPicker class can be used to prompt the user to do manual picks
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/523a09a5-c6e6-d69d-0d24-26ee5f69f9ac)
 
 ### Constructors
-- `AnalysisObjectPicker(...)` — Initializes a new instance of the AnalysisObjectPicker class
+- `public AnalysisObjectPicker()` — Initializes a new instance of the AnalysisObjectPicker class
 
 ### Methods
-#### `PickObject(...)`
+#### `public AnalysisObject PickObject(string analysisModelName, AnalysisObjectPicker.PickObjectType type, string prompt)`
 
 Prompts the user to pick object from the model with the given prompt. Object is either analysis object or model object.
 
+**Parameters:**
+- `analysisModelName` (System.String) — The analysis model name.
+- `type` (Tekla.Structures.Analysis.UI.AnalysisObjectPicker.PickObjectType) — The type of object to pick.
+- `prompt` (System.String) — The string to display as user guidance.
+
+**Returns:** `AnalysisObject` — The analysis object instance.
+
 [Docs](https://developer.tekla.com/topic/en/18/47/8dea0aee-506d-06df-c9db-27e86bbdf77e)
 
-#### `PickObjects(...)`
+#### `public List<AnalysisObject> PickObjects(string analysisModelName, AnalysisObjectPicker.PickObjectType type, string prompt)`
 
 Prompts the user to pick objects from the model with the given prompt.
+
+**Parameters:**
+- `analysisModelName` (System.String) — The analysis model name.
+- `type` (Tekla.Structures.Analysis.UI.AnalysisObjectPicker.PickObjectType) — The type of objects to pick.
+- `prompt` (System.String) — The string to display as user guidance.
+
+**Returns:** `List<AnalysisObject>` — An enumerator of analysis object instances.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/a9e9fa8a-ead4-44b2-3838-ce4e26602695)
 
@@ -48,18 +62,29 @@ Get or set selected analysis objects in model views.
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/e030d77d-a743-dc11-357f-42c32dab23e7)
 
 ### Constructors
-- `AnalysisObjectSelector(...)` — Initializes a new instance of the AnalysisObjectSelector class.
+- `public AnalysisObjectSelector()` — Initializes a new instance of the AnalysisObjectSelector class.
 
 ### Methods
-#### `GetSelectedObjects(...)`
+#### `public AnalysisObjectEnumerator GetSelectedObjects(string analysisModelName)`
 
 Get the analysis objects selected in model views.
 
+**Parameters:**
+- `analysisModelName` (System.String) — The analysis model name.
+
+**Returns:** `AnalysisObjectEnumerator` — The analysis object enumerator of analysis objects selected in model views.
+
 [Docs](https://developer.tekla.com/topic/en/18/47/67a2ab44-62cf-ee69-7f6b-c0231934cbeb)
 
-#### `SetSelectedObjects(...)`
+#### `public int SetSelectedObjects(List<AnalysisObject> analysisObjects, bool append)`
 
 Set analysis objects as selected in model views.
+
+**Parameters:**
+- `analysisObjects` (System.Collections.Generic.List<AnalysisObject>) — The analysis objects.
+- `append` (System.Boolean) — If true, objects are added to currently selected. If false, current selection is cleared.
+
+**Returns:** `Int32` — The count of objects selected.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/86208bd9-647e-0e3a-5dee-0cce9a4e50a2)
 

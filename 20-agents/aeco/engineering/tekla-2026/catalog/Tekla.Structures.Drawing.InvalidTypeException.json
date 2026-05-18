@@ -9,9 +9,15 @@
   "constructors": [
     {
       "name": "InvalidTypeException",
-      "signature": "InvalidTypeException(...)",
+      "signature": "public InvalidTypeException(string Message)",
       "summary": "Creates a new InvalidTypeException instance.",
-      "params": [],
+      "params": [
+        {
+          "name": "Message",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5abdc978-08a8-0cd9-2f9e-4c98e343edb7"

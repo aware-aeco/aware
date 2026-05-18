@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "ViewVisibilitySettings",
-      "signature": "ViewVisibilitySettings(...)",
+      "signature": "public ViewVisibilitySettings()",
       "summary": "Initializes a new instance of the ViewVisibilitySettings class",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "BoltHolesVisible",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the bolt hole visibility.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "BoltHolesVisibleInComponents",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the bolt hole visibility inside components.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "BoltsVisible",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the bolt visibility.",
@@ -45,7 +45,7 @@
     },
     {
       "name": "BoltsVisibleInComponents",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the bolt visibility inside components.",
@@ -53,7 +53,7 @@
     },
     {
       "name": "BuildingVisible",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the building heirarchy visibility.",
@@ -61,7 +61,7 @@
     },
     {
       "name": "ComponentsVisible",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the component symbol visibility.",
@@ -69,7 +69,7 @@
     },
     {
       "name": "ComponentsVisibleInComponents",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the component symbol visibility inside components.",
@@ -77,7 +77,7 @@
     },
     {
       "name": "ConstructionLinesVisible",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the construction line visibility.",
@@ -85,7 +85,7 @@
     },
     {
       "name": "ConstructionPlanesVisible",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the construction plane visibility.",
@@ -93,7 +93,7 @@
     },
     {
       "name": "ConstructionPlanesVisibleInComponents",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the construction plane visibility inside components.",
@@ -101,7 +101,7 @@
     },
     {
       "name": "CutsVisible",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the cut or union visibility.",
@@ -109,7 +109,7 @@
     },
     {
       "name": "CutsVisibleInComponents",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the cut visibility inside components.",
@@ -117,7 +117,7 @@
     },
     {
       "name": "FittingsVisible",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the fitting visibility.",
@@ -125,7 +125,7 @@
     },
     {
       "name": "FittingsVisibleInComponents",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the fitting visibility inside components.",
@@ -133,7 +133,7 @@
     },
     {
       "name": "GridsVisible",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the grid visibility.",
@@ -141,7 +141,7 @@
     },
     {
       "name": "LoadsVisible",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the load visibility.",
@@ -149,7 +149,7 @@
     },
     {
       "name": "PartsVisible",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the part visibility.",
@@ -157,7 +157,7 @@
     },
     {
       "name": "PartsVisibleInComponents",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the part visibility inside components.",
@@ -165,7 +165,7 @@
     },
     {
       "name": "PointsVisible",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the point visibility.",
@@ -173,7 +173,7 @@
     },
     {
       "name": "PointsVisibleInComponents",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the point visibility inside components.",
@@ -181,7 +181,7 @@
     },
     {
       "name": "PourBreaksVisible",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the pour break visibility. NOTE! this setting requires that XS_ENABLE_POUR_MANAGEMENT is set to true.",
@@ -189,7 +189,7 @@
     },
     {
       "name": "PoursVisible",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the pour visibility. NOTE! this setting requires that XS_ENABLE_POUR_MANAGEMENT is set to true.",
@@ -197,7 +197,7 @@
     },
     {
       "name": "RebarsVisible",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the reinforcement visibility.",
@@ -205,7 +205,7 @@
     },
     {
       "name": "RebarsVisibleInComponents",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the reinforcement visibility inside components.",
@@ -213,7 +213,7 @@
     },
     {
       "name": "ReferenceObjectsVisible",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the reference object visibility.",
@@ -221,7 +221,7 @@
     },
     {
       "name": "SurfaceTreatmentsVisible",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the surface treatment visibility.",
@@ -229,7 +229,7 @@
     },
     {
       "name": "WeldsVisible",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the weld visibility.",
@@ -237,7 +237,7 @@
     },
     {
       "name": "WeldsVisibleInComponents",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the weld visibility inside components.",

@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "ModelObjectSelector",
-      "signature": "ModelObjectSelector(...)",
+      "signature": "public ModelObjectSelector()",
       "summary": "Creates a new model object selector instance.",
       "params": [],
       "throws": [],
@@ -20,36 +20,91 @@
   "methods": [
     {
       "name": "GetObjectsByBoundingBox",
-      "signature": "GetObjectsByBoundingBox(...)",
+      "signature": "public ModelObjectEnumerator GetObjectsByBoundingBox(Point MinPoint, Point MaxPoint, View View)",
       "summary": "Returns an enumerator of the given view\u0027s visible model objects that collide with the given geometrical bounding box. Note that this method uses approximate bounding boxes and thus is NOT EXACT, and may return objects not necessarily colliding with the given box but only being somewhere near to it.",
-      "params": [],
+      "params": [
+        {
+          "name": "MinPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The minimum point of the bounding box.",
+          "optional": false
+        },
+        {
+          "name": "MaxPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The maximum point of the bounding box.",
+          "optional": false
+        },
+        {
+          "name": "View",
+          "type": "Tekla.Structures.Model.UI.View",
+          "doc": "The view to get the objects from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelObjectEnumerator",
+        "doc": "A model object enumerator of the visible model objects colliding with the given bounding box."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0f1d00ed-8269-6cd5-0403-81aa5206b9cd"
     },
     {
       "name": "GetSelectedObjects",
-      "signature": "GetSelectedObjects(...)",
+      "signature": "public ModelObjectEnumerator GetSelectedObjects()",
       "summary": "Returns an enumerator of all the selected model objects in the model view.",
       "params": [],
+      "returns": {
+        "type": "ModelObjectEnumerator",
+        "doc": "A model object enumerator of all the selected model objects."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a03063f4-8140-c465-1e84-95fbc0291f52"
     },
     {
       "name": "Select(ArrayList)",
-      "signature": "Select(ArrayList)(...)",
+      "signature": "public bool Select(ArrayList ModelObjects)",
       "summary": "Selects a list of objects from the user interface.",
-      "params": [],
+      "params": [
+        {
+          "name": "ModelObjects",
+          "type": "System.Collections.ArrayList",
+          "doc": "The list of model objects to select.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/739e39e9-0c4f-e37d-88a5-9fb6fdff508d"
     },
     {
       "name": "Select(ArrayList, Boolean)",
-      "signature": "Select(ArrayList, Boolean)(...)",
+      "signature": "public bool Select(ArrayList ModelObjects, bool ShowDimensions)",
       "summary": "Selects a list of objects from the user interface.",
-      "params": [],
+      "params": [
+        {
+          "name": "ModelObjects",
+          "type": "System.Collections.ArrayList",
+          "doc": "The list of model objects to select.",
+          "optional": false
+        },
+        {
+          "name": "ShowDimensions",
+          "type": "System.Boolean",
+          "doc": "Defines whether to show dimensions of the parts in the selection.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/faf6cfd2-be15-3cec-6dd1-efd77cf5938f"

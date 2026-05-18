@@ -9,9 +9,16 @@
   "constructors": [
     {
       "name": "CannotPerformOperationDrawingEditorMustBeClosedException",
-      "signature": "CannotPerformOperationDrawingEditorMustBeClosedException(...)",
+      "signature": "public CannotPerformOperationDrawingEditorMustBeClosedException(string Message)",
       "summary": "Creates a new cannot perform operation drawing editor must be closed exception instance.",
-      "params": [],
+      "params": [
+        {
+          "name": "Message",
+          "type": "System.String",
+          "doc": "The exception message.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/426d49dd-fffd-60e5-6d6c-7b19d338b3a7"

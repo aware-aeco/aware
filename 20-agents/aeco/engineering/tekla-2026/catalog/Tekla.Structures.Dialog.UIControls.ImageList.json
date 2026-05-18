@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "ImageList",
-      "signature": "ImageList(...)",
+      "signature": "public ImageList()",
       "summary": "Initializes a new instance of the ImageList class",
       "params": [],
       "throws": [],

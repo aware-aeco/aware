@@ -14,8 +14,8 @@ Class that represents weld seam specific geometry.
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/6396431a-0b14-abed-6cf9-bb16aa8542b2)
 
 ### Properties
-- `Polygons` (object, get/set) — Gets the weld seam specific ArrayList of Polygon objects.
-- `Position` (object, get/set) — Gets the weld seam position (above or below).
+- `Polygons` (ArrayList, get) — Gets the weld seam specific ArrayList of Polygon objects.
+- `Position` (WeldSeamPositionEnum, get) — Gets the weld seam position (above or below).
 
 ## WeldSeamPositionEnum (enum)
 

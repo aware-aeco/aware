@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AlongLinePlacingType",
-      "signature": "AlongLinePlacingType(...)",
+      "signature": "public AlongLinePlacingType()",
       "summary": "Creates a new along line placing type instance.",
       "params": [],
       "throws": [],

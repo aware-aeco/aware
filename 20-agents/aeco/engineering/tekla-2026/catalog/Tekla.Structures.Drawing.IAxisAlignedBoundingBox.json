@@ -9,9 +9,13 @@
   "methods": [
     {
       "name": "GetAxisAlignedBoundingBox",
-      "signature": "GetAxisAlignedBoundingBox(...)",
+      "signature": "RectangleBoundingBox GetAxisAlignedBoundingBox()",
       "summary": "Gets the bounding box for the current object in the global axis coordinate system.",
       "params": [],
+      "returns": {
+        "type": "RectangleBoundingBox",
+        "doc": "A rectangle bounding box for the current object."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f330d78c-7cd8-6e65-9af5-3ffae3df133a"

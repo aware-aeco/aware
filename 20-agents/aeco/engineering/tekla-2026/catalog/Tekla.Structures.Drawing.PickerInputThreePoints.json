@@ -9,9 +9,34 @@
   "constructors": [
     {
       "name": "PickerInputThreePoints",
-      "signature": "PickerInputThreePoints(...)",
+      "signature": "public PickerInputThreePoints(ViewBase pickedView, Point firstPickedPoint, Point secondPickedPoint, Point thirdPickedPoint)",
       "summary": "Creates a new PickerInputThreePoints instance with one point selected in a view.",
-      "params": [],
+      "params": [
+        {
+          "name": "pickedView",
+          "type": "Tekla.Structures.Drawing.ViewBase",
+          "doc": "The view in which the pick occurred.",
+          "optional": false
+        },
+        {
+          "name": "firstPickedPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The first picked point in the view coordinates.",
+          "optional": false
+        },
+        {
+          "name": "secondPickedPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The second picked point in the view coordinates.",
+          "optional": false
+        },
+        {
+          "name": "thirdPickedPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The third picked point in the view coordinates.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f70d0afd-9df1-ec62-8438-bfcfee84432c"
@@ -20,9 +45,20 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/27544458-03bd-3973-26f7-e0599800aa4e"
@@ -31,7 +67,7 @@
   "properties": [
     {
       "name": "FirstPickedPoint",
-      "type": "object",
+      "type": "Point",
       "getter": true,
       "setter": true,
       "summary": "The first picked point in the view coordinates.",
@@ -39,7 +75,7 @@
     },
     {
       "name": "PickedView",
-      "type": "object",
+      "type": "ViewBase",
       "getter": true,
       "setter": true,
       "summary": "The view within which the pick occurred.",
@@ -47,7 +83,7 @@
     },
     {
       "name": "SecondPickedPoint",
-      "type": "object",
+      "type": "Point",
       "getter": true,
       "setter": true,
       "summary": "The second picked point in the view coordinates.",
@@ -55,7 +91,7 @@
     },
     {
       "name": "ThirdPickedPoint",
-      "type": "object",
+      "type": "Point",
       "getter": true,
       "setter": true,
       "summary": "The third picked point in the view coordinates.",

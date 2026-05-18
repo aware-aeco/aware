@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "BindableRadioButton",
-      "signature": "BindableRadioButton(...)",
+      "signature": "public BindableRadioButton()",
       "summary": "Initializes a new instance of the BindableRadioButton class",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "Checked",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the control is checked.",

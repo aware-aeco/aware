@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "StrandUnbondingData",
-      "signature": "StrandUnbondingData(...)",
+      "signature": "public StrandUnbondingData()",
       "summary": "Initializes a new strand unbonding data instance with empty attributes.",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "FromEnd",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The unbonding from the end of the strand.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "FromStart",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The unbonding from the start of the strand.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "MiddleToEnd",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The unbonding from the middle of the strand to the end of the strand.",
@@ -45,7 +45,7 @@
     },
     {
       "name": "MiddleToStart",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The unbonding from the middle of the strand to the start of the strand.",
@@ -53,7 +53,7 @@
     },
     {
       "name": "StrandIndex",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The index of the strand.",

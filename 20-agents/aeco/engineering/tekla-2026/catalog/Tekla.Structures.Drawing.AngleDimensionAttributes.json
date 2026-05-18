@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AngleDimensionAttributes",
-      "signature": "AngleDimensionAttributes(...)",
+      "signature": "public AngleDimensionAttributes()",
       "summary": "Creates a new angle dimension attributes instance which loads standard attributes.",
       "params": [],
       "throws": [],
@@ -18,9 +18,16 @@
     },
     {
       "name": "AngleDimensionAttributes",
-      "signature": "AngleDimensionAttributes(...)",
+      "signature": "public AngleDimensionAttributes(string AttributesFile)",
       "summary": "Creates a new angle dimension attributes instance that loads the specified attributes.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributesFile",
+          "type": "System.String",
+          "doc": "The attributes file\u0027s filename.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6bbe2e71-0c46-632c-c552-df141f5221fd"
@@ -29,18 +36,40 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d0a96bf2-2013-a0f5-9705-6155f631da34"
     },
     {
       "name": "LoadAttributes",
-      "signature": "LoadAttributes(...)",
+      "signature": "public override bool LoadAttributes(string AttributeFile)",
       "summary": "Loads attributes from the attribute file.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The attribute file\u0027s filename.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5e011069-b9fc-983a-b591-62b41524349d"
@@ -49,7 +78,7 @@
   "properties": [
     {
       "name": "Arrowhead",
-      "type": "object",
+      "type": "ArrowheadAttributes",
       "getter": true,
       "setter": true,
       "summary": "The arrowhead attributes of the dimension.",
@@ -57,7 +86,7 @@
     },
     {
       "name": "Color",
-      "type": "object",
+      "type": "DrawingColors",
       "getter": true,
       "setter": true,
       "summary": "The color of the dimension line.",
@@ -65,7 +94,7 @@
     },
     {
       "name": "Format",
-      "type": "object",
+      "type": "DimensionSetBaseAttributes.DimensionFormatAttributes",
       "getter": true,
       "setter": true,
       "summary": "The format attributes of the dimension.",
@@ -73,7 +102,7 @@
     },
     {
       "name": "Placing",
-      "type": "object",
+      "type": "DimensionSetBaseAttributes.DimensionPlacingAttributes",
       "getter": true,
       "setter": true,
       "summary": "The placing attributes of the dimension.",
@@ -81,7 +110,7 @@
     },
     {
       "name": "Text",
-      "type": "object",
+      "type": "DimensionSetBaseAttributes.DimensionTextAttributes",
       "getter": true,
       "setter": true,
       "summary": "The text attributes of the dimension.",
@@ -89,7 +118,7 @@
     },
     {
       "name": "TransparentBackground",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "The dimension text background transparency. (transparent/opaque)",
@@ -97,7 +126,7 @@
     },
     {
       "name": "TriangleBase",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the triangle base length which controls the base dimension shown for bevel dimensions (only if Type is AngleTypes.Triangle).",
@@ -105,7 +134,7 @@
     },
     {
       "name": "TrueColor",
-      "type": "object",
+      "type": "TeklaDrawingColor",
       "getter": true,
       "setter": true,
       "summary": "The true color (RGB enabled) of the dimension line.",
@@ -113,7 +142,7 @@
     },
     {
       "name": "Type",
-      "type": "object",
+      "type": "AngleTypes",
       "getter": true,
       "setter": true,
       "summary": "The type of the angle.",

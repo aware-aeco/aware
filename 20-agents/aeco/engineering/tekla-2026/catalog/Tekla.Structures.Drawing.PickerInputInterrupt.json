@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "PickerInputInterrupt",
-      "signature": "PickerInputInterrupt(...)",
+      "signature": "public PickerInputInterrupt()",
       "summary": "Creates a new PickerInputInterrupt instance representing the interruption of picking by the user.",
       "params": [],
       "throws": [],
@@ -20,9 +20,20 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/dec8c103-42e2-6d17-dc9b-0947f96a89a7"

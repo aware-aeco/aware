@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "WpfComponentCatalog",
-      "signature": "WpfComponentCatalog(...)",
+      "signature": "public WpfComponentCatalog()",
       "summary": "Initializes a new instance of the WpfComponentCatalog class.",
       "params": [],
       "throws": [],
@@ -20,7 +20,7 @@
   "methods": [
     {
       "name": "InitializeComponent",
-      "signature": "InitializeComponent(...)",
+      "signature": "public void InitializeComponent()",
       "summary": "InitializeComponent",
       "params": [],
       "throws": [],
@@ -31,7 +31,7 @@
   "properties": [
     {
       "name": "ButtonHeight",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets and sets the height of the button control.",
@@ -39,7 +39,7 @@
     },
     {
       "name": "ButtonText",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets and sets the text of the button control.",
@@ -47,7 +47,7 @@
     },
     {
       "name": "ButtonWidth",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets and sets the width of the button control.",
@@ -55,7 +55,7 @@
     },
     {
       "name": "SelectedName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the selected component name in the control.",
@@ -63,7 +63,7 @@
     },
     {
       "name": "SelectedNumber",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the selected component number in the control.",
@@ -73,8 +73,8 @@
   "events": [
     {
       "name": "SelectClicked",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler SelectClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler SelectClicked",
       "summary": "The SelectClicked event is raised when the Select button is clicked.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/57e90535-aed5-b50d-f2aa-d9436e312296",
       "handler_thread": "unknown",
@@ -82,8 +82,8 @@
     },
     {
       "name": "SelectionDone",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler SelectionDone",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler SelectionDone",
       "summary": "The SelectionDone event is raised when the selection has been done.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/348083ac-1932-805d-1ded-93d7786faf89",
       "handler_thread": "unknown",

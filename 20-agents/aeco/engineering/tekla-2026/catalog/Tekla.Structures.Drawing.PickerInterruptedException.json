@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "PickerInterruptedException",
-      "signature": "PickerInterruptedException(...)",
+      "signature": "public PickerInterruptedException()",
       "summary": "Creates a new picker interrupted exception instance.",
       "params": [],
       "throws": [],

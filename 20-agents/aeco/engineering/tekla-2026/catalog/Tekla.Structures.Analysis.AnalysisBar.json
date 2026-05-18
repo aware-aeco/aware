@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisBar",
-      "signature": "AnalysisBar(...)",
+      "signature": "public AnalysisBar()",
       "summary": "Initializes a new instance of the AnalysisBar class.",
       "params": [],
       "throws": [],
@@ -20,25 +20,45 @@
   "methods": [
     {
       "name": "Add(AnalysisPosition)",
-      "signature": "Add(AnalysisPosition)(...)",
+      "signature": "public void Add(AnalysisPosition AnalysisPosition)",
       "summary": "Adds a position to the analysis bar.",
-      "params": [],
+      "params": [
+        {
+          "name": "AnalysisPosition",
+          "type": "Tekla.Structures.Analysis.AnalysisPosition",
+          "doc": "The position to be added.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/94840bd0-1058-900f-d0d7-e1ce12084405"
     },
     {
       "name": "Add(AnalysisPosition, AnalysisMember)",
-      "signature": "Add(AnalysisPosition, AnalysisMember)(...)",
+      "signature": "public void Add(AnalysisPosition position, AnalysisMember member)",
       "summary": "Adds a position and member to the analysis bar.",
-      "params": [],
+      "params": [
+        {
+          "name": "position",
+          "type": "Tekla.Structures.Analysis.AnalysisPosition",
+          "doc": "The position to be added.",
+          "optional": false
+        },
+        {
+          "name": "member",
+          "type": "Tekla.Structures.Analysis.AnalysisMember",
+          "doc": "The member to be added.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7b09f522-a98f-884b-899c-df298172e861"
     },
     {
       "name": "Delete",
-      "signature": "Delete(...)",
+      "signature": "public void Delete()",
       "summary": "Deletes an analysis bar. The method is not implemented.",
       "params": [],
       "throws": [],
@@ -47,25 +67,33 @@
     },
     {
       "name": "GetMembers",
-      "signature": "GetMembers(...)",
+      "signature": "public AnalysisObjectEnumerator GetMembers()",
       "summary": "Gets the members of the analysis bar.",
       "params": [],
+      "returns": {
+        "type": "AnalysisObjectEnumerator",
+        "doc": "The members of the analysis bar."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6e0db972-47fa-4b46-4ecd-74d9ca57cc92"
     },
     {
       "name": "GetPositions",
-      "signature": "GetPositions(...)",
+      "signature": "public AnalysisObjectEnumerator GetPositions()",
       "summary": "Gets the positions of the analysis bar.",
       "params": [],
+      "returns": {
+        "type": "AnalysisObjectEnumerator",
+        "doc": "The positions of the analysis bar."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ca833661-fac3-9807-2b22-01cd84711b6f"
     },
     {
       "name": "Modify",
-      "signature": "Modify(...)",
+      "signature": "public void Modify()",
       "summary": "Modifies an analysis bar. The method is not implemented.",
       "params": [],
       "throws": [],
@@ -74,7 +102,7 @@
     },
     {
       "name": "Select",
-      "signature": "Select(...)",
+      "signature": "public override void Select()",
       "summary": "Selects an analysis bar. The AnalysisModelName and ID have to be set.",
       "params": [],
       "throws": [],
@@ -85,7 +113,7 @@
   "properties": [
     {
       "name": "AnalysisDesignCode",
-      "type": "object",
+      "type": "AnalysisDesignCode",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis design code of the analysis bar.",
@@ -93,7 +121,7 @@
     },
     {
       "name": "AnalysisModelName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis model name.",
@@ -101,7 +129,7 @@
     },
     {
       "name": "AnalysisObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the analysis object.",
@@ -109,7 +137,7 @@
     },
     {
       "name": "AnalysisType",
-      "type": "object",
+      "type": "AnalysisPart.AnalysisTypeEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis type of the analysis bar.",
@@ -117,7 +145,7 @@
     },
     {
       "name": "CardinalPoint",
-      "type": "object",
+      "type": "AnalysisBar.CardinalPointEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the cardinal point of the analysis bar.",
@@ -125,7 +153,7 @@
     },
     {
       "name": "Composite",
-      "type": "object",
+      "type": "AnalysisCompositeBeam",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the composite beam of the analysis bar.",
@@ -133,7 +161,7 @@
     },
     {
       "name": "Curvature",
-      "type": "object",
+      "type": "AnalysisCurvature",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the curvature of the analysis bar.",
@@ -141,7 +169,7 @@
     },
     {
       "name": "FatherObject2ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -149,7 +177,7 @@
     },
     {
       "name": "FatherObject2Type",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -157,7 +185,7 @@
     },
     {
       "name": "FatherObjectID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -165,7 +193,7 @@
     },
     {
       "name": "FatherObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -173,7 +201,7 @@
     },
     {
       "name": "ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the analysis object.",
@@ -181,7 +209,7 @@
     },
     {
       "name": "Label",
-      "type": "object",
+      "type": "AnalysisLabel",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the label of the analysis bar.",
@@ -189,7 +217,7 @@
     },
     {
       "name": "Material",
-      "type": "object",
+      "type": "AnalysisMaterial",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the material of the analysis bar.",
@@ -197,7 +225,7 @@
     },
     {
       "name": "Members",
-      "type": "object",
+      "type": "List\u003CAnalysisMember\u003E",
       "getter": true,
       "setter": true,
       "summary": "Gets the members of the analysis bar.",
@@ -205,7 +233,7 @@
     },
     {
       "name": "Positions",
-      "type": "object",
+      "type": "List\u003CAnalysisPosition\u003E",
       "getter": true,
       "setter": true,
       "summary": "Gets the positions of the analysis bar.",
@@ -213,7 +241,7 @@
     },
     {
       "name": "ProfileEnd",
-      "type": "object",
+      "type": "AnalysisCrossSection",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the end profile of the analysis bar.",
@@ -221,7 +249,7 @@
     },
     {
       "name": "ProfileStart",
-      "type": "object",
+      "type": "AnalysisCrossSection",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the start profile of the analysis bar.",

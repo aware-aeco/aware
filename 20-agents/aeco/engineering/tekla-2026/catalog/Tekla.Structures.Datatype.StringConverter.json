@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "StringConverter",
-      "signature": "StringConverter(...)",
+      "signature": "public StringConverter()",
       "summary": "Initializes a new instance of the StringConverter class",
       "params": [],
       "throws": [],
@@ -20,36 +20,122 @@
   "methods": [
     {
       "name": "CanConvertFrom",
-      "signature": "CanConvertFrom(...)",
+      "signature": "public virtual bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)",
       "summary": "Checks whether the conversion can be made from the source type to the string datatype.",
-      "params": [],
+      "params": [
+        {
+          "name": "context",
+          "type": "System.ComponentModel.ITypeDescriptorContext",
+          "doc": "The context.",
+          "optional": false
+        },
+        {
+          "name": "sourceType",
+          "type": "System.Type",
+          "doc": "The type to convert from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if possible, false if not possible."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9210c084-0285-2bc9-ca5e-56bb8145aa11"
     },
     {
       "name": "CanConvertTo",
-      "signature": "CanConvertTo(...)",
+      "signature": "public virtual bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)",
       "summary": "Checks whether the conversion can be made from the string datatype to the destination type.",
-      "params": [],
+      "params": [
+        {
+          "name": "context",
+          "type": "System.ComponentModel.ITypeDescriptorContext",
+          "doc": "The context.",
+          "optional": false
+        },
+        {
+          "name": "destinationType",
+          "type": "System.Type",
+          "doc": "The type to convert to.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if possible, false if not possible."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/eba9b217-d5ac-841e-78e9-22ddccfbd516"
     },
     {
       "name": "ConvertFrom",
-      "signature": "ConvertFrom(...)",
+      "signature": "public virtual Object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)",
       "summary": "Converts an object from the given culture to the Tekla.Structures.Datatype.String type.",
-      "params": [],
+      "params": [
+        {
+          "name": "context",
+          "type": "System.ComponentModel.ITypeDescriptorContext",
+          "doc": "The context.",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "doc": "The culture.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "doc": "The object to be converted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "The new string datatype object."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/cdd83c5e-c1b2-749a-5d79-005757351f24"
     },
     {
       "name": "ConvertTo",
-      "signature": "ConvertTo(...)",
+      "signature": "public virtual Object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, Object value, Type destinationType)",
       "summary": "Converts an object from the string datatype to the given destination type.",
-      "params": [],
+      "params": [
+        {
+          "name": "context",
+          "type": "System.ComponentModel.ITypeDescriptorContext",
+          "doc": "The context.",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "doc": "The target culture.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "doc": "The string datatype object to be converted.",
+          "optional": false
+        },
+        {
+          "name": "destinationType",
+          "type": "System.Type",
+          "doc": "The destination type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "The given string datatype object converted to the new type."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a72e134e-3c4b-dd4a-a341-180a1a312248"

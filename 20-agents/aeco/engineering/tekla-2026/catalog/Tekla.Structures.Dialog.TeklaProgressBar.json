@@ -9,9 +9,16 @@
   "constructors": [
     {
       "name": "TeklaProgressBar",
-      "signature": "TeklaProgressBar(...)",
+      "signature": "public TeklaProgressBar(string text = \u0022albl_Processing_Please_wait...\u0022)",
       "summary": "Initializes the common progress bar control.",
-      "params": [],
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "The message to display in the control.",
+          "optional": true
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4529ddd7-b7a8-7995-fb16-17447dd45bf9"
@@ -21,7 +28,7 @@
   "properties": [
     {
       "name": "Text",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the current message text of the progress bar.",
@@ -29,18 +36,19 @@
     },
     {
       "name": "Value",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the current position of the progress bar.",
+      "remarks": "The value should be a number between 0 and 100.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2ab9f03e-d9b5-0079-1292-8b9d10f9690d"
     }
   ],
   "events": [
     {
       "name": "CancelClicked",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler CancelClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler CancelClicked",
       "summary": "The CancelClicked event is raised when the cancel button is clicked.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3c499df9-b2aa-a9b1-1766-446ecfbb022a",
       "handler_thread": "unknown",

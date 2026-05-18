@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisLabel",
-      "signature": "AnalysisLabel(...)",
+      "signature": "public AnalysisLabel()",
       "summary": "Initializes a new instance of the AnalysisLabel class",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "Number",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The number of the analysis label.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "Prefix",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The prefix of the analysis label.",

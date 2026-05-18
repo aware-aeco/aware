@@ -9,9 +9,16 @@
   "constructors": [
     {
       "name": "StructuresFieldAttribute",
-      "signature": "StructuresFieldAttribute(...)",
+      "signature": "public StructuresFieldAttribute(string attributeName)",
       "summary": "The custom attribute [StructuresField(attributeName)] uses this to map a database attribute to a data field that the plug-in uses in execution. This is not to be used by itself.",
-      "params": [],
+      "params": [
+        {
+          "name": "attributeName",
+          "type": "System.String",
+          "doc": "The name of the attribute.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b1691886-89a2-7a3c-6bed-d225331235fc"
@@ -21,9 +28,9 @@
   "properties": [
     {
       "name": "AttributeName",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The name of the attribute.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0a3ba61e-2140-c706-54bb-62b0c2bd1c9c"
     }

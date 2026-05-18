@@ -14,15 +14,23 @@ The point cloud data services. Examples The following example shows how to use t
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/acb39e25-f698-8918-8981-ab466ed1d0d7)
 
 ### Methods
-#### `GetPointCloudUrlAsync(...)`
+#### `public static Task<string> GetPointCloudUrlAsync(TCProject project, TCPointCloud pointCloud)`
 
 Retrieves the URL for a point cloud.
 
+**Parameters:**
+- `project` (Tekla.Structures.Model.PointCloudDataServices.TCProject) — The project for which to get the URL.
+- `pointCloud` (Tekla.Structures.Model.PointCloudDataServices.TCPointCloud) — The point cloud for which to get the URL.
+
+**Returns:** `Task<String>` — A task that represents the asynchronous operation. The task result contains a URL.
+
 [Docs](https://developer.tekla.com/topic/en/18/47/6be42c9c-b8bd-4539-55bb-b40a3311dfc7)
 
-#### `GetProjectsWithPointCloudsAsync(...)`
+#### `public static Task<IEnumerable<TCProject>> GetProjectsWithPointCloudsAsync()`
 
 Retrieves the list of Trimble Connect projects with point clouds.
+
+**Returns:** `Task<IEnumerable<TCProject>>` — A task that represents the asynchronous operation. The task result contains a list of projects that have point clouds.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/653fec87-3c1e-7c9f-23ed-c8a1cfcd9849)
 

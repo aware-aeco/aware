@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "BoltHoleAttributes",
-      "signature": "BoltHoleAttributes(...)",
+      "signature": "public BoltHoleAttributes()",
       "summary": "Creates a new bolt hole attributes instance.",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "HoleType",
-      "type": "object",
+      "type": "BoltGroup.BoltHoleTypeEnum",
       "getter": true,
       "setter": true,
       "summary": "The special hole type: oversized, tapped, slotted, blind or no hole.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "LongHoleX",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The long hole X value.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "LongHoleY",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The long hole Y value.",
@@ -45,7 +45,7 @@
     },
     {
       "name": "SlotOffsetX",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The slot offset X value that must be between \u002B-0.5 x LongHoleX.",
@@ -53,7 +53,7 @@
     },
     {
       "name": "SlotOffsetY",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The slot offset Y value that must be between \u002B-0.5 x LongHoleY.",

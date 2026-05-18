@@ -10,9 +10,13 @@
   "methods": [
     {
       "name": "GetVertexEnumerator",
-      "signature": "GetVertexEnumerator(...)",
+      "signature": "public VertexEnumerator GetVertexEnumerator()",
       "summary": "Gets a new vertex enumerator.",
       "params": [],
+      "returns": {
+        "type": "VertexEnumerator",
+        "doc": "A vertex enumerator to enumerate through the vertexes in the loop."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ff661a24-9b92-f3e4-7db9-4c062f71f19a"

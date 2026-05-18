@@ -9,18 +9,128 @@
   "constructors": [
     {
       "name": "BasePoint",
-      "signature": "BasePoint(...)",
+      "signature": "public BasePoint(string name)",
       "summary": "Initializes a new instance of the BasePoint class.",
-      "params": [],
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8c87f421-33b4-f3c9-d990-0b783916d515"
     },
     {
       "name": "BasePoint",
-      "signature": "BasePoint(...)",
+      "signature": "public BasePoint(int id, Guid guid, string initialGuid, string name, string description, string coordinateSystem, double northSouth, double eastWest, double elevation, double latitude, double longitude, double locationInModelX, double locationInModelY, double locationInModelZ, double angleToNorth, bool isProjectBasePoint, bool isCurrentBasePoint)",
       "summary": "Initializes a new instance of the BasePoint class.",
-      "params": [],
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "The id.",
+          "optional": false
+        },
+        {
+          "name": "guid",
+          "type": "System.Guid",
+          "doc": "The guid.",
+          "optional": false
+        },
+        {
+          "name": "initialGuid",
+          "type": "System.String",
+          "doc": "The initial guid.",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description.",
+          "optional": false
+        },
+        {
+          "name": "coordinateSystem",
+          "type": "System.String",
+          "doc": "The coordinate system.",
+          "optional": false
+        },
+        {
+          "name": "northSouth",
+          "type": "System.Double",
+          "doc": "The north-south.",
+          "optional": false
+        },
+        {
+          "name": "eastWest",
+          "type": "System.Double",
+          "doc": "The east-west.",
+          "optional": false
+        },
+        {
+          "name": "elevation",
+          "type": "System.Double",
+          "doc": "The elevation.",
+          "optional": false
+        },
+        {
+          "name": "latitude",
+          "type": "System.Double",
+          "doc": "The latitude.",
+          "optional": false
+        },
+        {
+          "name": "longitude",
+          "type": "System.Double",
+          "doc": "The longitude.",
+          "optional": false
+        },
+        {
+          "name": "locationInModelX",
+          "type": "System.Double",
+          "doc": "The location in model x.",
+          "optional": false
+        },
+        {
+          "name": "locationInModelY",
+          "type": "System.Double",
+          "doc": "The location in model y.",
+          "optional": false
+        },
+        {
+          "name": "locationInModelZ",
+          "type": "System.Double",
+          "doc": "The location in model z.",
+          "optional": false
+        },
+        {
+          "name": "angleToNorth",
+          "type": "System.Double",
+          "doc": "The angle to north in radians.",
+          "optional": false
+        },
+        {
+          "name": "isProjectBasePoint",
+          "type": "System.Boolean",
+          "doc": "Boolean indicating if this base point is the project base point.",
+          "optional": false
+        },
+        {
+          "name": "isCurrentBasePoint",
+          "type": "System.Boolean",
+          "doc": "Boolean indicating if this base point is the current base point.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ad62fa0c-bd80-7dcc-2fdf-448db488152d"
@@ -29,99 +139,190 @@
   "methods": [
     {
       "name": "ConvertFromBasePoint(Point)",
-      "signature": "ConvertFromBasePoint(Point)(...)",
+      "signature": "public Point ConvertFromBasePoint(Point point)",
       "summary": "Converts the given point from this base point to local point.",
-      "params": [],
+      "params": [
+        {
+          "name": "point",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The point to be converted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": "On success, the converted value. Otherwise the original value."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/69941ebe-3291-9807-b9ea-24339052ba16"
     },
     {
       "name": "ConvertFromBasePoint(BasePoint, Point)",
-      "signature": "ConvertFromBasePoint(BasePoint, Point)(...)",
+      "signature": "public static Point ConvertFromBasePoint(BasePoint basePoint, Point point)",
       "summary": "Converts the given base point point to local point.",
-      "params": [],
+      "params": [
+        {
+          "name": "basePoint",
+          "type": "Tekla.Structures.Model.BasePoint",
+          "doc": "The base point, from which the point is converted from.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The point to be converted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": "On success, the converted value. Otherwise the original value."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/405c560b-8772-065c-7a63-e474d21592c2"
     },
     {
       "name": "ConvertToBasePoint(Point)",
-      "signature": "ConvertToBasePoint(Point)(...)",
+      "signature": "public Point ConvertToBasePoint(Point point)",
       "summary": "Converts the given local point to this base point.",
-      "params": [],
+      "params": [
+        {
+          "name": "point",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The point to be converted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": "On success, the converted value. Otherwise the original value."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/07421afb-80e7-8279-e0b8-aa31206d6ff9"
     },
     {
       "name": "ConvertToBasePoint(BasePoint, Point)",
-      "signature": "ConvertToBasePoint(BasePoint, Point)(...)",
+      "signature": "public static Point ConvertToBasePoint(BasePoint basePoint, Point point)",
       "summary": "Converts the given local point to given base point.",
-      "params": [],
+      "params": [
+        {
+          "name": "basePoint",
+          "type": "Tekla.Structures.Model.BasePoint",
+          "doc": "The base point, to which the point is converted to.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The point to be converted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": "On success, the converted value. Otherwise the original value."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1ff21f4d-0da5-7345-9494-dd1bddcd9816"
     },
     {
       "name": "Delete",
-      "signature": "Delete(...)",
+      "signature": "public bool Delete()",
       "summary": "Deletes the base point from the model database.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, otherwise false."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/59b13ff7-fc18-dfed-6c0d-34efd5302110"
     },
     {
       "name": "GetCompoundPlaneAngleLatitude",
-      "signature": "GetCompoundPlaneAngleLatitude(...)",
+      "signature": "public Tuple\u003Cbool, int, int, int\u003E GetCompoundPlaneAngleLatitude()",
       "summary": "Gets the Latitude as a compound plane angle.",
       "params": [],
+      "returns": {
+        "type": "Tuple\u003CBoolean,Int32,Int32,Int32\u003E",
+        "doc": "compound plane angle integers. The first param is true, if the value successfully calculated."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/fb80f506-4793-911c-ed0f-32e7ddf5da12"
     },
     {
       "name": "GetCompoundPlaneAngleLongitude",
-      "signature": "GetCompoundPlaneAngleLongitude(...)",
+      "signature": "public Tuple\u003Cbool, int, int, int\u003E GetCompoundPlaneAngleLongitude()",
       "summary": "Gets the Longitude as a compound plane angle.",
       "params": [],
+      "returns": {
+        "type": "Tuple\u003CBoolean,Int32,Int32,Int32\u003E",
+        "doc": "compound plane angle integers. The first param is true, if the value successfully calculated."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/303a3cf2-8ce2-2cb7-84c4-77cdce557ca8"
     },
     {
       "name": "GetCoordinateSystem",
-      "signature": "GetCoordinateSystem(...)",
+      "signature": "public CoordinateSystem GetCoordinateSystem(BasePoint.CoordinateSystemType CoordsysType = BasePoint.CoordinateSystemType.GLOBAL)",
       "summary": "Gets the coordinate system of the base point.",
-      "params": [],
+      "params": [
+        {
+          "name": "CoordsysType",
+          "type": "Tekla.Structures.Model.BasePoint.CoordinateSystemType",
+          "doc": "Optional: Type of the coordinate system.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "CoordinateSystem",
+        "doc": "The coordinate system of the base point."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/230d2dc0-2288-59b4-4175-93eae8271817"
     },
     {
       "name": "Insert",
-      "signature": "Insert(...)",
+      "signature": "public bool Insert()",
       "summary": "Inserts the base point into the model database.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, otherwise false."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/74097064-a8ad-b2bc-4fd1-7ed932b55ba3"
     },
     {
       "name": "Modify",
-      "signature": "Modify(...)",
+      "signature": "public bool Modify()",
       "summary": "Modifies the base point in the model database.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, otherwise false."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a90914f1-1429-f8e1-bd91-94506e890222"
     },
     {
       "name": "SetAsCurrent",
-      "signature": "SetAsCurrent(...)",
+      "signature": "public IDisposable SetAsCurrent()",
       "summary": "Sets this base point as current base point point until the token is disposed of. Can be used for example when retrieving report values according to this base point.",
       "params": [],
+      "returns": {
+        "type": "IDisposable",
+        "doc": "The disposable token that removes this base points current base point status."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/35ba04bd-51ac-d3ed-cd44-0c518bbb97a4"
@@ -130,7 +331,7 @@
   "properties": [
     {
       "name": "AngleToNorth",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the angle to north in radians.",
@@ -138,7 +339,7 @@
     },
     {
       "name": "CoordinateSystem",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the coordinate system.",
@@ -146,7 +347,7 @@
     },
     {
       "name": "Description",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the description.",
@@ -154,7 +355,7 @@
     },
     {
       "name": "EastWest",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the east-west.",
@@ -162,7 +363,7 @@
     },
     {
       "name": "Elevation",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the elevation.",
@@ -170,7 +371,7 @@
     },
     {
       "name": "Guid",
-      "type": "object",
+      "type": "Guid",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the guid.",
@@ -178,7 +379,7 @@
     },
     {
       "name": "Id",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the id.",
@@ -186,7 +387,7 @@
     },
     {
       "name": "InitialGuid",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the initial guid. A metadata field to store for example some external applications base point guid. Not used in itself in any functionality.",
@@ -194,7 +395,7 @@
     },
     {
       "name": "IsCurrentBasePoint",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the value indicating if this base point is the current base point.",
@@ -202,7 +403,7 @@
     },
     {
       "name": "IsLocked",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the value indicating if this base point is locked.",
@@ -210,7 +411,7 @@
     },
     {
       "name": "IsProjectBasePoint",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the value indicating if this base point is the project base point.",
@@ -218,15 +419,15 @@
     },
     {
       "name": "IsScopedCurrentBasePoint",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the value indicating whether this base point is the scoped current base point. That means, a temporary base point set with the SetAsCurrent method, and changed back when returned token is disposed of.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7dcf2269-c2d3-476e-a0c0-f1018cfc56bc"
     },
     {
       "name": "Latitude",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the latitude.",
@@ -234,7 +435,7 @@
     },
     {
       "name": "LocationInModelX",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the location in model x.",
@@ -242,7 +443,7 @@
     },
     {
       "name": "LocationInModelY",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the location in model y.",
@@ -250,7 +451,7 @@
     },
     {
       "name": "LocationInModelZ",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the location in model z.",
@@ -258,7 +459,7 @@
     },
     {
       "name": "Longitude",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the longitude.",
@@ -266,7 +467,7 @@
     },
     {
       "name": "Name",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the name.",
@@ -274,7 +475,7 @@
     },
     {
       "name": "NorthSouth",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the north-south.",

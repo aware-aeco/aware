@@ -9,16 +9,21 @@
   "methods": [
     {
       "name": "Register",
-      "signature": "Register(...)",
+      "signature": "void Register()",
       "summary": "Registers the instance to listen to the specified events.",
       "params": [],
-      "throws": [],
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if attempting registration when already registered."
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a29c697c-fd29-90b1-22a1-186419feb09e"
     },
     {
       "name": "UnRegister",
-      "signature": "UnRegister(...)",
+      "signature": "void UnRegister()",
       "summary": "Unregisters the instance from listening to events.",
       "params": [],
       "throws": [],
@@ -30,8 +35,8 @@
   "events": [
     {
       "name": "DrawingChanged",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler DrawingChanged",
+      "delegate": "Tekla.Structures.Drawing.Events.DrawingStatusChangedDelegate",
+      "signature": "event Events.DrawingStatusChangedDelegate DrawingChanged",
       "summary": "The DrawingChanged event is raised when the drawing has been changed and the database is committed.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/23af96ae-5aa6-bcc0-fbcf-a9aa902e36b1",
       "handler_thread": "unknown",
@@ -39,8 +44,8 @@
     },
     {
       "name": "DrawingDeleted",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler DrawingDeleted",
+      "delegate": "Tekla.Structures.Drawing.Events.DrawingDeletedDelegate",
+      "signature": "event Events.DrawingDeletedDelegate DrawingDeleted",
       "summary": "The DrawingDeleted event is raised when a drawing has been deleted.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ea943c62-cf02-34f0-bbb3-233020f2c45f",
       "handler_thread": "unknown",
@@ -48,8 +53,8 @@
     },
     {
       "name": "DrawingInserted",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler DrawingInserted",
+      "delegate": "Tekla.Structures.Drawing.Events.DrawingInsertedDelegate",
+      "signature": "event Events.DrawingInsertedDelegate DrawingInserted",
       "summary": "The DrawingInserted event is raised when a drawing has been inserted.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/54d4e38c-ded8-dacc-103a-88c89f396649",
       "handler_thread": "unknown",
@@ -57,8 +62,8 @@
     },
     {
       "name": "DrawingReadyForIssuingChange",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler DrawingReadyForIssuingChange",
+      "delegate": "Tekla.Structures.Drawing.Events.DrawingReadyForIssuingChangeDelegate",
+      "signature": "event Events.DrawingReadyForIssuingChangeDelegate DrawingReadyForIssuingChange",
       "summary": "The DrawingReadyForIssuingChange event is raised just after a drawing is marked or unmarked ready for issuing.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c543e1bb-632f-9a9f-ee65-56c2aad7163d",
       "handler_thread": "unknown",
@@ -66,8 +71,8 @@
     },
     {
       "name": "DrawingStatusChanged",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler DrawingStatusChanged",
+      "delegate": "Tekla.Structures.Drawing.Events.DrawingStatusChangedDelegate",
+      "signature": "event Events.DrawingStatusChangedDelegate DrawingStatusChanged",
       "summary": "The DrawingStatusChanged event is raised when the drawing status has changed.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/df0a1a2f-1cd2-f22f-077b-573f4fe8992a",
       "handler_thread": "unknown",
@@ -75,8 +80,8 @@
     },
     {
       "name": "DrawingUpdated",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler DrawingUpdated",
+      "delegate": "Tekla.Structures.Drawing.Events.DrawingUpdatedDelegate",
+      "signature": "event Events.DrawingUpdatedDelegate DrawingUpdated",
       "summary": "The DrawingUpdated event is raised when the drawing has been inserted, deleted or modified, and the database is committed.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9dce710b-0dca-4fca-7026-3d03cea42217",
       "handler_thread": "unknown",

@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "TeklaStructuresSettings",
-      "signature": "TeklaStructuresSettings(...)",
+      "signature": "public TeklaStructuresSettings()",
       "summary": "Initializes a new instance of the TeklaStructuresSettings class",
       "params": [],
       "throws": [],
@@ -20,100 +20,259 @@
   "methods": [
     {
       "name": "GetAdvancedOption(String, Boolean.)",
-      "signature": "GetAdvancedOption(String, Boolean.)(...)",
+      "signature": "public static bool GetAdvancedOption(string VariableName, ref bool Value)",
       "summary": "Returns the value of an advanced option variable.",
-      "params": [],
+      "params": [
+        {
+          "name": "VariableName",
+          "type": "System.String",
+          "doc": "The name of the advanced option.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.Boolean.",
+          "doc": "The returned value of the advanced option.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was successfully retrieved."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8aa73d82-ab8b-e43d-63c7-cdde9ff4eb6e"
     },
     {
       "name": "GetAdvancedOption(String, Double.)",
-      "signature": "GetAdvancedOption(String, Double.)(...)",
+      "signature": "public static bool GetAdvancedOption(string VariableName, ref double Value)",
       "summary": "Returns the value of an advanced option variable.",
-      "params": [],
+      "params": [
+        {
+          "name": "VariableName",
+          "type": "System.String",
+          "doc": "The name of the advanced option.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.Double.",
+          "doc": "The returned value of the advanced option.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was successfully retrieved."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a4ddad5c-eccd-0038-3056-e7c41a86eb13"
     },
     {
       "name": "GetAdvancedOption(String, Int32.)",
-      "signature": "GetAdvancedOption(String, Int32.)(...)",
+      "signature": "public static bool GetAdvancedOption(string VariableName, ref int Value)",
       "summary": "Returns the value of an advanced option variable.",
-      "params": [],
+      "params": [
+        {
+          "name": "VariableName",
+          "type": "System.String",
+          "doc": "The name of the advanced option.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.Int32.",
+          "doc": "The returned value of the advanced option.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was successfully retrieved."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/765beeeb-fe53-93b4-24fd-d68dd05aa37c"
     },
     {
       "name": "GetAdvancedOption(String, String.)",
-      "signature": "GetAdvancedOption(String, String.)(...)",
+      "signature": "public static bool GetAdvancedOption(string VariableName, ref string Value)",
       "summary": "Returns the value of an advanced option variable.",
-      "params": [],
+      "params": [
+        {
+          "name": "VariableName",
+          "type": "System.String",
+          "doc": "The name of the advanced option.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.String.",
+          "doc": "The returned value of the advanced option.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was successfully retrieved."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/251a7058-3458-8683-9135-d39aa3de182b"
     },
     {
       "name": "GetAdvancedOptionPaths",
-      "signature": "GetAdvancedOptionPaths(...)",
+      "signature": "public static bool GetAdvancedOptionPaths(string advancedOption, out List\u003Cstring\u003E paths, TeklaStructuresSettings.InvalidPathCallback errorHandler = null)",
       "summary": "Gets the value of an advanced option as a list of valid paths. Strings with path separator ; are split into separate paths and any blank paths (containing only white space) are ignored. Paths do not need to exist but must use valid characters and format. Note: All valid paths are returned even when invalid paths are encountered.",
-      "params": [],
+      "params": [
+        {
+          "name": "advancedOption",
+          "type": "System.String",
+          "doc": "The advanced option name.",
+          "optional": false
+        },
+        {
+          "name": "paths",
+          "type": "System.Collections.Generic.List\u003CString\u003E.",
+          "doc": "The paths.",
+          "optional": false
+        },
+        {
+          "name": "errorHandler",
+          "type": "Tekla.Structures.TeklaStructuresSettings.InvalidPathCallback",
+          "doc": "The optional error handler callback.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the variable is read successfully and contains no invalid paths; otherwise false."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/00e86aee-ab47-95ed-1985-3f79cc91215c"
     },
     {
       "name": "GetOptions(ClashCheckOptions.)",
-      "signature": "GetOptions(ClashCheckOptions.)(...)",
+      "signature": "public static bool GetOptions(ref ClashCheckOptions Options)",
       "summary": "Returns the value of the clash check options.",
-      "params": [],
+      "params": [
+        {
+          "name": "Options",
+          "type": "Tekla.Structures.ClashCheckOptions.",
+          "doc": "The returned value of the clash check options.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the values were successfully retrieved."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/fa761e3b-f4ef-59b8-da2d-2cba78d907d4"
     },
     {
       "name": "GetOptions(ComponentOptions.)",
-      "signature": "GetOptions(ComponentOptions.)(...)",
+      "signature": "public static bool GetOptions(ref ComponentOptions Options)",
       "summary": "Returns the value of the component options.",
-      "params": [],
+      "params": [
+        {
+          "name": "Options",
+          "type": "Tekla.Structures.ComponentOptions.",
+          "doc": "The returned value of the component options.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the values were successfully retrieved."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/870f7c68-41f6-22e5-e591-550bede2d30b"
     },
     {
       "name": "IsPourEnabled",
-      "signature": "IsPourEnabled(...)",
+      "signature": "public static bool IsPourEnabled()",
       "summary": "Determines whether pour management is enabled.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if pour is enabled; otherwise, false."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/11cf2635-0c47-669c-770f-228d798e0d4b"
     },
     {
       "name": "IsToolOptionOn",
-      "signature": "IsToolOptionOn(...)",
+      "signature": "public static bool IsToolOptionOn(string toolOptionName)",
       "summary": "Determines whether select switch is on.",
-      "params": [],
+      "params": [
+        {
+          "name": "toolOptionName",
+          "type": "System.String",
+          "doc": "Name of the switch.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if select switch is on; otherwise, false."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/43438834-9d98-9090-4a02-15e6fe958c33"
     },
     {
       "name": "SetOptions(ClashCheckOptions)",
-      "signature": "SetOptions(ClashCheckOptions)(...)",
+      "signature": "public static bool SetOptions(ClashCheckOptions Options)",
       "summary": "Sets the clash check options.",
-      "params": [],
+      "params": [
+        {
+          "name": "Options",
+          "type": "Tekla.Structures.ClashCheckOptions",
+          "doc": "The clash check options to be set.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the clash check options were successfully set."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0de6b6e4-7696-1801-862e-fe2b8cf0aad5"
     },
     {
       "name": "SetOptions(ComponentOptions)",
-      "signature": "SetOptions(ComponentOptions)(...)",
+      "signature": "public static bool SetOptions(ComponentOptions Options)",
       "summary": "Sets the component options.",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "Options",
+          "type": "Tekla.Structures.ComponentOptions",
+          "doc": "The component options to be set.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the component options were successfully set."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Options cannot be null"
+        },
+        {
+          "type": "OverflowException",
+          "when": "Folded Plate Profile Name is too long or Plate Profile Name is too long or Bolt Standard is too long or Bolt Size is too long or Part Material is too long or or or or"
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1c1d8098-bb5b-7a6c-c73a-5069345ac004"
     }

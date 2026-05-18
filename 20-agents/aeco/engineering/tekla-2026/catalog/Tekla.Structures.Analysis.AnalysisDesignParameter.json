@@ -9,18 +9,50 @@
   "constructors": [
     {
       "name": "AnalysisDesignParameter",
-      "signature": "AnalysisDesignParameter(...)",
+      "signature": "public AnalysisDesignParameter(int materialType)",
       "summary": "Initializes a new instance of the AnalysisDesignParameter class.",
-      "params": [],
+      "params": [
+        {
+          "name": "materialType",
+          "type": "System.Int32",
+          "doc": "The material type of the analysis design parameter.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/975810c7-415f-d0c7-3179-5dd3ad67c64e"
     },
     {
       "name": "AnalysisDesignParameter",
-      "signature": "AnalysisDesignParameter(...)",
+      "signature": "public AnalysisDesignParameter(string analysisModelName, int parameterId, Identifier partId, double value)",
       "summary": "Initializes a new instance of the AnalysisDesignParameter class.",
-      "params": [],
+      "params": [
+        {
+          "name": "analysisModelName",
+          "type": "System.String",
+          "doc": "The analysis model name.",
+          "optional": false
+        },
+        {
+          "name": "parameterId",
+          "type": "System.Int32",
+          "doc": "The analysis design parameter ID.",
+          "optional": false
+        },
+        {
+          "name": "partId",
+          "type": "Tekla.Structures.Identifier",
+          "doc": "The father part ID.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "The value.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f37bbd36-db6e-2b5d-b674-9534a89d500a"
@@ -29,7 +61,7 @@
   "methods": [
     {
       "name": "Modify",
-      "signature": "Modify(...)",
+      "signature": "public override void Modify()",
       "summary": "Modifies an analysis design parameter. The ID has to be set.",
       "params": [],
       "throws": [],
@@ -38,7 +70,7 @@
     },
     {
       "name": "Select",
-      "signature": "Select(...)",
+      "signature": "public override void Select()",
       "summary": "Selects an analysis design parameter.",
       "params": [],
       "throws": [],
@@ -49,7 +81,7 @@
   "properties": [
     {
       "name": "AnalysisModelName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis model name.",
@@ -57,7 +89,7 @@
     },
     {
       "name": "AnalysisObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the analysis object.",
@@ -65,7 +97,7 @@
     },
     {
       "name": "FatherObject2ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -73,7 +105,7 @@
     },
     {
       "name": "FatherObject2Type",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -81,7 +113,7 @@
     },
     {
       "name": "FatherObjectID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -89,7 +121,7 @@
     },
     {
       "name": "FatherObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -97,7 +129,7 @@
     },
     {
       "name": "ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the analysis object.",
@@ -105,7 +137,7 @@
     },
     {
       "name": "IsGeneral",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the design parameter is general.",
@@ -113,7 +145,7 @@
     },
     {
       "name": "Name",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the name of the analysis design parameter.",
@@ -121,7 +153,7 @@
     },
     {
       "name": "Unit",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the unit of the analysis design parameter.",
@@ -129,7 +161,7 @@
     },
     {
       "name": "Value",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the value of the analysis design parameter.",

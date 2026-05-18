@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "IndirectPolymeshEdge",
-      "signature": "IndirectPolymeshEdge(...)",
+      "signature": "public IndirectPolymeshEdge()",
       "summary": "Initializes a new instance of the IndirectPolymeshEdge class",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "EdgeType",
-      "type": "object",
+      "type": "PolymeshEdgeTypeEnum",
       "getter": true,
       "setter": true,
       "summary": "Type of the edge.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "EndPoint",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "End point of the edge.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "ShellIndex",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The index of the shell the edge belongs to.",
@@ -45,7 +45,7 @@
     },
     {
       "name": "StartPoint",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "Start point of the edge.",

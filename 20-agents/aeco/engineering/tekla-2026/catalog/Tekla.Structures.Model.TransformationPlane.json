@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "TransformationPlane",
-      "signature": "TransformationPlane(...)",
+      "signature": "public TransformationPlane()",
       "summary": "Creates a new identity transformation using the global coordinate system.",
       "params": [],
       "throws": [],
@@ -18,18 +18,44 @@
     },
     {
       "name": "TransformationPlane",
-      "signature": "TransformationPlane(...)",
+      "signature": "public TransformationPlane(CoordinateSystem CoordinateSystem)",
       "summary": "Creates a new transformation plane defined by the given coordinate system.",
-      "params": [],
+      "params": [
+        {
+          "name": "CoordinateSystem",
+          "type": "Tekla.Structures.Geometry3d.CoordinateSystem",
+          "doc": "The coordinate system to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7bd754a7-a730-4c5f-3600-258e06a8abf3"
     },
     {
       "name": "TransformationPlane",
-      "signature": "TransformationPlane(...)",
+      "signature": "public TransformationPlane(Point Origo, Vector Xvector, Vector Yvector)",
       "summary": "Creates a new transformation plane defined by the given origin and two vectors.",
-      "params": [],
+      "params": [
+        {
+          "name": "Origo",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The origin to be used.",
+          "optional": false
+        },
+        {
+          "name": "Xvector",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The X vector to be used.",
+          "optional": false
+        },
+        {
+          "name": "Yvector",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The Y vector to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c0b2ecd9-cd91-d8ca-fd95-309c7907b7d3"
@@ -38,9 +64,13 @@
   "methods": [
     {
       "name": "ToString",
-      "signature": "ToString(...)",
+      "signature": "public override string ToString()",
       "summary": "Returns a string representation of the matrices that transform to local and global coordinates.",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A string representation of the matrices that transform to local and global coordinates."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5a396a55-b509-6d5c-71cc-d4cd1861e3a6"
@@ -49,17 +79,17 @@
   "properties": [
     {
       "name": "TransformationMatrixToGlobal",
-      "type": "object",
+      "type": "Matrix",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gives a transformation matrix for converting local points in the transformation plane to global coordinates.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/fa137525-b38f-cf90-f9c7-de6eb4200e26"
     },
     {
       "name": "TransformationMatrixToLocal",
-      "type": "object",
+      "type": "Matrix",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gives a transformation matrix for converting points in the global plane to local coordinates in the transformation plane.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f13cc4e2-3e20-b463-d181-7dd93555a8d6"
     }

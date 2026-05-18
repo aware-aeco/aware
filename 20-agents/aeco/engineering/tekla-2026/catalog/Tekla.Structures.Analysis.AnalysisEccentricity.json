@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisEccentricity",
-      "signature": "AnalysisEccentricity(...)",
+      "signature": "public AnalysisEccentricity()",
       "summary": "Creates a new analysis eccentricity instance.",
       "params": [],
       "throws": [],
@@ -21,17 +21,17 @@
   "properties": [
     {
       "name": "End",
-      "type": "object",
+      "type": "Vector",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The eccentricity at the end.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9d7b104c-795c-5bbd-3f2c-28ff573d021b"
     },
     {
       "name": "Start",
-      "type": "object",
+      "type": "Vector",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The eccentricity at the start.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/197394e4-f93a-131c-2107-a603e1f7256d"
     }

@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "UserPropertyOption",
-      "signature": "UserPropertyOption(...)",
+      "signature": "public UserPropertyOption()",
       "summary": "Initializes a new instance of the UserPropertyOption class",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "DoubleValue",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The double value.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "IntValue",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The integer value.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "OptionLabel",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The option name.",
@@ -45,7 +45,7 @@
     },
     {
       "name": "OptionLabelTranslated",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The translated option name.",
@@ -53,7 +53,7 @@
     },
     {
       "name": "StringValue",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The string value.",

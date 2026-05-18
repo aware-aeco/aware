@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "ComponentCatalog",
-      "signature": "ComponentCatalog(...)",
+      "signature": "public ComponentCatalog()",
       "summary": "Initializes a new instance of the ComponentCatalog class.",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "SelectedComponentType",
-      "type": "object",
+      "type": "ComponentItem.ComponentTypeEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the selected component type in the control.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "SelectedName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the selected component name in the control.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "SelectedNumber",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the selected component number in the control.",
@@ -47,8 +47,8 @@
   "events": [
     {
       "name": "SelectClicked",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler SelectClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler SelectClicked",
       "summary": "The SelectClicked event is raised when the Select button is clicked.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b2e533a4-f75c-fe43-0d2c-b47f74f7c209",
       "handler_thread": "unknown",
@@ -56,8 +56,8 @@
     },
     {
       "name": "SelectionDone",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler SelectionDone",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler SelectionDone",
       "summary": "The SelectionDone event is raised when the selection has been done.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/83b4d55d-cef1-631e-0026-00bddd897eac",
       "handler_thread": "unknown",

@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "DetailMarkSymbolAttributes",
-      "signature": "DetailMarkSymbolAttributes(...)",
+      "signature": "public DetailMarkSymbolAttributes()",
       "summary": "Initializes a new instance of the DetailMarkSymbolAttributes class",
       "params": [],
       "throws": [],
@@ -20,9 +20,20 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c5232b59-b0cc-d2d6-6ba6-26c04856847f"
@@ -31,7 +42,7 @@
   "properties": [
     {
       "name": "Shape",
-      "type": "object",
+      "type": "MarkSymbolShape",
       "getter": true,
       "setter": true,
       "summary": "The shape of the mark symbol.",
@@ -39,7 +50,7 @@
     },
     {
       "name": "Size",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The size of the mark symbol.",

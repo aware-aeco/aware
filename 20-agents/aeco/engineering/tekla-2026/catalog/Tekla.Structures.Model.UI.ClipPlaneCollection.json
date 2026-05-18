@@ -10,18 +10,52 @@
   "methods": [
     {
       "name": "CopyTo",
-      "signature": "CopyTo(...)",
+      "signature": "public void CopyTo(Array array, int index)",
       "summary": "Copies the elements of the ICollection to an Array, starting at a particular Array index.",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "array",
+          "type": "System.Array",
+          "doc": "The one-dimensional Array that is the destination of the elements copied from the ICollection. The Array must have zero-based indexing.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The zero-based index in the array at which copying begins.",
+          "optional": false
+        }
+      ],
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when the array is null."
+        },
+        {
+          "type": "ArgumentOutOfRangeException",
+          "when": "Thrown when the index is less than zero."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when the array is multidimensional, or the index is equal to or greater than the length of the array, or the number of elements in the source ICollection is greater than the available space from the index to the end of the destination array."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "Thrown when the type of the source ICollection cannot be cast automatically to the type of the destination array."
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/bd115bad-d53a-1fd5-ba78-1caab791cded"
     },
     {
       "name": "GetEnumerator",
-      "signature": "GetEnumerator(...)",
+      "signature": "public IEnumerator GetEnumerator()",
       "summary": "Returns an enumerator that iterates through a collection.",
       "params": [],
+      "returns": {
+        "type": "IEnumerator",
+        "doc": "An IEnumerator object that can be used to iterate through the collection."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2f45c0e9-3626-4010-87c5-1d4e27fe8506"
@@ -30,25 +64,25 @@
   "properties": [
     {
       "name": "Count",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the number of elements contained in the ICollection.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/fde157af-5a22-4b11-b94a-0d5dad3ae648"
     },
     {
       "name": "IsSynchronized",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets a value indicating whether access to the ICollection is synchronized (thread safe).",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6f58d3bb-cddc-2f7e-aac4-f5e68d3396f4"
     },
     {
       "name": "SyncRoot",
-      "type": "object",
+      "type": "Object",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets an object that can be used to synchronize access to the ICollection.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/213f416b-8833-2213-9ae1-e1deacb841a5"
     }

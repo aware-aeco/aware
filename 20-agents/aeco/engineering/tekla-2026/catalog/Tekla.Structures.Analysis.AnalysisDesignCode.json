@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisDesignCode",
-      "signature": "AnalysisDesignCode(...)",
+      "signature": "public AnalysisDesignCode()",
       "summary": "Initializes a new instance of the AnalysisDesignCode class",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "DesignParameters",
-      "type": "object",
+      "type": "AnalysisObjectEnumerator",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the design parameters of the analysis design code.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the analysis design code.",
@@ -37,17 +37,17 @@
     },
     {
       "name": "MaterialType",
-      "type": "object",
+      "type": "AnalysisMaterial.MaterialTypeEnum",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the material type of the analysis analysis design code.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/575765b6-a9e3-819d-7e37-42287f62c9d7"
     },
     {
       "name": "Name",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the name of the analysis design code.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1a23c53c-83e4-ab35-ff66-329065d2d8ba"
     }

@@ -9,9 +9,16 @@
   "constructors": [
     {
       "name": "CannotPerformOperationDrawingMustBeActiveException",
-      "signature": "CannotPerformOperationDrawingMustBeActiveException(...)",
+      "signature": "public CannotPerformOperationDrawingMustBeActiveException(string Message)",
       "summary": "Creates a new cannot perform operation drawing must be active exception instance.",
-      "params": [],
+      "params": [
+        {
+          "name": "Message",
+          "type": "System.String",
+          "doc": "The exception message.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/21e83eff-2df2-eae9-4acc-abbc63405e4e"

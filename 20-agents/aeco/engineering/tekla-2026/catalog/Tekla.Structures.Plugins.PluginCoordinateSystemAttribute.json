@@ -9,18 +9,32 @@
   "constructors": [
     {
       "name": "PluginCoordinateSystemAttribute",
-      "signature": "PluginCoordinateSystemAttribute(...)",
+      "signature": "public PluginCoordinateSystemAttribute(int Type)",
       "summary": "The custom attribute used to define coordinate system of the plug-in. This is not to be used by itself.",
-      "params": [],
+      "params": [
+        {
+          "name": "Type",
+          "type": "System.Int32",
+          "doc": "The type of the input object dependency as an integer.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/51605f3a-66ba-b8cf-c00b-7b5069c2bfdb"
     },
     {
       "name": "PluginCoordinateSystemAttribute",
-      "signature": "PluginCoordinateSystemAttribute(...)",
+      "signature": "public PluginCoordinateSystemAttribute(PluginBase.CoordinateSystemType Type)",
       "summary": "The custom attribute used to define coordinate system of the plug-in. This is not to be used by itself.",
-      "params": [],
+      "params": [
+        {
+          "name": "Type",
+          "type": "Tekla.Structures.Plugins.PluginBase.CoordinateSystemType",
+          "doc": "The type of the input object dependency.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/fda7daa8-5b93-c2d1-77c2-71d401e2d512"
@@ -30,9 +44,9 @@
   "properties": [
     {
       "name": "Type",
-      "type": "object",
+      "type": "PluginBase.CoordinateSystemType",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Returns the type of the input object dependency.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f62f37c8-45fd-e3ba-6914-7fe3e6db688b"
     }

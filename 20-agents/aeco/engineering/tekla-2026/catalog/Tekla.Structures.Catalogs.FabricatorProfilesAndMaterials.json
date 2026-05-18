@@ -10,9 +10,26 @@
   "methods": [
     {
       "name": "ConvertSourceFile",
-      "signature": "ConvertSourceFile(...)",
+      "signature": "public static bool ConvertSourceFile(string profilesFilePath, string dimensionsFilePath)",
       "summary": "Converts a fabricator profile catalog source file to an XML file that contains a list of valid Tekla Structures catalog profiles and materials.",
-      "params": [],
+      "params": [
+        {
+          "name": "profilesFilePath",
+          "type": "System.String",
+          "doc": "The path to the fabricator profiles and materials file.",
+          "optional": false
+        },
+        {
+          "name": "dimensionsFilePath",
+          "type": "System.String",
+          "doc": "The path to the fabricator dimensions file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if conversion was successful."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0ebcca0c-210b-e614-7bb9-ba5dfadceec1"

@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "RebarOffsets",
-      "signature": "RebarOffsets(...)",
+      "signature": "public RebarOffsets()",
       "summary": "Initializes a new instance of the RebarOffsets class",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "AtDepth",
-      "type": "object",
+      "type": "Nullable\u003CDouble\u003E",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the depth to offset each bar leg, not including bar radius.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "End",
-      "type": "object",
+      "type": "Nullable\u003CDouble\u003E",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the distance from the end of the bar to the surface of the concrete.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "Start",
-      "type": "object",
+      "type": "Nullable\u003CDouble\u003E",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the distance from the start of the bar to the surface of the concrete.",

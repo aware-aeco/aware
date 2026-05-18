@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "DetailMarkTagsAttributes",
-      "signature": "DetailMarkTagsAttributes(...)",
+      "signature": "public DetailMarkTagsAttributes()",
       "summary": "Creates a new mark tags attributes instance.",
       "params": [],
       "throws": [],
@@ -18,9 +18,40 @@
     },
     {
       "name": "DetailMarkTagsAttributes",
-      "signature": "DetailMarkTagsAttributes(...)",
+      "signature": "public DetailMarkTagsAttributes(ViewMarkBasicTagAttributes tagA1, ViewMarkBasicTagAttributes tagA2, ViewMarkBasicTagAttributes tagA3, ViewMarkBasicTagAttributes tagA4, ViewMarkBasicTagAttributes tagA5)",
       "summary": "Creates a new mark tags attributes instance.",
-      "params": [],
+      "params": [
+        {
+          "name": "tagA1",
+          "type": "Tekla.Structures.Drawing.ViewMarkBasicTagAttributes",
+          "doc": "The tag at place A1.",
+          "optional": false
+        },
+        {
+          "name": "tagA2",
+          "type": "Tekla.Structures.Drawing.ViewMarkBasicTagAttributes",
+          "doc": "The tag at place A2.",
+          "optional": false
+        },
+        {
+          "name": "tagA3",
+          "type": "Tekla.Structures.Drawing.ViewMarkBasicTagAttributes",
+          "doc": "The tag at place A3.",
+          "optional": false
+        },
+        {
+          "name": "tagA4",
+          "type": "Tekla.Structures.Drawing.ViewMarkBasicTagAttributes",
+          "doc": "The tag at place A4.",
+          "optional": false
+        },
+        {
+          "name": "tagA5",
+          "type": "Tekla.Structures.Drawing.ViewMarkBasicTagAttributes",
+          "doc": "The tag at place A5.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0ee79b9d-d98f-096f-de70-ed5ae0c40141"
@@ -29,9 +60,20 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/14044383-871a-2de6-0df0-017a86ee81de"
@@ -40,7 +82,7 @@
   "properties": [
     {
       "name": "TagA1",
-      "type": "object",
+      "type": "ViewMarkBasicTagAttributes",
       "getter": true,
       "setter": true,
       "summary": "The tag A1 of a mark.",
@@ -48,7 +90,7 @@
     },
     {
       "name": "TagA2",
-      "type": "object",
+      "type": "ViewMarkBasicTagAttributes",
       "getter": true,
       "setter": true,
       "summary": "The tag A2 of a mark.",
@@ -56,7 +98,7 @@
     },
     {
       "name": "TagA3",
-      "type": "object",
+      "type": "ViewMarkBasicTagAttributes",
       "getter": true,
       "setter": true,
       "summary": "The tag A3 of a mark.",
@@ -64,7 +106,7 @@
     },
     {
       "name": "TagA4",
-      "type": "object",
+      "type": "ViewMarkBasicTagAttributes",
       "getter": true,
       "setter": true,
       "summary": "The tag A4 of a mark.",
@@ -72,7 +114,7 @@
     },
     {
       "name": "TagA5",
-      "type": "object",
+      "type": "ViewMarkBasicTagAttributes",
       "getter": true,
       "setter": true,
       "summary": "The tag A5 of a mark.",

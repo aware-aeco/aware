@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "LayoutAttributes",
-      "signature": "LayoutAttributes(...)",
+      "signature": "[ObsoleteAttribute(\u0022This constructor is obsolete and may be removed in the future. Instead, use the constructor which takes a Drawing Type.\u0022, false)] public LayoutAttributes()",
       "summary": "Creates a new layout attributes instance that loads standard attributes.",
       "params": [],
       "throws": [],
@@ -18,27 +18,54 @@
     },
     {
       "name": "LayoutAttributes",
-      "signature": "LayoutAttributes(...)",
+      "signature": "[ObsoleteAttribute(\u0022This constructor is obsolete and may be removed in the future. Instead, use the constructor which takes a Drawing Type.\u0022, false)] public LayoutAttributes(string AttributeFile)",
       "summary": "Creates a new layout attributes instance that loads drawing layout attributes from the specified attribute file.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The name of the drawing attribute file. E.g. \u0022standard\u0022.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5cdf493a-df16-0949-6993-b25cc0c308c2"
     },
     {
       "name": "LayoutAttributes",
-      "signature": "LayoutAttributes(...)",
+      "signature": "public LayoutAttributes(Drawing Drawing)",
       "summary": "Creates a new layout attributes instance that loads standard attributes.",
-      "params": [],
+      "params": [
+        {
+          "name": "Drawing",
+          "type": "Tekla.Structures.Drawing.Drawing",
+          "doc": "The type of drawing to load layout attributes for.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/92d67225-8eb3-0d92-c4ae-ca7d56be457a"
     },
     {
       "name": "LayoutAttributes",
-      "signature": "LayoutAttributes(...)",
+      "signature": "public LayoutAttributes(string AttributeFile, Drawing Drawing)",
       "summary": "Creates a new layout attributes instance that loads drawing layout attributes from the specified attribute file.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The name of the drawing attribute file. E.g. \u0022standard\u0022.",
+          "optional": false
+        },
+        {
+          "name": "Drawing",
+          "type": "Tekla.Structures.Drawing.Drawing",
+          "doc": "The type of drawing to load layout attributes for.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0948ada9-0299-3031-262a-2f60ece82d5c"
@@ -47,18 +74,40 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/628efe7a-02bf-5d5c-0e53-cf5464e9e70d"
     },
     {
       "name": "LoadAttributes",
-      "signature": "LoadAttributes(...)",
+      "signature": "public override bool LoadAttributes(string AttributeFile)",
       "summary": "Loads drawing layout attributes from the specified attribute file.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The name of the drawing attribute file. E.g. \u0022standard\u0022.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/be6c4b9e-a9a4-b5c7-e99c-a88c1d33ebcc"
@@ -67,7 +116,7 @@
   "properties": [
     {
       "name": "AutoSizeOptions",
-      "type": "object",
+      "type": "AutoSizeOptions",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the auto size options that control the drawing sheet size. Setting this property will change the SizeDefinitionMode to AutoSize.",
@@ -75,7 +124,7 @@
     },
     {
       "name": "ListHiddenObjectsInTemplates",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the property for controlling whether to list hidden objects in templates.",
@@ -83,7 +132,7 @@
     },
     {
       "name": "SheetSize",
-      "type": "object",
+      "type": "Size",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the sheet size. Setting this property will change the SizeDefinitionMode to SpecifiedSize.",
@@ -91,7 +140,7 @@
     },
     {
       "name": "SizeDefinitionMode",
-      "type": "object",
+      "type": "SizeDefinitionMode",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the size definition mode.",

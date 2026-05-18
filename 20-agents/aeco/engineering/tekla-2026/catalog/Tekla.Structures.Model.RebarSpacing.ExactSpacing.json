@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "RebarSpacing.ExactSpacing",
-      "signature": "RebarSpacing.ExactSpacing(...)",
+      "signature": "public ExactSpacing()",
       "summary": "Initializes a new instance of the RebarSpacing.ExactSpacing class",
       "params": [],
       "throws": [],

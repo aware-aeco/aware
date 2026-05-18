@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Events",
-      "signature": "Events(...)",
+      "signature": "public Events()",
       "summary": "Creates an empty events instance.",
       "params": [],
       "throws": [],
@@ -20,7 +20,7 @@
   "methods": [
     {
       "name": "Dispose",
-      "signature": "Dispose(...)",
+      "signature": "public void Dispose()",
       "summary": "Disposes the instance.",
       "params": [],
       "throws": [],
@@ -29,16 +29,20 @@
     },
     {
       "name": "InitializeLifetimeService",
-      "signature": "InitializeLifetimeService(...)",
+      "signature": "public override Object InitializeLifetimeService()",
       "summary": "Initializes the lifetime service.",
       "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "Always null."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/46f8cdad-822e-e7ea-d76a-f495a0c83fb3"
     },
     {
       "name": "OnInterrupted",
-      "signature": "OnInterrupted(...)",
+      "signature": "public void OnInterrupted()",
       "summary": "Called when uesr interrupts.",
       "params": [],
       "throws": [],
@@ -47,16 +51,29 @@
     },
     {
       "name": "OnModelSaveInfo",
-      "signature": "OnModelSaveInfo(...)",
+      "signature": "public void OnModelSaveInfo(string eventName, params Object[] parameters)",
       "summary": "Called when model is saved.",
-      "params": [],
+      "params": [
+        {
+          "name": "eventName",
+          "type": "System.String",
+          "doc": "Name of the save event.",
+          "optional": false
+        },
+        {
+          "name": "parameters",
+          "type": ".System.Object.",
+          "doc": "Event parameters. Contains the code which specifies the reason of the save action.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/bed20299-72dc-0d5f-6325-1ba70626082f"
     },
     {
       "name": "OnUndoClicked",
-      "signature": "OnUndoClicked(...)",
+      "signature": "public void OnUndoClicked()",
       "summary": "Called when user clicks undo.",
       "params": [],
       "throws": [],
@@ -65,7 +82,7 @@
     },
     {
       "name": "Register",
-      "signature": "Register(...)",
+      "signature": "public void Register()",
       "summary": "Registers the instance to listen to the specified events. More event delegates should not be added without calling UnRegister first.",
       "params": [],
       "throws": [],
@@ -74,7 +91,7 @@
     },
     {
       "name": "UnRegister",
-      "signature": "UnRegister(...)",
+      "signature": "public void UnRegister()",
       "summary": "Unregisters the instance from listening to events.",
       "params": [],
       "throws": [],
@@ -86,8 +103,8 @@
   "events": [
     {
       "name": "AnnotationSelectionChange",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler AnnotationSelectionChange",
+      "delegate": "Tekla.Structures.Model.Events.SelectionChangeDelegate",
+      "signature": "public event Events.SelectionChangeDelegate AnnotationSelectionChange",
       "summary": "The SelectionChange event is raised when the user changes the current selection of an annotation inside Tekla Structures.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f799ee63-e2d3-224e-b824-b2c96c76d405",
       "handler_thread": "unknown",
@@ -95,8 +112,8 @@
     },
     {
       "name": "ClashCheckDone",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler ClashCheckDone",
+      "delegate": "Tekla.Structures.Model.Events.ClashCheckDoneDelegate",
+      "signature": "public event Events.ClashCheckDoneDelegate ClashCheckDone",
       "summary": "The ClashCheckDone event is raised just after clash check is completed.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/97cb0c22-0ee7-37d5-7908-c1fc2f036ede",
       "handler_thread": "unknown",
@@ -104,8 +121,8 @@
     },
     {
       "name": "ClashDetected",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler ClashDetected",
+      "delegate": "Tekla.Structures.Model.Events.ClashDetectedDelegate",
+      "signature": "public event Events.ClashDetectedDelegate ClashDetected",
       "summary": "The ClashDetected event is raised just after the detection of each clash. The clash information is saved before the event is triggered.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ffc4e371-805a-71c7-2486-4eccb4b2365d",
       "handler_thread": "unknown",
@@ -113,8 +130,8 @@
     },
     {
       "name": "ClipBoxChanged",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler ClipBoxChanged",
+      "delegate": "Tekla.Structures.Model.Events.ClipBoxChangedDelegate",
+      "signature": "public event Events.ClipBoxChangedDelegate ClipBoxChanged",
       "summary": "Occurs when user deletes a clip box.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6ceef6b0-799d-3d79-9083-ec99feb19756",
       "handler_thread": "unknown",
@@ -122,8 +139,8 @@
     },
     {
       "name": "ClipPlaneChanged",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler ClipPlaneChanged",
+      "delegate": "Tekla.Structures.Model.Events.ClipPlaneChangedDelegate",
+      "signature": "public event Events.ClipPlaneChangedDelegate ClipPlaneChanged",
       "summary": "Occurs when user deletes a clip plane.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/721df2a3-9657-41e7-7c48-1cf0a7b93dd7",
       "handler_thread": "unknown",
@@ -131,8 +148,8 @@
     },
     {
       "name": "CommandStatusChange",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler CommandStatusChange",
+      "delegate": "Tekla.Structures.Model.Events.CommandStatusChangeDelegate",
+      "signature": "public event Events.CommandStatusChangeDelegate CommandStatusChange",
       "summary": "The CommandStatusChange event is raised when a command is started/ended.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0cd7e991-c25d-a837-a622-e21c45c7708d",
       "handler_thread": "unknown",
@@ -140,8 +157,8 @@
     },
     {
       "name": "HiddenObjectsChanged",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler HiddenObjectsChanged",
+      "delegate": "Tekla.Structures.Model.Events.HiddenObjectsChangedDelegate",
+      "signature": "public event Events.HiddenObjectsChangedDelegate HiddenObjectsChanged",
       "summary": "Occurs when user hides an object or view is redrawn",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c3b53935-2927-bd06-0052-dde7c01c71ea",
       "handler_thread": "unknown",
@@ -149,8 +166,8 @@
     },
     {
       "name": "Interrupted",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler Interrupted",
+      "delegate": "Tekla.Structures.Model.Events.InterruptedDelegate",
+      "signature": "public event Events.InterruptedDelegate Interrupted",
       "summary": "Occurs when user interrupts.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1e0d303b-03bc-32a3-19a0-2569b7f9c8fd",
       "handler_thread": "unknown",
@@ -158,8 +175,8 @@
     },
     {
       "name": "ModelChanged",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler ModelChanged",
+      "delegate": "Tekla.Structures.Model.Events.ModelChangedDelegate",
+      "signature": "[ObsoleteAttribute(\u0022Use the new ModelObjectChanged event instead.\u0022)] public event Events.ModelChangedDelegate ModelChanged",
       "summary": "The ModelChanged event is raised just after some changes have been made to the model. Note, this event is however not triggered when UNDO or REDO are performed.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/89629a3e-cdc4-fb06-b16b-8f5d9c1e3e03",
       "handler_thread": "unknown",
@@ -167,8 +184,8 @@
     },
     {
       "name": "ModelLoad",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler ModelLoad",
+      "delegate": "Tekla.Structures.Model.Events.ModelLoadDelegate",
+      "signature": "public event Events.ModelLoadDelegate ModelLoad",
       "summary": "The ModelLoad event is raised just after a model has been loaded.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/99d9f5c4-b182-f022-ef7d-3dd16b9fbae3",
       "handler_thread": "unknown",
@@ -176,8 +193,8 @@
     },
     {
       "name": "ModelLoadInfo",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler ModelLoadInfo",
+      "delegate": "Tekla.Structures.Model.Events.ModelLoadInfoDelegate",
+      "signature": "public event Events.ModelLoadInfoDelegate ModelLoadInfo",
       "summary": "These are several events, user mast part the event info string to know the event type, see EventHandler OnEvent function",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7d76d21d-6e26-fe29-cb58-5ca31f59fed2",
       "handler_thread": "unknown",
@@ -185,8 +202,8 @@
     },
     {
       "name": "ModelObjectChanged",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler ModelObjectChanged",
+      "delegate": "Tekla.Structures.Model.Events.ModelObjectChangedDelegate",
+      "signature": "public event Events.ModelObjectChangedDelegate ModelObjectChanged",
       "summary": "The ModelObjectChanged event is raised just after some changes have been made to the model objects. Note, this event is triggered when UNDO or REDO are performed!!",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/17f71c02-7595-85e1-ae0f-0636d4fd1072",
       "handler_thread": "unknown",
@@ -194,8 +211,8 @@
     },
     {
       "name": "ModelObjectNumbered",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler ModelObjectNumbered",
+      "delegate": "Tekla.Structures.Model.Events.ModelObjectNumberedDelegate",
+      "signature": "public event Events.ModelObjectNumberedDelegate ModelObjectNumbered",
       "summary": "The ModelObjectNumbered event is raised when model object is numbered.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/dd75c7d0-ee11-6903-9d2c-90c3001823e6",
       "handler_thread": "unknown",
@@ -203,8 +220,8 @@
     },
     {
       "name": "ModelSave",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler ModelSave",
+      "delegate": "Tekla.Structures.Model.Events.ModelSaveDelegate",
+      "signature": "public event Events.ModelSaveDelegate ModelSave",
       "summary": "The ModelSave event is raised just after a model has been saved.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/104ed49c-cd7f-62af-c9a8-30d24863879a",
       "handler_thread": "unknown",
@@ -212,8 +229,8 @@
     },
     {
       "name": "ModelSaveAs",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler ModelSaveAs",
+      "delegate": "Tekla.Structures.Model.Events.ModelSaveAsDelegate",
+      "signature": "public event Events.ModelSaveAsDelegate ModelSaveAs",
       "summary": "The ModelSaveAs event is raised just after a model has been saved using save as.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0f11e599-85e9-5710-e19d-6da7c9dc72eb",
       "handler_thread": "unknown",
@@ -221,8 +238,8 @@
     },
     {
       "name": "ModelSaveInfo",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler ModelSaveInfo",
+      "delegate": "Tekla.Structures.Model.Events.ModelSaveInfoDelegate",
+      "signature": "public event Events.ModelSaveInfoDelegate ModelSaveInfo",
       "summary": "The ModelSave event is raised just after a model has been saved with the model save information as a string parameter.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/99e7c0e7-8836-e54f-bf97-565f74542a29",
       "handler_thread": "unknown",
@@ -230,8 +247,8 @@
     },
     {
       "name": "ModelUnloading",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler ModelUnloading",
+      "delegate": "Tekla.Structures.Model.Events.ModelLoadDelegate",
+      "signature": "public event Events.ModelLoadDelegate ModelUnloading",
       "summary": "The ModelUnloading event is raised just before the model is unloaded.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3e887bc9-d6ca-66b0-4a5e-cdde949f19c9",
       "handler_thread": "unknown",
@@ -239,8 +256,8 @@
     },
     {
       "name": "ModelUnloadingSync",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler ModelUnloadingSync",
+      "delegate": "Tekla.Structures.Model.Events.ModelLoadDelegate",
+      "signature": "public event Events.ModelLoadDelegate ModelUnloadingSync",
       "summary": "The ModelUnloadingSync event is raised synchronously on the main thread just before the model is unloaded. Use this event only when core resources need be cleaned up before the model unloading proceeds. All UI-only related resource cleanup should be done in the async ModelUnloading event. OnModelUnloadingSync(String, .Object.)",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/03f82a07-1d6c-a7df-323c-311d71808b8a",
       "handler_thread": "unknown",
@@ -248,8 +265,8 @@
     },
     {
       "name": "ModelViewDrawn",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler ModelViewDrawn",
+      "delegate": "Tekla.Structures.Model.Events.ModelViewDrawnDelegate",
+      "signature": "public event Events.ModelViewDrawnDelegate ModelViewDrawn",
       "summary": "Occurs when view is drawn or redrawn.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/bb6351e3-c30e-9c4c-a2be-4a7758b23c0b",
       "handler_thread": "unknown",
@@ -257,8 +274,8 @@
     },
     {
       "name": "Numbering",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler Numbering",
+      "delegate": "Tekla.Structures.Model.Events.NumberingDelegate",
+      "signature": "public event Events.NumberingDelegate Numbering",
       "summary": "The Numbering event is raised just after a model has been numbered.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7b8f33de-a5eb-7ae5-98c3-124486c7d38e",
       "handler_thread": "unknown",
@@ -266,8 +283,8 @@
     },
     {
       "name": "ProjectInfoChanged",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler ProjectInfoChanged",
+      "delegate": "Tekla.Structures.Model.Events.ProjectInfoChangedDelegate",
+      "signature": "public event Events.ProjectInfoChangedDelegate ProjectInfoChanged",
       "summary": "The ProjectInfoChanged event is raised just after some changes have been made to the project info. Note, this event is however not triggered when UNDO or REDO are performed.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/23fbc11c-197c-a56e-e715-20787b29ea6b",
       "handler_thread": "unknown",
@@ -275,8 +292,8 @@
     },
     {
       "name": "SelectionChange",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler SelectionChange",
+      "delegate": "Tekla.Structures.Model.Events.SelectionChangeDelegate",
+      "signature": "public event Events.SelectionChangeDelegate SelectionChange",
       "summary": "The SelectionChange event is raised when the user changes the current selection inside Tekla Structures.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/27f86a1c-8d6f-89db-e24b-403ee8d7461f",
       "handler_thread": "unknown",
@@ -284,8 +301,8 @@
     },
     {
       "name": "TeklaStructuresExit",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler TeklaStructuresExit",
+      "delegate": "Tekla.Structures.Model.Events.TeklaStructuresExitDelegate",
+      "signature": "public event Events.TeklaStructuresExitDelegate TeklaStructuresExit",
       "summary": "The TeklaStructuresExit event is raised just before Tekla Structures exits. After this event has been called the user will no longer be able to perform any calls to Tekla Structures.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7ed403c9-e659-d8df-dbc8-b028c59ecfa2",
       "handler_thread": "unknown",
@@ -293,8 +310,8 @@
     },
     {
       "name": "TemporaryStatesChanged",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler TemporaryStatesChanged",
+      "delegate": "Tekla.Structures.Model.Events.TemporaryStatesChangedDelegate",
+      "signature": "public event Events.TemporaryStatesChangedDelegate TemporaryStatesChanged",
       "summary": "Occurs when temporary states are changed.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8cd318d9-780d-6b36-53f0-314840e2fcad",
       "handler_thread": "unknown",
@@ -302,8 +319,8 @@
     },
     {
       "name": "TsEventOccurred",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler TsEventOccurred",
+      "delegate": "Tekla.Structures.Model.Events.TsEventOccurredDelegate",
+      "signature": "public event Events.TsEventOccurredDelegate TsEventOccurred",
       "summary": "Occurs when TS event occurs.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/51e39692-485f-052b-2926-c9b7bfed0fe0",
       "handler_thread": "unknown",
@@ -311,8 +328,8 @@
     },
     {
       "name": "UndoClicked",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler UndoClicked",
+      "delegate": "Tekla.Structures.Model.Events.UndoClickedDelegate",
+      "signature": "public event Events.UndoClickedDelegate UndoClicked",
       "summary": "Occurs when user clicks undo.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ad04c5ac-2094-95cf-2ca4-082797bc7850",
       "handler_thread": "unknown",
@@ -320,8 +337,8 @@
     },
     {
       "name": "ViewCameraChanged",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler ViewCameraChanged",
+      "delegate": "Tekla.Structures.Model.Events.ViewCameraChangedDelegate",
+      "signature": "public event Events.ViewCameraChangedDelegate ViewCameraChanged",
       "summary": "Occurs when view camera is changed.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/019d91d7-f1b7-54a7-48d9-6a5c6ba428a7",
       "handler_thread": "unknown",
@@ -329,8 +346,8 @@
     },
     {
       "name": "ViewClosed",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler ViewClosed",
+      "delegate": "Tekla.Structures.Model.Events.ViewClosedDelegate",
+      "signature": "public event Events.ViewClosedDelegate ViewClosed",
       "summary": "Occurs when view is closed.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b0716378-227a-dc10-bca8-f5080354050d",
       "handler_thread": "unknown",
@@ -338,8 +355,8 @@
     },
     {
       "name": "ViewCreated",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler ViewCreated",
+      "delegate": "Tekla.Structures.Model.Events.ViewCreatedDelegate",
+      "signature": "public event Events.ViewCreatedDelegate ViewCreated",
       "summary": "Occurs when view is created.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/19583918-dba0-a785-1625-4d934c48ad99",
       "handler_thread": "unknown",
@@ -347,8 +364,8 @@
     },
     {
       "name": "ViewDeleted",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler ViewDeleted",
+      "delegate": "Tekla.Structures.Model.Events.ViewDeletedDelegate",
+      "signature": "public event Events.ViewDeletedDelegate ViewDeleted",
       "summary": "Occurs when view is deleted.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/339fff50-d669-8364-e75e-22593f4d82c0",
       "handler_thread": "unknown",
@@ -356,8 +373,8 @@
     },
     {
       "name": "ViewModified",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler ViewModified",
+      "delegate": "Tekla.Structures.Model.Events.ViewModifiedDelegate",
+      "signature": "public event Events.ViewModifiedDelegate ViewModified",
       "summary": "Occurs when view is modified.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5733792a-4ce9-1360-5676-95e52f8885ca",
       "handler_thread": "unknown",
@@ -365,8 +382,8 @@
     },
     {
       "name": "ViewOpened",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler ViewOpened",
+      "delegate": "Tekla.Structures.Model.Events.ViewOpenedDelegate",
+      "signature": "public event Events.ViewOpenedDelegate ViewOpened",
       "summary": "Occurs when view is opened.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/73b79d49-aa7a-9636-f2ae-15c481d90de2",
       "handler_thread": "unknown",

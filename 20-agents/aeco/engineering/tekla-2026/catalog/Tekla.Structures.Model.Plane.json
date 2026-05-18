@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Plane",
-      "signature": "Plane(...)",
+      "signature": "public Plane()",
       "summary": "Initializes a new plane instance.",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "AxisX",
-      "type": "object",
+      "type": "Vector",
       "getter": true,
       "setter": true,
       "summary": "The X-axis of the plane.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "AxisY",
-      "type": "object",
+      "type": "Vector",
       "getter": true,
       "setter": true,
       "summary": "The Y-axis of the plane.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "Origin",
-      "type": "object",
+      "type": "Point",
       "getter": true,
       "setter": true,
       "summary": "The origin of the plane.",

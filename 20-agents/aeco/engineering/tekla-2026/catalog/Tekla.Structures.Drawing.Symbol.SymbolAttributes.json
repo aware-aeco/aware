@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Symbol.SymbolAttributes",
-      "signature": "Symbol.SymbolAttributes(...)",
+      "signature": "public SymbolAttributes()",
       "summary": "Creates a new default symbol attributes instance that loads standard attributes.",
       "params": [],
       "throws": [],
@@ -18,9 +18,16 @@
     },
     {
       "name": "Symbol.SymbolAttributes",
-      "signature": "Symbol.SymbolAttributes(...)",
+      "signature": "public SymbolAttributes(string AttributesFile)",
       "summary": "Creates a symbol attributes instance that loads the specified attributes.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributesFile",
+          "type": "System.String",
+          "doc": "The filename of the attributes file.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1f069dc7-5ea9-d8f1-2337-6b80291aaedb"
@@ -29,18 +36,40 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6ccd8468-c5e8-7d1e-0de9-78423f575142"
     },
     {
       "name": "LoadAttributes",
-      "signature": "LoadAttributes(...)",
+      "signature": "public override bool LoadAttributes(string attributeFile)",
       "summary": "Loads the attributes from the attribute file.",
-      "params": [],
+      "params": [
+        {
+          "name": "attributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7bbea6d2-d775-8e1a-ad4b-4fae564d6b74"
@@ -49,7 +78,7 @@
   "properties": [
     {
       "name": "Angle",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The angle of the symbol. Cannot be changed for an editor-created symbol when the symbol is created \u0022along line\u0022.",
@@ -57,7 +86,7 @@
     },
     {
       "name": "Color",
-      "type": "object",
+      "type": "DrawingColors",
       "getter": true,
       "setter": true,
       "summary": "The symbol color. Does not have an effect on symbols where the color is already defined in the symbol file.",
@@ -65,7 +94,7 @@
     },
     {
       "name": "Frame",
-      "type": "object",
+      "type": "Frame",
       "getter": true,
       "setter": true,
       "summary": "The frame for the symbol.",
@@ -73,7 +102,7 @@
     },
     {
       "name": "Height",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The height of the symbol.",
@@ -81,7 +110,7 @@
     },
     {
       "name": "PreferredPlacing",
-      "type": "object",
+      "type": "PreferredPlacingTypeBase",
       "getter": true,
       "setter": true,
       "summary": "The type of placing the object should use. See the preferred placing types for different types of placing.",
@@ -89,7 +118,7 @@
     },
     {
       "name": "TrueColor",
-      "type": "object",
+      "type": "TeklaDrawingColor",
       "getter": true,
       "setter": true,
       "summary": "The true color (RGB enabled) of the symbol. Does not have an effect on symbols where the color is already defined in the symbol file.",

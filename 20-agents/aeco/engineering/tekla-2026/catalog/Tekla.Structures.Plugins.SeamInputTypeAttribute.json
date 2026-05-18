@@ -9,18 +9,32 @@
   "constructors": [
     {
       "name": "SeamInputTypeAttribute",
-      "signature": "SeamInputTypeAttribute(...)",
+      "signature": "public SeamInputTypeAttribute(int Type)",
       "summary": "The custom attribute [SeamInputType()] uses this to store the input type to the system. This is not to be used by itself.",
-      "params": [],
+      "params": [
+        {
+          "name": "Type",
+          "type": "System.Int32",
+          "doc": "The seam input type.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f9e68e04-25d1-fe7b-abdf-4685c071a9cc"
     },
     {
       "name": "SeamInputTypeAttribute",
-      "signature": "SeamInputTypeAttribute(...)",
+      "signature": "public SeamInputTypeAttribute(ConnectionBase.SeamInputType Type)",
       "summary": "The custom attribute [SeamInputType()] uses this to store the input type to the system. This is not to be used by itself.",
-      "params": [],
+      "params": [
+        {
+          "name": "Type",
+          "type": "Tekla.Structures.Plugins.ConnectionBase.SeamInputType",
+          "doc": "The seam input type.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/24cbdaab-f002-48f1-7566-761cc43f481f"
@@ -30,9 +44,9 @@
   "properties": [
     {
       "name": "Type",
-      "type": "object",
+      "type": "ConnectionBase.SeamInputType",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The custom attribute [SeamInputType()] uses this to store the input type to the system. This is not to be used by itself.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d36dfdf3-9682-04e1-773d-af65d7a2d96f"
     }

@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "GraphicObject.GraphicObjectAttributes",
-      "signature": "GraphicObject.GraphicObjectAttributes(...)",
+      "signature": "public GraphicObjectAttributes()",
       "summary": "Creates a new graphic object attributes instance.",
       "params": [],
       "throws": [],
@@ -18,9 +18,16 @@
     },
     {
       "name": "GraphicObject.GraphicObjectAttributes",
-      "signature": "GraphicObject.GraphicObjectAttributes(...)",
+      "signature": "public GraphicObjectAttributes(string AttributeFile)",
       "summary": "Creates a new graphic object attributes instance using the given attribute file\u0027s filename.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/196cd0f0-2ac5-3962-5ca0-3c24c765d5bb"
@@ -29,18 +36,40 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public abstract bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/da11fa4f-a98d-c770-d0e2-f458bc3b82dc"
     },
     {
       "name": "LoadAttributes",
-      "signature": "LoadAttributes(...)",
+      "signature": "public abstract bool LoadAttributes(string AttributeFile)",
       "summary": "Loads the attributes from the specified file.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file. Use only the filename, not the extension.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5597a575-45e2-aa83-6576-390f23af3e48"
@@ -49,7 +78,7 @@
   "properties": [
     {
       "name": "Line",
-      "type": "object",
+      "type": "LineTypeAttributes",
       "getter": true,
       "setter": true,
       "summary": "The line attributes of the graphic object. A graphic object always consists of lines.",

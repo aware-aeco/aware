@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "RebarPropertiesNullable",
-      "signature": "RebarPropertiesNullable(...)",
+      "signature": "public RebarPropertiesNullable()",
       "summary": "Initializes a new instance of the RebarPropertiesNullable class.",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "BendingRadius",
-      "type": "object",
+      "type": "Nullable\u003CDouble\u003E",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the bending radius radius of the reinforcement.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "Class",
-      "type": "object",
+      "type": "Nullable\u003CInt32\u003E",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the class of the reinforcement. The class is used to group reinforcements.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "Grade",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the steel grade of the reinforcing bar. The grade indicates the strength of the steel used in reinforcing bars. It can also indicate other factors, such as the weldability or surface deformations of the bar.",
@@ -45,7 +45,7 @@
     },
     {
       "name": "Name",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the name of the reinforcement.",
@@ -53,7 +53,7 @@
     },
     {
       "name": "NumberingSeries",
-      "type": "object",
+      "type": "NumberingSeriesNullable",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the numbering series of the reinforcement.",
@@ -61,7 +61,7 @@
     },
     {
       "name": "Size",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the size of the reinforcement.",

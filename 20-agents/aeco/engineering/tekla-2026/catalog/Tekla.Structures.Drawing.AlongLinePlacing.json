@@ -9,9 +9,22 @@
   "constructors": [
     {
       "name": "AlongLinePlacing",
-      "signature": "AlongLinePlacing(...)",
+      "signature": "public AlongLinePlacing(Point StartPoint, Point EndPoint)",
       "summary": "Creates a new along line placing instance. The given two points define the line to be used for the placing.",
-      "params": [],
+      "params": [
+        {
+          "name": "StartPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The first point of the line.",
+          "optional": false
+        },
+        {
+          "name": "EndPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The second point of the line.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/cc6d3493-a867-1a37-eecc-435f27c47462"
@@ -20,9 +33,20 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a2360f3f-0551-3a34-e20d-40e9168f3c6b"
@@ -31,7 +55,7 @@
   "properties": [
     {
       "name": "EndPoint",
-      "type": "object",
+      "type": "Point",
       "getter": true,
       "setter": true,
       "summary": "The end point of the line that the object is placed on.",
@@ -39,7 +63,7 @@
     },
     {
       "name": "StartPoint",
-      "type": "object",
+      "type": "Point",
       "getter": true,
       "setter": true,
       "summary": "The start point of the line that the object is placed on.",

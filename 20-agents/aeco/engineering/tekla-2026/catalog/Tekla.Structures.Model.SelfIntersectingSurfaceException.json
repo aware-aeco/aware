@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "SelfIntersectingSurfaceException",
-      "signature": "SelfIntersectingSurfaceException(...)",
+      "signature": "public SelfIntersectingSurfaceException()",
       "summary": "Constructs an instance of the class",
       "params": [],
       "throws": [],

@@ -9,9 +9,22 @@
   "constructors": [
     {
       "name": "UploadProgress",
-      "signature": "UploadProgress(...)",
+      "signature": "public UploadProgress(long? totalBytes, long bytesUploaded)",
       "summary": "Initializes a new instance of the UploadProgress class with known total size.",
-      "params": [],
+      "params": [
+        {
+          "name": "totalBytes",
+          "type": "System.Nullable\u003CInt64\u003E",
+          "doc": "The total number of bytes to upload.",
+          "optional": false
+        },
+        {
+          "name": "bytesUploaded",
+          "type": "System.Int64",
+          "doc": "The number of bytes uploaded so far.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/90122eff-8cfc-0ea3-40f1-f53aaf737168"
@@ -21,25 +34,25 @@
   "properties": [
     {
       "name": "PercentComplete",
-      "type": "object",
+      "type": "Nullable\u003CInt32\u003E",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the upload progress as a percentage (0-100). If total is unknown, returns null. If null, it indicates we can\u0027t determine the completed percentage as we don\u0027t know the total size. UI should handle this case appropriately (e.g don\u0027t show percentage of completion but bytes upload).",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8fd847b9-4689-d797-22be-cffbd5c0428c"
     },
     {
       "name": "TotalBytes",
-      "type": "object",
+      "type": "Nullable\u003CInt64\u003E",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the total number of bytes to upload, 0 if total is unknown.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ae882328-37e5-01b3-95ea-d5ae5b962ee4"
     },
     {
       "name": "UploadedBytes",
-      "type": "object",
+      "type": "Int64",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the number of bytes uploaded so far.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/dbc664f6-62d2-ef7d-9690-2011d6833738"
     }

@@ -9,9 +9,16 @@
   "constructors": [
     {
       "name": "AnalysisEdge",
-      "signature": "AnalysisEdge(...)",
+      "signature": "public AnalysisEdge(AnalysisObject.AnalysisObjectEnum ObjectType)",
       "summary": "Creates a new instance of the AnalysisEdge class.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectType",
+          "type": "Tekla.Structures.Analysis.AnalysisObject.AnalysisObjectEnum",
+          "doc": "The type of the analysis object.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6c64ffd8-6c28-0d37-9218-a7e38217ec9a"
@@ -20,34 +27,52 @@
   "methods": [
     {
       "name": "AddSplit",
-      "signature": "AddSplit(...)",
+      "signature": "public void AddSplit(AnalysisPosition AnalysisPosition)",
       "summary": "Adds a split position to the analysis edge.",
-      "params": [],
+      "params": [
+        {
+          "name": "AnalysisPosition",
+          "type": "Tekla.Structures.Analysis.AnalysisPosition",
+          "doc": "The split position to be added.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/97fb70fe-2bf3-1123-3eaf-933faa33cd11"
     },
     {
       "name": "CopyData",
-      "signature": "CopyData(...)",
+      "signature": "public void CopyData(AnalysisEdge Analysisedge)",
       "summary": "Copies data from another analysis edge.",
-      "params": [],
+      "params": [
+        {
+          "name": "Analysisedge",
+          "type": "Tekla.Structures.Analysis.AnalysisEdge",
+          "doc": "The analysis edge to copy data from.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/bd114c63-7989-e9dc-7120-19315857a5a3"
     },
     {
       "name": "GetSplitPositions",
-      "signature": "GetSplitPositions(...)",
+      "signature": "public AnalysisObjectEnumerator GetSplitPositions()",
       "summary": "Gets the split positions of the analysis edge.",
       "params": [],
+      "returns": {
+        "type": "AnalysisObjectEnumerator",
+        "doc": "The split positions of the analysis edge."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0dfbec6e-354f-1b34-b69e-451f583d2be9"
     },
     {
       "name": "Modify",
-      "signature": "Modify(...)",
+      "signature": "public void Modify()",
       "summary": "Modifies an analysis edge. The AnalysisModelName has to be set.",
       "params": [],
       "throws": [],
@@ -56,7 +81,7 @@
     },
     {
       "name": "Select",
-      "signature": "Select(...)",
+      "signature": "public override void Select()",
       "summary": "Selects an analysis edge.",
       "params": [],
       "throws": [],
@@ -67,7 +92,7 @@
   "properties": [
     {
       "name": "AnalysisModelName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis model name.",
@@ -75,7 +100,7 @@
     },
     {
       "name": "AnalysisObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the analysis object.",
@@ -83,7 +108,7 @@
     },
     {
       "name": "Connectivity",
-      "type": "object",
+      "type": "AnalysisConnectivity",
       "getter": true,
       "setter": true,
       "summary": "The connectivity of the analysis edge.",
@@ -91,7 +116,7 @@
     },
     {
       "name": "FatherObject2ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -99,7 +124,7 @@
     },
     {
       "name": "FatherObject2Type",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -107,7 +132,7 @@
     },
     {
       "name": "FatherObjectID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -115,7 +140,7 @@
     },
     {
       "name": "FatherObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -123,7 +148,7 @@
     },
     {
       "name": "ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the analysis object.",
@@ -131,7 +156,7 @@
     },
     {
       "name": "Radius",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The radius of the analysis edge.",
@@ -139,9 +164,9 @@
     },
     {
       "name": "SplitPositions",
-      "type": "object",
+      "type": "List\u003CAnalysisPosition\u003E",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The split positions of the analysis edge.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/17c9db1a-0f42-ac31-0042-8648759e43ff"
     }

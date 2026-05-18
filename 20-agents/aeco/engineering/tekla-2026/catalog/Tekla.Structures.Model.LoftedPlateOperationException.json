@@ -9,9 +9,16 @@
   "constructors": [
     {
       "name": "LoftedPlateOperationException",
-      "signature": "LoftedPlateOperationException(...)",
+      "signature": "public LoftedPlateOperationException(string message)",
       "summary": "Constructs an instance of the class",
-      "params": [],
+      "params": [
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "Exception message",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8a8a7afb-94a0-62d8-f411-54ba9faa05a5"

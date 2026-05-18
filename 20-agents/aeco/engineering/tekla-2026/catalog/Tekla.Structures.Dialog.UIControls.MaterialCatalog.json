@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "MaterialCatalog",
-      "signature": "MaterialCatalog(...)",
+      "signature": "public MaterialCatalog()",
       "summary": "Initiates a new instance of the control.",
       "params": [],
       "throws": [],
@@ -18,9 +18,16 @@
     },
     {
       "name": "MaterialCatalog",
-      "signature": "MaterialCatalog(...)",
+      "signature": "public MaterialCatalog(string Material)",
       "summary": "Creates a new instance of the MaterialCatalog and will select the material (if available) in the tree.",
-      "params": [],
+      "params": [
+        {
+          "name": "Material",
+          "type": "System.String",
+          "doc": "The material to be selected in the dialog.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0e0d7a1d-142f-2df1-57d0-9c1e4c56c007"
@@ -30,7 +37,7 @@
   "properties": [
     {
       "name": "ButtonText",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets and sets the text of the button control.",
@@ -38,7 +45,7 @@
     },
     {
       "name": "SelectedMaterial",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets the selected material in the control.",
@@ -48,8 +55,8 @@
   "events": [
     {
       "name": "SelectClicked",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler SelectClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler SelectClicked",
       "summary": "The SelectClicked event is raised when the Select button is clicked.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/788d5c1d-dfc3-1b3f-f849-9e96756dbb4d",
       "handler_thread": "unknown",
@@ -57,8 +64,8 @@
     },
     {
       "name": "SelectionDone",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler SelectionDone",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler SelectionDone",
       "summary": "The SelectionDone event is raised when the selection has been done.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8e5da3b1-7d90-73eb-3806-28e4d4c34003",
       "handler_thread": "unknown",

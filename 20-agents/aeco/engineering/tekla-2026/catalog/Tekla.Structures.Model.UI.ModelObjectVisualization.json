@@ -10,115 +10,268 @@
   "methods": [
     {
       "name": "ClearAllTemporaryStates",
-      "signature": "ClearAllTemporaryStates(...)",
+      "signature": "public static bool ClearAllTemporaryStates()",
       "summary": "Clears temporary visualization from all model objects and restores permanent representation.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the permanent representation could be restored."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/46e12a40-2eeb-7017-5030-d4f181c03700"
     },
     {
       "name": "ClearTemporaryStates",
-      "signature": "ClearTemporaryStates(...)",
+      "signature": "public static bool ClearTemporaryStates(List\u003CModelObject\u003E modelObjects)",
       "summary": "Clears temporary visualization from model objects and restores permanent representation.",
-      "params": [],
+      "params": [
+        {
+          "name": "modelObjects",
+          "type": "System.Collections.Generic.List\u003CModelObject\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the permanent representation could be restored."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/33556963-de00-6812-42b1-f9915c3f0671"
     },
     {
       "name": "GetAllTemporaryColored",
-      "signature": "GetAllTemporaryColored(...)",
+      "signature": "public static IEnumerable\u003CKeyValuePair\u003CIdentifier, Color\u003E\u003E GetAllTemporaryColored()",
       "summary": "Gets all temporary colored objects and their color",
       "params": [],
+      "returns": {
+        "type": "IEnumerable\u003CKeyValuePair\u003CIdentifier,Color\u003E\u003E",
+        "doc": "Enumerable of Identifier-Color pairs"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3eb07452-fe80-8792-4784-d1c60233971a"
     },
     {
       "name": "GetRepresentation",
-      "signature": "GetRepresentation(...)",
+      "signature": "public static bool GetRepresentation(ModelObject modelObject, ref Color color)",
       "summary": "Gets current permanent representation (red, blue, green and transparency) of given model object",
-      "params": [],
+      "params": [
+        {
+          "name": "modelObject",
+          "type": "Tekla.Structures.Model.ModelObject",
+          "doc": "The model object to check.",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Tekla.Structures.Model.UI.Color.",
+          "doc": "The color of given model object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the permanent representation could be fetched."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e50d139f-8488-c3ac-59c6-9e75b44ac75d"
     },
     {
       "name": "GetTempRepresentation",
-      "signature": "GetTempRepresentation(...)",
+      "signature": "public static Color GetTempRepresentation(ModelObject modelObject)",
       "summary": "Gets the temporary representation (red, blue, green and transparency) of given model object",
-      "params": [],
+      "params": [
+        {
+          "name": "modelObject",
+          "type": "Tekla.Structures.Model.ModelObject",
+          "doc": "The model object to check.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "The temporary representation or null if not set."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/dd1423f6-244d-f32c-ea02-638b7138b190"
     },
     {
       "name": "SetTemporaryState(List.Identifier., Color)",
-      "signature": "SetTemporaryState(List.Identifier., Color)(...)",
+      "signature": "public static bool SetTemporaryState(List\u003CIdentifier\u003E identifiers, Color color)",
       "summary": "Sets visualization temporary state (red, blue, green and transparency) for given model object identifiers",
-      "params": [],
+      "params": [
+        {
+          "name": "identifiers",
+          "type": "System.Collections.Generic.List\u003CIdentifier\u003E",
+          "doc": "The list of model object identifiers.",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Tekla.Structures.Model.UI.Color",
+          "doc": "The temporary color for given model objects.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the temporary state could be set."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/283dae38-1f8e-91a7-4bb6-6766c0cb48b4"
     },
     {
       "name": "SetTemporaryState(List.ModelObject., Color)",
-      "signature": "SetTemporaryState(List.ModelObject., Color)(...)",
+      "signature": "public static bool SetTemporaryState(List\u003CModelObject\u003E modelObjects, Color color)",
       "summary": "Sets visualization temporary state (red, blue, green and transparency) for given model objects",
-      "params": [],
+      "params": [
+        {
+          "name": "modelObjects",
+          "type": "System.Collections.Generic.List\u003CModelObject\u003E",
+          "doc": "The list of model objects.",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Tekla.Structures.Model.UI.Color",
+          "doc": "The temporary state for given model objects.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the temporary state could be set."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4dff8ec4-a069-0729-ad48-b368608af476"
     },
     {
       "name": "SetTemporaryStateForAll",
-      "signature": "SetTemporaryStateForAll(...)",
+      "signature": "public static bool SetTemporaryStateForAll(Color color)",
       "summary": "Sets temporary visualization state (red, blue, green and transparency) for all model objects",
-      "params": [],
+      "params": [
+        {
+          "name": "color",
+          "type": "Tekla.Structures.Model.UI.Color",
+          "doc": "The temporary state for all model objects.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the temporary state could be set."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0eb20b32-3c7f-3c69-db53-87bb751d23ac"
     },
     {
       "name": "SetTransparency(List.Identifier., TemporaryTransparency)",
-      "signature": "SetTransparency(List.Identifier., TemporaryTransparency)(...)",
+      "signature": "public static bool SetTransparency(List\u003CIdentifier\u003E identifiers, TemporaryTransparency transparency)",
       "summary": "Restores permanent representation settings and sets temporary transparency for given model object identifiers",
-      "params": [],
+      "params": [
+        {
+          "name": "identifiers",
+          "type": "System.Collections.Generic.List\u003CIdentifier\u003E",
+          "doc": "The list of model object identifiers.",
+          "optional": false
+        },
+        {
+          "name": "transparency",
+          "type": "Tekla.Structures.Model.UI.TemporaryTransparency",
+          "doc": "The temporary transparency for given objects.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the temporary transparency could be set."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/205146e9-e809-6b1d-2557-85889ce28a67"
     },
     {
       "name": "SetTransparency(List.ModelObject., TemporaryTransparency)",
-      "signature": "SetTransparency(List.ModelObject., TemporaryTransparency)(...)",
+      "signature": "public static bool SetTransparency(List\u003CModelObject\u003E modelObjects, TemporaryTransparency transparency)",
       "summary": "Restores permanent representation settings and sets temporary transparency for given model objects",
-      "params": [],
+      "params": [
+        {
+          "name": "modelObjects",
+          "type": "System.Collections.Generic.List\u003CModelObject\u003E",
+          "doc": "The list of model objects.",
+          "optional": false
+        },
+        {
+          "name": "transparency",
+          "type": "Tekla.Structures.Model.UI.TemporaryTransparency",
+          "doc": "The temporary transparency for given objects.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the temporary transparency could be set."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/fa5656a1-4dc3-bd98-7d72-cfc405834e42"
     },
     {
       "name": "SetTransparencyForAll",
-      "signature": "SetTransparencyForAll(...)",
+      "signature": "public static bool SetTransparencyForAll(TemporaryTransparency transparency)",
       "summary": "Restores permanent representation settings and sets temporary transparency for all model objects",
-      "params": [],
+      "params": [
+        {
+          "name": "transparency",
+          "type": "Tekla.Structures.Model.UI.TemporaryTransparency",
+          "doc": "The temporary transparency for all model objects.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the temporary transparency could be set."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7b7f6b08-77c6-3c4a-88c0-d0dfd4ceaa47"
     },
     {
       "name": "SetVisibility",
-      "signature": "SetVisibility(...)",
+      "signature": "public static bool SetVisibility(List\u003CModelObject\u003E modelObjects, bool? Visible)",
       "summary": "Sets visibility for given model objects.",
-      "params": [],
+      "params": [
+        {
+          "name": "modelObjects",
+          "type": "System.Collections.Generic.List\u003CModelObject\u003E",
+          "doc": "The list of model objects, null for all objects",
+          "optional": false
+        },
+        {
+          "name": "Visible",
+          "type": "System.Nullable\u003CBoolean\u003E",
+          "doc": "Nullable boolean if to set to visible or reset state",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/24fd3a11-5699-9408-bccd-0f50155a6d82"
     },
     {
       "name": "UnhideParts",
-      "signature": "UnhideParts(...)",
+      "signature": "public static void UnhideParts()",
       "summary": "Unide all parts in the model.",
       "params": [],
       "throws": [],

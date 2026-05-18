@@ -9,9 +9,16 @@
   "constructors": [
     {
       "name": "CannotCreateSectionViewFrom3dView",
-      "signature": "CannotCreateSectionViewFrom3dView(...)",
+      "signature": "public CannotCreateSectionViewFrom3dView(string Message)",
       "summary": "Creates a new cannot create section view from 3d view exception instance.",
-      "params": [],
+      "params": [
+        {
+          "name": "Message",
+          "type": "System.String",
+          "doc": "The exception message.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e1879bd1-4a3e-a987-0446-7a93421ec824"

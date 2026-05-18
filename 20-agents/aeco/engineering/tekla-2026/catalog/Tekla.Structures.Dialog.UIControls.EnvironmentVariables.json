@@ -10,27 +10,56 @@
   "methods": [
     {
       "name": "Add",
-      "signature": "Add(...)",
+      "signature": "public static void Add(string key)",
       "summary": "Adds a variable to the list.",
-      "params": [],
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The variable to be added.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c7d998b9-ddb7-e742-a3e1-7fe8ecfb949d"
     },
     {
       "name": "Get",
-      "signature": "Get(...)",
+      "signature": "public static string Get(string key)",
       "summary": "Gets a key.",
-      "params": [],
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The key to get.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The key."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/002ca3fd-b561-354f-b73a-0422e9d79c18"
     },
     {
       "name": "GetEnvironmentVariable",
-      "signature": "GetEnvironmentVariable(...)",
+      "signature": "public static string GetEnvironmentVariable(string variableName)",
       "summary": "Gets an environment variable.",
-      "params": [],
+      "params": [
+        {
+          "name": "variableName",
+          "type": "System.String",
+          "doc": "The name of the variable to get.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The environment variable."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/38ea5140-b4be-74f3-f298-1270d3588221"

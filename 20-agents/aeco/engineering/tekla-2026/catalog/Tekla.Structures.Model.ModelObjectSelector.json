@@ -10,72 +10,158 @@
   "methods": [
     {
       "name": "GetAllObjects",
-      "signature": "GetAllObjects(...)",
+      "signature": "public ModelObjectEnumerator GetAllObjects()",
       "summary": "Returns an enumerator of all the model objects in the current model.",
       "params": [],
+      "returns": {
+        "type": "ModelObjectEnumerator",
+        "doc": "A model object enumerator of all the model objects."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/10561eb7-f852-d0f1-a34e-8cab6c2e3459"
     },
     {
       "name": "GetAllObjectsWithType(.Type.)",
-      "signature": "GetAllObjectsWithType(.Type.)(...)",
+      "signature": "public ModelObjectEnumerator GetAllObjectsWithType(Type[] TypeFilter)",
       "summary": "Returns an enumerator of all the model objects in the current model with the given base type.",
-      "params": [],
+      "params": [
+        {
+          "name": "TypeFilter",
+          "type": ".System.Type.",
+          "doc": "The types of the objects to return.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelObjectEnumerator",
+        "doc": "A model object enumerator of all the model objects with the given types."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/71548129-b401-0376-634f-c3b2add9f38a"
     },
     {
       "name": "GetAllObjectsWithType(ModelObject.ModelObjectEnum)",
-      "signature": "GetAllObjectsWithType(ModelObject.ModelObjectEnum)(...)",
+      "signature": "public ModelObjectEnumerator GetAllObjectsWithType(ModelObject.ModelObjectEnum Enum)",
       "summary": "Returns an enumerator of all the model objects in the current model with the given type.",
-      "params": [],
+      "params": [
+        {
+          "name": "Enum",
+          "type": "Tekla.Structures.Model.ModelObject.ModelObjectEnum",
+          "doc": "The type of the objects to return.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelObjectEnumerator",
+        "doc": "A model object enumerator of all the model objects with the given type."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d6c4b8b6-3636-3060-9458-a196720c6ba9"
     },
     {
       "name": "GetEnumerator",
-      "signature": "GetEnumerator(...)",
+      "signature": "public ModelObjectEnumerator GetEnumerator()",
       "summary": "Returns an enumerator of all the model objects in the current model.",
       "params": [],
+      "returns": {
+        "type": "ModelObjectEnumerator",
+        "doc": "A model object enumerator of all the model objects."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/cef5b6c6-2855-343a-7ccd-3e3c16e3cf47"
     },
     {
       "name": "GetFilteredObjectsWithType",
-      "signature": "GetFilteredObjectsWithType(...)",
+      "signature": "public ModelObjectEnumerator GetFilteredObjectsWithType(ModelObject.ModelObjectEnum Enum, string FilterName)",
       "summary": "Returns an enumerator of the model objects in the current model with the given type and selected by the filter.",
-      "params": [],
+      "params": [
+        {
+          "name": "Enum",
+          "type": "Tekla.Structures.Model.ModelObject.ModelObjectEnum",
+          "doc": "The type of the objects to return.",
+          "optional": false
+        },
+        {
+          "name": "FilterName",
+          "type": "System.String",
+          "doc": "The name of an existing selection filter to apply.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelObjectEnumerator",
+        "doc": "A model object enumerator of the model objects with the given type and selected by the filter."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1c569914-2d33-622e-1aae-8105c059ea09"
     },
     {
       "name": "GetObjectsByBoundingBox",
-      "signature": "GetObjectsByBoundingBox(...)",
+      "signature": "public ModelObjectEnumerator GetObjectsByBoundingBox(Point MinPoint, Point MaxPoint)",
       "summary": "Returns an enumerator of the model objects in the current model colliding with the given geometrical bounding box. Note that this method uses approximate bounding boxes and thus is NOT EXACT, and may return objects not necessarily colliding with the given box but only being somewhere near to it.",
-      "params": [],
+      "params": [
+        {
+          "name": "MinPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The minimum point of the bounding box.",
+          "optional": false
+        },
+        {
+          "name": "MaxPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The maximum point of the bounding box.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelObjectEnumerator",
+        "doc": "A model object enumerator of the model objects colliding with the given bounding box."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0947a69e-18cb-ca41-cb95-c36c19b1c85e"
     },
     {
       "name": "GetObjectsByFilter",
-      "signature": "GetObjectsByFilter(...)",
+      "signature": "public ModelObjectEnumerator GetObjectsByFilter(FilterExpression FilterExpression)",
       "summary": "Returns an enumerator of the model objects in the current model selected by the given selection filter definition.",
-      "params": [],
+      "params": [
+        {
+          "name": "FilterExpression",
+          "type": "Tekla.Structures.Filtering.FilterExpression",
+          "doc": "The definition of a selection filter to apply.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelObjectEnumerator",
+        "doc": "A model object enumerator of the objects selected by the filter."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/84095767-c855-1698-b819-6f73c55e19b6"
     },
     {
       "name": "GetObjectsByFilterName",
-      "signature": "GetObjectsByFilterName(...)",
+      "signature": "public ModelObjectEnumerator GetObjectsByFilterName(string FilterName)",
       "summary": "Returns an enumerator of the model objects in the current model selected by the given selection filter.",
-      "params": [],
+      "params": [
+        {
+          "name": "FilterName",
+          "type": "System.String",
+          "doc": "The name of an existing selection filter to apply.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelObjectEnumerator",
+        "doc": "A model object enumerator of the objects selected by the filter."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b51f9696-1097-13a6-7fac-f79264fabcbd"

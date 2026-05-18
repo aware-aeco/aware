@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "GuidConversion",
-      "signature": "GuidConversion(...)",
+      "signature": "public GuidConversion()",
       "summary": "Initializes a new instance of the GuidConversion class.",
       "params": [],
       "throws": [],
@@ -20,18 +20,33 @@
   "methods": [
     {
       "name": "GetGuidMapping",
-      "signature": "GetGuidMapping(...)",
+      "signature": "public Dictionary\u003CGuid, Guid\u003E GetGuidMapping()",
       "summary": "Gets the GUID mapping.",
       "params": [],
+      "returns": {
+        "type": "Dictionary\u003CGuid,Guid\u003E",
+        "doc": "The GUID mapping"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/53a1428d-6004-3a22-ae05-3736cf718674"
     },
     {
       "name": "GetNewGuid",
-      "signature": "GetNewGuid(...)",
+      "signature": "public Guid GetNewGuid(Guid oldGuid)",
       "summary": "Gets the new GUID.",
-      "params": [],
+      "params": [
+        {
+          "name": "oldGuid",
+          "type": "System.Guid",
+          "doc": "The old GUID.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "The current GUID"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/772a3a7a-8ebb-fbd1-7e80-885d4127556d"

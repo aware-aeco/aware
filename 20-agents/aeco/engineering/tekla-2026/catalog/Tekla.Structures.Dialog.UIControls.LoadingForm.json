@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "LoadingForm",
-      "signature": "LoadingForm(...)",
+      "signature": "public LoadingForm()",
       "summary": "Creates a new instance of the form.",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "AllowClosing",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Allows the closing of the dialog. By default disabled.",

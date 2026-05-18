@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "StraightDimension.StraightDimensionAttributes",
-      "signature": "StraightDimension.StraightDimensionAttributes(...)",
+      "signature": "public StraightDimensionAttributes()",
       "summary": "Initializes a new instance of the StraightDimension.StraightDimensionAttributes class",
       "params": [],
       "throws": [],
@@ -20,18 +20,40 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/cb6f2f50-1a59-6848-90c1-f19b5adcc489"
     },
     {
       "name": "LoadAttributes",
-      "signature": "LoadAttributes(...)",
+      "signature": "public override bool LoadAttributes(string AttributeFile)",
       "summary": "The attributes can\u0027t be loaded.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "False."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3725a98d-a2e9-323f-4362-4123b635085f"
@@ -40,7 +62,7 @@
   "properties": [
     {
       "name": "DimensionValuePostfix",
-      "type": "object",
+      "type": "ContainerElement",
       "getter": true,
       "setter": true,
       "summary": "The postfix for the dimension\u0027s value.",
@@ -48,7 +70,7 @@
     },
     {
       "name": "DimensionValuePrefix",
-      "type": "object",
+      "type": "ContainerElement",
       "getter": true,
       "setter": true,
       "summary": "The prefix for the dimension\u0027s value.",
@@ -56,7 +78,7 @@
     },
     {
       "name": "Exaggeration",
-      "type": "object",
+      "type": "DimensionSetBaseAttributes.DimensionExaggerationAttributes",
       "getter": true,
       "setter": true,
       "summary": "The exaggeration attributes of the dimension.",
@@ -64,7 +86,7 @@
     },
     {
       "name": "MiddleLowerTag",
-      "type": "object",
+      "type": "ContainerElement",
       "getter": true,
       "setter": true,
       "summary": "The dimension tag placed under the dimension value.",

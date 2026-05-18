@@ -11,25 +11,25 @@
   "properties": [
     {
       "name": "BendingRadiuses",
-      "type": "object",
+      "type": "ArrayList",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The bending radiuses of the wire.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/65148c8e-74d5-defa-1d65-3244c8292050"
     },
     {
       "name": "Diameter",
-      "type": "object",
+      "type": "Double",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The diameter of the wire.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/80568bca-4b5b-fe25-746a-a84be228be28"
     },
     {
       "name": "Shape",
-      "type": "object",
+      "type": "PolyLine",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The physical points of the reinforcing bar.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/078bcdfe-c45c-d6dd-8850-8979a9dec903"
     }

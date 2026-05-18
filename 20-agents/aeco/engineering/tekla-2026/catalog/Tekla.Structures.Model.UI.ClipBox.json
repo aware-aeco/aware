@@ -9,9 +9,22 @@
   "constructors": [
     {
       "name": "ClipBox",
-      "signature": "ClipBox(...)",
+      "signature": "public ClipBox(View view, IEnumerable\u003CClipPlane\u003E clipPlanes = null)",
       "summary": "Initializes a new instance of the ClipBox class with 6 clip planes.",
-      "params": [],
+      "params": [
+        {
+          "name": "view",
+          "type": "Tekla.Structures.Model.UI.View",
+          "doc": "The view where the clip box is inserted to",
+          "optional": false
+        },
+        {
+          "name": "clipPlanes",
+          "type": "System.Collections.Generic.IEnumerable\u003CClipPlane\u003E",
+          "doc": "Optional initial clip planes.",
+          "optional": true
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e369b275-b66c-19d2-7b73-ee49f7986eb4"
@@ -20,27 +33,39 @@
   "methods": [
     {
       "name": "Delete",
-      "signature": "Delete(...)",
+      "signature": "public bool Delete()",
       "summary": "Deletes the clip box from the application view. The application view must be visible.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e0b710e1-ea5b-4e8f-1c48-3910136d2e63"
     },
     {
       "name": "Insert",
-      "signature": "Insert(...)",
+      "signature": "public bool Insert()",
       "summary": "Creates a new clip box to the application view. The application view must be visible.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/cbd05c59-7ef5-514e-22f8-49ef5f7ce7db"
     },
     {
       "name": "Modify",
-      "signature": "Modify(...)",
+      "signature": "public bool Modify()",
       "summary": "Modifies the clip box position in the application view. The application view must be visible.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b12bea25-5e8e-46b8-0fb0-cd5c0cf1a017"
@@ -49,17 +74,17 @@
   "properties": [
     {
       "name": "ClipPlanes",
-      "type": "object",
+      "type": "List\u003CClipPlane\u003E",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets or sets the clip planes contained by this clip box.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b8bf55d1-42a0-525a-64c6-d43345dbb5e3"
     },
     {
       "name": "View",
-      "type": "object",
+      "type": "View",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the view the clip box belongs to.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5bccadcd-89fb-a688-0d8a-04aff70e2919"
     }

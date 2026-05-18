@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisPart",
-      "signature": "AnalysisPart(...)",
+      "signature": "public AnalysisPart()",
       "summary": "Initializes a new instance of the AnalysisPart class.",
       "params": [],
       "throws": [],
@@ -20,25 +20,39 @@
   "methods": [
     {
       "name": "Add(AnalysisArea)",
-      "signature": "Add(AnalysisArea)(...)",
+      "signature": "public void Add(AnalysisArea AnalysisArea)",
       "summary": "Adds an analysis area to the analysis part.",
-      "params": [],
+      "params": [
+        {
+          "name": "AnalysisArea",
+          "type": "Tekla.Structures.Analysis.AnalysisArea",
+          "doc": "The analysis area to be added.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/593e179d-1ef5-f69c-cc04-aa77832c2a64"
     },
     {
       "name": "Add(AnalysisBar)",
-      "signature": "Add(AnalysisBar)(...)",
+      "signature": "public void Add(AnalysisBar AnalysisBar)",
       "summary": "Adds an analysis bar to the analysis part.",
-      "params": [],
+      "params": [
+        {
+          "name": "AnalysisBar",
+          "type": "Tekla.Structures.Analysis.AnalysisBar",
+          "doc": "The analysis bar to be added.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8ee05e2c-7864-0c43-7b1d-c0b84e753f03"
     },
     {
       "name": "Delete",
-      "signature": "Delete(...)",
+      "signature": "public void Delete()",
       "summary": "Deletes an analysis part. The method is not implemented.",
       "params": [],
       "throws": [],
@@ -47,61 +61,85 @@
     },
     {
       "name": "DeleteAnalysisPart",
-      "signature": "DeleteAnalysisPart(...)",
+      "signature": "public bool DeleteAnalysisPart()",
       "summary": "Deletes the analysis part by ID.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4f473d30-9ec6-d949-746c-0c8ef34b245d"
     },
     {
       "name": "GetAnalysisAreas",
-      "signature": "GetAnalysisAreas(...)",
+      "signature": "public AnalysisObjectEnumerator GetAnalysisAreas()",
       "summary": "Gets the analysis areas of the analysis part.",
       "params": [],
+      "returns": {
+        "type": "AnalysisObjectEnumerator",
+        "doc": "The analysis areas of the analysis part."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ab93e725-314c-4b9a-f203-056d6d64702b"
     },
     {
       "name": "GetAnalysisBars",
-      "signature": "GetAnalysisBars(...)",
+      "signature": "public AnalysisObjectEnumerator GetAnalysisBars()",
       "summary": "Gets the analysis bars of the analysis part.",
       "params": [],
+      "returns": {
+        "type": "AnalysisObjectEnumerator",
+        "doc": "The analysis bars of the analysis part."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0da734f3-344d-69b2-6b60-44d0982272ec"
     },
     {
       "name": "GetAnalysisVolumes",
-      "signature": "GetAnalysisVolumes(...)",
+      "signature": "public AnalysisObjectEnumerator GetAnalysisVolumes()",
       "summary": "Gets the analysis volumes of the analysis part.",
       "params": [],
+      "returns": {
+        "type": "AnalysisObjectEnumerator",
+        "doc": "The analysis volumes of the analysis part."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ea25e3ca-8245-726d-53e8-3a727fb3c931"
     },
     {
       "name": "GetMainParts",
-      "signature": "GetMainParts(...)",
+      "signature": "public AnalysisObjectEnumerator GetMainParts()",
       "summary": "Get the main analysis parts of this analysis part. There are no main analysis parts if this is not a sub analysis part.",
       "params": [],
+      "returns": {
+        "type": "AnalysisObjectEnumerator",
+        "doc": "The the main parts of this analysis part."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/497f3914-70d0-aad9-e950-effe84eaa9d1"
     },
     {
       "name": "GetSubParts",
-      "signature": "GetSubParts(...)",
+      "signature": "public AnalysisObjectEnumerator GetSubParts()",
       "summary": "Get the sub analysis parts of this analysis part. There are no sub analysis parts if this is not a main analysis part.",
       "params": [],
+      "returns": {
+        "type": "AnalysisObjectEnumerator",
+        "doc": "The sub analysis parts of this analysis part."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/470af607-1d81-d92c-5897-a316ec333ef5"
     },
     {
       "name": "Insert",
-      "signature": "Insert(...)",
+      "signature": "public void Insert()",
       "summary": "Inserts a new analysis part into the Tekla Structures model. The AnalysisModelName has to be set.",
       "params": [],
       "throws": [],
@@ -110,25 +148,33 @@
     },
     {
       "name": "IsMainPart",
-      "signature": "IsMainPart(...)",
+      "signature": "public bool IsMainPart()",
       "summary": "Check if this analysis part is a main analysis part (has sub analysis parts).",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if this analysis part is a main analysis part."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4bf5cd08-99b9-bbae-bce7-6bc34d71a0c9"
     },
     {
       "name": "IsSubPart",
-      "signature": "IsSubPart(...)",
+      "signature": "public bool IsSubPart()",
       "summary": "Check if this analysis part is a sub analysis part.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if this analysis part is a sub part."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/779dd4a8-54b9-a77a-d4fc-dfeed6e88a84"
     },
     {
       "name": "Modify",
-      "signature": "Modify(...)",
+      "signature": "public void Modify()",
       "summary": "Modifies an analysis part. The ID, or the PartID and the AnalysisModelName, has to be set.",
       "params": [],
       "throws": [],
@@ -137,16 +183,33 @@
     },
     {
       "name": "MovePosition",
-      "signature": "MovePosition(...)",
+      "signature": "public bool MovePosition(AnalysisPosition position, Vector move)",
       "summary": "Move analysis position.",
-      "params": [],
+      "params": [
+        {
+          "name": "position",
+          "type": "Tekla.Structures.Analysis.AnalysisPosition",
+          "doc": "The analysis position.",
+          "optional": false
+        },
+        {
+          "name": "move",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The move.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/82b2187a-548d-dc58-4dc3-0a4654c17480"
     },
     {
       "name": "Select",
-      "signature": "Select(...)",
+      "signature": "public override void Select()",
       "summary": "Selects an analysis part. The ID, or the PartID and the AnalysisModelName, has to be set.",
       "params": [],
       "throws": [],
@@ -157,23 +220,23 @@
   "properties": [
     {
       "name": "AnalysisAreas",
-      "type": "object",
+      "type": "List\u003CAnalysisArea\u003E",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The analysis areas of the analysis part.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/283b06b3-8e00-9567-5172-9faee244a591"
     },
     {
       "name": "AnalysisBars",
-      "type": "object",
+      "type": "List\u003CAnalysisBar\u003E",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The analysis bars of the analysis part.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d875ecfc-7ff2-bf6c-3da7-6155755a5a3c"
     },
     {
       "name": "AnalysisDesignCode",
-      "type": "object",
+      "type": "AnalysisDesignCode",
       "getter": true,
       "setter": true,
       "summary": "The analysis design code of the analysis part.",
@@ -181,7 +244,7 @@
     },
     {
       "name": "AnalysisModelName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis model name.",
@@ -189,7 +252,7 @@
     },
     {
       "name": "AnalysisObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the analysis object.",
@@ -197,7 +260,7 @@
     },
     {
       "name": "AnalysisPartAnalysisProperties",
-      "type": "object",
+      "type": "AnalysisPartAnalysisProperties",
       "getter": true,
       "setter": true,
       "summary": "The analysis part analysis properties.",
@@ -205,7 +268,7 @@
     },
     {
       "name": "AnalysisPartAreaAttributes",
-      "type": "object",
+      "type": "AnalysisPartAreaAttributes",
       "getter": true,
       "setter": true,
       "summary": "The analysis part area attributes.",
@@ -213,7 +276,7 @@
     },
     {
       "name": "AnalysisPartBarAttributes",
-      "type": "object",
+      "type": "AnalysisPartBarAttributes",
       "getter": true,
       "setter": true,
       "summary": "The analysis part bar attributes.",
@@ -221,7 +284,7 @@
     },
     {
       "name": "AnalysisPartCompositeProperties",
-      "type": "object",
+      "type": "AnalysisPartCompositeProperties",
       "getter": true,
       "setter": true,
       "summary": "The analysis part composite properties.",
@@ -229,7 +292,7 @@
     },
     {
       "name": "AnalysisPartLoadingProperties",
-      "type": "object",
+      "type": "AnalysisPartLoadingProperties",
       "getter": true,
       "setter": true,
       "summary": "The analysis part loading properties.",
@@ -237,7 +300,7 @@
     },
     {
       "name": "AnalysisPartPositionProperties",
-      "type": "object",
+      "type": "AnalysisPartPositionProperties",
       "getter": true,
       "setter": true,
       "summary": "The analysis part position properties.",
@@ -245,7 +308,7 @@
     },
     {
       "name": "AnalysisPartSpanningProperties",
-      "type": "object",
+      "type": "AnalysisPartSpanningProperties",
       "getter": true,
       "setter": true,
       "summary": "The analysis part spanning properties.",
@@ -253,7 +316,7 @@
     },
     {
       "name": "AnalysisType",
-      "type": "object",
+      "type": "AnalysisPart.AnalysisTypeEnum",
       "getter": true,
       "setter": true,
       "summary": "The analysis type of the analysis part.",
@@ -261,15 +324,15 @@
     },
     {
       "name": "AnalysisVolumes",
-      "type": "object",
+      "type": "List\u003CAnalysisVolume\u003E",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The analysis volumes of the analysis part.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b4270f8e-3013-e875-a5f3-3f2566940087"
     },
     {
       "name": "CoordinateSystem",
-      "type": "object",
+      "type": "CoordinateSystem",
       "getter": true,
       "setter": true,
       "summary": "The coordinate system of the analysis part.",
@@ -277,7 +340,7 @@
     },
     {
       "name": "Curvature",
-      "type": "object",
+      "type": "AnalysisCurvature",
       "getter": true,
       "setter": true,
       "summary": "The curvature of the analysis part.",
@@ -285,7 +348,7 @@
     },
     {
       "name": "FatherObject2ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -293,7 +356,7 @@
     },
     {
       "name": "FatherObject2Type",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -301,7 +364,7 @@
     },
     {
       "name": "FatherObjectID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -309,7 +372,7 @@
     },
     {
       "name": "FatherObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -317,7 +380,7 @@
     },
     {
       "name": "ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the analysis object.",
@@ -325,7 +388,7 @@
     },
     {
       "name": "LoadBearingOrder",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The load bearing order.",
@@ -333,7 +396,7 @@
     },
     {
       "name": "Material",
-      "type": "object",
+      "type": "AnalysisMaterial",
       "getter": true,
       "setter": true,
       "summary": "The material of the analysis part.",
@@ -341,7 +404,7 @@
     },
     {
       "name": "OverrideProfile",
-      "type": "object",
+      "type": "AnalysisCrossSection",
       "getter": true,
       "setter": true,
       "summary": "The override profile of the analysis part. In case of tapered profile, only the name is available, and more details are available in the start/end properties of the analysis members.",
@@ -349,7 +412,7 @@
     },
     {
       "name": "PartID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "The identifier of the physical part.",
@@ -357,7 +420,7 @@
     },
     {
       "name": "PartName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The name of the physical part.",
@@ -365,7 +428,7 @@
     },
     {
       "name": "PartType",
-      "type": "object",
+      "type": "AnalysisPart.PartTypeEnum",
       "getter": true,
       "setter": true,
       "summary": "The type of the physical part.",
@@ -373,7 +436,7 @@
     },
     {
       "name": "Profile",
-      "type": "object",
+      "type": "AnalysisCrossSection",
       "getter": true,
       "setter": true,
       "summary": "The profile of the analysis part. Note: OverrideProfile may exist to replace this. In case of tapered profile, only the name is available, ID is 0 and values are not returned. More details are available in the start/end properties of the analysis members.",
@@ -381,7 +444,7 @@
     },
     {
       "name": "SnapDistance",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The snap distance. Use 0.0 for manual connectivity, positive value for automatic connectivity.",
@@ -389,7 +452,7 @@
     },
     {
       "name": "UpDirection",
-      "type": "object",
+      "type": "Vector",
       "getter": true,
       "setter": true,
       "summary": "The up direction of the analysis part (in the global coordinate system). The axis vector (connecting member end nodes) and the up direction vector define the local XY plane of the member. The local Z can be calculated as localZ = localX x UpDirection (cross product), and after this localY = localZ x localX (cross product).",

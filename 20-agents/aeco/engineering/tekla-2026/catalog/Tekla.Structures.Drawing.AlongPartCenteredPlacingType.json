@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AlongPartCenteredPlacingType",
-      "signature": "AlongPartCenteredPlacingType(...)",
+      "signature": "public AlongPartCenteredPlacingType()",
       "summary": "Creates a new along part centered placing type instance.",
       "params": [],
       "throws": [],

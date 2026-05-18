@@ -9,18 +9,33 @@
   "methods": [
     {
       "name": "GetRelatedObjects.",
-      "signature": "GetRelatedObjects.(...)",
+      "signature": "DrawingObjectEnumerator GetRelatedObjects()",
       "summary": "Gets the related objects of the current object.",
       "params": [],
+      "returns": {
+        "type": "DrawingObjectEnumerator",
+        "doc": "The related objects of the current object."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/003820ed-f0fb-31db-bd7b-9e29af26c9ea"
     },
     {
       "name": "GetRelatedObjects(.Type.)",
-      "signature": "GetRelatedObjects(.Type.)(...)",
+      "signature": "DrawingObjectEnumerator GetRelatedObjects(Type[] TypeFilter)",
       "summary": "Gets the related objects of the current object that are of certain types.",
-      "params": [],
+      "params": [
+        {
+          "name": "TypeFilter",
+          "type": ".System.Type.",
+          "doc": "The types of the objects to get.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DrawingObjectEnumerator",
+        "doc": "The related objects of the current object that are of certain types."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/01f07387-e7a7-4074-792a-d94e64785249"

@@ -10,36 +10,73 @@
   "methods": [
     {
       "name": "IsDefaultValue(Double)",
-      "signature": "IsDefaultValue(Double)(...)",
+      "signature": "public bool IsDefaultValue(double Value)",
       "summary": "Returns true if the given value is set to the default value for this type.",
-      "params": [],
+      "params": [
+        {
+          "name": "Value",
+          "type": "System.Double",
+          "doc": "The value to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value is set to the default."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/999607cd-78b3-27fa-2d16-477291d612e6"
     },
     {
       "name": "IsDefaultValue(Int32)",
-      "signature": "IsDefaultValue(Int32)(...)",
+      "signature": "public bool IsDefaultValue(int Value)",
       "summary": "Returns true if the given value is set to the default value for this type.",
-      "params": [],
+      "params": [
+        {
+          "name": "Value",
+          "type": "System.Int32",
+          "doc": "The value to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value is set to the default."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8260c2f5-8b1b-fe04-715e-b5408f07da8b"
     },
     {
       "name": "IsDefaultValue(String)",
-      "signature": "IsDefaultValue(String)(...)",
+      "signature": "public bool IsDefaultValue(string Value)",
       "summary": "Returns true if the given value is set to the default value (empty string).",
-      "params": [],
+      "params": [
+        {
+          "name": "Value",
+          "type": "System.String",
+          "doc": "The value to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value is set to the default."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ef9ef015-5d36-7c29-b229-3ae1bdd7be20"
     },
     {
       "name": "Run",
-      "signature": "Run(...)",
+      "signature": "public abstract bool Run()",
       "summary": "The main method of the component. Inside Run the user can implement the logic based on the user given attributes and input. Inside the method input can be found from the provided properties: Primary, Secondaries and Positions.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1fe2084f-e160-10b4-22a3-457d714a382b"
@@ -48,7 +85,7 @@
   "properties": [
     {
       "name": "Code",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The connection code of the executable connection instance. The maximum length is 22 characters.",
@@ -56,33 +93,33 @@
     },
     {
       "name": "Identifier",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The identifier of the executable plug-in instance.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/835ac56b-075e-144a-298a-2fed8ff77d9a"
     },
     {
       "name": "Positions",
-      "type": "object",
+      "type": "List\u003CPoint\u003E",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The positional attributes for a detail or a seam instance; one for a detail, N for a seam.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/619c304f-170b-2f81-0cf6-6281a1575cc6"
     },
     {
       "name": "Primary",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The identifier that was selected as the primary object.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/44d5df2e-93b6-236e-ae3d-19984869ebe5"
     },
     {
       "name": "Secondaries",
-      "type": "object",
+      "type": "List\u003CIdentifier\u003E",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "A list of secondary identifiers of a connection or a seam.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2ab8cc3e-509b-bc37-03ab-f7e3a48adb32"
     }

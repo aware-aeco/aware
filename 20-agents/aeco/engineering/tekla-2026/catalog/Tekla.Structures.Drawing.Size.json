@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Size",
-      "signature": "Size(...)",
+      "signature": "public Size()",
       "summary": "Creates a new size instance with zero width and height.",
       "params": [],
       "throws": [],
@@ -18,9 +18,22 @@
     },
     {
       "name": "Size",
-      "signature": "Size(...)",
+      "signature": "public Size(double Width, double Height)",
       "summary": "Creates a new size instance with the specified width and height.",
-      "params": [],
+      "params": [
+        {
+          "name": "Width",
+          "type": "System.Double",
+          "doc": "The width to be used.",
+          "optional": false
+        },
+        {
+          "name": "Height",
+          "type": "System.Double",
+          "doc": "The height to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/30392ec6-0648-8c8e-ef73-83e540b5b2a9"
@@ -29,27 +42,59 @@
   "methods": [
     {
       "name": "ToString.",
-      "signature": "ToString.(...)",
+      "signature": "public override string ToString()",
       "summary": "Returns a string that represents this instance (in fractional inches if advanced option XS_USE_ONLY_INCHES_IN_SHEET_SIZES set to true).",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A string that represents this instance using default separator character \u0022x\u0022."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1ef52bd4-9074-7210-56ff-6c3cf681ca06"
     },
     {
       "name": "ToString(String)",
-      "signature": "ToString(String)(...)",
+      "signature": "public string ToString(string separator)",
       "summary": "Returns a string that represents this instance (in fractional inches if advanced option XS_USE_ONLY_INCHES_IN_SHEET_SIZES set to true).",
-      "params": [],
+      "params": [
+        {
+          "name": "separator",
+          "type": "System.String",
+          "doc": "The separator characters(s).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A string that represents this instance using the specified separator character(s)."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9731ad65-0f62-db52-cba4-b742413b369b"
     },
     {
       "name": "ToString(IFormatProvider, String)",
-      "signature": "ToString(IFormatProvider, String)(...)",
+      "signature": "public string ToString(IFormatProvider formatProvider, string separator = null)",
       "summary": "Returns a string that represents this instance (in fractional inches if advanced option XS_USE_ONLY_INCHES_IN_SHEET_SIZES set to true).",
-      "params": [],
+      "params": [
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The format provider.",
+          "optional": false
+        },
+        {
+          "name": "separator",
+          "type": "System.String",
+          "doc": "The optional separator characters(s) - defaults to \u0022x\u0022.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A string that represents this instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1b4b2d55-5e98-707a-b193-91ecb9428738"
@@ -58,7 +103,7 @@
   "properties": [
     {
       "name": "Height",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the height value of the size instance.",
@@ -66,7 +111,7 @@
     },
     {
       "name": "Width",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the width value of the size instance.",

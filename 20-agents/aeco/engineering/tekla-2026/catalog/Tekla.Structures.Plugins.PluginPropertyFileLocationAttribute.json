@@ -9,9 +9,22 @@
   "constructors": [
     {
       "name": "PluginPropertyFileLocationAttribute",
-      "signature": "PluginPropertyFileLocationAttribute(...)",
+      "signature": "public PluginPropertyFileLocationAttribute(string suffix, string subdirectory)",
       "summary": "Initializes a new instance of the PluginPropertyFileLocationAttribute class, for a file with provided filename suffix.",
-      "params": [],
+      "params": [
+        {
+          "name": "suffix",
+          "type": "System.String",
+          "doc": "File suffix to register. Must contain the dot, such as \u0022.ExamplePlugin.Data.txt\u0022. Should be as specific as possible.",
+          "optional": false
+        },
+        {
+          "name": "subdirectory",
+          "type": "System.String",
+          "doc": "The model folder subdirectory where the attribute should be searched for.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0b7c4903-a5e8-3e8a-6ae0-f7174529fdbb"
@@ -21,17 +34,17 @@
   "properties": [
     {
       "name": "Subdirectory",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the property file subdirectory in a model folder.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/99d620f7-d1a2-e654-c71e-3dac7adfedc3"
     },
     {
       "name": "Suffix",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the property file suffix.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9c8be470-39d1-0f07-b289-df2d196eac3c"
     }

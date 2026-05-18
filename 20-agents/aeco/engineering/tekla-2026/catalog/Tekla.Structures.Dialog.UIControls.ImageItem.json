@@ -11,7 +11,7 @@
   "properties": [
     {
       "name": "Name",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the image name.",
@@ -19,7 +19,7 @@
     },
     {
       "name": "Picture",
-      "type": "object",
+      "type": "Image",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the image.",

@@ -11,47 +11,47 @@
   "properties": [
     {
       "name": "Description",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The description of the product.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4ef1a853-3a08-64d7-d9e1-7a972a0d95e5"
     },
     {
       "name": "Extrusion",
-      "type": "object",
+      "type": "Vector",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The extrusion vector.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3e9298b4-f968-cb57-f5ac-956c82e4c313"
     },
     {
       "name": "Name",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The name of the product.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/43a7f690-62b8-9b4e-e09e-0eeed73914fa"
     },
     {
       "name": "ObjectType",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The object type of the product.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f0fd3c96-e406-88ca-3007-cfc1aad8e489"
     },
     {
       "name": "Origin",
-      "type": "object",
+      "type": "Point",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The origin of the extrusion.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/79c545ba-bb67-a069-6955-04b7403bc9b8"
     },
     {
       "name": "ProfileName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The name of the profile (often empty).",
@@ -59,25 +59,25 @@
     },
     {
       "name": "SemiAxis1",
-      "type": "object",
+      "type": "Double",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The first semi-axis.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/eb4acddc-5c83-14f2-e79a-1adc32055a63"
     },
     {
       "name": "SemiAxis2",
-      "type": "object",
+      "type": "Double",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The second semi-axis.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/753145d8-a93b-de11-6d1a-3c7a1c7a7f00"
     },
     {
       "name": "xDir",
-      "type": "object",
+      "type": "Vector",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The X-axis direction.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1c58725d-7f05-89c1-bbe6-5ad2ed4e00eb"
     }

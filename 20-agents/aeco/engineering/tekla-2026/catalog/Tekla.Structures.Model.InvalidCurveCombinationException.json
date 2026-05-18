@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "InvalidCurveCombinationException",
-      "signature": "InvalidCurveCombinationException(...)",
+      "signature": "public InvalidCurveCombinationException()",
       "summary": "Constructs an instance of the class",
       "params": [],
       "throws": [],

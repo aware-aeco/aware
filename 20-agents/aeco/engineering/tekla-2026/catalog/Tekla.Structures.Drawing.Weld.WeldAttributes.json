@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Weld.WeldAttributes",
-      "signature": "Weld.WeldAttributes(...)",
+      "signature": "public WeldAttributes()",
       "summary": "Creates a new default weld attributes instance that loads standard attributes.",
       "params": [],
       "throws": [],
@@ -18,9 +18,16 @@
     },
     {
       "name": "Weld.WeldAttributes",
-      "signature": "Weld.WeldAttributes(...)",
+      "signature": "public WeldAttributes(string AttributeFile)",
       "summary": "Creates a new weld attributes instance that loads the specified attributes.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8e310c2f-e972-ef8b-7389-20cee98f7c41"
@@ -29,18 +36,40 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/324f5eed-802f-1847-a2e3-e205fae092d3"
     },
     {
       "name": "LoadAttributes",
-      "signature": "LoadAttributes(...)",
+      "signature": "public override bool LoadAttributes(string AttributeFile)",
       "summary": "Loads the attributes from the attribute file.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/610dd09a-8447-6f6d-22bf-45c35819209f"
@@ -49,7 +78,7 @@
   "properties": [
     {
       "name": "CustomPresentation",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Custom presentation GUID to be applied to the weld",
@@ -57,7 +86,7 @@
     },
     {
       "name": "DrawHiddenLines",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "True if hidden lines are drawn.",
@@ -65,7 +94,7 @@
     },
     {
       "name": "DrawOwnHiddenLines",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "True if own hidden lines are drawn.",
@@ -73,7 +102,7 @@
     },
     {
       "name": "HiddenLines",
-      "type": "object",
+      "type": "LineTypeAttributes",
       "getter": true,
       "setter": true,
       "summary": "The line type of hidden lines.",
@@ -81,7 +110,7 @@
     },
     {
       "name": "Representation",
-      "type": "object",
+      "type": "Weld.Representation",
       "getter": true,
       "setter": true,
       "summary": "The representation of the weld.",
@@ -89,7 +118,7 @@
     },
     {
       "name": "VisibleLines",
-      "type": "object",
+      "type": "LineTypeAttributes",
       "getter": true,
       "setter": true,
       "summary": "The line type of visible lines.",

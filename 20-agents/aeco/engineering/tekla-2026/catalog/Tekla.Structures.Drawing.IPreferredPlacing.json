@@ -10,7 +10,7 @@
   "properties": [
     {
       "name": "PreferredPlacing",
-      "type": "object",
+      "type": "PreferredPlacingTypeBase",
       "getter": true,
       "setter": true,
       "summary": "The type of placing the object should use. See PreferredPlacingTypes for different types of placing.",

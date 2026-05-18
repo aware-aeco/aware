@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "DimensionSetBaseAttributes.DimensionPlacingAttributes",
-      "signature": "DimensionSetBaseAttributes.DimensionPlacingAttributes(...)",
+      "signature": "public DimensionPlacingAttributes()",
       "summary": "Creates a new dimension placing attributes instance. The placing is set to the free placing.",
       "params": [],
       "throws": [],
@@ -18,9 +18,28 @@
     },
     {
       "name": "DimensionSetBaseAttributes.DimensionPlacingAttributes",
-      "signature": "DimensionSetBaseAttributes.DimensionPlacingAttributes(...)",
+      "signature": "public DimensionPlacingAttributes(DimensionSetBaseAttributes.Placings placing, PlacingDirectionAttributes direction, PlacingDistanceAttributes distance)",
       "summary": "Creates a new dimension placing attributes instance with the given parameters.",
-      "params": [],
+      "params": [
+        {
+          "name": "placing",
+          "type": "Tekla.Structures.Drawing.DimensionSetBaseAttributes.Placings",
+          "doc": "The placing type of the dimension.",
+          "optional": false
+        },
+        {
+          "name": "direction",
+          "type": "Tekla.Structures.Drawing.PlacingDirectionAttributes",
+          "doc": "The placing direction attributes of the dimension.",
+          "optional": false
+        },
+        {
+          "name": "distance",
+          "type": "Tekla.Structures.Drawing.PlacingDistanceAttributes",
+          "doc": "The placing distance attributes of the dimension.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c058ae87-e978-0c00-d9ac-ac062eede407"
@@ -29,9 +48,20 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/986ea414-b9bc-87b6-0ae1-6992b84173e6"
@@ -40,7 +70,7 @@
   "properties": [
     {
       "name": "Direction",
-      "type": "object",
+      "type": "PlacingDirectionAttributes",
       "getter": true,
       "setter": true,
       "summary": "The placing direction.",
@@ -48,7 +78,7 @@
     },
     {
       "name": "Distance",
-      "type": "object",
+      "type": "PlacingDistanceAttributes",
       "getter": true,
       "setter": true,
       "summary": "The placing distance attributes.",
@@ -56,7 +86,7 @@
     },
     {
       "name": "Placing",
-      "type": "object",
+      "type": "DimensionSetBaseAttributes.Placings",
       "getter": true,
       "setter": true,
       "summary": "The placing type.",

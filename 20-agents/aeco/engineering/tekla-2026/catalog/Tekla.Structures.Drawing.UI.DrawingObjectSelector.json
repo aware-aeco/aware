@@ -10,54 +10,112 @@
   "methods": [
     {
       "name": "GetSelected",
-      "signature": "GetSelected(...)",
+      "signature": "public DrawingObjectEnumerator GetSelected()",
       "summary": "Gets the selected objects in the drawing.",
       "params": [],
+      "returns": {
+        "type": "DrawingObjectEnumerator",
+        "doc": "A drawing object enumerator of the selected objects in the drawing."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/23520711-1212-6069-bd1e-684691554671"
     },
     {
       "name": "SelectObject",
-      "signature": "SelectObject(...)",
+      "signature": "public bool SelectObject(DrawingObject DrawingObject)",
       "summary": "Selects a single object in the drawing.",
-      "params": [],
+      "params": [
+        {
+          "name": "DrawingObject",
+          "type": "Tekla.Structures.Drawing.DrawingObject",
+          "doc": "The object to select.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if succeeded."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ce422e54-d551-c67b-ee2c-2e85907b91c7"
     },
     {
       "name": "SelectObjects",
-      "signature": "SelectObjects(...)",
+      "signature": "public bool SelectObjects(ArrayList DrawingObjects, bool ExtendSelection)",
       "summary": "Selects the specified drawing objects in the drawing.",
-      "params": [],
+      "params": [
+        {
+          "name": "DrawingObjects",
+          "type": "System.Collections.ArrayList",
+          "doc": "The drawing objects to be selected.",
+          "optional": false
+        },
+        {
+          "name": "ExtendSelection",
+          "type": "System.Boolean",
+          "doc": "Defines whether the selector keeps the currently selected objects selected or not.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if succeeded."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/16229e0b-b7ed-5b1c-3cc6-c64911d01ef4"
     },
     {
       "name": "UnselectAllObjects",
-      "signature": "UnselectAllObjects(...)",
+      "signature": "public bool UnselectAllObjects()",
       "summary": "Unselects all the selected objects.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if succeeded."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/bf12b799-6c49-70a7-dca9-d09c62c64cd9"
     },
     {
       "name": "UnselectObject",
-      "signature": "UnselectObject(...)",
+      "signature": "public bool UnselectObject(DrawingObject DrawingObject)",
       "summary": "Unselects a drawing object.",
-      "params": [],
+      "params": [
+        {
+          "name": "DrawingObject",
+          "type": "Tekla.Structures.Drawing.DrawingObject",
+          "doc": "The drawing object to be unselected.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if succeeded."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7dfd42cd-254d-ef27-6ab0-201a6d94b50c"
     },
     {
       "name": "UnselectObjects",
-      "signature": "UnselectObjects(...)",
+      "signature": "public bool UnselectObjects(ArrayList DrawingObjects)",
       "summary": "Unselects the specified drawing objects keeping the other objects still selected.",
-      "params": [],
+      "params": [
+        {
+          "name": "DrawingObjects",
+          "type": "System.Collections.ArrayList",
+          "doc": "The drawing objects to be unselected.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if succeeded."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/16da69e3-8e6d-8cbc-6ecb-c10645b03487"

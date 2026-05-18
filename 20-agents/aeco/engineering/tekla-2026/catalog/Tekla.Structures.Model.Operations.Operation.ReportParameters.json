@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Operation.ReportParameters",
-      "signature": "Operation.ReportParameters(...)",
+      "signature": "public ReportParameters()",
       "summary": "Initializes a new instance of the Operation.ReportParameters class",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "FileName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the name of the created report. The name must contain more than three characters.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "IsFromSelected",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the report is from selected or from all objects.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "TemplateName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the name of the report template to be used in report creation. The name must contain more than three characters.",
@@ -45,7 +45,7 @@
     },
     {
       "name": "Title1",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the first title for the created report.",
@@ -53,7 +53,7 @@
     },
     {
       "name": "Title2",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the second title for the created report.",
@@ -61,7 +61,7 @@
     },
     {
       "name": "Title3",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the third title for the created report.",
@@ -69,7 +69,7 @@
     },
     {
       "name": "XLSXFlags",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the flags used for processing XLSX files.",
@@ -77,7 +77,7 @@
     },
     {
       "name": "XLTXFileName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the name of the Excel template to be used.",

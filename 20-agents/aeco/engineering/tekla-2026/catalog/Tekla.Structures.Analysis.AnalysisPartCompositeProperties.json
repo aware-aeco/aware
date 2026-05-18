@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisPartCompositeProperties",
-      "signature": "AnalysisPartCompositeProperties(...)",
+      "signature": "public AnalysisPartCompositeProperties()",
       "summary": "Initializes a new instance of the AnalysisPartCompositeProperties class",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "CompositeBeamSlabMaterial",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The composite beam slab material.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "CompositeBeamSlabThickness",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The composite beam slab thickness.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "CompositeBeamType",
-      "type": "object",
+      "type": "AnalysisPartCompositeProperties.CompositeBeamEnum",
       "getter": true,
       "setter": true,
       "summary": "The composite beam type.",
@@ -45,7 +45,7 @@
     },
     {
       "name": "CompositeBeamWidthFromSpanFactor",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The composite beam width from span factor.",
@@ -53,7 +53,7 @@
     },
     {
       "name": "CompositeBeamWidthLeft",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The composite beam width left.",
@@ -61,7 +61,7 @@
     },
     {
       "name": "CompositeBeamWidthModeLeft",
-      "type": "object",
+      "type": "AnalysisPartCompositeProperties.CompositeBeamWidthEnum",
       "getter": true,
       "setter": true,
       "summary": "The composite beam width mode left.",
@@ -69,7 +69,7 @@
     },
     {
       "name": "CompositeBeamWidthModeRight",
-      "type": "object",
+      "type": "AnalysisPartCompositeProperties.CompositeBeamWidthEnum",
       "getter": true,
       "setter": true,
       "summary": "The composite beam width mode right.",
@@ -77,7 +77,7 @@
     },
     {
       "name": "CompositeBeamWidthRight",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The composite beam width right.",

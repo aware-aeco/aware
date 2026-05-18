@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "WeldFilterExpressions.SizeAboveLine",
-      "signature": "WeldFilterExpressions.SizeAboveLine(...)",
+      "signature": "public SizeAboveLine()",
       "summary": "Initializes a new instance of the SizeAboveLine class.",
       "params": [],
       "throws": [],
@@ -20,9 +20,13 @@
   "methods": [
     {
       "name": "ToString",
-      "signature": "ToString(...)",
+      "signature": "public override string ToString()",
       "summary": "Creates a string representation of the current object.",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A new string representing the current object."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4"

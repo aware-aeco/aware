@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisPartPositionProperties",
-      "signature": "AnalysisPartPositionProperties(...)",
+      "signature": "public AnalysisPartPositionProperties()",
       "summary": "Initializes a new instance of the AnalysisPartPositionProperties class",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "AxisCoordinateX",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The axis coordinate in the X direction.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "AxisCoordinateY",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The axis coordinate in the Y direction.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "AxisCoordinateZ",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The axis coordinate in the Z direction.",
@@ -45,7 +45,7 @@
     },
     {
       "name": "AxisLocation",
-      "type": "object",
+      "type": "AnalysisPartPositionProperties.AxisLocationEnum",
       "getter": true,
       "setter": true,
       "summary": "The axis location of the analysis part.",
@@ -53,7 +53,7 @@
     },
     {
       "name": "AxisModifierX",
-      "type": "object",
+      "type": "AnalysisPartPositionProperties.AxisModifierEnum",
       "getter": true,
       "setter": true,
       "summary": "The axis modifier in the X direction.",
@@ -61,7 +61,7 @@
     },
     {
       "name": "AxisModifierY",
-      "type": "object",
+      "type": "AnalysisPartPositionProperties.AxisModifierEnum",
       "getter": true,
       "setter": true,
       "summary": "The axis modifier in the Y direction.",
@@ -69,7 +69,7 @@
     },
     {
       "name": "AxisModifierZ",
-      "type": "object",
+      "type": "AnalysisPartPositionProperties.AxisModifierEnum",
       "getter": true,
       "setter": true,
       "summary": "The axis modifier in the Z direction.",
@@ -77,7 +77,7 @@
     },
     {
       "name": "AxisOffset",
-      "type": "object",
+      "type": "Vector",
       "getter": true,
       "setter": true,
       "summary": "The axis offset of the analysis part (in the global coordinate system).",
@@ -85,7 +85,7 @@
     },
     {
       "name": "KeepAxis",
-      "type": "object",
+      "type": "AnalysisModel.KeepAxisEnum",
       "getter": true,
       "setter": true,
       "summary": "The keep axis setting of the analysis part.",
@@ -93,7 +93,7 @@
     },
     {
       "name": "LongitudinalOffsetMode",
-      "type": "object",
+      "type": "AnalysisPartPositionProperties.LongitudinalOffsetEnum",
       "getter": true,
       "setter": true,
       "summary": "The longitudinal offset mode.",

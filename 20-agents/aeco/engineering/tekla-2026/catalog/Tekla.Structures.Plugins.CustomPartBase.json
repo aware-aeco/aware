@@ -10,36 +10,73 @@
   "methods": [
     {
       "name": "IsDefaultValue(Double)",
-      "signature": "IsDefaultValue(Double)(...)",
+      "signature": "public bool IsDefaultValue(double Value)",
       "summary": "Returns true if the given value is set to the default value for this type.",
-      "params": [],
+      "params": [
+        {
+          "name": "Value",
+          "type": "System.Double",
+          "doc": "The value to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value is set to the default."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0d112a60-b9ba-0cdc-49a9-b85f4a0d3557"
     },
     {
       "name": "IsDefaultValue(Int32)",
-      "signature": "IsDefaultValue(Int32)(...)",
+      "signature": "public bool IsDefaultValue(int Value)",
       "summary": "Returns true if the given value is set to the default value for this type.",
-      "params": [],
+      "params": [
+        {
+          "name": "Value",
+          "type": "System.Int32",
+          "doc": "The value to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value is set to the default."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6dbb47e9-a1c7-82ca-4b8e-d5fa5bc2a7fc"
     },
     {
       "name": "IsDefaultValue(String)",
-      "signature": "IsDefaultValue(String)(...)",
+      "signature": "public bool IsDefaultValue(string Value)",
       "summary": "Returns true if the given value is set to the default value (empty string).",
-      "params": [],
+      "params": [
+        {
+          "name": "Value",
+          "type": "System.String",
+          "doc": "The value to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value is set to the default."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/43ce7a81-3e9e-0ae0-8030-c9d8a06534ff"
     },
     {
       "name": "Run",
-      "signature": "Run(...)",
+      "signature": "public abstract bool Run()",
       "summary": "The main method of the component. Inside Run the user can implement the logic based on the user given attributes and input. Inside the method input can be found from the provided properties: Primary, Secondaries and Positions.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2785e532-af81-6a7d-ef0c-9f615039a143"
@@ -48,17 +85,17 @@
   "properties": [
     {
       "name": "Identifier",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The identifier of the executable plug-in instance.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c56aebfc-751e-97f0-5755-ff5ceaed6c53"
     },
     {
       "name": "Positions",
-      "type": "object",
+      "type": "List\u003CPoint\u003E",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The positional attributes for a custom part instance.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e839a39c-c161-1a90-e8d1-dc166b258473"
     }

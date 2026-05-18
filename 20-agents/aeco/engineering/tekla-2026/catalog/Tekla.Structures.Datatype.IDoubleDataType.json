@@ -10,7 +10,7 @@
   "properties": [
     {
       "name": "Value",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The double value of the field.",

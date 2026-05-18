@@ -10,34 +10,46 @@
   "methods": [
     {
       "name": "GetEnumerator",
-      "signature": "GetEnumerator(...)",
+      "signature": "public IEnumerator GetEnumerator()",
       "summary": "Gets the enumerator.",
       "params": [],
+      "returns": {
+        "type": "IEnumerator",
+        "doc": "The enumerator."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b9b8dfa0-1aff-df12-b15d-657934d702eb"
     },
     {
       "name": "GetSize",
-      "signature": "GetSize(...)",
+      "signature": "public int GetSize()",
       "summary": "Returns the total amount of items.",
       "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The total amount of items."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/554f6b86-812b-dce3-6f18-238f1bdfba05"
     },
     {
       "name": "MoveNext",
-      "signature": "MoveNext(...)",
+      "signature": "public bool MoveNext()",
       "summary": "Moves to the next item in the enumerator.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "False on failure."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f77c087e-87ac-dad4-049a-4d8d6d340d4d"
     },
     {
       "name": "Reset",
-      "signature": "Reset(...)",
+      "signature": "public void Reset()",
       "summary": "Resets the enumerator to the beginning.",
       "params": [],
       "throws": [],
@@ -48,7 +60,7 @@
   "properties": [
     {
       "name": "AutoFetch",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates that the objects are fetched from the model when the enumerator is created. Object information is therefore not anymore fetched when \u0027Current\u0027 item is asked from the enumerator. Warning: changing of TransformationPlane after creation of enumerator or during the enumeration requires a separate selection of object for refreshing the values. Property value is used for all enumerators in application",
@@ -56,15 +68,15 @@
     },
     {
       "name": "Current",
-      "type": "object",
+      "type": "ModelObject",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The current model object instance active in the enumerator. The value is null if there are no more objects left.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3e43dc06-5b42-6a4e-36b4-eaff02a80f05"
     },
     {
       "name": "SelectInstances",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates that the instance Select() is called when the \u0027Current\u0027 item is asked from the enumerator. The user can set this to \u0027false\u0027 if no members are ever asked from the instance. This is the case when, for example, asking only a report property from the identifier. Warning: normally the user should not change this value.",

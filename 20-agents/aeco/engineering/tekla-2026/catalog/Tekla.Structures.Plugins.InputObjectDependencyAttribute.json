@@ -9,18 +9,32 @@
   "constructors": [
     {
       "name": "InputObjectDependencyAttribute",
-      "signature": "InputObjectDependencyAttribute(...)",
+      "signature": "public InputObjectDependencyAttribute(int Type)",
       "summary": "The custom attribute [InputObjectDependency(PluginBase.InputObjectDependency Type)] uses this to store a dependency attribute which determines when the plug-in is updated in the system. This is not to be used by itself.",
-      "params": [],
+      "params": [
+        {
+          "name": "Type",
+          "type": "System.Int32",
+          "doc": "The type of the input object dependency as an integer.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3c626bba-3646-07d9-9195-8f1425dd1013"
     },
     {
       "name": "InputObjectDependencyAttribute",
-      "signature": "InputObjectDependencyAttribute(...)",
+      "signature": "public InputObjectDependencyAttribute(PluginBase.InputObjectDependency Type)",
       "summary": "The custom attribute [InputObjectDependency(PluginBase.InputObjectDependency Type)] uses this to store a dependency attribute which determines when the plug-in is updated in the system. This is not to be used by itself.",
-      "params": [],
+      "params": [
+        {
+          "name": "Type",
+          "type": "Tekla.Structures.Plugins.PluginBase.InputObjectDependency",
+          "doc": "The type of the input object dependency.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f2321b17-18ce-2d26-694b-a2179bc40282"
@@ -30,9 +44,9 @@
   "properties": [
     {
       "name": "Type",
-      "type": "object",
+      "type": "PluginBase.InputObjectDependency",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Returns the type of the input object dependency.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7b9ba5df-ee92-a4f8-ae31-dc3db5ecb650"
     }

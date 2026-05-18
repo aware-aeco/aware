@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "InsidePartHorizontalOrWithLeaderLinePlacingType",
-      "signature": "InsidePartHorizontalOrWithLeaderLinePlacingType(...)",
+      "signature": "public InsidePartHorizontalOrWithLeaderLinePlacingType()",
       "summary": "Creates a new inside part horizontal or with leader line placing type instance.",
       "params": [],
       "throws": [],

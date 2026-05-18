@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "LineTypeAttributes",
-      "signature": "LineTypeAttributes(...)",
+      "signature": "public LineTypeAttributes()",
       "summary": "Creates a new line type attributes instance.",
       "params": [],
       "throws": [],
@@ -18,18 +18,49 @@
     },
     {
       "name": "LineTypeAttributes",
-      "signature": "LineTypeAttributes(...)",
+      "signature": "public LineTypeAttributes(LineTypes lineType, DrawingColors color)",
       "summary": "Creates a new line type attributes instance with the given line type and color.",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "lineType",
+          "type": "Tekla.Structures.Drawing.LineTypes",
+          "doc": "The line type to be used.",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Tekla.Structures.Drawing.DrawingColors",
+          "doc": "The color to be used.",
+          "optional": false
+        }
+      ],
+      "throws": [
+        {
+          "type": "ArgumentOutOfRangeException",
+          "when": "Throws an exception if the color has an unsupported value. Value must be standard color value."
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/46d4e3b2-303a-bbff-cedd-1c4a84382c98"
     },
     {
       "name": "LineTypeAttributes",
-      "signature": "LineTypeAttributes(...)",
+      "signature": "public LineTypeAttributes(LineTypes lineType, TeklaDrawingColor color)",
       "summary": "Creates a new line type attributes instance with the given line type and color.",
-      "params": [],
+      "params": [
+        {
+          "name": "lineType",
+          "type": "Tekla.Structures.Drawing.LineTypes",
+          "doc": "The line type to be used.",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Tekla.Structures.Drawing.TeklaDrawingColor",
+          "doc": "The color to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/07be4b04-fc4d-b392-deee-619336f7e417"
@@ -38,9 +69,20 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c39f2c11-8b12-201f-711c-ed81d31727d7"
@@ -49,7 +91,7 @@
   "properties": [
     {
       "name": "Color",
-      "type": "object",
+      "type": "DrawingColors",
       "getter": true,
       "setter": true,
       "summary": "The color of the line (see DrawingColors for options).",
@@ -57,7 +99,7 @@
     },
     {
       "name": "TrueColor",
-      "type": "object",
+      "type": "TeklaDrawingColor",
       "getter": true,
       "setter": true,
       "summary": "The true color (rgb enabled) of the line.",
@@ -65,7 +107,7 @@
     },
     {
       "name": "Type",
-      "type": "object",
+      "type": "LineTypes",
       "getter": true,
       "setter": true,
       "summary": "The type of the line (see LineTypes for options).",

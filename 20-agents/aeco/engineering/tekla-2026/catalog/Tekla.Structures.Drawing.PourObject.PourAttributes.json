@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "PourObject.PourAttributes",
-      "signature": "PourObject.PourAttributes(...)",
+      "signature": "public PourAttributes()",
       "summary": "Creates a new default pour attributes instance that loads standard attributes.",
       "params": [],
       "throws": [],
@@ -18,9 +18,16 @@
     },
     {
       "name": "PourObject.PourAttributes",
-      "signature": "PourObject.PourAttributes(...)",
+      "signature": "public PourAttributes(string AttributeFile)",
       "summary": "Creates a new pour attributes instance that loads the specified attributes.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c1187858-dcf4-e656-fc79-d54235677ffa"
@@ -29,18 +36,40 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/11186dbb-413d-d09a-a4fe-e5a4173f2644"
     },
     {
       "name": "LoadAttributes",
-      "signature": "LoadAttributes(...)",
+      "signature": "public override bool LoadAttributes(string AttributeFile)",
       "summary": "Loads the attributes from the attribute file.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c2ca65bc-9ea4-e06c-494a-f22dbcd642e9"
@@ -49,7 +78,7 @@
   "properties": [
     {
       "name": "DrawChamfers",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "True if chamfers are drawn.",
@@ -57,7 +86,7 @@
     },
     {
       "name": "DrawHiddenLines",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "True if hidden lines are drawn.",
@@ -65,7 +94,7 @@
     },
     {
       "name": "DrawOwnHiddenLines",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "True if own hidden lines are drawn.",
@@ -73,7 +102,7 @@
     },
     {
       "name": "FaceHatch",
-      "type": "object",
+      "type": "ModelObjectHatchAttributes",
       "getter": true,
       "setter": true,
       "summary": "The hatch type of the face hatch.",
@@ -81,7 +110,7 @@
     },
     {
       "name": "HiddenLines",
-      "type": "object",
+      "type": "LineTypeAttributes",
       "getter": true,
       "setter": true,
       "summary": "The line type of hidden lines.",
@@ -89,7 +118,7 @@
     },
     {
       "name": "OwnHiddenLines",
-      "type": "object",
+      "type": "LineTypeAttributes",
       "getter": true,
       "setter": true,
       "summary": "The line type of own hidden lines.",
@@ -97,7 +126,7 @@
     },
     {
       "name": "SectionFaceHatch",
-      "type": "object",
+      "type": "ModelObjectHatchAttributes",
       "getter": true,
       "setter": true,
       "summary": "The hatch type of the section face hatch.",
@@ -105,7 +134,7 @@
     },
     {
       "name": "SectionLines",
-      "type": "object",
+      "type": "LineTypeAttributes",
       "getter": true,
       "setter": true,
       "summary": "The line type of section lines.",
@@ -113,7 +142,7 @@
     },
     {
       "name": "VisibleLines",
-      "type": "object",
+      "type": "LineTypeAttributes",
       "getter": true,
       "setter": true,
       "summary": "The line type of visible lines.",

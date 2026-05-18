@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisConnectivity",
-      "signature": "AnalysisConnectivity(...)",
+      "signature": "public AnalysisConnectivity()",
       "summary": "Initializes a new instance of the AnalysisConnectivity class",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "Connectivity",
-      "type": "object",
+      "type": ".AnalysisConnectivity.ConnectivityEnum.",
       "getter": true,
       "setter": true,
       "summary": "The connectivity type of the analysis connectivity.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "Spring",
-      "type": "object",
+      "type": ".Double.",
       "getter": true,
       "setter": true,
       "summary": "The spring values of the analysis connectivity.",

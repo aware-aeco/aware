@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Text.TextAttributes",
-      "signature": "Text.TextAttributes(...)",
+      "signature": "public TextAttributes()",
       "summary": "Creates a new default text attributes instance that loads standard attributes.",
       "params": [],
       "throws": [],
@@ -18,9 +18,16 @@
     },
     {
       "name": "Text.TextAttributes",
-      "signature": "Text.TextAttributes(...)",
+      "signature": "public TextAttributes(string AttributesFile)",
       "summary": "Creates a new text attributes instance that loads the specified attributes.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributesFile",
+          "type": "System.String",
+          "doc": "The attributes file\u0027s filename.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4607c21a-474a-1585-1a32-561432c6352e"
@@ -29,18 +36,40 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7ebbe26b-4b27-5290-0d70-7489b2a11e00"
     },
     {
       "name": "LoadAttributes",
-      "signature": "LoadAttributes(...)",
+      "signature": "public override bool LoadAttributes(string attributeFile)",
       "summary": "Loads the attributes from the attribute file.",
-      "params": [],
+      "params": [
+        {
+          "name": "attributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8b850f20-a238-96c8-db85-d1ff5e368993"
@@ -49,7 +78,7 @@
   "properties": [
     {
       "name": "Alignment",
-      "type": "object",
+      "type": "TextAlignment",
       "getter": true,
       "setter": true,
       "summary": "The text object\u0027s alignment (left, center, right).",
@@ -57,7 +86,7 @@
     },
     {
       "name": "Angle",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The angle of the text frame.",
@@ -65,7 +94,7 @@
     },
     {
       "name": "ArrowHead",
-      "type": "object",
+      "type": "ArrowheadAttributes",
       "getter": true,
       "setter": true,
       "summary": "The arrowhead of the leader line.",
@@ -73,7 +102,7 @@
     },
     {
       "name": "CustomPresentation",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Custom presentation GUID to be applied to the object type",
@@ -81,7 +110,7 @@
     },
     {
       "name": "Font",
-      "type": "object",
+      "type": "FontAttributes",
       "getter": true,
       "setter": true,
       "summary": "The text object\u0027s font settings.",
@@ -89,7 +118,7 @@
     },
     {
       "name": "Frame",
-      "type": "object",
+      "type": "Frame",
       "getter": true,
       "setter": true,
       "summary": "The frame for the text.",
@@ -97,7 +126,7 @@
     },
     {
       "name": "PlacingAttributes",
-      "type": "object",
+      "type": "PlacingAttributes",
       "getter": true,
       "setter": true,
       "summary": "The placing attributes that the object should use. Using these you can specify whether the object is automatically arranged in the drawing or not.",
@@ -105,7 +134,7 @@
     },
     {
       "name": "PreferredPlacing",
-      "type": "object",
+      "type": "PreferredPlacingTypeBase",
       "getter": true,
       "setter": true,
       "summary": "The type of placing the object should use. See the preferred placing types for different types of placing.",
@@ -113,7 +142,7 @@
     },
     {
       "name": "RulerWidth",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the width in paper coordinates of the ruler to be used in word wrapping.",
@@ -121,7 +150,7 @@
     },
     {
       "name": "TransparentBackground",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the background transparency is enabled for texts.",
@@ -129,7 +158,7 @@
     },
     {
       "name": "UseWordWrapping",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether to [use word wrapping].",

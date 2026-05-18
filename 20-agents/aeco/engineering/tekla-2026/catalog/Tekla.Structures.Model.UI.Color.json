@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Color",
-      "signature": "Color(...)",
+      "signature": "public Color()",
       "summary": "Creates a new color object. The default object is black.",
       "params": [],
       "throws": [],
@@ -18,18 +18,62 @@
     },
     {
       "name": "Color",
-      "signature": "Color(...)",
+      "signature": "public Color(double Red, double Green, double Blue)",
       "summary": "Creates a new color object with the given values.",
-      "params": [],
+      "params": [
+        {
+          "name": "Red",
+          "type": "System.Double",
+          "doc": "The red value of the color, between 0.0 and 1.0.",
+          "optional": false
+        },
+        {
+          "name": "Green",
+          "type": "System.Double",
+          "doc": "The green value of the color, between 0.0 and 1.0.",
+          "optional": false
+        },
+        {
+          "name": "Blue",
+          "type": "System.Double",
+          "doc": "The blue value of the color, between 0.0 and 1.0.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c1bd289c-404c-fc28-5ece-eee8fc5acb06"
     },
     {
       "name": "Color",
-      "signature": "Color(...)",
+      "signature": "public Color(double Red, double Green, double Blue, double Transparency)",
       "summary": "Creates a new color object with the given values.",
-      "params": [],
+      "params": [
+        {
+          "name": "Red",
+          "type": "System.Double",
+          "doc": "The red value of the color, between 0.0 and 1.0.",
+          "optional": false
+        },
+        {
+          "name": "Green",
+          "type": "System.Double",
+          "doc": "The green value of the color, between 0.0 and 1.0.",
+          "optional": false
+        },
+        {
+          "name": "Blue",
+          "type": "System.Double",
+          "doc": "The blue value of the color, between 0.0 and 1.0.",
+          "optional": false
+        },
+        {
+          "name": "Transparency",
+          "type": "System.Double",
+          "doc": "The transparency value of the color, between 0.0 (completely see-through) and 1.0 (completely solid).",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e61ea573-02b9-2fcc-9e34-86f65664867b"
@@ -39,7 +83,7 @@
   "properties": [
     {
       "name": "Blue",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The blue value of the color, between 0.0 and 1.0.",
@@ -47,7 +91,7 @@
     },
     {
       "name": "Green",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The green value of the color, between 0.0 and 1.0.",
@@ -55,7 +99,7 @@
     },
     {
       "name": "Red",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The red value of the color, between 0.0 and 1.0.",
@@ -63,7 +107,7 @@
     },
     {
       "name": "Transparency",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The transparency value of the color, between 0.0 (completely see-through) and 1.0 (completely solid).",

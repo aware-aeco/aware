@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Offset",
-      "signature": "Offset(...)",
+      "signature": "public Offset()",
       "summary": "Instantiates an offset with zero distance.",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "Dx",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The current object\u0027s Dx offset. This value is defined using the object\u0027s coordinate system.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "Dy",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The current object\u0027s Dy offset. This value is defined using the current work plane.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "Dz",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The current object\u0027s Dz offset. This value is defined using the current work plane.",

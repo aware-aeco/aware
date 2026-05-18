@@ -10,57 +10,57 @@
   "properties": [
     {
       "name": "Code",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the code associated with the shared model.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ebc1b66a-c4d7-63ce-4b15-11b7f40c2fa8"
     },
     {
       "name": "CreatedAt",
-      "type": "object",
+      "type": "DateTime",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the date and time when the shared model was created.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/577a618d-fdb6-d750-29b0-082184e86517"
     },
     {
       "name": "CurrentUserRole",
-      "type": "object",
+      "type": "SharingRole",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the sharing role of the current user for this model.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3276479b-b64a-f57c-d8a5-70b2207ca035"
     },
     {
       "name": "Description",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the description of the shared model.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d3a82fd7-6d92-2bdc-28d2-a9f2fca1b461"
     },
     {
       "name": "Id",
-      "type": "object",
+      "type": "Guid",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the unique identifier of the shared model.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0c8c4747-af4c-cb30-da43-e312e4cb59d6"
     },
     {
       "name": "Name",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the name of the shared model.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/bcc2ab4e-11a8-7433-5c02-8190cd8e738c"
     },
     {
       "name": "Owner",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the owner of the shared model.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8ec77091-bce6-b5b2-5d7f-39543366116d"
     }

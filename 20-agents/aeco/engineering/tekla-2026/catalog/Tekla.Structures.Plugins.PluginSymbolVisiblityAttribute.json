@@ -9,18 +9,32 @@
   "constructors": [
     {
       "name": "PluginSymbolVisiblityAttribute",
-      "signature": "PluginSymbolVisiblityAttribute(...)",
+      "signature": "public PluginSymbolVisiblityAttribute(int Type)",
       "summary": "The custom attribute used to define coordinate system of the plug-in. This is not to be used by itself.",
-      "params": [],
+      "params": [
+        {
+          "name": "Type",
+          "type": "System.Int32",
+          "doc": "The type of the input object dependency as an integer.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/96dca74e-eadd-2601-507b-06ab7463a12a"
     },
     {
       "name": "PluginSymbolVisiblityAttribute",
-      "signature": "PluginSymbolVisiblityAttribute(...)",
+      "signature": "public PluginSymbolVisiblityAttribute(PluginBase.SymbolVisibility Type)",
       "summary": "The custom attribute used to define coordinate system of the plug-in. This is not to be used by itself.",
-      "params": [],
+      "params": [
+        {
+          "name": "Type",
+          "type": "Tekla.Structures.Plugins.PluginBase.SymbolVisibility",
+          "doc": "The type of the input object dependency.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5b802a7d-3dca-6e69-ef42-9acd7ad1fbda"
@@ -30,9 +44,9 @@
   "properties": [
     {
       "name": "Type",
-      "type": "object",
+      "type": "PluginBase.SymbolVisibility",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Returns the type of the input object dependency.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ed4e7dd2-5718-ca35-5064-f8acaf56d8d7"
     }

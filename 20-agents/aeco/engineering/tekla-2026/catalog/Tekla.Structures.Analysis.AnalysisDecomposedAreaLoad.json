@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisDecomposedAreaLoad",
-      "signature": "AnalysisDecomposedAreaLoad(...)",
+      "signature": "public AnalysisDecomposedAreaLoad()",
       "summary": "Initializes a new instance of the AnalysisDecomposedAreaLoad class",
       "params": [],
       "throws": [],
@@ -20,7 +20,7 @@
   "methods": [
     {
       "name": "Select",
-      "signature": "Select(...)",
+      "signature": "public override void Select()",
       "summary": "Selects an analysis decomposed area load.",
       "params": [],
       "throws": [],
@@ -31,7 +31,7 @@
   "properties": [
     {
       "name": "AnalysisLoadType",
-      "type": "object",
+      "type": "AnalysisDecomposedLoad.AnalysisLoadTypeEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the analysis decomposed load.",
@@ -39,7 +39,7 @@
     },
     {
       "name": "AnalysisModelName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis model name.",
@@ -47,7 +47,7 @@
     },
     {
       "name": "AnalysisObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the analysis object.",
@@ -55,15 +55,15 @@
     },
     {
       "name": "Direction",
-      "type": "object",
+      "type": "AnalysisDecomposedLoad.AnalysisDecomposedLoadDirectionEnum",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The direction of the decomposed area load.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/699864b2-0900-ef0c-6145-1f01adf76541"
     },
     {
       "name": "FatherObject2ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -71,7 +71,7 @@
     },
     {
       "name": "FatherObject2Type",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -79,7 +79,7 @@
     },
     {
       "name": "FatherObjectID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -87,7 +87,7 @@
     },
     {
       "name": "FatherObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -95,7 +95,7 @@
     },
     {
       "name": "ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the analysis object.",
@@ -103,15 +103,15 @@
     },
     {
       "name": "Magnitudes",
-      "type": "object",
+      "type": "List\u003CDouble\u003E",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The magnitudes of the decomposed area load.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/480ba048-efdf-c3b5-1cbe-17bb262541c6"
     },
     {
       "name": "ModelLoadGroupID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the load group.",
@@ -119,7 +119,7 @@
     },
     {
       "name": "ModelLoadID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the model load.",
@@ -127,7 +127,7 @@
     },
     {
       "name": "ObjectAttachedToID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the object the load is attached to.",
@@ -135,7 +135,7 @@
     },
     {
       "name": "ObjectAttachedToType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the object the load is attached to.",
@@ -143,9 +143,9 @@
     },
     {
       "name": "Positions",
-      "type": "object",
+      "type": "List\u003CPoint\u003E",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The positions of the decomposed area load.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/46ad0d64-d488-9c36-6ca3-493cfd923bd4"
     }

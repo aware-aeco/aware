@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "ViewMarkBasicTagAttributes",
-      "signature": "ViewMarkBasicTagAttributes(...)",
+      "signature": "public ViewMarkBasicTagAttributes()",
       "summary": "Creates a new mark tag attributes instance.",
       "params": [],
       "throws": [],
@@ -18,9 +18,28 @@
     },
     {
       "name": "ViewMarkBasicTagAttributes",
-      "signature": "ViewMarkBasicTagAttributes(...)",
+      "signature": "public ViewMarkBasicTagAttributes(Vector offset, TagLocation location, ContainerElement tagContent)",
       "summary": "Creates a new mark tag attributes instance with the given offset, location and content.",
-      "params": [],
+      "params": [
+        {
+          "name": "offset",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The offset of the mark tag to be used.",
+          "optional": false
+        },
+        {
+          "name": "location",
+          "type": "Tekla.Structures.Drawing.TagLocation",
+          "doc": "The location of the mark tag to be used.",
+          "optional": false
+        },
+        {
+          "name": "tagContent",
+          "type": "Tekla.Structures.Drawing.ContainerElement",
+          "doc": "The content of the mark tag to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/bf9eecc9-18c1-e751-4d3d-cf7980915a38"
@@ -29,9 +48,20 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f39f9dcb-d8ad-b6c2-0199-cabb488c493f"
@@ -40,7 +70,7 @@
   "properties": [
     {
       "name": "Location",
-      "type": "object",
+      "type": "TagLocation",
       "getter": true,
       "setter": true,
       "summary": "The location of the mark tag.",
@@ -48,7 +78,7 @@
     },
     {
       "name": "Offset",
-      "type": "object",
+      "type": "Vector",
       "getter": true,
       "setter": true,
       "summary": "The offset of the mark tag.",
@@ -56,7 +86,7 @@
     },
     {
       "name": "TagContent",
-      "type": "object",
+      "type": "ContainerElement",
       "getter": true,
       "setter": true,
       "summary": "The tag content.",

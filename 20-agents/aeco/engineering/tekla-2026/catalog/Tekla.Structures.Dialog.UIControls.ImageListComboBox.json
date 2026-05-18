@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "ImageListComboBox",
-      "signature": "ImageListComboBox(...)",
+      "signature": "public ImageListComboBox()",
       "summary": "Initializes a new instance of the ImageListComboBox class.",
       "params": [],
       "throws": [],
@@ -20,7 +20,7 @@
   "methods": [
     {
       "name": "RefreshOptionList",
-      "signature": "RefreshOptionList(...)",
+      "signature": "public void RefreshOptionList()",
       "summary": "Refreshes the option list content.",
       "params": [],
       "throws": [],
@@ -31,7 +31,7 @@
   "properties": [
     {
       "name": "DefaultValue",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the default value in the image combo box. If the value is not found, SelectedItem is used instead.",
@@ -39,7 +39,7 @@
     },
     {
       "name": "HoverColor",
-      "type": "object",
+      "type": "Color",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the hover color of the combo box.",
@@ -47,7 +47,7 @@
     },
     {
       "name": "ImageList",
-      "type": "object",
+      "type": "ImageList",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the ImageList that contains the images to be displayed in the combo box. Recommended image file formats are JPG and BMP.",
@@ -55,7 +55,7 @@
     },
     {
       "name": "SelectedIndex",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the selected index of the image in the image combo box.",
@@ -63,7 +63,7 @@
     },
     {
       "name": "SelectedItem",
-      "type": "object",
+      "type": "Object",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the selected image in the image combo box. If the image is not found, SelectedIndex is used instead.",
@@ -71,7 +71,7 @@
     },
     {
       "name": "ToolTipText",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the tool tip text.",
@@ -81,8 +81,8 @@
   "events": [
     {
       "name": "ImageListComboBoxMouseWheel",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler ImageListComboBoxMouseWheel",
+      "delegate": "System.Windows.Forms.MouseEventHandler",
+      "signature": "public event MouseEventHandler ImageListComboBoxMouseWheel",
       "summary": "The ImageListComboBoxMouseWheel event is triggered just after the mouse wheel has been activated on top of the combo box.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8a816d16-75a8-7478-e598-046ea2501746",
       "handler_thread": "unknown",
@@ -90,8 +90,8 @@
     },
     {
       "name": "ImageListComboBoxSelectedIndexChanged",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler ImageListComboBoxSelectedIndexChanged",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler ImageListComboBoxSelectedIndexChanged",
       "summary": "The ImageListComboBoxSelectedIndexChanged event is triggered just after the selected index has been changed in the image combo box.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8de9966c-3515-eafb-9e11-cdf53b7029e8",
       "handler_thread": "unknown",

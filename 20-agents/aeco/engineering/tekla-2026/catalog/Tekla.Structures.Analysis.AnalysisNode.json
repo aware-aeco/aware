@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisNode",
-      "signature": "AnalysisNode(...)",
+      "signature": "public AnalysisNode()",
       "summary": "Initializes a new instance of the AnalysisNode class.",
       "params": [],
       "throws": [],
@@ -20,7 +20,7 @@
   "methods": [
     {
       "name": "Delete",
-      "signature": "Delete(...)",
+      "signature": "public void Delete()",
       "summary": "Deletes an analysis node. The ID has to be set.",
       "params": [],
       "throws": [],
@@ -29,25 +29,33 @@
     },
     {
       "name": "GetAnalysisNodeLinks",
-      "signature": "GetAnalysisNodeLinks(...)",
+      "signature": "public AnalysisObjectEnumerator GetAnalysisNodeLinks()",
       "summary": "Get analysis nodelinks connected to node.",
       "params": [],
+      "returns": {
+        "type": "AnalysisObjectEnumerator",
+        "doc": "Enumerator of analysis nodelinks connected to node."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9e08ff95-60a7-6ae3-4404-5661aff5d2e4"
     },
     {
       "name": "GetAnalysisParts",
-      "signature": "GetAnalysisParts(...)",
+      "signature": "public AnalysisObjectEnumerator GetAnalysisParts()",
       "summary": "Get analysis parts connected to node.",
       "params": [],
+      "returns": {
+        "type": "AnalysisObjectEnumerator",
+        "doc": "Enumerator of analysis parts connected to node."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ff69f4e7-472f-acac-5ee8-1841d45eb90d"
     },
     {
       "name": "Insert",
-      "signature": "Insert(...)",
+      "signature": "public void Insert()",
       "summary": "Inserts an analysis node. The AnalysisModelName has to be set.",
       "params": [],
       "throws": [],
@@ -56,7 +64,7 @@
     },
     {
       "name": "Modify",
-      "signature": "Modify(...)",
+      "signature": "public void Modify()",
       "summary": "Modifies an analysis node. The ID has to be set.",
       "params": [],
       "throws": [],
@@ -65,7 +73,7 @@
     },
     {
       "name": "Select",
-      "signature": "Select(...)",
+      "signature": "public override void Select()",
       "summary": "Selects an analysis node. The ID has to be set.",
       "params": [],
       "throws": [],
@@ -76,7 +84,7 @@
   "properties": [
     {
       "name": "AnalysisModelName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis model name.",
@@ -84,7 +92,7 @@
     },
     {
       "name": "AnalysisObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the analysis object.",
@@ -92,7 +100,7 @@
     },
     {
       "name": "CoordinateSystem",
-      "type": "object",
+      "type": "CoordinateSystem",
       "getter": true,
       "setter": true,
       "summary": "The coordinate system of the analysis node.",
@@ -100,7 +108,7 @@
     },
     {
       "name": "FatherObject2ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -108,7 +116,7 @@
     },
     {
       "name": "FatherObject2Type",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -116,7 +124,7 @@
     },
     {
       "name": "FatherObjectID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -124,7 +132,7 @@
     },
     {
       "name": "FatherObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -132,7 +140,7 @@
     },
     {
       "name": "ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the analysis object.",
@@ -140,7 +148,7 @@
     },
     {
       "name": "IsUserNode",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the analysis node is a user node.",
@@ -148,7 +156,7 @@
     },
     {
       "name": "IsUserSupport",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the analysis node has a user node.",
@@ -156,7 +164,7 @@
     },
     {
       "name": "Label",
-      "type": "object",
+      "type": "AnalysisLabel",
       "getter": true,
       "setter": true,
       "summary": "The label of the analysis node.",
@@ -164,7 +172,7 @@
     },
     {
       "name": "Position",
-      "type": "object",
+      "type": "Vector",
       "getter": true,
       "setter": true,
       "summary": "The position of the analysis node (in the global coordinate system).",
@@ -172,7 +180,7 @@
     },
     {
       "name": "Support",
-      "type": "object",
+      "type": "AnalysisSupport",
       "getter": true,
       "setter": true,
       "summary": "The support of the analysis node.",

@@ -8,9 +8,22 @@
   "constructors": [
     {
       "name": "RebarSpacing.Offset",
-      "signature": "RebarSpacing.Offset(...)",
+      "signature": "public Offset(bool automatic, double distance)",
       "summary": "Initializes a new instance of the RebarSpacing.Offset struct.",
-      "params": [],
+      "params": [
+        {
+          "name": "automatic",
+          "type": "System.Boolean",
+          "doc": "Whether or not the offset should be calculated automatically.",
+          "optional": false
+        },
+        {
+          "name": "distance",
+          "type": "System.Double",
+          "doc": "The distance.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b5add492-9940-04bd-997b-cac8abfcb027"

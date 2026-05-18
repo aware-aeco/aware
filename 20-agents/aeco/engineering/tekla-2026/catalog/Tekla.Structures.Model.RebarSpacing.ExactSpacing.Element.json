@@ -8,9 +8,22 @@
   "constructors": [
     {
       "name": "RebarSpacing.ExactSpacing.Element",
-      "signature": "RebarSpacing.ExactSpacing.Element(...)",
+      "signature": "public Element(int number, double distance)",
       "summary": "Initializes a new instance of the RebarSpacing.ExactSpacing.Element struct.",
-      "params": [],
+      "params": [
+        {
+          "name": "number",
+          "type": "System.Int32",
+          "doc": "The number of spaces.",
+          "optional": false
+        },
+        {
+          "name": "distance",
+          "type": "System.Double",
+          "doc": "The spacing distance.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f4e807c2-66cc-df81-552b-3e0c422ac6b1"
@@ -20,7 +33,7 @@
   "properties": [
     {
       "name": "Distance",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the spacing distance in the element.",
@@ -28,7 +41,7 @@
     },
     {
       "name": "Number",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the number of spaces in the element.",

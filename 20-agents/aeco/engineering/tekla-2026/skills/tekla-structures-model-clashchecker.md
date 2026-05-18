@@ -14,9 +14,11 @@ The ClashChekerEvent class contains methods related to clash check events.
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/41019c1f-840e-5c3e-22ec-42581c30115b)
 
 ### Methods
-#### `GetClashCheckHandler(...)`
+#### `public static ClashCheckHandler GetClashCheckHandler()`
 
 Returns a new clash check handler.
+
+**Returns:** `ClashCheckHandler` — The new clash check handler instance.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/342b4318-e005-3d4d-41a1-fa54fcac1276)
 

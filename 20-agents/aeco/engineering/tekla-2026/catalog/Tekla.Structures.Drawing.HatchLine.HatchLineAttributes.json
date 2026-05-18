@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "HatchLine.HatchLineAttributes",
-      "signature": "HatchLine.HatchLineAttributes(...)",
+      "signature": "public HatchLineAttributes()",
       "summary": "Creates a new default hatch line attributes instance that loads standard attributes.",
       "params": [],
       "throws": [],
@@ -18,9 +18,16 @@
     },
     {
       "name": "HatchLine.HatchLineAttributes",
-      "signature": "HatchLine.HatchLineAttributes(...)",
+      "signature": "public HatchLineAttributes(string AttributesFile)",
       "summary": "Creates a new hatch line attributes instance that loads the specified attributes.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributesFile",
+          "type": "System.String",
+          "doc": "The filename of the attributes file.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d2c0ab4b-d876-865f-d8ea-46f5358ddeae"
@@ -29,18 +36,40 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/73fb5abf-1c5d-cf75-f3b9-0d69491ba188"
     },
     {
       "name": "LoadAttributes",
-      "signature": "LoadAttributes(...)",
+      "signature": "public override bool LoadAttributes(string AttributeFile)",
       "summary": "Loads the attributes from the attribute file.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8642d92b-52a5-117c-a5ba-4fb54cc1d9de"
@@ -49,7 +78,7 @@
   "properties": [
     {
       "name": "Alignment",
-      "type": "object",
+      "type": "HatchLine.HatchLineAttributes.Alignments",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the alignment of the hatch line.",
@@ -57,7 +86,7 @@
     },
     {
       "name": "BehindModelObjects",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets whether the closed graphic object is drawn behind model objects",
@@ -65,7 +94,7 @@
     },
     {
       "name": "Hatch",
-      "type": "object",
+      "type": "GraphicObjectHatchAttributes",
       "getter": true,
       "setter": true,
       "summary": "The hatch attributes of the closed graphic object (the closed graphic object is hatchable).",
@@ -73,7 +102,7 @@
     },
     {
       "name": "Line",
-      "type": "object",
+      "type": "LineTypeAttributes",
       "getter": true,
       "setter": true,
       "summary": "The line attributes of the graphic object. A graphic object always consists of lines.",
@@ -81,7 +110,7 @@
     },
     {
       "name": "Scale",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the scale factor for the hatch line.",
@@ -89,7 +118,7 @@
     },
     {
       "name": "ShowJointLines",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether to show joint lines of the hatch line.",
@@ -97,7 +126,7 @@
     },
     {
       "name": "ShowOuterLines",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether to show outer lines of the hatch line.",
@@ -105,7 +134,7 @@
     },
     {
       "name": "Width",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the width of the hatch line.",

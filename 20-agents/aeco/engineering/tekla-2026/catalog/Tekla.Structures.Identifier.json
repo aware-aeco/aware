@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Identifier",
-      "signature": "Identifier(...)",
+      "signature": "public Identifier()",
       "summary": "Constructs an empty identifier.",
       "params": [],
       "throws": [],
@@ -18,27 +18,48 @@
     },
     {
       "name": "Identifier",
-      "signature": "Identifier(...)",
+      "signature": "public Identifier(Guid guid)",
       "summary": "Constructs an identifier with the given GUID.",
-      "params": [],
+      "params": [
+        {
+          "name": "guid",
+          "type": "System.Guid",
+          "doc": "The GUID to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e773ee15-b501-c1a4-3dcd-272cfcbb2c05"
     },
     {
       "name": "Identifier",
-      "signature": "Identifier(...)",
+      "signature": "public Identifier(int id)",
       "summary": "Constructs an identifier with the given ID.",
-      "params": [],
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "The ID to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/46d5ee66-3669-67ff-4f79-5e5fd02f87d9"
     },
     {
       "name": "Identifier",
-      "signature": "Identifier(...)",
+      "signature": "public Identifier(string guid)",
       "summary": "Constructs an identifier with the given GUID string.",
-      "params": [],
+      "params": [
+        {
+          "name": "guid",
+          "type": "System.String",
+          "doc": "The GUID to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/84bc0c91-cf27-caef-4365-f341eb03225a"
@@ -47,45 +68,79 @@
   "methods": [
     {
       "name": "Equals(Object)",
-      "signature": "Equals(Object)(...)",
+      "signature": "public override bool Equals(Object otherObject)",
       "summary": "Compares the identifier with another object instance.",
-      "params": [],
+      "params": [
+        {
+          "name": "otherObject",
+          "type": "System.Object",
+          "doc": "The object to compare with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the objects are equal, false otherwise."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4419ffcd-5422-43bf-66d3-eb2f5d7f8c37"
     },
     {
       "name": "Equals(Identifier)",
-      "signature": "Equals(Identifier)(...)",
+      "signature": "public bool Equals(Identifier otherIdentifier)",
       "summary": "Compares the identifier with another identifier instance.",
-      "params": [],
+      "params": [
+        {
+          "name": "otherIdentifier",
+          "type": "Tekla.Structures.Identifier",
+          "doc": "The identifier to compare with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the identifiers are equal, false otherwise."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/05e18bd6-3e91-7fc2-4965-fd6fbc2de331"
     },
     {
       "name": "GetHashCode",
-      "signature": "GetHashCode(...)",
+      "signature": "public override int GetHashCode()",
       "summary": "Gets the hash number of the identifier.",
       "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The hashed number."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/db9e3441-19e4-840e-44de-55692dc0890c"
     },
     {
       "name": "IsValid",
-      "signature": "IsValid(...)",
+      "signature": "public bool IsValid()",
       "summary": "Returns true if the identifier seems to be valid. The validation is done based on the ID or GUID property.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the identifier seems to be valid."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ad94afee-596d-cd8c-4a85-854c234e178c"
     },
     {
       "name": "ToString",
-      "signature": "ToString(...)",
+      "signature": "public override string ToString()",
       "summary": "Returns the integer ID as a string.",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The integer ID as a string."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ea0f0a40-bce9-e6a4-cf65-06f82a19ac59"
@@ -94,7 +149,7 @@
   "properties": [
     {
       "name": "GUID",
-      "type": "object",
+      "type": "Guid",
       "getter": true,
       "setter": true,
       "summary": "The object\u0027s globally unique identifier. If the GUID value is set manually, the ID is initialized to 0 and the identification is done based on the GUID.",
@@ -102,7 +157,7 @@
     },
     {
       "name": "ID",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The identifier number. If the ID value is set manually, the GUID is initialized to Guid.Empty and the identification is done based on the ID.",
@@ -110,7 +165,7 @@
     },
     {
       "name": "ID2",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The sub identifier number. If the subID value is set manually, the GUID is initialized to Guid.Empty and the identification is done based on the ID.",

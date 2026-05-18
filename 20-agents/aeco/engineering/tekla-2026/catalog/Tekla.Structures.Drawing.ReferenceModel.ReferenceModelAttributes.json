@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "ReferenceModel.ReferenceModelAttributes",
-      "signature": "ReferenceModel.ReferenceModelAttributes(...)",
+      "signature": "public ReferenceModelAttributes()",
       "summary": "Creates a new default reference model attributes instance that loads standard attributes.",
       "params": [],
       "throws": [],
@@ -20,18 +20,40 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/cfe1ac5d-1be1-1e60-c42f-15ecd038ca6f"
     },
     {
       "name": "LoadAttributes",
-      "signature": "LoadAttributes(...)",
+      "signature": "public override bool LoadAttributes(string AttributeFile)",
       "summary": "Loads the specified attribute file.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The name of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if succeeded."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b59bcad8-760c-a158-f842-39989dc788b3"
@@ -40,7 +62,7 @@
   "properties": [
     {
       "name": "Color",
-      "type": "object",
+      "type": "DrawingColors",
       "getter": true,
       "setter": true,
       "summary": "Obsolete.",
@@ -48,7 +70,7 @@
     },
     {
       "name": "Line",
-      "type": "object",
+      "type": "LineTypeAttributes",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the line type.",
@@ -56,7 +78,7 @@
     },
     {
       "name": "LineType",
-      "type": "object",
+      "type": "LineTypes",
       "getter": true,
       "setter": true,
       "summary": "Obsolete.",

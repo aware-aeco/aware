@@ -11,17 +11,17 @@
   "properties": [
     {
       "name": "Curve",
-      "type": "object",
+      "type": "ICurve",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the curve of the leg",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d46c9f66-c299-13c7-ec5f-3eaa52fc642a"
     },
     {
       "name": "Origin",
-      "type": "object",
+      "type": "RebarLeg.OriginEnum",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the origin of the leg",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8612fb22-2ad1-14cb-e560-cf6e25a4c3f2"
     }

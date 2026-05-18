@@ -9,7 +9,7 @@
   "methods": [
     {
       "name": "OnInterrupted",
-      "signature": "OnInterrupted(...)",
+      "signature": "void OnInterrupted()",
       "summary": "Called when uesr interrupts.",
       "params": [],
       "throws": [],
@@ -18,16 +18,21 @@
     },
     {
       "name": "Register",
-      "signature": "Register(...)",
+      "signature": "void Register()",
       "summary": "Registers the instance to listen to the specified events.",
       "params": [],
-      "throws": [],
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if attempting registration when already registered."
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c70f206a-d96f-1194-313d-a1fd3ddd51cd"
     },
     {
       "name": "UnRegister",
-      "signature": "UnRegister(...)",
+      "signature": "void UnRegister()",
       "summary": "Unregisters the instance from listening to events.",
       "params": [],
       "throws": [],
@@ -39,8 +44,8 @@
   "events": [
     {
       "name": "DocumentManagerClosed",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler DocumentManagerClosed",
+      "delegate": "Tekla.Structures.Drawing.UI.Events.DocumentManagerClosedDelegate",
+      "signature": "event Events.DocumentManagerClosedDelegate DocumentManagerClosed",
       "summary": "The DocumentManagerClosed eventis raised when the document manager is closed.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f85b670d-2fa4-c973-eea8-8811cc01ea31",
       "handler_thread": "unknown",
@@ -48,8 +53,8 @@
     },
     {
       "name": "DrawingEditorClosed",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler DrawingEditorClosed",
+      "delegate": "Tekla.Structures.Drawing.UI.Events.DrawingEditorClosedDelegate",
+      "signature": "event Events.DrawingEditorClosedDelegate DrawingEditorClosed",
       "summary": "The DrawingEditorClosed event is raised when the drawing editor is closed.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/62ee9224-ff44-6811-7bec-0735ee04ae2c",
       "handler_thread": "unknown",
@@ -57,8 +62,8 @@
     },
     {
       "name": "DrawingEditorOpened",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler DrawingEditorOpened",
+      "delegate": "Tekla.Structures.Drawing.UI.Events.DrawingEditorOpenedDelegate",
+      "signature": "event Events.DrawingEditorOpenedDelegate DrawingEditorOpened",
       "summary": "The DrawingEditorOpened event is raised when the drawing editor is opened.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1c303c30-c9b8-f492-a79a-dfd83f77a68d",
       "handler_thread": "unknown",
@@ -66,8 +71,8 @@
     },
     {
       "name": "DrawingListSelectionChanged",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler DrawingListSelectionChanged",
+      "delegate": "Tekla.Structures.Drawing.UI.Events.DrawingListSelectionChangedDelegate",
+      "signature": "event Events.DrawingListSelectionChangedDelegate DrawingListSelectionChanged",
       "summary": "The DrawingListSelectionChanged event is raised when selection on the drawing list has changed.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/24ccc4b9-2c62-b936-33a5-34085f067bfa",
       "handler_thread": "unknown",
@@ -75,8 +80,8 @@
     },
     {
       "name": "DrawingLoaded",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler DrawingLoaded",
+      "delegate": "Tekla.Structures.Drawing.UI.Events.DrawingLoadedDelegate",
+      "signature": "event Events.DrawingLoadedDelegate DrawingLoaded",
       "summary": "The DrawingLoaded event is raised when a new drawing is opened in the drawing editor.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/fe91aaa8-6824-f3db-4aa7-51e26a8e288e",
       "handler_thread": "unknown",
@@ -84,8 +89,8 @@
     },
     {
       "name": "Interrupted",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler Interrupted",
+      "delegate": "Tekla.Structures.Drawing.UI.Events.InterruptedDelegate",
+      "signature": "event Events.InterruptedDelegate Interrupted",
       "summary": "Occurs when user interrupts.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/249e5e09-4c01-a334-0d4e-61b3a54921b1",
       "handler_thread": "unknown",
@@ -93,8 +98,8 @@
     },
     {
       "name": "SelectionChange",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler SelectionChange",
+      "delegate": "Tekla.Structures.Drawing.UI.Events.SelectionChangeDelegate",
+      "signature": "event Events.SelectionChangeDelegate SelectionChange",
       "summary": "The SelectionChange event is raised when the selection is changed in a Tekla Structures drawing.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6b58856b-f085-7d08-e263-8041c5d46fa3",
       "handler_thread": "unknown",

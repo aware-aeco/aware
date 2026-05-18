@@ -9,9 +9,16 @@
   "constructors": [
     {
       "name": "AnalysisAreaPolygon",
-      "signature": "AnalysisAreaPolygon(...)",
+      "signature": "public AnalysisAreaPolygon(AnalysisObject.AnalysisObjectEnum ObjectType)",
       "summary": "Creates a new instance of the AnalysisAreaPolygon class.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectType",
+          "type": "Tekla.Structures.Analysis.AnalysisObject.AnalysisObjectEnum",
+          "doc": "The type of the analysis object.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f8aab803-2bfe-5ef2-d7ba-cbb6362ca9a5"
@@ -20,34 +27,49 @@
   "methods": [
     {
       "name": "Add",
-      "signature": "Add(...)",
+      "signature": "public void Add(AnalysisPosition AnalysisPosition)",
       "summary": "Adds a position to the analysis area polygon. Also adds an edge.",
-      "params": [],
+      "params": [
+        {
+          "name": "AnalysisPosition",
+          "type": "Tekla.Structures.Analysis.AnalysisPosition",
+          "doc": "The position to be added.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/dcd56480-7cc2-7ec3-1bcd-bd9cb1cd6baf"
     },
     {
       "name": "GetEdges",
-      "signature": "GetEdges(...)",
+      "signature": "public AnalysisObjectEnumerator GetEdges()",
       "summary": "Gets the edges of the area polygon.",
       "params": [],
+      "returns": {
+        "type": "AnalysisObjectEnumerator",
+        "doc": "The edges of the area polygon."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4a17d0fa-4e43-7502-a6dd-fd2cefede0fc"
     },
     {
       "name": "GetPositions",
-      "signature": "GetPositions(...)",
+      "signature": "public AnalysisObjectEnumerator GetPositions()",
       "summary": "Gets the positions of the area polygon.",
       "params": [],
+      "returns": {
+        "type": "AnalysisObjectEnumerator",
+        "doc": "The positions of the area polygon."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/431e508a-512d-97ac-648e-5564b1adb941"
     },
     {
       "name": "Insert",
-      "signature": "Insert(...)",
+      "signature": "public void Insert()",
       "summary": "Inserts an analysis area polygon. The AnalysisModelName has to be set.",
       "params": [],
       "throws": [],
@@ -56,7 +78,7 @@
     },
     {
       "name": "Select",
-      "signature": "Select(...)",
+      "signature": "public override void Select()",
       "summary": "Selects an analysis area polygon. The AnalysisObjectType has to be set.",
       "params": [],
       "throws": [],
@@ -67,7 +89,7 @@
   "properties": [
     {
       "name": "AnalysisModelName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis model name.",
@@ -75,7 +97,7 @@
     },
     {
       "name": "AnalysisObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the analysis object.",
@@ -83,7 +105,7 @@
     },
     {
       "name": "Edges",
-      "type": "object",
+      "type": "List\u003CAnalysisEdge\u003E",
       "getter": true,
       "setter": true,
       "summary": "The edges of the area polygon.",
@@ -91,7 +113,7 @@
     },
     {
       "name": "FatherObject2ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -99,7 +121,7 @@
     },
     {
       "name": "FatherObject2Type",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -107,7 +129,7 @@
     },
     {
       "name": "FatherObjectID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -115,7 +137,7 @@
     },
     {
       "name": "FatherObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -123,7 +145,7 @@
     },
     {
       "name": "ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the analysis object.",
@@ -131,7 +153,7 @@
     },
     {
       "name": "Positions",
-      "type": "object",
+      "type": "List\u003CAnalysisPosition\u003E",
       "getter": true,
       "setter": true,
       "summary": "The positions of the area polygon.",

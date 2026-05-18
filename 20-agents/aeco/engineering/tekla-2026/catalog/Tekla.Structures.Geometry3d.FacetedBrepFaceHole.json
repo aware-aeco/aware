@@ -11,33 +11,33 @@
   "properties": [
     {
       "name": "Count",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the count;",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/db69d7fe-3a31-1cc6-29a3-909e61ee4bfe"
     },
     {
       "name": "IsReadOnly",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets a value indicating whether this instance is read only.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/96116211-ffe5-f473-fe7b-966552794de0"
     },
     {
       "name": "VerticeIndexes",
-      "type": "object",
+      "type": "IList\u003CInt32\u003E",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the vertice indexes.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/95c7eb7a-9065-71b6-a7b4-cf39e39e5ad4"
     },
     {
       "name": "Vertices",
-      "type": "object",
+      "type": "IList\u003CVector\u003E",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the vertices.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/61fcd2a2-41ab-585c-d766-84b4296933eb"
     }

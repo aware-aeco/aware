@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "PrinterItem",
-      "signature": "PrinterItem(...)",
+      "signature": "public PrinterItem()",
       "summary": "Creates a new printer item instance.",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "Device",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The actual printer device used in the printing.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "Extension",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The printer item\u0027s default file extension which is used when printing to a file.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "Name",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The printer item\u0027s name which Tekla Structures uses to fetch all the item\u0027s default properties in the printing process.",
@@ -45,7 +45,7 @@
     },
     {
       "name": "PrintAreaHeigth",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The printer item\u0027s print area height.",
@@ -53,7 +53,7 @@
     },
     {
       "name": "PrintAreaWidth",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The printer item\u0027s print area width.",

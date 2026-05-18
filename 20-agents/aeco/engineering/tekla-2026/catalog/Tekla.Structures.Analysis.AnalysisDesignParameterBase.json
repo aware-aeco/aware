@@ -10,7 +10,7 @@
   "methods": [
     {
       "name": "Modify",
-      "signature": "Modify(...)",
+      "signature": "public abstract void Modify()",
       "summary": "Modifies an analysis design parameter at the database. Inserts if parameter does not exist.",
       "params": [],
       "throws": [],
@@ -19,7 +19,7 @@
     },
     {
       "name": "Select",
-      "signature": "Select(...)",
+      "signature": "public abstract void Select()",
       "summary": "Selects an analysis object from the database.",
       "params": [],
       "throws": [],
@@ -30,7 +30,7 @@
   "properties": [
     {
       "name": "AnalysisModelName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis model name.",
@@ -38,7 +38,7 @@
     },
     {
       "name": "AnalysisObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the analysis object.",
@@ -46,7 +46,7 @@
     },
     {
       "name": "FatherObject2ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -54,7 +54,7 @@
     },
     {
       "name": "FatherObject2Type",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -62,7 +62,7 @@
     },
     {
       "name": "FatherObjectID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -70,7 +70,7 @@
     },
     {
       "name": "FatherObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -78,7 +78,7 @@
     },
     {
       "name": "ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the analysis object.",
@@ -86,7 +86,7 @@
     },
     {
       "name": "IsGeneral",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the design parameter is general.",
@@ -94,7 +94,7 @@
     },
     {
       "name": "Name",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the name of the analysis design parameter.",
@@ -102,7 +102,7 @@
     },
     {
       "name": "Unit",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the unit of the analysis design parameter.",

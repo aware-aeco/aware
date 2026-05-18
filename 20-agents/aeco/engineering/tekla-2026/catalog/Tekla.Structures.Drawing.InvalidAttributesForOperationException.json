@@ -9,9 +9,16 @@
   "constructors": [
     {
       "name": "InvalidAttributesForOperationException",
-      "signature": "InvalidAttributesForOperationException(...)",
+      "signature": "public InvalidAttributesForOperationException(string Message)",
       "summary": "Creates a new exception instance.",
-      "params": [],
+      "params": [
+        {
+          "name": "Message",
+          "type": "System.String",
+          "doc": "The exception message.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7fd46a12-aff0-1894-d358-64b90260b3ce"

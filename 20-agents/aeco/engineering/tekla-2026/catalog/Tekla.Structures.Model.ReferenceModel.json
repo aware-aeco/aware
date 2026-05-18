@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "ReferenceModel",
-      "signature": "ReferenceModel(...)",
+      "signature": "public ReferenceModel()",
       "summary": "Initializes a new instance of the ReferenceModel class. The default values are as follows: Filename = string.Empty; ActiveFilePath = string.Empty; ProjectGUID = Guid.Empty; ModelGUID = Guid.Empty; VersionGUID = Guid.Empty; Position = new Point(); Scale = 1.0; Visibility = VisibilityEnum.VISIBLE; BasePointGuid = string.Empty;",
       "params": [],
       "throws": [],
@@ -18,9 +18,28 @@
     },
     {
       "name": "ReferenceModel",
-      "signature": "ReferenceModel(...)",
+      "signature": "public ReferenceModel(string filename, Point position, double scale)",
       "summary": "Initializes a new instance of the ReferenceModel class. Creates a new reference model instance using the given filename, position and scale.",
-      "params": [],
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "The filename to be used.",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The position to be used.",
+          "optional": false
+        },
+        {
+          "name": "scale",
+          "type": "System.Double",
+          "doc": "The scale to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/de615462-d93e-5f37-fce6-fc0d2c0e89ff"
@@ -29,396 +48,927 @@
   "methods": [
     {
       "name": "CompareTo",
-      "signature": "CompareTo(...)",
+      "signature": "public int CompareTo(Object obj)",
       "summary": "Compares Identifiers of model objects.",
-      "params": [],
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "The model object to be used in comparison.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0 if object Identifiers are the same, 1 if given object Identifier is bigger, -1 otherwise."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/79cca356-0c8a-e8fb-463a-34ad4141bec7"
     },
     {
       "name": "Delete",
-      "signature": "Delete(...)",
+      "signature": "public override bool Delete()",
       "summary": "Deletes the reference model with the given identifier.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/532a3f22-e1de-20e4-93f1-034f6702119c"
     },
     {
       "name": "Equals",
-      "signature": "Equals(...)",
+      "signature": "public bool Equals(ModelObject other)",
       "summary": "Check if Identifiers of model objects are same.",
-      "params": [],
+      "params": [
+        {
+          "name": "other",
+          "type": "Tekla.Structures.Model.ModelObject",
+          "doc": "The model object to be used in comparison.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if object Identifiers are the same, false otherwise,"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e4324265-2490-00de-4139-63a8f7acb492"
     },
     {
       "name": "GetAllReportProperties",
-      "signature": "GetAllReportProperties(...)",
+      "signature": "public bool GetAllReportProperties(ArrayList stringNames, ArrayList doubleNames, ArrayList integerNames, ref Hashtable values)",
       "summary": "Retrieves all properties for the model object in one hashtable. Type for the returned value must be checked using type casting.",
-      "params": [],
+      "params": [
+        {
+          "name": "stringNames",
+          "type": "System.Collections.ArrayList",
+          "doc": "An array list containing the names of the string properties.",
+          "optional": false
+        },
+        {
+          "name": "doubleNames",
+          "type": "System.Collections.ArrayList",
+          "doc": "An array list containing the names of the double properties.",
+          "optional": false
+        },
+        {
+          "name": "integerNames",
+          "type": "System.Collections.ArrayList",
+          "doc": "An array list containing the names of the integer properties.",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Hashtable.",
+          "doc": "The return value, a hash table list that contains all the values that were retrieved successfully.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if at least one single property was retrieved successfully."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0708f404-ce77-28e1-4ebe-fa906f68bff8"
     },
     {
       "name": "GetAllUserProperties",
-      "signature": "GetAllUserProperties(...)",
+      "signature": "public bool GetAllUserProperties(ref Hashtable values)",
       "summary": "Retrieves all properties for the model object in one hashtable. Type for the returned value must be checked using type casting.",
-      "params": [],
+      "params": [
+        {
+          "name": "values",
+          "type": "System.Collections.Hashtable.",
+          "doc": "The return value, a hash table that contains all the values that were retrieved successfully.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if at least one single property was retrieved successfully."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/63b853a0-0af5-af9c-3ce7-05299664d7f8"
     },
     {
       "name": "GetChildren",
-      "signature": "GetChildren(...)",
+      "signature": "public override ModelObjectEnumerator GetChildren()",
       "summary": "Returns an enumerator of all the children reference model objects.",
       "params": [],
+      "returns": {
+        "type": "ModelObjectEnumerator",
+        "doc": "A model object enumerator on success, otherwise null."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/729b427b-2ab5-8f20-1262-ec3ca0fae970"
     },
     {
       "name": "GetConvertedObjects",
-      "signature": "GetConvertedObjects(...)",
+      "signature": "public ModelObjectEnumerator GetConvertedObjects()",
       "summary": "Returns an enumerator of model object converted from the reference model.",
       "params": [],
+      "returns": {
+        "type": "ModelObjectEnumerator",
+        "doc": "A model object enumerator on success, otherwise null."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c4709708-9407-9313-d363-47fe73e1626d"
     },
     {
       "name": "GetCoordinateSystem",
-      "signature": "GetCoordinateSystem(...)",
+      "signature": "public CoordinateSystem GetCoordinateSystem()",
       "summary": "Returns the coordinate system for the given model object.",
       "params": [],
+      "returns": {
+        "type": "CoordinateSystem",
+        "doc": "The coordinate system for the given model object."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8adfe9cd-f6e5-6474-1297-33c6270a7b0a"
     },
     {
       "name": "GetCurrentRevision",
-      "signature": "GetCurrentRevision(...)",
+      "signature": "public ReferenceModel.Revision GetCurrentRevision()",
       "summary": "Gets the current revision.",
       "params": [],
+      "returns": {
+        "type": "ReferenceModel.Revision",
+        "doc": ""
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e644c72a-529a-8dc7-f3d8-4f420743222a"
     },
     {
       "name": "GetCustomObjectType",
-      "signature": "GetCustomObjectType(...)",
+      "signature": "public string GetCustomObjectType()",
       "summary": "Gets custom object type name from an existing object.",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "Type name string, empty string if type is not set."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d3be2ba3-8533-7165-f2d3-a5aa9df556b8"
     },
     {
       "name": "GetDoubleReportProperties",
-      "signature": "GetDoubleReportProperties(...)",
+      "signature": "public bool GetDoubleReportProperties(ArrayList names, ref Hashtable values)",
       "summary": "Retrieves multiple double report properties for the model object. It is faster to fetch multiple properties at once.",
-      "params": [],
+      "params": [
+        {
+          "name": "names",
+          "type": "System.Collections.ArrayList",
+          "doc": "An array list containing the names of the properties.",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Hashtable.",
+          "doc": "The return value, a hash table that contains all the values that were retrieved successfully.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if at least one single property was retrieved successfully."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f86f6c96-f738-49ca-16ba-f5634e862ba2"
     },
     {
       "name": "GetDoubleUserProperties",
-      "signature": "GetDoubleUserProperties(...)",
+      "signature": "public bool GetDoubleUserProperties(ref Hashtable values)",
       "summary": "Retrieves all double properties for the model object.",
-      "params": [],
+      "params": [
+        {
+          "name": "values",
+          "type": "System.Collections.Hashtable.",
+          "doc": "The return value, a hash table that contains all the values that were retrieved successfully.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if at least one single property was retrieved successfully."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6ead7a63-5f76-0631-d480-d46c27e882aa"
     },
     {
       "name": "GetDynamicStringProperty",
-      "signature": "GetDynamicStringProperty(...)",
+      "signature": "public bool GetDynamicStringProperty(string name, ref string value)",
       "summary": "Gets a dynamic string property from the model object.",
-      "params": [],
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the property to be set.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String.",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/415e86d9-7de6-ea53-ce68-20b3e67b8655"
     },
     {
       "name": "GetFatherComponent",
-      "signature": "GetFatherComponent(...)",
+      "signature": "public BaseComponent GetFatherComponent()",
       "summary": "Returns the father component of the model object.",
       "params": [],
+      "returns": {
+        "type": "BaseComponent",
+        "doc": "A base component on success, otherwise null."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a2c28f3f-52ff-50a8-1b32-10d18db5c31d"
     },
     {
       "name": "GetHierarchicObjects",
-      "signature": "GetHierarchicObjects(...)",
+      "signature": "public ModelObjectEnumerator GetHierarchicObjects()",
       "summary": "Returns an enumerator of all the connected hierarchic objects.",
       "params": [],
+      "returns": {
+        "type": "ModelObjectEnumerator",
+        "doc": "A model object enumerator on success, otherwise null."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/cc228ea0-267b-7d90-7441-c9efc1779b08"
     },
     {
       "name": "GetIntegerReportProperties",
-      "signature": "GetIntegerReportProperties(...)",
+      "signature": "public bool GetIntegerReportProperties(ArrayList names, ref Hashtable values)",
       "summary": "Retrieves multiple integer report properties for the model object. It is faster to fetch multiple properties at once.",
-      "params": [],
+      "params": [
+        {
+          "name": "names",
+          "type": "System.Collections.ArrayList",
+          "doc": "An array list containing the names of the properties.",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Hashtable.",
+          "doc": "The return value, a hash table that contains all the values that were retrieved successfully.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if at least one single property was retrieved successfully."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2623a9c0-2a9c-e233-9daa-59f92ed51445"
     },
     {
       "name": "GetIntegerUserProperties",
-      "signature": "GetIntegerUserProperties(...)",
+      "signature": "public bool GetIntegerUserProperties(ref Hashtable values)",
       "summary": "Retrieves all integer properties for the model object.",
-      "params": [],
+      "params": [
+        {
+          "name": "values",
+          "type": "System.Collections.Hashtable.",
+          "doc": "The return value, a hash table that contains all the values that were retrieved successfully.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if at least one single property was retrieved successfully."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1b3c6f06-bc25-a54e-2a88-b60dc4a3c85e"
     },
     {
       "name": "GetPhase",
-      "signature": "GetPhase(...)",
+      "signature": "public bool GetPhase(out Phase phase)",
       "summary": "Retrieves the phase of the model object (the phase number, the phase name, the phase comment and whether the phase is the current one or not).",
-      "params": [],
+      "params": [
+        {
+          "name": "phase",
+          "type": "Tekla.Structures.Model.Phase.",
+          "doc": "The returned phase.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/310f8b7a-c120-753a-35c9-f7c73a9806c9"
     },
     {
       "name": "GetReferenceModelObjectByExternalGuid",
-      "signature": "GetReferenceModelObjectByExternalGuid(...)",
+      "signature": "public ReferenceModelObject GetReferenceModelObjectByExternalGuid(string externalGuid)",
       "summary": "Gets reference model object by external (IFC) guid from this reference model.",
-      "params": [],
+      "params": [
+        {
+          "name": "externalGuid",
+          "type": "System.String",
+          "doc": "External (IFC) Guid of the reference object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ReferenceModelObject",
+        "doc": "Reference model object with specified external guid."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6dcd0806-25ad-bcad-46ea-dd1d5a9214c1"
     },
     {
       "name": "GetReferenceModelObjectGuidsByExternalGuids",
-      "signature": "GetReferenceModelObjectGuidsByExternalGuids(...)",
+      "signature": "public List\u003Cstring\u003E GetReferenceModelObjectGuidsByExternalGuids(List\u003Cstring\u003E externalGuids)",
       "summary": "Gets reference model object guids by external guids.",
-      "params": [],
+      "params": [
+        {
+          "name": "externalGuids",
+          "type": "System.Collections.Generic.List\u003CString\u003E",
+          "doc": "The external guids.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CString\u003E",
+        "doc": "If successful, the reference model object guids."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0a693785-9471-0c5e-a915-f09d0d1887fd"
     },
     {
       "name": "GetReportProperty(String, Double.)",
-      "signature": "GetReportProperty(String, Double.)(...)",
+      "signature": "public bool GetReportProperty(string name, ref double value)",
       "summary": "Retrieves a double property of the report for the model object.",
-      "params": [],
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the property to be retrieved.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double.",
+          "doc": "The return value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was returned successfully."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1c05aa56-5f42-be91-a59e-8d59a5549f45"
     },
     {
       "name": "GetReportProperty(String, Int32.)",
-      "signature": "GetReportProperty(String, Int32.)(...)",
+      "signature": "public bool GetReportProperty(string name, ref int value)",
       "summary": "Retrieves an integer property of the report for the model object.",
-      "params": [],
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the property to be retrieved.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32.",
+          "doc": "The return value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was returned successfully."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ce8e4ca0-3750-3c9b-5ca8-27e48b45e0bd"
     },
     {
       "name": "GetReportProperty(String, String.)",
-      "signature": "GetReportProperty(String, String.)(...)",
+      "signature": "public bool GetReportProperty(string name, ref string value)",
       "summary": "Retrieves a string property of the report for the model object.",
-      "params": [],
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the property to be retrieved.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String.",
+          "doc": "The return value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was returned successfully."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/70f212bb-ee70-e9e9-7ab6-d6a9d46f8de6"
     },
     {
       "name": "GetRevisions",
-      "signature": "GetRevisions(...)",
+      "signature": "public List\u003CReferenceModel.Revision\u003E GetRevisions()",
       "summary": "Gets the reference models available revisions.",
       "params": [],
+      "returns": {
+        "type": "List\u003CReferenceModel.Revision\u003E",
+        "doc": ""
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f1b36d75-032f-63b7-9d83-11ab4894bbd6"
     },
     {
       "name": "GetStringReportProperties",
-      "signature": "GetStringReportProperties(...)",
+      "signature": "public bool GetStringReportProperties(ArrayList names, ref Hashtable values)",
       "summary": "Retrieves multiple string report properties for the model object. It is faster to fetch multiple properties at once.",
-      "params": [],
+      "params": [
+        {
+          "name": "names",
+          "type": "System.Collections.ArrayList",
+          "doc": "An array list containing the names of the properties.",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Hashtable.",
+          "doc": "The return value, a hash table that contains all the values that were retrieved successfully.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if at least one single property was retrieved successfully."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5ff72da1-7382-f5d2-eb1d-c99b46239d42"
     },
     {
       "name": "GetStringUserProperties",
-      "signature": "GetStringUserProperties(...)",
+      "signature": "public bool GetStringUserProperties(ref Hashtable values)",
       "summary": "Retrieves all string properties for the model object.",
-      "params": [],
+      "params": [
+        {
+          "name": "values",
+          "type": "System.Collections.Hashtable.",
+          "doc": "The return value, a hash table that contains all the values that were retrieved successfully.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if at least one single property was retrieved successfully."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/67120e84-c820-9d52-12ae-c167c595842c"
     },
     {
       "name": "GetUserProperty(String, Double.)",
-      "signature": "GetUserProperty(String, Double.)(...)",
+      "signature": "public bool GetUserProperty(string name, ref double value)",
       "summary": "Retrieves a double property for the model object.",
-      "params": [],
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the property to be retrieved.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double.",
+          "doc": "The return value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was returned successfully."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/17cc8074-7955-32b5-2b4b-b169c45d4ee0"
     },
     {
       "name": "GetUserProperty(String, Int32.)",
-      "signature": "GetUserProperty(String, Int32.)(...)",
+      "signature": "public bool GetUserProperty(string name, ref int value)",
       "summary": "Retrieves an integer property for the model object.",
-      "params": [],
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the property to be retrieved.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32.",
+          "doc": "The return value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was returned successfully."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d9364c1d-5b57-6a31-4c13-01124058cfb2"
     },
     {
       "name": "GetUserProperty(String, String.)",
-      "signature": "GetUserProperty(String, String.)(...)",
+      "signature": "public bool GetUserProperty(string name, ref string value)",
       "summary": "Retrieves a string property for the model object.",
-      "params": [],
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the property to be retrieved.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String.",
+          "doc": "The return value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was returned successfully."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/214a886c-c18c-9b66-d7c9-fe84260962f2"
     },
     {
       "name": "Insert",
-      "signature": "Insert(...)",
+      "signature": "public override bool Insert()",
       "summary": "Inserts the reference model into the model.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/cf21c60e-c8c7-d1e0-48a0-185f609601cc"
     },
     {
       "name": "Modify",
-      "signature": "Modify(...)",
+      "signature": "public override bool Modify()",
       "summary": "Modifies the reference model with the given identifier.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/db7b2238-5e56-7adb-e06a-cc91f71d21fe"
     },
     {
       "name": "RefreshFile",
-      "signature": "RefreshFile(...)",
+      "signature": "public bool RefreshFile()",
       "summary": "Reload the reference file from the location specified by Filename. If the file has changed, a new revision will be created and taken into use. Note that if a new revision was successfully created, the ActiveFilePath is changed.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a new revision was added, false if it was not. If false, the file can either be unchanged or there was an error."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/13291a3d-b362-4520-34c3-418563d3e06f"
     },
     {
       "name": "RemoveRevision",
-      "signature": "RemoveRevision(...)",
+      "signature": "public bool RemoveRevision(ReferenceModel.Revision revision)",
       "summary": "Removes the given revision from the reference model.",
-      "params": [],
+      "params": [
+        {
+          "name": "revision",
+          "type": "Tekla.Structures.Model.ReferenceModel.Revision",
+          "doc": "The reference model revision to be removed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if removed successfully, otherwise false."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8eff93f8-cfed-5f17-8767-00bd2fe1c375"
     },
     {
       "name": "Select",
-      "signature": "Select(...)",
+      "signature": "public override bool Select()",
       "summary": "Selects the reference model with the given identifier.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/48df3abf-5d96-6af7-0921-a76530456bcd"
     },
     {
       "name": "SetAsCurrentRevision(ReferenceModel.Revision)",
-      "signature": "SetAsCurrentRevision(ReferenceModel.Revision)(...)",
+      "signature": "public bool SetAsCurrentRevision(ReferenceModel.Revision revision)",
       "summary": "Sets the given revision as current revision.",
-      "params": [],
+      "params": [
+        {
+          "name": "revision",
+          "type": "Tekla.Structures.Model.ReferenceModel.Revision",
+          "doc": "The revision to be set as current.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e311b023-4d53-2224-ef9a-b6134bba271e"
     },
     {
       "name": "SetAsCurrentRevision(Int32, Int32)",
-      "signature": "SetAsCurrentRevision(Int32, Int32)(...)",
+      "signature": "public bool SetAsCurrentRevision(int modelId, int revisionId)",
       "summary": "Sets the given revision as current revision.",
-      "params": [],
+      "params": [
+        {
+          "name": "modelId",
+          "type": "System.Int32",
+          "doc": "The model id, which revision is to be changed.",
+          "optional": false
+        },
+        {
+          "name": "revisionId",
+          "type": "System.Int32",
+          "doc": "The revision to be set as current.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/194aca9c-df74-e1ad-be42-3eacbe3538d2"
     },
     {
       "name": "SetCustomObjectType",
-      "signature": "SetCustomObjectType(...)",
+      "signature": "public bool SetCustomObjectType(string type)",
       "summary": "Sets a custom object type name for an existing object.",
-      "params": [],
+      "params": [
+        {
+          "name": "type",
+          "type": "System.String",
+          "doc": "The custom obect type name to set to the model object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3d6fb91b-48a9-35ca-d498-526514344089"
     },
     {
       "name": "SetDynamicStringProperty",
-      "signature": "SetDynamicStringProperty(...)",
+      "signature": "public bool SetDynamicStringProperty(string name, string value)",
       "summary": "Sets a dynamic string property for the model object.",
-      "params": [],
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the property to be set.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4dab0254-09e5-5e61-c28b-1c12afab71a0"
     },
     {
       "name": "SetLabel",
-      "signature": "SetLabel(...)",
+      "signature": "public bool SetLabel(string label)",
       "summary": "Sets a label for an object when a new instance is created, this method must be called before Insert. The label is used in plug-ins for identifying the changed object in modification.",
-      "params": [],
+      "params": [
+        {
+          "name": "label",
+          "type": "System.String",
+          "doc": "The label to set to the model object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3efcfc44-613a-e66b-9ebd-9f86df4f4036"
     },
     {
       "name": "SetPhase",
-      "signature": "SetPhase(...)",
+      "signature": "public bool SetPhase(Phase phase)",
       "summary": "Sets the phase of the model object.",
-      "params": [],
+      "params": [
+        {
+          "name": "phase",
+          "type": "Tekla.Structures.Model.Phase",
+          "doc": "The new phase. A phase with this phase\u0027s number must exist in the database.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ed80abcc-0ff7-d081-2229-e651f858a727"
     },
     {
       "name": "SetUserProperties",
-      "signature": "SetUserProperties(...)",
+      "signature": "public bool SetUserProperties(List\u003Cstring\u003E stringPropertyNames, List\u003Cstring\u003E stringValues, List\u003Cstring\u003E doublePropertyNames, List\u003Cdouble\u003E doubleValues, List\u003Cstring\u003E intPropertyNames, List\u003Cint\u003E intValues)",
       "summary": "Sets multiple properties for the model object.",
-      "params": [],
+      "params": [
+        {
+          "name": "stringPropertyNames",
+          "type": "System.Collections.Generic.List\u003CString\u003E",
+          "doc": "The names of the string properties to be set.",
+          "optional": false
+        },
+        {
+          "name": "stringValues",
+          "type": "System.Collections.Generic.List\u003CString\u003E",
+          "doc": "The new values for the string properties.",
+          "optional": false
+        },
+        {
+          "name": "doublePropertyNames",
+          "type": "System.Collections.Generic.List\u003CString\u003E",
+          "doc": "The names of the double properties to be set.",
+          "optional": false
+        },
+        {
+          "name": "doubleValues",
+          "type": "System.Collections.Generic.List\u003CDouble\u003E",
+          "doc": "The new values for the double properties.",
+          "optional": false
+        },
+        {
+          "name": "intPropertyNames",
+          "type": "System.Collections.Generic.List\u003CString\u003E",
+          "doc": "The names of the int properties to be set.",
+          "optional": false
+        },
+        {
+          "name": "intValues",
+          "type": "System.Collections.Generic.List\u003CInt32\u003E",
+          "doc": "The new values for the int properties.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8659da37-d571-f03f-c666-5c9fa3b113f5"
     },
     {
       "name": "SetUserProperty(String, Double)",
-      "signature": "SetUserProperty(String, Double)(...)",
+      "signature": "public bool SetUserProperty(string name, double value)",
       "summary": "Sets a double property for the model object.",
-      "params": [],
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the property to be set.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5c585b8b-5c2e-7b75-2242-758f17429396"
     },
     {
       "name": "SetUserProperty(String, Int32)",
-      "signature": "SetUserProperty(String, Int32)(...)",
+      "signature": "public bool SetUserProperty(string name, int value)",
       "summary": "Sets an integer property for the model object.",
-      "params": [],
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the property to be set.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/dd5b828d-3a87-bb58-5ac9-e1c3b4c2fe4b"
     },
     {
       "name": "SetUserProperty(String, String)",
-      "signature": "SetUserProperty(String, String)(...)",
+      "signature": "public bool SetUserProperty(string name, string value)",
       "summary": "Sets a string property for the model object.",
-      "params": [],
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the property to be set.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/80bf0348-b651-3d4a-862b-49c85bc924ab"
@@ -427,15 +977,15 @@
   "properties": [
     {
       "name": "ActiveFilePath",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the path to the local copy of the current revision of the reference model.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3c1c0f43-f52b-5085-4ef6-58655d7bc3c4"
     },
     {
       "name": "BasePointGuid",
-      "type": "object",
+      "type": "Guid",
       "getter": true,
       "setter": true,
       "summary": "The GUID of the used base point. Empty if base point is not used.",
@@ -443,7 +993,7 @@
     },
     {
       "name": "Filename",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The path to the original location of the reference file.",
@@ -451,7 +1001,7 @@
     },
     {
       "name": "Identifier",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "The identifier of the object.",
@@ -461,13 +1011,13 @@
       "name": "IsUpToDate",
       "type": "object",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets if the object does not have a modification which is not shared.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/bc992671-093f-44a9-5eeb-7d289fd00cc5"
     },
     {
       "name": "ModelGUID",
-      "type": "object",
+      "type": "Guid",
       "getter": true,
       "setter": true,
       "summary": "The ModelGUID of the reference model in the Project Center.",
@@ -477,13 +1027,14 @@
       "name": "ModificationTime",
       "type": "object",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets latest time of the object was modified or created.",
+      "remarks": "The returned time is time of history revision which the object belongs to. For Sharing it is WriteOut time, for multiuser is save time. If history it not written then this method returns null.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/28d2c3c4-efd2-b4ed-7e2c-93cfb6e3a57f"
     },
     {
       "name": "Position",
-      "type": "object",
+      "type": "Point",
       "getter": true,
       "setter": true,
       "summary": "The position of the reference model.",
@@ -491,7 +1042,7 @@
     },
     {
       "name": "ProjectGUID",
-      "type": "object",
+      "type": "Guid",
       "getter": true,
       "setter": true,
       "summary": "The ProjectGUID of the reference model in the Project Center.",
@@ -499,15 +1050,16 @@
     },
     {
       "name": "Rotation",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets value of rotation around Z axis (degrees).",
+      "remarks": "Reading result is only specified exactly when there are no other rotations. Otherwise it is approximate. Writing resets the other rotations so that the overall rotation is only around Z axis.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d8af5ec7-e279-0386-70a4-c465f8b889b9"
     },
     {
       "name": "Rotation3D",
-      "type": "object",
+      "type": "Rotation3D",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets value of 3d rotation.",
@@ -515,7 +1067,7 @@
     },
     {
       "name": "Scale",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The scale of the reference model.",
@@ -523,7 +1075,7 @@
     },
     {
       "name": "Title",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The reference model name(title).",
@@ -531,15 +1083,16 @@
     },
     {
       "name": "UseWorkplane",
-      "type": "object",
-      "getter": true,
+      "type": "Boolean",
+      "getter": false,
       "setter": true,
       "summary": "Sets whether workplane is used.",
+      "remarks": "Used only for insertsion!",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/90d6259f-4208-3a93-66a4-2310a3b8cce6"
     },
     {
       "name": "VersionGUID",
-      "type": "object",
+      "type": "Guid",
       "getter": true,
       "setter": true,
       "summary": "The VersionGUID of the reference model in the Project Center.",
@@ -547,7 +1100,7 @@
     },
     {
       "name": "Visibility",
-      "type": "object",
+      "type": "ReferenceModel.VisibilityEnum",
       "getter": true,
       "setter": true,
       "summary": "The visibility of the reference model in the model view.",

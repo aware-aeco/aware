@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "CoordinateSystem",
-      "signature": "CoordinateSystem(...)",
+      "signature": "public CoordinateSystem()",
       "summary": "Instantiates a coordinate system in the current work plane.",
       "params": [],
       "throws": [],
@@ -18,9 +18,28 @@
     },
     {
       "name": "CoordinateSystem",
-      "signature": "CoordinateSystem(...)",
+      "signature": "public CoordinateSystem(Point Origin, Vector AxisX, Vector AxisY)",
       "summary": "Instantiates a coordinate system with the given origin, X-axis and Y-axis.",
-      "params": [],
+      "params": [
+        {
+          "name": "Origin",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The origin for the coordinate system.",
+          "optional": false
+        },
+        {
+          "name": "AxisX",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The X-axis for the coordinate system.",
+          "optional": false
+        },
+        {
+          "name": "AxisY",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The Y-axis for the coordinate system.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1eaa2ce1-4eaa-4a3f-6e1d-37b6686f995a"
@@ -30,7 +49,7 @@
   "properties": [
     {
       "name": "AxisX",
-      "type": "object",
+      "type": "Vector",
       "getter": true,
       "setter": true,
       "summary": "The X-axis of the coordinate system.",
@@ -38,7 +57,7 @@
     },
     {
       "name": "AxisY",
-      "type": "object",
+      "type": "Vector",
       "getter": true,
       "setter": true,
       "summary": "The Y-axis of the coordinate system.",
@@ -46,7 +65,7 @@
     },
     {
       "name": "Origin",
-      "type": "object",
+      "type": "Point",
       "getter": true,
       "setter": true,
       "summary": "The origin of the coordinate system.",

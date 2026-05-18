@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "RebarItem",
-      "signature": "RebarItem(...)",
+      "signature": "public RebarItem()",
       "summary": "Creates a new rebar item instance.",
       "params": [],
       "throws": [],
@@ -20,90 +20,276 @@
   "methods": [
     {
       "name": "Delete",
-      "signature": "Delete(...)",
+      "signature": "public bool Delete()",
       "summary": "Deletes the rebar item from the rebar database.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ed0d2530-6424-8337-3f7e-2cee77c6319d"
     },
     {
       "name": "Export",
-      "signature": "Export(...)",
+      "signature": "public bool Export(ref string filename)",
       "summary": "Exports the rebar item in the catlog to given file name. If path is not given rebar is exported to model folder. If filename is empty rebar name is used as filename.",
-      "params": [],
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String.",
+          "doc": "The export file name of the item.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3feb12ed-4c12-9a6c-5dd2-41cbddedc126"
     },
     {
       "name": "Insert",
-      "signature": "Insert(...)",
+      "signature": "public bool Insert()",
       "summary": "Inserts the rebar item in the rebar database.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/304205d9-c7d3-7105-15f3-dce63768ce9a"
     },
     {
       "name": "Modify",
-      "signature": "Modify(...)",
+      "signature": "public bool Modify(string OriginalGrade, string OriginalSize, string OriginalUsage)",
       "summary": "Modifies the rebar item in the rebar database based on the given parameters.",
-      "params": [],
+      "params": [
+        {
+          "name": "OriginalGrade",
+          "type": "System.String",
+          "doc": "Original Grade",
+          "optional": false
+        },
+        {
+          "name": "OriginalSize",
+          "type": "System.String",
+          "doc": "Original Size",
+          "optional": false
+        },
+        {
+          "name": "OriginalUsage",
+          "type": "System.String",
+          "doc": "Original Usage",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/51fa7a7e-68a3-95d5-d6fe-a8d831f77ad4"
     },
     {
       "name": "Select(String, String)",
-      "signature": "Select(String, String)(...)",
+      "signature": "public bool Select(string Grade, string Size)",
       "summary": "Selects the rebar item in the rebar database.",
-      "params": [],
+      "params": [
+        {
+          "name": "Grade",
+          "type": "System.String",
+          "doc": "The grade of the rebar item to select.",
+          "optional": false
+        },
+        {
+          "name": "Size",
+          "type": "System.String",
+          "doc": "The size of the rebar item to select.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1a861995-0819-f921-aaab-563ae782ba56"
     },
     {
       "name": "Select(String, Double, Boolean)",
-      "signature": "Select(String, Double, Boolean)(...)",
+      "signature": "public bool Select(string Grade, double NominalDiameter, bool UseNominalDiameter)",
       "summary": "Selects the rebar item in the rebar database.",
-      "params": [],
+      "params": [
+        {
+          "name": "Grade",
+          "type": "System.String",
+          "doc": "The grade of the rebar item to select.",
+          "optional": false
+        },
+        {
+          "name": "NominalDiameter",
+          "type": "System.Double",
+          "doc": "The diameter of the rebar item to select.",
+          "optional": false
+        },
+        {
+          "name": "UseNominalDiameter",
+          "type": "System.Boolean",
+          "doc": "If set to false, the item is selected based on the actual diameter. If true, the item is selected based on the nominal diameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/13cbd057-d553-bf4b-4e47-a153a7efdfa9"
     },
     {
       "name": "Select(String, String, Double)",
-      "signature": "Select(String, String, Double)(...)",
+      "signature": "public bool Select(string Grade, string Size, double BendRadius)",
       "summary": "Selects the rebar item in the rebar database.",
-      "params": [],
+      "params": [
+        {
+          "name": "Grade",
+          "type": "System.String",
+          "doc": "The grade of the rebar item to select.",
+          "optional": false
+        },
+        {
+          "name": "Size",
+          "type": "System.String",
+          "doc": "The size of the rebar item to select.",
+          "optional": false
+        },
+        {
+          "name": "BendRadius",
+          "type": "System.Double",
+          "doc": "The bending radius of the rebar item to select.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/dd2e488d-3a2a-581d-8ebe-c280fcbef5fb"
     },
     {
       "name": "Select(String, String, String)",
-      "signature": "Select(String, String, String)(...)",
+      "signature": "public bool Select(string Grade, string Size, string Usage)",
       "summary": "Selects the rebar item in the rebar database.",
-      "params": [],
+      "params": [
+        {
+          "name": "Grade",
+          "type": "System.String",
+          "doc": "The grade of the rebar item to select.",
+          "optional": false
+        },
+        {
+          "name": "Size",
+          "type": "System.String",
+          "doc": "The size of the rebar item to select.",
+          "optional": false
+        },
+        {
+          "name": "Usage",
+          "type": "System.String",
+          "doc": "The usage of the rebar item to select.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a5a6ae29-8271-2eae-e587-fe894af9120e"
     },
     {
       "name": "Select(String, Double, Double, Boolean)",
-      "signature": "Select(String, Double, Double, Boolean)(...)",
+      "signature": "public bool Select(string Grade, double Diameter, double BendRadius, bool UseNominalDiameter)",
       "summary": "Selects the rebar item in the rebar database.",
-      "params": [],
+      "params": [
+        {
+          "name": "Grade",
+          "type": "System.String",
+          "doc": "The grade of the rebar item to select.",
+          "optional": false
+        },
+        {
+          "name": "Diameter",
+          "type": "System.Double",
+          "doc": "The diameter of the rebar item to select.",
+          "optional": false
+        },
+        {
+          "name": "BendRadius",
+          "type": "System.Double",
+          "doc": "The bending radius of the rebar item to select.",
+          "optional": false
+        },
+        {
+          "name": "UseNominalDiameter",
+          "type": "System.Boolean",
+          "doc": "If set to false, the item is selected based on the actual diameter. If true, the item is selected based on the nominal diameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/70937de3-c9ba-e60a-55c0-eb149ba46d7d"
     },
     {
       "name": "Select(String, Double, String, Boolean)",
-      "signature": "Select(String, Double, String, Boolean)(...)",
+      "signature": "public bool Select(string Grade, double Diameter, string Usage, bool UseNominalDiameter)",
       "summary": "Selects the rebar item in the rebar database.",
-      "params": [],
+      "params": [
+        {
+          "name": "Grade",
+          "type": "System.String",
+          "doc": "The grade of the rebar item to select.",
+          "optional": false
+        },
+        {
+          "name": "Diameter",
+          "type": "System.Double",
+          "doc": "The diameter of the rebar item to select.",
+          "optional": false
+        },
+        {
+          "name": "Usage",
+          "type": "System.String",
+          "doc": "The usage of the rebar item to select.",
+          "optional": false
+        },
+        {
+          "name": "UseNominalDiameter",
+          "type": "System.Boolean",
+          "doc": "If set to false, the item is selected based on the actual diameter. If true, the item is selected based on the nominal diameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0bd0ecb9-f9db-771e-f51e-2f9983b7aafb"
@@ -112,7 +298,7 @@
   "properties": [
     {
       "name": "ActualDiameter",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The rebar item\u0027s actual diameter.",
@@ -120,7 +306,7 @@
     },
     {
       "name": "BendRadius",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The rebar item\u0027s bending radius.",
@@ -128,7 +314,7 @@
     },
     {
       "name": "Code",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The rebar item\u0027s code.",
@@ -136,7 +322,7 @@
     },
     {
       "name": "CrankedLength",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the cranked length.",
@@ -144,7 +330,7 @@
     },
     {
       "name": "CrankedLengthType",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the cranked length type.",
@@ -152,7 +338,7 @@
     },
     {
       "name": "CrankExtraOffset",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the crank extra offset.",
@@ -160,7 +346,7 @@
     },
     {
       "name": "CrankStraightLength",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the crank straight length.",
@@ -168,7 +354,7 @@
     },
     {
       "name": "CrossSectionArea",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The rebar item\u0027s cross section area.",
@@ -176,7 +362,7 @@
     },
     {
       "name": "CurveTolerance",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the curve tolerance.",
@@ -184,7 +370,7 @@
     },
     {
       "name": "ExtraPointShortening",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the extra point shortening.",
@@ -192,7 +378,7 @@
     },
     {
       "name": "Grade",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The rebar item\u0027s grade.",
@@ -200,7 +386,7 @@
     },
     {
       "name": "HookLength135Degrees",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The rebar item\u0027s hook length for 135 degrees.",
@@ -208,7 +394,7 @@
     },
     {
       "name": "HookLength180Degrees",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The rebar item\u0027s hook length for 180 degrees.",
@@ -216,7 +402,7 @@
     },
     {
       "name": "HookLength90Degrees",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The rebar item\u0027s hook length for 90 degrees.",
@@ -224,7 +410,7 @@
     },
     {
       "name": "HookRadius135Degrees",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The rebar item\u0027s hook radius for 135 degrees.",
@@ -232,7 +418,7 @@
     },
     {
       "name": "HookRadius180Degrees",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The rebar item\u0027s hook radius for 180 degrees.",
@@ -240,7 +426,7 @@
     },
     {
       "name": "HookRadius90Degrees",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The rebar item\u0027s hook radius for 90 degrees.",
@@ -248,7 +434,7 @@
     },
     {
       "name": "LapLength",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the lap length.",
@@ -256,7 +442,7 @@
     },
     {
       "name": "MaxRadiusRequiringBending",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the max radius requiring bending.",
@@ -264,7 +450,7 @@
     },
     {
       "name": "NominalDiameter",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The rebar item\u0027s nominal diameter.",
@@ -272,7 +458,7 @@
     },
     {
       "name": "Size",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The rebar item\u0027s size.",
@@ -280,7 +466,7 @@
     },
     {
       "name": "Usage",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The rebar item\u0027s usage.",
@@ -288,7 +474,7 @@
     },
     {
       "name": "WeightPerLenght",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The rebar item\u0027s weight per lenght.",

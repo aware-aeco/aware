@@ -11,7 +11,7 @@
   "properties": [
     {
       "name": "Identifier",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "The identifier of the object.",

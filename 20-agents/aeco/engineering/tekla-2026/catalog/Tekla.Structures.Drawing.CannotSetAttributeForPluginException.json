@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "CannotSetAttributeForPluginException",
-      "signature": "CannotSetAttributeForPluginException(...)",
+      "signature": "public CannotSetAttributeForPluginException()",
       "summary": "Creates a new CannotSetAttributeForPluginException instance.",
       "params": [],
       "throws": [],
@@ -18,9 +18,16 @@
     },
     {
       "name": "CannotSetAttributeForPluginException",
-      "signature": "CannotSetAttributeForPluginException(...)",
+      "signature": "public CannotSetAttributeForPluginException(string Description)",
       "summary": "Creates a new CannotSetAttributeForPluginException instance.",
-      "params": [],
+      "params": [
+        {
+          "name": "Description",
+          "type": "System.String",
+          "doc": "The additional description.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/449e52d8-5c2a-1f2f-3d25-09f19d2871b7"

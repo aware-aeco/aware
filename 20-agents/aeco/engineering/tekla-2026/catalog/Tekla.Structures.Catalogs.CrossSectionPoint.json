@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "CrossSectionPoint",
-      "signature": "CrossSectionPoint(...)",
+      "signature": "public CrossSectionPoint()",
       "summary": "Creates a new cross section point instance.",
       "params": [],
       "throws": [],
@@ -20,61 +20,120 @@
   "methods": [
     {
       "name": "CompareTo",
-      "signature": "CompareTo(...)",
+      "signature": "public int CompareTo(Object obj)",
       "summary": "Compares two points. To use binarysearch somekind of sorting should be used.",
-      "params": [],
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "The point to be compared.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0 if both are equal, -1 if this point is before, 1 if this point is after."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2f202828-05fd-220f-92b1-5b64372a4f7e"
     },
     {
       "name": "Equals",
-      "signature": "Equals(...)",
+      "signature": "public override bool Equals(Object obj)",
       "summary": "Returns true if the current object and the given object are equal.",
-      "params": [],
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "The object we wish to check the equality with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the given object equals the current object."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/dbca17f2-6730-e2c4-583c-90c74c72e0b0"
     },
     {
       "name": "GetHashCode",
-      "signature": "GetHashCode(...)",
+      "signature": "public override int GetHashCode()",
       "summary": "Returns a hash code for the point. Notice, in extremely rare cases, you might not get the same hash code for two points even though they are considered equal! This should, however, happen only in extremely rare cases!",
       "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The hash code for the point."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9f84f024-170b-5181-770d-5ed2f56332cd"
     },
     {
       "name": "ToString.",
-      "signature": "ToString.(...)",
+      "signature": "public override string ToString()",
       "summary": "Formats the point into a string, using the current culture.",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The string that represents the point."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/63db29a6-32f7-6696-31eb-a6084dcb62cd"
     },
     {
       "name": "ToString(CultureInfo)",
-      "signature": "ToString(CultureInfo)(...)",
+      "signature": "public string ToString(CultureInfo cultureInfo)",
       "summary": "Formats the point into a string, using the provided culture.",
-      "params": [],
+      "params": [
+        {
+          "name": "cultureInfo",
+          "type": "System.Globalization.CultureInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The string that represents the point."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/176a7423-000a-5fb0-dab9-659b87bf1505"
     },
     {
       "name": "Translate",
-      "signature": "Translate(...)",
+      "signature": "public virtual void Translate(double X, double Y, double Z)",
       "summary": "Translates the point using the given vector.",
-      "params": [],
+      "params": [
+        {
+          "name": "X",
+          "type": "System.Double",
+          "doc": "The X-translation to be used.",
+          "optional": false
+        },
+        {
+          "name": "Y",
+          "type": "System.Double",
+          "doc": "The Y-translation to be used.",
+          "optional": false
+        },
+        {
+          "name": "Z",
+          "type": "System.Double",
+          "doc": "The Z-translation to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7ad7ecb9-acf3-7ed2-f2bc-aa52b99ceae6"
     },
     {
       "name": "Zero",
-      "signature": "Zero(...)",
+      "signature": "public void Zero()",
       "summary": "Zeros all the members of the point.",
       "params": [],
       "throws": [],
@@ -85,7 +144,7 @@
   "properties": [
     {
       "name": "Chamfer",
-      "type": "object",
+      "type": "Chamfer",
       "getter": true,
       "setter": true,
       "summary": "The chamfer for the cross section point.",

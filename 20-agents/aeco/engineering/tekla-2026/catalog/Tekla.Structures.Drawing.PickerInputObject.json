@@ -9,9 +9,16 @@
   "constructors": [
     {
       "name": "PickerInputObject",
-      "signature": "PickerInputObject(...)",
+      "signature": "public PickerInputObject(DrawingObject pickedObject)",
       "summary": "Creates a new PickerInputObject instance representing the pick of a drawing object in a view.",
-      "params": [],
+      "params": [
+        {
+          "name": "pickedObject",
+          "type": "Tekla.Structures.Drawing.DrawingObject",
+          "doc": "The picked drawing object.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/fa4f30fe-eba4-a177-1247-e5a4cf805015"
@@ -20,9 +27,20 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/875ad65f-678f-edae-4205-17361f71f304"
@@ -31,7 +49,7 @@
   "properties": [
     {
       "name": "PickedObject",
-      "type": "object",
+      "type": "DrawingObject",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the picked object in the view.",
@@ -39,7 +57,7 @@
     },
     {
       "name": "PickedView",
-      "type": "object",
+      "type": "ViewBase",
       "getter": true,
       "setter": true,
       "summary": "The view within which the pick occurred.",

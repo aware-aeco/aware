@@ -10,7 +10,7 @@
   "properties": [
     {
       "name": "ExcludeSinglePartAssemblies",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Boolean indicating whether single part assemblies are excluded.",
@@ -18,7 +18,7 @@
     },
     {
       "name": "ExportAllObjects",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Boolean indicating whether to export all objects.",
@@ -26,7 +26,7 @@
     },
     {
       "name": "ExportBrepAsExactSolid",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Boolean indicating whether BREP is exported as exact solid.",
@@ -34,7 +34,7 @@
     },
     {
       "name": "ExportBuildingHierarchy",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Boolean indicating whether the building hierarchy export is enabled.",
@@ -42,7 +42,7 @@
     },
     {
       "name": "ExportFlatBeamsAsPlates",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Boolean indicating whether flat beams are exported as plates.",
@@ -50,7 +50,7 @@
     },
     {
       "name": "ExportLocationsFromOrganizer",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Boolean indicating whether locations are obtained from the organizer.",
@@ -58,7 +58,7 @@
     },
     {
       "name": "ExportPolyBeamAsSectionedSpine",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Boolean indicating whether polybeams are exported as sectioned spines.",
@@ -66,7 +66,7 @@
     },
     {
       "name": "ExportSelectedObjectsAndTheirAssemblies",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Boolean indicating whether to export selected objects and their assemblies.",
@@ -74,7 +74,7 @@
     },
     {
       "name": "IncludeAssemblyHiearachy",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Boolean indicating whether the assembly hierarhcy (IFCELEMENTASSEMBLY) is exported.",
@@ -82,7 +82,7 @@
     },
     {
       "name": "IsBoltsEnabled",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Boolean indicating whether the bolts export is enabled.",
@@ -90,7 +90,7 @@
     },
     {
       "name": "IsGridsEnabled",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Boolean indicating whether the grids export is enabled.",
@@ -98,7 +98,7 @@
     },
     {
       "name": "IsPoursEnabled",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Pours export is enabled. True for pours, false for CIP cast-units and/or parts",
@@ -106,7 +106,7 @@
     },
     {
       "name": "IsRebarsEnabled",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Boolean indicating whether the rebars export is enabled.",
@@ -114,7 +114,7 @@
     },
     {
       "name": "IsSpacesEnabled",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Boolean indicating whether the export of spaces in building hierarchy is enabled.",
@@ -122,7 +122,7 @@
     },
     {
       "name": "IsSurfaceTreatmentsAndSurfacesEnabled",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Boolean indicating whether the surfaces and surface treatments export is enabled.",
@@ -130,7 +130,7 @@
     },
     {
       "name": "IsWeldsEnabled",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Boolean indicating whether the welds export is enabled.",

@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisSupport",
-      "signature": "AnalysisSupport(...)",
+      "signature": "public AnalysisSupport()",
       "summary": "Initializes a new instance of the AnalysisSupport class",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "Spring",
-      "type": "object",
+      "type": ".Double.",
       "getter": true,
       "setter": true,
       "summary": "The spring values of the connectivity.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "Support",
-      "type": "object",
+      "type": ".AnalysisSupport.SupportEnum.",
       "getter": true,
       "setter": true,
       "summary": "The connectivity type of the connectivity.",

@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "SectionMarkBase.SectionMarkSymbol",
-      "signature": "SectionMarkBase.SectionMarkSymbol(...)",
+      "signature": "public SectionMarkSymbol()",
       "summary": "Creates a new section mark symbol instance.",
       "params": [],
       "throws": [],
@@ -18,9 +18,28 @@
     },
     {
       "name": "SectionMarkBase.SectionMarkSymbol",
-      "signature": "SectionMarkBase.SectionMarkSymbol(...)",
+      "signature": "public SectionMarkSymbol(SectionMarkBase.SectionMarkSymbol.SymbolShapes shape, double size, Point position)",
       "summary": "Creates a new section mark symbol instance with the given shape, size and position.",
-      "params": [],
+      "params": [
+        {
+          "name": "shape",
+          "type": "Tekla.Structures.Drawing.SectionMarkBase.SectionMarkSymbol.SymbolShapes",
+          "doc": "The shape of the section mark symbol to be used.",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "System.Double",
+          "doc": "The size of the section mark symbol to be used.",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The position of the section mark symbol to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b155096b-2ce3-3bbe-cdb1-d3883c4d25f0"
@@ -29,9 +48,20 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/109f4eec-fc10-4b25-930b-3d95fb9d173b"
@@ -40,7 +70,7 @@
   "properties": [
     {
       "name": "Position",
-      "type": "object",
+      "type": "Point",
       "getter": true,
       "setter": true,
       "summary": "The position of the section mark symbol.",
@@ -48,7 +78,7 @@
     },
     {
       "name": "Shape",
-      "type": "object",
+      "type": "SectionMarkBase.SectionMarkSymbol.SymbolShapes",
       "getter": true,
       "setter": true,
       "summary": "The shape of the section mark symbol.",
@@ -56,7 +86,7 @@
     },
     {
       "name": "Size",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The size of the section mark symbol.",

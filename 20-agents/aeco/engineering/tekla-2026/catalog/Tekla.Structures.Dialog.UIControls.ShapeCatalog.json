@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "ShapeCatalog",
-      "signature": "ShapeCatalog(...)",
+      "signature": "public ShapeCatalog()",
       "summary": "Initializes a new instance of the ShapeCatalog class.",
       "params": [],
       "throws": [],
@@ -18,9 +18,16 @@
     },
     {
       "name": "ShapeCatalog",
-      "signature": "ShapeCatalog(...)",
+      "signature": "public ShapeCatalog(string shape)",
       "summary": "Initializes a new instance of the ShapeCatalog class and will select the Shape (if available) in the tree.",
-      "params": [],
+      "params": [
+        {
+          "name": "shape",
+          "type": "System.String",
+          "doc": "The Shape to be selected in the dialog.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/98ab8cec-bb7e-fc1c-ae5c-b6868fb910a9"
@@ -29,9 +36,16 @@
   "methods": [
     {
       "name": "OnValueChanged",
-      "signature": "OnValueChanged(...)",
+      "signature": "public void OnValueChanged(Object data)",
       "summary": "Event handler for passing generic catalog data back to dialog",
-      "params": [],
+      "params": [
+        {
+          "name": "data",
+          "type": "System.Object",
+          "doc": "value data",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ef1500b0-92e8-3fce-7d09-ac486efe991c"
@@ -40,7 +54,7 @@
   "properties": [
     {
       "name": "ButtonText",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets and sets the text of the button control.",
@@ -48,7 +62,7 @@
     },
     {
       "name": "SelectedShape",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the selected Shape in the control.",
@@ -58,8 +72,8 @@
   "events": [
     {
       "name": "SelectClicked",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler SelectClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler SelectClicked",
       "summary": "The SelectClicked event is raised when the Select button is clicked.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b94e72b1-fa1d-b9aa-db9e-36f2db93c83e",
       "handler_thread": "unknown",
@@ -67,8 +81,8 @@
     },
     {
       "name": "SelectionDone",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler SelectionDone",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler SelectionDone",
       "summary": "The SelectionDone event is raised when the selection has been done.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/77741b2b-72a2-3319-04f8-cea1cabae359",
       "handler_thread": "unknown",

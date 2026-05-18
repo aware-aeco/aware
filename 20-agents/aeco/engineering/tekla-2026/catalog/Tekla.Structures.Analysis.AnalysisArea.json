@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisArea",
-      "signature": "AnalysisArea(...)",
+      "signature": "public AnalysisArea()",
       "summary": "Initializes a new instance of the AnalysisArea class.",
       "params": [],
       "throws": [],
@@ -20,7 +20,7 @@
   "methods": [
     {
       "name": "Delete",
-      "signature": "Delete(...)",
+      "signature": "public void Delete()",
       "summary": "Deletes an analysis area. Method is not implemented yet.",
       "params": [],
       "throws": [],
@@ -29,25 +29,33 @@
     },
     {
       "name": "GetAreaHoles",
-      "signature": "GetAreaHoles(...)",
+      "signature": "public AnalysisObjectEnumerator GetAreaHoles()",
       "summary": "Gets the area holes of the analysis area.",
       "params": [],
+      "returns": {
+        "type": "AnalysisObjectEnumerator",
+        "doc": "The area holes of the analysis area."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/64f5bd46-62ea-5754-ae19-db73cfc9e27c"
     },
     {
       "name": "GetInnerPositions",
-      "signature": "GetInnerPositions(...)",
+      "signature": "public AnalysisObjectEnumerator GetInnerPositions()",
       "summary": "Gets the inner positions of the analysis area.",
       "params": [],
+      "returns": {
+        "type": "AnalysisObjectEnumerator",
+        "doc": "The inner positions of the analysis area."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f0447753-dfec-1cab-f755-3015aacddfa6"
     },
     {
       "name": "Modify",
-      "signature": "Modify(...)",
+      "signature": "public void Modify()",
       "summary": "Modifies an analysis area. Method is not implemented yet.",
       "params": [],
       "throws": [],
@@ -56,7 +64,7 @@
     },
     {
       "name": "Select",
-      "signature": "Select(...)",
+      "signature": "public override void Select()",
       "summary": "Selects an analysis area. The AnalysisModelName and ID have to be set.",
       "params": [],
       "throws": [],
@@ -67,7 +75,7 @@
   "properties": [
     {
       "name": "AnalysisDesignCode",
-      "type": "object",
+      "type": "AnalysisDesignCode",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the design code of the analysis area.",
@@ -75,7 +83,7 @@
     },
     {
       "name": "AnalysisModelName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis model name.",
@@ -83,7 +91,7 @@
     },
     {
       "name": "AnalysisObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the analysis object.",
@@ -91,7 +99,7 @@
     },
     {
       "name": "AnalysisType",
-      "type": "object",
+      "type": "AnalysisPart.AnalysisTypeEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis type of the analysis area.",
@@ -99,7 +107,7 @@
     },
     {
       "name": "Area",
-      "type": "object",
+      "type": "AnalysisAreaPolygon",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the area polygon of the analysis area.",
@@ -107,7 +115,7 @@
     },
     {
       "name": "AreaHoles",
-      "type": "object",
+      "type": "List\u003CAnalysisAreaPolygon\u003E",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the area holes of the analysis area.",
@@ -115,7 +123,7 @@
     },
     {
       "name": "FatherObject2ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -123,7 +131,7 @@
     },
     {
       "name": "FatherObject2Type",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -131,7 +139,7 @@
     },
     {
       "name": "FatherObjectID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -139,7 +147,7 @@
     },
     {
       "name": "FatherObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -147,7 +155,7 @@
     },
     {
       "name": "ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the analysis object.",
@@ -155,7 +163,7 @@
     },
     {
       "name": "InnerPositions",
-      "type": "object",
+      "type": "List\u003CAnalysisPosition\u003E",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the inner positions of the analysis area.",
@@ -163,7 +171,7 @@
     },
     {
       "name": "Label",
-      "type": "object",
+      "type": "AnalysisLabel",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the label of the analysis area.",
@@ -171,7 +179,7 @@
     },
     {
       "name": "Material",
-      "type": "object",
+      "type": "AnalysisMaterial",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the material of the analysis area.",
@@ -179,7 +187,7 @@
     },
     {
       "name": "Profile",
-      "type": "object",
+      "type": "AnalysisCrossSection",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the profile of the analysis area.",
@@ -187,7 +195,7 @@
     },
     {
       "name": "RigidDiaphragm",
-      "type": "object",
+      "type": "AnalysisRigidDiaphragm",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the rigid diaphragm of the analysis area.",
@@ -195,7 +203,7 @@
     },
     {
       "name": "Thickness",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the thickness of the analysis area.",

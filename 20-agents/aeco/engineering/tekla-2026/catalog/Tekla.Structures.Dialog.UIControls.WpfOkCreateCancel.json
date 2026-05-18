@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "WpfOkCreateCancel",
-      "signature": "WpfOkCreateCancel(...)",
+      "signature": "public WpfOkCreateCancel()",
       "summary": "Constructor",
       "params": [],
       "throws": [],
@@ -20,7 +20,7 @@
   "methods": [
     {
       "name": "InitializeComponent",
-      "signature": "InitializeComponent(...)",
+      "signature": "public void InitializeComponent()",
       "summary": "InitializeComponent",
       "params": [],
       "throws": [],
@@ -32,8 +32,8 @@
   "events": [
     {
       "name": "CancelClicked",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler CancelClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler CancelClicked",
       "summary": "The CancelClicked event is raised when the Cancel button is clicked.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6df16027-87de-bd4a-5fe8-7e867f2285d4",
       "handler_thread": "unknown",
@@ -41,8 +41,8 @@
     },
     {
       "name": "CreateClicked",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler CreateClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler CreateClicked",
       "summary": "The ApplyClicked event is raised when the Apply button is clicked.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d1e4b314-ad4f-1867-6f97-ab7aeb9fdf45",
       "handler_thread": "unknown",
@@ -50,8 +50,8 @@
     },
     {
       "name": "OkClicked",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler OkClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler OkClicked",
       "summary": "The OkClicked event is raised when the Ok button is clicked.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d72cc6d2-5319-f32b-9d86-da5930651ee3",
       "handler_thread": "unknown",

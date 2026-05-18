@@ -14,10 +14,10 @@ Represents the progress for a file upload operation.
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/07880a21-4805-702d-ed86-5cd5a37726ca)
 
 ### Constructors
-- `UploadProgress(...)` — Initializes a new instance of the UploadProgress class with known total size.
+- `public UploadProgress(long? totalBytes, long bytesUploaded)` — Initializes a new instance of the UploadProgress class with known total size.
 
 ### Properties
-- `PercentComplete` (object, get/set) — Gets the upload progress as a percentage (0-100). If total is unknown, returns null. If null, it indicates we can't determine the completed percentage as we don't know the total size. UI should handle this case appropriately (e.g don't show percentage of completion but bytes upload).
-- `TotalBytes` (object, get/set) — Gets the total number of bytes to upload, 0 if total is unknown.
-- `UploadedBytes` (object, get/set) — Gets the number of bytes uploaded so far.
+- `PercentComplete` (Nullable<Int32>, get) — Gets the upload progress as a percentage (0-100). If total is unknown, returns null. If null, it indicates we can't determine the completed percentage as we don't know the total size. UI should handle this case appropriately (e.g don't show percentage of completion but bytes upload).
+- `TotalBytes` (Nullable<Int64>, get) — Gets the total number of bytes to upload, 0 if total is unknown.
+- `UploadedBytes` (Int64, get) — Gets the number of bytes uploaded so far.
 

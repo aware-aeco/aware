@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisVolume",
-      "signature": "AnalysisVolume(...)",
+      "signature": "public AnalysisVolume()",
       "summary": "Initializes a new instance of the AnalysisVolume class",
       "params": [],
       "throws": [],
@@ -20,7 +20,7 @@
   "methods": [
     {
       "name": "Select",
-      "signature": "Select(...)",
+      "signature": "public override void Select()",
       "summary": "Selects an analysis volume. The ID has to be set.",
       "params": [],
       "throws": [],
@@ -31,7 +31,7 @@
   "properties": [
     {
       "name": "AnalysisModelName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis model name.",
@@ -39,7 +39,7 @@
     },
     {
       "name": "AnalysisObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the analysis object.",
@@ -47,7 +47,7 @@
     },
     {
       "name": "FatherObject2ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -55,7 +55,7 @@
     },
     {
       "name": "FatherObject2Type",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -63,7 +63,7 @@
     },
     {
       "name": "FatherObjectID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -71,7 +71,7 @@
     },
     {
       "name": "FatherObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -79,7 +79,7 @@
     },
     {
       "name": "ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the analysis object.",
@@ -87,33 +87,33 @@
     },
     {
       "name": "Material",
-      "type": "object",
+      "type": "AnalysisMaterial",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The material of the analysis volume.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5e95c91a-fbfd-4508-39cd-40dcf5d13903"
     },
     {
       "name": "Profile",
-      "type": "object",
+      "type": "AnalysisCrossSection",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The profile of the analysis volume.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/817bac7b-2732-8fbd-448a-566e20f037c6"
     },
     {
       "name": "Volume",
-      "type": "object",
+      "type": "AnalysisVolumeItem",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The volume item.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a36cfa86-44d0-093b-66b7-c211e1f0f0e2"
     },
     {
       "name": "VolumeHoles",
-      "type": "object",
+      "type": "List\u003CAnalysisVolumeItem\u003E",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The volume holes.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/671326c0-c092-636f-d73d-defcab8bdd5a"
     }

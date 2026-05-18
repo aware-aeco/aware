@@ -9,9 +9,13 @@
   "methods": [
     {
       "name": "GetAssembly",
-      "signature": "GetAssembly(...)",
+      "signature": "Assembly GetAssembly()",
       "summary": "Returns the assembly that the assemblable belongs to.",
       "params": [],
+      "returns": {
+        "type": "Assembly",
+        "doc": "The assembly that the assemblable belongs to."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5d79c5f5-a401-ab6b-3566-ae4ae54054a4"

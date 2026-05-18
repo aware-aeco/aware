@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisModelGeneralProperties",
-      "signature": "AnalysisModelGeneralProperties(...)",
+      "signature": "public AnalysisModelGeneralProperties()",
       "summary": "Creates a new analysis model general properties instance.",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "AnalysisEngineName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The name of the analysis engine.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "ExtendedClashCheck",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Defines whether the extended clash check is used.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "FilterName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The name of the filter.",
@@ -45,7 +45,7 @@
     },
     {
       "name": "MemberAxisLocation",
-      "type": "object",
+      "type": "AnalysisModelGeneralProperties.MemberAxisLocationEnum",
       "getter": true,
       "setter": true,
       "summary": "The location of the member axis.",
@@ -53,7 +53,7 @@
     },
     {
       "name": "MemberEndReleaseMethodByConnection",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Defines whether the support conditions of connections or parts are used.",
@@ -61,7 +61,7 @@
     },
     {
       "name": "ModalAnalysisModel",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Defines whether the modal analysis properties are used instead of the static load combinations.",
@@ -69,7 +69,7 @@
     },
     {
       "name": "ModelCreationType",
-      "type": "object",
+      "type": "AnalysisModelGeneralProperties.ModelCreationTypeEnum",
       "getter": true,
       "setter": true,
       "summary": "The model creation type.",
@@ -77,7 +77,7 @@
     },
     {
       "name": "ModelMerging",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Defines whether the model merging is used.",
@@ -85,7 +85,7 @@
     },
     {
       "name": "ModelName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The name of the model.",
@@ -93,7 +93,7 @@
     },
     {
       "name": "NodeDefinition",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Defines how the nodes and node positions are defined.",

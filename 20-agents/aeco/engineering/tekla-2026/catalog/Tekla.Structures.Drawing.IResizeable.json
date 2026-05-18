@@ -9,9 +9,20 @@
   "methods": [
     {
       "name": "Resize",
-      "signature": "Resize(...)",
+      "signature": "bool Resize(Size size)",
       "summary": "Resizes the object to the specified size, overriding possible scaling settings.",
-      "params": [],
+      "params": [
+        {
+          "name": "size",
+          "type": "Tekla.Structures.Drawing.Size",
+          "doc": "The new size.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if succeeded."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/427f75fb-07cb-ce16-16bb-f2de80b5e716"

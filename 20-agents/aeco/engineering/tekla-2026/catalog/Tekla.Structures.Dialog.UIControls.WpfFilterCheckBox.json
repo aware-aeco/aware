@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "WpfFilterCheckBox",
-      "signature": "WpfFilterCheckBox(...)",
+      "signature": "public WpfFilterCheckBox()",
       "summary": "Initiates a new instance of the control.",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "AttributeName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Dialog attribute name defined with StructuresFieldAttribute",

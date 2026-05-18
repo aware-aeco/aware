@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "ProfileName",
-      "signature": "ProfileName(...)",
+      "signature": "public ProfileName()",
       "summary": "Initializes a new instance of the ProfileName class",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "Name",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The profile item name.",

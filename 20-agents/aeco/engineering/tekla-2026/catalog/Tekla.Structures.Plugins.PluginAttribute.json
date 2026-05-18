@@ -9,9 +9,16 @@
   "constructors": [
     {
       "name": "PluginAttribute",
-      "signature": "PluginAttribute(...)",
+      "signature": "public PluginAttribute(string name)",
       "summary": "The custom attribute [Plugin(\u0022PluginName\u0022)] uses this to store the name to the system. This is not to be used by itself.",
-      "params": [],
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the plug-in.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/bf34b9f9-2376-db70-3a57-5633ea686226"
@@ -21,9 +28,9 @@
   "properties": [
     {
       "name": "Name",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The name of the plug-in in the system.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/43b1b0bb-6bdb-0e43-ddaa-65851531f14b"
     }

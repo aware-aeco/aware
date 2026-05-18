@@ -9,9 +9,22 @@
   "constructors": [
     {
       "name": "PluginNameAttribute",
-      "signature": "PluginNameAttribute(...)",
+      "signature": "public PluginNameAttribute(string language, string name)",
       "summary": "Not supported at the moment.",
-      "params": [],
+      "params": [
+        {
+          "name": "language",
+          "type": "System.String",
+          "doc": "Not supported at the moment.",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Not supported at the moment.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6ce655f8-e4b8-fa5f-6a41-541c9a2daf6b"
@@ -21,17 +34,17 @@
   "properties": [
     {
       "name": "Language",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Not supported at the moment.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2ffb4d71-a730-7090-ba54-e5c984580800"
     },
     {
       "name": "Name",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Not supported at the moment.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8de71614-0872-8dc9-7906-b5ce144b7b38"
     }

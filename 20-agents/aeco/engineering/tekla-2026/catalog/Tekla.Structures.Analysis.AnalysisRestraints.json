@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisRestraints",
-      "signature": "AnalysisRestraints(...)",
+      "signature": "public AnalysisRestraints()",
       "summary": "Creates a new analysis restraints instance.",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "End",
-      "type": "object",
+      "type": "AnalysisRestraintData",
       "getter": true,
       "setter": true,
       "summary": "Data related to the second part end.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "Start",
-      "type": "object",
+      "type": "AnalysisRestraintData",
       "getter": true,
       "setter": true,
       "summary": "Data related to the first part end.",

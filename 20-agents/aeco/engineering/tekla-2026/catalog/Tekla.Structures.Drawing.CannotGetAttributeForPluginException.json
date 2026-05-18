@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "CannotGetAttributeForPluginException",
-      "signature": "CannotGetAttributeForPluginException(...)",
+      "signature": "public CannotGetAttributeForPluginException()",
       "summary": "Creates a new CannotGetAttributeForPluginException instance.",
       "params": [],
       "throws": [],
@@ -18,9 +18,16 @@
     },
     {
       "name": "CannotGetAttributeForPluginException",
-      "signature": "CannotGetAttributeForPluginException(...)",
+      "signature": "public CannotGetAttributeForPluginException(string Description)",
       "summary": "Creates a new CannotGetAttributeForPluginException instance.",
-      "params": [],
+      "params": [
+        {
+          "name": "Description",
+          "type": "System.String",
+          "doc": "The additional description.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/98e31fa6-0fb7-3a31-3178-c07f52780e11"

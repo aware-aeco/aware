@@ -10,45 +10,93 @@
   "methods": [
     {
       "name": "DefineInput",
-      "signature": "DefineInput(...)",
+      "signature": "public abstract List\u003CPluginBase.InputDefinition\u003E DefineInput()",
       "summary": "The method Tekla Structures calls for the plug-in to query the input. The plug-in must then return a list of input definition instances. The plug-in will be dependent on the items it returns. Dependent means that if any of these items change, for example the user moves the points, the plug-in will be re-run with new input. DefineInput is not called during the re-run, and thus all the actual implementation should be in the Run() method. The maximum number of InputDefinitions in the List is 10.",
       "params": [],
+      "returns": {
+        "type": "List\u003CPluginBase.InputDefinition\u003E",
+        "doc": "A list of input definition instances. If the plug-in is not dependent on input, it should return an empty list (not null)."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/eb486b17-396b-4b6f-689d-a957db5b3658"
     },
     {
       "name": "IsDefaultValue(Double)",
-      "signature": "IsDefaultValue(Double)(...)",
+      "signature": "public bool IsDefaultValue(double Value)",
       "summary": "Returns true if the given value is set to the default value for this type.",
-      "params": [],
+      "params": [
+        {
+          "name": "Value",
+          "type": "System.Double",
+          "doc": "The value to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value is set to the default."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4a0abd49-6b0a-2bb5-a8ab-17c6e5b55c75"
     },
     {
       "name": "IsDefaultValue(Int32)",
-      "signature": "IsDefaultValue(Int32)(...)",
+      "signature": "public bool IsDefaultValue(int Value)",
       "summary": "Returns true if the given value is set to the default value for this type.",
-      "params": [],
+      "params": [
+        {
+          "name": "Value",
+          "type": "System.Int32",
+          "doc": "The value to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value is set to the default."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/79f0b6e7-7744-bb26-15ab-c97861855732"
     },
     {
       "name": "IsDefaultValue(String)",
-      "signature": "IsDefaultValue(String)(...)",
+      "signature": "public bool IsDefaultValue(string Value)",
       "summary": "Returns true if the given value is set to the default value (empty string).",
-      "params": [],
+      "params": [
+        {
+          "name": "Value",
+          "type": "System.String",
+          "doc": "The value to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value is set to the default."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8da27f11-11c1-871b-71c1-91c93d729bc0"
     },
     {
       "name": "Run",
-      "signature": "Run(...)",
+      "signature": "public abstract bool Run(List\u003CPluginBase.InputDefinition\u003E Input)",
       "summary": "The main method of the plug-in. It is called after the input has been defined with DefineInput(). This is the \u0022main\u0022 method of the plug-in and should contain all the actual implementation.",
-      "params": [],
+      "params": [
+        {
+          "name": "Input",
+          "type": "System.Collections.Generic.List\u003CPluginBase.InputDefinition\u003E",
+          "doc": "A list of the same format and order as what was returned from DefineInput().",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5c8c1a5b-438a-7950-fd69-8b4935074ec6"
@@ -57,9 +105,9 @@
   "properties": [
     {
       "name": "Identifier",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The identifier of the executable plug-in instance.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d75f8800-5482-7625-40b0-11b58b915e92"
     }

@@ -10,57 +10,57 @@
   "properties": [
     {
       "name": "Code",
-      "type": "object",
+      "type": "SharingResultCode",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the result code of the sharing operation.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d4a2fb16-e123-1537-4cfd-5fa49c69d7e0"
     },
     {
       "name": "Data",
-      "type": "object",
+      "type": "T",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the data associated with the sharing operation.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/897a7af1-df2f-c4d1-e5e2-c090c4948564"
     },
     {
       "name": "ErrorDetails",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the error details of the sharing operation.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3a5e9ebe-1a82-fcbd-7dad-26c1de2246ce"
     },
     {
       "name": "ErrorPath",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets a path of the file or folder which is relevant to a specific error. SharingResultCode values documentation for a specific cases.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b6055c71-f2fd-96ea-6b56-67c27cf24935"
     },
     {
       "name": "Notifications",
-      "type": "object",
+      "type": "IEnumerable\u003CString\u003E",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the notifications related to the sharing operation.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/cb6951d9-8d7b-4790-a630-54b039237739"
     },
     {
       "name": "PathLengthLimit",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the maximum allowed length for the path which was exceeded.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e240cddf-91f7-d230-5720-c3b002b5ecc1"
     },
     {
       "name": "State",
-      "type": "object",
+      "type": "SharingResultState",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the state Structures process and current model after the sharing operations completes.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f1771d1f-42e5-a6cb-7d63-3e452f2f7d79"
     }

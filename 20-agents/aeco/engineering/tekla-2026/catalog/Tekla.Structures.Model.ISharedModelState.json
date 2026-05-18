@@ -10,49 +10,49 @@
   "properties": [
     {
       "name": "Comment",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets comment provided at setting state.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c81303e9-9912-ece9-c504-c5c519d0487d"
     },
     {
       "name": "IsLockOwner",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets a value indicating whether the current user is the lock owner.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5db95b6d-5ff6-5d29-c885-1a49cdf49a6a"
     },
     {
       "name": "LockOwner",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets display name of the user who owns a lock (in case it is set).",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7cceb066-b7a9-7462-7db6-7d26c4afffec"
     },
     {
       "name": "PendingVersionsCount",
-      "type": "object",
+      "type": "Nullable\u003CInt32\u003E",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets number of pending versions or null when it is not relevant (for example model is not shared) or failed to get it.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8a85cbc0-f15a-9b0d-f87b-6ee0472028d7"
     },
     {
       "name": "SetBy",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets display name of the user who has set the state.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8dbea69a-37d8-dfb0-9ead-ba3b356b52f3"
     },
     {
       "name": "State",
-      "type": "object",
+      "type": "SharedModelStateEnum",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the state of the service.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b1655d02-c17c-9a4c-0c24-83d308330f52"
     }

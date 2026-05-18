@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "LeaderLinePlacingType",
-      "signature": "LeaderLinePlacingType(...)",
+      "signature": "public LeaderLinePlacingType()",
       "summary": "Creates a new leader line placing type instance.",
       "params": [],
       "throws": [],

@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Polymesh",
-      "signature": "Polymesh(...)",
+      "signature": "public Polymesh()",
       "summary": "Initializes a new instance of the Polymesh class",
       "params": [],
       "throws": [],
@@ -20,81 +20,198 @@
   "methods": [
     {
       "name": "CompareFingerprints",
-      "signature": "CompareFingerprints(...)",
+      "signature": "public static bool CompareFingerprints(string fingerprint1, string fingerprint2)",
       "summary": "Compares two fingerprints",
-      "params": [],
+      "params": [
+        {
+          "name": "fingerprint1",
+          "type": "System.String",
+          "doc": "The input parameter",
+          "optional": false
+        },
+        {
+          "name": "fingerprint2",
+          "type": "System.String",
+          "doc": "The input parameter2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if fingerprints match, false otherwise"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7d5c6766-b766-9e11-da23-5877d24d23ba"
     },
     {
       "name": "Convert",
-      "signature": "Convert(...)",
+      "signature": "public static List\u003CFacetedBrep\u003E Convert(ref dotPolymesh_t input)",
       "summary": "Converts a struct of polymeshes to a list of CopyFacetedBrep.",
-      "params": [],
+      "params": [
+        {
+          "name": "input",
+          "type": "dotPolymesh_t.",
+          "doc": "The input parameter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CFacetedBrep\u003E",
+        "doc": "The converted polymesh instances"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/32e5d693-cecf-b650-a701-11c119f1fbd1"
     },
     {
       "name": "ConvertInvalidInfoFromStruct",
-      "signature": "ConvertInvalidInfoFromStruct(...)",
+      "signature": "public static List\u003CKeyValuePair\u003Cint, Polymesh.PolymeshHealthCheckEnum\u003E\u003E ConvertInvalidInfoFromStruct(ref dotPolymeshValidateInvalidInfo_t input)",
       "summary": "Convert a struct of invalid info to a list of pairs of outer loop index and error code. Read indexes and error codes from the integer list.",
-      "params": [],
+      "params": [
+        {
+          "name": "input",
+          "type": "dotPolymeshValidateInvalidInfo_t.",
+          "doc": "Invalid info passed from TS core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CKeyValuePair\u003CInt32,Polymesh.PolymeshHealthCheckEnum\u003E\u003E",
+        "doc": "A list of pairs of outer loop index, error code"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e8630e24-1d44-86b8-3ed7-95417f96318e"
     },
     {
       "name": "ConvertToStruct",
-      "signature": "ConvertToStruct(...)",
+      "signature": "public static void ConvertToStruct(FacetedBrep brep, ref dotPolymesh_t output)",
       "summary": "Converts a CopyFacetedBrep to struct dot polymesh.",
-      "params": [],
+      "params": [
+        {
+          "name": "brep",
+          "type": "Tekla.Structures.Geometry3d.FacetedBrep",
+          "doc": "The input brep polymesh",
+          "optional": false
+        },
+        {
+          "name": "output",
+          "type": "dotPolymesh_t.",
+          "doc": "The output dot polymesh",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/56c98044-7935-f0a3-bd35-adfae51376ec"
     },
     {
       "name": "Fingerprint",
-      "signature": "Fingerprint(...)",
+      "signature": "public static string Fingerprint(FacetedBrep brep)",
       "summary": "Gets fingerprint information for input brep",
-      "params": [],
+      "params": [
+        {
+          "name": "brep",
+          "type": "Tekla.Structures.Geometry3d.FacetedBrep",
+          "doc": "The input parameter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "Fingerprint of the brep in string format"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5cb24120-b307-defd-1efd-157082e55a18"
     },
     {
       "name": "FromStruct",
-      "signature": "FromStruct(...)",
+      "signature": "public void FromStruct(ref dotPolymesh_t input)",
       "summary": "Converts a struct of polymesh to a CopyFacetedBrep.",
-      "params": [],
+      "params": [
+        {
+          "name": "input",
+          "type": "dotPolymesh_t.",
+          "doc": "The input parameter",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/fa3e031a-f57d-6525-c6d4-d3cbb8680918"
     },
     {
       "name": "GetSolidBrep",
-      "signature": "GetSolidBrep(...)",
+      "signature": "public static bool GetSolidBrep(FacetedBrep inBrep, out FacetedBrep outBrep)",
       "summary": "Gets the cleaned Brep",
-      "params": [],
+      "params": [
+        {
+          "name": "inBrep",
+          "type": "Tekla.Structures.Geometry3d.FacetedBrep",
+          "doc": "FacetedBrep to be cleaned",
+          "optional": false
+        },
+        {
+          "name": "outBrep",
+          "type": "Tekla.Structures.Geometry3d.FacetedBrep.",
+          "doc": "Cleaned facetedBrep",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if Brep can create a valid solid, false if outBrep is nonsolid"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9b11cd0e-703b-8a52-2192-f31f5be5e55b"
     },
     {
       "name": "ToStruct",
-      "signature": "ToStruct(...)",
+      "signature": "public void ToStruct(ref dotPolymesh_t output)",
       "summary": "Converts a CopyFacetedBrep to dotnet polymesh struct.",
-      "params": [],
+      "params": [
+        {
+          "name": "output",
+          "type": "dotPolymesh_t.",
+          "doc": "The output parameter.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c98e4037-98cc-3ff2-a650-7b0bfa910cdc"
     },
     {
       "name": "Validate",
-      "signature": "Validate(...)",
+      "signature": "public static bool Validate(FacetedBrep brep, Polymesh.PolymeshCheckerFlags checkCriteria, ref List\u003CKeyValuePair\u003Cint, Polymesh.PolymeshHealthCheckEnum\u003E\u003E invalidInfo)",
       "summary": "Converts a CopyFacetedBrep to a polymesh and validates.",
-      "params": [],
+      "params": [
+        {
+          "name": "brep",
+          "type": "Tekla.Structures.Geometry3d.FacetedBrep",
+          "doc": "The FacetedBrep to be converted and validated",
+          "optional": false
+        },
+        {
+          "name": "checkCriteria",
+          "type": "Tekla.Structures.Model.Polymesh.PolymeshCheckerFlags",
+          "doc": "The flags to indicate what to check",
+          "optional": false
+        },
+        {
+          "name": "invalidInfo",
+          "type": "System.Collections.Generic.List\u003CKeyValuePair\u003CInt32,Polymesh.PolymeshHealthCheckEnum\u003E\u003E.",
+          "doc": "The problematic faces\u0027 indices and their failed reasons, (-1, PolymeshUndefined) is for unknown reason for uncertain face. No inner loops checked further if outer loop found error.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if valid, false if error found"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/972f3ac2-c678-16b5-c9f6-110fb4d6a7cd"
@@ -103,7 +220,7 @@
   "properties": [
     {
       "name": "Brep",
-      "type": "object",
+      "type": "FacetedBrep",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the polymesh that forms the object geometry.",

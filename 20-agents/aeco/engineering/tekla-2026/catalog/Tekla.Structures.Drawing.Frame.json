@@ -9,18 +9,44 @@
   "constructors": [
     {
       "name": "Frame",
-      "signature": "Frame(...)",
+      "signature": "public Frame(FrameTypes FrameType, DrawingColors FrameColor)",
       "summary": "Creates a new frame instance with the specified frame type and color.",
-      "params": [],
+      "params": [
+        {
+          "name": "FrameType",
+          "type": "Tekla.Structures.Drawing.FrameTypes",
+          "doc": "The frame type to be used.",
+          "optional": false
+        },
+        {
+          "name": "FrameColor",
+          "type": "Tekla.Structures.Drawing.DrawingColors",
+          "doc": "The frame color to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c5dfc199-bba9-7ea4-fa78-2e04699ef901"
     },
     {
       "name": "Frame",
-      "signature": "Frame(...)",
+      "signature": "public Frame(FrameTypes FrameType, TeklaDrawingColor FrameColor)",
       "summary": "Creates a new frame instance with the specified frame type and RGB color.",
-      "params": [],
+      "params": [
+        {
+          "name": "FrameType",
+          "type": "Tekla.Structures.Drawing.FrameTypes",
+          "doc": "The frame type to be used.",
+          "optional": false
+        },
+        {
+          "name": "FrameColor",
+          "type": "Tekla.Structures.Drawing.TeklaDrawingColor",
+          "doc": "The frame RGB color to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a5e4882f-c238-88e3-4559-0dab5146a960"
@@ -29,36 +55,59 @@
   "methods": [
     {
       "name": "Clone",
-      "signature": "Clone(...)",
+      "signature": "public Object Clone()",
       "summary": "Clones the object.",
       "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "A copy of the object."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/443b9742-2894-2ba3-92a8-0889c193cd2b"
     },
     {
       "name": "GetAxisAlignedBoundingBox",
-      "signature": "GetAxisAlignedBoundingBox(...)",
+      "signature": "public RectangleBoundingBox GetAxisAlignedBoundingBox()",
       "summary": "Returns the bounding box of the frame in the global axis coordinate system.",
       "params": [],
+      "returns": {
+        "type": "RectangleBoundingBox",
+        "doc": "The bounding box of the frame in the global axis coordinate system."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/26c9ea8e-b0f0-2043-4f8e-87b9af27d476"
     },
     {
       "name": "GetObjectAlignedBoundingBox",
-      "signature": "GetObjectAlignedBoundingBox(...)",
+      "signature": "public RectangleBoundingBox GetObjectAlignedBoundingBox()",
       "summary": "Returns the bounding box of the frame in the local coordinate system.",
       "params": [],
+      "returns": {
+        "type": "RectangleBoundingBox",
+        "doc": "The bounding box of the frame in the local coordinate system."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9b7d3ea6-fe6a-1e44-1b7d-8545ffc17e94"
     },
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/867b0d3f-25bd-f1c4-a8b8-16f9b77c3cd1"
@@ -67,7 +116,7 @@
   "properties": [
     {
       "name": "Color",
-      "type": "object",
+      "type": "DrawingColors",
       "getter": true,
       "setter": true,
       "summary": "The frame\u0027s color.",
@@ -75,7 +124,7 @@
     },
     {
       "name": "TrueColor",
-      "type": "object",
+      "type": "TeklaDrawingColor",
       "getter": true,
       "setter": true,
       "summary": "The true color (RGB enabled) of the frame.",
@@ -83,7 +132,7 @@
     },
     {
       "name": "Type",
-      "type": "object",
+      "type": "FrameTypes",
       "getter": true,
       "setter": true,
       "summary": "The frame\u0027s type (square, round, dashed...).",

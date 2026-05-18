@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Operation",
-      "signature": "Operation(...)",
+      "signature": "public Operation()",
       "summary": "Initializes a new instance of the Operation class",
       "params": [],
       "throws": [],
@@ -20,36 +20,112 @@
   "methods": [
     {
       "name": "MoveAnalysisPartAreaEdge",
-      "signature": "MoveAnalysisPartAreaEdge(...)",
+      "signature": "public static bool MoveAnalysisPartAreaEdge(AnalysisPart analysisPart, AnalysisNode edgeNode1, AnalysisNode edgeNode2, Vector translation)",
       "summary": "Moves the analysis part area edge by translation vector. Perpendicular offset is calculated from the translation vector.",
-      "params": [],
+      "params": [
+        {
+          "name": "analysisPart",
+          "type": "Tekla.Structures.Analysis.AnalysisPart",
+          "doc": "The analysis part.",
+          "optional": false
+        },
+        {
+          "name": "edgeNode1",
+          "type": "Tekla.Structures.Analysis.AnalysisNode",
+          "doc": "Edge node 1.",
+          "optional": false
+        },
+        {
+          "name": "edgeNode2",
+          "type": "Tekla.Structures.Analysis.AnalysisNode",
+          "doc": "Edge node 2.",
+          "optional": false
+        },
+        {
+          "name": "translation",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The vector for moving the edge.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e21f7feb-4843-676b-29f0-76dcda52948a"
     },
     {
       "name": "MoveAnalysisPartPosition",
-      "signature": "MoveAnalysisPartPosition(...)",
+      "signature": "public static bool MoveAnalysisPartPosition(AnalysisPart analysisPart, AnalysisNode node, Vector translation)",
       "summary": "Moves the analysis part position by translation vector. Only the handle positions can be moved.",
-      "params": [],
+      "params": [
+        {
+          "name": "analysisPart",
+          "type": "Tekla.Structures.Analysis.AnalysisPart",
+          "doc": "The analysis part.",
+          "optional": false
+        },
+        {
+          "name": "node",
+          "type": "Tekla.Structures.Analysis.AnalysisNode",
+          "doc": "The node.",
+          "optional": false
+        },
+        {
+          "name": "translation",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The vector for moving the position.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8d745ca6-6ff9-ab60-b76b-a4383a09315b"
     },
     {
       "name": "MoveObject",
-      "signature": "MoveObject(...)",
+      "signature": "public static bool MoveObject(AnalysisObject analysisObject, Vector translation)",
       "summary": "Moves the analysis object by translation vector. Supported objects are: AnalysisNode, AnalysisPart.",
-      "params": [],
+      "params": [
+        {
+          "name": "analysisObject",
+          "type": "Tekla.Structures.Analysis.AnalysisObject",
+          "doc": "The analysis object to move.",
+          "optional": false
+        },
+        {
+          "name": "translation",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The vector for moving the object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2d4b3006-74d0-17d2-316f-1f10d028d0a6"
     },
     {
       "name": "ResetAnalysisPartPositions",
-      "signature": "ResetAnalysisPartPositions(...)",
+      "signature": "public static void ResetAnalysisPartPositions(AnalysisPart analysisPart)",
       "summary": "Reset analysis part. Removes the offsets applied to node positions. The axis offset of the analysis part is not reset.",
-      "params": [],
+      "params": [
+        {
+          "name": "analysisPart",
+          "type": "Tekla.Structures.Analysis.AnalysisPart",
+          "doc": "The analysis part.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/790333a7-df91-ceaa-caf7-be3183a0f547"

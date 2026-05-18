@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "BooleanConverter",
-      "signature": "BooleanConverter(...)",
+      "signature": "public BooleanConverter()",
       "summary": "Initializes a new instance of the BooleanConverter class",
       "params": [],
       "throws": [],
@@ -20,36 +20,122 @@
   "methods": [
     {
       "name": "CanConvertFrom",
-      "signature": "CanConvertFrom(...)",
+      "signature": "public virtual bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)",
       "summary": "Checks whether the conversion can be made from the source type to the boolean type.",
-      "params": [],
+      "params": [
+        {
+          "name": "context",
+          "type": "System.ComponentModel.ITypeDescriptorContext",
+          "doc": "The context.",
+          "optional": false
+        },
+        {
+          "name": "sourceType",
+          "type": "System.Type",
+          "doc": "The type to convert from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if possible, false if not possible."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9ed92bf9-a0b1-1e74-3a6c-1d0282840a95"
     },
     {
       "name": "CanConvertTo",
-      "signature": "CanConvertTo(...)",
+      "signature": "public virtual bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)",
       "summary": "Checks whether the conversion can be made from the boolean type to the destination type.",
-      "params": [],
+      "params": [
+        {
+          "name": "context",
+          "type": "System.ComponentModel.ITypeDescriptorContext",
+          "doc": "The context.",
+          "optional": false
+        },
+        {
+          "name": "destinationType",
+          "type": "System.Type",
+          "doc": "The type to convert to.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if possible, false if not possible."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/34334764-e5fb-2756-3815-49476e791327"
     },
     {
       "name": "ConvertFrom",
-      "signature": "ConvertFrom(...)",
+      "signature": "public virtual Object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)",
       "summary": "Converts an object from the given culture to the boolean type.",
-      "params": [],
+      "params": [
+        {
+          "name": "context",
+          "type": "System.ComponentModel.ITypeDescriptorContext",
+          "doc": "The context.",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "doc": "The culture.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "doc": "The object to be converted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "The new boolean object."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ebeec01c-5dbd-8080-3bfb-c917accf0edb"
     },
     {
       "name": "ConvertTo",
-      "signature": "ConvertTo(...)",
+      "signature": "public virtual Object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, Object value, Type destinationType)",
       "summary": "Converts an object from the boolean type to the given destination type.",
-      "params": [],
+      "params": [
+        {
+          "name": "context",
+          "type": "System.ComponentModel.ITypeDescriptorContext",
+          "doc": "The context.",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "doc": "The target culture.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "doc": "The boolean object to be converted.",
+          "optional": false
+        },
+        {
+          "name": "destinationType",
+          "type": "System.Type",
+          "doc": "The destination type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "The given boolean object converted to the new type."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/14446341-9404-e5cc-cf09-25f1930a9386"

@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "FontAttributes",
-      "signature": "FontAttributes(...)",
+      "signature": "public FontAttributes()",
       "summary": "Creates a new font attributes instance. The default color is black, the height is 2.5, the font name is Arial and the values of italic and bold are false.",
       "params": [],
       "throws": [],
@@ -18,18 +18,80 @@
     },
     {
       "name": "FontAttributes",
-      "signature": "FontAttributes(...)",
+      "signature": "public FontAttributes(DrawingColors color, double height, string fontName, bool italic, bool bold)",
       "summary": "Creates a new font attributes instance with the given parameters.",
-      "params": [],
+      "params": [
+        {
+          "name": "color",
+          "type": "Tekla.Structures.Drawing.DrawingColors",
+          "doc": "The color of the font.",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "System.Double",
+          "doc": "The height of the font.",
+          "optional": false
+        },
+        {
+          "name": "fontName",
+          "type": "System.String",
+          "doc": "The name of the font.",
+          "optional": false
+        },
+        {
+          "name": "italic",
+          "type": "System.Boolean",
+          "doc": "The italic specifier.",
+          "optional": false
+        },
+        {
+          "name": "bold",
+          "type": "System.Boolean",
+          "doc": "The bold specifier.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/dc7f41a0-8b07-43ff-6524-c5f09295d33f"
     },
     {
       "name": "FontAttributes",
-      "signature": "FontAttributes(...)",
+      "signature": "public FontAttributes(TeklaDrawingColor color, double height, string fontName, bool italic, bool bold)",
       "summary": "Creates a new font attributes instance with the given parameters.",
-      "params": [],
+      "params": [
+        {
+          "name": "color",
+          "type": "Tekla.Structures.Drawing.TeklaDrawingColor",
+          "doc": "The true RGB color of the font.",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "System.Double",
+          "doc": "The height of the font.",
+          "optional": false
+        },
+        {
+          "name": "fontName",
+          "type": "System.String",
+          "doc": "The name of the font.",
+          "optional": false
+        },
+        {
+          "name": "italic",
+          "type": "System.Boolean",
+          "doc": "The italic specifier.",
+          "optional": false
+        },
+        {
+          "name": "bold",
+          "type": "System.Boolean",
+          "doc": "The bold specifier.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/90db3507-04de-d20a-ead3-57eee5db23e4"
@@ -38,18 +100,33 @@
   "methods": [
     {
       "name": "Clone",
-      "signature": "Clone(...)",
+      "signature": "public Object Clone()",
       "summary": "Creates a new object that is a copy of the current instance.",
       "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "A new object that is a copy of the current instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8b7bcbf8-c379-13d6-9c02-0043bde2fbc4"
     },
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e240af18-28a0-7eba-1bff-de03c0f16c47"
@@ -58,7 +135,7 @@
   "properties": [
     {
       "name": "Bold",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Whether the font is bold.",
@@ -66,7 +143,7 @@
     },
     {
       "name": "Color",
-      "type": "object",
+      "type": "DrawingColors",
       "getter": true,
       "setter": true,
       "summary": "The color of the font.",
@@ -74,7 +151,7 @@
     },
     {
       "name": "Height",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The height of the font (in millimeters).",
@@ -82,7 +159,7 @@
     },
     {
       "name": "Italic",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Whether the font is italic.",
@@ -90,7 +167,7 @@
     },
     {
       "name": "Name",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The name of the font.",
@@ -98,7 +175,7 @@
     },
     {
       "name": "TrueColor",
-      "type": "object",
+      "type": "TeklaDrawingColor",
       "getter": true,
       "setter": true,
       "summary": "The true color (rgb enabled) of the font.",

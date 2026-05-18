@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "View.ViewAttributes",
-      "signature": "View.ViewAttributes(...)",
+      "signature": "public ViewAttributes()",
       "summary": "Creates a new view attributes instance that loads standard attributes.",
       "params": [],
       "throws": [],
@@ -18,9 +18,16 @@
     },
     {
       "name": "View.ViewAttributes",
-      "signature": "View.ViewAttributes(...)",
+      "signature": "public ViewAttributes(string AttributesFile)",
       "summary": "Creates a new view attributes instance that loads the specified attributes.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributesFile",
+          "type": "System.String",
+          "doc": "The name of the attributes file.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e2c5666b-3542-f4fb-d7de-d2d1ec4b473b"
@@ -29,18 +36,40 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/88f7ad53-6e09-7bf7-e523-1b30b1fc152b"
     },
     {
       "name": "LoadAttributes",
-      "signature": "LoadAttributes(...)",
+      "signature": "public override bool LoadAttributes(string attributeFile)",
       "summary": "Loads the attributes from the attribute file.",
-      "params": [],
+      "params": [
+        {
+          "name": "attributeFile",
+          "type": "System.String",
+          "doc": "The attribute file\u0027s filename.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9e31a4e7-f908-e01d-d4b0-99f0582dc4f6"
@@ -49,7 +78,7 @@
   "properties": [
     {
       "name": "DatumLevel",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The specified datum level. If ViewPlaneDatumPointForElevations is set to true when DatumLevel is set, the value of ViewPlaneDatumPointForElevations will change to false.",
@@ -57,7 +86,7 @@
     },
     {
       "name": "FixedViewPlacing",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Defines whether the view placing is fixed (true) or free (false).",
@@ -65,7 +94,7 @@
     },
     {
       "name": "LabelPositionHorizontal",
-      "type": "object",
+      "type": "View.HorizontalLabelPosition",
       "getter": true,
       "setter": true,
       "summary": "The horizontal position of the view label.",
@@ -73,7 +102,7 @@
     },
     {
       "name": "LabelPositionVertical",
-      "type": "object",
+      "type": "View.VerticalLabelPosition",
       "getter": true,
       "setter": true,
       "summary": "The vertical position of the view label.",
@@ -81,7 +110,7 @@
     },
     {
       "name": "LocationBy",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the location by attribute. Value is ViewAttributes.LocationByModelOrigin, ViewAttributes.LocationByProjectBasePoint or guid of a Basepoint.",
@@ -89,7 +118,7 @@
     },
     {
       "name": "MarkSymbolAttributes",
-      "type": "object",
+      "type": "View.ViewMarkSymbolAttributes",
       "getter": true,
       "setter": true,
       "summary": "The view mark symbol attributes.",
@@ -97,7 +126,7 @@
     },
     {
       "name": "MarkSymbolColor",
-      "type": "object",
+      "type": "DrawingColors",
       "getter": true,
       "setter": true,
       "summary": "The color of the mark symbol (see DrawingColors for options).",
@@ -105,7 +134,7 @@
     },
     {
       "name": "PartialProfileLength",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the partial profile length.",
@@ -113,7 +142,7 @@
     },
     {
       "name": "PartialProfileOffset",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the partial profile offset",
@@ -121,7 +150,7 @@
     },
     {
       "name": "PourView",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Defines whether the view is pour view or not.",
@@ -129,7 +158,7 @@
     },
     {
       "name": "ReflectedView",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Defines whether the view is reflected or not.",
@@ -137,7 +166,7 @@
     },
     {
       "name": "Scale",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The view scale.",
@@ -145,7 +174,7 @@
     },
     {
       "name": "Shortening",
-      "type": "object",
+      "type": "View.ViewShorteningAttributes",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the shortening attributes for the view.",
@@ -153,7 +182,7 @@
     },
     {
       "name": "ShowPartOpeningsOrRecessSymbol",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Defines whether to show the openings/recess symbol or not.",
@@ -161,7 +190,7 @@
     },
     {
       "name": "TagsAttributes",
-      "type": "object",
+      "type": "View.ViewMarkTagsAttributes",
       "getter": true,
       "setter": true,
       "summary": "The attributes for view mark tags.",
@@ -169,7 +198,7 @@
     },
     {
       "name": "TrueMarkSymbolColor",
-      "type": "object",
+      "type": "TeklaDrawingColor",
       "getter": true,
       "setter": true,
       "summary": "The true color (rgb enabled) of the mark symbol.",
@@ -177,7 +206,7 @@
     },
     {
       "name": "UndeformedView",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Defines whether the view is undeformed or not.",
@@ -185,7 +214,7 @@
     },
     {
       "name": "UnfoldedView",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Defines whether the view is unfolded or not.",
@@ -193,7 +222,7 @@
     },
     {
       "name": "ViewExtensionForNeighbourParts",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The view extension for neighbour parts.",
@@ -201,7 +230,7 @@
     },
     {
       "name": "ViewPlaneDatumPointForElevations",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Defines whether the datum point for elevations is view plane based (true) or specified (false). When set to false, the value of DatumLevel is used. When set to true, DatumLevel will be set to 0.0.",

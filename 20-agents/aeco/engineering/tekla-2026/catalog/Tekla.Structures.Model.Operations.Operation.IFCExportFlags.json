@@ -10,7 +10,7 @@
   "properties": [
     {
       "name": "UseIfcMapConversion",
-      "type": "object",
+      "type": "Nullable\u003CBoolean\u003E",
       "getter": true,
       "setter": true,
       "summary": "Boolean indicating whether to use IfcMapConversion with base points is enabled. By default IFC4 export should use IfcMapConversion. Uninitialized null will be converted to true during export.",

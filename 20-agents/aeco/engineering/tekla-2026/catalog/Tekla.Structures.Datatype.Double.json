@@ -8,9 +8,16 @@
   "constructors": [
     {
       "name": "Double",
-      "signature": "Double(...)",
+      "signature": "public Double(double value)",
       "summary": "Creates a new double datatype instance.",
-      "params": [],
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "The value for the double datatype.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2cca90f4-76de-ce22-c564-0adb3b046ea9"
@@ -19,72 +26,131 @@
   "methods": [
     {
       "name": "CompareTo",
-      "signature": "CompareTo(...)",
+      "signature": "public int CompareTo(Double other)",
       "summary": "Compares the current object with another object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "other",
+          "type": "Tekla.Structures.Datatype.Double",
+          "doc": "The object to be compared with the current object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "A 32-bit signed integer that indicates the relative order of the objects being compared.The return value has the following meanings:ValueMeaningLess than zeroThe current object is less than the other object.ZeroThe current object is equal to the other object.Greater than zeroThe current object is greater than the other object."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b08d6a92-be92-cd4a-8350-e676c9c6880c"
     },
     {
       "name": "Equals(Object)",
-      "signature": "Equals(Object)(...)",
+      "signature": "public override bool Equals(Object Obj)",
       "summary": "Returns a value that indicates whether the current instance is equal to the given object.",
-      "params": [],
+      "params": [
+        {
+          "name": "Obj",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the given object has the same value as the current instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/60172094-34b3-d3b4-a3c7-639ac7509369"
     },
     {
       "name": "Equals(Double)",
-      "signature": "Equals(Double)(...)",
+      "signature": "public bool Equals(Double other)",
       "summary": "Indicates whether the current object is equal to another object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "other",
+          "type": "Tekla.Structures.Datatype.Double",
+          "doc": "The object to be compared with the current object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the current object is equal to the other object; otherwise, false."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/320dd7c1-7183-dd8c-677c-653a8b5cd42c"
     },
     {
       "name": "GetHashCode",
-      "signature": "GetHashCode(...)",
+      "signature": "public override int GetHashCode()",
       "summary": "Returns the hash code for the current instance.",
       "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "A hash code for the current Double instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/dd889a84-a1e3-a0f8-babe-c1f361a973a8"
     },
     {
       "name": "GetSchema",
-      "signature": "GetSchema(...)",
+      "signature": "public XmlSchema GetSchema()",
       "summary": "Gets the XML Schema for the datatype.",
       "params": [],
+      "returns": {
+        "type": "XmlSchema",
+        "doc": "The datatype\u0027s XML Schema."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5a05a043-dcfb-bcdb-8d58-51e3f782e168"
     },
     {
       "name": "ReadXml",
-      "signature": "ReadXml(...)",
+      "signature": "public void ReadXml(XmlReader reader)",
       "summary": "Parses a new value from the given reader.",
-      "params": [],
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.Xml.XmlReader",
+          "doc": "The reader to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b88641ca-e4d7-28b6-cb2e-8132d8c2e4f0"
     },
     {
       "name": "ToString",
-      "signature": "ToString(...)",
+      "signature": "public override string ToString()",
       "summary": "Returns the string representation of the object.",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The string representation of the object."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7f80b0ef-dfc8-3714-4fd0-25a8f8d1d72d"
     },
     {
       "name": "WriteXml",
-      "signature": "WriteXml(...)",
+      "signature": "public void WriteXml(XmlWriter writer)",
       "summary": "Writes the value as XML to the given writer.",
-      "params": [],
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.Xml.XmlWriter",
+          "doc": "The writer to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/fffa87a4-e597-9339-09eb-e4f6555929c7"
@@ -93,7 +159,7 @@
   "properties": [
     {
       "name": "Value",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The value of the double datatype.",

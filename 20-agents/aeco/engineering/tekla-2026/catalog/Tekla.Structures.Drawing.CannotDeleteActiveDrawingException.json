@@ -9,9 +9,16 @@
   "constructors": [
     {
       "name": "CannotDeleteActiveDrawingException",
-      "signature": "CannotDeleteActiveDrawingException(...)",
+      "signature": "public CannotDeleteActiveDrawingException(string Message)",
       "summary": "Creates a new cannot delete active drawing exception instance.",
-      "params": [],
+      "params": [
+        {
+          "name": "Message",
+          "type": "System.String",
+          "doc": "The exception message.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/82867297-c6f7-b0f5-c880-95fb41f1decc"

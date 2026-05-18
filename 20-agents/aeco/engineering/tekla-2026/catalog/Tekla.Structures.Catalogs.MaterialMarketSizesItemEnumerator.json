@@ -10,16 +10,20 @@
   "methods": [
     {
       "name": "MoveNext",
-      "signature": "MoveNext(...)",
+      "signature": "public bool MoveNext()",
       "summary": "Moves to the next item in the MaterialMarketSizesItemEnumerator.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "False on failure."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4194e31a-208e-0382-4d8b-f0da8c0c278c"
     },
     {
       "name": "Reset",
-      "signature": "Reset(...)",
+      "signature": "public void Reset()",
       "summary": "Resets the MaterialMarketSizesItemEnumerator to the beginning.",
       "params": [],
       "throws": [],
@@ -30,9 +34,9 @@
   "properties": [
     {
       "name": "Current",
-      "type": "object",
+      "type": "MaterialMarketSizesItem",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Returns a MaterialMarketSizesItem instance with the current index.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1127b77b-3254-b0d0-3f5a-51fc07a837e0"
     }

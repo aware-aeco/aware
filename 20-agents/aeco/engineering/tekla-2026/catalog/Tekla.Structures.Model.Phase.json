@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Phase",
-      "signature": "Phase(...)",
+      "signature": "public Phase()",
       "summary": "Instantiates a new phase with the phase number 0.",
       "params": [],
       "throws": [],
@@ -18,18 +18,50 @@
     },
     {
       "name": "Phase",
-      "signature": "Phase(...)",
+      "signature": "public Phase(int PhaseNumber)",
       "summary": "Instantiates a new phase with the given phase number.",
-      "params": [],
+      "params": [
+        {
+          "name": "PhaseNumber",
+          "type": "System.Int32",
+          "doc": "The number of the phase.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1344d189-4729-3984-4cd2-7155e9be62f1"
     },
     {
       "name": "Phase",
-      "signature": "Phase(...)",
+      "signature": "public Phase(int PhaseNumber, string PhaseName, string PhaseComment, int IsCurrentPhase)",
       "summary": "Instantiates a new phase with the given parameters.",
-      "params": [],
+      "params": [
+        {
+          "name": "PhaseNumber",
+          "type": "System.Int32",
+          "doc": "The number of the phase.",
+          "optional": false
+        },
+        {
+          "name": "PhaseName",
+          "type": "System.String",
+          "doc": "The name of the phase.",
+          "optional": false
+        },
+        {
+          "name": "PhaseComment",
+          "type": "System.String",
+          "doc": "The comment of the phase.",
+          "optional": false
+        },
+        {
+          "name": "IsCurrentPhase",
+          "type": "System.Int32",
+          "doc": "The value is 1 if the phase is the current phase, 0 otherwise.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/70da8fdf-5c15-5203-0274-c40564d23d17"
@@ -38,90 +70,208 @@
   "methods": [
     {
       "name": "Delete",
-      "signature": "Delete(...)",
+      "signature": "public bool Delete()",
       "summary": "Deletes a phase. The current phase cannot be deleted.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false if failed (the attached objects probably caused the failure)."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/908ebf19-ac2e-5ea5-089d-8729f93c2569"
     },
     {
       "name": "GetUserProperty(String, Double.)",
-      "signature": "GetUserProperty(String, Double.)(...)",
+      "signature": "public bool GetUserProperty(string Name, ref double Value)",
       "summary": "Retrieves a double property for the phase.",
-      "params": [],
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be retrieved, in capital letters.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.Double.",
+          "doc": "The return value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was returned successfully."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/88f635f5-af5a-f8de-142d-1f5aafe13cda"
     },
     {
       "name": "GetUserProperty(String, Int32.)",
-      "signature": "GetUserProperty(String, Int32.)(...)",
+      "signature": "public bool GetUserProperty(string Name, ref int Value)",
       "summary": "Retrieves an integer property for the phase.",
-      "params": [],
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be retrieved, in capital letters.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.Int32.",
+          "doc": "The return value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was returned successfully."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1637afd3-9740-d429-3636-4c665df77bd1"
     },
     {
       "name": "GetUserProperty(String, String.)",
-      "signature": "GetUserProperty(String, String.)(...)",
+      "signature": "public bool GetUserProperty(string Name, ref string Value)",
       "summary": "Retrieves a string property for the phase.",
-      "params": [],
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be retrieved, in capital letters.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.String.",
+          "doc": "The return value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the value was returned successfully."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3e94df7a-eb8d-986c-afd6-dd42c8d5cf16"
     },
     {
       "name": "Insert",
-      "signature": "Insert(...)",
+      "signature": "public bool Insert()",
       "summary": "Creates a new phase.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false if failed (the reason for the failure is probably that the phase number already exists)."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3016a6b5-374c-abdc-a3c2-936850c22d67"
     },
     {
       "name": "Modify",
-      "signature": "Modify(...)",
+      "signature": "public bool Modify()",
       "summary": "Modifies a phase.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false if failed (PhaseNumber should be higher than 0)."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1ca533f6-1cc6-47bb-9537-4812b55e976d"
     },
     {
       "name": "Select",
-      "signature": "Select(...)",
+      "signature": "public bool Select()",
       "summary": "Selects a phase.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false if failed (PhaseNumber should be higher than 0)."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d107679d-0cab-291b-450e-82917ee51d77"
     },
     {
       "name": "SetUserProperty(String, Double)",
-      "signature": "SetUserProperty(String, Double)(...)",
+      "signature": "public bool SetUserProperty(string Name, double Value)",
       "summary": "Sets a double property for the phase.",
-      "params": [],
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be set, in capital letters.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.Double",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1b34bb94-be9d-b762-c6aa-c07f23a9aafe"
     },
     {
       "name": "SetUserProperty(String, Int32)",
-      "signature": "SetUserProperty(String, Int32)(...)",
+      "signature": "public bool SetUserProperty(string Name, int Value)",
       "summary": "Sets an integer property for the phase.",
-      "params": [],
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be set, in capital letters.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.Int32",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0fdc9fd6-07ce-feb9-4448-91f3279ec822"
     },
     {
       "name": "SetUserProperty(String, String)",
-      "signature": "SetUserProperty(String, String)(...)",
+      "signature": "public bool SetUserProperty(string Name, string Value)",
       "summary": "Sets a string property for the phase.",
-      "params": [],
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name of the property to be set, in capital letters.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.String",
+          "doc": "The new value for the property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the property was set successfully."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b6766490-3722-2bce-5ed3-f7c91182df8e"
@@ -130,7 +280,7 @@
   "properties": [
     {
       "name": "IsCurrentPhase",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The value is 1 if the phase is the current phase, 0 otherwise.",
@@ -138,7 +288,7 @@
     },
     {
       "name": "PhaseComment",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The phase comment.",
@@ -146,7 +296,7 @@
     },
     {
       "name": "PhaseName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The phase name.",
@@ -154,7 +304,7 @@
     },
     {
       "name": "PhaseNumber",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The phase number.",

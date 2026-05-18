@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "NumberingSeriesNullable",
-      "signature": "NumberingSeriesNullable(...)",
+      "signature": "public NumberingSeriesNullable()",
       "summary": "Initializes a new instance of the NumberingSeriesNullable class.",
       "params": [],
       "throws": [],
@@ -18,9 +18,22 @@
     },
     {
       "name": "NumberingSeriesNullable",
-      "signature": "NumberingSeriesNullable(...)",
+      "signature": "public NumberingSeriesNullable(string prefix, int number)",
       "summary": "Initializes a new instance of the NumberingSeriesNullable class with the given arguments.",
-      "params": [],
+      "params": [
+        {
+          "name": "prefix",
+          "type": "System.String",
+          "doc": "The prefix to be used.",
+          "optional": false
+        },
+        {
+          "name": "number",
+          "type": "System.Int32",
+          "doc": "The start number to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/dccc9eaa-d434-9789-d28e-713abc7f194a"
@@ -30,7 +43,7 @@
   "properties": [
     {
       "name": "Prefix",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the numbering prefix.",
@@ -38,7 +51,7 @@
     },
     {
       "name": "StartNumber",
-      "type": "object",
+      "type": "Nullable\u003CInt32\u003E",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the numbering start number.",

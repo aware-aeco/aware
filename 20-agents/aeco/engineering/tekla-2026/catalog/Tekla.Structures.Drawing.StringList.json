@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "StringList",
-      "signature": "StringList(...)",
+      "signature": "public StringList()",
       "summary": "Creates a new string list instance.",
       "params": [],
       "throws": [],
@@ -18,9 +18,16 @@
     },
     {
       "name": "StringList",
-      "signature": "StringList(...)",
+      "signature": "public StringList(int Capacity)",
       "summary": "Creates a new string list instance with the given capacity.",
-      "params": [],
+      "params": [
+        {
+          "name": "Capacity",
+          "type": "System.Int32",
+          "doc": "The capacity of the string list.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6273ea53-624c-a29e-5c00-bb3097c1b319"
@@ -29,126 +36,315 @@
   "methods": [
     {
       "name": "Add",
-      "signature": "Add(...)",
+      "signature": "public int Add(string value)",
       "summary": "Adds a new string to the end of the string list.",
-      "params": [],
+      "params": [
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "The string to be added to the list.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index where the string was added."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/fc0068a0-ffb4-23a5-8a95-e02ec5836e20"
     },
     {
       "name": "Contains",
-      "signature": "Contains(...)",
+      "signature": "public bool Contains(string value)",
       "summary": "Checks if the string is in the list.",
-      "params": [],
+      "params": [
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "The string to be checked.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the string is in the list, otherwise false."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7712ff56-f320-f4d0-6f98-900066e3c931"
     },
     {
       "name": "GetRange",
-      "signature": "GetRange(...)",
+      "signature": "public StringList GetRange(int index, int count)",
       "summary": "Gets a part of the string list.",
-      "params": [],
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The start index of the new list.",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "System.Int32",
+          "doc": "The number of items in the new list.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "StringList",
+        "doc": "The new string list."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/eea5d9d5-8b63-8bb6-ccc6-0231864fd401"
     },
     {
       "name": "IndexOf(String)",
-      "signature": "IndexOf(String)(...)",
+      "signature": "public int IndexOf(string value)",
       "summary": "Gets the index of the specified string.",
-      "params": [],
+      "params": [
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "The string to locate in the list.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the string if found in the list, otherwise -1."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d13aab21-684a-72f7-2c2e-bda2deae6bbe"
     },
     {
       "name": "IndexOf(String, Int32)",
-      "signature": "IndexOf(String, Int32)(...)",
+      "signature": "public int IndexOf(string value, int startIndex)",
       "summary": "Gets the index of the specified string between the index to start the search from and the end of the list.",
-      "params": [],
+      "params": [
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "The string to locate in the list.",
+          "optional": false
+        },
+        {
+          "name": "startIndex",
+          "type": "System.Int32",
+          "doc": "The index to start the search from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the string if found in the list, otherwise -1."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/717ab436-5319-c27c-b63f-65db9a5425a7"
     },
     {
       "name": "IndexOf(String, Int32, Int32)",
-      "signature": "IndexOf(String, Int32, Int32)(...)",
+      "signature": "public int IndexOf(string value, int startIndex, int count)",
       "summary": "Gets the index of the specified string between the index to start the search from and startIndex \u002B count.",
-      "params": [],
+      "params": [
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "The string to locate in the list.",
+          "optional": false
+        },
+        {
+          "name": "startIndex",
+          "type": "System.Int32",
+          "doc": "The index to start the search from.",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "System.Int32",
+          "doc": "The number of items searched.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the string if found in the list, otherwise -1."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/87ab9055-6834-3f94-0d08-56a5ed1c1183"
     },
     {
       "name": "Insert",
-      "signature": "Insert(...)",
+      "signature": "public void Insert(int index, string value)",
       "summary": "Inserts the string to the specified index.",
-      "params": [],
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The index where the string is inserted.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "The string to be inserted.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/be01405b-81c0-615a-0ffb-c002f21d4d0a"
     },
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/13fa4807-e6f2-2068-254c-6667ca2f9346"
     },
     {
       "name": "LastIndexOf(String)",
-      "signature": "LastIndexOf(String)(...)",
+      "signature": "public int LastIndexOf(string value)",
       "summary": "Searches for the last occurence of the string in the list.",
-      "params": [],
+      "params": [
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "The string to locate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The last index of the string if found, otherwise -1."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/df56c09b-a83f-109d-cf47-79e93127f7f0"
     },
     {
       "name": "LastIndexOf(String, Int32)",
-      "signature": "LastIndexOf(String, Int32)(...)",
+      "signature": "public int LastIndexOf(string value, int startIndex)",
       "summary": "Searches for the last occurence of the string in the list.",
-      "params": [],
+      "params": [
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "The string to locate.",
+          "optional": false
+        },
+        {
+          "name": "startIndex",
+          "type": "System.Int32",
+          "doc": "The index to start the search from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The last index of the string if found, otherwise -1."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9fc51a21-bcdb-ebb9-c2a9-d93434d5aedf"
     },
     {
       "name": "LastIndexOf(String, Int32, Int32)",
-      "signature": "LastIndexOf(String, Int32, Int32)(...)",
+      "signature": "public int LastIndexOf(string value, int startIndex, int count)",
       "summary": "Searches for the last occurence of the string in the list.",
-      "params": [],
+      "params": [
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "The string to locate.",
+          "optional": false
+        },
+        {
+          "name": "startIndex",
+          "type": "System.Int32",
+          "doc": "The index to start the search from.",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "System.Int32",
+          "doc": "The number of items searched.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The last index of the string if found, otherwise -1."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/717161f2-b30e-d521-f960-b3d39925ae92"
     },
     {
       "name": "Remove",
-      "signature": "Remove(...)",
+      "signature": "public void Remove(string value)",
       "summary": "Removes the first occurence of the string from the list.",
-      "params": [],
+      "params": [
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "The string to be removed.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/29585d51-29fa-8ec1-51b4-a6d0ccc053b3"
     },
     {
       "name": "RemoveRange",
-      "signature": "RemoveRange(...)",
+      "signature": "public void RemoveRange(int index, int count)",
       "summary": "Removes a range of items starting from the given index.",
-      "params": [],
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The start index.",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "System.Int32",
+          "doc": "The number of items to be removed.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/46812b00-070a-9e4a-adf1-e306fe85d657"
     },
     {
       "name": "ToArray",
-      "signature": "ToArray(...)",
+      "signature": "public string[] ToArray()",
       "summary": "Copies the strings to a string array.",
       "params": [],
+      "returns": {
+        "type": ".String.",
+        "doc": "The array of strings."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6d363dd2-aa3c-ca8d-bc36-c873fee76eb3"
@@ -157,7 +353,7 @@
   "properties": [
     {
       "name": "Item",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the string at the specified index.",

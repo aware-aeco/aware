@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisModelAnalysisProperties",
-      "signature": "AnalysisModelAnalysisProperties(...)",
+      "signature": "public AnalysisModelAnalysisProperties()",
       "summary": "Creates a new analysis model analysis properties instance.",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "AccuracyOfIterations",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The accuracy of the iterations.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "AnalysisMethod",
-      "type": "object",
+      "type": "AnalysisModelAnalysisProperties.AnalysisMethodEnum",
       "getter": true,
       "setter": true,
       "summary": "The analysis method.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "MaxIterations",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The maximum number of iterations.",

@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "InsidePartHorizontalPlacingType",
-      "signature": "InsidePartHorizontalPlacingType(...)",
+      "signature": "public InsidePartHorizontalPlacingType()",
       "summary": "Creates a new inside part horizontal placing type instance.",
       "params": [],
       "throws": [],

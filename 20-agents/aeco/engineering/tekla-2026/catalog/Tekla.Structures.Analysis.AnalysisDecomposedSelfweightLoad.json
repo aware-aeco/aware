@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisDecomposedSelfweightLoad",
-      "signature": "AnalysisDecomposedSelfweightLoad(...)",
+      "signature": "public AnalysisDecomposedSelfweightLoad()",
       "summary": "Initializes a new instance of the AnalysisDecomposedSelfweightLoad class",
       "params": [],
       "throws": [],
@@ -20,7 +20,7 @@
   "methods": [
     {
       "name": "Select",
-      "signature": "Select(...)",
+      "signature": "public override void Select()",
       "summary": "Selects an analysis decomposed selfweight load.",
       "params": [],
       "throws": [],
@@ -31,7 +31,7 @@
   "properties": [
     {
       "name": "AnalysisLoadType",
-      "type": "object",
+      "type": "AnalysisDecomposedLoad.AnalysisLoadTypeEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the analysis decomposed load.",
@@ -39,7 +39,7 @@
     },
     {
       "name": "AnalysisModelName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis model name.",
@@ -47,7 +47,7 @@
     },
     {
       "name": "AnalysisObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the analysis object.",
@@ -55,23 +55,23 @@
     },
     {
       "name": "Directions",
-      "type": "object",
+      "type": "List\u003CAnalysisDecomposedLoad.AnalysisDecomposedLoadDirectionEnum\u003E",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The directions of the decomposed selfweight load.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6b304b95-c715-7b3a-6057-510627fc06a1"
     },
     {
       "name": "Factors",
-      "type": "object",
+      "type": "List\u003CDouble\u003E",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The factors of the decomposed selfweight load.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9ffe3810-473b-65e1-8b83-9a59ac24dd4c"
     },
     {
       "name": "FatherObject2ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -79,7 +79,7 @@
     },
     {
       "name": "FatherObject2Type",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -87,7 +87,7 @@
     },
     {
       "name": "FatherObjectID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -95,7 +95,7 @@
     },
     {
       "name": "FatherObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -103,7 +103,7 @@
     },
     {
       "name": "ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the analysis object.",
@@ -111,7 +111,7 @@
     },
     {
       "name": "ModelLoadGroupID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the load group.",
@@ -119,7 +119,7 @@
     },
     {
       "name": "ModelLoadID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the model load.",
@@ -127,7 +127,7 @@
     },
     {
       "name": "ObjectAttachedToID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the object the load is attached to.",
@@ -135,7 +135,7 @@
     },
     {
       "name": "ObjectAttachedToType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the object the load is attached to.",

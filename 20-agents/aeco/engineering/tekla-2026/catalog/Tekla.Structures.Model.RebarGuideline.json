@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "RebarGuideline",
-      "signature": "RebarGuideline(...)",
+      "signature": "public RebarGuideline()",
       "summary": "Initializes a new instance of the RebarGuideline class.",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "ChamferType",
-      "type": "object",
+      "type": "RebarGuideline.GuidelineChamferTypeEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the chamfer type of the guideline. To create longitudinal bars on the top/bottom face of a flat polybeam, create a guideline at each corner, and use the ARC_POINT chamfer type at \u0022curved\u0022 corners, and NONE otherwise.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "Curve",
-      "type": "object",
+      "type": "Contour",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the geometric Contour of the rebar guideline.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "FollowEdges",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a flag that indicates whether the guideline should attempt to follow the leg face edges located between its end points.",
@@ -45,7 +45,7 @@
     },
     {
       "name": "Id",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets an identifier that may be used to identify instances of the same rebar guideline.",
@@ -53,7 +53,7 @@
     },
     {
       "name": "Spacing",
-      "type": "object",
+      "type": "RebarSpacing",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the RebarSpacing along the rebar guideline.",

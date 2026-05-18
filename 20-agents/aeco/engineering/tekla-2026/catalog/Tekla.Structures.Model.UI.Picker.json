@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Picker",
-      "signature": "Picker(...)",
+      "signature": "public Picker()",
       "summary": "Creates a new picker instance.",
       "params": [],
       "throws": [],
@@ -20,126 +20,283 @@
   "methods": [
     {
       "name": "PickFace.",
-      "signature": "PickFace.(...)",
+      "signature": "public PickInput PickFace()",
       "summary": "Queries the user to pick a face from the model.",
       "params": [],
+      "returns": {
+        "type": "PickInput",
+        "doc": "A list of the vertices of the face and the object the user picked as one PickInput instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2ab33130-77eb-ba4d-ac7c-75bcfd28b879"
     },
     {
       "name": "PickFace(String)",
-      "signature": "PickFace(String)(...)",
+      "signature": "public PickInput PickFace(string Prompt)",
       "summary": "Queries the user to pick a face from the model with the given prompt.",
-      "params": [],
+      "params": [
+        {
+          "name": "Prompt",
+          "type": "System.String",
+          "doc": "The string to display as user guidance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PickInput",
+        "doc": "A list of the vertices of the face and the object the user picked as one PickInput instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/cff69c8b-cd58-440a-12ec-13070f79791b"
     },
     {
       "name": "PickLine.",
-      "signature": "PickLine.(...)",
+      "signature": "public ArrayList PickLine()",
       "summary": "Queries the user to pick a line from the model.",
       "params": [],
+      "returns": {
+        "type": "ArrayList",
+        "doc": "A list of points the user picked."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b62ed31c-938a-9d36-8940-ca61bafaa0d0"
     },
     {
       "name": "PickLine(String)",
-      "signature": "PickLine(String)(...)",
+      "signature": "public ArrayList PickLine(string Prompt)",
       "summary": "Queries the user to pick a line from the model with the given prompt.",
-      "params": [],
+      "params": [
+        {
+          "name": "Prompt",
+          "type": "System.String",
+          "doc": "The string to display as user guidance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ArrayList",
+        "doc": "A list of points the user picked."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b657d3cb-2227-9b0c-774c-869a0ad84dda"
     },
     {
       "name": "PickObject(Picker.PickObjectEnum)",
-      "signature": "PickObject(Picker.PickObjectEnum)(...)",
+      "signature": "public ModelObject PickObject(Picker.PickObjectEnum Enum)",
       "summary": "Queries the user to pick one model object from the model.",
-      "params": [],
+      "params": [
+        {
+          "name": "Enum",
+          "type": "Tekla.Structures.Model.UI.Picker.PickObjectEnum",
+          "doc": "Indicates the type of objects to pick.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelObject",
+        "doc": "One model object instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b7912521-6faa-9028-79b6-6fb12374a80f"
     },
     {
       "name": "PickObject(Picker.PickObjectEnum, String)",
-      "signature": "PickObject(Picker.PickObjectEnum, String)(...)",
+      "signature": "public ModelObject PickObject(Picker.PickObjectEnum Enum, string Prompt)",
       "summary": "Queries the user to pick one model object from the model with the given prompt.",
-      "params": [],
+      "params": [
+        {
+          "name": "Enum",
+          "type": "Tekla.Structures.Model.UI.Picker.PickObjectEnum",
+          "doc": "Indicates the type of objects to pick.",
+          "optional": false
+        },
+        {
+          "name": "Prompt",
+          "type": "System.String",
+          "doc": "The string to display as user guidance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelObject",
+        "doc": "One model object instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3648eb9a-9367-cda9-8c88-87b772e032b3"
     },
     {
       "name": "PickObjects(Picker.PickObjectsEnum)",
-      "signature": "PickObjects(Picker.PickObjectsEnum)(...)",
+      "signature": "public ModelObjectEnumerator PickObjects(Picker.PickObjectsEnum Enum)",
       "summary": "Queries the user to pick model objects from the model.",
-      "params": [],
+      "params": [
+        {
+          "name": "Enum",
+          "type": "Tekla.Structures.Model.UI.Picker.PickObjectsEnum",
+          "doc": "Indicates the type and amount of objects to pick.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelObjectEnumerator",
+        "doc": "An enumerator of model object instances."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9af65bd8-dff0-142c-0f7a-0a1eb3341c29"
     },
     {
       "name": "PickObjects(Picker.PickObjectsEnum, String)",
-      "signature": "PickObjects(Picker.PickObjectsEnum, String)(...)",
+      "signature": "public ModelObjectEnumerator PickObjects(Picker.PickObjectsEnum Enum, string Prompt)",
       "summary": "Queries the user to pick model objects from the model with the given prompt.",
-      "params": [],
+      "params": [
+        {
+          "name": "Enum",
+          "type": "Tekla.Structures.Model.UI.Picker.PickObjectsEnum",
+          "doc": "Indicates the type and amount of objects to pick.",
+          "optional": false
+        },
+        {
+          "name": "Prompt",
+          "type": "System.String",
+          "doc": "The string to display as user guidance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelObjectEnumerator",
+        "doc": "An enumerator of model object instances."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/18d61ce6-d498-ef54-9367-032b7ec75162"
     },
     {
       "name": "PickPoint.",
-      "signature": "PickPoint.(...)",
+      "signature": "public Point PickPoint()",
       "summary": "Queries the user to pick a point from the model.",
       "params": [],
+      "returns": {
+        "type": "Point",
+        "doc": "The point the user picked."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7512c677-bc34-36b9-6b2c-f21055dd3a90"
     },
     {
       "name": "PickPoint(String)",
-      "signature": "PickPoint(String)(...)",
+      "signature": "public Point PickPoint(string Prompt)",
       "summary": "Queries the user to pick a point from the model with the given prompt.",
-      "params": [],
+      "params": [
+        {
+          "name": "Prompt",
+          "type": "System.String",
+          "doc": "The string to display as user guidance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": "The point the user picked."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c77fb6d5-b730-2beb-6f94-dd3e5efe1eb9"
     },
     {
       "name": "PickPoint(Point)",
-      "signature": "PickPoint(Point)(...)",
+      "signature": "public Point PickPoint(Point ReferencePoint)",
       "summary": "Queries the user to pick a point from the model with reference to the given point.",
-      "params": [],
+      "params": [
+        {
+          "name": "ReferencePoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The point to be used as reference.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": "The point the user picked."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/be6c66b5-0281-3cc3-2409-4b69845fb7a9"
     },
     {
       "name": "PickPoint(String, Point)",
-      "signature": "PickPoint(String, Point)(...)",
+      "signature": "public Point PickPoint(string Prompt, Point ReferencePoint)",
       "summary": "Queries the user to pick point with given prompt and reference to another point.",
-      "params": [],
+      "params": [
+        {
+          "name": "Prompt",
+          "type": "System.String",
+          "doc": "The string to display as user guidance.",
+          "optional": false
+        },
+        {
+          "name": "ReferencePoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The point to be used as reference.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": "The point the user picked."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6ef22e29-4b51-ed37-924a-7685879cdf76"
     },
     {
       "name": "PickPoints(Picker.PickPointEnum)",
-      "signature": "PickPoints(Picker.PickPointEnum)(...)",
+      "signature": "public ArrayList PickPoints(Picker.PickPointEnum Enum)",
       "summary": "Queries the user to pick points from the model.",
-      "params": [],
+      "params": [
+        {
+          "name": "Enum",
+          "type": "Tekla.Structures.Model.UI.Picker.PickPointEnum",
+          "doc": "Indicates how many points the user must pick.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ArrayList",
+        "doc": "A list of points the user picked."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f944c4c1-63d3-71cd-97cd-bd4409db7942"
     },
     {
       "name": "PickPoints(Picker.PickPointEnum, String)",
-      "signature": "PickPoints(Picker.PickPointEnum, String)(...)",
+      "signature": "public ArrayList PickPoints(Picker.PickPointEnum Enum, string Prompt)",
       "summary": "Queries the user to pick points from the model with the given prompt and reference to another point.",
-      "params": [],
+      "params": [
+        {
+          "name": "Enum",
+          "type": "Tekla.Structures.Model.UI.Picker.PickPointEnum",
+          "doc": "Indicates how many points the user must pick.",
+          "optional": false
+        },
+        {
+          "name": "Prompt",
+          "type": "System.String",
+          "doc": "The string to display as user guidance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ArrayList",
+        "doc": "A list of points the user picked."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/206fbceb-330c-c253-0df1-d8bc1b20d1ea"

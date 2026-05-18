@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisRestraintData",
-      "signature": "AnalysisRestraintData(...)",
+      "signature": "public AnalysisRestraintData()",
       "summary": "Creates a new instance of an analysis restraint data.",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "LocalCoordinateSystem",
-      "type": "object",
+      "type": "AnalysisLocalCoordinateSystem",
       "getter": true,
       "setter": true,
       "summary": "The local coordinate system.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "ReleaseType",
-      "type": "object",
+      "type": "AnalysisRestraintData.ReleaseTypeEnum",
       "getter": true,
       "setter": true,
       "summary": "The release type.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "RxSpring",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The rotation in the X-axis direction (Nmm/rad).",
@@ -45,7 +45,7 @@
     },
     {
       "name": "RxType",
-      "type": "object",
+      "type": "AnalysisRestraintData.RestraintTypeEnum",
       "getter": true,
       "setter": true,
       "summary": "The restraint type for the rotation in the X-axis direction.",
@@ -53,7 +53,7 @@
     },
     {
       "name": "RySpring",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The rotation in the Y-axis direction (Nmm/rad).",
@@ -61,7 +61,7 @@
     },
     {
       "name": "RyType",
-      "type": "object",
+      "type": "AnalysisRestraintData.RestraintTypeEnum",
       "getter": true,
       "setter": true,
       "summary": "The restraint type for the rotation in the Y-axis direction.",
@@ -69,7 +69,7 @@
     },
     {
       "name": "RzSpring",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The rotation in the Z-axis direction (Nmm/rad).",
@@ -77,7 +77,7 @@
     },
     {
       "name": "RzType",
-      "type": "object",
+      "type": "AnalysisRestraintData.RestraintTypeEnum",
       "getter": true,
       "setter": true,
       "summary": "The restraint type for the rotation in the Z-axis direction.",
@@ -85,7 +85,7 @@
     },
     {
       "name": "Supported",
-      "type": "object",
+      "type": "AnalysisRestraintData.SupportedEnum",
       "getter": true,
       "setter": true,
       "summary": "The support condition.",
@@ -93,7 +93,7 @@
     },
     {
       "name": "UxSpring",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The displacement in the X-axis direction (N/mm).",
@@ -101,7 +101,7 @@
     },
     {
       "name": "UxType",
-      "type": "object",
+      "type": "AnalysisRestraintData.RestraintTypeEnum",
       "getter": true,
       "setter": true,
       "summary": "The restraint type for the displacement in the X-axis direction.",
@@ -109,7 +109,7 @@
     },
     {
       "name": "UySpring",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The displacement in the Y-axis direction (N/mm).",
@@ -117,7 +117,7 @@
     },
     {
       "name": "UyType",
-      "type": "object",
+      "type": "AnalysisRestraintData.RestraintTypeEnum",
       "getter": true,
       "setter": true,
       "summary": "The restraint type for the displacement in the Y-axis direction.",
@@ -125,7 +125,7 @@
     },
     {
       "name": "UzSpring",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The displacement in the Z-axis direction (N/mm).",
@@ -133,7 +133,7 @@
     },
     {
       "name": "UzType",
-      "type": "object",
+      "type": "AnalysisRestraintData.RestraintTypeEnum",
       "getter": true,
       "setter": true,
       "summary": "The restraint type for the displacement in the Z-axis direction.",

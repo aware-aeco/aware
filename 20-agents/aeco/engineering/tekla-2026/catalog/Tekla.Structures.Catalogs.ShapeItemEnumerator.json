@@ -10,25 +10,33 @@
   "methods": [
     {
       "name": "GetSize",
-      "signature": "GetSize(...)",
+      "signature": "public int GetSize()",
       "summary": "Returns the total amount of items.",
       "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The total amount of items."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f53a8688-6506-8c9c-8e75-3c2cdf477af7"
     },
     {
       "name": "MoveNext",
-      "signature": "MoveNext(...)",
+      "signature": "public bool MoveNext()",
       "summary": "Moves to the next item in the enumerator.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "False on failure."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6b563dd5-5bed-aeb1-4171-dee33e4ea36d"
     },
     {
       "name": "Reset",
-      "signature": "Reset(...)",
+      "signature": "public void Reset()",
       "summary": "Resets the enumerator to the beginning.",
       "params": [],
       "throws": [],
@@ -39,9 +47,9 @@
   "properties": [
     {
       "name": "Current",
-      "type": "object",
+      "type": "ShapeItem",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Returns a shape item instance of the current element.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2e827973-ec2c-f577-82b5-48f55cff334a"
     }

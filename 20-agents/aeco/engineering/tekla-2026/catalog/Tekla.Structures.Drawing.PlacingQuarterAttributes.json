@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "PlacingQuarterAttributes",
-      "signature": "PlacingQuarterAttributes(...)",
+      "signature": "public PlacingQuarterAttributes()",
       "summary": "Creates a new placing quarter attributes instance. The default parameters are: TopLeft = true, TopRight = true, BottomLeft = true, BottomRight = true.",
       "params": [],
       "throws": [],
@@ -18,9 +18,34 @@
     },
     {
       "name": "PlacingQuarterAttributes",
-      "signature": "PlacingQuarterAttributes(...)",
+      "signature": "public PlacingQuarterAttributes(bool TopLeft, bool TopRight, bool BottomLeft, bool BottomRight)",
       "summary": "Creates a new placing quarter attributes instance with the given parameters.",
-      "params": [],
+      "params": [
+        {
+          "name": "TopLeft",
+          "type": "System.Boolean",
+          "doc": "Defines whether the object can search for a suitable location in the top left direction.",
+          "optional": false
+        },
+        {
+          "name": "TopRight",
+          "type": "System.Boolean",
+          "doc": "Defines whether the object can search for a suitable location in the top right direction.",
+          "optional": false
+        },
+        {
+          "name": "BottomLeft",
+          "type": "System.Boolean",
+          "doc": "Defines whether the object can search for a suitable location in the bottom left direction.",
+          "optional": false
+        },
+        {
+          "name": "BottomRight",
+          "type": "System.Boolean",
+          "doc": "Defines whether the object can search for a suitable location in the bottom right direction.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5e018245-f171-cd9d-fdcf-c7edbff412cb"
@@ -29,18 +54,33 @@
   "methods": [
     {
       "name": "Clone",
-      "signature": "Clone(...)",
+      "signature": "public Object Clone()",
       "summary": "Creates a new object that is a copy of the current instance.",
       "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "A new object that is a copy of the current instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3528770e-cd45-9205-73d7-b00c3e84a270"
     },
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c39a275d-9cb2-f970-34d2-f2fcf3beacb2"
@@ -49,7 +89,7 @@
   "properties": [
     {
       "name": "BottomLeft",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Defines whether the object can search for a suitable location in the bottom left direction.",
@@ -57,7 +97,7 @@
     },
     {
       "name": "BottomRight",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Defines whether the object can search for a suitable location in the bottom right direction.",
@@ -65,7 +105,7 @@
     },
     {
       "name": "TopLeft",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Defines whether the object can search for a suitable location in the top left direction.",
@@ -73,7 +113,7 @@
     },
     {
       "name": "TopRight",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Defines whether the object can search for a suitable location in the top right direction.",

@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "WpfBoltCatalogStandard",
-      "signature": "WpfBoltCatalogStandard(...)",
+      "signature": "public WpfBoltCatalogStandard()",
       "summary": "Initiates a new instance of the control.",
       "params": [],
       "throws": [],
@@ -21,9 +21,9 @@
   "properties": [
     {
       "name": "BoltSizes",
-      "type": "object",
+      "type": "CustomObservableCollection\u003CDistance\u003E",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Returns bolt sizes in catalog based on selected grade",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/875ea079-3269-aba3-a1d3-f3fccad98ddf"
     }

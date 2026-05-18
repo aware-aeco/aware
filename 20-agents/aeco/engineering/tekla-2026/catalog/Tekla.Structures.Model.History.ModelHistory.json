@@ -10,108 +10,268 @@
   "methods": [
     {
       "name": "GetCurrentModificationStamp",
-      "signature": "GetCurrentModificationStamp(...)",
+      "signature": "[ObsoleteAttribute(\u0022Use TakeModifications() instead.\u0022)] public static ModificationStamp GetCurrentModificationStamp()",
       "summary": "Gets the current modification stamp from the model.",
       "params": [],
+      "returns": {
+        "type": "ModificationStamp",
+        "doc": "The current modification stamp."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/28d800d0-50b6-521e-b252-add1b7a3baef"
     },
     {
       "name": "GetDeletedObjects",
-      "signature": "GetDeletedObjects(...)",
+      "signature": "[ObsoleteAttribute(\u0022Use TakeModifications() instead.\u0022)] public static ModelObjectEnumerator GetDeletedObjects(ModificationStamp ModStamp)",
       "summary": "Gets a list of the objects that have been deleted after the modification stamp.",
-      "params": [],
+      "params": [
+        {
+          "name": "ModStamp",
+          "type": "Tekla.Structures.Model.History.ModificationStamp",
+          "doc": "The modification stamp.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelObjectEnumerator",
+        "doc": "A list of the objects that have been deleted after the given modification stamp."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8e9cf21c-7ac8-3fa2-40a0-25a3bee15316"
     },
     {
       "name": "GetDeletedObjectsWithType",
-      "signature": "GetDeletedObjectsWithType(...)",
+      "signature": "[ObsoleteAttribute(\u0022Use TakeModifications() instead.\u0022)] public static ModelObjectEnumerator GetDeletedObjectsWithType(ModificationStamp ModStamp, ModelObject.ModelObjectEnum Enum)",
       "summary": "Gets based on type a list of the objects that have been deleted after the modification stamp.",
-      "params": [],
+      "params": [
+        {
+          "name": "ModStamp",
+          "type": "Tekla.Structures.Model.History.ModificationStamp",
+          "doc": "The modification stamp.",
+          "optional": false
+        },
+        {
+          "name": "Enum",
+          "type": "Tekla.Structures.Model.ModelObject.ModelObjectEnum",
+          "doc": "The type of the objects to return.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelObjectEnumerator",
+        "doc": "A list of the objects that have been deleted after the given modification stamp."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e1c9f788-42fe-130d-13aa-265d640884b7"
     },
     {
       "name": "GetLocalChanges",
-      "signature": "GetLocalChanges(...)",
+      "signature": "public static ModificationInfo GetLocalChanges()",
       "summary": "Get changes which are not written out.",
       "params": [],
+      "returns": {
+        "type": "ModificationInfo",
+        "doc": "Modifications which are not written out."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f8ecb33f-ac31-cc71-f7fc-016d53149a5c"
     },
     {
       "name": "GetModifications(String, ModificationStamp)",
-      "signature": "GetModifications(String, ModificationStamp)(...)",
+      "signature": "public static ModificationInfo GetModifications(string Name, ModificationStamp PrevStamp = null)",
       "summary": "Lookup modifications since previous call of TakeModifications() without resetting the modstamp",
-      "params": [],
+      "remarks": "Takes modification which has happened to the model since the previous call to TakeModifications with the same Name argument. If there was no previous call of TakeModifications() with this Name, shows modifications since beginning, or since PrevStap, if it is specified.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "Name of reference which is used for collecting modifications and which is updated. Intended use is to assign an unique name for each client application which needs to be informed of the model updates. Maximum length is 79 characters.",
+          "optional": false
+        },
+        {
+          "name": "PrevStamp",
+          "type": "Tekla.Structures.Model.History.ModificationStamp",
+          "doc": "When specified, default value of reference if is it not found",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "ModificationInfo",
+        "doc": "All modifications which happened since the last call"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f11c9055-8f2d-0b10-c2ba-4c8ee603e71f"
     },
     {
       "name": "GetModifications(String, IEnumerable.ModelObject.ModelObjectEnum., ModificationStamp)",
-      "signature": "GetModifications(String, IEnumerable.ModelObject.ModelObjectEnum., ModificationStamp)(...)",
+      "signature": "public static ModificationInfo GetModifications(string Name, IEnumerable\u003CModelObject.ModelObjectEnum\u003E ObjectTypes, ModificationStamp PrevStamp = null)",
       "summary": "Lookup modifications since previous call of TakeModifications() without resetting the modstamp, with object type filtering",
-      "params": [],
+      "remarks": "Same as GetModifications(String, ModificationStamp), but returns only the types listed in ObjectTypes.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "Name of reference which is used for collecting modifications and which is updated. Intended use is to assign an unique name for each client application which needs to be informed of the model updates. Maximum length is 79 characters.",
+          "optional": false
+        },
+        {
+          "name": "ObjectTypes",
+          "type": "System.Collections.Generic.IEnumerable\u003CModelObject.ModelObjectEnum\u003E",
+          "doc": "Types of object to select. Empty or null selects all types.",
+          "optional": false
+        },
+        {
+          "name": "PrevStamp",
+          "type": "Tekla.Structures.Model.History.ModificationStamp",
+          "doc": "When specified, default value of reference if is it not found",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "ModificationInfo",
+        "doc": "All modifications which happened since the last call"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8c2480d8-c493-0d4b-fee8-9671f447392d"
     },
     {
       "name": "GetModifiedObjects",
-      "signature": "GetModifiedObjects(...)",
+      "signature": "[ObsoleteAttribute(\u0022Use TakeModifications() instead.\u0022)] public static ModelObjectEnumerator GetModifiedObjects(ModificationStamp ModStamp)",
       "summary": "Gets a list of the objects that have been added or modified after the modification stamp.",
-      "params": [],
+      "params": [
+        {
+          "name": "ModStamp",
+          "type": "Tekla.Structures.Model.History.ModificationStamp",
+          "doc": "The modification stamp.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelObjectEnumerator",
+        "doc": "A list of the objects that have been modified after the given modification stamp."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a8255b6d-95d4-e938-e3a2-c88e86018c8f"
     },
     {
       "name": "GetModifiedObjectsWithType",
-      "signature": "GetModifiedObjectsWithType(...)",
+      "signature": "[ObsoleteAttribute(\u0022Use TakeModifications() instead.\u0022)] public static ModelObjectEnumerator GetModifiedObjectsWithType(ModificationStamp ModStamp, ModelObject.ModelObjectEnum Enum)",
       "summary": "Gets based on type a list of the objects that have been added or modified after the modification stamp.",
-      "params": [],
+      "params": [
+        {
+          "name": "ModStamp",
+          "type": "Tekla.Structures.Model.History.ModificationStamp",
+          "doc": "The modification stamp.",
+          "optional": false
+        },
+        {
+          "name": "Enum",
+          "type": "Tekla.Structures.Model.ModelObject.ModelObjectEnum",
+          "doc": "The type of the objects to return.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelObjectEnumerator",
+        "doc": "A list of the objects that have been modified after the given modification stamp."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/03657be1-bce3-21b4-6563-ad3c91ffdf5f"
     },
     {
       "name": "GetNotSharedObjects",
-      "signature": "GetNotSharedObjects(...)",
+      "signature": "public static ModelObjectEnumerator GetNotSharedObjects()",
       "summary": "Get object which are was created or modified since last ModelSharing WriteOut.",
+      "remarks": "If the model is not shared, returns all objects.",
       "params": [],
+      "returns": {
+        "type": "ModelObjectEnumerator",
+        "doc": "A list of objects"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/416c88f3-4e62-2ec5-ec11-9a2b10921f3e"
     },
     {
       "name": "TakeModifications(String, ModificationStamp)",
-      "signature": "TakeModifications(String, ModificationStamp)(...)",
+      "signature": "public static ModificationInfo TakeModifications(string Name, ModificationStamp PrevStamp = null)",
       "summary": "Take modifications since previous call.",
-      "params": [],
+      "remarks": "Takes modification which has happened to the model since the previous call to TakeModifications with the same Name argument. If there was no previous call with this Name, shows modifications since beginning, or since PrevStap, if it is specified. Updates internal reference for use when TakeModifications() is called next time.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "Name of reference which is used for collecting modifications and which is updated. Intended use is to assign an unique name for each client application which needs to be informed of the model updates. Maximum length is 79 characters.",
+          "optional": false
+        },
+        {
+          "name": "PrevStamp",
+          "type": "Tekla.Structures.Model.History.ModificationStamp",
+          "doc": "When specified, default value of reference if is it not found",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "ModificationInfo",
+        "doc": "All modifications which happened since the last call. See ModificationInfo reference"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/bef670da-b23b-8b62-bcc6-259c2bc5c819"
     },
     {
       "name": "TakeModifications(String, IEnumerable.ModelObject.ModelObjectEnum., ModificationStamp)",
-      "signature": "TakeModifications(String, IEnumerable.ModelObject.ModelObjectEnum., ModificationStamp)(...)",
+      "signature": "public static ModificationInfo TakeModifications(string Name, IEnumerable\u003CModelObject.ModelObjectEnum\u003E ObjectTypes, ModificationStamp PrevStamp = null)",
       "summary": "Take modifications since previous call, with object type filtering.",
-      "params": [],
+      "remarks": "Same as TakeModifications(String, ModificationStamp), but returns only the types listed in ObjectTypes. Note that since this function also sets base for the next invocation of for ALL objects, so using it discards change information for filtered objects.",
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "Name of reference which is used for collecting modifications and which is updated. Intended use is to assign an unique name for each client application which needs to be informed of the model updates. Maximum length is 79 characters.",
+          "optional": false
+        },
+        {
+          "name": "ObjectTypes",
+          "type": "System.Collections.Generic.IEnumerable\u003CModelObject.ModelObjectEnum\u003E",
+          "doc": "Types of object to select. Empty or null selects all types.",
+          "optional": false
+        },
+        {
+          "name": "PrevStamp",
+          "type": "Tekla.Structures.Model.History.ModificationStamp",
+          "doc": "When specified, default value of reference if is it not found",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "ModificationInfo",
+        "doc": "All modifications which happened since the last call. See ModificationInfo reference"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/780d29e6-388d-2137-c685-b603abcbeb7f"
     },
     {
       "name": "UpdateModificationStampToLatest",
-      "signature": "UpdateModificationStampToLatest(...)",
+      "signature": "public static void UpdateModificationStampToLatest(string modificationStampKey)",
       "summary": "Updates the modification stamp to latest.",
-      "params": [],
+      "params": [
+        {
+          "name": "modificationStampKey",
+          "type": "System.String",
+          "doc": "The modification stamp key.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/27c4394a-6ec7-41e4-ddc0-48de631b64a6"

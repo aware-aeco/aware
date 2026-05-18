@@ -9,18 +9,32 @@
   "constructors": [
     {
       "name": "CustomPartPositioningTypeAttribute",
-      "signature": "CustomPartPositioningTypeAttribute(...)",
+      "signature": "public CustomPartPositioningTypeAttribute(int Type)",
       "summary": "The custom attribute uses this to store the positioning type to the system. This is not to be used by itself.",
-      "params": [],
+      "params": [
+        {
+          "name": "Type",
+          "type": "System.Int32",
+          "doc": "The custom part positioning type.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/bbc58a84-c710-6e4d-e4e0-7f3781562443"
     },
     {
       "name": "CustomPartPositioningTypeAttribute",
-      "signature": "CustomPartPositioningTypeAttribute(...)",
+      "signature": "public CustomPartPositioningTypeAttribute(CustomPartBase.CustomPartPositioningType Type)",
       "summary": "The custom attribute uses this to store the positioning type to the system. This is not to be used by itself.",
-      "params": [],
+      "params": [
+        {
+          "name": "Type",
+          "type": "Tekla.Structures.Plugins.CustomPartBase.CustomPartPositioningType",
+          "doc": "The custom part positioning type.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5d8b8978-799c-111b-a938-67d40e065efb"
@@ -30,9 +44,9 @@
   "properties": [
     {
       "name": "Type",
-      "type": "object",
+      "type": "CustomPartBase.CustomPartPositioningType",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The custom attribute uses this to store the positioning type to the system. This is not to be used by itself.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f9178ce8-39b9-dd23-c0e8-ac72d9891470"
     }

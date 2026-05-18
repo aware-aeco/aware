@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Profile",
-      "signature": "Profile(...)",
+      "signature": "public Profile()",
       "summary": "Instantiates an empty profile.",
       "params": [],
       "throws": [],
@@ -20,18 +20,40 @@
   "methods": [
     {
       "name": "FormatProfileString",
-      "signature": "FormatProfileString(...)",
+      "signature": "public static string FormatProfileString(string profileString)",
       "summary": "Formats profile string",
-      "params": [],
+      "params": [
+        {
+          "name": "profileString",
+          "type": "System.String",
+          "doc": "profile string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "Formatted profile string, if not successful returns original string"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ca9d6a66-2d49-6f5e-ef81-d2688f631207"
     },
     {
       "name": "ParseProfileString",
-      "signature": "ParseProfileString(...)",
+      "signature": "public static string ParseProfileString(string profileString)",
       "summary": "Parses profile string",
-      "params": [],
+      "params": [
+        {
+          "name": "profileString",
+          "type": "System.String",
+          "doc": "profile string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "Parsed profile string, if not successful returns original string"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/fb92ae16-8054-c8ac-9469-ef01e23ffe0b"
@@ -40,7 +62,7 @@
   "properties": [
     {
       "name": "ProfileString",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The profile in human-readable form.",

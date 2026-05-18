@@ -9,18 +9,44 @@
   "constructors": [
     {
       "name": "EmbeddedObjectFrame",
-      "signature": "EmbeddedObjectFrame(...)",
+      "signature": "public EmbeddedObjectFrame(LineTypes LineType, DrawingColors FrameColor)",
       "summary": "Creates a new embedded object frame instance with the specified line type and color.",
-      "params": [],
+      "params": [
+        {
+          "name": "LineType",
+          "type": "Tekla.Structures.Drawing.LineTypes",
+          "doc": "The line type of the frame.",
+          "optional": false
+        },
+        {
+          "name": "FrameColor",
+          "type": "Tekla.Structures.Drawing.DrawingColors",
+          "doc": "The color of the frame.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/12ff9b88-bb43-a85b-a297-5da40b9fa83f"
     },
     {
       "name": "EmbeddedObjectFrame",
-      "signature": "EmbeddedObjectFrame(...)",
+      "signature": "public EmbeddedObjectFrame(LineTypes LineType, TeklaDrawingColor FrameColor)",
       "summary": "Creates a new embedded object frame instance with the specified line type and user defined RGB color.",
-      "params": [],
+      "params": [
+        {
+          "name": "LineType",
+          "type": "Tekla.Structures.Drawing.LineTypes",
+          "doc": "The line type of the frame.",
+          "optional": false
+        },
+        {
+          "name": "FrameColor",
+          "type": "Tekla.Structures.Drawing.TeklaDrawingColor",
+          "doc": "The color of the frame.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4a72d758-a3ea-b1fc-a006-e1dd0a6fcf1d"
@@ -29,27 +55,46 @@
   "methods": [
     {
       "name": "GetAxisAlignedBoundingBox",
-      "signature": "GetAxisAlignedBoundingBox(...)",
+      "signature": "public RectangleBoundingBox GetAxisAlignedBoundingBox()",
       "summary": "Returns the bounding box of the frame in the global axis coordinate system.",
       "params": [],
+      "returns": {
+        "type": "RectangleBoundingBox",
+        "doc": "The bounding box of the frame in the global axis coordinate system."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3d004ed7-9902-c6c8-6805-4c056268a763"
     },
     {
       "name": "GetObjectAlignedBoundingBox",
-      "signature": "GetObjectAlignedBoundingBox(...)",
+      "signature": "public RectangleBoundingBox GetObjectAlignedBoundingBox()",
       "summary": "Returns the bounding box of the frame in the local coordinate system.",
       "params": [],
+      "returns": {
+        "type": "RectangleBoundingBox",
+        "doc": "The bounding box of the frame in the local coordinate system."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c896a504-9410-e2c9-bbda-c8d671479c0b"
     },
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1182e099-00d7-f716-55c6-ebdb3397cbba"
@@ -58,7 +103,7 @@
   "properties": [
     {
       "name": "Color",
-      "type": "object",
+      "type": "DrawingColors",
       "getter": true,
       "setter": true,
       "summary": "Obsolete.",
@@ -66,7 +111,7 @@
     },
     {
       "name": "Line",
-      "type": "object",
+      "type": "LineTypeAttributes",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the line type of the frame.",
@@ -74,7 +119,7 @@
     },
     {
       "name": "LineType",
-      "type": "object",
+      "type": "LineTypes",
       "getter": true,
       "setter": true,
       "summary": "Obsolete.",
@@ -82,9 +127,9 @@
     },
     {
       "name": "Type",
-      "type": "object",
+      "type": "FrameTypes",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the frame type (rectangular).",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/95c79779-edfe-6e6e-ac6c-60c98dc5f81e"
     }

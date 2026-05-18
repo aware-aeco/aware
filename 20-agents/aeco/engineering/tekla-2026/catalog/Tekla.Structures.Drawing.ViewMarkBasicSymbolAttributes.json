@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "ViewMarkBasicSymbolAttributes",
-      "signature": "ViewMarkBasicSymbolAttributes(...)",
+      "signature": "public ViewMarkBasicSymbolAttributes()",
       "summary": "Creates a new mark symbol attributes instance.",
       "params": [],
       "throws": [],
@@ -18,9 +18,22 @@
     },
     {
       "name": "ViewMarkBasicSymbolAttributes",
-      "signature": "ViewMarkBasicSymbolAttributes(...)",
+      "signature": "public ViewMarkBasicSymbolAttributes(double size, MarkSymbolShape shape)",
       "summary": "Creates a new mark symbol attributes instance with the given size and shape.",
-      "params": [],
+      "params": [
+        {
+          "name": "size",
+          "type": "System.Double",
+          "doc": "The size of the mark symbol to be used.",
+          "optional": false
+        },
+        {
+          "name": "shape",
+          "type": "Tekla.Structures.Drawing.MarkSymbolShape",
+          "doc": "The shape of the mark symbol to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f9d11249-f5d5-6f17-1490-ef2e50efb0da"
@@ -29,9 +42,20 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c5232b59-b0cc-d2d6-6ba6-26c04856847f"
@@ -40,7 +64,7 @@
   "properties": [
     {
       "name": "Shape",
-      "type": "object",
+      "type": "MarkSymbolShape",
       "getter": true,
       "setter": true,
       "summary": "The shape of the mark symbol.",
@@ -48,7 +72,7 @@
     },
     {
       "name": "Size",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The size of the mark symbol.",

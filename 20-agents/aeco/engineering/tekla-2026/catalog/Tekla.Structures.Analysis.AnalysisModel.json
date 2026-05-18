@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisModel",
-      "signature": "AnalysisModel(...)",
+      "signature": "public AnalysisModel()",
       "summary": "Initializes a new instance of the AnalysisModel class.",
       "params": [],
       "throws": [],
@@ -20,7 +20,7 @@
   "methods": [
     {
       "name": "Delete",
-      "signature": "Delete(...)",
+      "signature": "public void Delete()",
       "summary": "Deletes an analysis model. The AnalysisModelName has to be set.",
       "params": [],
       "throws": [],
@@ -29,16 +29,20 @@
     },
     {
       "name": "GetIssues",
-      "signature": "GetIssues(...)",
+      "signature": "public List\u003CAnalysisModelIssue\u003E GetIssues()",
       "summary": "Get analysis model issues.",
       "params": [],
+      "returns": {
+        "type": "List\u003CAnalysisModelIssue\u003E",
+        "doc": "The analysis model issues."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8c9e3dbc-63d7-69b2-e63e-0192196652ae"
     },
     {
       "name": "Insert",
-      "signature": "Insert(...)",
+      "signature": "public void Insert()",
       "summary": "Inserts a new analysis model into the Tekla Structures model. The AnalysisModelName has to be set.",
       "params": [],
       "throws": [],
@@ -47,7 +51,7 @@
     },
     {
       "name": "Modify",
-      "signature": "Modify(...)",
+      "signature": "public void Modify()",
       "summary": "Modifies an analysis model. The AnalysisModelName has to be set.",
       "params": [],
       "throws": [],
@@ -56,7 +60,7 @@
     },
     {
       "name": "Select.",
-      "signature": "Select.(...)",
+      "signature": "public override void Select()",
       "summary": "Selects an analysis model. Updates the model. The AnalysisModelName or ID has to be set.",
       "params": [],
       "throws": [],
@@ -65,9 +69,20 @@
     },
     {
       "name": "Select(Boolean)",
-      "signature": "Select(Boolean)(...)",
+      "signature": "public bool Select(bool update)",
       "summary": "Selects an analysis model. The AnalysisModelName or ID has to be set.",
-      "params": [],
+      "params": [
+        {
+          "name": "update",
+          "type": "System.Boolean",
+          "doc": "Indicates whether analysis model is updated.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6f0dc619-b143-ca2b-7fec-9f75294ba493"
@@ -76,7 +91,7 @@
   "properties": [
     {
       "name": "AnalysisConnectivityRules",
-      "type": "object",
+      "type": "AnalysisObjectEnumerator",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis model connectivity rules.",
@@ -84,7 +99,7 @@
     },
     {
       "name": "AnalysisEngine",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis engine of the analysis model.",
@@ -92,7 +107,7 @@
     },
     {
       "name": "AnalysisLoadCombinations",
-      "type": "object",
+      "type": "AnalysisObjectEnumerator",
       "getter": true,
       "setter": true,
       "summary": "Gets the analysis load combinations of the analysis model.",
@@ -100,7 +115,7 @@
     },
     {
       "name": "AnalysisLoadGroups",
-      "type": "object",
+      "type": "AnalysisObjectEnumerator",
       "getter": true,
       "setter": true,
       "summary": "Gets the analysis load groups of the analysis model.",
@@ -108,7 +123,7 @@
     },
     {
       "name": "AnalysisMethod",
-      "type": "object",
+      "type": "AnalysisModel.AnalysisMethodEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis method of the analysis model.",
@@ -116,7 +131,7 @@
     },
     {
       "name": "AnalysisModelDesignProperties",
-      "type": "object",
+      "type": "AnalysisModelDesignProperties",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis model design properties.",
@@ -124,7 +139,7 @@
     },
     {
       "name": "AnalysisModelJobProperties",
-      "type": "object",
+      "type": "AnalysisModelJobProperties",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis model job properties.",
@@ -132,7 +147,7 @@
     },
     {
       "name": "AnalysisModelModalAnalysisProperties",
-      "type": "object",
+      "type": "AnalysisModelModalAnalysisProperties",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis model modal analysis properties.",
@@ -140,7 +155,7 @@
     },
     {
       "name": "AnalysisModelName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis model name.",
@@ -148,7 +163,7 @@
     },
     {
       "name": "AnalysisModelOutputProperties",
-      "type": "object",
+      "type": "AnalysisModelOutputProperties",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis model output properties.",
@@ -156,7 +171,7 @@
     },
     {
       "name": "AnalysisModelSeismicProperties",
-      "type": "object",
+      "type": "AnalysisModelSeismicProperties",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis model seismic properties.",
@@ -164,7 +179,7 @@
     },
     {
       "name": "AnalysisModelSpectrumProperties",
-      "type": "object",
+      "type": "AnalysisModelSpectrumProperties",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis model spectrum properties",
@@ -172,23 +187,23 @@
     },
     {
       "name": "AnalysisNodeLinks",
-      "type": "object",
+      "type": "AnalysisObjectEnumerator",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the analysis node links of the analysis model.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a04485ff-ad27-a10d-21c2-e092acd436ca"
     },
     {
       "name": "AnalysisNodes",
-      "type": "object",
+      "type": "AnalysisObjectEnumerator",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the analysis nodes of the analysis model.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f991c7ad-f35e-772f-3e96-fdc4b18a4d62"
     },
     {
       "name": "AnalysisObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the analysis object.",
@@ -196,15 +211,15 @@
     },
     {
       "name": "AnalysisParts",
-      "type": "object",
+      "type": "AnalysisObjectEnumerator",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the analysis parts of the analysis model.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2d0817ff-4403-c1db-091d-f5399bc42cc8"
     },
     {
       "name": "AnalysisRigidDiaphragms",
-      "type": "object",
+      "type": "AnalysisObjectEnumerator",
       "getter": true,
       "setter": true,
       "summary": "Gets the analysis rigid diaphragms of the analysis model.",
@@ -212,7 +227,7 @@
     },
     {
       "name": "AutodetectSecondaries",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether bracing members are detected automatically.",
@@ -220,7 +235,7 @@
     },
     {
       "name": "BracingFilterName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the bracing filter name.",
@@ -228,7 +243,7 @@
     },
     {
       "name": "ConstructionMethod",
-      "type": "object",
+      "type": "AnalysisModel.ConstructionMethodEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the construction method of the analysis model.",
@@ -236,7 +251,7 @@
     },
     {
       "name": "FatherObject2ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -244,7 +259,7 @@
     },
     {
       "name": "FatherObject2Type",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -252,7 +267,7 @@
     },
     {
       "name": "FatherObjectID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -260,7 +275,7 @@
     },
     {
       "name": "FatherObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -268,7 +283,7 @@
     },
     {
       "name": "FilterName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the filter name of the analysis model.",
@@ -276,7 +291,7 @@
     },
     {
       "name": "ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the analysis object.",
@@ -284,7 +299,7 @@
     },
     {
       "name": "IncludeImperfections",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether imperfections are to be included.",
@@ -292,7 +307,7 @@
     },
     {
       "name": "MemberAxislocation",
-      "type": "object",
+      "type": "AnalysisModel.AxisLocationEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the axis location of the members.",
@@ -300,7 +315,7 @@
     },
     {
       "name": "MemberEndReleaseMethodByJoint",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the end releases are set by joint properties.",
@@ -308,7 +323,7 @@
     },
     {
       "name": "ModelUpdateModificationIdentifier",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the model update modification.",
@@ -316,7 +331,7 @@
     },
     {
       "name": "NodePositionTolerance",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the node position tolerance of the analysis model.",
@@ -324,7 +339,7 @@
     },
     {
       "name": "NumberOfIterations",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the number of iterations of the analysis model.",
@@ -332,7 +347,7 @@
     },
     {
       "name": "PhysicalFreezed",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the physical objects are frozen.",
@@ -340,7 +355,7 @@
     },
     {
       "name": "PhysicalFrozen",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the physical objects are frozen.",
@@ -348,7 +363,7 @@
     },
     {
       "name": "RelativeAccuracy",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the relative accuracy of the analysis model.",
@@ -356,7 +371,7 @@
     },
     {
       "name": "ResultsFreezed",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the results are frozen.",
@@ -364,7 +379,7 @@
     },
     {
       "name": "ResultsFrozen",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the results are frozen.",
@@ -372,7 +387,7 @@
     },
     {
       "name": "ResultsModificationIdentifier",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the results modification identifier.",
@@ -380,7 +395,7 @@
     },
     {
       "name": "ResultsTime",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the results time.",
@@ -388,7 +403,7 @@
     },
     {
       "name": "SecondaryFilterName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the bracing filter name.",
@@ -396,7 +411,7 @@
     },
     {
       "name": "SecondaryKeepAxis",
-      "type": "object",
+      "type": "AnalysisModel.KeepAxisEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the secondary keep axis settings. Not used, bracing/secondary members always have KEEP_AXIS_NO initially.",
@@ -404,7 +419,7 @@
     },
     {
       "name": "SecondaryMemberFilterName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the secondary member filter name.",
@@ -412,7 +427,7 @@
     },
     {
       "name": "SnapDistance",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the snap distance of the analysis model.",
@@ -420,7 +435,7 @@
     },
     {
       "name": "UseModelMerge",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether model merge is used.",
@@ -428,7 +443,7 @@
     },
     {
       "name": "UseTrueCurvedMembers",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether members are true curved.",
@@ -436,7 +451,7 @@
     },
     {
       "name": "UseTwinProfiles",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether twin profiles are used.",

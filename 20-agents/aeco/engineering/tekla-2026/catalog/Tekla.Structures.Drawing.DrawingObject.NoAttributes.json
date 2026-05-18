@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "DrawingObject.NoAttributes",
-      "signature": "DrawingObject.NoAttributes(...)",
+      "signature": "public NoAttributes()",
       "summary": "Creates a new default no attributes instance.",
       "params": [],
       "throws": [],
@@ -18,9 +18,16 @@
     },
     {
       "name": "DrawingObject.NoAttributes",
-      "signature": "DrawingObject.NoAttributes(...)",
+      "signature": "public NoAttributes(string AttributeFile)",
       "summary": "Creates a new no attributes instance. No attributes are loaded from the attribute file as it is not possible to load attributes for objects of this type.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f2e39612-3b0a-6fcd-559e-f75d7dd271d9"
@@ -29,18 +36,40 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8cab66ba-5115-4e23-78e2-6e663ff74211"
     },
     {
       "name": "LoadAttributes",
-      "signature": "LoadAttributes(...)",
+      "signature": "public override bool LoadAttributes(string AttributeFile)",
       "summary": "It is not possible to load attributes for objects of this type because the objects have no attributes.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "False because it is not possible to load attributes."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6c1c9d6b-ed8f-13d0-5f6d-6564881fc82c"

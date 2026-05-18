@@ -9,18 +9,38 @@
   "constructors": [
     {
       "name": "ShapeSelectionForm",
-      "signature": "ShapeSelectionForm(...)",
+      "signature": "public ShapeSelectionForm(List\u003CShapeItem\u003E shapes)",
       "summary": "Initializes a new instance of the ShapeSelectionForm class.",
-      "params": [],
+      "params": [
+        {
+          "name": "shapes",
+          "type": "System.Collections.Generic.List\u003CShapeItem\u003E",
+          "doc": "The Shapes to be added to the dialog.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2dc4e422-ad1a-e1bb-bdab-0bf929e2bd5b"
     },
     {
       "name": "ShapeSelectionForm",
-      "signature": "ShapeSelectionForm(...)",
+      "signature": "public ShapeSelectionForm(List\u003CShapeItem\u003E shapes, string shape)",
       "summary": "Initializes a new instance of the ShapeSelectionForm class, selecting the given Shape in the tree control.",
-      "params": [],
+      "params": [
+        {
+          "name": "shapes",
+          "type": "System.Collections.Generic.List\u003CShapeItem\u003E",
+          "doc": "The Shapes to be added to the dialog.",
+          "optional": false
+        },
+        {
+          "name": "shape",
+          "type": "System.String",
+          "doc": "The Shape to be selected in the tree.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c2d56104-f064-232e-898b-51d0807239bb"
@@ -30,7 +50,7 @@
   "properties": [
     {
       "name": "SelectedShape",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the selected Shape in the control.",

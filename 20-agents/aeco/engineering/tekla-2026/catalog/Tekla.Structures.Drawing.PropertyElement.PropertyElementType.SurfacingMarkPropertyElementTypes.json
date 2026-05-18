@@ -10,45 +10,65 @@
   "methods": [
     {
       "name": "Class",
-      "signature": "Class(...)",
+      "signature": "public static PropertyElement.PropertyElementType Class()",
       "summary": "Returns the class property element type.",
       "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/cb114bbf-965d-29eb-8c94-699ef7495e6b"
     },
     {
       "name": "Code",
-      "signature": "Code(...)",
+      "signature": "public static PropertyElement.PropertyElementType Code()",
       "summary": "Returns the code property element type.",
       "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c7f205af-dfa1-3448-e391-4b4050e758df"
     },
     {
       "name": "Material",
-      "signature": "Material(...)",
+      "signature": "public static PropertyElement.PropertyElementType Material()",
       "summary": "Returns the material property element type.",
       "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/571e386b-5303-3ada-1454-b59db0e1fe46"
     },
     {
       "name": "Name",
-      "signature": "Name(...)",
+      "signature": "public static PropertyElement.PropertyElementType Name()",
       "summary": "Returns the name property element type.",
       "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/68ff7a5f-2f98-1812-31b7-7f62d7e51ac0"
     },
     {
       "name": "SurfaceTreatmentName",
-      "signature": "SurfaceTreatmentName(...)",
+      "signature": "public static PropertyElement.PropertyElementType SurfaceTreatmentName()",
       "summary": "Returns the surface treatment name property element type.",
       "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8b345135-4c8d-1e27-760f-635a5c3f69a6"

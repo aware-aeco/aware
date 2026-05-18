@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "NumberingSeries",
-      "signature": "NumberingSeries(...)",
+      "signature": "public NumberingSeries()",
       "summary": "Instantiates a default numbering.",
       "params": [],
       "throws": [],
@@ -18,9 +18,22 @@
     },
     {
       "name": "NumberingSeries",
-      "signature": "NumberingSeries(...)",
+      "signature": "public NumberingSeries(string Prefix, int Number)",
       "summary": "Instantiates a numbering series with the given arguments.",
-      "params": [],
+      "params": [
+        {
+          "name": "Prefix",
+          "type": "System.String",
+          "doc": "The prefix to be used.",
+          "optional": false
+        },
+        {
+          "name": "Number",
+          "type": "System.Int32",
+          "doc": "The start number to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/adae8e7c-ca96-84ef-ec4a-9ed360001d7a"
@@ -30,7 +43,7 @@
   "properties": [
     {
       "name": "Prefix",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The prefix in numbering.",
@@ -38,7 +51,7 @@
     },
     {
       "name": "StartNumber",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The start number in numbering.",

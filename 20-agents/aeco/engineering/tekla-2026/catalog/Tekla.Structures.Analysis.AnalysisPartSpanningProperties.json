@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisPartSpanningProperties",
-      "signature": "AnalysisPartSpanningProperties(...)",
+      "signature": "public AnalysisPartSpanningProperties()",
       "summary": "Initializes a new instance of the AnalysisPartSpanningProperties class",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "SpanningDirection",
-      "type": "object",
+      "type": "Vector",
       "getter": true,
       "setter": true,
       "summary": "The spanning direction (in the global coordinate system).",
@@ -29,7 +29,7 @@
     },
     {
       "name": "SpanningType",
-      "type": "object",
+      "type": "AnalysisPartSpanningProperties.SpanningTypeEnum",
       "getter": true,
       "setter": true,
       "summary": "The spanning type.",

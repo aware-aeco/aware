@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "RebarLapping",
-      "signature": "RebarLapping(...)",
+      "signature": "public RebarLapping()",
       "summary": "Initializes a new instance of the RebarLapping class.",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "LapLength",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the lap length. Negative values will define a gap rather than a lap.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "LappingType",
-      "type": "object",
+      "type": "RebarLapping.LappingTypeEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the lapping type.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "LapPlacement",
-      "type": "object",
+      "type": "RebarLapping.LapPlacementEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the placement of the lap relative to the associated RebarLegFace.",
@@ -45,7 +45,7 @@
     },
     {
       "name": "LapSide",
-      "type": "object",
+      "type": "RebarLapping.LapSideEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the side of the split that the lap is located.",

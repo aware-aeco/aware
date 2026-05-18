@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "CannotSetAttributeForPluginDueToInexistantFieldException",
-      "signature": "CannotSetAttributeForPluginDueToInexistantFieldException(...)",
+      "signature": "public CannotSetAttributeForPluginDueToInexistantFieldException()",
       "summary": "Creates a new CannotSetAttributeForPluginDueToInexistantFieldException instance.",
       "params": [],
       "throws": [],

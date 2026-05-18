@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "MarkBase.MarkBaseAttributes",
-      "signature": "MarkBase.MarkBaseAttributes(...)",
+      "signature": "public MarkBaseAttributes()",
       "summary": "Creates a new default mark base attributes instance that loads standard attributes.",
       "params": [],
       "throws": [],
@@ -18,9 +18,16 @@
     },
     {
       "name": "MarkBase.MarkBaseAttributes",
-      "signature": "MarkBase.MarkBaseAttributes(...)",
+      "signature": "public MarkBaseAttributes(string AttributesFile)",
       "summary": "Creates a new mark base attributes instance with the given attributes file\u0027s filename.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributesFile",
+          "type": "System.String",
+          "doc": "The filename of the attributes file.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ef65f614-e81b-b7b7-0729-5b4391c97fab"
@@ -29,18 +36,40 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public abstract bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/da11fa4f-a98d-c770-d0e2-f458bc3b82dc"
     },
     {
       "name": "LoadAttributes",
-      "signature": "LoadAttributes(...)",
+      "signature": "public abstract bool LoadAttributes(string AttributeFile)",
       "summary": "Loads the attributes from the specified file.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file. Use only the filename, not the extension.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5597a575-45e2-aa83-6576-390f23af3e48"
@@ -49,15 +78,15 @@
   "properties": [
     {
       "name": "Angle",
-      "type": "object",
+      "type": "Double",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The actual angle of the mark, in degrees. Can differ from the rotation angle set by the user for marks, e.g. 45-degree column marks in GA drawings or when placing mark along part edges.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4d09de42-a61f-2b59-af2e-df5bc654defd"
     },
     {
       "name": "ArrowHead",
-      "type": "object",
+      "type": "ArrowheadAttributes",
       "getter": true,
       "setter": true,
       "summary": "The arrowhead of the leader line(s).",
@@ -65,7 +94,7 @@
     },
     {
       "name": "CustomPresentation",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Custom presentation GUID to be applied to the object type",
@@ -73,7 +102,7 @@
     },
     {
       "name": "Frame",
-      "type": "object",
+      "type": "Frame",
       "getter": true,
       "setter": true,
       "summary": "The frame attributes of the mark\u0027s labels.",
@@ -81,7 +110,7 @@
     },
     {
       "name": "PlacingAttributes",
-      "type": "object",
+      "type": "PlacingAttributes",
       "getter": true,
       "setter": true,
       "summary": "The placing attributes that the object should use. Using these you can specify whether the object is automatically arranged in the drawing or not.",
@@ -89,7 +118,7 @@
     },
     {
       "name": "PreferredPlacing",
-      "type": "object",
+      "type": "PreferredPlacingTypeBase",
       "getter": true,
       "setter": true,
       "summary": "The type of placing the object should use. See the preferred placing types for different types of placing.",
@@ -97,7 +126,7 @@
     },
     {
       "name": "RotationAngle",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The mark rotation angle set by the user. Unit is degrees.",
@@ -105,7 +134,7 @@
     },
     {
       "name": "TextAlignment",
-      "type": "object",
+      "type": "MarkBase.MarkBaseAttributes.TextAlignOptions",
       "getter": true,
       "setter": true,
       "summary": "The mark text alignment.",
@@ -113,7 +142,7 @@
     },
     {
       "name": "TransparentBackground",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "The mark text background transparency. (transparent/opaque)",

@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "ImageComboBox",
-      "signature": "ImageComboBox(...)",
+      "signature": "public ImageComboBox()",
       "summary": "Initializes a new instance of the ImageComboBox class.",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "DefaultValue",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the default value in the image combo box.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "OptionList",
-      "type": "object",
+      "type": "ImageList",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the elements of the option list, the images that are in the image combo box.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "SelectedIndex",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the selected index of the image in the image combo box.",
@@ -45,7 +45,7 @@
     },
     {
       "name": "SelectedItem",
-      "type": "object",
+      "type": "Object",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the selected image in the image combo box.",
@@ -55,8 +55,8 @@
   "events": [
     {
       "name": "ImageCBSelectedIndexChanged",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler ImageCBSelectedIndexChanged",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler ImageCBSelectedIndexChanged",
       "summary": "The ImageCBSelectedIndexChanged event is triggered just after the selected index has been changed in the image combo box.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8c110efc-be84-b175-0b28-ae8256dd6ed7",
       "handler_thread": "unknown",

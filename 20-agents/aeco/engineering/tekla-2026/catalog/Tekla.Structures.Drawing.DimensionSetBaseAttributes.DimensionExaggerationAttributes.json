@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "DimensionSetBaseAttributes.DimensionExaggerationAttributes",
-      "signature": "DimensionSetBaseAttributes.DimensionExaggerationAttributes(...)",
+      "signature": "public DimensionExaggerationAttributes()",
       "summary": "Creates a new dimension exaggeration attributes instance. The default is to have exaggeration disabled.",
       "params": [],
       "throws": [],
@@ -18,9 +18,41 @@
     },
     {
       "name": "DimensionSetBaseAttributes.DimensionExaggerationAttributes",
-      "signature": "DimensionSetBaseAttributes.DimensionExaggerationAttributes(...)",
+      "signature": "public DimensionExaggerationAttributes(bool ExaggerationEnabled, DimensionSetBaseAttributes.ExaggerationDirections ExaggerationDirection, DimensionSetBaseAttributes.ExaggerationOrigins ExaggerationOrigin, double ExaggerationWidth, double ExaggerationPosition, double ExaggerationHeight)",
       "summary": "Creates a new dimension exaggeration attributes instance with the given parameters.",
-      "params": [],
+      "params": [
+        {
+          "name": "ExaggerationEnabled",
+          "type": "System.Boolean",
+          "doc": "Exaggeration is enabled if the value is true.",
+          "optional": false
+        },
+        {
+          "name": "ExaggerationDirection",
+          "type": "Tekla.Structures.Drawing.DimensionSetBaseAttributes.ExaggerationDirections",
+          "optional": false
+        },
+        {
+          "name": "ExaggerationOrigin",
+          "type": "Tekla.Structures.Drawing.DimensionSetBaseAttributes.ExaggerationOrigins",
+          "optional": false
+        },
+        {
+          "name": "ExaggerationWidth",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "ExaggerationPosition",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "ExaggerationHeight",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5989ec95-66ce-4bb5-37cc-ec120efb5bf4"
@@ -29,9 +61,20 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/835f5a19-1bf6-17fd-f6e5-d3605e638016"
@@ -40,7 +83,7 @@
   "properties": [
     {
       "name": "ExaggerationDirection",
-      "type": "object",
+      "type": "DimensionSetBaseAttributes.ExaggerationDirections",
       "getter": true,
       "setter": true,
       "summary": "The ExaggerationDirection.",
@@ -48,7 +91,7 @@
     },
     {
       "name": "ExaggerationEnabled",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Exaggeration is enabled if the value is true.",
@@ -56,7 +99,7 @@
     },
     {
       "name": "ExaggerationHeight",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The ExaggerationHeight.",
@@ -64,7 +107,7 @@
     },
     {
       "name": "ExaggerationOrigin",
-      "type": "object",
+      "type": "DimensionSetBaseAttributes.ExaggerationOrigins",
       "getter": true,
       "setter": true,
       "summary": "The ExaggerationOrigin.",
@@ -72,7 +115,7 @@
     },
     {
       "name": "ExaggerationPosition",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The ExaggerationPosition.",
@@ -80,7 +123,7 @@
     },
     {
       "name": "ExaggerationWidth",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The ExaggerationWidth.",

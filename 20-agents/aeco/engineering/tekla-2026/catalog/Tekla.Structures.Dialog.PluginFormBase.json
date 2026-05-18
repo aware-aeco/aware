@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "PluginFormBase",
-      "signature": "PluginFormBase(...)",
+      "signature": "public PluginFormBase()",
       "summary": "Runs the FormBase constructor and loads the default .NET localization file (DotNetDialogStrings.ail).",
       "params": [],
       "throws": [],
@@ -20,16 +20,23 @@
   "methods": [
     {
       "name": "ApplyValues",
-      "signature": "ApplyValues(...)",
+      "signature": "public void ApplyValues(string FileName)",
       "summary": "Loads the dialog values from a file and performs Apply. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type\u0027s name.",
-      "params": [],
+      "params": [
+        {
+          "name": "FileName",
+          "type": "System.String",
+          "doc": "The name of the file.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c4096cdf-60d9-f7b8-1daf-e71de20cf47d"
     },
     {
       "name": "Get",
-      "signature": "Get(...)",
+      "signature": "public void Get()",
       "summary": "Gets the dialog values from the part that is currently selected in Tekla Structures.",
       "params": [],
       "throws": [],
@@ -38,16 +45,20 @@
     },
     {
       "name": "GetConnectionStatus",
-      "signature": "GetConnectionStatus(...)",
+      "signature": "public bool GetConnectionStatus()",
       "summary": "Returns true if a proper connection to the Tekla Structures process has been established. Currently, there\u0027s no way to re-establish the connection.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2ba6677a-b8a7-cbfa-2724-e58464054abe"
     },
     {
       "name": "InitializeForm",
-      "signature": "InitializeForm(...)",
+      "signature": "public void InitializeForm()",
       "summary": "Prepares the data storage for the dialog and scans through the fields.",
       "params": [],
       "throws": [],
@@ -56,25 +67,39 @@
     },
     {
       "name": "LoadValues",
-      "signature": "LoadValues(...)",
+      "signature": "public void LoadValues(string FileName)",
       "summary": "Loads the dialog values from a file. To match the files to a certain dialog, the file suffix is set as the dialog type\u0027s name.",
-      "params": [],
+      "params": [
+        {
+          "name": "FileName",
+          "type": "System.String",
+          "doc": "The name of the file.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/df11f56f-8372-2886-e011-b4fcad4ac3de"
     },
     {
       "name": "ModifyValues",
-      "signature": "ModifyValues(...)",
+      "signature": "public void ModifyValues(string FileName)",
       "summary": "Loads the dialog values from a file and performs Modify. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type\u0027s name.",
-      "params": [],
+      "params": [
+        {
+          "name": "FileName",
+          "type": "System.String",
+          "doc": "The name of the file.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d20a7c4e-e913-92e5-0925-44015cc68ebf"
     },
     {
       "name": "ReloadForm",
-      "signature": "ReloadForm(...)",
+      "signature": "public void ReloadForm()",
       "summary": "Reloads the dialog values.",
       "params": [],
       "throws": [],
@@ -83,25 +108,45 @@
     },
     {
       "name": "SaveValues",
-      "signature": "SaveValues(...)",
+      "signature": "public void SaveValues(string fileName)",
       "summary": "Serializes the dialog values to an xml file.",
-      "params": [],
+      "params": [
+        {
+          "name": "fileName",
+          "type": "System.String",
+          "doc": "The path of the file.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a817a258-86a2-8616-be00-eda92c7e5f8e"
     },
     {
       "name": "SetAttributeValue",
-      "signature": "SetAttributeValue(...)",
+      "signature": "public void SetAttributeValue(Control Ctrl, Object Value)",
       "summary": "Sets a value for the given control. When the dialog is not shown, setting a property directly for a control (such as textBox1.Text = \u0022text\u0022) will not work for controls that have a Tekla Structures AttributeTypeName set. This method is going to have to be used to set the value.",
-      "params": [],
+      "params": [
+        {
+          "name": "Ctrl",
+          "type": "System.Windows.Forms.Control",
+          "doc": "The control whose value to set.",
+          "optional": false
+        },
+        {
+          "name": "Value",
+          "type": "System.Object",
+          "doc": "The new value. It can be of any primitive datatype supported by the control\u0027s AttributeType (normally int, double or string).",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/30e56a80-1c86-4606-781c-2a91b7bb8884"
     },
     {
       "name": "ShowForm",
-      "signature": "ShowForm(...)",
+      "signature": "public void ShowForm()",
       "summary": "Displays the form.",
       "params": [],
       "throws": [],
@@ -110,7 +155,7 @@
     },
     {
       "name": "UpdateValues",
-      "signature": "UpdateValues(...)",
+      "signature": "[ObsoleteAttribute(\u0022Does currently nothing. Will be removed in near future.\u0022)] public void UpdateValues()",
       "summary": "Rereads and updates all the field values on the form.",
       "params": [],
       "throws": [],
@@ -121,15 +166,15 @@
   "properties": [
     {
       "name": "Localization",
-      "type": "object",
+      "type": "Localization",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The localization instance for the dialog. Each dialog has its own localization instance that has read the localization files needed for that dialog.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6528eb05-2f85-a621-b23e-fcb51797ab1b"
     },
     {
       "name": "ShowInTaskbar",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Hides (shadows) the ShowInTaskbar property by setting the property to false.",
@@ -139,8 +184,8 @@
   "events": [
     {
       "name": "AttributesLoadedFromModel",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler AttributesLoadedFromModel",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler AttributesLoadedFromModel",
       "summary": "The AttributesLoadedFromModel event is triggered just after the attributes have been loaded from the model into the dialog.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/cb3d5559-e85d-1152-f617-d47b3e2524ec",
       "handler_thread": "unknown",

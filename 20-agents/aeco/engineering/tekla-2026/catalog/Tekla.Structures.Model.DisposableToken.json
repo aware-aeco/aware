@@ -9,9 +9,16 @@
   "constructors": [
     {
       "name": "DisposableToken",
-      "signature": "DisposableToken(...)",
+      "signature": "public DisposableToken(Action disposed)",
       "summary": "Initializes a new instance of the DisposableToken class.",
-      "params": [],
+      "params": [
+        {
+          "name": "disposed",
+          "type": "System.Action",
+          "doc": "The delegate to a method that is invoked on dispose.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0b9847a1-33bf-a69b-b899-19c9fc64b67d"
@@ -20,7 +27,7 @@
   "methods": [
     {
       "name": "Dispose",
-      "signature": "Dispose(...)",
+      "signature": "public void Dispose()",
       "summary": "Invokes the callback.",
       "params": [],
       "throws": [],

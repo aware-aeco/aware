@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Chamfer",
-      "signature": "Chamfer(...)",
+      "signature": "public Chamfer()",
       "summary": "Creates a chamfer instance with the basic shape type CHAMFER_NONE.",
       "params": [],
       "throws": [],
@@ -18,9 +18,28 @@
     },
     {
       "name": "Chamfer",
-      "signature": "Chamfer(...)",
+      "signature": "public Chamfer(double X, double Y, Chamfer.ChamferTypeEnum Type)",
       "summary": "Instantiates a chamfer with the given values.",
-      "params": [],
+      "params": [
+        {
+          "name": "X",
+          "type": "System.Double",
+          "doc": "The X value of the chamfer.",
+          "optional": false
+        },
+        {
+          "name": "Y",
+          "type": "System.Double",
+          "doc": "The Y value of the chamfer.",
+          "optional": false
+        },
+        {
+          "name": "Type",
+          "type": "Tekla.Structures.Model.Chamfer.ChamferTypeEnum",
+          "doc": "The basic shape type of the chamfer.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/17d86049-fc29-135a-c1d3-e24df677334f"
@@ -30,7 +49,7 @@
   "properties": [
     {
       "name": "DZ1",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The thickness above the offset. Note that this does nothing when used with the PolyBeam.",
@@ -38,7 +57,7 @@
     },
     {
       "name": "DZ2",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The thickness below the offset. Note that this does nothing when used with the PolyBeam.",
@@ -46,7 +65,7 @@
     },
     {
       "name": "Type",
-      "type": "object",
+      "type": "Chamfer.ChamferTypeEnum",
       "getter": true,
       "setter": true,
       "summary": "The basic shape type of the chamfer.",
@@ -54,7 +73,7 @@
     },
     {
       "name": "X",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The dimension of the chamfer.",
@@ -62,7 +81,7 @@
     },
     {
       "name": "Y",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The second dimension of straight chamfers.",

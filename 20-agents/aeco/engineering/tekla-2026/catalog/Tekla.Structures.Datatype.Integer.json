@@ -8,9 +8,16 @@
   "constructors": [
     {
       "name": "Integer",
-      "signature": "Integer(...)",
+      "signature": "public Integer(int value)",
       "summary": "Creates a new integer datatype instance.",
-      "params": [],
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "The value for the integer datatype.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f358c54b-c784-99ee-df68-6382c08d7242"
@@ -19,54 +26,91 @@
   "methods": [
     {
       "name": "Equals",
-      "signature": "Equals(...)",
+      "signature": "public override bool Equals(Object Obj)",
       "summary": "Returns a value that indicates whether the current instance is equal to the given object.",
-      "params": [],
+      "params": [
+        {
+          "name": "Obj",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the given object has the same value as the current instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/489c427b-05b2-2899-23b8-a3624cdb0da1"
     },
     {
       "name": "GetHashCode",
-      "signature": "GetHashCode(...)",
+      "signature": "public override int GetHashCode()",
       "summary": "Returns the hash code for the current instance.",
       "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "A hash code for the current Integer instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e917eafd-fa7d-e5b4-fad3-80b1c3c687e0"
     },
     {
       "name": "GetSchema",
-      "signature": "GetSchema(...)",
+      "signature": "public XmlSchema GetSchema()",
       "summary": "Gets the XML Schema for the datatype.",
       "params": [],
+      "returns": {
+        "type": "XmlSchema",
+        "doc": "The datatype\u0027s XML Schema."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/83a934e9-65a0-6c88-5f97-62f63585da52"
     },
     {
       "name": "ReadXml",
-      "signature": "ReadXml(...)",
+      "signature": "public void ReadXml(XmlReader reader)",
       "summary": "Parses a new value from the given reader.",
-      "params": [],
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.Xml.XmlReader",
+          "doc": "The reader to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2f7b1133-4d5f-175b-7a6f-cdf19e170b80"
     },
     {
       "name": "ToString",
-      "signature": "ToString(...)",
+      "signature": "public override string ToString()",
       "summary": "Returns the string representation of the object.",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The string representation of the object."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ba4f28f3-495d-66ed-d106-f2000d8623db"
     },
     {
       "name": "WriteXml",
-      "signature": "WriteXml(...)",
+      "signature": "public void WriteXml(XmlWriter writer)",
       "summary": "Writes the value as XML to the given writer.",
-      "params": [],
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.Xml.XmlWriter",
+          "doc": "The writer to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/61f951c6-ffaf-b2a1-6ddc-851a5601c3d8"
@@ -75,7 +119,7 @@
   "properties": [
     {
       "name": "Value",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The value of the integer datatype.",

@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "DrawingCoordinateConverter",
-      "signature": "DrawingCoordinateConverter(...)",
+      "signature": "public DrawingCoordinateConverter()",
       "summary": "Initializes a new instance of the DrawingCoordinateConverter class",
       "params": [],
       "throws": [],
@@ -20,18 +20,64 @@
   "methods": [
     {
       "name": "Convert(ViewBase, ViewBase, PointList)",
-      "signature": "Convert(ViewBase, ViewBase, PointList)(...)",
+      "signature": "public static PointList Convert(ViewBase fromView, ViewBase toView, PointList pointList)",
       "summary": "Converts a list of coordinate points from one view\u0027s coordinate system to another view\u0027s coordinate system.",
-      "params": [],
+      "params": [
+        {
+          "name": "fromView",
+          "type": "Tekla.Structures.Drawing.ViewBase",
+          "doc": "The source view.",
+          "optional": false
+        },
+        {
+          "name": "toView",
+          "type": "Tekla.Structures.Drawing.ViewBase",
+          "doc": "The target view.",
+          "optional": false
+        },
+        {
+          "name": "pointList",
+          "type": "Tekla.Structures.Drawing.PointList",
+          "doc": "The list of points to be converted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PointList",
+        "doc": "The converted list of points."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/cde655e6-530b-715c-d3a2-8ff1d6c7598b"
     },
     {
       "name": "Convert(ViewBase, ViewBase, Point)",
-      "signature": "Convert(ViewBase, ViewBase, Point)(...)",
+      "signature": "public static Point Convert(ViewBase fromView, ViewBase toView, Point point)",
       "summary": "Converts one coordinate point from one view\u0027s coordinate system to another view\u0027s coordinate system.",
-      "params": [],
+      "params": [
+        {
+          "name": "fromView",
+          "type": "Tekla.Structures.Drawing.ViewBase",
+          "doc": "The source view.",
+          "optional": false
+        },
+        {
+          "name": "toView",
+          "type": "Tekla.Structures.Drawing.ViewBase",
+          "doc": "The target view.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The point to be converted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": "The converted point."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/77a94c8e-e6bc-5d60-c364-c4b4e45d5eb4"

@@ -9,9 +9,22 @@
   "constructors": [
     {
       "name": "CannotSetAttributeForPluginDueToIncorrectTypeException",
-      "signature": "CannotSetAttributeForPluginDueToIncorrectTypeException(...)",
+      "signature": "public CannotSetAttributeForPluginDueToIncorrectTypeException(Type ExpectedType, Type GivenType)",
       "summary": "Creates a new CannotSetAttributeForPluginDueToIncorrectTypeException instance.",
-      "params": [],
+      "params": [
+        {
+          "name": "ExpectedType",
+          "type": "System.Type",
+          "doc": "The expected type.",
+          "optional": false
+        },
+        {
+          "name": "GivenType",
+          "type": "System.Type",
+          "doc": "The given type.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/fe1c96cb-781f-c10f-2255-5f7fd835af49"

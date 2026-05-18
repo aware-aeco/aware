@@ -9,9 +9,16 @@
   "constructors": [
     {
       "name": "AutoDrawingRule",
-      "signature": "AutoDrawingRule(...)",
+      "signature": "public AutoDrawingRule(string RuleFromFile)",
       "summary": "Creates a new AutoDrawing rule by using an existing rule file.",
-      "params": [],
+      "params": [
+        {
+          "name": "RuleFromFile",
+          "type": "System.String",
+          "doc": "The filename of the rule file.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4e75fc19-8382-4858-ad91-8a0a31e18fd9"
@@ -21,7 +28,7 @@
   "properties": [
     {
       "name": "Filename",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The filename of the AutoDrawing script.",

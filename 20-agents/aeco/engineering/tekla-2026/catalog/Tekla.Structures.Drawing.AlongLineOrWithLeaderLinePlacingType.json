@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AlongLineOrWithLeaderLinePlacingType",
-      "signature": "AlongLineOrWithLeaderLinePlacingType(...)",
+      "signature": "public AlongLineOrWithLeaderLinePlacingType()",
       "summary": "Creates a new along line or with leader line placing type instance.",
       "params": [],
       "throws": [],

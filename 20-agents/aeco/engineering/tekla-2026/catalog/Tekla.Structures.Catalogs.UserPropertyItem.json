@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "UserPropertyItem",
-      "signature": "UserPropertyItem(...)",
+      "signature": "public UserPropertyItem()",
       "summary": "Creates a new user property item instance.",
       "params": [],
       "throws": [],
@@ -20,225 +20,479 @@
   "methods": [
     {
       "name": "AddToObjectType",
-      "signature": "AddToObjectType(...)",
+      "signature": "public bool AddToObjectType(CatalogObjectTypeEnum objectType)",
       "summary": "Adds the user property item to the given object type.",
-      "params": [],
+      "params": [
+        {
+          "name": "objectType",
+          "type": "Tekla.Structures.Catalogs.CatalogObjectTypeEnum",
+          "doc": "The object type to add the item to.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7be988f0-9fd3-7d16-6e38-f65d98b7c422"
     },
     {
       "name": "Delete",
-      "signature": "Delete(...)",
+      "signature": "public bool Delete()",
       "summary": "Deletes the user property item from the database.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ae8ea363-5ba4-8dd1-9047-a0ac98d4eb4f"
     },
     {
       "name": "GetDefaultValue(Double.)",
-      "signature": "GetDefaultValue(Double.)(...)",
+      "signature": "public bool GetDefaultValue(ref double DefaultValue)",
       "summary": "Gets the default value of a double property.",
-      "params": [],
+      "params": [
+        {
+          "name": "DefaultValue",
+          "type": "System.Double.",
+          "doc": "The value that was gotten.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0d6f5378-603f-d5b6-5023-b2117b19ed7a"
     },
     {
       "name": "GetDefaultValue(Int32.)",
-      "signature": "GetDefaultValue(Int32.)(...)",
+      "signature": "public bool GetDefaultValue(ref int DefaultValue)",
       "summary": "Gets the default value of an integer property.",
-      "params": [],
+      "params": [
+        {
+          "name": "DefaultValue",
+          "type": "System.Int32.",
+          "doc": "The value that was gotten.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4ce40f2a-3bdd-a3e2-383f-ba34d0890923"
     },
     {
       "name": "GetDefaultValue(String.)",
-      "signature": "GetDefaultValue(String.)(...)",
+      "signature": "public bool GetDefaultValue(ref string DefaultValue)",
       "summary": "Gets the default value of a string property.",
-      "params": [],
+      "params": [
+        {
+          "name": "DefaultValue",
+          "type": "System.String.",
+          "doc": "The value that was gotten.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9aee87ff-94be-8506-3db5-025c3ffee451"
     },
     {
       "name": "GetLabel.",
-      "signature": "GetLabel.(...)",
+      "signature": "public string GetLabel()",
       "summary": "Gets the label of the user property. Labels are translated when translation is available.",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The label of the user property."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/03fdb5ab-ce53-fbda-e9e7-18f22fde4481"
     },
     {
       "name": "GetLabel(Boolean)",
-      "signature": "GetLabel(Boolean)(...)",
+      "signature": "public string GetLabel(bool translated)",
       "summary": "Gets the label of the user property.",
-      "params": [],
+      "params": [
+        {
+          "name": "translated",
+          "type": "System.Boolean",
+          "doc": "if set to true translated text is returned.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The label of the user property."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/18841e46-86a4-0941-eb7d-1bdd69976904"
     },
     {
       "name": "GetObjectTypes",
-      "signature": "GetObjectTypes(...)",
+      "signature": "public bool GetObjectTypes(ref List\u003CCatalogObjectTypeEnum\u003E objectTypes)",
       "summary": "Gets the object types which contain this user property item.",
-      "params": [],
+      "params": [
+        {
+          "name": "objectTypes",
+          "type": "System.Collections.Generic.List\u003CCatalogObjectTypeEnum\u003E.",
+          "doc": "The object types that were gotten.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/dc091818-71be-e6e4-b292-73185fafeedc"
     },
     {
       "name": "GetOptions(List.KeyValuePair.Double, String...)",
-      "signature": "GetOptions(List.KeyValuePair.Double, String...)(...)",
+      "signature": "public bool GetOptions(ref List\u003CKeyValuePair\u003Cdouble, string\u003E\u003E DoubleOptions)",
       "summary": "Gets the value options of a double property. Option strings are translated when translation is available.",
-      "params": [],
+      "params": [
+        {
+          "name": "DoubleOptions",
+          "type": "System.Collections.Generic.List\u003CKeyValuePair\u003CDouble,String\u003E\u003E.",
+          "doc": "The value options.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/508fd0e9-fe08-eb93-fedd-4f3b52e073b2"
     },
     {
       "name": "GetOptions(List.KeyValuePair.Int32, String...)",
-      "signature": "GetOptions(List.KeyValuePair.Int32, String...)(...)",
+      "signature": "public bool GetOptions(ref List\u003CKeyValuePair\u003Cint, string\u003E\u003E IntOptions)",
       "summary": "Gets the value options of an integer property. Option strings are translated when translation is available.",
-      "params": [],
+      "params": [
+        {
+          "name": "IntOptions",
+          "type": "System.Collections.Generic.List\u003CKeyValuePair\u003CInt32,String\u003E\u003E.",
+          "doc": "The value options.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/00d0baf4-c0ce-d26e-d037-f0c342d92103"
     },
     {
       "name": "GetOptions(List.KeyValuePair.String, String...)",
-      "signature": "GetOptions(List.KeyValuePair.String, String...)(...)",
+      "signature": "public bool GetOptions(ref List\u003CKeyValuePair\u003Cstring, string\u003E\u003E StringOptions)",
       "summary": "Gets the value options of a string property. Option strings are translated when translation is available.",
-      "params": [],
+      "params": [
+        {
+          "name": "StringOptions",
+          "type": "System.Collections.Generic.List\u003CKeyValuePair\u003CString,String\u003E\u003E.",
+          "doc": "The value options.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a4c8794d-754a-accd-a966-e934fcdc7514"
     },
     {
       "name": "GetOptions(List.KeyValuePair.Double, String..., Boolean)",
-      "signature": "GetOptions(List.KeyValuePair.Double, String..., Boolean)(...)",
+      "signature": "public bool GetOptions(ref List\u003CKeyValuePair\u003Cdouble, string\u003E\u003E DoubleOptions, bool translatedLabels)",
       "summary": "Gets the value options of a double property.",
-      "params": [],
+      "params": [
+        {
+          "name": "DoubleOptions",
+          "type": "System.Collections.Generic.List\u003CKeyValuePair\u003CDouble,String\u003E\u003E.",
+          "doc": "The value options.",
+          "optional": false
+        },
+        {
+          "name": "translatedLabels",
+          "type": "System.Boolean",
+          "doc": "if set to true labels translated to current language are returned, otherwise the resource key of label is returned.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4f65183f-06de-d81c-48a9-ec1d346fc50d"
     },
     {
       "name": "GetOptions(List.KeyValuePair.Int32, String..., Boolean)",
-      "signature": "GetOptions(List.KeyValuePair.Int32, String..., Boolean)(...)",
+      "signature": "public bool GetOptions(ref List\u003CKeyValuePair\u003Cint, string\u003E\u003E IntOptions, bool translatedLabels)",
       "summary": "Gets the value options of an integer property.",
-      "params": [],
+      "params": [
+        {
+          "name": "IntOptions",
+          "type": "System.Collections.Generic.List\u003CKeyValuePair\u003CInt32,String\u003E\u003E.",
+          "doc": "The value options.",
+          "optional": false
+        },
+        {
+          "name": "translatedLabels",
+          "type": "System.Boolean",
+          "doc": "if set to true labels translated to current language are returned, otherwise the resource key of label is returned.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a9d61eee-15e4-687e-5ddf-1983dcc071ce"
     },
     {
       "name": "GetOptions(List.KeyValuePair.String, String..., Boolean)",
-      "signature": "GetOptions(List.KeyValuePair.String, String..., Boolean)(...)",
+      "signature": "public bool GetOptions(ref List\u003CKeyValuePair\u003Cstring, string\u003E\u003E StringOptions, bool translatedLabels)",
       "summary": "Gets the value options of a string property.",
-      "params": [],
+      "params": [
+        {
+          "name": "StringOptions",
+          "type": "System.Collections.Generic.List\u003CKeyValuePair\u003CString,String\u003E\u003E.",
+          "doc": "The value options.",
+          "optional": false
+        },
+        {
+          "name": "translatedLabels",
+          "type": "System.Boolean",
+          "doc": "if set to true labels translated to current language are returned, otherwise the resource key of label is returned.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c19871a3-e7e9-1974-1174-e27b24e8a5cc"
     },
     {
       "name": "Insert",
-      "signature": "Insert(...)",
+      "signature": "public bool Insert()",
       "summary": "Inserts the user property item to the database.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/47df9e60-ef7a-23f0-6e08-fd85a21b2be6"
     },
     {
       "name": "Modify",
-      "signature": "Modify(...)",
+      "signature": "public bool Modify()",
       "summary": "Modifies the user property item.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/44b393b8-36cb-4d17-b620-6e58d7fa3419"
     },
     {
       "name": "RemoveFromObjectType",
-      "signature": "RemoveFromObjectType(...)",
+      "signature": "public bool RemoveFromObjectType(CatalogObjectTypeEnum objectType)",
       "summary": "Removes the user property item from the given object type.",
-      "params": [],
+      "params": [
+        {
+          "name": "objectType",
+          "type": "Tekla.Structures.Catalogs.CatalogObjectTypeEnum",
+          "doc": "The object type to remove the item from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/fb4c83dc-103a-28f3-5acf-402ef8bd8f92"
     },
     {
       "name": "Select",
-      "signature": "Select(...)",
+      "signature": "public bool Select()",
       "summary": "Selects by name the user property item from the database.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6f324d5f-053a-8901-67f1-51e882ed9def"
     },
     {
       "name": "SetDefaultValue(Double)",
-      "signature": "SetDefaultValue(Double)(...)",
+      "signature": "public bool SetDefaultValue(double DefaultValue)",
       "summary": "Sets the default value of a double property.",
-      "params": [],
+      "params": [
+        {
+          "name": "DefaultValue",
+          "type": "System.Double",
+          "doc": "The new value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6270ebb7-1318-06d1-2bbc-efd908962c13"
     },
     {
       "name": "SetDefaultValue(Int32)",
-      "signature": "SetDefaultValue(Int32)(...)",
+      "signature": "public bool SetDefaultValue(int DefaultValue)",
       "summary": "Sets the default value of an integer property.",
-      "params": [],
+      "params": [
+        {
+          "name": "DefaultValue",
+          "type": "System.Int32",
+          "doc": "The new value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5165d6f9-44d7-840d-61df-ff0f976b27ea"
     },
     {
       "name": "SetDefaultValue(String)",
-      "signature": "SetDefaultValue(String)(...)",
+      "signature": "public bool SetDefaultValue(string DefaultValue)",
       "summary": "Sets the default value of a string property.",
-      "params": [],
+      "params": [
+        {
+          "name": "DefaultValue",
+          "type": "System.String",
+          "doc": "The new value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/758fac4e-2e53-6483-86fc-57ebf8a819ad"
     },
     {
       "name": "SetLabel",
-      "signature": "SetLabel(...)",
+      "signature": "public void SetLabel(string label)",
       "summary": "Sets the label of the user property.",
-      "params": [],
+      "params": [
+        {
+          "name": "label",
+          "type": "System.String",
+          "doc": "The new label.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/682151bd-ed6f-08dc-c84d-d0f91bb708a7"
     },
     {
       "name": "SetOptions(List.KeyValuePair.Double, String..)",
-      "signature": "SetOptions(List.KeyValuePair.Double, String..)(...)",
+      "signature": "public bool SetOptions(List\u003CKeyValuePair\u003Cdouble, string\u003E\u003E DoubleOptions)",
       "summary": "Sets the value options of a double property. The maximum count of options is 400.",
-      "params": [],
+      "params": [
+        {
+          "name": "DoubleOptions",
+          "type": "System.Collections.Generic.List\u003CKeyValuePair\u003CDouble,String\u003E\u003E",
+          "doc": "The value options.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/20d1c30f-74a1-995d-9972-fb0907950eab"
     },
     {
       "name": "SetOptions(List.KeyValuePair.Int32, String..)",
-      "signature": "SetOptions(List.KeyValuePair.Int32, String..)(...)",
+      "signature": "public bool SetOptions(List\u003CKeyValuePair\u003Cint, string\u003E\u003E IntOptions)",
       "summary": "Sets the value options of an integer property. The maximum count of options is 400.",
-      "params": [],
+      "params": [
+        {
+          "name": "IntOptions",
+          "type": "System.Collections.Generic.List\u003CKeyValuePair\u003CInt32,String\u003E\u003E",
+          "doc": "The value options.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d27524ad-3dad-136a-19b7-fb462072afda"
     },
     {
       "name": "SetOptions(List.KeyValuePair.String, String..)",
-      "signature": "SetOptions(List.KeyValuePair.String, String..)(...)",
+      "signature": "public bool SetOptions(List\u003CKeyValuePair\u003Cstring, string\u003E\u003E StringOptions)",
       "summary": "Sets the value options of a string property. The maximum count of options is 400.",
-      "params": [],
+      "params": [
+        {
+          "name": "StringOptions",
+          "type": "System.Collections.Generic.List\u003CKeyValuePair\u003CString,String\u003E\u003E",
+          "doc": "The new value options.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3004f766-2f4e-9a7b-3561-2b5030fadb0a"
@@ -247,7 +501,7 @@
   "properties": [
     {
       "name": "AffectsNumbering",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the property value affects the numbering of objects.",
@@ -255,7 +509,7 @@
     },
     {
       "name": "FieldType",
-      "type": "object",
+      "type": "UserPropertyFieldTypeEnum",
       "getter": true,
       "setter": true,
       "summary": "The field type of the user property.",
@@ -263,7 +517,7 @@
     },
     {
       "name": "Level",
-      "type": "object",
+      "type": "UserPropertyLevelEnum",
       "getter": true,
       "setter": true,
       "summary": "The level at which the user property has been defined.",
@@ -271,7 +525,7 @@
     },
     {
       "name": "Name",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The name of the user property.",
@@ -279,7 +533,7 @@
     },
     {
       "name": "Type",
-      "type": "object",
+      "type": "PropertyTypeEnum",
       "getter": true,
       "setter": true,
       "summary": "The type of the user property.",
@@ -287,7 +541,7 @@
     },
     {
       "name": "Unique",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the property value is copied when the object is copied.",
@@ -295,7 +549,7 @@
     },
     {
       "name": "Visibility",
-      "type": "object",
+      "type": "UserPropertyVisibilityEnum",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the property value is visible/editable.",

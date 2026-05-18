@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "FacesTooNearEachOtherException",
-      "signature": "FacesTooNearEachOtherException(...)",
+      "signature": "public FacesTooNearEachOtherException()",
       "summary": "Initializes a new instance of the ExtensionIntersectsWithPlateException class with \u0022faces to be connected overlap\u0022 error message.",
       "params": [],
       "throws": [],

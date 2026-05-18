@@ -14,20 +14,22 @@ The BinaryFilterExpression class represents a binary expression between two filt
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/10ff0aa1-1cac-1cde-56ea-5239f32794b0)
 
 ### Constructors
-- `BinaryFilterExpression(...)` — Initializes a new instance of the BinaryFilterExpression class.
-- `BinaryFilterExpression(...)` — Initializes a new instance of the BinaryFilterExpression class.
-- `BinaryFilterExpression(...)` — Initializes a new instance of the BinaryFilterExpression class.
-- `BinaryFilterExpression(...)` — Initializes a new instance of the BinaryFilterExpression class.
+- `public BinaryFilterExpression(BooleanFilterExpression Left, BooleanOperatorType Oper, BooleanConstantFilterExpression Right)` — Initializes a new instance of the BinaryFilterExpression class.
+- `public BinaryFilterExpression(DateTimeFilterExpression Left, DateTimeOperatorType Oper, DateTimeConstantFilterExpression Right)` — Initializes a new instance of the BinaryFilterExpression class.
+- `public BinaryFilterExpression(NumericFilterExpression Left, NumericOperatorType Oper, NumericConstantFilterExpression Right)` — Initializes a new instance of the BinaryFilterExpression class.
+- `public BinaryFilterExpression(StringFilterExpression Left, StringOperatorType Oper, StringConstantFilterExpression Right)` — Initializes a new instance of the BinaryFilterExpression class.
 
 ### Methods
-#### `ToString(...)`
+#### `public override string ToString()`
 
 Creates a string representation of the current object.
+
+**Returns:** `String` — A new string representing the current object.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/fece057a-34f0-fbb1-7184-27f66452ed40)
 
 ### Properties
-- `IsEnable` (object, get/set) — Gets or sets the enabled state of the filter expression.
+- `IsEnable` (Boolean, get/set) — Gets or sets the enabled state of the filter expression.
 
 ## BinaryFilterExpressionCollection (class)
 
@@ -36,94 +38,139 @@ The BinaryFilterExpressionCollection class represents a collection of BinaryFilt
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/b265602f-8b11-715f-8159-73cbd7464c26)
 
 ### Constructors
-- `BinaryFilterExpressionCollection(...)` — Initializes a new instance of the BinaryFilterExpressionCollection class.
+- `public BinaryFilterExpressionCollection()` — Initializes a new instance of the BinaryFilterExpressionCollection class.
 
 ### Methods
-#### `Add(...)`
+#### `public void Add(BinaryFilterExpressionItem Item)`
 
 Adds a BinaryFilterExpressionItem object at the end of the collection.
 
+**Parameters:**
+- `Item` (Tekla.Structures.Filtering.BinaryFilterExpressionItem) — The object to add to the collection. This value cannot be null.
+
 [Docs](https://developer.tekla.com/topic/en/18/47/37a55e1e-c3d1-ab03-a52f-1f0856960257)
 
-#### `Clear(...)`
+#### `public void Clear()`
 
 Removes all the elements from the collection.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/d4879053-d92b-b022-d9a3-4d2381f59faa)
 
-#### `Contains(...)`
+#### `public bool Contains(BinaryFilterExpressionItem Item)`
 
 Determines whether an element is in the collection.
 
+**Parameters:**
+- `Item` (Tekla.Structures.Filtering.BinaryFilterExpressionItem) — The object to locate in the collection. This value cannot be null.
+
+**Returns:** `Boolean` — True if the object exists.
+
 [Docs](https://developer.tekla.com/topic/en/18/47/692fe680-5d97-a396-86e7-c53e541ca7c8)
 
-#### `CopyTo(...)`
+#### `public void CopyTo(BinaryFilterExpressionItem[] Array, int ArrayIndex)`
 
 Copies the collection to the input array.
 
+**Parameters:**
+- `Array` (.Tekla.Structures.Filtering.BinaryFilterExpressionItem.) — The input array. This value cannot be null.
+- `ArrayIndex` (System.Int32) — The starting index.
+
 [Docs](https://developer.tekla.com/topic/en/18/47/4aa802f3-e3bf-08cb-56ec-b5b6109cfbc3)
 
-#### `GetFirst(...)`
+#### `public BinaryFilterExpressionItem GetFirst()`
 
 Gets the first item of the collection.
 
+**Returns:** `BinaryFilterExpressionItem` — The first item of the collection.
+
 [Docs](https://developer.tekla.com/topic/en/18/47/67080931-72ad-1368-a331-8b823209cc19)
 
-#### `GetLast(...)`
+#### `public BinaryFilterExpressionItem GetLast()`
 
 Gets the last item of the collection.
 
+**Returns:** `BinaryFilterExpressionItem` — The last item of the collection.
+
 [Docs](https://developer.tekla.com/topic/en/18/47/ed7ab484-7f6e-9cc3-73af-519a3ebe6d5e)
 
-#### `IndexOf(...)`
+#### `public int IndexOf(BinaryFilterExpressionItem Item)`
 
 Searches for the specified BinaryFilterExpressionItem in the collection and returns a zero-based index if found.
 
+**Parameters:**
+- `Item` (Tekla.Structures.Filtering.BinaryFilterExpressionItem) — The item to search for. This value cannot be null.
+
+**Returns:** `Int32` — The zero-based index of the item in the collection. -1 if not found.
+
 [Docs](https://developer.tekla.com/topic/en/18/47/11f12bd5-c925-b507-86f1-6d1f242ac214)
 
-#### `Insert(...)`
+#### `public void Insert(int Index, BinaryFilterExpressionItem Item)`
 
 Inserts an element in the collection at a specified index.
 
+**Parameters:**
+- `Index` (System.Int32) — The zero-based index at which the item shoud be inserted.
+- `Item` (Tekla.Structures.Filtering.BinaryFilterExpressionItem) — The item to insert. This value cannot be null.
+
 [Docs](https://developer.tekla.com/topic/en/18/47/ed34cf70-121c-8d04-16fd-3dff463b7ca7)
 
-#### `IsFirst(...)`
+#### `public bool IsFirst(BinaryFilterExpressionItem BinaryFilterExpressionItem)`
 
 Determines whether an element is the first item of the collection.
 
+**Parameters:**
+- `BinaryFilterExpressionItem` (Tekla.Structures.Filtering.BinaryFilterExpressionItem) — The element to evaluate. This value cannot be null.
+
+**Returns:** `Boolean` — True if the element is the first item.
+
 [Docs](https://developer.tekla.com/topic/en/18/47/5cb79128-858c-ecc0-f8e2-aec6aa31db13)
 
-#### `IsLast(...)`
+#### `public bool IsLast(BinaryFilterExpressionItem BinaryFilterExpressionItem)`
 
 Determines whether an element is the last item of the collection.
 
+**Parameters:**
+- `BinaryFilterExpressionItem` (Tekla.Structures.Filtering.BinaryFilterExpressionItem) — The element to evaluate. This value cannot be null.
+
+**Returns:** `Boolean` — True if the element is the last item.
+
 [Docs](https://developer.tekla.com/topic/en/18/47/980afcfa-dae4-215d-1493-5caba0671bbd)
 
-#### `Remove(...)`
+#### `public bool Remove(BinaryFilterExpressionItem Item)`
 
 Removes the first occurrence of a specific object from the collection.
 
+**Parameters:**
+- `Item` (Tekla.Structures.Filtering.BinaryFilterExpressionItem) — The object to remove from the collection. This value cannot be null.
+
+**Returns:** `Boolean` — True if item was successfully removed. False otherwise.
+
 [Docs](https://developer.tekla.com/topic/en/18/47/4488a5f8-cfac-c06e-9537-badb4d390f35)
 
-#### `RemoveAt(...)`
+#### `public void RemoveAt(int Index)`
 
 Removes the element at the specified index from the collection.
 
+**Parameters:**
+- `Index` (System.Int32) — The index of the item to remove.
+
 [Docs](https://developer.tekla.com/topic/en/18/47/51945f78-fec1-8f3c-1c9e-13a0ef3eeb1b)
 
-#### `ToString(...)`
+#### `public override string ToString()`
 
 Creates a string representation of the current object.
+
+**Returns:** `String` — A new string representing the current object.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/fece057a-34f0-fbb1-7184-27f66452ed40)
 
 ### Properties
-- `Count` (object, get/set) — Gets the number of elements actually contained in the collection.
-- `IsEnable` (object, get/set) — Gets or sets the enabled state of the filter expression.
-- `IsReadOnly` (object, get/set) — Gets a value indicating whether the collection is read-only.
-- `IsSynchronized` (object, get/set) — Gets a value indicating whether the collection supports multithreading.
+- `Count` (Int32, get) — Gets the number of elements actually contained in the collection.
+- `IsEnable` (Boolean, get/set) — Gets or sets the enabled state of the filter expression.
+- `IsReadOnly` (Boolean, get) — Gets a value indicating whether the collection is read-only.
+- `IsSynchronized` (Boolean, get) — Gets a value indicating whether the collection supports multithreading.
 - `Item` (object, get/set) — Gets or sets the item at a specific index.
-- `SyncRoot` (object, get/set) — Gets the root for synchronization.
+- `SyncRoot` (Object, get) — Gets the root for synchronization.
 
 ## BinaryFilterExpressionItem (class)
 
@@ -132,13 +179,15 @@ The BinaryFilterExpressionItem class represents a data item in a BinaryFilterExp
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/861f110e-1c4c-1fb8-8cfa-638e399f5425)
 
 ### Constructors
-- `BinaryFilterExpressionItem(...)` — Initializes a new instance of the BinaryFilterExpressionItem class.
-- `BinaryFilterExpressionItem(...)` — Initializes a new instance of the BinaryFilterExpressionItem class.
+- `public BinaryFilterExpressionItem(FilterExpression FilterExpression)` — Initializes a new instance of the BinaryFilterExpressionItem class.
+- `public BinaryFilterExpressionItem(FilterExpression FilterExpression, BinaryFilterOperatorType BinaryFilterItemOperatorType)` — Initializes a new instance of the BinaryFilterExpressionItem class.
 
 ### Methods
-#### `ToString(...)`
+#### `public override string ToString()`
 
 Creates a string representation of the current object.
+
+**Returns:** `String` — A new string representing the current object.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/fece057a-34f0-fbb1-7184-27f66452ed40)
 
@@ -160,13 +209,15 @@ The BooleanConstantFilterExpression class represents a constant Boolean filter e
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/9fb6ce1a-0e8e-c0d0-fcc8-54b3f6a334cc)
 
 ### Constructors
-- `BooleanConstantFilterExpression(...)` — Initializes a new instance of the BooleanConstantFilterExpression class.
-- `BooleanConstantFilterExpression(...)` — Initializes a new instance of the BooleanConstantFilterExpression class.
+- `public BooleanConstantFilterExpression(bool Value)` — Initializes a new instance of the BooleanConstantFilterExpression class.
+- `public BooleanConstantFilterExpression(bool Value, IFormatProvider Provider)` — Initializes a new instance of the BooleanConstantFilterExpression class.
 
 ### Methods
-#### `ToString(...)`
+#### `public override string ToString()`
 
 Creates a string representation of the current object.
+
+**Returns:** `String` — A new string representing the current object.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4)
 
@@ -177,9 +228,11 @@ The BooleanFilterExpression class represents a Boolean filter expression.
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/338c3d33-f44a-342f-13f7-484475847438)
 
 ### Methods
-#### `ToString(...)`
+#### `public override string ToString()`
 
 Creates a string representation of the current object.
+
+**Returns:** `String` — A new string representing the current object.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4)
 
@@ -202,9 +255,11 @@ The DataFilterExpression class represents a basic data type for a filter express
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/fdcacbf1-dd6d-ecf2-05a1-b34f063e3119)
 
 ### Methods
-#### `ToString(...)`
+#### `public override string ToString()`
 
 Creates a string representation of the current object.
+
+**Returns:** `String` — A new string representing the current object.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4)
 
@@ -215,15 +270,17 @@ The DateTimeConstantFilterExpression class represents a constant DateTime filter
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/3f04e5be-a631-37df-c552-5e1ce8c0dd5c)
 
 ### Constructors
-- `DateTimeConstantFilterExpression(...)` — Initializes a new instance of the DateTimeConstantFilterExpression class.
-- `DateTimeConstantFilterExpression(...)` — Initializes a new instance of the DateTimeConstantFilterExpression class.
-- `DateTimeConstantFilterExpression(...)` — Initializes a new instance of the DateTimeConstantFilterExpression class.
-- `DateTimeConstantFilterExpression(...)` — Initializes a new instance of the DateTimeConstantFilterExpression class.
+- `public DateTimeConstantFilterExpression(IEnumerable<DateTime> Values)` — Initializes a new instance of the DateTimeConstantFilterExpression class.
+- `public DateTimeConstantFilterExpression(DateTime Value)` — Initializes a new instance of the DateTimeConstantFilterExpression class.
+- `public DateTimeConstantFilterExpression(IEnumerable<DateTime> Values, IFormatProvider Provider)` — Initializes a new instance of the DateTimeConstantFilterExpression class.
+- `public DateTimeConstantFilterExpression(DateTime Value, IFormatProvider Provider)` — Initializes a new instance of the DateTimeConstantFilterExpression class.
 
 ### Methods
-#### `ToString(...)`
+#### `public override string ToString()`
 
 Creates a string representation of the current object.
+
+**Returns:** `String` — A new string representing the current object.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4)
 
@@ -234,9 +291,11 @@ The DateTimeFilterExpression class represents a DateTime filter expression.
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/c8c4806f-8921-fee5-eac4-1c86d648eb89)
 
 ### Methods
-#### `ToString(...)`
+#### `public override string ToString()`
 
 Creates a string representation of the current object.
+
+**Returns:** `String` — A new string representing the current object.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4)
 
@@ -261,9 +320,11 @@ The Expression class represents an expression. This is a base class for other ex
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/0f6107cc-f4dc-2d5b-2160-8a8912965187)
 
 ### Methods
-#### `ToString(...)`
+#### `public override string ToString()`
 
 Creates a string representation of the current object.
+
+**Returns:** `String` — A new string representing the current object.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/fece057a-34f0-fbb1-7184-27f66452ed40)
 
@@ -274,24 +335,32 @@ The Filter class creates a filter file based on the input FilterExpression objec
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/3fe566dd-d704-1455-1c24-352a7d77ec85)
 
 ### Constructors
-- `Filter(...)` — Initializes a new instance of the Filter class.
-- `Filter(...)` — Initializes a new instance of the Filter class.
+- `public Filter(FilterExpression FilterExpression)` — Initializes a new instance of the Filter class.
+- `public Filter(string FullFileName, IFormatProvider Provider = null)` — Initializes a new instance of the Filter class.
 
 ### Methods
-#### `CreateFile(...)`
+#### `public string CreateFile(FilterExpressionFileType FilterExpressionFileType, string FullFileName)`
 
 Creates a filter and saves it as a text file.
 
+**Parameters:**
+- `FilterExpressionFileType` (Tekla.Structures.Filtering.FilterExpressionFileType) — The FilterExpressionFileType to be generated.
+- `FullFileName` (System.String) — The full file name of the file to be saved.
+
+**Returns:** `String` — A string containing the filter's full file name.
+
 [Docs](https://developer.tekla.com/topic/en/18/47/ca0bf551-31d5-5d89-d73d-d247375a025c)
 
-#### `ToString(...)`
+#### `public override string ToString()`
 
 Returns the current FilterExpression as a string.
+
+**Returns:** `String` — A string representation of the current FilterExpression.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/3084a925-8630-a8e8-fbbd-15b8ca9c8841)
 
 ### Properties
-- `FilterExpression` (object, get/set) — Gets the current FilterExpression instance.
+- `FilterExpression` (FilterExpression, get/set) — Gets the current FilterExpression instance.
 
 ## FilterExpression (class)
 
@@ -300,14 +369,16 @@ The FilterExpression class represents a filter expression. This is a base class 
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/2de0e25f-b8f2-75d1-7b6a-d548d2bd3868)
 
 ### Methods
-#### `ToString(...)`
+#### `public override string ToString()`
 
 Creates a string representation of the current object.
+
+**Returns:** `String` — A new string representing the current object.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/fece057a-34f0-fbb1-7184-27f66452ed40)
 
 ### Properties
-- `IsEnable` (object, get/set) — Gets or sets the enabled state of the filter expression.
+- `IsEnable` (Boolean, get/set) — Gets or sets the enabled state of the filter expression.
 
 ## FilterExpressionFileType (enum)
 
@@ -330,16 +401,16 @@ The InvalidFilterExpressionException class represents an error that occurred dur
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/12183379-26b4-46ac-2d00-a72bfe9473e3)
 
 ### Constructors
-- `InvalidFilterExpressionException(...)` — Initializes a new instance of the InvalidFilterExpressionException class.
-- `InvalidFilterExpressionException(...)` — Initializes a new instance of the InvalidFilterExpressionException class.
-- `InvalidFilterExpressionException(...)` — Initializes a new instance of the InvalidFilterExpressionException class.
+- `public InvalidFilterExpressionException(Expression Expression, InvalidFilterExpressionExceptionReasonsType InvalidFilterExpressionExceptionReasonsType)` — Initializes a new instance of the InvalidFilterExpressionException class.
+- `public InvalidFilterExpressionException(Expression Expression, InvalidFilterExpressionExceptionReasonsType InvalidFilterExpressionExceptionReasonsType, int MaximumExpressionNumber)` — Initializes a new instance of the InvalidFilterExpressionException class.
+- `public InvalidFilterExpressionException(Expression LeftExpression, OperatorType OperatorType, Expression RightExpression, InvalidFilterExpressionExceptionReasonsType InvalidFilterExpressionExceptionReasonsType)` — Initializes a new instance of the InvalidFilterExpressionException class.
 
 ### Properties
-- `Expression` (object, get/set) — Gets the invalid expression.
-- `InvalidFilterExpressionExceptionReasonsType` (object, get/set) — Gets the reason why the exception is thrown.
-- `LeftExpression` (object, get/set) — Gets the invalid expression's left operand.
-- `OperatorType` (object, get/set) — Gets the invalid expression's operator.
-- `RightExpression` (object, get/set) — Gets the invalid expression's right operand.
+- `Expression` (Expression, get) — Gets the invalid expression.
+- `InvalidFilterExpressionExceptionReasonsType` (InvalidFilterExpressionExceptionReasonsType, get) — Gets the reason why the exception is thrown.
+- `LeftExpression` (Expression, get) — Gets the invalid expression's left operand.
+- `OperatorType` (OperatorType, get) — Gets the invalid expression's operator.
+- `RightExpression` (Expression, get) — Gets the invalid expression's right operand.
 
 ## InvalidFilterExpressionExceptionReasonsType (enum)
 
@@ -357,41 +428,43 @@ The NumericConstantFilterExpression class represents a constant numeric filter e
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/6c797a9c-2d1c-a857-d1f0-82e78555e217)
 
 ### Constructors
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
-- `NumericConstantFilterExpression(...)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(IEnumerable<double> Values)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(IEnumerable<short> Values)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(IEnumerable<int> Values)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(IEnumerable<long> Values)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(IEnumerable<ushort> Values)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(IEnumerable<uint> Values)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(IEnumerable<ulong> Values)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(double Value)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(short Value)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(int Value)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(long Value)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(ushort Value)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(uint Value)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(ulong Value)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(IEnumerable<TeklaStructuresDatabaseTypeEnum> ObjectTypes)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(TeklaStructuresDatabaseTypeEnum ObjectType)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(IEnumerable<double> Values, IFormatProvider Provider)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(IEnumerable<short> Values, IFormatProvider Provider)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(IEnumerable<int> Values, IFormatProvider Provider)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(IEnumerable<long> Values, IFormatProvider Provider)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(IEnumerable<ushort> Values, IFormatProvider Provider)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(IEnumerable<uint> Values, IFormatProvider Provider)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(IEnumerable<ulong> Values, IFormatProvider Provider)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(double Value, IFormatProvider Provider)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(short Value, IFormatProvider Provider)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(int Value, IFormatProvider Provider)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(long Value, IFormatProvider Provider)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(ushort Value, IFormatProvider Provider)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(uint Value, IFormatProvider Provider)` — Initializes a new instance of the NumericConstantFilterExpression class.
+- `public NumericConstantFilterExpression(ulong Value, IFormatProvider Provider)` — Initializes a new instance of the NumericConstantFilterExpression class.
 
 ### Methods
-#### `ToString(...)`
+#### `public override string ToString()`
 
 Creates a string representation of the current object.
+
+**Returns:** `String` — A new string representing the current object.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4)
 
@@ -402,9 +475,11 @@ The NumericFilterExpression class represents a numeric filter expression.
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/13b949a0-ebf7-827a-54e3-f44b5ada00f8)
 
 ### Methods
-#### `ToString(...)`
+#### `public override string ToString()`
 
 Creates a string representation of the current object.
+
+**Returns:** `String` — A new string representing the current object.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4)
 
@@ -455,13 +530,15 @@ The StringConstantFilterExpression class represents a constant string filter exp
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/1ec9a93f-5ba3-47a6-2336-7185597983dc)
 
 ### Constructors
-- `StringConstantFilterExpression(...)` — Initializes a new instance of the StringConstantFilterExpression class.
-- `StringConstantFilterExpression(...)` — Initializes a new instance of the StringConstantFilterExpression class.
+- `public StringConstantFilterExpression(IEnumerable<string> Values)` — Initializes a new instance of the StringConstantFilterExpression class.
+- `public StringConstantFilterExpression(string Value)` — Initializes a new instance of the StringConstantFilterExpression class.
 
 ### Methods
-#### `ToString(...)`
+#### `public override string ToString()`
 
 Creates a string representation of the current object.
+
+**Returns:** `String` — A new string representing the current object.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4)
 
@@ -472,9 +549,11 @@ The StringFilterExpression class represents a string filter expression.
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/2ad423fa-08aa-b2e7-0053-07ee753a700d)
 
 ### Methods
-#### `ToString(...)`
+#### `public override string ToString()`
 
 Creates a string representation of the current object.
+
+**Returns:** `String` — A new string representing the current object.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4)
 

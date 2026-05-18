@@ -9,27 +9,60 @@
   "constructors": [
     {
       "name": "StructuresDialogAttribute",
-      "signature": "StructuresDialogAttribute(...)",
+      "signature": "public StructuresDialogAttribute(string attributeName)",
       "summary": "Initializes a new StructuresDialogAttribute instance.",
-      "params": [],
+      "params": [
+        {
+          "name": "attributeName",
+          "type": "System.String",
+          "doc": "The attribute name of the property.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/494c6575-ef5f-4548-a422-db61b3120b1c"
     },
     {
       "name": "StructuresDialogAttribute",
-      "signature": "StructuresDialogAttribute(...)",
+      "signature": "public StructuresDialogAttribute(string attributeName, string attributeType)",
       "summary": "Initializes a new StructuresDialogAttribute instance.",
-      "params": [],
+      "params": [
+        {
+          "name": "attributeName",
+          "type": "System.String",
+          "doc": "The attribute name of the property.",
+          "optional": false
+        },
+        {
+          "name": "attributeType",
+          "type": "System.String",
+          "doc": "The attribute type of the property, default is String.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ecbd0160-8dce-96c9-aac3-b041a332ba80"
     },
     {
       "name": "StructuresDialogAttribute",
-      "signature": "StructuresDialogAttribute(...)",
+      "signature": "public StructuresDialogAttribute(string attributeName, Type attributeType)",
       "summary": "Initializes a new StructuresDialogAttribute instance.",
-      "params": [],
+      "params": [
+        {
+          "name": "attributeName",
+          "type": "System.String",
+          "doc": "The attribute name of the property.",
+          "optional": false
+        },
+        {
+          "name": "attributeType",
+          "type": "System.Type",
+          "doc": "The attribute type of the property.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b146d771-e707-f78f-aa31-5ec7fd965023"
@@ -38,18 +71,33 @@
   "methods": [
     {
       "name": "GetCorrectDialogAttributeType",
-      "signature": "GetCorrectDialogAttributeType(...)",
+      "signature": "public static Type GetCorrectDialogAttributeType(string attributeType)",
       "summary": "Initializes a new StructuresDialogAttribute instance.",
-      "params": [],
+      "params": [
+        {
+          "name": "attributeType",
+          "type": "System.String",
+          "doc": "The attribute type of the property, default is String.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Type",
+        "doc": ""
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6c375ab8-7c62-bbea-0f14-67d3bf9d0a5b"
     },
     {
       "name": "ToString",
-      "signature": "ToString(...)",
+      "signature": "public override string ToString()",
       "summary": "Returns a string that represents the current StructuresDialogAttribute object.",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A string that represents the current StructuresDialogAttribute object."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2d85f6f4-d740-0286-b74a-ec7c92648b35"
@@ -58,17 +106,17 @@
   "properties": [
     {
       "name": "AttributeName",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the attribute name of the property.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/696ab0a5-2b74-af2f-ec53-b61b673c819f"
     },
     {
       "name": "AttributeType",
-      "type": "object",
+      "type": "Type",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the attribute type of the property.",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/60169928-c06e-6ac6-2152-2e7cfcb57640"
     }

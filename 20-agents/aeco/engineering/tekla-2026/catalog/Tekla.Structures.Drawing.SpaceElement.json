@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "SpaceElement",
-      "signature": "SpaceElement(...)",
+      "signature": "public SpaceElement()",
       "summary": "Initializes a new instance of the SpaceElement class",
       "params": [],
       "throws": [],
@@ -20,27 +20,46 @@
   "methods": [
     {
       "name": "Clone",
-      "signature": "Clone(...)",
+      "signature": "public override Object Clone()",
       "summary": "Clones the object.",
       "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "A copy of the object."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/397b8b91-583d-295c-801a-b2847d807561"
     },
     {
       "name": "GetUnformattedString",
-      "signature": "GetUnformattedString(...)",
+      "signature": "public override string GetUnformattedString()",
       "summary": "Returns the content as a string without formatting.",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The content as a string without formatting."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b8551ee4-d132-407b-2f23-0da21a35b230"
     },
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if both objects are space elements."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ca9411db-9480-72cc-fc6c-b0a27767c50d"
