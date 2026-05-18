@@ -43,6 +43,9 @@ pub struct BuildAgentArgs {
     /// (v0.8.1) npm package spec: <pkg>@<version>. Reflects from TypeScript .d.ts files.
     #[arg(long = "from-npm")]
     pub from_npm: Option<String>,
+    /// (v0.30) Build an agent from a host-coverage IR file.
+    #[arg(long = "from-coverage")]
+    pub from_coverage: Option<std::path::PathBuf>,
     /// (tier C — v0.5.1) Run decompile pass on DLLs / NuGet.
     #[arg(long)]
     pub decompile: bool,
@@ -52,6 +55,15 @@ pub struct BuildAgentArgs {
     /// Override the generated agent id (default: derived from source).
     #[arg(long)]
     pub output: Option<String>,
+    /// (v0.30) Agent id for --from-coverage (required for that source).
+    #[arg(long = "agent-id")]
+    pub agent_id: Option<String>,
+    /// (v0.30) Vendor name for --from-coverage (e.g. "trimble", "autodesk").
+    #[arg(long)]
+    pub vendor: Option<String>,
+    /// (v0.30) Vertical for --from-coverage (e.g. "engineering", "construction").
+    #[arg(long)]
+    pub vertical: Option<String>,
 }
 
 pub fn dispatch(cmd: BuildCommand, ctx: &Context) -> Result<(), AwareError> {
@@ -62,6 +74,25 @@ pub fn dispatch(cmd: BuildCommand, ctx: &Context) -> Result<(), AwareError> {
 
 fn build_agent(ctx: &Context, args: &BuildAgentArgs) -> Result<(), AwareError> {
     use crate::builder;
+
+    // v0.30 `--from-coverage` writes manifest + skills + catalog directly via the
+    // C# sidecar (it doesn't build a GeneratedAgent in-process). Handle it first
+    // and return — the rest of the dispatch is for builders that produce a
+    // GeneratedAgent + then go through write_agent().
+    if let Some(ir_path) = &args.from_coverage {
+        let agent_id = args
+            .agent_id
+            .as_deref()
+            .ok_or_else(|| AwareError::Validation("--from-coverage requires --agent-id".into()))?;
+        let agent_id = normalize_agent_id(agent_id)?;
+        let vendor = args.vendor.as_deref().unwrap_or("unknown");
+        let vertical = args.vertical.as_deref().unwrap_or("engineering");
+        let out = ctx.paths.aware_home.join("build").join(&agent_id);
+        let result =
+            builder::coverage::build_from_coverage(ir_path, &out, &agent_id, vendor, vertical)?;
+        println!("{}", serde_json::to_string_pretty(&result)?);
+        return Ok(());
+    }
 
     let normalized_output: Option<String> =
         args.output.as_deref().map(normalize_agent_id).transpose()?;
@@ -91,7 +122,7 @@ fn build_agent(ctx: &Context, args: &BuildAgentArgs) -> Result<(), AwareError> {
         builder::npm::build_from_npm(s, id_override)?
     } else {
         return Err(AwareError::Validation(
-            "aware build agent: must specify one of --from-openapi, --from-cli, --from-nuget, --from-python, --from-dlls, --from-com, --from-headers, --from-ruby, --from-yard, --from-npm".into()
+            "aware build agent: must specify one of --from-openapi, --from-cli, --from-nuget, --from-python, --from-dlls, --from-com, --from-headers, --from-ruby, --from-yard, --from-npm, --from-coverage".into()
         ));
     };
 

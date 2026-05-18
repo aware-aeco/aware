@@ -85,6 +85,7 @@ struct OkResponse {
 #[derive(Deserialize, Debug)]
 struct ResponseData {
     agent: Option<SidecarAgent>,
+    coverage: Option<serde_json::Value>,
 }
 
 /// Mirrors the C# `GeneratedAgent` shape. Converted to `crate::builder::GeneratedAgent` for return.
@@ -138,6 +139,15 @@ pub struct FromHeadersArgs {
     pub agent_id: Option<String>,
 }
 
+#[derive(Serialize)]
+pub struct CoverageGenerateArgs {
+    pub ir_path: String,
+    pub out_dir: String,
+    pub agent_id: String,
+    pub vendor: String,
+    pub vertical: String,
+}
+
 /// Spawn the sidecar, send a reflect-dlls request, return the parsed agent.
 pub fn reflect_dlls(args: ReflectDllsArgs) -> Result<GeneratedAgent, AwareError> {
     let agent = invoke("reflect-dlls", &args)?;
@@ -162,7 +172,33 @@ pub fn from_headers(args: FromHeadersArgs) -> Result<GeneratedAgent, AwareError>
     Ok(to_local_agent(agent, "headers"))
 }
 
+/// Spawn the sidecar, send a coverage-generate request, return the raw
+/// `coverage` payload (manifest path, skill/catalog counts, written paths).
+///
+/// Unlike the other verbs which deserialize into a `GeneratedAgent`, the
+/// coverage-generate verb writes its outputs directly to `out_dir` and returns
+/// a summary describing what was produced. Callers print the JSON value as-is.
+pub fn coverage_generate(args: CoverageGenerateArgs) -> Result<serde_json::Value, AwareError> {
+    invoke_raw("coverage-generate", &args).and_then(|data| {
+        data.coverage.ok_or_else(|| {
+            AwareError::Validation(
+                "sidecar coverage-generate returned ok but no coverage data".into(),
+            )
+        })
+    })
+}
+
 fn invoke<T: Serialize>(op: &str, args: &T) -> Result<SidecarAgent, AwareError> {
+    invoke_raw(op, args)?
+        .agent
+        .ok_or_else(|| AwareError::Validation(format!("sidecar {op} returned ok but no agent")))
+}
+
+/// Spawn the sidecar, send a request, return the raw `data` payload.
+///
+/// Lets callers pick whichever field of `ResponseData` matches their verb
+/// (`agent` for reflection verbs, `coverage` for coverage-generate, etc.).
+fn invoke_raw<T: Serialize>(op: &str, args: &T) -> Result<ResponseData, AwareError> {
     let bin = discover()?;
     let request = Envelope { op, args };
     let body = serde_json::to_string(&request)
@@ -206,8 +242,7 @@ fn invoke<T: Serialize>(op: &str, args: &T) -> Result<SidecarAgent, AwareError> 
 
     parsed
         .data
-        .and_then(|d| d.agent)
-        .ok_or_else(|| AwareError::Validation(format!("sidecar {op} returned ok but no agent")))
+        .ok_or_else(|| AwareError::Validation(format!("sidecar {op} returned ok but no data")))
 }
 
 fn to_local_agent(s: SidecarAgent, source_kind: &str) -> GeneratedAgent {
