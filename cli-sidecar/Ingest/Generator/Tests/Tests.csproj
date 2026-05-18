@@ -33,5 +33,6 @@
     <Compile Include="..\IRReader.cs" Link="IRReader.cs" />
     <Compile Include="..\ManifestWriter.cs" Link="ManifestWriter.cs" />
     <Compile Include="..\SkillWriter.cs" Link="SkillWriter.cs" />
+    <Compile Include="..\CatalogWriter.cs" Link="CatalogWriter.cs" />
   </ItemGroup>
 </Project>
