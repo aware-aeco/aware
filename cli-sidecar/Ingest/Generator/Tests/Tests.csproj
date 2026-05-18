@@ -31,5 +31,6 @@
     -->
     <Compile Include="..\Models.cs" Link="Models.cs" />
     <Compile Include="..\IRReader.cs" Link="IRReader.cs" />
+    <Compile Include="..\ManifestWriter.cs" Link="ManifestWriter.cs" />
   </ItemGroup>
 </Project>
