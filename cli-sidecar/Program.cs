@@ -92,6 +92,43 @@ internal static class Program
                     }
                     catch (Exception ex) { EmitError(envelope.Op, ex.Message); return 1; }
                 }
+                case "coverage-generate":
+                {
+                    var argsObj = envelope.Args.Deserialize(SidecarJsonContext.Default.CoverageGenerateArgs);
+                    if (argsObj is null) { EmitError(envelope.Op, "missing args"); return 2; }
+                    if (string.IsNullOrEmpty(argsObj.IrPath)
+                        || string.IsNullOrEmpty(argsObj.OutDir)
+                        || string.IsNullOrEmpty(argsObj.AgentId)
+                        || string.IsNullOrEmpty(argsObj.Vendor)
+                        || string.IsNullOrEmpty(argsObj.Vertical))
+                    {
+                        EmitError(envelope.Op, "coverage-generate requires ir_path, out_dir, agent_id, vendor, vertical");
+                        return 2;
+                    }
+                    try
+                    {
+                        var result = AwareSidecar.Ingest.Generator.Generate(new AwareSidecar.Ingest.GenerateRequest(
+                            IrPath:    argsObj.IrPath,
+                            OutputDir: argsObj.OutDir,
+                            AgentId:   argsObj.AgentId,
+                            Vendor:    argsObj.Vendor,
+                            Vertical:  argsObj.Vertical));
+                        EmitOk(envelope.Op, new ResponseData
+                        {
+                            Coverage = new CoverageGenerateResult
+                            {
+                                Manifest = result.ManifestPath,
+                                SkillCount = result.SkillPaths.Count,
+                                CatalogCount = result.CatalogPaths.Count,
+                                Total = result.TotalArtefactsWritten,
+                                Skills = result.SkillPaths.ToArray(),
+                                Catalogs = result.CatalogPaths.ToArray(),
+                            }
+                        });
+                        return 0;
+                    }
+                    catch (Exception ex) { EmitError(envelope.Op, ex.Message); return 1; }
+                }
                 default:
                 {
                     EmitError(envelope.Op, $"unknown op: {envelope.Op}");
@@ -129,10 +166,12 @@ internal static class Program
 [JsonSerializable(typeof(DecompileArgs))]
 [JsonSerializable(typeof(FromComArgs))]
 [JsonSerializable(typeof(FromHeadersArgs))]
+[JsonSerializable(typeof(CoverageGenerateArgs))]
 [JsonSerializable(typeof(OkResponse))]
 [JsonSerializable(typeof(ErrorResponse))]
 [JsonSerializable(typeof(ResponseData))]
 [JsonSerializable(typeof(GeneratedAgent))]
 [JsonSerializable(typeof(GeneratedCommand))]
 [JsonSerializable(typeof(GeneratedSkill))]
+[JsonSerializable(typeof(CoverageGenerateResult))]
 internal partial class SidecarJsonContext : JsonSerializerContext { }

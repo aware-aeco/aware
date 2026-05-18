@@ -34,3 +34,12 @@ public sealed class FromHeadersArgs
     [JsonPropertyName("files")] public string[] Files { get; set; } = Array.Empty<string>();
     [JsonPropertyName("agent_id")] public string? AgentId { get; set; }
 }
+
+public sealed class CoverageGenerateArgs
+{
+    [JsonPropertyName("ir_path")] public string IrPath { get; set; } = "";
+    [JsonPropertyName("out_dir")] public string OutDir { get; set; } = "";
+    [JsonPropertyName("agent_id")] public string AgentId { get; set; } = "";
+    [JsonPropertyName("vendor")] public string Vendor { get; set; } = "";
+    [JsonPropertyName("vertical")] public string Vertical { get; set; } = "";
+}

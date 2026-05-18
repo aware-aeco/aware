@@ -21,16 +21,26 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
 
 namespace AwareSidecar.Ingest;
 
 public static class CatalogWriter
 {
-    static readonly JsonSerializerOptions Pretty = new()
+    // See IRReader for the rationale on the explicit TypeInfoResolver: the
+    // sidecar csproj's PublishAot=true disables reflection-based JSON globally,
+    // so we re-enable it for this writer's options object. Trim/AOT warnings
+    // are accepted at the [Requires...] attributes below.
+    static readonly JsonSerializerOptions Pretty = BuildOptions();
+
+    [UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "Writer is annotated; resolver pulled in deliberately.")]
+    [UnconditionalSuppressMessage("AOT", "IL3050", Justification = "Writer is annotated; resolver pulled in deliberately.")]
+    static JsonSerializerOptions BuildOptions() => new()
     {
         WriteIndented = true,
         PropertyNamingPolicy = null,
         DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
+        TypeInfoResolver = new DefaultJsonTypeInfoResolver(),
     };
 
     [RequiresUnreferencedCode("JSON serialization uses reflection over TypeInfo and its members.")]

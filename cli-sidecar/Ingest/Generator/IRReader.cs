@@ -15,18 +15,31 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
 
 namespace AwareSidecar.Ingest;
 
 public static class IRReader
 {
-    static readonly JsonSerializerOptions Options = new()
+    // When the host project sets PublishAot=true, the SDK flips the global
+    // `JsonSerializerIsReflectionEnabledByDefault` switch off (even in Debug
+    // builds), which causes plain `Deserialize<T>` calls to throw at runtime.
+    // We explicitly attach a `DefaultJsonTypeInfoResolver` so this reader keeps
+    // working both in unit tests (managed) and from the NativeAOT entry point
+    // (Program.cs `coverage-generate` op). The trim/AOT warnings remain — see
+    // [RequiresUnreferencedCode] / [RequiresDynamicCode] below.
+    static readonly JsonSerializerOptions Options = BuildOptions();
+
+    [UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "Reader is annotated; resolver pulled in deliberately.")]
+    [UnconditionalSuppressMessage("AOT", "IL3050", Justification = "Reader is annotated; resolver pulled in deliberately.")]
+    static JsonSerializerOptions BuildOptions() => new()
     {
         // IR uses snake_case verbatim — record property names already match the
         // wire format (e.g. `host_version`, `extracted_at`), so no naming policy.
         PropertyNamingPolicy = null,
         ReadCommentHandling = JsonCommentHandling.Skip,
         AllowTrailingCommas = true,
+        TypeInfoResolver = new DefaultJsonTypeInfoResolver(),
     };
 
     [RequiresUnreferencedCode("JSON deserialization uses reflection over CoverageIR and its members.")]

@@ -13,6 +13,17 @@ public sealed class OkResponse
 public sealed class ResponseData
 {
     [JsonPropertyName("agent")] public GeneratedAgent? Agent { get; set; }
+    [JsonPropertyName("coverage")] public CoverageGenerateResult? Coverage { get; set; }
+}
+
+public sealed class CoverageGenerateResult
+{
+    [JsonPropertyName("manifest")] public string Manifest { get; set; } = "";
+    [JsonPropertyName("skill_count")] public int SkillCount { get; set; }
+    [JsonPropertyName("catalog_count")] public int CatalogCount { get; set; }
+    [JsonPropertyName("total")] public int Total { get; set; }
+    [JsonPropertyName("skills")] public string[] Skills { get; set; } = Array.Empty<string>();
+    [JsonPropertyName("catalogs")] public string[] Catalogs { get; set; } = Array.Empty<string>();
 }
 
 public sealed class ErrorResponse
