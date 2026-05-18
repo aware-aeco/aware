@@ -35,5 +35,13 @@
     <Compile Include="..\ManifestWriter.cs" Link="ManifestWriter.cs" />
     <Compile Include="..\SkillWriter.cs" Link="SkillWriter.cs" />
     <Compile Include="..\CatalogWriter.cs" Link="CatalogWriter.cs" />
+    <!--
+      IRBuilder is dependency-free (only references the IR records in Models.cs)
+      so we can link it directly into the test assembly without pulling in
+      Microsoft.Playwright. Scraper.cs is intentionally NOT linked — it depends on
+      Playwright and is exercised end-to-end by Phase B vendor extractors, not by
+      these generator-level unit tests.
+    -->
+    <Compile Include="..\..\Extractors\Common\IRBuilder.cs" Link="IRBuilder.cs" />
   </ItemGroup>
 </Project>

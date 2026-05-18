@@ -34,6 +34,16 @@
   <ItemGroup>
     <!-- MetadataLoadContext: safe for AOT (loads metadata only, no IL execution) -->
     <PackageReference Include="System.Reflection.MetadataLoadContext" Version="9.0.0" />
+    <!--
+      Microsoft.Playwright: drives a headless Chromium for the vendor extractors
+      (Phase B). Internally the .NET driver shells out to a Node-based runner over
+      stdio, so there is no managed reflection on user types. Any AOT/trim warnings
+      from Playwright's own assemblies are suppressed via the IL2026/IL3050 entries
+      in <NoWarn> below — accepted because we control where Playwright is invoked
+      from (only the Extractors.Common.Scraper wrapper) and we don't serialize
+      Playwright types ourselves.
+    -->
+    <PackageReference Include="Microsoft.Playwright" Version="1.49.0" />
   </ItemGroup>
 
   <!-- Exclude test project files from the main build -->
