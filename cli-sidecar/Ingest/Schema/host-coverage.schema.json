@@ -4,12 +4,14 @@
   "title": "AWARE host-agent coverage IR",
   "type": "object",
   "required": ["host", "host_version", "source", "types", "metadata"],
+  "additionalProperties": false,
   "properties": {
     "host":         { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
     "host_version": { "type": "string" },
     "source": {
       "type": "object",
       "required": ["kind", "urls", "extracted_at"],
+      "additionalProperties": false,
       "properties": {
         "kind":         { "enum": ["scrape", "chm", "xml", "nuget", "hybrid"] },
         "urls":         { "type": "array", "items": { "type": "string", "format": "uri" } },
@@ -23,6 +25,7 @@
     "metadata": {
       "type": "object",
       "required": ["page_count", "type_count", "method_count", "event_count", "property_count"],
+      "additionalProperties": false,
       "properties": {
         "page_count":     { "type": "integer", "minimum": 0 },
         "type_count":     { "type": "integer", "minimum": 0 },
@@ -36,6 +39,7 @@
     "Type": {
       "type": "object",
       "required": ["name", "namespace", "kind", "summary", "doc_url"],
+      "additionalProperties": false,
       "properties": {
         "name":        { "type": "string" },
         "namespace":   { "type": "string" },
@@ -56,23 +60,43 @@
     "Method": {
       "type": "object",
       "required": ["name", "signature", "summary", "params", "returns", "doc_url"],
+      "additionalProperties": false,
       "properties": {
         "name":            { "type": "string" },
         "signature":       { "type": "string" },
         "summary":         { "type": "string" },
         "remarks":         { "type": ["string", "null"] },
         "params":          { "type": "array", "items": { "$ref": "#/$defs/Param" } },
-        "returns":         { "type": ["object", "null"], "properties": { "type": {"type":"string"}, "doc": {"type":"string"} } },
-        "throws":          { "type": "array", "items": { "type": "object", "properties": { "type": {"type":"string"}, "when": {"type":"string"} } } },
+        "returns":         { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/ReturnInfo" }] },
+        "throws":          { "type": "array", "items": { "$ref": "#/$defs/ThrowsInfo" } },
         "events_related":  { "type": "array", "items": { "type": "string" } },
         "doc_url":         { "type": "string", "format": "uri" },
         "since":           { "type": ["string", "null"] },
         "deprecated":      { "type": ["string", "null"] }
       }
     },
+    "ReturnInfo": {
+      "type": "object",
+      "required": ["type", "doc"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "type": "string" },
+        "doc":  { "type": "string" }
+      }
+    },
+    "ThrowsInfo": {
+      "type": "object",
+      "required": ["type", "when"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "type": "string" },
+        "when": { "type": "string" }
+      }
+    },
     "Property": {
       "type": "object",
       "required": ["name", "type", "getter", "setter", "summary", "doc_url"],
+      "additionalProperties": false,
       "properties": {
         "name":    { "type": "string" },
         "type":    { "type": "string" },
@@ -85,7 +109,8 @@
     },
     "Event": {
       "type": "object",
-      "required": ["name", "delegate", "signature", "summary", "doc_url"],
+      "required": ["name", "delegate", "signature", "summary", "doc_url", "handler_thread", "interacts_with"],
+      "additionalProperties": false,
       "properties": {
         "name":           { "type": "string" },
         "delegate":       { "type": "string" },
@@ -100,6 +125,7 @@
     "EnumValue": {
       "type": "object",
       "required": ["name", "value"],
+      "additionalProperties": false,
       "properties": {
         "name":    { "type": "string" },
         "value":   { "oneOf": [{"type":"integer"}, {"type":"string"}] },
@@ -109,6 +135,7 @@
     "Param": {
       "type": "object",
       "required": ["name", "type"],
+      "additionalProperties": false,
       "properties": {
         "name":     { "type": "string" },
         "type":     { "type": "string" },
