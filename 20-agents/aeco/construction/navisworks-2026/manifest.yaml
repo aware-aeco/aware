@@ -1,5 +1,6 @@
 agent:        navisworks-2026
-version:      2026.0.0
+version:      0.1.0
+sdk-target:   2026.0.0
 display-name: Autodesk Navisworks Manage 2026
 description: |
   Federation + clash detection + 4D simulation for AECO models. Wraps the

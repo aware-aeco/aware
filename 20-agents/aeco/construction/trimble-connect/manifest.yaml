@@ -1,5 +1,6 @@
 agent:        trimble-connect
-version:      2.4.0
+version:      0.1.0
+sdk-target:   2.4.0
 display-name: Trimble Connect
 description: |
   Read and write files in a Trimble Connect project. Auto-generated from

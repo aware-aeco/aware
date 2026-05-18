@@ -147,7 +147,8 @@ pub(crate) fn build_from_bytes(
 
     Ok(GeneratedAgent {
         id,
-        version: version.to_string(),
+        version: "0.1.0".into(),
+        sdk_target: Some(version.to_string()),
         description: if description.is_empty() {
             format!("Generated from npm package {name}@{version}")
         } else {

@@ -31,6 +31,12 @@ use serde_yaml::Value;
 pub struct Agent {
     pub agent: String,
     pub version: String,
+    /// Optional vendor SDK / product version this agent targets. Distinct
+    /// from `version:` (which is the substrate's own semver for the agent).
+    /// Surfaced prominently in the substrate report so users can tell at a
+    /// glance which Tekla / Revit / etc. release the agent reflects.
+    #[serde(rename = "sdk-target", default)]
+    pub sdk_target: Option<String>,
     #[serde(rename = "display-name")]
     pub display_name: Option<String>,
     pub description: String,

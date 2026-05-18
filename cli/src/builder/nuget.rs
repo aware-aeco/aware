@@ -161,7 +161,8 @@ pub(crate) fn build_from_bytes(
 
     Ok(GeneratedAgent {
         id,
-        version: version.to_string(),
+        version: "0.1.0".into(),
+        sdk_target: Some(version.to_string()),
         description,
         commands,
         skills,
@@ -351,7 +352,8 @@ mod tests {
         );
         let agent = build_from_bytes(&bytes, "FakePkg", "1.0.0", None, false).unwrap();
         assert_eq!(agent.id, "fakepkg");
-        assert_eq!(agent.version, "1.0.0");
+        assert_eq!(agent.version, "0.1.0");
+        assert_eq!(agent.sdk_target.as_deref(), Some("1.0.0"));
         assert_eq!(agent.license, "MIT");
         assert_eq!(agent.description, "A test package");
         assert_eq!(agent.skills.len(), 1);

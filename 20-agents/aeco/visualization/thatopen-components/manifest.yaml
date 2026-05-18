@@ -1,5 +1,6 @@
 agent:        thatopen-components
-version:      3.4.6
+version:      0.1.0
+sdk-target:   3.4.6
 display-name: That Open Components (modern IFC.js — raw)
 description: |
   Auto-generated agent from `@thatopen/components@3.4.6` on npm via

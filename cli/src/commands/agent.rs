@@ -150,6 +150,8 @@ fn validate_cmd(_ctx: &Context, path: &std::path::Path) -> Result<(), AwareError
 struct AgentListRow {
     id: String,
     version: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    sdk_target: Option<String>,
     kind: String,
     skills: usize,
     commands: usize,
@@ -180,6 +182,8 @@ fn describe(ctx: &Context, agent_id: &str) -> Result<(), AwareError> {
         struct DescribeData<'a> {
             agent: &'a str,
             version: &'a str,
+            #[serde(skip_serializing_if = "Option::is_none")]
+            sdk_target: Option<&'a str>,
             display_name: Option<&'a str>,
             description: &'a str,
             stateful: bool,
@@ -208,6 +212,7 @@ fn describe(ctx: &Context, agent_id: &str) -> Result<(), AwareError> {
         let data = DescribeData {
             agent: &d.manifest.agent,
             version: &d.manifest.version,
+            sdk_target: d.manifest.sdk_target.as_deref(),
             display_name: d.manifest.display_name.as_deref(),
             description: &d.manifest.description,
             stateful: d.manifest.stateful,
@@ -227,6 +232,9 @@ fn describe(ctx: &Context, agent_id: &str) -> Result<(), AwareError> {
     let m = &d.manifest;
     println!("agent:        {}", m.agent);
     println!("version:      {}", m.version);
+    if let Some(sdk) = &m.sdk_target {
+        println!("sdk-target:   {sdk}");
+    }
     if let Some(dn) = &m.display_name {
         println!("display-name: {dn}");
     }
@@ -318,6 +326,7 @@ fn list(ctx: &Context) -> Result<(), AwareError> {
                 .map(|d| AgentListRow {
                     id: d.manifest.agent.clone(),
                     version: d.manifest.version.clone(),
+                    sdk_target: d.manifest.sdk_target.clone(),
                     kind: d.manifest.kind(),
                     skills: d.manifest.skill_count(),
                     commands: d.manifest.command_count(),
@@ -328,11 +337,12 @@ fn list(ctx: &Context) -> Result<(), AwareError> {
         return Ok(());
     }
 
-    let mut t = Table::new(["ID", "VERSION", "KIND", "SKILLS", "COMMANDS"]);
+    let mut t = Table::new(["ID", "VERSION", "SDK-TARGET", "KIND", "SKILLS", "COMMANDS"]);
     for d in &discovered {
         t.row([
             d.manifest.agent.clone(),
             d.manifest.version.clone(),
+            d.manifest.sdk_target.clone().unwrap_or_default(),
             d.manifest.kind(),
             d.manifest.skill_count().to_string(),
             d.manifest.command_count().to_string(),

@@ -1,5 +1,6 @@
 agent:        tsd-26
-version:      26.0.1
+version:      0.1.0
+sdk-target:   26.0.1
 display-name: Tekla Structural Designer 26 (raw — Remoting API)
 description: |
   Auto-generated agent from `TeklaStructuralDesigner.RemotingAPI@26.0.1`

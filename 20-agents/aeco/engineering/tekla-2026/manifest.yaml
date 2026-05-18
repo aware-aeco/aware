@@ -1,5 +1,6 @@
 agent:        tekla-2026
-version:      2026.0.3
+version:      0.1.0
+sdk-target:   2026.0.3
 display-name: Tekla Structures 2026 (raw)
 description: |
   Auto-generated agent from `Tekla.Structures.Model@2026.0.3` on NuGet

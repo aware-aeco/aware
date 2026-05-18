@@ -1,5 +1,6 @@
 agent:        archicad-29
-version:      29.0.0
+version:      0.1.0
+sdk-target:   29.0.0
 display-name: Graphisoft ArchiCAD 29
 description: |
   Architectural authoring on the Nemetschek / Graphisoft side. Drives

@@ -1,5 +1,6 @@
 agent:        tekla-2025
-version:      2025.0.0
+version:      0.1.0
+sdk-target:   2025.0.0
 display-name: Tekla Structures 2025 (raw)
 description: |
   Auto-generated agent from `Tekla.Structures.Model@2025.0.0` on NuGet

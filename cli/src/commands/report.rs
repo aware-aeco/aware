@@ -113,13 +113,25 @@ fn render_agent_section(html: &mut String, agent: &DiscoveredAgent) {
         .unwrap_or(agent.manifest.agent.as_str());
     let vendor = agent.manifest.vendor.as_deref().unwrap_or("");
     let version = agent.manifest.version.as_str();
+    let sdk_target = agent.manifest.sdk_target.as_deref().unwrap_or("");
     let cmd_count = agent.manifest.command_count();
     let skill_count = agent.manifest.skill_count();
 
+    // The substrate semver (agent.version) lives behind a small `v` prefix
+    // so it can't be confused with the SDK pin. SDK pin (when present) is
+    // rendered in its own labelled chip.
+    let sdk_chip = if sdk_target.is_empty() {
+        String::new()
+    } else {
+        format!(
+            r#" · <span class="sdk">SDK {sdk}</span>"#,
+            sdk = html_escape(sdk_target)
+        )
+    };
     html.push_str(&format!(
         r#"<details class="agent" data-vendor="{vendor}"><summary><span class="aname">{aid}</span>
         <span class="adisplay">{display}</span>
-        <span class="meta">{version} · {vendor} · {skill_count} skills · {cmd_count} cmds</span></summary>"#,
+        <span class="meta">v{version} · {vendor}{sdk_chip} · {skill_count} skills · {cmd_count} cmds</span></summary>"#,
         aid = html_escape(&agent.manifest.agent),
         display = html_escape(display),
         vendor = html_escape(vendor),
@@ -258,6 +270,7 @@ summary:hover { color: #2563eb; }
 .class > summary { font-size: 13px; }
 .class > summary .cname { font-family: monospace; color: #6b7280; }
 .meta { color: #6b7280; font-size: 12px; margin-left: 8px; font-weight: normal; }
+.sdk  { background: #eef2ff; color: #3730a3; padding: 1px 6px; border-radius: 3px; font-family: monospace; font-size: 11px; }
 ul { margin: 4px 0 4px 24px; padding: 0; list-style: none; }
 .cmd { font-size: 12px; padding: 2px 0; display: flex; gap: 12px; }
 .cmdname { font-family: monospace; color: #1a1a1a; min-width: 240px; flex-shrink: 0; }

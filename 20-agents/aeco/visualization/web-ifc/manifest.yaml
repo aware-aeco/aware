@@ -1,5 +1,6 @@
 agent:        web-ifc
-version:      0.0.77
+version:      0.1.0
+sdk-target:   0.0.77
 display-name: web-ifc (WebAssembly IFC parser — raw)
 description: |
   Auto-generated agent from `web-ifc@0.0.77` on npm via

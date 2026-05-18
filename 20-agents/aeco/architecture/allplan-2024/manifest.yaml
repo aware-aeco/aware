@@ -1,5 +1,6 @@
 agent:        allplan-2024
-version:      2024.0.1.35
+version:      0.1.0
+sdk-target:   2024.0.1.35
 display-name: Allplan 2024 (raw)
 description: |
   Auto-generated agent from `Allplan.BIF.Core@2024.0.1.35` on NuGet

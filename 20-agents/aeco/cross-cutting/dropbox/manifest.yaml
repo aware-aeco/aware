@@ -1,5 +1,6 @@
 agent:        dropbox
-version:      v2
+version:      0.1.0
+sdk-target:   v2
 display-name: Dropbox
 description: |
   Cross-cutting file storage + sharing for AECO firms running Dropbox

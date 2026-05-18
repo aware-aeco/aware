@@ -15,7 +15,7 @@
 
     <!-- Single-file friendly diagnostics -->
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Version>0.27.0</Version>
+    <Version>0.28.0</Version>
 
     <!--
       IL2026: RoAssembly.GetTypes() inside MetadataLoadContext calls Assembly.GetTypes() /

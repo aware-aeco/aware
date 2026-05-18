@@ -43,6 +43,7 @@ pub fn build_from_cli(binary: &str, agent_id: Option<&str>) -> Result<GeneratedA
     Ok(GeneratedAgent {
         id,
         version: "0.1.0".into(),
+        sdk_target: None,
         description: format!("Agent wrapping {binary} CLI"),
         commands,
         skills: Vec::new(),

@@ -1,5 +1,6 @@
 agent:        revit-2025
-version:      2025.0.2.419
+version:      0.1.0
+sdk-target:   2025.0.2.419
 display-name: Autodesk Revit 2025 (raw)
 description: |
   Auto-generated agent from `Autodesk.Revit.SDK@2025.0.2.419` on NuGet

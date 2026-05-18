@@ -1,5 +1,5 @@
 agent:        bcf-file
-version:      1.0.0
+version:      0.1.0
 display-name: BCF (file format)
 description: |
   Pure file-format agent for BCF-XML 2.1 / 3.0 — read, write, merge,

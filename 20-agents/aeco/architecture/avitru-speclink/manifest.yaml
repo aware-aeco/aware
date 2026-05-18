@@ -1,5 +1,6 @@
 agent:        avitru-speclink
-version:      7.0.0
+version:      0.1.0
+sdk-target:   7.0.0
 display-name: Avitru SpecLink
 description: |
   Cloud-based specification authoring (US MasterFormat). Wraps the

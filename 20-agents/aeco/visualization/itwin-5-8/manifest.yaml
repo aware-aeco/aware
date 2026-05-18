@@ -1,5 +1,6 @@
 agent:        itwin-5-8
-version:      5.8.5
+version:      0.1.0
+sdk-target:   5.8.5
 display-name: Bentley iTwin 5.8 (raw — core-frontend)
 description: |
   Auto-generated agent from `@itwin/core-frontend@5.8.5` on npm via

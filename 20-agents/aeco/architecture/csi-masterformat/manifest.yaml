@@ -1,5 +1,5 @@
 agent:        csi-masterformat
-version:      1.0.0
+version:      0.1.0
 display-name: CSI MasterFormat (file-format)
 description: |
   Pure file-format agent for CSI MasterFormat classification — code

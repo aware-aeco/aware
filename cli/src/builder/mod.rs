@@ -23,7 +23,11 @@ use crate::error::AwareError;
 #[derive(Debug)]
 pub struct GeneratedAgent {
     pub id: String,
+    /// Substrate semver. Starts at "0.1.0" for newly-generated agents.
     pub version: String,
+    /// Optional vendor SDK / package version this agent reflects. Distinct
+    /// from `version` (which tracks substrate revisions of the agent).
+    pub sdk_target: Option<String>,
     pub description: String,
     pub commands: BTreeMap<String, GeneratedCommand>,
     pub skills: Vec<GeneratedSkill>,
@@ -99,6 +103,9 @@ fn build_manifest_yaml(agent: &GeneratedAgent) -> Result<String, AwareError> {
     let mut out = String::new();
     out.push_str(&format!("agent:        {}\n", agent.id));
     out.push_str(&format!("version:      {}\n", agent.version));
+    if let Some(sdk) = &agent.sdk_target {
+        out.push_str(&format!("sdk-target:   {sdk}\n"));
+    }
     out.push_str(&format!(
         "description: |\n  {}\n",
         agent.description.replace('\n', "\n  ")
@@ -203,6 +210,7 @@ mod tests {
         GeneratedAgent {
             id: "test-agent".into(),
             version: "0.1.0".into(),
+            sdk_target: Some("1.2.3".into()),
             description: "Test agent generated for unit testing.".into(),
             commands: cmds,
             skills: vec![GeneratedSkill {

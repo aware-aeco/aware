@@ -46,7 +46,8 @@ The capability declaration. This is the source of truth for everything the regis
 
 ```yaml
 agent:        tekla                # required · the id (matches folder name)
-version:      2025.0.1             # required · semver
+version:      0.1.0                # required · substrate semver — NEVER the vendor SDK version
+sdk-target:   2025.0               # optional · the vendor SDK / product version this agent targets
 display-name: Tekla Structures     # optional · human-readable for UIs
 description: |                     # required · one paragraph
   Watches the active Tekla model and exposes Tekla Open API commands.
@@ -122,6 +123,17 @@ skills:
 ### Required fields
 
 `agent`, `version`, `description`, `stateful`, `license`, `transport`, `commands`. Everything else is optional.
+
+### `version` vs `sdk-target`
+
+These are **two different numbers**. Do not collapse them.
+
+- **`version`** — the substrate's own semver for this agent. New agents start at `0.1.0`. Bumped when the agent's manifest, skills, or commands change in our repo. Format: `MAJOR.MINOR.PATCH`.
+- **`sdk-target`** — the vendor SDK / product version this agent reflects. Optional (utility and file-format agents don't have one). Free-form string so it can mirror whatever the vendor uses (`2025.0`, `25.1.5.1431`, `v2`, `8.31.26126.13431`).
+
+Generated agents (`aware build agent --from-nuget`, `--from-openapi`, etc.) always emit `version: 0.1.0` and put the vendor pin in `sdk-target`. The substrate report displays both: `<agent> v<version> · <vendor> · SDK <sdk-target>`.
+
+Why: conflating them confused users — they'd see `tekla v2025.0.1` and read it as "Tekla SDK 2025.0.1" (which doesn't exist). Splitting the fields makes the vendor pin honest and lets the substrate revision evolve independently.
 
 ---
 

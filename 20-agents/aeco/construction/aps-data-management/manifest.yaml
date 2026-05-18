@@ -1,5 +1,6 @@
 agent:        aps-data-management
-version:      1.0
+version:      0.1.0
+sdk-target:   1.0
 display-name: Autodesk APS — Data Management (raw)
 description: |
   Auto-generated agent from Autodesk Platform Services'

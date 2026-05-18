@@ -1,5 +1,6 @@
 agent:        itwin-5-9
-version:      5.9.3
+version:      0.1.0
+sdk-target:   5.9.3
 display-name: Bentley iTwin 5.9 (raw — core-frontend)
 description: |
   Auto-generated agent from `@itwin/core-frontend@5.9.3` on npm via
