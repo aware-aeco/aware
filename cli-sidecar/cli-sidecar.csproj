@@ -39,6 +39,7 @@
   <!-- Exclude test project files from the main build -->
   <ItemGroup>
     <Compile Remove="Tests\**\*.cs" />
+    <Compile Remove="Ingest\Generator\Tests\**\*.cs" />
   </ItemGroup>
 
 </Project>
