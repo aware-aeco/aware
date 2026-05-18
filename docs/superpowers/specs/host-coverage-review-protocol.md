@@ -23,7 +23,12 @@ exact shape below.
 Verify the catalog covers every type the vendor publishes — no gaps, no
 silent drops.
 
-1. Fetch the vendor's type-index page from `source.urls[0]`.
+1. Fetch the vendor's type-index page(s) from `source.urls[0]`. **Some
+   vendors do not publish a single flat type-index page** (Tekla, for
+   one, uses a sidebar navigation tree); in those cases the reviewer
+   walks the same multi-page enumeration the extractor walked. The
+   extractor's `EXTRACTION-NOTES.md` documents the actual enumeration
+   pattern under "Crawl strategy" — follow it.
 2. Extract every `(type_name, namespace)` pair using the vendor-specific
    CSS selector defined by the extractor.
 3. Compute the set difference between the vendor's enumerated types and
@@ -50,6 +55,22 @@ surface for that type.
 6. **PASS** if `deep_check_pass_rate == 50/50`. Report every mismatch
    per type (extra members, missing members, signature drift).
 
+### Known-legitimate exemptions (false-positive whitelist)
+
+Some property types are genuinely `object` per language contract —
+flagging them as parser placeholders is a false positive. The reviewer
+maintains a whitelist of these patterns:
+
+- `.SyncRoot` properties on `.NET` `ICollection`/`IEnumerable`
+  implementations: the BCL contract returns `System.Object`. Tekla
+  vendor pages render these as `Type: Object`. **Not a parser bug.**
+- Reflection-style properties (`.Tag`, `.UserData`, `.Item`) that the
+  vendor documents as `object`-typed.
+
+A `type="object"` property only counts as a deep-check failure when the
+vendor page renders a non-`Object` type. Reviewers MUST cross-check the
+specific vendor URL before flagging.
+
 ## Step 3 — Behavioral spot-check (N=20 random methods)
 
 Verify that prose carried over from vendor docs — not just shapes.
@@ -65,10 +86,17 @@ Verify that prose carried over from vendor docs — not just shapes.
 
 Verify every artefact is well-formed.
 
-1. Validate every file under `catalog/` (and any other JSON artefacts)
-   against `cli-sidecar/Ingest/Schema/host-coverage.schema.json`.
-2. **PASS** if `schema_violations == 0`. Report every offending file
-   with the violating path.
+1. Validate the **IR file** at `cli-sidecar/Ingest/Output/<host>-<version>.ir.json`
+   against `cli-sidecar/Ingest/Schema/host-coverage.schema.json` (the
+   root-level schema with `host`/`host_version`/`source`/`types`/`metadata`).
+2. Validate **every file under `catalog/`** against
+   `cli-sidecar/Ingest/Schema/host-coverage-type.schema.json` (the
+   single-Type fragment schema). Each catalog file holds exactly one
+   `Type` — the root IR schema does NOT match catalog files, by design.
+3. Validate any other JSON artefacts the agent ships (none for v0.30).
+4. **PASS** if `schema_violations == 0` across all artefacts. Report
+   every offending file with the violating path and the specific
+   schema-required field that was missing or malformed.
 
 ## Output: COVERAGE-REVIEW.md
 

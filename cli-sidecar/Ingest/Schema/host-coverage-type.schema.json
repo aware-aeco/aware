@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aware-aeco.github.io/aware/schemas/host-coverage-type.json",
+  "title": "AWARE host-agent coverage IR — single Type fragment",
+  "description": "Standalone schema for one file under `catalog/<type>.json` in a generated raw host agent. Each catalog file holds exactly one `Type` from the parent IR's `types[]` array. This schema mirrors `host-coverage.schema.json#/$defs/Type` verbatim — kept as a standalone artefact so json-schema validators that don't dereference internal `$ref` (e.g. some Python and Go libs) can validate catalog files directly without extra plumbing.",
+  "type": "object",
+  "required": ["name", "namespace", "kind", "summary", "doc_url",
+               "interfaces", "constructors", "methods", "properties",
+               "events", "enum_values"],
+  "additionalProperties": false,
+  "properties": {
+    "name":        { "type": "string" },
+    "namespace":   { "type": "string" },
+    "kind":        { "enum": ["class", "struct", "interface", "enum", "delegate", "static-class"] },
+    "summary":     { "type": "string" },
+    "remarks":     { "type": ["string", "null"] },
+    "base":        { "type": ["string", "null"] },
+    "interfaces":  { "type": "array", "items": { "type": "string" } },
+    "doc_url":     { "type": "string", "format": "uri" },
+    "constructors":{ "type": "array", "items": { "$ref": "#/$defs/Method" } },
+    "methods":     { "type": "array", "items": { "$ref": "#/$defs/Method" } },
+    "properties":  { "type": "array", "items": { "$ref": "#/$defs/Property" } },
+    "events":      { "type": "array", "items": { "$ref": "#/$defs/Event" } },
+    "enum_values": { "type": "array", "items": { "$ref": "#/$defs/EnumValue" } },
+    "delegate_signature": { "type": ["string", "null"] }
+  },
+  "$defs": {
+    "Method": {
+      "type": "object",
+      "required": ["name", "signature", "summary", "params", "returns",
+                   "throws", "events_related", "doc_url"],
+      "additionalProperties": false,
+      "properties": {
+        "name":            { "type": "string" },
+        "signature":       { "type": "string" },
+        "summary":         { "type": "string" },
+        "remarks":         { "type": ["string", "null"] },
+        "params":          { "type": "array", "items": { "$ref": "#/$defs/Param" } },
+        "returns":         { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/ReturnInfo" }] },
+        "throws":          { "type": "array", "items": { "$ref": "#/$defs/ThrowsInfo" } },
+        "events_related":  { "type": "array", "items": { "type": "string" } },
+        "doc_url":         { "type": "string", "format": "uri" },
+        "since":           { "type": ["string", "null"] },
+        "deprecated":      { "type": ["string", "null"] }
+      }
+    },
+    "ReturnInfo": {
+      "type": "object",
+      "required": ["type", "doc"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "type": "string" },
+        "doc":  { "type": "string" }
+      }
+    },
+    "ThrowsInfo": {
+      "type": "object",
+      "required": ["type", "when"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "type": "string" },
+        "when": { "type": "string" }
+      }
+    },
+    "Property": {
+      "type": "object",
+      "required": ["name", "type", "getter", "setter", "summary", "doc_url"],
+      "additionalProperties": false,
+      "properties": {
+        "name":    { "type": "string" },
+        "type":    { "type": "string" },
+        "getter":  { "type": "boolean" },
+        "setter":  { "type": "boolean" },
+        "summary": { "type": "string" },
+        "remarks": { "type": ["string", "null"] },
+        "doc_url": { "type": "string", "format": "uri" }
+      }
+    },
+    "Event": {
+      "type": "object",
+      "required": ["name", "delegate", "signature", "summary", "doc_url", "handler_thread", "interacts_with"],
+      "additionalProperties": false,
+      "properties": {
+        "name":           { "type": "string" },
+        "delegate":       { "type": "string" },
+        "signature":      { "type": "string" },
+        "summary":        { "type": "string" },
+        "fires_when":     { "type": ["string", "null"] },
+        "doc_url":        { "type": "string", "format": "uri" },
+        "handler_thread": { "enum": ["main", "worker", "unknown"] },
+        "interacts_with": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "EnumValue": {
+      "type": "object",
+      "required": ["name", "value"],
+      "additionalProperties": false,
+      "properties": {
+        "name":    { "type": "string" },
+        "value":   { "oneOf": [{"type":"integer"}, {"type":"string"}] },
+        "summary": { "type": ["string", "null"] }
+      }
+    },
+    "Param": {
+      "type": "object",
+      "required": ["name", "type"],
+      "additionalProperties": false,
+      "properties": {
+        "name":     { "type": "string" },
+        "type":     { "type": "string" },
+        "doc":      { "type": ["string", "null"] },
+        "optional": { "type": "boolean", "default": false },
+        "default":  { "type": ["string", "null"] }
+      }
+    }
+  }
+}
