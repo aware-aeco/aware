@@ -1,0 +1,51 @@
+{
+  "name": "DetailMarkSymbolAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The DetailMarkSymbolAttributes class is for detail mark attributes related to the shape of the connecting symbol.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/82122653-7463-1d72-9991-af73d284f9f4",
+  "constructors": [
+    {
+      "name": "DetailMarkSymbolAttributes",
+      "signature": "DetailMarkSymbolAttributes(...)",
+      "summary": "Initializes a new instance of the DetailMarkSymbolAttributes class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/446f87f6-1a34-8733-6053-c9cb3d21b741"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c5232b59-b0cc-d2d6-6ba6-26c04856847f"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Shape",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The shape of the mark symbol.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/cb7ba4c8-149f-75f8-97ef-6faf5d7c5244"
+    },
+    {
+      "name": "Size",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The size of the mark symbol.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b9a42845-12ca-b7f2-d155-5f71af31cba0"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,94 @@
+{
+  "name": "EmbeddedObjectFrame",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The EmbeddedObjectFrame class defines the frame object for embedded objects.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/69279c2a-ae72-e8eb-62dc-ad7dbe3cc0d3",
+  "constructors": [
+    {
+      "name": "EmbeddedObjectFrame",
+      "signature": "EmbeddedObjectFrame(...)",
+      "summary": "Creates a new embedded object frame instance with the specified line type and color.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/12ff9b88-bb43-a85b-a297-5da40b9fa83f"
+    },
+    {
+      "name": "EmbeddedObjectFrame",
+      "signature": "EmbeddedObjectFrame(...)",
+      "summary": "Creates a new embedded object frame instance with the specified line type and user defined RGB color.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4a72d758-a3ea-b1fc-a006-e1dd0a6fcf1d"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetAxisAlignedBoundingBox",
+      "signature": "GetAxisAlignedBoundingBox(...)",
+      "summary": "Returns the bounding box of the frame in the global axis coordinate system.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3d004ed7-9902-c6c8-6805-4c056268a763"
+    },
+    {
+      "name": "GetObjectAlignedBoundingBox",
+      "signature": "GetObjectAlignedBoundingBox(...)",
+      "summary": "Returns the bounding box of the frame in the local coordinate system.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c896a504-9410-e2c9-bbda-c8d671479c0b"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1182e099-00d7-f716-55c6-ebdb3397cbba"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Color",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Obsolete.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a1971833-b2a0-4bce-6b30-49caf0216c46"
+    },
+    {
+      "name": "Line",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the line type of the frame.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/66ac0773-fa5a-1634-e7ae-7c43e3005cb8"
+    },
+    {
+      "name": "LineType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Obsolete.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7948667f-ed89-0fd6-08a5-1deb5979189f"
+    },
+    {
+      "name": "Type",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the frame type (rectangular).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/95c79779-edfe-6e6e-ac6c-60c98dc5f81e"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

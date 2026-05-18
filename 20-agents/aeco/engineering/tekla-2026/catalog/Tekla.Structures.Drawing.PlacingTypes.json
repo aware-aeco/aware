@@ -1,0 +1,51 @@
+{
+  "name": "PlacingTypes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PlacingTypes class defines the different available placing types. Please note that not all objects accept all types. If you try to use the wrong type it will not be accepted (Insert, Modify will fail).",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/38d18df2-bc23-3978-7a9f-cb48e7d91ae3",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AlongLinePlacing",
+      "signature": "AlongLinePlacing(...)",
+      "summary": "The object is located and moved along a line defined by two points.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0a360cc9-c148-aba4-f799-70c87d9cee9d"
+    },
+    {
+      "name": "BaseLinePlacing",
+      "signature": "BaseLinePlacing(...)",
+      "summary": "The object is placed using a line as a reference. This will thus define the object\u0027s X-axis along that line.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/350d8df2-b3ab-8e63-0a45-5e25d7eef0a5"
+    },
+    {
+      "name": "LeaderLinePlacing",
+      "signature": "LeaderLinePlacing(...)",
+      "summary": "The object is placed attached to a leader line.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/db02754b-9b64-ac06-1603-6ed790b6d33f"
+    },
+    {
+      "name": "PointPlacing",
+      "signature": "PointPlacing(...)",
+      "summary": "The object is placed at one point (the insertion point) without any additional placing options.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a01a7987-8b62-391d-46ce-1746577b2c25"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

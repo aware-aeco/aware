@@ -1,0 +1,113 @@
+{
+  "name": "Solid",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The Solid class represents the physical object in the model created by a part instance. A solid instance can be used to query the actual geometry of the part and intersect that geometry with, for example, lines and planes.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/7d939b20-a22f-7370-299b-a5a9fee8e54e",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetAllIntersectionPoints",
+      "signature": "GetAllIntersectionPoints(...)",
+      "summary": "Used to get all the intersection points between the solid and a plane. Does not arrange the points into polygons, thus a lot faster.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/75e5f4f1-9b46-fce4-7cab-b7033817cc3e"
+    },
+    {
+      "name": "GetCutPart",
+      "signature": "GetCutPart(...)",
+      "summary": "Returns a shell enumerator for the solid th at results cutting this solid with the given solid.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6df0f96a-ce73-cec1-6320-f3b7ddeae3cf"
+    },
+    {
+      "name": "GetEdgeEnumerator",
+      "signature": "GetEdgeEnumerator(...)",
+      "summary": "Returns a new edge enumerator in the current plane.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/222fbb93-f13f-f7af-0d51-a8b0018fe12d"
+    },
+    {
+      "name": "GetFaceEnumerator",
+      "signature": "GetFaceEnumerator(...)",
+      "summary": "Returns a new face enumerator in the current plane.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a760c670-0718-ebd9-2535-86c4df113e2c"
+    },
+    {
+      "name": "Intersect(LineSegment)",
+      "signature": "Intersect(LineSegment)(...)",
+      "summary": "Returns a list of line - solid intersection points.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b60a7604-e5c4-cf74-77e0-34139eec5d9a"
+    },
+    {
+      "name": "Intersect(Point, Point)",
+      "signature": "Intersect(Point, Point)(...)",
+      "summary": "Returns a list of line - solid intersection points.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/829d834d-424a-034e-c903-9cccf1759304"
+    },
+    {
+      "name": "Intersect(Point, Point, Point)",
+      "signature": "Intersect(Point, Point, Point)(...)",
+      "summary": "Returns a list of plane - solid intersection points. The first item of the list contains a list of the outmost intersection polygon and the rest of the items (if there are any) inner polygons.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/89e188c7-dedb-4439-db95-78e3a442bebf"
+    },
+    {
+      "name": "IntersectAllFaces",
+      "signature": "IntersectAllFaces(...)",
+      "summary": "Returns an enumerator for an array list of lists of plane - solid intersection points from all intersecting faces. The first item of one list contains points of the outmost intersection polygon and then the inner polygons (if there are any).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/223e9ea0-6f38-e3b0-f323-574838c399aa"
+    },
+    {
+      "name": "IsValid",
+      "signature": "IsValid(...)",
+      "summary": "Returns if the solid is valid.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4b7bd339-892a-5872-8156-d761323779cf"
+    }
+  ],
+  "properties": [
+    {
+      "name": "MaximumPoint",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the maximum axis-aligned point of the solid in the current plane.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f7363432-900d-2768-4164-bfa41c5c1474"
+    },
+    {
+      "name": "MinimumPoint",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the minimum axis-aligned point of the solid in the current plane.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f3041913-1282-75d7-1a56-7287b7a0e8a8"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

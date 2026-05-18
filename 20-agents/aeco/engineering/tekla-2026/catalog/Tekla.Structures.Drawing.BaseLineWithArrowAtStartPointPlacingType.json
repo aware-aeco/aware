@@ -1,0 +1,24 @@
+{
+  "name": "BaseLineWithArrowAtStartPointPlacingType",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The BaseLineWithArrowAtStartPointPlacingType class defines a placing type that places the object using the base line placing. The line is drawn and will have an arrow at the start point.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/221c5978-602c-a603-92f8-78b46dc1ebb3",
+  "constructors": [
+    {
+      "name": "BaseLineWithArrowAtStartPointPlacingType",
+      "signature": "BaseLineWithArrowAtStartPointPlacingType(...)",
+      "summary": "Creates a new base line with arrow at start point placing type instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/186b234a-b5f9-4e78-047e-2c696db97b0b"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

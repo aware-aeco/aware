@@ -1,0 +1,39 @@
+{
+  "name": "RebarSplice.RebarSpliceTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The splice types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/b63b4f78-1efe-c97c-e733-e7fee3435d99",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "SPLICE_TYPE_LAP_RIGHT",
+      "value": 0,
+      "summary": "The first (left) bar extends over the second (right) bar."
+    },
+    {
+      "name": "SPLICE_TYPE_LAP_LEFT",
+      "value": 1,
+      "summary": "The second (right) bar extends over the first (left) bar."
+    },
+    {
+      "name": "SPLICE_TYPE_LAP_BOTH",
+      "value": 2,
+      "summary": "Both bars extend over each other."
+    },
+    {
+      "name": "SPLICE_TYPE_MUFF",
+      "value": 3,
+      "summary": "The bar ends are joined with a muff."
+    },
+    {
+      "name": "SPLICE_TYPE_WELD",
+      "value": 4,
+      "summary": "The bar ends are joined with a weld."
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "name": "AnalysisModelGeneralProperties.MemberAxisLocationEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "Defines the member axis location.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/85038f7d-1ecb-5133-52b4-b9d67d860fe9",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "MODEL_DEFAULT",
+      "value": 0,
+      "summary": "The member axis is defined individually based on each part\u0027s properties."
+    },
+    {
+      "name": "REFERENCE_AXIS_ECCENTRICITY_BY_NEUTRAL_AXIS",
+      "value": 1,
+      "summary": "The reference axis is the member axis. The location of the neutral axis defines the axis eccentricity."
+    },
+    {
+      "name": "REFERENCE_AXIS",
+      "value": 2,
+      "summary": "The reference axis is the member axis."
+    },
+    {
+      "name": "NEUTRAL_AXIS",
+      "value": 3,
+      "summary": "The neutral axis is the member axis."
+    }
+  ]
+}

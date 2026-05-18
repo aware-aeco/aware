@@ -1,0 +1,43 @@
+{
+  "name": "AnalysisObjectPicker",
+  "namespace": "Tekla.Structures.Analysis.UI",
+  "kind": "class",
+  "summary": "The AnalysisObjectPicker class can be used to prompt the user to do manual picks of analysis objects. The methods throw an exception if the user interrupts (cancels) the pick command.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/523a09a5-c6e6-d69d-0d24-26ee5f69f9ac",
+  "constructors": [
+    {
+      "name": "AnalysisObjectPicker",
+      "signature": "AnalysisObjectPicker(...)",
+      "summary": "Initializes a new instance of the AnalysisObjectPicker class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3feb04f0-75ba-0848-e909-59ccc3e5496c"
+    }
+  ],
+  "methods": [
+    {
+      "name": "PickObject",
+      "signature": "PickObject(...)",
+      "summary": "Prompts the user to pick object from the model with the given prompt. Object is either analysis object or model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8dea0aee-506d-06df-c9db-27e86bbdf77e"
+    },
+    {
+      "name": "PickObjects",
+      "signature": "PickObjects(...)",
+      "summary": "Prompts the user to pick objects from the model with the given prompt.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a9e9fa8a-ead4-44b2-3838-ce4e26602695"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

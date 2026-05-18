@@ -1,0 +1,87 @@
+{
+  "name": "ModelObjectSelector",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The ModelObjectSelector class can be used to make different model object selections from the current model.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/50af1768-22fb-080e-f3d1-08b0da8199da",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetAllObjects",
+      "signature": "GetAllObjects(...)",
+      "summary": "Returns an enumerator of all the model objects in the current model.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/10561eb7-f852-d0f1-a34e-8cab6c2e3459"
+    },
+    {
+      "name": "GetAllObjectsWithType(.Type.)",
+      "signature": "GetAllObjectsWithType(.Type.)(...)",
+      "summary": "Returns an enumerator of all the model objects in the current model with the given base type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/71548129-b401-0376-634f-c3b2add9f38a"
+    },
+    {
+      "name": "GetAllObjectsWithType(ModelObject.ModelObjectEnum)",
+      "signature": "GetAllObjectsWithType(ModelObject.ModelObjectEnum)(...)",
+      "summary": "Returns an enumerator of all the model objects in the current model with the given type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d6c4b8b6-3636-3060-9458-a196720c6ba9"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "GetEnumerator(...)",
+      "summary": "Returns an enumerator of all the model objects in the current model.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/cef5b6c6-2855-343a-7ccd-3e3c16e3cf47"
+    },
+    {
+      "name": "GetFilteredObjectsWithType",
+      "signature": "GetFilteredObjectsWithType(...)",
+      "summary": "Returns an enumerator of the model objects in the current model with the given type and selected by the filter.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1c569914-2d33-622e-1aae-8105c059ea09"
+    },
+    {
+      "name": "GetObjectsByBoundingBox",
+      "signature": "GetObjectsByBoundingBox(...)",
+      "summary": "Returns an enumerator of the model objects in the current model colliding with the given geometrical bounding box. Note that this method uses approximate bounding boxes and thus is NOT EXACT, and may return objects not necessarily colliding with the given box but only being somewhere near to it.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0947a69e-18cb-ca41-cb95-c36c19b1c85e"
+    },
+    {
+      "name": "GetObjectsByFilter",
+      "signature": "GetObjectsByFilter(...)",
+      "summary": "Returns an enumerator of the model objects in the current model selected by the given selection filter definition.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/84095767-c855-1698-b819-6f73c55e19b6"
+    },
+    {
+      "name": "GetObjectsByFilterName",
+      "signature": "GetObjectsByFilterName(...)",
+      "summary": "Returns an enumerator of the model objects in the current model selected by the given selection filter.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b51f9696-1097-13a6-7fac-f79264fabcbd"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

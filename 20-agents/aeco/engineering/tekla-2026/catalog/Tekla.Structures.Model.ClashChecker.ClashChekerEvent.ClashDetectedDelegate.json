@@ -1,0 +1,14 @@
+{
+  "name": "ClashChekerEvent.ClashDetectedDelegate",
+  "namespace": "Tekla.Structures.Model.ClashChecker",
+  "kind": "delegate",
+  "summary": "The delegate to use for clash detection. Encapsulates any method that takes a clash check data object as a parameter.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/58049c03-be2e-67da-8c02-43b34f5e3c89",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void ClashDetectedDelegate( ClashCheckData ClashData )"
+}

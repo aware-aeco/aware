@@ -1,0 +1,51 @@
+{
+  "name": "PickerInputNPoints",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PickerInputNPoints class represents a pick of several points in a view. Used for values asked by UI.Picker.PickPoints(StringList Prompts, out PointList PickedPoints, out ViewBase PickedView) and UI.Picker.PickPoints(int NumberOfPicks, StringList Prompts, out PointList PickedPoints, out ViewBase PickedView).",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/3ffa5a86-d245-1c64-7261-2cff99d38314",
+  "constructors": [
+    {
+      "name": "PickerInputNPoints",
+      "signature": "PickerInputNPoints(...)",
+      "summary": "Creates a new PickerInputNPoints instance representing N points selected in a view.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fdda7adc-b146-49dd-d25e-d466a3814bb7"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0a458ed1-3080-d293-0f63-3e6346bb244b"
+    }
+  ],
+  "properties": [
+    {
+      "name": "PickedPoints",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the list of picked points in the view coordinates.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0cac868d-3491-b6bd-07c6-d597bf08057c"
+    },
+    {
+      "name": "PickedView",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The view within which the pick occurred.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/aecacf99-0f9d-b781-aa92-7e9efb2986c0"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,33 @@
+{
+  "name": "FilterExpression",
+  "namespace": "Tekla.Structures.Filtering",
+  "kind": "class",
+  "summary": "The FilterExpression class represents a filter expression. This is a base class for other filter expressions and should not be used directly.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/2de0e25f-b8f2-75d1-7b6a-d548d2bd3868",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fece057a-34f0-fbb1-7184-27f66452ed40"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsEnable",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the enabled state of the filter expression.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a436cbc9-a74e-3b98-1736-723e4f015b27"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

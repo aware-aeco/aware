@@ -1,0 +1,34 @@
+{
+  "name": "SurfaceTreatment.SurfaceTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The different surfacing types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/3f55bbef-2e2a-3aac-7081-a9e9fd68a52e",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CONCRETE_FINISH",
+      "value": 1,
+      "summary": "The concrete finish surface type."
+    },
+    {
+      "name": "SPECIAL_MIX",
+      "value": 2,
+      "summary": "The special mix surface type."
+    },
+    {
+      "name": "TILE_SURFACE",
+      "value": 3,
+      "summary": "The tile surface type."
+    },
+    {
+      "name": "STEEL_FINISH",
+      "value": 4,
+      "summary": "The steel finish surface type."
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "name": "ChangeData.ChangeTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The types of changed event.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/64a75766-987a-6ed2-0a2d-553e8507a5fc",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "OBJECT_INSERT",
+      "value": 0,
+      "summary": "Object created"
+    },
+    {
+      "name": "OBJECT_MODIFY",
+      "value": 1,
+      "summary": "Object modified"
+    },
+    {
+      "name": "OBJECT_DELETE",
+      "value": 2,
+      "summary": "Object deleted"
+    },
+    {
+      "name": "USERPROPERTY_CHANGED",
+      "value": 3,
+      "summary": "User property of object changed"
+    }
+  ]
+}

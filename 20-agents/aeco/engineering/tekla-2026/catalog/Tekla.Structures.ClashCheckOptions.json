@@ -1,0 +1,41 @@
+{
+  "name": "ClashCheckOptions",
+  "namespace": "Tekla.Structures",
+  "kind": "class",
+  "summary": "The ClashCheckOptions class represents the clash check options.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/7d696961-d1d1-d6bd-91a4-96109ba5b0d5",
+  "constructors": [
+    {
+      "name": "ClashCheckOptions",
+      "signature": "ClashCheckOptions(...)",
+      "summary": "Initializes a new instance of the ClashCheckOptions class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2e7249b6-7ad6-d8bf-cb10-41d33a9705fb"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "BoltHeadDiameter",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The bolt head diameter.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ca623d4f-f945-858a-c36a-c191757b5c99"
+    },
+    {
+      "name": "NutThickness",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The nut thickness.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f0c21821-594e-7633-cba9-cdb697646d1d"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

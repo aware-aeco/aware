@@ -1,0 +1,29 @@
+{
+  "name": "DetailTypeEnum",
+  "namespace": "Tekla.Structures",
+  "kind": "enum",
+  "summary": "The detail type defines what kind of a detail is in question.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/0d7cdc36-44c0-7f88-778a-d419f621809d",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "END",
+      "value": 0,
+      "summary": "With the detail type end, the X-axis is oriented towards the part\u0027s center point."
+    },
+    {
+      "name": "INTERMEDIATE",
+      "value": 1,
+      "summary": "With the detail type intermediate, the X-axis is oriented towards the end point of the part."
+    },
+    {
+      "name": "INTERMEDIATE_REVERSE",
+      "value": 2,
+      "summary": "With the detail type intermediate reverse, the X-axis is oriented towards the start point of the part."
+    }
+  ]
+}

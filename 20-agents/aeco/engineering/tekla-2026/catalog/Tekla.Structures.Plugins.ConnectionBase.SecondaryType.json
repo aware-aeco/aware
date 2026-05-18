@@ -1,0 +1,34 @@
+{
+  "name": "ConnectionBase.SecondaryType",
+  "namespace": "Tekla.Structures.Plugins",
+  "kind": "enum",
+  "summary": "Defines how many secondaries a connection can have.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/9568ad7f-6ab6-c04b-5307-4d30cc704931",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "SECONDARYTYPE_ZERO",
+      "value": 0,
+      "summary": "The connection can have zero secondaries. Zero secondaries means that the connection is a detail."
+    },
+    {
+      "name": "SECONDARYTYPE_ONE",
+      "value": 1,
+      "summary": "The connection can have one secondary."
+    },
+    {
+      "name": "SECONDARYTYPE_TWO",
+      "value": 2,
+      "summary": "The connection can have two secondaries."
+    },
+    {
+      "name": "SECONDARYTYPE_MULTIPLE",
+      "value": 3,
+      "summary": "The connection can have multiple secondaries."
+    }
+  ]
+}

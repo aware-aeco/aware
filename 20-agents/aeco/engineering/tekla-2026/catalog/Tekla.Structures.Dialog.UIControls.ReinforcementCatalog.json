@@ -1,0 +1,95 @@
+{
+  "name": "ReinforcementCatalog",
+  "namespace": "Tekla.Structures.Dialog.UIControls",
+  "kind": "class",
+  "summary": "The ReinforcementCatalog class represents a group of controls to select rebars using the rebar catalogs.",
+  "base": "System.Windows.Forms.UserControl",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/ec000661-895b-f21e-e0f1-9ff859cdc495",
+  "constructors": [
+    {
+      "name": "ReinforcementCatalog",
+      "signature": "ReinforcementCatalog(...)",
+      "summary": "Initiates a new instance of the control.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8751e7f7-486f-55cd-725b-8fc9fc3efe04"
+    },
+    {
+      "name": "ReinforcementCatalog",
+      "signature": "ReinforcementCatalog(...)",
+      "summary": "Creates a new instance of the ReinforcementCatalog and will select in the tree the rebar that contains the given parameters (if possible).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/01896acb-d164-2f29-341a-d2a47290597d"
+    }
+  ],
+  "methods": [
+    {
+      "name": "OnValueChanged",
+      "signature": "OnValueChanged(...)",
+      "summary": "Event handler for passing generic catalog data back to dialog",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c1c88c0f-3b3a-4715-2c9d-626037f46805"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ButtonText",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets and sets the text of the button control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/baf65153-a437-30e8-eb9c-b53aae836f66"
+    },
+    {
+      "name": "SelectedRebarBendingRadius",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the selected rebar bending radius in the control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d61c6178-b13e-5a41-7d04-c580a35ae9e6"
+    },
+    {
+      "name": "SelectedRebarGrade",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the selected rebar grade in the control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ba168369-b4d8-93b0-be33-5c96075f5918"
+    },
+    {
+      "name": "SelectedRebarSize",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the selected rebar size in the control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/daab7abb-6476-9902-abbd-5aa7dd971ad9"
+    }
+  ],
+  "events": [
+    {
+      "name": "SelectClicked",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler SelectClicked",
+      "summary": "The SelectClicked event is raised when the Select button is clicked.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/82470061-dee9-cc0f-339b-ba6348e19452",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "SelectionDone",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler SelectionDone",
+      "summary": "The SelectionDone event is raised when the selection has been done.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b2d01908-8051-5685-eee3-7a43fc5159d5",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

@@ -1,0 +1,70 @@
+{
+  "name": "ISharingUpdate",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "interface",
+  "summary": "Represents an update of data used in sharing operations within the Tekla Structures Model.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/8841ee22-b950-8f57-8697-4d654828cee7",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Code",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the code of the sharing update.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1d0f4a8a-caa2-ec91-1e2e-2d2124ee855f"
+    },
+    {
+      "name": "Comment",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the comment of the sharing update.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/857e4735-ab1f-5cf8-8562-20a89ff438b0"
+    },
+    {
+      "name": "CreatedAt",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the date and time when the sharing update was created.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b2ed1f21-4e08-9435-206e-7a48350d2953"
+    },
+    {
+      "name": "CreatedBy",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the email of the user who created the sharing update.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/18a23d24-9322-c488-c09b-2d5ae17add80"
+    },
+    {
+      "name": "Id",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the unique identifier of the sharing update.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2b8a2396-888d-cfc9-4ae9-a9913b499a10"
+    },
+    {
+      "name": "Number",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the update\u0027s packet number.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a03bce4d-d7bf-8247-40b6-f17ed345ca20"
+    },
+    {
+      "name": "Type",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the type of the sharing update.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/29eaaca3-b61e-2a30-3cad-1a726eca6c48"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

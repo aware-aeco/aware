@@ -1,0 +1,49 @@
+{
+  "name": "Plane",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The Plane class defines a plane in space using an origin, an X-axis and a Y-axis.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/37ad1799-48c1-2b90-a52c-fd0e84b4ec46",
+  "constructors": [
+    {
+      "name": "Plane",
+      "signature": "Plane(...)",
+      "summary": "Initializes a new plane instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/52299f5e-19ba-ecfa-74cf-f075e7bd7bd7"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AxisX",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The X-axis of the plane.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bba1bedd-0070-1ad6-645d-3d5bc64efabc"
+    },
+    {
+      "name": "AxisY",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The Y-axis of the plane.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c6eee64d-3e90-f16d-2fef-10edaaece1dd"
+    },
+    {
+      "name": "Origin",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The origin of the plane.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/63d783e9-5f7a-a5c9-f6df-1ec4e50d395e"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

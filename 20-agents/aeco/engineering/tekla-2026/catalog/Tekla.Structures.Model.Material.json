@@ -1,0 +1,33 @@
+{
+  "name": "Material",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The Material class represents a single material that parts can be made of.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/b76cd4d2-f863-0e66-174a-99dda6afc8d6",
+  "constructors": [
+    {
+      "name": "Material",
+      "signature": "Material(...)",
+      "summary": "Instantiates an empty material instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7222a2b0-7b58-dd87-25e4-96b3158b6c68"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "MaterialString",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Identifies the material in a string format.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/024d3ed1-ce85-2a53-f6cf-e76d682d715f"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

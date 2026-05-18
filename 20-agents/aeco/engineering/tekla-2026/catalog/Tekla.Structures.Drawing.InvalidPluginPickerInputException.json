@@ -1,0 +1,24 @@
+{
+  "name": "InvalidPluginPickerInputException",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The InvalidPluginPickerInputException class defines the exception that is thrown when UI.Picker is used during a Plugin.Insert call but the previously assigned PluginPickerInput does not correspond to the next UI.Picker call.",
+  "base": "System.ApplicationException",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/502ebf7f-f4ca-c868-7642-373b66416eb9",
+  "constructors": [
+    {
+      "name": "InvalidPluginPickerInputException",
+      "signature": "InvalidPluginPickerInputException(...)",
+      "summary": "Creates a new InvalidPluginPickerInputException instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/82bb81cd-0ac1-a7ee-6e95-9735592f0cfe"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

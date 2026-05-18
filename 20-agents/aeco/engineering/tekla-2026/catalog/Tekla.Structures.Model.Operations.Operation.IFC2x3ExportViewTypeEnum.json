@@ -1,0 +1,13 @@
+{
+  "name": "Operation.IFC2x3ExportViewTypeEnum",
+  "namespace": "Tekla.Structures.Model.Operations",
+  "kind": "enum",
+  "summary": "View configuration type for IFC 2x3 export",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/76a2a7d0-56a6-a8ee-1667-c264f10424df",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

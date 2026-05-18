@@ -1,0 +1,24 @@
+{
+  "name": "BaseLinePlacingType",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The BaseLinePlacingType class defines a placing type that places the object using the base line placing.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/31d87564-ac2c-c0ca-f3a6-b0a7ff9ef1a4",
+  "constructors": [
+    {
+      "name": "BaseLinePlacingType",
+      "signature": "BaseLinePlacingType(...)",
+      "summary": "Creates a new base line placing type instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b463bc25-5b0e-77d9-4f8f-b317de884ed7"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,39 @@
+{
+  "name": "Beam.BeamTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The beam types. The strip and pad footings are valid only if the material type of the beam is concrete.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/6151749e-0ba3-8d75-6127-b84f300dd30f",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "BEAM",
+      "value": 0,
+      "summary": "The beam."
+    },
+    {
+      "name": "PANEL",
+      "value": 1,
+      "summary": "The panel."
+    },
+    {
+      "name": "STRIP_FOOTING",
+      "value": 2,
+      "summary": "The concrete strip footing."
+    },
+    {
+      "name": "PAD_FOOTING",
+      "value": 3,
+      "summary": "The concrete pad footing."
+    },
+    {
+      "name": "COLUMN",
+      "value": 4,
+      "summary": "The column."
+    }
+  ]
+}

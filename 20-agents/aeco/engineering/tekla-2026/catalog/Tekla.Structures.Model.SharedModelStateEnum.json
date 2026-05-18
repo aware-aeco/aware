@@ -1,0 +1,39 @@
+{
+  "name": "SharedModelStateEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "Specifies the state of a shared model in the Tekla Structures sharing service.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/6dddf61a-52ec-0c34-6290-b241c53ad2c4",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "OFFLINE",
+      "value": 0,
+      "summary": "Service is not connected, no information about what user can do is available."
+    },
+    {
+      "name": "UNLOCKED",
+      "value": 1,
+      "summary": "Service is unlocked and current model is shared. User can read in or write out depending on it the model is up-to-date."
+    },
+    {
+      "name": "WRITELOCK",
+      "value": 2,
+      "summary": "Service is reserved for writing to another user. Current user can read in but not write out."
+    },
+    {
+      "name": "FULLLOCK",
+      "value": 3,
+      "summary": "Service is reserved for investigation to another user. Current user cannot read in or write out."
+    },
+    {
+      "name": "NEEDJOIN",
+      "value": 4,
+      "summary": "Service has current packet removed. Current local model cannot be used for sharing, model need to be joined again."
+    }
+  ]
+}

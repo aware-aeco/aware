@@ -1,0 +1,29 @@
+{
+  "name": "AnalysisModel.AnalysisMethodEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The analysis methods.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/35e76a03-c6d3-de4e-d51f-a540469de1f1",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "FIRST_ORDER",
+      "value": 1,
+      "summary": "The first order analysis method."
+    },
+    {
+      "name": "SECOND_ORDER",
+      "value": 2,
+      "summary": "The second order analysis method."
+    },
+    {
+      "name": "P_DELTA",
+      "value": 3,
+      "summary": "The P Delta analysis method."
+    }
+  ]
+}

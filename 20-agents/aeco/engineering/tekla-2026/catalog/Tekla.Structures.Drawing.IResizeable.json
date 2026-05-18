@@ -1,0 +1,23 @@
+{
+  "name": "IResizeable",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "interface",
+  "summary": "The IResizeable interface is implemented by objects that can be resized.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/dccac9b4-8457-057f-9198-c0a6633523fa",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Resize",
+      "signature": "Resize(...)",
+      "summary": "Resizes the object to the specified size, overriding possible scaling settings.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/427f75fb-07cb-ce16-16bb-f2de80b5e716"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

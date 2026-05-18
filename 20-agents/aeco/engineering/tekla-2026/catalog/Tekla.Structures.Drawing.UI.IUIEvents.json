@@ -1,0 +1,105 @@
+{
+  "name": "IUIEvents",
+  "namespace": "Tekla.Structures.Drawing.UI",
+  "kind": "interface",
+  "summary": "Interface for the Events class allows the user to register event listeners for DrawingUI events. This interface allows the Marshaling of the Events class with Trimble.Remoting",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/fcca08a4-5bcd-8d4d-1796-e4ea942d3b91",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "OnInterrupted",
+      "signature": "OnInterrupted(...)",
+      "summary": "Called when uesr interrupts.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/79cef3d6-e028-dde1-dda0-68fab9990ead"
+    },
+    {
+      "name": "Register",
+      "signature": "Register(...)",
+      "summary": "Registers the instance to listen to the specified events.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c70f206a-d96f-1194-313d-a1fd3ddd51cd"
+    },
+    {
+      "name": "UnRegister",
+      "signature": "UnRegister(...)",
+      "summary": "Unregisters the instance from listening to events.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/dd0db162-4261-8eaf-ac23-56353216b51b"
+    }
+  ],
+  "properties": [],
+  "events": [
+    {
+      "name": "DocumentManagerClosed",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler DocumentManagerClosed",
+      "summary": "The DocumentManagerClosed eventis raised when the document manager is closed.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f85b670d-2fa4-c973-eea8-8811cc01ea31",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DrawingEditorClosed",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler DrawingEditorClosed",
+      "summary": "The DrawingEditorClosed event is raised when the drawing editor is closed.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/62ee9224-ff44-6811-7bec-0735ee04ae2c",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DrawingEditorOpened",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler DrawingEditorOpened",
+      "summary": "The DrawingEditorOpened event is raised when the drawing editor is opened.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1c303c30-c9b8-f492-a79a-dfd83f77a68d",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DrawingListSelectionChanged",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler DrawingListSelectionChanged",
+      "summary": "The DrawingListSelectionChanged event is raised when selection on the drawing list has changed.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/24ccc4b9-2c62-b936-33a5-34085f067bfa",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DrawingLoaded",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler DrawingLoaded",
+      "summary": "The DrawingLoaded event is raised when a new drawing is opened in the drawing editor.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fe91aaa8-6824-f3db-4aa7-51e26a8e288e",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Interrupted",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler Interrupted",
+      "summary": "Occurs when user interrupts.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/249e5e09-4c01-a334-0d4e-61b3a54921b1",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "SelectionChange",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler SelectionChange",
+      "summary": "The SelectionChange event is raised when the selection is changed in a Tekla Structures drawing.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6b58856b-f085-7d08-e263-8041c5d46fa3",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

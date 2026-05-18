@@ -1,0 +1,29 @@
+{
+  "name": "IncludeRevisionMarkEnum",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "Options for including a revision info in file name",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/bc567ae8-40ba-d12f-6a83-d4f85959ccd7",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Never",
+      "value": 0,
+      "summary": "Never include revision info"
+    },
+    {
+      "name": "Always",
+      "value": 1,
+      "summary": "Always include revision info"
+    },
+    {
+      "name": "ByFormatString",
+      "value": 2,
+      "summary": "Include revision info if it\u0027s present in the format string, otherwise not"
+    }
+  ]
+}

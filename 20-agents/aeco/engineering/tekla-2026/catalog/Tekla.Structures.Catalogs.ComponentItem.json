@@ -1,0 +1,102 @@
+{
+  "name": "ComponentItem",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The ComponentItem class contains information about the components in the Tekla Structures catalog.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/5f8f7adf-d58e-527e-3ae1-9186855858e2",
+  "constructors": [
+    {
+      "name": "ComponentItem",
+      "signature": "ComponentItem(...)",
+      "summary": "Creates a new component item instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1050bcc8-4fcb-1d9b-b5e8-5a853a706ab6"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Export",
+      "signature": "Export(...)",
+      "summary": "Exports the custom component item in *.uel-format to the to given file name. If path is not given custom component is exported to model folder. If filename is empty custom component name is used as filename.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5a13c8a3-e8c0-e8b3-bab9-cabb1b4920d6"
+    },
+    {
+      "name": "GetVersion",
+      "signature": "GetVersion(...)",
+      "summary": "Gets the version number of custom component item from the component database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d3c4303c-4fa1-634e-27ed-c32be2d98431"
+    },
+    {
+      "name": "Select(String, Int32)",
+      "signature": "Select(String, Int32)(...)",
+      "summary": "Selects the component item from the component database. Uses the type if defined for selection",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c9fde42f-cebc-4165-fa52-2411ac2e5931"
+    },
+    {
+      "name": "Select(String, Int32, ComponentItem.ComponentTypeEnum)",
+      "signature": "Select(String, Int32, ComponentItem.ComponentTypeEnum)(...)",
+      "summary": "Selects the component item from the component database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0c351379-98c4-2fe0-ac3e-def043ea1d3f"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AttributeFileExtension",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the attribute file extension of item from the component database.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/923380dd-29f9-5fe8-f106-12b6e7ddb91f"
+    },
+    {
+      "name": "Name",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The component item\u0027s internal name which is used by Tekla Structures in component identification.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/008a043d-9cb1-7625-a7c6-67ea242e680a"
+    },
+    {
+      "name": "Number",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The component item\u0027s internal number which is used by Tekla Structures in component identification.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f8ee2f6e-47c9-9a11-0bee-26b73f2c2a0a"
+    },
+    {
+      "name": "Type",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The component item\u0027s type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c901526c-c474-e724-bd40-3e048645f9be"
+    },
+    {
+      "name": "UIName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The component item\u0027s name which is visible in the Tekla Structures user interface.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4b72e85c-c8dd-db52-8e02-514a8d6ea624"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

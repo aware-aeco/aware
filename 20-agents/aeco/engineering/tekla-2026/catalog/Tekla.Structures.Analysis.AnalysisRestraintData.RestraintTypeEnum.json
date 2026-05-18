@@ -1,0 +1,39 @@
+{
+  "name": "AnalysisRestraintData.RestraintTypeEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "Defines all the restraint types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/4fde30d0-24b7-ba1b-7a4d-fd30e9d15113",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NOT_DEFINED",
+      "value": -3,
+      "summary": "The restraint type is not defined."
+    },
+    {
+      "name": "PARTIAL_RELEASE",
+      "value": -2,
+      "summary": "The partial release type."
+    },
+    {
+      "name": "FIXED",
+      "value": -1,
+      "summary": "The fixed release type."
+    },
+    {
+      "name": "FREE",
+      "value": 0,
+      "summary": "The free release type."
+    },
+    {
+      "name": "SPRING",
+      "value": 1,
+      "summary": "The spring release type."
+    }
+  ]
+}

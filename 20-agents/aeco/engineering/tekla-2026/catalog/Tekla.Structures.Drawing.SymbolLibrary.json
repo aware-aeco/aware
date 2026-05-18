@@ -1,0 +1,33 @@
+{
+  "name": "SymbolLibrary",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The SymbolLibrary class is for handling symbol libraries.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/83f5e488-a939-d16f-cb31-7b27f36d8886",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetSymbolLibraries.",
+      "signature": "GetSymbolLibraries.(...)",
+      "summary": "Gets the names of the available symbol files in the current Tekla Structures environment, in the \u0022symbols\u0022 directory, without the suffix.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1a52bc25-6891-60fb-c459-d8531a91f5ae"
+    },
+    {
+      "name": "GetSymbolLibraries(Boolean)",
+      "signature": "GetSymbolLibraries(Boolean)(...)",
+      "summary": "Gets the names of the available symbol files in the current Tekla Structures environment, in the \u0022symbols\u0022 directory, without the suffix.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d0213ef2-9232-62f2-9c58-ba7b53e5f454"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

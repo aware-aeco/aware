@@ -1,0 +1,54 @@
+{
+  "name": "Chamfer.ChamferTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The basic shape type of the chamfer.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/e17f4130-3566-bee7-b126-0ddfa6a77eea",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CHAMFER_NONE",
+      "value": 0,
+      "summary": "No chamfer type."
+    },
+    {
+      "name": "CHAMFER_LINE",
+      "value": 1,
+      "summary": "The line type chamfer."
+    },
+    {
+      "name": "CHAMFER_ROUNDING",
+      "value": 2,
+      "summary": "The rounding type chamfer."
+    },
+    {
+      "name": "CHAMFER_ARC",
+      "value": 3,
+      "summary": "The arc type chamfer."
+    },
+    {
+      "name": "CHAMFER_ARC_POINT",
+      "value": 4,
+      "summary": "The arc point type chamfer."
+    },
+    {
+      "name": "CHAMFER_SQUARE",
+      "value": 5,
+      "summary": "The square type chamfer."
+    },
+    {
+      "name": "CHAMFER_SQUARE_PARALLEL",
+      "value": 6,
+      "summary": "The square parallel type chamfer."
+    },
+    {
+      "name": "CHAMFER_LINE_AND_ARC",
+      "value": 7,
+      "summary": "The line and arc type chamfer."
+    }
+  ]
+}

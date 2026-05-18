@@ -1,0 +1,125 @@
+{
+  "name": "GridLine.GridLabel",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The GridLabel class contains the grid labels of the grid lines, the text label and the insertion points.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/dc9cc3a9-7a1e-3320-de0f-a3cd60aad2d5",
+  "constructors": [
+    {
+      "name": "GridLine.GridLabel",
+      "signature": "GridLine.GridLabel(...)",
+      "summary": "Creates a new default grid label instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bf12bd12-c9ab-4dfc-62cc-f3312e0bcf44"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetAxisAlignedBoundingBox",
+      "signature": "GetAxisAlignedBoundingBox(...)",
+      "summary": "The bounding box of the grid line label (rectangle format, axis aligned).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1d86e9d9-3f79-b151-6763-2e07f536c676"
+    },
+    {
+      "name": "GetAxisAlignedBoundingBoxOfTextLabel",
+      "signature": "GetAxisAlignedBoundingBoxOfTextLabel(...)",
+      "summary": "The bounding box of the grid line label\u0027s text (rectangle format, axis aligned).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/398b10cf-8189-74dc-700f-6bbdc6064484"
+    },
+    {
+      "name": "MoveObjectRelative",
+      "signature": "MoveObjectRelative(...)",
+      "summary": "Moves the object using the move vector.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/44eb35f7-0343-00cd-c859-1b58302232d6"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CenterPoint",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The center point of the grid label.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6f39a150-cb6a-d538-a007-c3cff9cd24cb"
+    },
+    {
+      "name": "FrameHeight",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The height of the grid label frame.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/28a7a3dd-4a2c-e852-3b41-09334ec181c3"
+    },
+    {
+      "name": "FrameWidth",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The width of the grid label frame.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/baa04ff1-93f2-3ce5-0e62-a42cdce8e982"
+    },
+    {
+      "name": "GridLabelPoint",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The grid line\u0027s label point. If the value of GridLabelPoint differs from the OffsetGridPoint value, a leader line will be created to the GridLabelPoint position. You can remove the leader line by setting GridLabelPoint to the GridPoint value (or by setting the GridLabelPoint anywhere on the grid line, but then the offset will change).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3db00bca-566c-29ac-4460-86f3c8c36788"
+    },
+    {
+      "name": "GridLabelText",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The grid line\u0027s label text.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/92898988-3fa1-69d0-2629-f83cc175f2f1"
+    },
+    {
+      "name": "GridPoint",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The grid line point, without offsets taken into consideration (model grid line coordinates).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bfd9ca49-d305-312e-0e80-fb2f31a9f1f0"
+    },
+    {
+      "name": "OffsetGridPoint",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The grid line point where the grid line actually ends, with offsets applied.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c73465a2-a697-ab7d-68a7-389635363ef1"
+    },
+    {
+      "name": "TextHeight",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The height of the grid label\u0027s text frame.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/99c9297c-9283-8592-017f-af3c6f4b8216"
+    },
+    {
+      "name": "TextWidth",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The width of the grid label\u0027s text frame.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b481e11d-7c4b-f171-ee48-060950729a6f"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

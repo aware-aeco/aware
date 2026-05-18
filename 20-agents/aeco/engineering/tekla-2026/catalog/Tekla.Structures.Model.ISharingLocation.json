@@ -1,0 +1,38 @@
+{
+  "name": "ISharingLocation",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "interface",
+  "summary": "Represents a location used for sharing in the Tekla Structures model.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/5d39a130-6f72-1d9f-f954-0f745a748521",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DisplayName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the display name of the sharing location. It uses the current TS language when feasible.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2849a701-732c-2c84-f9b3-e44c8c7e0124"
+    },
+    {
+      "name": "Id",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the unique identifier of the sharing location.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ce2ecbd1-2780-e199-fb91-3f8fa4426e0d"
+    },
+    {
+      "name": "Name",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the name of the sharing location. It does not change based on the TS language.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/46284c26-e59e-d28b-dcb6-b51ad9d395bd"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

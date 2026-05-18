@@ -1,0 +1,24 @@
+{
+  "name": "SharingUpdateType",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "Specifies the type of sharing update used in model sharing operations.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/c500ecb5-b84b-7a8c-3381-e1c241f93b9e",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Update",
+      "value": 0,
+      "summary": "Represents an update update."
+    },
+    {
+      "name": "Baseline",
+      "value": 1,
+      "summary": "Represents a baseline update."
+    }
+  ]
+}

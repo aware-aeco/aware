@@ -1,0 +1,43 @@
+{
+  "name": "PickerInputPointsWithinAView",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PickerInputPointsWithinAView class is the base class of PickerInput instances that represent a pick of one or more points in a view.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/2bc856da-4f9c-8c14-5cdc-dff8e131c667",
+  "constructors": [
+    {
+      "name": "PickerInputPointsWithinAView",
+      "signature": "PickerInputPointsWithinAView(...)",
+      "summary": "Creates a new PickerInputPointsWithinAView instance representing N points selected in a view.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1b27b9ba-b7dc-f5d7-2815-97eb3f48d224"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0a458ed1-3080-d293-0f63-3e6346bb244b"
+    }
+  ],
+  "properties": [
+    {
+      "name": "PickedView",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The view within which the pick occurred.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/aecacf99-0f9d-b781-aa92-7e9efb2986c0"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

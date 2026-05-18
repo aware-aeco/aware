@@ -1,0 +1,41 @@
+{
+  "name": "AnalysisRestraints",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisRestraints class contains analysis restraints information for an analysis part.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/12b522fa-9fb8-a5b7-3fb2-b487f9a8e76e",
+  "constructors": [
+    {
+      "name": "AnalysisRestraints",
+      "signature": "AnalysisRestraints(...)",
+      "summary": "Creates a new analysis restraints instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f9626f4b-d5bb-358e-e388-54baa9c5795e"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "End",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Data related to the second part end.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fa66f654-cf65-be09-4c57-601ae6803e57"
+    },
+    {
+      "name": "Start",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Data related to the first part end.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/762ee870-8b63-126c-e554-e06173300399"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

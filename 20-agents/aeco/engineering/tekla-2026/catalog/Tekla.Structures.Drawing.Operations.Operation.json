@@ -1,0 +1,52 @@
+{
+  "name": "Operation",
+  "namespace": "Tekla.Structures.Drawing.Operations",
+  "kind": "class",
+  "summary": "Operations for drawing objects.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/2172371d-8e05-8a9c-a7cf-e27af89483f0",
+  "constructors": [
+    {
+      "name": "Operation",
+      "signature": "Operation(...)",
+      "summary": "Initializes a new instance of the Operation class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9182e385-dcae-794d-a95e-a3357662b3ad"
+    }
+  ],
+  "methods": [
+    {
+      "name": "MergeMarks",
+      "signature": "MergeMarks(...)",
+      "summary": "Merges given marks objects. NOTE!! Merge requires the original mark content to be similar and of same type. Operation does not support associative notes, mark sets or template content.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/33045019-b167-2f31-9f39-7fd8fbf633c4"
+    },
+    {
+      "name": "SortObjectsByPresentationOrder",
+      "signature": "SortObjectsByPresentationOrder(...)",
+      "summary": "Sorts objects relatively by presentation order from active drawing. Result is used to define relative drawing order of objects which are on top of each other. Last object from the list is drawn on top of all objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4762a6c1-1637-130d-c937-1efedfc8045a"
+    },
+    {
+      "name": "SplitMarks",
+      "signature": "SplitMarks(...)",
+      "summary": "Splits given marks to original marks.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4a588896-d9e1-e726-94a1-9b5c3e099f37"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

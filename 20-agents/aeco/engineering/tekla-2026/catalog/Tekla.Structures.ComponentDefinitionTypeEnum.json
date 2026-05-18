@@ -1,0 +1,39 @@
+{
+  "name": "ComponentDefinitionTypeEnum",
+  "namespace": "Tekla.Structures",
+  "kind": "enum",
+  "summary": "The component definition type tells what kind of a component is in question.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/f28368d2-a894-54a5-ba13-eb1eea31433c",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "SYSTEM",
+      "value": 0,
+      "summary": "With the type system, component is defined using developer-kit"
+    },
+    {
+      "name": "CUSTOM",
+      "value": -1,
+      "summary": "With the type custom, component is defined as custom component"
+    },
+    {
+      "name": "DOTNET",
+      "value": -100000,
+      "summary": "With the type dotnet, component is defined using .NET plug-in interface"
+    },
+    {
+      "name": "DOTNET_CONNECTION",
+      "value": -200000,
+      "summary": "With the type dotnet_connection, connection is defined using .NET plug-in interface"
+    },
+    {
+      "name": "DOTNET_DRAWING",
+      "value": -300000,
+      "summary": "With the type dotnet_drawing, drawing component is defined using .NET drawing plug-in interface"
+    }
+  ]
+}

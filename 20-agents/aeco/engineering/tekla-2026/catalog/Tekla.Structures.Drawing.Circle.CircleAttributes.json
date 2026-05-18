@@ -1,0 +1,77 @@
+{
+  "name": "Circle.CircleAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The CircleAttributes class is the attributes class of the circle.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/1e037ad1-c3f9-cdf6-fb5d-3b6fcb191cc9",
+  "constructors": [
+    {
+      "name": "Circle.CircleAttributes",
+      "signature": "Circle.CircleAttributes(...)",
+      "summary": "Creates a new default circle attributes instance that loads standard attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ee841385-d630-97b5-e5a5-95a7b58a4457"
+    },
+    {
+      "name": "Circle.CircleAttributes",
+      "signature": "Circle.CircleAttributes(...)",
+      "summary": "Creates a new circle attributes instance that loads the specified attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9130556c-2b21-156d-e13e-7a4b4c7243be"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/72984e43-0196-1930-e922-544f93db56ef"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "LoadAttributes(...)",
+      "summary": "Loads the attributes from the attribute file.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bd0ae190-2c49-55b6-41f9-ba7ff3e3be49"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BehindModelObjects",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether the closed graphic object is drawn behind model objects",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2f3d8e0e-95ab-ddc8-0eed-41a8f547f5e5"
+    },
+    {
+      "name": "Hatch",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The hatch attributes of the closed graphic object (the closed graphic object is hatchable).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a4e0e3d4-102f-e2cb-68f2-da8c9f63fba0"
+    },
+    {
+      "name": "Line",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The line attributes of the graphic object. A graphic object always consists of lines.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3483367b-c555-6997-e0a4-988358d7ce9b"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

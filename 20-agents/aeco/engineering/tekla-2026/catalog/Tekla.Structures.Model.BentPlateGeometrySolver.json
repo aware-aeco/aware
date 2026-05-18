@@ -1,0 +1,187 @@
+{
+  "name": "BentPlateGeometrySolver",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "BentPlateGeometrySolver is a solver class to handle ConnectiveGeometry modification related computations.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/6868795d-e6b6-4c94-a705-5e4972e535c9",
+  "constructors": [
+    {
+      "name": "BentPlateGeometrySolver",
+      "signature": "BentPlateGeometrySolver(...)",
+      "summary": "Initializes a new instance of the BentPlateGeometrySolver class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fd8af369-d18d-821f-2a59-be7b6f97e022"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddLeg(ConnectiveGeometry, Contour)",
+      "signature": "AddLeg(ConnectiveGeometry, Contour)(...)",
+      "summary": "Appends a polygon section to ConnectiveGeometry, using the maximal radius for the cylindrical connection.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a2759dfe-8879-387a-43c8-a30e76609c81"
+    },
+    {
+      "name": "AddLeg(ConnectiveGeometry, Contour, Double)",
+      "signature": "AddLeg(ConnectiveGeometry, Contour, Double)(...)",
+      "summary": "Appends a polygon section to this ConnectiveGeometry, using the specified radius for the cylindrical connection.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/be684308-bd46-4b43-ab67-885df4db987f"
+    },
+    {
+      "name": "AddLeg(ConnectiveGeometry, Contour, BentPlate.BendShape)",
+      "signature": "AddLeg(ConnectiveGeometry, Contour, BentPlate.BendShape)(...)",
+      "summary": "Appends a polygon section to ConnectiveGeometry, using the maximal radius for the cylindrical connection, or the maximum cone aperture for conical connection.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/01139736-16e5-b503-b77c-2a989302924e"
+    },
+    {
+      "name": "AddLeg(ConnectiveGeometry, LineSegment, Contour, LineSegment)",
+      "signature": "AddLeg(ConnectiveGeometry, LineSegment, Contour, LineSegment)(...)",
+      "summary": "Appends a polygon section to this ConnectiveGeometry, using the specified connection points and maximal radius for the cylindrical connection.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fe3ef7c1-95d0-b903-029f-3327db769d09"
+    },
+    {
+      "name": "AddLeg(ConnectiveGeometry, Contour, Double, Double)",
+      "signature": "AddLeg(ConnectiveGeometry, Contour, Double, Double)(...)",
+      "summary": "Joins a polygon section to this ConnectiveGeometry, using the specified radius and aperture for the conical connection.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/005a09fb-64f4-0150-fdee-40ba1d2e009e"
+    },
+    {
+      "name": "AddLeg(ConnectiveGeometry, LineSegment, Contour, LineSegment, Double)",
+      "signature": "AddLeg(ConnectiveGeometry, LineSegment, Contour, LineSegment, Double)(...)",
+      "summary": "Appends a polygon section to this ConnectiveGeometry, using the specified connection points and radius for the cylindrical connection.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3381e0db-8efa-f82b-8322-f4a48ed1a265"
+    },
+    {
+      "name": "AddLeg(ConnectiveGeometry, LineSegment, Contour, LineSegment, BentPlate.BendShape)",
+      "signature": "AddLeg(ConnectiveGeometry, LineSegment, Contour, LineSegment, BentPlate.BendShape)(...)",
+      "summary": "Appends a polygon section to this ConnectiveGeometry, using the specified connection points and maximal radius for the cylindrical connection, or maximum aperture for conical connection.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2ae3af3f-6bf8-1f24-e666-c55aca86f5c4"
+    },
+    {
+      "name": "AddLeg(ConnectiveGeometry, LineSegment, Contour, LineSegment, Double, Double)",
+      "signature": "AddLeg(ConnectiveGeometry, LineSegment, Contour, LineSegment, Double, Double)(...)",
+      "summary": "Joins a polygon section to this ConnectiveGeometry, using the specified connection points and radius and aperture for the conical connection.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/253cf055-768d-0624-e258-2039cd78494d"
+    },
+    {
+      "name": "ModifyBendSurface",
+      "signature": "ModifyBendSurface(...)",
+      "summary": "Modifies the shape of a bend surface section, and updates related polygon sections accordingly.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2d82eb90-c4a4-d473-b872-08e8522fa827"
+    },
+    {
+      "name": "ModifyConicalRadiuses",
+      "signature": "ModifyConicalRadiuses(...)",
+      "summary": "Modify the radiuses of a conical section, preserving the length of the side boundaries. The order of the provided radiuses is not relevant, as the cone vertex will be located on the same side of the plates as the original cone section.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e2a50415-93e4-cc52-e702-0bab551f0a2d"
+    },
+    {
+      "name": "ModifyCylindricalSurface",
+      "signature": "ModifyCylindricalSurface(...)",
+      "summary": "Modifies the shape of a cylindrical surface section, and updates related polygon sections accordingly.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9b20a6c3-4976-912f-a940-660056f80e3d"
+    },
+    {
+      "name": "ModifyPolygon",
+      "signature": "ModifyPolygon(...)",
+      "summary": "Modify the shape of a polygon section, and updates related cylindrical sections accordingly.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/124f6069-da5d-82e5-0762-9266e5b30aed"
+    },
+    {
+      "name": "ModifyRadius",
+      "signature": "ModifyRadius(...)",
+      "summary": "Modify the radius of a cylindrical section.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/332d9017-9164-8a8b-5a1e-dc772f98674f"
+    },
+    {
+      "name": "RemoveLeg",
+      "signature": "RemoveLeg(...)",
+      "summary": "Removes a polygon section which is the end section, from this ConnectiveGeometry including extensions and cylindrical surface.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5426185f-4351-d659-7842-8a1e6256eb25"
+    },
+    {
+      "name": "ScaleConeSection",
+      "signature": "ScaleConeSection(...)",
+      "summary": "Scale the shape of a conical section.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ca3720e0-be3e-6960-ca2f-151a15227447"
+    },
+    {
+      "name": "SetBendAngle",
+      "signature": "SetBendAngle(...)",
+      "summary": "Sets angle as the angle of curved section sectionToSetAngle and modifies geometry starting from sectionToMove.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6480f6a8-c58d-c973-1e50-e90c49132b08"
+    },
+    {
+      "name": "SetMainSection",
+      "signature": "SetMainSection(...)",
+      "summary": "Sets newMainSection as a main section of geometry.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a9b78007-72d0-cdc5-7461-ffd5fc97c0d5"
+    },
+    {
+      "name": "Split",
+      "signature": "Split(...)",
+      "summary": "Returns the resulting geometry or geometries when a section and the related automatically created sections are removed from this geometry.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5cac6160-6cf1-1bfb-b4da-d9c72fff026a"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

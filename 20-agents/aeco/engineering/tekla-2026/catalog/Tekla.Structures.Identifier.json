@@ -1,0 +1,122 @@
+{
+  "name": "Identifier",
+  "namespace": "Tekla.Structures",
+  "kind": "class",
+  "summary": "The Identifier class represents an identifier that holds information about the identifier number of an object.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/957a7507-7619-f1f9-acfb-6ff8de2d9e27",
+  "constructors": [
+    {
+      "name": "Identifier",
+      "signature": "Identifier(...)",
+      "summary": "Constructs an empty identifier.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4868e096-73c4-0b63-0abf-0b67b4e59313"
+    },
+    {
+      "name": "Identifier",
+      "signature": "Identifier(...)",
+      "summary": "Constructs an identifier with the given GUID.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e773ee15-b501-c1a4-3dcd-272cfcbb2c05"
+    },
+    {
+      "name": "Identifier",
+      "signature": "Identifier(...)",
+      "summary": "Constructs an identifier with the given ID.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/46d5ee66-3669-67ff-4f79-5e5fd02f87d9"
+    },
+    {
+      "name": "Identifier",
+      "signature": "Identifier(...)",
+      "summary": "Constructs an identifier with the given GUID string.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/84bc0c91-cf27-caef-4365-f341eb03225a"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals(Object)",
+      "signature": "Equals(Object)(...)",
+      "summary": "Compares the identifier with another object instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4419ffcd-5422-43bf-66d3-eb2f5d7f8c37"
+    },
+    {
+      "name": "Equals(Identifier)",
+      "signature": "Equals(Identifier)(...)",
+      "summary": "Compares the identifier with another identifier instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/05e18bd6-3e91-7fc2-4965-fd6fbc2de331"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "GetHashCode(...)",
+      "summary": "Gets the hash number of the identifier.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/db9e3441-19e4-840e-44de-55692dc0890c"
+    },
+    {
+      "name": "IsValid",
+      "signature": "IsValid(...)",
+      "summary": "Returns true if the identifier seems to be valid. The validation is done based on the ID or GUID property.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ad94afee-596d-cd8c-4a85-854c234e178c"
+    },
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Returns the integer ID as a string.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ea0f0a40-bce9-e6a4-cf65-06f82a19ac59"
+    }
+  ],
+  "properties": [
+    {
+      "name": "GUID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The object\u0027s globally unique identifier. If the GUID value is set manually, the ID is initialized to 0 and the identification is done based on the GUID.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6957c7fb-5f35-44e5-c7f4-ecbb2d8e8d0e"
+    },
+    {
+      "name": "ID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The identifier number. If the ID value is set manually, the GUID is initialized to Guid.Empty and the identification is done based on the ID.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f30bf8f9-bc63-07c5-0d56-8cd34a4a112b"
+    },
+    {
+      "name": "ID2",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The sub identifier number. If the subID value is set manually, the GUID is initialized to Guid.Empty and the identification is done based on the ID.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/49e5f804-b22d-6b67-a4ae-895a0121e378"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

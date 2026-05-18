@@ -1,0 +1,34 @@
+{
+  "name": "LogicalAreaFilterExpressions.Site",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The Site class represents the site filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/555b36ca-8870-92ed-3e38-8734047aa0c4",
+  "constructors": [
+    {
+      "name": "LogicalAreaFilterExpressions.Site",
+      "signature": "LogicalAreaFilterExpressions.Site(...)",
+      "summary": "Initializes a new instance of the Site class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5dc052b0-fd1d-de86-bdd2-4963a7242f33"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

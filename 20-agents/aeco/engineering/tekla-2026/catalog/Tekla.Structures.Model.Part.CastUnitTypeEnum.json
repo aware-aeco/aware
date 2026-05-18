@@ -1,0 +1,24 @@
+{
+  "name": "Part.CastUnitTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The cast unit types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/d8d763ec-4bed-04c2-a930-17d0fb53de92",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "PRECAST",
+      "value": 0,
+      "summary": "The precast cast unit type."
+    },
+    {
+      "name": "CAST_IN_PLACE",
+      "value": 1,
+      "summary": "The cast in place cast unit type."
+    }
+  ]
+}

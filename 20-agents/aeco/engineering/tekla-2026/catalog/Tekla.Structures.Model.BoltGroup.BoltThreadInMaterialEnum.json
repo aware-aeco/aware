@@ -1,0 +1,24 @@
+{
+  "name": "BoltGroup.BoltThreadInMaterialEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The thread in the material.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/3db6886a-d653-ddc4-6543-8e645a77f6da",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "THREAD_IN_MATERIAL_NO",
+      "value": 0,
+      "summary": "No thread inside the material (the part)."
+    },
+    {
+      "name": "THREAD_IN_MATERIAL_YES",
+      "value": 1,
+      "summary": "Thread inside the material (the part)."
+    }
+  ]
+}

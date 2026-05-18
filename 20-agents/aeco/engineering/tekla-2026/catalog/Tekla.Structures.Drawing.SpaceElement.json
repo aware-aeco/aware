@@ -1,0 +1,52 @@
+{
+  "name": "SpaceElement",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The SpaceElement class defines a space between the desired elements.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/51836ed0-86ad-cb8b-ea56-eb5f2a8645c9",
+  "constructors": [
+    {
+      "name": "SpaceElement",
+      "signature": "SpaceElement(...)",
+      "summary": "Initializes a new instance of the SpaceElement class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c6ef447b-11d1-da94-7d19-81b65a074dda"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "Clone(...)",
+      "summary": "Clones the object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/397b8b91-583d-295c-801a-b2847d807561"
+    },
+    {
+      "name": "GetUnformattedString",
+      "signature": "GetUnformattedString(...)",
+      "summary": "Returns the content as a string without formatting.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b8551ee4-d132-407b-2f23-0da21a35b230"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ca9411db-9480-72cc-fc6c-b0a27767c50d"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

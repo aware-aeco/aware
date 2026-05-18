@@ -1,0 +1,54 @@
+{
+  "name": "BaseWeld.WeldElectrodeClassificationEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The weld electrode classification.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/30523b14-c433-6f00-03bb-ff542912152d",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "WELD_ELECTRODE_CLASSIFICATION_NONE",
+      "value": 0,
+      "summary": "No electrode classification."
+    },
+    {
+      "name": "WELD_ELECTRODE_CLASSIFICATION_35",
+      "value": 1,
+      "summary": "The electrode classification 35."
+    },
+    {
+      "name": "WELD_ELECTRODE_CLASSIFICATION_42",
+      "value": 2,
+      "summary": "The electrode classification 42."
+    },
+    {
+      "name": "WELD_ELECTRODE_CLASSIFICATION_50",
+      "value": 3,
+      "summary": "The electrode classification 50."
+    },
+    {
+      "name": "WELD_ELECTRODE_CLASSIFICATION_E60XX",
+      "value": 4,
+      "summary": "The electrode classification E60XX."
+    },
+    {
+      "name": "WELD_ELECTRODE_CLASSIFICATION_E70XX",
+      "value": 5,
+      "summary": "The electrode classification E70XX."
+    },
+    {
+      "name": "WELD_ELECTRODE_CLASSIFICATION_E80XX",
+      "value": 6,
+      "summary": "The electrode classification E80XX."
+    },
+    {
+      "name": "WELD_ELECTRODE_CLASSIFICATION_E90XX",
+      "value": 7,
+      "summary": "The electrode classification E90XX."
+    }
+  ]
+}

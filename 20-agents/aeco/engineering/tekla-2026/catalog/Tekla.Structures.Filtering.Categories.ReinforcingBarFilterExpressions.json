@@ -1,0 +1,14 @@
+{
+  "name": "ReinforcingBarFilterExpressions",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The ReinforcingBarFilterExpressions class contains all the reinforcing bar filter expressions.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/8d19b059-93df-9a3d-f577-89207fdbf33b",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,29 @@
+{
+  "name": "BoltItem.BoltItemTypeEnum",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "enum",
+  "summary": "Defines the different bolt item types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/0b606ef0-2e8e-2527-2eac-63e2f9c94b04",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "BOLT_UNKNOWN",
+      "value": 0,
+      "summary": "The unknown bolt item type."
+    },
+    {
+      "name": "BOLT",
+      "value": 1,
+      "summary": "The bolt type."
+    },
+    {
+      "name": "STUD",
+      "value": 2,
+      "summary": "The stud type."
+    }
+  ]
+}

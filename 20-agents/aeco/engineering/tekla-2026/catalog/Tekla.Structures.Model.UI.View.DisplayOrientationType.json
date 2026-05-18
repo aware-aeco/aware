@@ -1,0 +1,24 @@
+{
+  "name": "View.DisplayOrientationType",
+  "namespace": "Tekla.Structures.Model.UI",
+  "kind": "enum",
+  "summary": "The view plane types. The plane type can be changed.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/c84772c0-1496-84bb-8b31-da24ed2ebab4",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "DISPLAY_VIEW_PLANE",
+      "value": 0,
+      "summary": "The display orientation is in the view plane defined by the view coordinate system."
+    },
+    {
+      "name": "DISPLAY_3D",
+      "value": 1,
+      "summary": "The display orientation is in 3D defined by the display coordinate system."
+    }
+  ]
+}

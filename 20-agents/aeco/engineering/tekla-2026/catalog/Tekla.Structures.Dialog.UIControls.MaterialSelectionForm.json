@@ -1,0 +1,42 @@
+{
+  "name": "MaterialSelectionForm",
+  "namespace": "Tekla.Structures.Dialog.UIControls",
+  "kind": "class",
+  "summary": "The MaterialSelectionForm class represents a dialog to select materials using the material catalogs.",
+  "base": "System.Windows.Forms.Form",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/c171b4db-6ad7-65a7-5659-3d3a409427f7",
+  "constructors": [
+    {
+      "name": "MaterialSelectionForm",
+      "signature": "MaterialSelectionForm(...)",
+      "summary": "Creates a new instance of the MaterialSelectionForm.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/45c347cb-181a-a431-c824-3ccaa6f05a05"
+    },
+    {
+      "name": "MaterialSelectionForm",
+      "signature": "MaterialSelectionForm(...)",
+      "summary": "Creates a new instance of the MaterialSelectionForm, selecting the given material in the tree control.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4599154a-2939-7aac-b798-85eb751acae6"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "SelectedMaterial",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The selected material in the control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/662b0895-a2e9-1ada-df36-9ef5790e64b4"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,14 @@
+{
+  "name": "BoltFilterExpressions",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The BoltFilterExpressions class contains all the bolt filter expressions.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/8660c0f3-0c5c-c0db-1822-1092fd3f6562",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

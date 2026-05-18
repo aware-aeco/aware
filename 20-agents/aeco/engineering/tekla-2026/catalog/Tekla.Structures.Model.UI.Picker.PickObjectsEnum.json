@@ -1,0 +1,39 @@
+{
+  "name": "Picker.PickObjectsEnum",
+  "namespace": "Tekla.Structures.Model.UI",
+  "kind": "enum",
+  "summary": "The possible model object pick types for many objects.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/1c0dbcdb-bae2-7720-b597-51504c46dddf",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "PICK_N_OBJECTS",
+      "value": 0,
+      "summary": "Pick multiple model objects of any type."
+    },
+    {
+      "name": "PICK_N_PARTS",
+      "value": 1,
+      "summary": "Pick multiple parts."
+    },
+    {
+      "name": "PICK_N_WELDS",
+      "value": 2,
+      "summary": "Pick multiple welds."
+    },
+    {
+      "name": "PICK_N_BOLTGROUPS",
+      "value": 3,
+      "summary": "Pick multiple bolt groups."
+    },
+    {
+      "name": "PICK_N_REINFORCEMENTS",
+      "value": 4,
+      "summary": "Pick multiple reinforcements."
+    }
+  ]
+}

@@ -1,0 +1,199 @@
+{
+  "name": "ProfileItem.ProfileItemTypeEnum",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "enum",
+  "summary": "Defines the different profile item types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/94572333-9548-b55f-e9ec-167c0efc528e",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ALL_PROFILES",
+      "value": -1,
+      "summary": "All profiles."
+    },
+    {
+      "name": "PROFILE_UNKNOWN",
+      "value": 0,
+      "summary": "The unknown profile."
+    },
+    {
+      "name": "PROFILE_I",
+      "value": 1,
+      "summary": "The I profile."
+    },
+    {
+      "name": "PROFILE_L",
+      "value": 2,
+      "summary": "The L profile."
+    },
+    {
+      "name": "PROFILE_Z",
+      "value": 3,
+      "summary": "The Z profile."
+    },
+    {
+      "name": "PROFILE_U",
+      "value": 4,
+      "summary": "The U profile."
+    },
+    {
+      "name": "PROFILE_PL",
+      "value": 5,
+      "summary": "The plate profile."
+    },
+    {
+      "name": "PROFILE_D",
+      "value": 6,
+      "summary": "The circular section profile."
+    },
+    {
+      "name": "PROFILE_PD",
+      "value": 7,
+      "summary": "The circular hollow section profile."
+    },
+    {
+      "name": "PROFILE_P",
+      "value": 8,
+      "summary": "The rectangular hollow section profile."
+    },
+    {
+      "name": "PROFILE_C",
+      "value": 9,
+      "summary": "The C profile."
+    },
+    {
+      "name": "PROFILE_T",
+      "value": 10,
+      "summary": "The T profile."
+    },
+    {
+      "name": "PROFILE_HK",
+      "value": 11,
+      "summary": "The welded box profile."
+    },
+    {
+      "name": "PROFILE_HQ",
+      "value": 13,
+      "summary": "The HQ profile"
+    },
+    {
+      "name": "PROFILE_ZZ",
+      "value": 15,
+      "summary": "The ZZ profile."
+    },
+    {
+      "name": "PROFILE_CC",
+      "value": 16,
+      "summary": "The CC profile."
+    },
+    {
+      "name": "PROFILE_CW",
+      "value": 17,
+      "summary": "The CW profile."
+    },
+    {
+      "name": "PROFILE_CU",
+      "value": 18,
+      "summary": "The CU profile."
+    },
+    {
+      "name": "PROFILE_EB",
+      "value": 19,
+      "summary": "The EB profile."
+    },
+    {
+      "name": "PROFILE_BF",
+      "value": 20,
+      "summary": "The BF profile."
+    },
+    {
+      "name": "PROFILE_SPD",
+      "value": 21,
+      "summary": "The SPD profile."
+    },
+    {
+      "name": "PROFILE_EC",
+      "value": 22,
+      "summary": "The EC profile."
+    },
+    {
+      "name": "PROFILE_ED",
+      "value": 23,
+      "summary": "The ED profile."
+    },
+    {
+      "name": "PROFILE_EE",
+      "value": 24,
+      "summary": "The EE profile."
+    },
+    {
+      "name": "PROFILE_EF",
+      "value": 25,
+      "summary": "The EF profile."
+    },
+    {
+      "name": "PROFILE_EZ",
+      "value": 26,
+      "summary": "The EZ profile."
+    },
+    {
+      "name": "PROFILE_EW",
+      "value": 27,
+      "summary": "The EW profile."
+    },
+    {
+      "name": "PROFILE_POLYGON_PLATE",
+      "value": 51,
+      "summary": "The polygon plate profile."
+    },
+    {
+      "name": "PROFILE_FPL",
+      "value": 2,
+      "summary": "The FPL profile."
+    },
+    {
+      "name": "PROFILE_SP",
+      "value": 101,
+      "summary": "The SP profile."
+    },
+    {
+      "name": "PROFILE_RCDL",
+      "value": 102,
+      "summary": "The RCDL profile."
+    },
+    {
+      "name": "PROFILE_RCXX",
+      "value": 103,
+      "summary": "The RCXX profile."
+    },
+    {
+      "name": "PROFILE_RCL",
+      "value": 104,
+      "summary": "The RCL profile."
+    },
+    {
+      "name": "PROFILE_RCDX",
+      "value": 105,
+      "summary": "The RCDX profile."
+    },
+    {
+      "name": "PROFILE_RCX",
+      "value": 106,
+      "summary": "The RCX profile."
+    },
+    {
+      "name": "PROFILE_USER_DEFINED",
+      "value": 998,
+      "summary": "The user-defined, fixed profile."
+    },
+    {
+      "name": "PROFILE_USER_PARAMETRIC",
+      "value": 999,
+      "summary": "The user-defined, parametric profile."
+    }
+  ]
+}

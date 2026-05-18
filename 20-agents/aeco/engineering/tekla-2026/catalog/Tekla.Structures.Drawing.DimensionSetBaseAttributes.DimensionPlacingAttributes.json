@@ -1,0 +1,68 @@
+{
+  "name": "DimensionSetBaseAttributes.DimensionPlacingAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The DimensionPlacingAttributes class controls the placing of the dimension.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/0c652346-d920-5590-e777-e1edf097c620",
+  "constructors": [
+    {
+      "name": "DimensionSetBaseAttributes.DimensionPlacingAttributes",
+      "signature": "DimensionSetBaseAttributes.DimensionPlacingAttributes(...)",
+      "summary": "Creates a new dimension placing attributes instance. The placing is set to the free placing.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/db0c8ec8-cc12-d64a-d89b-6a0b6c037399"
+    },
+    {
+      "name": "DimensionSetBaseAttributes.DimensionPlacingAttributes",
+      "signature": "DimensionSetBaseAttributes.DimensionPlacingAttributes(...)",
+      "summary": "Creates a new dimension placing attributes instance with the given parameters.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c058ae87-e978-0c00-d9ac-ac062eede407"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/986ea414-b9bc-87b6-0ae1-6992b84173e6"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Direction",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The placing direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9b033f85-99ed-f48b-6d56-d4d9e1ef98b9"
+    },
+    {
+      "name": "Distance",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The placing distance attributes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b2733a24-f554-a843-b4e1-09c6abff113b"
+    },
+    {
+      "name": "Placing",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The placing type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f41c1760-d4a1-9970-e807-d808ef2a2c04"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

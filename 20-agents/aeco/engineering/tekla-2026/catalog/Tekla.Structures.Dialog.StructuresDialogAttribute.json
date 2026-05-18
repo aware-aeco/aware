@@ -1,0 +1,78 @@
+{
+  "name": "StructuresDialogAttribute",
+  "namespace": "Tekla.Structures.Dialog",
+  "kind": "class",
+  "summary": "The StructuresDialogAttribute class specifies the attribute name to which the value of the property will be bound in Tekla Structures.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/1795a6fd-a41a-98af-ec52-cad837ec40d7",
+  "constructors": [
+    {
+      "name": "StructuresDialogAttribute",
+      "signature": "StructuresDialogAttribute(...)",
+      "summary": "Initializes a new StructuresDialogAttribute instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/494c6575-ef5f-4548-a422-db61b3120b1c"
+    },
+    {
+      "name": "StructuresDialogAttribute",
+      "signature": "StructuresDialogAttribute(...)",
+      "summary": "Initializes a new StructuresDialogAttribute instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ecbd0160-8dce-96c9-aac3-b041a332ba80"
+    },
+    {
+      "name": "StructuresDialogAttribute",
+      "signature": "StructuresDialogAttribute(...)",
+      "summary": "Initializes a new StructuresDialogAttribute instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b146d771-e707-f78f-aa31-5ec7fd965023"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetCorrectDialogAttributeType",
+      "signature": "GetCorrectDialogAttributeType(...)",
+      "summary": "Initializes a new StructuresDialogAttribute instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6c375ab8-7c62-bbea-0f14-67d3bf9d0a5b"
+    },
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Returns a string that represents the current StructuresDialogAttribute object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2d85f6f4-d740-0286-b74a-ec7c92648b35"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AttributeName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the attribute name of the property.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/696ab0a5-2b74-af2f-ec53-b61b673c819f"
+    },
+    {
+      "name": "AttributeType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the attribute type of the property.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/60169928-c06e-6ac6-2152-2e7cfcb57640"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

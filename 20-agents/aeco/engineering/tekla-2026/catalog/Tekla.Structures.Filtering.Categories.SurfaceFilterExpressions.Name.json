@@ -1,0 +1,34 @@
+{
+  "name": "SurfaceFilterExpressions.Name",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The Name class represents the name filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/d64824c0-9140-ef21-3a6b-b9cb46daf38c",
+  "constructors": [
+    {
+      "name": "SurfaceFilterExpressions.Name",
+      "signature": "SurfaceFilterExpressions.Name(...)",
+      "summary": "Initializes a new instance of the Name class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/10d58627-0a35-6433-e317-ef93ba732e1b"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

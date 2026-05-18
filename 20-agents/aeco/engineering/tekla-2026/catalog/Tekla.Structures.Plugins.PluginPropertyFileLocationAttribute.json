@@ -1,0 +1,41 @@
+{
+  "name": "PluginPropertyFileLocationAttribute",
+  "namespace": "Tekla.Structures.Plugins",
+  "kind": "class",
+  "summary": "Used to specify file location for a property file.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/23b0191a-e544-1e01-af19-aa2b3bb67a70",
+  "constructors": [
+    {
+      "name": "PluginPropertyFileLocationAttribute",
+      "signature": "PluginPropertyFileLocationAttribute(...)",
+      "summary": "Initializes a new instance of the PluginPropertyFileLocationAttribute class, for a file with provided filename suffix.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0b7c4903-a5e8-3e8a-6ae0-f7174529fdbb"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Subdirectory",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the property file subdirectory in a model folder.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/99d620f7-d1a2-e654-c71e-3dac7adfedc3"
+    },
+    {
+      "name": "Suffix",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the property file suffix.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9c8be470-39d1-0f07-b289-df2d196eac3c"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

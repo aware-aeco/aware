@@ -1,0 +1,23 @@
+{
+  "name": "IObjectAlignedBoundingBox",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "interface",
+  "summary": "The IObjectAlignedBoundingBox interface is implemented by objects that have an object aligned bounding box.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/c7cc1640-1aad-5955-defb-1e12e0708cac",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetObjectAlignedBoundingBox",
+      "signature": "GetObjectAlignedBoundingBox(...)",
+      "summary": "Gets the bounding box for the current object in its local coordinate system.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/06142c5d-cfd3-40c9-493e-9f860a626281"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

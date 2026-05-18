@@ -1,0 +1,69 @@
+{
+  "name": "DrawingObjectSelector",
+  "namespace": "Tekla.Structures.Drawing.UI",
+  "kind": "class",
+  "summary": "The DrawingObjectSelector class is used to select drawing objects in the drawing. The class contains methods for selecting/unselecting single objects or a list of objects. Currently, these selections both select the objects from the database and highlight them visually.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/7180d038-5676-9fc4-bd6c-bd5f4ec53535",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetSelected",
+      "signature": "GetSelected(...)",
+      "summary": "Gets the selected objects in the drawing.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/23520711-1212-6069-bd1e-684691554671"
+    },
+    {
+      "name": "SelectObject",
+      "signature": "SelectObject(...)",
+      "summary": "Selects a single object in the drawing.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ce422e54-d551-c67b-ee2c-2e85907b91c7"
+    },
+    {
+      "name": "SelectObjects",
+      "signature": "SelectObjects(...)",
+      "summary": "Selects the specified drawing objects in the drawing.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/16229e0b-b7ed-5b1c-3cc6-c64911d01ef4"
+    },
+    {
+      "name": "UnselectAllObjects",
+      "signature": "UnselectAllObjects(...)",
+      "summary": "Unselects all the selected objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bf12b799-6c49-70a7-dca9-d09c62c64cd9"
+    },
+    {
+      "name": "UnselectObject",
+      "signature": "UnselectObject(...)",
+      "summary": "Unselects a drawing object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7dfd42cd-254d-ef27-6ab0-201a6d94b50c"
+    },
+    {
+      "name": "UnselectObjects",
+      "signature": "UnselectObjects(...)",
+      "summary": "Unselects the specified drawing objects keeping the other objects still selected.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/16da69e3-8e6d-8cbc-6ecb-c10645b03487"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,24 @@
+{
+  "name": "RebarSpacing.ExactSpacing",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "This class defines objects used in the exact spacing type.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/8313a0b4-447c-2512-0509-31708a10f051",
+  "constructors": [
+    {
+      "name": "RebarSpacing.ExactSpacing",
+      "signature": "RebarSpacing.ExactSpacing(...)",
+      "summary": "Initializes a new instance of the RebarSpacing.ExactSpacing class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fa5531dd-c9e0-bebd-5f86-b3a425b2b826"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

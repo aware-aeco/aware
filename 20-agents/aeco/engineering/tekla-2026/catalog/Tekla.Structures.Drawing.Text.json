@@ -1,0 +1,369 @@
+{
+  "name": "Text",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The Text class defines a drawing object that can hold a text string and is shown in a drawing.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/a0397063-758c-2266-20c3-a70083fc302c",
+  "constructors": [
+    {
+      "name": "Text",
+      "signature": "Text(...)",
+      "summary": "Creates a new text instance with the given text string.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/999fc0fb-8b80-055b-2e8c-9cc88555d8fa"
+    },
+    {
+      "name": "Text",
+      "signature": "Text(...)",
+      "summary": "Creates a new text instance with the given text string using a specific placing type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d76f40f3-6a15-9007-4746-f30818ff0349"
+    },
+    {
+      "name": "Text",
+      "signature": "Text(...)",
+      "summary": "Creates a new text instance with the given text string and text attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a063ed43-f17f-a3c9-6719-d673a21e2af9"
+    },
+    {
+      "name": "Text",
+      "signature": "Text(...)",
+      "summary": "Creates a new text instance with the given text string and text attributes using a specific placing type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/caff41b5-cbc2-9109-621e-a529ccdbbfc0"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Delete",
+      "signature": "Delete(...)",
+      "summary": "Deletes the text from the current drawing database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8046ec4d-7495-401b-36bf-ab19112abb3f"
+    },
+    {
+      "name": "GetAxisAlignedBoundingBox",
+      "signature": "GetAxisAlignedBoundingBox(...)",
+      "summary": "Returns the axis aligned bounding box of the text (rectangle format).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4c9d4d1f-8fb7-255f-803c-e935b084fbde"
+    },
+    {
+      "name": "GetDoubleUserProperties(Dictionary.String, Double..)",
+      "signature": "GetDoubleUserProperties(Dictionary.String, Double..)(...)",
+      "summary": "Retrieves all double user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b25f0e6b-ab5c-154a-a45c-4f5868a20599"
+    },
+    {
+      "name": "GetDoubleUserProperties(List.String., Dictionary.String, Double..)",
+      "signature": "GetDoubleUserProperties(List.String., Dictionary.String, Double..)(...)",
+      "summary": "Retrieves all double user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7f327fc5-14b5-f534-da39-b68d3f87124a"
+    },
+    {
+      "name": "GetDrawing",
+      "signature": "GetDrawing(...)",
+      "summary": "Gets the drawing where the drawing object is.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4e9beef3-2188-ab45-9f07-dbde351915bf"
+    },
+    {
+      "name": "GetIntegerUserProperties(Dictionary.String, Int32..)",
+      "signature": "GetIntegerUserProperties(Dictionary.String, Int32..)(...)",
+      "summary": "Retrieves all integer user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/20a7d099-ebee-b016-ffc7-0181a1219405"
+    },
+    {
+      "name": "GetIntegerUserProperties(List.String., Dictionary.String, Int32..)",
+      "signature": "GetIntegerUserProperties(List.String., Dictionary.String, Int32..)(...)",
+      "summary": "Retrieves all integer user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b485bd81-5ccf-68e4-0453-caea6b1d0dde"
+    },
+    {
+      "name": "GetObjectAlignedBoundingBox",
+      "signature": "GetObjectAlignedBoundingBox(...)",
+      "summary": "Returns the object aligned bounding box of the text (rectangle format).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/df12c0cc-3b69-b142-0716-7c196694f0db"
+    },
+    {
+      "name": "GetObjects.",
+      "signature": "GetObjects.(...)",
+      "summary": "Gets the children objects of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/59774d78-87e8-44c4-a0c8-d38d85c81bd5"
+    },
+    {
+      "name": "GetObjects(.Type.)",
+      "signature": "GetObjects(.Type.)(...)",
+      "summary": "Gets the children objects of the current object that are of certain types.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2e30931a-cc02-c1f4-2a59-27f44ff519b2"
+    },
+    {
+      "name": "GetRelatedObjects.",
+      "signature": "GetRelatedObjects.(...)",
+      "summary": "Gets the related objects of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/50820387-cee1-637a-318e-fb3e06780149"
+    },
+    {
+      "name": "GetRelatedObjects(.Type.)",
+      "signature": "GetRelatedObjects(.Type.)(...)",
+      "summary": "Gets the related objects of the current object that are of certain types.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/01d5e137-fa4b-92d7-328b-69c974dc7415"
+    },
+    {
+      "name": "GetStringUserProperties(Dictionary.String, String..)",
+      "signature": "GetStringUserProperties(Dictionary.String, String..)(...)",
+      "summary": "Retrieves all string user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a0039213-2e79-912f-5bdf-5e6dd417c092"
+    },
+    {
+      "name": "GetStringUserProperties(List.String., Dictionary.String, String..)",
+      "signature": "GetStringUserProperties(List.String., Dictionary.String, String..)(...)",
+      "summary": "Retrieves all string user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/474a80dc-539a-2734-4b5c-1ea52f86e750"
+    },
+    {
+      "name": "GetUserProperty(String, Double.)",
+      "signature": "GetUserProperty(String, Double.)(...)",
+      "summary": "Gets a double property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/203a39af-db6b-e317-5de3-f0301c1642f2"
+    },
+    {
+      "name": "GetUserProperty(String, Int32.)",
+      "signature": "GetUserProperty(String, Int32.)(...)",
+      "summary": "Gets an integer property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f773aabe-fe4e-dba3-bf33-f6f927441a85"
+    },
+    {
+      "name": "GetUserProperty(String, String.)",
+      "signature": "GetUserProperty(String, String.)(...)",
+      "summary": "Gets a string property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5335a30d-ac20-6231-5b02-22e14c6980a7"
+    },
+    {
+      "name": "GetView",
+      "signature": "GetView(...)",
+      "summary": "Gets the view where the drawing object is.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ed3c08d7-c75f-2e18-ee97-fe2e096f29b5"
+    },
+    {
+      "name": "Insert",
+      "signature": "Insert(...)",
+      "summary": "Inserts the text into the current drawing database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f0c01941-938a-df07-c1e3-23bcd0ce72fc"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/73d1e9ce-2460-b66c-4107-0c4ef2adb354"
+    },
+    {
+      "name": "IsSameDatabaseObject",
+      "signature": "IsSameDatabaseObject(...)",
+      "summary": "Returns true if the current object and the given object are referencing the same database object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/675fe6a8-2f1f-6e66-07f4-768bc3a1c74b"
+    },
+    {
+      "name": "Modify",
+      "signature": "Modify(...)",
+      "summary": "Modifies the text in the current drawing database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fb30fcb4-25c1-d1e8-1896-83757c015bb2"
+    },
+    {
+      "name": "MoveObjectRelative",
+      "signature": "MoveObjectRelative(...)",
+      "summary": "Moves the object using the move vector.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5c3f5b5b-afdb-a6d9-ce4a-b03f13f88f14"
+    },
+    {
+      "name": "Select",
+      "signature": "Select(...)",
+      "summary": "Selects the text from the current drawing database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/38543e63-4b92-66c8-b912-12d53361d233"
+    },
+    {
+      "name": "SetUserProperty(String, Double)",
+      "signature": "SetUserProperty(String, Double)(...)",
+      "summary": "Sets a double property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/995715f7-c86c-86d0-359f-76dc4d14197a"
+    },
+    {
+      "name": "SetUserProperty(String, Int32)",
+      "signature": "SetUserProperty(String, Int32)(...)",
+      "summary": "Sets an integer property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/88a5c4aa-fb12-e341-ee9e-fcd3284fab68"
+    },
+    {
+      "name": "SetUserProperty(String, String)",
+      "signature": "SetUserProperty(String, String)(...)",
+      "summary": "Sets a string property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/633cfaf7-22e7-1bb1-6596-053d78749c52"
+    },
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Changes the string presentation of the drawing object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/23e70841-4b0d-9dc2-7a9b-f3b6d7eed19f"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Attributes",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The attributes for the text.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3984d537-e641-c206-8b11-5e228c046747"
+    },
+    {
+      "name": "Hideable",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Accesses the information if this object is hidden or not or if it should be.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/565105f2-31b9-72c7-e962-96ce30bb1072"
+    },
+    {
+      "name": "InsertionPoint",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The insertion point of the text.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/157f1776-2360-cc4f-95e5-5be517b8ff58"
+    },
+    {
+      "name": "IsRichText",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets a value indicating whether the text contains rich text formatting (RTF). Returns false if the text is plain text or an empty string.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/baa5981c-b0fa-ff58-b538-54d1a359fb21"
+    },
+    {
+      "name": "Placing",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The current placing of the object. See the placing types for different placing options.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/67021b45-10a5-97d4-253a-fc4f00783f22"
+    },
+    {
+      "name": "QueryReturnValue",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Status information about the latest database operation (select, insert, modify, delete).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d86cf9da-3acd-9719-d93c-e98d5fb25151"
+    },
+    {
+      "name": "ResizeBehavior",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The text resize behavior.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/54b65097-1829-6c48-d634-50f508747255"
+    },
+    {
+      "name": "TextString",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The contents of the text.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/059a3009-519f-9537-985d-e2c4c8b05de3"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

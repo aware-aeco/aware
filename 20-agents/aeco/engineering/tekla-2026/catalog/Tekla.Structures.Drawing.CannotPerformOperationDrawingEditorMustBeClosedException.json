@@ -1,0 +1,24 @@
+{
+  "name": "CannotPerformOperationDrawingEditorMustBeClosedException",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The CannotPerformOperationDrawingEditorMustBeClosedException class defines the exception that is thrown when a user tries to do an operation which requires the drawing editor to be closed.",
+  "base": "System.ApplicationException",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/9f749962-f48a-a9fd-454a-17d708165ec3",
+  "constructors": [
+    {
+      "name": "CannotPerformOperationDrawingEditorMustBeClosedException",
+      "signature": "CannotPerformOperationDrawingEditorMustBeClosedException(...)",
+      "summary": "Creates a new cannot perform operation drawing editor must be closed exception instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/426d49dd-fffd-60e5-6d6c-7b19d338b3a7"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

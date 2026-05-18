@@ -1,0 +1,14 @@
+{
+  "name": "ReferenceObjectFilterExpressions",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The ReferenceObjectFilterExpressions class contains all the reference object filter expressions.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/e631274b-130a-0a7f-4c40-33a59edadcce",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

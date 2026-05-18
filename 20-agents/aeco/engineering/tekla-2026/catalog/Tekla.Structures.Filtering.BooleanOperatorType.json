@@ -1,0 +1,34 @@
+{
+  "name": "BooleanOperatorType",
+  "namespace": "Tekla.Structures.Filtering",
+  "kind": "enum",
+  "summary": "The Boolean operator type defines the operators between two Boolean filter expressions.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/58cc9e30-ca28-96dd-dadc-a3616f66acc6",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "IS_EQUAL",
+      "value": 1,
+      "summary": "The \u0022is equal\u0022 operator."
+    },
+    {
+      "name": "IS_NOT_EQUAL",
+      "value": 2,
+      "summary": "The \u0022is not equal\u0022 operator."
+    },
+    {
+      "name": "BOOLEAN_OR",
+      "value": 3,
+      "summary": "The Boolean OR operator."
+    },
+    {
+      "name": "BOOLEAN_AND",
+      "value": 4,
+      "summary": "The Boolean AND operator."
+    }
+  ]
+}

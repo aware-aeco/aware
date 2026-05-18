@@ -1,0 +1,34 @@
+{
+  "name": "PartFilterExpressions.Profile",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The Profile class represents the profile filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/e2e5e027-795c-62fb-05b0-082e272e8e69",
+  "constructors": [
+    {
+      "name": "PartFilterExpressions.Profile",
+      "signature": "PartFilterExpressions.Profile(...)",
+      "summary": "Initializes a new instance of the Profile class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/299fca4c-aaa9-5bb2-8553-adb5adae3412"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,87 @@
+{
+  "name": "Integer",
+  "namespace": "Tekla.Structures.Datatype",
+  "kind": "struct",
+  "summary": "The Integer datatype.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/6e7e0138-f3f9-f260-9930-c6b25f7583f5",
+  "constructors": [
+    {
+      "name": "Integer",
+      "signature": "Integer(...)",
+      "summary": "Creates a new integer datatype instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f358c54b-c784-99ee-df68-6382c08d7242"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "Equals(...)",
+      "summary": "Returns a value that indicates whether the current instance is equal to the given object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/489c427b-05b2-2899-23b8-a3624cdb0da1"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "GetHashCode(...)",
+      "summary": "Returns the hash code for the current instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e917eafd-fa7d-e5b4-fad3-80b1c3c687e0"
+    },
+    {
+      "name": "GetSchema",
+      "signature": "GetSchema(...)",
+      "summary": "Gets the XML Schema for the datatype.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/83a934e9-65a0-6c88-5f97-62f63585da52"
+    },
+    {
+      "name": "ReadXml",
+      "signature": "ReadXml(...)",
+      "summary": "Parses a new value from the given reader.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2f7b1133-4d5f-175b-7a6f-cdf19e170b80"
+    },
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Returns the string representation of the object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ba4f28f3-495d-66ed-d106-f2000d8623db"
+    },
+    {
+      "name": "WriteXml",
+      "signature": "WriteXml(...)",
+      "summary": "Writes the value as XML to the given writer.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/61f951c6-ffaf-b2a1-6ddc-851a5601c3d8"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Value",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The value of the integer datatype.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bebf3f86-accd-dc66-a467-681b5b67ebef"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

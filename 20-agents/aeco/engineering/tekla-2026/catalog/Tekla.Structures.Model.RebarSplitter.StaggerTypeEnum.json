@@ -1,0 +1,34 @@
+{
+  "name": "RebarSplitter.StaggerTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The side of the split that the additional offset (stagger) is located.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/2c5b0cea-b4cf-ce97-321f-28514bca0952",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NO_STAGGER",
+      "value": 0,
+      "summary": "No stagger."
+    },
+    {
+      "name": "STAGGER_LEFT",
+      "value": 1,
+      "summary": "Stagger left."
+    },
+    {
+      "name": "STAGGER_RIGHT",
+      "value": 2,
+      "summary": "Stagger right."
+    },
+    {
+      "name": "STAGGER_MIDDLE",
+      "value": 3,
+      "summary": "Stagger middle."
+    }
+  ]
+}

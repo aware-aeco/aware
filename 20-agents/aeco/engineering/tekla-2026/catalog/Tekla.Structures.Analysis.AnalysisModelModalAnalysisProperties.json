@@ -1,0 +1,81 @@
+{
+  "name": "AnalysisModelModalAnalysisProperties",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisModelModalAnalysisProperties class contains information related to analysis model modal analysis properties.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/715e3969-7cde-65df-fc37-09f24d0b442e",
+  "constructors": [
+    {
+      "name": "AnalysisModelModalAnalysisProperties",
+      "signature": "AnalysisModelModalAnalysisProperties(...)",
+      "summary": "Initializes a new instance of the AnalysisModelModalAnalysisProperties class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0a3ea1cc-6393-741a-a1ea-cc3a278ae1ad"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ModalAnalysisIncludeSelfWeightMass",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether selfweight mass is included in the modal analysis.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8e89358d-5266-7538-2bc0-cda6a14da3b7"
+    },
+    {
+      "name": "ModalAnalysisMassLoadGroupDirections",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The mass load group directions of the modal analysis.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/cd764c75-d4df-6d5f-32ea-26bcb57de22d"
+    },
+    {
+      "name": "ModalAnalysisMassLoadGroupFactors",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The mass load group factors of the modal analysis.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/364fd17e-bde2-e021-dd38-836d9a035dbe"
+    },
+    {
+      "name": "ModalAnalysisMassLoadGroupIds",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The mass load group indentifier of the modal analysis.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b49a2afe-7feb-1f25-04fe-b1e3785ee44c"
+    },
+    {
+      "name": "ModalAnalysisMaxFrequency",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The modal analysis maximum frequence.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f719fa97-bd85-7095-9505-83fceb37085f"
+    },
+    {
+      "name": "ModalAnalysisModeCount",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The modal analysis mode count.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9f22e768-1a8f-5c45-5243-e0db55f88410"
+    },
+    {
+      "name": "ModalAnalysisModel",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether a modal analysis model is used.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/28875c2f-4bdd-ecb7-0a8e-b145ed00f087"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

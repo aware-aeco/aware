@@ -1,0 +1,24 @@
+{
+  "name": "CannotGetAttributeForPluginDueToInexistantFieldException",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The CannotGetAttributeForPluginDueToInexistantFieldException class defines the exception that is thrown when Plugin.GetAttribute is called but the field does not exist.",
+  "base": "System.ApplicationException",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/3d81a833-510c-0c73-42d2-02724799f341",
+  "constructors": [
+    {
+      "name": "CannotGetAttributeForPluginDueToInexistantFieldException",
+      "signature": "CannotGetAttributeForPluginDueToInexistantFieldException(...)",
+      "summary": "Creates a new CannotGetAttributeForPluginDueToInexistantFieldException instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e4772d30-4287-cda5-a5d3-c7964afd6e0b"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

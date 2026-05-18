@@ -1,0 +1,22 @@
+{
+  "name": "Operation.IFCExportFlags",
+  "namespace": "Tekla.Structures.Model.Operations",
+  "kind": "struct",
+  "summary": "Boolean flags for IFC 4 export.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/a79a1b5b-f9a9-9753-0d4e-f97962336baa",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "UseIfcMapConversion",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Boolean indicating whether to use IfcMapConversion with base points is enabled. By default IFC4 export should use IfcMapConversion. Uninitialized null will be converted to true during export.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/200e7cd5-2611-9ac5-c376-b65572c37d2b"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

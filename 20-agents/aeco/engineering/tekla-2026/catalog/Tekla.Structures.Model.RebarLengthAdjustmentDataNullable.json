@@ -1,0 +1,41 @@
+{
+  "name": "RebarLengthAdjustmentDataNullable",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The RebarLengthAdjustmentDataNullable class defines the length adjustment at the end of a reinforcing bar affected by a RebarEndDetailModifier. If a length adjustment property is null then that property will not be applied to the RebarSet generated reinforcing bars.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/f01e81f5-5d30-9ee4-1d10-be6f2ad7cafa",
+  "constructors": [
+    {
+      "name": "RebarLengthAdjustmentDataNullable",
+      "signature": "RebarLengthAdjustmentDataNullable(...)",
+      "summary": "Initializes a new instance of the RebarLengthAdjustmentDataNullable class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/cf72ee7d-5c4f-fe42-202a-f623d68330c3"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AdjustmentLength",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the adjustment length.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a0dee21c-f48b-e5de-3a5a-2f2c1b1b75a8"
+    },
+    {
+      "name": "AdjustmentType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the adjustment type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ee33d0db-0401-0725-7e81-1caa13fae203"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

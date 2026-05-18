@@ -1,0 +1,34 @@
+{
+  "name": "AnalysisPart.ItemTypeEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The item types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/c1ab8b10-0725-0315-e221-8ccdb3e779ad",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ITEM_TYPE_UNKNOWN",
+      "value": 0,
+      "summary": "The item type is unknown."
+    },
+    {
+      "name": "ITEM_TYPE_BAR",
+      "value": 1,
+      "summary": "The bar item type."
+    },
+    {
+      "name": "ITEM_TYPE_AREA",
+      "value": 2,
+      "summary": "The area item type."
+    },
+    {
+      "name": "ITEM_TYPE_VOLUME",
+      "value": 3,
+      "summary": "The volume item type."
+    }
+  ]
+}

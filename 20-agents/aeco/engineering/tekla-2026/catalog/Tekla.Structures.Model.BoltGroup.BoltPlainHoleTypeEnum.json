@@ -1,0 +1,24 @@
+{
+  "name": "BoltGroup.BoltPlainHoleTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The plain hole type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/d1716b64-f135-3612-eaca-36a14f2341ec",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "HOLE_TYPE_THROUGH",
+      "value": 0,
+      "summary": "The through hole type."
+    },
+    {
+      "name": "HOLE_TYPE_BLIND",
+      "value": 1,
+      "summary": "The blind hole type."
+    }
+  ]
+}

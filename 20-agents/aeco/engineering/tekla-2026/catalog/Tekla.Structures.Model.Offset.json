@@ -1,0 +1,49 @@
+{
+  "name": "Offset",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The Offset class defines the offset value of start points and end points. The offset is the distance from the current work plane in the three global directions.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/288e8450-b840-d318-343e-9098448754b4",
+  "constructors": [
+    {
+      "name": "Offset",
+      "signature": "Offset(...)",
+      "summary": "Instantiates an offset with zero distance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4532b846-0605-82c7-c6c7-b6911dcc92cc"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Dx",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The current object\u0027s Dx offset. This value is defined using the object\u0027s coordinate system.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c6555ca2-50df-f247-f10e-738cc696c693"
+    },
+    {
+      "name": "Dy",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The current object\u0027s Dy offset. This value is defined using the current work plane.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e2dd6738-f929-e2b5-d06b-c2b28ee06499"
+    },
+    {
+      "name": "Dz",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The current object\u0027s Dz offset. This value is defined using the current work plane.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/10cba3d1-9683-586d-01d4-44e09a0a8d7a"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

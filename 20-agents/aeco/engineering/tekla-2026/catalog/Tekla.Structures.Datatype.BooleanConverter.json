@@ -1,0 +1,61 @@
+{
+  "name": "BooleanConverter",
+  "namespace": "Tekla.Structures.Datatype",
+  "kind": "class",
+  "summary": "The BooleanConverter class converts types to and from the boolean type.",
+  "base": "System.ComponentModel.TypeConverter",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/e88cfafe-df6e-34c6-94a2-66ac5f5c45c8",
+  "constructors": [
+    {
+      "name": "BooleanConverter",
+      "signature": "BooleanConverter(...)",
+      "summary": "Initializes a new instance of the BooleanConverter class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3266a55a-37f7-ad81-d8c5-aa84fc887032"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CanConvertFrom",
+      "signature": "CanConvertFrom(...)",
+      "summary": "Checks whether the conversion can be made from the source type to the boolean type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9ed92bf9-a0b1-1e74-3a6c-1d0282840a95"
+    },
+    {
+      "name": "CanConvertTo",
+      "signature": "CanConvertTo(...)",
+      "summary": "Checks whether the conversion can be made from the boolean type to the destination type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/34334764-e5fb-2756-3815-49476e791327"
+    },
+    {
+      "name": "ConvertFrom",
+      "signature": "ConvertFrom(...)",
+      "summary": "Converts an object from the given culture to the boolean type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ebeec01c-5dbd-8080-3bfb-c917accf0edb"
+    },
+    {
+      "name": "ConvertTo",
+      "signature": "ConvertTo(...)",
+      "summary": "Converts an object from the boolean type to the given destination type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/14446341-9404-e5cc-cf09-25f1930a9386"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

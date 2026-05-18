@@ -1,0 +1,75 @@
+{
+  "name": "GraphicPolyLine",
+  "namespace": "Tekla.Structures.Model.UI",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Tekla.Structures.Model.UI.GraphicPolyLine.)",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/6bdfc7b9-9538-09a9-5536-1c7f879a71ec",
+  "constructors": [
+    {
+      "name": "GraphicPolyLine",
+      "signature": "GraphicPolyLine(...)",
+      "summary": "Create a black line with width 1 and solid line type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/35132ae5-1dca-df7b-4bce-eb1a8eab51d4"
+    },
+    {
+      "name": "GraphicPolyLine",
+      "signature": "GraphicPolyLine(...)",
+      "summary": "Create a graphic polyline object with 0 points.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a1f6c5af-3e21-16cc-eeb3-d90861989f11"
+    },
+    {
+      "name": "GraphicPolyLine",
+      "signature": "GraphicPolyLine(...)",
+      "summary": "Create a graphic polyline object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/384fb38c-d0ec-359a-2167-6c5a148478e7"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Color",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The line color.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ffa65a95-0236-6688-4f15-4a529e69d52b"
+    },
+    {
+      "name": "PolyLine",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The path of the line.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/74efbd23-7c76-b0ae-ba1b-d042bf6b5ac9"
+    },
+    {
+      "name": "Type",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The appearance of the line. For instance solid, dashed or dotted.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c622b6c3-de00-cd56-ee8b-08331c938f35"
+    },
+    {
+      "name": "Width",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The line width in pixels. NOTE: Currently the valid width values are 1, 2 and 4",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1144a40a-4159-82d0-8f23-7d356c76d572"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

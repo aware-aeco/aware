@@ -1,0 +1,73 @@
+{
+  "name": "RebarProperties",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The RebarProperties class defines the default properties of the reinforcing bars in a RebarSet.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/131721c2-c623-c3df-1f06-ff6a0ba3302a",
+  "constructors": [
+    {
+      "name": "RebarProperties",
+      "signature": "RebarProperties(...)",
+      "summary": "Initializes a new instance of the RebarProperties class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2e723b4d-5252-fce0-1082-83b76fa6cb3a"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "BendingRadius",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the bending radius of the reinforcement.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5adee5d6-9630-01cc-4c82-b921ce7341ff"
+    },
+    {
+      "name": "Class",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the class of the reinforcement. The class is used to group reinforcements.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6881f4cb-4b8a-d961-02ab-1cc5a501ea63"
+    },
+    {
+      "name": "Grade",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the steel grade of the reinforcing bar. The grade indicates the strength of the steel used in reinforcing bars. It can also indicate other factors, such as the weldability or surface deformations of the bar.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/dcf490fb-58e9-8cab-dffa-54c9d9656ae3"
+    },
+    {
+      "name": "Name",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name of the reinforcement.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8769dbf5-9fa6-fc1e-d895-f0fd47b04e69"
+    },
+    {
+      "name": "NumberingSeries",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the numbering series of the reinforcement.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f6052bc8-27e2-be90-5606-d022fe956440"
+    },
+    {
+      "name": "Size",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the size of the reinforcement.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6954a625-eec3-daa1-d5d8-1a5ee8963723"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

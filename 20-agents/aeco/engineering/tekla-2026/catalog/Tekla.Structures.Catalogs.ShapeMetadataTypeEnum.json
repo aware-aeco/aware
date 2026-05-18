@@ -1,0 +1,54 @@
+{
+  "name": "ShapeMetadataTypeEnum",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "enum",
+  "summary": "Represents data type or measurement unit of the specific metadata If this is updated, update ShapeMetadataType_e on the Core side",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/c664c68d-0e1f-afdd-716c-9736a174f994",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Text",
+      "value": 0,
+      "summary": "Default value is text"
+    },
+    {
+      "name": "DateTime",
+      "value": 10,
+      "summary": "Date"
+    },
+    {
+      "name": "Integer",
+      "value": 11,
+      "summary": "Integer"
+    },
+    {
+      "name": "Double",
+      "value": 12,
+      "summary": "Double, here precision controlled by TS-\u003E Menu-\u003E Settings-\u003E Options-\u003E Units and decimals -\u003E Modeling -\u003E Factor \u0022XS_UNITDECIMALS_INPUT_FACTOR\u0022"
+    },
+    {
+      "name": "Length",
+      "value": 101,
+      "summary": "Unit of length, here length refers to TS-\u003E Menu-\u003E Settings-\u003E Options-\u003E Units and decimals -\u003E Catalogs -\u003E Dimension. \u0022XS_UNIT_INPUT_DIMENSION\u0022, \u0022XS_UNITDECIMALS_INPUT_DIMENSION\u0022"
+    },
+    {
+      "name": "Area",
+      "value": 201,
+      "summary": "Unit of area, here area refers to TS-\u003E Menu-\u003E Settings-\u003E Options-\u003E Units and decimals -\u003E Catalogs -\u003E Area. \u0022XS_UNIT_INPUT_AREA\u0022, \u0022XS_UNITDECIMALS_INPUT_AREA\u0022"
+    },
+    {
+      "name": "Volume",
+      "value": 301,
+      "summary": "Unit of volume, here volume refers to TS-\u003E Menu-\u003E Settings-\u003E Options-\u003E Units and decimals -\u003E Catalogs -\u003E Volume. \u0022XS_UNIT_INPUT_VOLUME\u0022, \u0022XS_UNITDECIMALS_INPUT_VOLUME\u0022"
+    },
+    {
+      "name": "Weight",
+      "value": 401,
+      "summary": "Unit of weight, here weight refers to TS-\u003E Menu-\u003E Settings-\u003E Options-\u003E Units and decimals -\u003E Catalogs -\u003E Weight. \u0022XS_UNIT_INPUT_WEIGHT\u0022, \u0022XS_UNITDECIMALS_INPUT_WEIGHT\u0022"
+    }
+  ]
+}

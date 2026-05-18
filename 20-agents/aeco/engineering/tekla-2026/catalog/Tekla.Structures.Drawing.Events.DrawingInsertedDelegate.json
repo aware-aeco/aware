@@ -1,0 +1,14 @@
+{
+  "name": "Events.DrawingInsertedDelegate",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "delegate",
+  "summary": "The delegate to use for drawing insertion.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/d133bbe2-02e5-c3b6-2847-be49f0c1d10f",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void DrawingInsertedDelegate()"
+}

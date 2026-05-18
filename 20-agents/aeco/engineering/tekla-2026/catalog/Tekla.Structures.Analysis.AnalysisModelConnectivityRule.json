@@ -1,0 +1,139 @@
+{
+  "name": "AnalysisModelConnectivityRule",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisModelConnectivityRule class contains information related to analysis model connectivity rules.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/d6c5fe24-23bd-5e24-35d5-cfe63d1f4195",
+  "constructors": [
+    {
+      "name": "AnalysisModelConnectivityRule",
+      "signature": "AnalysisModelConnectivityRule(...)",
+      "summary": "Initializes a new instance of the AnalysisModelConnectivityRule class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2625900a-1313-f402-49d1-6ea7477523a2"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Select",
+      "signature": "Select(...)",
+      "summary": "Selects an analysis connectivity rule. The ID has to be set.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2f473acf-e09d-0c80-08d2-3225114ddc7b"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AnalysisModelName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis model name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/820dc60f-92bc-f84c-9b4f-bf71faf2b76a"
+    },
+    {
+      "name": "AnalysisObjectType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2a2631ed-5e7b-7e60-f1d2-52186a5a17c4"
+    },
+    {
+      "name": "FatherObject2ID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3cc2e3ff-3afd-4def-2559-7c1827233bec"
+    },
+    {
+      "name": "FatherObject2Type",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7b5d643a-2a12-5281-7f65-a312171bafcc"
+    },
+    {
+      "name": "FatherObjectID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7e55f4c8-ca1a-2761-edd6-2b69663ff941"
+    },
+    {
+      "name": "FatherObjectType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/739bcea1-858d-70e2-ff0d-9c4928129c3e"
+    },
+    {
+      "name": "Group1",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The group name 1 of the connectivity rule.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/926bdd0d-cc3e-e78d-2eda-bbe2890c77ee"
+    },
+    {
+      "name": "Group2",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The group name 2 of the connectivity rule.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/cbcc5fc7-0df5-eb5b-f2c5-316b6396840f"
+    },
+    {
+      "name": "ID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/289caef6-9b6e-cd4c-dcbc-6397be2f9de0"
+    },
+    {
+      "name": "Linkage1",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The linkage 1 of the connectivity rule.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4b03bb32-2c16-1612-69b2-41cc4f24d3e9"
+    },
+    {
+      "name": "Linkage2",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The linkage 2 of the connectivity rule.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/10c4c7d0-99ff-48f0-94ac-bdfdf464ecfc"
+    },
+    {
+      "name": "MagneticDistance",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The magnetic distance of the connectivity rule.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/957d1d5f-e634-b7de-1b9a-97426b3e9f43"
+    },
+    {
+      "name": "Status",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The status of the connectivity rule.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0181d727-d01e-a26c-3733-634d15b401b7"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

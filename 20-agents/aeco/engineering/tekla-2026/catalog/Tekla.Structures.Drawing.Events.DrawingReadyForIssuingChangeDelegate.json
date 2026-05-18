@@ -1,0 +1,14 @@
+{
+  "name": "Events.DrawingReadyForIssuingChangeDelegate",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "delegate",
+  "summary": "The delegate to use for drawing ready for issuing change event.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/5ca7a195-665c-d788-ce74-a36f21063a7f",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void DrawingReadyForIssuingChangeDelegate( string drawingGuid, bool isReady )"
+}

@@ -1,0 +1,95 @@
+{
+  "name": "FormingStates",
+  "namespace": "Tekla.Structures.Forming",
+  "kind": "class",
+  "summary": "FormingStates class which contains different forming options.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/798a3ceb-2766-0a5c-7853-023059f04b55",
+  "constructors": [
+    {
+      "name": "FormingStates",
+      "signature": "FormingStates(...)",
+      "summary": "Initializes a new instance of the FormingStates class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a337f962-954a-28c9-9658-a4b2cb8952c7"
+    },
+    {
+      "name": "FormingStates",
+      "signature": "FormingStates(...)",
+      "summary": "Initializes a new instance of the FormingStates class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/75be16b2-6f80-cbdd-b88c-8652262b42c9"
+    },
+    {
+      "name": "FormingStates",
+      "signature": "FormingStates(...)",
+      "summary": "Initializes a new instance of the FormingStates class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/aeb66ea3-9cab-04e0-2f35-67057b0fc5bc"
+    },
+    {
+      "name": "FormingStates",
+      "signature": "FormingStates(...)",
+      "summary": "Initializes a new instance of the FormingStates class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/03862639-25de-9c60-7bcc-f26e6cf64ec6"
+    },
+    {
+      "name": "FormingStates",
+      "signature": "FormingStates(...)",
+      "summary": "Initializes a new instance of the FormingStates class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8d47a18e-4caf-1fb1-e1c6-6cabaf7066e3"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "Clone(...)",
+      "summary": "Method for cloning the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0798cc99-1eaa-efe0-401e-c789ae54bbf4"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Deforming",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the deforming type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ec9b2743-6746-2a6b-d667-198f8e4dbb42"
+    },
+    {
+      "name": "Folding",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the folding type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0c715692-c402-377c-d1bf-4b5753e4d887"
+    },
+    {
+      "name": "Wrapping",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the wrapping type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ffdb5f8c-0478-3e82-6619-1384c3890a83"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

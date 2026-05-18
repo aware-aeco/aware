@@ -1,0 +1,125 @@
+{
+  "name": "PourObject.PourAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PourAttributes class is the attributes class for the pour.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/5b4159f0-d8d8-3643-a751-bc4a891d8816",
+  "constructors": [
+    {
+      "name": "PourObject.PourAttributes",
+      "signature": "PourObject.PourAttributes(...)",
+      "summary": "Creates a new default pour attributes instance that loads standard attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/82d5f205-eb4f-0006-de82-583b1b9681f2"
+    },
+    {
+      "name": "PourObject.PourAttributes",
+      "signature": "PourObject.PourAttributes(...)",
+      "summary": "Creates a new pour attributes instance that loads the specified attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c1187858-dcf4-e656-fc79-d54235677ffa"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/11186dbb-413d-d09a-a4fe-e5a4173f2644"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "LoadAttributes(...)",
+      "summary": "Loads the attributes from the attribute file.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c2ca65bc-9ea4-e06c-494a-f22dbcd642e9"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DrawChamfers",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "True if chamfers are drawn.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/50c0e4ba-631a-6b98-5b72-f05589fd93a4"
+    },
+    {
+      "name": "DrawHiddenLines",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "True if hidden lines are drawn.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f8fcdd60-6cbd-8f60-26c0-6d0edb2f434e"
+    },
+    {
+      "name": "DrawOwnHiddenLines",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "True if own hidden lines are drawn.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/dc34b3dd-5df2-ce3f-d18e-86912fa11d4b"
+    },
+    {
+      "name": "FaceHatch",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The hatch type of the face hatch.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4a41fbae-dd52-527f-6889-0faeaeed5f8f"
+    },
+    {
+      "name": "HiddenLines",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The line type of hidden lines.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6dafb441-3d02-13e7-fa26-f9debbc4b123"
+    },
+    {
+      "name": "OwnHiddenLines",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The line type of own hidden lines.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/dba5e7c8-9634-c97d-0ec7-a23caa979765"
+    },
+    {
+      "name": "SectionFaceHatch",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The hatch type of the section face hatch.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/575b2935-b0ad-ebb1-547a-077c7de908e9"
+    },
+    {
+      "name": "SectionLines",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The line type of section lines.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ade0350c-c16f-38dc-c3a9-d222aa890f46"
+    },
+    {
+      "name": "VisibleLines",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The line type of visible lines.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/780c7a2d-a584-2aae-587c-9b8762bcc236"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,104 @@
+{
+  "name": "AnalysisPartPositionProperties.AxisLocationEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The axis location.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/1abe87fa-f529-9083-4045-afa77b219693",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "REFERENCE_AXIS_WITH_ECCENTRICITY",
+      "value": 0,
+      "summary": "The axis location is the reference axis with eccentricity."
+    },
+    {
+      "name": "REFERENCE_AXIS",
+      "value": 1,
+      "summary": "The axis location is the reference axis."
+    },
+    {
+      "name": "NEUTRAL_AXIS",
+      "value": 3,
+      "summary": "The axis location is the neutral axis."
+    },
+    {
+      "name": "TOP_PLANE",
+      "value": 4,
+      "summary": "The axis location is the top plane."
+    },
+    {
+      "name": "MIDDLE_PLANE",
+      "value": 5,
+      "summary": "The axis location is the middle plane."
+    },
+    {
+      "name": "BOTTOM_PLANE",
+      "value": 6,
+      "summary": "The axis location is the bottom plane."
+    },
+    {
+      "name": "LEFT_PLANE",
+      "value": 7,
+      "summary": "The axis location is the left plane."
+    },
+    {
+      "name": "RIGHT_PLANE",
+      "value": 8,
+      "summary": "The axis location is the right plane."
+    },
+    {
+      "name": "MIDDLE_PLANE_BY_LEFT_RIGHT",
+      "value": 9,
+      "summary": "The axis location is the middle plane by the left point."
+    },
+    {
+      "name": "TOP_LEFT",
+      "value": 10,
+      "summary": "The axis location is at the top left corner."
+    },
+    {
+      "name": "TOP_CENTER",
+      "value": 11,
+      "summary": "The axis location is at top center."
+    },
+    {
+      "name": "TOP_RIGHT",
+      "value": 12,
+      "summary": "The axis location is at the top right corner."
+    },
+    {
+      "name": "MIDDLE_LEFT",
+      "value": 13,
+      "summary": "The axis location is at the middle left corner."
+    },
+    {
+      "name": "MIDDLE_CENTER",
+      "value": 14,
+      "summary": "The axis location is at middle center."
+    },
+    {
+      "name": "MIDDLE_RIGHT",
+      "value": 15,
+      "summary": "The axis location is at the middle right corner."
+    },
+    {
+      "name": "BOTTOM_LEFT",
+      "value": 16,
+      "summary": "The axis location is at the bottom left corner."
+    },
+    {
+      "name": "BOTTOM_CENTER",
+      "value": 17,
+      "summary": "The axis location is at bottom center."
+    },
+    {
+      "name": "BOTTOM_RIGHT",
+      "value": 18,
+      "summary": "The axis location is at the bottom right corner."
+    }
+  ]
+}

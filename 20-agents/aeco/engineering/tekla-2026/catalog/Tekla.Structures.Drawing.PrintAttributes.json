@@ -1,0 +1,91 @@
+{
+  "name": "PrintAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PrintAttributes class contains the attributes for controlling the printing.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/1cba3ab8-d44e-01ee-d0f2-fbab61eb2a3d",
+  "constructors": [
+    {
+      "name": "PrintAttributes",
+      "signature": "PrintAttributes(...)",
+      "summary": "Creates a new PrintAttributes instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/da55cdb2-b443-2f32-283d-e540fb163fd9"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4e37a7ae-9c14-2009-7793-1a9928692792"
+    }
+  ],
+  "properties": [
+    {
+      "name": "NumberOfCopies",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The number of copies in printing.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f7773347-3f41-9121-2c8b-ef97d0536d90"
+    },
+    {
+      "name": "Orientation",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The print orientation type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1d22fb54-6d07-ccb9-b74e-557e5e570894"
+    },
+    {
+      "name": "PrintArea",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The print area type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bc7183f6-02be-c142-4079-427138c91847"
+    },
+    {
+      "name": "PrinterInstance",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The name of the printer instance. Can be fetched from the printer catalog.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a866e5b7-abc7-824a-5f6d-8dab6eb0de58"
+    },
+    {
+      "name": "PrintToMultipleSheet",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Whether to print to multiple sheets.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a0a32fcc-35a6-c409-efa5-137801cc72be"
+    },
+    {
+      "name": "Scale",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The scale factor.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e1fb1537-69d3-d510-2c86-eccf1deb7b96"
+    },
+    {
+      "name": "ScalingType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The scale type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fca54c69-7723-aae6-9c41-659f15656df7"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

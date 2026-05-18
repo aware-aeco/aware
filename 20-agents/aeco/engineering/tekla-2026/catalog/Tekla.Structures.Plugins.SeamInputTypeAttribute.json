@@ -1,0 +1,42 @@
+{
+  "name": "SeamInputTypeAttribute",
+  "namespace": "Tekla.Structures.Plugins",
+  "kind": "class",
+  "summary": "The SeamInputTypeAttribute class is used for identifying that the connection is a seam and defining the input type. Based on the type the system will then ask for the correct number of input points in the creation. The attribute is initialized from the custom attribute [SeamInputType(ConnectionBase.SeamInputType.INPUT_POLYGON)] in the connection source.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/d4a9bbb6-876c-df62-b60a-424ef66dd3c0",
+  "constructors": [
+    {
+      "name": "SeamInputTypeAttribute",
+      "signature": "SeamInputTypeAttribute(...)",
+      "summary": "The custom attribute [SeamInputType()] uses this to store the input type to the system. This is not to be used by itself.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f9e68e04-25d1-fe7b-abdf-4685c071a9cc"
+    },
+    {
+      "name": "SeamInputTypeAttribute",
+      "signature": "SeamInputTypeAttribute(...)",
+      "summary": "The custom attribute [SeamInputType()] uses this to store the input type to the system. This is not to be used by itself.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/24cbdaab-f002-48f1-7566-761cc43f481f"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Type",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The custom attribute [SeamInputType()] uses this to store the input type to the system. This is not to be used by itself.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d36dfdf3-9682-04e1-773d-af65d7a2d96f"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

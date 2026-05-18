@@ -1,0 +1,57 @@
+{
+  "name": "AnalysisPartAnalysisProperties",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisPartAnalysisProperties class contains information related to analysis part analysis properties.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/4f9a542f-63fa-730d-3e5b-7b292c6aa99f",
+  "constructors": [
+    {
+      "name": "AnalysisPartAnalysisProperties",
+      "signature": "AnalysisPartAnalysisProperties(...)",
+      "summary": "Initializes a new instance of the AnalysisPartAnalysisProperties class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/18dfbb8f-5098-d057-83a7-0784719fbbab"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AnalysisClass",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The analysis class of the analysis part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/cbfd7f35-8b12-7054-3b00-c83c201cf00a"
+    },
+    {
+      "name": "BuiltupMode",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The builtup mode of the analysis part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e7e1d1db-56bf-b6e8-54b2-00dac67d789d"
+    },
+    {
+      "name": "DesignGroup",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The design group of the analysis part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/78071663-cb54-948c-8b14-7f75de3905a5"
+    },
+    {
+      "name": "PhysicalFreezed",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the physical part has been freezed.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/66fd292a-eee2-a0f8-62e7-8f3e56784917"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

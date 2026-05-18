@@ -1,0 +1,103 @@
+{
+  "name": "LayoutAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The LayoutAttributes class contains attributes for controlling the drawing layout.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/1850def0-b58c-df22-0db5-e61ee3c34036",
+  "constructors": [
+    {
+      "name": "LayoutAttributes",
+      "signature": "LayoutAttributes(...)",
+      "summary": "Creates a new layout attributes instance that loads standard attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/938fa59a-b84b-9ea5-d944-133d69d35589"
+    },
+    {
+      "name": "LayoutAttributes",
+      "signature": "LayoutAttributes(...)",
+      "summary": "Creates a new layout attributes instance that loads drawing layout attributes from the specified attribute file.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5cdf493a-df16-0949-6993-b25cc0c308c2"
+    },
+    {
+      "name": "LayoutAttributes",
+      "signature": "LayoutAttributes(...)",
+      "summary": "Creates a new layout attributes instance that loads standard attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/92d67225-8eb3-0d92-c4ae-ca7d56be457a"
+    },
+    {
+      "name": "LayoutAttributes",
+      "signature": "LayoutAttributes(...)",
+      "summary": "Creates a new layout attributes instance that loads drawing layout attributes from the specified attribute file.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0948ada9-0299-3031-262a-2f60ece82d5c"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/628efe7a-02bf-5d5c-0e53-cf5464e9e70d"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "LoadAttributes(...)",
+      "summary": "Loads drawing layout attributes from the specified attribute file.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/be6c4b9e-a9a4-b5c7-e99c-a88c1d33ebcc"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AutoSizeOptions",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the auto size options that control the drawing sheet size. Setting this property will change the SizeDefinitionMode to AutoSize.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/cbaf0da0-0d41-420d-a8f3-76b741d2ee76"
+    },
+    {
+      "name": "ListHiddenObjectsInTemplates",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the property for controlling whether to list hidden objects in templates.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3de70f71-d20e-232e-c6d5-a8df744557bd"
+    },
+    {
+      "name": "SheetSize",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the sheet size. Setting this property will change the SizeDefinitionMode to SpecifiedSize.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2a22406e-0b31-f6ee-69d1-af77643d7138"
+    },
+    {
+      "name": "SizeDefinitionMode",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the size definition mode.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8dac26fa-4989-4dcd-79fd-31b94de3f064"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

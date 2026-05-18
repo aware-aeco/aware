@@ -1,0 +1,79 @@
+{
+  "name": "ShapeCatalog",
+  "namespace": "Tekla.Structures.Dialog.UIControls",
+  "kind": "class",
+  "summary": "The ShapeCatalog class represents a group of controls to select Shapes using the Shape catalog.",
+  "base": "System.Windows.Forms.UserControl",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/0d92e884-932e-e2c7-91b0-752c95686b70",
+  "constructors": [
+    {
+      "name": "ShapeCatalog",
+      "signature": "ShapeCatalog(...)",
+      "summary": "Initializes a new instance of the ShapeCatalog class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/38ab94af-7ed2-1708-35cf-b4e5280c5e4e"
+    },
+    {
+      "name": "ShapeCatalog",
+      "signature": "ShapeCatalog(...)",
+      "summary": "Initializes a new instance of the ShapeCatalog class and will select the Shape (if available) in the tree.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/98ab8cec-bb7e-fc1c-ae5c-b6868fb910a9"
+    }
+  ],
+  "methods": [
+    {
+      "name": "OnValueChanged",
+      "signature": "OnValueChanged(...)",
+      "summary": "Event handler for passing generic catalog data back to dialog",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ef1500b0-92e8-3fce-7d09-ac486efe991c"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ButtonText",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets and sets the text of the button control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/656d8206-051c-a9cb-ee3c-99397a8a007d"
+    },
+    {
+      "name": "SelectedShape",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the selected Shape in the control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c7b3a97e-cdc3-ad23-2967-e9c483b10026"
+    }
+  ],
+  "events": [
+    {
+      "name": "SelectClicked",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler SelectClicked",
+      "summary": "The SelectClicked event is raised when the Select button is clicked.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b94e72b1-fa1d-b9aa-db9e-36f2db93c83e",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "SelectionDone",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler SelectionDone",
+      "summary": "The SelectionDone event is raised when the selection has been done.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/77741b2b-72a2-3319-04f8-cea1cabae359",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

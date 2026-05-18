@@ -1,0 +1,274 @@
+{
+  "name": "DimensionSetBase",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The DimensionSetBase class is the common base class for all the different dimension sets. The dimension set base cannot be instantiated.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/e0a486f0-f2b7-ee59-3589-ecaa5ae93e81",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddToDimensionSet",
+      "signature": "AddToDimensionSet(...)",
+      "summary": "Adds a dimension set to the current dimension set.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c6ae7b87-49aa-8bb4-456a-61e0f37e1637"
+    },
+    {
+      "name": "Delete",
+      "signature": "Delete(...)",
+      "summary": "Deletes the instance from the database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f13a6c17-3cc9-d9cb-5393-7ef5795760c1"
+    },
+    {
+      "name": "GetDoubleUserProperties(Dictionary.String, Double..)",
+      "signature": "GetDoubleUserProperties(Dictionary.String, Double..)(...)",
+      "summary": "Retrieves all double user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b25f0e6b-ab5c-154a-a45c-4f5868a20599"
+    },
+    {
+      "name": "GetDoubleUserProperties(List.String., Dictionary.String, Double..)",
+      "signature": "GetDoubleUserProperties(List.String., Dictionary.String, Double..)(...)",
+      "summary": "Retrieves all double user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7f327fc5-14b5-f534-da39-b68d3f87124a"
+    },
+    {
+      "name": "GetDrawing",
+      "signature": "GetDrawing(...)",
+      "summary": "Gets the drawing where the drawing object is.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4e9beef3-2188-ab45-9f07-dbde351915bf"
+    },
+    {
+      "name": "GetIntegerUserProperties(Dictionary.String, Int32..)",
+      "signature": "GetIntegerUserProperties(Dictionary.String, Int32..)(...)",
+      "summary": "Retrieves all integer user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/20a7d099-ebee-b016-ffc7-0181a1219405"
+    },
+    {
+      "name": "GetIntegerUserProperties(List.String., Dictionary.String, Int32..)",
+      "signature": "GetIntegerUserProperties(List.String., Dictionary.String, Int32..)(...)",
+      "summary": "Retrieves all integer user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b485bd81-5ccf-68e4-0453-caea6b1d0dde"
+    },
+    {
+      "name": "GetObjects.",
+      "signature": "GetObjects.(...)",
+      "summary": "Gets the children straight dimensions of the current straight dimension set.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a5b00ccb-a302-c9bd-b940-6b64af7bccdc"
+    },
+    {
+      "name": "GetObjects(.Type.)",
+      "signature": "GetObjects(.Type.)(...)",
+      "summary": "Gets the children straight dimensions of the current straight dimension set that are of certain types.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0ec2481b-08c7-d5e3-41e4-291bfbb31bbc"
+    },
+    {
+      "name": "GetRelatedObjects.",
+      "signature": "GetRelatedObjects.(...)",
+      "summary": "Gets the related objects of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/50820387-cee1-637a-318e-fb3e06780149"
+    },
+    {
+      "name": "GetRelatedObjects(.Type.)",
+      "signature": "GetRelatedObjects(.Type.)(...)",
+      "summary": "Gets the related objects of the current object that are of certain types.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/01d5e137-fa4b-92d7-328b-69c974dc7415"
+    },
+    {
+      "name": "GetStringUserProperties(Dictionary.String, String..)",
+      "signature": "GetStringUserProperties(Dictionary.String, String..)(...)",
+      "summary": "Retrieves all string user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a0039213-2e79-912f-5bdf-5e6dd417c092"
+    },
+    {
+      "name": "GetStringUserProperties(List.String., Dictionary.String, String..)",
+      "signature": "GetStringUserProperties(List.String., Dictionary.String, String..)(...)",
+      "summary": "Retrieves all string user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/474a80dc-539a-2734-4b5c-1ea52f86e750"
+    },
+    {
+      "name": "GetUserProperty(String, Double.)",
+      "signature": "GetUserProperty(String, Double.)(...)",
+      "summary": "Gets a double property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/203a39af-db6b-e317-5de3-f0301c1642f2"
+    },
+    {
+      "name": "GetUserProperty(String, Int32.)",
+      "signature": "GetUserProperty(String, Int32.)(...)",
+      "summary": "Gets an integer property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f773aabe-fe4e-dba3-bf33-f6f927441a85"
+    },
+    {
+      "name": "GetUserProperty(String, String.)",
+      "signature": "GetUserProperty(String, String.)(...)",
+      "summary": "Gets a string property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5335a30d-ac20-6231-5b02-22e14c6980a7"
+    },
+    {
+      "name": "GetView",
+      "signature": "GetView(...)",
+      "summary": "Gets the view where the drawing object is.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ed3c08d7-c75f-2e18-ee97-fe2e096f29b5"
+    },
+    {
+      "name": "Insert",
+      "signature": "Insert(...)",
+      "summary": "Inserts the object instance into the database. The inserted instance must be of a real type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/020bf502-50ea-ba9f-bf32-a167db34fe82"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with the given object. Checks every field of both objects for equality.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ef079c64-f745-35e7-e5c0-4b2c2bc93d02"
+    },
+    {
+      "name": "IsSameDatabaseObject",
+      "signature": "IsSameDatabaseObject(...)",
+      "summary": "Returns true if the current object and the given object are referencing the same database object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/675fe6a8-2f1f-6e66-07f4-768bc3a1c74b"
+    },
+    {
+      "name": "Modify",
+      "signature": "Modify(...)",
+      "summary": "Modifies the instance in the database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/22491355-41a3-d4b9-ff88-842fe212aaf0"
+    },
+    {
+      "name": "Select",
+      "signature": "Select(...)",
+      "summary": "Selects the object instance from the database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/44b1746f-df01-19ef-b98f-d577d5dd0435"
+    },
+    {
+      "name": "SetUserProperty(String, Double)",
+      "signature": "SetUserProperty(String, Double)(...)",
+      "summary": "Sets a double property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/995715f7-c86c-86d0-359f-76dc4d14197a"
+    },
+    {
+      "name": "SetUserProperty(String, Int32)",
+      "signature": "SetUserProperty(String, Int32)(...)",
+      "summary": "Sets an integer property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/88a5c4aa-fb12-e341-ee9e-fcd3284fab68"
+    },
+    {
+      "name": "SetUserProperty(String, String)",
+      "signature": "SetUserProperty(String, String)(...)",
+      "summary": "Sets a string property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/633cfaf7-22e7-1bb1-6596-053d78749c52"
+    },
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Changes the string presentation of the drawing object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/23e70841-4b0d-9dc2-7a9b-f3b6d7eed19f"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Attributes",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The dimension set attributes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d6eb5326-428c-9518-2042-e0ecebeef8e8"
+    },
+    {
+      "name": "Hideable",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Accesses the information if this object is hidden or not or if it should be.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1dd4faeb-9914-eec8-e6cd-e57901317141"
+    },
+    {
+      "name": "QueryReturnValue",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Status information about the latest database operation (select, insert, modify, delete).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d86cf9da-3acd-9719-d93c-e98d5fb25151"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

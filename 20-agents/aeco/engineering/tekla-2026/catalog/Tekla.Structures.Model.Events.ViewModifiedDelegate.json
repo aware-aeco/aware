@@ -1,0 +1,14 @@
+{
+  "name": "Events.ViewModifiedDelegate",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "delegate",
+  "summary": "The delegate to use for view modified event.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/cf73d96a-bc6a-83c0-4dae-4cc64142aba7",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void ViewModifiedDelegate( int viewId )"
+}

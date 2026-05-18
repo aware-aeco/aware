@@ -1,0 +1,104 @@
+{
+  "name": "OperatorType",
+  "namespace": "Tekla.Structures.Filtering",
+  "kind": "enum",
+  "summary": "The operator type defines the operators between two filter expressions.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/774cc6c1-7fab-2418-4d35-59069d90d7c3",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "IS_EQUAL",
+      "value": 1,
+      "summary": "The \u0022is equal\u0022 operator."
+    },
+    {
+      "name": "IS_NOT_EQUAL",
+      "value": 2,
+      "summary": "The \u0022is not equal\u0022 operator."
+    },
+    {
+      "name": "BOOLEAN_OR",
+      "value": 3,
+      "summary": "The Boolean OR operator."
+    },
+    {
+      "name": "BOOLEAN_AND",
+      "value": 4,
+      "summary": "The Boolean AND operator."
+    },
+    {
+      "name": "SMALLER_THAN",
+      "value": 5,
+      "summary": "The \u0022smaller than\u0022 operator."
+    },
+    {
+      "name": "SMALLER_OR_EQUAL",
+      "value": 6,
+      "summary": "The \u0022smaller or equal\u0022 operator."
+    },
+    {
+      "name": "GREATER_THAN",
+      "value": 7,
+      "summary": "The \u0022greater than\u0022 operator."
+    },
+    {
+      "name": "GREATER_OR_EQUAL",
+      "value": 8,
+      "summary": "The \u0022greater or equal\u0022 operator."
+    },
+    {
+      "name": "CONTAINS",
+      "value": 9,
+      "summary": "The \u0022contains\u0022 string operator."
+    },
+    {
+      "name": "NOT_CONTAINS",
+      "value": 10,
+      "summary": "The \u0022not contains\u0022 string operator."
+    },
+    {
+      "name": "STARTS_WITH",
+      "value": 11,
+      "summary": "The \u0022starts with\u0022 string operator."
+    },
+    {
+      "name": "NOT_STARTS_WITH",
+      "value": 12,
+      "summary": "The \u0022not starts with\u0022 string operator."
+    },
+    {
+      "name": "ENDS_WITH",
+      "value": 13,
+      "summary": "The \u0022ends with\u0022 string operator."
+    },
+    {
+      "name": "NOT_ENDS_WITH",
+      "value": 14,
+      "summary": "The \u0022not ends with\u0022 string operator."
+    },
+    {
+      "name": "EARLIER_THAN",
+      "value": 15,
+      "summary": "The \u0022earlier than\u0022 operator."
+    },
+    {
+      "name": "EARLIER_OR_EQUAL",
+      "value": 16,
+      "summary": "The \u0022earlier or equal\u0022 operator."
+    },
+    {
+      "name": "LATER_THAN",
+      "value": 17,
+      "summary": "The \u0022later than\u0022 operator."
+    },
+    {
+      "name": "LATER_OR_EQUAL",
+      "value": 18,
+      "summary": "The \u0022later or equal\u0022 operator."
+    }
+  ]
+}

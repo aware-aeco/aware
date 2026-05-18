@@ -1,0 +1,61 @@
+{
+  "name": "DistanceConverter",
+  "namespace": "Tekla.Structures.Datatype",
+  "kind": "class",
+  "summary": "The DistanceConverter class converts types to and from the distance type.",
+  "base": "System.ComponentModel.TypeConverter",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/40392776-f460-001c-0eed-dfee702cb672",
+  "constructors": [
+    {
+      "name": "DistanceConverter",
+      "signature": "DistanceConverter(...)",
+      "summary": "Initializes a new instance of the DistanceConverter class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3e515259-c107-0c44-cdfc-1bbb409359ac"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CanConvertFrom",
+      "signature": "CanConvertFrom(...)",
+      "summary": "Checks whether the conversion can be made from the source type to the distance type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/19293faf-2238-0f03-fcb5-aef2c762d440"
+    },
+    {
+      "name": "CanConvertTo",
+      "signature": "CanConvertTo(...)",
+      "summary": "Checks whether the conversion can be made from the distance type to the destination type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f5117fd1-eff2-5925-d971-3b27704b4a1b"
+    },
+    {
+      "name": "ConvertFrom",
+      "signature": "ConvertFrom(...)",
+      "summary": "Converts an object from the given culture to the distance type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c4b60749-7c53-6d4d-40bb-df1eebed715f"
+    },
+    {
+      "name": "ConvertTo",
+      "signature": "ConvertTo(...)",
+      "summary": "Converts an object from the distance type to the given destination type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6291a0b1-0d57-c9d9-069f-a1bcf83f8de2"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

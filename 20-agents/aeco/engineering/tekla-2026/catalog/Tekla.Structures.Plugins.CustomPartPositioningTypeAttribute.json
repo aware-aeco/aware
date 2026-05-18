@@ -1,0 +1,42 @@
+{
+  "name": "CustomPartPositioningTypeAttribute",
+  "namespace": "Tekla.Structures.Plugins",
+  "kind": "class",
+  "summary": "The CustomPartInputTypeAttribute class is used for defining the input type. Based on the type the system will then position the custom part either based on calculated extrema center point or given input points. The attribute is initialized from the custom attribute i.e. [CustomPartPositioningType((CustomPartBase.CustomPartPositioningType.POSITIONING_BY_INPUTPOINTS)] in the custom part source code.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/68e9e6e3-dc82-cd2c-637d-ec7b0bb89ef2",
+  "constructors": [
+    {
+      "name": "CustomPartPositioningTypeAttribute",
+      "signature": "CustomPartPositioningTypeAttribute(...)",
+      "summary": "The custom attribute uses this to store the positioning type to the system. This is not to be used by itself.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bbc58a84-c710-6e4d-e4e0-7f3781562443"
+    },
+    {
+      "name": "CustomPartPositioningTypeAttribute",
+      "signature": "CustomPartPositioningTypeAttribute(...)",
+      "summary": "The custom attribute uses this to store the positioning type to the system. This is not to be used by itself.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5d8b8978-799c-111b-a938-67d40e065efb"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Type",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The custom attribute uses this to store the positioning type to the system. This is not to be used by itself.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f9178ce8-39b9-dd23-c0e8-ac72d9891470"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

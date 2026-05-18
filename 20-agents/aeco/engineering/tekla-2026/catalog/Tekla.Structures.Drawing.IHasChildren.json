@@ -1,0 +1,32 @@
+{
+  "name": "IHasChildren",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "interface",
+  "summary": "The IHasChildren interface is implemented by objects that have child objects.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/c8afa60b-3959-4d13-a047-c2a2b6450171",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetObjects.",
+      "signature": "GetObjects.(...)",
+      "summary": "Gets the children of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e548034d-415e-3fc3-844f-780bc5d2e7c2"
+    },
+    {
+      "name": "GetObjects(.Type.)",
+      "signature": "GetObjects(.Type.)(...)",
+      "summary": "Gets the children of the current object that are of certain types.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7b2c4ae3-77ab-3ff9-2e07-a39e04badc8f"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

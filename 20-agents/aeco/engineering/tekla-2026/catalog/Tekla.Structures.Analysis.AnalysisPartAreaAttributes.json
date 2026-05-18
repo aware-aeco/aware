@@ -1,0 +1,113 @@
+{
+  "name": "AnalysisPartAreaAttributes",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisPartAreaAttributes class contains information related to analysis part area attributes.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/413b0561-05af-f353-df9e-be7a291c50af",
+  "constructors": [
+    {
+      "name": "AnalysisPartAreaAttributes",
+      "signature": "AnalysisPartAreaAttributes(...)",
+      "summary": "Initializes a new instance of the AnalysisPartAreaAttributes class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/546c24c2-d079-2ca8-2124-c8fb67e90c59"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AreaElementSizeHoles",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the area element size holes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6881311e-09f3-1d83-71ee-423e8c9f0b03"
+    },
+    {
+      "name": "AreaElementSizeX",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the area element size X.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4f0fef03-966e-2bf9-98cb-d913c5d71ee1"
+    },
+    {
+      "name": "AreaElementSizeY",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the area element size Y.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f9a71ad1-edc2-c29f-b2fa-69b109a212be"
+    },
+    {
+      "name": "AreaElementType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the area element type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c9aef74c-d6b1-d492-b136-f2d70410deea"
+    },
+    {
+      "name": "AreaRotationXY",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the area rotation XY.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3db88343-8c63-e254-55bb-cf8fb7597cf7"
+    },
+    {
+      "name": "AreaStartNumber",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the start number of the area.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ca74df8f-aab5-57c2-5354-9bd41258c7ee"
+    },
+    {
+      "name": "AreaSupport",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the area support.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/954b6dd7-bc84-8e30-839e-9cf75454196d"
+    },
+    {
+      "name": "AreaSupportType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the area support type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e0d3cc59-e2f3-d37f-41cf-763cd7f2d590"
+    },
+    {
+      "name": "MinimumAreaHoleSize",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the minimum area hole size.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/766e5d4d-88f7-c1d3-6982-5f02d6264ac2"
+    },
+    {
+      "name": "RigidDiaphragmFilterName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the filter name of the rigid diaphragm.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/25bdb3ee-b32c-b435-9935-32c8bfe9bd5a"
+    },
+    {
+      "name": "UseSimpleArea",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether simple areas are used.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3a61957a-2ecb-0ff1-f72f-5e667b57805f"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

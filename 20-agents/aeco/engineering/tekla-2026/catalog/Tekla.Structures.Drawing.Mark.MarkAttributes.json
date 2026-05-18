@@ -1,0 +1,133 @@
+{
+  "name": "Mark.MarkAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The MarkAttributes class defines the mark attributes.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/4dede4c2-574c-e381-baef-66b0c36c9fdf",
+  "constructors": [
+    {
+      "name": "Mark.MarkAttributes",
+      "signature": "Mark.MarkAttributes(...)",
+      "summary": "Creates a new default mark attributes instance that loads standard attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/55adbd83-075e-cd7f-dcc6-febb43458147"
+    },
+    {
+      "name": "Mark.MarkAttributes",
+      "signature": "Mark.MarkAttributes(...)",
+      "summary": "Creates a new mark attributes instance that loads the specified attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/cb2b168d-fa1e-c19e-1b5d-d28571e8edf0"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/48571435-fb53-ae1c-8991-522c0f153733"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "LoadAttributes(...)",
+      "summary": "Loads attributes from the attribute file.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bc73e5ae-f88b-8971-2354-196cf03b0255"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Angle",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The actual angle of the mark, in degrees. Can differ from the rotation angle set by the user for marks, e.g. 45-degree column marks in GA drawings or when placing mark along part edges.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4d09de42-a61f-2b59-af2e-df5bc654defd"
+    },
+    {
+      "name": "ArrowHead",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The arrowhead of the leader line(s).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c3ba42a0-744a-9b5d-c65e-23e380190899"
+    },
+    {
+      "name": "Content",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The mark content as a list of elements.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a35731c2-0bba-8854-32cb-c49766775854"
+    },
+    {
+      "name": "CustomPresentation",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Custom presentation GUID to be applied to the object type",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4bf280a6-17ed-e2db-3313-cda35b139fa3"
+    },
+    {
+      "name": "Frame",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The frame attributes of the mark\u0027s labels.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f7460815-3488-7e38-eea8-96d1f4feeb47"
+    },
+    {
+      "name": "PlacingAttributes",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The placing attributes that the object should use. Using these you can specify whether the object is automatically arranged in the drawing or not.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ccf1cbda-5520-b694-b7c8-60e33eb16d04"
+    },
+    {
+      "name": "PreferredPlacing",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The type of placing the object should use. See the preferred placing types for different types of placing.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f1e78cd8-64cc-7e9c-c3e0-a972599934bb"
+    },
+    {
+      "name": "RotationAngle",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The mark rotation angle set by the user. Unit is degrees.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7efb8b2e-0d41-ba47-ea87-423cb02a1ef2"
+    },
+    {
+      "name": "TextAlignment",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The mark text alignment.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d4a3f9e2-6a2b-6572-9df5-fbdf00926040"
+    },
+    {
+      "name": "TransparentBackground",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The mark text background transparency. (transparent/opaque)",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5ae9a4e8-a67c-61a6-2a3a-2cfcb3cb3ea8"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

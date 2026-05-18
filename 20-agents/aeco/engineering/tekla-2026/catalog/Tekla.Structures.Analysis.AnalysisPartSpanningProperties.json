@@ -1,0 +1,41 @@
+{
+  "name": "AnalysisPartSpanningProperties",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisPartSpanningProperties class contains information related to analysis part spanning properties.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/f3750ff1-4fd4-8586-6ebf-cdd7cc8156ef",
+  "constructors": [
+    {
+      "name": "AnalysisPartSpanningProperties",
+      "signature": "AnalysisPartSpanningProperties(...)",
+      "summary": "Initializes a new instance of the AnalysisPartSpanningProperties class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/84c17cd4-5912-a9a7-9b79-e2ad041ce1da"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "SpanningDirection",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The spanning direction (in the global coordinate system).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/aa08a30d-8b37-353a-1c89-3681403fff51"
+    },
+    {
+      "name": "SpanningType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The spanning type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ea817cff-de68-4f6d-5ef7-9ee2bf3d1e10"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

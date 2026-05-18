@@ -1,0 +1,58 @@
+{
+  "name": "PickInput",
+  "namespace": "Tekla.Structures.Model.UI",
+  "kind": "class",
+  "summary": "The PickInput class handles the input of picked objects and positions.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/2e208f87-8875-9304-4428-7e885b0a6d11",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CopyTo",
+      "signature": "CopyTo(...)",
+      "summary": "Copies the elements of the ICollection to an Array, starting at a particular Array index.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7e74c797-6176-4be3-498a-b159effccf56"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "GetEnumerator(...)",
+      "summary": "Returns an enumerator that iterates through a collection.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b36e7354-ce73-6445-48e1-1b28b6a1adfa"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the number of elements contained in the ICollection.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0cb12e6b-e3a1-d7ee-876e-567e8e468909"
+    },
+    {
+      "name": "IsSynchronized",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets a value indicating whether access to the ICollection is synchronized (thread safe).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/465ede3b-1ede-f75e-7b91-1c7b8c44f1b6"
+    },
+    {
+      "name": "SyncRoot",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets an object that can be used to synchronize access to the ICollection.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/91e2c779-856b-8524-8424-cd57d3b56d1a"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

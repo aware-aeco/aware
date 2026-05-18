@@ -1,0 +1,146 @@
+{
+  "name": "WpfSaveLoad",
+  "namespace": "Tekla.Structures.Dialog.UIControls",
+  "kind": "class",
+  "summary": "Interaction logic for WpfSaveload.xaml",
+  "base": "System.Windows.Controls.UserControl",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/6af15825-83ac-b471-8428-dce47a36c5aa",
+  "constructors": [
+    {
+      "name": "WpfSaveLoad",
+      "signature": "WpfSaveLoad(...)",
+      "summary": "Initializes a new instance of the WpfSaveLoad class with the default language and file extensions.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7cc9cb4f-62ec-e498-7bdb-c6b8527c5ec9"
+    }
+  ],
+  "methods": [
+    {
+      "name": "InitializeComponent",
+      "signature": "InitializeComponent(...)",
+      "summary": "InitializeComponent",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8ac86348-7a2a-a276-0956-4af37c0c03dd"
+    }
+  ],
+  "properties": [
+    {
+      "name": "HelpFileType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the help file type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d35b88b1-fb96-0625-4713-8fcaceada442"
+    },
+    {
+      "name": "HelpKeyword",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the HelpKeyword that the help file should be opened for. If you do not provide a HelpKeyword and HelpUrl is not set, the default start page for Tekla Structures Help viewer is displayed.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d221dc27-bf9a-e753-044c-0458b47c2277"
+    },
+    {
+      "name": "HelpUrl",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the HelpUrl where the help file is located. If you do not provide a HelpUrl, the Tekla Structures help viewer will be displayed with given HelpKeyword.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/489f98ac-4706-58ee-acef-651abb551fb1"
+    },
+    {
+      "name": "SaveAsText",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the text in the SaveAs text box.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/421da647-02d3-defe-c173-611dce05b5de"
+    },
+    {
+      "name": "SaveLoadText",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the currently selected file name in the Save/Load combo box.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5c3c853e-2ce3-1668-07a6-3e70fda5e7b4"
+    },
+    {
+      "name": "SelectedFileName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the text in the SaveAs text box.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/11b79352-10c6-21c4-19ba-3e53de49dbb8"
+    },
+    {
+      "name": "UserDefinedHelpFilePath",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the file path where the UserDefined help file is located. If you do not provide a UserDefinedHelpFilePath, the general Help file, help.chm, will be displayed.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8b5196de-12c0-380e-fd74-8f236475308b"
+    }
+  ],
+  "events": [
+    {
+      "name": "AttributesLoadClicked",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler AttributesLoadClicked",
+      "summary": "The AttributesLoadClicked event is triggered just after the load button has been clicked.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/60efdf07-87d4-2a9f-ec57-15b1eb3613e6",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "AttributesLoaded",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler AttributesLoaded",
+      "summary": "The AttributesLoaded event is triggered just after attributes have been loaded into the dialog.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d733659e-c437-a6d3-0eea-71348432597f",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "AttributesSaveClicked",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler AttributesSaveClicked",
+      "summary": "The AttributesSaveClicked event is triggered just after the save button has been clicked.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f6a7e6fa-0397-07d0-1207-94a897971a07",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "AttributesSaved",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler AttributesSaved",
+      "summary": "The AttributesSaved event is triggered just after attributes are saved to a file.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b7872aac-f55d-67ce-8ab5-879920ff05ac",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HelpOpenClicked",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler HelpOpenClicked",
+      "summary": "The HelpOpenClicked event is triggered just after the help button has been clicked.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7c3df761-1b2b-6c99-979d-62491ea8bca3",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HelpOpened",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler HelpOpened",
+      "summary": "The HelpOpened event is triggered just after the help file is opened.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f504ff6c-f5c0-695c-baba-e402ac64c1db",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

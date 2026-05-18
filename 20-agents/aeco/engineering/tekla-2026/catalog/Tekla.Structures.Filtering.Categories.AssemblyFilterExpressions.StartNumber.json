@@ -1,0 +1,34 @@
+{
+  "name": "AssemblyFilterExpressions.StartNumber",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The StartNumber class represents the start number filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/8d1a46d8-5f18-c212-4a02-a25e9a7ed715",
+  "constructors": [
+    {
+      "name": "AssemblyFilterExpressions.StartNumber",
+      "signature": "AssemblyFilterExpressions.StartNumber(...)",
+      "summary": "Initializes a new instance of the StartNumber class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/57a60cf4-ad43-4892-73db-953b8ec3ac7f"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

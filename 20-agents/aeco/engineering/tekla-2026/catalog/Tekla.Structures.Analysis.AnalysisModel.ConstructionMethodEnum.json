@@ -1,0 +1,39 @@
+{
+  "name": "AnalysisModel.ConstructionMethodEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The construction methods.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/b06c0307-de43-92c7-81b1-41fac45c89ee",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "FULL",
+      "value": 1,
+      "summary": "The construction method is \u0022full\u0022."
+    },
+    {
+      "name": "BOX",
+      "value": 2,
+      "summary": "The construction method is \u0022box\u0022."
+    },
+    {
+      "name": "SELECTED_PARTS",
+      "value": 3,
+      "summary": "The construction method is \u0022with selected parts\u0022."
+    },
+    {
+      "name": "SELECTED_PARTS_AND_LOADS",
+      "value": 4,
+      "summary": "The construction method is \u0022with selected parts and loads\u0022."
+    },
+    {
+      "name": "FLOOR_BY_SELECTED_PARTS_AND_LOADS",
+      "value": 11,
+      "summary": "The construction method is \u0022floor by selected parts and loads\u0022."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "name": "WrappingType",
+  "namespace": "Tekla.Structures.Forming",
+  "kind": "enum",
+  "summary": "Enumeration for wrapping type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/f473d02d-8108-78fb-d9ed-6c522b848120",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NOT_SPECIFIED",
+      "value": 0,
+      "summary": "Not specified, default value."
+    },
+    {
+      "name": "WRAPPED",
+      "value": 1,
+      "summary": "Indicates wrapped item."
+    },
+    {
+      "name": "UNWRAPPED",
+      "value": 2,
+      "summary": "Indicates unwrapped item."
+    }
+  ]
+}

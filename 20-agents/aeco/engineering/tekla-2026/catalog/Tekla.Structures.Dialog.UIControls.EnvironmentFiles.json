@@ -1,0 +1,97 @@
+{
+  "name": "EnvironmentFiles",
+  "namespace": "Tekla.Structures.Dialog.UIControls",
+  "kind": "class",
+  "summary": "The EnvironmentFiles class is for the paths where the attributes file will be searched for.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/827d1e0c-fca9-2053-0228-224c20fe1f9f",
+  "constructors": [
+    {
+      "name": "EnvironmentFiles",
+      "signature": "EnvironmentFiles(...)",
+      "summary": "Initializes a new instance of the EnvironmentFiles class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/aa516161-1326-d314-ea27-51abb6955a59"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetAttributeFile(String)",
+      "signature": "GetAttributeFile(String)(...)",
+      "summary": "Gets a file info representing the first match in the standard property file directories.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/25184c95-e965-0260-3b9f-5000f8b11a1f"
+    },
+    {
+      "name": "GetAttributeFile(List.String., String)",
+      "signature": "GetAttributeFile(List.String., String)(...)",
+      "summary": "Gets a file info representing the first match in the search directories.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1d543ea0-e1bd-f108-64cf-c057005203fa"
+    },
+    {
+      "name": "GetAttributeFiles",
+      "signature": "GetAttributeFiles(...)",
+      "summary": "Gets attribute files with specified suffix from model, XS_FIRM and XS_PROJECT directories and subdirectories.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8989c740-9207-24ea-2551-74bffdd718d7"
+    },
+    {
+      "name": "GetMultiDirectoryFileList(String)",
+      "signature": "GetMultiDirectoryFileList(String)(...)",
+      "summary": "Gets a list of files with the given extension from the default search directories.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c369ab72-1076-53f7-b462-df1a718863de"
+    },
+    {
+      "name": "GetMultiDirectoryFileList(List.String., String)",
+      "signature": "GetMultiDirectoryFileList(List.String., String)(...)",
+      "summary": "Gets a list of files with the given extension from the given search directories and from XS_FIRM, XS_PROJECT subdirectories.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2b3a348a-bf7d-942b-0353-ba9d32e66ab6"
+    },
+    {
+      "name": "GetStandardPropertyFileDirectories",
+      "signature": "GetStandardPropertyFileDirectories(...)",
+      "summary": "Gets the paths where to look for the property files.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1d1abc86-3590-1bb6-65ac-c97febcbf03a"
+    },
+    {
+      "name": "IsValidDirectory",
+      "signature": "IsValidDirectory(...)",
+      "summary": "Checks if a directory is valid.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0b445871-456d-31a8-68c7-40832b64cc7e"
+    }
+  ],
+  "properties": [
+    {
+      "name": "PropertyFileDirectories",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The directories where to look for property files.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/177c211c-b0c4-152b-1109-4b3d79e7206c"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

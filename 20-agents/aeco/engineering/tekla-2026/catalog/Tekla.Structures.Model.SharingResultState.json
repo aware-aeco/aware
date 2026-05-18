@@ -1,0 +1,39 @@
+{
+  "name": "SharingResultState",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "Indicates a state of Tekla Structures and model after sharing operation.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/8e66d0fa-de5e-d8ac-f1df-6212dff803f8",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Undefined",
+      "value": 0,
+      "summary": "The underfined state. It is the default value which is also set when the code is not able to determine the current state."
+    },
+    {
+      "name": "Ready",
+      "value": 1,
+      "summary": "After a successfull operation or an error, model is still opened."
+    },
+    {
+      "name": "ModelReopened",
+      "value": 2,
+      "summary": "After an error, model is reopened to the last saved."
+    },
+    {
+      "name": "ModelClosed",
+      "value": 3,
+      "summary": "After an error, model is closed."
+    },
+    {
+      "name": "ProcessClosed",
+      "value": 4,
+      "summary": "After an error, model is closed and Structures process closes."
+    }
+  ]
+}

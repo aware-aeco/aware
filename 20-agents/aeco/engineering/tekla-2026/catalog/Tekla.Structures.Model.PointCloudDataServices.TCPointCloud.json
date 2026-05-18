@@ -1,0 +1,13 @@
+{
+  "name": "TCPointCloud",
+  "namespace": "Tekla.Structures.Model.PointCloudDataServices",
+  "kind": "struct",
+  "summary": "Represents a point cloud in Trimble Connect project with metadata such as ID, name, file size, point count, and uploader information.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/23881e7d-cebf-6a60-a990-6468e8e1b877",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,309 @@
+{
+  "name": "LibraryProfileItem",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The LibraryProfileItem class contains information from library profiles in the catalog. Library profile items can be enumerated using a profile item enumerator.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/ea4317c4-643d-d275-a818-1354400f42fd",
+  "constructors": [
+    {
+      "name": "LibraryProfileItem",
+      "signature": "LibraryProfileItem(...)",
+      "summary": "Creates a new library profile item instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a0c0305b-1b8a-cfdb-5aa3-60caca650015"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddCrossSection",
+      "signature": "AddCrossSection(...)",
+      "summary": "Adds the cross section to a profile.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4e6a9522-3637-c6d8-0156-1c0da42950b6"
+    },
+    {
+      "name": "Copy",
+      "signature": "Copy(...)",
+      "summary": "Copy the library profile item in the profile database to item with new name.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b47e13e3-7cfe-251a-ff4a-268f5e5cf5e4"
+    },
+    {
+      "name": "Delete",
+      "signature": "Delete(...)",
+      "summary": "Deletes the profile item in the profile database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/aa4e6c8a-57e6-8a6e-a228-652fcbe977a3"
+    },
+    {
+      "name": "DeleteCrossSection",
+      "signature": "DeleteCrossSection(...)",
+      "summary": "Deletes the cross section of a profile.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1e4bdd8d-a3d7-7aac-9157-4c5f373471e8"
+    },
+    {
+      "name": "Export",
+      "signature": "Export(...)",
+      "summary": "Exports the profile item in the profile database to given file name. Currently library profiles, sketch profiles and clb profiles are supported. Library profiles are exported to *.lis format. Sketch profiles are exported to *.uel format. Clb profiles are exported to *.clb format. If path is not given profile is exported to model folder. If filename is empty profile name or prefix is used as filename.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/24d7de14-d3e6-314a-0e91-e57dab6ab0e7"
+    },
+    {
+      "name": "GetCrossSection",
+      "signature": "GetCrossSection(...)",
+      "summary": "Returns list of cross section points of inner surfaces from the profile item.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9a9c5248-16b2-338f-062f-bfc58c4738e5"
+    },
+    {
+      "name": "GetHighAccuracyCrossSection",
+      "signature": "GetHighAccuracyCrossSection(...)",
+      "summary": "Get cross section with high accuracy.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/285dde88-c699-5213-abc8-fa5f4c951bfe"
+    },
+    {
+      "name": "GetProfileItemSubTypes.",
+      "signature": "GetProfileItemSubTypes.(...)",
+      "summary": "Selects the profile item and updates the sub types in the profile database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8470624e-f868-9cd5-c674-41da81101565"
+    },
+    {
+      "name": "IsProfileUserDefined",
+      "signature": "IsProfileUserDefined(...)",
+      "summary": "Whether the profile is a fixed user-defined profile.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/645e4bae-5cca-9fa0-6a29-2cae47b32227"
+    },
+    {
+      "name": "IsProfileUserParametric",
+      "signature": "IsProfileUserParametric(...)",
+      "summary": "Whether the profile is a parametric user-defined profile. If so, the prefix can be asked by type and subtype.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ee8579f8-e74e-9ed2-d500-eaae92d78d76"
+    },
+    {
+      "name": "Modify",
+      "signature": "Modify(...)",
+      "summary": "Modifies the profile item in the profile database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/17d97070-9bfb-1d2f-fee9-6af19c795839"
+    },
+    {
+      "name": "ModifyCrossSection",
+      "signature": "ModifyCrossSection(...)",
+      "summary": "Modifies the cross section of a profile.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3770cf41-a91e-a2b7-e61e-45e324e16afe"
+    },
+    {
+      "name": "ModifyProfileItemAnalysisParameter",
+      "signature": "ModifyProfileItemAnalysisParameter(...)",
+      "summary": "Modify analysis parameter of library profile item. Modify is needed for profile item for updating changes to profile database",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8a875a37-33c2-54dd-3563-0ac9668839eb"
+    },
+    {
+      "name": "ModifyProfileItemParameter",
+      "signature": "ModifyProfileItemParameter(...)",
+      "summary": "Modify parameter of library profile item. Modify is needed for profile item for updating changes to profile database",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b8f040eb-f414-8c30-cb64-cf68921818db"
+    },
+    {
+      "name": "ModifyProfileItemUserParameter",
+      "signature": "ModifyProfileItemUserParameter(...)",
+      "summary": "Modify user parameter of library profile item. Modify is needed for profile item for updating changes to profile database",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2bc63067-81ca-5ba6-cf20-efa1c134ea97"
+    },
+    {
+      "name": "Select.",
+      "signature": "Select.(...)",
+      "summary": "Selects the profile item in the profile database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/90db4650-0ec0-3f08-dcc6-595f25789b73"
+    },
+    {
+      "name": "Select(String)",
+      "signature": "Select(String)(...)",
+      "summary": "Selects the profile item in the profile database using the given name.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d75dc6a6-c379-ac2f-a635-5c955166f1b8"
+    },
+    {
+      "name": "SelectCrossSections",
+      "signature": "SelectCrossSections(...)",
+      "summary": "Selects the profile item cross section in the profile database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f88821da-0793-3a27-6c20-2112029268fb"
+    },
+    {
+      "name": "SetEquivalentType",
+      "signature": "SetEquivalentType(...)",
+      "summary": "Sets the equivalent type for the specified cross section.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/935df01d-74a9-b6f3-5826-9b2d34a5aa52"
+    }
+  ],
+  "properties": [
+    {
+      "name": "aProfileItemAnalysisParameters",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "An array list with the profile item analysis parameters.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2e128ecc-f27c-128b-4de7-7c88311dfb33"
+    },
+    {
+      "name": "aProfileItemCrossSections",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "An array list with the profile item cross-sections.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/57fa535a-5f45-57b5-feac-4a0ae7362806"
+    },
+    {
+      "name": "aProfileItemParameters",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "An array list with the profile item parameters.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7ef3289d-9c56-66c4-0427-8a1eb76d467b"
+    },
+    {
+      "name": "aProfileItemUserParameters",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "An array list with the profile item user parameters.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f1ea4b81-bc8f-6961-0702-d3057eb1687b"
+    },
+    {
+      "name": "IsCLBProfile",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Whether the profile is a clb profile.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4fa257a4-7e2a-9906-33de-afebe7477bb3"
+    },
+    {
+      "name": "IsHardcodedProfile",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Whether the profile is a parametric user-defined hard coded profile.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/83255eca-0695-258f-3d04-2239825319a9"
+    },
+    {
+      "name": "IsMultiCrossSectionUserParametric",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Whether the profile is a parametric user-defined multi cross section profile.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/86704af4-4b43-1f92-f258-c08f86bea0b6"
+    },
+    {
+      "name": "IsSketchedUserParametric",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Whether the profile is a parametric user-defined sketched profile.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5bf79177-27b9-0508-316c-6b27ad8cf6b9"
+    },
+    {
+      "name": "NumberOfCrossSections",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The number of cross sections in the profile item.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/64f464d3-395f-755f-eafb-48b52140b667"
+    },
+    {
+      "name": "ParameterString",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The profile item parameter string.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c52c625a-20a2-ceea-04d9-833d212a33cc"
+    },
+    {
+      "name": "ProfileItemCrossSections",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The list of profile item cross-sections.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/52757bb4-e858-85ad-0845-6953db5d7a3f"
+    },
+    {
+      "name": "ProfileItemSubType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The profile item subtype.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bef5e450-67c4-3b0c-eb79-20b23999c102"
+    },
+    {
+      "name": "ProfileItemType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The profile item type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/07cbd8db-27a8-9905-45c2-9e035757bcca"
+    },
+    {
+      "name": "ProfileName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The profile item name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/04d504c2-0b91-ed86-aad1-7d492b8092e0"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

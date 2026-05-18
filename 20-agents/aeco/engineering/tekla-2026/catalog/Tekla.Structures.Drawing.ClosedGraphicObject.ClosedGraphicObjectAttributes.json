@@ -1,0 +1,58 @@
+{
+  "name": "ClosedGraphicObject.ClosedGraphicObjectAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The ClosedGraphicObjectAttributes class is the attributes class for the closed graphic object.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/97faf0f7-b5ad-77df-42a3-50ed1b6c5a6b",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/da11fa4f-a98d-c770-d0e2-f458bc3b82dc"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "LoadAttributes(...)",
+      "summary": "Loads the attributes from the specified file.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5597a575-45e2-aa83-6576-390f23af3e48"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BehindModelObjects",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether the closed graphic object is drawn behind model objects",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2f3d8e0e-95ab-ddc8-0eed-41a8f547f5e5"
+    },
+    {
+      "name": "Hatch",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The hatch attributes of the closed graphic object (the closed graphic object is hatchable).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a4e0e3d4-102f-e2cb-68f2-da8c9f63fba0"
+    },
+    {
+      "name": "Line",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The line attributes of the graphic object. A graphic object always consists of lines.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3483367b-c555-6997-e0a4-988358d7ce9b"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

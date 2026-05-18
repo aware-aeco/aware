@@ -1,0 +1,51 @@
+{
+  "name": "AnalysisObjectSelector",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisObjectSelector class contains methods for getting objects.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/302cf92f-a39e-a869-a38b-1b6683f77dac",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetAllObjects",
+      "signature": "GetAllObjects(...)",
+      "summary": "Returns an enumerator of all the model objects in the current model. NOT YET IMPLEMENTED.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2d75a66e-dc18-0739-17a1-342d7ff82771"
+    },
+    {
+      "name": "GetAllObjectsWithType",
+      "signature": "GetAllObjectsWithType(...)",
+      "summary": "Returns an enumerator of all the model objects in the current model with the given type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c9afcf88-f1ec-9cf1-0280-66a70e47e66a"
+    },
+    {
+      "name": "GetAnalysisModels",
+      "signature": "GetAnalysisModels(...)",
+      "summary": "Returns an enumerator of all the analysis model objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/327fdf82-56ca-888e-a9ff-bf12bc757028"
+    },
+    {
+      "name": "GetSelectedObjects",
+      "signature": "GetSelectedObjects(...)",
+      "summary": "Returns an enumerator of all the selected model objects in the current model. NOT YET IMPLEMENTED.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/82197e0a-7acf-41b1-05d7-b1c4c95f8e3d"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

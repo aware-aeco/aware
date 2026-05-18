@@ -1,0 +1,24 @@
+{
+  "name": "ComponentOptions.BoltEdgeDistanceReferenceEnum",
+  "namespace": "Tekla.Structures",
+  "kind": "enum",
+  "summary": "The bolt edge distance reference type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/c668e8fe-10a6-c044-ca5d-f8216f73c335",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "BOLT_DIAMETER",
+      "value": 0,
+      "summary": "Compares the edge distance to the bolt diameter."
+    },
+    {
+      "name": "HOLE_DIAMETER",
+      "value": 1,
+      "summary": "Compares the edge distance to the hole diameter."
+    }
+  ]
+}

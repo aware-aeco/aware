@@ -1,0 +1,141 @@
+{
+  "name": "PropertyElement.PropertyElementType.ReinforcementMarkPropertyElementTypes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The ReinforcementMarkPropertyElementTypes class represents the available property element types for reinforcement marks.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/20d7b27d-98cf-1dd2-786e-e3ac03f57a47",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Cc",
+      "signature": "Cc(...)",
+      "summary": "Returns the cc property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/25d784fd-f266-2316-bde3-534c2c8ccfba"
+    },
+    {
+      "name": "CcExact",
+      "signature": "CcExact(...)",
+      "summary": "Returns the cc exact property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b2d55752-7107-1281-16f8-16c3ad7b1a82"
+    },
+    {
+      "name": "CcMax",
+      "signature": "CcMax(...)",
+      "summary": "Returns the cc max property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e555640a-388d-5850-bf59-4f18420ba3f2"
+    },
+    {
+      "name": "CcMin",
+      "signature": "CcMin(...)",
+      "summary": "Returns the cc min property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/68cf364a-e493-be7a-f968-c84557a0929b"
+    },
+    {
+      "name": "CcTarget",
+      "signature": "CcTarget(...)",
+      "summary": "Returns the cc target property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/41d768a1-e016-7304-ca20-0f74ac732b1d"
+    },
+    {
+      "name": "Class",
+      "signature": "Class(...)",
+      "summary": "Returns the class property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a355828b-d10f-c990-9002-011ca430e7e6"
+    },
+    {
+      "name": "Diameter",
+      "signature": "Diameter(...)",
+      "summary": "Returns the diameter property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/cba228ca-ad32-a07a-65dd-e3b2f39a36c6"
+    },
+    {
+      "name": "Grade",
+      "signature": "Grade(...)",
+      "summary": "Returns the grade property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6e9fd147-2b42-8b5e-16d4-e9ba46f5a950"
+    },
+    {
+      "name": "Length",
+      "signature": "Length(...)",
+      "summary": "Returns the length property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4da1b491-7248-f7b2-c926-149284d4729e"
+    },
+    {
+      "name": "Name",
+      "signature": "Name(...)",
+      "summary": "Returns the name property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d3f30557-d52e-26af-8012-72c56c8f02ad"
+    },
+    {
+      "name": "Number",
+      "signature": "Number(...)",
+      "summary": "Returns the number property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7e089ba6-08e3-a1d8-7594-9978c73958b3"
+    },
+    {
+      "name": "Position",
+      "signature": "Position(...)",
+      "summary": "Returns the position property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f16ffc9b-8090-7d2a-beeb-a0ee7c53b9e0"
+    },
+    {
+      "name": "Shape",
+      "signature": "Shape(...)",
+      "summary": "Returns the shape property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/516d97a3-5a6f-e7af-7579-b61c1f8a096b"
+    },
+    {
+      "name": "Weight",
+      "signature": "Weight(...)",
+      "summary": "Returns the weight property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5687b005-c253-547c-42d7-b264b33f9879"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

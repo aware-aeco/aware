@@ -1,0 +1,58 @@
+{
+  "name": "CoordinateSystem",
+  "namespace": "Tekla.Structures.Geometry3d",
+  "kind": "class",
+  "summary": "The CoordinateSystem class defines a coordinate system in space. The system is defined by an origin, an X-axis and a Y-axis. The Z-axis is the cross product of the X-axis and the Y-axis.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/62ca8a5c-4cfe-1fe0-5009-75b994b06a07",
+  "constructors": [
+    {
+      "name": "CoordinateSystem",
+      "signature": "CoordinateSystem(...)",
+      "summary": "Instantiates a coordinate system in the current work plane.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fedd7e89-dcc8-a8f4-2346-09b041190a35"
+    },
+    {
+      "name": "CoordinateSystem",
+      "signature": "CoordinateSystem(...)",
+      "summary": "Instantiates a coordinate system with the given origin, X-axis and Y-axis.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1eaa2ce1-4eaa-4a3f-6e1d-37b6686f995a"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AxisX",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The X-axis of the coordinate system.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/dcba528d-2208-0390-43e0-19883ae0b6ac"
+    },
+    {
+      "name": "AxisY",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The Y-axis of the coordinate system.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/78010d9d-6ceb-27e8-a98a-0fd1f07073ec"
+    },
+    {
+      "name": "Origin",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The origin of the coordinate system.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5d98eb3f-913e-ce6b-5fb0-41496f484c99"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

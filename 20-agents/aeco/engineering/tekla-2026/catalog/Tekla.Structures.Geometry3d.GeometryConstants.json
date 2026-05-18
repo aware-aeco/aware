@@ -1,0 +1,24 @@
+{
+  "name": "GeometryConstants",
+  "namespace": "Tekla.Structures.Geometry3d",
+  "kind": "class",
+  "summary": "The Constants class of Geometry3d holds certain constant values that are used internally by the other geometry classes.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/b5a32e82-3d8b-f5cc-5abd-24b7c92d8db4",
+  "constructors": [
+    {
+      "name": "GeometryConstants",
+      "signature": "GeometryConstants(...)",
+      "summary": "Initializes a new instance of the GeometryConstants class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1f1c4ac2-41de-20a6-22cc-8096bb15abe3"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

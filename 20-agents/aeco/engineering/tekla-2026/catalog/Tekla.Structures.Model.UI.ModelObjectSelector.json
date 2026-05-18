@@ -1,0 +1,61 @@
+{
+  "name": "ModelObjectSelector",
+  "namespace": "Tekla.Structures.Model.UI",
+  "kind": "class",
+  "summary": "The ModelObjectSelector class can be used to select objects from the Tekla Structures user interface. Currently, these selections both select the objects from the database and highlight them visually.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/d1c10655-d2b0-2c0f-5bf4-16bdc2b18ca7",
+  "constructors": [
+    {
+      "name": "ModelObjectSelector",
+      "signature": "ModelObjectSelector(...)",
+      "summary": "Creates a new model object selector instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b472a494-e224-2f21-32e1-e9d0cdcfffd4"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetObjectsByBoundingBox",
+      "signature": "GetObjectsByBoundingBox(...)",
+      "summary": "Returns an enumerator of the given view\u0027s visible model objects that collide with the given geometrical bounding box. Note that this method uses approximate bounding boxes and thus is NOT EXACT, and may return objects not necessarily colliding with the given box but only being somewhere near to it.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0f1d00ed-8269-6cd5-0403-81aa5206b9cd"
+    },
+    {
+      "name": "GetSelectedObjects",
+      "signature": "GetSelectedObjects(...)",
+      "summary": "Returns an enumerator of all the selected model objects in the model view.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a03063f4-8140-c465-1e84-95fbc0291f52"
+    },
+    {
+      "name": "Select(ArrayList)",
+      "signature": "Select(ArrayList)(...)",
+      "summary": "Selects a list of objects from the user interface.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/739e39e9-0c4f-e37d-88a5-9fb6fdff508d"
+    },
+    {
+      "name": "Select(ArrayList, Boolean)",
+      "signature": "Select(ArrayList, Boolean)(...)",
+      "summary": "Selects a list of objects from the user interface.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/faf6cfd2-be15-3cec-6dd1-efd77cf5938f"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

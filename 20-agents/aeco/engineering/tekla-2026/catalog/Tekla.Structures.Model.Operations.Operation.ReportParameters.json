@@ -1,0 +1,89 @@
+{
+  "name": "Operation.ReportParameters",
+  "namespace": "Tekla.Structures.Model.Operations",
+  "kind": "class",
+  "summary": "Represents the parameters required for generating a report.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/f3230537-529d-b6e5-72dc-e718a4190599",
+  "constructors": [
+    {
+      "name": "Operation.ReportParameters",
+      "signature": "Operation.ReportParameters(...)",
+      "summary": "Initializes a new instance of the Operation.ReportParameters class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ba252c79-2162-5318-1cab-c3e8917c2bf8"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "FileName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name of the created report. The name must contain more than three characters.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3e89c5b5-21c3-e6e0-8214-27c320a16e4e"
+    },
+    {
+      "name": "IsFromSelected",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the report is from selected or from all objects.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b129d086-b045-07e4-27a2-28693ab7970c"
+    },
+    {
+      "name": "TemplateName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name of the report template to be used in report creation. The name must contain more than three characters.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ad31fccd-de03-52f5-bcab-9e325caf1da2"
+    },
+    {
+      "name": "Title1",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the first title for the created report.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b0ebae4a-0003-e382-2076-43f3caa0c387"
+    },
+    {
+      "name": "Title2",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the second title for the created report.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9be0f095-fb1c-7753-1fbb-e5ffb5f916c9"
+    },
+    {
+      "name": "Title3",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the third title for the created report.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b0c712c2-0ba4-c9df-9e32-4467f2b52459"
+    },
+    {
+      "name": "XLSXFlags",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the flags used for processing XLSX files.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/75f07f6e-a158-b517-d2ae-83246a578b59"
+    },
+    {
+      "name": "XLTXFileName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name of the Excel template to be used.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1840a5e1-b6ff-fffe-6853-ba17758bee03"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

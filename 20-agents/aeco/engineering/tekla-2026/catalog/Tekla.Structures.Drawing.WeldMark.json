@@ -1,0 +1,308 @@
+{
+  "name": "WeldMark",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The WeldMark class defines a drawing object that illustrates a weld mark in a specific view. WeldMark class refers to welding marks that appear when creating/updating drawing views. In this case, ModelIdentifier has a value. WeldMark class also refers to weld marks created with drawing editor UI. In this case, ModelIdentifier value is zero. Graphical representation of welding marks (line and text properties) can be modified using .wel setting files. The welding mark settting files (.wls) cannot be used to modify instances of WeldMark class.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/dae803f9-fb07-c6d7-ad0f-df44a120a6e4",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Delete",
+      "signature": "Delete(...)",
+      "summary": "Deletes the weld mark from the current drawing database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0aa79b98-4590-4547-2c66-949037ffba8e"
+    },
+    {
+      "name": "GetAxisAlignedBoundingBox",
+      "signature": "GetAxisAlignedBoundingBox(...)",
+      "summary": "Returns the axis aligned bounding box of the weld mark (rectangle format).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8bb50ca2-6dea-a3fb-5118-79cf400644be"
+    },
+    {
+      "name": "GetDoubleUserProperties(Dictionary.String, Double..)",
+      "signature": "GetDoubleUserProperties(Dictionary.String, Double..)(...)",
+      "summary": "Retrieves all double user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b25f0e6b-ab5c-154a-a45c-4f5868a20599"
+    },
+    {
+      "name": "GetDoubleUserProperties(List.String., Dictionary.String, Double..)",
+      "signature": "GetDoubleUserProperties(List.String., Dictionary.String, Double..)(...)",
+      "summary": "Retrieves all double user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7f327fc5-14b5-f534-da39-b68d3f87124a"
+    },
+    {
+      "name": "GetDrawing",
+      "signature": "GetDrawing(...)",
+      "summary": "Gets the drawing where the drawing object is.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4e9beef3-2188-ab45-9f07-dbde351915bf"
+    },
+    {
+      "name": "GetIntegerUserProperties(Dictionary.String, Int32..)",
+      "signature": "GetIntegerUserProperties(Dictionary.String, Int32..)(...)",
+      "summary": "Retrieves all integer user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/20a7d099-ebee-b016-ffc7-0181a1219405"
+    },
+    {
+      "name": "GetIntegerUserProperties(List.String., Dictionary.String, Int32..)",
+      "signature": "GetIntegerUserProperties(List.String., Dictionary.String, Int32..)(...)",
+      "summary": "Retrieves all integer user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b485bd81-5ccf-68e4-0453-caea6b1d0dde"
+    },
+    {
+      "name": "GetObjectAlignedBoundingBox",
+      "signature": "GetObjectAlignedBoundingBox(...)",
+      "summary": "Returns the object aligned bounding box of the weld mark (rectangle format).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ddbc4ec3-4fff-620f-fd09-e743318185b6"
+    },
+    {
+      "name": "GetObjects.",
+      "signature": "GetObjects.(...)",
+      "summary": "Gets the children objects of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/41fc1a14-869d-313a-134b-6abba011a1e9"
+    },
+    {
+      "name": "GetObjects(.Type.)",
+      "signature": "GetObjects(.Type.)(...)",
+      "summary": "Gets the children objects of the current object that are of certain types.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4f27ba0a-4880-f09e-d734-82fea5b72200"
+    },
+    {
+      "name": "GetRelatedObjects.",
+      "signature": "GetRelatedObjects.(...)",
+      "summary": "Gets the related objects of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/50820387-cee1-637a-318e-fb3e06780149"
+    },
+    {
+      "name": "GetRelatedObjects(.Type.)",
+      "signature": "GetRelatedObjects(.Type.)(...)",
+      "summary": "Gets the related objects of the current object that are of certain types.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/01d5e137-fa4b-92d7-328b-69c974dc7415"
+    },
+    {
+      "name": "GetStringUserProperties(Dictionary.String, String..)",
+      "signature": "GetStringUserProperties(Dictionary.String, String..)(...)",
+      "summary": "Retrieves all string user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a0039213-2e79-912f-5bdf-5e6dd417c092"
+    },
+    {
+      "name": "GetStringUserProperties(List.String., Dictionary.String, String..)",
+      "signature": "GetStringUserProperties(List.String., Dictionary.String, String..)(...)",
+      "summary": "Retrieves all string user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/474a80dc-539a-2734-4b5c-1ea52f86e750"
+    },
+    {
+      "name": "GetUserProperty(String, Double.)",
+      "signature": "GetUserProperty(String, Double.)(...)",
+      "summary": "Gets a double property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/203a39af-db6b-e317-5de3-f0301c1642f2"
+    },
+    {
+      "name": "GetUserProperty(String, Int32.)",
+      "signature": "GetUserProperty(String, Int32.)(...)",
+      "summary": "Gets an integer property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f773aabe-fe4e-dba3-bf33-f6f927441a85"
+    },
+    {
+      "name": "GetUserProperty(String, String.)",
+      "signature": "GetUserProperty(String, String.)(...)",
+      "summary": "Gets a string property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5335a30d-ac20-6231-5b02-22e14c6980a7"
+    },
+    {
+      "name": "GetView",
+      "signature": "GetView(...)",
+      "summary": "Gets the view where the drawing object is.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ed3c08d7-c75f-2e18-ee97-fe2e096f29b5"
+    },
+    {
+      "name": "Insert",
+      "signature": "Insert(...)",
+      "summary": "NOT YET IMPLEMENTED. Welding marks connected with welds in the model database appear when drawing views are created/updated. Weld marks created with drawing editor UI cannot be inserted with API code.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/133d93c8-9325-f294-6a36-a307848ff516"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/620f4174-d0c0-3b3a-4d5e-78da6e205edd"
+    },
+    {
+      "name": "IsSameDatabaseObject",
+      "signature": "IsSameDatabaseObject(...)",
+      "summary": "Returns true if the current object and the given object are referencing the same database object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/675fe6a8-2f1f-6e66-07f4-768bc3a1c74b"
+    },
+    {
+      "name": "Modify",
+      "signature": "Modify(...)",
+      "summary": "Modifies the weld mark in the current drawing database. Attributes can be modified with .wel setting files.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bdb342be-7a5a-1962-3079-b741c7e90428"
+    },
+    {
+      "name": "MoveObjectRelative",
+      "signature": "MoveObjectRelative(...)",
+      "summary": "Moves the object using the move vector.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/041e9576-0600-15ac-8339-bc2cdb274ba4"
+    },
+    {
+      "name": "Select",
+      "signature": "Select(...)",
+      "summary": "Selects the weld mark from the current drawing database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/052f7f53-8715-a861-fb57-dbeaa8688eca"
+    },
+    {
+      "name": "SetUserProperty(String, Double)",
+      "signature": "SetUserProperty(String, Double)(...)",
+      "summary": "Sets a double property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/995715f7-c86c-86d0-359f-76dc4d14197a"
+    },
+    {
+      "name": "SetUserProperty(String, Int32)",
+      "signature": "SetUserProperty(String, Int32)(...)",
+      "summary": "Sets an integer property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/88a5c4aa-fb12-e341-ee9e-fcd3284fab68"
+    },
+    {
+      "name": "SetUserProperty(String, String)",
+      "signature": "SetUserProperty(String, String)(...)",
+      "summary": "Sets a string property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/633cfaf7-22e7-1bb1-6596-053d78749c52"
+    },
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Changes the string presentation of the drawing object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/23e70841-4b0d-9dc2-7a9b-f3b6d7eed19f"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Attributes",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The attributes of the weld mark. For more information see WeldMark.WeldMarkAttributes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bef62590-b699-8914-bc7d-5477831e9372"
+    },
+    {
+      "name": "Hideable",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Accesses the information if this object is hidden or not or if it should be.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0f2b7d48-571b-c2c6-849e-8bb2b45bacaf"
+    },
+    {
+      "name": "InsertionPoint",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The insertion point of the mark.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8ea0a925-92f9-e55c-7153-65206bec458a"
+    },
+    {
+      "name": "ModelIdentifier",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "When instance refers to welding mark related to a weld in model database, ModelIdentifier has a value. When instance refers to weld mark created with drawing editor UI, value is zero.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b9544c3c-b191-484c-69e4-6010e6d49717"
+    },
+    {
+      "name": "QueryReturnValue",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Status information about the latest database operation (select, insert, modify, delete).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d86cf9da-3acd-9719-d93c-e98d5fb25151"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,61 @@
+{
+  "name": "Filter",
+  "namespace": "Tekla.Structures.Filtering",
+  "kind": "class",
+  "summary": "The Filter class creates a filter file based on the input FilterExpression object.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/3fe566dd-d704-1455-1c24-352a7d77ec85",
+  "constructors": [
+    {
+      "name": "Filter",
+      "signature": "Filter(...)",
+      "summary": "Initializes a new instance of the Filter class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/08b840d5-75e6-e69d-1033-31e32a983d07"
+    },
+    {
+      "name": "Filter",
+      "signature": "Filter(...)",
+      "summary": "Initializes a new instance of the Filter class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/34efc8b0-dc67-fabe-0221-a02bd7f537c7"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateFile",
+      "signature": "CreateFile(...)",
+      "summary": "Creates a filter and saves it as a text file.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ca0bf551-31d5-5d89-d73d-d247375a025c"
+    },
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Returns the current FilterExpression as a string.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3084a925-8630-a8e8-fbbd-15b8ca9c8841"
+    }
+  ],
+  "properties": [
+    {
+      "name": "FilterExpression",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the current FilterExpression instance.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/948ac3b3-fb4a-959b-79c4-72fe7b42791b"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

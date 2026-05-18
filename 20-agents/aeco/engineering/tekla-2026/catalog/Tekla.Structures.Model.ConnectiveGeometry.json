@@ -1,0 +1,79 @@
+{
+  "name": "ConnectiveGeometry",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "A class for geometry formed of several geometry sections. Geometry is initialized with polygon geometry and then can be extended by calling one of AddLeg methods using BentPlateGeometrySolver class. In the case of success, two polygon geometries will be connected by cylindrical surface geometry possibly with help of additional polygon geometries. Resulted geometry, then, can be set to bent plate.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/f376b309-e3fe-c8f6-d8cd-805695550b9d",
+  "constructors": [
+    {
+      "name": "ConnectiveGeometry",
+      "signature": "ConnectiveGeometry(...)",
+      "summary": "Initializes a new instance of the ConnectiveGeometry class for a stand-alone bend creation.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bd7311ef-d792-d20f-12e8-9254b3aaba33"
+    },
+    {
+      "name": "ConnectiveGeometry",
+      "signature": "ConnectiveGeometry(...)",
+      "summary": "Initializes a new instance of the ConnectiveGeometry class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8593a028-2b6d-e56f-11d8-48be5efc3b93"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetConnection",
+      "signature": "GetConnection(...)",
+      "summary": "Returns 2 connecting line segments between geometrySection1 and geometrySection2 sections, if sections are connected, otherwise returns empty list.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/97fdc8ce-5c44-0d5b-0cf1-0477b2bf7ee7"
+    },
+    {
+      "name": "GetGeometryEnumerator",
+      "signature": "GetGeometryEnumerator(...)",
+      "summary": "Gets a new geometry sections enumerator for enumerating through the geometry sections.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4b345f2f-7977-8d1d-bfe8-df07f99c4c91"
+    },
+    {
+      "name": "GetGeometryLegSections",
+      "signature": "GetGeometryLegSections(...)",
+      "summary": "Gets geometry end GeometrySections which are possible to remove.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/68035fba-42ff-c225-5b85-2fd9b6664c21"
+    },
+    {
+      "name": "GetNeighborSections",
+      "signature": "GetNeighborSections(...)",
+      "summary": "Gets neighbor sections of the geometrySection inside this ConnectiveGeometry.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7ffd60f3-2ecb-c6fe-beba-c9e01964d2db"
+    },
+    {
+      "name": "IsEmpty",
+      "signature": "IsEmpty(...)",
+      "summary": "Checks whether the geometry is degenerate",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a5b27561-22c1-e67a-ba34-971391059a30"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

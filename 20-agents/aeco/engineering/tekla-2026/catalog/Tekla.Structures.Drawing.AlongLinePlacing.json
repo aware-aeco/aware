@@ -1,0 +1,51 @@
+{
+  "name": "AlongLinePlacing",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The AlongLinePlacing class defines a placing where the object is located and moved along a line defined by two points.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/add4e174-6dc4-3eeb-7b1f-2d013882190d",
+  "constructors": [
+    {
+      "name": "AlongLinePlacing",
+      "signature": "AlongLinePlacing(...)",
+      "summary": "Creates a new along line placing instance. The given two points define the line to be used for the placing.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/cc6d3493-a867-1a37-eecc-435f27c47462"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a2360f3f-0551-3a34-e20d-40e9168f3c6b"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EndPoint",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The end point of the line that the object is placed on.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/13eaa524-808d-f7b3-790d-5253fede8456"
+    },
+    {
+      "name": "StartPoint",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The start point of the line that the object is placed on.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bed7dd3b-929a-e4f1-e7f1-39870cce94ce"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

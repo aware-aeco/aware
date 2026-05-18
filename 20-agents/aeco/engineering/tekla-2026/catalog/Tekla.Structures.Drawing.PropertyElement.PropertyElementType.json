@@ -1,0 +1,24 @@
+{
+  "name": "PropertyElement.PropertyElementType",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PropertyElementType class represents the type of a property element.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/941ed10f-6559-4a0b-08c3-cbcd3d7ae447",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/983806d4-2c2a-7a71-8ae0-5d28bfae9edc"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

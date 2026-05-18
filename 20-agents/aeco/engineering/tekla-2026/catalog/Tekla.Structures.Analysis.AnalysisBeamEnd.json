@@ -1,0 +1,49 @@
+{
+  "name": "AnalysisBeamEnd",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisBeamEnd class contains information related to analysis beam ends.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/4cb46c46-20b2-25d2-ded2-1d065a7fd2b0",
+  "constructors": [
+    {
+      "name": "AnalysisBeamEnd",
+      "signature": "AnalysisBeamEnd(...)",
+      "summary": "Initializes a new instance of the AnalysisBeamEnd class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/07d2e665-8eeb-da6c-ff38-560c31e3219d"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Connectivity",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the connectivity at the beam end.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/dadef039-44da-0679-8732-bbd7e6286152"
+    },
+    {
+      "name": "Eccentricity",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the eccentricity at the beam end (in the member\u0027s local coordinate system).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/332ec1e9-1134-32c3-9ed1-d8312be02ae7"
+    },
+    {
+      "name": "Profile",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the profile at the beam end.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/964a904c-3802-380c-e71f-280737984880"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,24 @@
+{
+  "name": "AlongLinePlacingType",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The AlongLinePlacingType class defines a placing type that places the object using the along line placing.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/7c46b8e9-1452-4a67-55c3-ed71c540f360",
+  "constructors": [
+    {
+      "name": "AlongLinePlacingType",
+      "signature": "AlongLinePlacingType(...)",
+      "summary": "Creates a new along line placing type instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/024dfa8d-07cd-fc9f-9ddd-4167fe297370"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

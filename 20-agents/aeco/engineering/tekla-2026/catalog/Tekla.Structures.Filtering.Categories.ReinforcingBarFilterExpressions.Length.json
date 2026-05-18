@@ -1,0 +1,34 @@
+{
+  "name": "ReinforcingBarFilterExpressions.Length",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The Length class represents the length filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/29bf4ea5-c36c-38fa-3037-9c13849b766b",
+  "constructors": [
+    {
+      "name": "ReinforcingBarFilterExpressions.Length",
+      "signature": "ReinforcingBarFilterExpressions.Length(...)",
+      "summary": "Initializes a new instance of the Length class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e0d6e976-7f52-f074-b9ef-d5ef4bdc5f18"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

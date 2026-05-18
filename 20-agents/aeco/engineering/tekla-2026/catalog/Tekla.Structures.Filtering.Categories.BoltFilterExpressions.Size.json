@@ -1,0 +1,34 @@
+{
+  "name": "BoltFilterExpressions.Size",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The Size class represents the size filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/dce1e41e-ed2d-f996-bf8b-d22acb0271a4",
+  "constructors": [
+    {
+      "name": "BoltFilterExpressions.Size",
+      "signature": "BoltFilterExpressions.Size(...)",
+      "summary": "Initializes a new instance of the Size class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9c967536-749f-b8a9-c2e7-9d3b44674a8e"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

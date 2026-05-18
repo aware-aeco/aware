@@ -1,0 +1,29 @@
+{
+  "name": "RebarMesh.RebarMeshCrossBarLocationEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The ways to locate the crossing bars.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/4ae1fcc1-01e0-0245-8025-8cd06a8711c8",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "LOCATION_TYPE_UNDEFINED",
+      "value": -1,
+      "summary": "The undefined location type."
+    },
+    {
+      "name": "LOCATION_TYPE_ABOVE",
+      "value": 0,
+      "summary": "The location of the crossing bars is above the longitudinal bars."
+    },
+    {
+      "name": "LOCATION_TYPE_BELOW",
+      "value": 1,
+      "summary": "The location of the crossing bars is below the longitudinal bars."
+    }
+  ]
+}

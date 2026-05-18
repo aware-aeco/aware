@@ -1,0 +1,23 @@
+{
+  "name": "ISharingEvents",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "interface",
+  "summary": "Provides events related to the sharing service in a shared model environment.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/3e0df457-57a3-2312-035d-472d7ee71df8",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [
+    {
+      "name": "SharedModelStateChanged",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler SharedModelStateChanged",
+      "summary": "Occurs when the sharing service state changes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fbd2c8c3-d153-63c7-70b4-42f0066be93b",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

@@ -1,0 +1,52 @@
+{
+  "name": "SettingsProxy",
+  "namespace": "Tekla.Structures.Datatype",
+  "kind": "class",
+  "summary": "The SettingsProxy class is a proxy for the settings.",
+  "base": "System.MarshalByRefObject",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/4f296ae4-7b22-7536-4d51-6f0c786b1f24",
+  "constructors": [
+    {
+      "name": "SettingsProxy",
+      "signature": "SettingsProxy(...)",
+      "summary": "Creates a new settings proxy instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8826bdeb-9325-8841-203b-a524429b072b"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetValue",
+      "signature": "GetValue(...)",
+      "summary": "Gets the value of the setting with the given name.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/aff544dc-6a76-16cc-fa9d-00deef9d60b8"
+    },
+    {
+      "name": "SetValue",
+      "signature": "SetValue(...)",
+      "summary": "Sets a setting to a value.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2652bc46-1ae5-fcbb-f343-4960697413fc"
+    },
+    {
+      "name": "TryGetValue",
+      "signature": "TryGetValue(...)",
+      "summary": "Tries to get the value of the setting with the given name.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8e499dc9-15ec-89fa-013f-82afbab6ec18"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

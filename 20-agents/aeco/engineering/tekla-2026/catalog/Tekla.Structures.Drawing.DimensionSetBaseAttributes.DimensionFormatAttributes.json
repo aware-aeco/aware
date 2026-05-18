@@ -1,0 +1,76 @@
+{
+  "name": "DimensionSetBaseAttributes.DimensionFormatAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The DimensionFormatAttributes class controls the precision, format and unit of the dimension.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/4d479d66-b47c-fc8f-6223-3abe21e7f513",
+  "constructors": [
+    {
+      "name": "DimensionSetBaseAttributes.DimensionFormatAttributes",
+      "signature": "DimensionSetBaseAttributes.DimensionFormatAttributes(...)",
+      "summary": "Creates a new dimension format attributes instance. By default the format rounds the dimension value to the nearest whole and shows it with no decimals. The unit is selected automatically.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3be7e271-9859-992c-eea8-4a2cf3f7f604"
+    },
+    {
+      "name": "DimensionSetBaseAttributes.DimensionFormatAttributes",
+      "signature": "DimensionSetBaseAttributes.DimensionFormatAttributes(...)",
+      "summary": "Creates a new dimension format attributes instance with the given parameters.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ad619fa5-d246-e9b8-d3a2-229815aaf4f9"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/72852c3f-ae80-ead6-2076-fe9e89d03971"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Format",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The format of the dimension.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/dc5ae8e6-7fe6-62b7-09e3-d86feb7911be"
+    },
+    {
+      "name": "Precision",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The precision of the dimension.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e3e63db7-cf62-0533-9c35-30273a4ab38c"
+    },
+    {
+      "name": "Unit",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the unit of the dimension. Changing this attribute does not have any effect if the dimension measures an angle.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3f309f86-9940-96e2-ef3f-602d8368e7a2"
+    },
+    {
+      "name": "UseDigitGrouping",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether digit grouping should be used or not.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bfc228ad-a48d-83cc-7224-db64c0fd9d9a"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,84 @@
+{
+  "name": "DetailMarkTagsAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The DetailMarkTagsAttributes class contains attributes for detail mark tags.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/82466df4-79d8-486e-cdbe-c58c38a329c1",
+  "constructors": [
+    {
+      "name": "DetailMarkTagsAttributes",
+      "signature": "DetailMarkTagsAttributes(...)",
+      "summary": "Creates a new mark tags attributes instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ff2124aa-bdcc-8ffb-46f8-2e8269c50735"
+    },
+    {
+      "name": "DetailMarkTagsAttributes",
+      "signature": "DetailMarkTagsAttributes(...)",
+      "summary": "Creates a new mark tags attributes instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0ee79b9d-d98f-096f-de70-ed5ae0c40141"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/14044383-871a-2de6-0df0-017a86ee81de"
+    }
+  ],
+  "properties": [
+    {
+      "name": "TagA1",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The tag A1 of a mark.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8be62553-b9b0-1058-de7d-4ef4044813a4"
+    },
+    {
+      "name": "TagA2",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The tag A2 of a mark.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a7d8746e-5d6e-1f4c-981d-05f6e918f194"
+    },
+    {
+      "name": "TagA3",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The tag A3 of a mark.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7887022f-12f4-387a-ec27-91b4a4bb0b3c"
+    },
+    {
+      "name": "TagA4",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The tag A4 of a mark.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/dec25b99-03d1-a27a-6131-ba0f0bf5a456"
+    },
+    {
+      "name": "TagA5",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The tag A5 of a mark.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9d1d2871-cb34-88b5-f8c5-3cfcf82c294f"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

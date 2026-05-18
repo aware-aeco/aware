@@ -1,0 +1,39 @@
+{
+  "name": "AnalysisModelGeneralProperties.ModelCreationTypeEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "Defines the model creation type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/1b93f9f4-65f6-8560-291a-bef55c181055",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "FULL_MODEL",
+      "value": 0,
+      "summary": "Creates an analysis model using the full model."
+    },
+    {
+      "name": "BY_WORK_AREA",
+      "value": 1,
+      "summary": "Creates an analysis model using the selected area."
+    },
+    {
+      "name": "BY_SELECTED_PARTS",
+      "value": 2,
+      "summary": "Creates an analysis model using the selected parts."
+    },
+    {
+      "name": "BY_SELECTED_PARTS_AND_LOADS",
+      "value": 3,
+      "summary": "Creates an analysis model using the selected parts and loads."
+    },
+    {
+      "name": "FLOOR_MODEL_BY_SELECTED_PARTS_AND_LOADS",
+      "value": 4,
+      "summary": "Creates a floor model using the selected parts and loads."
+    }
+  ]
+}

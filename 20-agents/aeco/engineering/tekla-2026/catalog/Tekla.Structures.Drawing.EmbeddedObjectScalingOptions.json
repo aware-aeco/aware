@@ -1,0 +1,34 @@
+{
+  "name": "EmbeddedObjectScalingOptions",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The options for controlling the scaling of the objects in the drawing.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/795b7d71-f3a0-1d23-342f-a65be670084e",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ScaleX",
+      "value": 1,
+      "summary": "Scales the object in the X direction."
+    },
+    {
+      "name": "ScaleXY",
+      "value": 3,
+      "summary": "Scales the object in the X and Y directions."
+    },
+    {
+      "name": "ScaleToFit",
+      "value": 4,
+      "summary": "Scales the object to fit in the frame in the Y direction."
+    },
+    {
+      "name": "ScaleBestFit",
+      "value": 8,
+      "summary": "The object is scaled inside the frame, still maintaining its original aspect ratio."
+    }
+  ]
+}

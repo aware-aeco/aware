@@ -1,0 +1,34 @@
+{
+  "name": "PickerInputInterrupt",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PickerInputInterrupt class represents the interruption of picking by the user (e.g. by pressing Escape while requested to pick points). Used for values asked by any UI.Picker.Pick* method where an interrupt happens by the user.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/9294b17b-788d-fdf8-9238-bbd7d9b0c2d3",
+  "constructors": [
+    {
+      "name": "PickerInputInterrupt",
+      "signature": "PickerInputInterrupt(...)",
+      "summary": "Creates a new PickerInputInterrupt instance representing the interruption of picking by the user.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c761485e-721b-956f-793a-6928f05a3e33"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/dec8c103-42e2-6d17-dc9b-0947f96a89a7"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

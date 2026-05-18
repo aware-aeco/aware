@@ -1,0 +1,14 @@
+{
+  "name": "Events.NumberingDelegate",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "delegate",
+  "summary": "The delegate to use for numbering.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/e7ad68f1-6cba-7616-c9c7-ffe1140a0f13",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void NumberingDelegate()"
+}

@@ -1,0 +1,101 @@
+{
+  "name": "ClipPlane",
+  "namespace": "Tekla.Structures.Model.UI",
+  "kind": "class",
+  "summary": "The ClipPlane class defines a clip plane which can be used together with a visible view.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/40d3dd42-53da-9673-f4e1-e4179f76dab0",
+  "constructors": [
+    {
+      "name": "ClipPlane",
+      "signature": "ClipPlane(...)",
+      "summary": "Initializes a new instance of the ClipPlane class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e730eab4-57bb-51ea-c214-978a40c92ede"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Delete",
+      "signature": "Delete(...)",
+      "summary": "Deletes the clip plane from the application view. The application view must be visible.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6eebebcb-48d6-608d-0dff-8b12c0ccf3ff"
+    },
+    {
+      "name": "Insert",
+      "signature": "Insert(...)",
+      "summary": "Creates a new clip plane to the application view. The application view must be visible.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/645247ba-2e22-de99-6df9-2f3ff7569531"
+    },
+    {
+      "name": "Modify",
+      "signature": "Modify(...)",
+      "summary": "Modifies the clip plane position in the application view. The application view must be visible.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b9b9e337-16d4-22c1-5d05-a8ed788cfcc7"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ClipPlaneID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the clip plane ID.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0f119217-c3a0-3c87-68e0-a7d516f051b2"
+    },
+    {
+      "name": "IsBorderVisible",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the clip plane border is visible.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/02e47ffe-2195-298e-f332-10109eb92936"
+    },
+    {
+      "name": "IsScissorVisible",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the clip plane scissor icon is visible.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c6117fd4-ae89-01a3-d9d2-f7e2d6c8e383"
+    },
+    {
+      "name": "Location",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The clip plane location in global coordinates (XYZ).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/78676d2f-3220-ef6b-8d87-d943bdc05466"
+    },
+    {
+      "name": "UpVector",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The clip plane up vector in global coordinates (XYZ).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/25516ba4-7332-4768-4690-0d3b120ae17d"
+    },
+    {
+      "name": "View",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The view the clip plane belongs to.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3709c632-4ca5-80e8-930b-787a41a6022f"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

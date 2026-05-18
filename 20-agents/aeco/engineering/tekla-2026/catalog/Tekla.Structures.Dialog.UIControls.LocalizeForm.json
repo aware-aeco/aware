@@ -1,0 +1,23 @@
+{
+  "name": "LocalizeForm",
+  "namespace": "Tekla.Structures.Dialog.UIControls",
+  "kind": "class",
+  "summary": "The LocalizeForm class is for localizing the forms.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/2bc9b34b-378c-79b3-513c-c0941222b31a",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Localization",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the localization for the dialog.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3294a183-55dd-1515-e207-9ea668cffef6"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

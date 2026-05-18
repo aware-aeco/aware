@@ -1,0 +1,109 @@
+{
+  "name": "AnalysisModelIssue.TypeEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "Issue type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/2b03f57c-3255-d26d-1dfe-dc5deaa567dd",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CrossSectionValues",
+      "value": 1301,
+      "summary": "Cross section values issue."
+    },
+    {
+      "name": "ShortRigidLink",
+      "value": 1403,
+      "summary": "Short rigid link issue."
+    },
+    {
+      "name": "ShortMember",
+      "value": 1404,
+      "summary": "Short member issue."
+    },
+    {
+      "name": "ProfileOverride",
+      "value": 1405,
+      "summary": "Part profile override issue."
+    },
+    {
+      "name": "NearNodes",
+      "value": 1407,
+      "summary": "Near nodes issue."
+    },
+    {
+      "name": "RequiredRigidLinkDisabled",
+      "value": 1408,
+      "summary": "Required rigid link disabled issue."
+    },
+    {
+      "name": "TooCloseNodesForRigidLink",
+      "value": 1409,
+      "summary": "Too close nodes for rigid link issue."
+    },
+    {
+      "name": "MemberDirectionDifference",
+      "value": 1410,
+      "summary": "Member direction difference issue."
+    },
+    {
+      "name": "BarDirectionDifference",
+      "value": 1411,
+      "summary": "Bar direction difference issue."
+    },
+    {
+      "name": "BarNotConnected",
+      "value": 1412,
+      "summary": "Bar not connected issue."
+    },
+    {
+      "name": "BarOverlapping",
+      "value": 1413,
+      "summary": "Bar overlapping issue."
+    },
+    {
+      "name": "AreaNotConnected",
+      "value": 1414,
+      "summary": "Area not connected issue."
+    },
+    {
+      "name": "AreaNotPlanar",
+      "value": 1415,
+      "summary": "Area not planar issue."
+    },
+    {
+      "name": "LoadDistribution",
+      "value": 1501,
+      "summary": "Load distribution issue."
+    },
+    {
+      "name": "DuplicateLoad",
+      "value": 1502,
+      "summary": "Duplicate load issue."
+    },
+    {
+      "name": "LoadGroupNotInCombinations",
+      "value": 1503,
+      "summary": "Load group not in load combinations issue."
+    },
+    {
+      "name": "KmodeMustNePhysicalMember",
+      "value": 1416,
+      "summary": "Buckling kmode issue."
+    },
+    {
+      "name": "DesignParameterValueCount",
+      "value": 1417,
+      "summary": "Design parameter value count issue."
+    },
+    {
+      "name": "DesignParameterValue",
+      "value": 1419,
+      "summary": "Design parameter value issue."
+    }
+  ]
+}

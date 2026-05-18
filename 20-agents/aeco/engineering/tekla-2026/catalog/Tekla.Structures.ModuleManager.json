@@ -1,0 +1,97 @@
+{
+  "name": "ModuleManager",
+  "namespace": "Tekla.Structures",
+  "kind": "class",
+  "summary": "The ModuleManager class handles the product model module configuration information: the information that defines what configuration the customer is currently running.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/03aec97c-c61b-fc99-7d7e-e4c7c935b7b6",
+  "constructors": [
+    {
+      "name": "ModuleManager",
+      "signature": "ModuleManager(...)",
+      "summary": "Initializes a new instance of the ModuleManager class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/23c1d3b5-7516-84ec-0ae0-37aa315c10ac"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AnalysisAndDesign",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the Analysis and Design management is enabled.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2cb0637f-ec60-e9a1-cdbb-0edf6dc39419"
+    },
+    {
+      "name": "CIPModeling",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the CIP modeling is enabled.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c7a68c0e-03e9-4852-b20c-aafb706d7810"
+    },
+    {
+      "name": "ConcreteDetailing",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the concrete detailing is enabled.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ab60400c-1960-9de5-b13d-935b2fcf4c67"
+    },
+    {
+      "name": "Configuration",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The currently running configuration of Tekla Structures.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/cd1204b7-246f-e9b7-c64f-5057038b1e5b"
+    },
+    {
+      "name": "LoadModeling",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the load modeling is enabled.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/13e44f04-4a99-57c8-fc91-b22a938d5a76"
+    },
+    {
+      "name": "MultimaterialModeling",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the multimaterial modeling is enabled.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bcf561aa-95f0-d4a4-c079-aaeeb107c2d0"
+    },
+    {
+      "name": "RebarModeling",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the rebar modeling is enabled.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fbaa52af-5997-e9f2-1906-2d982d7aeb55"
+    },
+    {
+      "name": "SteelDetailing",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the steel detailing is enabled.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8a1e9839-d289-4082-ce3f-17ca163c4fc5"
+    },
+    {
+      "name": "TaskManagement",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the task management is enabled.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4b60116b-645d-23c9-c905-3ea7ddc3fd9d"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

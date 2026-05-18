@@ -1,0 +1,34 @@
+{
+  "name": "LoadFilterExpressions.CustomNumber",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The CustomNumber class represents a custom numeric filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/b75c39fc-6303-b5c9-50f4-a56e3bffdcc7",
+  "constructors": [
+    {
+      "name": "LoadFilterExpressions.CustomNumber",
+      "signature": "LoadFilterExpressions.CustomNumber(...)",
+      "summary": "Initializes a new instance of the CustomNumber class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c9363341-a527-8214-f075-2c26cb504957"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

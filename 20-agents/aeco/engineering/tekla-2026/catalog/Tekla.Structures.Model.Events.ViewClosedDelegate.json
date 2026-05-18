@@ -1,0 +1,14 @@
+{
+  "name": "Events.ViewClosedDelegate",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "delegate",
+  "summary": "The delegate to use for view closed event.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/400204c0-a733-8832-fe35-8963bf394fa0",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void ViewClosedDelegate( int viewId )"
+}

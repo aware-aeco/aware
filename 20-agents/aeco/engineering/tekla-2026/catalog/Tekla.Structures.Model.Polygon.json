@@ -1,0 +1,33 @@
+{
+  "name": "Polygon",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The Polygon class represents a polygon object that has its corners at the given points.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/b08e87a3-a223-a38f-882e-91c412b7db5e",
+  "constructors": [
+    {
+      "name": "Polygon",
+      "signature": "Polygon(...)",
+      "summary": "Initializes a new polygon instance with empty attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6669e909-6cc2-eb98-b46b-1bb9e859e17d"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Points",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The corners of the polygon.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1138e6b4-15d0-4a4d-ed58-e2005ab7f81d"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

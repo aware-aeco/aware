@@ -1,0 +1,29 @@
+{
+  "name": "AnalysisPartAreaAttributes.AreaSupportTypeEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The new area support options.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/84d42166-d983-6890-310c-01acac51ca9a",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "AREA_SUPPORT_NO",
+      "value": 0,
+      "summary": "The \u0022no\u0022 area support option."
+    },
+    {
+      "name": "AREA_SUPPORT_SIMPLE",
+      "value": 1,
+      "summary": "The area support simple."
+    },
+    {
+      "name": "AREA_SUPPORT_FULL",
+      "value": 2,
+      "summary": "The area support full."
+    }
+  ]
+}

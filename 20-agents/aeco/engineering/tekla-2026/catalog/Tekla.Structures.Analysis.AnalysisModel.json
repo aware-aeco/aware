@@ -1,0 +1,448 @@
+{
+  "name": "AnalysisModel",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisModel class contains information related to analysis models.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/8186bfc0-ae67-5ac2-8c87-c9ba59724faf",
+  "constructors": [
+    {
+      "name": "AnalysisModel",
+      "signature": "AnalysisModel(...)",
+      "summary": "Initializes a new instance of the AnalysisModel class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2048b6d6-d56b-4b9b-02d7-4837d2ca1b5f"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Delete",
+      "signature": "Delete(...)",
+      "summary": "Deletes an analysis model. The AnalysisModelName has to be set.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0d04a451-e528-f758-6971-4f844133eef7"
+    },
+    {
+      "name": "GetIssues",
+      "signature": "GetIssues(...)",
+      "summary": "Get analysis model issues.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8c9e3dbc-63d7-69b2-e63e-0192196652ae"
+    },
+    {
+      "name": "Insert",
+      "signature": "Insert(...)",
+      "summary": "Inserts a new analysis model into the Tekla Structures model. The AnalysisModelName has to be set.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/cf8651fe-b4fe-9219-a849-978ef567254c"
+    },
+    {
+      "name": "Modify",
+      "signature": "Modify(...)",
+      "summary": "Modifies an analysis model. The AnalysisModelName has to be set.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/70a4a6f1-39f2-6e34-d1e5-fea6d37dc33f"
+    },
+    {
+      "name": "Select.",
+      "signature": "Select.(...)",
+      "summary": "Selects an analysis model. Updates the model. The AnalysisModelName or ID has to be set.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/754a6dbd-1581-b4bf-98cc-f4334db31c84"
+    },
+    {
+      "name": "Select(Boolean)",
+      "signature": "Select(Boolean)(...)",
+      "summary": "Selects an analysis model. The AnalysisModelName or ID has to be set.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6f0dc619-b143-ca2b-7fec-9f75294ba493"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AnalysisConnectivityRules",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis model connectivity rules.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4342274b-9948-f2e8-06d3-92eb38211627"
+    },
+    {
+      "name": "AnalysisEngine",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis engine of the analysis model.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/17b59f55-a243-8539-282d-335d007d5ea0"
+    },
+    {
+      "name": "AnalysisLoadCombinations",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the analysis load combinations of the analysis model.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/283737fc-5c28-6c54-96cc-1f6d29ab5494"
+    },
+    {
+      "name": "AnalysisLoadGroups",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the analysis load groups of the analysis model.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6adae94f-c11a-75de-35ca-a2b8ec78998a"
+    },
+    {
+      "name": "AnalysisMethod",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis method of the analysis model.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/88b0dc1a-daac-bc75-7bc6-1bb752193e57"
+    },
+    {
+      "name": "AnalysisModelDesignProperties",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis model design properties.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/031bf6ca-4467-9cad-208d-ae25c174639d"
+    },
+    {
+      "name": "AnalysisModelJobProperties",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis model job properties.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0108cff6-588b-5749-8446-1eacd96b9f6d"
+    },
+    {
+      "name": "AnalysisModelModalAnalysisProperties",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis model modal analysis properties.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b469be37-f3f8-9456-32a7-a320703d0ba9"
+    },
+    {
+      "name": "AnalysisModelName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis model name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/820dc60f-92bc-f84c-9b4f-bf71faf2b76a"
+    },
+    {
+      "name": "AnalysisModelOutputProperties",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis model output properties.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0c00f6b1-929e-1122-515d-54ae1a85e504"
+    },
+    {
+      "name": "AnalysisModelSeismicProperties",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis model seismic properties.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/23bc0aa0-c8a2-0ef8-c64d-5ceb562bca3b"
+    },
+    {
+      "name": "AnalysisModelSpectrumProperties",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis model spectrum properties",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/afc9af2c-05c4-d4fd-1e19-d49e0bd4db15"
+    },
+    {
+      "name": "AnalysisNodeLinks",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the analysis node links of the analysis model.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a04485ff-ad27-a10d-21c2-e092acd436ca"
+    },
+    {
+      "name": "AnalysisNodes",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the analysis nodes of the analysis model.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f991c7ad-f35e-772f-3e96-fdc4b18a4d62"
+    },
+    {
+      "name": "AnalysisObjectType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2a2631ed-5e7b-7e60-f1d2-52186a5a17c4"
+    },
+    {
+      "name": "AnalysisParts",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the analysis parts of the analysis model.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2d0817ff-4403-c1db-091d-f5399bc42cc8"
+    },
+    {
+      "name": "AnalysisRigidDiaphragms",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the analysis rigid diaphragms of the analysis model.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/31f0640f-ad1c-9079-0876-ff5e7ab3dc46"
+    },
+    {
+      "name": "AutodetectSecondaries",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether bracing members are detected automatically.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b7ff7f29-c9d9-4f26-cee8-9e3ff31f4e86"
+    },
+    {
+      "name": "BracingFilterName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the bracing filter name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/73c75c02-d41f-4dde-830e-ae6a6ef9db2d"
+    },
+    {
+      "name": "ConstructionMethod",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the construction method of the analysis model.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e5cb7b92-5b3e-d82b-fabd-6765c613ef13"
+    },
+    {
+      "name": "FatherObject2ID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3cc2e3ff-3afd-4def-2559-7c1827233bec"
+    },
+    {
+      "name": "FatherObject2Type",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7b5d643a-2a12-5281-7f65-a312171bafcc"
+    },
+    {
+      "name": "FatherObjectID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7e55f4c8-ca1a-2761-edd6-2b69663ff941"
+    },
+    {
+      "name": "FatherObjectType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/739bcea1-858d-70e2-ff0d-9c4928129c3e"
+    },
+    {
+      "name": "FilterName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the filter name of the analysis model.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f07d8053-8f55-b75c-8ef8-120b301b9197"
+    },
+    {
+      "name": "ID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/289caef6-9b6e-cd4c-dcbc-6397be2f9de0"
+    },
+    {
+      "name": "IncludeImperfections",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether imperfections are to be included.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4c81c585-271b-f520-178b-c2e2ae8eb426"
+    },
+    {
+      "name": "MemberAxislocation",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the axis location of the members.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c084e97a-8c4c-fdc0-f4a5-ec8ad1738be5"
+    },
+    {
+      "name": "MemberEndReleaseMethodByJoint",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the end releases are set by joint properties.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/08bd7e7f-4057-853c-4086-6536df633307"
+    },
+    {
+      "name": "ModelUpdateModificationIdentifier",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the model update modification.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ce02c155-40f5-e9fc-1928-812a43b47cee"
+    },
+    {
+      "name": "NodePositionTolerance",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the node position tolerance of the analysis model.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a261ce27-738c-e8f4-a6dd-04165bfa596a"
+    },
+    {
+      "name": "NumberOfIterations",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the number of iterations of the analysis model.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bc617b1c-b2b3-a7a0-59cd-c945f9b02419"
+    },
+    {
+      "name": "PhysicalFreezed",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the physical objects are frozen.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5e152048-cceb-0d5d-6cb0-8c2e21412b9c"
+    },
+    {
+      "name": "PhysicalFrozen",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the physical objects are frozen.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/db32ecbe-e920-575f-3b96-da7b2a1549e2"
+    },
+    {
+      "name": "RelativeAccuracy",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the relative accuracy of the analysis model.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/59050006-0784-0f03-d414-814644505c02"
+    },
+    {
+      "name": "ResultsFreezed",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the results are frozen.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d1908dbe-d089-31fa-a79f-3aa80bf5d13d"
+    },
+    {
+      "name": "ResultsFrozen",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the results are frozen.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2540e1e5-cc62-4d4a-dce2-52b2bc52e50a"
+    },
+    {
+      "name": "ResultsModificationIdentifier",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the results modification identifier.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a1467b07-2d4b-9084-b811-531f34ce1b02"
+    },
+    {
+      "name": "ResultsTime",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the results time.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9c7bc835-11c0-1c0d-a4a1-c236ca493ebc"
+    },
+    {
+      "name": "SecondaryFilterName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the bracing filter name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b599a3ef-b66c-6f75-be6c-184279879a46"
+    },
+    {
+      "name": "SecondaryKeepAxis",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the secondary keep axis settings. Not used, bracing/secondary members always have KEEP_AXIS_NO initially.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f79a771d-9480-5db0-5146-4c270acc5131"
+    },
+    {
+      "name": "SecondaryMemberFilterName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the secondary member filter name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/07e77731-75c2-f22b-bf2b-35fe61b2d5b0"
+    },
+    {
+      "name": "SnapDistance",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the snap distance of the analysis model.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/50c1226b-e4a6-39cd-08c7-8fa77a5dc658"
+    },
+    {
+      "name": "UseModelMerge",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether model merge is used.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/84df7d64-ad38-3ae2-9d46-45e145dafd2a"
+    },
+    {
+      "name": "UseTrueCurvedMembers",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether members are true curved.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f86705a0-4617-860e-5994-8bd4da6196ab"
+    },
+    {
+      "name": "UseTwinProfiles",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether twin profiles are used.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/09b189e8-a7b3-0e23-aa79-db88ddda77ff"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

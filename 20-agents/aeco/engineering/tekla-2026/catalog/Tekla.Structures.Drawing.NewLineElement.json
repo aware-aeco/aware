@@ -1,0 +1,52 @@
+{
+  "name": "NewLineElement",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The NewLineElement class defines a line feed between the desired elements to create multi-row marks.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/23d83e95-d85b-f88e-fea5-e05dabf2ddba",
+  "constructors": [
+    {
+      "name": "NewLineElement",
+      "signature": "NewLineElement(...)",
+      "summary": "Initializes a new instance of the NewLineElement class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4aa0d9bb-e935-c797-f7d7-05cc947aeb8f"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "Clone(...)",
+      "summary": "Clones the object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a51519a3-5dcd-cefe-2d19-9b39d166e895"
+    },
+    {
+      "name": "GetUnformattedString",
+      "signature": "GetUnformattedString(...)",
+      "summary": "Returns the content as a string without formatting.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/eeef7e0e-64f0-a0ac-5971-fdf7830dacd4"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/61dd3ba4-f0f0-a376-9305-fa512aaddf20"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

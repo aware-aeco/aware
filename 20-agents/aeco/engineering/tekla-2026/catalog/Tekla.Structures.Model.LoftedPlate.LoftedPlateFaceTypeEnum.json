@@ -1,0 +1,24 @@
+{
+  "name": "LoftedPlate.LoftedPlateFaceTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "Lofted plate solid creation face types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/f535a70c-d17d-cb0d-60a6-f472d5ec5664",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Perpendicular",
+      "value": 0,
+      "summary": "Faces are perpendicular to the thickness direction."
+    },
+    {
+      "name": "BoundedByCurvePlanes",
+      "value": 1,
+      "summary": "Faces following each curve plane."
+    }
+  ]
+}

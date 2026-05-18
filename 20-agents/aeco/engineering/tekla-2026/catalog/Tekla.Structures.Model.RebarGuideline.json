@@ -1,0 +1,65 @@
+{
+  "name": "RebarGuideline",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "Defines a rebar guideline that is used in a RebarSet. A RebarSet has a minimum of one rebar guideline, the primary guideline.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/39c4ee42-992a-871b-bed2-b3665b791270",
+  "constructors": [
+    {
+      "name": "RebarGuideline",
+      "signature": "RebarGuideline(...)",
+      "summary": "Initializes a new instance of the RebarGuideline class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f68021c3-8116-e21e-8344-232cee35d44f"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ChamferType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the chamfer type of the guideline. To create longitudinal bars on the top/bottom face of a flat polybeam, create a guideline at each corner, and use the ARC_POINT chamfer type at \u0022curved\u0022 corners, and NONE otherwise.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/04caac02-bcbb-d336-94fe-fc5342471a7f"
+    },
+    {
+      "name": "Curve",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the geometric Contour of the rebar guideline.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a55314ed-d0bc-e1a3-4893-ad9ec214ddd2"
+    },
+    {
+      "name": "FollowEdges",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a flag that indicates whether the guideline should attempt to follow the leg face edges located between its end points.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/133f2879-9cc3-a0ec-f5f2-12ea45bf1083"
+    },
+    {
+      "name": "Id",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets an identifier that may be used to identify instances of the same rebar guideline.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/018058b3-b7b7-2ca0-8cd2-1717102aad4e"
+    },
+    {
+      "name": "Spacing",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the RebarSpacing along the rebar guideline.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e3f8cd54-220f-c0e3-a9b5-9ce822e4191b"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

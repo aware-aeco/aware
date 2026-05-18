@@ -1,0 +1,34 @@
+{
+  "name": "LoadLine.LineLoadFormEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The line load form.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/73f495f9-6e26-28a8-1ef6-82e1c7b2b808",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "LOAD_FORM_LINE_1",
+      "value": 1001,
+      "summary": "The load magnitude is uniform across the loaded length."
+    },
+    {
+      "name": "LOAD_FORM_LINE_2",
+      "value": 1002,
+      "summary": "The load has different magnitudes at the ends of the loaded length. The magnitude changes linearly between the ends."
+    },
+    {
+      "name": "LOAD_FORM_LINE_3",
+      "value": 1003,
+      "summary": "The load magnitude changes linearly, from zero at the ends of the loaded length, to a fixed value in the middle of the loaded length."
+    },
+    {
+      "name": "LOAD_FORM_LINE_4",
+      "value": 1004,
+      "summary": "The load magnitude changes linearly, from zero at one end of the loaded length, through two (different) values, back to zero at the other end."
+    }
+  ]
+}

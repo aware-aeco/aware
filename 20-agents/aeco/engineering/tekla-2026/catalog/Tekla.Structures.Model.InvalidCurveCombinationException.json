@@ -1,0 +1,24 @@
+{
+  "name": "InvalidCurveCombinationException",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "This class represent an exception thrown when the combination of base curves is not allowed in a lofted plate operation",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/aee41b14-a9b8-3cd3-84ff-3b08d60f94e6",
+  "constructors": [
+    {
+      "name": "InvalidCurveCombinationException",
+      "signature": "InvalidCurveCombinationException(...)",
+      "summary": "Constructs an instance of the class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7133cbd8-961e-be17-49e1-9ce2028883b6"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

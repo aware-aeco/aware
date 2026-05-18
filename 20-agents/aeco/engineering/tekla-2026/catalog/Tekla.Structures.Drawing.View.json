@@ -1,0 +1,607 @@
+{
+  "name": "View",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The View class contains methods related to views. Views are views that contain other drawing objects, excluding other views. Views also contain drawing representations of model objects.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/c677c912-dc7d-0e16-cc44-433195eee9d2",
+  "constructors": [
+    {
+      "name": "View",
+      "signature": "View(...)",
+      "summary": "Creates a new view instance with the given coordinate systems and part list.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d8af13bf-cbda-afeb-4300-111505321002"
+    },
+    {
+      "name": "View",
+      "signature": "View(...)",
+      "summary": "Creates a new view instance with the given coordinate systems and model area.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/54ec810e-d6b0-5634-4877-d64002793364"
+    },
+    {
+      "name": "View",
+      "signature": "View(...)",
+      "summary": "Creates a new view instance with the given coordinate systems, part list and attributes file\u0027s filename.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e580d74b-79ef-204b-d34a-7b9a45a6cdbc"
+    },
+    {
+      "name": "View",
+      "signature": "View(...)",
+      "summary": "Creates a new view instance with the given coordinate systems, model area and attributes file\u0027s filename.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2dc64c38-f949-0fed-5b4d-08c1eda572a3"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Create3dView(Drawing, Point, View.ViewAttributes, View.)",
+      "signature": "Create3dView(Drawing, Point, View.ViewAttributes, View.)(...)",
+      "summary": "Generates a new 3d view on the sheet of the given active drawing.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b76cddf7-6db5-800f-66f1-9c0e522c6753"
+    },
+    {
+      "name": "Create3dView(Drawing, CoordinateSystem, CoordinateSystem, AABB, Point, View.ViewAttributes, View.)",
+      "signature": "Create3dView(Drawing, CoordinateSystem, CoordinateSystem, AABB, Point, View.ViewAttributes, View.)(...)",
+      "summary": "Generates a new 3d view on the sheet of the given active drawing using given view plane and display plane.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/55ff2f8d-a8ab-0d68-0d86-92bb423cb8b5"
+    },
+    {
+      "name": "CreateBackView",
+      "signature": "CreateBackView(...)",
+      "summary": "Generates a new back view on the sheet of the given active drawing.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0a133867-4bc0-c354-4ba1-ffa7b7d46596"
+    },
+    {
+      "name": "CreateBottomView",
+      "signature": "CreateBottomView(...)",
+      "summary": "Generates a new bottom view on the sheet of the given active drawing.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4a06f3ff-0fac-dfd8-c683-5035e2e9255d"
+    },
+    {
+      "name": "CreateCurvedSectionView",
+      "signature": "CreateCurvedSectionView(...)",
+      "summary": "Generates a new curved section view on the sheet of the active drawing and the associated section mark for the specified view.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/96f0d083-d484-cea9-3fc0-e534f94a4fd1"
+    },
+    {
+      "name": "CreateDetailView",
+      "signature": "CreateDetailView(...)",
+      "summary": "Generates a new detail view on the sheet of the active drawing and the associated detail mark for the specified view.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/39279a5c-e5a3-ea02-8bdc-c8d8c7c3cea2"
+    },
+    {
+      "name": "CreateFrontView",
+      "signature": "CreateFrontView(...)",
+      "summary": "Generates a new front view on the sheet of the given active drawing.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fefcfa36-befa-a3b7-2147-e6b7c6b21c54"
+    },
+    {
+      "name": "CreateModelView",
+      "signature": "CreateModelView(...)",
+      "summary": "Generates a new model view on the sheet of the given active drawing using given model view id.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5d36926b-48a0-48a2-9b51-7e9dd48c3a26"
+    },
+    {
+      "name": "CreateSectionView",
+      "signature": "CreateSectionView(...)",
+      "summary": "Generates a new section view on the sheet of the active drawing and the associated section mark for the specified view.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/524fe216-b878-33be-8db7-035a7da252f1"
+    },
+    {
+      "name": "CreateTopView",
+      "signature": "CreateTopView(...)",
+      "summary": "Generates a new top view on the sheet of the given active drawing.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5893bec2-ade0-9949-35de-f2f52db65e9d"
+    },
+    {
+      "name": "Delete",
+      "signature": "Delete(...)",
+      "summary": "Deletes the view and its children objects from the database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c7b5ef15-0c29-6a2a-ef92-99fb8e0ed0b3"
+    },
+    {
+      "name": "GetAllObjects.",
+      "signature": "GetAllObjects.(...)",
+      "summary": "Gets all the objects and their children objects in the view.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6c8f0774-654d-498b-93d5-904797569fd5"
+    },
+    {
+      "name": "GetAllObjects(Type)",
+      "signature": "GetAllObjects(Type)(...)",
+      "summary": "Gets all the objects and their children objects in the view that are of a certain type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d8756000-215b-c1e0-49c7-d36dc245bec8"
+    },
+    {
+      "name": "GetAllObjects(.Type.)",
+      "signature": "GetAllObjects(.Type.)(...)",
+      "summary": "Gets all the objects and their children objects in the view that are of certain types.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d9638840-5e65-49e6-cadb-2e2a8b5423fd"
+    },
+    {
+      "name": "GetAxisAlignedBoundingBox",
+      "signature": "GetAxisAlignedBoundingBox(...)",
+      "summary": "The view size in paper coordinates.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c51d1265-7cc9-ca4c-86b0-d76fe62d8be8"
+    },
+    {
+      "name": "GetDoubleUserProperties(Dictionary.String, Double..)",
+      "signature": "GetDoubleUserProperties(Dictionary.String, Double..)(...)",
+      "summary": "Retrieves all double user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b25f0e6b-ab5c-154a-a45c-4f5868a20599"
+    },
+    {
+      "name": "GetDoubleUserProperties(List.String., Dictionary.String, Double..)",
+      "signature": "GetDoubleUserProperties(List.String., Dictionary.String, Double..)(...)",
+      "summary": "Retrieves all double user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7f327fc5-14b5-f534-da39-b68d3f87124a"
+    },
+    {
+      "name": "GetDrawing",
+      "signature": "GetDrawing(...)",
+      "summary": "Gets the drawing where the drawing object is.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4e9beef3-2188-ab45-9f07-dbde351915bf"
+    },
+    {
+      "name": "GetIntegerUserProperties(Dictionary.String, Int32..)",
+      "signature": "GetIntegerUserProperties(Dictionary.String, Int32..)(...)",
+      "summary": "Retrieves all integer user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/20a7d099-ebee-b016-ffc7-0181a1219405"
+    },
+    {
+      "name": "GetIntegerUserProperties(List.String., Dictionary.String, Int32..)",
+      "signature": "GetIntegerUserProperties(List.String., Dictionary.String, Int32..)(...)",
+      "summary": "Retrieves all integer user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b485bd81-5ccf-68e4-0453-caea6b1d0dde"
+    },
+    {
+      "name": "GetModelObjects.",
+      "signature": "GetModelObjects.(...)",
+      "summary": "Gets the model objects that are in the view.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ec48c4dd-923d-2eae-4243-5454aa07e042"
+    },
+    {
+      "name": "GetModelObjects(Identifier)",
+      "signature": "GetModelObjects(Identifier)(...)",
+      "summary": "Gets the drawing model objects based on given model object identifier. If used from sheet model objects from all views are returned.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c59be515-bde2-42ef-2e58-fa8a4e0173ba"
+    },
+    {
+      "name": "GetObjects.",
+      "signature": "GetObjects.(...)",
+      "summary": "Gets the objects in the view. Does not return child objects (single dimensions, grid lines, views).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bd691388-4a5f-d33f-3364-d516c037cb21"
+    },
+    {
+      "name": "GetObjects(.Type.)",
+      "signature": "GetObjects(.Type.)(...)",
+      "summary": "Gets the objects in the view that are of certain types. Does not return child objects (single dimensions, grid lines, views).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e64fef01-3761-6798-cd3f-d5e5d006a37f"
+    },
+    {
+      "name": "GetOriginalDrawing",
+      "signature": "GetOriginalDrawing(...)",
+      "summary": "Gets the drawing on which the view was originally created. @see DrawingObject.GetDrawing() for retrieving the current drawing the object resides on.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b34f08ba-6799-5511-dd98-8654ffbc1ebd"
+    },
+    {
+      "name": "GetPossibleFollowedObjects",
+      "signature": "GetPossibleFollowedObjects(...)",
+      "summary": "Get the possible rule objects for the section view. Note: this is currently only supported for section views in fabrication drawings.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7e69cee3-8259-76b4-d8a7-98787e27aed4"
+    },
+    {
+      "name": "GetPreferredFollowedObject",
+      "signature": "GetPreferredFollowedObject(...)",
+      "summary": "Gets the preferred followed object for the view, if it\u0027s supported. Note: this is currently only supported for section views in fabrication drawings.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/dba90d2a-d451-1160-dd06-f8f8b1e77d02"
+    },
+    {
+      "name": "GetRelatedObjects.",
+      "signature": "GetRelatedObjects.(...)",
+      "summary": "Gets the related objects of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/50820387-cee1-637a-318e-fb3e06780149"
+    },
+    {
+      "name": "GetRelatedObjects(.Type.)",
+      "signature": "GetRelatedObjects(.Type.)(...)",
+      "summary": "Gets the related objects of the current object that are of certain types.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/01d5e137-fa4b-92d7-328b-69c974dc7415"
+    },
+    {
+      "name": "GetStringUserProperties(Dictionary.String, String..)",
+      "signature": "GetStringUserProperties(Dictionary.String, String..)(...)",
+      "summary": "Retrieves all string user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a0039213-2e79-912f-5bdf-5e6dd417c092"
+    },
+    {
+      "name": "GetStringUserProperties(List.String., Dictionary.String, String..)",
+      "signature": "GetStringUserProperties(List.String., Dictionary.String, String..)(...)",
+      "summary": "Retrieves all string user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/474a80dc-539a-2734-4b5c-1ea52f86e750"
+    },
+    {
+      "name": "GetUserProperty(String, Double.)",
+      "signature": "GetUserProperty(String, Double.)(...)",
+      "summary": "Gets a double property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/203a39af-db6b-e317-5de3-f0301c1642f2"
+    },
+    {
+      "name": "GetUserProperty(String, Int32.)",
+      "signature": "GetUserProperty(String, Int32.)(...)",
+      "summary": "Gets an integer property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f773aabe-fe4e-dba3-bf33-f6f927441a85"
+    },
+    {
+      "name": "GetUserProperty(String, String.)",
+      "signature": "GetUserProperty(String, String.)(...)",
+      "summary": "Gets a string property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5335a30d-ac20-6231-5b02-22e14c6980a7"
+    },
+    {
+      "name": "GetView",
+      "signature": "GetView(...)",
+      "summary": "Gets the view where the drawing object is.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ed3c08d7-c75f-2e18-ee97-fe2e096f29b5"
+    },
+    {
+      "name": "GetVisibleAreaRestrictionBoxes",
+      "signature": "GetVisibleAreaRestrictionBoxes(...)",
+      "summary": "Gets the restriction boxes that represent the visible areas of the view.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/398218d2-fd27-947f-5c2c-c5285109d398"
+    },
+    {
+      "name": "Insert",
+      "signature": "Insert(...)",
+      "summary": "Inserts the view to the database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c5735e20-f3b0-3147-4879-3e1e42c30d82"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7054fc86-ce4c-0668-7ddd-1cfaae8e81bb"
+    },
+    {
+      "name": "IsSameDatabaseObject",
+      "signature": "IsSameDatabaseObject(...)",
+      "summary": "Returns true if the current object and the given object are referencing the same database object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/675fe6a8-2f1f-6e66-07f4-768bc3a1c74b"
+    },
+    {
+      "name": "Modify",
+      "signature": "Modify(...)",
+      "summary": "Modifies the view in the database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/883ce75d-2048-41ab-05ba-96ffe20220aa"
+    },
+    {
+      "name": "RotateViewOnAxisX",
+      "signature": "RotateViewOnAxisX(...)",
+      "summary": "Rotate the view on the X axis.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5773a49d-274a-6f1a-a489-53fd7f7b8f0f"
+    },
+    {
+      "name": "RotateViewOnAxisY",
+      "signature": "RotateViewOnAxisY(...)",
+      "summary": "Rotate the view on the Y axis.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c9e316b0-ee4f-8c1b-a859-672fa91f2f1f"
+    },
+    {
+      "name": "RotateViewOnAxisZ",
+      "signature": "RotateViewOnAxisZ(...)",
+      "summary": "Rotate the view on the Z axis.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7daeae28-0a89-b6a5-cd69-1973544a1298"
+    },
+    {
+      "name": "RotateViewOnDrawingPlane",
+      "signature": "RotateViewOnDrawingPlane(...)",
+      "summary": "Rotate the view on the drawings plane. This works just like the user interface command \u0022Rotate view\u0022.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7448119c-d5c0-391c-1ee6-fdc2aa42fcf6"
+    },
+    {
+      "name": "Select",
+      "signature": "Select(...)",
+      "summary": "Selects the view from the database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4630a41b-4e54-0f11-a21d-eed889061760"
+    },
+    {
+      "name": "SetPreferredFollowedObject",
+      "signature": "SetPreferredFollowedObject(...)",
+      "summary": "Sets the preferred rule object for the section view based on model object ID or Guid. Note: this is currently only supported for section views in fabrication drawings.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7dcc461e-02c7-91d8-82fd-91f519443e17"
+    },
+    {
+      "name": "SetUserProperty(String, Double)",
+      "signature": "SetUserProperty(String, Double)(...)",
+      "summary": "Sets a double property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/995715f7-c86c-86d0-359f-76dc4d14197a"
+    },
+    {
+      "name": "SetUserProperty(String, Int32)",
+      "signature": "SetUserProperty(String, Int32)(...)",
+      "summary": "Sets an integer property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/88a5c4aa-fb12-e341-ee9e-fcd3284fab68"
+    },
+    {
+      "name": "SetUserProperty(String, String)",
+      "signature": "SetUserProperty(String, String)(...)",
+      "summary": "Sets a string property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/633cfaf7-22e7-1bb1-6596-053d78749c52"
+    },
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Changes the string presentation of the drawing object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/23e70841-4b0d-9dc2-7a9b-f3b6d7eed19f"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Attributes",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The view attributes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c0386da8-c957-b818-07a5-425a0aa1055a"
+    },
+    {
+      "name": "DisplayCoordinateSystem",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The coordinate system of the display plane. This can be used to transform global points from the model that is to be inserted in the view.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/211c5985-24f6-b3ce-e127-51ebc43d2423"
+    },
+    {
+      "name": "ExtremaCenter",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the view extrema center.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/32e00f37-3d05-d1a9-984d-fbb689d4c537"
+    },
+    {
+      "name": "FrameOrigin",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The vector from the view origin to the frame origin.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6e108696-5862-a360-fd5d-fab315875a26"
+    },
+    {
+      "name": "Height",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The height of the view frame in paper coordinates.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3c445de8-2419-60ac-c854-c7126ab9bb36"
+    },
+    {
+      "name": "IsSheet",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets a value indicating whether the container view is the drawing\u0027s sheet.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a72fbae7-14b7-4a6e-862d-666b7d5e1e84"
+    },
+    {
+      "name": "Name",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The name of the view.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c34eb4d5-c3de-b51c-47d3-cb992ce96399"
+    },
+    {
+      "name": "Origin",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The view origin coordinates in the sheet.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6de0bf46-f66b-8f5b-db2b-0e35a3258b2f"
+    },
+    {
+      "name": "QueryReturnValue",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Status information about the latest database operation (select, insert, modify, delete).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d86cf9da-3acd-9719-d93c-e98d5fb25151"
+    },
+    {
+      "name": "RestrictionBox",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The axis aligned bounding box that represents the volume of the view.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3e4defc4-469d-7864-ecd5-4711a639f241"
+    },
+    {
+      "name": "ViewCoordinateSystem",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The coordinate system of the view plane.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a5686778-fb13-bf74-1409-4c6c0f95db5c"
+    },
+    {
+      "name": "ViewType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The view type information.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/941968a7-3cc7-0b1a-cca0-b070b7b268b8"
+    },
+    {
+      "name": "Width",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The width of the view frame in paper coordinates.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7865fbe8-899f-daa5-1b3f-60273cc7cc60"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

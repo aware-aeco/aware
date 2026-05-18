@@ -1,0 +1,61 @@
+{
+  "name": "IntegerConverter",
+  "namespace": "Tekla.Structures.Datatype",
+  "kind": "class",
+  "summary": "The IntegerConverter class converts types to and from the integer datatype.",
+  "base": "System.ComponentModel.TypeConverter",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/83ff6d0a-70a0-8a03-3514-624cf9605045",
+  "constructors": [
+    {
+      "name": "IntegerConverter",
+      "signature": "IntegerConverter(...)",
+      "summary": "Initializes a new instance of the IntegerConverter class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/279e266f-2fbd-a714-2897-9c323457be36"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CanConvertFrom",
+      "signature": "CanConvertFrom(...)",
+      "summary": "Checks whether the conversion can be made from the source type to the integer datatype.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ec34b138-b93b-bf83-35e2-54169429e20e"
+    },
+    {
+      "name": "CanConvertTo",
+      "signature": "CanConvertTo(...)",
+      "summary": "Checks whether the conversion can be made from the integer datatype to the destination type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ef525f1e-d054-144f-636d-85ae260b1331"
+    },
+    {
+      "name": "ConvertFrom",
+      "signature": "ConvertFrom(...)",
+      "summary": "Converts an object from the given culture to the Tekla.Structures.Datatype.Integer type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d035f709-44b7-afc5-cd49-545314828813"
+    },
+    {
+      "name": "ConvertTo",
+      "signature": "ConvertTo(...)",
+      "summary": "Converts an object from the the integer datatype to the given destination type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b7f633f9-8cf6-0241-57f1-8009d859b6c9"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

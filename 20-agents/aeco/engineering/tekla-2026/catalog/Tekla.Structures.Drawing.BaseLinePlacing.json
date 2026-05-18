@@ -1,0 +1,51 @@
+{
+  "name": "BaseLinePlacing",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The BaseLinePlacing class defines a placing where the object is placed using a line as a reference. This will thus define the object\u0027s X-axis along that line.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/d8a3f20c-80e0-b943-0b1f-1ab47b62fcb5",
+  "constructors": [
+    {
+      "name": "BaseLinePlacing",
+      "signature": "BaseLinePlacing(...)",
+      "summary": "Creates a new base line placing instance. The given two points define the line to be used for the placing.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/91b2d09d-51de-f677-a7ce-10ff8bfc1f61"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e9a8dbbb-56e4-be2a-1271-32945e7a22de"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EndPoint",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Sets the end point of the line that the object is using for the placement.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9502270e-d3df-1578-256d-f8aa15c488ac"
+    },
+    {
+      "name": "StartPoint",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Sets the start point of the line that the object is using for the placement.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/426297e7-3a36-8085-a7cd-12b15a98a668"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

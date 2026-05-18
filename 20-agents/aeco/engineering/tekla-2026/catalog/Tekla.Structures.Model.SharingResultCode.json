@@ -1,0 +1,164 @@
+{
+  "name": "SharingResultCode",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "Represents the result code for a sharing operation.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/e74f760a-14ba-a630-1bf9-b9298c946280",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "OK",
+      "value": 0,
+      "summary": "The operation completed successfully."
+    },
+    {
+      "name": "ANOTHER_OPERATION_IN_PROGRESS",
+      "value": 1,
+      "summary": "Another operation is already in progress."
+    },
+    {
+      "name": "CANCELLED",
+      "value": 2,
+      "summary": "The operation is cancelled by user."
+    },
+    {
+      "name": "WRITE_OUT_RESERVED",
+      "value": 3,
+      "summary": "Write out is reserved by a user who is not the current user."
+    },
+    {
+      "name": "READ_IN_REQUIRED_BEFORE_WRITE_OUT",
+      "value": 4,
+      "summary": "The service has versions newer than the last read-in. They should be read-in before writing out."
+    },
+    {
+      "name": "MODEL_DOES_NOT_EXIST",
+      "value": 5,
+      "summary": "A model with the specified id doen not exist on the service, or the current user is not invited to the model."
+    },
+    {
+      "name": "NO_PERMISSION",
+      "value": 6,
+      "summary": "The request operation is not permitted for the current user."
+    },
+    {
+      "name": "WRITEOUT_DATA_FOLDER_CREATION_FAILED",
+      "value": 7,
+      "summary": "The write out temporary folder could not be created."
+    },
+    {
+      "name": "WRITEOUT_ZIP_CREATION_FAILED",
+      "value": 8,
+      "summary": "The write out version packet could not be compressed."
+    },
+    {
+      "name": "JOIN_FAILED_FOLDER_EXISTS",
+      "value": 9,
+      "summary": "The requested join folder already exists."
+    },
+    {
+      "name": "SAVE_FAILED",
+      "value": 10,
+      "summary": "Saving the model failed because of reasons internal to Tekla Structures."
+    },
+    {
+      "name": "FILE_BUSY",
+      "value": 11,
+      "summary": "The operation failed because a file was opened in another program. If ErrorPath is set, it contains the file path."
+    },
+    {
+      "name": "MODEL_FOLDER_PATH_TOO_LONG",
+      "value": 12,
+      "summary": "The operation failed because the model folder path is too long. If ErrorPath is set, it contains the folder path, and PathLengthLimit contains the maximum allowed length."
+    },
+    {
+      "name": "TEMP_FOLDER_PATH_TOO_LONG",
+      "value": 13,
+      "summary": "The operation failed because the temporary folder path is too long. If ErrorPath is set, it contains the folder path, and PathLengthLimit contains the maximum allowed length."
+    },
+    {
+      "name": "FILE_PATH_TOO_LONG",
+      "value": 14,
+      "summary": "The operation failed because a file path is too long. If ErrorPath is set, it contains the file path, and PathLengthLimit contains the maximum allowed length."
+    },
+    {
+      "name": "FOLDER_CREATION_ERROR",
+      "value": 15,
+      "summary": "The operation failed because a folder could not be created. If ErrorPath is set, it contains the folder path."
+    },
+    {
+      "name": "FILE_COPY_ERROR",
+      "value": 16,
+      "summary": "The operation failed because a file could not be copied. If ErrorPath is set, it contains the file path."
+    },
+    {
+      "name": "DISK_FULL",
+      "value": 17,
+      "summary": "There is not enough disk space to complete the operation safely. Note that due to complexity of the operations, actual space requirements may be hard to predict, so the checks may make mistakes to either side."
+    },
+    {
+      "name": "UNPERMITTED_WRITE_OUT_CHANGES",
+      "value": 18,
+      "summary": "Unallowed model changes exist. The current user\u0027s role needs to be elevated or you need to join again to work with this model."
+    },
+    {
+      "name": "DATABASE_ERROR",
+      "value": 19,
+      "summary": "The operation failed because or error in database operations."
+    },
+    {
+      "name": "NO_PACKETS_AVAILABLE_TO_READ_IN",
+      "value": 20,
+      "summary": "Read in operation failed because the model is already up-to-date with latest service version."
+    },
+    {
+      "name": "MODEL_NOT_SHARED",
+      "value": 21,
+      "summary": "The operation failed because the current model is not shared."
+    },
+    {
+      "name": "CODEPAGE_UTF8",
+      "value": 22,
+      "summary": "The operation was stopped because the current system codepage is UTF-8, whic isn\u0027t supported in Tekla Structures."
+    },
+    {
+      "name": "LICENSE_CLOCK_SKEW",
+      "value": 23,
+      "summary": "The operation was stopped because the system clock is incorrect. Correct clock settings are imporrtant for proper licensing."
+    },
+    {
+      "name": "LICENSE_NOT_GRANTED",
+      "value": 24,
+      "summary": "The operation was stopped because the sharing license was not granted for the user\u0027s organisation."
+    },
+    {
+      "name": "LICENSE_QUOTA_EXCEEDED",
+      "value": 25,
+      "summary": "The operation was stopped because the sharing license has exceeded its allowed quota."
+    },
+    {
+      "name": "LICENSE_EXPIRED",
+      "value": 26,
+      "summary": "The operation was stopped because the license has expired."
+    },
+    {
+      "name": "LICENSE_DENIED",
+      "value": 27,
+      "summary": "The operation was stopped because the license was denied for the user."
+    },
+    {
+      "name": "SERVICE_CONNECTION_FAILED",
+      "value": 28,
+      "summary": "The operation failed because connection to a service or service operation failed."
+    },
+    {
+      "name": "ERROR",
+      "value": 255,
+      "summary": "The operation encountered an unspecified error. ErrorDetails and Notifications may contain more information."
+    }
+  ]
+}

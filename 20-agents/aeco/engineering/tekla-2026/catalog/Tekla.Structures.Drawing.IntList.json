@@ -1,0 +1,160 @@
+{
+  "name": "IntList",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The IntList class defines a type safe list of integers.",
+  "base": "System.Collections.CollectionBase",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/2f040240-80e1-d7ed-7bc9-e99324180ca9",
+  "constructors": [
+    {
+      "name": "IntList",
+      "signature": "IntList(...)",
+      "summary": "Initializes a new instance of the IntList class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c24fcfb8-5abc-12cd-027c-410bcadd886d"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "Add(...)",
+      "summary": "Adds a new integer to the end of the string list.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/047ae331-ab3f-f133-9ad9-44c9e916afbd"
+    },
+    {
+      "name": "Contains",
+      "signature": "Contains(...)",
+      "summary": "Checks if the given integer is in the list.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a497d712-0f41-327b-f730-0028d83be6c8"
+    },
+    {
+      "name": "GetRange",
+      "signature": "GetRange(...)",
+      "summary": "Gets a sub-list of the integer list.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/06faae13-73e4-b5ca-3f59-f42c12381516"
+    },
+    {
+      "name": "IndexOf(Int32)",
+      "signature": "IndexOf(Int32)(...)",
+      "summary": "Gets the index of the specified integer.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2cccec74-0b25-169f-ddbd-11b9360323ad"
+    },
+    {
+      "name": "IndexOf(Int32, Int32)",
+      "signature": "IndexOf(Int32, Int32)(...)",
+      "summary": "Gets the index of the specified integer between the index to start the search from and the end of the list.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/925dae1d-c39e-7149-1d58-f8bcac32e8be"
+    },
+    {
+      "name": "IndexOf(Int32, Int32, Int32)",
+      "signature": "IndexOf(Int32, Int32, Int32)(...)",
+      "summary": "Gets the index of the specified integer between the index to start the search from and startIndex \u002B count.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4ffca6bf-7601-19f3-5313-fc8749dfbdf9"
+    },
+    {
+      "name": "Insert",
+      "signature": "Insert(...)",
+      "summary": "Inserts the integer to the specified index.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c256012d-a9b7-0165-7a1c-f7a2c104147c"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/426ae003-7107-e1f8-06f1-8c6e8dd833ee"
+    },
+    {
+      "name": "LastIndexOf(Int32)",
+      "signature": "LastIndexOf(Int32)(...)",
+      "summary": "Searches for the last occurence of the integer in the list.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2aebe3ab-2bba-4fc2-4e3f-137c6589cb0f"
+    },
+    {
+      "name": "LastIndexOf(Int32, Int32)",
+      "signature": "LastIndexOf(Int32, Int32)(...)",
+      "summary": "Searches for the last occurence of the integer in the list.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/688d011b-6613-c514-9478-de9a30dc8deb"
+    },
+    {
+      "name": "LastIndexOf(Int32, Int32, Int32)",
+      "signature": "LastIndexOf(Int32, Int32, Int32)(...)",
+      "summary": "Searches for the last occurence of the integer in the list.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9fa1a7a6-6810-cb91-91eb-27c93769b7d1"
+    },
+    {
+      "name": "Remove",
+      "signature": "Remove(...)",
+      "summary": "Removes the first occurence of the integer from the list.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/cd8e0284-12af-e850-bf04-e00168f6fe16"
+    },
+    {
+      "name": "RemoveRange",
+      "signature": "RemoveRange(...)",
+      "summary": "Removes a range of items starting from the given index.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/29b15dbf-aae0-4823-6696-87243ba20ad3"
+    },
+    {
+      "name": "ToArray",
+      "signature": "ToArray(...)",
+      "summary": "Copies the integers to an integer array.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8abbc579-908a-e6d0-c687-133300d69e76"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Item",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the integer at the specified index.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8debcba3-2c1a-b709-fbef-fa7dd9bb5503"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

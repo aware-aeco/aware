@@ -1,0 +1,39 @@
+{
+  "name": "AnalysisRestraintData.ReleaseTypeEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "Defines the release type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/c4969558-6118-4b46-caa3-8633b1ab1df6",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "FIXED_SUPPORTED",
+      "value": 0,
+      "summary": "The fixed and supported type."
+    },
+    {
+      "name": "PINNED_SUPPORTED",
+      "value": 1,
+      "summary": "The pinned and supported type."
+    },
+    {
+      "name": "FIXED_CONNECTED",
+      "value": 2,
+      "summary": "The fixed and connected type."
+    },
+    {
+      "name": "PINNED_CONNECTED",
+      "value": 3,
+      "summary": "The pinned and connected type."
+    },
+    {
+      "name": "USER_DEFINED",
+      "value": 4,
+      "summary": "The user defined type."
+    }
+  ]
+}

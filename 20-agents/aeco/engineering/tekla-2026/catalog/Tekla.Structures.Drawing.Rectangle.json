@@ -1,0 +1,324 @@
+{
+  "name": "Rectangle",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The Rectangle class defines a rectangle that is a box made of four lines with orthogonal angles.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/54ce7e2f-93ea-3eeb-ea30-cdc6e5bf453b",
+  "constructors": [
+    {
+      "name": "Rectangle",
+      "signature": "Rectangle(...)",
+      "summary": "Creates a new rectangle instance with two points using standard attributes. Please note that creating a rectangle using two points will re-calculate the start point to correspond with positive widths and heights.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/292ceb05-7888-80eb-753e-03daf6b8ee73"
+    },
+    {
+      "name": "Rectangle",
+      "signature": "Rectangle(...)",
+      "summary": "Creates a new rectangle instance with the start point and the defined width and height using standard attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/de8eef0b-d706-9aa7-dc6f-09bf8b499b2e"
+    },
+    {
+      "name": "Rectangle",
+      "signature": "Rectangle(...)",
+      "summary": "Creates a new rectangle instance with two points using the given attributes. Please note that creating a rectangle using two points will re-calculate the start point to correspond with positive widths and heights.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5810010b-9b16-5216-88ea-616a4197579f"
+    },
+    {
+      "name": "Rectangle",
+      "signature": "Rectangle(...)",
+      "summary": "Creates a new rectangle instance with the start point and the defined width and height using the given attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9e835c00-c08c-7ec9-bf02-4efa96487917"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Delete",
+      "signature": "Delete(...)",
+      "summary": "Calls the system to delete the object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/724d7fa7-8819-dfac-4c9c-700264d7ef79"
+    },
+    {
+      "name": "GetDoubleUserProperties(Dictionary.String, Double..)",
+      "signature": "GetDoubleUserProperties(Dictionary.String, Double..)(...)",
+      "summary": "Retrieves all double user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b25f0e6b-ab5c-154a-a45c-4f5868a20599"
+    },
+    {
+      "name": "GetDoubleUserProperties(List.String., Dictionary.String, Double..)",
+      "signature": "GetDoubleUserProperties(List.String., Dictionary.String, Double..)(...)",
+      "summary": "Retrieves all double user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7f327fc5-14b5-f534-da39-b68d3f87124a"
+    },
+    {
+      "name": "GetDrawing",
+      "signature": "GetDrawing(...)",
+      "summary": "Gets the drawing where the drawing object is.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4e9beef3-2188-ab45-9f07-dbde351915bf"
+    },
+    {
+      "name": "GetIntegerUserProperties(Dictionary.String, Int32..)",
+      "signature": "GetIntegerUserProperties(Dictionary.String, Int32..)(...)",
+      "summary": "Retrieves all integer user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/20a7d099-ebee-b016-ffc7-0181a1219405"
+    },
+    {
+      "name": "GetIntegerUserProperties(List.String., Dictionary.String, Int32..)",
+      "signature": "GetIntegerUserProperties(List.String., Dictionary.String, Int32..)(...)",
+      "summary": "Retrieves all integer user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b485bd81-5ccf-68e4-0453-caea6b1d0dde"
+    },
+    {
+      "name": "GetRelatedObjects.",
+      "signature": "GetRelatedObjects.(...)",
+      "summary": "Gets the related objects of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/50820387-cee1-637a-318e-fb3e06780149"
+    },
+    {
+      "name": "GetRelatedObjects(.Type.)",
+      "signature": "GetRelatedObjects(.Type.)(...)",
+      "summary": "Gets the related objects of the current object that are of certain types.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/01d5e137-fa4b-92d7-328b-69c974dc7415"
+    },
+    {
+      "name": "GetStringUserProperties(Dictionary.String, String..)",
+      "signature": "GetStringUserProperties(Dictionary.String, String..)(...)",
+      "summary": "Retrieves all string user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a0039213-2e79-912f-5bdf-5e6dd417c092"
+    },
+    {
+      "name": "GetStringUserProperties(List.String., Dictionary.String, String..)",
+      "signature": "GetStringUserProperties(List.String., Dictionary.String, String..)(...)",
+      "summary": "Retrieves all string user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/474a80dc-539a-2734-4b5c-1ea52f86e750"
+    },
+    {
+      "name": "GetUserProperty(String, Double.)",
+      "signature": "GetUserProperty(String, Double.)(...)",
+      "summary": "Gets a double property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/203a39af-db6b-e317-5de3-f0301c1642f2"
+    },
+    {
+      "name": "GetUserProperty(String, Int32.)",
+      "signature": "GetUserProperty(String, Int32.)(...)",
+      "summary": "Gets an integer property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f773aabe-fe4e-dba3-bf33-f6f927441a85"
+    },
+    {
+      "name": "GetUserProperty(String, String.)",
+      "signature": "GetUserProperty(String, String.)(...)",
+      "summary": "Gets a string property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5335a30d-ac20-6231-5b02-22e14c6980a7"
+    },
+    {
+      "name": "GetView",
+      "signature": "GetView(...)",
+      "summary": "Gets the view where the drawing object is.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ed3c08d7-c75f-2e18-ee97-fe2e096f29b5"
+    },
+    {
+      "name": "Insert",
+      "signature": "Insert(...)",
+      "summary": "Calls the system to insert the new object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7375cc49-4069-3d42-049c-842d1919d682"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1872c312-d5ed-2f86-a094-9076a0d97b31"
+    },
+    {
+      "name": "IsSameDatabaseObject",
+      "signature": "IsSameDatabaseObject(...)",
+      "summary": "Returns true if the current object and the given object are referencing the same database object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/675fe6a8-2f1f-6e66-07f4-768bc3a1c74b"
+    },
+    {
+      "name": "Modify",
+      "signature": "Modify(...)",
+      "summary": "Calls the system to update/modify the object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9f602580-e659-9f52-e664-58c98882f003"
+    },
+    {
+      "name": "Select",
+      "signature": "Select(...)",
+      "summary": "Calls the system to select and retrieve the object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/804f1153-35e7-4c6f-eef0-f3851e625d8d"
+    },
+    {
+      "name": "SetUserProperty(String, Double)",
+      "signature": "SetUserProperty(String, Double)(...)",
+      "summary": "Sets a double property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/995715f7-c86c-86d0-359f-76dc4d14197a"
+    },
+    {
+      "name": "SetUserProperty(String, Int32)",
+      "signature": "SetUserProperty(String, Int32)(...)",
+      "summary": "Sets an integer property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/88a5c4aa-fb12-e341-ee9e-fcd3284fab68"
+    },
+    {
+      "name": "SetUserProperty(String, String)",
+      "signature": "SetUserProperty(String, String)(...)",
+      "summary": "Sets a string property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/633cfaf7-22e7-1bb1-6596-053d78749c52"
+    },
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Changes the string presentation of the drawing object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/23e70841-4b0d-9dc2-7a9b-f3b6d7eed19f"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Angle",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The angle of the rectangle. The rectangle rotates around its start point.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/80d4cf57-970d-7976-fc23-f130a82853b5"
+    },
+    {
+      "name": "Attributes",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The attributes of the rectangle.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5f3fe810-04a8-86de-d72f-da85f0221391"
+    },
+    {
+      "name": "EndPoint",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The end point of the rectangle.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b8eef501-3319-95b7-7c57-b25a68c9d2c3"
+    },
+    {
+      "name": "Height",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The height of the rectangle. Changing the height changes the end point with the height.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6fbc42e1-5bf0-bd14-52fd-7f3300db73fa"
+    },
+    {
+      "name": "Hideable",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Accesses the information if this object is hidden or not or if it should be.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3f942051-7989-f490-1840-d2dd62728cc2"
+    },
+    {
+      "name": "QueryReturnValue",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Status information about the latest database operation (select, insert, modify, delete).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d86cf9da-3acd-9719-d93c-e98d5fb25151"
+    },
+    {
+      "name": "StartPoint",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The start point of the rectangle. Changing this will move the rectangle.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/590de9b6-43d0-8757-af66-3ad28746a3c2"
+    },
+    {
+      "name": "Width",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The width of the rectangle. Changing the width changes the end point with the width.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1184a9a0-9980-66c0-553c-f44dcc0778f9"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

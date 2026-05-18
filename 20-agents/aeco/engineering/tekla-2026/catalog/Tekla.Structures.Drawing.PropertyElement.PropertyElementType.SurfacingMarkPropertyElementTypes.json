@@ -1,0 +1,60 @@
+{
+  "name": "PropertyElement.PropertyElementType.SurfacingMarkPropertyElementTypes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The SurfacingMarkPropertyElementTypes class represents the available property element types for surfacing marks.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/217d2470-7a29-0688-957c-d8dbb02bc45b",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Class",
+      "signature": "Class(...)",
+      "summary": "Returns the class property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/cb114bbf-965d-29eb-8c94-699ef7495e6b"
+    },
+    {
+      "name": "Code",
+      "signature": "Code(...)",
+      "summary": "Returns the code property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c7f205af-dfa1-3448-e391-4b4050e758df"
+    },
+    {
+      "name": "Material",
+      "signature": "Material(...)",
+      "summary": "Returns the material property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/571e386b-5303-3ada-1454-b59db0e1fe46"
+    },
+    {
+      "name": "Name",
+      "signature": "Name(...)",
+      "summary": "Returns the name property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/68ff7a5f-2f98-1812-31b7-7f62d7e51ac0"
+    },
+    {
+      "name": "SurfaceTreatmentName",
+      "signature": "SurfaceTreatmentName(...)",
+      "summary": "Returns the surface treatment name property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8b345135-4c8d-1e27-760f-635a5c3f69a6"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

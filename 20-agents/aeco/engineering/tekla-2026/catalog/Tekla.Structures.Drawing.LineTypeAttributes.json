@@ -1,0 +1,77 @@
+{
+  "name": "LineTypeAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The LineTypeAttributes class contains basic attributes for lines.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/7f1413c6-c244-9485-97d7-4825df1f5e31",
+  "constructors": [
+    {
+      "name": "LineTypeAttributes",
+      "signature": "LineTypeAttributes(...)",
+      "summary": "Creates a new line type attributes instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/72d543de-298d-71c8-87fb-2380870e74ec"
+    },
+    {
+      "name": "LineTypeAttributes",
+      "signature": "LineTypeAttributes(...)",
+      "summary": "Creates a new line type attributes instance with the given line type and color.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/46d4e3b2-303a-bbff-cedd-1c4a84382c98"
+    },
+    {
+      "name": "LineTypeAttributes",
+      "signature": "LineTypeAttributes(...)",
+      "summary": "Creates a new line type attributes instance with the given line type and color.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/07be4b04-fc4d-b392-deee-619336f7e417"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c39f2c11-8b12-201f-711c-ed81d31727d7"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Color",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The color of the line (see DrawingColors for options).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/20dd986e-5a4f-39e3-4b9b-492f2411f3b8"
+    },
+    {
+      "name": "TrueColor",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The true color (rgb enabled) of the line.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/acf0d845-889d-615f-902c-ab2d670b73ea"
+    },
+    {
+      "name": "Type",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The type of the line (see LineTypes for options).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c6eecc7f-6fbb-bfda-825b-1b0b054ffb5a"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

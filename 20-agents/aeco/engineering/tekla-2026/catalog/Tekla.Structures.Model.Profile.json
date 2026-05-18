@@ -1,0 +1,52 @@
+{
+  "name": "Profile",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The Profile class defines the form of a cross section.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/ee78af8a-1ea0-65e3-6b75-57945a009dae",
+  "constructors": [
+    {
+      "name": "Profile",
+      "signature": "Profile(...)",
+      "summary": "Instantiates an empty profile.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f7afe7eb-9c88-5431-bb40-410b2ea1c417"
+    }
+  ],
+  "methods": [
+    {
+      "name": "FormatProfileString",
+      "signature": "FormatProfileString(...)",
+      "summary": "Formats profile string",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ca9d6a66-2d49-6f5e-ef81-d2688f631207"
+    },
+    {
+      "name": "ParseProfileString",
+      "signature": "ParseProfileString(...)",
+      "summary": "Parses profile string",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fb92ae16-8054-c8ac-9469-ef01e23ffe0b"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ProfileString",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The profile in human-readable form.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/39c11788-fca0-db81-3c7e-a18505427410"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

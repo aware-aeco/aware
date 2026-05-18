@@ -1,0 +1,67 @@
+{
+  "name": "RebarComplexGeometry",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The ReinforcingBar class represents a single physical reinforcing bar. It contains the curves and bendings that define the geometry of the bar.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/4fdf4193-1664-f040-0c9c-789b5e9443cf",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "Equals(...)",
+      "summary": "Determines whether the specified object is equal to the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5ee212fe-0bc8-1dab-6faa-4af8b623cc35"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "GetHashCode(...)",
+      "summary": "Serves as the default hash function.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0df24e7f-0293-d680-645a-9c01b84a63f5"
+    },
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Returns a string that represents the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c4128e3f-c689-fb49-d68d-28060ae09f8d"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BendingRadiuses",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The bending radiuses of the wire.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c72dde25-7531-0d87-3006-3e728e3271d9"
+    },
+    {
+      "name": "Diameter",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the diameter of the wire.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5db4245d-2a1c-a2c9-e81d-0afc306b7462"
+    },
+    {
+      "name": "Legs",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the list of RebarLegs of the bar.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5b866b82-7bbe-1a3f-32da-aa9b984e58a3"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

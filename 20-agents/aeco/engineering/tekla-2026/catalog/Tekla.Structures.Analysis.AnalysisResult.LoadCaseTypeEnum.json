@@ -1,0 +1,39 @@
+{
+  "name": "AnalysisResult.LoadCaseTypeEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The load case type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/6ec3a114-0a91-d863-b137-45953d5d4c16",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CASE",
+      "value": 1,
+      "summary": "Load case (not a combination to be considered in design)."
+    },
+    {
+      "name": "COMBINATION_ULS",
+      "value": 2,
+      "summary": "Ultimate limit state combination."
+    },
+    {
+      "name": "COMBINATION_SLS",
+      "value": 3,
+      "summary": "Service limit state combination."
+    },
+    {
+      "name": "COMBINATION",
+      "value": 4,
+      "summary": "Combination (not limit state)."
+    },
+    {
+      "name": "ENVELOPE",
+      "value": 5,
+      "summary": "Envelope (from group of combinations)."
+    }
+  ]
+}

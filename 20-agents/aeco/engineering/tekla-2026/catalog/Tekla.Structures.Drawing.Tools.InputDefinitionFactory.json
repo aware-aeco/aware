@@ -1,0 +1,133 @@
+{
+  "name": "InputDefinitionFactory",
+  "namespace": "Tekla.Structures.Drawing.Tools",
+  "kind": "class",
+  "summary": "The InputDefinitionFactory class contains helper functions for input definition handling.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/3ce1ecfc-0320-5978-8235-52a3cd14c9a6",
+  "constructors": [
+    {
+      "name": "InputDefinitionFactory",
+      "signature": "InputDefinitionFactory(...)",
+      "summary": "Initializes a new instance of the InputDefinitionFactory class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4431961b-5e14-7d83-cae0-771460117b0b"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateInputDefinition(Tuple.DrawingObject, ViewBase.)",
+      "signature": "CreateInputDefinition(Tuple.DrawingObject, ViewBase.)(...)",
+      "summary": "Creates a single-object input definition.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/84a089fa-dc54-8a22-f6ff-d912b01dca5c"
+    },
+    {
+      "name": "CreateInputDefinition(Tuple.Point, ViewBase.)",
+      "signature": "CreateInputDefinition(Tuple.Point, ViewBase.)(...)",
+      "summary": "Creates a single-point input definition.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/09f1de79-d1a5-3da0-368a-5c1e4a69174f"
+    },
+    {
+      "name": "CreateInputDefinition(Tuple.PointList, ViewBase.)",
+      "signature": "CreateInputDefinition(Tuple.PointList, ViewBase.)(...)",
+      "summary": "Creates a multi-point input definition.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/50ffa338-dfce-f96b-f27c-5509c6477d81"
+    },
+    {
+      "name": "CreateInputDefinition(ViewBase, DrawingObject)",
+      "signature": "CreateInputDefinition(ViewBase, DrawingObject)(...)",
+      "summary": "Creates a single-object input definition.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ccd25bad-30a2-87f1-a291-99531a837a39"
+    },
+    {
+      "name": "CreateInputDefinition(ViewBase, PointList)",
+      "signature": "CreateInputDefinition(ViewBase, PointList)(...)",
+      "summary": "Creates a multi-point input definition.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a169f862-3ab6-6393-4d2c-0919a848fc92"
+    },
+    {
+      "name": "CreateInputDefinition(ViewBase, Point)",
+      "signature": "CreateInputDefinition(ViewBase, Point)(...)",
+      "summary": "Creates a single-point input definition.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c5bbd8b8-2fba-78bc-0ffd-67457e8144bf"
+    },
+    {
+      "name": "CreateInputDefinition(ViewBase, Point, Point)",
+      "signature": "CreateInputDefinition(ViewBase, Point, Point)(...)",
+      "summary": "Creates a two-point input definition.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ae205985-792e-1c17-edff-e88331837cb9"
+    },
+    {
+      "name": "CreateInputDefinition(ViewBase, Point, Point, Point)",
+      "signature": "CreateInputDefinition(ViewBase, Point, Point, Point)(...)",
+      "summary": "Creates a three-point input definition.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6dbcb73d-a621-c67f-1779-ba20d8a800ea"
+    },
+    {
+      "name": "GetDrawingObject",
+      "signature": "GetDrawingObject(...)",
+      "summary": "Gets the object from the given single-object input.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e07e0bd1-185a-2f57-6e97-7530043d6d89"
+    },
+    {
+      "name": "GetPoint",
+      "signature": "GetPoint(...)",
+      "summary": "Gets the point from the given single-point input.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d118cf03-e535-2b81-6f9c-857de6299a7d"
+    },
+    {
+      "name": "GetPoints",
+      "signature": "GetPoints(...)",
+      "summary": "Gets the points from the given n-point input.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d1cfbbc8-bf9f-043e-1964-539796a929cc"
+    },
+    {
+      "name": "GetView",
+      "signature": "GetView(...)",
+      "summary": "Gets the view that the given input belongs to.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8581caba-017b-6552-f26e-bdd92e953ec0"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

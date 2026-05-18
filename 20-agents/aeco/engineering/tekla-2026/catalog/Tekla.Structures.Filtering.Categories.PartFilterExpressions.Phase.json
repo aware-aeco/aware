@@ -1,0 +1,34 @@
+{
+  "name": "PartFilterExpressions.Phase",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The Phase class represents the phase filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/c038e031-8591-ef8b-f745-d332a1543fca",
+  "constructors": [
+    {
+      "name": "PartFilterExpressions.Phase",
+      "signature": "PartFilterExpressions.Phase(...)",
+      "summary": "Initializes a new instance of the Phase class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/22076dba-94d2-b086-0770-f7c1002ec74d"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

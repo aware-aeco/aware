@@ -1,0 +1,24 @@
+{
+  "name": "RebarSpacingZone.SpacingEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The spacing type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/bb47f856-0f41-2b58-5a0c-0d59c8c0c37a",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "EXACT",
+      "value": 0,
+      "summary": "The spacing is exact."
+    },
+    {
+      "name": "TARGET",
+      "value": 1,
+      "summary": "The spacing is a target value."
+    }
+  ]
+}

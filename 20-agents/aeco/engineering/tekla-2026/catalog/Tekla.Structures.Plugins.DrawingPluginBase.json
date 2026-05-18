@@ -1,0 +1,60 @@
+{
+  "name": "DrawingPluginBase",
+  "namespace": "Tekla.Structures.Plugins",
+  "kind": "class",
+  "summary": "The DrawingPluginBase class is an abstract base class for drawing plug-ins.",
+  "base": "System.MarshalByRefObject",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/d888ea51-3dae-c2e2-2c18-d89cbf04ce23",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "DefineInput",
+      "signature": "DefineInput(...)",
+      "summary": "The method Tekla Structures calls for the plug-in to query the input. The plug-in must then return an array list of input definition instances. The plug-in will be dependent on the items it returns. Dependent means that if any of these items change, for example the user moves the points, the plug-in will be re-run with new input. DefineInput is not called during the re-run, and thus all the actual implementation should be in the Run() method. The Run() method is always called in view coordinates.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b566fc7a-696f-a394-7641-2bcda9c40726"
+    },
+    {
+      "name": "IsDefaultValue(Double)",
+      "signature": "IsDefaultValue(Double)(...)",
+      "summary": "Returns true if the given value is set to the default value for this type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7acd70f1-66e5-28b9-73ff-8cce84fdecb0"
+    },
+    {
+      "name": "IsDefaultValue(Int32)",
+      "signature": "IsDefaultValue(Int32)(...)",
+      "summary": "Returns true if the given value is set to the default value for this type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/063121cd-be98-6430-9c28-288b181b1602"
+    },
+    {
+      "name": "IsDefaultValue(String)",
+      "signature": "IsDefaultValue(String)(...)",
+      "summary": "Returns true if the given value is set to the default value (empty string).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/00f6e4b6-60f6-68de-c128-9be9648e31b6"
+    },
+    {
+      "name": "Run",
+      "signature": "Run(...)",
+      "summary": "The main method of the plug-in. It is called after the input has been defined with DefineInput(). This is the \u0022main\u0022 method of the plug-in and should contain all the actual implementation.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/758feebd-8605-e681-7498-1772eee54f02"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

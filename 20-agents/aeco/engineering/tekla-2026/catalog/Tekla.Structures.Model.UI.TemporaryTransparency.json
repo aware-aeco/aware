@@ -1,0 +1,39 @@
+{
+  "name": "TemporaryTransparency",
+  "namespace": "Tekla.Structures.Model.UI",
+  "kind": "enum",
+  "summary": "The possible temporary transparencies. Used to temporarily change transparency of a model object to visualize some state in the model.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/9504d3d1-7079-60a2-a399-d920c6492cb7",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "HIDDEN",
+      "value": 0,
+      "summary": "Object is hidden."
+    },
+    {
+      "name": "TRANSPARENT",
+      "value": 1,
+      "summary": "Object is transparent."
+    },
+    {
+      "name": "SEMITRANSPARENT",
+      "value": 3,
+      "summary": "Object is semi transparent."
+    },
+    {
+      "name": "SEMIVISIBLE",
+      "value": 5,
+      "summary": "Object is almost fully visible."
+    },
+    {
+      "name": "VISIBLE",
+      "value": 10,
+      "summary": "Object is fully visible."
+    }
+  ]
+}

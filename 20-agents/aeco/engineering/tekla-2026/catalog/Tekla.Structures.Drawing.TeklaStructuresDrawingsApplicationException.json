@@ -1,0 +1,24 @@
+{
+  "name": "TeklaStructuresDrawingsApplicationException",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The TeklaStructuresDrawingsApplicationException class defines the base class for all exceptions that can be thrown while using Tekla.Structures.Drawing.",
+  "base": "System.ApplicationException",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/03b4176e-9f3e-ae2e-c94a-18404d14ce7d",
+  "constructors": [
+    {
+      "name": "TeklaStructuresDrawingsApplicationException",
+      "signature": "TeklaStructuresDrawingsApplicationException(...)",
+      "summary": "Creates a new exception instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ae11a188-775d-9af5-abf9-24392ab1b9be"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

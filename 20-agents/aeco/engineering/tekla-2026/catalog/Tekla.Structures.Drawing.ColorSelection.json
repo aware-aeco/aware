@@ -1,0 +1,33 @@
+{
+  "name": "ColorSelection",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "This class provides methods to show the color palette for drawing colors and hatch background colors.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/6def533d-91c7-8220-4dc7-66f666250c25",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ShowColorPalette",
+      "signature": "ShowColorPalette(...)",
+      "summary": "Shows the color palette for drawing colors.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c3181ad1-7bcf-0aaf-f5bb-fc6371bd4567"
+    },
+    {
+      "name": "ShowColorPaletteForHatchBackground",
+      "signature": "ShowColorPaletteForHatchBackground(...)",
+      "summary": "Shows the color palette for hatch background colors.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4981902e-df62-64ad-71e1-432376fcbd38"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Operation.IFCExportViewTypeEnum",
+  "namespace": "Tekla.Structures.Model.Operations",
+  "kind": "enum",
+  "summary": "View configuration type for IFC 4 export",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/63baf60e-d0bf-f23f-d879-c6b104295c44",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

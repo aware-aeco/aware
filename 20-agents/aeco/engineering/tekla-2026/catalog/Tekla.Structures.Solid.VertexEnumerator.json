@@ -1,0 +1,42 @@
+{
+  "name": "VertexEnumerator",
+  "namespace": "Tekla.Structures.Solid",
+  "kind": "class",
+  "summary": "The VertexEnumerator class is used to enumerate the vertexes of a loop instance.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/6cff93f0-7fe6-7e86-61f9-287418f3f72b",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "MoveNext",
+      "signature": "MoveNext(...)",
+      "summary": "Moves to the next item in the enumerator.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/82296b31-303c-4ca2-940d-5ae78820e294"
+    },
+    {
+      "name": "Reset",
+      "signature": "Reset(...)",
+      "summary": "Resets the enumerator to the beginning.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/17307965-cc44-9be8-dba1-c5d96f9e9039"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Current",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns the current vertex.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1f78db2e-dd5d-9397-f117-3bbdf52c9b40"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,52 @@
+{
+  "name": "DrawingObject.NoAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The NoAttributes class defines attributes for objects that do not contain any attributes.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/7227e500-8f42-5762-0143-d3eaf00e8c77",
+  "constructors": [
+    {
+      "name": "DrawingObject.NoAttributes",
+      "signature": "DrawingObject.NoAttributes(...)",
+      "summary": "Creates a new default no attributes instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/37d6cade-a893-a6be-324c-7b718bd5b592"
+    },
+    {
+      "name": "DrawingObject.NoAttributes",
+      "signature": "DrawingObject.NoAttributes(...)",
+      "summary": "Creates a new no attributes instance. No attributes are loaded from the attribute file as it is not possible to load attributes for objects of this type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f2e39612-3b0a-6fcd-559e-f75d7dd271d9"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8cab66ba-5115-4e23-78e2-6e663ff74211"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "LoadAttributes(...)",
+      "summary": "It is not possible to load attributes for objects of this type because the objects have no attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6c1c9d6b-ed8f-13d0-5f6d-6564881fc82c"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

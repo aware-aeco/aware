@@ -1,0 +1,78 @@
+{
+  "name": "AngleList",
+  "namespace": "Tekla.Structures.Datatype",
+  "kind": "class",
+  "summary": "This class provides methods to handle lists of angles",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/c1bc620d-d79c-42a2-f0ac-9009f6a87509",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Parse(String)",
+      "signature": "Parse(String)(...)",
+      "summary": "Parses the given text as an angle list in the current unit type",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5a037ea2-783e-73d7-f7a1-34662923a055"
+    },
+    {
+      "name": "Parse(String, IFormatProvider)",
+      "signature": "Parse(String, IFormatProvider)(...)",
+      "summary": "Parses the given text as an angle list in the current unit type",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bf366b35-4717-fdcd-f174-23607938c085"
+    },
+    {
+      "name": "Parse(String, IFormatProvider, Angle.UnitType)",
+      "signature": "Parse(String, IFormatProvider, Angle.UnitType)(...)",
+      "summary": "Parses the given text as an angle list in the current unit type",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4113d54a-0ab4-8b2e-7062-a3771be61c87"
+    },
+    {
+      "name": "ToString(IEnumerable.Angle.)",
+      "signature": "ToString(IEnumerable.Angle.)(...)",
+      "summary": "Converts the given angles to a string in the current units",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8d7e5255-799a-1f85-a13f-08dd45382341"
+    },
+    {
+      "name": "ToString(IEnumerable.Angle., Angle.UnitType)",
+      "signature": "ToString(IEnumerable.Angle., Angle.UnitType)(...)",
+      "summary": "Converts the given angles to a string in the given units",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9b32abf0-6afc-3f7b-dab7-dd9098e60177"
+    },
+    {
+      "name": "ToString(IEnumerable.Angle., String, IFormatProvider)",
+      "signature": "ToString(IEnumerable.Angle., String, IFormatProvider)(...)",
+      "summary": "Converts the given angles to a string with the given parameters in the current unit",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/15ac3c4f-5d3f-0463-54ba-088f3f089f97"
+    },
+    {
+      "name": "ToString(IEnumerable.Angle., String, IFormatProvider, Angle.UnitType)",
+      "signature": "ToString(IEnumerable.Angle., String, IFormatProvider, Angle.UnitType)(...)",
+      "summary": "Converts the given angles to a string with the given parameters in the current unit",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d2f3fab0-5ef0-1c85-20a3-053346a181d2"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

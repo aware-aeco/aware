@@ -1,0 +1,43 @@
+{
+  "name": "StructuresDialogFilterAttribute",
+  "namespace": "Tekla.Structures.Dialog",
+  "kind": "class",
+  "summary": "The StructuresDialogFilterAttribute class specifies the attribute name for which the value of the attributed property will be used as a filter in Tekla Structures. The return type of the attributed property must be boolean. The apply and modify operations will only commit/update those attributes which either do not have a filter property defined or the value of the filter property is true.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/57235798-67b4-a448-5a8b-8cb224973d5b",
+  "constructors": [
+    {
+      "name": "StructuresDialogFilterAttribute",
+      "signature": "StructuresDialogFilterAttribute(...)",
+      "summary": "Initializes a new StructuresDialogFilterAttribute instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a46f4547-4ede-2720-cff6-8b2e29a93466"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Returns a string that represents the current StructuresDialogFilterAttribute object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b9cfb05a-79d5-038a-52e7-3857c613a07a"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AttributeName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the attribute name of the property.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/77059035-a1de-8ae6-a066-9f7cfc86fc82"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,24 @@
+{
+  "name": "BoltGroup.ErrorStatus",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "Define possible statuses for geometry creation/modification commands.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/2c68335c-fae5-a806-5e6b-40bbb9a29738",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CommonSettingFromDiffPropertiesException",
+      "value": 0,
+      "summary": "Exception thrown when the common setting cannot be computed from the individual settings."
+    },
+    {
+      "name": "SlottedHoleOffsetsTooBigException",
+      "value": 1,
+      "summary": "Exception thrown when the slotted hole offsets move hole too far from bolt origin."
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "name": "StraightDimensionSetHandler",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The StraightDimensionSetHandler class contains operations for creating and modifying straight dimension sets.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/13408e9f-2759-ac34-b4b2-30597ce5e73f",
+  "constructors": [
+    {
+      "name": "StraightDimensionSetHandler",
+      "signature": "StraightDimensionSetHandler(...)",
+      "summary": "Initializes a new instance of the StraightDimensionSetHandler class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2055e108-7609-4fee-8eff-ce27c609b47d"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateDimensionSet(ViewBase, PointList, Vector, Double)",
+      "signature": "CreateDimensionSet(ViewBase, PointList, Vector, Double)(...)",
+      "summary": "Creates straight dimensions and combines them to one straight dimension set. Returns null if fails.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/506ac2af-0156-0c5f-3531-063cbe11a51d"
+    },
+    {
+      "name": "CreateDimensionSet(ViewBase, PointList, Vector, Double, StraightDimensionSet.StraightDimensionSetAttributes)",
+      "signature": "CreateDimensionSet(ViewBase, PointList, Vector, Double, StraightDimensionSet.StraightDimensionSetAttributes)(...)",
+      "summary": "Creates straight dimensions and combines them to one straight dimension set. Returns null if fails.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5ce3babb-67f5-6f3a-e078-4b40adb04967"
+    },
+    {
+      "name": "CreateDimensionSet(ViewBase, PointList, Vector, Double, Double, Double)",
+      "signature": "CreateDimensionSet(ViewBase, PointList, Vector, Double, Double, Double)(...)",
+      "summary": "Creates straight dimensions and combines them to one straight dimension set. Returns null if fails.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/56bf2ebf-e514-45d2-121c-c41d1f8644b0"
+    },
+    {
+      "name": "CreateDimensionSet(ViewBase, PointList, Vector, Double, Double, Double, StraightDimensionSet.StraightDimensionSetAttributes)",
+      "signature": "CreateDimensionSet(ViewBase, PointList, Vector, Double, Double, Double, StraightDimensionSet.StraightDimensionSetAttributes)(...)",
+      "summary": "Creates straight dimensions and combines them to one straight dimension set. Returns null if fails.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/392a2299-5b18-4fe2-09bc-43365daf5494"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

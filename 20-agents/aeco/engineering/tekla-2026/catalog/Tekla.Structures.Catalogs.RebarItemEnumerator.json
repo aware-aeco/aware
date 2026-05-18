@@ -1,0 +1,159 @@
+{
+  "name": "RebarItemEnumerator",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The RebarItemEnumerator class allows to loop through the catalog rebar items.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/79244a17-2ec1-6047-bb54-fb7c63ad8d4b",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "DeleteRebarItem",
+      "signature": "DeleteRebarItem(...)",
+      "summary": "Delete the RebarItem from the list",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8134716e-7107-ace0-ee37-1762fdc6c6e5"
+    },
+    {
+      "name": "GetRebarHeaderItems",
+      "signature": "GetRebarHeaderItems(...)",
+      "summary": "Gets the header items from the rebar catalog header.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/15c513bc-268d-6adb-2484-6fc63f53586b"
+    },
+    {
+      "name": "GetSize",
+      "signature": "GetSize(...)",
+      "summary": "Returns the total amout of items.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/143e5791-aab0-dd97-59e4-6dc160365bf8"
+    },
+    {
+      "name": "InsertRebarItem",
+      "signature": "InsertRebarItem(...)",
+      "summary": "Insert the RebarItem in to the list",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8ccbe8c7-936b-e7f7-5a8b-15bd890c35d7"
+    },
+    {
+      "name": "ModifyRebarItem",
+      "signature": "ModifyRebarItem(...)",
+      "summary": "Modify the RebarItem in the list",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e12ff711-c46d-beba-9f0a-58c370a56a48"
+    },
+    {
+      "name": "MoveNext",
+      "signature": "MoveNext(...)",
+      "summary": "Moves to the next item in the enumerator.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/16173cf8-253b-7207-0efd-433facfb2a43"
+    },
+    {
+      "name": "RebarItemExists",
+      "signature": "RebarItemExists(...)",
+      "summary": "Check RebarItem is available in database file",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/91a4841a-1b14-8d2e-a919-f82ac6d98d04"
+    },
+    {
+      "name": "Reset",
+      "signature": "Reset(...)",
+      "summary": "Resets the enumerator to the beginning.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ad0e7d04-4ef9-97a7-4bea-db64119745ee"
+    },
+    {
+      "name": "SelectRebarItem(String, String)",
+      "signature": "SelectRebarItem(String, String)(...)",
+      "summary": "Selects a rebar item in the rebar database with the given grade and size.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/43cc4200-e00f-bc6b-7b54-5fe9aa9eca99"
+    },
+    {
+      "name": "SelectRebarItem(String, Double, Boolean)",
+      "signature": "SelectRebarItem(String, Double, Boolean)(...)",
+      "summary": "Selects a rebar item in the rebar database with the given grade and nominal diameter.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8070f297-24cb-845f-c6f3-a4c9f4cd18c5"
+    },
+    {
+      "name": "SelectRebarItem(String, String, Double)",
+      "signature": "SelectRebarItem(String, String, Double)(...)",
+      "summary": "Selects a rebar item in the rebar database with the given grade, size and bending radius.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/79ebffd5-4708-d0f0-4b97-850d7e31fd8c"
+    },
+    {
+      "name": "SelectRebarItem(String, String, String)",
+      "signature": "SelectRebarItem(String, String, String)(...)",
+      "summary": "Selects a rebar item in the rebar database with the given grade, size and usage.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a39216d1-61a1-12bb-1df8-440b927be16d"
+    },
+    {
+      "name": "SelectRebarItem(String, Double, Double, Boolean)",
+      "signature": "SelectRebarItem(String, Double, Double, Boolean)(...)",
+      "summary": "Selects a rebar item in the rebar database with the given grade, nominal diameter and bending radius.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/57ce99c3-1beb-75bf-b836-a72f15427a21"
+    },
+    {
+      "name": "SelectRebarItem(String, Double, String, Boolean)",
+      "signature": "SelectRebarItem(String, Double, String, Boolean)(...)",
+      "summary": "Selects a rebar item in the rebar database with the given grade, nominal diameter and bending radius.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/711493f8-9bba-e516-550a-e3121156d859"
+    },
+    {
+      "name": "SelectRebarItem(String, String, String, String)",
+      "signature": "SelectRebarItem(String, String, String, String)(...)",
+      "summary": "Selects a rebar item in the rebar database with the given grade, size, usage and code.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7804542c-1ac2-cdff-33bd-19b6a5d4f66b"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Current",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns a rebar item instance of the current element.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/698062cd-6577-feb5-29b9-65770f3cc419"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

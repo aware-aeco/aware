@@ -1,0 +1,151 @@
+{
+  "name": "ModelSharingHandler",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "Handles operations related to model sharing.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/60cc1fcf-a879-b4b3-10f8-cb27e1a52da4",
+  "constructors": [
+    {
+      "name": "ModelSharingHandler",
+      "signature": "ModelSharingHandler(...)",
+      "summary": "Initializes a new instance of the ModelSharingHandler class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2254dee5-32df-fc40-bbce-df50c9d56625"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateBaselineAsync",
+      "signature": "CreateBaselineAsync(...)",
+      "summary": "Make a new baseline and upload it to the service with the specified code and comment.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/cb604e29-4672-1aa7-6063-7fedbdcf7510"
+    },
+    {
+      "name": "ExcludeAndOpen",
+      "signature": "ExcludeAndOpen(...)",
+      "summary": "Excludes the specified model from sharing and opens it. The currently opened model is closed.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/252881cd-c926-f1dd-d6c0-43d250b09934"
+    },
+    {
+      "name": "GetLocationsAsync",
+      "signature": "GetLocationsAsync(...)",
+      "summary": "Gets the list of available locations for shared models.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3ebe852a-f1d7-97ad-6015-3ed8cb534fcd"
+    },
+    {
+      "name": "GetModelsAsync",
+      "signature": "GetModelsAsync(...)",
+      "summary": "Gets the list of shared models available for the current user.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ad157052-8f0f-1a44-904e-6b445728cb7a"
+    },
+    {
+      "name": "GetSharingEvents",
+      "signature": "GetSharingEvents(...)",
+      "summary": "Gets an instance of ISharingEvents to subscribe to sharing-related events.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2e80e39c-d769-e7f8-facf-1ac2af7f27dc"
+    },
+    {
+      "name": "GetUpdatesAsync",
+      "signature": "GetUpdatesAsync(...)",
+      "summary": "Get available updates for the model.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2b0eb561-5a91-b03c-af2d-f81a8d335ef7"
+    },
+    {
+      "name": "InviteUserAsync",
+      "signature": "InviteUserAsync(...)",
+      "summary": "Invite sharing user.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/51d37ad7-f0fa-b085-33d5-552b2883e1a8"
+    },
+    {
+      "name": "JoinAsync",
+      "signature": "JoinAsync(...)",
+      "summary": "Joins a shared model using the specified model identifier and join folder.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fe2cf713-f044-cdd1-665e-ee6c6367e98b"
+    },
+    {
+      "name": "ReadInAsync",
+      "signature": "ReadInAsync(...)",
+      "summary": "Reads in updates to the shared model.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9ca10bdf-71e2-77b9-d825-de333c557e3d"
+    },
+    {
+      "name": "ReleaseNextWriteOutAsync",
+      "signature": "ReleaseNextWriteOutAsync(...)",
+      "summary": "Releases a previously reserved next write-out for the current user with the specified comment.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3a3cc590-0fba-7993-d1c9-b29691708f7c"
+    },
+    {
+      "name": "RemoveModelAsync",
+      "signature": "RemoveModelAsync(...)",
+      "summary": "Removes the shared model from the system.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e3d1df04-d59c-eb1a-1758-f8e0852df753"
+    },
+    {
+      "name": "ReserveNextWriteOutAsync",
+      "signature": "ReserveNextWriteOutAsync(...)",
+      "summary": "Reserves the next write-out for the current user with the specified comment.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8033a381-f7ce-e0e8-28fd-27c59f00991b"
+    },
+    {
+      "name": "StartSharingAsync",
+      "signature": "StartSharingAsync(...)",
+      "summary": "Starts sharing a model with the specified code, description, and location.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/673ada8b-5db9-e755-a708-faf0bd5da254"
+    },
+    {
+      "name": "WriteOutAsync",
+      "signature": "WriteOutAsync(...)",
+      "summary": "Writes out changes to the service with the specified code and comment. Automatically release the next write-out reservation if there is one.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3d421c71-06c9-187f-672c-b25e386b9e05"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

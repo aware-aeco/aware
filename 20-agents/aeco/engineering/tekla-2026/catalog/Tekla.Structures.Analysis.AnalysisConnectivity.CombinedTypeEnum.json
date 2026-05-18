@@ -1,0 +1,29 @@
+{
+  "name": "AnalysisConnectivity.CombinedTypeEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The combined types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/6fcb495a-b35d-a303-9998-c8f9ade7379c",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "COMBINED_TYPE_FIXED",
+      "value": 0,
+      "summary": "The combined type is fixed."
+    },
+    {
+      "name": "COMBINED_TYPE_PINNED",
+      "value": 1,
+      "summary": "The combined type is pinned."
+    },
+    {
+      "name": "COMBINED_TYPE_OTHER",
+      "value": 2,
+      "summary": "The combined type is other."
+    }
+  ]
+}

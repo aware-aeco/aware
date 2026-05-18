@@ -1,0 +1,33 @@
+{
+  "name": "HelpViewer",
+  "namespace": "Tekla.Structures.Dialog",
+  "kind": "class",
+  "summary": "Class for viewing help files with Tekla Structures HelpViewer.exe.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/5d571035-1ebd-4cf2-051e-415a19a65e2a",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "DisplayHelpTopic",
+      "signature": "DisplayHelpTopic(...)",
+      "summary": "Method for opening Tekla Structures help viewer with given help topic. Method requires Tekla Structures to be running.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4b0c80b5-237d-c017-4355-cc5d42ea9087"
+    },
+    {
+      "name": "DisplayHelpTopicIndependent",
+      "signature": "DisplayHelpTopicIndependent(...)",
+      "summary": "Method for opening Tekla Structures help viewer independently from given file path with given help topic and language.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5ed14735-0448-5c67-ba91-447382f56925"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

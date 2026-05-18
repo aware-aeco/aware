@@ -1,0 +1,51 @@
+{
+  "name": "PickerInputPoint",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PickerInputPoint class represents a pick of one point in a view. Used for values asked by UI.Picker.PickPoint(string Prompt, out Point PickedPoint, out ViewBase PickedView).",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/a0988e3c-a83d-a2b0-cd04-6a6b0228d72b",
+  "constructors": [
+    {
+      "name": "PickerInputPoint",
+      "signature": "PickerInputPoint(...)",
+      "summary": "Creates a new PickerInputPoint instance with one point selected in a view.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ea556ce0-fffd-36b0-215b-f46a222f80d7"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2e213537-2c72-6afb-177b-a04c8b70b27a"
+    }
+  ],
+  "properties": [
+    {
+      "name": "PickedPoint",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The picked point in the view coordinates.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6ca3669b-3e46-8c70-8b78-14a7b8a210e9"
+    },
+    {
+      "name": "PickedView",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The view within which the pick occurred.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/aecacf99-0f9d-b781-aa92-7e9efb2986c0"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

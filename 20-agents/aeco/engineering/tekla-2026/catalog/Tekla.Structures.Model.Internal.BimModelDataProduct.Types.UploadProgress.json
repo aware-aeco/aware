@@ -1,0 +1,49 @@
+{
+  "name": "UploadProgress",
+  "namespace": "Tekla.Structures.Model.Internal.BimModelDataProduct.Types",
+  "kind": "class",
+  "summary": "Represents the progress for a file upload operation.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/07880a21-4805-702d-ed86-5cd5a37726ca",
+  "constructors": [
+    {
+      "name": "UploadProgress",
+      "signature": "UploadProgress(...)",
+      "summary": "Initializes a new instance of the UploadProgress class with known total size.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/90122eff-8cfc-0ea3-40f1-f53aaf737168"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "PercentComplete",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the upload progress as a percentage (0-100). If total is unknown, returns null. If null, it indicates we can\u0027t determine the completed percentage as we don\u0027t know the total size. UI should handle this case appropriately (e.g don\u0027t show percentage of completion but bytes upload).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8fd847b9-4689-d797-22be-cffbd5c0428c"
+    },
+    {
+      "name": "TotalBytes",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the total number of bytes to upload, 0 if total is unknown.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ae882328-37e5-01b3-95ea-d5ae5b962ee4"
+    },
+    {
+      "name": "UploadedBytes",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the number of bytes uploaded so far.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/dbc664f6-62d2-ef7d-9690-2011d6833738"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,117 @@
+{
+  "name": "HatchLine.HatchLineAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The HatchLineAttributes class is the attributes class of the hatch line.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/d4b14e7a-0c10-2132-de30-99a72d7152b9",
+  "constructors": [
+    {
+      "name": "HatchLine.HatchLineAttributes",
+      "signature": "HatchLine.HatchLineAttributes(...)",
+      "summary": "Creates a new default hatch line attributes instance that loads standard attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/49dd1dc3-1a57-381a-6bc4-ee797c501cdd"
+    },
+    {
+      "name": "HatchLine.HatchLineAttributes",
+      "signature": "HatchLine.HatchLineAttributes(...)",
+      "summary": "Creates a new hatch line attributes instance that loads the specified attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d2c0ab4b-d876-865f-d8ea-46f5358ddeae"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/73fb5abf-1c5d-cf75-f3b9-0d69491ba188"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "LoadAttributes(...)",
+      "summary": "Loads the attributes from the attribute file.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8642d92b-52a5-117c-a5ba-4fb54cc1d9de"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Alignment",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the alignment of the hatch line.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/38122a77-5a46-2393-c9a2-336b69829b32"
+    },
+    {
+      "name": "BehindModelObjects",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether the closed graphic object is drawn behind model objects",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2f3d8e0e-95ab-ddc8-0eed-41a8f547f5e5"
+    },
+    {
+      "name": "Hatch",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The hatch attributes of the closed graphic object (the closed graphic object is hatchable).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a4e0e3d4-102f-e2cb-68f2-da8c9f63fba0"
+    },
+    {
+      "name": "Line",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The line attributes of the graphic object. A graphic object always consists of lines.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3483367b-c555-6997-e0a4-988358d7ce9b"
+    },
+    {
+      "name": "Scale",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the scale factor for the hatch line.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b0d006b6-0da7-c955-9e18-f809d738ba36"
+    },
+    {
+      "name": "ShowJointLines",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether to show joint lines of the hatch line.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/059f7be2-3aba-5423-96e8-0e57c05ce37c"
+    },
+    {
+      "name": "ShowOuterLines",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether to show outer lines of the hatch line.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b3565778-ef2f-a4f6-65af-566ad3d439cc"
+    },
+    {
+      "name": "Width",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the width of the hatch line.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b7c2fcc5-e78d-b189-3766-cb1baf1dcb11"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

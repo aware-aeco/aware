@@ -1,0 +1,61 @@
+{
+  "name": "Operation",
+  "namespace": "Tekla.Structures.Analysis.Operations",
+  "kind": "class",
+  "summary": "Operations of analysis objects.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/babef861-9636-cd4d-67fd-a987b73de719",
+  "constructors": [
+    {
+      "name": "Operation",
+      "signature": "Operation(...)",
+      "summary": "Initializes a new instance of the Operation class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/251aa8f2-3b6b-2862-9582-56e27a7e3875"
+    }
+  ],
+  "methods": [
+    {
+      "name": "MoveAnalysisPartAreaEdge",
+      "signature": "MoveAnalysisPartAreaEdge(...)",
+      "summary": "Moves the analysis part area edge by translation vector. Perpendicular offset is calculated from the translation vector.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e21f7feb-4843-676b-29f0-76dcda52948a"
+    },
+    {
+      "name": "MoveAnalysisPartPosition",
+      "signature": "MoveAnalysisPartPosition(...)",
+      "summary": "Moves the analysis part position by translation vector. Only the handle positions can be moved.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8d745ca6-6ff9-ab60-b76b-a4383a09315b"
+    },
+    {
+      "name": "MoveObject",
+      "signature": "MoveObject(...)",
+      "summary": "Moves the analysis object by translation vector. Supported objects are: AnalysisNode, AnalysisPart.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2d4b3006-74d0-17d2-316f-1f10d028d0a6"
+    },
+    {
+      "name": "ResetAnalysisPartPositions",
+      "signature": "ResetAnalysisPartPositions(...)",
+      "summary": "Reset analysis part. Removes the offsets applied to node positions. The axis offset of the analysis part is not reset.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/790333a7-df91-ceaa-caf7-be3183a0f547"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

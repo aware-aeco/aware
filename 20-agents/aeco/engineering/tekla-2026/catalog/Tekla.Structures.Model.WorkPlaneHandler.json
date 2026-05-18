@@ -1,0 +1,33 @@
+{
+  "name": "WorkPlaneHandler",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The WorkPlaneHandler class contains methods for getting and setting the current transformation plane.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/ac187147-19d4-851c-7af5-19e217534818",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetCurrentTransformationPlane",
+      "signature": "GetCurrentTransformationPlane(...)",
+      "summary": "Gets the current transformation plane.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/74206331-60ff-3061-ce71-526788aee687"
+    },
+    {
+      "name": "SetCurrentTransformationPlane",
+      "signature": "SetCurrentTransformationPlane(...)",
+      "summary": "Sets the current transformation plane.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e6f659a2-cc4a-9e35-fbde-78769210ab87"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

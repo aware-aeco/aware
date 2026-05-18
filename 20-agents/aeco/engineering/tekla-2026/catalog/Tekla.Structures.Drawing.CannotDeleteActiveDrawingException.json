@@ -1,0 +1,24 @@
+{
+  "name": "CannotDeleteActiveDrawingException",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The CannotDeleteActiveDrawingException class defines the exception that is thrown when a user tries to delete a drawing that is active.",
+  "base": "System.ApplicationException",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/ed998625-1913-2678-66f0-9e32917fb5d3",
+  "constructors": [
+    {
+      "name": "CannotDeleteActiveDrawingException",
+      "signature": "CannotDeleteActiveDrawingException(...)",
+      "summary": "Creates a new cannot delete active drawing exception instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/82867297-c6f7-b0f5-c880-95fb41f1decc"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

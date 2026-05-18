@@ -1,0 +1,42 @@
+{
+  "name": "MaterialMarketSizesItemEnumerator",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The MaterialMarketSizesItemEnumerator class allows to loop through the items defined in XS_PROFDB\\marketsizes.dat file.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/b38af553-7529-a4e3-dfb8-56da1faf142b",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "MoveNext",
+      "signature": "MoveNext(...)",
+      "summary": "Moves to the next item in the MaterialMarketSizesItemEnumerator.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4194e31a-208e-0382-4d8b-f0da8c0c278c"
+    },
+    {
+      "name": "Reset",
+      "signature": "Reset(...)",
+      "summary": "Resets the MaterialMarketSizesItemEnumerator to the beginning.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/137847a1-5995-9fe8-7b7a-9f6ef98b62a1"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Current",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns a MaterialMarketSizesItem instance with the current index.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1127b77b-3254-b0d0-3f5a-51fc07a837e0"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

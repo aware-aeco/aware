@@ -1,0 +1,92 @@
+{
+  "name": "DimensionSetBaseAttributes.DimensionExaggerationAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The DimensionExaggerationAttributes class handles attributes related to the exaggeration of dimension lines.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/ed104708-bf83-237c-9c78-d8dac70012af",
+  "constructors": [
+    {
+      "name": "DimensionSetBaseAttributes.DimensionExaggerationAttributes",
+      "signature": "DimensionSetBaseAttributes.DimensionExaggerationAttributes(...)",
+      "summary": "Creates a new dimension exaggeration attributes instance. The default is to have exaggeration disabled.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/06208c1d-951e-e00c-3e13-f961b8f849c6"
+    },
+    {
+      "name": "DimensionSetBaseAttributes.DimensionExaggerationAttributes",
+      "signature": "DimensionSetBaseAttributes.DimensionExaggerationAttributes(...)",
+      "summary": "Creates a new dimension exaggeration attributes instance with the given parameters.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5989ec95-66ce-4bb5-37cc-ec120efb5bf4"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/835f5a19-1bf6-17fd-f6e5-d3605e638016"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ExaggerationDirection",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The ExaggerationDirection.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/59947e8d-f7ee-8f26-64a2-fe23eeaa4905"
+    },
+    {
+      "name": "ExaggerationEnabled",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Exaggeration is enabled if the value is true.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d29b6a89-2dd8-f2be-8c70-c71b6cafe012"
+    },
+    {
+      "name": "ExaggerationHeight",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The ExaggerationHeight.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ac9bffa1-ef2b-73cf-b955-5027c96afc29"
+    },
+    {
+      "name": "ExaggerationOrigin",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The ExaggerationOrigin.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/437e7c46-56e0-befc-27b6-936cd9fdaaca"
+    },
+    {
+      "name": "ExaggerationPosition",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The ExaggerationPosition.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8c0962f4-e94f-4981-9c11-b2e15f4b6717"
+    },
+    {
+      "name": "ExaggerationWidth",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The ExaggerationWidth.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ec10d9f1-a802-15e1-e544-dc675e305888"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

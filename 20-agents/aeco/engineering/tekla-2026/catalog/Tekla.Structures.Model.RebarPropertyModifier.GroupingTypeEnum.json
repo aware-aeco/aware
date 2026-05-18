@@ -1,0 +1,29 @@
+{
+  "name": "RebarPropertyModifier.GroupingTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The grouping type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/c78cea4b-aa31-e9b6-1295-e07dfa3f8679",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "AUTOMATIC",
+      "value": 0,
+      "summary": "Automatic grouping."
+    },
+    {
+      "name": "MANUAL",
+      "value": 1,
+      "summary": "Manual grouping."
+    },
+    {
+      "name": "NO_GROUPING",
+      "value": 2,
+      "summary": "No grouping."
+    }
+  ]
+}

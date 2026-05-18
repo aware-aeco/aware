@@ -1,0 +1,34 @@
+{
+  "name": "PourObjectFilterExpressions.CustomDateTime",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The CustomDateTime class represents a custom DateTime filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/4578c7c3-7396-1584-5b5c-aad04b0baa39",
+  "constructors": [
+    {
+      "name": "PourObjectFilterExpressions.CustomDateTime",
+      "signature": "PourObjectFilterExpressions.CustomDateTime(...)",
+      "summary": "Initializes a new instance of the CustomDateTime class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bac23bbf-ec28-1772-6c8d-89f985bdec83"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

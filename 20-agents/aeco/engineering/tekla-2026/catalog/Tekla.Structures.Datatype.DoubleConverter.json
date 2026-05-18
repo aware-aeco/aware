@@ -1,0 +1,61 @@
+{
+  "name": "DoubleConverter",
+  "namespace": "Tekla.Structures.Datatype",
+  "kind": "class",
+  "summary": "The DoubleConverter class converts types to and from the double datatype.",
+  "base": "System.ComponentModel.TypeConverter",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/30f3a075-d5b1-6d35-de48-d8fa193902db",
+  "constructors": [
+    {
+      "name": "DoubleConverter",
+      "signature": "DoubleConverter(...)",
+      "summary": "Initializes a new instance of the DoubleConverter class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d7d56fa3-5452-79fe-7a16-8f227a63b9f9"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CanConvertFrom",
+      "signature": "CanConvertFrom(...)",
+      "summary": "Checks whether the conversion can be made from the source type to the double datatype.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/74518166-0416-0497-a7a5-288b483a03fc"
+    },
+    {
+      "name": "CanConvertTo",
+      "signature": "CanConvertTo(...)",
+      "summary": "Checks whether the conversion can be made from the double datatype to the destination type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a9a810f2-8ce1-3433-84b9-172a5a4e404f"
+    },
+    {
+      "name": "ConvertFrom",
+      "signature": "ConvertFrom(...)",
+      "summary": "Converts an object from the given culture to the Tekla.Structures.Datatype.Double type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ed867658-ddc3-7673-ad31-67e255099ac7"
+    },
+    {
+      "name": "ConvertTo",
+      "signature": "ConvertTo(...)",
+      "summary": "Converts an object from the double datatype to the given destination type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/53a8a97e-d5a8-0aee-6090-39a9c125dbe7"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

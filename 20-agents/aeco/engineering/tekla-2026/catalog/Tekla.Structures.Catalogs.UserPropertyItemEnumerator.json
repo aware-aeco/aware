@@ -1,0 +1,51 @@
+{
+  "name": "UserPropertyItemEnumerator",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The UserPropertyItemEnumerator class allows to loop through the user property items.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/ac5773e5-b29e-a74e-ed36-163d2f78cdac",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetSize",
+      "signature": "GetSize(...)",
+      "summary": "Returns the total amout of items.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/08edeb18-b3bc-a616-2b85-b3665fb08417"
+    },
+    {
+      "name": "MoveNext",
+      "signature": "MoveNext(...)",
+      "summary": "Moves to the next item in the enumerator.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0b52f390-c822-76f2-82d3-0e016b43c0c9"
+    },
+    {
+      "name": "Reset",
+      "signature": "Reset(...)",
+      "summary": "Resets the enumerator to the beginning.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2f41c308-cf0d-05b7-939b-cc7d38aa8713"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Current",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns a user property item instance of the current element.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4f021f58-ea0f-859e-f63b-7fa70881df42"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

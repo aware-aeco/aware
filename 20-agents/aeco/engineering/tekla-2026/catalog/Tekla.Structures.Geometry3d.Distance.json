@@ -1,0 +1,51 @@
+{
+  "name": "Distance",
+  "namespace": "Tekla.Structures.Geometry3d",
+  "kind": "class",
+  "summary": "The Distance class contains methods for calculating the distance between geometric objects.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/521b8d2d-b375-34c3-3af2-2baa10d02611",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "PointToLine",
+      "signature": "PointToLine(...)",
+      "summary": "Returns the distance between the given point and line.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/11a2eb0e-0732-164f-31c8-c85b56929f4d"
+    },
+    {
+      "name": "PointToLineSegment",
+      "signature": "PointToLineSegment(...)",
+      "summary": "Returns the distance between the given point and line segment.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9e10cbbd-9168-5dcc-391e-c6fc3cfd130b"
+    },
+    {
+      "name": "PointToPlane",
+      "signature": "PointToPlane(...)",
+      "summary": "Returns the distance between the given point and plane.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/95fcd6fe-bccf-7fce-b43e-63613ed787be"
+    },
+    {
+      "name": "PointToPoint",
+      "signature": "PointToPoint(...)",
+      "summary": "Returns the distance between the given two points.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6b98cdad-9a85-b545-9c21-d101f7354eb3"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

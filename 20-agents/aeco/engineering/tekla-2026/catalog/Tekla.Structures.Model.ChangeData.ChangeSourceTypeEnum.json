@@ -1,0 +1,29 @@
+{
+  "name": "ChangeData.ChangeSourceTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The source types of changed event.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/fe62fb09-f708-2f31-f3d4-57c7300fe40e",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "COMMIT",
+      "value": 0,
+      "summary": "Normal commit"
+    },
+    {
+      "name": "UNDO_REDO",
+      "value": 1,
+      "summary": "Undo or redo pressed"
+    },
+    {
+      "name": "ROLLBACK",
+      "value": 2,
+      "summary": "Rollback of database"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "name": "Rotation3D",
+  "namespace": "Tekla.Structures.Model.Geometry",
+  "kind": "class",
+  "summary": "Represents 3d rotation of object.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/18fb56dd-64f5-6410-d628-9b71ef5585aa",
+  "constructors": [
+    {
+      "name": "Rotation3D",
+      "signature": "Rotation3D(...)",
+      "summary": "Initializes a new instance of the Rotation3D class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2f84822e-14e9-3665-0ec8-6addd504371c"
+    },
+    {
+      "name": "Rotation3D",
+      "signature": "Rotation3D(...)",
+      "summary": "Initializes a new instance of the Rotation3D class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/80111e03-1f33-7db7-adae-7c137beb6a74"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "Equals(...)",
+      "summary": "Compares with another rotation.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/979fb96b-2c44-9fc5-e000-56947aa3efa9"
+    },
+    {
+      "name": "FromZRotation",
+      "signature": "FromZRotation(...)",
+      "summary": "Creates Rotation3D which represents rotation around the Z axis.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f5b0d717-aa22-02fa-cefa-41307adec2f5"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AxisX",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the X direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b88261f3-2a89-04ed-ae46-4aa773b4b26b"
+    },
+    {
+      "name": "AxisY",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the Y direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/67d56796-2355-8343-f358-413caa0b6ce4"
+    },
+    {
+      "name": "AxisZ",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the Z direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/32e1fabd-b30f-9ce4-06bc-cddf4b7e6faa"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

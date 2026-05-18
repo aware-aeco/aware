@@ -1,0 +1,44 @@
+{
+  "name": "ReinforcementPulloutElement.EndSymbols",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The shape of the bar ends in the pull-out.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/fd664343-fc64-7eb6-3d15-3d523ee0498b",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NONE",
+      "value": 1,
+      "summary": "Obsolete. No end symbols."
+    },
+    {
+      "name": "None",
+      "value": 1,
+      "summary": "No end symbols."
+    },
+    {
+      "name": "SINGLE",
+      "value": 2,
+      "summary": "Obsolete. A single end symbol arrow."
+    },
+    {
+      "name": "Single",
+      "value": 2,
+      "summary": "A single end symbol arrow."
+    },
+    {
+      "name": "BOTH",
+      "value": 3,
+      "summary": "Obsolete. An arrow to both directions."
+    },
+    {
+      "name": "Both",
+      "value": 3,
+      "summary": "An arrow to both directions."
+    }
+  ]
+}

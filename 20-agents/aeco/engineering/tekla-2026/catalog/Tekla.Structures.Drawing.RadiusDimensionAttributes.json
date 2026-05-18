@@ -1,0 +1,109 @@
+{
+  "name": "RadiusDimensionAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The RadiusDimensionAttributes class contains attributes to manage all the attributes of a straight dimension.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/63e95acf-3561-9d38-0ba6-172ff088e445",
+  "constructors": [
+    {
+      "name": "RadiusDimensionAttributes",
+      "signature": "RadiusDimensionAttributes(...)",
+      "summary": "Creates a new radius dimension attributes instance which loads standard attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a8331c93-129d-b05c-395b-5d65f25274de"
+    },
+    {
+      "name": "RadiusDimensionAttributes",
+      "signature": "RadiusDimensionAttributes(...)",
+      "summary": "Creates a new radius dimension attributes instance that loads the specified attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1fc87aff-29c8-d7a8-e60e-08847c19cc60"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f5601fad-2842-6f5d-6f0e-a2726866153e"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "LoadAttributes(...)",
+      "summary": "Loads attributes from the specified attribute file.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/553f5f0a-be30-616c-aefc-f9e2ec0fbe85"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Arrowhead",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The arrowhead attributes of the dimension.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4c332baa-e78d-9f49-d545-06db80ded057"
+    },
+    {
+      "name": "Color",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The color of the dimension line.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3a7bd26a-cd08-2c1a-acba-2e7f94097b15"
+    },
+    {
+      "name": "Format",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The format attributes of the dimension.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fd6dddef-6baa-38c4-6cdc-7e0160288d45"
+    },
+    {
+      "name": "Placing",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The placing attributes of the dimension.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6ba9881d-4209-effd-6196-617b4cf9ddfe"
+    },
+    {
+      "name": "Text",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The text attributes of the dimension.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4839ad95-c254-dcce-3452-d28af56facd4"
+    },
+    {
+      "name": "TransparentBackground",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The dimension text background transparency. (transparent/opaque)",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bca2692c-a7f6-294b-6193-21843d7a31eb"
+    },
+    {
+      "name": "TrueColor",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The true color (RGB enabled) of the dimension line.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6bbcbdef-4946-63a4-b32f-687678147016"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

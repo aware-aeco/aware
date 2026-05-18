@@ -1,0 +1,34 @@
+{
+  "name": "PolyBeam.PolyBeamTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The polybeam types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/252fe607-40e6-7326-862c-944f6c6e4513",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "BEAM",
+      "value": 0,
+      "summary": "The polybeam."
+    },
+    {
+      "name": "PANEL",
+      "value": 1,
+      "summary": "The panel."
+    },
+    {
+      "name": "STRIP_FOOTING",
+      "value": 2,
+      "summary": "The strip footing."
+    },
+    {
+      "name": "COLUMN",
+      "value": 3,
+      "summary": "The column."
+    }
+  ]
+}

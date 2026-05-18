@@ -1,0 +1,34 @@
+{
+  "name": "ReferenceObjectFilterExpressions.CustomString",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The CustomString class represents a custom string filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/ca51d0b5-6262-c7f1-52df-6975e3618e66",
+  "constructors": [
+    {
+      "name": "ReferenceObjectFilterExpressions.CustomString",
+      "signature": "ReferenceObjectFilterExpressions.CustomString(...)",
+      "summary": "Initializes a new instance of the CustomString class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/dcca5166-e2cf-4e98-b0b6-24e436aa49e5"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

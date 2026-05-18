@@ -1,0 +1,24 @@
+{
+  "name": "CustomPartBase.CustomPartPositioningType",
+  "namespace": "Tekla.Structures.Plugins",
+  "kind": "enum",
+  "summary": "Defines the type of the positioning.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/e219db13-ecfa-4073-4879-1ca003da8543",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "POSITIONING_BY_CENTER_OF_BOUNDING_BOX",
+      "value": 1,
+      "summary": "Positioning happens based on total extrema of objects. Default value. Same as \u0022Use center of the bounding box in positioning\u0022 value on in custom component wizard"
+    },
+    {
+      "name": "POSITIONING_BY_INPUTPOINTS",
+      "value": 2,
+      "summary": "Positioning happens based on input points and extrema of objects. Similar to exact positioning in custom parts Same as \u0022Use center of the bounding box in positioning\u0022 value off in custom component wizard"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "ConstructionObjectFilterExpressions",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The ConstructionObjectFilterExpressions class contains all the construction object filter expressions.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/893d87a7-8bdb-5c7b-e6b4-fa08fc7f0a47",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

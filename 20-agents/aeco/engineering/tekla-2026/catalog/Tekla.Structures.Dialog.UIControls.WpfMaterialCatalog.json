@@ -1,0 +1,95 @@
+{
+  "name": "WpfMaterialCatalog",
+  "namespace": "Tekla.Structures.Dialog.UIControls",
+  "kind": "class",
+  "summary": "The WpfMaterialCatalog class represents a group of controls to select materials using the material catalog.",
+  "base": "System.Windows.Controls.UserControl",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/c5c22ec5-ec18-07be-d0d1-3aa1c2d0abcf",
+  "constructors": [
+    {
+      "name": "WpfMaterialCatalog",
+      "signature": "WpfMaterialCatalog(...)",
+      "summary": "Initiates a new instance of the control.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ed794cf8-d789-3b6e-0569-9c9984fb2025"
+    },
+    {
+      "name": "WpfMaterialCatalog",
+      "signature": "WpfMaterialCatalog(...)",
+      "summary": "Creates a new instance of the MaterialCatalog and will select the material (if available) in the tree.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1bbdb847-dbff-69ba-eb30-c8881146fa90"
+    }
+  ],
+  "methods": [
+    {
+      "name": "InitializeComponent",
+      "signature": "InitializeComponent(...)",
+      "summary": "InitializeComponent",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/67c07c6d-80a2-e507-6eee-eb9f779a7fd0"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ButtonHeight",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets and sets the height of the button control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c22f6fbc-8a54-da40-5ff3-d8cf33f62ab9"
+    },
+    {
+      "name": "ButtonText",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets and sets the text of the button control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/70b4e2a8-8598-41d9-6377-7ad43e11ae2c"
+    },
+    {
+      "name": "ButtonWidth",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets and sets the width of the button control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ede9b762-f515-5026-868f-22dba08744d7"
+    },
+    {
+      "name": "SelectedMaterial",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the selected material in the control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4d4c22a7-b066-ca35-c338-d3ff4e997338"
+    }
+  ],
+  "events": [
+    {
+      "name": "SelectClicked",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler SelectClicked",
+      "summary": "The SelectClicked event is raised when the Select button is clicked.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b297791c-4da5-0bae-5a81-7453e8d1686e",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "SelectionDone",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler SelectionDone",
+      "summary": "The SelectionDone event is raised when the selection has been done.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d68f6463-28a9-f69f-bae4-edccd7ad5a44",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

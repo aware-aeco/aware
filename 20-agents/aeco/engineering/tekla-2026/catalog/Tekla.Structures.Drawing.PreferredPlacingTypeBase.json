@@ -1,0 +1,14 @@
+{
+  "name": "PreferredPlacingTypeBase",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PreferredPlacingTypeBase class is the base class for the preferred placing type. You can set the PreferredPlacingType in the object\u0027s attributes to specify how your object should be placed in the drawing. Please note that not all objects accept all types. If you try to use the wrong type it will not be accepted (Insert, Modify will fail). To use valid types you should use the named defaults (PreferredTextPlacingTypes for Text, PreferredMarkPlacingTypes for Mark, PreferredSymbolPlacingTypes for Symbol).",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/b87c3562-b4be-a343-1589-2b1dd093c416",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

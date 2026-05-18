@@ -1,0 +1,121 @@
+{
+  "name": "ContainerElement",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The ContainerElement class defines container elements. A container element is a mark element that has a frame and contains other mark elements. A container element may also contain container elements to achieve nested frames.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/a922aaee-1a0a-7083-3f39-496dff2e4641",
+  "constructors": [
+    {
+      "name": "ContainerElement",
+      "signature": "ContainerElement(...)",
+      "summary": "Initializes a new instance of the ContainerElement class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b003c6b2-b951-acc2-bb39-d10e5f3381e6"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "Add(...)",
+      "summary": "Adds a new element base to the end of the list.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/01ce5ad6-2d97-4dba-7a04-6459a4476c13"
+    },
+    {
+      "name": "Clear",
+      "signature": "Clear(...)",
+      "summary": "Removes all elements from the container instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3ebf4c11-e7c8-6443-e915-da0b4ce362f8"
+    },
+    {
+      "name": "Clone",
+      "signature": "Clone(...)",
+      "summary": "Clones the object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8c2b52ff-4f86-62b0-0f43-3ea9f9abbc41"
+    },
+    {
+      "name": "CopyTo",
+      "signature": "CopyTo(...)",
+      "summary": "Copies the elements of the ICollection to an Array, starting at a particular Array index.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/25d92102-0435-213f-88b4-75f7e22a74fc"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "GetEnumerator(...)",
+      "summary": "Returns an enumerator that iterates through a collection.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fcecd7e0-80e1-bce3-3c16-0132ee1f7d1e"
+    },
+    {
+      "name": "GetUnformattedString",
+      "signature": "GetUnformattedString(...)",
+      "summary": "Returns the content as a string without formatting.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a7f3aff9-b3d9-5fb4-3044-7937d3719ed7"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/970e9be2-ffcc-8465-8a29-8f5d872deb90"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the number of elements contained in the ICollection.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d18025b5-def0-ff02-fed8-ca8e2de99a59"
+    },
+    {
+      "name": "Frame",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The frame of the container element.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1bf70b7c-d84e-0be5-1e5e-e35af4ccc325"
+    },
+    {
+      "name": "IsSynchronized",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets a value indicating whether access to the ICollection is synchronized (thread safe).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8e2688ca-88bc-80b4-5862-debcbefcf45a"
+    },
+    {
+      "name": "SyncRoot",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets an object that can be used to synchronize access to the ICollection.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5d2c0346-9a80-42b8-256e-865dc9895d9f"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

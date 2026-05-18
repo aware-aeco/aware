@@ -1,0 +1,69 @@
+{
+  "name": "BentPlateGeometrySolver.OperationStatus",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "Define possible statuses for geometry creation/modification commands.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/6e3965fc-cced-c0c2-3025-63df350c92bd",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Success",
+      "value": 0,
+      "summary": "Status on success creation."
+    },
+    {
+      "name": "Failure",
+      "value": 1,
+      "summary": "General failure mode."
+    },
+    {
+      "name": "FacePerpendicularToIntersectionLine",
+      "value": 2,
+      "summary": "Face perpendicular to intersection line."
+    },
+    {
+      "name": "PlateIntersectsWithIntersectionLine",
+      "value": 3,
+      "summary": "Plate polygon extends beyond intersection line."
+    },
+    {
+      "name": "ExtensionIntersectsWithPlate",
+      "value": 4,
+      "summary": "Extension plate clashes with plates."
+    },
+    {
+      "name": "FacesTooNearEachOther",
+      "value": 5,
+      "summary": "Faces to be connected overlap."
+    },
+    {
+      "name": "FacesAtAnObtuseAngle",
+      "value": 6,
+      "summary": "Faces to be connected are too steep of an angle."
+    },
+    {
+      "name": "UndefinedCurveDirection",
+      "value": 7,
+      "summary": "Can\u0027t make inward/outward curve check."
+    },
+    {
+      "name": "UnsupportedChamfer",
+      "value": 8,
+      "summary": "Plates containing unsupported chamfer information."
+    },
+    {
+      "name": "InvalidRadius",
+      "value": 9,
+      "summary": "Cannot connect parts with a cylindrical section having the provided radius."
+    },
+    {
+      "name": "InvalidFacePoints",
+      "value": 10,
+      "summary": "Cannot create geometry from requested face points."
+    }
+  ]
+}

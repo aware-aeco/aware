@@ -1,0 +1,87 @@
+{
+  "name": "IEvents",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "interface",
+  "summary": "Interface for the Events class allows the user to register event listeners for Drawings events. This interface allows the Marshaling of the Events class with Trimble.Remoting",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/9b0213b1-c8bf-7f15-b67f-6cadf5155f2a",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Register",
+      "signature": "Register(...)",
+      "summary": "Registers the instance to listen to the specified events.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a29c697c-fd29-90b1-22a1-186419feb09e"
+    },
+    {
+      "name": "UnRegister",
+      "signature": "UnRegister(...)",
+      "summary": "Unregisters the instance from listening to events.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/33683b4f-4add-0b6d-6743-3adb3e5088ef"
+    }
+  ],
+  "properties": [],
+  "events": [
+    {
+      "name": "DrawingChanged",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler DrawingChanged",
+      "summary": "The DrawingChanged event is raised when the drawing has been changed and the database is committed.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/23af96ae-5aa6-bcc0-fbcf-a9aa902e36b1",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DrawingDeleted",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler DrawingDeleted",
+      "summary": "The DrawingDeleted event is raised when a drawing has been deleted.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ea943c62-cf02-34f0-bbb3-233020f2c45f",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DrawingInserted",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler DrawingInserted",
+      "summary": "The DrawingInserted event is raised when a drawing has been inserted.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/54d4e38c-ded8-dacc-103a-88c89f396649",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DrawingReadyForIssuingChange",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler DrawingReadyForIssuingChange",
+      "summary": "The DrawingReadyForIssuingChange event is raised just after a drawing is marked or unmarked ready for issuing.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c543e1bb-632f-9a9f-ee65-56c2aad7163d",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DrawingStatusChanged",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler DrawingStatusChanged",
+      "summary": "The DrawingStatusChanged event is raised when the drawing status has changed.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/df0a1a2f-1cd2-f22f-077b-573f4fe8992a",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DrawingUpdated",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler DrawingUpdated",
+      "summary": "The DrawingUpdated event is raised when the drawing has been inserted, deleted or modified, and the database is committed.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9dce710b-0dca-4fca-7026-3d03cea42217",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

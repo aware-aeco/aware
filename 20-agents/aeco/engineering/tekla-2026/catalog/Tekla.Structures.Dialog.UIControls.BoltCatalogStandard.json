@@ -1,0 +1,33 @@
+{
+  "name": "BoltCatalogStandard",
+  "namespace": "Tekla.Structures.Dialog.UIControls",
+  "kind": "class",
+  "summary": "The BoltCatalogStandard class represents a control to select the bolt standard using the bolt catalog. Bolt catalog controls always need to be in pairs, meaning in every dialog there has to be a BoltCatalogStandard and a BoltCatalogSize control. The property BoltCatalogStandard.LinkedBoltCatalogSize sets to which BoltCatalogSize the control is linked.",
+  "base": "System.Windows.Forms.ComboBox",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/9ff0b8bf-2f0f-4301-4868-2d8fb0795f68",
+  "constructors": [
+    {
+      "name": "BoltCatalogStandard",
+      "signature": "BoltCatalogStandard(...)",
+      "summary": "Initiates a new instance of the control.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0e29743c-5265-e086-9670-c07198cbd232"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "LinkedBoltCatalogSize",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The BoltCatalogSize control linked to the BoltCatalogStandard control. Bolt catalog controls always need to be in pairs, meaning in every dialog there has to be a BoltCatalogStandard and a BoltCatalogSize control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/65c0b3d9-7782-96ac-5146-7169be0168ab"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

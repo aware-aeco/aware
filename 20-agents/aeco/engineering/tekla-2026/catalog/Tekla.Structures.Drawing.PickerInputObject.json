@@ -1,0 +1,51 @@
+{
+  "name": "PickerInputObject",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PickerInputObject class represents a pick of an object in a view. Used for values asked by UI.Picker.PickObject(string Prompt, out DrawingObject PickedObject, out ViewBase PickedView).",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/7a15973c-357f-775e-2360-55a2ae153fb6",
+  "constructors": [
+    {
+      "name": "PickerInputObject",
+      "signature": "PickerInputObject(...)",
+      "summary": "Creates a new PickerInputObject instance representing the pick of a drawing object in a view.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fa4f30fe-eba4-a177-1247-e5a4cf805015"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/875ad65f-678f-edae-4205-17361f71f304"
+    }
+  ],
+  "properties": [
+    {
+      "name": "PickedObject",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the picked object in the view.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a20b2f43-6e83-71e0-039c-b26a2906a02a"
+    },
+    {
+      "name": "PickedView",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The view within which the pick occurred.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/aecacf99-0f9d-b781-aa92-7e9efb2986c0"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

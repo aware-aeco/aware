@@ -1,0 +1,61 @@
+{
+  "name": "EdgeChamfer.EdgeChamferAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The EdgeChamferAttributes class is the attributes class for the edge chamfer.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/21329c5d-35e7-6835-32de-03df1084b0a0",
+  "constructors": [
+    {
+      "name": "EdgeChamfer.EdgeChamferAttributes",
+      "signature": "EdgeChamfer.EdgeChamferAttributes(...)",
+      "summary": "Creates a new default edge chamfer attributes instance that loads standard attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/94fea28b-edba-700b-6792-d62427dfce2b"
+    },
+    {
+      "name": "EdgeChamfer.EdgeChamferAttributes",
+      "signature": "EdgeChamfer.EdgeChamferAttributes(...)",
+      "summary": "Creates a new edge chamfer attributes instance that loads the specified attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f885c6d4-dfd3-d7d9-1e8e-e1ffeba6791b"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0788720f-031d-788b-92e8-a85d95a2701c"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "LoadAttributes(...)",
+      "summary": "Loads the attributes from the attribute file.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/96a9aab9-8841-803d-8bc5-7c0688350dff"
+    }
+  ],
+  "properties": [
+    {
+      "name": "VisibleLines",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The line type of the chamfer.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bc91e279-8af3-c1e9-dc2d-ca34c7aad605"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

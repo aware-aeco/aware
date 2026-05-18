@@ -1,0 +1,14 @@
+{
+  "name": "Events.UndoClickedDelegate",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "delegate",
+  "summary": "The delegate to use for undo clicked event",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/6fa8018b-5e6b-55b2-489e-1a216a2538e0",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void UndoClickedDelegate()"
+}

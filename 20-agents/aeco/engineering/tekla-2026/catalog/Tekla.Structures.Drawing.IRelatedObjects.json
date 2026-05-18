@@ -1,0 +1,32 @@
+{
+  "name": "IRelatedObjects",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "interface",
+  "summary": "The IRelatedObjects interface is implemented by objects that have related objects.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/418d8ffc-af61-6647-0028-9b76311ea27f",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetRelatedObjects.",
+      "signature": "GetRelatedObjects.(...)",
+      "summary": "Gets the related objects of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/003820ed-f0fb-31db-bd7b-9e29af26c9ea"
+    },
+    {
+      "name": "GetRelatedObjects(.Type.)",
+      "signature": "GetRelatedObjects(.Type.)(...)",
+      "summary": "Gets the related objects of the current object that are of certain types.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/01f07387-e7a7-4074-792a-d94e64785249"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

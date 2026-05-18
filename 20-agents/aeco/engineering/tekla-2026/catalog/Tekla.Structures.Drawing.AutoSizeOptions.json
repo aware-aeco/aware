@@ -1,0 +1,29 @@
+{
+  "name": "AutoSizeOptions",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "Options for controlling how the sheet size is calculated when the SizeDefinitionMode is AutoSize.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/84383201-3a42-4585-f98b-8f150ecfcb89",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CalculatedSizes",
+      "value": 0,
+      "summary": "Use \u0022calculated size\u0022 values of the selected layout in the drawing."
+    },
+    {
+      "name": "FixedSizes",
+      "value": 1,
+      "summary": "Use \u0022fixed size\u0022 values of the selected layout in the drawing."
+    },
+    {
+      "name": "CalculatedAndFixedSizes",
+      "value": 2,
+      "summary": "Use both \u0022fixed size\u0022 and \u0022calculated size\u0022 values of the selected layout in the drawing."
+    }
+  ]
+}

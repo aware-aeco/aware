@@ -1,0 +1,22 @@
+{
+  "name": "IPreferredPlacing",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "interface",
+  "summary": "The IPreferredPlacing interface is for objects that can have different preferred placing types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/31880a9b-0bd9-17f0-de16-102b1edabb0a",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "PreferredPlacing",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The type of placing the object should use. See PreferredPlacingTypes for different types of placing.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/aa493a36-09b7-8289-5827-6b6c031acc65"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,23 @@
+{
+  "name": "IAxisAlignedBoundingBox",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "interface",
+  "summary": "The IAxisAlignedBoundingBox interface is implemented by objects that have an axis aligned bounding box.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/be873f02-ea02-6703-2a50-35389c9b66e4",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetAxisAlignedBoundingBox",
+      "signature": "GetAxisAlignedBoundingBox(...)",
+      "summary": "Gets the bounding box for the current object in the global axis coordinate system.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f330d78c-7cd8-6e65-9af5-3ffae3df133a"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

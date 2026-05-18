@@ -1,0 +1,24 @@
+{
+  "name": "LocExtension",
+  "namespace": "Tekla.Structures.Dialog",
+  "kind": "class",
+  "summary": "Localization binding for strings referred in xaml",
+  "base": "System.Windows.Data.Binding",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/643b6677-1792-f0ac-bcc8-80c759173637",
+  "constructors": [
+    {
+      "name": "LocExtension",
+      "signature": "LocExtension(...)",
+      "summary": "Localization extension for strings referred in xaml",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e130ea3e-554b-aa16-8626-5ff44509abe2"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,14 @@
+{
+  "name": "Events.ModelObjectChangedDelegate",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "delegate",
+  "summary": "The delegate to use for changed model objects. ModelObject inside ChangeData contains only identifier information. If properties need to be checked, Select() for object is required.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/0fb5c5db-fdf7-5bf8-6b41-dad52cb01933",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void ModelObjectChangedDelegate( List\u003CChangeData\u003E Changes )"
+}

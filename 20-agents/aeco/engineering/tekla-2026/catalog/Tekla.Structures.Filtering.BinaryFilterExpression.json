@@ -1,0 +1,70 @@
+{
+  "name": "BinaryFilterExpression",
+  "namespace": "Tekla.Structures.Filtering",
+  "kind": "class",
+  "summary": "The BinaryFilterExpression class represents a binary expression between two filter expressions. This class cannot be inherited.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/10ff0aa1-1cac-1cde-56ea-5239f32794b0",
+  "constructors": [
+    {
+      "name": "BinaryFilterExpression",
+      "signature": "BinaryFilterExpression(...)",
+      "summary": "Initializes a new instance of the BinaryFilterExpression class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1cc0baa9-cacd-302e-fab3-0de3190daf0f"
+    },
+    {
+      "name": "BinaryFilterExpression",
+      "signature": "BinaryFilterExpression(...)",
+      "summary": "Initializes a new instance of the BinaryFilterExpression class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bbb4eaa5-8205-ebec-36d8-db5c873df7cb"
+    },
+    {
+      "name": "BinaryFilterExpression",
+      "signature": "BinaryFilterExpression(...)",
+      "summary": "Initializes a new instance of the BinaryFilterExpression class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f74eaac0-7d11-56bb-b694-c63cc7f05309"
+    },
+    {
+      "name": "BinaryFilterExpression",
+      "signature": "BinaryFilterExpression(...)",
+      "summary": "Initializes a new instance of the BinaryFilterExpression class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/99cef8dc-7b7f-1519-37c9-e474b3ae2417"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fece057a-34f0-fbb1-7184-27f66452ed40"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsEnable",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the enabled state of the filter expression.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a436cbc9-a74e-3b98-1736-723e4f015b27"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,822 @@
+{
+  "name": "BoltArray",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The BoltArray class defines a bolt group with an array shape.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/caa3aee3-d7ae-6c96-bce9-eaab89a1cad5",
+  "constructors": [
+    {
+      "name": "BoltArray",
+      "signature": "BoltArray(...)",
+      "summary": "Creates a new bolt array instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/812f8721-9dbb-3fd7-42a6-7adc2d24a3d5"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddBoltDistX",
+      "signature": "AddBoltDistX(...)",
+      "summary": "Adds an X distance to the bolt array.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d42a61ed-0cfb-094d-c7af-dc55b8a32373"
+    },
+    {
+      "name": "AddBoltDistY",
+      "signature": "AddBoltDistY(...)",
+      "summary": "Adds a Y distance to the bolt array.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/37e5f9a4-7c3e-82df-8d22-afb6a0b45357"
+    },
+    {
+      "name": "AddOtherPartToBolt",
+      "signature": "AddOtherPartToBolt(...)",
+      "summary": "Adds the given part to the list of the other parts that should be bolted.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/342a0099-f3a9-d0f2-c02f-9df1901682e3"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "CompareTo(...)",
+      "summary": "Compares Identifiers of model objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/79cca356-0c8a-e8fb-463a-34ad4141bec7"
+    },
+    {
+      "name": "Delete",
+      "signature": "Delete(...)",
+      "summary": "Deletes the bolt array instance with the given ID from the model database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b879ced4-71d9-beb2-8de2-32ac4a205886"
+    },
+    {
+      "name": "Equals",
+      "signature": "Equals(...)",
+      "summary": "Check if Identifiers of model objects are same.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e4324265-2490-00de-4139-63a8f7acb492"
+    },
+    {
+      "name": "GetAllReportProperties",
+      "signature": "GetAllReportProperties(...)",
+      "summary": "Retrieves all properties for the model object in one hashtable. Type for the returned value must be checked using type casting.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0708f404-ce77-28e1-4ebe-fa906f68bff8"
+    },
+    {
+      "name": "GetAllUserProperties",
+      "signature": "GetAllUserProperties(...)",
+      "summary": "Retrieves all properties for the model object in one hashtable. Type for the returned value must be checked using type casting.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/63b853a0-0af5-af9c-3ce7-05299664d7f8"
+    },
+    {
+      "name": "GetBoltDistX",
+      "signature": "GetBoltDistX(...)",
+      "summary": "Returns the X distance defined by the argument.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/58abe51f-c1aa-2707-0471-28b2320bd300"
+    },
+    {
+      "name": "GetBoltDistXCount",
+      "signature": "GetBoltDistXCount(...)",
+      "summary": "Returns the amount of X distances in the bolt array.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c2895d2f-3620-3d3b-856d-c9ee42ce7e30"
+    },
+    {
+      "name": "GetBoltDistY",
+      "signature": "GetBoltDistY(...)",
+      "summary": "Returns the Y distance defined by the argument.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d64395de-1003-2609-ba02-6276dd0f6aa9"
+    },
+    {
+      "name": "GetBoltDistYCount",
+      "signature": "GetBoltDistYCount(...)",
+      "summary": "Returns the amount of Y distances in the bolt array.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8808662a-0a53-3b51-3df0-6db0b53d9b09"
+    },
+    {
+      "name": "GetChildren",
+      "signature": "GetChildren(...)",
+      "summary": "Returns an enumerator of all the children model objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ce51ec40-310c-6067-a89f-f8d029aab747"
+    },
+    {
+      "name": "GetCoordinateSystem",
+      "signature": "GetCoordinateSystem(...)",
+      "summary": "Returns the coordinate system for the given model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8adfe9cd-f6e5-6474-1297-33c6270a7b0a"
+    },
+    {
+      "name": "GetCustomObjectType",
+      "signature": "GetCustomObjectType(...)",
+      "summary": "Gets custom object type name from an existing object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d3be2ba3-8533-7165-f2d3-a5aa9df556b8"
+    },
+    {
+      "name": "GetDoubleReportProperties",
+      "signature": "GetDoubleReportProperties(...)",
+      "summary": "Retrieves multiple double report properties for the model object. It is faster to fetch multiple properties at once.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f86f6c96-f738-49ca-16ba-f5634e862ba2"
+    },
+    {
+      "name": "GetDoubleUserProperties",
+      "signature": "GetDoubleUserProperties(...)",
+      "summary": "Retrieves all double properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6ead7a63-5f76-0631-d480-d46c27e882aa"
+    },
+    {
+      "name": "GetDynamicStringProperty",
+      "signature": "GetDynamicStringProperty(...)",
+      "summary": "Gets a dynamic string property from the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/415e86d9-7de6-ea53-ce68-20b3e67b8655"
+    },
+    {
+      "name": "GetFatherComponent",
+      "signature": "GetFatherComponent(...)",
+      "summary": "Returns the father component of the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a2c28f3f-52ff-50a8-1b32-10d18db5c31d"
+    },
+    {
+      "name": "GetFatherPour",
+      "signature": "GetFatherPour(...)",
+      "summary": "Returns the pour that the bolt group is associated to.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/47ce2460-d162-281a-9154-da7df10209f3"
+    },
+    {
+      "name": "GetFatherPourUnit",
+      "signature": "GetFatherPourUnit(...)",
+      "summary": "Returns the pour unit that the bolt group is associated to.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9dd833c7-8aaf-a67f-6687-b59b481be994"
+    },
+    {
+      "name": "GetHierarchicObjects",
+      "signature": "GetHierarchicObjects(...)",
+      "summary": "Returns an enumerator of all the connected hierarchic objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/cc228ea0-267b-7d90-7441-c9efc1779b08"
+    },
+    {
+      "name": "GetIntegerReportProperties",
+      "signature": "GetIntegerReportProperties(...)",
+      "summary": "Retrieves multiple integer report properties for the model object. It is faster to fetch multiple properties at once.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2623a9c0-2a9c-e233-9daa-59f92ed51445"
+    },
+    {
+      "name": "GetIntegerUserProperties",
+      "signature": "GetIntegerUserProperties(...)",
+      "summary": "Retrieves all integer properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1b3c6f06-bc25-a54e-2a88-b60dc4a3c85e"
+    },
+    {
+      "name": "GetOtherPartsToBolt",
+      "signature": "GetOtherPartsToBolt(...)",
+      "summary": "Returns an array list containing all the other parts that are bolted.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8c9b1d6d-45d5-0007-b428-104a4945b343"
+    },
+    {
+      "name": "GetPhase",
+      "signature": "GetPhase(...)",
+      "summary": "Retrieves the phase of the model object (the phase number, the phase name, the phase comment and whether the phase is the current one or not).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/310f8b7a-c120-753a-35c9-f7c73a9806c9"
+    },
+    {
+      "name": "GetReportProperty(String, Double.)",
+      "signature": "GetReportProperty(String, Double.)(...)",
+      "summary": "Retrieves a double property of the report for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1c05aa56-5f42-be91-a59e-8d59a5549f45"
+    },
+    {
+      "name": "GetReportProperty(String, Int32.)",
+      "signature": "GetReportProperty(String, Int32.)(...)",
+      "summary": "Retrieves an integer property of the report for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ce8e4ca0-3750-3c9b-5ca8-27e48b45e0bd"
+    },
+    {
+      "name": "GetReportProperty(String, String.)",
+      "signature": "GetReportProperty(String, String.)(...)",
+      "summary": "Retrieves a string property of the report for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/70f212bb-ee70-e9e9-7ab6-d6a9d46f8de6"
+    },
+    {
+      "name": "GetSolid.",
+      "signature": "GetSolid.(...)",
+      "summary": "Method for getting the solid information of the bolt group.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8db794a9-0fab-8338-811d-5a70711839d1"
+    },
+    {
+      "name": "GetSolid(Boolean)",
+      "signature": "GetSolid(Boolean)(...)",
+      "summary": "Method for getting the solid information of the bolt group.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/32e49ef9-ec57-ece5-011e-d4ebcd8afe6b"
+    },
+    {
+      "name": "GetStringReportProperties",
+      "signature": "GetStringReportProperties(...)",
+      "summary": "Retrieves multiple string report properties for the model object. It is faster to fetch multiple properties at once.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5ff72da1-7382-f5d2-eb1d-c99b46239d42"
+    },
+    {
+      "name": "GetStringUserProperties",
+      "signature": "GetStringUserProperties(...)",
+      "summary": "Retrieves all string properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/67120e84-c820-9d52-12ae-c167c595842c"
+    },
+    {
+      "name": "GetUserProperty(String, Double.)",
+      "signature": "GetUserProperty(String, Double.)(...)",
+      "summary": "Retrieves a double property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/17cc8074-7955-32b5-2b4b-b169c45d4ee0"
+    },
+    {
+      "name": "GetUserProperty(String, Int32.)",
+      "signature": "GetUserProperty(String, Int32.)(...)",
+      "summary": "Retrieves an integer property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d9364c1d-5b57-6a31-4c13-01124058cfb2"
+    },
+    {
+      "name": "GetUserProperty(String, String.)",
+      "signature": "GetUserProperty(String, String.)(...)",
+      "summary": "Retrieves a string property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/214a886c-c18c-9b66-d7c9-fe84260962f2"
+    },
+    {
+      "name": "Insert",
+      "signature": "Insert(...)",
+      "summary": "Inserts the bolt array into the model database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/af3ee62e-fab7-9a46-021a-8f4db0204d84"
+    },
+    {
+      "name": "Modify",
+      "signature": "Modify(...)",
+      "summary": "Modifies the existing bolt array in the model database to match the current one. Note, the IDs of Part To Bolt To, Part To Be Bolted and OtherParts cannot be modified.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8e6cf242-f7e0-7d8d-0353-57389423b258"
+    },
+    {
+      "name": "RemoveBoltDistX",
+      "signature": "RemoveBoltDistX(...)",
+      "summary": "Removes an X distance from the bolt array in the index position.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d07f9461-ccef-722c-ad84-624b7f9da45d"
+    },
+    {
+      "name": "RemoveBoltDistY",
+      "signature": "RemoveBoltDistY(...)",
+      "summary": "Removes a Y distance from the bolt array in the index position.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ef298124-c755-5cf7-4c86-f3593737249b"
+    },
+    {
+      "name": "RemoveOtherPartToBolt",
+      "signature": "RemoveOtherPartToBolt(...)",
+      "summary": "Removes the given part from the list of the other bolted parts.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/93b65a83-3e7f-fee6-8392-3d22a1be58d6"
+    },
+    {
+      "name": "Select",
+      "signature": "Select(...)",
+      "summary": "Selects a bolt array from the model database. The ID must be set.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2ecfe059-1043-8dbf-b665-279c8956cbcb"
+    },
+    {
+      "name": "SetBoltDistX",
+      "signature": "SetBoltDistX(...)",
+      "summary": "Sets the X distance at the index defined by the argument.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2d6d155a-2aa6-3bd4-6c42-d27905f314b3"
+    },
+    {
+      "name": "SetBoltDistY",
+      "signature": "SetBoltDistY(...)",
+      "summary": "Sets the Y distance at the index defined by the argument.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5a314c16-c04c-6481-0a78-cf81caa2f2dc"
+    },
+    {
+      "name": "SetCustomObjectType",
+      "signature": "SetCustomObjectType(...)",
+      "summary": "Sets a custom object type name for an existing object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3d6fb91b-48a9-35ca-d498-526514344089"
+    },
+    {
+      "name": "SetDynamicStringProperty",
+      "signature": "SetDynamicStringProperty(...)",
+      "summary": "Sets a dynamic string property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4dab0254-09e5-5e61-c28b-1c12afab71a0"
+    },
+    {
+      "name": "SetLabel",
+      "signature": "SetLabel(...)",
+      "summary": "Sets a label for an object when a new instance is created, this method must be called before Insert. The label is used in plug-ins for identifying the changed object in modification.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3efcfc44-613a-e66b-9ebd-9f86df4f4036"
+    },
+    {
+      "name": "SetPhase",
+      "signature": "SetPhase(...)",
+      "summary": "Sets the phase of the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ed80abcc-0ff7-d081-2229-e651f858a727"
+    },
+    {
+      "name": "SetUserProperties",
+      "signature": "SetUserProperties(...)",
+      "summary": "Sets multiple properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8659da37-d571-f03f-c666-5c9fa3b113f5"
+    },
+    {
+      "name": "SetUserProperty(String, Double)",
+      "signature": "SetUserProperty(String, Double)(...)",
+      "summary": "Sets a double property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5c585b8b-5c2e-7b75-2242-758f17429396"
+    },
+    {
+      "name": "SetUserProperty(String, Int32)",
+      "signature": "SetUserProperty(String, Int32)(...)",
+      "summary": "Sets an integer property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/dd5b828d-3a87-bb58-5ac9-e1c3b4c2fe4b"
+    },
+    {
+      "name": "SetUserProperty(String, String)",
+      "signature": "SetUserProperty(String, String)(...)",
+      "summary": "Sets a string property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/80bf0348-b651-3d4a-862b-49c85bc924ab"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BlindHoleDepth",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the blind hole depth.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/061631e8-856e-37cc-3764-c0decda16cfa"
+    },
+    {
+      "name": "Bolt",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the instance is a bolt or just a hole.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1937f5bd-75ea-c70b-94c8-09942e1f6a77"
+    },
+    {
+      "name": "BoltHolesAttributes",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The bolt holes attributes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a3bdcf49-ce94-8b5e-c493-4767f19b7557"
+    },
+    {
+      "name": "BoltPositions",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the single bolt positions. All the bolt positions are in the XY-plane defined by the bolt group coordinate system. The given positions are in relation to the transformation plane in which the bolt group was selected.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ac9976b0-3978-3991-3223-b8f15f9fb519"
+    },
+    {
+      "name": "BoltSize",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The size of the bolts in the group.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5ba9efd0-90b6-e64a-2786-0ccae11896a6"
+    },
+    {
+      "name": "BoltStandard",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The standard of the bolt group.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b83379cc-c3eb-9bc2-5134-ce2aa1531030"
+    },
+    {
+      "name": "BoltType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The type of the bolt group.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ac7616fb-fc07-f97e-ad19-e83855c0e79c"
+    },
+    {
+      "name": "ConnectAssemblies",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines whether to connect a part or an assembly as a secondary part (false) or as a sub-assembly (true).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e77ffa28-4d00-29e5-3b9d-8b372abf301d"
+    },
+    {
+      "name": "CutLength",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The cut length.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1ea4148a-2a2c-bca5-579b-643fffbe36e2"
+    },
+    {
+      "name": "EndPointOffset",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The end point offset values of the bolt group.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/703a5d24-b2a2-53b3-28d5-102305738e6b"
+    },
+    {
+      "name": "ExtraLength",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The extra length for the bolts.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b88c7d39-9e9e-1148-2c47-3f05917c605d"
+    },
+    {
+      "name": "FirstPosition",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The first position point.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b9d9bfe3-64f8-e5c0-cdff-4518cd1eae77"
+    },
+    {
+      "name": "Hole1",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the hole 1 is used.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f75e47c1-851c-36d2-e7f4-3920cc95a41c"
+    },
+    {
+      "name": "Hole2",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the hole 2 is used.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0e459eb0-7e5b-a072-b06c-2bf924af1d1e"
+    },
+    {
+      "name": "Hole3",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the hole 3 is used.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/715bd704-7940-fcc0-e5c4-a0349c360a26"
+    },
+    {
+      "name": "Hole4",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the hole 4 is used.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1ee7d656-6ec6-79ea-c145-fee4ec89e9c1"
+    },
+    {
+      "name": "Hole5",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the hole 5 is used.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5385be78-4cfb-9ad0-63bf-83a6f7651f6f"
+    },
+    {
+      "name": "HoleType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The special hole type: oversized, slotted, blind or no hole.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8edc6115-32c8-e2ba-ddcf-33f5f66e8ebb"
+    },
+    {
+      "name": "Identifier",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The identifier of the object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3704f321-8e6e-27e4-0752-adfaed74c69f"
+    },
+    {
+      "name": "IsUpToDate",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets if the object does not have a modification which is not shared.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/bc992671-093f-44a9-5eeb-7d289fd00cc5"
+    },
+    {
+      "name": "Length",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The length. An extra variable that is only set when the bolt group is made of studs instead of bolts.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f877ac2c-2f7e-55fb-682e-95c9b8ce8260"
+    },
+    {
+      "name": "ModificationTime",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets latest time of the object was modified or created.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/28d2c3c4-efd2-b4ed-7e2c-93cfb6e3a57f"
+    },
+    {
+      "name": "Nut1",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the nut 1 is used in the assembly.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0e6d8e6e-2089-f748-5c5a-ce97486f01d5"
+    },
+    {
+      "name": "Nut2",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the nut 2 is used in the assembly.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9c42f302-6638-f5a7-eda4-ee4f2706ba0d"
+    },
+    {
+      "name": "OtherPartsToBolt",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The other parts to be bolted (read-only).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6992ccba-e203-3c08-7996-e61ff590cae6"
+    },
+    {
+      "name": "PartToBeBolted",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The part to be bolted.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/67bfe131-327a-6c72-35b8-714406c26a24"
+    },
+    {
+      "name": "PartToBoltTo",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The part to bolt to.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/01b55e9a-0e57-77c8-94cc-109c05233e32"
+    },
+    {
+      "name": "PlainHoleType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the plain hole type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c8343f9a-3f90-9d35-06d7-03c14846322e"
+    },
+    {
+      "name": "Position",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The position attributes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/318b1529-1e5d-bf6e-c48a-f128cd2be3f9"
+    },
+    {
+      "name": "RotateSlots",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the rotation of the slots: odd, even or parallel.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2c04eb69-d5f9-bd8a-8f7f-6664ade32ec1"
+    },
+    {
+      "name": "SecondPosition",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The second position point.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9db4d0d2-8079-25ca-751a-4b01d4dad12f"
+    },
+    {
+      "name": "SlotOffsetX",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the slotted hole offset X.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6abb58a3-4740-6c8d-1fd6-2c1a144e5bfc"
+    },
+    {
+      "name": "SlotOffsetY",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the slotted hole offset Y.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2b66e34d-0229-2750-d918-40f1fae8f15a"
+    },
+    {
+      "name": "SlottedHoleX",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the X allowance of the slotted hole.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7abaf070-c9f8-1c4a-7c73-b35395bea7af"
+    },
+    {
+      "name": "SlottedHoleY",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Y allowance of the slotted hole.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/feecdae5-5009-4d81-4486-4b9768fd016e"
+    },
+    {
+      "name": "StartPointOffset",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The start point offset values of the bolt group.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4846bfcf-c1c0-2877-b93e-59997d603755"
+    },
+    {
+      "name": "ThreadInMaterial",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Whether the thread goes inside the materal or not.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1cc7749d-0c48-d4e4-595f-7cdff09d8253"
+    },
+    {
+      "name": "Tolerance",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The hole tolerance.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/90d0b03c-4724-4dc0-c063-3fc421533c89"
+    },
+    {
+      "name": "Washer1",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the washer 1 is used in the assembly.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a26f3071-4258-9bab-7d9c-b59572d6183e"
+    },
+    {
+      "name": "Washer2",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the washer 2 is used in the assembly.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/a39e3688-554d-eb75-d076-1d25ebea7ee4"
+    },
+    {
+      "name": "Washer3",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the washer 3 is used in the assembly.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/1016885b-753f-2cc7-2b84-42b4cbaf07e2"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

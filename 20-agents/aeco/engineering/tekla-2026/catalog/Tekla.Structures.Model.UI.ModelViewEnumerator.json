@@ -1,0 +1,58 @@
+{
+  "name": "ModelViewEnumerator",
+  "namespace": "Tekla.Structures.Model.UI",
+  "kind": "class",
+  "summary": "The ModelViewEnumerator class is an enumerator class for model views. The enumerator enables model view items to be looped.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/04866e15-0045-c9a0-640a-6e74e32b4816",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "MoveNext",
+      "signature": "MoveNext(...)",
+      "summary": "Moves to the next view in the enumerator.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d8d9f6e5-b4f1-6625-26e7-c1cc98edac57"
+    },
+    {
+      "name": "Reset",
+      "signature": "Reset(...)",
+      "summary": "Resets the enumerator.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f0907ea0-c4f0-ac68-6a87-d3c37260e066"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns the number of views in the enumerator.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6e0f3376-add1-58da-634c-150a7b31e69b"
+    },
+    {
+      "name": "Current",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns the current view.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/e3f88a57-fe99-02e0-36fe-cc5897552e13"
+    },
+    {
+      "name": "CurrentViewId",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the current view identifier.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/adbcf970-958b-0018-fcb7-2f77d4b3be3f"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

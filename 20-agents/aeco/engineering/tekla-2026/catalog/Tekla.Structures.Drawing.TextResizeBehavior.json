@@ -1,0 +1,24 @@
+{
+  "name": "TextResizeBehavior",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "Text resize behavior.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/cbd758f9-0513-bc56-aee5-ac7f8d15558d",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "AllDirections",
+      "value": 0,
+      "summary": "When the text is modified, resizing happens in all directions. In this case, the insertion point will remain the same."
+    },
+    {
+      "name": "BottomRight",
+      "value": 1,
+      "summary": "When the text is modified, resizing happens in bottom and right directions. In this case, the insertion point will be modified."
+    }
+  ]
+}

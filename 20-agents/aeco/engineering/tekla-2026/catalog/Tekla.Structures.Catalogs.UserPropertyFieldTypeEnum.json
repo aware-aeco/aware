@@ -1,0 +1,424 @@
+{
+  "name": "UserPropertyFieldTypeEnum",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "enum",
+  "summary": "The user property field type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/8dd87f1e-3621-dc2e-f515-2d1678ef0e36",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "FIELDTYPE_UNDEFINED",
+      "value": 0,
+      "summary": "The user property field type is undefined."
+    },
+    {
+      "name": "FIELDTYPE_NUMBER",
+      "value": 1,
+      "summary": "The user property field type is number."
+    },
+    {
+      "name": "FIELDTYPE_TEXT",
+      "value": 2,
+      "summary": "The user property field type is text."
+    },
+    {
+      "name": "FIELDTYPE_DISTANCE",
+      "value": 3,
+      "summary": "The user property field type is distance."
+    },
+    {
+      "name": "FIELDTYPE_PROFILE",
+      "value": 4,
+      "summary": "The user property field type is profile."
+    },
+    {
+      "name": "FIELDTYPE_MATERIAL",
+      "value": 5,
+      "summary": "The user property field type is material."
+    },
+    {
+      "name": "FIELDTYPE_TEXT_LIST_DISTANCE",
+      "value": 6,
+      "summary": "The user property field type is distance list."
+    },
+    {
+      "name": "FIELDTYPE_FILE_IN",
+      "value": 7,
+      "summary": "The user property field type is file in."
+    },
+    {
+      "name": "FIELDTYPE_FILE_OUT",
+      "value": 8,
+      "summary": "The user property field type is file out."
+    },
+    {
+      "name": "FIELDTYPE_BOLT_STANDARD",
+      "value": 9,
+      "summary": "The user property field type is bolt standard."
+    },
+    {
+      "name": "FIELDTYPE_BOLT_SIZE",
+      "value": 10,
+      "summary": "The user property field type is bolt size."
+    },
+    {
+      "name": "FIELDTYPE_RATIO",
+      "value": 11,
+      "summary": "The user property field type is ratio."
+    },
+    {
+      "name": "FIELDTYPE_STRAIN",
+      "value": 12,
+      "summary": "The user property field type is strain."
+    },
+    {
+      "name": "FIELDTYPE_ANGLE",
+      "value": 13,
+      "summary": "The user property field type is angle."
+    },
+    {
+      "name": "FIELDTYPE_DEFORMATION",
+      "value": 14,
+      "summary": "The user property field type is deformation."
+    },
+    {
+      "name": "FIELDTYPE_DIMENSION",
+      "value": 15,
+      "summary": "The user property field type is dimension."
+    },
+    {
+      "name": "FIELDTYPE_RADIUSOFINERTIA",
+      "value": 16,
+      "summary": "The user property field type is radius of inertia."
+    },
+    {
+      "name": "FIELDTYPE_AREA",
+      "value": 17,
+      "summary": "The user property field type is area."
+    },
+    {
+      "name": "FIELDTYPE_AREAPERLENGTH",
+      "value": 18,
+      "summary": "The user property field type is area/length."
+    },
+    {
+      "name": "FIELDTYPE_SECTIONMODULUS",
+      "value": 19,
+      "summary": "The user property field type is section modulus."
+    },
+    {
+      "name": "FIELDTYPE_MOMENTOFINERTIA",
+      "value": 20,
+      "summary": "The user property field type is moment of inertia."
+    },
+    {
+      "name": "FIELDTYPE_TORSIONCONSTANT",
+      "value": 21,
+      "summary": "The user property field type is torsion constant."
+    },
+    {
+      "name": "FIELDTYPE_WARPINGCONSTANT",
+      "value": 22,
+      "summary": "The user property field type is warping constant."
+    },
+    {
+      "name": "FIELDTYPE_FORCE",
+      "value": 23,
+      "summary": "The user property field type is force."
+    },
+    {
+      "name": "FIELDTYPE_WEIGHT",
+      "value": 24,
+      "summary": "The user property field type is weight."
+    },
+    {
+      "name": "FIELDTYPE_DISTRIBLOAD",
+      "value": 25,
+      "summary": "The user property field type is distributed load."
+    },
+    {
+      "name": "FIELDTYPE_SPRINGCONSTANT",
+      "value": 26,
+      "summary": "The user property field type is spring constant."
+    },
+    {
+      "name": "FIELDTYPE_SURFACELOAD",
+      "value": 27,
+      "summary": "The user property field type is surface load."
+    },
+    {
+      "name": "FIELDTYPE_STRENGTH",
+      "value": 28,
+      "summary": "The user property field type is strength."
+    },
+    {
+      "name": "FIELDTYPE_MODULUS",
+      "value": 29,
+      "summary": "The user property field type is modulus."
+    },
+    {
+      "name": "FIELDTYPE_DENSITY",
+      "value": 30,
+      "summary": "The user property field type is density."
+    },
+    {
+      "name": "FIELDTYPE_MOMENT",
+      "value": 31,
+      "summary": "The user property field type is moment."
+    },
+    {
+      "name": "FIELDTYPE_DISTRIBMOMENT",
+      "value": 32,
+      "summary": "The user property field type is distributed moment."
+    },
+    {
+      "name": "FIELDTYPE_ROTSPRINGCONST",
+      "value": 33,
+      "summary": "The user property field type is rotational spring constant."
+    },
+    {
+      "name": "FIELDTYPE_TEMPERATURE",
+      "value": 34,
+      "summary": "The user property field type is temperature."
+    },
+    {
+      "name": "FIELDTYPE_THERMDILATCOEFF",
+      "value": 35,
+      "summary": "The user property field type is thermal coefficient."
+    },
+    {
+      "name": "FIELDTYPE_ANALYSIS_RESTRAINT",
+      "value": 36,
+      "summary": "The user property field type is analysis restraint."
+    },
+    {
+      "name": "FIELDTYPE_VOLUME",
+      "value": 37,
+      "summary": "The user property field type is volume."
+    },
+    {
+      "name": "FIELDTYPE_REBAR_MAIN",
+      "value": 38,
+      "summary": "The user property field type is main reinforcement bar."
+    },
+    {
+      "name": "FIELDTYPE_REBAR_STIRRUP",
+      "value": 39,
+      "summary": "The user property field type is stirrup reinforcement bar."
+    },
+    {
+      "name": "FIELDTYPE_DATE",
+      "value": 40,
+      "summary": "The user property field type is date."
+    },
+    {
+      "name": "FIELDTYPE_DATE_TIME_SEC",
+      "value": 41,
+      "summary": "The user property field type is date and time with seconds."
+    },
+    {
+      "name": "FIELDTYPE_DATE_TIME_MIN",
+      "value": 42,
+      "summary": "The user property field type is date and time with minutes."
+    },
+    {
+      "name": "FIELDTYPE_STUD_STANDARD",
+      "value": 43,
+      "summary": "The user property field type is stud standard."
+    },
+    {
+      "name": "FIELDTYPE_STUD_SIZE",
+      "value": 44,
+      "summary": "The user property field type is stud size."
+    },
+    {
+      "name": "FIELDTYPE_STUD_LENGTH",
+      "value": 45,
+      "summary": "The user property field type is stud length."
+    },
+    {
+      "name": "FIELDTYPE_HOLE_TYPE",
+      "value": 46,
+      "summary": "The user property field type is hole type."
+    },
+    {
+      "name": "FIELDTYPE_HOLE_DIRECTION",
+      "value": 47,
+      "summary": "The user property field type is hole direction."
+    },
+    {
+      "name": "FIELDTYPE_WELD_TYPE",
+      "value": 48,
+      "summary": "The user property field type is weld type."
+    },
+    {
+      "name": "FIELDTYPE_CHAMFER_TYPE",
+      "value": 49,
+      "summary": "The user property field type is chamfer type."
+    },
+    {
+      "name": "FIELDTYPE_WELDING_SITE",
+      "value": 50,
+      "summary": "The user property field type is welding site."
+    },
+    {
+      "name": "FIELDTYPE_FACTOR",
+      "value": 51,
+      "summary": "The user property field type is factor."
+    },
+    {
+      "name": "FIELDTYPE_PART_NAME",
+      "value": 52,
+      "summary": "The user property field type is part name."
+    },
+    {
+      "name": "FIELDTYPE_BOLT_TYPE",
+      "value": 53,
+      "summary": "The user property field type is bolt type."
+    },
+    {
+      "name": "FIELDTYPE_COMPONENT_NAME",
+      "value": 54,
+      "summary": "The user property field type is component name."
+    },
+    {
+      "name": "FIELDTYPE_REBAR_MESH",
+      "value": 55,
+      "summary": "The user property field type is rebar mesh."
+    },
+    {
+      "name": "FIELDTYPE_USERDEFINED",
+      "value": 56,
+      "summary": "The user property field type is user defined."
+    },
+    {
+      "name": "FIELDTYPE_YES_NO",
+      "value": 57,
+      "summary": "The user property field type is yes/no."
+    },
+    {
+      "name": "FIELDTYPE_COMPONENT_STANDARD_FILE",
+      "value": 58,
+      "summary": "The user property field type is component standard file."
+    },
+    {
+      "name": "FIELDTYPE_REBAR_GRADE",
+      "value": 59,
+      "summary": "The user property field type is reinforcement bar grade."
+    },
+    {
+      "name": "FIELDTYPE_REBAR_RADIUS",
+      "value": 60,
+      "summary": "The user property field type is reinforcement bar radius."
+    },
+    {
+      "name": "FIELDTYPE_REBAR_SIZE",
+      "value": 61,
+      "summary": "The user property field type is reinforcement bar size."
+    },
+    {
+      "name": "FIELDTYPE_HOOK_SHAPE",
+      "value": 62,
+      "summary": "The user property field type is reinforcement bar hook shape."
+    },
+    {
+      "name": "FIELDTYPE_CROSSBAR_POSITION",
+      "value": 63,
+      "summary": "The user property field type is reinforcement cross bar position."
+    },
+    {
+      "name": "FIELDTYPE_REBAR_SPLIT_TARGET",
+      "value": 64,
+      "summary": "The user property field type is rebar split target."
+    },
+    {
+      "name": "FIELDTYPE_REBAR_STAGGER_TYPE",
+      "value": 65,
+      "summary": "The user property field type is rebar stagger type."
+    },
+    {
+      "name": "FIELDTYPE_REBAR_LAPPING_SIDE",
+      "value": 66,
+      "summary": "The user property field type is rebar lapping side."
+    },
+    {
+      "name": "FIELDTYPE_REBAR_LAPPING_OFFSET_DIRECTION",
+      "value": 67,
+      "summary": "The user property field type is rebar lapping offset direction."
+    },
+    {
+      "name": "FIELDTYPE_REBAR_LAPPING_OFFSET_TYPE",
+      "value": 68,
+      "summary": "The user property field type is rebar lapping offset type."
+    },
+    {
+      "name": "FIELDTYPE_DISTANCE_LIST_TOTAL",
+      "value": 69,
+      "summary": "The user property field type is distance list total."
+    },
+    {
+      "name": "FIELDTYPE_REBAR_LENGTH_ADJUSTMENT_TYPE",
+      "value": 70,
+      "summary": "The user property field type is rebar length adjustment type."
+    },
+    {
+      "name": "FIELDTYPE_SHAPE",
+      "value": 71,
+      "summary": "The user property field type is shape."
+    },
+    {
+      "name": "FIELDTYPE_PLAIN_HOLE_TYPE",
+      "value": 72,
+      "summary": "The user property field type is plain hole type."
+    },
+    {
+      "name": "FIELDTYPE_MASS_FLOW",
+      "value": 73,
+      "summary": "The user property field type is mass flow."
+    },
+    {
+      "name": "FIELDTYPE_VOLUME_FLOW",
+      "value": 74,
+      "summary": "The user property field type is volume flow."
+    },
+    {
+      "name": "FIELDTYPE_HEAT_CAPACITY",
+      "value": 75,
+      "summary": "The user property field type is heat capacity."
+    },
+    {
+      "name": "FIELDTYPE_PRESSURE_LOSS",
+      "value": 76,
+      "summary": "The user property field type is pressure loss."
+    },
+    {
+      "name": "FIELDTYPE_VELOCITY",
+      "value": 77,
+      "summary": "The user property field type is velocity."
+    },
+    {
+      "name": "FIELDTYPE_FLOW_COEFFICIENT",
+      "value": 78,
+      "summary": "The user property field type is flow coefficient."
+    },
+    {
+      "name": "FIELDTYPE_DYNAMIC_VISCOSITY",
+      "value": 79,
+      "summary": "The user property field type is dynamic viscosity."
+    },
+    {
+      "name": "FIELDTYPE_KINEMATIC_VISCOSITY",
+      "value": 80,
+      "summary": "The user property field type is kinematic viscosity."
+    },
+    {
+      "name": "FIELDTYPE_POWER",
+      "value": 81,
+      "summary": "The user property field type is power."
+    }
+  ]
+}

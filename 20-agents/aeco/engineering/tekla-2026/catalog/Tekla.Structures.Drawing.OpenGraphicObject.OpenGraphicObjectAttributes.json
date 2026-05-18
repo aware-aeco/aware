@@ -1,0 +1,50 @@
+{
+  "name": "OpenGraphicObject.OpenGraphicObjectAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The OpenGraphicObjectAttributes class is the attributes class of the open graphic object.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/c5d70471-238f-783d-4b33-c7dcb02251ce",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/da11fa4f-a98d-c770-d0e2-f458bc3b82dc"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "LoadAttributes(...)",
+      "summary": "Loads the attributes from the specified file.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5597a575-45e2-aa83-6576-390f23af3e48"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Arrowhead",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The arrowhead attributes of the open graphic object. The end points of an open graphic object can contain arrowheads.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fc9e61df-70b7-4271-ac40-f00c1772e151"
+    },
+    {
+      "name": "Line",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The line attributes of the graphic object. A graphic object always consists of lines.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/3483367b-c555-6997-e0a4-988358d7ce9b"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

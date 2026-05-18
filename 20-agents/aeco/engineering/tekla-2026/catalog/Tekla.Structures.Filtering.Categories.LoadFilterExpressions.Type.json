@@ -1,0 +1,34 @@
+{
+  "name": "LoadFilterExpressions.Type",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The Type class represents the type filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/c140ae09-0d1b-c2f6-5f36-d454062fabfc",
+  "constructors": [
+    {
+      "name": "LoadFilterExpressions.Type",
+      "signature": "LoadFilterExpressions.Type(...)",
+      "summary": "Initializes a new instance of the Type class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/eb753554-de15-4b42-f56b-a9ec1c5b3991"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

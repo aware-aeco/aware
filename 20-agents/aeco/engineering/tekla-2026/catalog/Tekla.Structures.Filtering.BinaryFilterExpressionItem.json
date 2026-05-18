@@ -1,0 +1,43 @@
+{
+  "name": "BinaryFilterExpressionItem",
+  "namespace": "Tekla.Structures.Filtering",
+  "kind": "class",
+  "summary": "The BinaryFilterExpressionItem class represents a data item in a BinaryFilterExpressionCollection. This class cannot be inherited.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/861f110e-1c4c-1fb8-8cfa-638e399f5425",
+  "constructors": [
+    {
+      "name": "BinaryFilterExpressionItem",
+      "signature": "BinaryFilterExpressionItem(...)",
+      "summary": "Initializes a new instance of the BinaryFilterExpressionItem class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/33977136-4fe5-99d7-524a-34f1f3c888f5"
+    },
+    {
+      "name": "BinaryFilterExpressionItem",
+      "signature": "BinaryFilterExpressionItem(...)",
+      "summary": "Initializes a new instance of the BinaryFilterExpressionItem class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6f652800-3aee-c8b0-a923-98e1160ca964"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fece057a-34f0-fbb1-7184-27f66452ed40"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

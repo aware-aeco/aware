@@ -1,0 +1,34 @@
+{
+  "name": "BaseRebarModifier.BarsAffectedEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The reinforcing bars affected.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/68f81d64-7286-6118-c2e4-f659b15a0c06",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ALL_BARS",
+      "value": 0,
+      "summary": "All reinforcing bars."
+    },
+    {
+      "name": "EVERY_SECOND_BAR",
+      "value": 1,
+      "summary": "Every second reinforcing bar."
+    },
+    {
+      "name": "EVERY_THIRD_BAR",
+      "value": 2,
+      "summary": "Every third reinforcing bar."
+    },
+    {
+      "name": "EVERY_FOURTH_BAR",
+      "value": 3,
+      "summary": "Every fourth reinforcing bar."
+    }
+  ]
+}

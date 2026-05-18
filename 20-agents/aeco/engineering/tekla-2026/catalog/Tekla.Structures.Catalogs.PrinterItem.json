@@ -1,0 +1,65 @@
+{
+  "name": "PrinterItem",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The PrinterItem class contains information about the printers in the Tekla Structures catalog.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/cfcf8cd5-e9f5-e0aa-8773-3f607dba8404",
+  "constructors": [
+    {
+      "name": "PrinterItem",
+      "signature": "PrinterItem(...)",
+      "summary": "Creates a new printer item instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/24fc1bda-8108-dd89-1cda-37ce79311adb"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Device",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The actual printer device used in the printing.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0131abf5-da5a-4464-466d-9fd4fa4c67d3"
+    },
+    {
+      "name": "Extension",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The printer item\u0027s default file extension which is used when printing to a file.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/fa2bb7d8-9b89-d034-8d4d-3741e03dfd04"
+    },
+    {
+      "name": "Name",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The printer item\u0027s name which Tekla Structures uses to fetch all the item\u0027s default properties in the printing process.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c6530968-817a-3de9-2bb0-9fdc1f49bc1c"
+    },
+    {
+      "name": "PrintAreaHeigth",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The printer item\u0027s print area height.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7d2fcecd-c670-ae93-12d9-4fd23775148d"
+    },
+    {
+      "name": "PrintAreaWidth",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The printer item\u0027s print area width.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/47c592fb-5e37-febc-49db-1c93895c8e58"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

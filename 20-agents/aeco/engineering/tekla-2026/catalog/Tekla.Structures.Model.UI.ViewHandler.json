@@ -1,0 +1,151 @@
+{
+  "name": "ViewHandler",
+  "namespace": "Tekla.Structures.Model.UI",
+  "kind": "class",
+  "summary": "The ViewHandler class contains methods for handling views.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/d65d9ef6-7f02-5524-6054-15a0126614e7",
+  "constructors": [
+    {
+      "name": "ViewHandler",
+      "signature": "ViewHandler(...)",
+      "summary": "Initializes a new instance of the ViewHandler class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/d3b3479a-9107-c6d5-0938-f19d21950d50"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetActiveView",
+      "signature": "GetActiveView(...)",
+      "summary": "Get the current active MDI child window view",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0a00b23a-98fd-37b3-9bc3-9616d63a2c47"
+    },
+    {
+      "name": "GetAllViews",
+      "signature": "GetAllViews(...)",
+      "summary": "Fetches all the views from the model.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0caa8a9f-c41c-0d38-fdb4-70d46f656bd9"
+    },
+    {
+      "name": "GetPermanentViews",
+      "signature": "GetPermanentViews(...)",
+      "summary": "Returns the permanent views.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/843d23db-2a34-56d7-abfb-792b5fe57558"
+    },
+    {
+      "name": "GetSelectedViews",
+      "signature": "GetSelectedViews(...)",
+      "summary": "Returns the views the user has selected.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/99f504e2-d095-f9c4-4852-870dd721f35e"
+    },
+    {
+      "name": "GetTemporaryViews",
+      "signature": "GetTemporaryViews(...)",
+      "summary": "Returns the temporary views.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/c33af31d-4e77-1ed5-baac-bb270bd4af2b"
+    },
+    {
+      "name": "GetVisibleViews",
+      "signature": "GetVisibleViews(...)",
+      "summary": "Returns the visible views.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8ea2983b-ed89-6d3f-5fef-f08de2397e6f"
+    },
+    {
+      "name": "HideView",
+      "signature": "HideView(...)",
+      "summary": "Closes a model view.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0f04ff24-f332-4456-c8eb-41f24566efec"
+    },
+    {
+      "name": "RedrawView",
+      "signature": "RedrawView(...)",
+      "summary": "Redraws a model view.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2bf7baba-1ff8-00c3-012d-cb8023362c85"
+    },
+    {
+      "name": "RedrawWorkplane",
+      "signature": "RedrawWorkplane(...)",
+      "summary": "Sets the workplane to current transformation plane and redraws it.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/13a65fe3-f0fc-1cef-233f-48c5c471de84"
+    },
+    {
+      "name": "SetActiveView",
+      "signature": "SetActiveView(...)",
+      "summary": "Set the current active MDI child window view.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/16f16693-48c5-ab07-62f1-49c302fafad1"
+    },
+    {
+      "name": "SetRepresentation",
+      "signature": "SetRepresentation(...)",
+      "summary": "Sets the object representation.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/54ce1cb1-f8e3-4544-7558-fbf7f200fd49"
+    },
+    {
+      "name": "ShowView",
+      "signature": "ShowView(...)",
+      "summary": "Opens a model view.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/ad1a67d1-4535-d9fd-c4ef-6f8855c4e934"
+    },
+    {
+      "name": "ZoomToBoundingBox(AABB)",
+      "signature": "ZoomToBoundingBox(AABB)(...)",
+      "summary": "Zooms the current model view.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/cabd4471-1f0a-285c-b4ed-688a935b7c17"
+    },
+    {
+      "name": "ZoomToBoundingBox(View, AABB)",
+      "signature": "ZoomToBoundingBox(View, AABB)(...)",
+      "summary": "Zooms a model view.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/5554e2b7-1f8f-5b6c-37e3-b7217202a73c"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

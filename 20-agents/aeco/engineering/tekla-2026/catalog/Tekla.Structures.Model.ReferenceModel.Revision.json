@@ -1,0 +1,72 @@
+{
+  "name": "ReferenceModel.Revision",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "struct",
+  "summary": "Reference model revision.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/2d3e9160-2d8e-2de7-7c4c-978d447e3d92",
+  "constructors": [
+    {
+      "name": "ReferenceModel.Revision",
+      "signature": "ReferenceModel.Revision(...)",
+      "summary": "Parameterized constructor.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0f2a1165-c608-1c61-67df-7bf7a9c8ee9b"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "FileName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the revision file name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/f806e361-474e-487e-a649-3c8d48151c7d"
+    },
+    {
+      "name": "Hash",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the revision hash identifier.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/52cf82f9-1a62-3248-631d-8cbd4b6d9ccb"
+    },
+    {
+      "name": "Id",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the revision id.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/4db4418c-8340-eba1-e109-b0569f02ede8"
+    },
+    {
+      "name": "IsCurrentRevision",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the value indicating whether this revision is the current revision or not.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/0c5a03b3-a429-95a2-69c7-5b22686f1417"
+    },
+    {
+      "name": "ReferenceModelId",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the parent reference model id.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/2702447a-a76a-575f-7d73-7de1b5d4d045"
+    },
+    {
+      "name": "Time",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the revision time.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/de4bde21-81bc-1f5a-4a7a-56f0a55f5212"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

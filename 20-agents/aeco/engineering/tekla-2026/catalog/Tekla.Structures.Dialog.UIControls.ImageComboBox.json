@@ -1,0 +1,67 @@
+{
+  "name": "ImageComboBox",
+  "namespace": "Tekla.Structures.Dialog.UIControls",
+  "kind": "class",
+  "summary": "The ImageComboBox class represents a combo box control that can contain images.",
+  "base": "System.Windows.Forms.UserControl",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/47/6a9566df-5ab1-19ad-b407-c587eee6436d",
+  "constructors": [
+    {
+      "name": "ImageComboBox",
+      "signature": "ImageComboBox(...)",
+      "summary": "Initializes a new instance of the ImageComboBox class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/79fb9f29-842e-a891-450a-61afa744dea8"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DefaultValue",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the default value in the image combo box.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/9d24792d-5bc9-d095-7950-1202ae1d9c66"
+    },
+    {
+      "name": "OptionList",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the elements of the option list, the images that are in the image combo box.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/7968a474-939c-93b6-08a9-71dd7957831c"
+    },
+    {
+      "name": "SelectedIndex",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the selected index of the image in the image combo box.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/6f4d0b4b-f6c9-3d4e-6161-1a9af685f0b1"
+    },
+    {
+      "name": "SelectedItem",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the selected image in the image combo box.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/b466c9a8-98d8-e63f-50b6-0fd0cc17d429"
+    }
+  ],
+  "events": [
+    {
+      "name": "ImageCBSelectedIndexChanged",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler ImageCBSelectedIndexChanged",
+      "summary": "The ImageCBSelectedIndexChanged event is triggered just after the selected index has been changed in the image combo box.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/47/8c110efc-be84-b175-0b28-ae8256dd6ed7",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}
