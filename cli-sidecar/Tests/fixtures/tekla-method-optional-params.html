@@ -1,0 +1,42 @@
+<!-- Minimal fixture: a method whose signature has an optional default-valued parameter
+     `int Count = 10`. The Parameters dl carries "(Optional)" on the dt. The parser must
+     mark params[1].optional == true. The default-value "10" is currently captured in the
+     signature string (e.g. "Foo(int Bar, int Count = 10)") rather than ParamInfo.default —
+     that's a known limitation; the test asserts what the parser actually emits today.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div class="topicContent" id="TopicContent">
+  <table class="titleTable">
+    <tr>
+      <td class="logoColumn"></td>
+      <td class="titleColumn">
+        <h1>Sampler<span id="LST00000002_0"></span><script type="text/javascript">AddLanguageSpecificTextSet("LST00000002_0?cs=.|vb=.|cpp=::|nu=.|fs=.");</script>Sample Method </h1>
+      </td>
+    </tr>
+  </table>
+  <div class="summary">Returns up to <c>Count</c> samples drawn from the source.</div>
+  <strong>Namespace:</strong>
+  <a href="/topic/en/18/47/00000000-aaaa-bbbb-cccc-000000000002">Tekla.Structures.Util</a><br>
+  <div class="collapsibleAreaRegion">
+    <span class="collapsibleRegionTitle">Syntax</span>
+  </div>
+  <div id="ID1RBSection" class="collapsibleSection">
+    <div class="codeSnippetContainer">
+      <div class="codeSnippetContainerCodeContainer">
+        <div id="ID0EBCA_code_Div1" class="codeSnippetContainerCode" style="display: block"><pre xml:space="preserve"><span class="keyword">public</span> <span class="identifier">int</span> <span class="identifier">Sample</span>(
+	<span class="identifier">int</span> <span class="parameter">Count</span> = <span class="literal">10</span>
+)</pre></div>
+      </div>
+    </div>
+    <h4 class="subHeading">Parameters</h4>
+    <dl>
+      <dt><span class="parameter">Count</span>&nbsp;(Optional)</dt>
+      <dd>Type: <span class="nolink">System<span id="LST00000002_1"></span><script type="text/javascript">AddLanguageSpecificTextSet("LST00000002_1?cs=.|vb=.|cpp=::|nu=.|fs=.");</script>Int32</span><br>Number of samples to draw. Defaults to 10 when omitted.</dd>
+    </dl>
+    <h4 class="subHeading">Return Value</h4>Type: <span class="nolink">System<span id="LST00000002_2"></span><script type="text/javascript">AddLanguageSpecificTextSet("LST00000002_2?cs=.|vb=.|cpp=::|nu=.|fs=.");</script>Int32</span><br>The number of samples actually drawn.
+  </div>
+</div>
+</body>
+</html>

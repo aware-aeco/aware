@@ -77,6 +77,51 @@ The restart-on-stall wrapper (`cli-sidecar/Ingest/Output/extract-with-restart.ps
 | Exceptions table | `table.exception` with `<tr>` rows of `(type, when)` |
 | Remarks section | `span.collapsibleRegionTitle` text="Remarks" → next `.collapsibleSection` |
 
+## Extraction errors log
+
+If an extraction run produces errors (HTTP failure, parse failure, retry-exhausted), they are appended one per line to a dedicated log file alongside the IR output:
+
+```
+cli-sidecar/Ingest/Output/tekla-2026.0-errors.log
+```
+
+Format (tab-separated, one record per line):
+
+```
+<utc-iso8601>\t<phase>\t<url>\t<exception-message>
+```
+
+Phase values currently emitted:
+
+| phase | meaning |
+|-------|---------|
+| `namespace-fetch` | A namespace landing page fetch failed during Phase 2 type-URL harvest. |
+| `type-page-fetch` | A type page fetch failed during Phase 3 concurrent crawl. |
+| `type-page-retry-final` | After two retries in the sequential post-pass, the type page still wouldn't load. |
+| `member-page-fetch` | A per-member page fetch (with `FetchWithFreshScraper` + 1 retry) finally failed. |
+| `member-page-parse` | The page loaded but `MemberPageParser` threw an unexpected exception. |
+
+The file is **created lazily on the first error**, never pre-created empty. Resumed runs append rather than clobber so the history of throttle events across restarts is preserved. The current 2026 run produced **0 errors** end-to-end (single uninterrupted process), so no log file exists on disk today. A future re-run that hits a fresh CDN throttle will lazily create the file with one line per failure.
+
+## Concurrency tuning
+
+The Tekla extractor uses three tunable constants (`Extractor.cs`):
+
+| constant | Tekla value | rationale |
+|----------|-------------|-----------|
+| `TypePageConcurrency` | 4 | Single shared HttpClient pool; staying conservative on the first ~1320 type pages keeps us comfortably below the throttle threshold. Empirically: 4 in-flight requests completed the type-page pass in ~3 minutes with 0 retries. |
+| `MemberPageConcurrency` | 8 | Per-fetch fresh `HttpScraper` instances (one HttpClient each). 8 is the empirical sweet spot — 4 under-utilises the per-IP request budget, 16 trips the per-CDN throttle at ~1k fetches. At 8 we completed 12,417 fetches in a single uninterrupted run on the tekla-2026 pass. |
+| `SnapshotEvery` | 200 | A 5-6 MB IR write every 200 enrichments costs ~50-100 ms (well under 1% wall-clock overhead at 8-way concurrency). 200 also gives a generous resumability window: a `kill -9` mid-run loses at most ~40 s of work. |
+
+The `extract-with-restart.ps1` wrapper exposes `StallTimeoutSec` (default 240s) which is sized for the Tekla CDN's typical pause-after-throttle window. See the wrapper's header comment for vendor-specific tuning guidance.
+
+**Why these numbers — for B2-B14 implementers:** Tekla's CDN throttles aggressively after ~3k fetches per IP. Concurrency=8 with per-fetch fresh HttpScraper instances empirically stays below the throttle threshold longer than concurrency=16; per-fetch dispose-on-completion also avoids the long-lived-pool progressive-throttling pattern we observed under shared-scraper testing (100 fetches then stall). For B2-B14 vendors:
+
+1. Measure throughput vs throttle-time on a first run (the dedicated errors log makes this easy — each throttle event lands as a `*-fetch` row with a timestamp).
+2. If you see >10 throttle events per 1000 fetches, halve `MemberPageConcurrency` and re-run.
+3. If you see <1 throttle event per 5000 fetches AND fetches are not CPU-bound on the parser, double `MemberPageConcurrency`.
+4. Document the chosen value + the measurement that informed it in the vendor's EXTRACTION-NOTES.md.
+
 ## Parser quirks
 
 - **Language-specific delimiters via inline `<script>`**: Tekla's docs use a pattern like `<span class="nolink">System<span id="LSTAB654CE3_0"></span><script>AddLanguageSpecificTextSet("LSTAB654CE3_0?cs=.|vb=.|cpp=::|nu=.|fs=.");</script>Object</span>`. In a real browser the script substitutes the C# delimiter (`.`) into the empty `<span id="LST...">`. Without JS we synthesize the dot ourselves: when traversing inline text, any element with `id` starting with `LST` is replaced with `.`. This is in `CleanInlineText` / `CleanNoLinkText` in `PageParser.cs`. Without this, every base type would be `SystemObject` (missing dot) and method names containing generics would carry the raw `AddLanguageSpecificTextSet("...")` script text — both of which downstream consumers would have to deal with separately.

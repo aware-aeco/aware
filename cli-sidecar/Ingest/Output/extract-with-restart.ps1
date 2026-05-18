@@ -7,6 +7,23 @@
 # more than StallTimeoutSec seconds without writing a new progress line.
 #
 # Stops once the extractor logs '[tekla-extract] done:' successfully.
+#
+# Tuning notes for B2-B14 implementers:
+#   - StallTimeoutSec = 240 (4 minutes) is calibrated against the Tekla CDN's typical
+#     pause-after-throttle window. Measured against tekla-2025 run (4 restarts needed
+#     to complete 12k member fetches): each throttle event paused 60-180s, comfortably
+#     under the 240s budget. Going lower (e.g. 120s) caused false-positive restarts
+#     during a real throttle pause — wasted work. Going higher (e.g. 600s) burned
+#     wall-clock when the CDN had genuinely killed the connection.
+#   - Other vendors WILL need tuning per-CDN. Symptoms to measure on first run:
+#       - Slow-DOM-rendering vendor pages (rare, but possible for JS-heavy sites
+#         under HttpScraper's pre-rendered HTML capture): may need 360-600s.
+#       - Low-throughput / always-on stalls (vendor genuinely returning slow per-page):
+#         may need 120-180s.
+#       - High-burst vendors that throttle aggressively at the second-of-day boundary:
+#         keep 240s and tune MaxRestarts up to 100+ instead.
+#   - Document the chosen value + reasoning in the vendor's EXTRACTION-NOTES.md
+#     under the "Concurrency tuning" section.
 
 param(
     [Parameter(Mandatory)] [string] $Version,

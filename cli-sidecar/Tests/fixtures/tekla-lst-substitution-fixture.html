@@ -1,0 +1,51 @@
+<!-- Focused fixture for the LST language-specific-text-set substitution path.
+     Each container element exercises ONE LST context — the test asserts the
+     element's CleanInlineText / PageParser-rendered string substitutes the
+     C# variant (.) rather than passing through script junk or rendering
+     nothing.
+
+     Contexts:
+       1. #ctx-between-spans  — LST sits between two non-link spans (the
+          plain "Tekla.Structures" namespace rendering).
+       2. #ctx-inside-link    — LST sits inside an <a> anchor's child list
+          (the "Foo.Bar" rendering inside a See Also link).
+       3. #ctx-inside-typename — LST sits inside a <span class="nolink">
+          that itself contains other children (the deepest path — Walk
+          must recurse into the wrapper span and still substitute).
+     We also expose a topicContent-style host so the test can call
+     PageParser.Parse against the whole document if needed — the type-page
+     parser uses the same Walk routine internally.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<!-- Standalone snippets — the test grabs each by id and calls CleanInlineText through
+     the public MemberPageParser.ParseMethod path on a wrapper document. To keep the
+     surface simple we ship the LST snippets directly inside three sibling divs and
+     query them from the test via the AngleSharp document the parser uses. -->
+<div class="topicContent" id="TopicContent">
+  <table class="titleTable">
+    <tr>
+      <td class="logoColumn"></td>
+      <td class="titleColumn">
+        <h1>LstFixture<span id="LSTFIXTURE_0"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTFIXTURE_0?cs=.|vb=.|cpp=::|nu=.|fs=.");</script>Probe Method </h1>
+      </td>
+    </tr>
+  </table>
+  <!-- Summary string carries all three LST contexts so a single parse pass renders them all. -->
+  <div class="summary"><span id="ctx-between-spans">Tekla<span id="LSTFIXTURE_1"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTFIXTURE_1?cs=.|vb=.|cpp=::|nu=.|fs=.");</script>Structures</span> :: <span id="ctx-inside-link"><a href="/topic/x">Foo<span id="LSTFIXTURE_2"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTFIXTURE_2?cs=.|vb=.|cpp=::|nu=.|fs=.");</script>Bar</a></span> :: <span id="ctx-inside-typename"><span class="nolink">Foo<span id="LSTFIXTURE_3"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTFIXTURE_3?cs=.|vb=.|cpp=::|nu=.|fs=.");</script>BarEnum</span></span>.</div>
+  <strong>Namespace:</strong>
+  <a href="/topic/en/18/47/00000000-aaaa-bbbb-cccc-fixturelst1">Tekla.Structures.Lst</a><br>
+  <div class="collapsibleAreaRegion">
+    <span class="collapsibleRegionTitle">Syntax</span>
+  </div>
+  <div id="ID1RBSection" class="collapsibleSection">
+    <div class="codeSnippetContainer">
+      <div class="codeSnippetContainerCodeContainer">
+        <div id="ID0EBCA_code_Div1" class="codeSnippetContainerCode" style="display: block"><pre xml:space="preserve"><span class="keyword">public</span> <span class="keyword">void</span> <span class="identifier">Probe</span>()</pre></div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

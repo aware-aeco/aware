@@ -1,0 +1,36 @@
+<!-- Minimal fixture: a void-return method page. The parser must produce returns == null
+     because there is no "Return Value" subHeading. Mirrors Tekla's real DOM shape
+     (titleTable + topicContent + collapsibleAreaRegion(Syntax)) without the
+     surrounding chrome we don't read.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div class="topicContent" id="TopicContent">
+  <table class="titleTable">
+    <tr>
+      <td class="logoColumn"></td>
+      <td class="titleColumn">
+        <h1>Model<span id="LST00000001_0"></span><script type="text/javascript">AddLanguageSpecificTextSet("LST00000001_0?cs=.|vb=.|cpp=::|nu=.|fs=.");</script>CommitChanges Method </h1>
+      </td>
+    </tr>
+  </table>
+  <div class="summary">Commits any pending changes in the model.</div>
+  <strong>Namespace:</strong>
+  <a href="/topic/en/18/47/00000000-aaaa-bbbb-cccc-000000000001">Tekla.Structures.Model</a><br>
+  <strong>Assembly:</strong> Tekla.Structures.Model (in Tekla.Structures.Model.dll)
+  <div class="collapsibleAreaRegion">
+    <span class="collapsibleRegionTitle">Syntax</span>
+  </div>
+  <div id="ID1RBSection" class="collapsibleSection">
+    <div class="codeSnippetContainer">
+      <div class="codeSnippetContainerCodeContainer">
+        <div id="ID0EBCA_code_Div1" class="codeSnippetContainerCode" style="display: block"><pre xml:space="preserve"><span class="keyword">public</span> <span class="keyword">void</span> <span class="identifier">CommitChanges</span>()</pre></div>
+      </div>
+    </div>
+  </div>
+  <!-- Intentionally NO "Return Value" subHeading. A void-return method has no such section
+       on Tekla's docs site. ExtractReturnValue must return null. -->
+</div>
+</body>
+</html>

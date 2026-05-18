@@ -62,20 +62,79 @@ public static class Extractor
     };
 
     const string BaseHost = "https://developer.tekla.com";
+    // Type-page concurrency = 4. Empirical: the Tekla CDN throttles aggressively after
+    // ~3k fetches/IP. At the type-page stage we have a single long-lived HttpClient
+    // (per-pool connection re-use), so we stay conservative: 4 in-flight requests keep
+    // the pool warm without tripping the throttle threshold on the first ~1320 type pages.
+    // For B2-B14, vendors should tune this per-CDN behavior — measure type-page
+    // throughput vs throttle-time on a first run and document the chosen value in
+    // EXTRACTION-NOTES.md under the "Concurrency tuning" section.
     const int TypePageConcurrency = 4;
-    // Member-page concurrency. We use 8 here because each fetch instantiates its own
-    // HttpScraper (its own HttpClient + connection pool) — so the long-lived connection
-    // pool that caused "100 fetches then stall" under shared-scraper testing is avoided.
-    // Each request is isolated; the CDN sees 8 short-lived connections instead of a few
-    // long-lived ones that get progressively throttled.
+    // Member-page concurrency = 8. Empirical: with fresh per-fetch HttpScraper instances
+    // (each its own HttpClient + connection pool) the CDN sees uniform short-lived
+    // connections. We measured 8 as the sweet spot — it stays below the throttle
+    // threshold longer than 16 (which trips throttling at ~1k fetches) and is faster
+    // than 4 (which under-utilises the per-IP request budget). 12 of 12417 member pages
+    // on tekla-2026 completed in a single uninterrupted run at this setting.
+    // For B2-B14, vendors should tune this per-CDN behavior — start at 8, halve on
+    // throttle, double on consistent steady-state. Document the chosen value + reasoning
+    // in EXTRACTION-NOTES.md under the "Concurrency tuning" section.
     const int MemberPageConcurrency = 8;
-    // How often to snapshot the IR during the enrich pass. Writing 5-6 MB of JSON every
-    // 200 enrichments costs ~50-100 ms and gives a generous resumability window.
+    // Snapshot every 200 enrichments. Writing 5-6 MB of JSON every 200 enrichments costs
+    // ~50-100 ms and gives a generous resumability window: with 8-way concurrency we burn
+    // through 200 members in 20-40 s, so a kill -9 at any point loses <40 s of work.
+    // For B2-B14, vendors with larger IRs (>50 MB) may need a higher snapshot interval
+    // to keep the write-amplification cost below 1-2% of total wall-clock time.
     const int SnapshotEvery = 200;
 
     enum MemberKind { Constructor, Method, Property, Event }
 
     sealed record MemberWorkItem(int TypeIdx, MemberKind Kind, int MemberIdx, string Url);
+
+    /// <summary>
+    /// Thread-safe append-only writer for the dedicated extraction-errors log
+    /// (`tekla-&lt;version&gt;-errors.log`). Created on first write, never pre-created
+    /// empty. Format: tab-separated UTC ISO-8601 timestamp + phase + url + message,
+    /// one line per error.
+    /// </summary>
+    sealed class ErrorsLog
+    {
+        readonly string? _path;
+        readonly object _lock = new();
+        public ErrorsLog(string? path) { _path = path; }
+
+        public void Append(string phase, string url, string message)
+        {
+            if (string.IsNullOrEmpty(_path)) return;
+            // Strip CR/LF/TAB from the free-text fields so each record is a single line.
+            var safeMsg = (message ?? "").Replace('\t', ' ').Replace('\r', ' ').Replace('\n', ' ');
+            var safeUrl = (url ?? "").Replace('\t', ' ').Replace('\r', ' ').Replace('\n', ' ');
+            var line = $"{DateTime.UtcNow:O}\t{phase}\t{safeUrl}\t{safeMsg}{Environment.NewLine}";
+            lock (_lock)
+            {
+                var dir = Path.GetDirectoryName(_path);
+                if (!string.IsNullOrEmpty(dir)) Directory.CreateDirectory(dir);
+                File.AppendAllText(_path, line);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Derive the errors-log path from the output IR path: replace `.ir.json` with
+    /// `-errors.log`. Returns null when no outPath was provided.
+    /// </summary>
+    static string? DeriveErrorsLogPath(string? outPath)
+    {
+        if (string.IsNullOrEmpty(outPath)) return null;
+        var dir = Path.GetDirectoryName(outPath) ?? "";
+        var fileName = Path.GetFileName(outPath);
+        // outPath is e.g. "tekla-2026.0.ir.json"; we want "tekla-2026.0-errors.log".
+        if (fileName.EndsWith(".ir.json", StringComparison.Ordinal))
+            fileName = fileName[..^".ir.json".Length] + "-errors.log";
+        else
+            fileName += "-errors.log";
+        return Path.Combine(dir, fileName);
+    }
 
     /// <summary>
     /// Backwards-compatible API for callers that don't pass an outPath. They get a fresh
@@ -98,6 +157,12 @@ public static class Extractor
         var rootUrl = $"{BaseHost}/doc/tekla-structures/{v.version}/tekla-structures-{v.rootId}";
         var state = new SnapshotState();
         state.SourceUrls.Add(rootUrl);
+
+        // Dedicated extraction-errors log alongside outPath. Created lazily on first
+        // append so a clean run leaves no on-disk file (matches the 0-errors-so-far
+        // story documented in EXTRACTION-NOTES.md). Errors from prior resumed runs are
+        // APPENDED to so the history of throttle events survives across restarts.
+        var errorsLog = new ErrorsLog(DeriveErrorsLogPath(outPath));
 
         // Try to resume from an existing snapshot.
         List<PageParser.ParseResult>? parsed = TryLoadSnapshot(version, outPath, rootUrl, state);
@@ -130,13 +195,14 @@ public static class Extractor
                 catch (Exception ex)
                 {
                     Console.Error.WriteLine($"[tekla-extract] WARN failed namespace {nsUrl}: {ex.Message}");
+                    errorsLog.Append("namespace-fetch", nsUrl, ex.Message);
                 }
             }
 
             typeUrls = typeUrls.Distinct().ToList();
             Console.Error.WriteLine($"[tekla-extract] total unique type URLs: {typeUrls.Count}");
 
-            parsed = await CrawlTypePages(typeScraper, typeUrls, state);
+            parsed = await CrawlTypePages(typeScraper, typeUrls, state, errorsLog);
 
             // Snapshot after type-page pass so the enrich loop is fully resumable.
             if (outPath is not null) WriteSnapshot(version, state, parsed, outPath);
@@ -147,7 +213,7 @@ public static class Extractor
         }
 
         // Phase 4 — enrich members.
-        var enriched = await EnrichAllMembers(parsed, state, version, outPath);
+        var enriched = await EnrichAllMembers(parsed, state, version, outPath, errorsLog);
 
         // Final IRBuilder assembly.
         var builder = new IRBuilder("tekla", version, "scrape");
@@ -236,7 +302,7 @@ public static class Extractor
     // ── type-page crawl (Parallel.ForEachAsync) ────────────────────────────
 
     static async Task<List<PageParser.ParseResult>> CrawlTypePages(
-        HttpScraper scraper, IReadOnlyList<string> typeUrls, SnapshotState state)
+        HttpScraper scraper, IReadOnlyList<string> typeUrls, SnapshotState state, ErrorsLog errorsLog)
     {
         var parsed = new List<PageParser.ParseResult>();
         var skippedUrls = new List<string>();
@@ -267,6 +333,7 @@ public static class Extractor
             catch (Exception ex)
             {
                 lock (addLock) failedUrls.Add((url, ex.Message));
+                errorsLog.Append("type-page-fetch", url, ex.Message);
             }
         });
 
@@ -304,6 +371,7 @@ public static class Extractor
                 Console.Error.WriteLine($"[tekla-extract] hard type-page failures after retry ({stillFailing.Count}):");
                 foreach (var (u, e) in stillFailing.Take(20)) Console.Error.WriteLine($"  FAIL {u}: {e}");
                 if (stillFailing.Count > 20) Console.Error.WriteLine($"  ... +{stillFailing.Count - 20} more");
+                foreach (var (u, e) in stillFailing) errorsLog.Append("type-page-retry-final", u, e);
             }
         }
 
@@ -312,6 +380,9 @@ public static class Extractor
             Console.Error.WriteLine($"[tekla-extract] skipped non-type pages ({skippedUrls.Count}):");
             foreach (var u in skippedUrls.Take(20)) Console.Error.WriteLine($"  SKIP {u}");
             if (skippedUrls.Count > 20) Console.Error.WriteLine($"  ... +{skippedUrls.Count - 20} more");
+            // Note: skipped-non-type pages are intentional (e.g. method-overload landing pages with
+            // an <h1> ending in "Methods"); they aren't logged as errors. They're filtered before
+            // reaching this point — only counted here for the summary line.
         }
 
         Console.Error.WriteLine($"[tekla-extract] type-page pass done: ok={parsedOk} skip={skippedUrls.Count} fail={failedUrls.Count} of {typeUrls.Count}");
@@ -338,13 +409,20 @@ public static class Extractor
         p.type == "object" && p.getter && p.setter && p.remarks is null;
 
     /// <summary>
-    /// Event placeholder shape.
+    /// Event placeholder shape. Structural check (not signature string equality) so it stays
+    /// robust if the type-page placeholder constructor in PageParser changes its signature
+    /// template — the three field combo (delegate=EventHandler, fires_when=null,
+    /// handler_thread="unknown") only appears together in the placeholder writer at
+    /// PageParser.cs:ExtractEventTable. Real enriched events overwrite delegate to the real
+    /// type name and never leave handler_thread as "unknown".
     /// </summary>
     static bool IsEventPlaceholder(EventInfo e) =>
-        e.@delegate == "EventHandler" && e.signature == $"event EventHandler {e.name}";
+        e.@delegate == "EventHandler"
+        && e.fires_when is null
+        && e.handler_thread == "unknown";
 
     static async Task<List<TypeInfo>> EnrichAllMembers(
-        IReadOnlyList<PageParser.ParseResult> parsed, SnapshotState state, string version, string? outPath)
+        IReadOnlyList<PageParser.ParseResult> parsed, SnapshotState state, string version, string? outPath, ErrorsLog errorsLog)
     {
         // Mutable per-type buffers we overwrite as members are enriched.
         var ctors = parsed.Select(p => p.Type.constructors.ToList()).ToList();
@@ -446,6 +524,7 @@ public static class Extractor
                 {
                     var typeName = parsed[item.TypeIdx].Type.@namespace + "." + parsed[item.TypeIdx].Type.name;
                     lock (errorLock) errors.Add((typeName, item.Url, ex.Message));
+                    errorsLog.Append("member-page-fetch", item.Url, ex.Message);
                     var d = Interlocked.Increment(ref doneCount);
                     if (d % 200 == 0)
                     {
@@ -461,79 +540,64 @@ public static class Extractor
                     switch (item.Kind)
                     {
                         case MemberKind.Constructor:
-                        {
-                            var enrichment = MemberPageParser.ParseMethod(html, isCtor: true);
-                            if (enrichment is null) { Interlocked.Increment(ref parseSkipCount); break; }
-                            lock (slotLock)
-                            {
-                                var row = ctors[item.TypeIdx][item.MemberIdx];
-                                ctors[item.TypeIdx][item.MemberIdx] = row with
+                            EnrichSlot(
+                                ctors[item.TypeIdx], item.MemberIdx, html, slotLock,
+                                parseFn: h => MemberPageParser.ParseMethod(h, isCtor: true),
+                                merge: (row, e) => row with
                                 {
-                                    signature = string.IsNullOrEmpty(enrichment.signature) ? row.signature : enrichment.signature,
-                                    @params = enrichment.@params,
-                                    returns = enrichment.returns,
-                                    throws = enrichment.throws,
-                                    remarks = enrichment.remarks
-                                };
-                            }
+                                    signature = string.IsNullOrEmpty(e.signature) ? row.signature : e.signature,
+                                    @params = e.@params,
+                                    returns = e.returns,
+                                    throws = e.throws,
+                                    remarks = e.remarks
+                                },
+                                onSkip: () => Interlocked.Increment(ref parseSkipCount));
                             break;
-                        }
                         case MemberKind.Method:
-                        {
-                            var enrichment = MemberPageParser.ParseMethod(html, isCtor: false);
-                            if (enrichment is null) { Interlocked.Increment(ref parseSkipCount); break; }
-                            lock (slotLock)
-                            {
-                                var row = methods[item.TypeIdx][item.MemberIdx];
-                                methods[item.TypeIdx][item.MemberIdx] = row with
+                            EnrichSlot(
+                                methods[item.TypeIdx], item.MemberIdx, html, slotLock,
+                                parseFn: h => MemberPageParser.ParseMethod(h, isCtor: false),
+                                merge: (row, e) => row with
                                 {
-                                    signature = string.IsNullOrEmpty(enrichment.signature) ? row.signature : enrichment.signature,
-                                    @params = enrichment.@params,
-                                    returns = enrichment.returns,
-                                    throws = enrichment.throws,
-                                    remarks = enrichment.remarks
-                                };
-                            }
+                                    signature = string.IsNullOrEmpty(e.signature) ? row.signature : e.signature,
+                                    @params = e.@params,
+                                    returns = e.returns,
+                                    throws = e.throws,
+                                    remarks = e.remarks
+                                },
+                                onSkip: () => Interlocked.Increment(ref parseSkipCount));
                             break;
-                        }
                         case MemberKind.Property:
-                        {
-                            var enrichment = MemberPageParser.ParseProperty(html);
-                            if (enrichment is null) { Interlocked.Increment(ref parseSkipCount); break; }
-                            lock (slotLock)
-                            {
-                                var row = properties[item.TypeIdx][item.MemberIdx];
-                                properties[item.TypeIdx][item.MemberIdx] = row with
+                            EnrichSlot(
+                                properties[item.TypeIdx], item.MemberIdx, html, slotLock,
+                                parseFn: MemberPageParser.ParseProperty,
+                                merge: (row, e) => row with
                                 {
-                                    type = enrichment.type,
-                                    getter = enrichment.getter,
-                                    setter = enrichment.setter,
-                                    remarks = enrichment.remarks
-                                };
-                            }
+                                    type = e.type,
+                                    getter = e.getter,
+                                    setter = e.setter,
+                                    remarks = e.remarks
+                                },
+                                onSkip: () => Interlocked.Increment(ref parseSkipCount));
                             break;
-                        }
                         case MemberKind.Event:
-                        {
-                            var enrichment = MemberPageParser.ParseEvent(html);
-                            if (enrichment is null) { Interlocked.Increment(ref parseSkipCount); break; }
-                            lock (slotLock)
-                            {
-                                var row = events[item.TypeIdx][item.MemberIdx];
-                                events[item.TypeIdx][item.MemberIdx] = row with
+                            EnrichSlot(
+                                events[item.TypeIdx], item.MemberIdx, html, slotLock,
+                                parseFn: MemberPageParser.ParseEvent,
+                                merge: (row, e) => row with
                                 {
-                                    @delegate = enrichment.@delegate,
-                                    signature = string.IsNullOrEmpty(enrichment.signature) ? row.signature : enrichment.signature
-                                };
-                            }
+                                    @delegate = e.@delegate,
+                                    signature = string.IsNullOrEmpty(e.signature) ? row.signature : e.signature
+                                },
+                                onSkip: () => Interlocked.Increment(ref parseSkipCount));
                             break;
-                        }
                     }
                 }
                 catch (Exception ex)
                 {
                     var typeName = parsed[item.TypeIdx].Type.@namespace + "." + parsed[item.TypeIdx].Type.name;
                     lock (errorLock) errors.Add((typeName, item.Url, "parse: " + ex.Message));
+                    errorsLog.Append("member-page-parse", item.Url, ex.Message);
                 }
 
                 var donePost = Interlocked.Increment(ref doneCount);
@@ -582,6 +646,29 @@ public static class Extractor
     }
 
     /// <summary>
+    /// Apply a per-member enrichment to slot <paramref name="idx"/> of <paramref name="list"/>:
+    /// run <paramref name="parseFn"/> on the HTML; if it returns null, invoke <paramref name="onSkip"/>;
+    /// otherwise re-build the row via <paramref name="merge"/> under <paramref name="slotLock"/>.
+    /// Pulled out of the per-member switch so the four arms (ctor/method/property/event) share the
+    /// same lock + null-guard scaffolding and differ only in <paramref name="parseFn"/> +
+    /// <paramref name="merge"/>.
+    /// </summary>
+    static void EnrichSlot<TRow, TEnrich>(
+        IList<TRow> list, int idx, string html, object slotLock,
+        Func<string, TEnrich?> parseFn,
+        Func<TRow, TEnrich, TRow> merge,
+        Action onSkip)
+        where TEnrich : class
+    {
+        var enrichment = parseFn(html);
+        if (enrichment is null) { onSkip(); return; }
+        lock (slotLock)
+        {
+            list[idx] = merge(list[idx], enrichment);
+        }
+    }
+
+    /// <summary>
     /// Fetch a single member page using a fresh HttpScraper (and therefore a fresh HttpClient
     /// and connection pool). One retry on transient failure with a 750ms backoff. The
     /// HttpScraper is disposed before the method returns so its TCP connection drops to
@@ -590,6 +677,7 @@ public static class Extractor
     /// </summary>
     static async Task<string> FetchWithFreshScraper(string url)
     {
+        Exception? lastException = null;
         for (int attempt = 1; attempt <= 2; attempt++)
         {
             await using var scraper = await HttpScraper.Launch();
@@ -597,13 +685,22 @@ public static class Extractor
             {
                 return await scraper.FetchHtml(url);
             }
-            catch when (attempt < 2)
+            catch (Exception ex) when (attempt < 2)
             {
+                lastException = ex;
                 await Task.Delay(750);
             }
+            catch (Exception ex)
+            {
+                // Second-iteration failure — surface with the underlying cause attached.
+                throw new InvalidOperationException(
+                    $"FetchWithFreshScraper exhausted retries for {url}", ex);
+            }
         }
-        // Unreachable — the second iteration either returns or throws.
-        throw new InvalidOperationException("unreachable");
+        // Defensive: the second iteration either returns or throws above. If we somehow get
+        // here, surface the last seen exception as the cause rather than losing it.
+        throw new InvalidOperationException(
+            $"FetchWithFreshScraper exhausted retries for {url}", lastException);
     }
 
     // ── namespace URL discovery from the root page sidebar ──────────────────

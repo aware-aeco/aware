@@ -1,0 +1,49 @@
+<!-- Minimal fixture: a method with TWO exception rows in the Exceptions collapsible section.
+     The parser must emit two ThrowsInfo entries, each with a real `when` description.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div class="topicContent" id="TopicContent">
+  <table class="titleTable">
+    <tr>
+      <td class="logoColumn"></td>
+      <td class="titleColumn">
+        <h1>FileWriter<span id="LST00000003_0"></span><script type="text/javascript">AddLanguageSpecificTextSet("LST00000003_0?cs=.|vb=.|cpp=::|nu=.|fs=.");</script>Save Method </h1>
+      </td>
+    </tr>
+  </table>
+  <div class="summary">Saves the buffered content to disk.</div>
+  <strong>Namespace:</strong>
+  <a href="/topic/en/18/47/00000000-aaaa-bbbb-cccc-000000000003">Tekla.Structures.IO</a><br>
+  <div class="collapsibleAreaRegion">
+    <span class="collapsibleRegionTitle">Syntax</span>
+  </div>
+  <div id="ID1RBSection" class="collapsibleSection">
+    <div class="codeSnippetContainer">
+      <div class="codeSnippetContainerCodeContainer">
+        <div id="ID0EBCA_code_Div1" class="codeSnippetContainerCode" style="display: block"><pre xml:space="preserve"><span class="keyword">public</span> <span class="keyword">void</span> <span class="identifier">Save</span>()</pre></div>
+      </div>
+    </div>
+  </div>
+  <div class="collapsibleAreaRegion">
+    <span class="collapsibleRegionTitle">Exceptions</span>
+  </div>
+  <div id="ID2RBSection" class="collapsibleSection">
+    <div class="tableSection">
+      <table>
+        <tr><th>Exception</th><th>Condition</th></tr>
+        <tr>
+          <td><a href="/topic/en/18/47/exc1">IOException</a></td>
+          <td>Thrown if the underlying stream cannot be flushed.</td>
+        </tr>
+        <tr>
+          <td><a href="/topic/en/18/47/exc2">UnauthorizedAccessException</a></td>
+          <td>Thrown if the caller lacks write permission on the target path.</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+</html>

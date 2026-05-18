@@ -57,6 +57,10 @@ namespace AwareSidecar.Ingest;
 // fallback at runtime.
 [JsonSerializable(typeof(int))]
 [JsonSerializable(typeof(string))]
-public partial class IrJsonContext : JsonSerializerContext
+// Visibility: `internal` — IrJsonContext is consumed only from within the cli-sidecar
+// assembly (Extractor.cs, Program.cs, IRReader.cs, CatalogWriter.cs, PageParser.cs).
+// No external assembly needs its JsonTypeInfo metadata. Matches SidecarJsonContext's
+// `internal partial class` visibility.
+internal partial class IrJsonContext : JsonSerializerContext
 {
 }
