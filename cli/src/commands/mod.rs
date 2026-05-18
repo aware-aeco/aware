@@ -13,6 +13,8 @@ pub mod doctor;
 pub mod plugins;
 pub mod report;
 pub mod search;
+pub mod key;
+pub mod receipt_cli;
 pub mod skill;
 pub mod tree;
 pub mod voice;

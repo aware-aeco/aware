@@ -11,6 +11,7 @@ mod app_lock;
 mod auth;
 mod builder;
 mod commands;
+mod receipt;
 mod context;
 mod envelope;
 mod error;
@@ -114,6 +115,18 @@ enum Command {
         #[command(subcommand)]
         action: commands::voice::VoiceCommand,
     },
+
+    /// Manage ed25519 signing keys for receipts (v0.27).
+    Key {
+        #[command(subcommand)]
+        action: commands::key::KeyCommand,
+    },
+
+    /// Inspect / verify signed JSONL receipts (v0.27).
+    Receipt {
+        #[command(subcommand)]
+        action: commands::receipt_cli::ReceiptCommand,
+    },
 }
 
 #[tokio::main]
@@ -146,6 +159,8 @@ async fn main() -> anyhow::Result<()> {
         Command::Search(args) => commands::search::run(&ctx, &args),
         Command::Report { action } => commands::report::dispatch(action, &ctx),
         Command::Voice { action } => commands::voice::dispatch(action, &ctx),
+        Command::Key { action } => commands::key::dispatch(action, &ctx),
+        Command::Receipt { action } => commands::receipt_cli::dispatch(action, &ctx),
     };
 
     match result {
