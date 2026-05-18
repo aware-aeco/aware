@@ -240,7 +240,8 @@ fn to_local_agent(s: SidecarAgent, source_kind: &str) -> GeneratedAgent {
     };
     GeneratedAgent {
         id: s.id,
-        version: s.version,
+        version: "0.1.0".into(),
+        sdk_target: Some(s.version),
         description: s.description,
         commands,
         skills,

@@ -1,5 +1,6 @@
 agent:        procore
-version:      3.0.0
+version:      0.1.0
+sdk-target:   3.0.0
 display-name: Procore (architect side)
 description: |
   Drawings + Submittals + RFIs + ASIs against the Procore platform. Wraps

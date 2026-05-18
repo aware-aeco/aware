@@ -86,7 +86,8 @@ pub fn build_from_url_or_path(
 
     Ok(GeneratedAgent {
         id,
-        version,
+        version: "0.1.0".into(),
+        sdk_target: Some(version),
         description,
         commands,
         skills: Vec::new(),

@@ -1,5 +1,6 @@
 agent:        revit-2026
-version:      2026.0.0.9999
+version:      0.1.0
+sdk-target:   2026.0.0.9999
 display-name: Autodesk Revit 2026 (raw)
 description: |
   Auto-generated agent from `Autodesk.Revit.SDK@2026.0.0.9999` on NuGet

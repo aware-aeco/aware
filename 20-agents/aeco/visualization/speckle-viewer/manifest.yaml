@@ -1,5 +1,6 @@
 agent:        speckle-viewer
-version:      2.28.0
+version:      0.1.0
+sdk-target:   2.28.0
 display-name: Speckle Viewer (raw)
 description: |
   Auto-generated agent from `@speckle/viewer@2.28.0` on npm via

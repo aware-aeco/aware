@@ -1,5 +1,5 @@
 agent:        enscape-prep
-version:      1.0.0
+version:      0.1.0
 display-name: Enscape Prep
 description: |
   Honest agent — Enscape (Chaos) has no publicly scriptable API. This

@@ -1,5 +1,6 @@
 agent:        tekla
-version:      2025.0.1
+version:      0.1.0
+sdk-target:   2025.0
 display-name: Tekla Structures
 description: |
   Watches the active Tekla model, reads its state, and writes back via the

@@ -1,5 +1,6 @@
 agent:        nbs-chorus
-version:      4.0.0
+version:      0.1.0
+sdk-target:   4.0.0
 display-name: NBS Chorus
 description: |
   Cloud-based specification authoring (UK + global). Wraps the NBS

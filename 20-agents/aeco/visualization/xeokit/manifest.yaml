@@ -1,5 +1,6 @@
 agent:        xeokit
-version:      2.6.109
+version:      0.1.0
+sdk-target:   2.6.109
 display-name: xeokit SDK (BIM/IFC web viewer)
 description: |
   Auto-generated agent from `@xeokit/xeokit-sdk@2.6.109` on npm via

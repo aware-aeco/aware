@@ -1,5 +1,6 @@
 agent:        bluebeam-studio
-version:      1.0.0
+version:      0.1.0
+sdk-target:   1.0.0
 display-name: Bluebeam Revu Studio
 description: |
   PDF mark-up + Studio Session collaboration for AECO. Wraps the

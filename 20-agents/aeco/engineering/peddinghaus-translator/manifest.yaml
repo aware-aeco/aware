@@ -1,5 +1,5 @@
 agent:        peddinghaus-translator
-version:      1.0.0
+version:      0.1.0
 display-name: Peddinghaus Translator (DSTV ↔ Peddimat)
 description: |
   File-format agent: convert between DSTV `.nc1` (the industry-standard

@@ -67,6 +67,7 @@ pub fn build_from_python(
     Ok(GeneratedAgent {
         id,
         version: "0.1.0".into(),
+        sdk_target: None,
         description: format!("Python module wrapper: {module}"),
         commands,
         skills: Vec::new(),

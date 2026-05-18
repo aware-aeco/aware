@@ -1,5 +1,6 @@
 agent:        google-workspace
-version:      1.0.0
+version:      0.1.0
+sdk-target:   1.0.0
 display-name: Google Workspace
 description: |
   Read and write across Google Drive, Sheets, Calendar, and Gmail. Auto-generated

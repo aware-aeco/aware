@@ -1,5 +1,5 @@
 agent:        html-report
-version:      1.0.0
+version:      0.1.0
 display-name: HTML Report
 description: |
   Utility agent for generating self-contained HTML reports — single-file

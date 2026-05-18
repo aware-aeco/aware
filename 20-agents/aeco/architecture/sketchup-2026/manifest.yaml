@@ -1,5 +1,6 @@
 agent:        sketchup-2026
-version:      2026.0.0
+version:      0.1.0
+sdk-target:   2026.0.0
 display-name: SketchUp 2026 Ruby API (raw)
 description: |
   Auto-generated agent from the SketchUp 2026 Ruby API YARD docs

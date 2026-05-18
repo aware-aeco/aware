@@ -1,5 +1,6 @@
 agent:        slack
-version:      1.7.0
+version:      0.1.0
+sdk-target:   1.7.0
 display-name: Slack Web API (raw)
 description: |
   Auto-generated agent from Slack's public OpenAPI specification

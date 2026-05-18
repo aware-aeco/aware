@@ -1,5 +1,5 @@
 agent:        ifc-inspector
-version:      1.0.0
+version:      0.1.0
 display-name: IFC Inspector (web-ifc parser)
 description: |
   Headless IFC analysis — entity counts, GUID lists, Psets extraction,

@@ -1,5 +1,6 @@
 agent:        acc-docs
-version:      1.0.0
+version:      0.1.0
+sdk-target:   1.0.0
 display-name: Autodesk Construction Cloud — Docs
 description: |
   The files side of ACC — sheets, files, folders, version control,

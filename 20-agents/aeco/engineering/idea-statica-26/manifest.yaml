@@ -1,5 +1,6 @@
 agent:        idea-statica-26
-version:      26.0.1.2450
+version:      0.1.0
+sdk-target:   26.0.1.2450
 display-name: IDEA StatiCa 26 (raw — OpenModel)
 description: |
   Auto-generated agent from `IdeaStatiCa.OpenModel@26.0.1.2450` on

@@ -1,5 +1,6 @@
 agent:        dynamo-4-1-0
-version:      4.1.0.4845
+version:      0.1.0
+sdk-target:   4.1.0.4845
 display-name: Dynamo Core 4.1.0 (raw)
 description: |
   Auto-generated agent from `DynamoVisualProgramming.Core@4.1.0.4845`

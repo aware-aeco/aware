@@ -1,5 +1,6 @@
 agent:        sketchup-2025
-version:      2025.0.3
+version:      0.1.0
+sdk-target:   2025.0.3
 display-name: SketchUp 2025 Ruby API (raw)
 description: |
   Auto-generated agent from the SketchUp 2025 Ruby API YARD docs

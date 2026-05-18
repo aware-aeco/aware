@@ -1,5 +1,6 @@
 agent:        rhino-8
-version:      8.31.26126.13431
+version:      0.1.0
+sdk-target:   8.31.26126.13431
 display-name: Rhino 8 (raw)
 description: |
   Auto-generated agent from `RhinoCommon@8.31.26126.13431` on NuGet

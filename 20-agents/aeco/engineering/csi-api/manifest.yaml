@@ -1,5 +1,6 @@
 agent:        csi-api
-version:      2.12.0
+version:      0.1.0
+sdk-target:   2.12.0
 display-name: CSi API (SAP2000 / ETABS / SAFE / CSiBridge — raw)
 description: |
   Auto-generated agent from `CSiAPIv1-All@2.12.0` on NuGet via

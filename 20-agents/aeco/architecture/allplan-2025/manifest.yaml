@@ -1,5 +1,6 @@
 agent:        allplan-2025
-version:      2025.0.0.15
+version:      0.1.0
+sdk-target:   2025.0.0.15
 display-name: Allplan 2025 (raw)
 description: |
   Auto-generated agent from `Allplan.BIF.Core@2025.0.0.15` on NuGet

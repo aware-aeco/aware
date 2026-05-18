@@ -1,5 +1,6 @@
 agent:        archicad-28
-version:      28.0.0
+version:      0.1.0
+sdk-target:   28.0.0
 display-name: Graphisoft ArchiCAD 28
 description: |
   Architectural authoring on the Nemetschek / Graphisoft side. Drives

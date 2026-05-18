@@ -1,5 +1,6 @@
 agent:        microsoft-365
-version:      1.0.0
+version:      0.1.0
+sdk-target:   1.0.0
 display-name: Microsoft 365 (Graph API)
 description: |
   Read and write across the Microsoft 365 surface — OneDrive, SharePoint,

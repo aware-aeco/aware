@@ -102,6 +102,7 @@ pub fn build_from_url_or_dir(
     Ok(GeneratedAgent {
         id,
         version: "0.1.0".into(),
+        sdk_target: None,
         description: format!(
             "Generated from YARD docs at {input} ({} classes, {} methods)",
             class_paths.len(),

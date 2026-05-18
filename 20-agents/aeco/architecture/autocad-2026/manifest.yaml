@@ -1,5 +1,6 @@
 agent:        autocad-2026
-version:      26.0.0
+version:      0.1.0
+sdk-target:   26.0.0
 display-name: AutoCAD 2026 (raw)
 description: |
   Auto-generated agent from `AutoCAD.NET@26.0.0` on NuGet via

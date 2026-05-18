@@ -1,5 +1,6 @@
 agent:        grasshopper-7
-version:      7.38.24338.17001
+version:      0.1.0
+sdk-target:   7.38.24338.17001
 display-name: Grasshopper 7 (raw)
 description: |
   Auto-generated agent from `Grasshopper@7.38.24338.17001` on NuGet

@@ -1,5 +1,6 @@
 agent:        solibri
-version:      9.13.0
+version:      0.1.0
+sdk-target:   9.13.0
 display-name: Solibri Office
 description: |
   Rule-based IFC model checking — the credible BEP-enforcement and
