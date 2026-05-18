@@ -5,13 +5,9 @@
 // the agent metadata fields required by the manifest (id / vendor / vertical).
 // Outputs: <out>/manifest.yaml, <out>/skills/*.md, <out>/catalog/*.json.
 //
-// AOT note: this calls IRReader and CatalogWriter which both use reflection-
-// based System.Text.Json. The annotations propagate up to callers (Program.cs
-// dispatches with the same warning codes suppressed at the project level).
-// The Generator itself is pure orchestration — no JSON serialization happens
-// here, but the call graph requires the attributes anyway.
-
-using System.Diagnostics.CodeAnalysis;
+// AOT: IRReader and CatalogWriter both use the source-generated IrJsonContext,
+// so this orchestration is fully NativeAOT-clean — no trim or AOT warnings
+// propagate out of the JSON path.
 
 namespace AwareSidecar.Ingest;
 
@@ -30,8 +26,6 @@ public sealed record GenerateResult(
 
 public static class Generator
 {
-    [RequiresUnreferencedCode("Calls IRReader/CatalogWriter which use reflection-based JSON.")]
-    [RequiresDynamicCode("Calls IRReader/CatalogWriter which may construct generic types at runtime.")]
     public static GenerateResult Generate(GenerateRequest req)
     {
         var ir = IRReader.ReadFromFile(req.IrPath);

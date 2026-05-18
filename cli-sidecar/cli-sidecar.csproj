@@ -28,18 +28,7 @@
       IL2050: LoadTypeLibEx P/Invoke declares an out ITypeLib COM interface parameter. ITypeLib
       is BCL-defined and will not be trimmed. COM ref is managed manually via Marshal.ReleaseComObject.
     -->
-    <!--
-      IL3050: AwareSidecar.Ingest.Generator.Generate (and IRReader / CatalogWriter beneath it)
-      use reflection-based System.Text.Json (Deserialize<T> / Serialize(object)) over the
-      coverage IR model graph. These call sites are reachable from the NativeAOT entry point
-      via the `coverage-generate` op. The reflection paths work at runtime because the IR
-      models are concrete records and JSON only touches public properties — the trimmer
-      cannot prove this statically, hence the warning. We accept it project-wide; if any
-      catalog type ever gets serialised wrong at runtime, the failure will surface in the
-      smoke test rather than via IL3050. A future task can replace these with source-
-      generated JsonSerializerContext entries for the IR models if AOT cleanliness matters.
-    -->
-    <NoWarn>$(NoWarn);IL2026;IL2050;IL2104;IL3050;IL3053</NoWarn>
+    <NoWarn>$(NoWarn);IL2026;IL2050;IL2104;IL3053</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

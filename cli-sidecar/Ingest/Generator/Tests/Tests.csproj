@@ -31,6 +31,7 @@
     -->
     <Compile Include="..\Models.cs" Link="Models.cs" />
     <Compile Include="..\IRReader.cs" Link="IRReader.cs" />
+    <Compile Include="..\IrJsonContext.cs" Link="IrJsonContext.cs" />
     <Compile Include="..\ManifestWriter.cs" Link="ManifestWriter.cs" />
     <Compile Include="..\SkillWriter.cs" Link="SkillWriter.cs" />
     <Compile Include="..\CatalogWriter.cs" Link="CatalogWriter.cs" />
