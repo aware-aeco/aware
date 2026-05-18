@@ -9,9 +9,20 @@
   "methods": [
     {
       "name": "MoveObjectRelative",
-      "signature": "MoveObjectRelative(...)",
+      "signature": "bool MoveObjectRelative(Vector MoveVector)",
       "summary": "Moves the current object using the move vector. The move vector can be calculated as in the following example.",
-      "params": [],
+      "params": [
+        {
+          "name": "MoveVector",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The move vector to be used for moving the object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/36bb86bc-dd7e-cfd1-9918-1d6962524d59"

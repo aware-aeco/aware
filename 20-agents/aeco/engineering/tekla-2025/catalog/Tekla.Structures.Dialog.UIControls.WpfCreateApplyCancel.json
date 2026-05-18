@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "WpfCreateApplyCancel",
-      "signature": "WpfCreateApplyCancel(...)",
+      "signature": "public WpfCreateApplyCancel()",
       "summary": "Constructor",
       "params": [],
       "throws": [],
@@ -20,7 +20,7 @@
   "methods": [
     {
       "name": "InitializeComponent",
-      "signature": "InitializeComponent(...)",
+      "signature": "public void InitializeComponent()",
       "summary": "InitializeComponent",
       "params": [],
       "throws": [],
@@ -32,8 +32,8 @@
   "events": [
     {
       "name": "ApplyClicked",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler ApplyClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler ApplyClicked",
       "summary": "The ApplyClicked event is raised when the Apply button is clicked.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/24f1d8e1-5a32-e9ec-07d2-9dc360ea58ca",
       "handler_thread": "unknown",
@@ -41,8 +41,8 @@
     },
     {
       "name": "CancelClicked",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler CancelClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler CancelClicked",
       "summary": "The CancelClicked event is raised when the Cancel button is clicked.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9abb1f10-36ab-1264-baa4-90806a29a4df",
       "handler_thread": "unknown",
@@ -50,8 +50,8 @@
     },
     {
       "name": "CreateClicked",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler CreateClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler CreateClicked",
       "summary": "The ApplyClicked event is raised when the Apply button is clicked.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/18a7e64a-9cd0-cd4c-c429-ccade298c1e8",
       "handler_thread": "unknown",

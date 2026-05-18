@@ -8,9 +8,16 @@
   "constructors": [
     {
       "name": "Boolean",
-      "signature": "Boolean(...)",
+      "signature": "public Boolean(bool boolValue)",
       "summary": "Initializes a new instance of the structure.",
-      "params": [],
+      "params": [
+        {
+          "name": "boolValue",
+          "type": "System.Boolean",
+          "doc": "The boolean value.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5efcccb3-448c-63b9-18ca-094432c9e6fd"
@@ -20,7 +27,7 @@
   "properties": [
     {
       "name": "Value",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the boolean value.",

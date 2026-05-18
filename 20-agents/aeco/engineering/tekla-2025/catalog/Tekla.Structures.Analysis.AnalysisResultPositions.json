@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisResultPositions",
-      "signature": "AnalysisResultPositions(...)",
+      "signature": "public AnalysisResultPositions()",
       "summary": "Creates a new analysis result positions instance.",
       "params": [],
       "throws": [],
@@ -20,9 +20,13 @@
   "methods": [
     {
       "name": "GetResultPositions",
-      "signature": "GetResultPositions(...)",
+      "signature": "public bool GetResultPositions()",
       "summary": "Gets the analysis result positions.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successfully got the analysis result positions."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/0e17cde9-3d30-1d38-2cdb-11721904ffcf"
@@ -31,47 +35,47 @@
   "properties": [
     {
       "name": "aPositions",
-      "type": "object",
+      "type": "ArrayList",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The position types.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d615cc50-47cd-b18a-e581-241ce5e948fe"
     },
     {
       "name": "aPositionsX",
-      "type": "object",
+      "type": "ArrayList",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The X coordinates of the positions.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/611a60e8-31fa-c39f-6cbb-3b1e2cf13f0c"
     },
     {
       "name": "aPositionsY",
-      "type": "object",
+      "type": "ArrayList",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The Y coordinates of the positions.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c005886f-15a7-7aa2-6c3b-0c09dfbd9147"
     },
     {
       "name": "aPositionsZ",
-      "type": "object",
+      "type": "ArrayList",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The Z coordinates of the positions.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/abd4b964-9f6d-7815-6e3a-6fb987325e72"
     },
     {
       "name": "nPositions",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The number of returned positions.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/220bcd7e-d8bc-c37c-a85a-06408f538019"
     },
     {
       "name": "ObjectId",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The identifier of the object.",
@@ -79,7 +83,7 @@
     },
     {
       "name": "ObjectType",
-      "type": "object",
+      "type": "AnalysisResult.ObjectTypeEnum",
       "getter": true,
       "setter": true,
       "summary": "The object type. In result query the only supported type is the physical member (the part).",

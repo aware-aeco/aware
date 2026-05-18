@@ -9,28 +9,118 @@
   "constructors": [
     {
       "name": "Arc",
-      "signature": "Arc(...)",
+      "signature": "public Arc(Point startPoint, Point endPoint, Point pointOnArc)",
       "summary": "Constructs a new arc geometry",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "startPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "Start point of the arc.",
+          "optional": false
+        },
+        {
+          "name": "endPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "End point of the arc.",
+          "optional": false
+        },
+        {
+          "name": "pointOnArc",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "Point that defines the arc.",
+          "optional": false
+        }
+      ],
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Throws when input points are not defined correctly"
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a33eb806-7ba2-c1c2-5006-3e05facaf053"
     },
     {
       "name": "Arc",
-      "signature": "Arc(...)",
+      "signature": "public Arc(Point centerPoint, Point startPoint, Vector normal, double deltaAngleRadians)",
       "summary": "Constructs a new arc geometry",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "centerPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "Center point of the arc.",
+          "optional": false
+        },
+        {
+          "name": "startPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "StartPoint point of the arc.",
+          "optional": false
+        },
+        {
+          "name": "normal",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "Normal vector of the arc, defines the axis of rotation of the start vector.",
+          "optional": false
+        },
+        {
+          "name": "deltaAngleRadians",
+          "type": "System.Double",
+          "doc": "Angle of the arc in radians. From 0 to 2*PI.",
+          "optional": false
+        }
+      ],
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Throws when input values are not defined correctly"
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6f4f82e6-22b4-4f89-edca-e1e058e74131"
     },
     {
       "name": "Arc",
-      "signature": "Arc(...)",
+      "signature": "public Arc(Point centerPoint, Vector startDirection, Vector startTangent, double radius, double deltaAngleRadians)",
       "summary": "Constructs a new arc geometry",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "centerPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "Center point of the arc.",
+          "optional": false
+        },
+        {
+          "name": "startDirection",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "Direction vector pointing from the center towards the start point of the arc.",
+          "optional": false
+        },
+        {
+          "name": "startTangent",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "Vector tangent to the arc at its start point, pointing towards the arc.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "Radius of the arc",
+          "optional": false
+        },
+        {
+          "name": "deltaAngleRadians",
+          "type": "System.Double",
+          "doc": "Angle of the arc in radians. From 0 to 2*PI.",
+          "optional": false
+        }
+      ],
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Throws when input values are not defined correctly"
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f6b85f37-52d3-7bf5-00c1-48fb77a31b69"
     }
@@ -38,36 +128,66 @@
   "methods": [
     {
       "name": "Clone",
-      "signature": "Clone(...)",
+      "signature": "public ICurve Clone()",
       "summary": "Returns a copy of itself",
       "params": [],
+      "returns": {
+        "type": "ICurve",
+        "doc": "The copy"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/1f4dbf08-4da7-7c11-7c55-159f1f5b86e8"
     },
     {
       "name": "Equals(Object)",
-      "signature": "Equals(Object)(...)",
+      "signature": "public override bool Equals(Object other)",
       "summary": "Checks for equality with another arc",
-      "params": [],
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Object",
+          "doc": "Other arc",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if equal, false otherwise"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/88eada87-789f-9424-44aa-230246e3fdae"
     },
     {
       "name": "Equals(ICurve)",
-      "signature": "Equals(ICurve)(...)",
+      "signature": "public bool Equals(ICurve other)",
       "summary": "Checks for equality with another curve",
-      "params": [],
+      "params": [
+        {
+          "name": "other",
+          "type": "Tekla.Structures.Geometry3d.ICurve",
+          "doc": "Other curve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the other curve is an arc and is equal to this"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/1c2a7907-359a-8324-3650-cb35ab367763"
     },
     {
       "name": "GetHashCode",
-      "signature": "GetHashCode(...)",
+      "signature": "public override int GetHashCode()",
       "summary": "Get HashCode override",
       "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e1176a87-c480-02f4-813f-7255afde47b3"
@@ -76,81 +196,81 @@
   "properties": [
     {
       "name": "Angle",
-      "type": "object",
+      "type": "Double",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets angle of the arc in radians.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/1b6111d8-8c77-9012-18c9-8a7dfdebc20e"
     },
     {
       "name": "ArcMiddlePoint",
-      "type": "object",
+      "type": "Point",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the point located at the middle of the arc",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c4daa16d-3557-3e33-1a99-236ba1d2753a"
     },
     {
       "name": "CenterPoint",
-      "type": "object",
+      "type": "Point",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets or sets center point of the arc.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/bb87dd09-aa68-9850-f137-09b1b912ea42"
     },
     {
       "name": "EndPoint",
-      "type": "object",
+      "type": "Point",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets or sets end point of the arc.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c3918304-cd9b-efac-ece2-77c741619cf7"
     },
     {
       "name": "Length",
-      "type": "object",
+      "type": "Double",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Returns the length of the arc",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/ddde2733-7090-6100-848a-dc633104fece"
     },
     {
       "name": "Normal",
-      "type": "object",
+      "type": "Vector",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets normal of the arc, which defines the axis of rotation of the radial vector pointing to the start point of the arc.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/58d565cb-8694-0c72-3b17-3f95d76a0538"
     },
     {
       "name": "Radius",
-      "type": "object",
+      "type": "Double",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the radius of the arc.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a1e1f621-ec75-4dd5-ad13-25f344ec234f"
     },
     {
       "name": "StartDirection",
-      "type": "object",
+      "type": "Vector",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the unit vector which points from the center point to the start point of the arc, which defines the X axis of the arc coordinate system.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a922566b-eeb6-7b16-d287-cdbb3a4bf30a"
     },
     {
       "name": "StartPoint",
-      "type": "object",
+      "type": "Point",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets or sets start point of the arc.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4382a1a7-b26b-de81-f68f-e547a25458b7"
     },
     {
       "name": "StartTangent",
-      "type": "object",
+      "type": "Vector",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the unit vector tangent to the start point which defines the Y axis of the arc coordinate system",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a053fcd7-f39e-ff47-b367-5c44effec1cd"
     }

@@ -10,36 +10,104 @@
   "methods": [
     {
       "name": "LineSegmentToPlane",
-      "signature": "LineSegmentToPlane(...)",
+      "signature": "public static LineSegment LineSegmentToPlane(LineSegment LineSegment, GeometricPlane Plane)",
       "summary": "Returns a new line segment which is a projection of the given line segment onto the given plane.",
-      "params": [],
+      "params": [
+        {
+          "name": "LineSegment",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "The line segment to be used.",
+          "optional": false
+        },
+        {
+          "name": "Plane",
+          "type": "Tekla.Structures.Geometry3d.GeometricPlane",
+          "doc": "The plane to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LineSegment",
+        "doc": "The new projection line segment."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d3a1c359-b82a-1e76-5f3f-31076224f4b5"
     },
     {
       "name": "LineToPlane",
-      "signature": "LineToPlane(...)",
+      "signature": "public static Line LineToPlane(Line Line, GeometricPlane Plane)",
       "summary": "Returns a new line which is a projection of the given line onto the given plane.",
-      "params": [],
+      "params": [
+        {
+          "name": "Line",
+          "type": "Tekla.Structures.Geometry3d.Line",
+          "doc": "The line to be used.",
+          "optional": false
+        },
+        {
+          "name": "Plane",
+          "type": "Tekla.Structures.Geometry3d.GeometricPlane",
+          "doc": "The plane to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Line",
+        "doc": "The new projection line."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/85fc7afb-9440-5632-948e-1f98201f5291"
     },
     {
       "name": "PointToLine",
-      "signature": "PointToLine(...)",
+      "signature": "public static Point PointToLine(Point Point, Line Line)",
       "summary": "Returns a new point which is a projection of the given point onto the given line.",
-      "params": [],
+      "params": [
+        {
+          "name": "Point",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The point to be used.",
+          "optional": false
+        },
+        {
+          "name": "Line",
+          "type": "Tekla.Structures.Geometry3d.Line",
+          "doc": "The line to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": "The new projection point."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6a36026c-9003-b1f1-fdd5-109453c21397"
     },
     {
       "name": "PointToPlane",
-      "signature": "PointToPlane(...)",
+      "signature": "public static Point PointToPlane(Point Point, GeometricPlane Plane)",
       "summary": "Returns a new point which is a projection of the given point onto the given plane.",
-      "params": [],
+      "params": [
+        {
+          "name": "Point",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The point to be used.",
+          "optional": false
+        },
+        {
+          "name": "Plane",
+          "type": "Tekla.Structures.Geometry3d.GeometricPlane",
+          "doc": "The plane to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": "The new projection point."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/68645083-3c17-6e0a-9b43-15f056dcfedd"

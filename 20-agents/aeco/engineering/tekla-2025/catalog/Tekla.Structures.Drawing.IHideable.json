@@ -10,9 +10,9 @@
   "properties": [
     {
       "name": "Hideable",
-      "type": "object",
+      "type": "Hideable",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Accesses the information if this object is hidden or not or if it should be.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/0a456091-c423-55e9-67db-917d7422c653"
     }

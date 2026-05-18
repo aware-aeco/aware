@@ -1,5 +1,6 @@
 // PageParser — parse a single Tekla developer.tekla.com type-documentation page
-// into a TypeInfo (the schema-level record).
+// into a TypeInfo plus the URL bundle for each member that needs a follow-up
+// per-member fetch.
 //
 // Tekla docs site shape (verified 2026-05-18 against developer.tekla.com):
 //
@@ -12,30 +13,26 @@
 //   • The namespace is shown via:  <strong>Namespace:</strong> <a ...>Tekla.Structures.Foo</a>
 //   • The first inheritance line (before Syntax) is the SECTION "Inheritance Hierarchy" — we
 //     parse `base` from the LAST <span class="nolink"> entry (its parent before SelfLink).
+//   • The C# syntax block lives in <div id="..._code_Div1" class="codeSnippetContainerCode">'s <pre>.
+//     We parse the class declaration here to recover IMPLEMENTED INTERFACES — the
+//     Inheritance Hierarchy section only carries base types.
 //   • Each member-table section is a <span class="collapsibleRegionTitle"> labelled with the
 //     section name (Constructors / Properties / Methods / Events) IMMEDIATELY followed by a
 //     <table class="members" id="constructorList|propertyList|methodList|eventList"> in the
 //     same parent <div class="collapsibleSection">.
 //   • For enum types, the values table is <table id="enumMemberList" class="members"> with
 //     rows of  <td>(icon)</td><td>(name)</td><td>(value)</td><td>(summary)</td>.
-//   • The C# syntax block is <div id="..._code_Div1" class="codeSnippetContainerCode">'s <pre>.
 //
-// This parser extracts type-level coverage. Method/property/event/constructor signatures
-// available on the type page are SHORT (name + summary only) — full per-member signatures
-// + parameter types + returns + exceptions live on per-member pages (/topic/... links).
-// For coverage IR purposes the type page yields:
-//   • method.name + summary + doc_url   (signature = name as a synthesized fallback)
-//   • property.name + summary + doc_url (type + getter/setter inferred from icon, see below)
-//   • event.name + summary + doc_url    (delegate left as "EventHandler" placeholder)
-//   • constructor.name + summary + doc_url (signature = type name + "()" fallback)
-// EXTRACTION-NOTES.md documents this limitation. A future Phase B pass can deepen
-// the parser to follow member-page links and overwrite signature/params/returns —
-// but the IR + agent are valid and useful as-is, and the row summaries are the same
-// authoritative source the SkillWriter renders into namespace skills.
+// Each member-table row carries an <a href="/topic/.../<guid>"> pointing to the member-detail
+// page. The TYPE page lists only name + one-line summary — the full signature, parameter types,
+// return value, exception list, and remarks all live on the per-member page (see
+// MemberPageParser). PageParser captures the member URL for each row and returns it alongside
+// the partial TypeInfo so the Extractor can drive a follow-up enrichment pass that overwrites
+// the placeholders with real data.
 
-using AngleSharp;
 using AngleSharp.Dom;
 using AngleSharp.Html.Parser;
+using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
@@ -46,11 +43,27 @@ public static class PageParser
     static readonly HtmlParser _parser = new();
 
     /// <summary>
-    /// Parse one Tekla type-documentation page into a TypeInfo. Returns null if the page
-    /// is not a recognized type page (e.g. a "FooBar Methods" overview page that has no
-    /// type-level content — those are intermediate index pages and not types themselves).
+    /// URL bundle returned alongside a parsed TypeInfo: each list pairs a member NAME with the
+    /// member-detail page URL the type-page row pointed to. The Extractor walks these URLs to
+    /// enrich each member with real signature + param + return data.
+    ///
+    /// Constructors are keyed by the row name (the type name in single-ctor cases, or the
+    /// type-name + overload-signature for multi-ctor). Methods and properties and events by their
+    /// row names. Index alignment is intentional: result.methods[i] pairs with links.Methods[i].
     /// </summary>
-    public static TypeInfo? Parse(string html, string sourceUrl)
+    public sealed record MemberLinks(
+        IReadOnlyList<string> Constructors,
+        IReadOnlyList<string> Methods,
+        IReadOnlyList<string> Properties,
+        IReadOnlyList<string> Events);
+
+    public sealed record ParseResult(TypeInfo Type, MemberLinks Links);
+
+    /// <summary>
+    /// Parse one Tekla type-documentation page into a TypeInfo + member URL bundle. Returns null
+    /// if the page is not a recognized type page (e.g. a "FooBar Methods" overview index page).
+    /// </summary>
+    public static ParseResult? Parse(string html, string sourceUrl)
     {
         using var doc = _parser.ParseDocument(html);
         var content = doc.QuerySelector("div.topicContent#TopicContent");
@@ -60,81 +73,80 @@ public static class PageParser
         var title = h1 is null ? "" : CleanInlineText(h1);
         if (string.IsNullOrEmpty(title)) return null;
 
-        // The H1 title is one of:
-        //   "Foo Class"           → kind=class
-        //   "Foo Structure"       → kind=struct
-        //   "Foo Interface"       → kind=interface
-        //   "Foo Enumeration"     → kind=enum
-        //   "Foo Delegate"        → kind=delegate
-        //   "Foo Methods"         → NOT a type page (overview index); skip
-        //   "Foo Properties"      → NOT a type page; skip
-        //   "Foo Constructor"     → NOT a type page (single-member page); skip
-        //   "Foo.Bar Method"      → NOT a type page (single-member page); skip
-        //   "Foo Namespace"       → NOT a type page (namespace landing page); skip
         var (name, kind) = ParseTitle(title);
         if (kind is null) return null;
 
         var summary = ExtractDirectChildSummary(content);
         var ns = ExtractNamespace(content);
-        if (string.IsNullOrEmpty(ns)) return null;  // can't place the type without a namespace
+        if (string.IsNullOrEmpty(ns)) return null;
 
         // The IR schema requires a non-empty `summary` for every type. Some Tekla doc pages
-        // ship with an empty <div class="summary"> (no description authored on the vendor side).
-        // We supply a precise, honest placeholder rather than dropping the type — the
-        // placeholder makes the omission visible to anyone reading the catalog.
+        // ship with an empty <div class="summary">. We supply a precise placeholder — visible
+        // to anyone reading the catalog — rather than dropping the type entirely.
         if (string.IsNullOrEmpty(summary))
             summary = $"(No description provided in vendor docs for {ns}.{name}.)";
 
-        var (baseTypeName, interfaces) = ExtractInheritance(content);
+        var (baseTypeName, ifacesFromHierarchy) = ExtractInheritanceFromHierarchy(content);
 
-        // Member tables — each section appears as a "collapsibleRegionTitle" span,
-        // immediately followed by a "collapsibleSection" div containing the table.
-        var constructors = ExtractMethodTable(content, "constructorList", name, sourceUrl, isCtor: true);
-        var methods       = ExtractMethodTable(content, "methodList",      name, sourceUrl, isCtor: false);
-        var properties    = ExtractPropertyTable(content, "propertyList",  sourceUrl);
-        var events        = ExtractEventTable(content, "eventList",        sourceUrl);
+        // The Inheritance Hierarchy section gives us the LINEAR ancestor chain (base). The C#
+        // syntax block, however, is the only place that lists IMPLEMENTED INTERFACES, e.g.
+        //   public abstract class ModelObject : Object, IComparable, IEquatable<ModelObject>
+        // We parse the declaration line of the syntax pre to recover interfaces and to refine
+        // `base` when the hierarchy block is absent.
+        var (baseFromSyntax, ifacesFromSyntax) = ExtractInheritanceFromSyntax(content, kind);
+        var finalBase = !string.IsNullOrEmpty(baseTypeName) ? baseTypeName : baseFromSyntax;
+        // Merge interfaces from both sources, preserving syntax-block order which is the
+        // declaration order Tekla emits.
+        var interfaces = new List<string>(ifacesFromSyntax);
+        foreach (var i in ifacesFromHierarchy) if (!interfaces.Contains(i)) interfaces.Add(i);
 
-        // Enum values table — only present on enum pages.
+        var ctorRes = ExtractMethodTable(content, "constructorList", name, sourceUrl, isCtor: true);
+        var methRes = ExtractMethodTable(content, "methodList",      name, sourceUrl, isCtor: false);
+        var propRes = ExtractPropertyTable(content, "propertyList",  sourceUrl);
+        var evtRes  = ExtractEventTable(content, "eventList",        sourceUrl);
+
+        // Enum value table — only present on enum pages.
         var enumValues = kind == "enum"
             ? ExtractEnumValues(content)
             : new List<EnumValueInfo>();
 
-        // Delegate signature — for delegates the syntax block contains the full method-style
-        // signature. We extract the C# variant.
+        // Delegate signature — for delegates the syntax block carries the full method-style
+        // signature including parameter types.
         string? delegateSig = kind == "delegate" ? ExtractCSharpSyntax(content) : null;
 
-        return new TypeInfo(
+        // Type-level Remarks — type pages can have a top-level Remarks collapsible region.
+        var typeRemarks = ExtractTypeRemarks(content);
+
+        var typeInfo = new TypeInfo(
             name: name,
             @namespace: ns,
             kind: kind,
             summary: NormaliseWhitespace(summary),
-            remarks: null,                  // Type pages don't have a "Remarks" section at type scope.
-            @base: baseTypeName,
+            remarks: typeRemarks,
+            @base: finalBase,
             interfaces: interfaces,
             doc_url: sourceUrl,
-            constructors: constructors,
-            methods: methods,
-            properties: properties,
-            events: events,
+            constructors: ctorRes.Members,
+            methods: methRes.Members,
+            properties: propRes.Members,
+            events: evtRes.Members,
             enum_values: enumValues,
             delegate_signature: delegateSig);
+
+        var links = new MemberLinks(
+            Constructors: ctorRes.Urls,
+            Methods: methRes.Urls,
+            Properties: propRes.Urls,
+            Events: evtRes.Urls);
+
+        return new ParseResult(typeInfo, links);
     }
 
     // ── title parsing ────────────────────────────────────────────────────────
 
     static (string name, string? kind) ParseTitle(string title)
     {
-        // Tekla titles use trailing keyword to identify kind. Examples seen:
-        //   "Assertion Class"
-        //   "TemporaryTransparency Enumeration"
-        //   "TeklaStructuresSettings.InvalidPathCallback Delegate"
-        //   "ClashCheckOptions.SafetyDistanceMode Structure"
-        //   "ICoreLibLayoutHandler Interface"
-        // Some title-cased tokens collide (e.g. "Foo Method" is a member page not a type page).
-        var t = title.Trim();
-        // Strip trailing whitespace artefacts (the docs sometimes emit "Constructor " etc.).
-        t = Regex.Replace(t, @"\s+", " ");
-
+        var t = Regex.Replace(title.Trim(), @"\s+", " ");
         if (t.EndsWith(" Class", StringComparison.Ordinal))
             return (t[..^" Class".Length], "class");
         if (t.EndsWith(" Structure", StringComparison.Ordinal))
@@ -145,8 +157,6 @@ public static class PageParser
             return (t[..^" Enumeration".Length], "enum");
         if (t.EndsWith(" Delegate", StringComparison.Ordinal))
             return (t[..^" Delegate".Length], "delegate");
-        // Anything else (Methods, Properties, Constructor, Namespace, individual Method names)
-        // is not a type page from our perspective.
         return (t, null);
     }
 
@@ -154,17 +164,12 @@ public static class PageParser
 
     static string ExtractDirectChildSummary(IElement content)
     {
-        // The type-level summary is the FIRST <div class="summary"> that is a direct child
-        // of the topicContent container (or directly inside the title block). Member-table
-        // rows ALSO contain <div class="summary"> children, so we must not grab those.
-        // Use CleanInlineText to swap LST placeholder spans for ".".
         foreach (var child in content.Children)
         {
             if (child.LocalName == "div" && child.ClassList.Contains("summary"))
                 return CleanInlineText(child);
-            if (child.LocalName == "table") continue; // titleTable holds the H1 only — skip.
+            if (child.LocalName == "table") continue; // titleTable carries the H1 only.
         }
-        // Fallback: find ANY .summary that is NOT inside a .members table.
         foreach (var s in content.QuerySelectorAll("div.summary"))
         {
             var p = s.ParentElement;
@@ -183,11 +188,6 @@ public static class PageParser
 
     static string ExtractNamespace(IElement content)
     {
-        // Pattern in the page body:
-        //   <strong>Namespace:</strong> <a href="/topic/...">Tekla.Structures.Model</a>
-        // We find the <strong> with "Namespace:" text and take the next link's text.
-        // The anchor may carry inline <script>+placeholder spans the same way ancestor types do,
-        // so we route through CleanInlineText.
         foreach (var strong in content.QuerySelectorAll("strong"))
         {
             if (string.Equals(strong.TextContent.Trim(), "Namespace:", StringComparison.Ordinal))
@@ -200,92 +200,197 @@ public static class PageParser
                 }
             }
         }
-        // Fallback: parse "Tekla.Structures.<something>" out of the breadcrumb chain if available.
         return "";
     }
 
-    // ── inheritance hierarchy ───────────────────────────────────────────────
+    // ── type-level remarks extraction ───────────────────────────────────────
 
-    static (string? baseName, List<string> interfaces) ExtractInheritance(IElement content)
+    static string? ExtractTypeRemarks(IElement content)
     {
-        // The "Inheritance Hierarchy" section ID is positional ("ID0RBSection" or similar) so
-        // we anchor on its title span instead.
+        // Type-level Remarks live in a top-level "Remarks" collapsibleRegion (NOT nested inside any
+        // member table). The same title text appears on member pages too — but on type pages it's
+        // a direct child of topicContent.
+        foreach (var titleSpan in content.QuerySelectorAll("span.collapsibleRegionTitle"))
+        {
+            var t = NormaliseWhitespace(titleSpan.TextContent);
+            if (!string.Equals(t, "Remarks", StringComparison.Ordinal)) continue;
+            var section = titleSpan.ParentElement?.NextElementSibling;
+            if (section is null || !section.ClassList.Contains("collapsibleSection")) continue;
+            var clone = (IElement)section.Clone();
+            foreach (var code in clone.QuerySelectorAll("div.codeSnippetContainer").ToList())
+                code.Remove();
+            var text = NormaliseWhitespace(CleanInlineText(clone));
+            return string.IsNullOrEmpty(text) ? null : text;
+        }
+        return null;
+    }
+
+    // ── inheritance hierarchy: linear ancestor chain ────────────────────────
+
+    static (string? baseName, List<string> interfaces) ExtractInheritanceFromHierarchy(IElement content)
+    {
         var titleSpan = content.QuerySelectorAll("span.collapsibleRegionTitle")
             .FirstOrDefault(s => s.TextContent.Contains("Inheritance Hierarchy", StringComparison.Ordinal));
         if (titleSpan is null) return (null, new List<string>());
 
-        // The hierarchy lives in the next sibling div with class="collapsibleSection".
         var section = titleSpan.ParentElement?.NextElementSibling;
         if (section is null || !section.ClassList.Contains("collapsibleSection"))
             return (null, new List<string>());
 
-        // The hierarchy is rendered as a chain of <span class="nolink"> for ancestor types and
-        // a final <span class="selflink"> for the current type. The direct parent (base type)
-        // is the LAST .nolink before .selflink.
         var ancestors = section.QuerySelectorAll("span.nolink").ToList();
         if (ancestors.Count == 0) return (null, new List<string>());
 
         var lastAncestor = ancestors[^1];
-        // Strip nested script tags' text contributions before reading textContent.
-        var baseText = CleanNoLinkText(lastAncestor);
-        return (baseText, new List<string>());  // Tekla pages don't itemize implemented interfaces; left as [].
+        var baseText = CleanInlineText(lastAncestor).Replace(" ", "");
+        return (baseText, new List<string>());
     }
 
-    // The .nolink spans render dotted type names through inline placeholders that the
-    // page's JS replaces at render time, e.g.:
-    //
-    //   <span class="nolink">System<span id="LSTAB654CE3_0"></span><script>AddLanguageSpecificTextSet(
-    //     "LSTAB654CE3_0?cs=.|vb=.|cpp=::|nu=.|fs=.");</script>Object</span>
-    //
-    // In a real browser the script substitutes "." (the C# variant) into the empty inner span.
-    // Without JS execution we have to do the substitution ourselves. The empty placeholder span
-    // has an id starting with "LST" and is followed by a <script> whose first language is `cs=`.
-    // We walk children and synthesize the dot between the text nodes on either side of each
-    // LST placeholder.
-    static string CleanNoLinkText(IElement span)
+    // ── inheritance from C# syntax block: base + interfaces ────────────────
+
+    /// <summary>
+    /// Parse the C# class declaration from the syntax block to recover base type + interface list.
+    /// Tekla emits e.g.
+    ///   public abstract class ModelObject : Object,
+    ///     IComparable, IEquatable&lt;ModelObject&gt;
+    /// where the type-name span ends just before " : " and everything after the colon and before
+    /// the end of declaration line (i.e. before any "where T :" generic constraint, before the
+    /// opening brace which never appears in Tekla, or before EOF) is the list of inherited types.
+    /// Returns (null, []) for non-class/interface/struct kinds (enums and delegates don't expose
+    /// interfaces this way).
+    /// </summary>
+    static (string? baseName, List<string> interfaces) ExtractInheritanceFromSyntax(IElement content, string kind)
     {
-        var sb = new System.Text.StringBuilder();
-        foreach (var node in span.ChildNodes)
+        if (kind is not ("class" or "struct" or "interface")) return (null, new List<string>());
+
+        var pre = FindSyntaxPre(content);
+        if (pre is null) return (null, new List<string>());
+        var sig = CleanInlineText(pre);
+
+        // The signature can be multi-line and start with one or more attribute lines like
+        // `[SerializableAttribute]` or `[Flags()]`. Drop those.
+        var lines = sig.Split('\n').Select(l => l.Trim()).Where(l => l.Length > 0).ToList();
+        var idx = lines.FindIndex(l => !l.StartsWith("[", StringComparison.Ordinal));
+        if (idx < 0) return (null, new List<string>());
+        // Re-join from the declaration line onward — Tekla wraps long inheritance lists across
+        // multiple lines.
+        var declAndAfter = string.Join(" ", lines.Skip(idx));
+
+        // Find the type-name token. We look for the kind keyword followed by the type identifier.
+        // Examples:
+        //   public abstract class ModelObject : Object, IComparable, IEquatable<ModelObject>
+        //   public interface ICoreLibLayoutHandler : IFoo, IBar
+        //   public struct DistanceList : IBar
+        // We split on " : " — anything before is the declaration; anything after is the inherited list.
+        var colonIdx = declAndAfter.IndexOf(" : ", StringComparison.Ordinal);
+        if (colonIdx < 0) return (null, new List<string>());
+        var inheritedRaw = declAndAfter.Substring(colonIdx + 3).Trim();
+        // Drop any trailing "where T : …" generic constraint clauses — Tekla rarely uses them but
+        // some types do.
+        var whereIdx = inheritedRaw.IndexOf(" where ", StringComparison.Ordinal);
+        if (whereIdx >= 0) inheritedRaw = inheritedRaw.Substring(0, whereIdx).Trim();
+
+        // Split on commas — but commas inside angle brackets must not split, e.g.
+        // `IEquatable<Foo, Bar>` is one element, not two.
+        var items = SplitOnTopLevelCommas(inheritedRaw);
+        if (items.Count == 0) return (null, new List<string>());
+
+        // For class/struct: convention says the first item is the base TYPE if it does not start
+        // with "I" + uppercase (interface convention) or contain ".I" + uppercase (qualified
+        // interface). It's not airtight but Tekla follows convention reliably. For interfaces, ALL
+        // items are inherited interfaces, no base.
+        string? baseName = null;
+        var interfaces = new List<string>();
+        foreach (var (i, item) in items.Select((x, idx2) => (idx2, x)))
         {
-            switch (node.NodeType)
+            var s = item.Trim();
+            if (string.IsNullOrEmpty(s)) continue;
+            // Strip a generic-arg suffix when checking the "I" prefix convention — we want to
+            // detect `IEquatable<ModelObject>` as an interface.
+            var bareName = StripGenericArgs(s);
+            // Extract the unqualified last segment for the "starts with I + capital" check.
+            var lastDot = bareName.LastIndexOf('.');
+            var lastSegment = lastDot >= 0 ? bareName.Substring(lastDot + 1) : bareName;
+            bool looksLikeInterface = lastSegment.Length >= 2
+                && lastSegment[0] == 'I'
+                && char.IsUpper(lastSegment[1]);
+
+            if (kind == "interface")
             {
-                case NodeType.Text:
-                    sb.Append(node.TextContent);
-                    break;
-                case NodeType.Element when node is IElement el:
-                    if (el.LocalName == "script") break;            // script never contributes text
-                    var id = el.GetAttribute("id") ?? "";
-                    if (id.StartsWith("LST", StringComparison.Ordinal))
-                    {
-                        // Placeholder — the doc's JS would replace it with the C# delimiter ".".
-                        sb.Append('.');
-                    }
-                    else
-                    {
-                        sb.Append(el.TextContent);
-                    }
-                    break;
+                interfaces.Add(s);
+            }
+            else if (i == 0 && !looksLikeInterface)
+            {
+                baseName = s;
+            }
+            else
+            {
+                interfaces.Add(s);
             }
         }
-        return Regex.Replace(sb.ToString(), @"\s+", "").Trim();
+        return (baseName, interfaces);
     }
 
-    // ── method / constructor table parsing ──────────────────────────────────
-
-    static List<MethodInfo> ExtractMethodTable(IElement content, string tableId, string typeName, string typeDocUrl, bool isCtor)
+    static string StripGenericArgs(string name)
     {
-        var table = content.QuerySelector($"table.members#{tableId}");
-        if (table is null) return new List<MethodInfo>();
+        var lt = name.IndexOf('<');
+        return lt < 0 ? name : name.Substring(0, lt);
+    }
 
+    /// <summary>
+    /// Split on commas that are not inside angle-bracket generic parameter lists. Handles nested
+    /// generics correctly (e.g. <c>List&lt;Dictionary&lt;int, string&gt;&gt;</c>).
+    /// </summary>
+    static List<string> SplitOnTopLevelCommas(string s)
+    {
+        var parts = new List<string>();
+        var sb = new StringBuilder();
+        int depth = 0;
+        foreach (var ch in s)
+        {
+            if (ch == '<') { depth++; sb.Append(ch); continue; }
+            if (ch == '>') { depth--; sb.Append(ch); continue; }
+            if (ch == ',' && depth == 0)
+            {
+                parts.Add(sb.ToString().Trim());
+                sb.Clear();
+                continue;
+            }
+            sb.Append(ch);
+        }
+        if (sb.Length > 0) parts.Add(sb.ToString().Trim());
+        return parts;
+    }
+
+    static IElement? FindSyntaxPre(IElement content)
+    {
+        // Look in the "Syntax" collapsible region's first C# code block. Tekla pages for types
+        // always have a Syntax section.
+        var titleSpan = content.QuerySelectorAll("span.collapsibleRegionTitle")
+            .FirstOrDefault(s => string.Equals(NormaliseWhitespace(s.TextContent), "Syntax", StringComparison.Ordinal));
+        var section = titleSpan?.ParentElement?.NextElementSibling;
+        if (section is null) section = content;  // fallback
+        var div = section.QuerySelectorAll("div.codeSnippetContainerCode")
+            .FirstOrDefault(d => (d.GetAttribute("id") ?? "").EndsWith("_code_Div1", StringComparison.Ordinal));
+        return div?.QuerySelector("pre");
+    }
+
+    // ── member-table parsing ────────────────────────────────────────────────
+
+    sealed record MemberTableResult<T>(List<T> Members, List<string> Urls);
+
+    static MemberTableResult<MethodInfo> ExtractMethodTable(IElement content, string tableId, string typeName, string typeDocUrl, bool isCtor)
+    {
         var rows = new List<MethodInfo>();
+        var urls = new List<string>();
+        var table = content.QuerySelector($"table.members#{tableId}");
+        if (table is null) return new MemberTableResult<MethodInfo>(rows, urls);
+
         foreach (var tr in table.QuerySelectorAll("tr"))
         {
-            // Skip header row (its first cell is a <th>).
             if (tr.QuerySelector("th") != null) continue;
             var cells = tr.QuerySelectorAll("td").ToList();
             if (cells.Count < 3) continue;
 
-            // Cell layout: [icon] [<a>Name</a>] [<div class="summary">...</div>]
             var nameAnchor = cells[1].QuerySelector("a");
             if (nameAnchor is null) continue;
 
@@ -295,8 +400,7 @@ public static class PageParser
 
             var summary = ExtractRowSummary(cells[2]);
 
-            // Synthesized signature: name + "(...)" placeholder. Member-page deep crawl would
-            // replace this; documented as a coverage caveat in EXTRACTION-NOTES.md.
+            // Placeholder signature — overwritten by MemberPageParser during enrichment.
             var sig = isCtor
                 ? $"{typeName}(...)"
                 : $"{memberName}(...)";
@@ -313,17 +417,19 @@ public static class PageParser
                 doc_url: string.IsNullOrEmpty(memberUrl) ? typeDocUrl : memberUrl,
                 since: null,
                 deprecated: null));
+
+            urls.Add(string.IsNullOrEmpty(memberUrl) ? "" : memberUrl);
         }
-        return rows;
+        return new MemberTableResult<MethodInfo>(rows, urls);
     }
 
-    // ── property table parsing ──────────────────────────────────────────────
-
-    static List<PropertyInfo> ExtractPropertyTable(IElement content, string tableId, string typeDocUrl)
+    static MemberTableResult<PropertyInfo> ExtractPropertyTable(IElement content, string tableId, string typeDocUrl)
     {
-        var table = content.QuerySelector($"table.members#{tableId}");
-        if (table is null) return new List<PropertyInfo>();
         var props = new List<PropertyInfo>();
+        var urls = new List<string>();
+        var table = content.QuerySelector($"table.members#{tableId}");
+        if (table is null) return new MemberTableResult<PropertyInfo>(props, urls);
+
         foreach (var tr in table.QuerySelectorAll("tr"))
         {
             if (tr.QuerySelector("th") != null) continue;
@@ -336,29 +442,26 @@ public static class PageParser
             var href = anchor.GetAttribute("href") ?? "";
             var url = AbsoluteUrl(href);
 
-            // Icon column (cells[0]) tells us static/instance. Without a per-member fetch we
-            // don't know the property TYPE; we placeholder "object" and document this.
-            // get/set: Tekla docs don't expose this in the table without a member fetch. Default
-            // to (getter=true, setter=true) so consumers see read-write access until corrected.
             props.Add(new PropertyInfo(
                 name: name,
-                type: "object",
-                getter: true,
-                setter: true,
+                type: "object",          // Placeholder; overwritten by MemberPageParser.
+                getter: true,             // Placeholder; overwritten by MemberPageParser.
+                setter: true,             // Placeholder; overwritten by MemberPageParser.
                 summary: ExtractRowSummary(cells[2]),
                 remarks: null,
                 doc_url: string.IsNullOrEmpty(url) ? typeDocUrl : url));
+            urls.Add(string.IsNullOrEmpty(url) ? "" : url);
         }
-        return props;
+        return new MemberTableResult<PropertyInfo>(props, urls);
     }
 
-    // ── event table parsing ─────────────────────────────────────────────────
-
-    static List<EventInfo> ExtractEventTable(IElement content, string tableId, string typeDocUrl)
+    static MemberTableResult<EventInfo> ExtractEventTable(IElement content, string tableId, string typeDocUrl)
     {
-        var table = content.QuerySelector($"table.members#{tableId}");
-        if (table is null) return new List<EventInfo>();
         var events = new List<EventInfo>();
+        var urls = new List<string>();
+        var table = content.QuerySelector($"table.members#{tableId}");
+        if (table is null) return new MemberTableResult<EventInfo>(events, urls);
+
         foreach (var tr in table.QuerySelectorAll("tr"))
         {
             if (tr.QuerySelector("th") != null) continue;
@@ -373,15 +476,16 @@ public static class PageParser
 
             events.Add(new EventInfo(
                 name: name,
-                @delegate: "EventHandler",       // Placeholder; the per-member page has the real delegate name.
+                @delegate: "EventHandler",
                 signature: $"event EventHandler {name}",
                 summary: ExtractRowSummary(cells[2]),
                 fires_when: null,
                 doc_url: string.IsNullOrEmpty(url) ? typeDocUrl : url,
                 handler_thread: "unknown",
                 interacts_with: new List<string>()));
+            urls.Add(string.IsNullOrEmpty(url) ? "" : url);
         }
-        return events;
+        return new MemberTableResult<EventInfo>(events, urls);
     }
 
     // ── enum value table parsing ────────────────────────────────────────────
@@ -396,14 +500,12 @@ public static class PageParser
             if (tr.QuerySelector("th") != null) continue;
             var cells = tr.QuerySelectorAll("td").ToList();
             if (cells.Count < 4) continue;
-            // Cell layout: [icon] [name] [value] [summary]
             var nameCell = cells[1];
             var nameText = nameCell.QuerySelector("span.selflink")?.TextContent.Trim()
                           ?? nameCell.TextContent.Trim();
             var valueText = cells[2].TextContent.Trim();
             var summary = cells[3].TextContent.Trim();
 
-            // Try to parse value as integer first; fall back to string.
             JsonElement valueElem;
             if (int.TryParse(valueText, out var intVal))
                 valueElem = JsonSerializer.SerializeToElement(intVal, IrJsonContext.Default.Int32);
@@ -419,61 +521,21 @@ public static class PageParser
 
     static string? ExtractCSharpSyntax(IElement content)
     {
-        // Page emits two language tabs: id ends with "_code_Div1" (C#) and "_code_Div2" (VB).
-        // The <pre> may contain inline language-placeholder spans for dotted nested types
-        // (e.g. Events.DrawingUpdateTypeEnum). Route through CleanInlineText to swap the
-        // placeholders for "." and to keep the result script-text-free.
-        var div = content.QuerySelectorAll("div.codeSnippetContainerCode")
-            .FirstOrDefault(d => (d.GetAttribute("id") ?? "").EndsWith("_code_Div1"));
-        var pre = div?.QuerySelector("pre");
+        var pre = FindSyntaxPre(content);
         return pre is null ? null : CleanInlineText(pre);
     }
 
-    // ── helpers ─────────────────────────────────────────────────────────────
+    // ── inline text rendering ──────────────────────────────────────────────
 
     /// <summary>
-    /// Strip inline `<script>` and language-placeholder `<span id="LST...">` nodes from an
-    /// element's textual rendering, substituting the C# delimiter "." where the placeholder
-    /// span would otherwise be replaced by JS. Used for member names which sometimes contain
-    /// dotted-generic types (e.g. <c>GetAttributeFile(List&lt;String&gt;, String)</c>).
+    /// Render inline text with Tekla's language-specific text placeholders resolved to their C#
+    /// variant. Delegates to MemberPageParser.CleanInlineText so both parsers share the same
+    /// LST-script substitution logic.
     /// </summary>
-    static string CleanInlineText(IElement root)
-    {
-        var sb = new System.Text.StringBuilder();
-        Walk(root);
-        return Regex.Replace(sb.ToString(), @"\s+", " ").Trim();
-
-        void Walk(IElement node)
-        {
-            foreach (var child in node.ChildNodes)
-            {
-                if (child.NodeType == NodeType.Text)
-                {
-                    sb.Append(child.TextContent);
-                }
-                else if (child is IElement el)
-                {
-                    if (el.LocalName == "script") continue;
-                    var id = el.GetAttribute("id") ?? "";
-                    if (id.StartsWith("LST", StringComparison.Ordinal))
-                    {
-                        // Placeholder span — the page's JS would inject the C# delimiter ".".
-                        sb.Append('.');
-                        continue;
-                    }
-                    Walk(el);
-                }
-            }
-        }
-    }
+    static string CleanInlineText(IElement root) => MemberPageParser.CleanInlineText(root);
 
     static string ExtractRowSummary(IElement summaryCell)
     {
-        // Cell can be either a <div class="summary">…</div> wrapper, or raw text containing
-        // an "(Overrides …)" suffix. We pick the first .summary div content if present,
-        // else the whole cell's text. Use CleanInlineText to strip inline <script> and
-        // language-placeholder spans (e.g. (Overrides Object.Equals(Object).) renders with
-        // an LST language placeholder for the dot).
         var s = summaryCell.QuerySelector("div.summary");
         return CleanInlineText(s ?? summaryCell);
     }

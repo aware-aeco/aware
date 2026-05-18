@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "DataGrid",
-      "signature": "DataGrid(...)",
+      "signature": "public DataGrid()",
       "summary": "Initializes a new instance of the DataGrid class.",
       "params": [],
       "throws": [],

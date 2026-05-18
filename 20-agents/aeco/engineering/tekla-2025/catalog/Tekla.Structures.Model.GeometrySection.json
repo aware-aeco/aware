@@ -11,17 +11,17 @@
   "properties": [
     {
       "name": "GeometryNode",
-      "type": "object",
+      "type": "IGeometryNode",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the geometry node",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/b80128e1-a3c7-451a-9d4c-91a245f93060"
     },
     {
       "name": "Index",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the index of the node",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/cf53cc6e-2369-ccc8-8f76-1b2d1aa29de2"
     }

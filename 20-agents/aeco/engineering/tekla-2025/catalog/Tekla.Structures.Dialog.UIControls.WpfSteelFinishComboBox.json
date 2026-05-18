@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "WpfSteelFinishComboBox",
-      "signature": "WpfSteelFinishComboBox(...)",
+      "signature": "public WpfSteelFinishComboBox()",
       "summary": "Initiates a new instance of the control.",
       "params": [],
       "throws": [],
@@ -21,9 +21,9 @@
   "properties": [
     {
       "name": "Finish",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets or sets the finish value",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/ab618289-8f17-097f-1263-8cd856e824bf"
     }

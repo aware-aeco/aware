@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "RebarLengthAdjustmentDataNullable",
-      "signature": "RebarLengthAdjustmentDataNullable(...)",
+      "signature": "public RebarLengthAdjustmentDataNullable()",
       "summary": "Initializes a new instance of the RebarLengthAdjustmentDataNullable class.",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "AdjustmentLength",
-      "type": "object",
+      "type": "Nullable\u003CDouble\u003E",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the adjustment length.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "AdjustmentType",
-      "type": "object",
+      "type": "Nullable\u003CRebarLengthAdjustmentDataNullable.LengthAdjustmentTypeEnum\u003E",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the adjustment type.",

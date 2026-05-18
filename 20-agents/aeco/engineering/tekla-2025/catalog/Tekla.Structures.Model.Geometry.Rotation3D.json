@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Rotation3D",
-      "signature": "Rotation3D(...)",
+      "signature": "public Rotation3D()",
       "summary": "Initializes a new instance of the Rotation3D class.",
       "params": [],
       "throws": [],
@@ -18,9 +18,22 @@
     },
     {
       "name": "Rotation3D",
-      "signature": "Rotation3D(...)",
+      "signature": "public Rotation3D(Vector axisX, Vector axisY)",
       "summary": "Initializes a new instance of the Rotation3D class.",
-      "params": [],
+      "params": [
+        {
+          "name": "axisX",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The X direction, must be unit.",
+          "optional": false
+        },
+        {
+          "name": "axisY",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The Y direction, must be unit and perpendicular to axisX.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/80111e03-1f33-7db7-adae-7c137beb6a74"
@@ -29,18 +42,46 @@
   "methods": [
     {
       "name": "Equals",
-      "signature": "Equals(...)",
+      "signature": "public bool Equals(Rotation3D other, double tolerance)",
       "summary": "Compares with another rotation.",
-      "params": [],
+      "params": [
+        {
+          "name": "other",
+          "type": "Tekla.Structures.Model.Geometry.Rotation3D",
+          "doc": "The other rotation.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Comparison tolerance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if found equal, false otherwise."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/979fb96b-2c44-9fc5-e000-56947aa3efa9"
     },
     {
       "name": "FromZRotation",
-      "signature": "FromZRotation(...)",
+      "signature": "public static Rotation3D FromZRotation(Angle angle)",
       "summary": "Creates Rotation3D which represents rotation around the Z axis.",
-      "params": [],
+      "params": [
+        {
+          "name": "angle",
+          "type": "Tekla.Structures.Datatype.Angle",
+          "doc": "The rotation andle.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Rotation3D",
+        "doc": "Rotation3D instance whcih represents the Z rotation."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f5b0d717-aa22-02fa-cefa-41307adec2f5"
@@ -49,25 +90,25 @@
   "properties": [
     {
       "name": "AxisX",
-      "type": "object",
+      "type": "Vector",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the X direction.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/b88261f3-2a89-04ed-ae46-4aa773b4b26b"
     },
     {
       "name": "AxisY",
-      "type": "object",
+      "type": "Vector",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the Y direction.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/67d56796-2355-8343-f358-413caa0b6ce4"
     },
     {
       "name": "AxisZ",
-      "type": "object",
+      "type": "Vector",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the Z direction.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/32e1fabd-b30f-9ce4-06bc-cddf4b7e6faa"
     }

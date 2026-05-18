@@ -26,7 +26,7 @@ provenance:
   source:
     type: scrape
     urls: ["https://developer.tekla.com/doc/tekla-structures/2025/tekla-structures-45473"]
-  generated-at: 2026-05-18T19:28:23.8519840Z
+  generated-at: 2026-05-18T21:34:19.4820375Z
 
 transport:
   cli:

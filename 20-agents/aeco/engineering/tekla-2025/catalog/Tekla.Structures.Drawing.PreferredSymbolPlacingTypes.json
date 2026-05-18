@@ -10,27 +10,39 @@
   "methods": [
     {
       "name": "AlongLinePlacingType",
-      "signature": "AlongLinePlacingType(...)",
+      "signature": "public static PreferredPlacingTypeBase AlongLinePlacingType()",
       "summary": "The object is placed using the along line placing.",
       "params": [],
+      "returns": {
+        "type": "PreferredPlacingTypeBase",
+        "doc": "A new along line placing type instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/49eecfdf-0020-ec6e-1c64-f56f000450df"
     },
     {
       "name": "LeaderLinePlacingType",
-      "signature": "LeaderLinePlacingType(...)",
+      "signature": "public static PreferredPlacingTypeBase LeaderLinePlacingType()",
       "summary": "The object is placed with a leader line.",
       "params": [],
+      "returns": {
+        "type": "PreferredPlacingTypeBase",
+        "doc": "A new leader line placing type instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/bf6e2c24-f843-b1f9-b78c-c12464250f15"
     },
     {
       "name": "PointPlacingType",
-      "signature": "PointPlacingType(...)",
+      "signature": "public static PreferredPlacingTypeBase PointPlacingType()",
       "summary": "The object is placed at one point (the insertion point) without any additional placing options.",
       "params": [],
+      "returns": {
+        "type": "PreferredPlacingTypeBase",
+        "doc": "A new point placing type instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e175ecf4-37c0-2e1c-ca51-eb68fa11a7da"

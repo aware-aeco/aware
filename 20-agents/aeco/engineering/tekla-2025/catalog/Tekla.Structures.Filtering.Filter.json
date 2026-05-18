@@ -9,19 +9,49 @@
   "constructors": [
     {
       "name": "Filter",
-      "signature": "Filter(...)",
+      "signature": "public Filter(FilterExpression FilterExpression)",
       "summary": "Initializes a new instance of the Filter class.",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "FilterExpression",
+          "type": "Tekla.Structures.Filtering.FilterExpression",
+          "doc": "The FilterExpression object to be generated.",
+          "optional": false
+        }
+      ],
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when a null FilterExpression is specified."
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/08b840d5-75e6-e69d-1033-31e32a983d07"
     },
     {
       "name": "Filter",
-      "signature": "Filter(...)",
+      "signature": "public Filter(string FullFileName, IFormatProvider Provider = null)",
       "summary": "Initializes a new instance of the Filter class.",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "FullFileName",
+          "type": "System.String",
+          "doc": "The filter\u0027s full file name to load.",
+          "optional": false
+        },
+        {
+          "name": "Provider",
+          "type": "System.IFormatProvider",
+          "doc": "An object that supports the IFormatProvider interface to correctly parse numbers and dates according to the current culture information. If not provided, the current CultureInfo is used.",
+          "optional": true
+        }
+      ],
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when a null FullFileName is specified."
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/34efc8b0-dc67-fabe-0221-a02bd7f537c7"
     }
@@ -29,18 +59,39 @@
   "methods": [
     {
       "name": "CreateFile",
-      "signature": "CreateFile(...)",
+      "signature": "public string CreateFile(FilterExpressionFileType FilterExpressionFileType, string FullFileName)",
       "summary": "Creates a filter and saves it as a text file.",
-      "params": [],
+      "params": [
+        {
+          "name": "FilterExpressionFileType",
+          "type": "Tekla.Structures.Filtering.FilterExpressionFileType",
+          "doc": "The FilterExpressionFileType to be generated.",
+          "optional": false
+        },
+        {
+          "name": "FullFileName",
+          "type": "System.String",
+          "doc": "The full file name of the file to be saved.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A string containing the filter\u0027s full file name."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/ca0bf551-31d5-5d89-d73d-d247375a025c"
     },
     {
       "name": "ToString",
-      "signature": "ToString(...)",
+      "signature": "public override string ToString()",
       "summary": "Returns the current FilterExpression as a string.",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A string representation of the current FilterExpression."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/3084a925-8630-a8e8-fbbd-15b8ca9c8841"
@@ -49,7 +100,7 @@
   "properties": [
     {
       "name": "FilterExpression",
-      "type": "object",
+      "type": "FilterExpression",
       "getter": true,
       "setter": true,
       "summary": "Gets the current FilterExpression instance.",

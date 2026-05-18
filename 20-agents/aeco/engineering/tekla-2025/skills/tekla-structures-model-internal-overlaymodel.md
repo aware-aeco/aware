@@ -14,9 +14,9 @@ Interface for the OverlayModelEvents class allows the user to register event lis
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/1bd72aa5-d22c-71c1-a538-e7690d486747)
 
 ### Events
-#### `OverlayModelCollectionChanged` (`EventHandler`)
+#### `OverlayModelCollectionChanged` (`Tekla.Structures.Model.Internal.OverlayModel.OverlayModelEvents.OverlayModelCollectionChangedDelegate`)
 
-**Signature:** `event EventHandler OverlayModelCollectionChanged`
+**Signature:** `event OverlayModelEvents.OverlayModelCollectionChangedDelegate OverlayModelCollectionChanged`
 
 The OverlayModelCollectionChanged event is raised when an overlay model is changed (added/updated/removed).
 
@@ -40,12 +40,12 @@ Event class to allow the user to subscribe for OverlayModel events.
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/209f899a-9f34-2277-f9d1-0bd4864eb214)
 
 ### Constructors
-- `OverlayModelEvents(...)` — Initializes a new instance of the OverlayModelEvents class
+- `public OverlayModelEvents()` — Initializes a new instance of the OverlayModelEvents class
 
 ### Events
-#### `OverlayModelCollectionChanged` (`EventHandler`)
+#### `OverlayModelCollectionChanged` (`Tekla.Structures.Model.Internal.OverlayModel.OverlayModelEvents.OverlayModelCollectionChangedDelegate`)
 
-**Signature:** `event EventHandler OverlayModelCollectionChanged`
+**Signature:** `public event OverlayModelEvents.OverlayModelCollectionChangedDelegate OverlayModelCollectionChanged`
 
 The OverlayModelCollectionChanged event is raised when an overlay model is changed (added/updated/removed).
 

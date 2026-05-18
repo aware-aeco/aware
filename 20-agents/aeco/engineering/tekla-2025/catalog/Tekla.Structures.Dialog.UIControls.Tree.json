@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Tree",
-      "signature": "Tree(...)",
+      "signature": "public Tree()",
       "summary": "Initializes a new instance of the Tree class.",
       "params": [],
       "throws": [],

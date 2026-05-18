@@ -9,36 +9,70 @@
   "constructors": [
     {
       "name": "PluginBase.InputDefinition",
-      "signature": "PluginBase.InputDefinition(...)",
+      "signature": "public InputDefinition(ArrayList _Input)",
       "summary": "Creates a new input definition instance with multiple point or identifier instances.",
-      "params": [],
+      "params": [
+        {
+          "name": "_Input",
+          "type": "System.Collections.ArrayList",
+          "doc": "A list of either points or identifiers.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c3369b9a-adf0-7b86-dae3-e026f4fb63ba"
     },
     {
       "name": "PluginBase.InputDefinition",
-      "signature": "PluginBase.InputDefinition(...)",
+      "signature": "public InputDefinition(Identifier ID)",
       "summary": "Creates a new input definition instance with one identifier.",
-      "params": [],
+      "params": [
+        {
+          "name": "ID",
+          "type": "Tekla.Structures.Identifier",
+          "doc": "The model object identifier.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/11449c09-91f9-8f7f-bfb8-948237ce12fb"
     },
     {
       "name": "PluginBase.InputDefinition",
-      "signature": "PluginBase.InputDefinition(...)",
+      "signature": "public InputDefinition(Point Point)",
       "summary": "Creates a new input definition instance with one point.",
-      "params": [],
+      "params": [
+        {
+          "name": "Point",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The point.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/bb9f6b4e-47dc-376a-41ff-ff76a48396ed"
     },
     {
       "name": "PluginBase.InputDefinition",
-      "signature": "PluginBase.InputDefinition(...)",
+      "signature": "public InputDefinition(Point P1, Point P2)",
       "summary": "Creates a new input definition instance with two points.",
-      "params": [],
+      "params": [
+        {
+          "name": "P1",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The first point.",
+          "optional": false
+        },
+        {
+          "name": "P2",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The second point.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/221b36d2-427a-77fb-ebf0-7d0287c3fdb2"
@@ -47,18 +81,26 @@
   "methods": [
     {
       "name": "GetInput",
-      "signature": "GetInput(...)",
+      "signature": "public Object GetInput()",
       "summary": "Returns the input Tekla Structures gave to the plug-in. The input is either a point instance, an identifier instance, an array list of points or an array list of identifiers. This is based on the input format returned from the DefineInput() method.",
       "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "The input to use in the Run() method."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/ea126692-d899-a70f-46e5-14e462635aa5"
     },
     {
       "name": "GetInputType",
-      "signature": "GetInputType(...)",
+      "signature": "public PluginBase.InputDefinition.InputTypeEnum GetInputType()",
       "summary": "Returns the type of the input the current instance contains.",
       "params": [],
+      "returns": {
+        "type": "PluginBase.InputDefinition.InputTypeEnum",
+        "doc": "The type of the input."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4262e736-6d4a-89ba-0950-5e1d7902a34e"

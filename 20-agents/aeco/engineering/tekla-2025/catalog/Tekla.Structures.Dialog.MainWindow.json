@@ -10,18 +10,44 @@
   "methods": [
     {
       "name": "AddExternalWindow",
-      "signature": "AddExternalWindow(...)",
+      "signature": "public void AddExternalWindow(string Name, IntPtr Handle)",
       "summary": "Registers the entire dialog to be insensitive at certain points, for example while modal Tekla Structures system dialog boxes are open. When insensitive, the dialog does not respond to any input. You can remove the registration of the dialog with RemoveExternalWindow(String, IntPtr).",
-      "params": [],
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The unique name of the form.",
+          "optional": false
+        },
+        {
+          "name": "Handle",
+          "type": "System.IntPtr",
+          "doc": "The handle to the form that is to be added.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/92595806-5cd0-f58c-9ecb-569eac5bcfc0"
     },
     {
       "name": "RemoveExternalWindow",
-      "signature": "RemoveExternalWindow(...)",
+      "signature": "public void RemoveExternalWindow(string Name, IntPtr Handle)",
       "summary": "Removes a registration done with AddExternalWindow(String, IntPtr).",
-      "params": [],
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The unique name of the form.",
+          "optional": false
+        },
+        {
+          "name": "Handle",
+          "type": "System.IntPtr",
+          "doc": "The handle to the form that is to be removed.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9e63470d-b3c6-e44c-eba7-619d7e7e1015"
@@ -30,9 +56,9 @@
   "properties": [
     {
       "name": "Handle",
-      "type": "object",
+      "type": "IntPtr",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the handle.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/b5cd32d4-d877-ff48-bd3b-82d88a9c8879"
     }

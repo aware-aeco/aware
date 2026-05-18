@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "ModelHandler",
-      "signature": "ModelHandler(...)",
+      "signature": "public ModelHandler()",
       "summary": "Creates a new ModelHandler instance.",
       "params": [],
       "throws": [],
@@ -20,7 +20,7 @@
   "methods": [
     {
       "name": "Close",
-      "signature": "Close(...)",
+      "signature": "public void Close()",
       "summary": "Closes current model.",
       "params": [],
       "throws": [],
@@ -29,63 +29,181 @@
     },
     {
       "name": "CreateNewMultiUserModel",
-      "signature": "CreateNewMultiUserModel(...)",
+      "signature": "public bool CreateNewMultiUserModel(string ModelName, string ModelFolder, string ServerName)",
       "summary": "Creates a new multi-user model.",
-      "params": [],
+      "params": [
+        {
+          "name": "ModelName",
+          "type": "System.String",
+          "doc": "The name for the new model.",
+          "optional": false
+        },
+        {
+          "name": "ModelFolder",
+          "type": "System.String",
+          "doc": "The folder path for the new model.",
+          "optional": false
+        },
+        {
+          "name": "ServerName",
+          "type": "System.String",
+          "doc": "The multi user server name.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/26fdf9dc-2f34-5ea8-af1c-af891809822b"
     },
     {
       "name": "CreateNewSingleUserModel",
-      "signature": "CreateNewSingleUserModel(...)",
+      "signature": "public bool CreateNewSingleUserModel(string ModelName, string ModelFolder, string TemplateNameOrTemplatePath = \u0022\u0022)",
       "summary": "Creates a new single user model.",
-      "params": [],
+      "params": [
+        {
+          "name": "ModelName",
+          "type": "System.String",
+          "doc": "The name for the new model.",
+          "optional": false
+        },
+        {
+          "name": "ModelFolder",
+          "type": "System.String",
+          "doc": "The folder path for the new model.",
+          "optional": false
+        },
+        {
+          "name": "TemplateNameOrTemplatePath",
+          "type": "System.String",
+          "doc": "The optional template name for the new model.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4a87383d-506b-847e-0259-27e1e9b1dfb0"
     },
     {
       "name": "IsModelAutoSaved",
-      "signature": "IsModelAutoSaved(...)",
+      "signature": "public bool IsModelAutoSaved(string ModelFolder)",
       "summary": "Tells whether a model has auto saved information.",
-      "params": [],
+      "params": [
+        {
+          "name": "ModelFolder",
+          "type": "System.String",
+          "doc": "The model folder path to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if there is auto saved information."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/df868bbd-a070-1cc4-349f-e2ef21aa408c"
     },
     {
       "name": "IsModelSaved",
-      "signature": "IsModelSaved(...)",
+      "signature": "public bool IsModelSaved()",
       "summary": "Tells whether current model has been saved.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if there are no unsaved changes in the model."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c2a7a29e-4c4b-f75a-1116-d3c0e276fd25"
     },
     {
       "name": "Open",
-      "signature": "Open(...)",
+      "signature": "public bool Open(string ModelFolder, bool OpenAutoSaved = false)",
       "summary": "Opens a new model to Tekla Structures without saving changes to current model.",
-      "params": [],
+      "params": [
+        {
+          "name": "ModelFolder",
+          "type": "System.String",
+          "doc": "The model folder path to be used.",
+          "optional": false
+        },
+        {
+          "name": "OpenAutoSaved",
+          "type": "System.Boolean",
+          "doc": "Tells whether to open auto saved information or not. Optional parameter, default = false",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/3c82285d-8ad8-bd71-cc74-874ea0ef0e16"
     },
     {
       "name": "Save(String, String)",
-      "signature": "Save(String, String)(...)",
+      "signature": "public bool Save(string Comment = \u0022\u0022, string User = \u0022\u0022)",
       "summary": "Saves current model with comment and user information.",
-      "params": [],
+      "params": [
+        {
+          "name": "Comment",
+          "type": "System.String",
+          "doc": "The comment for save operation, used only with multi-user models.",
+          "optional": true
+        },
+        {
+          "name": "User",
+          "type": "System.String",
+          "doc": "The user identification, used only with multi-user models.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c828c8fa-25b4-eb78-f9dc-0d465498e3d0"
     },
     {
       "name": "Save(String, String, String)",
-      "signature": "Save(String, String, String)(...)",
+      "signature": "public bool Save(string Comment, string User, string Reason)",
       "summary": "Saves current model with comment and user information.",
-      "params": [],
+      "params": [
+        {
+          "name": "Comment",
+          "type": "System.String",
+          "doc": "The comment for save operation, used only with multi-user models.",
+          "optional": false
+        },
+        {
+          "name": "User",
+          "type": "System.String",
+          "doc": "The user identification, used only with multi-user models.",
+          "optional": false
+        },
+        {
+          "name": "Reason",
+          "type": "System.String",
+          "doc": "The reason why this model save is being called. Used for identifying model save events.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7373ac01-ea88-2ffa-ddae-01a37ed87e2c"

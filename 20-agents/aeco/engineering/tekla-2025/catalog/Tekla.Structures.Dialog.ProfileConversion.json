@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "ProfileConversion",
-      "signature": "ProfileConversion(...)",
+      "signature": "public ProfileConversion()",
       "summary": "Initializes a new instance of the ProfileConversion class",
       "params": [],
       "throws": [],
@@ -20,18 +20,52 @@
   "methods": [
     {
       "name": "ConvertFromCurrentUnits",
-      "signature": "ConvertFromCurrentUnits(...)",
+      "signature": "public static bool ConvertFromCurrentUnits(string Profile, ref string ConvertedProfile)",
       "summary": "Converts a profile string from current units to internal units (set in Units and decimals options).",
-      "params": [],
+      "params": [
+        {
+          "name": "Profile",
+          "type": "System.String",
+          "doc": "The profile string to convert.",
+          "optional": false
+        },
+        {
+          "name": "ConvertedProfile",
+          "type": "System.String.",
+          "doc": "The converted profile string.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successfully converted the string."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9d8e9aad-e97f-8cba-98f6-3648ca66d6a9"
     },
     {
       "name": "ConvertToCurrentUnits",
-      "signature": "ConvertToCurrentUnits(...)",
+      "signature": "public static bool ConvertToCurrentUnits(string Profile, ref string ConvertedProfile)",
       "summary": "Converts a profile string from internal units to current units (set in Units and decimals options).",
-      "params": [],
+      "params": [
+        {
+          "name": "Profile",
+          "type": "System.String",
+          "doc": "The profile string to convert.",
+          "optional": false
+        },
+        {
+          "name": "ConvertedProfile",
+          "type": "System.String.",
+          "doc": "The converted profile string.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successfully converted the string."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/46ce1d12-a1f5-19e1-129f-94893992d71c"

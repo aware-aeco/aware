@@ -10,99 +10,143 @@
   "methods": [
     {
       "name": "AlongLineOrWithLeaderLineAndParentObjectAlongPartPlacingType",
-      "signature": "AlongLineOrWithLeaderLineAndParentObjectAlongPartPlacingType(...)",
+      "signature": "public static PreferredPlacingTypeBase AlongLineOrWithLeaderLineAndParentObjectAlongPartPlacingType()",
       "summary": "The object is placed using the along line placing as the first option. If there is no room for the first option the fallback option will be used. The fallback option is placing the object with a leader line and rotated to be at the same angle as the connected part.",
       "params": [],
+      "returns": {
+        "type": "PreferredPlacingTypeBase",
+        "doc": "A new along line or with leader line and parent object along part placing type instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6d3540d9-24e3-6269-a47b-001bf7d8bc4f"
     },
     {
       "name": "AlongLineOrWithLeaderLinePlacingType",
-      "signature": "AlongLineOrWithLeaderLinePlacingType(...)",
+      "signature": "public static PreferredPlacingTypeBase AlongLineOrWithLeaderLinePlacingType()",
       "summary": "The object is placed using the along line placing as the first option. If there is no room for the first option the fallback option will be used. The fallback option is placing the object with a leader line.",
       "params": [],
+      "returns": {
+        "type": "PreferredPlacingTypeBase",
+        "doc": "A new along line or with leader line placing type instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/1601449f-48f3-fe2b-3370-7a3754f21808"
     },
     {
       "name": "AlongLinePlacingType",
-      "signature": "AlongLinePlacingType(...)",
+      "signature": "public static PreferredPlacingTypeBase AlongLinePlacingType()",
       "summary": "The object is placed using the along line placing.",
       "params": [],
+      "returns": {
+        "type": "PreferredPlacingTypeBase",
+        "doc": "A new along line placing type instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5f098f43-2054-cd59-c87d-4e1b4f870dee"
     },
     {
       "name": "AlongPartCenteredPlacingType",
-      "signature": "AlongPartCenteredPlacingType(...)",
+      "signature": "public static PreferredPlacingTypeBase AlongPartCenteredPlacingType()",
       "summary": "The object is placed using the along line placing. The line used will be the part\u0027s edge in the center of that line.",
       "params": [],
+      "returns": {
+        "type": "PreferredPlacingTypeBase",
+        "doc": "A new along part centered placing type instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a972a34f-74e0-7329-39e3-c9d1370159fd"
     },
     {
       "name": "InsidePartAlongPartOrWithLeaderLinePlacingType",
-      "signature": "InsidePartAlongPartOrWithLeaderLinePlacingType(...)",
+      "signature": "public static PreferredPlacingTypeBase InsidePartAlongPartOrWithLeaderLinePlacingType()",
       "summary": "The object is placed using the base line placing as the first option. If there is no room for the first option the fallback option will be used. The fallback option is placing the object with a leader line. The base line used is in the middle of the part, aligned with the part.",
       "params": [],
+      "returns": {
+        "type": "PreferredPlacingTypeBase",
+        "doc": "A new inside part along part or with leader line placing type instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/376611d0-8168-9b78-18f4-4d2a822964d8"
     },
     {
       "name": "InsidePartAlongPartPlacingType",
-      "signature": "InsidePartAlongPartPlacingType(...)",
+      "signature": "public static PreferredPlacingTypeBase InsidePartAlongPartPlacingType()",
       "summary": "The object is placed using the base line placing. The base line used is in the middle of the part, aligned with the part.",
       "params": [],
+      "returns": {
+        "type": "PreferredPlacingTypeBase",
+        "doc": "A new inside part along part placing type instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/df64f61b-ae1e-b113-57bd-64dbf50c7266"
     },
     {
       "name": "InsidePartHorizontalOrWithLeaderLinePlacingType",
-      "signature": "InsidePartHorizontalOrWithLeaderLinePlacingType(...)",
+      "signature": "public static PreferredPlacingTypeBase InsidePartHorizontalOrWithLeaderLinePlacingType()",
       "summary": "The object is placed using the base line placing as the first option. If there is no room for the first option the fallback option will be used. The fallback option is placing the object with a leader line. The base line used is in the middle of the part, aligned with the part. In addition the object will be rotated to be horizontal in the drawing.",
       "params": [],
+      "returns": {
+        "type": "PreferredPlacingTypeBase",
+        "doc": "A new inside part horizontal or with leader line placing type instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/1eb7852e-30f6-18b3-5a18-c04ede39612c"
     },
     {
       "name": "InsidePartHorizontalPlacingType",
-      "signature": "InsidePartHorizontalPlacingType(...)",
+      "signature": "public static PreferredPlacingTypeBase InsidePartHorizontalPlacingType()",
       "summary": "The object is placed using the base line placing. The base line used is in the middle of the part, aligned with the part. In addition the object will be rotated to be horizontal in the drawing.",
       "params": [],
+      "returns": {
+        "type": "PreferredPlacingTypeBase",
+        "doc": "A new inside part horizontal placing type instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d10771d3-a18f-4a93-0d8f-fe215dad4d4e"
     },
     {
       "name": "LeaderLineAndParentObjectAlongPartPlacingType",
-      "signature": "LeaderLineAndParentObjectAlongPartPlacingType(...)",
+      "signature": "public static PreferredPlacingTypeBase LeaderLineAndParentObjectAlongPartPlacingType()",
       "summary": "The object is placed with a leader line and rotated to be at the same angle as the connected part.",
       "params": [],
+      "returns": {
+        "type": "PreferredPlacingTypeBase",
+        "doc": "A new leader line and parent object along part placing type instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9ee993af-0f5b-196f-30da-475c8ad0f470"
     },
     {
       "name": "LeaderLinePlacingType",
-      "signature": "LeaderLinePlacingType(...)",
+      "signature": "public static PreferredPlacingTypeBase LeaderLinePlacingType()",
       "summary": "The object is placed with a leader line.",
       "params": [],
+      "returns": {
+        "type": "PreferredPlacingTypeBase",
+        "doc": "A new leader line placing type instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/0b63f11c-400b-e9ce-ad61-3211f61e4c03"
     },
     {
       "name": "PointPlacingType",
-      "signature": "PointPlacingType(...)",
+      "signature": "public static PreferredPlacingTypeBase PointPlacingType()",
       "summary": "The object is placed at one point (the insertion point) without any additional placing options.",
       "params": [],
+      "returns": {
+        "type": "PreferredPlacingTypeBase",
+        "doc": "A new point placing type instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/67efdc2d-3657-5658-5c5c-c58d93d569a0"

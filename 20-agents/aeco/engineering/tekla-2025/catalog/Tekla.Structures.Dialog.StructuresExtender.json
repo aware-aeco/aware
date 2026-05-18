@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "StructuresExtender",
-      "signature": "StructuresExtender(...)",
+      "signature": "public StructuresExtender()",
       "summary": "Initializes a new instance of the StructuresExtender class",
       "params": [],
       "throws": [],
@@ -20,81 +20,188 @@
   "methods": [
     {
       "name": "CanExtend",
-      "signature": "CanExtend(...)",
+      "signature": "public bool CanExtend(Object extendee)",
       "summary": "Specifies whether the current object can provide its extender properties to the specified object.",
-      "params": [],
+      "params": [
+        {
+          "name": "extendee",
+          "type": "System.Object",
+          "doc": "The object to receive the extender properties.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the current object can provide its extender properties to the specified object; otherwise, false."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e420da2e-767d-c932-be01-ebb557ff30b3"
     },
     {
       "name": "GetAttributeName",
-      "signature": "GetAttributeName(...)",
+      "signature": "public string GetAttributeName(Control control)",
       "summary": "Retrieves the AttributeName text associated with the specified control.",
-      "params": [],
+      "params": [
+        {
+          "name": "control",
+          "type": "System.Windows.Forms.Control",
+          "doc": "The control for which to retrieve the AttributeName text.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A string containing the AttributeName text for the specified control, or null if no text is associated with the specified control."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d3425d49-18cb-66e5-9c9e-91de523b1d1f"
     },
     {
       "name": "GetAttributeTypeName",
-      "signature": "GetAttributeTypeName(...)",
+      "signature": "public string GetAttributeTypeName(Control control)",
       "summary": "Retrieves the AttributeTypeName text associated with the specified control.",
-      "params": [],
+      "params": [
+        {
+          "name": "control",
+          "type": "System.Windows.Forms.Control",
+          "doc": "The control for which to retrieve the AttributeTypeName text.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A string containing the AttributeTypeName text for the specified control, or null if no text is associated with the specified control."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f6f015d4-b5e4-74d1-f9d3-0902b7bd6d4d"
     },
     {
       "name": "GetBindPropertyName",
-      "signature": "GetBindPropertyName(...)",
+      "signature": "public string GetBindPropertyName(Control control)",
       "summary": "Retrieves the BindPropertyName text associated with the specified control.",
-      "params": [],
+      "params": [
+        {
+          "name": "control",
+          "type": "System.Windows.Forms.Control",
+          "doc": "The control for which to retrieve the BindPropertyName text.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A string containing the BindPropertyName text for the specified control, or null if no text is associated with the specified control."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4beb42d7-2857-08f0-de96-454e6993d294"
     },
     {
       "name": "GetIsFilter",
-      "signature": "GetIsFilter(...)",
+      "signature": "public bool GetIsFilter(Control control)",
       "summary": "Retrieves the IsFilter boolean value associated with the specified control.",
-      "params": [],
+      "params": [
+        {
+          "name": "control",
+          "type": "System.Windows.Forms.Control",
+          "doc": "The control for which to retrieve the IsFilter value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "A boolean containing the IsFilter value for the specified control."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/aa096d0b-8bb2-a7b4-5ef2-0a823abf2b1a"
     },
     {
       "name": "SetAttributeName",
-      "signature": "SetAttributeName(...)",
+      "signature": "public void SetAttributeName(Control control, string value)",
       "summary": "Associates AttributeName text with the specified control.",
-      "params": [],
+      "params": [
+        {
+          "name": "control",
+          "type": "System.Windows.Forms.Control",
+          "doc": "The control to associate the AttributeName text with.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "The AttributeName text to associate with the control.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/be684d7c-2d8e-23f8-2322-f613569ab409"
     },
     {
       "name": "SetAttributeTypeName",
-      "signature": "SetAttributeTypeName(...)",
+      "signature": "public void SetAttributeTypeName(Control control, string value)",
       "summary": "Associates the AttributeTypeName text with the specified control.",
-      "params": [],
+      "params": [
+        {
+          "name": "control",
+          "type": "System.Windows.Forms.Control",
+          "doc": "The control to associate the AttributeTypeName text with.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "The AttributeTypeName text to associate with the control.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/caf131b4-139f-c16e-adce-aaf58eeb48a1"
     },
     {
       "name": "SetBindPropertyName",
-      "signature": "SetBindPropertyName(...)",
+      "signature": "public void SetBindPropertyName(Control control, string value)",
       "summary": "Associates the BindPropertyName text with the specified control.",
-      "params": [],
+      "params": [
+        {
+          "name": "control",
+          "type": "System.Windows.Forms.Control",
+          "doc": "The control to associate the BindPropertyName text with.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "The BindPropertyName text to associate with the control.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d9bc1d5e-9a6e-a099-f857-1a2f5af61a47"
     },
     {
       "name": "SetIsFilter",
-      "signature": "SetIsFilter(...)",
+      "signature": "public void SetIsFilter(Control control, bool value)",
       "summary": "Associates the IsFilter boolean value with the specified control.",
-      "params": [],
+      "params": [
+        {
+          "name": "control",
+          "type": "System.Windows.Forms.Control",
+          "doc": "The control to associate the IsFilter value with.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "The IsFilter value to associate with the control.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/938428a6-0561-e6ae-5376-ded7218ff601"

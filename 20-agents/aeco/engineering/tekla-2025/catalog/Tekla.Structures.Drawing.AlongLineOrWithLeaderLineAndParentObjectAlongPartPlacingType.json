@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AlongLineOrWithLeaderLineAndParentObjectAlongPartPlacingType",
-      "signature": "AlongLineOrWithLeaderLineAndParentObjectAlongPartPlacingType(...)",
+      "signature": "public AlongLineOrWithLeaderLineAndParentObjectAlongPartPlacingType()",
       "summary": "Creates a new along line or with leader line and parent object along part placing type instance.",
       "params": [],
       "throws": [],

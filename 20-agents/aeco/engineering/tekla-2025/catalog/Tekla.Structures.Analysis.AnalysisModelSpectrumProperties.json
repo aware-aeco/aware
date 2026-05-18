@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisModelSpectrumProperties",
-      "signature": "AnalysisModelSpectrumProperties(...)",
+      "signature": "public AnalysisModelSpectrumProperties()",
       "summary": "Initializes a new instance of the AnalysisModelSpectrumProperties class",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "SpectrumAcceleration",
-      "type": "object",
+      "type": "List\u003CDouble\u003E",
       "getter": true,
       "setter": true,
       "summary": "The list of the accelerations of the spectrum.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "SpectrumASCEf1",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The ASCEf1 value of the spectrum.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "SpectrumASCEf2",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The ASCEf2 value of the spectrum.",
@@ -45,7 +45,7 @@
     },
     {
       "name": "SpectrumCombination",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The spectrum combination.",
@@ -53,7 +53,7 @@
     },
     {
       "name": "SpectrumCompositeDampingRatioX",
-      "type": "object",
+      "type": "List\u003CDouble\u003E",
       "getter": true,
       "setter": true,
       "summary": "The list of the composite damping rations in the X direction of the spectrum.",
@@ -61,7 +61,7 @@
     },
     {
       "name": "SpectrumCompositeDampingRatioY",
-      "type": "object",
+      "type": "List\u003CDouble\u003E",
       "getter": true,
       "setter": true,
       "summary": "The list of the composite damping rations in the Y direction of the spectrum.",
@@ -69,7 +69,7 @@
     },
     {
       "name": "SpectrumCompositeDampingRatioZ",
-      "type": "object",
+      "type": "List\u003CDouble\u003E",
       "getter": true,
       "setter": true,
       "summary": "The list of the composite damping rations in the Z direction of the spectrum.",
@@ -77,7 +77,7 @@
     },
     {
       "name": "SpectrumDampingFactor",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The damping factor of the spectrum.",
@@ -85,7 +85,7 @@
     },
     {
       "name": "SpectrumDampingPointID",
-      "type": "object",
+      "type": "List\u003CIdentifier\u003E",
       "getter": true,
       "setter": true,
       "summary": "The list of the damping point identifiers of the spectrum.",
@@ -93,7 +93,7 @@
     },
     {
       "name": "SpectrumDampingType",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The type of the spectrum damping.",
@@ -101,7 +101,7 @@
     },
     {
       "name": "SpectrumInterpolation",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The interpolation of the spectrum.",
@@ -109,7 +109,7 @@
     },
     {
       "name": "SpectrumMaximumDampingRatio",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The maximum damping ratio of the spectrum.",
@@ -117,7 +117,7 @@
     },
     {
       "name": "SpectrumMinimumDampingRatio",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The minimum damping ratio of the spectrum.",
@@ -125,7 +125,7 @@
     },
     {
       "name": "SpectrumMissingMass",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The missing mass of the spectrum.",
@@ -133,7 +133,7 @@
     },
     {
       "name": "SpectrumMissingMassEnable",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the missing mass of the spectrum is enabled.",
@@ -141,7 +141,7 @@
     },
     {
       "name": "SpectrumModalDampingRatio",
-      "type": "object",
+      "type": "List\u003CDouble\u003E",
       "getter": true,
       "setter": true,
       "summary": "The list of the modal damping ratios of the spectrum.",
@@ -149,7 +149,7 @@
     },
     {
       "name": "SpectrumModalDampingRatioEnable",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the damping ratio of the spectrum is enabled.",
@@ -157,7 +157,7 @@
     },
     {
       "name": "SpectrumModeCount",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The count of the spectrum mode.",
@@ -165,7 +165,7 @@
     },
     {
       "name": "SpectrumPeriod",
-      "type": "object",
+      "type": "List\u003CDouble\u003E",
       "getter": true,
       "setter": true,
       "summary": "The list of the periods of the spectrum.",
@@ -173,7 +173,7 @@
     },
     {
       "name": "SpectrumScale",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The scale of the spectrum.",
@@ -181,7 +181,7 @@
     },
     {
       "name": "SpectrumType",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The type of the spectrum.",
@@ -189,7 +189,7 @@
     },
     {
       "name": "SpectrumXdirection",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The X direction of the spectrum.",
@@ -197,7 +197,7 @@
     },
     {
       "name": "SpectrumXdirectionEnable",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the X direction of the spectrum is enabled.",
@@ -205,7 +205,7 @@
     },
     {
       "name": "SpectrumYdirection",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The Y direction of the spectrum.",
@@ -213,7 +213,7 @@
     },
     {
       "name": "SpectrumYdirectionEnable",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the Y direction of the spectrum is enabled.",
@@ -221,7 +221,7 @@
     },
     {
       "name": "SpectrumZdirection",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The Z direction of the spectrum.",
@@ -229,7 +229,7 @@
     },
     {
       "name": "SpectrumZdirectionEnable",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the Z direction of the spectrum is enabled.",

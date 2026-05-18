@@ -9,9 +9,20 @@
   "constructors": [
     {
       "name": "SpiralBeamDataException",
-      "signature": "SpiralBeamDataException(...)",
+      "signature": "public SpiralBeamDataException(SpiralBeam.ErrorStatus status, string message)",
       "summary": "Initializes a new instance of the SpiralBeamDataException class with spiral beam error message based on status.",
-      "params": [],
+      "params": [
+        {
+          "name": "status",
+          "type": "Tekla.Structures.Model.SpiralBeam.ErrorStatus",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a63fc625-3f24-578b-ec7d-e689a896c163"

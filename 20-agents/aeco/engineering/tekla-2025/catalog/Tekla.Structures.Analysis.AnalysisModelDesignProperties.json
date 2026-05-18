@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisModelDesignProperties",
-      "signature": "AnalysisModelDesignProperties(...)",
+      "signature": "public AnalysisModelDesignProperties()",
       "summary": "Initializes a new instance of the AnalysisModelDesignProperties class",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "ConcreteDesign",
-      "type": "object",
+      "type": "AnalysisDesignCode",
       "getter": true,
       "setter": true,
       "summary": "The concrete code used.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "ConcreteDesignMethod",
-      "type": "object",
+      "type": "AnalysisModelDesignProperties.DesignMethodEnum",
       "getter": true,
       "setter": true,
       "summary": "The concrete design method.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "SteelDesign",
-      "type": "object",
+      "type": "AnalysisDesignCode",
       "getter": true,
       "setter": true,
       "summary": "The steel code used.",
@@ -45,7 +45,7 @@
     },
     {
       "name": "SteelDesignMethod",
-      "type": "object",
+      "type": "AnalysisModelDesignProperties.DesignMethodEnum",
       "getter": true,
       "setter": true,
       "summary": "The steel design method.",
@@ -53,7 +53,7 @@
     },
     {
       "name": "TimberDesign",
-      "type": "object",
+      "type": "AnalysisDesignCode",
       "getter": true,
       "setter": true,
       "summary": "The timber code used.",
@@ -61,7 +61,7 @@
     },
     {
       "name": "TimberDesignMethod",
-      "type": "object",
+      "type": "AnalysisModelDesignProperties.DesignMethodEnum",
       "getter": true,
       "setter": true,
       "summary": "The timber design method.",

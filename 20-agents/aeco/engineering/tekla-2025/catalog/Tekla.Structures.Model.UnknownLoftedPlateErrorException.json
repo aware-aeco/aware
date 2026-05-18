@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "UnknownLoftedPlateErrorException",
-      "signature": "UnknownLoftedPlateErrorException(...)",
+      "signature": "public UnknownLoftedPlateErrorException()",
       "summary": "Constructs an instance of the class",
       "params": [],
       "throws": [],

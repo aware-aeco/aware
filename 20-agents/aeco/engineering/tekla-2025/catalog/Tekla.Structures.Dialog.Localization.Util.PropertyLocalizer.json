@@ -9,9 +9,16 @@
   "constructors": [
     {
       "name": "Localization.Util.PropertyLocalizer",
-      "signature": "Localization.Util.PropertyLocalizer(...)",
+      "signature": "public PropertyLocalizer(string propertyName)",
       "summary": "Creates a new instance of the localizer.",
-      "params": [],
+      "params": [
+        {
+          "name": "propertyName",
+          "type": "System.String",
+          "doc": "The name of the property.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2326a892-e00f-756f-988c-d4c81592e693"
@@ -20,9 +27,22 @@
   "methods": [
     {
       "name": "Localize",
-      "signature": "Localize(...)",
+      "signature": "public void Localize(Localization localization, Object obj)",
       "summary": "Localizes the object with the given localization instance.",
-      "params": [],
+      "params": [
+        {
+          "name": "localization",
+          "type": "Tekla.Structures.Dialog.Localization",
+          "doc": "The localization instance to be used.",
+          "optional": false
+        },
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "The object to be localized.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f0d889df-cd25-7dd5-b112-9359562b4e68"

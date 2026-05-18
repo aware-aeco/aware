@@ -9,9 +9,16 @@
   "constructors": [
     {
       "name": "CannotInsertDrawingException",
-      "signature": "CannotInsertDrawingException(...)",
+      "signature": "public CannotInsertDrawingException(string Message)",
       "summary": "Creates a new cannot insert drawing exception instance.",
-      "params": [],
+      "params": [
+        {
+          "name": "Message",
+          "type": "System.String",
+          "doc": "The exception message.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/06cb21b0-fed0-74bc-7f7e-6a8ea16d89f3"

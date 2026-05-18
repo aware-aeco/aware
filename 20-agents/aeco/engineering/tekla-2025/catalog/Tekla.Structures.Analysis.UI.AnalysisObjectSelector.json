@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisObjectSelector",
-      "signature": "AnalysisObjectSelector(...)",
+      "signature": "public AnalysisObjectSelector()",
       "summary": "Initializes a new instance of the AnalysisObjectSelector class.",
       "params": [],
       "throws": [],
@@ -20,18 +20,46 @@
   "methods": [
     {
       "name": "GetSelectedObjects",
-      "signature": "GetSelectedObjects(...)",
+      "signature": "public AnalysisObjectEnumerator GetSelectedObjects(string analysisModelName)",
       "summary": "Get the analysis objects selected in model views.",
-      "params": [],
+      "params": [
+        {
+          "name": "analysisModelName",
+          "type": "System.String",
+          "doc": "The analysis model name.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "AnalysisObjectEnumerator",
+        "doc": "The analysis object enumerator of analysis objects selected in model views."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/67a2ab44-62cf-ee69-7f6b-c0231934cbeb"
     },
     {
       "name": "SetSelectedObjects",
-      "signature": "SetSelectedObjects(...)",
+      "signature": "public int SetSelectedObjects(List\u003CAnalysisObject\u003E analysisObjects, bool append)",
       "summary": "Set analysis objects as selected in model views.",
-      "params": [],
+      "params": [
+        {
+          "name": "analysisObjects",
+          "type": "System.Collections.Generic.List\u003CAnalysisObject\u003E",
+          "doc": "The analysis objects.",
+          "optional": false
+        },
+        {
+          "name": "append",
+          "type": "System.Boolean",
+          "doc": "If true, objects are added to currently selected. If false, current selection is cleared.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The count of objects selected."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/86208bd9-647e-0e3a-5dee-0cce9a4e50a2"

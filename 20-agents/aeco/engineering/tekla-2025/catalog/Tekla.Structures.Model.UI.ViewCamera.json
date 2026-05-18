@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "ViewCamera",
-      "signature": "ViewCamera(...)",
+      "signature": "public ViewCamera()",
       "summary": "Instantiates a new view camera instance with zero length vectors.",
       "params": [],
       "throws": [],
@@ -20,18 +20,26 @@
   "methods": [
     {
       "name": "Modify",
-      "signature": "Modify(...)",
+      "signature": "public bool Modify()",
       "summary": "Updates the camera to the application view.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/25b308fd-2fdb-630f-ef81-dbe854987574"
     },
     {
       "name": "Select",
-      "signature": "Select(...)",
+      "signature": "public bool Select()",
       "summary": "Updates the camera parameters from the application view.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/32e5ccf7-e831-0b1f-6bdc-f27f9d9c5a3b"
@@ -40,7 +48,7 @@
   "properties": [
     {
       "name": "DirectionVector",
-      "type": "object",
+      "type": "Vector",
       "getter": true,
       "setter": true,
       "summary": "The camera direction (controls the camera pan and tilt).",
@@ -48,7 +56,7 @@
     },
     {
       "name": "FieldOfView",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The camera field of view as an angle (degrees) in the perspective view.",
@@ -56,7 +64,7 @@
     },
     {
       "name": "Location",
-      "type": "object",
+      "type": "Point",
       "getter": true,
       "setter": true,
       "summary": "The camera location in global coordinates (XYZ).",
@@ -64,7 +72,7 @@
     },
     {
       "name": "UpVector",
-      "type": "object",
+      "type": "Vector",
       "getter": true,
       "setter": true,
       "summary": "The camera up vector (controls the camera roll).",
@@ -72,7 +80,7 @@
     },
     {
       "name": "View",
-      "type": "object",
+      "type": "View",
       "getter": true,
       "setter": true,
       "summary": "The view where the camera belongs to.",
@@ -80,7 +88,7 @@
     },
     {
       "name": "ZoomFactor",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The camera zoom factor (meter/pixel) in the orthogonal view.",

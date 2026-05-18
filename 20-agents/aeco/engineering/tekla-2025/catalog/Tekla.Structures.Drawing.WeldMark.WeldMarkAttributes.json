@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "WeldMark.WeldMarkAttributes",
-      "signature": "WeldMark.WeldMarkAttributes(...)",
+      "signature": "public WeldMarkAttributes()",
       "summary": "Creates a new default weld mark attributes instance that loads standard attributes.",
       "params": [],
       "throws": [],
@@ -18,9 +18,16 @@
     },
     {
       "name": "WeldMark.WeldMarkAttributes",
-      "signature": "WeldMark.WeldMarkAttributes(...)",
+      "signature": "public WeldMarkAttributes(string AttributeFile)",
       "summary": "Creates a new weld mark attributes instance that loads the specified attributes.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a095c260-2033-20a0-2b73-6d916c6e6515"
@@ -29,18 +36,40 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/15f7400e-a8c0-6cef-0991-aa99d4daa923"
     },
     {
       "name": "LoadAttributes",
-      "signature": "LoadAttributes(...)",
+      "signature": "public override bool LoadAttributes(string AttributeFile)",
       "summary": "Loads the attributes from the attribute file.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9f018710-63bd-27fd-fa0f-8e8e34de85ab"
@@ -49,7 +78,7 @@
   "properties": [
     {
       "name": "CustomPresentation",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Custom presentation GUID to be applied to the object type",
@@ -57,7 +86,7 @@
     },
     {
       "name": "Font",
-      "type": "object",
+      "type": "FontAttributes",
       "getter": true,
       "setter": true,
       "summary": "The weld mark font settings.",
@@ -65,7 +94,7 @@
     },
     {
       "name": "SeamAbove",
-      "type": "object",
+      "type": "WeldMark.SeamVisibilityAttributes",
       "getter": true,
       "setter": true,
       "summary": "The visibility of the seam above parameters.",
@@ -73,7 +102,7 @@
     },
     {
       "name": "SeamBelow",
-      "type": "object",
+      "type": "WeldMark.SeamVisibilityAttributes",
       "getter": true,
       "setter": true,
       "summary": "The visibility of the seam below parameters.",
@@ -81,7 +110,7 @@
     },
     {
       "name": "ShowEdgeAround",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets visibility of the weld mark edge/around property.",
@@ -89,7 +118,7 @@
     },
     {
       "name": "ShowReferenceText",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets visibility of the weld mark reference text.",
@@ -97,7 +126,7 @@
     },
     {
       "name": "ShowWeldNumber",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "The visibility of the weld number.",
@@ -105,7 +134,7 @@
     },
     {
       "name": "ShowWorkshopSite",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets visibility of the weld mark workshop/site property.",
@@ -113,7 +142,7 @@
     },
     {
       "name": "TransparentBackground",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Controls the text background transparency (transparent/opaque).",

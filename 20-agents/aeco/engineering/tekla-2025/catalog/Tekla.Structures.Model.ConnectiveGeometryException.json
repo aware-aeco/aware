@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "ConnectiveGeometryException",
-      "signature": "ConnectiveGeometryException(...)",
+      "signature": "public ConnectiveGeometryException()",
       "summary": "Initializes a new instance of the ConnectiveGeometryException class with general connective geometry error message.",
       "params": [],
       "throws": [],
@@ -18,9 +18,22 @@
     },
     {
       "name": "ConnectiveGeometryException",
-      "signature": "ConnectiveGeometryException(...)",
+      "signature": "public ConnectiveGeometryException(BentPlateGeometrySolver.OperationStatus status, string errorMessage)",
       "summary": "Initializes a new instance of the ConnectiveGeometryException class with connective geometry error message based on status.",
-      "params": [],
+      "params": [
+        {
+          "name": "status",
+          "type": "Tekla.Structures.Model.BentPlateGeometrySolver.OperationStatus",
+          "doc": "Possible error statuses for geometry creation/modification commands.",
+          "optional": false
+        },
+        {
+          "name": "errorMessage",
+          "type": "System.String",
+          "doc": "The message that describes the error status.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/bb022e80-fb6a-1396-8247-da27beee2b5c"

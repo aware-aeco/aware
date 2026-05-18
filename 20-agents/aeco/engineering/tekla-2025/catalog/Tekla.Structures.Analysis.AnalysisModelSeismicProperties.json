@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisModelSeismicProperties",
-      "signature": "AnalysisModelSeismicProperties(...)",
+      "signature": "public AnalysisModelSeismicProperties()",
       "summary": "Initializes a new instance of the AnalysisModelSeismicProperties class",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "SeismicIncludeSelfWeightMass",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the selfweight is included.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "SeismicMassLoadGroupFactors",
-      "type": "object",
+      "type": "List\u003CDouble\u003E",
       "getter": true,
       "setter": true,
       "summary": "The factors of the mass load group.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "SeismicMassLoadGroupIds",
-      "type": "object",
+      "type": "List\u003CIdentifier\u003E",
       "getter": true,
       "setter": true,
       "summary": "The identifier of the mass load group.",
@@ -45,7 +45,7 @@
     },
     {
       "name": "SeismicParameters",
-      "type": "object",
+      "type": "List\u003CDouble\u003E",
       "getter": true,
       "setter": true,
       "summary": "The seismic parameters.",

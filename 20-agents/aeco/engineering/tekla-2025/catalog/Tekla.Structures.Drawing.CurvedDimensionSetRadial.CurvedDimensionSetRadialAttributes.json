@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "CurvedDimensionSetRadial.CurvedDimensionSetRadialAttributes",
-      "signature": "CurvedDimensionSetRadial.CurvedDimensionSetRadialAttributes(...)",
+      "signature": "public CurvedDimensionSetRadialAttributes()",
       "summary": "Creates a new curved dimension set radial attributes instance which loads standard attributes.",
       "params": [],
       "throws": [],
@@ -18,18 +18,31 @@
     },
     {
       "name": "CurvedDimensionSetRadial.CurvedDimensionSetRadialAttributes",
-      "signature": "CurvedDimensionSetRadial.CurvedDimensionSetRadialAttributes(...)",
+      "signature": "public CurvedDimensionSetRadialAttributes(bool SkipLoadingAttributes)",
       "summary": "Creates a new curved dimension set radial attributes instance which loads standard attributes. If it set to true attributes won\u0027t be lodaded.",
-      "params": [],
+      "params": [
+        {
+          "name": "SkipLoadingAttributes",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/310e73de-19dc-cc06-ebfb-43d7babfc4b2"
     },
     {
       "name": "CurvedDimensionSetRadial.CurvedDimensionSetRadialAttributes",
-      "signature": "CurvedDimensionSetRadial.CurvedDimensionSetRadialAttributes(...)",
+      "signature": "public CurvedDimensionSetRadialAttributes(string AttributesFile)",
       "summary": "Creates a new curved dimension set radial attributes instance that loads the specified attributes.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributesFile",
+          "type": "System.String",
+          "doc": "The attributes file\u0027s filename.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/b2ed5466-761c-fdeb-26f8-2c7bedf88f63"
@@ -38,18 +51,40 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9f71819e-59e9-7575-c9ec-e020b97186bc"
     },
     {
       "name": "LoadAttributes",
-      "signature": "LoadAttributes(...)",
+      "signature": "public override bool LoadAttributes(string attributeFilename)",
       "summary": "Loads the attributes from the attribute file.",
-      "params": [],
+      "params": [
+        {
+          "name": "attributeFilename",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f22edb8d-d2ae-0aee-3a63-1acfb794bd69"
@@ -58,7 +93,7 @@
   "properties": [
     {
       "name": "Arrowhead",
-      "type": "object",
+      "type": "ArrowheadAttributes",
       "getter": true,
       "setter": true,
       "summary": "The arrowhead attributes of the dimension.",
@@ -66,7 +101,7 @@
     },
     {
       "name": "Color",
-      "type": "object",
+      "type": "DrawingColors",
       "getter": true,
       "setter": true,
       "summary": "The color of the dimension line.",
@@ -74,7 +109,7 @@
     },
     {
       "name": "CurvedDimensionType",
-      "type": "object",
+      "type": "DimensionSetBaseAttributes.CurvedDimensionTypes",
       "getter": true,
       "setter": true,
       "summary": "The curved dimension type.",
@@ -82,7 +117,7 @@
     },
     {
       "name": "DimensionType",
-      "type": "object",
+      "type": "DimensionSetBaseAttributes.DimensionTypes",
       "getter": true,
       "setter": true,
       "summary": "The dimension type.",
@@ -90,7 +125,7 @@
     },
     {
       "name": "Format",
-      "type": "object",
+      "type": "DimensionSetBaseAttributes.DimensionFormatAttributes",
       "getter": true,
       "setter": true,
       "summary": "The format attributes of the dimension.",
@@ -98,7 +133,7 @@
     },
     {
       "name": "Placing",
-      "type": "object",
+      "type": "DimensionSetBaseAttributes.DimensionPlacingAttributes",
       "getter": true,
       "setter": true,
       "summary": "The placing attributes of the dimension.",
@@ -106,7 +141,7 @@
     },
     {
       "name": "Text",
-      "type": "object",
+      "type": "DimensionSetBaseAttributes.DimensionTextAttributes",
       "getter": true,
       "setter": true,
       "summary": "The text attributes of the dimension.",
@@ -114,7 +149,7 @@
     },
     {
       "name": "TransparentBackground",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "The dimension text background transparency. (transparent/opaque)",
@@ -122,7 +157,7 @@
     },
     {
       "name": "TrueColor",
-      "type": "object",
+      "type": "TeklaDrawingColor",
       "getter": true,
       "setter": true,
       "summary": "The true color (RGB enabled) of the dimension line.",

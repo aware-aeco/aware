@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Model",
-      "signature": "Model(...)",
+      "signature": "public Model()",
       "summary": "Creates a \u0022handle\u0022 to the currently open model.",
       "params": [],
       "throws": [],
@@ -20,153 +20,314 @@
   "methods": [
     {
       "name": "CommitChanges.",
-      "signature": "CommitChanges.(...)",
+      "signature": "public bool CommitChanges()",
       "summary": "Commits the changes made to the model database so far. One commit is something that a user can later on undo with the undo command. A commit also launches the drawing of the changed product model to the visible views. A dependent plug-in should never call CommitChanges, since this would make undo very difficult for the user to do. However, non-dependent plug-ins require a separate commit if new objects are created.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/06690b14-dafd-82b5-ee4c-51292a3e3055"
     },
     {
       "name": "CommitChanges(String)",
-      "signature": "CommitChanges(String)(...)",
+      "signature": "public bool CommitChanges(string Message)",
       "summary": "Commits the changes made to the model database so far. One commit is something that a user can later on undo with the undo command. A commit also launches the drawing of the changed product model to the visible views. A plug-in should never call CommitChanges, since this would make undo very difficult for the user to do.",
-      "params": [],
+      "params": [
+        {
+          "name": "Message",
+          "type": "System.String",
+          "doc": "The message to be saved with the commit.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6b589509-80c1-8a7d-4c6d-718ccf01b9d3"
     },
     {
       "name": "FetchModelObjects(List.String., Boolean)",
-      "signature": "FetchModelObjects(List.String., Boolean)(...)",
+      "signature": "public List\u003CModelObject\u003E FetchModelObjects(List\u003Cstring\u003E Guids, bool SelectInstances = true)",
       "summary": "Fetches a list of modelobjects based on given guid list of objects, checks if guid is native or external (for reference model object) and optionally selects objects before returning them.",
-      "params": [],
+      "params": [
+        {
+          "name": "Guids",
+          "type": "System.Collections.Generic.List\u003CString\u003E",
+          "doc": "The GUID list to look for in the model.",
+          "optional": false
+        },
+        {
+          "name": "SelectInstances",
+          "type": "System.Boolean",
+          "doc": "Optional parameter whether object is selected, default = true.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "List\u003CModelObject\u003E",
+        "doc": "The model objects with the given guids, or empty list if any of the objects do not exists or object data loading failed for some reason."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/fb4054d2-dfad-6bb6-c07d-0298ea5e1833"
     },
     {
       "name": "FetchModelObjects(List.Identifier., Boolean)",
-      "signature": "FetchModelObjects(List.Identifier., Boolean)(...)",
+      "signature": "public List\u003CModelObject\u003E FetchModelObjects(List\u003CIdentifier\u003E Ids, bool SelectInstances = true)",
       "summary": "Fetches a list of modelobjects based on given identifier list of objects, and optionally selects objects before returning them.",
-      "params": [],
+      "params": [
+        {
+          "name": "Ids",
+          "type": "System.Collections.Generic.List\u003CIdentifier\u003E",
+          "doc": "The identifier list to look for in the model.",
+          "optional": false
+        },
+        {
+          "name": "SelectInstances",
+          "type": "System.Boolean",
+          "doc": "Optional parameter whether object is selected, default = true.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "List\u003CModelObject\u003E",
+        "doc": "The model objects with the given identifiers skipping the objects which do not exists or object data loading failed for some reason."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a1d2ba4a-7713-0fb2-5e0c-671708b98b58"
     },
     {
       "name": "GetClashCheckHandler",
-      "signature": "GetClashCheckHandler(...)",
+      "signature": "public ClashCheckHandler GetClashCheckHandler()",
       "summary": "Returns a new clash check handler.",
       "params": [],
+      "returns": {
+        "type": "ClashCheckHandler",
+        "doc": "The new clash check handler instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e27b5954-d2a6-55e5-3b08-c0d3c8e8fba6"
     },
     {
       "name": "GetConnectionStatus",
-      "signature": "GetConnectionStatus(...)",
+      "signature": "public bool GetConnectionStatus()",
       "summary": "Returns true if a proper connection to the Tekla Structures process has been established. Currently, there\u0027s no way to re-establish the connection.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/aea8fbbf-cf8f-7128-f6e9-e3ef045497d4"
     },
     {
       "name": "GetGUIDByIdentifier",
-      "signature": "GetGUIDByIdentifier(...)",
+      "signature": "public string GetGUIDByIdentifier(Identifier identifier)",
       "summary": "Returns the GUID of the given identifier instance.",
-      "params": [],
+      "params": [
+        {
+          "name": "identifier",
+          "type": "Tekla.Structures.Identifier",
+          "doc": "The identifier to look for in the model.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The GUID of the identifier."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/01994be1-6039-ca3b-98fb-1deb2aeba040"
     },
     {
       "name": "GetIdentifierByGUID",
-      "signature": "GetIdentifierByGUID(...)",
+      "signature": "public Identifier GetIdentifierByGUID(string guid)",
       "summary": "Returns an identifier instance that has the given GUID in the model.",
-      "params": [],
+      "params": [
+        {
+          "name": "guid",
+          "type": "System.String",
+          "doc": "The GUID to look for in the model.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Identifier",
+        "doc": "The identifier of the GUID, or null if not found."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/3fb69e75-03a4-e79b-4f2d-8738407ffabe"
     },
     {
       "name": "GetInfo",
-      "signature": "GetInfo(...)",
+      "signature": "public ModelInfo GetInfo()",
       "summary": "Returns information about the currently open model.",
       "params": [],
+      "returns": {
+        "type": "ModelInfo",
+        "doc": "A ModelInfo instance on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/de955ec1-7513-ad43-07ea-95d11ab3c34c"
     },
     {
       "name": "GetModelObjectSelector",
-      "signature": "GetModelObjectSelector(...)",
+      "signature": "public ModelObjectSelector GetModelObjectSelector()",
       "summary": "Returns a ModelObjectSelector instance from which different kind of selections can be made.",
       "params": [],
+      "returns": {
+        "type": "ModelObjectSelector",
+        "doc": "A new ModelObjectSelector instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/fb9935eb-3299-ce0b-7415-c08eed8a8244"
     },
     {
       "name": "GetPhases",
-      "signature": "GetPhases(...)",
+      "signature": "public PhaseCollection GetPhases()",
       "summary": "Returns information about the current model\u0027s phases.",
       "params": [],
+      "returns": {
+        "type": "PhaseCollection",
+        "doc": "A PhaseCollection instance on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4bc73a5f-a7d0-72d1-1e9d-87587dd37139"
     },
     {
       "name": "GetProjectInfo",
-      "signature": "GetProjectInfo(...)",
+      "signature": "public ProjectInfo GetProjectInfo()",
       "summary": "Returns information about the current model\u0027s project.",
       "params": [],
+      "returns": {
+        "type": "ProjectInfo",
+        "doc": "A ProjectInfo instance on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/dc119752-ab2b-b228-b92e-2e7d08a6f599"
     },
     {
       "name": "GetReportPropertyDouble",
-      "signature": "GetReportPropertyDouble(...)",
+      "signature": "public List\u003Cdouble\u003E GetReportPropertyDouble(IList\u003CIdentifier\u003E identifiers, string property)",
       "summary": "Get a list of property values, where the property is of type double, for the given identifiers.",
-      "params": [],
+      "params": [
+        {
+          "name": "identifiers",
+          "type": "System.Collections.Generic.IList\u003CIdentifier\u003E",
+          "doc": "The list of identifiers to get the property for.",
+          "optional": false
+        },
+        {
+          "name": "property",
+          "type": "System.String",
+          "doc": "The name of the property to get.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CDouble\u003E",
+        "doc": "The double values of the property for the given identifiers."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/0c8df735-b799-f799-b733-fd15cc8efd16"
     },
     {
       "name": "GetReportPropertyInt",
-      "signature": "GetReportPropertyInt(...)",
+      "signature": "public List\u003Cint\u003E GetReportPropertyInt(IList\u003CIdentifier\u003E identifiers, string property)",
       "summary": "Get a list of property values, where the property is of type interger, for the given identifiers.",
-      "params": [],
+      "params": [
+        {
+          "name": "identifiers",
+          "type": "System.Collections.Generic.IList\u003CIdentifier\u003E",
+          "doc": "The list of identifiers to get the property for.",
+          "optional": false
+        },
+        {
+          "name": "property",
+          "type": "System.String",
+          "doc": "The name of the property to get.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CInt32\u003E",
+        "doc": "The integer values of the property for the given identifiers."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a72cac03-20d1-216f-471f-7a8b491ba1f3"
     },
     {
       "name": "GetReportPropertyStr",
-      "signature": "GetReportPropertyStr(...)",
+      "signature": "public List\u003Cstring\u003E GetReportPropertyStr(IList\u003CIdentifier\u003E identifiers, string property)",
       "summary": "Get a list of property values, where the property is of type string, for the given identifiers.",
-      "params": [],
+      "params": [
+        {
+          "name": "identifiers",
+          "type": "System.Collections.Generic.IList\u003CIdentifier\u003E",
+          "doc": "The list of identifiers to get the property for.",
+          "optional": false
+        },
+        {
+          "name": "property",
+          "type": "System.String",
+          "doc": "The name of the property to get.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CString\u003E",
+        "doc": "The string values of the property for the given identifiers."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/3387b364-3010-d135-79c6-8f45d935e25f"
     },
     {
       "name": "GetWorkPlaneHandler",
-      "signature": "GetWorkPlaneHandler(...)",
+      "signature": "public WorkPlaneHandler GetWorkPlaneHandler()",
       "summary": "Returns a new work plane handler for the model. The work plane handler can be used to manipulate the current work plane in the model.",
       "params": [],
+      "returns": {
+        "type": "WorkPlaneHandler",
+        "doc": "The new work plane handler instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f0559338-2fb2-eb85-3986-9717b9637c73"
     },
     {
       "name": "SelectModelObject",
-      "signature": "SelectModelObject(...)",
+      "signature": "public ModelObject SelectModelObject(Identifier ID)",
       "summary": "Takes as input an identifier to an object and then checks its type and instantiates and selects it before returning it.",
-      "params": [],
+      "params": [
+        {
+          "name": "ID",
+          "type": "Tekla.Structures.Identifier",
+          "doc": "The identifier of the model object that is to be selected.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelObject",
+        "doc": "The selected model object with the given identifier, or null if object does not exists or object data loading failed for some reason."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/42921956-058f-e5b1-1765-02ad74c57f55"

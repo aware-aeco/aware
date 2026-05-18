@@ -11,25 +11,25 @@
   "properties": [
     {
       "name": "BendingRadiuses",
-      "type": "object",
+      "type": "List\u003CDouble\u003E",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The bending radiuses of the wire.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c72dde25-7531-0d87-3006-3e728e3271d9"
     },
     {
       "name": "Diameter",
-      "type": "object",
+      "type": "Double",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the diameter of the wire.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5db4245d-2a1c-a2c9-e81d-0afc306b7462"
     },
     {
       "name": "Legs",
-      "type": "object",
+      "type": "List\u003CRebarLeg\u003E",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the list of RebarLegs of the bar.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5b866b82-7bbe-1a3f-32da-aa9b984e58a3"
     }

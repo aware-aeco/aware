@@ -11,41 +11,41 @@
   "properties": [
     {
       "name": "HasHoles",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets a value indicating whether this instance has holes.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8cd7effa-c88d-47c4-c160-b1ff0abff7d6"
     },
     {
       "name": "Holes",
-      "type": "object",
+      "type": "IList\u003CFacetedBrepFaceHole\u003E",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the holes.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/ebcfaa0e-31e7-cc79-b9d9-4d32fb38080b"
     },
     {
       "name": "IsReadOnly",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets a value indicating whether this instance is read only.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/b3aa3e47-a76f-9ccb-8ad2-90bacccd24b3"
     },
     {
       "name": "VerticeIndexes",
-      "type": "object",
+      "type": "IList\u003CInt32\u003E",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the vertex indexes.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d177ac82-3f2b-44ce-21e8-47f756511bbd"
     },
     {
       "name": "Vertices",
-      "type": "object",
+      "type": "IList\u003CVector\u003E",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the vertices.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6cfb73bf-53c3-a7c8-80d7-92099feac035"
     }

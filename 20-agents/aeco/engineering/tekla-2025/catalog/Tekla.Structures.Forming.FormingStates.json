@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "FormingStates",
-      "signature": "FormingStates(...)",
+      "signature": "public FormingStates()",
       "summary": "Initializes a new instance of the FormingStates class.",
       "params": [],
       "throws": [],
@@ -18,36 +18,76 @@
     },
     {
       "name": "FormingStates",
-      "signature": "FormingStates(...)",
+      "signature": "public FormingStates(DeformingType deforming)",
       "summary": "Initializes a new instance of the FormingStates class.",
-      "params": [],
+      "params": [
+        {
+          "name": "deforming",
+          "type": "Tekla.Structures.Forming.DeformingType",
+          "doc": "Deforming type.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/75be16b2-6f80-cbdd-b88c-8652262b42c9"
     },
     {
       "name": "FormingStates",
-      "signature": "FormingStates(...)",
+      "signature": "public FormingStates(FoldingType folding)",
       "summary": "Initializes a new instance of the FormingStates class.",
-      "params": [],
+      "params": [
+        {
+          "name": "folding",
+          "type": "Tekla.Structures.Forming.FoldingType",
+          "doc": "Folding type.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/aeb66ea3-9cab-04e0-2f35-67057b0fc5bc"
     },
     {
       "name": "FormingStates",
-      "signature": "FormingStates(...)",
+      "signature": "public FormingStates(WrappingType wrapping)",
       "summary": "Initializes a new instance of the FormingStates class.",
-      "params": [],
+      "params": [
+        {
+          "name": "wrapping",
+          "type": "Tekla.Structures.Forming.WrappingType",
+          "doc": "Wrapping type.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/03862639-25de-9c60-7bcc-f26e6cf64ec6"
     },
     {
       "name": "FormingStates",
-      "signature": "FormingStates(...)",
+      "signature": "public FormingStates(DeformingType deforming, FoldingType folding, WrappingType wrapping)",
       "summary": "Initializes a new instance of the FormingStates class.",
-      "params": [],
+      "params": [
+        {
+          "name": "deforming",
+          "type": "Tekla.Structures.Forming.DeformingType",
+          "doc": "Deforming type.",
+          "optional": false
+        },
+        {
+          "name": "folding",
+          "type": "Tekla.Structures.Forming.FoldingType",
+          "doc": "Folding type.",
+          "optional": false
+        },
+        {
+          "name": "wrapping",
+          "type": "Tekla.Structures.Forming.WrappingType",
+          "doc": "Wrapping type.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8d47a18e-4caf-1fb1-e1c6-6cabaf7066e3"
@@ -56,9 +96,13 @@
   "methods": [
     {
       "name": "Clone",
-      "signature": "Clone(...)",
+      "signature": "public Object Clone()",
       "summary": "Method for cloning the current object.",
       "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "Cloned object."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/0798cc99-1eaa-efe0-401e-c789ae54bbf4"
@@ -67,7 +111,7 @@
   "properties": [
     {
       "name": "Deforming",
-      "type": "object",
+      "type": "DeformingType",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the deforming type.",
@@ -75,7 +119,7 @@
     },
     {
       "name": "Folding",
-      "type": "object",
+      "type": "FoldingType",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the folding type.",
@@ -83,7 +127,7 @@
     },
     {
       "name": "Wrapping",
-      "type": "object",
+      "type": "WrappingType",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the wrapping type.",

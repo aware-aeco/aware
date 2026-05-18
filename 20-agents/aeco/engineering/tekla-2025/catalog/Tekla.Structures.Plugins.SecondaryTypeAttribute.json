@@ -9,18 +9,32 @@
   "constructors": [
     {
       "name": "SecondaryTypeAttribute",
-      "signature": "SecondaryTypeAttribute(...)",
+      "signature": "public SecondaryTypeAttribute(int Type)",
       "summary": "The custom attribute [SecondaryType()] uses this to store the secondary type to the system. This is not to be used by itself.",
-      "params": [],
+      "params": [
+        {
+          "name": "Type",
+          "type": "System.Int32",
+          "doc": "The secondary type.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5424aae8-6671-f1ad-e3d4-c3ac9a5aacd3"
     },
     {
       "name": "SecondaryTypeAttribute",
-      "signature": "SecondaryTypeAttribute(...)",
+      "signature": "public SecondaryTypeAttribute(ConnectionBase.SecondaryType Type)",
       "summary": "The custom attribute [SecondaryType()] uses this to store the secondary type to the system. This is not to be used by itself.",
-      "params": [],
+      "params": [
+        {
+          "name": "Type",
+          "type": "Tekla.Structures.Plugins.ConnectionBase.SecondaryType",
+          "doc": "The secondary type.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/264333a9-e56b-fdb4-b9c6-2c0ac33960c7"
@@ -30,9 +44,9 @@
   "properties": [
     {
       "name": "Type",
-      "type": "object",
+      "type": "ConnectionBase.SecondaryType",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The custom attribute [SecondaryType()] uses this to store the secondary type to the system. This is not to be used by itself.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a03023de-7110-0046-aee4-f1a0fc3149db"
     }

@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "ProfileItemSubType",
-      "signature": "ProfileItemSubType(...)",
+      "signature": "public ProfileItemSubType()",
       "summary": "Initializes a new instance of the ProfileItemSubType class",
       "params": [],
       "throws": [],
@@ -21,33 +21,33 @@
   "properties": [
     {
       "name": "BitmapName",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets a value of the property BitmapName.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e8315f2a-3f37-0a95-c1d9-9ac5092b90cf"
     },
     {
       "name": "Label",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets a value of the property Label.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6dbea015-6068-aa9c-554f-b974b2dbe00d"
     },
     {
       "name": "ParameterString",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets a value of the property ParameterString.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f1a0656e-43c2-a3ef-1273-c9a8a0b6e763"
     },
     {
       "name": "SubTypeId",
-      "type": "object",
+      "type": "ProfileItem.ProfileItemSubTypeEnum",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets a value of the property SubTypeId.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/451d4ad4-c0b9-d765-876d-72a62c941562"
     }

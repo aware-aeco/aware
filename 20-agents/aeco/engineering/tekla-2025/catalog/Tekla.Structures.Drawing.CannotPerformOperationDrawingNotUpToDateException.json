@@ -9,9 +9,16 @@
   "constructors": [
     {
       "name": "CannotPerformOperationDrawingNotUpToDateException",
-      "signature": "CannotPerformOperationDrawingNotUpToDateException(...)",
+      "signature": "public CannotPerformOperationDrawingNotUpToDateException(string Message)",
       "summary": "Creates a new cannot perform operation drawing not up to date exception instance.",
-      "params": [],
+      "params": [
+        {
+          "name": "Message",
+          "type": "System.String",
+          "doc": "The exception message.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/28341f63-9e49-699a-fccc-29843f8899e0"

@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisCurvature",
-      "signature": "AnalysisCurvature(...)",
+      "signature": "public AnalysisCurvature()",
       "summary": "Initializes a new instance of the AnalysisCurvature class",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "Radius",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The radius of the beam curvature.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "RadiusDirection",
-      "type": "object",
+      "type": "Vector",
       "getter": true,
       "setter": true,
       "summary": "The radius direction of the beam curvature.",

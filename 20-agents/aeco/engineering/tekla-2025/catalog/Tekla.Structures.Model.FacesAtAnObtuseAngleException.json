@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "FacesAtAnObtuseAngleException",
-      "signature": "FacesAtAnObtuseAngleException(...)",
+      "signature": "public FacesAtAnObtuseAngleException()",
       "summary": "Initializes a new instance of the FacesAtAnObtuseAngleException class with \u0022Faces to be connected are too steep of an angle\u0022 error message.",
       "params": [],
       "throws": [],

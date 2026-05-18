@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisModelJobProperties",
-      "signature": "AnalysisModelJobProperties(...)",
+      "signature": "public AnalysisModelJobProperties()",
       "summary": "Initializes a new instance of the AnalysisModelJobProperties class",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "ApprovedDate",
-      "type": "object",
+      "type": "DateTime",
       "getter": true,
       "setter": true,
       "summary": "The date of the approval.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "ApprovedName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The name of approver.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "CheckerDate",
-      "type": "object",
+      "type": "DateTime",
       "getter": true,
       "setter": true,
       "summary": "The date of the checking.",
@@ -45,7 +45,7 @@
     },
     {
       "name": "CheckerName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The name of the checker.",
@@ -53,7 +53,7 @@
     },
     {
       "name": "ClientName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The name of the client.",
@@ -61,7 +61,7 @@
     },
     {
       "name": "EngineerDate",
-      "type": "object",
+      "type": "DateTime",
       "getter": true,
       "setter": true,
       "summary": "The date of the engineering.",
@@ -69,7 +69,7 @@
     },
     {
       "name": "EngineerName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The name of the engineer.",
@@ -77,7 +77,7 @@
     },
     {
       "name": "JobComment",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The comment of the job.",
@@ -85,7 +85,7 @@
     },
     {
       "name": "JobName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The name of the job.",
@@ -93,7 +93,7 @@
     },
     {
       "name": "JobNumber",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The number of the job.",
@@ -101,7 +101,7 @@
     },
     {
       "name": "PartNumber",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The number of the part.",
@@ -109,7 +109,7 @@
     },
     {
       "name": "ReferenceNumber",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The reference number.",

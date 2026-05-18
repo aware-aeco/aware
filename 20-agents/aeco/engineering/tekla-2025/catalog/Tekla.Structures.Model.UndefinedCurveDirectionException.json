@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "UndefinedCurveDirectionException",
-      "signature": "UndefinedCurveDirectionException(...)",
+      "signature": "public UndefinedCurveDirectionException()",
       "summary": "Initializes a new instance of the UndefinedCurveDirectionException class with \u0022Cannot make inward/outward curve check\u0022 error message.",
       "params": [],
       "throws": [],

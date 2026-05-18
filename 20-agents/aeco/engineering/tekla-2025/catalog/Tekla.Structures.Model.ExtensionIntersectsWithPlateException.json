@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "ExtensionIntersectsWithPlateException",
-      "signature": "ExtensionIntersectsWithPlateException(...)",
+      "signature": "public ExtensionIntersectsWithPlateException()",
       "summary": "Initializes a new instance of the ExtensionIntersectsWithPlateException class with \u0022extension plate clashes with plates\u0022 error message.",
       "params": [],
       "throws": [],

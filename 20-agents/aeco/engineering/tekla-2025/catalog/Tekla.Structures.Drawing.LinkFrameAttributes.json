@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "LinkFrameAttributes",
-      "signature": "LinkFrameAttributes(...)",
+      "signature": "public LinkFrameAttributes()",
       "summary": "Initializes a new instance of the LinkFrameAttributes class",
       "params": [],
       "throws": [],
@@ -20,27 +20,46 @@
   "methods": [
     {
       "name": "GetAxisAlignedBoundingBox",
-      "signature": "GetAxisAlignedBoundingBox(...)",
+      "signature": "public RectangleBoundingBox GetAxisAlignedBoundingBox()",
       "summary": "Gets the bounding box of the frame in the global axis coordinate system.",
       "params": [],
+      "returns": {
+        "type": "RectangleBoundingBox",
+        "doc": "The bounding box of the frame in the global axis coordinate system."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a41d1798-1556-f561-f40b-79a9118b48f5"
     },
     {
       "name": "GetObjectAlignedBoundingBox",
-      "signature": "GetObjectAlignedBoundingBox(...)",
+      "signature": "public RectangleBoundingBox GetObjectAlignedBoundingBox()",
       "summary": "Gets the bounding box of the frame in the local coordinate system.",
       "params": [],
+      "returns": {
+        "type": "RectangleBoundingBox",
+        "doc": "The bounding box of the frame in the local coordinate system."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6fe41cdb-f28b-9253-d9dc-8fe9a419471c"
     },
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/b2e4ca25-cc6b-5b25-7ac6-37e67fe95ef6"
@@ -49,7 +68,7 @@
   "properties": [
     {
       "name": "Color",
-      "type": "object",
+      "type": "DrawingColors",
       "getter": true,
       "setter": true,
       "summary": "Obsolete.",
@@ -57,7 +76,7 @@
     },
     {
       "name": "Line",
-      "type": "object",
+      "type": "LineTypeAttributes",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the line type.",
@@ -65,7 +84,7 @@
     },
     {
       "name": "LineType",
-      "type": "object",
+      "type": "LineTypes",
       "getter": true,
       "setter": true,
       "summary": "Obsolete.",

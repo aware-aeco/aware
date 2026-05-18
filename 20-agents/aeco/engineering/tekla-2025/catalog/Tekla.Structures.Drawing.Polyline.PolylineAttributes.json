@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Polyline.PolylineAttributes",
-      "signature": "Polyline.PolylineAttributes(...)",
+      "signature": "public PolylineAttributes()",
       "summary": "Creates a new default polyline attributes instance that loads standard attributes.",
       "params": [],
       "throws": [],
@@ -18,9 +18,16 @@
     },
     {
       "name": "Polyline.PolylineAttributes",
-      "signature": "Polyline.PolylineAttributes(...)",
+      "signature": "public PolylineAttributes(string AttributesFile)",
       "summary": "Creates a new polyline attributes instance that loads the specified attributes.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributesFile",
+          "type": "System.String",
+          "doc": "The filename of the attributes file.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/fee35a5f-58c6-6491-2cf4-986643d5b447"
@@ -29,18 +36,40 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/404136cb-bdc9-a35f-5793-d0412c18b305"
     },
     {
       "name": "LoadAttributes",
-      "signature": "LoadAttributes(...)",
+      "signature": "public override bool LoadAttributes(string AttributeFile)",
       "summary": "Loads the attributes from the attribute file.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/cb4bb2c3-a745-825c-37b5-446de54da1cf"
@@ -49,7 +78,7 @@
   "properties": [
     {
       "name": "Arrowhead",
-      "type": "object",
+      "type": "ArrowheadAttributes",
       "getter": true,
       "setter": true,
       "summary": "The arrowhead attributes of the open graphic object. The end points of an open graphic object can contain arrowheads.",
@@ -57,7 +86,7 @@
     },
     {
       "name": "Line",
-      "type": "object",
+      "type": "LineTypeAttributes",
       "getter": true,
       "setter": true,
       "summary": "The line attributes of the graphic object. A graphic object always consists of lines.",

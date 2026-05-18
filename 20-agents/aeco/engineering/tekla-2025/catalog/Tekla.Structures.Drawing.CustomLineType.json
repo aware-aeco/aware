@@ -10,45 +10,79 @@
   "methods": [
     {
       "name": "Clone",
-      "signature": "Clone(...)",
+      "signature": "public override Object Clone()",
       "summary": "Creates a new object that is a copy of the current instance.",
       "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "A new object that is a copy of the current instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/03a890bb-7796-54c5-907f-51890915a07a"
     },
     {
       "name": "Equals",
-      "signature": "Equals(...)",
+      "signature": "public override bool Equals(Object obj)",
       "summary": "Returns true if the current object and the given object are equal.",
-      "params": [],
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "The object we wish to check the equality with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the given object equals the current object."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d0b0011c-d08d-40ac-fdfc-1c8ccd83d064"
     },
     {
       "name": "GetHashCode",
-      "signature": "GetHashCode(...)",
+      "signature": "public override int GetHashCode()",
       "summary": "Returns a hash code for the object.",
       "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The hash code for the object."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/60bfd567-f4d8-1eb5-eece-d8d9e16be107"
     },
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/508fe885-1e18-ed11-81c5-ea7963144e85"
     },
     {
       "name": "ToString",
-      "signature": "ToString(...)",
+      "signature": "public override string ToString()",
       "summary": "Returns the LineTypes information as a string.",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The LineTypes information as a string."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/33edfbad-ab7c-406a-fec4-5e932e3ea8aa"
@@ -57,25 +91,25 @@
   "properties": [
     {
       "name": "Description",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The Description of the custom line type (ASCII representation of the line).",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/acb9d851-eb20-c07b-d40b-a2c39bf533f5"
     },
     {
       "name": "LineDescription",
-      "type": "object",
+      "type": "List\u003CDouble\u003E",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The description of the custom line type. Description uses the following format: List of line segments. Positive value gives length of filled line segment and negative value gives length of empty line segment. 0 means a dot.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/067b835f-fdf1-fd50-5f0e-d82c3d4e698a"
     },
     {
       "name": "Name",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The Name of the custom line type.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/96f55946-e5ce-af3c-6d7e-638741c0625a"
     }

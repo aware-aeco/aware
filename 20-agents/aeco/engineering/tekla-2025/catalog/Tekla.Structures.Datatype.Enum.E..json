@@ -9,27 +9,43 @@
   "methods": [
     {
       "name": "GetSchema",
-      "signature": "GetSchema(...)",
+      "signature": "public XmlSchema GetSchema()",
       "summary": "",
       "params": [],
+      "returns": {
+        "type": "XmlSchema",
+        "doc": ""
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/27ddc2df-2642-c422-aea0-63db5fc74037"
     },
     {
       "name": "ReadXml",
-      "signature": "ReadXml(...)",
+      "signature": "public void ReadXml(XmlReader reader)",
       "summary": "",
-      "params": [],
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.Xml.XmlReader",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8cd9e291-2d2d-6178-3366-05fde4a64bc2"
     },
     {
       "name": "WriteXml",
-      "signature": "WriteXml(...)",
+      "signature": "public void WriteXml(XmlWriter writer)",
       "summary": "",
-      "params": [],
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.Xml.XmlWriter",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/777144d9-9d41-3453-fb21-7af2b6baf9c8"
@@ -38,7 +54,7 @@
   "properties": [
     {
       "name": "Value",
-      "type": "object",
+      "type": "E",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the value.",

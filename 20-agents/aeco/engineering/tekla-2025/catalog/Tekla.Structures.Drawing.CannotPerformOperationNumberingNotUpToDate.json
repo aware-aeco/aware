@@ -9,9 +9,16 @@
   "constructors": [
     {
       "name": "CannotPerformOperationNumberingNotUpToDate",
-      "signature": "CannotPerformOperationNumberingNotUpToDate(...)",
+      "signature": "public CannotPerformOperationNumberingNotUpToDate(string Message)",
       "summary": "Creates a new cannot perform operation numbering not up to date exception instance.",
-      "params": [],
+      "params": [
+        {
+          "name": "Message",
+          "type": "System.String",
+          "doc": "The exception message.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/fb014bc2-b4de-5582-4f04-58a2d2270dfe"

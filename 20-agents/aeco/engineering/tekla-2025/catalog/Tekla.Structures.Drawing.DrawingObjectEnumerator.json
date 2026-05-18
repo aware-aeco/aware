@@ -10,34 +10,46 @@
   "methods": [
     {
       "name": "GetEnumerator",
-      "signature": "GetEnumerator(...)",
+      "signature": "public IEnumerator GetEnumerator()",
       "summary": "Allows the usage of the foreach statement with DrawingObjectEnumerator.",
       "params": [],
+      "returns": {
+        "type": "IEnumerator",
+        "doc": "A pointer to the existing instance of the class."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6d49ab9f-b229-3e1a-f471-83fe41ddd3aa"
     },
     {
       "name": "GetSize",
-      "signature": "GetSize(...)",
+      "signature": "public int GetSize()",
       "summary": "Returns the total amout of items.",
       "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The total amount of items."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/1b1d3fb7-f3cb-3fbe-97f7-19fc5d437b48"
     },
     {
       "name": "MoveNext",
-      "signature": "MoveNext(...)",
+      "signature": "public bool MoveNext()",
       "summary": "Moves to the next item in the enumerator.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if succeeded."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4f07c4bf-0de8-7040-8a2a-883fb0b8db66"
     },
     {
       "name": "Reset",
-      "signature": "Reset(...)",
+      "signature": "public void Reset()",
       "summary": "Resets the enumerator to the beginning.",
       "params": [],
       "throws": [],
@@ -48,9 +60,9 @@
   "properties": [
     {
       "name": "Current",
-      "type": "object",
+      "type": "DrawingObject",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the current drawing object.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/dacb3cd3-744b-ec50-179f-3f226e16417b"
     }

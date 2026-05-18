@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "BaseLinePlacingType",
-      "signature": "BaseLinePlacingType(...)",
+      "signature": "public BaseLinePlacingType()",
       "summary": "Creates a new base line placing type instance.",
       "params": [],
       "throws": [],

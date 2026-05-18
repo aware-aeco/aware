@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Contour",
-      "signature": "Contour(...)",
+      "signature": "public Contour()",
       "summary": "Instantiates an empty contour.",
       "params": [],
       "throws": [],
@@ -20,27 +20,49 @@
   "methods": [
     {
       "name": "AddContourPoint",
-      "signature": "AddContourPoint(...)",
+      "signature": "public void AddContourPoint(ContourPoint Point)",
       "summary": "Adds a new contour point to the contour. Do not add the same contour point twice.",
-      "params": [],
+      "params": [
+        {
+          "name": "Point",
+          "type": "Tekla.Structures.Model.ContourPoint",
+          "doc": "The contour point to add.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/758831d8-d612-1ccd-aa64-e3c0d07baa1d"
     },
     {
       "name": "CalculatePolygon",
-      "signature": "CalculatePolygon(...)",
+      "signature": "public bool CalculatePolygon(out Polygon polygon)",
       "summary": "Calculate a polygon approximating the contour with chamfers evaluated.",
-      "params": [],
+      "params": [
+        {
+          "name": "polygon",
+          "type": "Tekla.Structures.Model.Polygon.",
+          "doc": "The calculated Polygon.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful, otherwise false."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f5c142bc-8a2b-dee2-5b19-26863e8410a0"
     },
     {
       "name": "GetPolycurve",
-      "signature": "GetPolycurve(...)",
+      "signature": "public Polycurve GetPolycurve()",
       "summary": "Gets the contour geometry as Polycurve",
       "params": [],
+      "returns": {
+        "type": "Polycurve",
+        "doc": "Polycurve"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/1a21df7a-cb44-dada-7422-69a6052fad72"
@@ -49,7 +71,7 @@
   "properties": [
     {
       "name": "ContourPoints",
-      "type": "object",
+      "type": "ArrayList",
       "getter": true,
       "setter": true,
       "summary": "The contour points belonging to the contour.",

@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "DimensionSetBaseAttributes.CombinedDimensionAttributes",
-      "signature": "DimensionSetBaseAttributes.CombinedDimensionAttributes(...)",
+      "signature": "public CombinedDimensionAttributes()",
       "summary": "Creates a new combined dimension attributes instance. The defaults combine a minimum of three identical dimensions to be shown as the number of items times the length of the dimension.",
       "params": [],
       "throws": [],
@@ -18,9 +18,22 @@
     },
     {
       "name": "DimensionSetBaseAttributes.CombinedDimensionAttributes",
-      "signature": "DimensionSetBaseAttributes.CombinedDimensionAttributes(...)",
+      "signature": "public CombinedDimensionAttributes(int minimumNumberToCombine, DimensionSetBaseAttributes.CombineFormats format)",
       "summary": "Creates a new combined dimension attributes instance with the given parameters.",
-      "params": [],
+      "params": [
+        {
+          "name": "minimumNumberToCombine",
+          "type": "System.Int32",
+          "doc": "The minimum number of dimensions to be combined.",
+          "optional": false
+        },
+        {
+          "name": "format",
+          "type": "Tekla.Structures.Drawing.DimensionSetBaseAttributes.CombineFormats",
+          "doc": "The format of the combined dimensions.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/95fc1a0c-f771-0bce-2916-900df5530f81"
@@ -29,9 +42,20 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/08efea1e-c0ac-8c7c-65e6-b5a6448d8347"
@@ -40,7 +64,7 @@
   "properties": [
     {
       "name": "Format",
-      "type": "object",
+      "type": "DimensionSetBaseAttributes.CombineFormats",
       "getter": true,
       "setter": true,
       "summary": "The combined dimension format.",
@@ -48,7 +72,7 @@
     },
     {
       "name": "MinimumNumberToCombine",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The minimum number of dimensions to be combined.",

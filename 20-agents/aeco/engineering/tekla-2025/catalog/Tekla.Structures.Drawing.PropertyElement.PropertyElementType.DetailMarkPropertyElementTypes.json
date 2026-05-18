@@ -10,27 +10,39 @@
   "methods": [
     {
       "name": "DetailName",
-      "signature": "DetailName(...)",
+      "signature": "public static PropertyElement.PropertyElementType DetailName()",
       "summary": "Returns the detail name property element type.",
       "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7373f53a-629c-b92a-9cd5-f67b18334854"
     },
     {
       "name": "SourceDrawingName",
-      "signature": "SourceDrawingName(...)",
+      "signature": "public static PropertyElement.PropertyElementType SourceDrawingName()",
       "summary": "Returns the source drawing name property element type.",
       "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/745bc5f2-3d1f-fadd-f39a-10a0752bfaeb"
     },
     {
       "name": "SourceDrawingNameWhenMoved",
-      "signature": "SourceDrawingNameWhenMoved(...)",
+      "signature": "public static PropertyElement.PropertyElementType SourceDrawingNameWhenMoved()",
       "summary": "Returns the source drawing name when moved property element type.",
       "params": [],
+      "returns": {
+        "type": "PropertyElement.PropertyElementType",
+        "doc": "The requested property element type."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7035319d-1e22-adc1-3a62-1815fd21de69"

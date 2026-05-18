@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "DrawingItem",
-      "signature": "DrawingItem(...)",
+      "signature": "public DrawingItem()",
       "summary": "Creates a new drawing item instance.",
       "params": [],
       "throws": [],
@@ -20,18 +20,40 @@
   "methods": [
     {
       "name": "Export",
-      "signature": "Export(...)",
+      "signature": "public bool Export(ref string filename)",
       "summary": "Exports the drawing item in the catalog to given file name. If path is not given drawing is exported to model folder. If filename is empty drawing name is used as filename.",
-      "params": [],
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String.",
+          "doc": "The export file name of the drawing item.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e73e32a2-21fa-37e6-2d50-dba9af49e09a"
     },
     {
       "name": "Select",
-      "signature": "Select(...)",
+      "signature": "public bool Select(string Name)",
       "summary": "Selects the drawing item in the drawing catalog.",
-      "params": [],
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The Name of the drawing item to select.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6a028f0c-b5bb-2e2a-8119-eea7fbea3a34"
@@ -40,7 +62,7 @@
   "properties": [
     {
       "name": "Files",
-      "type": "object",
+      "type": "List\u003CFileInfo\u003E",
       "getter": true,
       "setter": true,
       "summary": "The files belonging to drawing item.",
@@ -48,7 +70,7 @@
     },
     {
       "name": "Name",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The drawing item\u0027s name.",
@@ -56,7 +78,7 @@
     },
     {
       "name": "Type",
-      "type": "object",
+      "type": "DrawingTypes",
       "getter": true,
       "setter": true,
       "summary": "The files belonging to drawing item.",

@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "BentPlateGeometrySolver",
-      "signature": "BentPlateGeometrySolver(...)",
+      "signature": "public BentPlateGeometrySolver()",
       "summary": "Initializes a new instance of the BentPlateGeometrySolver class.",
       "params": [],
       "throws": [],
@@ -20,163 +20,729 @@
   "methods": [
     {
       "name": "AddLeg(ConnectiveGeometry, Contour)",
-      "signature": "AddLeg(ConnectiveGeometry, Contour)(...)",
+      "signature": "public ConnectiveGeometry AddLeg(ConnectiveGeometry geometry, Contour polygon)",
       "summary": "Appends a polygon section to ConnectiveGeometry, using the maximal radius for the cylindrical connection.",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Tekla.Structures.Model.ConnectiveGeometry",
+          "doc": "ConnectiveGeometry used to create a connection with.",
+          "optional": false
+        },
+        {
+          "name": "polygon",
+          "type": "Tekla.Structures.Model.Contour",
+          "doc": "The polygonal contour to add to geometry.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ConnectiveGeometry",
+        "doc": "Modified ConnectiveGeometry if command succeeded or geometry otherwise."
+      },
+      "throws": [
+        {
+          "type": "ConnectiveGeometryException",
+          "when": "Thrown if could not create or modify ConnectiveGeometry instance."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when geometry is a stand-alone bend geometry, meaning that the first GeometrySection is a BendSurfaceNode."
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a2759dfe-8879-387a-43c8-a30e76609c81"
     },
     {
       "name": "AddLeg(ConnectiveGeometry, Contour, Double)",
-      "signature": "AddLeg(ConnectiveGeometry, Contour, Double)(...)",
+      "signature": "public ConnectiveGeometry AddLeg(ConnectiveGeometry geometry, Contour polygon, double radius)",
       "summary": "Appends a polygon section to this ConnectiveGeometry, using the specified radius for the cylindrical connection.",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Tekla.Structures.Model.ConnectiveGeometry",
+          "doc": "ConnectiveGeometry used to create a connection with.",
+          "optional": false
+        },
+        {
+          "name": "polygon",
+          "type": "Tekla.Structures.Model.Contour",
+          "doc": "the polygonal contour to add to this geometry",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "the specified radius for the connecting cylindrical section",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ConnectiveGeometry",
+        "doc": "Modified ConnectiveGeometry if command succeeded or geometry otherwise."
+      },
+      "throws": [
+        {
+          "type": "ConnectiveGeometryException",
+          "when": "Thrown if could not create or modify ConnectiveGeometry instance."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when geometry is a stand-alone bend geometry, meaning that the first GeometrySection is a BendSurfaceNode."
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/be684308-bd46-4b43-ab67-885df4db987f"
     },
     {
       "name": "AddLeg(ConnectiveGeometry, Contour, BentPlate.BendShape)",
-      "signature": "AddLeg(ConnectiveGeometry, Contour, BentPlate.BendShape)(...)",
+      "signature": "public ConnectiveGeometry AddLeg(ConnectiveGeometry geometry, Contour polygon, BentPlate.BendShape bendShape)",
       "summary": "Appends a polygon section to ConnectiveGeometry, using the maximal radius for the cylindrical connection, or the maximum cone aperture for conical connection.",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Tekla.Structures.Model.ConnectiveGeometry",
+          "doc": "ConnectiveGeometry used to create a connection with.",
+          "optional": false
+        },
+        {
+          "name": "polygon",
+          "type": "Tekla.Structures.Model.Contour",
+          "doc": "The polygonal contour to add to geometry.",
+          "optional": false
+        },
+        {
+          "name": "bendShape",
+          "type": "Tekla.Structures.Model.BentPlate.BendShape",
+          "doc": "Shape of the bend that connects the leg",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ConnectiveGeometry",
+        "doc": "Modified ConnectiveGeometry if command succeeded or geometry otherwise."
+      },
+      "throws": [
+        {
+          "type": "ConnectiveGeometryException",
+          "when": "Thrown if could not create or modify ConnectiveGeometry instance."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when geometry is a stand-alone bend geometry, meaning that the first GeometrySection is a BendSurfaceNode."
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/01139736-16e5-b503-b77c-2a989302924e"
     },
     {
       "name": "AddLeg(ConnectiveGeometry, LineSegment, Contour, LineSegment)",
-      "signature": "AddLeg(ConnectiveGeometry, LineSegment, Contour, LineSegment)(...)",
+      "signature": "public ConnectiveGeometry AddLeg(ConnectiveGeometry geometry, LineSegment segment1, Contour polygon, LineSegment segment2)",
       "summary": "Appends a polygon section to this ConnectiveGeometry, using the specified connection points and maximal radius for the cylindrical connection.",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Tekla.Structures.Model.ConnectiveGeometry",
+          "doc": "ConnectiveGeometry used to create a connection with.",
+          "optional": false
+        },
+        {
+          "name": "segment1",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "the two connection points on this instance geometry",
+          "optional": false
+        },
+        {
+          "name": "polygon",
+          "type": "Tekla.Structures.Model.Contour",
+          "doc": "the polygonal contour to add to this geometry",
+          "optional": false
+        },
+        {
+          "name": "segment2",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "the two connection points on polygon geometry",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ConnectiveGeometry",
+        "doc": "Modified ConnectiveGeometry if command succeeded or geometry otherwise."
+      },
+      "throws": [
+        {
+          "type": "ConnectiveGeometryException",
+          "when": "Thrown if could not create or modify ConnectiveGeometry instance."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when geometry is a stand-alone bend geometry, meaning that the first GeometrySection is a BendSurfaceNode."
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/fe3ef7c1-95d0-b903-029f-3327db769d09"
     },
     {
       "name": "AddLeg(ConnectiveGeometry, Contour, Double, Double)",
-      "signature": "AddLeg(ConnectiveGeometry, Contour, Double, Double)(...)",
+      "signature": "public ConnectiveGeometry AddLeg(ConnectiveGeometry geometry, Contour polygon, double largestRadius, double halfAperture)",
       "summary": "Joins a polygon section to this ConnectiveGeometry, using the specified radius and aperture for the conical connection.",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Tekla.Structures.Model.ConnectiveGeometry",
+          "doc": "ConnectiveGeometry used to create a connection with.",
+          "optional": false
+        },
+        {
+          "name": "polygon",
+          "type": "Tekla.Structures.Model.Contour",
+          "doc": "the polygonal contour to add to this geometry",
+          "optional": false
+        },
+        {
+          "name": "largestRadius",
+          "type": "System.Double",
+          "doc": "The specified largest radius for the connecting conical section.",
+          "optional": false
+        },
+        {
+          "name": "halfAperture",
+          "type": "System.Double",
+          "doc": "The angle between the cone generatrix and any of its generator lines.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ConnectiveGeometry",
+        "doc": "Modified ConnectiveGeometry if command succeeded or geometry otherwise."
+      },
+      "throws": [
+        {
+          "type": "ConnectiveGeometryException",
+          "when": "Thrown if could not create ConnectiveGeometry instance."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when geometry is a stand-alone bend geometry, meaning that the first GeometrySection is a BendSurfaceNode."
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/005a09fb-64f4-0150-fdee-40ba1d2e009e"
     },
     {
       "name": "AddLeg(ConnectiveGeometry, LineSegment, Contour, LineSegment, Double)",
-      "signature": "AddLeg(ConnectiveGeometry, LineSegment, Contour, LineSegment, Double)(...)",
+      "signature": "public ConnectiveGeometry AddLeg(ConnectiveGeometry geometry, LineSegment segment1, Contour polygon, LineSegment segment2, double radius)",
       "summary": "Appends a polygon section to this ConnectiveGeometry, using the specified connection points and radius for the cylindrical connection.",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Tekla.Structures.Model.ConnectiveGeometry",
+          "doc": "ConnectiveGeometry used to create a connection with.",
+          "optional": false
+        },
+        {
+          "name": "segment1",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "the two connection points on this instance geometry",
+          "optional": false
+        },
+        {
+          "name": "polygon",
+          "type": "Tekla.Structures.Model.Contour",
+          "doc": "the polygonal contour to add to this geometry",
+          "optional": false
+        },
+        {
+          "name": "segment2",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "the two connection points on polygon geometry",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "the specified radius for the connecting cylindrical section",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ConnectiveGeometry",
+        "doc": "Modified ConnectiveGeometry if command succeeded or geometry otherwise."
+      },
+      "throws": [
+        {
+          "type": "ConnectiveGeometryException",
+          "when": "Thrown if could not create or modify ConnectiveGeometry instance."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when geometry is a stand-alone bend geometry, meaning that the first GeometrySection is a BendSurfaceNode."
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/3381e0db-8efa-f82b-8322-f4a48ed1a265"
     },
     {
       "name": "AddLeg(ConnectiveGeometry, LineSegment, Contour, LineSegment, BentPlate.BendShape)",
-      "signature": "AddLeg(ConnectiveGeometry, LineSegment, Contour, LineSegment, BentPlate.BendShape)(...)",
+      "signature": "public ConnectiveGeometry AddLeg(ConnectiveGeometry geometry, LineSegment segment1, Contour polygon, LineSegment segment2, BentPlate.BendShape bendShape)",
       "summary": "Appends a polygon section to this ConnectiveGeometry, using the specified connection points and maximal radius for the cylindrical connection, or maximum aperture for conical connection.",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Tekla.Structures.Model.ConnectiveGeometry",
+          "doc": "ConnectiveGeometry used to create a connection with.",
+          "optional": false
+        },
+        {
+          "name": "segment1",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "the two connection points on this instance geometry",
+          "optional": false
+        },
+        {
+          "name": "polygon",
+          "type": "Tekla.Structures.Model.Contour",
+          "doc": "the polygonal contour to add to this geometry",
+          "optional": false
+        },
+        {
+          "name": "segment2",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "the two connection points on polygon geometry",
+          "optional": false
+        },
+        {
+          "name": "bendShape",
+          "type": "Tekla.Structures.Model.BentPlate.BendShape",
+          "doc": "Shape of the bend that connects the leg",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ConnectiveGeometry",
+        "doc": "Modified ConnectiveGeometry if command succeeded or geometry otherwise."
+      },
+      "throws": [
+        {
+          "type": "ConnectiveGeometryException",
+          "when": "Thrown if could not create or modify ConnectiveGeometry instance."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when geometry is a stand-alone bend geometry, meaning that the first GeometrySection is a BendSurfaceNode."
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2ae3af3f-6bf8-1f24-e666-c55aca86f5c4"
     },
     {
       "name": "AddLeg(ConnectiveGeometry, LineSegment, Contour, LineSegment, Double, Double)",
-      "signature": "AddLeg(ConnectiveGeometry, LineSegment, Contour, LineSegment, Double, Double)(...)",
+      "signature": "public ConnectiveGeometry AddLeg(ConnectiveGeometry geometry, LineSegment segment1, Contour polygon, LineSegment segment2, double largestRadius, double halfAperture)",
       "summary": "Joins a polygon section to this ConnectiveGeometry, using the specified connection points and radius and aperture for the conical connection.",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Tekla.Structures.Model.ConnectiveGeometry",
+          "doc": "ConnectiveGeometry used to create a connection with.",
+          "optional": false
+        },
+        {
+          "name": "segment1",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "The two connection points on this instance geometry.",
+          "optional": false
+        },
+        {
+          "name": "polygon",
+          "type": "Tekla.Structures.Model.Contour",
+          "doc": "the polygonal contour to add to this geometry",
+          "optional": false
+        },
+        {
+          "name": "segment2",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "The two connection points on polygon geometry.",
+          "optional": false
+        },
+        {
+          "name": "largestRadius",
+          "type": "System.Double",
+          "doc": "The specified largest radius for the connecting conical section.",
+          "optional": false
+        },
+        {
+          "name": "halfAperture",
+          "type": "System.Double",
+          "doc": "The angle between the cone generatrix and any of its generator lines.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ConnectiveGeometry",
+        "doc": "Modified ConnectiveGeometry if command succeeded or geometry otherwise."
+      },
+      "throws": [
+        {
+          "type": "ConnectiveGeometryException",
+          "when": "Thrown if could not create ConnectiveGeometry instance."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when geometry is a stand-alone bend geometry, meaning that the first GeometrySection is a BendSurfaceNode."
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/253cf055-768d-0624-e258-2039cd78494d"
     },
     {
       "name": "ModifyBendSurface",
-      "signature": "ModifyBendSurface(...)",
+      "signature": "public ConnectiveGeometry ModifyBendSurface(ConnectiveGeometry geometry, GeometrySection bendSection, BendSurface surface)",
       "summary": "Modifies the shape of a bend surface section, and updates related polygon sections accordingly.",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Tekla.Structures.Model.ConnectiveGeometry",
+          "doc": "Reference geometry to modify which contains cylindricalSection.",
+          "optional": false
+        },
+        {
+          "name": "bendSection",
+          "type": "Tekla.Structures.Model.GeometrySection",
+          "doc": "Geometry section to modify.",
+          "optional": false
+        },
+        {
+          "name": "surface",
+          "type": "Tekla.Structures.Model.BendSurface",
+          "doc": "The modified bend surface for the section.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ConnectiveGeometry",
+        "doc": "Modified ConnectiveGeometry if command succeeded or geometry otherwise."
+      },
+      "throws": [
+        {
+          "type": "ConnectiveGeometryException",
+          "when": "Thrown if could not modify the bend surface."
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2d82eb90-c4a4-d473-b872-08e8522fa827"
     },
     {
       "name": "ModifyConicalRadiuses",
-      "signature": "ModifyConicalRadiuses(...)",
+      "signature": "public ConnectiveGeometry ModifyConicalRadiuses(ConnectiveGeometry geometry, GeometrySection conicalSection, double radius1, double radius2)",
       "summary": "Modify the radiuses of a conical section, preserving the length of the side boundaries. The order of the provided radiuses is not relevant, as the cone vertex will be located on the same side of the plates as the original cone section.",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Tekla.Structures.Model.ConnectiveGeometry",
+          "doc": "Reference geometry to modify which contains conicalSection.",
+          "optional": false
+        },
+        {
+          "name": "conicalSection",
+          "type": "Tekla.Structures.Model.GeometrySection",
+          "doc": "The conical geometry section to modify.",
+          "optional": false
+        },
+        {
+          "name": "radius1",
+          "type": "System.Double",
+          "doc": "New radius one of the cross sections of the cone.",
+          "optional": false
+        },
+        {
+          "name": "radius2",
+          "type": "System.Double",
+          "doc": "New radius of the other cross section of the cone.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ConnectiveGeometry",
+        "doc": "Modified ConnectiveGeometry if command succeeded or geometry otherwise."
+      },
+      "throws": [
+        {
+          "type": "ConnectiveGeometryException",
+          "when": "Thrown if could not modify the geometry."
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e2a50415-93e4-cc52-e702-0bab551f0a2d"
     },
     {
       "name": "ModifyCylindricalSurface",
-      "signature": "ModifyCylindricalSurface(...)",
+      "signature": "public ConnectiveGeometry ModifyCylindricalSurface(ConnectiveGeometry geometry, GeometrySection cylindricalSection, CylindricalSurface surface)",
       "summary": "Modifies the shape of a cylindrical surface section, and updates related polygon sections accordingly.",
-      "params": [],
+      "remarks": "Identical to ModifyBendSurface(ConnectiveGeometry, GeometrySection, BendSurface)",
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Tekla.Structures.Model.ConnectiveGeometry",
+          "optional": false
+        },
+        {
+          "name": "cylindricalSection",
+          "type": "Tekla.Structures.Model.GeometrySection",
+          "optional": false
+        },
+        {
+          "name": "surface",
+          "type": "Tekla.Structures.Model.CylindricalSurface",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ConnectiveGeometry",
+        "doc": ""
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9b20a6c3-4976-912f-a940-660056f80e3d"
     },
     {
       "name": "ModifyPolygon",
-      "signature": "ModifyPolygon(...)",
+      "signature": "public ConnectiveGeometry ModifyPolygon(ConnectiveGeometry geometry, GeometrySection polygonSection, Contour points)",
       "summary": "Modify the shape of a polygon section, and updates related cylindrical sections accordingly.",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Tekla.Structures.Model.ConnectiveGeometry",
+          "doc": "Reference geometry to modify which contains polygonSection.",
+          "optional": false
+        },
+        {
+          "name": "polygonSection",
+          "type": "Tekla.Structures.Model.GeometrySection",
+          "doc": "A polygon section from geometry to modify.",
+          "optional": false
+        },
+        {
+          "name": "points",
+          "type": "Tekla.Structures.Model.Contour",
+          "doc": "The modified contour for the section.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ConnectiveGeometry",
+        "doc": "Modified ConnectiveGeometry if command succeeded or geometry otherwise."
+      },
+      "throws": [
+        {
+          "type": "ConnectiveGeometryException",
+          "when": "Thrown if could not modify polygon."
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/124f6069-da5d-82e5-0762-9266e5b30aed"
     },
     {
       "name": "ModifyRadius",
-      "signature": "ModifyRadius(...)",
+      "signature": "public ConnectiveGeometry ModifyRadius(ConnectiveGeometry geometry, GeometrySection cylindricalSection, double radius)",
       "summary": "Modify the radius of a cylindrical section.",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Tekla.Structures.Model.ConnectiveGeometry",
+          "doc": "Reference geometry to modify which contains cylindricalSection.",
+          "optional": false
+        },
+        {
+          "name": "cylindricalSection",
+          "type": "Tekla.Structures.Model.GeometrySection",
+          "doc": "The cylindrical geometry section to modify.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "The new radius for the cylindrical section.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ConnectiveGeometry",
+        "doc": "Modified ConnectiveGeometry if command succeeded or geometry otherwise."
+      },
+      "throws": [
+        {
+          "type": "ConnectiveGeometryException",
+          "when": "Thrown if could not modify radius."
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/332d9017-9164-8a8b-5a1e-dc772f98674f"
     },
     {
       "name": "RemoveLeg",
-      "signature": "RemoveLeg(...)",
+      "signature": "public ConnectiveGeometry RemoveLeg(ConnectiveGeometry geometry, GeometrySection legSection)",
       "summary": "Removes a polygon section which is the end section, from this ConnectiveGeometry including extensions and cylindrical surface.",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Tekla.Structures.Model.ConnectiveGeometry",
+          "doc": "ConnectiveGeometry used to remove a connection.",
+          "optional": false
+        },
+        {
+          "name": "legSection",
+          "type": "Tekla.Structures.Model.GeometrySection",
+          "doc": "Leg GeometrySection to remove.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ConnectiveGeometry",
+        "doc": "Modified ConnectiveGeometry if command succeeded or geometry otherwise."
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when the supplied legSection is invalid leg section or geometry is a stand-alone bend geometry, meaning that the first GeometrySection is a BendSurfaceNode."
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5426185f-4351-d659-7842-8a1e6256eb25"
     },
     {
       "name": "ScaleConeSection",
-      "signature": "ScaleConeSection(...)",
+      "signature": "public ConnectiveGeometry ScaleConeSection(ConnectiveGeometry geometry, GeometrySection conicalSection, double scale)",
       "summary": "Scale the shape of a conical section.",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Tekla.Structures.Model.ConnectiveGeometry",
+          "doc": "Reference geometry to modify which contains conicalSection.",
+          "optional": false
+        },
+        {
+          "name": "conicalSection",
+          "type": "Tekla.Structures.Model.GeometrySection",
+          "doc": "The conical geometry section to modify.",
+          "optional": false
+        },
+        {
+          "name": "scale",
+          "type": "System.Double",
+          "doc": "Scale to apply to the conical section (greater than 0).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ConnectiveGeometry",
+        "doc": "Modified ConnectiveGeometry if command succeeded or geometry otherwise."
+      },
+      "throws": [
+        {
+          "type": "ConnectiveGeometryException",
+          "when": "Thrown if could not modify the geometry."
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/ca3720e0-be3e-6960-ca2f-151a15227447"
     },
     {
       "name": "SetBendAngle",
-      "signature": "SetBendAngle(...)",
+      "signature": "public ConnectiveGeometry SetBendAngle(double angle, GeometrySection sectionToSetAngle, GeometrySection sectionToMove, ConnectiveGeometry geometry)",
       "summary": "Sets angle as the angle of curved section sectionToSetAngle and modifies geometry starting from sectionToMove.",
-      "params": [],
+      "params": [
+        {
+          "name": "angle",
+          "type": "System.Double",
+          "doc": "Angle in degrees to set.",
+          "optional": false
+        },
+        {
+          "name": "sectionToSetAngle",
+          "type": "Tekla.Structures.Model.GeometrySection",
+          "doc": "Curved section to set angle value.",
+          "optional": false
+        },
+        {
+          "name": "sectionToMove",
+          "type": "Tekla.Structures.Model.GeometrySection",
+          "doc": "Could be curved or plate section, used to know which side of chain to modify.",
+          "optional": false
+        },
+        {
+          "name": "geometry",
+          "type": "Tekla.Structures.Model.ConnectiveGeometry",
+          "doc": "Geometry of the bent plate to modify.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ConnectiveGeometry",
+        "doc": "Returns modified geometry with on success or initial geometry on fail."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6480f6a8-c58d-c973-1e50-e90c49132b08"
     },
     {
       "name": "SetMainSection",
-      "signature": "SetMainSection(...)",
+      "signature": "public ConnectiveGeometry SetMainSection(GeometrySection newMainSection, ConnectiveGeometry geometry)",
       "summary": "Sets newMainSection as a main section of geometry.",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "newMainSection",
+          "type": "Tekla.Structures.Model.GeometrySection",
+          "doc": "Geometry section to set as main section.",
+          "optional": false
+        },
+        {
+          "name": "geometry",
+          "type": "Tekla.Structures.Model.ConnectiveGeometry",
+          "doc": "Connective geometry to modify.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ConnectiveGeometry",
+        "doc": "Connective geometry with newMainSection as main section."
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Throws an ArgumentException exception if the input newMainSection is not a polygon section."
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a9b78007-72d0-cdc5-7461-ffd5fc97c0d5"
     },
     {
       "name": "Split",
-      "signature": "Split(...)",
+      "signature": "public IList\u003CConnectiveGeometry\u003E Split(ConnectiveGeometry geometry, GeometrySection geometrySection)",
       "summary": "Returns the resulting geometry or geometries when a section and the related automatically created sections are removed from this geometry.",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Tekla.Structures.Model.ConnectiveGeometry",
+          "doc": "ConnectiveGeometry used for split operation.",
+          "optional": false
+        },
+        {
+          "name": "geometrySection",
+          "type": "Tekla.Structures.Model.GeometrySection",
+          "doc": "GeometrySection to remove.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IList\u003CConnectiveGeometry\u003E",
+        "doc": "The resulting geometries once the section and related automatic sections are removed."
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when the supplied geometrySection is invalid or geometry is a stand-alone bend geometry, meaning that the first GeometrySection is a BendSurfaceNode."
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5cac6160-6cf1-1bfb-b4da-d9c72fff026a"
     }

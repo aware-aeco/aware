@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "PrintAttributes",
-      "signature": "PrintAttributes(...)",
+      "signature": "public PrintAttributes()",
       "summary": "Creates a new PrintAttributes instance.",
       "params": [],
       "throws": [],
@@ -20,9 +20,20 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4e37a7ae-9c14-2009-7793-1a9928692792"
@@ -31,7 +42,7 @@
   "properties": [
     {
       "name": "NumberOfCopies",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The number of copies in printing.",
@@ -39,7 +50,7 @@
     },
     {
       "name": "Orientation",
-      "type": "object",
+      "type": "DotPrintOrientationType",
       "getter": true,
       "setter": true,
       "summary": "The print orientation type.",
@@ -47,7 +58,7 @@
     },
     {
       "name": "PrintArea",
-      "type": "object",
+      "type": "DotPrintAreaType",
       "getter": true,
       "setter": true,
       "summary": "The print area type.",
@@ -55,7 +66,7 @@
     },
     {
       "name": "PrinterInstance",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The name of the printer instance. Can be fetched from the printer catalog.",
@@ -63,7 +74,7 @@
     },
     {
       "name": "PrintToMultipleSheet",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Whether to print to multiple sheets.",
@@ -71,7 +82,7 @@
     },
     {
       "name": "Scale",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The scale factor.",
@@ -79,7 +90,7 @@
     },
     {
       "name": "ScalingType",
-      "type": "object",
+      "type": "DotPrintScalingType",
       "getter": true,
       "setter": true,
       "summary": "The scale type.",

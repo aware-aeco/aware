@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "ComponentOptions",
-      "signature": "ComponentOptions(...)",
+      "signature": "public ComponentOptions()",
       "summary": "Initializes a new instance of the ComponentOptions class",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "AssemblyLoosePartPositionPrefix",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The assembly loose position prefix.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "AssemblyLoosePartStartNumber",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The assembly loose part number.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "BoltEdgeDistanceFactor",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The factor of bolt edge distance.",
@@ -45,7 +45,7 @@
     },
     {
       "name": "BoltEdgeDistanceReference",
-      "type": "object",
+      "type": "ComponentOptions.BoltEdgeDistanceReferenceEnum",
       "getter": true,
       "setter": true,
       "summary": "The bolt edge distance reference.",
@@ -53,7 +53,7 @@
     },
     {
       "name": "BoltSize",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The bolt size.",
@@ -61,7 +61,7 @@
     },
     {
       "name": "BoltStandard",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The bolt standard.",
@@ -69,15 +69,16 @@
     },
     {
       "name": "FoldedPlateProfileName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The folded plate profile name.",
+      "remarks": "The maximum length is 10 characters.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7ca82afe-5f80-ac9d-21e0-2201e8f713dc"
     },
     {
       "name": "LoosePartPositionPrefix",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The loose part position prefix.",
@@ -85,7 +86,7 @@
     },
     {
       "name": "LoosePartStartNumber",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The loose part start number.",
@@ -93,7 +94,7 @@
     },
     {
       "name": "PartMaterial",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The part material.",
@@ -101,7 +102,7 @@
     },
     {
       "name": "PartWeldedToPrimaryPositionPrefix",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The part welded to primary position prefix.",
@@ -109,7 +110,7 @@
     },
     {
       "name": "PartWeldedToPrimaryStartNumber",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The part welded to primary start number.",
@@ -117,7 +118,7 @@
     },
     {
       "name": "PartWeldedToSecondaryPositionPrefix",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The part welded to secondary position prefix.",
@@ -125,7 +126,7 @@
     },
     {
       "name": "PartWeldedToSecondaryStartNumber",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The part welded to secondary start number.",
@@ -133,10 +134,11 @@
     },
     {
       "name": "PlateProfileName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The plate profile name.",
+      "remarks": "The maximum length is 10 characters.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c293d03c-2b72-d63c-1d15-428366f044c1"
     }
   ],

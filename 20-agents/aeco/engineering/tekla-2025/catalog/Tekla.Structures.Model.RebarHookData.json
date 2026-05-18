@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "RebarHookData",
-      "signature": "RebarHookData(...)",
+      "signature": "public RebarHookData()",
       "summary": "Instantiates a rebar hook data instance with empty members.",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "Angle",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The angle of the hook. The value is between -270 to \u002B270 degrees.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "Length",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The length of the straight part of the hook.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "Radius",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The bending radius of the hook.",
@@ -45,7 +45,7 @@
     },
     {
       "name": "Shape",
-      "type": "object",
+      "type": "RebarHookData.RebarHookShapeEnum",
       "getter": true,
       "setter": true,
       "summary": "Defines the shape of the hook. The options are: NO_HOOK. Sets the angle, radius and length to 0.HOOK_90_DEGREES.HOOK_135_DEGREES.HOOK_180_DEGREES.CUSTOM_HOOK. The angle, radius and length values have to be set manually.",

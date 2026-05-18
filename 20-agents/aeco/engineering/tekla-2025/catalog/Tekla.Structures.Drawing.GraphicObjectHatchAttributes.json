@@ -10,9 +10,20 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/42743022-d347-9ac1-942e-7a6990e9bb83"
@@ -21,7 +32,7 @@
   "properties": [
     {
       "name": "Angle",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The angle in which to draw the hatch.",
@@ -29,7 +40,7 @@
     },
     {
       "name": "BackgroundColor",
-      "type": "object",
+      "type": "DrawingHatchColors",
       "getter": true,
       "setter": true,
       "summary": "The background color of the hatch.",
@@ -37,7 +48,7 @@
     },
     {
       "name": "Color",
-      "type": "object",
+      "type": "DrawingHatchColors",
       "getter": true,
       "setter": true,
       "summary": "The color of the hatch.",
@@ -45,7 +56,7 @@
     },
     {
       "name": "DrawBackgroundColor",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Sets whether the background color will be enabled or disabled for the hatch. See also: BackgroundColor.",
@@ -53,7 +64,7 @@
     },
     {
       "name": "FactorType",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The type of the hatch factor.",
@@ -61,7 +72,7 @@
     },
     {
       "name": "Name",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The name of the hatch. If an empty string is given as hatch name it will become \u0022None\u0022.",
@@ -69,7 +80,7 @@
     },
     {
       "name": "OffsetX",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The offset from the origin in the X-direction.",
@@ -77,7 +88,7 @@
     },
     {
       "name": "OffsetY",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The offset from the origin in the Y-direction.",
@@ -85,7 +96,7 @@
     },
     {
       "name": "ScaleX",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The scale value of the hatch in the X-direction.",
@@ -93,7 +104,7 @@
     },
     {
       "name": "ScaleY",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The scale value of the hatch in the Y-direction.",
@@ -101,7 +112,7 @@
     },
     {
       "name": "TrueBackgroundColor",
-      "type": "object",
+      "type": "TeklaDrawingColor",
       "getter": true,
       "setter": true,
       "summary": "The true color (rgb enabled) of the hatch background.",
@@ -109,7 +120,7 @@
     },
     {
       "name": "TrueColor",
-      "type": "object",
+      "type": "TeklaDrawingColor",
       "getter": true,
       "setter": true,
       "summary": "The true color (RGB enabled) of the hatch.",

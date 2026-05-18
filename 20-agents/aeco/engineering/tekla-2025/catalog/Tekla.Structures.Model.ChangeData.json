@@ -11,25 +11,25 @@
   "properties": [
     {
       "name": "Object",
-      "type": "object",
+      "type": "ModelObject",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the changed object.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/336f8d1a-c1f9-96f8-5f34-906ca393cd7d"
     },
     {
       "name": "Source",
-      "type": "object",
+      "type": "ChangeData.ChangeSourceTypeEnum",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the change source type.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2395ea14-bcc2-cc0b-28b6-120b097a3f76"
     },
     {
       "name": "Type",
-      "type": "object",
+      "type": "ChangeData.ChangeTypeEnum",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the change type.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f165592b-a841-edfa-0fdd-471f7db25554"
     }

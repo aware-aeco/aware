@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "WeldMark.SeamVisibilityAttributes",
-      "signature": "WeldMark.SeamVisibilityAttributes(...)",
+      "signature": "public SeamVisibilityAttributes()",
       "summary": "Creates a new weld seam visibility attributes instance.",
       "params": [],
       "throws": [],
@@ -18,9 +18,70 @@
     },
     {
       "name": "WeldMark.SeamVisibilityAttributes",
-      "signature": "WeldMark.SeamVisibilityAttributes(...)",
+      "signature": "public SeamVisibilityAttributes(bool showPrefix, bool showSize, bool showType, bool showAngle, bool showContour, bool showFinish, bool showLength, bool showPitch, bool showEffectiveThroat, bool showRootOpening)",
       "summary": "Creates a new weld seam visibility attributes instance with the given attributes.",
-      "params": [],
+      "params": [
+        {
+          "name": "showPrefix",
+          "type": "System.Boolean",
+          "doc": "The seam prefix visibility to be used.",
+          "optional": false
+        },
+        {
+          "name": "showSize",
+          "type": "System.Boolean",
+          "doc": "The seam size visibility to be used.",
+          "optional": false
+        },
+        {
+          "name": "showType",
+          "type": "System.Boolean",
+          "doc": "The seam type visibility to be used.",
+          "optional": false
+        },
+        {
+          "name": "showAngle",
+          "type": "System.Boolean",
+          "doc": "The seam angle visibility to be used.",
+          "optional": false
+        },
+        {
+          "name": "showContour",
+          "type": "System.Boolean",
+          "doc": "The seam contour visibility to be used.",
+          "optional": false
+        },
+        {
+          "name": "showFinish",
+          "type": "System.Boolean",
+          "doc": "The seam finish visibility to be used.",
+          "optional": false
+        },
+        {
+          "name": "showLength",
+          "type": "System.Boolean",
+          "doc": "The seam length visibility to be used.",
+          "optional": false
+        },
+        {
+          "name": "showPitch",
+          "type": "System.Boolean",
+          "doc": "The seam pitch visibility to be used.",
+          "optional": false
+        },
+        {
+          "name": "showEffectiveThroat",
+          "type": "System.Boolean",
+          "doc": "The seam effective throat visibility to be used.",
+          "optional": false
+        },
+        {
+          "name": "showRootOpening",
+          "type": "System.Boolean",
+          "doc": "The seam root opening visibility to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/06f29061-6d5e-ce1a-1e28-ebe80c13eec7"
@@ -29,9 +90,20 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e1d49834-4506-32f5-7fe4-0dab996df6af"
@@ -40,7 +112,7 @@
   "properties": [
     {
       "name": "ShowAngle",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the seam angle is visible.",
@@ -48,7 +120,7 @@
     },
     {
       "name": "ShowContour",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the seam contour is visible.",
@@ -56,7 +128,7 @@
     },
     {
       "name": "ShowEffectiveThroat",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the seam effective throat is visible.",
@@ -64,7 +136,7 @@
     },
     {
       "name": "ShowFinish",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the seam finish is visible.",
@@ -72,7 +144,7 @@
     },
     {
       "name": "ShowLength",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the seam length is visible.",
@@ -80,7 +152,7 @@
     },
     {
       "name": "ShowPitch",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the seam pitch is visible.",
@@ -88,7 +160,7 @@
     },
     {
       "name": "ShowPrefix",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the seam prefix is visible.",
@@ -96,7 +168,7 @@
     },
     {
       "name": "ShowRootOpening",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the seam root opening is visible.",
@@ -104,7 +176,7 @@
     },
     {
       "name": "ShowSize",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the seam size is visible.",
@@ -112,7 +184,7 @@
     },
     {
       "name": "ShowType",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the seam type is visible.",

@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "CustomObservableCollection.T.",
-      "signature": "CustomObservableCollection.T.(...)",
+      "signature": "public CustomObservableCollection()",
       "summary": "CustomObservableCollection constructor.",
       "params": [],
       "throws": [],
@@ -18,18 +18,32 @@
     },
     {
       "name": "CustomObservableCollection.T.",
-      "signature": "CustomObservableCollection.T.(...)",
+      "signature": "public CustomObservableCollection(IEnumerable\u003CT\u003E collection)",
       "summary": "CustomObservableCollection constructor.",
-      "params": [],
+      "params": [
+        {
+          "name": "collection",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "doc": "The collection used in creation.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/466b759c-5f04-ce9c-51a2-3f9dacc87138"
     },
     {
       "name": "CustomObservableCollection.T.",
-      "signature": "CustomObservableCollection.T.(...)",
+      "signature": "public CustomObservableCollection(List\u003CT\u003E list)",
       "summary": "CustomObservableCollection constructor.",
-      "params": [],
+      "params": [
+        {
+          "name": "list",
+          "type": "System.Collections.Generic.List\u003CT\u003E",
+          "doc": "The list used in creation.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/b8d57eb0-d577-2757-a14e-95d4028e3025"
@@ -38,9 +52,16 @@
   "methods": [
     {
       "name": "Repopulate",
-      "signature": "Repopulate(...)",
+      "signature": "public void Repopulate(IEnumerable\u003CT\u003E collection)",
       "summary": "CustomObservableCollection repopulator, sends notification about property and collection change.",
-      "params": [],
+      "params": [
+        {
+          "name": "collection",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "doc": "The collection used in repopulation.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9c83ef1c-6b7b-1aa3-da5b-9fdd9a28309a"

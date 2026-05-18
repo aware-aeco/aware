@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "PointPlacing",
-      "signature": "PointPlacing(...)",
+      "signature": "public PointPlacing()",
       "summary": "Creates a new point placing instance. The value used for the placing is the parent object\u0027s insertion point in this case.",
       "params": [],
       "throws": [],
@@ -20,9 +20,20 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/be2242f1-aa49-fbdb-fc2e-ac7b35b4f910"

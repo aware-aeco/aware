@@ -10,18 +10,57 @@
   "methods": [
     {
       "name": "DisplayHelpTopic",
-      "signature": "DisplayHelpTopic(...)",
+      "signature": "public static bool DisplayHelpTopic(string helpTopic)",
       "summary": "Method for opening Tekla Structures help viewer with given help topic. Method requires Tekla Structures to be running.",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "helpTopic",
+          "type": "System.String",
+          "doc": "Help topic (e.g. Help file name without extension).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if success, otherwise false."
+      },
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown when connection to Tekla Structures failed."
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4b0c80b5-237d-c017-4355-cc5d42ea9087"
     },
     {
       "name": "DisplayHelpTopicIndependent",
-      "signature": "DisplayHelpTopicIndependent(...)",
+      "signature": "public static bool DisplayHelpTopicIndependent(string helpViewerFilePath, string helpTopic, string language)",
       "summary": "Method for opening Tekla Structures help viewer independently from given file path with given help topic and language.",
-      "params": [],
+      "params": [
+        {
+          "name": "helpViewerFilePath",
+          "type": "System.String",
+          "doc": "Full file path to HelpViewer.exe containing the name of the executable.",
+          "optional": false
+        },
+        {
+          "name": "helpTopic",
+          "type": "System.String",
+          "doc": "Help topic (e.g. Help file name without extension).",
+          "optional": false
+        },
+        {
+          "name": "language",
+          "type": "System.String",
+          "doc": "Help language. Defaults to enu.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if success, otherwise false."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5ed14735-0448-5c67-ba91-447382f56925"

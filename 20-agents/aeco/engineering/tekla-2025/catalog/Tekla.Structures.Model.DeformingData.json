@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "DeformingData",
-      "signature": "DeformingData(...)",
+      "signature": "public DeformingData()",
       "summary": "Instantiates a deforming data instance.",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "Angle",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The angle of the part at its start point, relative to the part reference line. For example, if the beam is warped 45 degrees at the end point, in the Angle field the value is 0, and the value is 45 in the Angle2 field.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "Angle2",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The angle of the part at its end point, relative to the part reference line. For example, if the beam is warped 45 degrees at the end point, in the Angle field the value is 0, and the value is 45 in the Angle2 field.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "Cambering",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The degree of cambering.",
@@ -45,7 +45,7 @@
     },
     {
       "name": "Shortening",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The degree of shortening.",

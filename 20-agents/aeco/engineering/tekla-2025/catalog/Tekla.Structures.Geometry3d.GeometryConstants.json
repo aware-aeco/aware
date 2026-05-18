@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "GeometryConstants",
-      "signature": "GeometryConstants(...)",
+      "signature": "public GeometryConstants()",
       "summary": "Initializes a new instance of the GeometryConstants class",
       "params": [],
       "throws": [],

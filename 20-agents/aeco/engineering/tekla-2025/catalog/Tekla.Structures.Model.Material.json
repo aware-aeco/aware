@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Material",
-      "signature": "Material(...)",
+      "signature": "public Material()",
       "summary": "Instantiates an empty material instance.",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "MaterialString",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Identifies the material in a string format.",

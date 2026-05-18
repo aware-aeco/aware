@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "RebarHeaderItem",
-      "signature": "RebarHeaderItem(...)",
+      "signature": "public RebarHeaderItem()",
       "summary": "Initializes a new instance of the RebarHeaderItem class.",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "Name",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the name.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "PropertyName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the property name.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "Type",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type.",
@@ -45,7 +45,7 @@
     },
     {
       "name": "Units",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the units.",

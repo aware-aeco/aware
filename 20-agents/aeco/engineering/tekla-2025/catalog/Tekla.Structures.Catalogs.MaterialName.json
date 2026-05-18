@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "MaterialName",
-      "signature": "MaterialName(...)",
+      "signature": "public MaterialName()",
       "summary": "Initializes a new instance of the MaterialName class",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "Name",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The material item name.",

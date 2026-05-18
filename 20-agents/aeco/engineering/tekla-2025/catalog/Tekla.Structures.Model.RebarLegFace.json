@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "RebarLegFace",
-      "signature": "RebarLegFace(...)",
+      "signature": "public RebarLegFace()",
       "summary": "Initializes a new instance of the RebarLegFace class.",
       "params": [],
       "throws": [],
@@ -18,9 +18,16 @@
     },
     {
       "name": "RebarLegFace",
-      "signature": "RebarLegFace(...)",
+      "signature": "public RebarLegFace(Contour contour)",
       "summary": "Initializes a new instance of the RebarLegFace class using the specified Contour.",
-      "params": [],
+      "params": [
+        {
+          "name": "contour",
+          "type": "Tekla.Structures.Model.Contour",
+          "doc": "The primary contour.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/aac881d3-8ec1-8230-5b74-71a33a1ac624"
@@ -30,7 +37,7 @@
   "properties": [
     {
       "name": "AdditonalOffset",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the user defined offset of the rebars from the rebar leg face.",
@@ -38,7 +45,7 @@
     },
     {
       "name": "Contour",
-      "type": "object",
+      "type": "Contour",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the outer Contour of the rebar leg face.",
@@ -46,7 +53,7 @@
     },
     {
       "name": "Id",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets an identifier that may be used to identify instances of the same rebar leg face.",
@@ -54,7 +61,7 @@
     },
     {
       "name": "LayerOrderNumber",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the layer order number of the rebar leg face.",
@@ -62,7 +69,7 @@
     },
     {
       "name": "Reversed",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the cover thickness is opposite to the coordinate system Z direction for the rebar leg face.",

@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "InvalidFacePointsException",
-      "signature": "InvalidFacePointsException(...)",
+      "signature": "public InvalidFacePointsException()",
       "summary": "Initializes a new instance of the InvalidFacePointsException class with \u0022Cannot create geometry from requested face points\u0022 error message.",
       "params": [],
       "throws": [],

@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "ClashCheckOptions",
-      "signature": "ClashCheckOptions(...)",
+      "signature": "public ClashCheckOptions()",
       "summary": "Initializes a new instance of the ClashCheckOptions class",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "BoltHeadDiameter",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The bolt head diameter.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "NutThickness",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The nut thickness.",

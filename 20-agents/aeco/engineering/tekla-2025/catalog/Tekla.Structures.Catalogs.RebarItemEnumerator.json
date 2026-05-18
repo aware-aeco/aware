@@ -10,70 +10,132 @@
   "methods": [
     {
       "name": "DeleteRebarItem",
-      "signature": "DeleteRebarItem(...)",
+      "signature": "public static bool DeleteRebarItem(RebarItem rebarItem)",
       "summary": "Delete the RebarItem from the list",
-      "params": [],
+      "params": [
+        {
+          "name": "rebarItem",
+          "type": "Tekla.Structures.Catalogs.RebarItem",
+          "doc": "item to delete",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8134716e-7107-ace0-ee37-1762fdc6c6e5"
     },
     {
       "name": "GetRebarHeaderItems",
-      "signature": "GetRebarHeaderItems(...)",
+      "signature": "public static List\u003CRebarHeaderItem\u003E GetRebarHeaderItems()",
       "summary": "Gets the header items from the rebar catalog header.",
       "params": [],
+      "returns": {
+        "type": "List\u003CRebarHeaderItem\u003E",
+        "doc": "The rebar header items."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/15c513bc-268d-6adb-2484-6fc63f53586b"
     },
     {
       "name": "GetSize",
-      "signature": "GetSize(...)",
+      "signature": "public int GetSize()",
       "summary": "Returns the total amout of items.",
       "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The total amount of items."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/143e5791-aab0-dd97-59e4-6dc160365bf8"
     },
     {
       "name": "InsertRebarItem",
-      "signature": "InsertRebarItem(...)",
+      "signature": "public static bool InsertRebarItem(RebarItem rebarItem)",
       "summary": "Insert the RebarItem in to the list",
-      "params": [],
+      "params": [
+        {
+          "name": "rebarItem",
+          "type": "Tekla.Structures.Catalogs.RebarItem",
+          "doc": "Item to insert",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8ccbe8c7-936b-e7f7-5a8b-15bd890c35d7"
     },
     {
       "name": "ModifyRebarItem",
-      "signature": "ModifyRebarItem(...)",
+      "signature": "public static bool ModifyRebarItem(RebarItem rebarItem, RebarItem originalRebarItem)",
       "summary": "Modify the RebarItem in the list",
-      "params": [],
+      "params": [
+        {
+          "name": "rebarItem",
+          "type": "Tekla.Structures.Catalogs.RebarItem",
+          "doc": "item to modify",
+          "optional": false
+        },
+        {
+          "name": "originalRebarItem",
+          "type": "Tekla.Structures.Catalogs.RebarItem",
+          "doc": "original Rebar Item to match",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e12ff711-c46d-beba-9f0a-58c370a56a48"
     },
     {
       "name": "MoveNext",
-      "signature": "MoveNext(...)",
+      "signature": "public bool MoveNext()",
       "summary": "Moves to the next item in the enumerator.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "False on failure."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/16173cf8-253b-7207-0efd-433facfb2a43"
     },
     {
       "name": "RebarItemExists",
-      "signature": "RebarItemExists(...)",
+      "signature": "public static bool RebarItemExists(RebarItem rebarItem)",
       "summary": "Check RebarItem is available in database file",
-      "params": [],
+      "params": [
+        {
+          "name": "rebarItem",
+          "type": "Tekla.Structures.Catalogs.RebarItem",
+          "doc": "rebarItem to check with rebar db",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on rebar item exist in data base"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/91a4841a-1b14-8d2e-a919-f82ac6d98d04"
     },
     {
       "name": "Reset",
-      "signature": "Reset(...)",
+      "signature": "public void Reset()",
       "summary": "Resets the enumerator to the beginning.",
       "params": [],
       "throws": [],
@@ -82,63 +144,236 @@
     },
     {
       "name": "SelectRebarItem(String, String)",
-      "signature": "SelectRebarItem(String, String)(...)",
+      "signature": "public static RebarItem SelectRebarItem(string Grade, string Size)",
       "summary": "Selects a rebar item in the rebar database with the given grade and size.",
-      "params": [],
+      "params": [
+        {
+          "name": "Grade",
+          "type": "System.String",
+          "doc": "The grade of the rebar item to select.",
+          "optional": false
+        },
+        {
+          "name": "Size",
+          "type": "System.String",
+          "doc": "The size of the rebar item to select.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RebarItem",
+        "doc": "The first RebarItem that matches the conditions."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/43cc4200-e00f-bc6b-7b54-5fe9aa9eca99"
     },
     {
       "name": "SelectRebarItem(String, Double, Boolean)",
-      "signature": "SelectRebarItem(String, Double, Boolean)(...)",
+      "signature": "public static RebarItem SelectRebarItem(string Grade, double Diameter, bool UseNominalDiameter)",
       "summary": "Selects a rebar item in the rebar database with the given grade and nominal diameter.",
-      "params": [],
+      "params": [
+        {
+          "name": "Grade",
+          "type": "System.String",
+          "doc": "The grade of the rebar item to select.",
+          "optional": false
+        },
+        {
+          "name": "Diameter",
+          "type": "System.Double",
+          "doc": "The diameter of the rebar item to select.",
+          "optional": false
+        },
+        {
+          "name": "UseNominalDiameter",
+          "type": "System.Boolean",
+          "doc": "If set to false, the item is selected based on the actual diameter. If true, the item is selected based on the nominal diameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RebarItem",
+        "doc": "The first RebarItem that matches the conditions."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8070f297-24cb-845f-c6f3-a4c9f4cd18c5"
     },
     {
       "name": "SelectRebarItem(String, String, Double)",
-      "signature": "SelectRebarItem(String, String, Double)(...)",
+      "signature": "public static RebarItem SelectRebarItem(string Grade, string Size, double BendRadius)",
       "summary": "Selects a rebar item in the rebar database with the given grade, size and bending radius.",
-      "params": [],
+      "params": [
+        {
+          "name": "Grade",
+          "type": "System.String",
+          "doc": "The grade of the rebar item to select.",
+          "optional": false
+        },
+        {
+          "name": "Size",
+          "type": "System.String",
+          "doc": "The size of the rebar item to select.",
+          "optional": false
+        },
+        {
+          "name": "BendRadius",
+          "type": "System.Double",
+          "doc": "The bending radius of the rebar item to select.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RebarItem",
+        "doc": "The first RebarItem that matches the conditions."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/79ebffd5-4708-d0f0-4b97-850d7e31fd8c"
     },
     {
       "name": "SelectRebarItem(String, String, String)",
-      "signature": "SelectRebarItem(String, String, String)(...)",
+      "signature": "public static RebarItem SelectRebarItem(string Grade, string Size, string Usage)",
       "summary": "Selects a rebar item in the rebar database with the given grade, size and usage.",
-      "params": [],
+      "params": [
+        {
+          "name": "Grade",
+          "type": "System.String",
+          "doc": "The grade of the rebar item to select.",
+          "optional": false
+        },
+        {
+          "name": "Size",
+          "type": "System.String",
+          "doc": "The size of the rebar item to select.",
+          "optional": false
+        },
+        {
+          "name": "Usage",
+          "type": "System.String",
+          "doc": "The usage of the rebar item to select.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RebarItem",
+        "doc": "The first RebarItem that matches the conditions."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a39216d1-61a1-12bb-1df8-440b927be16d"
     },
     {
       "name": "SelectRebarItem(String, Double, Double, Boolean)",
-      "signature": "SelectRebarItem(String, Double, Double, Boolean)(...)",
+      "signature": "public static RebarItem SelectRebarItem(string Grade, double Diameter, double BendRadius, bool UseNominalDiameter)",
       "summary": "Selects a rebar item in the rebar database with the given grade, nominal diameter and bending radius.",
-      "params": [],
+      "params": [
+        {
+          "name": "Grade",
+          "type": "System.String",
+          "doc": "The grade of the rebar item to select.",
+          "optional": false
+        },
+        {
+          "name": "Diameter",
+          "type": "System.Double",
+          "doc": "The diameter of the rebar item to select.",
+          "optional": false
+        },
+        {
+          "name": "BendRadius",
+          "type": "System.Double",
+          "doc": "The bending radius of the rebar item to select.",
+          "optional": false
+        },
+        {
+          "name": "UseNominalDiameter",
+          "type": "System.Boolean",
+          "doc": "If set to false, the item is selected based on the actual diameter. If true, the item is selected based on the nominal diameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RebarItem",
+        "doc": "The first RebarItem that matches the conditions."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/57ce99c3-1beb-75bf-b836-a72f15427a21"
     },
     {
       "name": "SelectRebarItem(String, Double, String, Boolean)",
-      "signature": "SelectRebarItem(String, Double, String, Boolean)(...)",
+      "signature": "public static RebarItem SelectRebarItem(string Grade, double Diameter, string Usage, bool UseNominalDiameter)",
       "summary": "Selects a rebar item in the rebar database with the given grade, nominal diameter and bending radius.",
-      "params": [],
+      "params": [
+        {
+          "name": "Grade",
+          "type": "System.String",
+          "doc": "The grade of the rebar item to select.",
+          "optional": false
+        },
+        {
+          "name": "Diameter",
+          "type": "System.Double",
+          "doc": "The diameter of the rebar item to select.",
+          "optional": false
+        },
+        {
+          "name": "Usage",
+          "type": "System.String",
+          "doc": "The usage of the rebar item to select.",
+          "optional": false
+        },
+        {
+          "name": "UseNominalDiameter",
+          "type": "System.Boolean",
+          "doc": "If set to false, the item is selected based on the actual diameter. If true, the item is selected based on the nominal diameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RebarItem",
+        "doc": "The first RebarItem that matches the conditions."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/711493f8-9bba-e516-550a-e3121156d859"
     },
     {
       "name": "SelectRebarItem(String, String, String, String)",
-      "signature": "SelectRebarItem(String, String, String, String)(...)",
+      "signature": "public static RebarItem SelectRebarItem(string Grade, string Size, string Usage, string Code)",
       "summary": "Selects a rebar item in the rebar database with the given grade, size, usage and code.",
-      "params": [],
+      "params": [
+        {
+          "name": "Grade",
+          "type": "System.String",
+          "doc": "The grade of the rebar item to select.",
+          "optional": false
+        },
+        {
+          "name": "Size",
+          "type": "System.String",
+          "doc": "The size of the rebar item to select.",
+          "optional": false
+        },
+        {
+          "name": "Usage",
+          "type": "System.String",
+          "doc": "The usage of the rebar item to select.",
+          "optional": false
+        },
+        {
+          "name": "Code",
+          "type": "System.String",
+          "doc": "The code of the rebar item to select.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RebarItem",
+        "doc": "The first RebarItem that matches the conditions."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7804542c-1ac2-cdff-33bd-19b6a5d4f66b"
@@ -147,9 +382,9 @@
   "properties": [
     {
       "name": "Current",
-      "type": "object",
+      "type": "RebarItem",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Returns a rebar item instance of the current element.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/698062cd-6577-feb5-29b9-65770f3cc419"
     }

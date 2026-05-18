@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "View.ViewMarkTagAttributes",
-      "signature": "View.ViewMarkTagAttributes(...)",
+      "signature": "public ViewMarkTagAttributes()",
       "summary": "Creates a new mark tag attributes instance.",
       "params": [],
       "throws": [],
@@ -18,9 +18,34 @@
     },
     {
       "name": "View.ViewMarkTagAttributes",
-      "signature": "View.ViewMarkTagAttributes(...)",
+      "signature": "public ViewMarkTagAttributes(Vector offset, TagLocation location, TextAlignment alignment, ContainerElement tagContent)",
       "summary": "Creates a new mark tag attributes instance with the given offset, location, alignment and content.",
-      "params": [],
+      "params": [
+        {
+          "name": "offset",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The offset of the mark tag to be used.",
+          "optional": false
+        },
+        {
+          "name": "location",
+          "type": "Tekla.Structures.Drawing.TagLocation",
+          "doc": "The location of the mark tag to be used.",
+          "optional": false
+        },
+        {
+          "name": "alignment",
+          "type": "Tekla.Structures.Drawing.TextAlignment",
+          "doc": "The alignment of the mark tag text to be used.",
+          "optional": false
+        },
+        {
+          "name": "tagContent",
+          "type": "Tekla.Structures.Drawing.ContainerElement",
+          "doc": "The content of the mark tag to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2b78ed8c-3445-6a1f-0fee-6fa9e13ed890"
@@ -29,9 +54,20 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/aa40044e-5b47-ea87-43b9-db5751e4c0aa"
@@ -40,7 +76,7 @@
   "properties": [
     {
       "name": "Location",
-      "type": "object",
+      "type": "TagLocation",
       "getter": true,
       "setter": true,
       "summary": "The location of the mark tag.",
@@ -48,7 +84,7 @@
     },
     {
       "name": "Offset",
-      "type": "object",
+      "type": "Vector",
       "getter": true,
       "setter": true,
       "summary": "The offset of the mark tag.",
@@ -56,7 +92,7 @@
     },
     {
       "name": "TagAlignment",
-      "type": "object",
+      "type": "TextAlignment",
       "getter": true,
       "setter": true,
       "summary": "The tag text alignment.",
@@ -64,7 +100,7 @@
     },
     {
       "name": "TagContent",
-      "type": "object",
+      "type": "ContainerElement",
       "getter": true,
       "setter": true,
       "summary": "The tag content.",

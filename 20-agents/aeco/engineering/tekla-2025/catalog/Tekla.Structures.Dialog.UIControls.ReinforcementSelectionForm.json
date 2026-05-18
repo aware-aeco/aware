@@ -9,27 +9,90 @@
   "constructors": [
     {
       "name": "ReinforcementSelectionForm",
-      "signature": "ReinforcementSelectionForm(...)",
+      "signature": "public ReinforcementSelectionForm(List\u003CRebarItem\u003E RebarList)",
       "summary": "Creates a new instance of the ReinforcementSelectionForm.",
-      "params": [],
+      "params": [
+        {
+          "name": "RebarList",
+          "type": "System.Collections.Generic.List\u003CRebarItem\u003E",
+          "doc": "A list with the rebars that will be added to the tree.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e8accdd0-c173-c5cb-a3f5-3599891f2ca1"
     },
     {
       "name": "ReinforcementSelectionForm",
-      "signature": "ReinforcementSelectionForm(...)",
+      "signature": "public ReinforcementSelectionForm(List\u003CRebarItem\u003E RebarList, string Size, string Grade, double BendRadius)",
       "summary": "Creates a new instance of the ReinforcementSelectionForm and will select in the tree the rebar that contains the given parameters (if possible).",
-      "params": [],
+      "params": [
+        {
+          "name": "RebarList",
+          "type": "System.Collections.Generic.List\u003CRebarItem\u003E",
+          "doc": "A list with the rebars that will be added to the tree.",
+          "optional": false
+        },
+        {
+          "name": "Size",
+          "type": "System.String",
+          "doc": "The size of the rebar to be selected.",
+          "optional": false
+        },
+        {
+          "name": "Grade",
+          "type": "System.String",
+          "doc": "The grade of the rebar to be selected.",
+          "optional": false
+        },
+        {
+          "name": "BendRadius",
+          "type": "System.Double",
+          "doc": "The bend radius of the rebar to be selected.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f1ec97d0-1f3c-4423-360d-601a53c6cb69"
     },
     {
       "name": "ReinforcementSelectionForm",
-      "signature": "ReinforcementSelectionForm(...)",
+      "signature": "public ReinforcementSelectionForm(List\u003CRebarItem\u003E RebarList, string Size, string Grade, double BendRadius, string Usage)",
       "summary": "Creates a new instance of the ReinforcementSelectionForm and will select in the tree the rebar that contains the given parameters (if possible).",
-      "params": [],
+      "params": [
+        {
+          "name": "RebarList",
+          "type": "System.Collections.Generic.List\u003CRebarItem\u003E",
+          "doc": "A list with the rebars that will be added to the tree.",
+          "optional": false
+        },
+        {
+          "name": "Size",
+          "type": "System.String",
+          "doc": "The size of the rebar to be selected.",
+          "optional": false
+        },
+        {
+          "name": "Grade",
+          "type": "System.String",
+          "doc": "The grade of the rebar to be selected.",
+          "optional": false
+        },
+        {
+          "name": "BendRadius",
+          "type": "System.Double",
+          "doc": "The bend radius of the rebar to be selected.",
+          "optional": false
+        },
+        {
+          "name": "Usage",
+          "type": "System.String",
+          "doc": "The usage of the rebar to be selected.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/fcfa5673-780c-93fd-a74d-ee52f9338422"
@@ -39,7 +102,7 @@
   "properties": [
     {
       "name": "Culture",
-      "type": "object",
+      "type": "CultureInfo",
       "getter": true,
       "setter": true,
       "summary": "Gets the culture.",
@@ -47,7 +110,7 @@
     },
     {
       "name": "SelectedBendingRadius",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets the selected rebar bending radius.",
@@ -55,7 +118,7 @@
     },
     {
       "name": "SelectedGrade",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets the selected rebar grade.",
@@ -63,7 +126,7 @@
     },
     {
       "name": "SelectedSize",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets the selected rebar size.",
@@ -71,7 +134,7 @@
     },
     {
       "name": "SelectedUsage",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets the selected usage.",

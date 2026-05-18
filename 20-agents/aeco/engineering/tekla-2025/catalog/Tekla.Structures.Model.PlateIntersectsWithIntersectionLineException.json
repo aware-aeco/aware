@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "PlateIntersectsWithIntersectionLineException",
-      "signature": "PlateIntersectsWithIntersectionLineException(...)",
+      "signature": "public PlateIntersectsWithIntersectionLineException()",
       "summary": "Initializes a new instance of the PlateIntersectsWithIntersectionLineException class with \u0022Plate polygon extends beyond intersection line\u0022 error message.",
       "params": [],
       "throws": [],

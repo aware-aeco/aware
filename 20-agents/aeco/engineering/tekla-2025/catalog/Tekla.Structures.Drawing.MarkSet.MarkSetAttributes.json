@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "MarkSet.MarkSetAttributes",
-      "signature": "MarkSet.MarkSetAttributes(...)",
+      "signature": "public MarkSetAttributes()",
       "summary": "Initializes a new instance of the MarkSet.MarkSetAttributes class",
       "params": [],
       "throws": [],
@@ -20,18 +20,40 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/52043a5a-0ded-dae1-433e-b78dbf2bd68a"
     },
     {
       "name": "LoadAttributes",
-      "signature": "LoadAttributes(...)",
+      "signature": "public override bool LoadAttributes(string attributeFilename)",
       "summary": "Loads the attributes from the attribute file. Not implemented yet.",
-      "params": [],
+      "params": [
+        {
+          "name": "attributeFilename",
+          "type": "System.String",
+          "doc": "The attribute file\u0027s filename.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "False always."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/000e97d7-16e6-56b8-9ede-6153fecbc722"
@@ -40,15 +62,15 @@
   "properties": [
     {
       "name": "Angle",
-      "type": "object",
+      "type": "Double",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The actual angle of the mark, in degrees. Can differ from the rotation angle set by the user for marks, e.g. 45-degree column marks in GA drawings or when placing mark along part edges.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4d09de42-a61f-2b59-af2e-df5bc654defd"
     },
     {
       "name": "ArrowHead",
-      "type": "object",
+      "type": "ArrowheadAttributes",
       "getter": true,
       "setter": true,
       "summary": "The arrowhead of the leader line(s).",
@@ -56,7 +78,7 @@
     },
     {
       "name": "CustomPresentation",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Custom presentation GUID to be applied to the object type",
@@ -64,7 +86,7 @@
     },
     {
       "name": "Frame",
-      "type": "object",
+      "type": "Frame",
       "getter": true,
       "setter": true,
       "summary": "The frame attributes of the mark\u0027s labels.",
@@ -72,7 +94,7 @@
     },
     {
       "name": "PlacingAttributes",
-      "type": "object",
+      "type": "PlacingAttributes",
       "getter": true,
       "setter": true,
       "summary": "The placing attributes that the object should use. Using these you can specify whether the object is automatically arranged in the drawing or not.",
@@ -80,7 +102,7 @@
     },
     {
       "name": "PreferredPlacing",
-      "type": "object",
+      "type": "PreferredPlacingTypeBase",
       "getter": true,
       "setter": true,
       "summary": "The type of placing the object should use. See the preferred placing types for different types of placing.",
@@ -88,7 +110,7 @@
     },
     {
       "name": "RotationAngle",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The mark rotation angle set by the user. Unit is degrees.",
@@ -96,7 +118,7 @@
     },
     {
       "name": "TextAlignment",
-      "type": "object",
+      "type": "MarkBase.MarkBaseAttributes.TextAlignOptions",
       "getter": true,
       "setter": true,
       "summary": "The mark text alignment.",
@@ -104,7 +126,7 @@
     },
     {
       "name": "TransparentBackground",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "The mark text background transparency. (transparent/opaque)",

@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "NullRulingException",
-      "signature": "NullRulingException(...)",
+      "signature": "public NullRulingException()",
       "summary": "Constructs an instance of the class",
       "params": [],
       "throws": [],

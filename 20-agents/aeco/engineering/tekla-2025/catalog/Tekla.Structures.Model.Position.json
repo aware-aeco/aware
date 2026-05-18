@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Position",
-      "signature": "Position(...)",
+      "signature": "public Position()",
       "summary": "Creates a new position instance.",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "Depth",
-      "type": "object",
+      "type": "Position.DepthEnum",
       "getter": true,
       "setter": true,
       "summary": "Indicates the positioning in the depth sense.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "DepthOffset",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The offset away from the Depth value.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "Plane",
-      "type": "object",
+      "type": "Position.PlaneEnum",
       "getter": true,
       "setter": true,
       "summary": "Indicates the positioning in the plane sense.",
@@ -45,7 +45,7 @@
     },
     {
       "name": "PlaneOffset",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The offset away from the Plane value.",
@@ -53,7 +53,7 @@
     },
     {
       "name": "Rotation",
-      "type": "object",
+      "type": "Position.RotationEnum",
       "getter": true,
       "setter": true,
       "summary": "Indicates the positioning in the rotational sense.",
@@ -61,7 +61,7 @@
     },
     {
       "name": "RotationOffset",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The offset away from the Rotation value.",

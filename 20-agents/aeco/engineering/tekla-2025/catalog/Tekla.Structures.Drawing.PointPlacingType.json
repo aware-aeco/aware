@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "PointPlacingType",
-      "signature": "PointPlacingType(...)",
+      "signature": "public PointPlacingType()",
       "summary": "Creates a new point placing type instance.",
       "params": [],
       "throws": [],

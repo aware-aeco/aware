@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "ContourPoint",
-      "signature": "ContourPoint(...)",
+      "signature": "public ContourPoint()",
       "summary": "Creates a new contour point instance.",
       "params": [],
       "throws": [],
@@ -18,9 +18,22 @@
     },
     {
       "name": "ContourPoint",
-      "signature": "ContourPoint(...)",
+      "signature": "public ContourPoint(Point P, Chamfer C)",
       "summary": "Creates a new contour point using the given point and chamfer.",
-      "params": [],
+      "params": [
+        {
+          "name": "P",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The point (with X, Y and Z coordinates) to be used.",
+          "optional": false
+        },
+        {
+          "name": "C",
+          "type": "Tekla.Structures.Model.Chamfer",
+          "doc": "The chamfer to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7901742b-2a8d-b6d5-3f13-2f9df088f68d"
@@ -29,61 +42,117 @@
   "methods": [
     {
       "name": "CompareTo",
-      "signature": "CompareTo(...)",
+      "signature": "public int CompareTo(Object obj)",
       "summary": "Compares two points. To use binarysearch somekind of sorting should be used.",
-      "params": [],
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "The point to be compared.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0 if both are equal, -1 if this point is before, 1 if this point is after."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2f202828-05fd-220f-92b1-5b64372a4f7e"
     },
     {
       "name": "Equals",
-      "signature": "Equals(...)",
+      "signature": "public override bool Equals(Object obj)",
       "summary": "Returns true if the current object and the given object are equal.",
-      "params": [],
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "The object we wish to check the equality with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the given object equals the current object."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/dbca17f2-6730-e2c4-583c-90c74c72e0b0"
     },
     {
       "name": "GetHashCode",
-      "signature": "GetHashCode(...)",
+      "signature": "public override int GetHashCode()",
       "summary": "Returns a hash code for the point. Notice, in extremely rare cases, you might not get the same hash code for two points even though they are considered equal! This should, however, happen only in extremely rare cases!",
       "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The hash code for the point."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9f84f024-170b-5181-770d-5ed2f56332cd"
     },
     {
       "name": "SetPoint",
-      "signature": "SetPoint(...)",
+      "signature": "public void SetPoint(Point P)",
       "summary": "Sets the point\u0027s coordinates for the contour point.",
-      "params": [],
+      "params": [
+        {
+          "name": "P",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The point.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/caa63223-3fa6-7f07-5e3f-1d8e7b7386d0"
     },
     {
       "name": "ToString",
-      "signature": "ToString(...)",
+      "signature": "public override string ToString()",
       "summary": "Formats the point into a string.",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The string that represents the point."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/63db29a6-32f7-6696-31eb-a6084dcb62cd"
     },
     {
       "name": "Translate",
-      "signature": "Translate(...)",
+      "signature": "public virtual void Translate(double X, double Y, double Z)",
       "summary": "Translates the point using the given vector.",
-      "params": [],
+      "params": [
+        {
+          "name": "X",
+          "type": "System.Double",
+          "doc": "The X-translation to be used.",
+          "optional": false
+        },
+        {
+          "name": "Y",
+          "type": "System.Double",
+          "doc": "The Y-translation to be used.",
+          "optional": false
+        },
+        {
+          "name": "Z",
+          "type": "System.Double",
+          "doc": "The Z-translation to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7ad7ecb9-acf3-7ed2-f2bc-aa52b99ceae6"
     },
     {
       "name": "Zero",
-      "signature": "Zero(...)",
+      "signature": "public void Zero()",
       "summary": "Zeros all the members of the point.",
       "params": [],
       "throws": [],
@@ -94,7 +163,7 @@
   "properties": [
     {
       "name": "Chamfer",
-      "type": "object",
+      "type": "Chamfer",
       "getter": true,
       "setter": true,
       "summary": "The chamfer for the contour point.",

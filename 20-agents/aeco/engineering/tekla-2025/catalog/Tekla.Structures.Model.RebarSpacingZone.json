@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "RebarSpacingZone",
-      "signature": "RebarSpacingZone(...)",
+      "signature": "public RebarSpacingZone()",
       "summary": "Initializes a new instance of the RebarSpacingZone class.",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "Length",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the proposed overall spacing zone length.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "LengthType",
-      "type": "object",
+      "type": "RebarSpacingZone.LengthEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the length is absolute or relative. If the length is relative the length property is treated as a proportion of the overall available spacing length (from the associated RebarGuideline). The available spacing length is the guideline length less the calculated start and end offsets and less any fixed length spacing zones. An example of how relative length values are handled: With two relative length zones with proposed length values of 10 and 20 respectively the final calculated lengths will normally be \u0027available spacing length\u0027*10/(10\u002B20) and \u0027available spacing length\u0027*20/(10\u002B20) though the spacing algorithm may determine a different result in some situations.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "NumberOfSpaces",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the proposed number of spaces in the spacing zone.",
@@ -45,7 +45,7 @@
     },
     {
       "name": "NumberOfSpacesType",
-      "type": "object",
+      "type": "RebarSpacingZone.SpacingEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the number of spaces is exact or target. If the number of spaces is target the spacing algorithm may determine a different number of spaces to use.",
@@ -53,7 +53,7 @@
     },
     {
       "name": "Spacing",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the proposed spacing (the space between each reinforcing bar centerline) in the spacing zone.",
@@ -61,7 +61,7 @@
     },
     {
       "name": "SpacingType",
-      "type": "object",
+      "type": "RebarSpacingZone.SpacingEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the spacing is exact or target. If the spacing is target the spacing algorithm may determine a different spacing to use.",

@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "ReportTemplateElement",
-      "signature": "ReportTemplateElement(...)",
+      "signature": "public ReportTemplateElement()",
       "summary": "Creates a new report template element instance with the default template.",
       "params": [],
       "throws": [],
@@ -18,9 +18,16 @@
     },
     {
       "name": "ReportTemplateElement",
-      "signature": "ReportTemplateElement(...)",
+      "signature": "public ReportTemplateElement(TemplateInfo Template)",
       "summary": "Creates a new report template element instance with the given template.",
-      "params": [],
+      "params": [
+        {
+          "name": "Template",
+          "type": "Tekla.Structures.Drawing.TemplateInfo",
+          "doc": "The template to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/dc247c2b-5cd1-0290-4115-5636b902c23e"
@@ -29,27 +36,46 @@
   "methods": [
     {
       "name": "Clone",
-      "signature": "Clone(...)",
+      "signature": "public override Object Clone()",
       "summary": "Clones the object.",
       "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "A copy of the object."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9e4ac224-4776-92ab-a8ac-25a05d262bc6"
     },
     {
       "name": "GetUnformattedString",
-      "signature": "GetUnformattedString(...)",
+      "signature": "public override string GetUnformattedString()",
       "summary": "Returns the content as a string without formatting.",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The content as a string without formatting."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/89abb5d5-b23f-ede9-1455-76d6c947e420"
     },
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f6040361-088b-3a59-e2d2-82f7bd06fea4"
@@ -58,7 +84,7 @@
   "properties": [
     {
       "name": "Template",
-      "type": "object",
+      "type": "TemplateInfo",
       "getter": true,
       "setter": true,
       "summary": "The template.",

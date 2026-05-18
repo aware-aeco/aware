@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisDecomposedTemperatureLoad",
-      "signature": "AnalysisDecomposedTemperatureLoad(...)",
+      "signature": "public AnalysisDecomposedTemperatureLoad()",
       "summary": "Initializes a new instance of the AnalysisDecomposedTemperatureLoad class",
       "params": [],
       "throws": [],
@@ -20,7 +20,7 @@
   "methods": [
     {
       "name": "Select",
-      "signature": "Select(...)",
+      "signature": "public override void Select()",
       "summary": "Selects an analysis decomposed temperature load.",
       "params": [],
       "throws": [],
@@ -31,7 +31,7 @@
   "properties": [
     {
       "name": "AnalysisLoadType",
-      "type": "object",
+      "type": "AnalysisDecomposedLoad.AnalysisLoadTypeEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the analysis decomposed load.",
@@ -39,7 +39,7 @@
     },
     {
       "name": "AnalysisModelName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis model name.",
@@ -47,7 +47,7 @@
     },
     {
       "name": "AnalysisObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the analysis object.",
@@ -55,15 +55,15 @@
     },
     {
       "name": "AxialTemperatureDifference",
-      "type": "object",
+      "type": "Double",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The axial temperature difference of the decomposed temperature load.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4ad200b4-92c4-8cb4-57c0-02d758c4f2f8"
     },
     {
       "name": "FatherObject2ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -71,7 +71,7 @@
     },
     {
       "name": "FatherObject2Type",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -79,7 +79,7 @@
     },
     {
       "name": "FatherObjectID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -87,7 +87,7 @@
     },
     {
       "name": "FatherObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -95,15 +95,15 @@
     },
     {
       "name": "HorizontalTemperatureDifference",
-      "type": "object",
+      "type": "Double",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The horizontal temperature difference of the decomposed temperature load.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7f26405d-cb71-49ea-6b4c-a993ae381b9f"
     },
     {
       "name": "ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the analysis object.",
@@ -111,7 +111,7 @@
     },
     {
       "name": "ModelLoadGroupID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the load group.",
@@ -119,7 +119,7 @@
     },
     {
       "name": "ModelLoadID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the model load.",
@@ -127,7 +127,7 @@
     },
     {
       "name": "ObjectAttachedToID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the object the load is attached to.",
@@ -135,7 +135,7 @@
     },
     {
       "name": "ObjectAttachedToType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the object the load is attached to.",
@@ -143,17 +143,17 @@
     },
     {
       "name": "Strain",
-      "type": "object",
+      "type": "Double",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The strain of the decomposed temperature load.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/92bf8583-10a9-64ac-d1c9-3d57db7fde37"
     },
     {
       "name": "VerticalTemperatureDifference",
-      "type": "object",
+      "type": "Double",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The vertical temperature difference of the decomposed temperature load.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a8de9eda-1f50-0003-6a6b-5d5b6c717e7f"
     }

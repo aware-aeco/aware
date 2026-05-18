@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Surfacing.SurfacingAttributes",
-      "signature": "Surfacing.SurfacingAttributes(...)",
+      "signature": "public SurfacingAttributes()",
       "summary": "Creates a new default surfacing attributes instance that loads standard attributes.",
       "params": [],
       "throws": [],
@@ -18,9 +18,16 @@
     },
     {
       "name": "Surfacing.SurfacingAttributes",
-      "signature": "Surfacing.SurfacingAttributes(...)",
+      "signature": "public SurfacingAttributes(string AttributeFile)",
       "summary": "Creates a new surfacing attributes instance that loads the specified attributes.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The name of the attribute file.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/26438b3a-e96d-5cfa-6ded-dc2fe3a19023"
@@ -29,18 +36,40 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4b4ee56c-622d-74d8-99f1-bcf616d3fb67"
     },
     {
       "name": "LoadAttributes",
-      "signature": "LoadAttributes(...)",
+      "signature": "public override bool LoadAttributes(string AttributeFile)",
       "summary": "Loads the attributes from the attribute file.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/53def60f-8695-9925-0755-4fc288c1bb65"
@@ -49,7 +78,7 @@
   "properties": [
     {
       "name": "DrawHiddenLines",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "True if hidden lines are drawn.",
@@ -57,7 +86,7 @@
     },
     {
       "name": "DrawOwnHiddenLines",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "True if own hidden lines are enabled.",
@@ -65,7 +94,7 @@
     },
     {
       "name": "HiddenLines",
-      "type": "object",
+      "type": "LineTypeAttributes",
       "getter": true,
       "setter": true,
       "summary": "The line type of hidden lines.",
@@ -73,7 +102,7 @@
     },
     {
       "name": "Representation",
-      "type": "object",
+      "type": "Surfacing.Representation",
       "getter": true,
       "setter": true,
       "summary": "The representation type of the surfacing.",
@@ -81,7 +110,7 @@
     },
     {
       "name": "ShowPattern",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "True if the pattern is shown.",
@@ -89,7 +118,7 @@
     },
     {
       "name": "VisibleLines",
-      "type": "object",
+      "type": "LineTypeAttributes",
       "getter": true,
       "setter": true,
       "summary": "The line type of visible lines.",

@@ -11,17 +11,17 @@
   "properties": [
     {
       "name": "Polygons",
-      "type": "object",
+      "type": "ArrayList",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the weld seam specific ArrayList of Polygon objects.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e0dbd376-b56e-43c6-051d-8303d7f975dc"
     },
     {
       "name": "Position",
-      "type": "object",
+      "type": "WeldSeamPositionEnum",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the weld seam position (above or below).",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d129fe41-9b21-9340-2912-24feae5653b7"
     }

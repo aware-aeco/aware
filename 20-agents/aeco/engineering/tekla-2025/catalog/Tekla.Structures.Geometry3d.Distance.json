@@ -10,36 +10,104 @@
   "methods": [
     {
       "name": "PointToLine",
-      "signature": "PointToLine(...)",
+      "signature": "public static double PointToLine(Point Point, Line Line)",
       "summary": "Returns the distance between the given point and line.",
-      "params": [],
+      "params": [
+        {
+          "name": "Point",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The point to be used.",
+          "optional": false
+        },
+        {
+          "name": "Line",
+          "type": "Tekla.Structures.Geometry3d.Line",
+          "doc": "The line to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The distance between the given point and line."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/11a2eb0e-0732-164f-31c8-c85b56929f4d"
     },
     {
       "name": "PointToLineSegment",
-      "signature": "PointToLineSegment(...)",
+      "signature": "public static double PointToLineSegment(Point Point, LineSegment LineSegment)",
       "summary": "Returns the distance between the given point and line segment.",
-      "params": [],
+      "params": [
+        {
+          "name": "Point",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The point to be used.",
+          "optional": false
+        },
+        {
+          "name": "LineSegment",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "The line segment to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The distance between the given point and line segment."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9e10cbbd-9168-5dcc-391e-c6fc3cfd130b"
     },
     {
       "name": "PointToPlane",
-      "signature": "PointToPlane(...)",
+      "signature": "public static double PointToPlane(Point Point, GeometricPlane Plane)",
       "summary": "Returns the distance between the given point and plane.",
-      "params": [],
+      "params": [
+        {
+          "name": "Point",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The point to be used.",
+          "optional": false
+        },
+        {
+          "name": "Plane",
+          "type": "Tekla.Structures.Geometry3d.GeometricPlane",
+          "doc": "The plane to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The distance between the given point and plane."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/95fcd6fe-bccf-7fce-b43e-63613ed787be"
     },
     {
       "name": "PointToPoint",
-      "signature": "PointToPoint(...)",
+      "signature": "public static double PointToPoint(Point Point1, Point Point2)",
       "summary": "Returns the distance between the given two points.",
-      "params": [],
+      "params": [
+        {
+          "name": "Point1",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The first point to be used.",
+          "optional": false
+        },
+        {
+          "name": "Point2",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The second point to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The distance between the given points."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6b98cdad-9a85-b545-9c21-d101f7354eb3"

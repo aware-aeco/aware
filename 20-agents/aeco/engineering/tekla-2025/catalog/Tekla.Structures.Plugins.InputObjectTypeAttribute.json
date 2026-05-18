@@ -9,18 +9,32 @@
   "constructors": [
     {
       "name": "InputObjectTypeAttribute",
-      "signature": "InputObjectTypeAttribute(...)",
+      "signature": "public InputObjectTypeAttribute(int Type)",
       "summary": "The custom attribute [InputObjectType()] uses this to store the input object type to the system. This is not to be used by itself.",
-      "params": [],
+      "params": [
+        {
+          "name": "Type",
+          "type": "System.Int32",
+          "doc": "The input object type.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/59a94394-b7fa-f5d6-68f9-a06bc789a567"
     },
     {
       "name": "InputObjectTypeAttribute",
-      "signature": "InputObjectTypeAttribute(...)",
+      "signature": "public InputObjectTypeAttribute(ConnectionBase.InputObjectType Type)",
       "summary": "The custom attribute [InputObjectType()] uses this to store the input object type to the system. This is not to be used by itself.",
-      "params": [],
+      "params": [
+        {
+          "name": "Type",
+          "type": "Tekla.Structures.Plugins.ConnectionBase.InputObjectType",
+          "doc": "The input object type.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/54383b32-3be1-c532-1245-3df5037b0f64"
@@ -30,9 +44,9 @@
   "properties": [
     {
       "name": "Type",
-      "type": "object",
+      "type": "ConnectionBase.InputObjectType",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The custom attribute [InputObjectType()] uses this to store the input object type to the system. This is not to be used by itself.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7a2c07a3-45a1-8c87-2d40-2e192b52f3e6"
     }

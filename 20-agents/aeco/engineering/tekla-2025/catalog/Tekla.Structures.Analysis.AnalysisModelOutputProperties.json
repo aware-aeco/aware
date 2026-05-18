@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisModelOutputProperties",
-      "signature": "AnalysisModelOutputProperties(...)",
+      "signature": "public AnalysisModelOutputProperties()",
       "summary": "Initializes a new instance of the AnalysisModelOutputProperties class",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "OutputAnalysisResults",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the analysis results are created.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "OutputElementForces",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the element forces are created.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "OutputElementInformation",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the element information is created.",
@@ -45,7 +45,7 @@
     },
     {
       "name": "OutputElementJointStresses",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the element joint stresses are created.",
@@ -53,7 +53,7 @@
     },
     {
       "name": "OutputElementJointStressesSolid",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the element joint stresses solid is created.",
@@ -61,7 +61,7 @@
     },
     {
       "name": "OutputEntireSteelTable",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the entire steel table is created.",
@@ -69,7 +69,7 @@
     },
     {
       "name": "OutputJointCoordinates",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the joint coordinates are created.",
@@ -77,7 +77,7 @@
     },
     {
       "name": "OutputJointDisplacements",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the joint displacements are created.",
@@ -85,7 +85,7 @@
     },
     {
       "name": "OutputMaterialProperties",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the material properties are created.",
@@ -93,7 +93,7 @@
     },
     {
       "name": "OutputMemberForces",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the member forces are created.",
@@ -101,7 +101,7 @@
     },
     {
       "name": "OutputMemberInformation",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the member information is created.",
@@ -109,7 +109,7 @@
     },
     {
       "name": "OutputMemberProperties",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the member properties are created.",
@@ -117,7 +117,7 @@
     },
     {
       "name": "OutputMemberSectionForces",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the member section forces are created.",
@@ -125,7 +125,7 @@
     },
     {
       "name": "OutputMemberStresses",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the member stresses are created.",
@@ -133,7 +133,7 @@
     },
     {
       "name": "OutputModeShapes",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the mode shapes are created.",
@@ -141,7 +141,7 @@
     },
     {
       "name": "OutputStoryDrift",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the story drift is created.",
@@ -149,7 +149,7 @@
     },
     {
       "name": "OutputSupportInformation",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the support information is created.",
@@ -157,7 +157,7 @@
     },
     {
       "name": "OutputSupportReactions",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the supported reactions are created.",

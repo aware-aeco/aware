@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "WpfProfileCatalog",
-      "signature": "WpfProfileCatalog(...)",
+      "signature": "public WpfProfileCatalog()",
       "summary": "Initiates a new instance of the control.",
       "params": [],
       "throws": [],
@@ -18,9 +18,16 @@
     },
     {
       "name": "WpfProfileCatalog",
-      "signature": "WpfProfileCatalog(...)",
+      "signature": "public WpfProfileCatalog(string Profile)",
       "summary": "Initiates a new instance of the control selecting the given profile.",
-      "params": [],
+      "params": [
+        {
+          "name": "Profile",
+          "type": "System.String",
+          "doc": "The profile string that will be selecteed in the dialog.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9cd4bf5a-0905-f1ea-514d-c77da79e9499"
@@ -29,7 +36,7 @@
   "methods": [
     {
       "name": "Dispose",
-      "signature": "Dispose(...)",
+      "signature": "public void Dispose()",
       "summary": "Cleans up any resources being used.",
       "params": [],
       "throws": [],
@@ -38,7 +45,7 @@
     },
     {
       "name": "InitializeComponent",
-      "signature": "InitializeComponent(...)",
+      "signature": "public void InitializeComponent()",
       "summary": "InitializeComponent",
       "params": [],
       "throws": [],
@@ -47,9 +54,16 @@
     },
     {
       "name": "OnValueChanged",
-      "signature": "OnValueChanged(...)",
+      "signature": "public void OnValueChanged(Object data)",
       "summary": "Event handler for passing generic catalog data back to dialog",
-      "params": [],
+      "params": [
+        {
+          "name": "data",
+          "type": "System.Object",
+          "doc": "value data",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6e26d06b-7e86-57c4-8fed-e82d758a689f"
@@ -58,7 +72,7 @@
   "properties": [
     {
       "name": "ButtonHeight",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets and sets the height of the button control.",
@@ -66,7 +80,7 @@
     },
     {
       "name": "ButtonText",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets and sets the text of the button control.",
@@ -74,7 +88,7 @@
     },
     {
       "name": "ButtonWidth",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets and sets the width of the button control.",
@@ -82,7 +96,7 @@
     },
     {
       "name": "SelectedProfile",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The selected profile in the control.",
@@ -92,8 +106,8 @@
   "events": [
     {
       "name": "SelectClicked",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler SelectClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler SelectClicked",
       "summary": "The SelectClicked event is raised when the Select button is clicked.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/28c5418c-bf2a-30ee-307a-b88b944a5bb8",
       "handler_thread": "unknown",
@@ -101,8 +115,8 @@
     },
     {
       "name": "SelectionDone",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler SelectionDone",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler SelectionDone",
       "summary": "The SelectionDone event is raised when the selection has been done.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4d1356b6-f3e0-efbd-e8a1-3792d943a2d4",
       "handler_thread": "unknown",

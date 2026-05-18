@@ -10,18 +10,34 @@
   "methods": [
     {
       "name": "GetCurrentTransformationPlane",
-      "signature": "GetCurrentTransformationPlane(...)",
+      "signature": "public TransformationPlane GetCurrentTransformationPlane()",
       "summary": "Gets the current transformation plane.",
       "params": [],
+      "returns": {
+        "type": "TransformationPlane",
+        "doc": "The current transformation plane."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/74206331-60ff-3061-ce71-526788aee687"
     },
     {
       "name": "SetCurrentTransformationPlane",
-      "signature": "SetCurrentTransformationPlane(...)",
+      "signature": "public bool SetCurrentTransformationPlane(TransformationPlane TransformationPlane)",
       "summary": "Sets the current transformation plane.",
-      "params": [],
+      "remarks": "Please note that in order to see workplane change visible in the model, use the RedrawWorkplane() method of the ViewHandler class.",
+      "params": [
+        {
+          "name": "TransformationPlane",
+          "type": "Tekla.Structures.Model.TransformationPlane",
+          "doc": "The transformation plane to be set as the current transformation plane.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "False on failure."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e6f659a2-cc4a-9e35-fbde-78769210ab87"

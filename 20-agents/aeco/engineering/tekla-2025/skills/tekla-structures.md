@@ -14,31 +14,40 @@ Defines an assertion by the method it failed in and the messages it provided.
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/ad52597a-0408-037b-a3d1-689855b86dc5)
 
 ### Constructors
-- `Assertion(...)` — Initializes a new instance of the Assertion class.
+- `public Assertion(string message, string detailedMessage, string methodName)` — Initializes a new instance of the Assertion class.
 
 ### Methods
-#### `Equals(...)`
+#### `public override bool Equals(Object obj)`
 
 The equals.
 
+**Parameters:**
+- `obj` (System.Object) — The obj.
+
+**Returns:** `Boolean` — The Boolean.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/0e1a8744-a12a-74b6-4bcd-6f67e2c54fc2)
 
-#### `GetHashCode(...)`
+#### `public override int GetHashCode()`
 
 Gets a hash code for this instance. Calculated as recommended at http://msdn.microsoft.com/en-us/library/system.object.gethashcode.aspx
 
+**Returns:** `Int32` — The Int32.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/0694a655-97f1-d848-0561-2b43332e2ecf)
 
-#### `ToString(...)`
+#### `public override string ToString()`
 
 The tostring.
+
+**Returns:** `String` — The String.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/ca2065a8-4966-563c-8b29-4e84a9e0acab)
 
 ### Properties
-- `DetailedMessage` (object, get/set) — Gets the detailed message provided by the assertion.
-- `Message` (object, get/set) — Gets the message provided by the assertion.
-- `MethodName` (object, get/set) — Gets the name of the method the assertion failed in.
+- `DetailedMessage` (String, get) — Gets the detailed message provided by the assertion.
+- `Message` (String, get) — Gets the message provided by the assertion.
+- `MethodName` (String, get) — Gets the name of the method the assertion failed in.
 
 ## AutoDirectionTypeEnum (enum)
 
@@ -64,11 +73,11 @@ The ClashCheckOptions class represents the clash check options.
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/7d696961-d1d1-d6bd-91a4-96109ba5b0d5)
 
 ### Constructors
-- `ClashCheckOptions(...)` — Initializes a new instance of the ClashCheckOptions class
+- `public ClashCheckOptions()` — Initializes a new instance of the ClashCheckOptions class
 
 ### Properties
-- `BoltHeadDiameter` (object, get/set) — The bolt head diameter.
-- `NutThickness` (object, get/set) — The nut thickness.
+- `BoltHeadDiameter` (Double, get/set) — The bolt head diameter.
+- `NutThickness` (Double, get/set) — The nut thickness.
 
 ## ComponentDefinitionTypeEnum (enum)
 
@@ -90,24 +99,24 @@ The ComponentOptions class represents the component options.
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/af50ad50-32e9-d812-74ef-dfe45170f2b0)
 
 ### Constructors
-- `ComponentOptions(...)` — Initializes a new instance of the ComponentOptions class
+- `public ComponentOptions()` — Initializes a new instance of the ComponentOptions class
 
 ### Properties
-- `AssemblyLoosePartPositionPrefix` (object, get/set) — The assembly loose position prefix.
-- `AssemblyLoosePartStartNumber` (object, get/set) — The assembly loose part number.
-- `BoltEdgeDistanceFactor` (object, get/set) — The factor of bolt edge distance.
-- `BoltEdgeDistanceReference` (object, get/set) — The bolt edge distance reference.
-- `BoltSize` (object, get/set) — The bolt size.
-- `BoltStandard` (object, get/set) — The bolt standard.
-- `FoldedPlateProfileName` (object, get/set) — The folded plate profile name.
-- `LoosePartPositionPrefix` (object, get/set) — The loose part position prefix.
-- `LoosePartStartNumber` (object, get/set) — The loose part start number.
-- `PartMaterial` (object, get/set) — The part material.
-- `PartWeldedToPrimaryPositionPrefix` (object, get/set) — The part welded to primary position prefix.
-- `PartWeldedToPrimaryStartNumber` (object, get/set) — The part welded to primary start number.
-- `PartWeldedToSecondaryPositionPrefix` (object, get/set) — The part welded to secondary position prefix.
-- `PartWeldedToSecondaryStartNumber` (object, get/set) — The part welded to secondary start number.
-- `PlateProfileName` (object, get/set) — The plate profile name.
+- `AssemblyLoosePartPositionPrefix` (String, get/set) — The assembly loose position prefix.
+- `AssemblyLoosePartStartNumber` (Int32, get/set) — The assembly loose part number.
+- `BoltEdgeDistanceFactor` (Double, get/set) — The factor of bolt edge distance.
+- `BoltEdgeDistanceReference` (ComponentOptions.BoltEdgeDistanceReferenceEnum, get/set) — The bolt edge distance reference.
+- `BoltSize` (String, get/set) — The bolt size.
+- `BoltStandard` (String, get/set) — The bolt standard.
+- `FoldedPlateProfileName` (String, get/set) — The folded plate profile name.
+- `LoosePartPositionPrefix` (String, get/set) — The loose part position prefix.
+- `LoosePartStartNumber` (Int32, get/set) — The loose part start number.
+- `PartMaterial` (String, get/set) — The part material.
+- `PartWeldedToPrimaryPositionPrefix` (String, get/set) — The part welded to primary position prefix.
+- `PartWeldedToPrimaryStartNumber` (Int32, get/set) — The part welded to primary start number.
+- `PartWeldedToSecondaryPositionPrefix` (String, get/set) — The part welded to secondary position prefix.
+- `PartWeldedToSecondaryStartNumber` (Int32, get/set) — The part welded to secondary start number.
+- `PlateProfileName` (String, get/set) — The plate profile name.
 
 ## ComponentOptions.BoltEdgeDistanceReferenceEnum (enum)
 
@@ -149,46 +158,62 @@ The Identifier class represents an identifier that holds information about the i
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/957a7507-7619-f1f9-acfb-6ff8de2d9e27)
 
 ### Constructors
-- `Identifier(...)` — Constructs an empty identifier.
-- `Identifier(...)` — Constructs an identifier with the given GUID.
-- `Identifier(...)` — Constructs an identifier with the given ID.
-- `Identifier(...)` — Constructs an identifier with the given GUID string.
+- `public Identifier()` — Constructs an empty identifier.
+- `public Identifier(Guid guid)` — Constructs an identifier with the given GUID.
+- `public Identifier(int id)` — Constructs an identifier with the given ID.
+- `public Identifier(string guid)` — Constructs an identifier with the given GUID string.
 
 ### Methods
-#### `Equals(Identifier)(...)`
+#### `public bool Equals(Identifier otherIdentifier)`
 
 Compares the identifier with another identifier instance.
 
+**Parameters:**
+- `otherIdentifier` (Tekla.Structures.Identifier) — The identifier to compare with.
+
+**Returns:** `Boolean` — True if the identifiers are equal, false otherwise.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/05e18bd6-3e91-7fc2-4965-fd6fbc2de331)
 
-#### `Equals(Object)(...)`
+#### `public override bool Equals(Object otherObject)`
 
 Compares the identifier with another object instance.
 
+**Parameters:**
+- `otherObject` (System.Object) — The object to compare with.
+
+**Returns:** `Boolean` — True if the objects are equal, false otherwise.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/4419ffcd-5422-43bf-66d3-eb2f5d7f8c37)
 
-#### `GetHashCode(...)`
+#### `public override int GetHashCode()`
 
 Gets the hash number of the identifier.
 
+**Returns:** `Int32` — The hashed number.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/db9e3441-19e4-840e-44de-55692dc0890c)
 
-#### `IsValid(...)`
+#### `public bool IsValid()`
 
 Returns true if the identifier seems to be valid. The validation is done based on the ID or GUID property.
 
+**Returns:** `Boolean` — True if the identifier seems to be valid.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/ad94afee-596d-cd8c-4a85-854c234e178c)
 
-#### `ToString(...)`
+#### `public override string ToString()`
 
 Returns the integer ID as a string.
+
+**Returns:** `String` — The integer ID as a string.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/ea0f0a40-bce9-e6a4-cf65-06f82a19ac59)
 
 ### Properties
-- `GUID` (object, get/set) — The object's globally unique identifier. If the GUID value is set manually, the ID is initialized to 0 and the identification is done based on the GUID.
-- `ID` (object, get/set) — The identifier number. If the ID value is set manually, the GUID is initialized to Guid.Empty and the identification is done based on the ID.
-- `ID2` (object, get/set) — The sub identifier number. If the subID value is set manually, the GUID is initialized to Guid.Empty and the identification is done based on the ID.
+- `GUID` (Guid, get/set) — The object's globally unique identifier. If the GUID value is set manually, the ID is initialized to 0 and the identification is done based on the GUID.
+- `ID` (Int32, get/set) — The identifier number. If the ID value is set manually, the GUID is initialized to Guid.Empty and the identification is done based on the ID.
+- `ID2` (Int32, get/set) — The sub identifier number. If the subID value is set manually, the GUID is initialized to Guid.Empty and the identification is done based on the ID.
 
 ## ModuleManager (class)
 
@@ -197,18 +222,18 @@ The ModuleManager class handles the product model module configuration informati
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/03aec97c-c61b-fc99-7d7e-e4c7c935b7b6)
 
 ### Constructors
-- `ModuleManager(...)` — Initializes a new instance of the ModuleManager class
+- `public ModuleManager()` — Initializes a new instance of the ModuleManager class
 
 ### Properties
-- `AnalysisAndDesign` (object, get/set) — Indicates whether the Analysis and Design management is enabled.
-- `CIPModeling` (object, get/set) — Indicates whether the CIP modeling is enabled.
-- `ConcreteDetailing` (object, get/set) — Indicates whether the concrete detailing is enabled.
-- `Configuration` (object, get/set) — The currently running configuration of Tekla Structures.
-- `LoadModeling` (object, get/set) — Indicates whether the load modeling is enabled.
-- `MultimaterialModeling` (object, get/set) — Indicates whether the multimaterial modeling is enabled.
-- `RebarModeling` (object, get/set) — Indicates whether the rebar modeling is enabled.
-- `SteelDetailing` (object, get/set) — Indicates whether the steel detailing is enabled.
-- `TaskManagement` (object, get/set) — Indicates whether the task management is enabled.
+- `AnalysisAndDesign` (Boolean, get) — Indicates whether the Analysis and Design management is enabled.
+- `CIPModeling` (Boolean, get) — Indicates whether the CIP modeling is enabled.
+- `ConcreteDetailing` (Boolean, get) — Indicates whether the concrete detailing is enabled.
+- `Configuration` (ModuleManager.ProgramConfigurationEnum, get) — The currently running configuration of Tekla Structures.
+- `LoadModeling` (Boolean, get) — Indicates whether the load modeling is enabled.
+- `MultimaterialModeling` (Boolean, get) — Indicates whether the multimaterial modeling is enabled.
+- `RebarModeling` (Boolean, get) — Indicates whether the rebar modeling is enabled.
+- `SteelDetailing` (Boolean, get) — Indicates whether the steel detailing is enabled.
+- `TaskManagement` (Boolean, get) — Indicates whether the task management is enabled.
 
 ## ModuleManager.ProgramConfigurationEnum (enum)
 
@@ -335,35 +360,58 @@ The TeklaStructuresFiles class is for the paths where the attributes file will b
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/085dde53-6ee8-0f4f-0872-55b88314e523)
 
 ### Constructors
-- `TeklaStructuresFiles(...)` — Initializes a new instance of the TeklaStructuresFiles class.
+- `public TeklaStructuresFiles(string modelpath = "")` — Initializes a new instance of the TeklaStructuresFiles class.
 
 ### Methods
-#### `GetAttributeFile(List.String., String)(...)`
+#### `public FileInfo GetAttributeFile(List<string> searchDirectories, string fileName)`
 
 Gets a file info representing the first match in the search directories.
 
+**Parameters:**
+- `searchDirectories` (System.Collections.Generic.List<String>) — The list of directories to be used for searching for the file.
+- `fileName` (System.String) — The name of the file including the file extension.
+
+**Returns:** `FileInfo` — A file info for the first match in the directory list. Null if no match was found.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/d5bb70ef-8c5c-698e-3c33-5121d54eee52)
 
-#### `GetAttributeFile(String)(...)`
+#### `public FileInfo GetAttributeFile(string fileName)`
 
 Gets a file info representing the first match in the standard property file directories.
 
+**Parameters:**
+- `fileName` (System.String) — The name of the file including the file extension.
+
+**Returns:** `FileInfo` — A file info for the first match in the directory list. Null if no match was found.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/9a341c18-e6db-ebe1-2ab9-afcf2ec9ce15)
 
-#### `GetFileDictionaryByExtension(...)`
+#### `public static Dictionary<string, string> GetFileDictionaryByExtension(string fileExtension, string modelPath)`
 
 Retrieves a dictionary of file names and their corresponding paths from multiple directories.
 
+**Parameters:**
+- `fileExtension` (System.String) — The file extension to filter the files by.
+- `modelPath` (System.String) — The model path.
+
+**Returns:** `Dictionary<String,String>` — A dictionary containing file names without the extension and their paths.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/a9bbbec7-6b73-ffcd-a2e0-1d3a249dfb05)
 
-#### `GetMultiDirectoryFileList(...)`
+#### `public List<string> GetMultiDirectoryFileList(string fileExtension, bool fullpath = false)`
 
 Gets a list of files with the given extension from the default search directories.
+
+**Parameters:**
+- `fileExtension` (System.String) — The file extension to be used.
+- `fullpath` (System.Boolean) — If true, file with full path with extension is returned.
+
+**Returns:** `List<String>` — A list of files with the given extension.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/da0bbcb4-ea14-c355-cb9e-d98cbbbbf5c7)
 
 ### Properties
-- `PropertyFileDirectories` (object, get/set) — The directories where to look for property files.
+- `PropertyFileDirectories` (List<String>, get/set) — The directories where to look for property files.
 
 ## TeklaStructuresInfo (class)
 
@@ -372,60 +420,78 @@ The TeklaStructuresInfo class provides information about Tekla Structures.
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/2a9f3fee-0ba1-486f-02bf-75a848487149)
 
 ### Constructors
-- `TeklaStructuresInfo(...)` — Initializes a new instance of the TeklaStructuresInfo class
+- `public TeklaStructuresInfo()` — Initializes a new instance of the TeklaStructuresInfo class
 
 ### Methods
-#### `GetBuildNumber(...)`
+#### `public static string GetBuildNumber()`
 
 Returns the Tekla Structures build number.
 
+**Returns:** `String` — The current buildnumber of Tekla Structures.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/50f50908-3f5c-2773-53fd-224a6eeff144)
 
-#### `GetCommonAppDataFolder(...)`
+#### `public static string GetCommonAppDataFolder()`
 
 Returns (XSDATADIR)environments installation folder of the Tekla Structures as string.
 
+**Returns:** `String` — The (XSDATADIR)environments installation folder of the Tekla Structures.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/05bcf770-3562-717a-cfb7-54411b2042f8)
 
-#### `GetCopyRightText(...)`
+#### `public static string GetCopyRightText()`
 
 Returns the Tekla Structures copyright text as string.
 
+**Returns:** `String` — The current copyright text of Tekla Structures.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/e6370f74-6753-5fbe-b34d-1f4707bc8c0c)
 
-#### `GetCurrentProgramVersion(...)`
+#### `public static string GetCurrentProgramVersion()`
 
 Returns the current Tekla Structures version.
 
+**Returns:** `String` — The current version of Tekla Structures.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/fb2133c4-9bbd-c937-7c28-360dcc2a1024)
 
-#### `GetCurrentUser(...)`
+#### `public static string GetCurrentUser()`
 
 Returns the current Tekla Structures user.
 
+**Returns:** `String` — The current user of Tekla Structures.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/bfb41c15-c986-3f19-deed-441826d2d6a2)
 
-#### `GetFullTSRegistryKeyText(...)`
+#### `public static string GetFullTSRegistryKeyText()`
 
 Returns full registry key of the Tekla Structures as string.
 
+**Returns:** `String` — The full registry key of the Tekla Structures.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/8c418356-738f-fd33-7979-0be189410276)
 
-#### `GetLocalAppDataFolder(...)`
+#### `public static string GetLocalAppDataFolder()`
 
 Returns (XSUSERDATADIR) user's local appdata folder of the Tekla Structures as string.
 
+**Returns:** `String` — The (XSUSERDATADIR)user's local appdata folder of the Tekla Structures.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/6eab7354-6339-58f6-1a10-6b7087297f4d)
 
-#### `GetPluginsFolder(...)`
+#### `public static string GetPluginsFolder()`
 
 Returns main TS plugins folder, not extensions folder
 
+**Returns:** `String` — plugins folder
+
 [Docs](https://developer.tekla.com/topic/en/18/43/c59332bb-8052-cc1d-e593-db4706d2b0ba)
 
-#### `GetRevisionDate(...)`
+#### `public static string GetRevisionDate()`
 
 Returns the Tekla Structures revision date as string.
+
+**Returns:** `String` — The current revision date of Tekla Structures.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/0908b72b-8b87-70bb-02c3-076e5ad3cfc5)
 
@@ -436,72 +502,130 @@ The TeklaStructuresSettings class provides methods to inquire application settin
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/7c4799d1-b9cb-cbb1-9b3d-4ce81b05ccc6)
 
 ### Constructors
-- `TeklaStructuresSettings(...)` — Initializes a new instance of the TeklaStructuresSettings class
+- `public TeklaStructuresSettings()` — Initializes a new instance of the TeklaStructuresSettings class
 
 ### Methods
-#### `GetAdvancedOption(String, Boolean.)(...)`
+#### `public static bool GetAdvancedOption(string VariableName, ref bool Value)`
 
 Returns the value of an advanced option variable.
+
+**Parameters:**
+- `VariableName` (System.String) — The name of the advanced option.
+- `Value` (System.Boolean.) — The returned value of the advanced option.
+
+**Returns:** `Boolean` — True if the value was successfully retrieved.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/8aa73d82-ab8b-e43d-63c7-cdde9ff4eb6e)
 
-#### `GetAdvancedOption(String, Double.)(...)`
+#### `public static bool GetAdvancedOption(string VariableName, ref double Value)`
 
 Returns the value of an advanced option variable.
+
+**Parameters:**
+- `VariableName` (System.String) — The name of the advanced option.
+- `Value` (System.Double.) — The returned value of the advanced option.
+
+**Returns:** `Boolean` — True if the value was successfully retrieved.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/a4ddad5c-eccd-0038-3056-e7c41a86eb13)
 
-#### `GetAdvancedOption(String, Int32.)(...)`
+#### `public static bool GetAdvancedOption(string VariableName, ref int Value)`
 
 Returns the value of an advanced option variable.
+
+**Parameters:**
+- `VariableName` (System.String) — The name of the advanced option.
+- `Value` (System.Int32.) — The returned value of the advanced option.
+
+**Returns:** `Boolean` — True if the value was successfully retrieved.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/765beeeb-fe53-93b4-24fd-d68dd05aa37c)
 
-#### `GetAdvancedOption(String, String.)(...)`
+#### `public static bool GetAdvancedOption(string VariableName, ref string Value)`
 
 Returns the value of an advanced option variable.
 
+**Parameters:**
+- `VariableName` (System.String) — The name of the advanced option.
+- `Value` (System.String.) — The returned value of the advanced option.
+
+**Returns:** `Boolean` — True if the value was successfully retrieved.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/251a7058-3458-8683-9135-d39aa3de182b)
 
-#### `GetAdvancedOptionPaths(...)`
+#### `public static bool GetAdvancedOptionPaths(string advancedOption, out List<string> paths, TeklaStructuresSettings.InvalidPathCallback errorHandler = null)`
 
 Gets the value of an advanced option as a list of valid paths. Strings with path separator ; are split into separate paths and any blank paths (containing only white space) are ignored. Paths do not need to exist but must use valid characters and format. Note: All valid paths are returned even when invalid paths are encountered.
 
+**Parameters:**
+- `advancedOption` (System.String) — The advanced option name.
+- `paths` (System.Collections.Generic.List<String>.) — The paths.
+- `errorHandler` (Tekla.Structures.TeklaStructuresSettings.InvalidPathCallback) — The optional error handler callback.
+
+**Returns:** `Boolean` — True if the variable is read successfully and contains no invalid paths; otherwise false.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/00e86aee-ab47-95ed-1985-3f79cc91215c)
 
-#### `GetOptions(ClashCheckOptions.)(...)`
+#### `public static bool GetOptions(ref ClashCheckOptions Options)`
 
 Returns the value of the clash check options.
 
+**Parameters:**
+- `Options` (Tekla.Structures.ClashCheckOptions.) — The returned value of the clash check options.
+
+**Returns:** `Boolean` — True if the values were successfully retrieved.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/fa761e3b-f4ef-59b8-da2d-2cba78d907d4)
 
-#### `GetOptions(ComponentOptions.)(...)`
+#### `public static bool GetOptions(ref ComponentOptions Options)`
 
 Returns the value of the component options.
 
+**Parameters:**
+- `Options` (Tekla.Structures.ComponentOptions.) — The returned value of the component options.
+
+**Returns:** `Boolean` — True if the values were successfully retrieved.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/870f7c68-41f6-22e5-e591-550bede2d30b)
 
-#### `IsPourEnabled(...)`
+#### `public static bool IsPourEnabled()`
 
 Determines whether pour management is enabled.
 
+**Returns:** `Boolean` — true if pour is enabled; otherwise, false.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/11cf2635-0c47-669c-770f-228d798e0d4b)
 
-#### `IsToolOptionOn(...)`
+#### `public static bool IsToolOptionOn(string toolOptionName)`
 
 Determines whether select switch is on.
 
+**Parameters:**
+- `toolOptionName` (System.String) — Name of the switch.
+
+**Returns:** `Boolean` — true if select switch is on; otherwise, false.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/43438834-9d98-9090-4a02-15e6fe958c33)
 
-#### `SetOptions(ClashCheckOptions)(...)`
+#### `public static bool SetOptions(ClashCheckOptions Options)`
 
 Sets the clash check options.
 
+**Parameters:**
+- `Options` (Tekla.Structures.ClashCheckOptions) — The clash check options to be set.
+
+**Returns:** `Boolean` — True if the clash check options were successfully set.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/0de6b6e4-7696-1801-862e-fe2b8cf0aad5)
 
-#### `SetOptions(ComponentOptions)(...)`
+#### `public static bool SetOptions(ComponentOptions Options)`
 
 Sets the component options.
+
+**Parameters:**
+- `Options` (Tekla.Structures.ComponentOptions) — The component options to be set.
+
+**Returns:** `Boolean` — True if the component options were successfully set.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/1c1d8098-bb5b-7a6c-c73a-5069345ac004)
 
@@ -524,21 +648,34 @@ The EnvironmentVariables class contains a sorted list specializing in getting ac
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/a2b71094-2e13-c03d-5ddd-723c90c5e43f)
 
 ### Methods
-#### `Add(...)`
+#### `public static void Add(string key)`
 
 Adds a variable to the list.
 
+**Parameters:**
+- `key` (System.String) — The variable to be added.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/6be71bf8-01ce-7aef-1c32-22ba3f8ff426)
 
-#### `ContainsVariable(...)`
+#### `public static bool ContainsVariable(string key)`
 
 Gets a key.
+
+**Parameters:**
+- `key` (System.String) — The key to get.
+
+**Returns:** `Boolean` — The key.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/35e0bbbf-008d-7f5d-f202-52276614aa3d)
 
-#### `Get(...)`
+#### `public static string Get(string key)`
 
 Gets a key.
+
+**Parameters:**
+- `key` (System.String) — The key to get.
+
+**Returns:** `String` — The key.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/f8b3823f-87a5-7e86-68b1-36598d8403f9)
 

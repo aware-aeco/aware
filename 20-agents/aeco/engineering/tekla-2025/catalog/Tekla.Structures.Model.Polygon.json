@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Polygon",
-      "signature": "Polygon(...)",
+      "signature": "public Polygon()",
       "summary": "Initializes a new polygon instance with empty attributes.",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "Points",
-      "type": "object",
+      "type": "ArrayList",
       "getter": true,
       "setter": true,
       "summary": "The corners of the polygon.",

@@ -11,8 +11,8 @@
   "events": [
     {
       "name": "OverlayModelCollectionChanged",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler OverlayModelCollectionChanged",
+      "delegate": "Tekla.Structures.Model.Internal.OverlayModel.OverlayModelEvents.OverlayModelCollectionChangedDelegate",
+      "signature": "event OverlayModelEvents.OverlayModelCollectionChangedDelegate OverlayModelCollectionChanged",
       "summary": "The OverlayModelCollectionChanged event is raised when an overlay model is changed (added/updated/removed).",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/cddddf87-f612-8b80-8651-c769dd483482",
       "handler_thread": "unknown",

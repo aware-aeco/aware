@@ -9,18 +9,44 @@
   "constructors": [
     {
       "name": "AnalysisDesignParameterMulti",
-      "signature": "AnalysisDesignParameterMulti(...)",
+      "signature": "public AnalysisDesignParameterMulti(int materialType)",
       "summary": "Initializes a new instance of the AnalysisDesignParameterMulti class.",
-      "params": [],
+      "params": [
+        {
+          "name": "materialType",
+          "type": "System.Int32",
+          "doc": "The material type of the analysis design parameter.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/eb3f0702-86fd-5375-88c8-81aa4e02218e"
     },
     {
       "name": "AnalysisDesignParameterMulti",
-      "signature": "AnalysisDesignParameterMulti(...)",
+      "signature": "public AnalysisDesignParameterMulti(string analysisModelName, int parameterId, Identifier partId)",
       "summary": "Initializes a new instance of the AnalysisDesignParameterMulti class.",
-      "params": [],
+      "params": [
+        {
+          "name": "analysisModelName",
+          "type": "System.String",
+          "doc": "The analysis model name.",
+          "optional": false
+        },
+        {
+          "name": "parameterId",
+          "type": "System.Int32",
+          "doc": "The analysis design parameter ID.",
+          "optional": false
+        },
+        {
+          "name": "partId",
+          "type": "Tekla.Structures.Identifier",
+          "doc": "The father part ID.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7e6e2f0b-1ed3-864d-9f3a-4fe6a89e9351"
@@ -29,16 +55,27 @@
   "methods": [
     {
       "name": "GetValue",
-      "signature": "GetValue(...)",
+      "signature": "public double GetValue(int index)",
       "summary": "Gets the value specified by the index of the analysis design parameter.",
-      "params": [],
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The index of the value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The value at the index."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f6895b51-f553-4e17-24d9-95812e97ab6a"
     },
     {
       "name": "Modify",
-      "signature": "Modify(...)",
+      "signature": "public override void Modify()",
       "summary": "Modifies an analysis design parameter. The ID has to be set.",
       "params": [],
       "throws": [],
@@ -47,7 +84,7 @@
     },
     {
       "name": "Select",
-      "signature": "Select(...)",
+      "signature": "public override void Select()",
       "summary": "Selects an analysis design parameter.",
       "params": [],
       "throws": [],
@@ -56,9 +93,22 @@
     },
     {
       "name": "SetValue",
-      "signature": "SetValue(...)",
+      "signature": "public void SetValue(int index, double value)",
       "summary": "Sets the value specified by the index of the analysis design parameter.",
-      "params": [],
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The index of the value.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "The value.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2b53c57a-62a1-2098-6d42-915962610188"
@@ -67,7 +117,7 @@
   "properties": [
     {
       "name": "AnalysisModelName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis model name.",
@@ -75,7 +125,7 @@
     },
     {
       "name": "AnalysisObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the analysis object.",
@@ -83,7 +133,7 @@
     },
     {
       "name": "FatherObject2ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -91,7 +141,7 @@
     },
     {
       "name": "FatherObject2Type",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -99,7 +149,7 @@
     },
     {
       "name": "FatherObjectID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -107,7 +157,7 @@
     },
     {
       "name": "FatherObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -115,7 +165,7 @@
     },
     {
       "name": "ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the analysis object.",
@@ -123,7 +173,7 @@
     },
     {
       "name": "IsGeneral",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the design parameter is general.",
@@ -131,15 +181,15 @@
     },
     {
       "name": "MultiValueCount",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the multi value count of the analysis design parameter.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c260f534-269b-941a-22bd-6aa196a9359d"
     },
     {
       "name": "Name",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the name of the analysis design parameter.",
@@ -147,7 +197,7 @@
     },
     {
       "name": "Unit",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the unit of the analysis design parameter.",

@@ -9,18 +9,32 @@
   "constructors": [
     {
       "name": "ConnectiveGeometry",
-      "signature": "ConnectiveGeometry(...)",
+      "signature": "public ConnectiveGeometry(BendSurface bendSurface)",
       "summary": "Initializes a new instance of the ConnectiveGeometry class for a stand-alone bend creation.",
-      "params": [],
+      "params": [
+        {
+          "name": "bendSurface",
+          "type": "Tekla.Structures.Model.BendSurface",
+          "doc": "Conical or cylindrical surface geometry.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/bd7311ef-d792-d20f-12e8-9254b3aaba33"
     },
     {
       "name": "ConnectiveGeometry",
-      "signature": "ConnectiveGeometry(...)",
+      "signature": "public ConnectiveGeometry(Contour contour)",
       "summary": "Initializes a new instance of the ConnectiveGeometry class.",
-      "params": [],
+      "params": [
+        {
+          "name": "contour",
+          "type": "Tekla.Structures.Model.Contour",
+          "doc": "The polygon geometry",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8593a028-2b6d-e56f-11d8-48be5efc3b93"
@@ -29,45 +43,85 @@
   "methods": [
     {
       "name": "GetConnection",
-      "signature": "GetConnection(...)",
+      "signature": "public IList\u003CLineSegment\u003E GetConnection(GeometrySection geometrySection1, GeometrySection geometrySection2)",
       "summary": "Returns 2 connecting line segments between geometrySection1 and geometrySection2 sections, if sections are connected, otherwise returns empty list.",
-      "params": [],
+      "params": [
+        {
+          "name": "geometrySection1",
+          "type": "Tekla.Structures.Model.GeometrySection",
+          "doc": "The first GeometrySection.",
+          "optional": false
+        },
+        {
+          "name": "geometrySection2",
+          "type": "Tekla.Structures.Model.GeometrySection",
+          "doc": "The second GeometrySection.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IList\u003CLineSegment\u003E",
+        "doc": "2 connecting line segments if sections are connected, otherwise returns empty list."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/97fdc8ce-5c44-0d5b-0cf1-0477b2bf7ee7"
     },
     {
       "name": "GetGeometryEnumerator",
-      "signature": "GetGeometryEnumerator(...)",
+      "signature": "public GeometrySectionEnumerator GetGeometryEnumerator()",
       "summary": "Gets a new geometry sections enumerator for enumerating through the geometry sections.",
       "params": [],
+      "returns": {
+        "type": "GeometrySectionEnumerator",
+        "doc": "The new geometry sections enumerator."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4b345f2f-7977-8d1d-bfe8-df07f99c4c91"
     },
     {
       "name": "GetGeometryLegSections",
-      "signature": "GetGeometryLegSections(...)",
+      "signature": "public IList\u003CGeometrySection\u003E GetGeometryLegSections()",
       "summary": "Gets geometry end GeometrySections which are possible to remove.",
       "params": [],
+      "returns": {
+        "type": "IList\u003CGeometrySection\u003E",
+        "doc": "Returns List of the removable GeometrySections."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/68035fba-42ff-c225-5b85-2fd9b6664c21"
     },
     {
       "name": "GetNeighborSections",
-      "signature": "GetNeighborSections(...)",
+      "signature": "public IList\u003CGeometrySection\u003E GetNeighborSections(GeometrySection geometrySection)",
       "summary": "Gets neighbor sections of the geometrySection inside this ConnectiveGeometry.",
-      "params": [],
+      "params": [
+        {
+          "name": "geometrySection",
+          "type": "Tekla.Structures.Model.GeometrySection",
+          "doc": "GeometrySection to get neighbors for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IList\u003CGeometrySection\u003E",
+        "doc": "List of neighbor GeometrySection of the given GeometrySection."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7ffd60f3-2ecb-c6fe-beba-c9e01964d2db"
     },
     {
       "name": "IsEmpty",
-      "signature": "IsEmpty(...)",
+      "signature": "public bool IsEmpty()",
       "summary": "Checks whether the geometry is degenerate",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True, if the geometry does not contain any section."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a5b27561-22c1-e67a-ba34-971391059a30"

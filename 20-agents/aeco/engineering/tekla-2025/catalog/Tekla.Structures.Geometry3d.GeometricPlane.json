@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "GeometricPlane",
-      "signature": "GeometricPlane(...)",
+      "signature": "public GeometricPlane()",
       "summary": "Instantiates an XY-plane with the origin at (0,0,0).",
       "params": [],
       "throws": [],
@@ -18,27 +18,66 @@
     },
     {
       "name": "GeometricPlane",
-      "signature": "GeometricPlane(...)",
+      "signature": "public GeometricPlane(CoordinateSystem CoordSys)",
       "summary": "Instantiates a plane defined by the given coordinate system.",
-      "params": [],
+      "params": [
+        {
+          "name": "CoordSys",
+          "type": "Tekla.Structures.Geometry3d.CoordinateSystem",
+          "doc": "The coordinate system to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8fc2061f-88af-4f7a-700e-82b208d463aa"
     },
     {
       "name": "GeometricPlane",
-      "signature": "GeometricPlane(...)",
+      "signature": "public GeometricPlane(Point Origin, Vector Normal)",
       "summary": "Instantiates a plane defined by the given origin point and normal vector.",
-      "params": [],
+      "params": [
+        {
+          "name": "Origin",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The origin point to be used.",
+          "optional": false
+        },
+        {
+          "name": "Normal",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The normal vector to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/eb8134d9-731a-4efb-ec8e-2c1400d0b5a8"
     },
     {
       "name": "GeometricPlane",
-      "signature": "GeometricPlane(...)",
+      "signature": "public GeometricPlane(Point Origin, Vector Xaxis, Vector Yaxis)",
       "summary": "Instantiates a plane defined by the given origin, X-axis vector and Y-axis vector.",
-      "params": [],
+      "params": [
+        {
+          "name": "Origin",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The origin to be used.",
+          "optional": false
+        },
+        {
+          "name": "Xaxis",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The X-axis to be used.",
+          "optional": false
+        },
+        {
+          "name": "Yaxis",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The Y-axis to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/3050d844-f011-429c-7570-9b07cf9d8af4"
@@ -47,9 +86,13 @@
   "methods": [
     {
       "name": "GetNormal",
-      "signature": "GetNormal(...)",
+      "signature": "public Vector GetNormal()",
       "summary": "Returns a normalized normal vector of the plane.",
       "params": [],
+      "returns": {
+        "type": "Vector",
+        "doc": "The normalized normal vector of the plane."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/0d4be4d7-ed58-feb0-756c-76428dd49e0d"
@@ -58,7 +101,7 @@
   "properties": [
     {
       "name": "Normal",
-      "type": "object",
+      "type": "Vector",
       "getter": true,
       "setter": true,
       "summary": "The normal vector of the plane.",
@@ -66,7 +109,7 @@
     },
     {
       "name": "Origin",
-      "type": "object",
+      "type": "Point",
       "getter": true,
       "setter": true,
       "summary": "The origin point of the plane.",

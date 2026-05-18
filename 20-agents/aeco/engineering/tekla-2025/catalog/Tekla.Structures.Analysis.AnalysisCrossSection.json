@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisCrossSection",
-      "signature": "AnalysisCrossSection(...)",
+      "signature": "public AnalysisCrossSection()",
       "summary": "Creates a new instance of an analysis cross section.",
       "params": [],
       "throws": [],
@@ -20,7 +20,7 @@
   "methods": [
     {
       "name": "Delete",
-      "signature": "Delete(...)",
+      "signature": "public void Delete()",
       "summary": "Deletes an analysis cross section. The AnalysisModelName and ID have to be set.",
       "params": [],
       "throws": [],
@@ -29,16 +29,20 @@
     },
     {
       "name": "GetCrossSectionGroup",
-      "signature": "GetCrossSectionGroup(...)",
+      "signature": "public List\u003CAnalysisCrossSection\u003E GetCrossSectionGroup()",
       "summary": "Gets the cross section group.",
       "params": [],
+      "returns": {
+        "type": "List\u003CAnalysisCrossSection\u003E",
+        "doc": "The cross section group."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/907ce96f-4947-c62d-fe9d-acad76f92dad"
     },
     {
       "name": "Insert",
-      "signature": "Insert(...)",
+      "signature": "public void Insert()",
       "summary": "Inserts an analysis cross section. The AnalysisModelName has to be set.",
       "params": [],
       "throws": [],
@@ -47,7 +51,7 @@
     },
     {
       "name": "Select",
-      "signature": "Select(...)",
+      "signature": "public override void Select()",
       "summary": "Selects an analysis cross section. The AnalysisModelName and ID/Name have to be set.",
       "params": [],
       "throws": [],
@@ -58,7 +62,7 @@
   "properties": [
     {
       "name": "A",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The cross section area (m2) of the analysis cross section.",
@@ -66,7 +70,7 @@
     },
     {
       "name": "AnalysisModelName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis model name.",
@@ -74,7 +78,7 @@
     },
     {
       "name": "AnalysisObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the analysis object.",
@@ -82,7 +86,7 @@
     },
     {
       "name": "AnalysisSubSections",
-      "type": "object",
+      "type": "List\u003CAnalysisSubSection\u003E",
       "getter": true,
       "setter": true,
       "summary": "The subsections of the analysis cross section.",
@@ -90,7 +94,7 @@
     },
     {
       "name": "Avy",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The shear area for loads parallel to the Y-axis (m2) of the analysis cross section.",
@@ -98,7 +102,7 @@
     },
     {
       "name": "Avz",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The shear area for loads parallel to the Z-axis (m2) of the analysis cross section.",
@@ -106,7 +110,7 @@
     },
     {
       "name": "Calculated",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether section values have been calculated.",
@@ -114,7 +118,7 @@
     },
     {
       "name": "FatherObject2ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -122,7 +126,7 @@
     },
     {
       "name": "FatherObject2Type",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -130,7 +134,7 @@
     },
     {
       "name": "FatherObjectID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -138,7 +142,7 @@
     },
     {
       "name": "FatherObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -146,7 +150,7 @@
     },
     {
       "name": "G",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The mass per unit of length (kg/m) of the analysis cross section.",
@@ -154,7 +158,7 @@
     },
     {
       "name": "ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the analysis object.",
@@ -162,7 +166,7 @@
     },
     {
       "name": "It",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The torsion moment (m4) of the analysis cross section.",
@@ -170,7 +174,7 @@
     },
     {
       "name": "Iw",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The warping constant (m6) of the analysis cross section.",
@@ -178,7 +182,7 @@
     },
     {
       "name": "Iy",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The radius of gyration about the Y-axis (m) of the analysis cross section.",
@@ -186,7 +190,7 @@
     },
     {
       "name": "Iyy",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The moment of inertia about the Y-axis (m4) of the analysis cross section.",
@@ -194,7 +198,7 @@
     },
     {
       "name": "Iz",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The radius of gyration about the Z-axis (m) of the analysis cross section.",
@@ -202,7 +206,7 @@
     },
     {
       "name": "Izz",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The moment of inertia about the Z-axis (m4) of the analysis cross section.",
@@ -210,7 +214,7 @@
     },
     {
       "name": "Name",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The name of the analysis cross section.",
@@ -218,7 +222,7 @@
     },
     {
       "name": "Wplyy",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The plastic modulus about the Y-axis (m3) of the analysis cross section.",
@@ -226,7 +230,7 @@
     },
     {
       "name": "Wplzz",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The plastic modulus about the Z-axis (m3) of the analysis cross section.",
@@ -234,7 +238,7 @@
     },
     {
       "name": "Wyy",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The elastic modulus about the Y-axis (m3) of the analysis cross section.",
@@ -242,7 +246,7 @@
     },
     {
       "name": "Wzz",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The elastic modulus about the Z-axis (m3) of the analysis cross section.",

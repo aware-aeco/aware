@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Grid.GridAttributes",
-      "signature": "Grid.GridAttributes(...)",
+      "signature": "public GridAttributes()",
       "summary": "Creates a new default grid attributes instance that loads standard attributes.",
       "params": [],
       "throws": [],
@@ -18,9 +18,16 @@
     },
     {
       "name": "Grid.GridAttributes",
-      "signature": "Grid.GridAttributes(...)",
+      "signature": "public GridAttributes(string AttributesFile)",
       "summary": "Creates a new grid attributes instance that loads the specified attributes.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributesFile",
+          "type": "System.String",
+          "doc": "The filename of the attributes file.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/faaa9c92-45aa-a366-9556-3bb166729971"
@@ -29,18 +36,40 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8c08ec6f-c6cd-22d9-ece4-8f6dca8a1339"
     },
     {
       "name": "LoadAttributes",
-      "signature": "LoadAttributes(...)",
+      "signature": "public override bool LoadAttributes(string AttributeFile)",
       "summary": "Loads the attributes from the attribute file.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/edf66ccf-da28-90ec-e685-81c2a4649c9a"
@@ -49,7 +78,7 @@
   "properties": [
     {
       "name": "DrawOnlyTextLabelsNotGrids",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Set as true if you don\u0027t want to draw the grids, only show the grids\u0027 text labels.",
@@ -57,7 +86,7 @@
     },
     {
       "name": "DrawTextAtBottomOfGrid",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Set as true if you want to show the grid\u0027s text labels at the bottom of the grid.",
@@ -65,7 +94,7 @@
     },
     {
       "name": "DrawTextAtLeftOfGrid",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Set as true if you want to show the grid\u0027s text labels at the left of the grid.",
@@ -73,7 +102,7 @@
     },
     {
       "name": "DrawTextAtRightOfGrid",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Set as true if you want to show the grid\u0027s text labels at the right of the grid.",
@@ -81,7 +110,7 @@
     },
     {
       "name": "DrawTextAtTopOfGrid",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Set as true if you want to show the grid\u0027s text labels at the top of the grid.",
@@ -89,7 +118,7 @@
     },
     {
       "name": "Font",
-      "type": "object",
+      "type": "FontAttributes",
       "getter": true,
       "setter": true,
       "summary": "The grid\u0027s font attributes.",
@@ -97,7 +126,7 @@
     },
     {
       "name": "Frame",
-      "type": "object",
+      "type": "Frame",
       "getter": true,
       "setter": true,
       "summary": "The frame attributes of the grid\u0027s labels.",
@@ -105,7 +134,7 @@
     },
     {
       "name": "Line",
-      "type": "object",
+      "type": "LineTypeAttributes",
       "getter": true,
       "setter": true,
       "summary": "The grid\u0027s line attributes.",
@@ -113,7 +142,7 @@
     },
     {
       "name": "OffsetAtEndOfLine",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The offset for the end of the grid lines.",
@@ -121,7 +150,7 @@
     },
     {
       "name": "OffsetAtStartOfLine",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The offset for the beginning of the grid lines.",

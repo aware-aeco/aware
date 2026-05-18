@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "WpfMeshCatalog",
-      "signature": "WpfMeshCatalog(...)",
+      "signature": "public WpfMeshCatalog()",
       "summary": "Initiates a new instance of the control.",
       "params": [],
       "throws": [],
@@ -20,7 +20,7 @@
   "methods": [
     {
       "name": "InitializeComponent",
-      "signature": "InitializeComponent(...)",
+      "signature": "public void InitializeComponent()",
       "summary": "InitializeComponent",
       "params": [],
       "throws": [],
@@ -31,7 +31,7 @@
   "properties": [
     {
       "name": "ButtonHeight",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets and sets the height of the button control.",
@@ -39,7 +39,7 @@
     },
     {
       "name": "ButtonText",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets and sets the text of the button control.",
@@ -47,7 +47,7 @@
     },
     {
       "name": "ButtonWidth",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets and sets the width of the button control.",
@@ -55,7 +55,7 @@
     },
     {
       "name": "SelectedMeshGrade",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The mesh grade in the control.",
@@ -63,7 +63,7 @@
     },
     {
       "name": "SelectedMeshName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The mesh name in the control.",
@@ -73,8 +73,8 @@
   "events": [
     {
       "name": "SelectClicked",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler SelectClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler SelectClicked",
       "summary": "The SelectClicked event is raised when the Select button is clicked.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/0a69ef90-5c7d-15b9-3e4f-54cc6aa0a0ab",
       "handler_thread": "unknown",
@@ -82,8 +82,8 @@
     },
     {
       "name": "SelectionDone",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler SelectionDone",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler SelectionDone",
       "summary": "The SelectionDone event is raised when the selection has been done.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2643be87-58d7-16c8-3ad5-fb99f8ab604e",
       "handler_thread": "unknown",

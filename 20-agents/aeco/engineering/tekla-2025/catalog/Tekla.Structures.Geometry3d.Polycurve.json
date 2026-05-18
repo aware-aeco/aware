@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Polycurve",
-      "signature": "Polycurve(...)",
+      "signature": "public Polycurve()",
       "summary": "Initializes a new instance of the Polycurve class.",
       "params": [],
       "throws": [],
@@ -18,18 +18,32 @@
     },
     {
       "name": "Polycurve",
-      "signature": "Polycurve(...)",
+      "signature": "public Polycurve(ICurve geometry)",
       "summary": "Initializes a new instance of the Polycurve class from a curve geometry.",
-      "params": [],
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Tekla.Structures.Geometry3d.ICurve",
+          "doc": "Initial geometry for the polycurve",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/07335fb4-483f-b2b7-08fc-0f70fd8251ec"
     },
     {
       "name": "Polycurve",
-      "signature": "Polycurve(...)",
+      "signature": "public Polycurve(PolyLine polyLine)",
       "summary": "Initializes a new instance of the Polycurve class from a PolyLine. The lines are converted to line segments.",
-      "params": [],
+      "params": [
+        {
+          "name": "polyLine",
+          "type": "Tekla.Structures.Geometry3d.PolyLine",
+          "doc": "Initial geometry for the geometry list",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8a1280e0-7f40-5343-92c2-715880aea375"
@@ -38,27 +52,46 @@
   "methods": [
     {
       "name": "Clone",
-      "signature": "Clone(...)",
+      "signature": "public ICurve Clone()",
       "summary": "Creates a deep copy of the polycurve",
       "params": [],
+      "returns": {
+        "type": "ICurve",
+        "doc": "The copy"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/99934b85-1d06-7519-e2f4-088739ec4ff2"
     },
     {
       "name": "Equals",
-      "signature": "Equals(...)",
+      "signature": "public bool Equals(ICurve other)",
       "summary": "Determines whether the polycurve equals another polycurve This function only checks for equality among polycurves",
-      "params": [],
+      "params": [
+        {
+          "name": "other",
+          "type": "Tekla.Structures.Geometry3d.ICurve",
+          "doc": "The other polycurve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if equal, false otherwise"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/db9385bc-cef2-213d-644b-0c6bd15583d1"
     },
     {
       "name": "GetEnumerator",
-      "signature": "GetEnumerator(...)",
+      "signature": "public IEnumerator\u003CICurve\u003E GetEnumerator()",
       "summary": "This method implements the IEnumerable interface",
       "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CICurve\u003E",
+        "doc": "Enumerator of the geometry list"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5f3b450c-d314-020c-dafa-3ae3b17c7a54"
@@ -67,25 +100,25 @@
   "properties": [
     {
       "name": "EndPoint",
-      "type": "object",
+      "type": "Point",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the end point of the polycurve",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/b717de23-0a0a-914b-696b-ddc0f75e61bd"
     },
     {
       "name": "Length",
-      "type": "object",
+      "type": "Double",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the total length of the polycurve",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a520778e-92ce-cac8-6388-76abb42dd69e"
     },
     {
       "name": "StartPoint",
-      "type": "object",
+      "type": "Point",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the start point of the polycurve",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/de4e5dba-557d-82d8-049a-eb325a0daa0d"
     }

@@ -9,18 +9,38 @@
   "constructors": [
     {
       "name": "UserDefinedElement",
-      "signature": "UserDefinedElement(...)",
+      "signature": "public UserDefinedElement(string Name)",
       "summary": "Creates a new user-defined element instance with the given name.",
-      "params": [],
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/aac9be57-cd98-16d8-23a8-20273baa47fb"
     },
     {
       "name": "UserDefinedElement",
-      "signature": "UserDefinedElement(...)",
+      "signature": "public UserDefinedElement(string Name, FontAttributes Font)",
       "summary": "Creates a new user-defined element instance with the given name and font.",
-      "params": [],
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The name to be used.",
+          "optional": false
+        },
+        {
+          "name": "Font",
+          "type": "Tekla.Structures.Drawing.FontAttributes",
+          "doc": "The font to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/0f57f5a7-69e4-de71-2d1f-e22a3bc08cc2"
@@ -29,27 +49,46 @@
   "methods": [
     {
       "name": "Clone",
-      "signature": "Clone(...)",
+      "signature": "public override Object Clone()",
       "summary": "Clones the object.",
       "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "A copy of the object."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9d8c81d8-26c1-6ef9-1130-663591375ba2"
     },
     {
       "name": "GetUnformattedString",
-      "signature": "GetUnformattedString(...)",
+      "signature": "public override string GetUnformattedString()",
       "summary": "Returns the content as a string without formatting.",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The content as a string without formatting."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2471ba47-3a7d-b112-a1f7-1999248324b3"
     },
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7267437d-5400-eab8-2d2c-0f7bb7aacea1"
@@ -58,7 +97,7 @@
   "properties": [
     {
       "name": "Font",
-      "type": "object",
+      "type": "FontAttributes",
       "getter": true,
       "setter": true,
       "summary": "The font of the user-defined attribute.",
@@ -66,7 +105,7 @@
     },
     {
       "name": "Name",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The name of the user-defined attribute.",
@@ -74,7 +113,7 @@
     },
     {
       "name": "Unit",
-      "type": "object",
+      "type": "UnitAttributes",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the unit attributes.",
@@ -82,9 +121,9 @@
     },
     {
       "name": "Value",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The value of the user-defined attribute.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c1da33e0-af63-7ea1-b991-8356d45b2205"
     }

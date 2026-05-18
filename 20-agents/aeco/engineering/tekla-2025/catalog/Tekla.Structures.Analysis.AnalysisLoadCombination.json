@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisLoadCombination",
-      "signature": "AnalysisLoadCombination(...)",
+      "signature": "public AnalysisLoadCombination()",
       "summary": "Initializes a new instance of the AnalysisLoadCombination class.",
       "params": [],
       "throws": [],
@@ -20,7 +20,7 @@
   "methods": [
     {
       "name": "Delete",
-      "signature": "Delete(...)",
+      "signature": "public void Delete()",
       "summary": "Deletes an analysis load combination. The AnalysisModelName and ID have to be set.",
       "params": [],
       "throws": [],
@@ -29,7 +29,7 @@
     },
     {
       "name": "Insert",
-      "signature": "Insert(...)",
+      "signature": "public void Insert()",
       "summary": "Inserts an analysis load combination. The AnalysisModelName has to be set.",
       "params": [],
       "throws": [],
@@ -38,7 +38,7 @@
     },
     {
       "name": "Modify",
-      "signature": "Modify(...)",
+      "signature": "public void Modify()",
       "summary": "Modifies an analysis load combination. The AnalysisModelName and ID have to be set.",
       "params": [],
       "throws": [],
@@ -47,7 +47,7 @@
     },
     {
       "name": "Select",
-      "signature": "Select(...)",
+      "signature": "public override void Select()",
       "summary": "Selects an analysis load combination. The AnalysisModelName and ID have to be set.",
       "params": [],
       "throws": [],
@@ -56,9 +56,34 @@
     },
     {
       "name": "SetLoads",
-      "signature": "SetLoads(...)",
+      "signature": "public void SetLoads(List\u003CIdentifier\u003E groupIDs, List\u003Cdouble\u003E scalingFactors, List\u003Cdouble\u003E reductionFactors, List\u003Cdouble\u003E partialSafetyFactors)",
       "summary": "Sets the loads.",
-      "params": [],
+      "params": [
+        {
+          "name": "groupIDs",
+          "type": "System.Collections.Generic.List\u003CIdentifier\u003E",
+          "doc": "The group identifiers.",
+          "optional": false
+        },
+        {
+          "name": "scalingFactors",
+          "type": "System.Collections.Generic.List\u003CDouble\u003E",
+          "doc": "The scaling factors.",
+          "optional": false
+        },
+        {
+          "name": "reductionFactors",
+          "type": "System.Collections.Generic.List\u003CDouble\u003E",
+          "doc": "The reduction factors.",
+          "optional": false
+        },
+        {
+          "name": "partialSafetyFactors",
+          "type": "System.Collections.Generic.List\u003CDouble\u003E",
+          "doc": "The partial safety factors.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2da09cbf-b58c-9aab-7c3a-e2a4797d2d8a"
@@ -67,7 +92,7 @@
   "properties": [
     {
       "name": "AnalysisModelName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis model name.",
@@ -75,7 +100,7 @@
     },
     {
       "name": "AnalysisObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the analysis object.",
@@ -83,7 +108,7 @@
     },
     {
       "name": "FatherObject2ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -91,7 +116,7 @@
     },
     {
       "name": "FatherObject2Type",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -99,7 +124,7 @@
     },
     {
       "name": "FatherObjectID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -107,7 +132,7 @@
     },
     {
       "name": "FatherObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -115,7 +140,7 @@
     },
     {
       "name": "GroupIDs",
-      "type": "object",
+      "type": "List\u003CIdentifier\u003E",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifiers of the groups of the analysis load combination.",
@@ -123,7 +148,7 @@
     },
     {
       "name": "ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the analysis object.",
@@ -131,7 +156,7 @@
     },
     {
       "name": "Name",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the name of the analysis load combination.",
@@ -139,7 +164,7 @@
     },
     {
       "name": "PartialSafetyFactors",
-      "type": "object",
+      "type": "List\u003CDouble\u003E",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the partial safety factors of the analysis load combination.",
@@ -147,7 +172,7 @@
     },
     {
       "name": "ReductionFactors",
-      "type": "object",
+      "type": "List\u003CDouble\u003E",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the reduction factors of the analysis load combination.",
@@ -155,7 +180,7 @@
     },
     {
       "name": "ScalingFactors",
-      "type": "object",
+      "type": "List\u003CDouble\u003E",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the scaling factors of the analysis load combination.",
@@ -163,7 +188,7 @@
     },
     {
       "name": "Type",
-      "type": "object",
+      "type": "AnalysisLoadCombination.LoadCombinationEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the combination type of the analysis load combination.",

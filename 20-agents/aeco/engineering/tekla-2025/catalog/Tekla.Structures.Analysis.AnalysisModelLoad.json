@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisModelLoad",
-      "signature": "AnalysisModelLoad(...)",
+      "signature": "public AnalysisModelLoad()",
       "summary": "Initializes a new instance of the AnalysisModelLoad class",
       "params": [],
       "throws": [],
@@ -20,7 +20,7 @@
   "methods": [
     {
       "name": "Select",
-      "signature": "Select(...)",
+      "signature": "public override void Select()",
       "summary": "Selects an analysis node. The ID has to be set.",
       "params": [],
       "throws": [],
@@ -31,7 +31,7 @@
   "properties": [
     {
       "name": "AnalysisModelName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis model name.",
@@ -39,7 +39,7 @@
     },
     {
       "name": "AnalysisObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the analysis object.",
@@ -47,7 +47,7 @@
     },
     {
       "name": "FatherObject2ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -55,7 +55,7 @@
     },
     {
       "name": "FatherObject2Type",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -63,7 +63,7 @@
     },
     {
       "name": "FatherObjectID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -71,7 +71,7 @@
     },
     {
       "name": "FatherObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -79,7 +79,7 @@
     },
     {
       "name": "ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the analysis object.",

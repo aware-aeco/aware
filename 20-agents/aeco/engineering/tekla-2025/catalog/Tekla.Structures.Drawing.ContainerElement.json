@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "ContainerElement",
-      "signature": "ContainerElement(...)",
+      "signature": "public ContainerElement()",
       "summary": "Initializes a new instance of the ContainerElement class",
       "params": [],
       "throws": [],
@@ -20,16 +20,23 @@
   "methods": [
     {
       "name": "Add",
-      "signature": "Add(...)",
+      "signature": "public void Add(ElementBase value)",
       "summary": "Adds a new element base to the end of the list.",
-      "params": [],
+      "params": [
+        {
+          "name": "value",
+          "type": "Tekla.Structures.Drawing.ElementBase",
+          "doc": "The element base to be added to the list.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/01ce5ad6-2d97-4dba-7a04-6459a4476c13"
     },
     {
       "name": "Clear",
-      "signature": "Clear(...)",
+      "signature": "public void Clear()",
       "summary": "Removes all elements from the container instance.",
       "params": [],
       "throws": [],
@@ -38,45 +45,98 @@
     },
     {
       "name": "Clone",
-      "signature": "Clone(...)",
+      "signature": "public override Object Clone()",
       "summary": "Clones the object.",
       "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "A copy of the object."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8c2b52ff-4f86-62b0-0f43-3ea9f9abbc41"
     },
     {
       "name": "CopyTo",
-      "signature": "CopyTo(...)",
+      "signature": "public void CopyTo(Array array, int index)",
       "summary": "Copies the elements of the ICollection to an Array, starting at a particular Array index.",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "array",
+          "type": "System.Array",
+          "doc": "The one-dimensional Array that is the destination of the elements copied from the ICollection. The Array must have zero-based indexing.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The zero-based index in the array at which copying begins.",
+          "optional": false
+        }
+      ],
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "The array is null."
+        },
+        {
+          "type": "ArgumentOutOfRangeException",
+          "when": "The index is less than zero."
+        },
+        {
+          "type": "ArgumentException",
+          "when": "The array is multidimensional, or the index is equal to or greater than the length of the array, or the number of elements in the source ICollection is greater than the available space from the index to the end of the destination array."
+        },
+        {
+          "type": "InvalidCastException",
+          "when": "The type of the source ICollection cannot be cast automatically to the type of the destination array."
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/25d92102-0435-213f-88b4-75f7e22a74fc"
     },
     {
       "name": "GetEnumerator",
-      "signature": "GetEnumerator(...)",
+      "signature": "public IEnumerator GetEnumerator()",
       "summary": "Returns an enumerator that iterates through a collection.",
       "params": [],
+      "returns": {
+        "type": "IEnumerator",
+        "doc": "An IEnumerator object that can be used to iterate through the collection."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/fcecd7e0-80e1-bce3-3c16-0132ee1f7d1e"
     },
     {
       "name": "GetUnformattedString",
-      "signature": "GetUnformattedString(...)",
+      "signature": "public override string GetUnformattedString()",
       "summary": "Returns the content as a string without formatting.",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The content as a string without formatting."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a7f3aff9-b3d9-5fb4-3044-7937d3719ed7"
     },
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/970e9be2-ffcc-8465-8a29-8f5d872deb90"
@@ -85,15 +145,15 @@
   "properties": [
     {
       "name": "Count",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the number of elements contained in the ICollection.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d18025b5-def0-ff02-fed8-ca8e2de99a59"
     },
     {
       "name": "Frame",
-      "type": "object",
+      "type": "Frame",
       "getter": true,
       "setter": true,
       "summary": "The frame of the container element.",
@@ -101,17 +161,17 @@
     },
     {
       "name": "IsSynchronized",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets a value indicating whether access to the ICollection is synchronized (thread safe).",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8e2688ca-88bc-80b4-5862-debcbefcf45a"
     },
     {
       "name": "SyncRoot",
-      "type": "object",
+      "type": "Object",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets an object that can be used to synchronize access to the ICollection.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5d2c0346-9a80-42b8-256e-865dc9895d9f"
     }

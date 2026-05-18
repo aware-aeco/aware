@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "CatalogHandler",
-      "signature": "CatalogHandler(...)",
+      "signature": "public CatalogHandler()",
       "summary": "Creates a new catalog handler instance.",
       "params": [],
       "throws": [],
@@ -20,252 +20,462 @@
   "methods": [
     {
       "name": "ExportProfileItems",
-      "signature": "ExportProfileItems(...)",
+      "signature": "public bool ExportProfileItems(IList\u003Cstring\u003E profileNames, string path, string fileName)",
       "summary": "Exports the profile items in the profile database to given path and file name. Currently library profiles, sketch profiles and clb profiles are supported. Library profiles are exported to *.lis format. Sketch profiles are exported to *.uel format. Clb profiles are exported to *.clb format. If profiles are not available, export fails. If path is empty, export fails. If file name is empty, export fails.",
-      "params": [],
+      "params": [
+        {
+          "name": "profileNames",
+          "type": "System.Collections.Generic.IList\u003CString\u003E",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/0d367359-7a89-53c0-5a76-33930fd78ba8"
     },
     {
       "name": "GetBoltItems",
-      "signature": "GetBoltItems(...)",
+      "signature": "public BoltItemEnumerator GetBoltItems()",
       "summary": "Returns an enumerator of all bolt items.",
       "params": [],
+      "returns": {
+        "type": "BoltItemEnumerator",
+        "doc": "A BoltItemEnumerator of all bolt items."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/564d4405-0cb8-bd00-36fe-8dadcfd8d443"
     },
     {
       "name": "GetComponentItems",
-      "signature": "GetComponentItems(...)",
+      "signature": "public ComponentItemEnumerator GetComponentItems()",
       "summary": "Returns an enumerator of all component items.",
       "params": [],
+      "returns": {
+        "type": "ComponentItemEnumerator",
+        "doc": "A ComponentItemEnumerator of all component items."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5276c15a-19f5-9538-0b02-9a5f1aab35c4"
     },
     {
       "name": "GetConnectionStatus",
-      "signature": "GetConnectionStatus(...)",
+      "signature": "public bool GetConnectionStatus()",
       "summary": "Returns true if a proper connection to the Tekla Structures process has been established. Currently, there\u0027s no way to re-establish the connection.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c78555d3-7a00-e1ee-f7d8-13efac5e8f80"
     },
     {
       "name": "GetDrawingItems",
-      "signature": "GetDrawingItems(...)",
+      "signature": "public DrawingItemEnumerator GetDrawingItems()",
       "summary": "Returns an enumerator of all drawing items.",
       "params": [],
+      "returns": {
+        "type": "DrawingItemEnumerator",
+        "doc": "A DrawingItemEnumerator of all drawing catalog items."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2f10f848-08c7-a9ef-5b20-5d05465066c5"
     },
     {
       "name": "GetLibraryProfileItems",
-      "signature": "GetLibraryProfileItems(...)",
+      "signature": "public ProfileItemEnumerator GetLibraryProfileItems()",
       "summary": "Returns an enumerator of library profile items.",
       "params": [],
+      "returns": {
+        "type": "ProfileItemEnumerator",
+        "doc": "A ProfileItemEnumerator of library profile items."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5451d58b-692d-f5b5-141a-100e2751bc08"
     },
     {
       "name": "GetMaterialItems",
-      "signature": "GetMaterialItems(...)",
+      "signature": "public MaterialItemEnumerator GetMaterialItems()",
       "summary": "Returns an enumerator of all material items.",
       "params": [],
+      "returns": {
+        "type": "MaterialItemEnumerator",
+        "doc": "A MaterialItemEnumerator of all material items."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/1f0b154b-381e-3cb4-8c28-c942c520b5b3"
     },
     {
       "name": "GetMaterialMarketSizes",
-      "signature": "GetMaterialMarketSizes(...)",
+      "signature": "public MaterialMarketSizesItemEnumerator GetMaterialMarketSizes()",
       "summary": "Returns an enumerator of all material marketsizes. Data is read from XS_PROFDB\\marketsizes.dat file.",
       "params": [],
-      "throws": [],
+      "returns": {
+        "type": "MaterialMarketSizesItemEnumerator",
+        "doc": "A MaterialMarketSizesItemEnumerator of all material marketsizes."
+      },
+      "throws": [
+        {
+          "type": "CatalogItemEnumeratorInitializationException",
+          "when": "Thrown when initialization of MaterialMarketSizesItemEnumerator fails."
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/80ddd345-75e3-9778-89c8-4674603e5510"
     },
     {
       "name": "GetMeshItems",
-      "signature": "GetMeshItems(...)",
+      "signature": "public MeshItemEnumerator GetMeshItems()",
       "summary": "Returns an enumerator of mesh items.",
       "params": [],
+      "returns": {
+        "type": "MeshItemEnumerator",
+        "doc": "A MeshItemEnumerator of mesh items."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/0f63844e-2f69-8886-9a11-0a7e7c5a0dde"
     },
     {
       "name": "GetParametricProfileItems",
-      "signature": "GetParametricProfileItems(...)",
+      "signature": "public ProfileItemEnumerator GetParametricProfileItems()",
       "summary": "Returns an enumerator of parametric profile items.",
       "params": [],
+      "returns": {
+        "type": "ProfileItemEnumerator",
+        "doc": "A ProfileItemEnumerator of parametric profile items."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/80fe7547-568c-5ccb-62f4-cd419ba5727b"
     },
     {
       "name": "GetPrinterItems",
-      "signature": "GetPrinterItems(...)",
+      "signature": "public PrinterItemEnumerator GetPrinterItems()",
       "summary": "Returns an enumerator of all printer items.",
       "params": [],
+      "returns": {
+        "type": "PrinterItemEnumerator",
+        "doc": "A PrinterItemEnumerator of all printer items."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/db6c490a-4382-88c7-b00b-cebdd305a780"
     },
     {
       "name": "GetProfileItems",
-      "signature": "GetProfileItems(...)",
+      "signature": "public ProfileItemEnumerator GetProfileItems()",
       "summary": "Returns an enumerator of all profile items.",
       "params": [],
+      "returns": {
+        "type": "ProfileItemEnumerator",
+        "doc": "A ProfileItemEnumerator of all profile items."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/bcb35b79-bdf0-dcf1-3f3a-c7a0b297743b"
     },
     {
       "name": "GetRebarItems",
-      "signature": "GetRebarItems(...)",
+      "signature": "public RebarItemEnumerator GetRebarItems()",
       "summary": "Returns an enumerator of rebar items.",
       "params": [],
+      "returns": {
+        "type": "RebarItemEnumerator",
+        "doc": "A RebarItemEnumerator of rebar items."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/1eed9080-8844-eb0b-1952-943d0af5b563"
     },
     {
       "name": "GetShapeItems",
-      "signature": "GetShapeItems(...)",
+      "signature": "public ShapeItemEnumerator GetShapeItems()",
       "summary": "Returns an enumerator of all shape items.",
       "params": [],
+      "returns": {
+        "type": "ShapeItemEnumerator",
+        "doc": "A ShapeItemEnumerator of all shape items."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/3b509288-e37f-d537-5416-6cbb7b9b60d6"
     },
     {
       "name": "GetSteelFinishItems",
-      "signature": "GetSteelFinishItems(...)",
+      "signature": "public static IEnumerable\u003CFinishItem\u003E GetSteelFinishItems()",
       "summary": "Returns the collection of all steel finish items.",
       "params": [],
+      "returns": {
+        "type": "IEnumerable\u003CFinishItem\u003E",
+        "doc": "The collection of all steel finish items."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/992a8408-b4c2-c50f-895a-ea876c4c7333"
     },
     {
       "name": "GetUserPropertyItems.",
-      "signature": "GetUserPropertyItems.(...)",
+      "signature": "public UserPropertyItemEnumerator GetUserPropertyItems()",
       "summary": "Returns an enumerator of all user property items.",
       "params": [],
+      "returns": {
+        "type": "UserPropertyItemEnumerator",
+        "doc": "A UserPropertyItemEnumerator of all user property items."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e982db4c-daf4-1161-db5e-6a4688c724db"
     },
     {
       "name": "GetUserPropertyItems(CatalogObjectTypeEnum)",
-      "signature": "GetUserPropertyItems(CatalogObjectTypeEnum)(...)",
+      "signature": "public UserPropertyItemEnumerator GetUserPropertyItems(CatalogObjectTypeEnum objectType)",
       "summary": "Returns an enumerator of user property items of the given object type.",
-      "params": [],
+      "params": [
+        {
+          "name": "objectType",
+          "type": "Tekla.Structures.Catalogs.CatalogObjectTypeEnum",
+          "doc": "The object type to be used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UserPropertyItemEnumerator",
+        "doc": "A UserPropertyItemEnumerator of user property items of the given object type."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/17a6222e-f487-de7e-aa78-37d6283209bb"
     },
     {
       "name": "ImportBoltItems",
-      "signature": "ImportBoltItems(...)",
+      "signature": "public bool ImportBoltItems(string path)",
       "summary": "Imports bolt items and their assembly information (*.bass) from folder to bolt assembly catalog and bolt catalog. Import overrides the existing bolts in the catalog without any warnings.",
-      "params": [],
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The path to be used for import.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8b3e21a7-4d9e-b8d5-c524-df1235bac4c8"
     },
     {
       "name": "ImportCustomComponentItems",
-      "signature": "ImportCustomComponentItems(...)",
+      "signature": "public bool ImportCustomComponentItems(string path)",
       "summary": "Imports custom component items (*.uel) from path to component catalog. Import overrides the existing custom components in the catalog without any warnings.",
-      "params": [],
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The path to be used for import. This can be a uel file or a folder containing one or more uel files.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/bd6a584e-e1b5-ca68-8032-00d23479b3fc"
     },
     {
       "name": "ImportDrawingItems",
-      "signature": "ImportDrawingItems(...)",
+      "signature": "public bool ImportDrawingItems(string path)",
       "summary": "Imports drawing setting items (*.tsds) from specified folder to model folder. Import throws exception if model is not open. Import overrides the existing drawing items in the catalog without any warnings.",
-      "params": [],
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The path to be used for import.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/830a96bd-0a99-3085-ec1c-af48386c4ea7"
     },
     {
       "name": "ImportLibraryProfileItems",
-      "signature": "ImportLibraryProfileItems(...)",
+      "signature": "public bool ImportLibraryProfileItems(string path)",
       "summary": "Imports library profile items (*.lis) from folder to profile catalog. Import overrides the existing profiles in the catalog without any warnings.",
-      "params": [],
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The path to be used for import.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/78798d1e-e2a8-84cc-f7e5-16c62fe595b8"
     },
     {
       "name": "ImportMaterialItems",
-      "signature": "ImportMaterialItems(...)",
+      "signature": "public bool ImportMaterialItems(string path)",
       "summary": "Imports material items (*.lis) from folder to material catalog. Import overrides the existing materials in the catalog without any warnings.",
-      "params": [],
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The path to be used for import.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e2360d79-0bb9-5a37-c03c-1111f1cf6191"
     },
     {
       "name": "ImportMeshItems",
-      "signature": "ImportMeshItems(...)",
+      "signature": "public bool ImportMeshItems(string path)",
       "summary": "Imports mesh items (*.mexp) from folder to mesh catalog. Import overrides the existing mesh item in the catalog without any warnings.",
-      "params": [],
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The path to be used for import.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7fa2e012-8246-ec8e-9905-15f25a27102d"
     },
     {
       "name": "ImportParametricProfileItems",
-      "signature": "ImportParametricProfileItems(...)",
+      "signature": "public bool ImportParametricProfileItems(string path)",
       "summary": "Imports parametric profile items (*.uel) from folder to profile catalog. Import overrides the existing profiles in the catalog without any warnings.",
-      "params": [],
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The path to be used for import.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/3f5bc8b2-8d3f-37ee-260c-b0ad223a29e5"
     },
     {
       "name": "ImportRebarItems",
-      "signature": "ImportRebarItems(...)",
+      "signature": "public bool ImportRebarItems(string path)",
       "summary": "Imports rebar items (*.rexp) from folder to reinforcement catalog. Import overrides the existing rebar item in the catalog without any warnings.",
-      "params": [],
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The path to be used for import.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7004c954-a82e-7a40-1e9d-c5af25142caf"
     },
     {
       "name": "ImportShapeItems",
-      "signature": "ImportShapeItems(...)",
+      "signature": "public bool ImportShapeItems(string path)",
       "summary": "Imports shape geometry items (*.tsc) from specified folder. Import throws exception if model is not open. Import overrides the existing shape items in the catalog without any warnings.",
-      "params": [],
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The path to be used for import.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/148728ab-d5fc-ce70-4dee-f6005e6f7f1f"
     },
     {
       "name": "ImportShapeItemsFromGeometryFiles",
-      "signature": "ImportShapeItemsFromGeometryFiles(...)",
+      "signature": "public bool ImportShapeItemsFromGeometryFiles(string path)",
       "summary": "Imports shape geometry items from geometry files in specified folder. Import supports following file formats: \u0022.skp\u0022, \u0022.dxf\u0022, \u0022.dwg\u0022, \u0022.step\u0022, \u0022.iges\u0022, \u0022.stp\u0022, \u0022.igs\u0022, \u0022.ifc\u0022, \u0022.dgn\u0022, \u0022.trb\u0022 File name is used as shape name. Import throws exception if model is not open. Import overrides the existing shape items in the catalog without any warnings.",
-      "params": [],
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The path to be used for import.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/48449125-2fd4-5422-80f9-62bc46bfdf2a"
     },
     {
       "name": "SaveProfileDatabase",
-      "signature": "SaveProfileDatabase(...)",
+      "signature": "public bool SaveProfileDatabase()",
       "summary": "Saves the profile database.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/59394a51-ded4-984c-f616-31fdb8599db7"

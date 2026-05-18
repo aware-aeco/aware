@@ -9,9 +9,16 @@
   "constructors": [
     {
       "name": "ReferenceModelObjectAttributeEnumerator",
-      "signature": "ReferenceModelObjectAttributeEnumerator(...)",
+      "signature": "public ReferenceModelObjectAttributeEnumerator(ReferenceModelObject RMO)",
       "summary": "Creates a new reference model object attribute enumerator instance.",
-      "params": [],
+      "params": [
+        {
+          "name": "RMO",
+          "type": "Tekla.Structures.Model.ReferenceModelObject",
+          "doc": "The reference model object from which the enumerator is created.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8864905e-6c22-05fc-b778-873e3eae3f4a"
@@ -20,16 +27,20 @@
   "methods": [
     {
       "name": "MoveNext",
-      "signature": "MoveNext(...)",
+      "signature": "public bool MoveNext()",
       "summary": "Moves to the next reference model object attribute.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successfully moved to the next reference model object attribute."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d97e9744-200e-a87a-93ce-38b177e5a4cd"
     },
     {
       "name": "Reset",
-      "signature": "Reset(...)",
+      "signature": "public void Reset()",
       "summary": "Resets the enumerator.",
       "params": [],
       "throws": [],
@@ -40,9 +51,9 @@
   "properties": [
     {
       "name": "Current",
-      "type": "object",
+      "type": "Object",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The current attribute.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4a05ce9b-6a4f-19b5-c8ec-91164f069c36"
     }

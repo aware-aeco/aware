@@ -9,9 +9,22 @@
   "constructors": [
     {
       "name": "PickerInputObjectAndAPoint",
-      "signature": "PickerInputObjectAndAPoint(...)",
+      "signature": "public PickerInputObjectAndAPoint(DrawingObject pickedObject, Point pickedPoint)",
       "summary": "Creates a new PickerInputObjectAndAPoint instance representing the pick of a drawing object and the coordinates of the point used to pick the object.",
-      "params": [],
+      "params": [
+        {
+          "name": "pickedObject",
+          "type": "Tekla.Structures.Drawing.DrawingObject",
+          "doc": "The picked drawing object.",
+          "optional": false
+        },
+        {
+          "name": "pickedPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The picked point in the picked object view coordinates.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/b2245247-729e-3e04-697b-58c343f6c918"
@@ -20,9 +33,20 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/239a901f-aec1-7b2a-f509-0cdf9bae0c16"
@@ -31,7 +55,7 @@
   "properties": [
     {
       "name": "PickedObject",
-      "type": "object",
+      "type": "DrawingObject",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the picked object in the view.",
@@ -39,7 +63,7 @@
     },
     {
       "name": "PickedPoint",
-      "type": "object",
+      "type": "Point",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the picked point in the view coordinates.",
@@ -47,7 +71,7 @@
     },
     {
       "name": "PickedView",
-      "type": "object",
+      "type": "ViewBase",
       "getter": true,
       "setter": true,
       "summary": "The view within which the pick occurred.",

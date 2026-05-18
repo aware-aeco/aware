@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "PointCloud",
-      "signature": "PointCloud(...)",
+      "signature": "public PointCloud()",
       "summary": "Creates a new point cloud instance using the given parameters.",
       "params": [],
       "throws": [],
@@ -20,63 +20,104 @@
   "methods": [
     {
       "name": "Attach",
-      "signature": "Attach(...)",
+      "signature": "public bool Attach()",
       "summary": "Attach this point cloud to model. Can select only Potree type point clouds immediately after attach. Others need to be selected manually after attach has been completed. Use AttachComplete() to find out, if attach process has completed.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful, otherwise false."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/959ad250-6b61-2aa2-7fbb-d8517edebe11"
     },
     {
       "name": "AttachComplete",
-      "signature": "AttachComplete(...)",
+      "signature": "public bool AttachComplete()",
       "summary": "Checks if the point cloud attach is complete. Needed when attaching non-Potree point cloud file, which needs conversion.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful, otherwise false."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/75b49d08-b9b4-82d7-15c4-006d7bb75c77"
     },
     {
       "name": "Detach",
-      "signature": "Detach(...)",
+      "signature": "public bool Detach()",
       "summary": "Detach this point cloud from model.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful, otherwise false."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d78949bd-39ae-6564-b318-5079c4f245cc"
     },
     {
       "name": "GetPointClouds",
-      "signature": "GetPointClouds(...)",
+      "signature": "public static List\u003CPointCloud\u003E GetPointClouds()",
       "summary": "Utility function: Gets available point clouds.",
       "params": [],
+      "returns": {
+        "type": "List\u003CPointCloud\u003E",
+        "doc": "The available point clouds."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/1fea88c0-bef7-2351-4388-781f1da03780"
     },
     {
       "name": "GetVisibleInViews",
-      "signature": "GetVisibleInViews(...)",
+      "signature": "public List\u003CView\u003E GetVisibleInViews()",
       "summary": "Gets the views in which this point cloud is visible.",
       "params": [],
+      "returns": {
+        "type": "List\u003CView\u003E",
+        "doc": "The available point clouds."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/ea50246a-4f69-ea97-6a67-c7734d15b73a"
     },
     {
       "name": "Select",
-      "signature": "Select(...)",
+      "signature": "public bool Select()",
       "summary": "Select point cloud by Guid, by Name, by OriginalPath or by Url.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful, otherwise false."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/1cf3df03-e26a-0776-d572-596b4756c9a1"
     },
     {
       "name": "SetVisibility",
-      "signature": "SetVisibility(...)",
+      "signature": "public bool SetVisibility(List\u003CView\u003E views, bool visible)",
       "summary": "Set point cloud visibility in given views.",
-      "params": [],
+      "params": [
+        {
+          "name": "views",
+          "type": "System.Collections.Generic.List\u003CView\u003E",
+          "doc": "The views, in which the point clouds visibility is changed.",
+          "optional": false
+        },
+        {
+          "name": "visible",
+          "type": "System.Boolean",
+          "doc": "Visibility value: True for visible, false for hidden.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful to all given views, otherwise false."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8f10f866-0f6e-a6ba-0e8a-9918e1ed65f8"
@@ -85,15 +126,15 @@
   "properties": [
     {
       "name": "BoundingBox",
-      "type": "object",
+      "type": "AABB",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets or sets the bounding box.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/651a561b-df65-b8b1-66ea-5e3d15eda604"
     },
     {
       "name": "Guid",
-      "type": "object",
+      "type": "Guid",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the guid.",
@@ -101,7 +142,7 @@
     },
     {
       "name": "LocationBy",
-      "type": "object",
+      "type": "Guid",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the location by value: Empty for model origin, base point guid for base point.",
@@ -109,7 +150,7 @@
     },
     {
       "name": "Name",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the point clouds name. Abbreviated from the point cloud file name. Cannot be given by user.",
@@ -117,7 +158,7 @@
     },
     {
       "name": "OffsetX",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the offset X.",
@@ -125,7 +166,7 @@
     },
     {
       "name": "OffsetY",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the offset Y.",
@@ -133,7 +174,7 @@
     },
     {
       "name": "OffsetZ",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the offset Z.",
@@ -141,7 +182,7 @@
     },
     {
       "name": "OriginalPath",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the point clouds path (where it originally located).",
@@ -149,7 +190,7 @@
     },
     {
       "name": "RotationZ",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the rotation Z.",
@@ -157,7 +198,7 @@
     },
     {
       "name": "Scale",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the scale.",
@@ -165,7 +206,7 @@
     },
     {
       "name": "Url",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the point clouds URL without a file name.",
@@ -173,7 +214,7 @@
     },
     {
       "name": "UseAutoCreatedBasePoint",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether an auto-created base point should be used. If set to true, LocationBy value is ignored.",

@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "UserPropertyName",
-      "signature": "UserPropertyName(...)",
+      "signature": "public UserPropertyName()",
       "summary": "Initializes a new instance of the UserPropertyName class",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "Name",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The user property item name.",

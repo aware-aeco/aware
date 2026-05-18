@@ -9,9 +9,16 @@
   "constructors": [
     {
       "name": "PluginUserInterfaceAttribute",
-      "signature": "PluginUserInterfaceAttribute(...)",
+      "signature": "public PluginUserInterfaceAttribute(string description)",
       "summary": "The custom attribute [PluginUserInterface(PluginName.UserInterfaceDefinitions.Plugin1)] uses this to store the description of the plug-in user interface to the system. This is not to be used by itself.",
-      "params": [],
+      "params": [
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the plug-in user interface in inp format or the name of the dialog class for the PluginFormBase dialog.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7962935c-29d1-0aae-3af5-a4233ae3d930"
@@ -21,9 +28,9 @@
   "properties": [
     {
       "name": "Description",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The description of the plug-in user interface in inp format.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/36273632-82f7-2489-752e-20d2aae40796"
     }

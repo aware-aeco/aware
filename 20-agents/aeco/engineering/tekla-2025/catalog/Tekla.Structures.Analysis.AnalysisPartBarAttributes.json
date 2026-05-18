@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisPartBarAttributes",
-      "signature": "AnalysisPartBarAttributes(...)",
+      "signature": "public AnalysisPartBarAttributes()",
       "summary": "Initializes a new instance of the AnalysisPartBarAttributes class",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "BarEndCondition",
-      "type": "object",
+      "type": "AnalysisPartEnd",
       "getter": true,
       "setter": true,
       "summary": "The bar end condition.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "BarStartCondition",
-      "type": "object",
+      "type": "AnalysisPartEnd",
       "getter": true,
       "setter": true,
       "summary": "The bar start condition.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "BarStartNumber",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The start number of the bar.",
@@ -45,7 +45,7 @@
     },
     {
       "name": "ForceStraightSegments",
-      "type": "object",
+      "type": "AnalysisPartBarAttributes.ForceStraightSegmentsEnum",
       "getter": true,
       "setter": true,
       "summary": "The straight force segments.",
@@ -53,7 +53,7 @@
     },
     {
       "name": "MemberStartNumber",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The start number of the member.",
@@ -61,7 +61,7 @@
     },
     {
       "name": "OverrideProfileName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The override profile name.",
@@ -69,7 +69,7 @@
     },
     {
       "name": "SplitDistances",
-      "type": "object",
+      "type": "List\u003CDouble\u003E",
       "getter": true,
       "setter": true,
       "summary": "The split distances.",
@@ -77,7 +77,7 @@
     },
     {
       "name": "SplitNodeCount",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The count of the split node.",

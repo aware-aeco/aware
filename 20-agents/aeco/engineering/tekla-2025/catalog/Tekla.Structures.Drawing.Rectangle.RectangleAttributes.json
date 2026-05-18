@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Rectangle.RectangleAttributes",
-      "signature": "Rectangle.RectangleAttributes(...)",
+      "signature": "public RectangleAttributes()",
       "summary": "Creates a new default rectangle attributes instance that loads standard attributes.",
       "params": [],
       "throws": [],
@@ -18,9 +18,16 @@
     },
     {
       "name": "Rectangle.RectangleAttributes",
-      "signature": "Rectangle.RectangleAttributes(...)",
+      "signature": "public RectangleAttributes(string AttributesFile)",
       "summary": "Creates a new rectangle attributes instance that loads the specified attributes.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributesFile",
+          "type": "System.String",
+          "doc": "The filename of the attributes file.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e971538a-cee6-ebfa-74a3-d0856a6ed539"
@@ -29,18 +36,40 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6e4b5fa1-be4f-1840-4fd0-de810b7e10bf"
     },
     {
       "name": "LoadAttributes",
-      "signature": "LoadAttributes(...)",
+      "signature": "public override bool LoadAttributes(string AttributeFile)",
       "summary": "Loads the attributes from the attribute file.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9e964ef1-34b9-4ffb-33fe-480366a83dd1"
@@ -49,7 +78,7 @@
   "properties": [
     {
       "name": "BehindModelObjects",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets whether the closed graphic object is drawn behind model objects",
@@ -57,7 +86,7 @@
     },
     {
       "name": "Bulge",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The bulge value for the rectangle.",
@@ -65,7 +94,7 @@
     },
     {
       "name": "Hatch",
-      "type": "object",
+      "type": "GraphicObjectHatchAttributes",
       "getter": true,
       "setter": true,
       "summary": "The hatch attributes of the closed graphic object (the closed graphic object is hatchable).",
@@ -73,7 +102,7 @@
     },
     {
       "name": "Line",
-      "type": "object",
+      "type": "LineTypeAttributes",
       "getter": true,
       "setter": true,
       "summary": "The line attributes of the graphic object. A graphic object always consists of lines.",

@@ -11,9 +11,9 @@
   "properties": [
     {
       "name": "Localization",
-      "type": "object",
+      "type": "Localization",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the localization for the dialog.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/3294a183-55dd-1515-e207-9ea668cffef6"
     }

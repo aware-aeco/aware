@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "InvalidRadiusException",
-      "signature": "InvalidRadiusException(...)",
+      "signature": "public InvalidRadiusException()",
       "summary": "Initializes a new instance of the InvalidRadiusException class with \u0022Cannot connect parts with a cylindrical section having the provided radius\u0022 error message.",
       "params": [],
       "throws": [],

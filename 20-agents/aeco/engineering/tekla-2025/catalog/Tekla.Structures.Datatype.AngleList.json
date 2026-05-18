@@ -10,63 +10,194 @@
   "methods": [
     {
       "name": "Parse(String)",
-      "signature": "Parse(String)(...)",
+      "signature": "public static List\u003CAngle\u003E Parse(string text)",
       "summary": "Parses the given text as an angle list in the current unit type",
-      "params": [],
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to parse",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CAngle\u003E",
+        "doc": "Resulting angle list from the text"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5a037ea2-783e-73d7-f7a1-34662923a055"
     },
     {
       "name": "Parse(String, IFormatProvider)",
-      "signature": "Parse(String, IFormatProvider)(...)",
+      "signature": "public static List\u003CAngle\u003E Parse(string text, IFormatProvider formatProvider)",
       "summary": "Parses the given text as an angle list in the current unit type",
-      "params": [],
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to parse",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "Format provider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CAngle\u003E",
+        "doc": "Resulting angle list from the text"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/bf366b35-4717-fdcd-f174-23607938c085"
     },
     {
       "name": "Parse(String, IFormatProvider, Angle.UnitType)",
-      "signature": "Parse(String, IFormatProvider, Angle.UnitType)(...)",
+      "signature": "public static List\u003CAngle\u003E Parse(string text, IFormatProvider formatProvider, Angle.UnitType unitType)",
       "summary": "Parses the given text as an angle list in the current unit type",
-      "params": [],
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to parse",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "Format provider",
+          "optional": false
+        },
+        {
+          "name": "unitType",
+          "type": "Tekla.Structures.Datatype.Angle.UnitType",
+          "doc": "Input unit type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CAngle\u003E",
+        "doc": "Resulting angle list from the text"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4113d54a-0ab4-8b2e-7062-a3771be61c87"
     },
     {
       "name": "ToString(IEnumerable.Angle.)",
-      "signature": "ToString(IEnumerable.Angle.)(...)",
+      "signature": "public static string ToString(IEnumerable\u003CAngle\u003E angleList)",
       "summary": "Converts the given angles to a string in the current units",
-      "params": [],
+      "params": [
+        {
+          "name": "angleList",
+          "type": "System.Collections.Generic.IEnumerable\u003CAngle\u003E",
+          "doc": "List of angles to convert",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The angle list as a string"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8d7e5255-799a-1f85-a13f-08dd45382341"
     },
     {
       "name": "ToString(IEnumerable.Angle., Angle.UnitType)",
-      "signature": "ToString(IEnumerable.Angle., Angle.UnitType)(...)",
+      "signature": "public static string ToString(IEnumerable\u003CAngle\u003E angleList, Angle.UnitType unitType)",
       "summary": "Converts the given angles to a string in the given units",
-      "params": [],
+      "params": [
+        {
+          "name": "angleList",
+          "type": "System.Collections.Generic.IEnumerable\u003CAngle\u003E",
+          "doc": "List of angles to convert",
+          "optional": false
+        },
+        {
+          "name": "unitType",
+          "type": "Tekla.Structures.Datatype.Angle.UnitType",
+          "doc": "Input unit type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The angle list as a string"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9b32abf0-6afc-3f7b-dab7-dd9098e60177"
     },
     {
       "name": "ToString(IEnumerable.Angle., String, IFormatProvider)",
-      "signature": "ToString(IEnumerable.Angle., String, IFormatProvider)(...)",
+      "signature": "public static string ToString(IEnumerable\u003CAngle\u003E angleList, string format, IFormatProvider formatProvider)",
       "summary": "Converts the given angles to a string with the given parameters in the current unit",
-      "params": [],
+      "params": [
+        {
+          "name": "angleList",
+          "type": "System.Collections.Generic.IEnumerable\u003CAngle\u003E",
+          "doc": "List of angles to convert",
+          "optional": false
+        },
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "The format string. Can be null.",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The number format provider.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The angle as a string"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/15ac3c4f-5d3f-0463-54ba-088f3f089f97"
     },
     {
       "name": "ToString(IEnumerable.Angle., String, IFormatProvider, Angle.UnitType)",
-      "signature": "ToString(IEnumerable.Angle., String, IFormatProvider, Angle.UnitType)(...)",
+      "signature": "public static string ToString(IEnumerable\u003CAngle\u003E angleList, string format, IFormatProvider formatProvider, Angle.UnitType angleUnit)",
       "summary": "Converts the given angles to a string with the given parameters in the current unit",
-      "params": [],
+      "params": [
+        {
+          "name": "angleList",
+          "type": "System.Collections.Generic.IEnumerable\u003CAngle\u003E",
+          "doc": "List of angles to convert",
+          "optional": false
+        },
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "The format string. Can be null.",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The number format provider.",
+          "optional": false
+        },
+        {
+          "name": "angleUnit",
+          "type": "Tekla.Structures.Datatype.Angle.UnitType",
+          "doc": "The unit type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The angle as a string"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d2f3fab0-5ef0-1c85-20a3-053346a181d2"

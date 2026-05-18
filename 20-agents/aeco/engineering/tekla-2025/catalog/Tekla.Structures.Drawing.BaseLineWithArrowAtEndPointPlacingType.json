@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "BaseLineWithArrowAtEndPointPlacingType",
-      "signature": "BaseLineWithArrowAtEndPointPlacingType(...)",
+      "signature": "public BaseLineWithArrowAtEndPointPlacingType()",
       "summary": "Creates a new base line with arrow at end point placing type instance.",
       "params": [],
       "throws": [],

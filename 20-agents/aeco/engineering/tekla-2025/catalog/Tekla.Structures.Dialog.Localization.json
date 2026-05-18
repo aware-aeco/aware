@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Localization",
-      "signature": "Localization(...)",
+      "signature": "public Localization()",
       "summary": "Creates a new localization instance.",
       "params": [],
       "throws": [],
@@ -18,9 +18,22 @@
     },
     {
       "name": "Localization",
-      "signature": "Localization(...)",
+      "signature": "public Localization(string fileName, string language)",
       "summary": "Creates a new localization instance.",
-      "params": [],
+      "params": [
+        {
+          "name": "fileName",
+          "type": "System.String",
+          "doc": "The file from which the localization strings are loaded.",
+          "optional": false
+        },
+        {
+          "name": "language",
+          "type": "System.String",
+          "doc": "The set localization language.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/ea5ac0bd-0aa6-25b0-caac-197ded02749b"
@@ -29,99 +42,196 @@
   "methods": [
     {
       "name": "GetLocalizationFileFullPath",
-      "signature": "GetLocalizationFileFullPath(...)",
+      "signature": "public static string GetLocalizationFileFullPath(string fileName)",
       "summary": "Returns localization file if found from environment",
-      "params": [],
+      "params": [
+        {
+          "name": "fileName",
+          "type": "System.String",
+          "doc": "filename to search",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/814de45d-06ca-db66-f8a5-3fb668445041"
     },
     {
       "name": "GetText",
-      "signature": "GetText(...)",
+      "signature": "public string GetText(string name)",
       "summary": "Gets the translation for the current language. The translations are searched with the given identifier string.",
-      "params": [],
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The identifier string.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The translated string."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f8c92b4f-4ee9-fff6-8f2f-bc32c6558431"
     },
     {
       "name": "LoadAidFile",
-      "signature": "LoadAidFile(...)",
+      "signature": "public void LoadAidFile(string fileName)",
       "summary": "Loads the localization strings from an aid file. Several files may be used concurrently, just call LoadAidFile for each file. The translations are searched in the loading order and the first match is returned.",
-      "params": [],
+      "params": [
+        {
+          "name": "fileName",
+          "type": "System.String",
+          "doc": "The aid file to be loaded.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e5f64544-6122-615c-fe3f-fe55dfd3bb15"
     },
     {
       "name": "LoadAilFile",
-      "signature": "LoadAilFile(...)",
+      "signature": "public void LoadAilFile(string fileName)",
       "summary": "Loads the localization strings from an ail file. Several files may be used concurrently, just call LoadAilFile for each file. The translations are searched in the loading order and the first match is returned.",
-      "params": [],
+      "params": [
+        {
+          "name": "fileName",
+          "type": "System.String",
+          "doc": "The ail file to be loaded.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/ce8fe818-f1b3-287c-2556-4aab6e4e4fde"
     },
     {
       "name": "LoadFile",
-      "signature": "LoadFile(...)",
+      "signature": "public void LoadFile(string fileName)",
       "summary": "Loads the localization strings from a file. Several files may be used concurrently, just call LoadFile for each file. The translations are searched in the loading order and the first match is returned. The method uses the extension of the filename to identify the file type (\u0022.xml\u0022, \u0022.aid\u0022 or \u0022.ail\u0022).",
-      "params": [],
+      "params": [
+        {
+          "name": "fileName",
+          "type": "System.String",
+          "doc": "The file to be loaded.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f3061153-fc54-871b-7a3a-a61c7700ead8"
     },
     {
       "name": "LoadXMLFile",
-      "signature": "LoadXMLFile(...)",
+      "signature": "public void LoadXMLFile(string fileName)",
       "summary": "Loads the localization strings from an xml file. Several files may be used concurrently, just call LoadXMLFile for each file. The translations are searched in the loading order and the first match is returned.",
-      "params": [],
+      "params": [
+        {
+          "name": "fileName",
+          "type": "System.String",
+          "doc": "The xml file to be loaded.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/81d33ad8-0af5-e71e-f1e4-3e108eeef787"
     },
     {
       "name": "Localize(ApplicationSettingsBase)",
-      "signature": "Localize(ApplicationSettingsBase)(...)",
+      "signature": "public void Localize(ApplicationSettingsBase applicationSettings)",
       "summary": "Localizes application settings.",
-      "params": [],
+      "params": [
+        {
+          "name": "applicationSettings",
+          "type": "System.Configuration.ApplicationSettingsBase",
+          "doc": "The application settings that should be localized.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8f64771f-7a89-67f8-7a18-e56d01b3260c"
     },
     {
       "name": "Localize(Control)",
-      "signature": "Localize(Control)(...)",
+      "signature": "public void Localize(Control control)",
       "summary": "Localizes a control recursively.",
-      "params": [],
+      "params": [
+        {
+          "name": "control",
+          "type": "System.Windows.Forms.Control",
+          "doc": "The control instance.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/83044e33-c832-1e45-2e54-71a15be3b7ab"
     },
     {
       "name": "Localize(MenuItem)",
-      "signature": "Localize(MenuItem)(...)",
+      "signature": "public void Localize(MenuItem menuItem)",
       "summary": "Localizes a MenuItem control recursively.",
-      "params": [],
+      "params": [
+        {
+          "name": "menuItem",
+          "type": "System.Windows.Forms.MenuItem",
+          "doc": "The MenuItem instance.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/985e14bc-0164-6f24-cc16-099d799c8527"
     },
     {
       "name": "LocalizeToolTip",
-      "signature": "LocalizeToolTip(...)",
+      "signature": "public void LocalizeToolTip(Control control, ToolTip toolTip)",
       "summary": "Localizes a ToolTip control.",
-      "params": [],
+      "params": [
+        {
+          "name": "control",
+          "type": "System.Windows.Forms.Control",
+          "doc": "The root control for all the controls which should be localized.",
+          "optional": false
+        },
+        {
+          "name": "toolTip",
+          "type": "System.Windows.Forms.ToolTip",
+          "doc": "The ToolTip instance.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/88453655-72be-4c55-8bf7-4bb7fad8df80"
     },
     {
       "name": "RegisterLocalizationCallback",
-      "signature": "RegisterLocalizationCallback(...)",
+      "signature": "public void RegisterLocalizationCallback(Localization.LocalizationCallback cb, params Type[] types)",
       "summary": "Registers a localization callback which is used to translate the registered control types.",
-      "params": [],
+      "params": [
+        {
+          "name": "cb",
+          "type": "Tekla.Structures.Dialog.Localization.LocalizationCallback",
+          "doc": "The localization delegate.",
+          "optional": false
+        },
+        {
+          "name": "types",
+          "type": ".System.Type.",
+          "doc": "An array of types which will trigger the current delegate.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9c7c6069-4285-dda1-795d-a478948d46d5"
@@ -130,23 +240,23 @@
   "properties": [
     {
       "name": "DefaultLocalizationFile",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The path and name of the default localization file.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/cc1493a9-b4d4-3f10-8773-286705510632"
     },
     {
       "name": "DefaultLocalizationPath",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The path and directory name where to find localization files.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/83869bed-fa42-34c0-17ff-7c7edd7f8e99"
     },
     {
       "name": "Language",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the language that is currently used in Tekla Structures.",

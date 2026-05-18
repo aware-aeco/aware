@@ -9,9 +9,22 @@
   "constructors": [
     {
       "name": "PickerInputPoint",
-      "signature": "PickerInputPoint(...)",
+      "signature": "public PickerInputPoint(ViewBase pickedView, Point pickedPoint)",
       "summary": "Creates a new PickerInputPoint instance with one point selected in a view.",
-      "params": [],
+      "params": [
+        {
+          "name": "pickedView",
+          "type": "Tekla.Structures.Drawing.ViewBase",
+          "doc": "The view in which the pick occurred.",
+          "optional": false
+        },
+        {
+          "name": "pickedPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The picked point in the view coordinates.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/ea556ce0-fffd-36b0-215b-f46a222f80d7"
@@ -20,9 +33,20 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2e213537-2c72-6afb-177b-a04c8b70b27a"
@@ -31,7 +55,7 @@
   "properties": [
     {
       "name": "PickedPoint",
-      "type": "object",
+      "type": "Point",
       "getter": true,
       "setter": true,
       "summary": "The picked point in the view coordinates.",
@@ -39,7 +63,7 @@
     },
     {
       "name": "PickedView",
-      "type": "object",
+      "type": "ViewBase",
       "getter": true,
       "setter": true,
       "summary": "The view within which the pick occurred.",

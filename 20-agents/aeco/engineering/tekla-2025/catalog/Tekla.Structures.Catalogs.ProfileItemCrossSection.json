@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "ProfileItemCrossSection",
-      "signature": "ProfileItemCrossSection(...)",
+      "signature": "public ProfileItemCrossSection()",
       "summary": "Initializes a new instance of the ProfileItemCrossSection class",
       "params": [],
       "throws": [],
@@ -20,27 +20,138 @@
   "methods": [
     {
       "name": "AddProfileItemAnalysisParamter",
-      "signature": "AddProfileItemAnalysisParamter(...)",
+      "signature": "public void AddProfileItemAnalysisParamter(string property, string alblString, string symbol, Object value, ProfileItemParameter.ParameterUnitTypeEnum ParameterUnitType, int crossSectionNumber)",
       "summary": "adds a new profile item analisis parameter.",
-      "params": [],
+      "params": [
+        {
+          "name": "property",
+          "type": "System.String",
+          "doc": "The name of the property.",
+          "optional": false
+        },
+        {
+          "name": "alblString",
+          "type": "System.String",
+          "doc": "The translation string.",
+          "optional": false
+        },
+        {
+          "name": "symbol",
+          "type": "System.String",
+          "doc": "The property symbol.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "doc": "The value of the property.",
+          "optional": false
+        },
+        {
+          "name": "ParameterUnitType",
+          "type": "Tekla.Structures.Catalogs.ProfileItemParameter.ParameterUnitTypeEnum",
+          "doc": "The property value unit type.",
+          "optional": false
+        },
+        {
+          "name": "crossSectionNumber",
+          "type": "System.Int32",
+          "doc": "The cross-section number.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/1fcd2d06-503e-f7e9-9837-1756ae102de0"
     },
     {
       "name": "AddProfileItemParamter",
-      "signature": "AddProfileItemParamter(...)",
+      "signature": "public void AddProfileItemParamter(string property, string alblString, string symbol, Object value, ProfileItemParameter.ParameterUnitTypeEnum ParameterUnitType, int crossSectionNumber)",
       "summary": "adds a new profile item parameter.",
-      "params": [],
+      "params": [
+        {
+          "name": "property",
+          "type": "System.String",
+          "doc": "The name of the property.",
+          "optional": false
+        },
+        {
+          "name": "alblString",
+          "type": "System.String",
+          "doc": "The translation string.",
+          "optional": false
+        },
+        {
+          "name": "symbol",
+          "type": "System.String",
+          "doc": "The property symbol.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "doc": "The value of the property.",
+          "optional": false
+        },
+        {
+          "name": "ParameterUnitType",
+          "type": "Tekla.Structures.Catalogs.ProfileItemParameter.ParameterUnitTypeEnum",
+          "doc": "The property value unit type.",
+          "optional": false
+        },
+        {
+          "name": "crossSectionNumber",
+          "type": "System.Int32",
+          "doc": "The cross-section number.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/0e81ef0a-d9ca-2db1-6937-c833eced17d5"
     },
     {
       "name": "AddProfileItemUserParamter",
-      "signature": "AddProfileItemUserParamter(...)",
+      "signature": "public void AddProfileItemUserParamter(string property, string alblString, string symbol, Object value, ProfileItemParameter.ParameterUnitTypeEnum ParameterUnitType, int crossSectionNumber)",
       "summary": "adds a new profile item user parameter.",
-      "params": [],
+      "params": [
+        {
+          "name": "property",
+          "type": "System.String",
+          "doc": "The name of the property.",
+          "optional": false
+        },
+        {
+          "name": "alblString",
+          "type": "System.String",
+          "doc": "The translation string.",
+          "optional": false
+        },
+        {
+          "name": "symbol",
+          "type": "System.String",
+          "doc": "The property symbol.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "doc": "The value of the property.",
+          "optional": false
+        },
+        {
+          "name": "ParameterUnitType",
+          "type": "Tekla.Structures.Catalogs.ProfileItemParameter.ParameterUnitTypeEnum",
+          "doc": "The property value unit type.",
+          "optional": false
+        },
+        {
+          "name": "crossSectionNumber",
+          "type": "System.Int32",
+          "doc": "The cross-section number.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/fb403a79-d9d4-f258-5ee6-8ad260b3f729"
@@ -49,7 +160,7 @@
   "properties": [
     {
       "name": "CrossSectionLocation",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value of the property CrossSectionLocation.",
@@ -57,7 +168,7 @@
     },
     {
       "name": "CrossSectionNumber",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value of the property CrossSectionNumber.",
@@ -65,7 +176,7 @@
     },
     {
       "name": "EquivalentType",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value of the property EquivalentType.",
@@ -73,7 +184,7 @@
     },
     {
       "name": "Location",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value of the property Location.",
@@ -81,7 +192,7 @@
     },
     {
       "name": "Number",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value of the property Number.",
@@ -89,7 +200,7 @@
     },
     {
       "name": "NumberOfProfileItemAnalysisParameters",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value of the property NumberOfProfileItemAnalysisParameters.",
@@ -97,7 +208,7 @@
     },
     {
       "name": "NumberOfProfileItemParameters",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value of the property NumberOfProfileItemParameters.",
@@ -105,7 +216,7 @@
     },
     {
       "name": "NumberOfProfileItemUserParameters",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value of the property NumberOfProfileItemUserParameters.",
@@ -113,7 +224,7 @@
     },
     {
       "name": "ProfileItemAnalysisParameters",
-      "type": "object",
+      "type": "IList\u003CProfileItemParameter\u003E",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value of the property ProfileItemAnalysisParameters.",
@@ -121,7 +232,7 @@
     },
     {
       "name": "ProfileItemParameters",
-      "type": "object",
+      "type": "IList\u003CProfileItemParameter\u003E",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value of the property ProfileItemParameters.",
@@ -129,7 +240,7 @@
     },
     {
       "name": "ProfileItemUserParameters",
-      "type": "object",
+      "type": "IList\u003CProfileItemParameter\u003E",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value of the property ProfileItemUserParameters.",
@@ -137,7 +248,7 @@
     },
     {
       "name": "ProfileSubType",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value of the property ProfileSubType.",
@@ -145,7 +256,7 @@
     },
     {
       "name": "ProfileType",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value of the property ProfileType.",

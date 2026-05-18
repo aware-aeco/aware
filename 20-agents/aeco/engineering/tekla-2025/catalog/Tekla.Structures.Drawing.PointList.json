@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "PointList",
-      "signature": "PointList(...)",
+      "signature": "public PointList()",
       "summary": "Initializes a new instance of the PointList class",
       "params": [],
       "throws": [],
@@ -20,135 +20,331 @@
   "methods": [
     {
       "name": "Add",
-      "signature": "Add(...)",
+      "signature": "public int Add(Point value)",
       "summary": "Adds a new point to the end of the point list.",
-      "params": [],
+      "params": [
+        {
+          "name": "value",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The point to be added to the list.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index where the point was added."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/0a85dfdc-b822-8a8f-e229-363ef592a753"
     },
     {
       "name": "AddRange",
-      "signature": "AddRange(...)",
+      "signature": "public void AddRange(PointList value)",
       "summary": "Appends all points from another point list to the end of this point list.",
-      "params": [],
+      "params": [
+        {
+          "name": "value",
+          "type": "Tekla.Structures.Drawing.PointList",
+          "doc": "The points to be added to the list.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/99fd5ef6-df1d-d958-1935-606fee669fab"
     },
     {
       "name": "Contains",
-      "signature": "Contains(...)",
+      "signature": "public bool Contains(Point value)",
       "summary": "Checks if the given point is in the list.",
-      "params": [],
+      "params": [
+        {
+          "name": "value",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The point to be checked.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the point is in the list, otherwise false."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e3ffabed-f260-de57-7187-1052ca293554"
     },
     {
       "name": "GetRange",
-      "signature": "GetRange(...)",
+      "signature": "public PointList GetRange(int index, int count)",
       "summary": "Gets a part of the point list.",
-      "params": [],
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The start index of the new list.",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "System.Int32",
+          "doc": "The number of items in the new list.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PointList",
+        "doc": "The new point list."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5f47ab27-bd7e-8777-dae0-2c3e9cb12ed6"
     },
     {
       "name": "IndexOf(Point)",
-      "signature": "IndexOf(Point)(...)",
+      "signature": "public int IndexOf(Point value)",
       "summary": "Gets the index of the specified point.",
-      "params": [],
+      "params": [
+        {
+          "name": "value",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The point to locate in the list.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the point if found in the list, otherwise -1."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/275ccccd-031e-39e6-2e60-b3335e1aea1d"
     },
     {
       "name": "IndexOf(Point, Int32)",
-      "signature": "IndexOf(Point, Int32)(...)",
+      "signature": "public int IndexOf(Point value, int startIndex)",
       "summary": "Gets the index of the specified point between the index to start the search from and the end of the list.",
-      "params": [],
+      "params": [
+        {
+          "name": "value",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The point to locate in the list.",
+          "optional": false
+        },
+        {
+          "name": "startIndex",
+          "type": "System.Int32",
+          "doc": "The index to start the search from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the point if found in the list, otherwise -1."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/71ec7df3-2212-b7f7-05eb-a1fd3eed7b9c"
     },
     {
       "name": "IndexOf(Point, Int32, Int32)",
-      "signature": "IndexOf(Point, Int32, Int32)(...)",
+      "signature": "public int IndexOf(Point value, int startIndex, int count)",
       "summary": "Gets the index of the specified point between the index to start the search from and startIndex \u002B count.",
-      "params": [],
+      "params": [
+        {
+          "name": "value",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The point to locate in the list.",
+          "optional": false
+        },
+        {
+          "name": "startIndex",
+          "type": "System.Int32",
+          "doc": "The index to start the search from.",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "System.Int32",
+          "doc": "The number of items searched.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the point if found in the list, otherwise -1."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/b1382631-8c95-1737-6763-124469f375f7"
     },
     {
       "name": "Insert",
-      "signature": "Insert(...)",
+      "signature": "public void Insert(int index, Point value)",
       "summary": "Inserts the point to the specified index.",
-      "params": [],
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The index where the point is inserted.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The point to be inserted.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/74fe90d5-80cf-09d3-5a76-e136dfe6277e"
     },
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/862def26-cc3f-96a8-629e-892bf2833081"
     },
     {
       "name": "LastIndexOf(Point)",
-      "signature": "LastIndexOf(Point)(...)",
+      "signature": "public int LastIndexOf(Point value)",
       "summary": "Searches for the last occurence of the point in the list.",
-      "params": [],
+      "params": [
+        {
+          "name": "value",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The point to locate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The last index of the point if found, otherwise -1."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4e7b3fe7-4ed2-7d42-b3d2-933d9450e458"
     },
     {
       "name": "LastIndexOf(Point, Int32)",
-      "signature": "LastIndexOf(Point, Int32)(...)",
+      "signature": "public int LastIndexOf(Point value, int startIndex)",
       "summary": "Searches for the last occurence of the point in the list.",
-      "params": [],
+      "params": [
+        {
+          "name": "value",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The point to locate.",
+          "optional": false
+        },
+        {
+          "name": "startIndex",
+          "type": "System.Int32",
+          "doc": "The index to start the search from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The last index of the point if found, otherwise -1."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2d941eaf-2701-40aa-61f3-4390403322ab"
     },
     {
       "name": "LastIndexOf(Point, Int32, Int32)",
-      "signature": "LastIndexOf(Point, Int32, Int32)(...)",
+      "signature": "public int LastIndexOf(Point value, int startIndex, int count)",
       "summary": "Searches for the last occurence of the point in the list.",
-      "params": [],
+      "params": [
+        {
+          "name": "value",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The point to locate.",
+          "optional": false
+        },
+        {
+          "name": "startIndex",
+          "type": "System.Int32",
+          "doc": "The index to start the search from.",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "System.Int32",
+          "doc": "The number of items searched.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The last index of the point if found, otherwise -1."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6d9bd143-8a6e-c3f8-4763-a97b3052057e"
     },
     {
       "name": "Remove",
-      "signature": "Remove(...)",
+      "signature": "public void Remove(Point value)",
       "summary": "Removes the first occurence of the point from the list.",
-      "params": [],
+      "params": [
+        {
+          "name": "value",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The point to be removed.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7742080a-5946-fc98-472b-25baddad1e51"
     },
     {
       "name": "RemoveRange",
-      "signature": "RemoveRange(...)",
+      "signature": "public void RemoveRange(int index, int count)",
       "summary": "Removes a range of items starting from the given index.",
-      "params": [],
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The start index.",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "System.Int32",
+          "doc": "The number of items to be removed.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/53f1d876-8c57-2b85-a646-25903eff3636"
     },
     {
       "name": "ToArray",
-      "signature": "ToArray(...)",
+      "signature": "public Point[] ToArray()",
       "summary": "Copies the points to a point array.",
       "params": [],
+      "returns": {
+        "type": ".Point.",
+        "doc": "The array of points."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5a62ed18-25a0-73ff-ab35-2044f5a47004"
@@ -157,7 +353,7 @@
   "properties": [
     {
       "name": "Item",
-      "type": "object",
+      "type": "Point",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the point at the specified index.",

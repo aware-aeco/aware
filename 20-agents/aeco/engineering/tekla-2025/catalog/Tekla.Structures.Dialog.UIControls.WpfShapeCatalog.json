@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "WpfShapeCatalog",
-      "signature": "WpfShapeCatalog(...)",
+      "signature": "public WpfShapeCatalog()",
       "summary": "Initializes a new instance of the ShapeCatalog class.",
       "params": [],
       "throws": [],
@@ -18,9 +18,16 @@
     },
     {
       "name": "WpfShapeCatalog",
-      "signature": "WpfShapeCatalog(...)",
+      "signature": "public WpfShapeCatalog(string shape)",
       "summary": "Initializes a new instance of the ShapeCatalog class and will select the Shape (if available) in the tree.",
-      "params": [],
+      "params": [
+        {
+          "name": "shape",
+          "type": "System.String",
+          "doc": "The Shape to be selected in the dialog.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/ca864005-02d8-28a7-0855-41b4a60efab9"
@@ -29,7 +36,7 @@
   "methods": [
     {
       "name": "InitializeComponent",
-      "signature": "InitializeComponent(...)",
+      "signature": "public void InitializeComponent()",
       "summary": "InitializeComponent",
       "params": [],
       "throws": [],
@@ -38,9 +45,16 @@
     },
     {
       "name": "OnValueChanged",
-      "signature": "OnValueChanged(...)",
+      "signature": "public void OnValueChanged(Object data)",
       "summary": "Event handler for passing generic catalog data back to dialog",
-      "params": [],
+      "params": [
+        {
+          "name": "data",
+          "type": "System.Object",
+          "doc": "value data",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6142c281-2aea-1606-72b4-abf7c44ed66e"
@@ -49,7 +63,7 @@
   "properties": [
     {
       "name": "ButtonHeight",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets and sets the height of the button control.",
@@ -57,7 +71,7 @@
     },
     {
       "name": "ButtonText",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets and sets the text of the button control.",
@@ -65,7 +79,7 @@
     },
     {
       "name": "ButtonWidth",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets and sets the width of the button control.",
@@ -73,7 +87,7 @@
     },
     {
       "name": "SelectedShape",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the selected Shape in the control.",
@@ -83,8 +97,8 @@
   "events": [
     {
       "name": "SelectClicked",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler SelectClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler SelectClicked",
       "summary": "The SelectClicked event is raised when the Select button is clicked.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/0a3c217b-d39b-f5da-4c55-6508b2802ea9",
       "handler_thread": "unknown",
@@ -92,8 +106,8 @@
     },
     {
       "name": "SelectionDone",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler SelectionDone",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler SelectionDone",
       "summary": "The SelectionDone event is raised when the selection has been done.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f6e92018-f5e0-9b42-e141-04b5aa0134fc",
       "handler_thread": "unknown",

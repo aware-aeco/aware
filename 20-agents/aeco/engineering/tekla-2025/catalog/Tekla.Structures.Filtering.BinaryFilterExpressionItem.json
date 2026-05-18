@@ -9,19 +9,53 @@
   "constructors": [
     {
       "name": "BinaryFilterExpressionItem",
-      "signature": "BinaryFilterExpressionItem(...)",
+      "signature": "public BinaryFilterExpressionItem(FilterExpression FilterExpression)",
       "summary": "Initializes a new instance of the BinaryFilterExpressionItem class.",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "FilterExpression",
+          "type": "Tekla.Structures.Filtering.FilterExpression",
+          "doc": "The filter expression to collect.",
+          "optional": false
+        }
+      ],
+      "throws": [
+        {
+          "type": "InvalidFilterExpressionException",
+          "when": "Thrown when an invalid filter expression is specified."
+        },
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when a null filter expression is specified."
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/33977136-4fe5-99d7-524a-34f1f3c888f5"
     },
     {
       "name": "BinaryFilterExpressionItem",
-      "signature": "BinaryFilterExpressionItem(...)",
+      "signature": "public BinaryFilterExpressionItem(FilterExpression FilterExpression, BinaryFilterOperatorType BinaryFilterItemOperatorType)",
       "summary": "Initializes a new instance of the BinaryFilterExpressionItem class.",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "FilterExpression",
+          "type": "Tekla.Structures.Filtering.FilterExpression",
+          "doc": "The FilterExpression object to collect.",
+          "optional": false
+        },
+        {
+          "name": "BinaryFilterItemOperatorType",
+          "type": "Tekla.Structures.Filtering.BinaryFilterOperatorType",
+          "doc": "The operator type to be used against the next item.",
+          "optional": false
+        }
+      ],
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when a null filter expression is specified."
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6f652800-3aee-c8b0-a923-98e1160ca964"
     }
@@ -29,9 +63,13 @@
   "methods": [
     {
       "name": "ToString",
-      "signature": "ToString(...)",
+      "signature": "public override string ToString()",
       "summary": "Creates a string representation of the current object.",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A new string representing the current object."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/fece057a-34f0-fbb1-7184-27f66452ed40"

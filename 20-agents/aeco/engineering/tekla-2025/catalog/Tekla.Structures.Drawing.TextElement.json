@@ -9,18 +9,38 @@
   "constructors": [
     {
       "name": "TextElement",
-      "signature": "TextElement(...)",
+      "signature": "public TextElement(string Text)",
       "summary": "Creates a new text element instance with the given textual value.",
-      "params": [],
+      "params": [
+        {
+          "name": "Text",
+          "type": "System.String",
+          "doc": "The textual value to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/270c56a6-f8e2-c61a-8c44-b910d717a1f2"
     },
     {
       "name": "TextElement",
-      "signature": "TextElement(...)",
+      "signature": "public TextElement(string Text, FontAttributes Font)",
       "summary": "Creates a new text element instance with the given textual value and font.",
-      "params": [],
+      "params": [
+        {
+          "name": "Text",
+          "type": "System.String",
+          "doc": "The textual value to be used.",
+          "optional": false
+        },
+        {
+          "name": "Font",
+          "type": "Tekla.Structures.Drawing.FontAttributes",
+          "doc": "The font to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/fadfae91-20e9-5281-aef7-190fec0e16c8"
@@ -29,27 +49,46 @@
   "methods": [
     {
       "name": "Clone",
-      "signature": "Clone(...)",
+      "signature": "public override Object Clone()",
       "summary": "Clones the object.",
       "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "A copy of the object."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/765f3e69-9834-0f36-e506-3d9fec1cbe12"
     },
     {
       "name": "GetUnformattedString",
-      "signature": "GetUnformattedString(...)",
+      "signature": "public override string GetUnformattedString()",
       "summary": "Returns the content as a string without formatting.",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The content as a string without formatting."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/185c6e84-13cd-8f89-7cb7-a52913ce103f"
     },
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/542e3a8d-9da6-f6fd-07ab-d14a76a05ad2"
@@ -58,7 +97,7 @@
   "properties": [
     {
       "name": "Font",
-      "type": "object",
+      "type": "FontAttributes",
       "getter": true,
       "setter": true,
       "summary": "The font of the text element.",
@@ -66,7 +105,7 @@
     },
     {
       "name": "Value",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The textual value of the text element.",

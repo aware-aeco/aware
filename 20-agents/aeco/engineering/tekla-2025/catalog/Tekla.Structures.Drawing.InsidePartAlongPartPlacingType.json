@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "InsidePartAlongPartPlacingType",
-      "signature": "InsidePartAlongPartPlacingType(...)",
+      "signature": "public InsidePartAlongPartPlacingType()",
       "summary": "Creates a new inside part along part placing type instance.",
       "params": [],
       "throws": [],

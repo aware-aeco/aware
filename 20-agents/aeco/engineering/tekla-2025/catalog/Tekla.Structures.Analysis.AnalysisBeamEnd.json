@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisBeamEnd",
-      "signature": "AnalysisBeamEnd(...)",
+      "signature": "public AnalysisBeamEnd()",
       "summary": "Initializes a new instance of the AnalysisBeamEnd class.",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "Connectivity",
-      "type": "object",
+      "type": "AnalysisConnectivity",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the connectivity at the beam end.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "Eccentricity",
-      "type": "object",
+      "type": "Vector",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the eccentricity at the beam end (in the member\u0027s local coordinate system).",
@@ -37,7 +37,7 @@
     },
     {
       "name": "Profile",
-      "type": "object",
+      "type": "AnalysisCrossSection",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the profile at the beam end.",

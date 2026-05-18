@@ -10,27 +10,53 @@
   "methods": [
     {
       "name": "Get.",
-      "signature": "Get.(...)",
+      "signature": "public static List\u003CCustomLineType\u003E Get()",
       "summary": "Gets all the available CustomLineType\u0027s.",
       "params": [],
+      "returns": {
+        "type": "List\u003CCustomLineType\u003E",
+        "doc": "List of CustomLineType\u0027s."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/79c1407b-4793-aae6-b25d-78b4ce92167c"
     },
     {
       "name": "Get(Int32)",
-      "signature": "Get(Int32)(...)",
+      "signature": "public static CustomLineType Get(int CustomLineTypeId)",
       "summary": "Gets the CustomLineType with the specified ID.",
-      "params": [],
+      "params": [
+        {
+          "name": "CustomLineTypeId",
+          "type": "System.Int32",
+          "doc": "The ID of the CustomLineType to fetch.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "CustomLineType",
+        "doc": "The requested CustomLineType or null if not found."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/fa20f456-d445-b0cd-9c15-6329e9b23ecc"
     },
     {
       "name": "Get(String)",
-      "signature": "Get(String)(...)",
+      "signature": "public static CustomLineType Get(string Name)",
       "summary": "Gets the CustomLineType with the specified Name.",
-      "params": [],
+      "params": [
+        {
+          "name": "Name",
+          "type": "System.String",
+          "doc": "The Name of the CustomLineType to fetch.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "CustomLineType",
+        "doc": "The requested CustomLineType or null if not found."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/67d83194-02c4-4ea0-60cf-a2c822e7299b"

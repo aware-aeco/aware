@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "LevelMark.LevelMarkAttributes",
-      "signature": "LevelMark.LevelMarkAttributes(...)",
+      "signature": "public LevelMarkAttributes()",
       "summary": "Initializes a new instance of the LevelMark.LevelMarkAttributes class that loads standard attributes.",
       "params": [],
       "throws": [],
@@ -18,9 +18,16 @@
     },
     {
       "name": "LevelMark.LevelMarkAttributes",
-      "signature": "LevelMark.LevelMarkAttributes(...)",
+      "signature": "public LevelMarkAttributes(string AttributesFile)",
       "summary": "Initializes a new instance of the LevelMark.LevelMarkAttributes class that loads the specified attributes.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributesFile",
+          "type": "System.String",
+          "doc": "The filename of the attributes file.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/eb5f0415-7413-d048-445a-747a349da511"
@@ -29,18 +36,40 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6a5f89ee-75fb-acf8-f90a-70311f0a3c83"
     },
     {
       "name": "LoadAttributes",
-      "signature": "LoadAttributes(...)",
+      "signature": "public override bool LoadAttributes(string AttributeFile)",
       "summary": "Loads the attributes from the attribute file.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/61650b6f-be32-1dab-3b09-8256f7189601"
@@ -49,7 +78,7 @@
   "properties": [
     {
       "name": "Angle",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the angle of the level mark, in degrees.",
@@ -57,7 +86,7 @@
     },
     {
       "name": "ArrowHead",
-      "type": "object",
+      "type": "ArrowheadAttributes",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the arrow attributes for the level mark.",
@@ -65,7 +94,7 @@
     },
     {
       "name": "Font",
-      "type": "object",
+      "type": "FontAttributes",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the font of the level mark text.",
@@ -73,7 +102,7 @@
     },
     {
       "name": "Frame",
-      "type": "object",
+      "type": "Frame",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the frame attributes for the level mark.",
@@ -81,7 +110,7 @@
     },
     {
       "name": "PlacingAttributes",
-      "type": "object",
+      "type": "PlacingAttributes",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the placing attributes that the object should use. Using these you can specify whether the object is automatically arranged in the drawing or not.",
@@ -89,7 +118,7 @@
     },
     {
       "name": "Postfix",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets text after the level value.",
@@ -97,7 +126,7 @@
     },
     {
       "name": "Prefix",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the text before the level value.",
@@ -105,7 +134,7 @@
     },
     {
       "name": "TextHidden",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the numeric values are visible or hidden.",
@@ -113,7 +142,7 @@
     },
     {
       "name": "TransparentBackground",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether the transparency of the background of the level mark text is enabled.",
@@ -121,7 +150,7 @@
     },
     {
       "name": "Unit",
-      "type": "object",
+      "type": "UnitAttributes",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the unit attributes.",
@@ -129,7 +158,7 @@
     },
     {
       "name": "UseGrouping",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether to use different grouping options to represent the level mark dimensions.",
@@ -137,7 +166,7 @@
     },
     {
       "name": "UsePositiveSignForPositiveLevels",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets a value indicating whether a \u002B character in front of positive level value.",

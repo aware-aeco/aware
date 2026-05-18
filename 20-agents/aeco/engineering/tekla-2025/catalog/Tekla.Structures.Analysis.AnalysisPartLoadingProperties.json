@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisPartLoadingProperties",
-      "signature": "AnalysisPartLoadingProperties(...)",
+      "signature": "public AnalysisPartLoadingProperties()",
       "summary": "Initializes a new instance of the AnalysisPartLoadingProperties class",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "LoadGenerationAutoCreateFixedSupports",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether fixed supports are automatically created.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "LoadGenerationGroupIdentifierFactors",
-      "type": "object",
+      "type": "Dictionary\u003CInt32,Double\u003E",
       "getter": true,
       "setter": true,
       "summary": "The load generation group identifier factors.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "LoadGenerationPartNames",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The load generation part names.",
@@ -45,7 +45,7 @@
     },
     {
       "name": "LoadGenerationPartNamesInclude",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether part names are included in the load generation.",
@@ -53,7 +53,7 @@
     },
     {
       "name": "LoadGenerationSelfWeight",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the selfweight load is generated.",

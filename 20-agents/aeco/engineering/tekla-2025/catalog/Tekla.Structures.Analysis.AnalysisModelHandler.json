@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisModelHandler",
-      "signature": "AnalysisModelHandler(...)",
+      "signature": "public AnalysisModelHandler()",
       "summary": "Initializes a new instance of the AnalysisModelHandler class",
       "params": [],
       "throws": [],
@@ -20,54 +20,117 @@
   "methods": [
     {
       "name": "AddLoad",
-      "signature": "AddLoad(...)",
+      "signature": "public void AddLoad(AnalysisModel AnalysisModel, Load ModelLoad)",
       "summary": "Adds a load to the analysis model. The ConstructionMethod must be SELECTED_PARTS, SELECTED_PARTS_AND_LOADS or FLOOR_BY_SELECTED_PARTS_AND_LOADS.",
-      "params": [],
+      "params": [
+        {
+          "name": "AnalysisModel",
+          "type": "Tekla.Structures.Analysis.AnalysisModel",
+          "doc": "The analysis model to be used.",
+          "optional": false
+        },
+        {
+          "name": "ModelLoad",
+          "type": "Tekla.Structures.Model.Load",
+          "doc": "The model load to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5546fc34-2f62-dfcf-c3c1-d4a36a0d9c11"
     },
     {
       "name": "AddPart",
-      "signature": "AddPart(...)",
+      "signature": "public void AddPart(AnalysisModel AnalysisModel, Part ModelPart)",
       "summary": "Adds a part to the analysis model. The ConstructionMethod must be SELECTED_PARTS, SELECTED_PARTS_AND_LOADS or FLOOR_BY_SELECTED_PARTS_AND_LOADS.",
-      "params": [],
+      "params": [
+        {
+          "name": "AnalysisModel",
+          "type": "Tekla.Structures.Analysis.AnalysisModel",
+          "doc": "The analysis model to be used.",
+          "optional": false
+        },
+        {
+          "name": "ModelPart",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "The model part to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7ef1b329-8542-0e1c-e32e-f6da38518297"
     },
     {
       "name": "GetActiveModel",
-      "signature": "GetActiveModel(...)",
+      "signature": "public AnalysisModel GetActiveModel()",
       "summary": "Gets the active model.",
       "params": [],
+      "returns": {
+        "type": "AnalysisModel",
+        "doc": "The active model."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9fba4ad4-3677-279c-e06e-6d986d05892e"
     },
     {
       "name": "RemoveLoad",
-      "signature": "RemoveLoad(...)",
+      "signature": "public void RemoveLoad(AnalysisModel AnalysisModel, Load ModelLoad)",
       "summary": "Removes a load from the analysis model. The ConstructionMethod must be SELECTED_PARTS, SELECTED_PARTS_AND_LOADS or FLOOR_BY_SELECTED_PARTS_AND_LOADS.",
-      "params": [],
+      "params": [
+        {
+          "name": "AnalysisModel",
+          "type": "Tekla.Structures.Analysis.AnalysisModel",
+          "doc": "The analysis model to be used.",
+          "optional": false
+        },
+        {
+          "name": "ModelLoad",
+          "type": "Tekla.Structures.Model.Load",
+          "doc": "The model load to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/3f0b05fa-cd06-7e36-6871-6f21ee51e7e5"
     },
     {
       "name": "RemovePart",
-      "signature": "RemovePart(...)",
+      "signature": "public void RemovePart(AnalysisModel AnalysisModel, Part ModelPart)",
       "summary": "Removes a part from the analysis model. The ConstructionMethod must be SELECTED_PARTS, SELECTED_PARTS_AND_LOADS or FLOOR_BY_SELECTED_PARTS_AND_LOADS.",
-      "params": [],
+      "params": [
+        {
+          "name": "AnalysisModel",
+          "type": "Tekla.Structures.Analysis.AnalysisModel",
+          "doc": "The analysis model to be used.",
+          "optional": false
+        },
+        {
+          "name": "ModelPart",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "The model part to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/3155a7d5-d251-6247-0273-21bcd6bd7b52"
     },
     {
       "name": "SetActiveModel",
-      "signature": "SetActiveModel(...)",
+      "signature": "public void SetActiveModel(AnalysisModel AnalysisModel)",
       "summary": "Sets the active model. The AnalysisModelName or ID has to be set.",
-      "params": [],
+      "params": [
+        {
+          "name": "AnalysisModel",
+          "type": "Tekla.Structures.Analysis.AnalysisModel",
+          "doc": "The analysis model to be used.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6d4c76b2-b00d-fb79-e6e9-817f80757055"

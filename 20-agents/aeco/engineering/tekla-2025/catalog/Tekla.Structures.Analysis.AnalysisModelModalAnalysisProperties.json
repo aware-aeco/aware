@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisModelModalAnalysisProperties",
-      "signature": "AnalysisModelModalAnalysisProperties(...)",
+      "signature": "public AnalysisModelModalAnalysisProperties()",
       "summary": "Initializes a new instance of the AnalysisModelModalAnalysisProperties class",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "ModalAnalysisIncludeSelfWeightMass",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether selfweight mass is included in the modal analysis.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "ModalAnalysisMassLoadGroupDirections",
-      "type": "object",
+      "type": "List\u003CInt32\u003E",
       "getter": true,
       "setter": true,
       "summary": "The mass load group directions of the modal analysis.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "ModalAnalysisMassLoadGroupFactors",
-      "type": "object",
+      "type": "List\u003CDouble\u003E",
       "getter": true,
       "setter": true,
       "summary": "The mass load group factors of the modal analysis.",
@@ -45,7 +45,7 @@
     },
     {
       "name": "ModalAnalysisMassLoadGroupIds",
-      "type": "object",
+      "type": "List\u003CIdentifier\u003E",
       "getter": true,
       "setter": true,
       "summary": "The mass load group indentifier of the modal analysis.",
@@ -53,7 +53,7 @@
     },
     {
       "name": "ModalAnalysisMaxFrequency",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The modal analysis maximum frequence.",
@@ -61,7 +61,7 @@
     },
     {
       "name": "ModalAnalysisModeCount",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The modal analysis mode count.",
@@ -69,7 +69,7 @@
     },
     {
       "name": "ModalAnalysisModel",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether a modal analysis model is used.",

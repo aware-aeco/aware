@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisLocalCoordinateSystem",
-      "signature": "AnalysisLocalCoordinateSystem(...)",
+      "signature": "public AnalysisLocalCoordinateSystem()",
       "summary": "Creates a new analysis local coordinate system instance.",
       "params": [],
       "throws": [],
@@ -21,17 +21,17 @@
   "properties": [
     {
       "name": "LocalX",
-      "type": "object",
+      "type": "Vector",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The local X direction.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e9ad0533-8654-40de-81e0-e1944fd447ac"
     },
     {
       "name": "LocalY",
-      "type": "object",
+      "type": "Vector",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The local Y direction.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8cac9969-25c7-ff86-7888-b3f5b840643a"
     }

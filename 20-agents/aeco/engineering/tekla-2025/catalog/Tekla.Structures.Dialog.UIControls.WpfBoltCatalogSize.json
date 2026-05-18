@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "WpfBoltCatalogSize",
-      "signature": "WpfBoltCatalogSize(...)",
+      "signature": "public WpfBoltCatalogSize()",
       "summary": "Initiates a new instance of the control.",
       "params": [],
       "throws": [],

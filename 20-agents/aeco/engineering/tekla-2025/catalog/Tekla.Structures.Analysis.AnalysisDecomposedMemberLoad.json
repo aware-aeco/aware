@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisDecomposedMemberLoad",
-      "signature": "AnalysisDecomposedMemberLoad(...)",
+      "signature": "public AnalysisDecomposedMemberLoad()",
       "summary": "Initializes a new instance of the AnalysisDecomposedMemberLoad class.",
       "params": [],
       "throws": [],
@@ -20,7 +20,7 @@
   "methods": [
     {
       "name": "Select",
-      "signature": "Select(...)",
+      "signature": "public override void Select()",
       "summary": "Selects the analysis decomposed member load.",
       "params": [],
       "throws": [],
@@ -31,7 +31,7 @@
   "properties": [
     {
       "name": "AnalysisLoadType",
-      "type": "object",
+      "type": "AnalysisDecomposedLoad.AnalysisLoadTypeEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the analysis decomposed load.",
@@ -39,7 +39,7 @@
     },
     {
       "name": "AnalysisModelName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis model name.",
@@ -47,7 +47,7 @@
     },
     {
       "name": "AnalysisObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the analysis object.",
@@ -55,7 +55,7 @@
     },
     {
       "name": "CSCode",
-      "type": "object",
+      "type": "AnalysisDecomposedLoad.LoadCoordinateEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the CS code of the decomposed member load.",
@@ -63,7 +63,7 @@
     },
     {
       "name": "EndDistance",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the end distance of the decomposed member load.",
@@ -71,7 +71,7 @@
     },
     {
       "name": "EndValue",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the end value of the decomposed member load.",
@@ -79,7 +79,7 @@
     },
     {
       "name": "FatherObject2ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -87,7 +87,7 @@
     },
     {
       "name": "FatherObject2Type",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -95,7 +95,7 @@
     },
     {
       "name": "FatherObjectID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -103,7 +103,7 @@
     },
     {
       "name": "FatherObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -111,7 +111,7 @@
     },
     {
       "name": "ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the analysis object.",
@@ -119,7 +119,7 @@
     },
     {
       "name": "ModelLoadGroupID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the load group.",
@@ -127,7 +127,7 @@
     },
     {
       "name": "ModelLoadID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the model load.",
@@ -135,7 +135,7 @@
     },
     {
       "name": "ObjectAttachedToID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the object the load is attached to.",
@@ -143,7 +143,7 @@
     },
     {
       "name": "ObjectAttachedToType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the object the load is attached to.",
@@ -151,7 +151,7 @@
     },
     {
       "name": "StartDistance",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the start distance of the decomposed member load.",
@@ -159,7 +159,7 @@
     },
     {
       "name": "StartValue",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the start value of the decomposed member load.",

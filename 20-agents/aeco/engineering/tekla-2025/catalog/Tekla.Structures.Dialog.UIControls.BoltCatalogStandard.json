@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "BoltCatalogStandard",
-      "signature": "BoltCatalogStandard(...)",
+      "signature": "public BoltCatalogStandard()",
       "summary": "Initiates a new instance of the control.",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "LinkedBoltCatalogSize",
-      "type": "object",
+      "type": "BoltCatalogSize",
       "getter": true,
       "setter": true,
       "summary": "The BoltCatalogSize control linked to the BoltCatalogStandard control. Bolt catalog controls always need to be in pairs, meaning in every dialog there has to be a BoltCatalogStandard and a BoltCatalogSize control.",

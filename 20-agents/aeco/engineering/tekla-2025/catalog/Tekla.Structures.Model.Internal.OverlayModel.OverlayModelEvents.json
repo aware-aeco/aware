@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "OverlayModelEvents",
-      "signature": "OverlayModelEvents(...)",
+      "signature": "public OverlayModelEvents()",
       "summary": "Initializes a new instance of the OverlayModelEvents class",
       "params": [],
       "throws": [],
@@ -22,8 +22,8 @@
   "events": [
     {
       "name": "OverlayModelCollectionChanged",
-      "delegate": "EventHandler",
-      "signature": "event EventHandler OverlayModelCollectionChanged",
+      "delegate": "Tekla.Structures.Model.Internal.OverlayModel.OverlayModelEvents.OverlayModelCollectionChangedDelegate",
+      "signature": "public event OverlayModelEvents.OverlayModelCollectionChangedDelegate OverlayModelCollectionChanged",
       "summary": "The OverlayModelCollectionChanged event is raised when an overlay model is changed (added/updated/removed).",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/750c1e81-7bca-6605-4513-12880f3fe584",
       "handler_thread": "unknown",

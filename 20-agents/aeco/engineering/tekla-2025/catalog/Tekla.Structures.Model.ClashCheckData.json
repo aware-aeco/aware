@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "ClashCheckData",
-      "signature": "ClashCheckData(...)",
+      "signature": "public ClashCheckData()",
       "summary": "Initializes a new instance of the ClashCheckData class",
       "params": [],
       "throws": [],
@@ -21,33 +21,33 @@
   "properties": [
     {
       "name": "Object1",
-      "type": "object",
+      "type": "ModelObject",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the first clashing object.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2d4fc46b-394c-8e44-873d-32b4e827ec57"
     },
     {
       "name": "Object2",
-      "type": "object",
+      "type": "ModelObject",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the second clashing object.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/11ea7120-139b-121c-cbc0-f412d94a3bae"
     },
     {
       "name": "Overlap",
-      "type": "object",
+      "type": "Double",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the overlap of the clash. Only applies to clashes of type CLASH_TYPE_CLASH.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5757702d-26bf-6d30-7ebe-d62498ac91e7"
     },
     {
       "name": "Type",
-      "type": "object",
+      "type": "ClashCheckData.ClashTypeEnum",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the type of the clash.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/ec95ede2-2188-f03b-347a-75bceefc732a"
     }

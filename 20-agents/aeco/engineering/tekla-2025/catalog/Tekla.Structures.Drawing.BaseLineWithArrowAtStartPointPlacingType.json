@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "BaseLineWithArrowAtStartPointPlacingType",
-      "signature": "BaseLineWithArrowAtStartPointPlacingType(...)",
+      "signature": "public BaseLineWithArrowAtStartPointPlacingType()",
       "summary": "Creates a new base line with arrow at start point placing type instance.",
       "params": [],
       "throws": [],

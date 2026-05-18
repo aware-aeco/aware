@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "ModelAccess",
-      "signature": "ModelAccess(...)",
+      "signature": "public ModelAccess()",
       "summary": "Initializes a new instance of the ModelAccess class",
       "params": [],
       "throws": [],
@@ -20,27 +20,53 @@
   "methods": [
     {
       "name": "ConnectToModel.",
-      "signature": "ConnectToModel.(...)",
+      "signature": "public static Model ConnectToModel()",
       "summary": "Gets a model connnection.",
       "params": [],
+      "returns": {
+        "type": "Model",
+        "doc": "The model or null if unable to connect."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/112f2b0f-baa5-60ee-0a52-93a9cfaf4c93"
     },
     {
       "name": "ConnectToModel(Boolean.)",
-      "signature": "ConnectToModel(Boolean.)(...)",
+      "signature": "public static Model ConnectToModel(out bool ConnectedToModel)",
       "summary": "Gets a model connection.",
-      "params": [],
+      "params": [
+        {
+          "name": "ConnectedToModel",
+          "type": "System.Boolean.",
+          "doc": "True if a model connection was made. False otherwise.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Model",
+        "doc": "The model or null if unable to connect."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e07e7c5c-a968-97d5-b631-babec211bc26"
     },
     {
       "name": "ConnectToModel(Model.)",
-      "signature": "ConnectToModel(Model.)(...)",
+      "signature": "public static bool ConnectToModel(out Model model)",
       "summary": "Gets a model connection.",
-      "params": [],
+      "params": [
+        {
+          "name": "model",
+          "type": "Tekla.Structures.Model.Model.",
+          "doc": "The model connection.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success. False otherwise."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a013c153-5759-8c07-4ca8-d60053b82bc6"

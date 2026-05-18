@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "RebarThreadingDataNullable",
-      "signature": "RebarThreadingDataNullable(...)",
+      "signature": "public RebarThreadingDataNullable()",
       "summary": "Initializes a new instance of the RebarThreadingDataNullable class.",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "ExtraFabricationLength",
-      "type": "object",
+      "type": "Nullable\u003CDouble\u003E",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the extra fabrication length.",
@@ -29,7 +29,7 @@
     },
     {
       "name": "Length",
-      "type": "object",
+      "type": "Nullable\u003CDouble\u003E",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the threading length.",
@@ -37,7 +37,7 @@
     },
     {
       "name": "ThreadingType",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the threading type. Null indicates that the threading type is not specified.",

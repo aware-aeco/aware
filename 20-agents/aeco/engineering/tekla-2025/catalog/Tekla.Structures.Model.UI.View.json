@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "View",
-      "signature": "View(...)",
+      "signature": "public View()",
       "summary": "Initializes a new instance of the View class",
       "params": [],
       "throws": [],
@@ -20,72 +20,120 @@
   "methods": [
     {
       "name": "CreateSnapshot",
-      "signature": "CreateSnapshot(...)",
+      "signature": "public bool CreateSnapshot(string filePath, SnapshotSettings snapshotSettings, bool overwrite = true)",
       "summary": "",
-      "params": [],
+      "params": [
+        {
+          "name": "filePath",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "snapshotSettings",
+          "type": "SnapshotSettings",
+          "optional": false
+        },
+        {
+          "name": "overwrite",
+          "type": "System.Boolean",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/daf1eedd-c9c4-77fd-53e7-ab93c84fd26f"
     },
     {
       "name": "Delete",
-      "signature": "Delete(...)",
+      "signature": "public bool Delete()",
       "summary": "Deletes the view.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the operation was successful."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/373b64d1-a896-1729-5baa-c9873e621574"
     },
     {
       "name": "GetClipPlanes",
-      "signature": "GetClipPlanes(...)",
+      "signature": "public ClipPlaneCollection GetClipPlanes()",
       "summary": "Returns all the clip planes of the view.",
       "params": [],
+      "returns": {
+        "type": "ClipPlaneCollection",
+        "doc": "The clip planes of the view."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/56c48d87-ad03-15b1-8aa8-56c29b9352ae"
     },
     {
       "name": "Insert",
-      "signature": "Insert(...)",
+      "signature": "public bool Insert()",
       "summary": "Inserts a new view to the model.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the operation was successful."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/02a81550-35a1-d76e-dfe0-5a682bf66ae6"
     },
     {
       "name": "IsPerspectiveViewProjection",
-      "signature": "IsPerspectiveViewProjection(...)",
+      "signature": "public bool IsPerspectiveViewProjection()",
       "summary": "Tells whether the view projection is a perspective projection.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the view projection type is perspective projection."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9d0d48ec-75ea-3798-8912-55db56d4d897"
     },
     {
       "name": "IsVisible",
-      "signature": "IsVisible(...)",
+      "signature": "public bool IsVisible()",
       "summary": "Tells whether the view is currently visible.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the view is visible."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/017d834b-5c34-1442-bb49-ab67fcc48c80"
     },
     {
       "name": "Modify",
-      "signature": "Modify(...)",
+      "signature": "public bool Modify()",
       "summary": "Modifies the view parameters.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the operation was successful."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/999bd78f-0586-ace8-02d8-bc4ffeab1ee0"
     },
     {
       "name": "Select",
-      "signature": "Select(...)",
+      "signature": "public bool Select()",
       "summary": "Selects the view.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the operation was successful."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a3880c31-bba7-5304-200c-642c88898e21"
@@ -94,7 +142,7 @@
   "properties": [
     {
       "name": "CurrentRepresentation",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the current representation.",
@@ -102,7 +150,7 @@
     },
     {
       "name": "DisplayCoordinateSystem",
-      "type": "object",
+      "type": "CoordinateSystem",
       "getter": true,
       "setter": true,
       "summary": "The local coordinate system for the display.",
@@ -110,7 +158,7 @@
     },
     {
       "name": "DisplayType",
-      "type": "object",
+      "type": "View.DisplayOrientationType",
       "getter": true,
       "setter": true,
       "summary": "The display plane type.",
@@ -118,7 +166,7 @@
     },
     {
       "name": "Identifier",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "The view identifier.",
@@ -126,7 +174,7 @@
     },
     {
       "name": "Name",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The name of the view. 84 characters at most.",
@@ -134,7 +182,7 @@
     },
     {
       "name": "SharedView",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "The property which tells if the view is shared. The value is meaningful only when the model is shared.",
@@ -142,7 +190,7 @@
     },
     {
       "name": "ViewCoordinateSystem",
-      "type": "object",
+      "type": "CoordinateSystem",
       "getter": true,
       "setter": true,
       "summary": "The local coordinate system for the view. Can be set when creating a view. The origin is always set to zero.",
@@ -150,7 +198,7 @@
     },
     {
       "name": "ViewDepthDown",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The view depth down.",
@@ -158,7 +206,7 @@
     },
     {
       "name": "ViewDepthUp",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The view depth up.",
@@ -166,7 +214,7 @@
     },
     {
       "name": "ViewFilter",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The name of the view filter. 256 characters at most.",
@@ -174,7 +222,7 @@
     },
     {
       "name": "ViewProjection",
-      "type": "object",
+      "type": "View.ViewProjectionType",
       "getter": true,
       "setter": true,
       "summary": "The view projection type.",
@@ -182,15 +230,15 @@
     },
     {
       "name": "ViewRendering",
-      "type": "object",
+      "type": "View.ViewRenderingType",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The view rendering type.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/dddfd637-79f4-0b13-9c35-b378b95d62ef"
     },
     {
       "name": "VisibilitySettings",
-      "type": "object",
+      "type": "ViewVisibilitySettings",
       "getter": true,
       "setter": true,
       "summary": "The property which tells the view visibility settings for objects.",
@@ -198,7 +246,7 @@
     },
     {
       "name": "WorkArea",
-      "type": "object",
+      "type": "AABB",
       "getter": true,
       "setter": true,
       "summary": "The view working area.",

@@ -9,9 +9,15 @@
   "constructors": [
     {
       "name": "LocExtension",
-      "signature": "LocExtension(...)",
+      "signature": "public LocExtension(string name)",
       "summary": "Localization extension for strings referred in xaml",
-      "params": [],
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e130ea3e-554b-aa16-8626-5ff44509abe2"

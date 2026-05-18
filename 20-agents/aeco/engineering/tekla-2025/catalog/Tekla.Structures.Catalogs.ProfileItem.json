@@ -10,144 +10,330 @@
   "methods": [
     {
       "name": "AddCrossSection",
-      "signature": "AddCrossSection(...)",
+      "signature": "public bool AddCrossSection(int CrossSectionNumber, double Location, int Type, int SubType)",
       "summary": "Adds the cross section to a profile.",
-      "params": [],
+      "params": [
+        {
+          "name": "CrossSectionNumber",
+          "type": "System.Int32",
+          "doc": "The cross section number.",
+          "optional": false
+        },
+        {
+          "name": "Location",
+          "type": "System.Double",
+          "doc": "The Location value.",
+          "optional": false
+        },
+        {
+          "name": "Type",
+          "type": "System.Int32",
+          "doc": "The type number.",
+          "optional": false
+        },
+        {
+          "name": "SubType",
+          "type": "System.Int32",
+          "doc": "The subtype number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4e6a9522-3637-c6d8-0156-1c0da42950b6"
     },
     {
       "name": "DeleteCrossSection",
-      "signature": "DeleteCrossSection(...)",
+      "signature": "public bool DeleteCrossSection(int CrossSectionNumber)",
       "summary": "Deletes the cross section of a profile.",
-      "params": [],
+      "params": [
+        {
+          "name": "CrossSectionNumber",
+          "type": "System.Int32",
+          "doc": "The cross section number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/1e4bdd8d-a3d7-7aac-9157-4c5f373471e8"
     },
     {
       "name": "Export",
-      "signature": "Export(...)",
+      "signature": "public virtual bool Export(ref string filename)",
       "summary": "Exports the profile item in the profile database to given file name. Currently library profiles, sketch profiles and clb profiles are supported. Library profiles are exported to *.lis format. Sketch profiles are exported to *.uel format. Clb profiles are exported to *.clb format. If path is not given profile is exported to model folder. If filename is empty profile name or prefix is used as filename.",
-      "params": [],
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String.",
+          "doc": "The export file name of the profile item.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/24d7de14-d3e6-314a-0e91-e57dab6ab0e7"
     },
     {
       "name": "GetCrossSection",
-      "signature": "GetCrossSection(...)",
+      "signature": "public CrossSection GetCrossSection(double RelativeLocation = 0)",
       "summary": "Returns list of cross section points of inner surfaces from the profile item.",
-      "params": [],
+      "params": [
+        {
+          "name": "RelativeLocation",
+          "type": "System.Double",
+          "doc": "The relative location of the cross section, values between 0 (start of profile) and 1 (end of profile).",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "CrossSection",
+        "doc": "List of inner cross section point lists on success, null on failure."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9a9c5248-16b2-338f-062f-bfc58c4738e5"
     },
     {
       "name": "GetHighAccuracyCrossSection",
-      "signature": "GetHighAccuracyCrossSection(...)",
+      "signature": "public CrossSection GetHighAccuracyCrossSection(double RelativeLocation = 0)",
       "summary": "Get cross section with high accuracy.",
-      "params": [],
+      "params": [
+        {
+          "name": "RelativeLocation",
+          "type": "System.Double",
+          "doc": "The relative location of the cross section, values between 0 (start of profile) and 1 (end of profile).",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "CrossSection",
+        "doc": "CrossSection object or null on failure."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/285dde88-c699-5213-abc8-fa5f4c951bfe"
     },
     {
       "name": "GetProfileItemSubTypes.",
-      "signature": "GetProfileItemSubTypes.(...)",
+      "signature": "public List\u003CProfileItemSubType\u003E GetProfileItemSubTypes()",
       "summary": "Selects the profile item and updates the sub types in the profile database.",
       "params": [],
+      "returns": {
+        "type": "List\u003CProfileItemSubType\u003E",
+        "doc": ""
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8470624e-f868-9cd5-c674-41da81101565"
     },
     {
       "name": "GetProfileItemSubTypes(ProfileItem, ProfileItem.ProfileItemTypeEnum)",
-      "signature": "GetProfileItemSubTypes(ProfileItem, ProfileItem.ProfileItemTypeEnum)(...)",
+      "signature": "public static List\u003CProfileItemSubType\u003E GetProfileItemSubTypes(ProfileItem profileItem, ProfileItem.ProfileItemTypeEnum typeEnum)",
       "summary": "",
-      "params": [],
+      "params": [
+        {
+          "name": "profileItem",
+          "type": "Tekla.Structures.Catalogs.ProfileItem",
+          "optional": false
+        },
+        {
+          "name": "typeEnum",
+          "type": "Tekla.Structures.Catalogs.ProfileItem.ProfileItemTypeEnum",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CProfileItemSubType\u003E",
+        "doc": ""
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/1c3c5a2f-8603-df13-d55d-07ad12763469"
     },
     {
       "name": "IsProfileUserDefined",
-      "signature": "IsProfileUserDefined(...)",
+      "signature": "public bool IsProfileUserDefined()",
       "summary": "Whether the profile is a fixed user-defined profile.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Whether the profile is a fixed user-defined profile or not."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/645e4bae-5cca-9fa0-6a29-2cae47b32227"
     },
     {
       "name": "IsProfileUserParametric",
-      "signature": "IsProfileUserParametric(...)",
+      "signature": "public bool IsProfileUserParametric()",
       "summary": "Whether the profile is a parametric user-defined profile. If so, the prefix can be asked by type and subtype.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Whether the profile is a parametric user-defined profile or not."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/ee8579f8-e74e-9ed2-d500-eaae92d78d76"
     },
     {
       "name": "ModifyCrossSection",
-      "signature": "ModifyCrossSection(...)",
+      "signature": "public bool ModifyCrossSection(int CrossSectionNumber, double Location, int Type, int SubType)",
       "summary": "Modifies the cross section of a profile.",
-      "params": [],
+      "params": [
+        {
+          "name": "CrossSectionNumber",
+          "type": "System.Int32",
+          "doc": "The cross section number.",
+          "optional": false
+        },
+        {
+          "name": "Location",
+          "type": "System.Double",
+          "doc": "The Location value.",
+          "optional": false
+        },
+        {
+          "name": "Type",
+          "type": "System.Int32",
+          "doc": "The type number.",
+          "optional": false
+        },
+        {
+          "name": "SubType",
+          "type": "System.Int32",
+          "doc": "The subtype number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/3770cf41-a91e-a2b7-e61e-45e324e16afe"
     },
     {
       "name": "ModifyProfileItemAnalysisParameter",
-      "signature": "ModifyProfileItemAnalysisParameter(...)",
+      "signature": "public bool ModifyProfileItemAnalysisParameter(ProfileItemParameter value)",
       "summary": "Modify analysis parameter of library profile item. Modify is needed for profile item for updating changes to profile database",
-      "params": [],
+      "params": [
+        {
+          "name": "value",
+          "type": "Tekla.Structures.Catalogs.ProfileItemParameter",
+          "doc": "The modified parameter value for the profile item.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8a875a37-33c2-54dd-3563-0ac9668839eb"
     },
     {
       "name": "ModifyProfileItemParameter",
-      "signature": "ModifyProfileItemParameter(...)",
+      "signature": "public bool ModifyProfileItemParameter(ProfileItemParameter value)",
       "summary": "Modify parameter of library profile item. Modify is needed for profile item for updating changes to profile database",
-      "params": [],
+      "params": [
+        {
+          "name": "value",
+          "type": "Tekla.Structures.Catalogs.ProfileItemParameter",
+          "doc": "The modified parameter value for the profile item.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/b8f040eb-f414-8c30-cb64-cf68921818db"
     },
     {
       "name": "ModifyProfileItemUserParameter",
-      "signature": "ModifyProfileItemUserParameter(...)",
+      "signature": "public bool ModifyProfileItemUserParameter(ProfileItemParameter value)",
       "summary": "Modify user parameter of library profile item. Modify is needed for profile item for updating changes to profile database",
-      "params": [],
+      "params": [
+        {
+          "name": "value",
+          "type": "Tekla.Structures.Catalogs.ProfileItemParameter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2bc63067-81ca-5ba6-cf20-efa1c134ea97"
     },
     {
       "name": "Select",
-      "signature": "Select(...)",
+      "signature": "public virtual bool Select()",
       "summary": "Selects the profile item in the profile database.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/90db4650-0ec0-3f08-dcc6-595f25789b73"
     },
     {
       "name": "SelectCrossSections",
-      "signature": "SelectCrossSections(...)",
+      "signature": "public bool SelectCrossSections()",
       "summary": "Selects the profile item cross section in the profile database.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f88821da-0793-3a27-6c20-2112029268fb"
     },
     {
       "name": "SetEquivalentType",
-      "signature": "SetEquivalentType(...)",
+      "signature": "public bool SetEquivalentType(int CrossSectionNumber, int EquivalentType)",
       "summary": "Sets the equivalent type for the specified cross section.",
-      "params": [],
+      "params": [
+        {
+          "name": "CrossSectionNumber",
+          "type": "System.Int32",
+          "doc": "The cross section number.",
+          "optional": false
+        },
+        {
+          "name": "EquivalentType",
+          "type": "System.Int32",
+          "doc": "The equivalent type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/935df01d-74a9-b6f3-5826-9b2d34a5aa52"
@@ -156,17 +342,17 @@
   "properties": [
     {
       "name": "aProfileItemCrossSections",
-      "type": "object",
+      "type": "ArrayList",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "An array list with the profile item cross-sections.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/57fa535a-5f45-57b5-feac-4a0ae7362806"
     },
     {
       "name": "aProfileItemParameters",
-      "type": "object",
+      "type": "ArrayList",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "An array list with the profile item parameters.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7ef3289d-9c56-66c4-0427-8a1eb76d467b"
     },
@@ -174,7 +360,7 @@
       "name": "IsMultiCrossSectionUserParametric",
       "type": "object",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Whether the profile is a parametric user-defined multi cross section profile.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/86704af4-4b43-1f92-f258-c08f86bea0b6"
     },
@@ -182,37 +368,37 @@
       "name": "IsSketchedUserParametric",
       "type": "object",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Whether the profile is a parametric user-defined sketched profile.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5bf79177-27b9-0508-316c-6b27ad8cf6b9"
     },
     {
       "name": "NumberOfCrossSections",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The number of cross sections in the profile item.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/64f464d3-395f-755f-eafb-48b52140b667"
     },
     {
       "name": "ParameterString",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The profile item parameter string.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c52c625a-20a2-ceea-04d9-833d212a33cc"
     },
     {
       "name": "ProfileItemCrossSections",
-      "type": "object",
+      "type": "IList\u003CProfileItemCrossSection\u003E",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The list of profile item cross-sections.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/52757bb4-e858-85ad-0845-6953db5d7a3f"
     },
     {
       "name": "ProfileItemSubType",
-      "type": "object",
+      "type": "ProfileItem.ProfileItemSubTypeEnum",
       "getter": true,
       "setter": true,
       "summary": "The profile item subtype.",
@@ -220,9 +406,9 @@
     },
     {
       "name": "ProfileItemType",
-      "type": "object",
+      "type": "ProfileItem.ProfileItemTypeEnum",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "The profile item type.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/07cbd8db-27a8-9905-45c2-9e035757bcca"
     }

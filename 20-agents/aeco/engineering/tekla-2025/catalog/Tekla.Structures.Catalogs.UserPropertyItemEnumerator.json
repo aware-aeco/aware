@@ -10,25 +10,33 @@
   "methods": [
     {
       "name": "GetSize",
-      "signature": "GetSize(...)",
+      "signature": "public int GetSize()",
       "summary": "Returns the total amout of items.",
       "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The total amount of items."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/08edeb18-b3bc-a616-2b85-b3665fb08417"
     },
     {
       "name": "MoveNext",
-      "signature": "MoveNext(...)",
+      "signature": "public bool MoveNext()",
       "summary": "Moves to the next item in the enumerator.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "False on failure."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/0b52f390-c822-76f2-82d3-0e016b43c0c9"
     },
     {
       "name": "Reset",
-      "signature": "Reset(...)",
+      "signature": "public void Reset()",
       "summary": "Resets the enumerator to the beginning.",
       "params": [],
       "throws": [],
@@ -39,9 +47,9 @@
   "properties": [
     {
       "name": "Current",
-      "type": "object",
+      "type": "UserPropertyItem",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Returns a user property item instance of the current element.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4f021f58-ea0f-859e-f63b-7fa70881df42"
     }

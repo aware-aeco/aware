@@ -9,9 +9,20 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with the given object. Checks every field of both objects for equality.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "An object of the same type to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the field values of both objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f3ea1fd0-1de5-e6c6-e153-fd78b0c22e96"

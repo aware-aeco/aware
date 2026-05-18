@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "TeklaStructuresInfo",
-      "signature": "TeklaStructuresInfo(...)",
+      "signature": "public TeklaStructuresInfo()",
       "summary": "Initializes a new instance of the TeklaStructuresInfo class",
       "params": [],
       "throws": [],
@@ -20,81 +20,117 @@
   "methods": [
     {
       "name": "GetBuildNumber",
-      "signature": "GetBuildNumber(...)",
+      "signature": "public static string GetBuildNumber()",
       "summary": "Returns the Tekla Structures build number.",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The current buildnumber of Tekla Structures."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/50f50908-3f5c-2773-53fd-224a6eeff144"
     },
     {
       "name": "GetCommonAppDataFolder",
-      "signature": "GetCommonAppDataFolder(...)",
+      "signature": "public static string GetCommonAppDataFolder()",
       "summary": "Returns (XSDATADIR)environments installation folder of the Tekla Structures as string.",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The (XSDATADIR)environments installation folder of the Tekla Structures."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/05bcf770-3562-717a-cfb7-54411b2042f8"
     },
     {
       "name": "GetCopyRightText",
-      "signature": "GetCopyRightText(...)",
+      "signature": "public static string GetCopyRightText()",
       "summary": "Returns the Tekla Structures copyright text as string.",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The current copyright text of Tekla Structures."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e6370f74-6753-5fbe-b34d-1f4707bc8c0c"
     },
     {
       "name": "GetCurrentProgramVersion",
-      "signature": "GetCurrentProgramVersion(...)",
+      "signature": "public static string GetCurrentProgramVersion()",
       "summary": "Returns the current Tekla Structures version.",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The current version of Tekla Structures."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/fb2133c4-9bbd-c937-7c28-360dcc2a1024"
     },
     {
       "name": "GetCurrentUser",
-      "signature": "GetCurrentUser(...)",
+      "signature": "public static string GetCurrentUser()",
       "summary": "Returns the current Tekla Structures user.",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The current user of Tekla Structures."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/bfb41c15-c986-3f19-deed-441826d2d6a2"
     },
     {
       "name": "GetFullTSRegistryKeyText",
-      "signature": "GetFullTSRegistryKeyText(...)",
+      "signature": "public static string GetFullTSRegistryKeyText()",
       "summary": "Returns full registry key of the Tekla Structures as string.",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The full registry key of the Tekla Structures."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8c418356-738f-fd33-7979-0be189410276"
     },
     {
       "name": "GetLocalAppDataFolder",
-      "signature": "GetLocalAppDataFolder(...)",
+      "signature": "public static string GetLocalAppDataFolder()",
       "summary": "Returns (XSUSERDATADIR) user\u0027s local appdata folder of the Tekla Structures as string.",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The (XSUSERDATADIR)user\u0027s local appdata folder of the Tekla Structures."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6eab7354-6339-58f6-1a10-6b7087297f4d"
     },
     {
       "name": "GetPluginsFolder",
-      "signature": "GetPluginsFolder(...)",
+      "signature": "public static string GetPluginsFolder()",
       "summary": "Returns main TS plugins folder, not extensions folder",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "plugins folder"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c59332bb-8052-cc1d-e593-db4706d2b0ba"
     },
     {
       "name": "GetRevisionDate",
-      "signature": "GetRevisionDate(...)",
+      "signature": "public static string GetRevisionDate()",
       "summary": "Returns the Tekla Structures revision date as string.",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The current revision date of Tekla Structures."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/0908b72b-8b87-70bb-02c3-076e5ad3cfc5"

@@ -10,9 +10,20 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5b0aca25-a5f4-0eca-8817-8b0e912a5229"
@@ -21,7 +32,7 @@
   "properties": [
     {
       "name": "PickedView",
-      "type": "object",
+      "type": "ViewBase",
       "getter": true,
       "setter": true,
       "summary": "The view within which the pick occurred.",

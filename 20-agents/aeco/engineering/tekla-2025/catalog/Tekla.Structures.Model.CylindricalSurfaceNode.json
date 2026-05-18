@@ -9,9 +9,16 @@
   "constructors": [
     {
       "name": "CylindricalSurfaceNode",
-      "signature": "CylindricalSurfaceNode(...)",
+      "signature": "public CylindricalSurfaceNode(CylindricalSurface surface)",
       "summary": "Initializes a new instance of the CylindricalSurfaceNode class.",
-      "params": [],
+      "params": [
+        {
+          "name": "surface",
+          "type": "Tekla.Structures.Model.CylindricalSurface",
+          "doc": "The contour of the node.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c8ad2959-1bf6-7356-5baa-e90e153fa071"
@@ -20,18 +27,28 @@
   "methods": [
     {
       "name": "AcceptVisitor",
-      "signature": "AcceptVisitor(...)",
+      "signature": "public override void AcceptVisitor(IGeometryNodeVisitor visitor)",
       "summary": "Entry method for the visitor pattern",
-      "params": [],
+      "params": [
+        {
+          "name": "visitor",
+          "type": "Tekla.Structures.Model.IGeometryNodeVisitor",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2868c6b0-a860-931e-fa9b-47dae98b5b3c"
     },
     {
       "name": "Clone",
-      "signature": "Clone(...)",
+      "signature": "public override IGeometryNode Clone()",
       "summary": "Creates a new object that is a copy of the current instance.",
       "params": [],
+      "returns": {
+        "type": "IGeometryNode",
+        "doc": "A new object that is a copy of the current instance."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/10b89604-e30a-248d-d676-57e9e21c0baf"
@@ -40,17 +57,17 @@
   "properties": [
     {
       "name": "IsAutomatic",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets a value indicating whether this geometry node was automatically generated (returns false if it was originally a user-defined part)",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8e111624-05f3-3f95-51f5-6bedc676a42d"
     },
     {
       "name": "Surface",
-      "type": "object",
+      "type": "CylindricalSurface",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the cylindrical surface geometry.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e683c7f9-9096-1c8d-9f38-724b6ad0895a"
     }

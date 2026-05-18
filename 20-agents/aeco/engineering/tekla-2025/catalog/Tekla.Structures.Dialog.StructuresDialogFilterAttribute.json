@@ -9,9 +9,16 @@
   "constructors": [
     {
       "name": "StructuresDialogFilterAttribute",
-      "signature": "StructuresDialogFilterAttribute(...)",
+      "signature": "public StructuresDialogFilterAttribute(string attributeName)",
       "summary": "Initializes a new StructuresDialogFilterAttribute instance.",
-      "params": [],
+      "params": [
+        {
+          "name": "attributeName",
+          "type": "System.String",
+          "doc": "The attribute name of the attributed property.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a46f4547-4ede-2720-cff6-8b2e29a93466"
@@ -20,9 +27,13 @@
   "methods": [
     {
       "name": "ToString",
-      "signature": "ToString(...)",
+      "signature": "public override string ToString()",
       "summary": "Returns a string that represents the current StructuresDialogFilterAttribute object.",
       "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A string that represents the current StructuresDialogFilterAttribute object."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/b9cfb05a-79d5-038a-52e7-3857c613a07a"
@@ -31,9 +42,9 @@
   "properties": [
     {
       "name": "AttributeName",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the attribute name of the property.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/77059035-a1de-8ae6-a066-9f7cfc86fc82"
     }

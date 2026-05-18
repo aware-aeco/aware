@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "GraphicPolyLine",
-      "signature": "GraphicPolyLine(...)",
+      "signature": "public GraphicPolyLine()",
       "summary": "Create a black line with width 1 and solid line type.",
       "params": [],
       "throws": [],
@@ -18,18 +18,62 @@
     },
     {
       "name": "GraphicPolyLine",
-      "signature": "GraphicPolyLine(...)",
+      "signature": "public GraphicPolyLine(Color color, int width, GraphicPolyLine.LineType type)",
       "summary": "Create a graphic polyline object with 0 points.",
-      "params": [],
+      "params": [
+        {
+          "name": "color",
+          "type": "Tekla.Structures.Model.UI.Color",
+          "doc": "The color of the line.",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "System.Int32",
+          "doc": "The width of the line.",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "Tekla.Structures.Model.UI.GraphicPolyLine.LineType",
+          "doc": "The type of the line. For example solid, dashed or dotted.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a1f6c5af-3e21-16cc-eeb3-d90861989f11"
     },
     {
       "name": "GraphicPolyLine",
-      "signature": "GraphicPolyLine(...)",
+      "signature": "public GraphicPolyLine(PolyLine polyLine, Color color, int width, GraphicPolyLine.LineType type)",
       "summary": "Create a graphic polyline object.",
-      "params": [],
+      "params": [
+        {
+          "name": "polyLine",
+          "type": "Tekla.Structures.Geometry3d.PolyLine",
+          "doc": "The path of the line.",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Tekla.Structures.Model.UI.Color",
+          "doc": "The color of the line.",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "System.Int32",
+          "doc": "The width of the line.",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "Tekla.Structures.Model.UI.GraphicPolyLine.LineType",
+          "doc": "The type of the line. For example solid, dashed or dotted.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/384fb38c-d0ec-359a-2167-6c5a148478e7"
@@ -39,7 +83,7 @@
   "properties": [
     {
       "name": "Color",
-      "type": "object",
+      "type": "Color",
       "getter": true,
       "setter": true,
       "summary": "The line color.",
@@ -47,7 +91,7 @@
     },
     {
       "name": "PolyLine",
-      "type": "object",
+      "type": "PolyLine",
       "getter": true,
       "setter": true,
       "summary": "The path of the line.",
@@ -55,7 +99,7 @@
     },
     {
       "name": "Type",
-      "type": "object",
+      "type": "GraphicPolyLine.LineType",
       "getter": true,
       "setter": true,
       "summary": "The appearance of the line. For instance solid, dashed or dotted.",
@@ -63,7 +107,7 @@
     },
     {
       "name": "Width",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The line width in pixels. NOTE: Currently the valid width values are 1, 2 and 4",

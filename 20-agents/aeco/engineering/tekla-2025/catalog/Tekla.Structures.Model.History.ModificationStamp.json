@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "ModificationStamp",
-      "signature": "ModificationStamp(...)",
+      "signature": "public ModificationStamp()",
       "summary": "Creates a new modification stamp instance where the current modification stamp is 0. Can be used for fetching all the created or deleted model objects from the model history.",
       "params": [],
       "throws": [],
@@ -18,9 +18,22 @@
     },
     {
       "name": "ModificationStamp",
-      "signature": "ModificationStamp(...)",
+      "signature": "public ModificationStamp(int LocalStamp, int ServerStamp)",
       "summary": "Creates a new modification stamp instance with the given local and server stamps. Can be used for fetching from the model history all the model objects that have been created or deleted after the specified stamp.",
-      "params": [],
+      "params": [
+        {
+          "name": "LocalStamp",
+          "type": "System.Int32",
+          "doc": "The local stamp to be used for fetching the model changes after the stamp.",
+          "optional": false
+        },
+        {
+          "name": "ServerStamp",
+          "type": "System.Int32",
+          "doc": "The server stamp for fetching the external multi-user or synchronized model changes after the stamp.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/029f07f6-707a-1435-dba0-cbf55cf9533a"
@@ -30,15 +43,15 @@
   "properties": [
     {
       "name": "Guid",
-      "type": "object",
+      "type": "String",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Guid representation",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/fa0c20df-cea3-e8c2-082d-7569011a2788"
     },
     {
       "name": "LocalStamp",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The modification stamp for the local changes.",
@@ -46,7 +59,7 @@
     },
     {
       "name": "ServerStamp",
-      "type": "object",
+      "type": "Int32",
       "getter": true,
       "setter": true,
       "summary": "The modification stamp from the multi-user server for the external changes caused by the saving of the multi-user model.",

@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "PolycurveGeometryBuilder",
-      "signature": "PolycurveGeometryBuilder(...)",
+      "signature": "public PolycurveGeometryBuilder()",
       "summary": "Creates an empty geometry builder. This builder contains no geometries",
       "params": [],
       "throws": [],
@@ -18,9 +18,16 @@
     },
     {
       "name": "PolycurveGeometryBuilder",
-      "signature": "PolycurveGeometryBuilder(...)",
+      "signature": "public PolycurveGeometryBuilder(Polycurve geometries)",
       "summary": "Constructs a geometry builder from an existing geometry list",
-      "params": [],
+      "params": [
+        {
+          "name": "geometries",
+          "type": "Tekla.Structures.Geometry3d.Polycurve",
+          "doc": "Initial geometry list",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f0392613-f949-50f1-af2f-184be5a9f228"
@@ -29,144 +36,355 @@
   "methods": [
     {
       "name": "Append(Arc)",
-      "signature": "Append(Arc)(...)",
+      "signature": "public PolycurveGeometryBuilder Append(Arc arc)",
       "summary": "Appends an arc to the geometry list",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "arc",
+          "type": "Tekla.Structures.Geometry3d.Arc",
+          "doc": "Geometry to append",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PolycurveGeometryBuilder",
+        "doc": "The builder itself"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown if input geometry is not connected to the polycurve"
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/130ffd77-0137-e50c-a906-f72980c4e529"
     },
     {
       "name": "Append(LineSegment)",
-      "signature": "Append(LineSegment)(...)",
+      "signature": "public PolycurveGeometryBuilder Append(LineSegment segment)",
       "summary": "Appends a line segment to the geometry list",
-      "params": [],
-      "throws": [],
+      "params": [
+        {
+          "name": "segment",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "Geometry to append",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PolycurveGeometryBuilder",
+        "doc": "The builder itself"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown if input geometry is not connected to the polycurve"
+        }
+      ],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/b9618faf-1dc6-8997-d4a8-d97065f19276"
     },
     {
       "name": "Append(Polycurve)",
-      "signature": "Append(Polycurve)(...)",
+      "signature": "public PolycurveGeometryBuilder Append(Polycurve otherPolycurve)",
       "summary": "Appends another polycurve to the geometry list",
-      "params": [],
+      "params": [
+        {
+          "name": "otherPolycurve",
+          "type": "Tekla.Structures.Geometry3d.Polycurve",
+          "doc": "Polycurve to add to the list",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PolycurveGeometryBuilder",
+        "doc": "The builder itself"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7c1cfb82-2a9a-472b-d0be-af5b1a424a15"
     },
     {
       "name": "AppendArc",
-      "signature": "AppendArc(...)",
+      "signature": "public PolycurveGeometryBuilder AppendArc(Point middlePoint, Point endPoint)",
       "summary": "Appends an arc using three points. The first point is taken as the last point of the last element of the polycurve.",
-      "params": [],
+      "remarks": "This function requires that there is at least one curve in the polycurve",
+      "params": [
+        {
+          "name": "middlePoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "Arc middle point",
+          "optional": false
+        },
+        {
+          "name": "endPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "Arc end point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PolycurveGeometryBuilder",
+        "doc": "The builder itself"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6cff5ac1-35c8-1833-85dd-f61c704782f1"
     },
     {
       "name": "AppendSegment",
-      "signature": "AppendSegment(...)",
+      "signature": "public PolycurveGeometryBuilder AppendSegment(Point endPoint)",
       "summary": "Appends an line segment. The first point is taken as the last point of the last element of the polycurve.",
-      "params": [],
+      "remarks": "This function requires that there is at least one curve in the polycurve",
+      "params": [
+        {
+          "name": "endPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "Segment end point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PolycurveGeometryBuilder",
+        "doc": "The builder itself"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/877b5f08-530d-c3c6-3b27-b0388d1a8eaf"
     },
     {
       "name": "AppendTangentArc",
-      "signature": "AppendTangentArc(...)",
+      "signature": "public PolycurveGeometryBuilder AppendTangentArc(Point endPoint)",
       "summary": "Appends an arc tangent to the last curve of the curve list.",
-      "params": [],
+      "remarks": "This function requires that there is at least one curve in the polycurve",
+      "params": [
+        {
+          "name": "endPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "End point of the arc",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PolycurveGeometryBuilder",
+        "doc": "The builder itself"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/1bfd7bf5-b45f-3e6c-5823-2d488e032604"
     },
     {
       "name": "AppendTangentSegment",
-      "signature": "AppendTangentSegment(...)",
+      "signature": "public PolycurveGeometryBuilder AppendTangentSegment(double length)",
       "summary": "Appends a line segment of the given length tangent to the last curve of the list.",
-      "params": [],
+      "remarks": "This function requires that there is at least one curve in the polycurve",
+      "params": [
+        {
+          "name": "length",
+          "type": "System.Double",
+          "doc": "Length of the segment to append",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PolycurveGeometryBuilder",
+        "doc": "The builder itself"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/b4d39724-45c4-0bdb-e9ac-f1e454a30e12"
     },
     {
       "name": "GetPolycurve",
-      "signature": "GetPolycurve(...)",
+      "signature": "public Polycurve GetPolycurve()",
       "summary": "Gets the final geometry after all the modifications made by the builder",
       "params": [],
+      "returns": {
+        "type": "Polycurve",
+        "doc": "The final geometry list"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/79f07950-e9ab-986e-5c7f-a6682de823c2"
     },
     {
       "name": "Prepend(Arc)",
-      "signature": "Prepend(Arc)(...)",
+      "signature": "public PolycurveGeometryBuilder Prepend(Arc arc)",
       "summary": "Prepends an arc to the geometry list",
-      "params": [],
+      "params": [
+        {
+          "name": "arc",
+          "type": "Tekla.Structures.Geometry3d.Arc",
+          "doc": "Geometry to prepend",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PolycurveGeometryBuilder",
+        "doc": "The builder itself"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5bbbff95-4bb2-04cd-3de9-6877cfa3dd1c"
     },
     {
       "name": "Prepend(LineSegment)",
-      "signature": "Prepend(LineSegment)(...)",
+      "signature": "public PolycurveGeometryBuilder Prepend(LineSegment segment)",
       "summary": "Prepends a line segment to the geometry list",
-      "params": [],
+      "params": [
+        {
+          "name": "segment",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "Geometry to prepend",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PolycurveGeometryBuilder",
+        "doc": "The builder itself"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8d3c332e-9191-e060-cb8a-91ecf8387ef6"
     },
     {
       "name": "PrependArc",
-      "signature": "PrependArc(...)",
+      "signature": "public PolycurveGeometryBuilder PrependArc(Point startPoint, Point middlePoint)",
       "summary": "Prepends an arc using three points. The last point is taken as the start point of the first element of the polycurve.",
-      "params": [],
+      "remarks": "This function requires that there is at least one curve in the polycurve",
+      "params": [
+        {
+          "name": "startPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "Arc start point",
+          "optional": false
+        },
+        {
+          "name": "middlePoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "Arc middle point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PolycurveGeometryBuilder",
+        "doc": "The builder itself"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/99a847f2-de10-f995-b26a-bf5f1e9bf440"
     },
     {
       "name": "PrependSegment",
-      "signature": "PrependSegment(...)",
+      "signature": "public PolycurveGeometryBuilder PrependSegment(Point startPoint)",
       "summary": "Prepends an line segment. The last point is taken as the start point of the first element of the polycurve.",
-      "params": [],
+      "remarks": "This function requires that there is at least one curve in the polycurve",
+      "params": [
+        {
+          "name": "startPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "Segment start point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PolycurveGeometryBuilder",
+        "doc": "The builder itself"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/78fce10c-2023-b722-d326-028bf12faf56"
     },
     {
       "name": "PrependTangentArc",
-      "signature": "PrependTangentArc(...)",
+      "signature": "public PolycurveGeometryBuilder PrependTangentArc(Point startPoint)",
       "summary": "Prepends an arc tangent to the first curve of the curve list.",
-      "params": [],
+      "remarks": "This function requires that there is at least one curve in the polycurve",
+      "params": [
+        {
+          "name": "startPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "Start point of the arc",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PolycurveGeometryBuilder",
+        "doc": "The builder itself"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/accf12eb-0a7e-54e3-c8b0-313bfe92481e"
     },
     {
       "name": "PrependTangentSegment",
-      "signature": "PrependTangentSegment(...)",
+      "signature": "public PolycurveGeometryBuilder PrependTangentSegment(double length)",
       "summary": "Prepends a line segment of the given length tangent to the first curve of the list.",
-      "params": [],
+      "remarks": "This function requires that there is at least one curve in the polycurve",
+      "params": [
+        {
+          "name": "length",
+          "type": "System.Double",
+          "doc": "Length of the segment to append",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PolycurveGeometryBuilder",
+        "doc": "The builder itself"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d67e7fa4-7550-0712-9f0b-52a08631d0d5"
     },
     {
       "name": "Replace(Int32, Arc)",
-      "signature": "Replace(Int32, Arc)(...)",
+      "signature": "public PolycurveGeometryBuilder Replace(int index, Arc arc)",
       "summary": "Replaces the geometry at a given index",
-      "params": [],
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of the geometry to replace",
+          "optional": false
+        },
+        {
+          "name": "arc",
+          "type": "Tekla.Structures.Geometry3d.Arc",
+          "doc": "Geometry to insert in place of the existing one",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PolycurveGeometryBuilder",
+        "doc": "The builder itself"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e8c5f5f1-3c92-6664-1907-0637abfd65f9"
     },
     {
       "name": "Replace(Int32, LineSegment)",
-      "signature": "Replace(Int32, LineSegment)(...)",
+      "signature": "public PolycurveGeometryBuilder Replace(int index, LineSegment segment)",
       "summary": "Replaces the geometry at a given index",
-      "params": [],
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of the geometry to replace",
+          "optional": false
+        },
+        {
+          "name": "segment",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "Geometry to insert in place of the existing one",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PolycurveGeometryBuilder",
+        "doc": "The builder itself"
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/901804e0-459b-b57b-6bb5-03b6eb1eb3c7"

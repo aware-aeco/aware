@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "EnumConverter",
-      "signature": "EnumConverter(...)",
+      "signature": "public EnumConverter()",
       "summary": "Initializes a new instance of the EnumConverter class",
       "params": [],
       "throws": [],
@@ -20,36 +20,111 @@
   "methods": [
     {
       "name": "CanConvertFrom",
-      "signature": "CanConvertFrom(...)",
+      "signature": "public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)",
       "summary": "(Overrides TypeConverter.CanConvertFrom(ITypeDescriptorContext, Type).)",
-      "params": [],
+      "params": [
+        {
+          "name": "context",
+          "type": "System.ComponentModel.ITypeDescriptorContext",
+          "optional": false
+        },
+        {
+          "name": "sourceType",
+          "type": "System.Type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/0b0bd085-59fe-234a-332e-91c6575ba2c8"
     },
     {
       "name": "CanConvertTo",
-      "signature": "CanConvertTo(...)",
+      "signature": "public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)",
       "summary": "(Overrides TypeConverter.CanConvertTo(ITypeDescriptorContext, Type).)",
-      "params": [],
+      "params": [
+        {
+          "name": "context",
+          "type": "System.ComponentModel.ITypeDescriptorContext",
+          "optional": false
+        },
+        {
+          "name": "destinationType",
+          "type": "System.Type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7276eb74-bf2f-3369-41b7-63cc47940877"
     },
     {
       "name": "ConvertFrom",
-      "signature": "ConvertFrom(...)",
+      "signature": "public override Object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)",
       "summary": "(Overrides TypeConverter.ConvertFrom(ITypeDescriptorContext, CultureInfo, Object).)",
-      "params": [],
+      "params": [
+        {
+          "name": "context",
+          "type": "System.ComponentModel.ITypeDescriptorContext",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": ""
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/dc16d26e-bf17-b038-d170-aa132b6b34db"
     },
     {
       "name": "ConvertTo",
-      "signature": "ConvertTo(...)",
+      "signature": "public override Object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, Object value, Type destinationType)",
       "summary": "(Overrides TypeConverter.ConvertTo(ITypeDescriptorContext, CultureInfo, Object, Type).)",
-      "params": [],
+      "params": [
+        {
+          "name": "context",
+          "type": "System.ComponentModel.ITypeDescriptorContext",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "optional": false
+        },
+        {
+          "name": "destinationType",
+          "type": "System.Type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": ""
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/726ddaea-16ca-37a5-75f1-1d4f0fdfe98d"

@@ -110,7 +110,9 @@ internal static class Program
                         // is happening on this process.
                         Ingest.CoverageIR ir = argsObj.Vendor.ToLowerInvariant() switch
                         {
-                            "tekla" => Ingest.Extractors.Tekla.Extractor.Extract(argsObj.Version)
+                            // The Tekla extractor accepts the destination path so it can
+                            // snapshot progress to disk and resume if the process is killed.
+                            "tekla" => Ingest.Extractors.Tekla.Extractor.Extract(argsObj.Version, argsObj.OutPath)
                                 .GetAwaiter().GetResult(),
                             _ => throw new NotSupportedException(
                                 $"coverage-extract: vendor '{argsObj.Vendor}' has no extractor yet")

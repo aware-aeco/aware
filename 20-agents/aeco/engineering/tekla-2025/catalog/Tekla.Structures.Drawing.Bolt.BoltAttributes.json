@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "Bolt.BoltAttributes",
-      "signature": "Bolt.BoltAttributes(...)",
+      "signature": "public BoltAttributes()",
       "summary": "Creates a new default bolt attributes instance that loads standard attributes.",
       "params": [],
       "throws": [],
@@ -18,9 +18,16 @@
     },
     {
       "name": "Bolt.BoltAttributes",
-      "signature": "Bolt.BoltAttributes(...)",
+      "signature": "public BoltAttributes(string AttributeFile)",
       "summary": "Creates a new bolt attributes instance that loads the specified attributes.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2b963373-96fe-21d5-e914-56f7fab9655c"
@@ -29,18 +36,40 @@
   "methods": [
     {
       "name": "IsEqual",
-      "signature": "IsEqual(...)",
+      "signature": "public override bool IsEqual(Object ObjectToCompare)",
       "summary": "Compares the current object with an object of the same type.",
-      "params": [],
+      "params": [
+        {
+          "name": "ObjectToCompare",
+          "type": "System.Object",
+          "doc": "The object to be used for comparing.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if all the fields (except for the database GUID) of the objects match."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/54817577-3916-4204-aee7-4746a827260f"
     },
     {
       "name": "LoadAttributes",
-      "signature": "LoadAttributes(...)",
+      "signature": "public override bool LoadAttributes(string AttributeFile)",
       "summary": "Loads the attributes from the attribute file.",
-      "params": [],
+      "params": [
+        {
+          "name": "AttributeFile",
+          "type": "System.String",
+          "doc": "The filename of the attribute file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the attributes are loaded correctly. False if the attribute file loading failed."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/544b8092-9dc3-ef98-1b98-6c8c619f4714"
@@ -49,7 +78,7 @@
   "properties": [
     {
       "name": "Color",
-      "type": "object",
+      "type": "DrawingColors",
       "getter": true,
       "setter": true,
       "summary": "The color of the bolt.",
@@ -57,7 +86,7 @@
     },
     {
       "name": "CustomPresentation",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Custom presentation GUID to be applied to the bolt",
@@ -65,7 +94,7 @@
     },
     {
       "name": "Representation",
-      "type": "object",
+      "type": "Bolt.Representation",
       "getter": true,
       "setter": true,
       "summary": "The representation type of the bolt.",
@@ -73,7 +102,7 @@
     },
     {
       "name": "SymbolContainsAxis",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "True if the bolt symbol contains an axis.",
@@ -81,7 +110,7 @@
     },
     {
       "name": "SymbolContainsHole",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "True if the bolt symbol contains a hole.",
@@ -89,7 +118,7 @@
     },
     {
       "name": "TrueColor",
-      "type": "object",
+      "type": "TeklaDrawingColor",
       "getter": true,
       "setter": true,
       "summary": "The true color (RGB enabled) of the bolt.",

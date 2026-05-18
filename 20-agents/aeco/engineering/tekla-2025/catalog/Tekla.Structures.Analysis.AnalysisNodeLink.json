@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "AnalysisNodeLink",
-      "signature": "AnalysisNodeLink(...)",
+      "signature": "public AnalysisNodeLink()",
       "summary": "Initializes a new instance of the AnalysisNodeLink class.",
       "params": [],
       "throws": [],
@@ -20,7 +20,7 @@
   "methods": [
     {
       "name": "Delete",
-      "signature": "Delete(...)",
+      "signature": "public void Delete()",
       "summary": "Deletes a user analysis node link. The ID has to be set.",
       "params": [],
       "throws": [],
@@ -29,7 +29,7 @@
     },
     {
       "name": "Insert",
-      "signature": "Insert(...)",
+      "signature": "public void Insert()",
       "summary": "Inserts a user analysis node link. The AnalysisModelName has to be set. The StartNodeID has to be set. The EndNodeID has to be set.",
       "params": [],
       "throws": [],
@@ -38,7 +38,7 @@
     },
     {
       "name": "Modify",
-      "signature": "Modify(...)",
+      "signature": "public void Modify()",
       "summary": "Modifies an analysis node link. The ID has to be set.",
       "params": [],
       "throws": [],
@@ -47,7 +47,7 @@
     },
     {
       "name": "Select",
-      "signature": "Select(...)",
+      "signature": "public override void Select()",
       "summary": "Selects an analysis node link. The ID has to be set.",
       "params": [],
       "throws": [],
@@ -58,7 +58,7 @@
   "properties": [
     {
       "name": "AnalysisModelName",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the analysis model name.",
@@ -66,7 +66,7 @@
     },
     {
       "name": "AnalysisObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the analysis object.",
@@ -74,7 +74,7 @@
     },
     {
       "name": "CoordinateSystem",
-      "type": "object",
+      "type": "CoordinateSystem",
       "getter": true,
       "setter": true,
       "summary": "The coordinate system of the analysis node link.",
@@ -82,7 +82,7 @@
     },
     {
       "name": "Disabled",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the analysis node link is disabled.",
@@ -90,7 +90,7 @@
     },
     {
       "name": "EndConnectivity",
-      "type": "object",
+      "type": "AnalysisConnectivity",
       "getter": true,
       "setter": true,
       "summary": "The end connectivity of the analysis node link.",
@@ -98,7 +98,7 @@
     },
     {
       "name": "EndNode",
-      "type": "object",
+      "type": "AnalysisNode",
       "getter": true,
       "setter": true,
       "summary": "The end node.",
@@ -106,7 +106,7 @@
     },
     {
       "name": "FatherObject2ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -114,7 +114,7 @@
     },
     {
       "name": "FatherObject2Type",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -122,7 +122,7 @@
     },
     {
       "name": "FatherObjectID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the father part.",
@@ -130,7 +130,7 @@
     },
     {
       "name": "FatherObjectType",
-      "type": "object",
+      "type": "AnalysisObject.AnalysisObjectEnum",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the type of the father object.",
@@ -138,7 +138,7 @@
     },
     {
       "name": "ID",
-      "type": "object",
+      "type": "Identifier",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the identifier of the analysis object.",
@@ -146,7 +146,7 @@
     },
     {
       "name": "IsUserConnectivity",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the analysis node has a user defined connectivity.",
@@ -154,7 +154,7 @@
     },
     {
       "name": "IsUserNodeLink",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": true,
       "summary": "Indicates whether the analysis node is a user node link.",
@@ -162,7 +162,7 @@
     },
     {
       "name": "OwnerPartIDs",
-      "type": "object",
+      "type": "List\u003CIdentifier\u003E",
       "getter": true,
       "setter": true,
       "summary": "The list of the identifiers of the owner parts.",
@@ -170,7 +170,7 @@
     },
     {
       "name": "StartConnectivity",
-      "type": "object",
+      "type": "AnalysisConnectivity",
       "getter": true,
       "setter": true,
       "summary": "The start connectivity of the analysis node link.",
@@ -178,7 +178,7 @@
     },
     {
       "name": "StartNode",
-      "type": "object",
+      "type": "AnalysisNode",
       "getter": true,
       "setter": true,
       "summary": "The start node.",

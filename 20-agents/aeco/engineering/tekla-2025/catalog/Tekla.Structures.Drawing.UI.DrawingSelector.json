@@ -10,9 +10,13 @@
   "methods": [
     {
       "name": "GetSelected",
-      "signature": "GetSelected(...)",
+      "signature": "public DrawingEnumerator GetSelected()",
       "summary": "Gets the drawings that are currently selected in the drawing list dialog.",
       "params": [],
+      "returns": {
+        "type": "DrawingEnumerator",
+        "doc": "The drawings that are currently selected in the drawing list dialog."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/ef028482-5c99-2d37-0d57-8998b46346de"

@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "BoltCatalogSize",
-      "signature": "BoltCatalogSize(...)",
+      "signature": "public BoltCatalogSize()",
       "summary": "Initiates a new instance of the control.",
       "params": [],
       "throws": [],

@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "InvalidPluginPickerInputException",
-      "signature": "InvalidPluginPickerInputException(...)",
+      "signature": "public InvalidPluginPickerInputException()",
       "summary": "Creates a new InvalidPluginPickerInputException instance.",
       "params": [],
       "throws": [],

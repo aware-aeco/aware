@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "BoltName",
-      "signature": "BoltName(...)",
+      "signature": "public BoltName()",
       "summary": "Initializes a new instance of the BoltName class",
       "params": [],
       "throws": [],
@@ -21,7 +21,7 @@
   "properties": [
     {
       "name": "Name",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The bolt item name.",

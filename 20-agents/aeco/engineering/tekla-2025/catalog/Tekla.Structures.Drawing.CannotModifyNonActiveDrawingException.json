@@ -9,9 +9,16 @@
   "constructors": [
     {
       "name": "CannotModifyNonActiveDrawingException",
-      "signature": "CannotModifyNonActiveDrawingException(...)",
+      "signature": "public CannotModifyNonActiveDrawingException(string Message)",
       "summary": "Creates a new cannot modify non-active drawing exception instance.",
-      "params": [],
+      "params": [
+        {
+          "name": "Message",
+          "type": "System.String",
+          "doc": "The exception message.",
+          "optional": false
+        }
+      ],
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/944b272a-39ae-6294-3045-efebb74e3f18"

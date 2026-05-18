@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "MeshItem",
-      "signature": "MeshItem(...)",
+      "signature": "public MeshItem()",
       "summary": "Creates a new mesh item instance.",
       "params": [],
       "throws": [],
@@ -20,18 +20,46 @@
   "methods": [
     {
       "name": "Export",
-      "signature": "Export(...)",
+      "signature": "public bool Export(ref string filename)",
       "summary": "Exports the rebar item in the catlog to given file name. If path is not given rebar is exported to model folder. If filename is empty rebar name is used as filename.",
-      "params": [],
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String.",
+          "doc": "The export file name of the item.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a6eb55ef-fcd9-90f8-3467-1b69037491ea"
     },
     {
       "name": "Select",
-      "signature": "Select(...)",
+      "signature": "public bool Select(string MeshName, string MeshGrade)",
       "summary": "Selects the mesh item in the mesh database.",
-      "params": [],
+      "params": [
+        {
+          "name": "MeshName",
+          "type": "System.String",
+          "doc": "The name of the mesh item to select.",
+          "optional": false
+        },
+        {
+          "name": "MeshGrade",
+          "type": "System.String",
+          "doc": "The grade of the mesh item to select.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/553fb3e2-fcc9-33bc-79e3-fdacd64003c9"
@@ -40,7 +68,7 @@
   "properties": [
     {
       "name": "DiameterCross",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The mesh item\u0027s cross direction bar size.",
@@ -48,7 +76,7 @@
     },
     {
       "name": "DiameterLongitudinal",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The mesh item\u0027s longitudinal direction bar size.",
@@ -56,7 +84,7 @@
     },
     {
       "name": "DistanceCross",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The mesh item\u0027s cross direction distance.",
@@ -64,7 +92,7 @@
     },
     {
       "name": "DistanceLongitudinal",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The mesh item\u0027s longitudinal direction distance.",
@@ -72,7 +100,7 @@
     },
     {
       "name": "Grade",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The mesh item\u0027s grade.",
@@ -80,7 +108,7 @@
     },
     {
       "name": "LeftOverhangCross",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The mesh item\u0027s cross direction left overhang.",
@@ -88,7 +116,7 @@
     },
     {
       "name": "LeftOverhangLongitudinal",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The mesh item\u0027s longitudinal direction left overhang.",
@@ -96,7 +124,7 @@
     },
     {
       "name": "Length",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The mesh item\u0027s length.",
@@ -104,7 +132,7 @@
     },
     {
       "name": "MaximumOverlappingCross",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The mesh item\u0027s cross direction maximum overlapping.",
@@ -112,7 +140,7 @@
     },
     {
       "name": "MaximumOverlappingLongitudinal",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The mesh item\u0027s longitudinal direction maximum overlapping.",
@@ -120,7 +148,7 @@
     },
     {
       "name": "MinimumOverlappingCross",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The mesh item\u0027s cross direction minimum overlapping.",
@@ -128,7 +156,7 @@
     },
     {
       "name": "MinimumOverlappingLongitudinal",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The mesh item\u0027s longitudinal direction minimum overlapping.",
@@ -136,7 +164,7 @@
     },
     {
       "name": "Name",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": true,
       "summary": "The mesh item\u0027s name.",
@@ -144,7 +172,7 @@
     },
     {
       "name": "RightOverhangCross",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The mesh item\u0027s cross direction right overhang.",
@@ -152,7 +180,7 @@
     },
     {
       "name": "RightOverhangLongitudinal",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The mesh item\u0027s longitudinal direction right overhang.",
@@ -160,7 +188,7 @@
     },
     {
       "name": "Width",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "The mesh item\u0027s width.",

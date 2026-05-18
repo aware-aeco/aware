@@ -10,16 +10,20 @@
   "methods": [
     {
       "name": "MoveNext",
-      "signature": "MoveNext(...)",
+      "signature": "public bool MoveNext()",
       "summary": "Moves to the next item in the enumerator.",
       "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "False on failure."
+      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e3a5139a-f5d1-c283-d58a-21d2403b9624"
     },
     {
       "name": "Reset",
-      "signature": "Reset(...)",
+      "signature": "public void Reset()",
       "summary": "Resets the enumerator to the beginning.",
       "params": [],
       "throws": [],
@@ -30,9 +34,9 @@
   "properties": [
     {
       "name": "Current",
-      "type": "object",
+      "type": "GeometrySection",
       "getter": true,
-      "setter": true,
+      "setter": false,
       "summary": "Gets the current geometry section.",
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6ea522b6-5174-3bce-576c-f0a0b5d18c06"
     }

@@ -14,11 +14,11 @@ The AutoDirectionTypeAttribute class is used for storing the auto direction type
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/6319f80e-cec4-116d-6232-c66ff4de6101)
 
 ### Constructors
-- `AutoDirectionTypeAttribute(...)` — The custom attribute [AutoDirectionType()] uses this to store the auto direction type to the system. This is not to be used by itself.
-- `AutoDirectionTypeAttribute(...)` — The custom attribute [AutoDirectionType()] uses this to store the auto direction type to the system. This is not to be used by itself.
+- `public AutoDirectionTypeAttribute(int Type)` — The custom attribute [AutoDirectionType()] uses this to store the auto direction type to the system. This is not to be used by itself.
+- `public AutoDirectionTypeAttribute(AutoDirectionTypeEnum Type)` — The custom attribute [AutoDirectionType()] uses this to store the auto direction type to the system. This is not to be used by itself.
 
 ### Properties
-- `Type` (object, get/set) — The custom attribute [AutoDirectionType()] uses this to store the auto direction type to the system. This is not to be used by itself.
+- `Type` (AutoDirectionTypeEnum, get) — The custom attribute [AutoDirectionType()] uses this to store the auto direction type to the system. This is not to be used by itself.
 
 ## ConnectionBase (class)
 
@@ -27,36 +27,53 @@ The ConnectionBase class is a base class for defining connections, details and s
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/6109ad9b-caa0-e7bd-dd42-dafe9b7d82a9)
 
 ### Methods
-#### `IsDefaultValue(Double)(...)`
+#### `public bool IsDefaultValue(double Value)`
 
 Returns true if the given value is set to the default value for this type.
+
+**Parameters:**
+- `Value` (System.Double) — The value to test.
+
+**Returns:** `Boolean` — True if the value is set to the default.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/999607cd-78b3-27fa-2d16-477291d612e6)
 
-#### `IsDefaultValue(Int32)(...)`
+#### `public bool IsDefaultValue(int Value)`
 
 Returns true if the given value is set to the default value for this type.
 
+**Parameters:**
+- `Value` (System.Int32) — The value to test.
+
+**Returns:** `Boolean` — True if the value is set to the default.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/8260c2f5-8b1b-fe04-715e-b5408f07da8b)
 
-#### `IsDefaultValue(String)(...)`
+#### `public bool IsDefaultValue(string Value)`
 
 Returns true if the given value is set to the default value (empty string).
 
+**Parameters:**
+- `Value` (System.String) — The value to test.
+
+**Returns:** `Boolean` — True if the value is set to the default.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/ef9ef015-5d36-7c29-b229-3ae1bdd7be20)
 
-#### `Run(...)`
+#### `public abstract bool Run()`
 
 The main method of the component. Inside Run the user can implement the logic based on the user given attributes and input. Inside the method input can be found from the provided properties: Primary, Secondaries and Positions.
+
+**Returns:** `Boolean` — True on success.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/1fe2084f-e160-10b4-22a3-457d714a382b)
 
 ### Properties
-- `Code` (object, get/set) — The connection code of the executable connection instance. The maximum length is 22 characters.
-- `Identifier` (object, get/set) — The identifier of the executable plug-in instance.
-- `Positions` (object, get/set) — The positional attributes for a detail or a seam instance; one for a detail, N for a seam.
-- `Primary` (object, get/set) — The identifier that was selected as the primary object.
-- `Secondaries` (object, get/set) — A list of secondary identifiers of a connection or a seam.
+- `Code` (String, get/set) — The connection code of the executable connection instance. The maximum length is 22 characters.
+- `Identifier` (Identifier, get) — The identifier of the executable plug-in instance.
+- `Positions` (List<Point>, get) — The positional attributes for a detail or a seam instance; one for a detail, N for a seam.
+- `Primary` (Identifier, get) — The identifier that was selected as the primary object.
+- `Secondaries` (List<Identifier>, get) — A list of secondary identifiers of a connection or a seam.
 
 ## ConnectionBase.InputObjectType (enum)
 
@@ -97,33 +114,50 @@ The CustomPartBase class is a base class for defining custom parts. These types 
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/b498d9fd-0928-7653-c323-d66cfb18f678)
 
 ### Methods
-#### `IsDefaultValue(Double)(...)`
+#### `public bool IsDefaultValue(double Value)`
 
 Returns true if the given value is set to the default value for this type.
+
+**Parameters:**
+- `Value` (System.Double) — The value to test.
+
+**Returns:** `Boolean` — True if the value is set to the default.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/0d112a60-b9ba-0cdc-49a9-b85f4a0d3557)
 
-#### `IsDefaultValue(Int32)(...)`
+#### `public bool IsDefaultValue(int Value)`
 
 Returns true if the given value is set to the default value for this type.
 
+**Parameters:**
+- `Value` (System.Int32) — The value to test.
+
+**Returns:** `Boolean` — True if the value is set to the default.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/6dbb47e9-a1c7-82ca-4b8e-d5fa5bc2a7fc)
 
-#### `IsDefaultValue(String)(...)`
+#### `public bool IsDefaultValue(string Value)`
 
 Returns true if the given value is set to the default value (empty string).
 
+**Parameters:**
+- `Value` (System.String) — The value to test.
+
+**Returns:** `Boolean` — True if the value is set to the default.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/43ce7a81-3e9e-0ae0-8030-c9d8a06534ff)
 
-#### `Run(...)`
+#### `public abstract bool Run()`
 
 The main method of the component. Inside Run the user can implement the logic based on the user given attributes and input. Inside the method input can be found from the provided properties: Primary, Secondaries and Positions.
+
+**Returns:** `Boolean` — True on success.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/2785e532-af81-6a7d-ef0c-9f615039a143)
 
 ### Properties
-- `Identifier` (object, get/set) — The identifier of the executable plug-in instance.
-- `Positions` (object, get/set) — The positional attributes for a custom part instance.
+- `Identifier` (Identifier, get) — The identifier of the executable plug-in instance.
+- `Positions` (List<Point>, get) — The positional attributes for a custom part instance.
 
 ## CustomPartBase.CustomPartInputType (enum)
 
@@ -152,11 +186,11 @@ The CustomPartInputTypeAttribute class is used for defining the input type. Base
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/c53e4a0c-1bda-8552-dd7b-b83017d390ed)
 
 ### Constructors
-- `CustomPartInputTypeAttribute(...)` — The custom attribute uses this to store the input type to the system. This is not to be used by itself.
-- `CustomPartInputTypeAttribute(...)` — The custom attribute uses this to store the input type to the system. This is not to be used by itself.
+- `public CustomPartInputTypeAttribute(int Type)` — The custom attribute uses this to store the input type to the system. This is not to be used by itself.
+- `public CustomPartInputTypeAttribute(CustomPartBase.CustomPartInputType Type)` — The custom attribute uses this to store the input type to the system. This is not to be used by itself.
 
 ### Properties
-- `Type` (object, get/set) — The custom attribute uses this to store the input type to the system. This is not to be used by itself.
+- `Type` (CustomPartBase.CustomPartInputType, get) — The custom attribute uses this to store the input type to the system. This is not to be used by itself.
 
 ## CustomPartPositioningTypeAttribute (class)
 
@@ -165,11 +199,11 @@ The CustomPartInputTypeAttribute class is used for defining the input type. Base
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/68e9e6e3-dc82-cd2c-637d-ec7b0bb89ef2)
 
 ### Constructors
-- `CustomPartPositioningTypeAttribute(...)` — The custom attribute uses this to store the positioning type to the system. This is not to be used by itself.
-- `CustomPartPositioningTypeAttribute(...)` — The custom attribute uses this to store the positioning type to the system. This is not to be used by itself.
+- `public CustomPartPositioningTypeAttribute(int Type)` — The custom attribute uses this to store the positioning type to the system. This is not to be used by itself.
+- `public CustomPartPositioningTypeAttribute(CustomPartBase.CustomPartPositioningType Type)` — The custom attribute uses this to store the positioning type to the system. This is not to be used by itself.
 
 ### Properties
-- `Type` (object, get/set) — The custom attribute uses this to store the positioning type to the system. This is not to be used by itself.
+- `Type` (CustomPartBase.CustomPartPositioningType, get) — The custom attribute uses this to store the positioning type to the system. This is not to be used by itself.
 
 ## DetailTypeAttribute (class)
 
@@ -178,11 +212,11 @@ The DetailTypeAttribute class is used for storing the detail type. Based on the 
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/039e5970-ac37-24e7-cd99-658f3ede5126)
 
 ### Constructors
-- `DetailTypeAttribute(...)` — The custom attribute [DetailType()] uses this to store the type of the detail to the system. This is not to be used by itself.
-- `DetailTypeAttribute(...)` — The custom attribute [DetailType()] uses this to store the type of the detail to the system. This is not to be used by itself.
+- `public DetailTypeAttribute(int Type)` — The custom attribute [DetailType()] uses this to store the type of the detail to the system. This is not to be used by itself.
+- `public DetailTypeAttribute(DetailTypeEnum Type)` — The custom attribute [DetailType()] uses this to store the type of the detail to the system. This is not to be used by itself.
 
 ### Properties
-- `Type` (object, get/set) — The custom attribute [DetailType()] uses this to store the type of the detail to the system. This is not to be used by itself.
+- `Type` (DetailTypeEnum, get) — The custom attribute [DetailType()] uses this to store the type of the detail to the system. This is not to be used by itself.
 
 ## DrawingPluginBase (class)
 
@@ -191,33 +225,55 @@ The DrawingPluginBase class is an abstract base class for drawing plug-ins.
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/d888ea51-3dae-c2e2-2c18-d89cbf04ce23)
 
 ### Methods
-#### `DefineInput(...)`
+#### `public abstract List<DrawingPluginBase.InputDefinition> DefineInput()`
 
 The method Tekla Structures calls for the plug-in to query the input. The plug-in must then return an array list of input definition instances. The plug-in will be dependent on the items it returns. Dependent means that if any of these items change, for example the user moves the points, the plug-in will be re-run with new input. DefineInput is not called during the re-run, and thus all the actual implementation should be in the Run() method. The Run() method is always called in view coordinates.
 
+**Returns:** `List<DrawingPluginBase.InputDefinition>` — An array list of input definition instances. If the plug-in is not dependent on input, it should return an empty array list (not null).
+
 [Docs](https://developer.tekla.com/topic/en/18/43/b566fc7a-696f-a394-7641-2bcda9c40726)
 
-#### `IsDefaultValue(Double)(...)`
+#### `public bool IsDefaultValue(double Value)`
 
 Returns true if the given value is set to the default value for this type.
+
+**Parameters:**
+- `Value` (System.Double) — The value to test.
+
+**Returns:** `Boolean` — True if the value is set to the default.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/7acd70f1-66e5-28b9-73ff-8cce84fdecb0)
 
-#### `IsDefaultValue(Int32)(...)`
+#### `public bool IsDefaultValue(int Value)`
 
 Returns true if the given value is set to the default value for this type.
 
+**Parameters:**
+- `Value` (System.Int32) — The value to test.
+
+**Returns:** `Boolean` — True if the value is set to the default.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/063121cd-be98-6430-9c28-288b181b1602)
 
-#### `IsDefaultValue(String)(...)`
+#### `public bool IsDefaultValue(string Value)`
 
 Returns true if the given value is set to the default value (empty string).
 
+**Parameters:**
+- `Value` (System.String) — The value to test.
+
+**Returns:** `Boolean` — True if the value is set to the default.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/00f6e4b6-60f6-68de-c128-9be9648e31b6)
 
-#### `Run(...)`
+#### `public abstract bool Run(List<DrawingPluginBase.InputDefinition> Input)`
 
 The main method of the plug-in. It is called after the input has been defined with DefineInput(). This is the "main" method of the plug-in and should contain all the actual implementation.
+
+**Parameters:**
+- `Input` (System.Collections.Generic.List<DrawingPluginBase.InputDefinition>) — An array list of the same format and order as what was returned from DefineInput().
+
+**Returns:** `Boolean` — True on success.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/758feebd-8605-e681-7498-1772eee54f02)
 
@@ -228,22 +284,24 @@ The InputDefinition class is a class for defining the plug-in dependency over th
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/671978ea-ae03-3158-95ff-a55cbd398d67)
 
 ### Constructors
-- `DrawingPluginBase.InputDefinition(...)` — Creates a new input definition with multiple points.
-- `DrawingPluginBase.InputDefinition(...)` — Creates a new input definition instance with one point.
-- `DrawingPluginBase.InputDefinition(...)` — Creates a new input definition instance with one identifier.
-- `DrawingPluginBase.InputDefinition(...)` — Creates a new input definition instance with two points.
-- `DrawingPluginBase.InputDefinition(...)` — Creates a new input definition instance with three points.
+- `public InputDefinition(Identifier viewId, List<Point> points)` — Creates a new input definition with multiple points.
+- `public InputDefinition(Identifier viewId, Point point)` — Creates a new input definition instance with one point.
+- `public InputDefinition(Identifier viewId, Identifier ObjectId)` — Creates a new input definition instance with one identifier.
+- `public InputDefinition(Identifier viewId, Point point1, Point point2)` — Creates a new input definition instance with two points.
+- `public InputDefinition(Identifier viewId, Point point1, Point point2, Point point3)` — Creates a new input definition instance with three points.
 
 ### Methods
-#### `GetInput(...)`
+#### `public Object GetInput()`
 
 Returns the input Tekla Structures gave to the plug-in. The input is either a point instance, an identifier instance, an array list of points or an array list of identifiers. This is based on the input format returned from the DefineInput() method.
+
+**Returns:** `Object` — The input to use in the Run() method.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/9376bb9a-beae-f280-96ac-1b6fd0160c65)
 
 ### Properties
-- `Type` (object, get/set) — The type of the input the current instance contains.
-- `ViewId` (object, get/set) — The view object's identifier.
+- `Type` (DrawingPluginBase.InputDefinition.InputTypes, get/set) — The type of the input the current instance contains.
+- `ViewId` (Identifier, get/set) — The view object's identifier.
 
 ## DrawingPluginBase.InputDefinition.InputTypes (enum)
 
@@ -276,11 +334,11 @@ The InputObjectDependencyAttribute class is used for storing an input object dep
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/683d0814-ff48-9371-384c-8b8a2db73b46)
 
 ### Constructors
-- `InputObjectDependencyAttribute(...)` — The custom attribute [InputObjectDependency(PluginBase.InputObjectDependency Type)] uses this to store a dependency attribute which determines when the plug-in is updated in the system. This is not to be used by itself.
-- `InputObjectDependencyAttribute(...)` — The custom attribute [InputObjectDependency(PluginBase.InputObjectDependency Type)] uses this to store a dependency attribute which determines when the plug-in is updated in the system. This is not to be used by itself.
+- `public InputObjectDependencyAttribute(int Type)` — The custom attribute [InputObjectDependency(PluginBase.InputObjectDependency Type)] uses this to store a dependency attribute which determines when the plug-in is updated in the system. This is not to be used by itself.
+- `public InputObjectDependencyAttribute(PluginBase.InputObjectDependency Type)` — The custom attribute [InputObjectDependency(PluginBase.InputObjectDependency Type)] uses this to store a dependency attribute which determines when the plug-in is updated in the system. This is not to be used by itself.
 
 ### Properties
-- `Type` (object, get/set) — Returns the type of the input object dependency.
+- `Type` (PluginBase.InputObjectDependency, get) — Returns the type of the input object dependency.
 
 ## InputObjectTypeAttribute (class)
 
@@ -289,11 +347,11 @@ The InputObjectTypeAttribute class is used for storing the type of the input. Ba
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/6d2240db-156e-3bf5-fd9d-10f29c411e8b)
 
 ### Constructors
-- `InputObjectTypeAttribute(...)` — The custom attribute [InputObjectType()] uses this to store the input object type to the system. This is not to be used by itself.
-- `InputObjectTypeAttribute(...)` — The custom attribute [InputObjectType()] uses this to store the input object type to the system. This is not to be used by itself.
+- `public InputObjectTypeAttribute(int Type)` — The custom attribute [InputObjectType()] uses this to store the input object type to the system. This is not to be used by itself.
+- `public InputObjectTypeAttribute(ConnectionBase.InputObjectType Type)` — The custom attribute [InputObjectType()] uses this to store the input object type to the system. This is not to be used by itself.
 
 ### Properties
-- `Type` (object, get/set) — The custom attribute [InputObjectType()] uses this to store the input object type to the system. This is not to be used by itself.
+- `Type` (ConnectionBase.InputObjectType, get) — The custom attribute [InputObjectType()] uses this to store the input object type to the system. This is not to be used by itself.
 
 ## PluginAttribute (class)
 
@@ -302,10 +360,10 @@ The PluginAttribute class is used for storing the name of the plug-in to the sys
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/19308e33-a3f9-4297-8963-b9532788d8cf)
 
 ### Constructors
-- `PluginAttribute(...)` — The custom attribute [Plugin("PluginName")] uses this to store the name to the system. This is not to be used by itself.
+- `public PluginAttribute(string name)` — The custom attribute [Plugin("PluginName")] uses this to store the name to the system. This is not to be used by itself.
 
 ### Properties
-- `Name` (object, get/set) — The name of the plug-in in the system.
+- `Name` (String, get) — The name of the plug-in in the system.
 
 ## PluginBase (class)
 
@@ -314,38 +372,60 @@ The PluginBase class in an abstract base class for model plug-ins. Model plug-in
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/5bd24240-26d1-39e2-9b6b-3f4556cdcd47)
 
 ### Methods
-#### `DefineInput(...)`
+#### `public abstract List<PluginBase.InputDefinition> DefineInput()`
 
 The method Tekla Structures calls for the plug-in to query the input. The plug-in must then return a list of input definition instances. The plug-in will be dependent on the items it returns. Dependent means that if any of these items change, for example the user moves the points, the plug-in will be re-run with new input. DefineInput is not called during the re-run, and thus all the actual implementation should be in the Run() method. The maximum number of InputDefinitions in the List is 10.
 
+**Returns:** `List<PluginBase.InputDefinition>` — A list of input definition instances. If the plug-in is not dependent on input, it should return an empty list (not null).
+
 [Docs](https://developer.tekla.com/topic/en/18/43/eb486b17-396b-4b6f-689d-a957db5b3658)
 
-#### `IsDefaultValue(Double)(...)`
+#### `public bool IsDefaultValue(double Value)`
 
 Returns true if the given value is set to the default value for this type.
+
+**Parameters:**
+- `Value` (System.Double) — The value to test.
+
+**Returns:** `Boolean` — True if the value is set to the default.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/4a0abd49-6b0a-2bb5-a8ab-17c6e5b55c75)
 
-#### `IsDefaultValue(Int32)(...)`
+#### `public bool IsDefaultValue(int Value)`
 
 Returns true if the given value is set to the default value for this type.
 
+**Parameters:**
+- `Value` (System.Int32) — The value to test.
+
+**Returns:** `Boolean` — True if the value is set to the default.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/79f0b6e7-7744-bb26-15ab-c97861855732)
 
-#### `IsDefaultValue(String)(...)`
+#### `public bool IsDefaultValue(string Value)`
 
 Returns true if the given value is set to the default value (empty string).
 
+**Parameters:**
+- `Value` (System.String) — The value to test.
+
+**Returns:** `Boolean` — True if the value is set to the default.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/8da27f11-11c1-871b-71c1-91c93d729bc0)
 
-#### `Run(...)`
+#### `public abstract bool Run(List<PluginBase.InputDefinition> Input)`
 
 The main method of the plug-in. It is called after the input has been defined with DefineInput(). This is the "main" method of the plug-in and should contain all the actual implementation.
+
+**Parameters:**
+- `Input` (System.Collections.Generic.List<PluginBase.InputDefinition>) — A list of the same format and order as what was returned from DefineInput().
+
+**Returns:** `Boolean` — True on success.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/5c8c1a5b-438a-7950-fd69-8b4935074ec6)
 
 ### Properties
-- `Identifier` (object, get/set) — The identifier of the executable plug-in instance.
+- `Identifier` (Identifier, get) — The identifier of the executable plug-in instance.
 
 ## PluginBase.CoordinateSystemType (enum)
 
@@ -364,21 +444,25 @@ The InputDefinition class is a class for defining the plug-in dependency over th
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/5a24f6b6-72e1-ef1b-1dfd-c51d9b39e460)
 
 ### Constructors
-- `PluginBase.InputDefinition(...)` — Creates a new input definition instance with multiple point or identifier instances.
-- `PluginBase.InputDefinition(...)` — Creates a new input definition instance with one identifier.
-- `PluginBase.InputDefinition(...)` — Creates a new input definition instance with one point.
-- `PluginBase.InputDefinition(...)` — Creates a new input definition instance with two points.
+- `public InputDefinition(ArrayList _Input)` — Creates a new input definition instance with multiple point or identifier instances.
+- `public InputDefinition(Identifier ID)` — Creates a new input definition instance with one identifier.
+- `public InputDefinition(Point Point)` — Creates a new input definition instance with one point.
+- `public InputDefinition(Point P1, Point P2)` — Creates a new input definition instance with two points.
 
 ### Methods
-#### `GetInput(...)`
+#### `public Object GetInput()`
 
 Returns the input Tekla Structures gave to the plug-in. The input is either a point instance, an identifier instance, an array list of points or an array list of identifiers. This is based on the input format returned from the DefineInput() method.
 
+**Returns:** `Object` — The input to use in the Run() method.
+
 [Docs](https://developer.tekla.com/topic/en/18/43/ea126692-d899-a70f-46e5-14e462635aa5)
 
-#### `GetInputType(...)`
+#### `public PluginBase.InputDefinition.InputTypeEnum GetInputType()`
 
 Returns the type of the input the current instance contains.
+
+**Returns:** `PluginBase.InputDefinition.InputTypeEnum` — The type of the input.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/4262e736-6d4a-89ba-0950-5e1d7902a34e)
 
@@ -424,11 +508,11 @@ The PluginCoordinateSystemAttribute class is used for defining the coordinate sy
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/4e22e521-31d7-14cd-9322-b5e585d3cdee)
 
 ### Constructors
-- `PluginCoordinateSystemAttribute(...)` — The custom attribute used to define coordinate system of the plug-in. This is not to be used by itself.
-- `PluginCoordinateSystemAttribute(...)` — The custom attribute used to define coordinate system of the plug-in. This is not to be used by itself.
+- `public PluginCoordinateSystemAttribute(int Type)` — The custom attribute used to define coordinate system of the plug-in. This is not to be used by itself.
+- `public PluginCoordinateSystemAttribute(PluginBase.CoordinateSystemType Type)` — The custom attribute used to define coordinate system of the plug-in. This is not to be used by itself.
 
 ### Properties
-- `Type` (object, get/set) — Returns the type of the input object dependency.
+- `Type` (PluginBase.CoordinateSystemType, get) — Returns the type of the input object dependency.
 
 ## PluginDescriptionAttribute (class)
 
@@ -437,11 +521,11 @@ Not supported at the moment.
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/3ae73917-956a-f7d8-520c-a60ea15ce79d)
 
 ### Constructors
-- `PluginDescriptionAttribute(...)` — Not supported at the moment.
+- `public PluginDescriptionAttribute(string language, string description)` — Not supported at the moment.
 
 ### Properties
-- `Description` (object, get/set) — Not supported at the moment.
-- `Language` (object, get/set) — Not supported at the moment.
+- `Description` (String, get) — Not supported at the moment.
+- `Language` (String, get) — Not supported at the moment.
 
 ## PluginNameAttribute (class)
 
@@ -450,11 +534,11 @@ Not supported at the moment.
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/64260160-d2fd-baf5-377c-d4a0318a3def)
 
 ### Constructors
-- `PluginNameAttribute(...)` — Not supported at the moment.
+- `public PluginNameAttribute(string language, string name)` — Not supported at the moment.
 
 ### Properties
-- `Language` (object, get/set) — Not supported at the moment.
-- `Name` (object, get/set) — Not supported at the moment.
+- `Language` (String, get) — Not supported at the moment.
+- `Name` (String, get) — Not supported at the moment.
 
 ## PluginPropertyFileLocationAttribute (class)
 
@@ -463,11 +547,11 @@ Used to specify file location for a property file.
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/23b0191a-e544-1e01-af19-aa2b3bb67a70)
 
 ### Constructors
-- `PluginPropertyFileLocationAttribute(...)` — Initializes a new instance of the PluginPropertyFileLocationAttribute class, for a file with provided filename suffix.
+- `public PluginPropertyFileLocationAttribute(string suffix, string subdirectory)` — Initializes a new instance of the PluginPropertyFileLocationAttribute class, for a file with provided filename suffix.
 
 ### Properties
-- `Subdirectory` (object, get/set) — Gets the property file subdirectory in a model folder.
-- `Suffix` (object, get/set) — Gets the property file suffix.
+- `Subdirectory` (String, get) — Gets the property file subdirectory in a model folder.
+- `Suffix` (String, get) — Gets the property file suffix.
 
 ## PluginSymbolVisiblityAttribute (class)
 
@@ -476,11 +560,11 @@ The PluginSymbolVisiblityAttribute class is used for defining the symbol visibil
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/34a54f53-8840-15d4-9cc6-d7a746bc3f49)
 
 ### Constructors
-- `PluginSymbolVisiblityAttribute(...)` — The custom attribute used to define coordinate system of the plug-in. This is not to be used by itself.
-- `PluginSymbolVisiblityAttribute(...)` — The custom attribute used to define coordinate system of the plug-in. This is not to be used by itself.
+- `public PluginSymbolVisiblityAttribute(int Type)` — The custom attribute used to define coordinate system of the plug-in. This is not to be used by itself.
+- `public PluginSymbolVisiblityAttribute(PluginBase.SymbolVisibility Type)` — The custom attribute used to define coordinate system of the plug-in. This is not to be used by itself.
 
 ### Properties
-- `Type` (object, get/set) — Returns the type of the input object dependency.
+- `Type` (PluginBase.SymbolVisibility, get) — Returns the type of the input object dependency.
 
 ## PluginUserInterfaceAttribute (class)
 
@@ -489,10 +573,10 @@ The PluginUserInterfaceAttribute class is used for storing the description of th
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/48e673e5-d34c-6ed9-ce45-1a1d5a444898)
 
 ### Constructors
-- `PluginUserInterfaceAttribute(...)` — The custom attribute [PluginUserInterface(PluginName.UserInterfaceDefinitions.Plugin1)] uses this to store the description of the plug-in user interface to the system. This is not to be used by itself.
+- `public PluginUserInterfaceAttribute(string description)` — The custom attribute [PluginUserInterface(PluginName.UserInterfaceDefinitions.Plugin1)] uses this to store the description of the plug-in user interface to the system. This is not to be used by itself.
 
 ### Properties
-- `Description` (object, get/set) — The description of the plug-in user interface in inp format.
+- `Description` (String, get) — The description of the plug-in user interface in inp format.
 
 ## PositionTypeAttribute (class)
 
@@ -501,11 +585,11 @@ The PositionTypeAttribute class is used for storing the position type of the con
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/85869afb-56cb-102f-dc01-3c8aa94b473c)
 
 ### Constructors
-- `PositionTypeAttribute(...)` — The custom attribute [PositionType()] uses this to store the position type to the system. This is not to be used by itself.
-- `PositionTypeAttribute(...)` — The custom attribute [PositionType()] uses this to store the position type to the system. This is not to be used by itself.
+- `public PositionTypeAttribute(int Type)` — The custom attribute [PositionType()] uses this to store the position type to the system. This is not to be used by itself.
+- `public PositionTypeAttribute(PositionTypeEnum Type)` — The custom attribute [PositionType()] uses this to store the position type to the system. This is not to be used by itself.
 
 ### Properties
-- `Type` (object, get/set) — The custom attribute [PositionType()] uses this to store the position type to the system. This is not to be used by itself.
+- `Type` (PositionTypeEnum, get) — The custom attribute [PositionType()] uses this to store the position type to the system. This is not to be used by itself.
 
 ## SeamInputTypeAttribute (class)
 
@@ -514,11 +598,11 @@ The SeamInputTypeAttribute class is used for identifying that the connection is 
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/d4a9bbb6-876c-df62-b60a-424ef66dd3c0)
 
 ### Constructors
-- `SeamInputTypeAttribute(...)` — The custom attribute [SeamInputType()] uses this to store the input type to the system. This is not to be used by itself.
-- `SeamInputTypeAttribute(...)` — The custom attribute [SeamInputType()] uses this to store the input type to the system. This is not to be used by itself.
+- `public SeamInputTypeAttribute(int Type)` — The custom attribute [SeamInputType()] uses this to store the input type to the system. This is not to be used by itself.
+- `public SeamInputTypeAttribute(ConnectionBase.SeamInputType Type)` — The custom attribute [SeamInputType()] uses this to store the input type to the system. This is not to be used by itself.
 
 ### Properties
-- `Type` (object, get/set) — The custom attribute [SeamInputType()] uses this to store the input type to the system. This is not to be used by itself.
+- `Type` (ConnectionBase.SeamInputType, get) — The custom attribute [SeamInputType()] uses this to store the input type to the system. This is not to be used by itself.
 
 ## SecondaryTypeAttribute (class)
 
@@ -527,11 +611,11 @@ The SecondaryTypeAttribute class is used for storing the number of needed second
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/babb5ce4-8ff1-4e7a-5190-f4ea99b35406)
 
 ### Constructors
-- `SecondaryTypeAttribute(...)` — The custom attribute [SecondaryType()] uses this to store the secondary type to the system. This is not to be used by itself.
-- `SecondaryTypeAttribute(...)` — The custom attribute [SecondaryType()] uses this to store the secondary type to the system. This is not to be used by itself.
+- `public SecondaryTypeAttribute(int Type)` — The custom attribute [SecondaryType()] uses this to store the secondary type to the system. This is not to be used by itself.
+- `public SecondaryTypeAttribute(ConnectionBase.SecondaryType Type)` — The custom attribute [SecondaryType()] uses this to store the secondary type to the system. This is not to be used by itself.
 
 ### Properties
-- `Type` (object, get/set) — The custom attribute [SecondaryType()] uses this to store the secondary type to the system. This is not to be used by itself.
+- `Type` (ConnectionBase.SecondaryType, get) — The custom attribute [SecondaryType()] uses this to store the secondary type to the system. This is not to be used by itself.
 
 ## StructuresFieldAttribute (class)
 
@@ -540,8 +624,8 @@ The StructuresFieldAttribute class is used for mapping a database attribute to a
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/1db3e6b8-6d5a-3d89-28df-6ff41b96fa92)
 
 ### Constructors
-- `StructuresFieldAttribute(...)` — The custom attribute [StructuresField(attributeName)] uses this to map a database attribute to a data field that the plug-in uses in execution. This is not to be used by itself.
+- `public StructuresFieldAttribute(string attributeName)` — The custom attribute [StructuresField(attributeName)] uses this to map a database attribute to a data field that the plug-in uses in execution. This is not to be used by itself.
 
 ### Properties
-- `AttributeName` (object, get/set) — The name of the attribute.
+- `AttributeName` (String, get) — The name of the attribute.
 

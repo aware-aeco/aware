@@ -9,7 +9,7 @@
   "constructors": [
     {
       "name": "FacePerpendicularToIntersectionLineException",
-      "signature": "FacePerpendicularToIntersectionLineException(...)",
+      "signature": "public FacePerpendicularToIntersectionLineException()",
       "summary": "Initializes a new instance of the FacePerpendicularToIntersectionLineException class with \u0022face perpendicular to intersection line\u0022 error message.",
       "params": [],
       "throws": [],
