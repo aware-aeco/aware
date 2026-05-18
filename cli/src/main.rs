@@ -83,6 +83,12 @@ enum Command {
         action: commands::build::BuildCommand,
     },
 
+    /// Manage host-coverage IR files and reviews (v0.30).
+    Coverage {
+        #[command(subcommand)]
+        action: commands::coverage::CoverageCommand,
+    },
+
     /// Health check — config, filesystem, credentials, registry.
     Doctor,
 
@@ -152,6 +158,7 @@ async fn main() -> anyhow::Result<()> {
         Command::Disconnect(args) => commands::connect::run_disconnect(args, &ctx),
         Command::Skill { action } => commands::skill::dispatch(action, &ctx),
         Command::Build { action } => commands::build::dispatch(action, &ctx),
+        Command::Coverage { action } => commands::coverage::dispatch(action, &ctx),
         Command::Doctor => commands::doctor::run(&ctx),
         Command::Plugins { action } => commands::plugins::dispatch(action, &ctx),
         Command::Diagram { action } => commands::diagram::dispatch(action, &ctx),
