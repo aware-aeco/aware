@@ -39,7 +39,16 @@ pub enum AgentCommand {
     /// Uninstall an agent. (v0.2)
     Uninstall { agent: String },
     /// Re-pull the latest matching version of an agent. (v0.2)
-    Update { agent: String },
+    ///
+    /// Pass `--all` to update every installed agent instead of a single one.
+    /// The `<agent>` argument is required unless `--all` is used.
+    Update {
+        /// Agent id to update. Omit when `--all` is set.
+        agent: Option<String>,
+        /// Update every installed agent.
+        #[arg(long)]
+        all: bool,
+    },
     /// Validate an agent folder against the agent-spec. (v0.2)
     Validate {
         /// Path to an agent folder containing manifest.yaml.
@@ -62,7 +71,7 @@ pub fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError> {
             let _ = crate::commands::diagram::auto_regenerate(ctx);
             Ok(())
         }
-        AgentCommand::Update { agent } => update(ctx, &agent),
+        AgentCommand::Update { agent, all } => update(ctx, agent.as_deref(), all),
         AgentCommand::Validate { path } => validate_cmd(ctx, &path),
         AgentCommand::Publish { .. } => Err(AwareError::NotYetImplemented("agent publish")),
     }
@@ -114,14 +123,71 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
     Ok(())
 }
 
-fn update(ctx: &Context, id: &str) -> Result<(), AwareError> {
+fn update(ctx: &Context, id: Option<&str>, all: bool) -> Result<(), AwareError> {
+    match (id, all) {
+        (Some(_), true) => Err(AwareError::Validation(
+            "agent update: pass either <agent> or --all, not both".into(),
+        )),
+        (None, false) => Err(AwareError::Validation(
+            "agent update: missing <agent> (or pass --all)".into(),
+        )),
+        (Some(id), false) => update_one(ctx, id),
+        (None, true) => update_all(ctx),
+    }
+}
+
+fn update_one(ctx: &Context, id: &str) -> Result<(), AwareError> {
     let index = crate::registry::fetch::fetch_index(&ctx.paths.cache_dir())?;
     // Best-effort: remove existing installation (ignore NotFound).
     let _ = crate::install::uninstall_agent(id, &ctx.paths);
     let installed = crate::install::install_agent_from_registry(id, None, &ctx.paths, &index)?;
-    println!("✓ updated {installed}");
+    println!("\u{2713} updated {installed}");
     let _ = auto_regenerate_plugins(ctx);
     let _ = crate::commands::diagram::auto_regenerate(ctx);
+    Ok(())
+}
+
+fn update_all(ctx: &Context) -> Result<(), AwareError> {
+    let installed = discover_agents(&ctx.paths)?;
+    if installed.is_empty() {
+        println!("(no agents installed)");
+        return Ok(());
+    }
+    let ids: Vec<String> = installed
+        .iter()
+        .map(|d| d.manifest.agent.clone())
+        .collect();
+    println!("updating {} installed agents...", ids.len());
+    let index = crate::registry::fetch::fetch_index(&ctx.paths.cache_dir())?;
+
+    let mut ok = 0usize;
+    let mut failed: Vec<(String, String)> = Vec::new();
+    for id in &ids {
+        let _ = crate::install::uninstall_agent(id, &ctx.paths);
+        match crate::install::install_agent_from_registry(id, None, &ctx.paths, &index) {
+            Ok(spec) => {
+                println!("  \u{2713} {spec}");
+                ok += 1;
+            }
+            Err(e) => {
+                println!("  \u{2717} {id}: {e}");
+                failed.push((id.clone(), e.to_string()));
+            }
+        }
+    }
+
+    // Refresh derived artefacts once at the end (cheaper than per-agent).
+    let _ = auto_regenerate_plugins(ctx);
+    let _ = crate::commands::diagram::auto_regenerate(ctx);
+
+    println!();
+    println!("{ok} updated, {} failed", failed.len());
+    if !failed.is_empty() {
+        return Err(AwareError::Validation(format!(
+            "{} agent(s) failed to update",
+            failed.len()
+        )));
+    }
     Ok(())
 }
 

@@ -145,3 +145,78 @@ fn updates_agent_that_was_not_installed() {
 
     assert!(aware.join("agents/tekla/manifest.yaml").is_file());
 }
+
+#[test]
+fn update_requires_agent_or_all_flag() {
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .args(["agent", "update"])
+        .assert()
+        .failure()
+        .stderr(predicate::str::contains("missing <agent>"));
+}
+
+#[test]
+fn update_rejects_both_agent_and_all_flag() {
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .args(["agent", "update", "tekla", "--all"])
+        .assert()
+        .failure()
+        .stderr(predicate::str::contains("either <agent> or --all"));
+}
+
+#[test]
+fn update_all_with_no_agents_installed() {
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .args(["agent", "update", "--all"])
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("no agents installed"));
+}
+
+#[test]
+fn update_all_reinstalls_every_installed_agent() {
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let tarball = tmp.path().join("tekla.tar.gz");
+    build_tekla_tarball(&tarball);
+    let idx_path = write_registry_fixture(tmp.path(), &tarball);
+    let idx_url = to_file_url(&idx_path);
+
+    // Install the agent first.
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .env("AWARE_REGISTRY", &idx_url)
+        .args(["agent", "install", "tekla"])
+        .assert()
+        .success();
+
+    // `--all` should iterate every installed id and update each.
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .env("AWARE_REGISTRY", &idx_url)
+        .args(["agent", "update", "--all"])
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("updating 1 installed agents"))
+        .stdout(predicate::str::contains("tekla"))
+        .stdout(predicate::str::contains("1 updated"));
+
+    assert!(aware.join("agents/tekla/manifest.yaml").is_file());
+}
