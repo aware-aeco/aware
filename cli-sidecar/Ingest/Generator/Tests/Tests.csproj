@@ -41,7 +41,13 @@
       Microsoft.Playwright. Scraper.cs is intentionally NOT linked — it depends on
       Playwright and is exercised end-to-end by Phase B vendor extractors, not by
       these generator-level unit tests.
+
+      ChmParser only depends on System.Diagnostics + System.IO, so it's linked in
+      the same way as IRBuilder. The test suite exercises only the dependency-free
+      surface (constructor validation + the non-Windows skip path); a Windows runner
+      with hh.exe will also exercise the missing-file negative path.
     -->
     <Compile Include="..\..\Extractors\Common\IRBuilder.cs" Link="IRBuilder.cs" />
+    <Compile Include="..\..\Extractors\Common\ChmParser.cs" Link="ChmParser.cs" />
   </ItemGroup>
 </Project>
