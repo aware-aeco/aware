@@ -20,4 +20,16 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
+  <ItemGroup>
+    <!--
+      Link Models.cs + IRReader.cs into the test assembly without using a
+      ProjectReference to cli-sidecar.csproj — pulling in the main project would
+      drag along the NativeAOT publishing config and slow the test build down.
+      The main project's default Compile glob still includes these files, so
+      they end up in both assemblies as plain managed code.
+    -->
+    <Compile Include="..\Models.cs" Link="Models.cs" />
+    <Compile Include="..\IRReader.cs" Link="IRReader.cs" />
+  </ItemGroup>
 </Project>
