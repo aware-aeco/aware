@@ -1,6 +1,6 @@
 [package]
 name        = "aware"
-version     = "0.26.0"
+version     = "0.27.0"
 edition     = "2024"
 authors     = ["AWARE contributors"]
 license     = "Apache-2.0"
@@ -52,6 +52,10 @@ url        = "2"
 rand       = "0.8"
 base64     = "0.22"
 sha2       = "0.10"
+
+# v0.27 — Stamped Receipt (ed25519-signed JSONL receipts).
+ed25519-dalek = { version = "2", features = ["rand_core"] }
+rand_core     = "0.6"
 
 [dev-dependencies]
 assert_cmd  = "2.0"

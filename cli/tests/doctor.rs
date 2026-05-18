@@ -13,7 +13,7 @@ fn doctor_reports_fiftyseven_agents_and_seven_apps() {
         .assert()
         .success()
         .stdout(predicate::str::contains("CLI:"))
-        .stdout(predicate::str::contains("aware v0.26.0"))
+        .stdout(predicate::str::contains("aware v0.27.0"))
         .stdout(predicate::str::contains("Filesystem:"))
         .stdout(predicate::str::contains("57 installed"))
         .stdout(predicate::str::contains("7 installed"));
