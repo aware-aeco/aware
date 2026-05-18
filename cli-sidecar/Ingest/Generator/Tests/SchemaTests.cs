@@ -76,9 +76,11 @@ public class SchemaTests
           "source": { "kind": "scrape", "urls": [], "extracted_at": "2026-01-01T00:00:00Z" },
           "types": [{
             "name": "T", "namespace": "N", "kind": "class", "summary": "s", "doc_url": "https://x.example/T",
+            "interfaces": [], "constructors": [], "properties": [], "events": [], "enum_values": [],
             "methods": [{
               "name": "M", "signature": "void M()", "summary": "s", "params": [],
               "returns": {},
+              "throws": [], "events_related": [],
               "doc_url": "https://x.example/T.M"
             }]
           }],
@@ -99,9 +101,11 @@ public class SchemaTests
           "source": { "kind": "scrape", "urls": [], "extracted_at": "2026-01-01T00:00:00Z" },
           "types": [{
             "name": "T", "namespace": "N", "kind": "class", "summary": "s", "doc_url": "https://x.example/T",
+            "interfaces": [], "constructors": [], "properties": [], "events": [], "enum_values": [],
             "methods": [{
               "name": "M", "signature": "void M()", "summary": "s", "params": [],
               "returns": null,
+              "throws": [], "events_related": [],
               "doc_url": "https://x.example/T.M"
             }]
           }],
@@ -122,6 +126,7 @@ public class SchemaTests
           "source": { "kind": "scrape", "urls": [], "extracted_at": "2026-01-01T00:00:00Z" },
           "types": [{
             "name": "T", "namespace": "N", "kind": "class", "summary": "s", "doc_url": "https://x.example/T",
+            "interfaces": [], "constructors": [], "methods": [], "properties": [], "enum_values": [],
             "events": [{
               "name": "E", "delegate": "EDelegate", "signature": "void EDelegate()",
               "summary": "s", "doc_url": "https://x.example/T.E"
@@ -132,5 +137,25 @@ public class SchemaTests
         """);
         var result = schema.Evaluate(ir.RootElement);
         Assert.False(result.IsValid, "schema should reject Event missing handler_thread and interacts_with");
+    }
+
+    [Fact]
+    public void Schema_Rejects_Type_Without_Methods_Array()
+    {
+        var schema = LoadSchema();
+        var ir = JsonDocument.Parse("""
+        {
+          "host": "test", "host_version": "1.0",
+          "source": { "kind": "scrape", "urls": [], "extracted_at": "2026-01-01T00:00:00Z" },
+          "types": [{
+            "name": "T", "namespace": "N", "kind": "class",
+            "summary": "s", "doc_url": "https://x.example/T",
+            "interfaces": [], "constructors": [], "properties": [], "events": [], "enum_values": []
+          }],
+          "metadata": { "page_count": 0, "type_count": 1, "method_count": 0, "event_count": 0, "property_count": 0 }
+        }
+        """);
+        var result = schema.Evaluate(ir.RootElement);
+        Assert.False(result.IsValid, "schema should reject Type missing methods array (producer must emit [])");
     }
 }

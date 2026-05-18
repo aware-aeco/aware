@@ -38,7 +38,9 @@
   "$defs": {
     "Type": {
       "type": "object",
-      "required": ["name", "namespace", "kind", "summary", "doc_url"],
+      "required": ["name", "namespace", "kind", "summary", "doc_url",
+                   "interfaces", "constructors", "methods", "properties",
+                   "events", "enum_values"],
       "additionalProperties": false,
       "properties": {
         "name":        { "type": "string" },
@@ -59,7 +61,8 @@
     },
     "Method": {
       "type": "object",
-      "required": ["name", "signature", "summary", "params", "returns", "doc_url"],
+      "required": ["name", "signature", "summary", "params", "returns",
+                   "throws", "events_related", "doc_url"],
       "additionalProperties": false,
       "properties": {
         "name":            { "type": "string" },
