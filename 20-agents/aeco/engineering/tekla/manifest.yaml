@@ -1,7 +1,20 @@
 agent:        tekla
 version:      0.1.0
-sdk-target:   2025.0
+sdk-target:   2025+         # version-agnostic shorthand; structured form lands in hardening pass
 display-name: Tekla Structures
+
+# Desktop-host metadata (see 10-core/desktop-host-sidecar-spec.md).
+# The runtime sidecar `aware-tekla.exe` reads this to pre-flight check
+# whether a matching host instance is running before invoking verbs.
+host:
+  exe-name:           TeklaStructures.exe
+  versions-supported: [2025.x, 2026.x]
+  routing:            com-rot
+  runtime-tfm:        net48              # CRITICAL: see skills/runtime-bridge-dotnet-framework.md
+  dll-probe-paths:                       # ordered list — first match wins
+    - "{host_install}/bin/Net48Runtime"  # Tekla 2026+ dual-runtime layout
+    - "{host_install}/bin"               # Tekla 2025 and earlier
+
 description: |
   Watches the active Tekla model, reads its state, and writes back via the
   Tekla Open API. Auto-generated from Tekla Structures 2025.0 DLLs and
@@ -36,6 +49,79 @@ transport:
     binary: aware-tekla
 
 commands:
+  send-status:
+    lifecycle: single
+    category: curated
+    description: |
+      Display a transient message in Tekla's status bar via
+      Operation.DisplayPrompt(message). Stable across Tekla 2025 / 2026.
+      Useful as a connection smoke-test and for non-blocking user feedback
+      during long-running compositions. Idempotent.
+    inputs:
+      message:
+        type: string
+        max-length: 256
+    outputs:
+      type: single
+      schema:
+        delivered_at:  string
+        tekla_pid:     integer
+        tekla_version: string
+
+  launch:
+    lifecycle: single
+    category: curated
+    description: |
+      Start a Tekla Structures instance headless (no setup dialog) via
+      a `Bypass.ini` file. See skills/headless-startup-and-shutdown.md
+      for the full reference. Returns immediately after process start —
+      caller polls `send-status` to detect Open API readiness (~30s
+      typical with a small / blank model). Window opens maximized so
+      subsequent status-bar messages are visually verifiable.
+
+      Inputs are optional with sensible defaults — at minimum supply
+      `version`. If you supply `environment` + `license` (+ optional
+      `role`) the sidecar generates a Bypass.ini for you under
+      `%TEMP%\\aware-tekla\\`. If you supply a pre-built `bypass_ini`
+      path, that path is used verbatim and the other env / license / role
+      fields are ignored.
+    inputs:
+      version:
+        type: string
+        required: true
+        example: "2026.0"
+      model_path:
+        type: string
+        required: false
+        description: Open this existing model after startup
+      bypass_ini:
+        type: string
+        required: false
+        description: Pre-built Bypass.ini path; mutually exclusive with environment/license/role
+      environment:
+        type: string
+        required: false
+        example: "blank_project"
+        description: Tekla environment slug (used to generate Bypass.ini if bypass_ini not given)
+      license:
+        type: string
+        required: false
+        example: "Partner"
+        description: XS_DEFAULT_LICENSE value (Partner | DIAMOND | GRAPHITE | CARBON | FULL)
+      role:
+        type: string
+        required: false
+        description: Full XS_DEFAULT_ROLE path; defaults to %XSDATADIR%\\Environments\\default\\role_Engineer.ini
+    outputs:
+      type: single
+      schema:
+        host_pid:     integer
+        host_version: string
+        bypass_ini:   string
+        model_path:   string
+        maximized:    boolean
+        note:         string
+
   watch:
     lifecycle: start
     category: curated
@@ -491,6 +577,8 @@ commands:
             severity: string
 
 skills:
+  - runtime-bridge-dotnet-framework.md   # CRITICAL — read first before writing any Tekla sidecar
+  - headless-startup-and-shutdown.md     # how to launch / shut down Tekla without dialogs (test harness)
   - drawing-identity.md
   - event-threading.md
   - coordinate-systems.md
