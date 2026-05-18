@@ -1,0 +1,57 @@
+{
+  "name": "RebarLapping",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The RebarLapping class represents the lapping of reinforcing bars at a RebarSplitter.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/148c7454-629c-faca-e0c8-956fb85a4ad2",
+  "constructors": [
+    {
+      "name": "RebarLapping",
+      "signature": "RebarLapping(...)",
+      "summary": "Initializes a new instance of the RebarLapping class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b0d90ade-e0e9-64e7-73ea-760384cc3034"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "LapLength",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the lap length. Negative values will define a gap rather than a lap.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/970372d1-fb43-b3cc-c0b6-21f64759d849"
+    },
+    {
+      "name": "LappingType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the lapping type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/30842535-a8b9-1073-adef-6ba8b1bfec33"
+    },
+    {
+      "name": "LapPlacement",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the placement of the lap relative to the associated RebarLegFace.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/eebbe970-d38c-9026-f19a-17c2e611eb28"
+    },
+    {
+      "name": "LapSide",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the side of the split that the lap is located.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6ae1f016-b1b3-b620-de11-7fccd74127fb"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

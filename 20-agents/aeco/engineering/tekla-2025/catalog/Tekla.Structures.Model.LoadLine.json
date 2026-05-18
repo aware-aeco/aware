@@ -1,0 +1,549 @@
+{
+  "name": "LoadLine",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The LoadLine class defines a linearly-distributed force or torsion.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/6c2c4fcd-3944-0df3-0dfb-d042662860d1",
+  "constructors": [
+    {
+      "name": "LoadLine",
+      "signature": "LoadLine(...)",
+      "summary": "Creates a new load line instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ff67b248-a3a0-60f5-88f1-c14e92f1b379"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CompareTo",
+      "signature": "CompareTo(...)",
+      "summary": "Compares Identifiers of model objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/79cca356-0c8a-e8fb-463a-34ad4141bec7"
+    },
+    {
+      "name": "Delete",
+      "signature": "Delete(...)",
+      "summary": "Deletes the load line instance with the given ID from the model database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e99dacfc-d419-8098-143c-3db0f454221f"
+    },
+    {
+      "name": "Equals",
+      "signature": "Equals(...)",
+      "summary": "Check if Identifiers of model objects are same.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e4324265-2490-00de-4139-63a8f7acb492"
+    },
+    {
+      "name": "GetAllReportProperties",
+      "signature": "GetAllReportProperties(...)",
+      "summary": "Retrieves all properties for the model object in one hashtable. Type for the returned value must be checked using type casting.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0708f404-ce77-28e1-4ebe-fa906f68bff8"
+    },
+    {
+      "name": "GetAllUserProperties",
+      "signature": "GetAllUserProperties(...)",
+      "summary": "Retrieves all properties for the model object in one hashtable. Type for the returned value must be checked using type casting.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/63b853a0-0af5-af9c-3ce7-05299664d7f8"
+    },
+    {
+      "name": "GetChildren",
+      "signature": "GetChildren(...)",
+      "summary": "Returns an enumerator of all the children model objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ce51ec40-310c-6067-a89f-f8d029aab747"
+    },
+    {
+      "name": "GetCoordinateSystem",
+      "signature": "GetCoordinateSystem(...)",
+      "summary": "Returns the coordinate system for the given model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8adfe9cd-f6e5-6474-1297-33c6270a7b0a"
+    },
+    {
+      "name": "GetCustomObjectType",
+      "signature": "GetCustomObjectType(...)",
+      "summary": "Gets custom object type name from an existing object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d3be2ba3-8533-7165-f2d3-a5aa9df556b8"
+    },
+    {
+      "name": "GetDoubleReportProperties",
+      "signature": "GetDoubleReportProperties(...)",
+      "summary": "Retrieves multiple double report properties for the model object. It is faster to fetch multiple properties at once.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f86f6c96-f738-49ca-16ba-f5634e862ba2"
+    },
+    {
+      "name": "GetDoubleUserProperties",
+      "signature": "GetDoubleUserProperties(...)",
+      "summary": "Retrieves all double properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6ead7a63-5f76-0631-d480-d46c27e882aa"
+    },
+    {
+      "name": "GetDynamicStringProperty",
+      "signature": "GetDynamicStringProperty(...)",
+      "summary": "Gets a dynamic string property from the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/415e86d9-7de6-ea53-ce68-20b3e67b8655"
+    },
+    {
+      "name": "GetFatherComponent",
+      "signature": "GetFatherComponent(...)",
+      "summary": "Returns the father component of the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a2c28f3f-52ff-50a8-1b32-10d18db5c31d"
+    },
+    {
+      "name": "GetHierarchicObjects",
+      "signature": "GetHierarchicObjects(...)",
+      "summary": "Returns an enumerator of all the connected hierarchic objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cc228ea0-267b-7d90-7441-c9efc1779b08"
+    },
+    {
+      "name": "GetIntegerReportProperties",
+      "signature": "GetIntegerReportProperties(...)",
+      "summary": "Retrieves multiple integer report properties for the model object. It is faster to fetch multiple properties at once.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2623a9c0-2a9c-e233-9daa-59f92ed51445"
+    },
+    {
+      "name": "GetIntegerUserProperties",
+      "signature": "GetIntegerUserProperties(...)",
+      "summary": "Retrieves all integer properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1b3c6f06-bc25-a54e-2a88-b60dc4a3c85e"
+    },
+    {
+      "name": "GetPhase",
+      "signature": "GetPhase(...)",
+      "summary": "Retrieves the phase of the model object (the phase number, the phase name, the phase comment and whether the phase is the current one or not).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/310f8b7a-c120-753a-35c9-f7c73a9806c9"
+    },
+    {
+      "name": "GetReportProperty(String, Double.)",
+      "signature": "GetReportProperty(String, Double.)(...)",
+      "summary": "Retrieves a double property of the report for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1c05aa56-5f42-be91-a59e-8d59a5549f45"
+    },
+    {
+      "name": "GetReportProperty(String, Int32.)",
+      "signature": "GetReportProperty(String, Int32.)(...)",
+      "summary": "Retrieves an integer property of the report for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ce8e4ca0-3750-3c9b-5ca8-27e48b45e0bd"
+    },
+    {
+      "name": "GetReportProperty(String, String.)",
+      "signature": "GetReportProperty(String, String.)(...)",
+      "summary": "Retrieves a string property of the report for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/70f212bb-ee70-e9e9-7ab6-d6a9d46f8de6"
+    },
+    {
+      "name": "GetStringReportProperties",
+      "signature": "GetStringReportProperties(...)",
+      "summary": "Retrieves multiple string report properties for the model object. It is faster to fetch multiple properties at once.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5ff72da1-7382-f5d2-eb1d-c99b46239d42"
+    },
+    {
+      "name": "GetStringUserProperties",
+      "signature": "GetStringUserProperties(...)",
+      "summary": "Retrieves all string properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/67120e84-c820-9d52-12ae-c167c595842c"
+    },
+    {
+      "name": "GetUserProperty(String, Double.)",
+      "signature": "GetUserProperty(String, Double.)(...)",
+      "summary": "Retrieves a double property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/17cc8074-7955-32b5-2b4b-b169c45d4ee0"
+    },
+    {
+      "name": "GetUserProperty(String, Int32.)",
+      "signature": "GetUserProperty(String, Int32.)(...)",
+      "summary": "Retrieves an integer property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d9364c1d-5b57-6a31-4c13-01124058cfb2"
+    },
+    {
+      "name": "GetUserProperty(String, String.)",
+      "signature": "GetUserProperty(String, String.)(...)",
+      "summary": "Retrieves a string property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/214a886c-c18c-9b66-d7c9-fe84260962f2"
+    },
+    {
+      "name": "Insert",
+      "signature": "Insert(...)",
+      "summary": "Inserts the load line into the model database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/aa00c4dc-0874-7830-b834-0f442ba9bc6b"
+    },
+    {
+      "name": "Modify",
+      "signature": "Modify(...)",
+      "summary": "Modifies the existing load line in the model database to match the current one. At the moment it is not possible to change the load attachment or the father.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6c276991-260e-37b4-7e83-26c620053e42"
+    },
+    {
+      "name": "Select",
+      "signature": "Select(...)",
+      "summary": "Selects a load line from the model database. The ID must be set.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d3ead8dd-68a2-f871-ca48-50c1f7784fed"
+    },
+    {
+      "name": "SetCustomObjectType",
+      "signature": "SetCustomObjectType(...)",
+      "summary": "Sets a custom object type name for an existing object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3d6fb91b-48a9-35ca-d498-526514344089"
+    },
+    {
+      "name": "SetDynamicStringProperty",
+      "signature": "SetDynamicStringProperty(...)",
+      "summary": "Sets a dynamic string property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4dab0254-09e5-5e61-c28b-1c12afab71a0"
+    },
+    {
+      "name": "SetLabel",
+      "signature": "SetLabel(...)",
+      "summary": "Sets a label for an object when a new instance is created, this method must be called before Insert. The label is used in plug-ins for identifying the changed object in modification.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3efcfc44-613a-e66b-9ebd-9f86df4f4036"
+    },
+    {
+      "name": "SetPhase",
+      "signature": "SetPhase(...)",
+      "summary": "Sets the phase of the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ed80abcc-0ff7-d081-2229-e651f858a727"
+    },
+    {
+      "name": "SetUserProperties",
+      "signature": "SetUserProperties(...)",
+      "summary": "Sets multiple properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8659da37-d571-f03f-c666-5c9fa3b113f5"
+    },
+    {
+      "name": "SetUserProperty(String, Double)",
+      "signature": "SetUserProperty(String, Double)(...)",
+      "summary": "Sets a double property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5c585b8b-5c2e-7b75-2242-758f17429396"
+    },
+    {
+      "name": "SetUserProperty(String, Int32)",
+      "signature": "SetUserProperty(String, Int32)(...)",
+      "summary": "Sets an integer property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dd5b828d-3a87-bb58-5ac9-e1c3b4c2fe4b"
+    },
+    {
+      "name": "SetUserProperty(String, String)",
+      "signature": "SetUserProperty(String, String)(...)",
+      "summary": "Sets a string property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/80bf0348-b651-3d4a-862b-49c85bc924ab"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AutomaticPrimaryAxisWeight",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The automatic primary axis weight.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4d273664-49d1-f7e3-8527-81b9cb5c2765"
+    },
+    {
+      "name": "BoundingBoxDx",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The dimension of the bounding box in the X direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d108ba30-fe6c-7e56-2b83-8e52a613e8ba"
+    },
+    {
+      "name": "BoundingBoxDy",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The dimension of the bounding box in the Y direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1d59bb0a-58c5-a385-fb20-385d7c909592"
+    },
+    {
+      "name": "BoundingBoxDz",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The dimension of the bounding box in the Z direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/626008aa-0aa9-5f3b-9cd9-a0232c1792d2"
+    },
+    {
+      "name": "CreateFixedSupportConditionsAutomatically",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether fixed support conditions are created automatically.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/be57d41d-4fbe-4d3f-9377-e945a714a5a3"
+    },
+    {
+      "name": "DistanceA",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The distance a (for shortening or dividing the length of a line load).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9dff425e-fbd8-9f34-14b8-60b9f3fd74fe"
+    },
+    {
+      "name": "DistanceB",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The distance b (for shortening or dividing the length of a line load).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8da15795-5020-dd3a-3ac0-3e8c1075229f"
+    },
+    {
+      "name": "FatherId",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The identifier of the father object that the load is attached to.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/914545e2-5bf1-7ca0-7924-71d28339978b"
+    },
+    {
+      "name": "Group",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The load group object for the load.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9f2be3b7-cf80-46cb-6ba4-514352a1d2b4"
+    },
+    {
+      "name": "Identifier",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The identifier of the object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3704f321-8e6e-27e4-0752-adfaed74c69f"
+    },
+    {
+      "name": "IsUpToDate",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets if the object does not have a modification which is not shared.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bc992671-093f-44a9-5eeb-7d289fd00cc5"
+    },
+    {
+      "name": "LoadAttachment",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The load attachment.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0e03d7e0-0869-c849-30fc-008e9df2a865"
+    },
+    {
+      "name": "LoadDispersionAngle",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The load dispersion angle.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f7f9e928-fdc2-8ffa-98e1-ce07aaf593a0"
+    },
+    {
+      "name": "LoadForm",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The load form.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0cf36400-3b80-de3a-948f-88e11b5be988"
+    },
+    {
+      "name": "ModificationTime",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets latest time of the object was modified or created.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/28d2c3c4-efd2-b4ed-7e2c-93cfb6e3a57f"
+    },
+    {
+      "name": "P1",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The load magnitude vector at the start position. The values are given in the local coordinate system of the load (not in the current coordinate system).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4fa7ce9d-8d9c-5e53-1a19-95385a2d8448"
+    },
+    {
+      "name": "P2",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The load magnitude vector at the end position. The values are given in the local coordinate system of the load (not in the current coordinate system).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c5fa4fd8-8e7e-b818-95e6-c337887c0ba5"
+    },
+    {
+      "name": "PartFilter",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The part filter.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8b1778e3-3f59-c50a-a6b2-84565528c257"
+    },
+    {
+      "name": "PartNames",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The part names.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5c2779cf-3def-bc12-9358-d279612a861f"
+    },
+    {
+      "name": "Position1",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The first input position point.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ef2d509e-9858-ef89-cddc-cd9b35484bfe"
+    },
+    {
+      "name": "Position2",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The second input position point.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/310bba25-df97-d8d6-1a66-3ba732efe195"
+    },
+    {
+      "name": "PrimaryAxisDirection",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The vector for the primary axis direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b89c3013-35b3-a020-8366-a06a24a555d9"
+    },
+    {
+      "name": "Spanning",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The load spanning.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d3d53d80-b12c-7a8f-bc12-99000c7e7818"
+    },
+    {
+      "name": "Torsion1",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The first torsion.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c2a2d64b-1711-e30c-40a8-592f679342d4"
+    },
+    {
+      "name": "Torsion2",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The second torsion.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1d4eec7c-ab2c-a658-bb39-2b0806fcd9ba"
+    },
+    {
+      "name": "Weight",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The weight.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/08a04f3d-e59c-3f82-2e68-15872cf27561"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,34 @@
+{
+  "name": "WeldFilterExpressions.SizeBelowLine",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The SizeBelowLine class represents the size below line filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/2269878e-cfcf-c97c-d79c-3441118ff927",
+  "constructors": [
+    {
+      "name": "WeldFilterExpressions.SizeBelowLine",
+      "signature": "WeldFilterExpressions.SizeBelowLine(...)",
+      "summary": "Initializes a new instance of the SizeBelowLine class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f91d8994-7818-7205-fe6a-c4af156e8053"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

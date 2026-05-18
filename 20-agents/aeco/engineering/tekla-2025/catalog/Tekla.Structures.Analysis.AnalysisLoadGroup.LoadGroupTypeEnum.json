@@ -1,0 +1,419 @@
+{
+  "name": "AnalysisLoadGroup.LoadGroupTypeEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The types of load groups.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/35b03eb4-d4e1-c307-377e-c524513588fc",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NOT_DEFINED",
+      "value": 0,
+      "summary": "The load group has not been defined."
+    },
+    {
+      "name": "LOADM_DEFAULT_GROUP",
+      "value": 1000,
+      "summary": "The default load group."
+    },
+    {
+      "name": "LOADM_SELF_WEIGHT_EC",
+      "value": 1001,
+      "summary": "The Eurocode self weight type."
+    },
+    {
+      "name": "LOADM_PERMANENT_LOAD_EC",
+      "value": 1002,
+      "summary": "The Eurocode permanent load type."
+    },
+    {
+      "name": "LOADM_PRE_STRESS_LOAD_EC",
+      "value": 1003,
+      "summary": "The Eurocode pre-stress load type."
+    },
+    {
+      "name": "LOADM_LIVE_LOAD_HOUSING_EC",
+      "value": 1004,
+      "summary": "The Eurocode live load housing type."
+    },
+    {
+      "name": "LOADM_LIVE_LOAD_PUBLIC_BUILDINGS_EC",
+      "value": 1005,
+      "summary": "The Eurocode live load public buildings type."
+    },
+    {
+      "name": "LOADM_LIVE_LOAD_THEATRES_RESTAURANTS_EC",
+      "value": 1006,
+      "summary": "The Eurocode live load theatres, restaurants type."
+    },
+    {
+      "name": "LOADM_LIVE_LOAD_WAREHOUSES_EC",
+      "value": 1007,
+      "summary": "The Eurocode live load warehouses type."
+    },
+    {
+      "name": "LOADM_LIVE_LOAD_STORAGE_BUILDINGS_EC",
+      "value": 1008,
+      "summary": "The Eurocode live load storage buildings type."
+    },
+    {
+      "name": "LOADM_TRAFFIC_LOAD_LIGHT_VEHICLES_EC",
+      "value": 1009,
+      "summary": "The Eurocode traffic load light vehicles type."
+    },
+    {
+      "name": "LOADM_TRAFFIC_LOAD_HEAVY_VEHICLES_EC",
+      "value": 1010,
+      "summary": "The Eurocode traffic load heavy vehicles type."
+    },
+    {
+      "name": "LOADM_TRAFFIC_LOAD_ROOFS_EC",
+      "value": 1011,
+      "summary": "The Eurocode traffic load roofs type."
+    },
+    {
+      "name": "LOADM_SNOW_LOAD_EC",
+      "value": 1012,
+      "summary": "The Eurocode snow load type."
+    },
+    {
+      "name": "LOADM_WIND_LOAD_EC",
+      "value": 1013,
+      "summary": "The Eurocode wind load type."
+    },
+    {
+      "name": "LOADM_FORCES_DUE_TO_TEMPERATURE_EFFECTS_EC",
+      "value": 1014,
+      "summary": "The Eurocode forces due to temperature effects type."
+    },
+    {
+      "name": "LOADM_IMPERFECTION_LOAD_DUE_TO_DEAD_LOADS_EC",
+      "value": 1015,
+      "summary": "The Eurocode imperfection load due to dead loads type."
+    },
+    {
+      "name": "LOADM_IMPERFECTION_LOAD_DUE_TO_LIVE_LOADS_EC",
+      "value": 1016,
+      "summary": "The Eurocode imperfection load due to live loads type."
+    },
+    {
+      "name": "LOADM_IMPERFECTION_LOAD_DUE_TO_SNOW_LOADS_EC",
+      "value": 1017,
+      "summary": "The Eurocode imperfection load due to snow loads type."
+    },
+    {
+      "name": "LOADM_ACCIDENTAL_LOAD_EC",
+      "value": 1018,
+      "summary": "The Eurocode accidental load type."
+    },
+    {
+      "name": "LOADM_EARTHQUAKE_LOAD_EC",
+      "value": 1019,
+      "summary": "The Eurocode earthquake load type."
+    },
+    {
+      "name": "LOADM_DEAD_LOAD_ALONE_BS",
+      "value": 2001,
+      "summary": "The British code dead load alone type."
+    },
+    {
+      "name": "LOADM_DEADLOAD_BS",
+      "value": 2002,
+      "summary": "The British code dead load type."
+    },
+    {
+      "name": "LOADM_IMPOSED_LOAD_BS",
+      "value": 2003,
+      "summary": "The British code imposed load type."
+    },
+    {
+      "name": "LOADM_WIND_LOAD_BS",
+      "value": 2004,
+      "summary": "The British code wind load type."
+    },
+    {
+      "name": "LOADM_TEMPERATURE_LOAD_BS",
+      "value": 2005,
+      "summary": "The British code temperature load type."
+    },
+    {
+      "name": "LOADM_VERTICAL_CRANE_LOAD_BS",
+      "value": 2006,
+      "summary": "The British code vertical crane load type."
+    },
+    {
+      "name": "LOADM_HORIZONTAL_CRANE_LOAD_BS",
+      "value": 2007,
+      "summary": "The British code horizontal crane load type."
+    },
+    {
+      "name": "LOADM_DEAD_LOAD_ALONE_AISC",
+      "value": 3001,
+      "summary": "The AISC dead load alone type."
+    },
+    {
+      "name": "LOADM_DEAD_LOAD_AISC",
+      "value": 3002,
+      "summary": "The AISC dead load type."
+    },
+    {
+      "name": "LOADM_LIVE_LOAD_AISC",
+      "value": 3003,
+      "summary": "The AISC live load type."
+    },
+    {
+      "name": "LOADM_ROOF_LIVE_LOAD_AISC",
+      "value": 3004,
+      "summary": "The AISC roof live load type."
+    },
+    {
+      "name": "LOADM_WIND_LOAD_AISC",
+      "value": 3005,
+      "summary": "The AISC wind load type."
+    },
+    {
+      "name": "LOADM_SNOW_LOAD_AISC",
+      "value": 3006,
+      "summary": "The AISC snow load type."
+    },
+    {
+      "name": "LOADM_RAINWATER_LOAD_AISC",
+      "value": 3007,
+      "summary": "The AISC rainwater load type."
+    },
+    {
+      "name": "LOADM_EARTHQUAKE_LOAD_AISC",
+      "value": 3008,
+      "summary": "The AISC earthquake load type."
+    },
+    {
+      "name": "LOADM_PERMANENT_LOAD_FR_CM66",
+      "value": 6001,
+      "summary": "The CM66 permanent load type."
+    },
+    {
+      "name": "LOADM_EXPLOITATION_LOAD_FR_CM66",
+      "value": 6002,
+      "summary": "The CM66 exploitation load type."
+    },
+    {
+      "name": "LOADM_TEMPERATURE_LOAD_FR_CM66",
+      "value": 6003,
+      "summary": "The CM66 temperature load type."
+    },
+    {
+      "name": "LOADM_WIND_LOAD_FR_CM66",
+      "value": 6004,
+      "summary": "The CM66 wind load type."
+    },
+    {
+      "name": "LOADM_SNOW_LOAD_FR_CM66",
+      "value": 6005,
+      "summary": "The CM66 snow load type."
+    },
+    {
+      "name": "LOADM_SEISMIC_LOAD_HORIZONTAL_FR_CM66",
+      "value": 6006,
+      "summary": "The CM66 seismic load horizontal type."
+    },
+    {
+      "name": "LOADM_SEISMIC_LOAD_VERTICAL_FR_CM66",
+      "value": 6007,
+      "summary": "The CM66 seismic load vertical type."
+    },
+    {
+      "name": "LOADM_PERMANENT_LOAD_FR_BAEL91",
+      "value": 7001,
+      "summary": "The BAEL91 permanent load type."
+    },
+    {
+      "name": "LOADM_EXPLOITATION_LOAD_FR_BAEL91",
+      "value": 7002,
+      "summary": "The BAEL91 exploitation load type."
+    },
+    {
+      "name": "LOADM_TEMPERATURE_LOAD_FR_BAEL91",
+      "value": 7003,
+      "summary": "The BAEL91 temperature load type."
+    },
+    {
+      "name": "LOADM_WIND_LOAD_FR_BAEL91",
+      "value": 7004,
+      "summary": "The BAEL91 wind load type."
+    },
+    {
+      "name": "LOADM_SNOW_LOAD_FR_BAEL91",
+      "value": 7005,
+      "summary": "The BAEL91 snow load type."
+    },
+    {
+      "name": "LOADM_SEISMIC_LOAD_FR_BAEL91",
+      "value": 7006,
+      "summary": "The BAEL91 seismic load type."
+    },
+    {
+      "name": "LOADM_ACCIDENTAL_LOAD_FR_BAEL91",
+      "value": 7007,
+      "summary": "The BAEL91 accidental load type."
+    },
+    {
+      "name": "LOADM_DEAD_LOAD_UBC",
+      "value": 8001,
+      "summary": "The UBC dead load type."
+    },
+    {
+      "name": "LOADM_LIVE_LOAD_UBC",
+      "value": 8002,
+      "summary": "The UBC live load type."
+    },
+    {
+      "name": "LOADM_ROOF_LIVE_LOAD_UBC",
+      "value": 8003,
+      "summary": "The UBC roof live load type."
+    },
+    {
+      "name": "LOADM_WIND_LOAD_UBC",
+      "value": 8004,
+      "summary": "The UBC wind load type."
+    },
+    {
+      "name": "LOADM_SNOW_LOAD_UBC",
+      "value": 8005,
+      "summary": "The UBC snow load type."
+    },
+    {
+      "name": "LOADM_TEMPERATURE_LOAD_UBC",
+      "value": 8006,
+      "summary": "The UBC temperature load type."
+    },
+    {
+      "name": "LOADM_FLUIDS_LOAD_UBC",
+      "value": 8007,
+      "summary": "The UBC fluids load type."
+    },
+    {
+      "name": "LOADM_SOIL_LOAD_UBC",
+      "value": 8008,
+      "summary": "The UBC soil load type."
+    },
+    {
+      "name": "LOADM_PONDING_LOAD_UBC",
+      "value": 8009,
+      "summary": "The UBC ponding load type."
+    },
+    {
+      "name": "LOADM_SEISMIC_LOAD_UBC",
+      "value": 8010,
+      "summary": "The UBC seismic load type."
+    },
+    {
+      "name": "LOADM_DEAD_LOAD_IBC",
+      "value": 9001,
+      "summary": "The IBC dead load type."
+    },
+    {
+      "name": "LOADM_LIVE_LOAD_IBC",
+      "value": 9002,
+      "summary": "The IBC live load type."
+    },
+    {
+      "name": "LOADM_ROOF_LIVE_LOAD_IBC",
+      "value": 9003,
+      "summary": "The IBC roof live load type."
+    },
+    {
+      "name": "LOADM_WIND_LOAD_IBC",
+      "value": 9004,
+      "summary": "The IBC wind load type."
+    },
+    {
+      "name": "LOADM_SNOW_LOAD_IBC",
+      "value": 9005,
+      "summary": "The IBC snow load type."
+    },
+    {
+      "name": "LOADM_TEMPERATURE_LOAD_IBC",
+      "value": 9006,
+      "summary": "The IBC temperature load type."
+    },
+    {
+      "name": "LOADM_FLUIDS_LOAD_IBC",
+      "value": 9007,
+      "summary": "The IBC fluids load type."
+    },
+    {
+      "name": "LOADM_SOIL_LOAD_IBC",
+      "value": 9008,
+      "summary": "The IBC soil load type."
+    },
+    {
+      "name": "LOADM_RAIN_LOAD_IBC",
+      "value": 9009,
+      "summary": "The IBC rain load type."
+    },
+    {
+      "name": "LOADM_PONDING_LOAD_IBC",
+      "value": 9010,
+      "summary": "The IBC ponding load type."
+    },
+    {
+      "name": "LOADM_SEISMIC_LOAD_IBC",
+      "value": 9011,
+      "summary": "The IBC seismic load type."
+    },
+    {
+      "name": "LOADM_DEAD_LOAD_ACI",
+      "value": 9101,
+      "summary": "The ACI dead load type."
+    },
+    {
+      "name": "LOADM_LIVE_LOAD_ACI",
+      "value": 9102,
+      "summary": "The ACI live load type."
+    },
+    {
+      "name": "LOADM_ROOF_LIVE_LOAD_ACI",
+      "value": 9103,
+      "summary": "The ACI roof live load type."
+    },
+    {
+      "name": "LOADM_WIND_LOAD_ACI",
+      "value": 9104,
+      "summary": "The ACI wind load type."
+    },
+    {
+      "name": "LOADM_SEISMIC_LOAD_ACI",
+      "value": 9105,
+      "summary": "The ACI seismic load type."
+    },
+    {
+      "name": "LOADM_SNOW_LOAD_ACI",
+      "value": 9106,
+      "summary": "The ACI snow load type."
+    },
+    {
+      "name": "LOADM_FLUIDS_LOAD_ACI",
+      "value": 9107,
+      "summary": "The ACI fluids load type."
+    },
+    {
+      "name": "LOADM_SOIL_LOAD_ACI",
+      "value": 9108,
+      "summary": "The ACI soil load type."
+    },
+    {
+      "name": "LOADM_RAIN_LOAD_ACI",
+      "value": 9109,
+      "summary": "The ACI rain load type."
+    },
+    {
+      "name": "LOADM_TEMPERATURE_LOAD_ACI",
+      "value": 9110,
+      "summary": "The ACI temperature load type."
+    }
+  ]
+}

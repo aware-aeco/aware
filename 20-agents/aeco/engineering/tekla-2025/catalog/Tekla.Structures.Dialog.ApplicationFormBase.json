@@ -1,0 +1,115 @@
+{
+  "name": "ApplicationFormBase",
+  "namespace": "Tekla.Structures.Dialog",
+  "kind": "class",
+  "summary": "The ApplicationFormBase class is the base class for all Tekla Structures dialogs. The class provides localization, unit conversion and data storage (temporary and file-based) among other things.",
+  "base": "System.Windows.Forms.Form",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/74d5e044-c9fa-b822-ed2d-1d2d7cfbeef2",
+  "constructors": [
+    {
+      "name": "ApplicationFormBase",
+      "signature": "ApplicationFormBase(...)",
+      "summary": "The default constructor that does not need parameters. Initializes the form and registers property bindings.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f38b4382-1a1d-50b9-0edd-aed28a2e920c"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ApplyValues",
+      "signature": "ApplyValues(...)",
+      "summary": "Loads the dialog values from a file and performs Apply. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type\u0027s name.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c4096cdf-60d9-f7b8-1daf-e71de20cf47d"
+    },
+    {
+      "name": "GetConnectionStatus",
+      "signature": "GetConnectionStatus(...)",
+      "summary": "Returns true if a proper connection to the Tekla Structures process has been established. Currently, there\u0027s no way to re-establish the connection.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2ba6677a-b8a7-cbfa-2724-e58464054abe"
+    },
+    {
+      "name": "InitializeForm",
+      "signature": "InitializeForm(...)",
+      "summary": "Prepares the data storage for the dialog and scans through the fields.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/70881deb-ea45-96c7-ee73-399bc7b76a90"
+    },
+    {
+      "name": "LoadValues",
+      "signature": "LoadValues(...)",
+      "summary": "Loads the dialog values from a file. To match the files to a certain dialog, the file suffix is set as the dialog type\u0027s name.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/df11f56f-8372-2886-e011-b4fcad4ac3de"
+    },
+    {
+      "name": "ModifyValues",
+      "signature": "ModifyValues(...)",
+      "summary": "Loads the dialog values from a file and performs Modify. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type\u0027s name.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d20a7c4e-e913-92e5-0925-44015cc68ebf"
+    },
+    {
+      "name": "SaveValues",
+      "signature": "SaveValues(...)",
+      "summary": "Serializes the dialog values to an xml file.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a817a258-86a2-8616-be00-eda92c7e5f8e"
+    },
+    {
+      "name": "SetAttributeValue",
+      "signature": "SetAttributeValue(...)",
+      "summary": "Sets a value for the given control. When the dialog is not shown, setting a property directly for a control (such as textBox1.Text = \u0022text\u0022) will not work for controls that have a Tekla Structures AttributeTypeName set. This method is going to have to be used to set the value.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/30e56a80-1c86-4606-781c-2a91b7bb8884"
+    },
+    {
+      "name": "ShowForm",
+      "signature": "ShowForm(...)",
+      "summary": "Displays the form.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/79258182-6491-e7e6-99d0-de2072cb85a5"
+    },
+    {
+      "name": "UpdateValues",
+      "signature": "UpdateValues(...)",
+      "summary": "Rereads and updates all the field values on the form.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5ab0c9d1-4ddf-1e05-29ca-560e387350e5"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Localization",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The localization instance for the dialog. Each dialog has its own localization instance that has read the localization files needed for that dialog.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6528eb05-2f85-a621-b23e-fcb51797ab1b"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

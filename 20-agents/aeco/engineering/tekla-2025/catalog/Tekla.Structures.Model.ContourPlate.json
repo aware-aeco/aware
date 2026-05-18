@@ -1,0 +1,640 @@
+{
+  "name": "ContourPlate",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The ContourPlate class represents a part made with a contour, such as, a concrete slab.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/ec399c5b-d8e9-a69a-57c8-d85f70ac3c51",
+  "constructors": [
+    {
+      "name": "ContourPlate",
+      "signature": "ContourPlate(...)",
+      "summary": "Initializes a new instance of the ContourPlate class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/68dc3d53-e1e5-e9ac-4409-c42022540745"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddContourPoint",
+      "signature": "AddContourPoint(...)",
+      "summary": "Adds a contour point to the contour plate.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e76c9697-5ba1-7d4a-69d0-62f148d12938"
+    },
+    {
+      "name": "CompareTo(Object)",
+      "signature": "CompareTo(Object)(...)",
+      "summary": "Compares Identifiers of model objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/79cca356-0c8a-e8fb-463a-34ad4141bec7"
+    },
+    {
+      "name": "CompareTo(Part)",
+      "signature": "CompareTo(Part)(...)",
+      "summary": "Compares the instantiated part with another one.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e8632c0d-89cf-9aab-6532-f62f9873067b"
+    },
+    {
+      "name": "Delete",
+      "signature": "Delete(...)",
+      "summary": "Deletes the contour plate instance with the given identifier from the model database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dde078ae-650d-2dee-1446-ab354c04dbda"
+    },
+    {
+      "name": "Equals",
+      "signature": "Equals(...)",
+      "summary": "Check if Identifiers of model objects are same.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e4324265-2490-00de-4139-63a8f7acb492"
+    },
+    {
+      "name": "GetAllReportProperties",
+      "signature": "GetAllReportProperties(...)",
+      "summary": "Retrieves all properties for the model object in one hashtable. Type for the returned value must be checked using type casting.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0708f404-ce77-28e1-4ebe-fa906f68bff8"
+    },
+    {
+      "name": "GetAllUserProperties",
+      "signature": "GetAllUserProperties(...)",
+      "summary": "Retrieves all properties for the model object in one hashtable. Type for the returned value must be checked using type casting.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/63b853a0-0af5-af9c-3ce7-05299664d7f8"
+    },
+    {
+      "name": "GetAssembly",
+      "signature": "GetAssembly(...)",
+      "summary": "Returns the assembly that the part belongs to.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bda18562-45a1-1355-42ed-6044af0b18cb"
+    },
+    {
+      "name": "GetBolts",
+      "signature": "GetBolts(...)",
+      "summary": "Returns an enumerator of all the connected bolts.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dbc6b475-7461-7ec4-e8ec-7b7d3d8ff429"
+    },
+    {
+      "name": "GetBooleans",
+      "signature": "GetBooleans(...)",
+      "summary": "Returns an enumerator of all the connected boolean objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ae180e43-88e2-d759-0ae0-567d52681a2a"
+    },
+    {
+      "name": "GetCenterLine",
+      "signature": "GetCenterLine(...)",
+      "summary": "Returns the center line for the given part.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bdc886b8-af7a-722c-dcb8-fddb2f250a83"
+    },
+    {
+      "name": "GetChildren",
+      "signature": "GetChildren(...)",
+      "summary": "Returns an enumerator of all the children model objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ce51ec40-310c-6067-a89f-f8d029aab747"
+    },
+    {
+      "name": "GetComponents",
+      "signature": "GetComponents(...)",
+      "summary": "Returns an enumerator of all the connected components, connections, seams and details inherited from the base component.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ed57941c-2cd8-3b78-6a6e-848b8a920298"
+    },
+    {
+      "name": "GetContourPolycurve",
+      "signature": "GetContourPolycurve(...)",
+      "summary": "Get contour as polycurve",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e0fcc8a4-baaf-b32e-bb1b-b5432b52ab6e"
+    },
+    {
+      "name": "GetCoordinateSystem",
+      "signature": "GetCoordinateSystem(...)",
+      "summary": "Returns the coordinate system for the given model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8adfe9cd-f6e5-6474-1297-33c6270a7b0a"
+    },
+    {
+      "name": "GetCustomObjectType",
+      "signature": "GetCustomObjectType(...)",
+      "summary": "Gets custom object type name from an existing object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d3be2ba3-8533-7165-f2d3-a5aa9df556b8"
+    },
+    {
+      "name": "GetDoubleReportProperties",
+      "signature": "GetDoubleReportProperties(...)",
+      "summary": "Retrieves multiple double report properties for the model object. It is faster to fetch multiple properties at once.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f86f6c96-f738-49ca-16ba-f5634e862ba2"
+    },
+    {
+      "name": "GetDoubleUserProperties",
+      "signature": "GetDoubleUserProperties(...)",
+      "summary": "Retrieves all double properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6ead7a63-5f76-0631-d480-d46c27e882aa"
+    },
+    {
+      "name": "GetDSTVCoordinateSystem",
+      "signature": "GetDSTVCoordinateSystem(...)",
+      "summary": "Get DSTV coordinate system.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9e70005f-c701-ab99-8fa0-4fce47b1ab05"
+    },
+    {
+      "name": "GetDynamicStringProperty",
+      "signature": "GetDynamicStringProperty(...)",
+      "summary": "Gets a dynamic string property from the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/415e86d9-7de6-ea53-ce68-20b3e67b8655"
+    },
+    {
+      "name": "GetFatherComponent",
+      "signature": "GetFatherComponent(...)",
+      "summary": "Returns the father component of the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a2c28f3f-52ff-50a8-1b32-10d18db5c31d"
+    },
+    {
+      "name": "GetHierarchicObjects",
+      "signature": "GetHierarchicObjects(...)",
+      "summary": "Returns an enumerator of all the connected hierarchic objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cc228ea0-267b-7d90-7441-c9efc1779b08"
+    },
+    {
+      "name": "GetIntegerReportProperties",
+      "signature": "GetIntegerReportProperties(...)",
+      "summary": "Retrieves multiple integer report properties for the model object. It is faster to fetch multiple properties at once.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2623a9c0-2a9c-e233-9daa-59f92ed51445"
+    },
+    {
+      "name": "GetIntegerUserProperties",
+      "signature": "GetIntegerUserProperties(...)",
+      "summary": "Retrieves all integer properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1b3c6f06-bc25-a54e-2a88-b60dc4a3c85e"
+    },
+    {
+      "name": "GetPartMark",
+      "signature": "GetPartMark(...)",
+      "summary": "Returns the part mark.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9978ba28-6304-714d-815c-fe4a6bb77076"
+    },
+    {
+      "name": "GetPhase",
+      "signature": "GetPhase(...)",
+      "summary": "Retrieves the phase of the model object (the phase number, the phase name, the phase comment and whether the phase is the current one or not).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/310f8b7a-c120-753a-35c9-f7c73a9806c9"
+    },
+    {
+      "name": "GetPours",
+      "signature": "GetPours(...)",
+      "summary": "Returns an enumerator of all the pours that the part belongs to.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1cc67ebb-329a-4675-7857-af663602d21d"
+    },
+    {
+      "name": "GetReferenceLine",
+      "signature": "GetReferenceLine(...)",
+      "summary": "Returns the reference line for the given part.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3e0a42c9-f10c-4225-bcd6-2b9b61ecc743"
+    },
+    {
+      "name": "GetReinforcements",
+      "signature": "GetReinforcements(...)",
+      "summary": "Returns an enumerator of all the connected reinforcements.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/510c913a-0653-6777-1841-c4f7df4fee47"
+    },
+    {
+      "name": "GetReportProperty(String, Double.)",
+      "signature": "GetReportProperty(String, Double.)(...)",
+      "summary": "Retrieves a double property of the report for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1c05aa56-5f42-be91-a59e-8d59a5549f45"
+    },
+    {
+      "name": "GetReportProperty(String, Int32.)",
+      "signature": "GetReportProperty(String, Int32.)(...)",
+      "summary": "Retrieves an integer property of the report for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ce8e4ca0-3750-3c9b-5ca8-27e48b45e0bd"
+    },
+    {
+      "name": "GetReportProperty(String, String.)",
+      "signature": "GetReportProperty(String, String.)(...)",
+      "summary": "Retrieves a string property of the report for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/70f212bb-ee70-e9e9-7ab6-d6a9d46f8de6"
+    },
+    {
+      "name": "GetSolid.",
+      "signature": "GetSolid.(...)",
+      "summary": "Returns the solid of the part.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7bd70e97-7c8b-823c-c7e1-da2ebe3dadaf"
+    },
+    {
+      "name": "GetSolid(FormingStates)",
+      "signature": "GetSolid(FormingStates)(...)",
+      "summary": "Returns the solid of the part.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1e4d454b-d3a0-4219-b4e2-7f661b402c4d"
+    },
+    {
+      "name": "GetSolid(Solid.SolidCreationTypeEnum)",
+      "signature": "GetSolid(Solid.SolidCreationTypeEnum)(...)",
+      "summary": "Returns the solid of the part.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/25f58541-37fe-c1ca-f384-065ecbe38e55"
+    },
+    {
+      "name": "GetStringReportProperties",
+      "signature": "GetStringReportProperties(...)",
+      "summary": "Retrieves multiple string report properties for the model object. It is faster to fetch multiple properties at once.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5ff72da1-7382-f5d2-eb1d-c99b46239d42"
+    },
+    {
+      "name": "GetStringUserProperties",
+      "signature": "GetStringUserProperties(...)",
+      "summary": "Retrieves all string properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/67120e84-c820-9d52-12ae-c167c595842c"
+    },
+    {
+      "name": "GetSurfaceObjects",
+      "signature": "GetSurfaceObjects(...)",
+      "summary": "Returns an enumerator of all the connected surface objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/36268c4e-9006-1c9d-57bd-331f907da6ce"
+    },
+    {
+      "name": "GetSurfaceTreatments",
+      "signature": "GetSurfaceTreatments(...)",
+      "summary": "Returns an enumerator of all the connected surface treatments.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/26c1c1a5-e5db-9850-f739-c58bc05c963e"
+    },
+    {
+      "name": "GetUserProperty(String, Double.)",
+      "signature": "GetUserProperty(String, Double.)(...)",
+      "summary": "Retrieves a double property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/17cc8074-7955-32b5-2b4b-b169c45d4ee0"
+    },
+    {
+      "name": "GetUserProperty(String, Int32.)",
+      "signature": "GetUserProperty(String, Int32.)(...)",
+      "summary": "Retrieves an integer property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d9364c1d-5b57-6a31-4c13-01124058cfb2"
+    },
+    {
+      "name": "GetUserProperty(String, String.)",
+      "signature": "GetUserProperty(String, String.)(...)",
+      "summary": "Retrieves a string property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/214a886c-c18c-9b66-d7c9-fe84260962f2"
+    },
+    {
+      "name": "GetWelds",
+      "signature": "GetWelds(...)",
+      "summary": "Returns an enumerator of all the connected welds.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/722de753-413b-f810-f09c-07388feb0afa"
+    },
+    {
+      "name": "Insert",
+      "signature": "Insert(...)",
+      "summary": "Inserts the contour plate into the model database. All the attributes must be set.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c02b023b-a8be-925c-f2bf-7f3cee59c03d"
+    },
+    {
+      "name": "Modify",
+      "signature": "Modify(...)",
+      "summary": "Modifies the existing contour plate in the model database to match the current one. The identifier must be set.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/15700480-e315-b734-7e0d-129e39990368"
+    },
+    {
+      "name": "Select",
+      "signature": "Select(...)",
+      "summary": "Selects a contour plate from the model database. The identifier of the contour plate must be set.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cc2b528a-c78d-8237-3171-8ae0c6650913"
+    },
+    {
+      "name": "SetCustomObjectType",
+      "signature": "SetCustomObjectType(...)",
+      "summary": "Sets a custom object type name for an existing object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3d6fb91b-48a9-35ca-d498-526514344089"
+    },
+    {
+      "name": "SetDynamicStringProperty",
+      "signature": "SetDynamicStringProperty(...)",
+      "summary": "Sets a dynamic string property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4dab0254-09e5-5e61-c28b-1c12afab71a0"
+    },
+    {
+      "name": "SetLabel",
+      "signature": "SetLabel(...)",
+      "summary": "Sets a label for an object when a new instance is created, this method must be called before Insert. The label is used in plug-ins for identifying the changed object in modification.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3efcfc44-613a-e66b-9ebd-9f86df4f4036"
+    },
+    {
+      "name": "SetPhase",
+      "signature": "SetPhase(...)",
+      "summary": "Sets the phase of the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ed80abcc-0ff7-d081-2229-e651f858a727"
+    },
+    {
+      "name": "SetUserProperties",
+      "signature": "SetUserProperties(...)",
+      "summary": "Sets multiple properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8659da37-d571-f03f-c666-5c9fa3b113f5"
+    },
+    {
+      "name": "SetUserProperty(String, Double)",
+      "signature": "SetUserProperty(String, Double)(...)",
+      "summary": "Sets a double property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5c585b8b-5c2e-7b75-2242-758f17429396"
+    },
+    {
+      "name": "SetUserProperty(String, Int32)",
+      "signature": "SetUserProperty(String, Int32)(...)",
+      "summary": "Sets an integer property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dd5b828d-3a87-bb58-5ac9-e1c3b4c2fe4b"
+    },
+    {
+      "name": "SetUserProperty(String, String)",
+      "signature": "SetUserProperty(String, String)(...)",
+      "summary": "Sets a string property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/80bf0348-b651-3d4a-862b-49c85bc924ab"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AssemblyNumber",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the assembly number. Defines the numbering in the assembly sense.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1c3ccf73-5e3c-32be-98b1-c8663c4cfc39"
+    },
+    {
+      "name": "CastUnitType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the cast unit type of the part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/52193e59-27bc-5276-8cf7-3ad3b9caf2c8"
+    },
+    {
+      "name": "Class",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the class of the part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/29df5903-60f2-42ae-64d9-47160c9c81f6"
+    },
+    {
+      "name": "Contour",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the contour for the contour plate.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c6908075-f7e2-2eeb-a05d-324ecf1c229e"
+    },
+    {
+      "name": "DeformingData",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the deforming data of the part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6ac17a2d-4f8d-351c-1bf2-dc656520dd55"
+    },
+    {
+      "name": "Finish",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the finish of the part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f90bd56c-d3ea-3999-8650-8480f1d0bb6c"
+    },
+    {
+      "name": "Identifier",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The identifier of the object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3704f321-8e6e-27e4-0752-adfaed74c69f"
+    },
+    {
+      "name": "IsUpToDate",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets if the object does not have a modification which is not shared.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bc992671-093f-44a9-5eeb-7d289fd00cc5"
+    },
+    {
+      "name": "Material",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the material the part is made of.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4ac52495-3ea6-8408-5b01-bee542216fb1"
+    },
+    {
+      "name": "ModificationTime",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets latest time of the object was modified or created.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/28d2c3c4-efd2-b4ed-7e2c-93cfb6e3a57f"
+    },
+    {
+      "name": "Name",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name of the part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/654c5a05-d3b9-1089-fcd3-a4143d753ce7"
+    },
+    {
+      "name": "PartNumber",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the part number. Defines the numbering in the part sense.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ebfb85eb-c261-3eec-0f80-ce0bd4469518"
+    },
+    {
+      "name": "Position",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the part position. Defines the way the part is positioned in the model.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f1e5515d-e690-169d-5ea3-013961ab5a81"
+    },
+    {
+      "name": "PourPhase",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the pour phase of the part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/92e39fc5-5f44-fb11-6cc6-788811e808e3"
+    },
+    {
+      "name": "Profile",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the profile of the part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0235e42f-2181-19dc-9a39-6fdecaf8eba8"
+    },
+    {
+      "name": "Type",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the read only type of the contour plate. In creation, the type is defined based on the material. If the material is concrete, the type will be slab, otherwise plate.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2c68327e-03e5-f00d-ed9c-8a3b21007e04"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

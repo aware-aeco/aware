@@ -1,0 +1,24 @@
+{
+  "name": "CustomPartBase.CustomPartInputType",
+  "namespace": "Tekla.Structures.Plugins",
+  "kind": "enum",
+  "summary": "Defines the type of the input.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/c9fa6dad-b75e-dcee-2222-118095d0d763",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "INPUT_2_POINTS",
+      "value": 1,
+      "summary": "The input is two points. The data is returned as an array list of points. Default value."
+    },
+    {
+      "name": "INPUT_1_POINT",
+      "value": 2,
+      "summary": "The input is one point. The data is returned as an array list of points."
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "name": "ProfileItemCrossSection",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The ProfileItemCrossSection contains the information of the cross section information for multi-cross section profiles.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/89e71628-5e13-2b7e-d0e8-4ebc503cee62",
+  "constructors": [
+    {
+      "name": "ProfileItemCrossSection",
+      "signature": "ProfileItemCrossSection(...)",
+      "summary": "Initializes a new instance of the ProfileItemCrossSection class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d7b10db2-d792-9472-89d5-7dd016baabe9"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddProfileItemAnalysisParamter",
+      "signature": "AddProfileItemAnalysisParamter(...)",
+      "summary": "adds a new profile item analisis parameter.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1fcd2d06-503e-f7e9-9837-1756ae102de0"
+    },
+    {
+      "name": "AddProfileItemParamter",
+      "signature": "AddProfileItemParamter(...)",
+      "summary": "adds a new profile item parameter.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0e81ef0a-d9ca-2db1-6937-c833eced17d5"
+    },
+    {
+      "name": "AddProfileItemUserParamter",
+      "signature": "AddProfileItemUserParamter(...)",
+      "summary": "adds a new profile item user parameter.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fb403a79-d9d4-f258-5ee6-8ad260b3f729"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CrossSectionLocation",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value of the property CrossSectionLocation.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8b77a440-535a-bbb6-7212-91c14ceb91b8"
+    },
+    {
+      "name": "CrossSectionNumber",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value of the property CrossSectionNumber.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6cc3b069-8402-e256-1a57-166d5d1d27b9"
+    },
+    {
+      "name": "EquivalentType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value of the property EquivalentType.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/33c1d71a-d248-3459-65b2-6e753fdbce0b"
+    },
+    {
+      "name": "Location",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value of the property Location.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4b15ad0a-85bb-29d6-dedc-03c8cbf77311"
+    },
+    {
+      "name": "Number",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value of the property Number.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/275351a0-314a-a114-3508-6dde6a6907d1"
+    },
+    {
+      "name": "NumberOfProfileItemAnalysisParameters",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value of the property NumberOfProfileItemAnalysisParameters.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a22d416f-4422-0b8d-a197-679a5157f4cd"
+    },
+    {
+      "name": "NumberOfProfileItemParameters",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value of the property NumberOfProfileItemParameters.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fc3756c4-36ad-ce94-5443-94cf5ee98125"
+    },
+    {
+      "name": "NumberOfProfileItemUserParameters",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value of the property NumberOfProfileItemUserParameters.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a1596090-c258-3d19-dd53-b23da3296ac0"
+    },
+    {
+      "name": "ProfileItemAnalysisParameters",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value of the property ProfileItemAnalysisParameters.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b68b8c72-cdd9-4def-dce9-0f1f25016b5c"
+    },
+    {
+      "name": "ProfileItemParameters",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value of the property ProfileItemParameters.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/24362122-f213-34cd-d8a7-4ce8cb2e54e1"
+    },
+    {
+      "name": "ProfileItemUserParameters",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value of the property ProfileItemUserParameters.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dd484f0a-a6ad-5c49-9455-b2341f4e7776"
+    },
+    {
+      "name": "ProfileSubType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value of the property ProfileSubType.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/43baf669-6780-072a-186e-3c8d171bdd7b"
+    },
+    {
+      "name": "ProfileType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value of the property ProfileType.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/040e31c5-ea63-1021-df2a-43bd2e33053b"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

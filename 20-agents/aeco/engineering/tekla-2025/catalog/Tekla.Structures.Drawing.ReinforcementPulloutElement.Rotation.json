@@ -1,0 +1,29 @@
+{
+  "name": "ReinforcementPulloutElement.Rotation",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The rotation of the pull-out.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/406dd8c3-f13c-b1f7-f468-d4fbe369036a",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Automatic",
+      "value": 0,
+      "summary": "Automatic rotation."
+    },
+    {
+      "name": "Plane",
+      "value": 1,
+      "summary": "Plane rotation."
+    },
+    {
+      "name": "Global",
+      "value": 2,
+      "summary": "Global 3D rotation."
+    }
+  ]
+}

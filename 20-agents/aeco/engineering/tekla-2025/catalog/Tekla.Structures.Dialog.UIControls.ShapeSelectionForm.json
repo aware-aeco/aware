@@ -1,0 +1,42 @@
+{
+  "name": "ShapeSelectionForm",
+  "namespace": "Tekla.Structures.Dialog.UIControls",
+  "kind": "class",
+  "summary": "The ShapeSelectionForm class represents a dialog to select Shapes using the Shape catalogs.",
+  "base": "System.Windows.Forms.Form",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/2f45ba74-99dc-bd5c-bef3-221281f1d833",
+  "constructors": [
+    {
+      "name": "ShapeSelectionForm",
+      "signature": "ShapeSelectionForm(...)",
+      "summary": "Initializes a new instance of the ShapeSelectionForm class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2dc4e422-ad1a-e1bb-bdab-0bf929e2bd5b"
+    },
+    {
+      "name": "ShapeSelectionForm",
+      "signature": "ShapeSelectionForm(...)",
+      "summary": "Initializes a new instance of the ShapeSelectionForm class, selecting the given Shape in the tree control.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c2d56104-f064-232e-898b-51d0807239bb"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "SelectedShape",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the selected Shape in the control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/28400bd8-d2b5-a706-ef91-2b6598e89f3b"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

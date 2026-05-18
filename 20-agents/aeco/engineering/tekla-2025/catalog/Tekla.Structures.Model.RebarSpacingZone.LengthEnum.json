@@ -1,0 +1,24 @@
+{
+  "name": "RebarSpacingZone.LengthEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The length type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/223a779e-0ae1-dcad-ff8c-52bcd3fe46f3",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ABSOLUTE",
+      "value": 0,
+      "summary": "The length is an absolute value."
+    },
+    {
+      "name": "RELATIVE",
+      "value": 1,
+      "summary": "The length is a relative value."
+    }
+  ]
+}

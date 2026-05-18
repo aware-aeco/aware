@@ -1,0 +1,68 @@
+{
+  "name": "ViewMarkBasicTagAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The ViewMarkBasicTagAttributes class contains basic attributes for view mark tags.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/115cdf5c-c4ca-707c-761d-a174175a4682",
+  "constructors": [
+    {
+      "name": "ViewMarkBasicTagAttributes",
+      "signature": "ViewMarkBasicTagAttributes(...)",
+      "summary": "Creates a new mark tag attributes instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7d5ec4f6-edbd-3e0a-8661-3f62820f38f9"
+    },
+    {
+      "name": "ViewMarkBasicTagAttributes",
+      "signature": "ViewMarkBasicTagAttributes(...)",
+      "summary": "Creates a new mark tag attributes instance with the given offset, location and content.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bf9eecc9-18c1-e751-4d3d-cf7980915a38"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f39f9dcb-d8ad-b6c2-0199-cabb488c493f"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Location",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The location of the mark tag.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5cfa0bec-7ded-11fb-c125-c9a015d41da7"
+    },
+    {
+      "name": "Offset",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The offset of the mark tag.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0095c5d2-868d-ae47-8ebd-6c1848a3439f"
+    },
+    {
+      "name": "TagContent",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The tag content.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/48b0907a-5a0e-b17c-6a7a-b98abb8cadc1"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,14 @@
+{
+  "name": "Events.DrawingUpdatedDelegate",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "delegate",
+  "summary": "The delegate to use for drawing updated (insertion, deletion or modification).",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/354f8066-5b51-c720-b519-1439296c0375",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void DrawingUpdatedDelegate( Drawing drawing, Events.DrawingUpdateTypeEnum type )"
+}

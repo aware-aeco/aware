@@ -43,3 +43,14 @@ public sealed class CoverageGenerateArgs
     [JsonPropertyName("vendor")] public string Vendor { get; set; } = "";
     [JsonPropertyName("vertical")] public string Vertical { get; set; } = "";
 }
+
+/// <summary>
+/// Coverage-extract verb args (Phase B). Drives a vendor extractor to crawl the
+/// vendor's docs site / SDK and write a host-coverage IR JSON to disk.
+/// </summary>
+public sealed class CoverageExtractArgs
+{
+    [JsonPropertyName("vendor")] public string Vendor { get; set; } = "";
+    [JsonPropertyName("version")] public string Version { get; set; } = "";
+    [JsonPropertyName("out_path")] public string OutPath { get; set; } = "";
+}

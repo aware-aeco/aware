@@ -1,0 +1,52 @@
+{
+  "name": "OkApplyCancel",
+  "namespace": "Tekla.Structures.Dialog.UIControls",
+  "kind": "class",
+  "summary": "The OkApplyCancel class represents a control including the Ok-Apply-Cancel button group.",
+  "base": "System.Windows.Forms.UserControl",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/475b9797-ba28-f3ef-330d-357a17a3bcb0",
+  "constructors": [
+    {
+      "name": "OkApplyCancel",
+      "signature": "OkApplyCancel(...)",
+      "summary": "Initializes a new instance of the OkApplyCancel class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9ae12605-935c-ad63-c803-024c134f8025"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [
+    {
+      "name": "ApplyClicked",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler ApplyClicked",
+      "summary": "The ApplyClicked event is raised when the Apply button is clicked.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/95713516-c251-7fd4-e346-741aaa0ebcf2",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "CancelClicked",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler CancelClicked",
+      "summary": "The CancelClicked event is raised when the Cancel button is clicked.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8548e233-6926-2390-0617-d4d94540a296",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "OkClicked",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler OkClicked",
+      "summary": "The OkClicked event is raised when the Ok button is clicked.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4c478d7d-4ea4-2fef-d438-e0e29bb07ea4",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

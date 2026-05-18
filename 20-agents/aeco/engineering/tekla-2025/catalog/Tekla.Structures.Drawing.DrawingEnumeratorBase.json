@@ -1,0 +1,60 @@
+{
+  "name": "DrawingEnumeratorBase",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The DrawingEnumeratorBase class is a base class for DrawingObjectEnumerator and DrawingEnumerator.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/965d8de8-7450-4374-7000-018074df3b54",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetEnumerator",
+      "signature": "GetEnumerator(...)",
+      "summary": "Allows the usage of the foreach statement with DrawingObjectEnumerator.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6d49ab9f-b229-3e1a-f471-83fe41ddd3aa"
+    },
+    {
+      "name": "GetSize",
+      "signature": "GetSize(...)",
+      "summary": "Returns the total amout of items.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1b1d3fb7-f3cb-3fbe-97f7-19fc5d437b48"
+    },
+    {
+      "name": "MoveNext",
+      "signature": "MoveNext(...)",
+      "summary": "Moves to the next item in the enumerator.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4f07c4bf-0de8-7040-8a2a-883fb0b8db66"
+    },
+    {
+      "name": "Reset",
+      "signature": "Reset(...)",
+      "summary": "Resets the enumerator to the beginning.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8b7ad0a7-646c-0763-6b98-9c49984e0d55"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AutoFetch",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates that the objects are fetched from the drawing when the enumerator is created. Object information is therefore not anymore fetched when \u0027Current\u0027 item is asked from the enumerator. Property value is used for all enumerators in application",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6b70a4d1-b0a5-9e8b-20a8-7e9a17c17cf8"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

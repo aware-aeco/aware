@@ -1,0 +1,33 @@
+{
+  "name": "AutoDrawingRule",
+  "namespace": "Tekla.Structures.Drawing.Automation",
+  "kind": "class",
+  "summary": "The AutoDrawingRule class contains the definition of a rule for the Tekla Structures AutoDrawing tool.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/14fb0762-786d-a810-3a17-c47fa3e05982",
+  "constructors": [
+    {
+      "name": "AutoDrawingRule",
+      "signature": "AutoDrawingRule(...)",
+      "summary": "Creates a new AutoDrawing rule by using an existing rule file.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4e75fc19-8382-4858-ad91-8a0a31e18fd9"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Filename",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The filename of the AutoDrawing script.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4fd13150-6df1-24d4-9883-84f759189ea1"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

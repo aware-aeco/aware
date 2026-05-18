@@ -1,0 +1,33 @@
+{
+  "name": "BoltName",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The BoltName class contains the name of the bolt item.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/14ea55d1-ede5-e746-1b99-fc5debac1fcc",
+  "constructors": [
+    {
+      "name": "BoltName",
+      "signature": "BoltName(...)",
+      "summary": "Initializes a new instance of the BoltName class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/df7caabd-9d40-39ff-684d-6ebc28d4f0c7"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The bolt item name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/46fbb359-5074-c11d-3a24-a1cfd372fa14"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,24 @@
+{
+  "name": "View.VerticalLabelPosition",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The vertical label position types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/0f88254d-66dc-5106-8c22-03dbfd891b58",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Top",
+      "value": 1,
+      "summary": "The label is located on the top of the view."
+    },
+    {
+      "name": "Bottom",
+      "value": 2,
+      "summary": "The label is located on the bottom of the view."
+    }
+  ]
+}

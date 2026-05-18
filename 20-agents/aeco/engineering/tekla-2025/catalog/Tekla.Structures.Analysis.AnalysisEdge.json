@@ -1,0 +1,151 @@
+{
+  "name": "AnalysisEdge",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisEdge class contains information related to analysis edges.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/d8425917-6ede-07de-d448-2967ae5abea4",
+  "constructors": [
+    {
+      "name": "AnalysisEdge",
+      "signature": "AnalysisEdge(...)",
+      "summary": "Creates a new instance of the AnalysisEdge class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6c64ffd8-6c28-0d37-9218-a7e38217ec9a"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddSplit",
+      "signature": "AddSplit(...)",
+      "summary": "Adds a split position to the analysis edge.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/97fb70fe-2bf3-1123-3eaf-933faa33cd11"
+    },
+    {
+      "name": "CopyData",
+      "signature": "CopyData(...)",
+      "summary": "Copies data from another analysis edge.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bd114c63-7989-e9dc-7120-19315857a5a3"
+    },
+    {
+      "name": "GetSplitPositions",
+      "signature": "GetSplitPositions(...)",
+      "summary": "Gets the split positions of the analysis edge.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0dfbec6e-354f-1b34-b69e-451f583d2be9"
+    },
+    {
+      "name": "Modify",
+      "signature": "Modify(...)",
+      "summary": "Modifies an analysis edge. The AnalysisModelName has to be set.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6c457e77-05cc-2d55-e9bc-13da787aa80f"
+    },
+    {
+      "name": "Select",
+      "signature": "Select(...)",
+      "summary": "Selects an analysis edge.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2b38b971-27ff-c814-1587-f036332eb619"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AnalysisModelName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis model name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/820dc60f-92bc-f84c-9b4f-bf71faf2b76a"
+    },
+    {
+      "name": "AnalysisObjectType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2a2631ed-5e7b-7e60-f1d2-52186a5a17c4"
+    },
+    {
+      "name": "Connectivity",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The connectivity of the analysis edge.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b5719732-44b0-60ea-fe6f-4aafbc7478ec"
+    },
+    {
+      "name": "FatherObject2ID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3cc2e3ff-3afd-4def-2559-7c1827233bec"
+    },
+    {
+      "name": "FatherObject2Type",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7b5d643a-2a12-5281-7f65-a312171bafcc"
+    },
+    {
+      "name": "FatherObjectID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7e55f4c8-ca1a-2761-edd6-2b69663ff941"
+    },
+    {
+      "name": "FatherObjectType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/739bcea1-858d-70e2-ff0d-9c4928129c3e"
+    },
+    {
+      "name": "ID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/289caef6-9b6e-cd4c-dcbc-6397be2f9de0"
+    },
+    {
+      "name": "Radius",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The radius of the analysis edge.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2ce5b2b7-a1c2-21e4-1e41-9a8de6238671"
+    },
+    {
+      "name": "SplitPositions",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The split positions of the analysis edge.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/17c9db1a-0f42-ac31-0042-8648759e43ff"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

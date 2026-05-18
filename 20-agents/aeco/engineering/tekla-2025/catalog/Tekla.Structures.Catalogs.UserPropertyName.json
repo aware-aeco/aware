@@ -1,0 +1,33 @@
+{
+  "name": "UserPropertyName",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The UserPropertyName class contains the name of the user property item.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/42e8df58-db5b-2799-58a9-9ba5cc5f9f99",
+  "constructors": [
+    {
+      "name": "UserPropertyName",
+      "signature": "UserPropertyName(...)",
+      "summary": "Initializes a new instance of the UserPropertyName class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c875cae1-5514-c52a-b6d7-1e61045c5197"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The user property item name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/049d8f45-9d30-afa7-40c1-0aac095b7653"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

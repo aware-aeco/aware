@@ -1,0 +1,250 @@
+{
+  "name": "DrawingHandler",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The DrawingHandler class initializes the interface from a .NET application to Tekla Structures. This object must be created before any actions can be performed on Tekla Structures drawings. When this object is created, it is possible to ask the current active drawing in Tekla Structures, get a list of drawings or create a new drawing.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/99085c56-78ab-d559-3ae6-e0cae84b3742",
+  "constructors": [
+    {
+      "name": "DrawingHandler",
+      "signature": "DrawingHandler(...)",
+      "summary": "Creates a new drawing handler instance, a \u0022handle\u0022 to Tekla.Structures.Drawing. When a drawing handler object is created, it is possible to ask the current active drawing in Tekla Structures, get a list of drawings or create a new drawing.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/080d8546-ab71-54e4-9570-0bf36043bba1"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CloseActiveDrawing.",
+      "signature": "CloseActiveDrawing.(...)",
+      "summary": "Closes the drawing editor.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/28a51c2a-f66c-7516-857a-c28c7e8c0737"
+    },
+    {
+      "name": "CloseActiveDrawing(Boolean)",
+      "signature": "CloseActiveDrawing(Boolean)(...)",
+      "summary": "Closes the drawing editor.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3b137222-7773-704a-d875-fbdbb1257ca6"
+    },
+    {
+      "name": "GetActiveDrawing",
+      "signature": "GetActiveDrawing(...)",
+      "summary": "Returns an instance of the active drawing that is currently open in Tekla Structures.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b81bdfd4-7251-6dd2-3220-840143e6cbbf"
+    },
+    {
+      "name": "GetConnectionStatus",
+      "signature": "GetConnectionStatus(...)",
+      "summary": "Returns true if a proper connection to the Tekla Structures process has been established. A proper connection to Tekla Stuctures in the drawing API needs Tekla Structures up and running and a model open. Currently, there\u0027s no way to re-establish the connection.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0f81f45b-d947-0af9-7dcd-5f808f6b77a1"
+    },
+    {
+      "name": "GetDrawingObjectSelector",
+      "signature": "GetDrawingObjectSelector(...)",
+      "summary": "Gets a drawing object selector. With a drawing object selector drawing objects can be selected and highlighted in the drawing editor. A drawing object selector also provides a list of currently selected drawing objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/697aadf2-9bb6-4f35-f6a7-ad6f07afb121"
+    },
+    {
+      "name": "GetDrawings",
+      "signature": "GetDrawings(...)",
+      "summary": "Gets all the drawings from the database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/168596db-1134-c430-5061-c5e7bfd74137"
+    },
+    {
+      "name": "GetDrawingSelector",
+      "signature": "GetDrawingSelector(...)",
+      "summary": "Gets a drawing selector. With a drawing selector the list of selected drawings can be gotten.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0d2838dc-fc44-9ca6-1160-9199c9a61c86"
+    },
+    {
+      "name": "GetMessageExecutionStatus",
+      "signature": "GetMessageExecutionStatus(...)",
+      "summary": "Gets the current message execution mode for the application.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/98f090d6-61bf-b7c3-e882-8ce74bfb4e94"
+    },
+    {
+      "name": "GetModelObjectIdentifiers",
+      "signature": "GetModelObjectIdentifiers(...)",
+      "summary": "Gets model object identifiers of the drawing.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/10273ee5-31be-5058-48b0-b54a684f60e7"
+    },
+    {
+      "name": "GetPicker",
+      "signature": "GetPicker(...)",
+      "summary": "Gets a picker for picking points and objects in a drawing.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4f0314ad-dfb2-e486-4936-0fb4e680e628"
+    },
+    {
+      "name": "IsAnyDrawingOpen",
+      "signature": "IsAnyDrawingOpen(...)",
+      "summary": "Returns information if any drawing is open.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bc85671d-e8ca-5537-83a4-251f188816e0"
+    },
+    {
+      "name": "IssueDrawing",
+      "signature": "IssueDrawing(...)",
+      "summary": "Issues the drawing if the drawing is not issued or was previously issued but has been modified since. This is the same as pressing Issue on the drawing list for a selected drawing.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c3d672fd-1551-264f-6ef0-845fb7c0ed8f"
+    },
+    {
+      "name": "PrintDrawing(Drawing, DPMPrinterAttributes)",
+      "signature": "PrintDrawing(Drawing, DPMPrinterAttributes)(...)",
+      "summary": "Prints the drawing using the given printer attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/794a682c-1c9e-09e2-61a9-a190a3c6a7a0"
+    },
+    {
+      "name": "PrintDrawing(Drawing, PrintAttributes)",
+      "signature": "PrintDrawing(Drawing, PrintAttributes)(...)",
+      "summary": "Prints the drawing using the given printer instance. NOTE! The drawing cannot be active, otherwise printing fails.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6d90ef48-e76c-7b90-97ea-f0f0305f356f"
+    },
+    {
+      "name": "PrintDrawing(Drawing, DPMPrinterAttributes, String)",
+      "signature": "PrintDrawing(Drawing, DPMPrinterAttributes, String)(...)",
+      "summary": "Prints the drawing to file using the given printer attributes and name of the output file. The given output file overrides the printer attributes file settings.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9892c982-a3a0-7c7f-be45-d0c0ecf5e011"
+    },
+    {
+      "name": "PrintDrawing(Drawing, PrintAttributes, String)",
+      "signature": "PrintDrawing(Drawing, PrintAttributes, String)(...)",
+      "summary": "Prints the drawing to file using the given printer instance. NOTE! The drawing cannot be active, otherwise printing fails.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8769190b-de6e-2268-846a-3fe3ccbfc6f1"
+    },
+    {
+      "name": "PrintDrawings(List.Drawing., DPMPrinterAttributes)",
+      "signature": "PrintDrawings(List.Drawing., DPMPrinterAttributes)(...)",
+      "summary": "Prints the list of drawings using the given printer attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8bbf61cb-24e0-da11-a4ba-e187133b4c55"
+    },
+    {
+      "name": "PrintDrawings(IEnumerable.Drawing., DPMPrinterAttributes, String)",
+      "signature": "PrintDrawings(IEnumerable.Drawing., DPMPrinterAttributes, String)(...)",
+      "summary": "Prints the list of drawings using the given printer attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/18cfb3c1-0804-3486-ae62-da6e8a3c357e"
+    },
+    {
+      "name": "SaveActiveDrawing",
+      "signature": "SaveActiveDrawing(...)",
+      "summary": "Saves the currently open drawing.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/22861cc2-b284-efde-02ff-824947336e92"
+    },
+    {
+      "name": "SetActiveDrawing(Drawing)",
+      "signature": "SetActiveDrawing(Drawing)(...)",
+      "summary": "Sets the active drawing that is currently open in Tekla Structures.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3dab6952-0b6b-9b3a-9d77-48c406290215"
+    },
+    {
+      "name": "SetActiveDrawing(Drawing, Boolean)",
+      "signature": "SetActiveDrawing(Drawing, Boolean)(...)",
+      "summary": "Sets the active drawing that is currently open in Tekla Structures.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/11e9c711-1f1d-a057-d26b-abec310ddafe"
+    },
+    {
+      "name": "SetActiveDrawing(Drawing, Boolean, Boolean)",
+      "signature": "SetActiveDrawing(Drawing, Boolean, Boolean)(...)",
+      "summary": "Sets the active drawing that is currently open in Tekla Structures.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/106a2ced-348c-3323-21f7-61ffff722d8c"
+    },
+    {
+      "name": "SetMessageExecutionStatus",
+      "signature": "SetMessageExecutionStatus(...)",
+      "summary": "Sets the message execution mode for the application.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/588ddcdb-534e-5cd4-3069-1cdb2f8a20f9"
+    },
+    {
+      "name": "UnissueDrawing",
+      "signature": "UnissueDrawing(...)",
+      "summary": "Unissues the drawing. This is the same as pressing Unissue on the drawing list for a selected drawing.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fa82a99e-ce89-e906-6d43-28e189ed48d3"
+    },
+    {
+      "name": "UpdateDrawing",
+      "signature": "UpdateDrawing(...)",
+      "summary": "Updates the drawing. This is the same as pressing Update on the drawing list for a selected drawing. NOTE! The drawing cannot be active, otherwise the operation fails. NOTE! Numbering must be executed before this operation.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e6815606-40e5-189f-d6c1-5192dc16f9ad"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

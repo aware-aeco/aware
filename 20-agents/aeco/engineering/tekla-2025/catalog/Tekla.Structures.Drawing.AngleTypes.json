@@ -1,0 +1,49 @@
+{
+  "name": "AngleTypes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The different types for angle dimensions.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/62aa1446-baf4-d2f9-326e-a1a502f11e66",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "AngleOnSide",
+      "value": 1,
+      "summary": "Shows the angle dimensions in degrees on the side."
+    },
+    {
+      "name": "AngleAtVertex",
+      "value": 3,
+      "summary": "Shows the angle dimensions in degrees at the angle vertex."
+    },
+    {
+      "name": "Triangle",
+      "value": 2,
+      "summary": "Shows the angle dimensions using a triangle. The triangle base length can be configured."
+    },
+    {
+      "name": "TriangleWithDegrees",
+      "value": 4,
+      "summary": "Shows the angle using a triangle, also shows the angle in degrees on one side of the triangle."
+    },
+    {
+      "name": "AngleOnSideGradian",
+      "value": 5,
+      "summary": "Shows the angle dimensions in gradians on the side."
+    },
+    {
+      "name": "AngleAtVertexGradian",
+      "value": 6,
+      "summary": "Shows the angle dimensions in gradians at the angle vertex."
+    },
+    {
+      "name": "TriangleWithGradians",
+      "value": 7,
+      "summary": "Shows the angle using a triangle, also shows the angle in gradians on one side of the triangle."
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "name": "Settings",
+  "namespace": "Tekla.Structures.Datatype",
+  "kind": "class",
+  "summary": "The Settings class contains the currently active unit settings.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/9485d590-5b71-ebb9-13fb-8f55de9337ab",
+  "constructors": [
+    {
+      "name": "Settings",
+      "signature": "Settings(...)",
+      "summary": "Initializes a new instance of the Settings class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cb350206-d31b-553d-fa35-2394d59889ac"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetValue",
+      "signature": "GetValue(...)",
+      "summary": "Gets the value of the setting with the given name.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0db94c0d-502a-97b2-51df-d351b58524c4"
+    },
+    {
+      "name": "SetValue",
+      "signature": "SetValue(...)",
+      "summary": "Sets a setting to a value.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2903c000-7c5f-df96-9a7f-9556d992d4aa"
+    },
+    {
+      "name": "TryGetValue(String, Object.)",
+      "signature": "TryGetValue(String, Object.)(...)",
+      "summary": "Tries to get the value of the setting with the given name.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9ebbbc0c-626d-6f2b-2c3f-e58c9509bcf5"
+    },
+    {
+      "name": "TryGetValue.T.(String, T.)",
+      "signature": "TryGetValue.T.(String, T.)(...)",
+      "summary": "Tries to get the value of the setting with the given name and given object type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c48529be-f7c8-5b08-34fe-33491cb04597"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

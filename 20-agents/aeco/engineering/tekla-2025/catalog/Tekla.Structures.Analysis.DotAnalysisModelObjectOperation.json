@@ -1,0 +1,13 @@
+{
+  "name": "DotAnalysisModelObjectOperation",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "struct",
+  "summary": "The serialization structure for analysis model object operations.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/6723a0df-9ef7-71db-b04c-7beda2734bdd",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

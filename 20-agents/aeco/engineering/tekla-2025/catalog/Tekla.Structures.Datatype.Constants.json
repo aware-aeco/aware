@@ -1,0 +1,14 @@
+{
+  "name": "Constants",
+  "namespace": "Tekla.Structures.Datatype",
+  "kind": "class",
+  "summary": "The Constants class is a repository for constants used by the Tekla.Structures.Datatype.* types.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/a9c87d6b-3c67-250d-c2d6-addcbb36aa96",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

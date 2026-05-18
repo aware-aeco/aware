@@ -1,0 +1,67 @@
+{
+  "name": "PickerInputThreePoints",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PickerInputThreePoints class represents a pick of three points in a view. Used for values asked by UI.Picker.PickThreePoints(string FirstPrompt, string SecondPrompt, string ThirdPrompt, out Point FirstPickedPoint, out Point SecondPickedPoint, out Point ThirdPickedPoint, out ViewBase PickedView).",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/2629dcea-675a-313d-5374-4318480be672",
+  "constructors": [
+    {
+      "name": "PickerInputThreePoints",
+      "signature": "PickerInputThreePoints(...)",
+      "summary": "Creates a new PickerInputThreePoints instance with one point selected in a view.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f70d0afd-9df1-ec62-8438-bfcfee84432c"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/27544458-03bd-3973-26f7-e0599800aa4e"
+    }
+  ],
+  "properties": [
+    {
+      "name": "FirstPickedPoint",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The first picked point in the view coordinates.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/245b40f0-61d5-78a4-778d-0a02d542a35d"
+    },
+    {
+      "name": "PickedView",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The view within which the pick occurred.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/aecacf99-0f9d-b781-aa92-7e9efb2986c0"
+    },
+    {
+      "name": "SecondPickedPoint",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The second picked point in the view coordinates.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4af32644-65c8-d1d7-9af6-0a6908957ecc"
+    },
+    {
+      "name": "ThirdPickedPoint",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The third picked point in the view coordinates.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f6177867-bc72-3282-f29c-b61033ad9ddf"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

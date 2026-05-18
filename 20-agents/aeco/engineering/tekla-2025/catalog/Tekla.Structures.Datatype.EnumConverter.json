@@ -1,0 +1,61 @@
+{
+  "name": "EnumConverter",
+  "namespace": "Tekla.Structures.Datatype",
+  "kind": "class",
+  "summary": "Type converter for Enum",
+  "base": "System.ComponentModel.TypeConverter",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/dd7d11a6-800a-0ad4-445e-2a071b3fa1a9",
+  "constructors": [
+    {
+      "name": "EnumConverter",
+      "signature": "EnumConverter(...)",
+      "summary": "Initializes a new instance of the EnumConverter class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e8c55b6b-b197-9c21-01ac-e6397ccbd663"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CanConvertFrom",
+      "signature": "CanConvertFrom(...)",
+      "summary": "(Overrides TypeConverter.CanConvertFrom(ITypeDescriptorContext, Type).)",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0b0bd085-59fe-234a-332e-91c6575ba2c8"
+    },
+    {
+      "name": "CanConvertTo",
+      "signature": "CanConvertTo(...)",
+      "summary": "(Overrides TypeConverter.CanConvertTo(ITypeDescriptorContext, Type).)",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7276eb74-bf2f-3369-41b7-63cc47940877"
+    },
+    {
+      "name": "ConvertFrom",
+      "signature": "ConvertFrom(...)",
+      "summary": "(Overrides TypeConverter.ConvertFrom(ITypeDescriptorContext, CultureInfo, Object).)",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dc16d26e-bf17-b038-d170-aa132b6b34db"
+    },
+    {
+      "name": "ConvertTo",
+      "signature": "ConvertTo(...)",
+      "summary": "(Overrides TypeConverter.ConvertTo(ITypeDescriptorContext, CultureInfo, Object, Type).)",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/726ddaea-16ca-37a5-75f1-1d4f0fdfe98d"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

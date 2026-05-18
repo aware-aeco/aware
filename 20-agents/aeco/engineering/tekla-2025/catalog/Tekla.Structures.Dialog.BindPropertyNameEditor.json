@@ -1,0 +1,43 @@
+{
+  "name": "BindPropertyNameEditor",
+  "namespace": "Tekla.Structures.Dialog",
+  "kind": "class",
+  "summary": "The BindPropertyNameEditor class provides a user interface for selecting a property for the attribute binding.",
+  "base": "System.Drawing.Design.UITypeEditor",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/0f3291e8-c5d8-b8a0-393c-b8fbd856e46d",
+  "constructors": [
+    {
+      "name": "BindPropertyNameEditor",
+      "signature": "BindPropertyNameEditor(...)",
+      "summary": "Initializes a new instance of the BindPropertyNameEditor class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/64c9d61a-ad0c-c99a-6468-fba85f1eed22"
+    }
+  ],
+  "methods": [
+    {
+      "name": "EditValue",
+      "signature": "EditValue(...)",
+      "summary": "Edits the specified object\u0027s value using the editor style indicated by the GetEditStyle method.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3514de25-6ae6-f277-0fc1-f2d29bb86009"
+    },
+    {
+      "name": "GetEditStyle",
+      "signature": "GetEditStyle(...)",
+      "summary": "Gets the editor style used by the EditValue method.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a84dddb2-7bd1-afe7-7be8-3d5949a9971d"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

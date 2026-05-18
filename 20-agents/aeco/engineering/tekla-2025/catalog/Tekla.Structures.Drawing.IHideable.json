@@ -1,0 +1,22 @@
+{
+  "name": "IHideable",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "interface",
+  "summary": "The IHideable interface is used for each object that can be hidden in the drawing.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/0c4dfdaf-aa13-bb97-dc11-6f890f917d57",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Hideable",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Accesses the information if this object is hidden or not or if it should be.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0a456091-c423-55e9-67db-917d7422c653"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

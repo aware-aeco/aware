@@ -1,0 +1,69 @@
+{
+  "name": "Arc.ArcAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The ArcAttributes class is the attributes class for the arc.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/fe75912d-5edb-8618-bff7-26101e15bcca",
+  "constructors": [
+    {
+      "name": "Arc.ArcAttributes",
+      "signature": "Arc.ArcAttributes(...)",
+      "summary": "Creates a new default arc attributes instance that loads standard attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/67d7f502-b671-3f33-4a4b-5826bf5866b2"
+    },
+    {
+      "name": "Arc.ArcAttributes",
+      "signature": "Arc.ArcAttributes(...)",
+      "summary": "Creates a new arc attributes instance that loads the specified attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a247bdde-18a2-0907-fff5-9526491a4335"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4487b421-12ff-7f14-e459-d8007696ea56"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "LoadAttributes(...)",
+      "summary": "Loads the attributes from the attribute file.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e57b493d-61b1-036c-333f-0c0a8610d197"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Arrowhead",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The arrowhead attributes of the open graphic object. The end points of an open graphic object can contain arrowheads.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fc9e61df-70b7-4271-ac40-f00c1772e151"
+    },
+    {
+      "name": "Line",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The line attributes of the graphic object. A graphic object always consists of lines.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3483367b-c555-6997-e0a4-988358d7ce9b"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

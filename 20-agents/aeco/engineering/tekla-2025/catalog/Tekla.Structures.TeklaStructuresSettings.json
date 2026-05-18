@@ -1,0 +1,124 @@
+{
+  "name": "TeklaStructuresSettings",
+  "namespace": "Tekla.Structures",
+  "kind": "class",
+  "summary": "The TeklaStructuresSettings class provides methods to inquire application settings.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/7c4799d1-b9cb-cbb1-9b3d-4ce81b05ccc6",
+  "constructors": [
+    {
+      "name": "TeklaStructuresSettings",
+      "signature": "TeklaStructuresSettings(...)",
+      "summary": "Initializes a new instance of the TeklaStructuresSettings class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ab75b5ab-ed36-3c6d-d9ec-d84e0275ce4f"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetAdvancedOption(String, Boolean.)",
+      "signature": "GetAdvancedOption(String, Boolean.)(...)",
+      "summary": "Returns the value of an advanced option variable.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8aa73d82-ab8b-e43d-63c7-cdde9ff4eb6e"
+    },
+    {
+      "name": "GetAdvancedOption(String, Double.)",
+      "signature": "GetAdvancedOption(String, Double.)(...)",
+      "summary": "Returns the value of an advanced option variable.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a4ddad5c-eccd-0038-3056-e7c41a86eb13"
+    },
+    {
+      "name": "GetAdvancedOption(String, Int32.)",
+      "signature": "GetAdvancedOption(String, Int32.)(...)",
+      "summary": "Returns the value of an advanced option variable.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/765beeeb-fe53-93b4-24fd-d68dd05aa37c"
+    },
+    {
+      "name": "GetAdvancedOption(String, String.)",
+      "signature": "GetAdvancedOption(String, String.)(...)",
+      "summary": "Returns the value of an advanced option variable.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/251a7058-3458-8683-9135-d39aa3de182b"
+    },
+    {
+      "name": "GetAdvancedOptionPaths",
+      "signature": "GetAdvancedOptionPaths(...)",
+      "summary": "Gets the value of an advanced option as a list of valid paths. Strings with path separator ; are split into separate paths and any blank paths (containing only white space) are ignored. Paths do not need to exist but must use valid characters and format. Note: All valid paths are returned even when invalid paths are encountered.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/00e86aee-ab47-95ed-1985-3f79cc91215c"
+    },
+    {
+      "name": "GetOptions(ClashCheckOptions.)",
+      "signature": "GetOptions(ClashCheckOptions.)(...)",
+      "summary": "Returns the value of the clash check options.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fa761e3b-f4ef-59b8-da2d-2cba78d907d4"
+    },
+    {
+      "name": "GetOptions(ComponentOptions.)",
+      "signature": "GetOptions(ComponentOptions.)(...)",
+      "summary": "Returns the value of the component options.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/870f7c68-41f6-22e5-e591-550bede2d30b"
+    },
+    {
+      "name": "IsPourEnabled",
+      "signature": "IsPourEnabled(...)",
+      "summary": "Determines whether pour management is enabled.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/11cf2635-0c47-669c-770f-228d798e0d4b"
+    },
+    {
+      "name": "IsToolOptionOn",
+      "signature": "IsToolOptionOn(...)",
+      "summary": "Determines whether select switch is on.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/43438834-9d98-9090-4a02-15e6fe958c33"
+    },
+    {
+      "name": "SetOptions(ClashCheckOptions)",
+      "signature": "SetOptions(ClashCheckOptions)(...)",
+      "summary": "Sets the clash check options.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0de6b6e4-7696-1801-862e-fe2b8cf0aad5"
+    },
+    {
+      "name": "SetOptions(ComponentOptions)",
+      "signature": "SetOptions(ComponentOptions)(...)",
+      "summary": "Sets the component options.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1c1d8098-bb5b-7a6c-c73a-5069345ac004"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

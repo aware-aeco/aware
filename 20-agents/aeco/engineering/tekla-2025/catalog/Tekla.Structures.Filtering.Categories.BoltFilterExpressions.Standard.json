@@ -1,0 +1,34 @@
+{
+  "name": "BoltFilterExpressions.Standard",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The Standard class represents the standard filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/3c43c69e-56d6-2b91-5a0a-e9a8d099fc85",
+  "constructors": [
+    {
+      "name": "BoltFilterExpressions.Standard",
+      "signature": "BoltFilterExpressions.Standard(...)",
+      "summary": "Initializes a new instance of the Standard class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4d75bb89-619c-aa54-65f5-5d537ecf59ba"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

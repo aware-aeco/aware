@@ -1,0 +1,60 @@
+{
+  "name": "DimensionSetBaseAttributes.CombinedDimensionAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The CombinedDimensionAttributes class handles attributes related to the combination of identical parts of dimensions.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/1f848894-eb94-d830-b612-4e021e78f6ed",
+  "constructors": [
+    {
+      "name": "DimensionSetBaseAttributes.CombinedDimensionAttributes",
+      "signature": "DimensionSetBaseAttributes.CombinedDimensionAttributes(...)",
+      "summary": "Creates a new combined dimension attributes instance. The defaults combine a minimum of three identical dimensions to be shown as the number of items times the length of the dimension.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3c38018e-b638-e437-bf43-ca53d9c74b32"
+    },
+    {
+      "name": "DimensionSetBaseAttributes.CombinedDimensionAttributes",
+      "signature": "DimensionSetBaseAttributes.CombinedDimensionAttributes(...)",
+      "summary": "Creates a new combined dimension attributes instance with the given parameters.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/95fc1a0c-f771-0bce-2916-900df5530f81"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/08efea1e-c0ac-8c7c-65e6-b5a6448d8347"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Format",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The combined dimension format.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ed123fce-b3d2-f84c-6ddd-9e91de261982"
+    },
+    {
+      "name": "MinimumNumberToCombine",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The minimum number of dimensions to be combined.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0797ccbf-4858-76c0-73da-721b2f61c5ff"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

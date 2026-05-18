@@ -1,0 +1,78 @@
+{
+  "name": "TextElement",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The TextElement class defines a user-defined text in a mark content.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/71636693-ebad-f893-1ca0-95a85d63a091",
+  "constructors": [
+    {
+      "name": "TextElement",
+      "signature": "TextElement(...)",
+      "summary": "Creates a new text element instance with the given textual value.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/270c56a6-f8e2-c61a-8c44-b910d717a1f2"
+    },
+    {
+      "name": "TextElement",
+      "signature": "TextElement(...)",
+      "summary": "Creates a new text element instance with the given textual value and font.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fadfae91-20e9-5281-aef7-190fec0e16c8"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "Clone(...)",
+      "summary": "Clones the object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/765f3e69-9834-0f36-e506-3d9fec1cbe12"
+    },
+    {
+      "name": "GetUnformattedString",
+      "signature": "GetUnformattedString(...)",
+      "summary": "Returns the content as a string without formatting.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/185c6e84-13cd-8f89-7cb7-a52913ce103f"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/542e3a8d-9da6-f6fd-07ab-d14a76a05ad2"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Font",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The font of the text element.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d687ef3e-4e9b-f819-5683-9793943240fd"
+    },
+    {
+      "name": "Value",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The textual value of the text element.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/69603e00-c878-1208-fa20-fb17f694271f"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

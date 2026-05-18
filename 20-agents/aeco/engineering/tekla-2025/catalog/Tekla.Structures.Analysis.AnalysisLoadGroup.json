@@ -1,0 +1,182 @@
+{
+  "name": "AnalysisLoadGroup",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisLoadGroup class contains information related to analysis load groups.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/24cabe5a-7528-384d-0a1b-e9c8ad887b43",
+  "constructors": [
+    {
+      "name": "AnalysisLoadGroup",
+      "signature": "AnalysisLoadGroup(...)",
+      "summary": "Initializes a new instance of the AnalysisLoadGroup class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f98494eb-ca73-3883-a4b9-ddb91d9e0e39"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetTypeName",
+      "signature": "GetTypeName(...)",
+      "summary": "Get load group type name, translated to current language.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c8df68e9-6555-bd7d-de0b-0798e23adf1d"
+    },
+    {
+      "name": "IsEmpty",
+      "signature": "IsEmpty(...)",
+      "summary": "Check if load group is empty (no loading exists).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bea58da2-9fb8-b013-3c35-22e720c6e37d"
+    },
+    {
+      "name": "IsSelfWeight",
+      "signature": "IsSelfWeight(...)",
+      "summary": "Check if load group is self weight load group.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/40c25a63-12da-aee2-c68a-d932b7ce09a1"
+    },
+    {
+      "name": "Select",
+      "signature": "Select(...)",
+      "summary": "Selects an AnalysisLoadGroup. The ID has to be set.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/79cc408a-009f-71df-c73e-0762d0e7b95c"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AnalysisModelName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis model name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/820dc60f-92bc-f84c-9b4f-bf71faf2b76a"
+    },
+    {
+      "name": "AnalysisObjectType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2a2631ed-5e7b-7e60-f1d2-52186a5a17c4"
+    },
+    {
+      "name": "Compatible",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the load group is compatible.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7732aa89-fa9f-7f65-b018-ded423853973"
+    },
+    {
+      "name": "CompatibleNumber",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the load group compatible number.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ada748c0-7c55-e2ac-6586-d87be0777711"
+    },
+    {
+      "name": "Direction",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the direction of the load group.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2a0a5848-b5d7-425b-29d4-eb2dae5a5c2e"
+    },
+    {
+      "name": "FatherObject2ID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3cc2e3ff-3afd-4def-2559-7c1827233bec"
+    },
+    {
+      "name": "FatherObject2Type",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7b5d643a-2a12-5281-7f65-a312171bafcc"
+    },
+    {
+      "name": "FatherObjectID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7e55f4c8-ca1a-2761-edd6-2b69663ff941"
+    },
+    {
+      "name": "FatherObjectType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/739bcea1-858d-70e2-ff0d-9c4928129c3e"
+    },
+    {
+      "name": "ID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/289caef6-9b6e-cd4c-dcbc-6397be2f9de0"
+    },
+    {
+      "name": "Incompatible",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the load group is incompatible.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/17baf4c8-809a-5055-95ba-b4229671f02e"
+    },
+    {
+      "name": "IncompatibleNumber",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the load group incompatible number.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2ff36efb-a60e-f9cf-6450-30008c533190"
+    },
+    {
+      "name": "LoadGroupID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the load group.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/93e1b04d-ca0a-7a9c-b526-83cb9744f47a"
+    },
+    {
+      "name": "Name",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name of the load group.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0ba64a4b-2fb2-8fac-2d18-36e86fb4a2dc"
+    },
+    {
+      "name": "Type",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the load group.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dfad6a44-c5c4-2e4f-039a-3071507f27c4"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

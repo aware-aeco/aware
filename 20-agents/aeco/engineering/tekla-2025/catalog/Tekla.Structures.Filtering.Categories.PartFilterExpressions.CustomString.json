@@ -1,0 +1,34 @@
+{
+  "name": "PartFilterExpressions.CustomString",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The CustomString class represents a custom string filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/5bf51487-65fe-68b4-356c-d6c3e7951166",
+  "constructors": [
+    {
+      "name": "PartFilterExpressions.CustomString",
+      "signature": "PartFilterExpressions.CustomString(...)",
+      "summary": "Initializes a new instance of the CustomString class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ee8ca388-6f55-abc0-2c6f-cbe3fe34b027"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

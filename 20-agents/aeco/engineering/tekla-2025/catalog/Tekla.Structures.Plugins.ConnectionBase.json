@@ -1,0 +1,92 @@
+{
+  "name": "ConnectionBase",
+  "namespace": "Tekla.Structures.Plugins",
+  "kind": "class",
+  "summary": "The ConnectionBase class is a base class for defining connections, details and seams. These types are more specialized and restricted by the input values than the ones derived from PluginBase. The coordinate system for connections, details and seams is explained in the Tekla Structures help, in the part about the position type of custom components. The position type defines the origin of the custom component, relative to the main part.",
+  "base": "System.MarshalByRefObject",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/6109ad9b-caa0-e7bd-dd42-dafe9b7d82a9",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "IsDefaultValue(Double)",
+      "signature": "IsDefaultValue(Double)(...)",
+      "summary": "Returns true if the given value is set to the default value for this type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/999607cd-78b3-27fa-2d16-477291d612e6"
+    },
+    {
+      "name": "IsDefaultValue(Int32)",
+      "signature": "IsDefaultValue(Int32)(...)",
+      "summary": "Returns true if the given value is set to the default value for this type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8260c2f5-8b1b-fe04-715e-b5408f07da8b"
+    },
+    {
+      "name": "IsDefaultValue(String)",
+      "signature": "IsDefaultValue(String)(...)",
+      "summary": "Returns true if the given value is set to the default value (empty string).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ef9ef015-5d36-7c29-b229-3ae1bdd7be20"
+    },
+    {
+      "name": "Run",
+      "signature": "Run(...)",
+      "summary": "The main method of the component. Inside Run the user can implement the logic based on the user given attributes and input. Inside the method input can be found from the provided properties: Primary, Secondaries and Positions.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1fe2084f-e160-10b4-22a3-457d714a382b"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Code",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The connection code of the executable connection instance. The maximum length is 22 characters.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/60397075-1252-12c6-deba-1f9275b078ff"
+    },
+    {
+      "name": "Identifier",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The identifier of the executable plug-in instance.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/835ac56b-075e-144a-298a-2fed8ff77d9a"
+    },
+    {
+      "name": "Positions",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The positional attributes for a detail or a seam instance; one for a detail, N for a seam.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/619c304f-170b-2f81-0cf6-6281a1575cc6"
+    },
+    {
+      "name": "Primary",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The identifier that was selected as the primary object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/44d5df2e-93b6-236e-ae3d-19984869ebe5"
+    },
+    {
+      "name": "Secondaries",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "A list of secondary identifiers of a connection or a seam.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2ab8cc3e-509b-bc37-03ab-f7e3a48adb32"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,69 @@
+{
+  "name": "PropertyElement.PropertyElementType.PourMarkPropertyElementTypes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PourMarkPropertyElementTypes class represents the available property element types for pour marks.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/f8361d11-b852-50ae-74a5-659e139eabbe",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Class",
+      "signature": "Class(...)",
+      "summary": "Returns the class property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ac02e677-57de-9fb0-dd34-ea05ff4139db"
+    },
+    {
+      "name": "Material",
+      "signature": "Material(...)",
+      "summary": "Returns the material property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/43ffe354-2bd0-465c-2aba-3f85dacb1e76"
+    },
+    {
+      "name": "Name",
+      "signature": "Name(...)",
+      "summary": "Returns the name property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/05d664e1-603c-2754-3acf-d17cc4e66b26"
+    },
+    {
+      "name": "PourConcreteMixture",
+      "signature": "PourConcreteMixture(...)",
+      "summary": "Returns the contrete mixture property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/901b05ba-44a0-88e0-771f-a708ddb43cf7"
+    },
+    {
+      "name": "PourNumber",
+      "signature": "PourNumber(...)",
+      "summary": "Returns the pour number property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e0d82f72-a13a-c81e-c979-1c58f4e9ff46"
+    },
+    {
+      "name": "PourType",
+      "signature": "PourType(...)",
+      "summary": "Returns the pour type property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f31607b7-4ff5-07a1-37e1-7b530c219265"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

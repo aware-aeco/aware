@@ -1,0 +1,14 @@
+{
+  "name": "Events.ModelSaveAsDelegate",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "delegate",
+  "summary": "The delegate to use for model save as.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/1d7ece5c-9948-e002-d6f9-f171c73b88a1",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void ModelSaveAsDelegate()"
+}

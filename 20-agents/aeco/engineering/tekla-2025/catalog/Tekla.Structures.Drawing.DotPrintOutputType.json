@@ -1,0 +1,34 @@
+{
+  "name": "DotPrintOutputType",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The printer output type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/46b40759-ff8d-bf63-02bb-28853dec8d85",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Printer",
+      "value": 0,
+      "summary": "Printer output type."
+    },
+    {
+      "name": "PDF",
+      "value": 2,
+      "summary": "PDF output type."
+    },
+    {
+      "name": "Plot",
+      "value": 3,
+      "summary": "Plot output type."
+    },
+    {
+      "name": "Image",
+      "value": 4,
+      "summary": "Image png output type."
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "Load.LoadSpanningEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The load spanning.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/2d4b6439-a7f7-2f14-8a1a-37e5ff6ca95a",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "LOAD_SPANNING_SINGLE",
+      "value": 1,
+      "summary": "Single spanning."
+    },
+    {
+      "name": "LOAD_SPANNING_DOUBLE",
+      "value": 2,
+      "summary": "Double spanning."
+    }
+  ]
+}

@@ -28,7 +28,17 @@
       IL2050: LoadTypeLibEx P/Invoke declares an out ITypeLib COM interface parameter. ITypeLib
       is BCL-defined and will not be trimmed. COM ref is managed manually via Marshal.ReleaseComObject.
     -->
-    <NoWarn>$(NoWarn);IL2026;IL2050;IL2104;IL3053</NoWarn>
+    <!--
+      IL3000/IL3002: Microsoft.Playwright's Driver.cs reads Assembly.Location to locate the
+      Node-based driver binary. Both warnings are about single-file deployment behavior
+      (Assembly.Location is empty inside a single-file app). Playwright already falls back to
+      AppContext.BaseDirectory at runtime, so the published sidecar binary works correctly.
+      Surfaced once the Tekla extractor made the Playwright code paths reachable from Main()
+      (Phase A had Scraper.cs as a library but never called it). These are NoWarn-suppressed
+      ONLY for the Playwright package code; our own Scraper wrapper does not introduce
+      Assembly.Location reads.
+    -->
+    <NoWarn>$(NoWarn);IL2026;IL2050;IL2104;IL3053;IL3000;IL3002</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -44,6 +54,14 @@
       Playwright types ourselves.
     -->
     <PackageReference Include="Microsoft.Playwright" Version="1.49.0" />
+    <!--
+      AngleSharp: HTML parsing for the Phase B vendor extractors. AngleSharp is a
+      pure managed library with no reflection on user types and ships net9.0
+      assemblies; trim/AOT warnings from its own internals are suppressed via the
+      NoWarn list. We invoke AngleSharp only from inside Extractors/<vendor>/* and
+      we never serialize AngleSharp types ourselves.
+    -->
+    <PackageReference Include="AngleSharp" Version="1.1.2" />
   </ItemGroup>
 
   <!-- Exclude test project files from the main build -->

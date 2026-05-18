@@ -1,0 +1,2287 @@
+---
+name: tekla-tekla-structures-catalogs
+description: This skill encodes the tekla 2025.0 surface of the Tekla.Structures.Catalogs namespace — 52 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: BoltItem, BoltName, BoltItemEnumerator, CatalogItemEnumeratorInitializationException, CatalogHandler, ComponentItemEnumerator, ComponentItem, CrossSectionPoint, and 44 more types.
+---
+
+# Tekla.Structures.Catalogs
+
+Auto-generated from vendor docs for tekla 2025.0. 52 types in this namespace.
+
+## BoltItem (class)
+
+The BoltItem class contains information about the bolts in the Tekla Structures bolt catalog.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/e9c3c616-26e8-f827-b96f-592aa2724c60)
+
+### Constructors
+- `BoltItem(...)` — Creates a new bolt item instance.
+
+### Methods
+#### `ExportBoltStandard(...)`
+
+Exports the bolt item standard + needed bolt catalog items in *.bass-format to the to given file name. If path is not given bolt standard + items are exported to model folder. If filename is empty bolt standard name is used as filename.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/742798eb-02a0-3b83-ef22-62f4ee2ef9d3)
+
+### Properties
+- `Lengths` (object, get/set) — The bolt item's length values.
+- `Size` (object, get/set) — The bolt item's size.
+- `Standard` (object, get/set) — The bolt item's grade.
+- `Type` (object, get/set) — The bolt item's type.
+
+## BoltItem.BoltItemTypeEnum (enum)
+
+Defines the different bolt item types.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/0b606ef0-2e8e-2527-2eac-63e2f9c94b04)
+
+### Values
+- `BOLT_UNKNOWN` = `0` — The unknown bolt item type.
+- `BOLT` = `1` — The bolt type.
+- `STUD` = `2` — The stud type.
+
+## BoltItemEnumerator (class)
+
+The BoltItemEnumerator class allows to loop through the bolt catalog items.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/1b842d05-50f4-8862-42f7-703fdaa505a0)
+
+### Methods
+#### `GetSize(...)`
+
+Returns the total amout of items.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/e6c7329c-43d2-5c89-1c91-89a81813f37e)
+
+#### `MoveNext(...)`
+
+Moves to the next item in the enumerator.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/d7ef7d06-eed2-5dc8-3024-0097c5d7e8bd)
+
+#### `Reset(...)`
+
+Resets the enumerator to the beginning.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/a42dea55-ef04-8bc3-cefb-aa00d6c1cc52)
+
+### Properties
+- `Current` (object, get/set) — Returns a bolt item instance of the current element.
+
+## BoltName (class)
+
+The BoltName class contains the name of the bolt item.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/14ea55d1-ede5-e746-1b99-fc5debac1fcc)
+
+### Constructors
+- `BoltName(...)` — Initializes a new instance of the BoltName class
+
+### Properties
+- `Name` (object, get/set) — The bolt item name.
+
+## BrepType (enum)
+
+Shape catalog renewal makes it possible to organize shapes in the shape catalog compared to a plain list before. Thus, it is now possible and required to distinguish shapes in such a manner that: BuildingProduct represent shapes that users can import from, for example, Tekla Warehouse and insert them into a model. These are usually provided by the manufacturer and not detailed by users themselves. StructuralShape represent shapes that get created by "Convert part to item" or from geometry editing.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/2bf93ab8-7617-e2d7-910b-3baf23087211)
+
+### Values
+- `BuildingProduct` = `0` — Default value if the flag doesn't exist for the shape. It is also assigned in case of shape import.
+- `StructuralShape` = `1` — StructuralShape is assigned in case a shape is created by "Convert part to item", or on shape edit and save.
+
+## CatalogHandler (class)
+
+The CatalogHandler class is a class from which the user can query catalog instances.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/9335ffbe-aadb-8919-93a2-6622af8b3efa)
+
+### Constructors
+- `CatalogHandler(...)` — Creates a new catalog handler instance.
+
+### Methods
+#### `ExportProfileItems(...)`
+
+Exports the profile items in the profile database to given path and file name. Currently library profiles, sketch profiles and clb profiles are supported. Library profiles are exported to *.lis format. Sketch profiles are exported to *.uel format. Clb profiles are exported to *.clb format. If profiles are not available, export fails. If path is empty, export fails. If file name is empty, export fails.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/0d367359-7a89-53c0-5a76-33930fd78ba8)
+
+#### `GetBoltItems(...)`
+
+Returns an enumerator of all bolt items.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/564d4405-0cb8-bd00-36fe-8dadcfd8d443)
+
+#### `GetComponentItems(...)`
+
+Returns an enumerator of all component items.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/5276c15a-19f5-9538-0b02-9a5f1aab35c4)
+
+#### `GetConnectionStatus(...)`
+
+Returns true if a proper connection to the Tekla Structures process has been established. Currently, there's no way to re-establish the connection.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/c78555d3-7a00-e1ee-f7d8-13efac5e8f80)
+
+#### `GetDrawingItems(...)`
+
+Returns an enumerator of all drawing items.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/2f10f848-08c7-a9ef-5b20-5d05465066c5)
+
+#### `GetLibraryProfileItems(...)`
+
+Returns an enumerator of library profile items.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/5451d58b-692d-f5b5-141a-100e2751bc08)
+
+#### `GetMaterialItems(...)`
+
+Returns an enumerator of all material items.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/1f0b154b-381e-3cb4-8c28-c942c520b5b3)
+
+#### `GetMaterialMarketSizes(...)`
+
+Returns an enumerator of all material marketsizes. Data is read from XS_PROFDB\marketsizes.dat file.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/80ddd345-75e3-9778-89c8-4674603e5510)
+
+#### `GetMeshItems(...)`
+
+Returns an enumerator of mesh items.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/0f63844e-2f69-8886-9a11-0a7e7c5a0dde)
+
+#### `GetParametricProfileItems(...)`
+
+Returns an enumerator of parametric profile items.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/80fe7547-568c-5ccb-62f4-cd419ba5727b)
+
+#### `GetPrinterItems(...)`
+
+Returns an enumerator of all printer items.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/db6c490a-4382-88c7-b00b-cebdd305a780)
+
+#### `GetProfileItems(...)`
+
+Returns an enumerator of all profile items.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/bcb35b79-bdf0-dcf1-3f3a-c7a0b297743b)
+
+#### `GetRebarItems(...)`
+
+Returns an enumerator of rebar items.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/1eed9080-8844-eb0b-1952-943d0af5b563)
+
+#### `GetShapeItems(...)`
+
+Returns an enumerator of all shape items.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/3b509288-e37f-d537-5416-6cbb7b9b60d6)
+
+#### `GetSteelFinishItems(...)`
+
+Returns the collection of all steel finish items.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/992a8408-b4c2-c50f-895a-ea876c4c7333)
+
+#### `GetUserPropertyItems(CatalogObjectTypeEnum)(...)`
+
+Returns an enumerator of user property items of the given object type.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/17a6222e-f487-de7e-aa78-37d6283209bb)
+
+#### `GetUserPropertyItems.(...)`
+
+Returns an enumerator of all user property items.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/e982db4c-daf4-1161-db5e-6a4688c724db)
+
+#### `ImportBoltItems(...)`
+
+Imports bolt items and their assembly information (*.bass) from folder to bolt assembly catalog and bolt catalog. Import overrides the existing bolts in the catalog without any warnings.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/8b3e21a7-4d9e-b8d5-c524-df1235bac4c8)
+
+#### `ImportCustomComponentItems(...)`
+
+Imports custom component items (*.uel) from path to component catalog. Import overrides the existing custom components in the catalog without any warnings.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/bd6a584e-e1b5-ca68-8032-00d23479b3fc)
+
+#### `ImportDrawingItems(...)`
+
+Imports drawing setting items (*.tsds) from specified folder to model folder. Import throws exception if model is not open. Import overrides the existing drawing items in the catalog without any warnings.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/830a96bd-0a99-3085-ec1c-af48386c4ea7)
+
+#### `ImportLibraryProfileItems(...)`
+
+Imports library profile items (*.lis) from folder to profile catalog. Import overrides the existing profiles in the catalog without any warnings.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/78798d1e-e2a8-84cc-f7e5-16c62fe595b8)
+
+#### `ImportMaterialItems(...)`
+
+Imports material items (*.lis) from folder to material catalog. Import overrides the existing materials in the catalog without any warnings.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/e2360d79-0bb9-5a37-c03c-1111f1cf6191)
+
+#### `ImportMeshItems(...)`
+
+Imports mesh items (*.mexp) from folder to mesh catalog. Import overrides the existing mesh item in the catalog without any warnings.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/7fa2e012-8246-ec8e-9905-15f25a27102d)
+
+#### `ImportParametricProfileItems(...)`
+
+Imports parametric profile items (*.uel) from folder to profile catalog. Import overrides the existing profiles in the catalog without any warnings.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/3f5bc8b2-8d3f-37ee-260c-b0ad223a29e5)
+
+#### `ImportRebarItems(...)`
+
+Imports rebar items (*.rexp) from folder to reinforcement catalog. Import overrides the existing rebar item in the catalog without any warnings.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/7004c954-a82e-7a40-1e9d-c5af25142caf)
+
+#### `ImportShapeItems(...)`
+
+Imports shape geometry items (*.tsc) from specified folder. Import throws exception if model is not open. Import overrides the existing shape items in the catalog without any warnings.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/148728ab-d5fc-ce70-4dee-f6005e6f7f1f)
+
+#### `ImportShapeItemsFromGeometryFiles(...)`
+
+Imports shape geometry items from geometry files in specified folder. Import supports following file formats: ".skp", ".dxf", ".dwg", ".step", ".iges", ".stp", ".igs", ".ifc", ".dgn", ".trb" File name is used as shape name. Import throws exception if model is not open. Import overrides the existing shape items in the catalog without any warnings.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/48449125-2fd4-5422-80f9-62bc46bfdf2a)
+
+#### `SaveProfileDatabase(...)`
+
+Saves the profile database.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/59394a51-ded4-984c-f616-31fdb8599db7)
+
+## CatalogItemEnumeratorInitializationException (class)
+
+The CatalogItemEnumeratorInitializationException class represents an error that occurred during the catalog item enumerator initialization. This class cannot be inherited.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/17d12340-b3ce-add9-a3e8-10911fbc6b86)
+
+## CatalogObjectTypeEnum (enum)
+
+The catalog object type.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/69665cba-e22d-fad0-277b-377c99a3766a)
+
+### Values
+- `PART` = `1` — The part type.
+- `STEEL_BEAM` = `2` — The steel beam type.
+- `STEEL_COLUMN` = `3` — The steel column type.
+- `STEEL_ORTHOGONAL_BEAM` = `4` — The steel orthogonal beam type.
+- `STEEL_TWIN_PROFILE_BEAM` = `5` — The steel twin profile beam type.
+- `STEEL_CONTOUR_PLATE` = `6` — The steel contour plate type.
+- `STEEL_FOLDED_PLATE` = `7` — The steel folded plate type.
+- `CONCRETE_BEAM` = `8` — The concrete beam type.
+- `CONCRETE_COLUMN` = `9` — The concrete column type.
+- `CONCRETE_PAD_FOOTING` = `10` — The concrete pad footing type.
+- `CONCRETE_STRIP_FOOTING` = `11` — The concrete strip footing type.
+- `CONCRETE_PANEL` = `12` — The concrete panel type.
+- `CONCRETE_SLAB` = `13` — The concrete slab type.
+- `REINFORCING_BAR` = `14` — The reinforcing bar type.
+- `SURFACING` = `15` — The surfacing type.
+- `WELD` = `16` — The weld type.
+- `BOLT` = `17` — The bolt type.
+- `STEEL_ASSEMBLY` = `18` — The steel assembly type.
+- `PRECAST_CONCRETE_ASSEMBLY` = `19` — The precast concrete assembly type.
+- `INSITU_CONCRETE_ASSEMBLY` = `20` — The in situ concrete assembly type.
+- `POUR_OBJECT` = `21` — The pour object type.
+- `POUR_BREAK` = `22` — The pour break type.
+- `GRID` = `23` — The grid type.
+- `PROJECT` = `24` — The project type.
+- `PHASE` = `25` — The phase type.
+- `TASK` = `26` — The task type.
+- `REFERENCE_MODEL` = `27` — The reference model type.
+- `REFERENCE_MODEL_OBJECT` = `28` — The reference model object type.
+- `SINGLE_PART_DRAWING` = `29` — The single part drawing type.
+- `ASSEMBLY_DRAWING` = `30` — The assembly drawing type.
+- `GA_DRAWING` = `31` — The general arrangement drawing type.
+- `MULTI_DRAWING` = `32` — The multidrawing type.
+- `CAST_UNIT_DRAWING` = `33` — The cast unit drawing type.
+- `BENT_PLATE` = `34` — The bent plate type.
+- `STEEL_BREP_PART` = `35` — The steel brep part type.
+- `CONCRETE_BREP_PART` = `36` — The concrete brep part type.
+- `CHAMFER_OBJECT` = `37` — The chanfer object type.
+- `SURFACE_OBJECT` = `38` — The surface object type.
+- `GRID_PLANE` = `39` — The grid plane type.
+- `STEEL_SPIRAL_BEAM` = `40` — The steel helix part type.
+- `CONCRETE_SPIRAL_BEAM` = `41` — The concrete helix part type.
+- `POUR_UNIT` = `42` — The pour unit type.
+- `STEEL_LOFTED_PLATE` = `43` — The steel lofted plate part type.
+- `CONCRETE_LOFTED_SLAB` = `44` — The concrete lofted slab part type.
+- `BUILDING_SPACE` = `45` — The building space object type.
+
+## ComponentItem (class)
+
+The ComponentItem class contains information about the components in the Tekla Structures catalog.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/5f8f7adf-d58e-527e-3ae1-9186855858e2)
+
+### Constructors
+- `ComponentItem(...)` — Creates a new component item instance.
+
+### Methods
+#### `Export(...)`
+
+Exports the custom component item in *.uel-format to the to given file name. If path is not given custom component is exported to model folder. If filename is empty custom component name is used as filename.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/5a13c8a3-e8c0-e8b3-bab9-cabb1b4920d6)
+
+#### `GetVersion(...)`
+
+Gets the version number of custom component item from the component database.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/d3c4303c-4fa1-634e-27ed-c32be2d98431)
+
+#### `Select(String, Int32)(...)`
+
+Selects the component item from the component database. Uses the type if defined for selection
+
+[Docs](https://developer.tekla.com/topic/en/18/43/c9fde42f-cebc-4165-fa52-2411ac2e5931)
+
+#### `Select(String, Int32, ComponentItem.ComponentTypeEnum)(...)`
+
+Selects the component item from the component database.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/0c351379-98c4-2fe0-ac3e-def043ea1d3f)
+
+### Properties
+- `AttributeFileExtension` (object, get/set) — Gets the attribute file extension of item from the component database.
+- `Name` (object, get/set) — The component item's internal name which is used by Tekla Structures in component identification.
+- `Number` (object, get/set) — The component item's internal number which is used by Tekla Structures in component identification.
+- `Type` (object, get/set) — The component item's type.
+- `UIName` (object, get/set) — The component item's name which is visible in the Tekla Structures user interface.
+
+## ComponentItem.ComponentTypeEnum (enum)
+
+Defines the different component types.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/87a65766-7edb-e0cb-d9be-47d432900e45)
+
+### Values
+- `UNKNOWN` = `0` — The unknown component type.
+- `CONNECTION` = `24` — The component type is connection.
+- `COMPONENT` = `25` — The component type is component.
+- `SEAM` = `26` — The component type is seam.
+- `DETAIL` = `27` — The component type is detail.
+- `CUSTOM_PART` = `43` — The component type is custom part object.
+- `DRAWING_PLUGIN` = `38` — The component type is drawing plugin.
+
+## ComponentItemEnumerator (class)
+
+The ComponentItemEnumerator class allows to loop through the component catalog items.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/56616cbe-13dc-2aee-eb1e-1438529de663)
+
+### Methods
+#### `GetSize(...)`
+
+Returns the total amout of items.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/db63047f-fe9b-99cf-200b-c0f83bb909b6)
+
+#### `MoveNext(...)`
+
+Moves to the next item in the enumerator.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/62006a3f-6909-42e1-a397-62eaeb85c44f)
+
+#### `Reset(...)`
+
+Resets the enumerator to the beginning.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/458e0c09-e8ec-7988-92a2-b14462fee30b)
+
+### Properties
+- `Current` (object, get/set) — Returns a component item instance of the current element.
+
+## CrossSection (class)
+
+The CrossSection class defines a with cross section points
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/35f56e00-3ebc-f537-971a-78530f8315dc)
+
+### Constructors
+- `CrossSection(...)` — Creates a new cross section point instance.
+- `CrossSection(...)` — Creates a new cross section point instance.
+
+### Methods
+#### `GetInnerContours(...)`
+
+Gets the inner loop geometries as Polycurve.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/ce3e7313-3691-0e3b-9ea3-f73187e2761f)
+
+#### `GetOuterContour(...)`
+
+Gets the outer loop geometry as Polycurve.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/403e20e9-8043-3c61-b70b-bbba11e3387a)
+
+#### `Select(Boolean, Double, Double)(...)`
+
+Selects the cross section from the profile definition.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/bd26d42e-ce1b-40d8-f039-3c8620dfd204)
+
+#### `Select(Double, Double)(...)`
+
+Selects the cross section from the profile definition.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/899646b5-12f5-a29e-511a-08e4ac3bfb6f)
+
+### Properties
+- `HighAccuracy` (object, get/set) — The contour geometry accuracy.
+- `InnerSurfacePoints` (object, get/set) — Gets the points for inner surfaces.
+- `InnerSurfaces` (object, get/set) — Gets the cross section points for inner surfaces.
+- `Length` (object, get/set) — The total length
+- `Location` (object, get/set) — The location in relation to length, 0.0 referring to start of the profile
+- `OuterSurface` (object, get/set) — Gets the cross section points for outer surface.
+- `OuterSurfacePoints` (object, get/set) — Gets the cross section points for outer surface.
+- `Profile` (object, get/set) — The profile where cross section is asked from
+
+## CrossSectionPoint (class)
+
+The CrossSectionPoint class defines a point with possible chamfering information
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/86912ba9-9e66-d9a2-21a0-9fb0e808f7ae)
+
+### Constructors
+- `CrossSectionPoint(...)` — Creates a new cross section point instance.
+
+### Methods
+#### `CompareTo(...)`
+
+Compares two points. To use binarysearch somekind of sorting should be used.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/2f202828-05fd-220f-92b1-5b64372a4f7e)
+
+#### `Equals(...)`
+
+Returns true if the current object and the given object are equal.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/dbca17f2-6730-e2c4-583c-90c74c72e0b0)
+
+#### `GetHashCode(...)`
+
+Returns a hash code for the point. Notice, in extremely rare cases, you might not get the same hash code for two points even though they are considered equal! This should, however, happen only in extremely rare cases!
+
+[Docs](https://developer.tekla.com/topic/en/18/43/9f84f024-170b-5181-770d-5ed2f56332cd)
+
+#### `ToString(...)`
+
+Formats the point into a string.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/63db29a6-32f7-6696-31eb-a6084dcb62cd)
+
+#### `Translate(...)`
+
+Translates the point using the given vector.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/7ad7ecb9-acf3-7ed2-f2bc-aa52b99ceae6)
+
+#### `Zero(...)`
+
+Zeros all the members of the point.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/9bf63e0c-fe71-40ae-e467-306f0a41f315)
+
+### Properties
+- `Chamfer` (object, get/set) — The chamfer for the cross section point.
+
+## DrawingItem (class)
+
+The DrawingItem class contains information from the drawings in the master drawing catalog.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/9c95f68b-b566-e073-66a1-6eb6016b5da4)
+
+### Constructors
+- `DrawingItem(...)` — Creates a new drawing item instance.
+
+### Methods
+#### `Export(...)`
+
+Exports the drawing item in the catalog to given file name. If path is not given drawing is exported to model folder. If filename is empty drawing name is used as filename.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/e73e32a2-21fa-37e6-2d50-dba9af49e09a)
+
+#### `Select(...)`
+
+Selects the drawing item in the drawing catalog.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/6a028f0c-b5bb-2e2a-8119-eea7fbea3a34)
+
+### Properties
+- `Files` (object, get/set) — The files belonging to drawing item.
+- `Name` (object, get/set) — The drawing item's name.
+- `Type` (object, get/set) — The files belonging to drawing item.
+
+## DrawingItemEnumerator (class)
+
+The DrawingItemEnumerator class allows to loop through the catalog drawing items.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/b1173c1b-55e1-315c-d1f0-0f85569c3290)
+
+### Methods
+#### `GetSize(...)`
+
+Returns the total amout of items.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/8de3ed75-ca8d-b88d-c7b6-0fad5cd4f515)
+
+#### `MoveNext(...)`
+
+Moves to the next item in the enumerator.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/fde8aa3f-601b-5d2c-3d3b-15c5b04d34b3)
+
+#### `Reset(...)`
+
+Resets the enumerator to the beginning.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/6cf2a4dd-7afb-ac9e-550a-7ebff355061c)
+
+### Properties
+- `Current` (object, get/set) — Returns a drawing item instance of the current element.
+
+## FabricatorProfilesAndMaterials (class)
+
+The FabricatorProfilesAndMaterials class contains methods for converting fabricator profiles and materials to Tekla Structures.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/5041534d-8dc1-d4ac-f2b8-ca0cd7778b26)
+
+### Methods
+#### `ConvertSourceFile(...)`
+
+Converts a fabricator profile catalog source file to an XML file that contains a list of valid Tekla Structures catalog profiles and materials.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/0ebcca0c-210b-e614-7bb9-ba5dfadceec1)
+
+## FinishItem (struct)
+
+The FinishItem struct contains information about the finish parameters.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/41196302-456a-c390-3cca-e32155fa9743)
+
+### Constructors
+- `FinishItem(...)` — Creates a new finish item instance.
+
+### Methods
+#### `ToString(...)`
+
+Returns the fully qualified type name of this instance.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/6c0845a0-4621-8c59-f7b1-491241966a2d)
+
+### Properties
+- `Abbreviation` (object, get/set) — The finish abbreviation
+- `Description` (object, get/set) — The finish description
+
+## LibraryProfileItem (class)
+
+The LibraryProfileItem class contains information from library profiles in the catalog. Library profile items can be enumerated using a profile item enumerator.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/ea4317c4-643d-d275-a818-1354400f42fd)
+
+### Constructors
+- `LibraryProfileItem(...)` — Creates a new library profile item instance.
+
+### Methods
+#### `AddCrossSection(...)`
+
+Adds the cross section to a profile.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/4e6a9522-3637-c6d8-0156-1c0da42950b6)
+
+#### `Copy(...)`
+
+Copy the library profile item in the profile database to item with new name.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/b47e13e3-7cfe-251a-ff4a-268f5e5cf5e4)
+
+#### `Delete(...)`
+
+Deletes the profile item in the profile database.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/aa4e6c8a-57e6-8a6e-a228-652fcbe977a3)
+
+#### `DeleteCrossSection(...)`
+
+Deletes the cross section of a profile.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/1e4bdd8d-a3d7-7aac-9157-4c5f373471e8)
+
+#### `Export(...)`
+
+Exports the profile item in the profile database to given file name. Currently library profiles, sketch profiles and clb profiles are supported. Library profiles are exported to *.lis format. Sketch profiles are exported to *.uel format. Clb profiles are exported to *.clb format. If path is not given profile is exported to model folder. If filename is empty profile name or prefix is used as filename.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/24d7de14-d3e6-314a-0e91-e57dab6ab0e7)
+
+#### `GetCrossSection(...)`
+
+Returns list of cross section points of inner surfaces from the profile item.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/9a9c5248-16b2-338f-062f-bfc58c4738e5)
+
+#### `GetHighAccuracyCrossSection(...)`
+
+Get cross section with high accuracy.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/285dde88-c699-5213-abc8-fa5f4c951bfe)
+
+#### `GetProfileItemSubTypes.(...)`
+
+Selects the profile item and updates the sub types in the profile database.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/8470624e-f868-9cd5-c674-41da81101565)
+
+#### `IsProfileUserDefined(...)`
+
+Whether the profile is a fixed user-defined profile.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/645e4bae-5cca-9fa0-6a29-2cae47b32227)
+
+#### `IsProfileUserParametric(...)`
+
+Whether the profile is a parametric user-defined profile. If so, the prefix can be asked by type and subtype.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/ee8579f8-e74e-9ed2-d500-eaae92d78d76)
+
+#### `Modify(...)`
+
+Modifies the profile item in the profile database.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/17d97070-9bfb-1d2f-fee9-6af19c795839)
+
+#### `ModifyCrossSection(...)`
+
+Modifies the cross section of a profile.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/3770cf41-a91e-a2b7-e61e-45e324e16afe)
+
+#### `ModifyProfileItemAnalysisParameter(...)`
+
+Modify analysis parameter of library profile item. Modify is needed for profile item for updating changes to profile database
+
+[Docs](https://developer.tekla.com/topic/en/18/43/8a875a37-33c2-54dd-3563-0ac9668839eb)
+
+#### `ModifyProfileItemParameter(...)`
+
+Modify parameter of library profile item. Modify is needed for profile item for updating changes to profile database
+
+[Docs](https://developer.tekla.com/topic/en/18/43/b8f040eb-f414-8c30-cb64-cf68921818db)
+
+#### `ModifyProfileItemUserParameter(...)`
+
+Modify user parameter of library profile item. Modify is needed for profile item for updating changes to profile database
+
+[Docs](https://developer.tekla.com/topic/en/18/43/2bc63067-81ca-5ba6-cf20-efa1c134ea97)
+
+#### `Select(String)(...)`
+
+Selects the profile item in the profile database using the given name.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/d75dc6a6-c379-ac2f-a635-5c955166f1b8)
+
+#### `Select.(...)`
+
+Selects the profile item in the profile database.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/90db4650-0ec0-3f08-dcc6-595f25789b73)
+
+#### `SelectCrossSections(...)`
+
+Selects the profile item cross section in the profile database.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/f88821da-0793-3a27-6c20-2112029268fb)
+
+#### `SetEquivalentType(...)`
+
+Sets the equivalent type for the specified cross section.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/935df01d-74a9-b6f3-5826-9b2d34a5aa52)
+
+### Properties
+- `aProfileItemAnalysisParameters` (object, get/set) — An array list with the profile item analysis parameters.
+- `aProfileItemCrossSections` (object, get/set) — An array list with the profile item cross-sections.
+- `aProfileItemParameters` (object, get/set) — An array list with the profile item parameters.
+- `aProfileItemUserParameters` (object, get/set) — An array list with the profile item user parameters.
+- `IsMultiCrossSectionUserParametric` (object, get/set) — Whether the profile is a parametric user-defined multi cross section profile.
+- `IsSketchedUserParametric` (object, get/set) — Whether the profile is a parametric user-defined sketched profile.
+- `NumberOfCrossSections` (object, get/set) — The number of cross sections in the profile item.
+- `ParameterString` (object, get/set) — The profile item parameter string.
+- `ProfileItemCrossSections` (object, get/set) — The list of profile item cross-sections.
+- `ProfileItemSubType` (object, get/set) — The profile item subtype.
+- `ProfileItemType` (object, get/set) — The profile item type.
+- `ProfileName` (object, get/set) — The profile item name.
+
+## MaterialItem (class)
+
+The MaterialItem class contains information about the materials in the Tekla Structures catalog.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/adea6e3d-a5cf-27f5-aea9-53028a0a7abb)
+
+### Constructors
+- `MaterialItem(...)` — Creates a new material item instance.
+
+### Methods
+#### `Delete(...)`
+
+Delete this material from material database.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/c54db24c-0052-6fd7-cc44-feed0faf2d2d)
+
+#### `Export(...)`
+
+Exports the material item in the material database to given file name. Materials are exported to *.lis format. If path is not given material is exported to model folder. If filename is empty material name is used as filename.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/e25a642c-02df-a2d3-78a7-fb5de8f07c73)
+
+#### `Insert(...)`
+
+Inserts this material item to material database.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/c11e69a1-d29a-1037-0978-5fd05dd09fd8)
+
+#### `MaterialNameMaxLength(...)`
+
+Returns the maximum length a material name can be.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/e969d307-0de6-76ca-1a04-615718bb1a8a)
+
+#### `Modify(...)`
+
+Modifies the material in material database that has the same name as this instance.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/8a966994-dbf3-f876-01b4-24a2ce3a609a)
+
+#### `Select(String)(...)`
+
+Selects the material item based on the name from the material database. The material name can also be an alias name.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/24928801-2e7f-f555-08c4-ba2f32d14410)
+
+#### `Select.(...)`
+
+Selects the material item from the database based on the material name and alias name in this instance.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/0068c882-b486-2d60-27e7-d9f3a15b48d5)
+
+### Properties
+- `AliasName1` (object, get/set) — The material item's alias name 1.
+- `AliasName2` (object, get/set) — The material item's alias name 2.
+- `AliasName3` (object, get/set) — The material item's alias name 3.
+- `DesignCode` (object, get/set) — The design code.
+- `MaterialName` (object, get/set) — The material item's name.
+- `ModulusOfElasticity` (object, get/set) — Thte modulus of elasticity in unit N/m2.
+- `PlateDensity` (object, get/set) — The plate density in unit kg/m3.
+- `PoissonsRatio` (object, get/set) — The poissons ratio
+- `ProfileDensity` (object, get/set) — The profile density in unit kg/m3.
+- `ThermalDilatation` (object, get/set) — The thermal dilatation in unit 1/K.
+- `Type` (object, get/set) — The material item's type.
+
+## MaterialItem.MaterialItemTypeEnum (enum)
+
+Defines the different material item types.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/66c9dde4-2e2e-c54e-8e76-35853038601e)
+
+### Values
+- `MATERIAL_UNKNOWN` = `0` — The unknown material item type.
+- `MATERIAL_STEEL` = `1` — The steel material type.
+- `MATERIAL_CONCRETE` = `2` — The concrete material type.
+- `MATERIAL_TIMBER` = `3` — The timber material type.
+- `MATERIAL_MISC` = `4` — The miscellaneous material type.
+- `MATERIAL_REBAR` = `5` — The rebar material type.
+- `MATERIAL_REBAR_MESH` = `6` — The rebar mesh material type.
+
+## MaterialItemEnumerator (class)
+
+The MaterialItemEnumerator class allows to loop through the catalog material items.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/9e82b720-28fa-dceb-f771-59865cd3a5dd)
+
+### Methods
+#### `GetSize(...)`
+
+Returns the total amout of items.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/11b98a3c-be43-b9dc-2d95-7e671b6c8549)
+
+#### `MoveNext(...)`
+
+Moves to the next item in the enumerator.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/c37ba5f4-4b49-a60e-9e70-33ecae0c5251)
+
+#### `Reset(...)`
+
+Resets the enumerator to the beginning.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/88af2290-f975-1fbe-cd9e-7f3dd8d552d2)
+
+### Properties
+- `Current` (object, get/set) — Returns a material item instance of the current element.
+
+## MaterialMarketSizesItem (class)
+
+The MaterialMarketSizesItem class contains information about the available market sizes for particular material.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/4b82a70e-35d7-0a4b-08b1-10c3b96f6505)
+
+### Properties
+- `MarketSizes` (object, get/set) — Available MarketSizes for the particular material
+- `MaterialName` (object, get/set) — Material name
+
+## MaterialMarketSizesItemEnumerator (class)
+
+The MaterialMarketSizesItemEnumerator class allows to loop through the items defined in XS_PROFDB\marketsizes.dat file.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/b38af553-7529-a4e3-dfb8-56da1faf142b)
+
+### Methods
+#### `MoveNext(...)`
+
+Moves to the next item in the MaterialMarketSizesItemEnumerator.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/4194e31a-208e-0382-4d8b-f0da8c0c278c)
+
+#### `Reset(...)`
+
+Resets the MaterialMarketSizesItemEnumerator to the beginning.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/137847a1-5995-9fe8-7b7a-9f6ef98b62a1)
+
+### Properties
+- `Current` (object, get/set) — Returns a MaterialMarketSizesItem instance with the current index.
+
+## MaterialName (class)
+
+The MaterialName class contains the name of the material item.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/e2e27770-8e50-518f-f6d8-a8cc391c97a2)
+
+### Constructors
+- `MaterialName(...)` — Initializes a new instance of the MaterialName class
+
+### Properties
+- `Name` (object, get/set) — The material item name.
+
+## MeshItem (class)
+
+The MeshItem class contains information from the meshes in the catalog (mesh_database.inp).
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/f4d9b53a-3f68-8d8a-92c2-eff42b83b925)
+
+### Constructors
+- `MeshItem(...)` — Creates a new mesh item instance.
+
+### Methods
+#### `Export(...)`
+
+Exports the rebar item in the catlog to given file name. If path is not given rebar is exported to model folder. If filename is empty rebar name is used as filename.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/a6eb55ef-fcd9-90f8-3467-1b69037491ea)
+
+#### `Select(...)`
+
+Selects the mesh item in the mesh database.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/553fb3e2-fcc9-33bc-79e3-fdacd64003c9)
+
+### Properties
+- `DiameterCross` (object, get/set) — The mesh item's cross direction bar size.
+- `DiameterLongitudinal` (object, get/set) — The mesh item's longitudinal direction bar size.
+- `DistanceCross` (object, get/set) — The mesh item's cross direction distance.
+- `DistanceLongitudinal` (object, get/set) — The mesh item's longitudinal direction distance.
+- `Grade` (object, get/set) — The mesh item's grade.
+- `LeftOverhangCross` (object, get/set) — The mesh item's cross direction left overhang.
+- `LeftOverhangLongitudinal` (object, get/set) — The mesh item's longitudinal direction left overhang.
+- `Length` (object, get/set) — The mesh item's length.
+- `MaximumOverlappingCross` (object, get/set) — The mesh item's cross direction maximum overlapping.
+- `MaximumOverlappingLongitudinal` (object, get/set) — The mesh item's longitudinal direction maximum overlapping.
+- `MinimumOverlappingCross` (object, get/set) — The mesh item's cross direction minimum overlapping.
+- `MinimumOverlappingLongitudinal` (object, get/set) — The mesh item's longitudinal direction minimum overlapping.
+- `Name` (object, get/set) — The mesh item's name.
+- `RightOverhangCross` (object, get/set) — The mesh item's cross direction right overhang.
+- `RightOverhangLongitudinal` (object, get/set) — The mesh item's longitudinal direction right overhang.
+- `Width` (object, get/set) — The mesh item's width.
+
+## MeshItemEnumerator (class)
+
+The MeshItemEnumerator class allows to loop through the catalog mesh items.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/f552ff0e-d4f1-6231-c3ef-0311c4c98d61)
+
+### Methods
+#### `GetSize(...)`
+
+Returns the total amout of items.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/18b986f2-6f35-4fb8-b4a9-2189fc71872c)
+
+#### `MoveNext(...)`
+
+Moves to the next item in the enumerator.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/97bb2529-52f8-4678-1a2e-c0a8ac27b98e)
+
+#### `Reset(...)`
+
+Resets the enumerator to the beginning.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/057e41d3-1955-a5fe-48c7-aca7221b0b5c)
+
+#### `SelectMeshItem(...)`
+
+Selects a mesh item in the mesh database with the given name and grade.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/a34e89b5-c6a2-ec57-9250-2a9e29ae14bf)
+
+### Properties
+- `Current` (object, get/set) — Returns a mesh item instance of the current element.
+
+## ParametricProfileItem (class)
+
+The ParametricProfileItem class contains information from parametric profiles in the catalog. Parametric profile items can be enumerated using a profile item enumerator.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/e935ae0d-c280-dd76-a09c-bae369c41a52)
+
+### Constructors
+- `ParametricProfileItem(...)` — Creates a new parametric profile item instance.
+
+### Methods
+#### `AddCrossSection(...)`
+
+Adds the cross section to a profile.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/4e6a9522-3637-c6d8-0156-1c0da42950b6)
+
+#### `CreateProfileString(...)`
+
+Gets the parametric profile item prefix and adds parameter values.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/4bc80f28-d1a5-5bef-34e7-07423b892bb8)
+
+#### `DeleteCrossSection(...)`
+
+Deletes the cross section of a profile.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/1e4bdd8d-a3d7-7aac-9157-4c5f373471e8)
+
+#### `Export(...)`
+
+Exports the profile item in the profile database to given file name. Currently library profiles, sketch profiles and clb profiles are supported. Library profiles are exported to *.lis format. Sketch profiles are exported to *.uel format. Clb profiles are exported to *.clb format. If path is not given profile is exported to model folder. If filename is empty profile name or prefix is used as filename.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/24d7de14-d3e6-314a-0e91-e57dab6ab0e7)
+
+#### `GetCrossSection(...)`
+
+Returns list of cross section points of inner surfaces from the profile item.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/9a9c5248-16b2-338f-062f-bfc58c4738e5)
+
+#### `GetHighAccuracyCrossSection(...)`
+
+Get cross section with high accuracy.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/285dde88-c699-5213-abc8-fa5f4c951bfe)
+
+#### `GetParametricProfilePrefix(...)`
+
+Gets the parametric profile item prefix using the given subtype. This can be used after retrieving a library profile that has a parametric user-defined type.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/6a353980-ac2f-62c2-794d-7e62e80d2a35)
+
+#### `GetProfileItemSubTypes.(...)`
+
+Selects the profile item and updates the sub types in the profile database.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/8470624e-f868-9cd5-c674-41da81101565)
+
+#### `IsProfileUserDefined(...)`
+
+Whether the profile is a fixed user-defined profile.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/645e4bae-5cca-9fa0-6a29-2cae47b32227)
+
+#### `IsProfileUserParametric(...)`
+
+Whether the profile is a parametric user-defined profile. If so, the prefix can be asked by type and subtype.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/ee8579f8-e74e-9ed2-d500-eaae92d78d76)
+
+#### `ModifyCrossSection(...)`
+
+Modifies the cross section of a profile.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/3770cf41-a91e-a2b7-e61e-45e324e16afe)
+
+#### `ModifyProfileItemAnalysisParameter(...)`
+
+Modify analysis parameter of library profile item. Modify is needed for profile item for updating changes to profile database
+
+[Docs](https://developer.tekla.com/topic/en/18/43/8a875a37-33c2-54dd-3563-0ac9668839eb)
+
+#### `ModifyProfileItemParameter(...)`
+
+Modify parameter of library profile item. Modify is needed for profile item for updating changes to profile database
+
+[Docs](https://developer.tekla.com/topic/en/18/43/b8f040eb-f414-8c30-cb64-cf68921818db)
+
+#### `ModifyProfileItemUserParameter(...)`
+
+Modify user parameter of library profile item. Modify is needed for profile item for updating changes to profile database
+
+[Docs](https://developer.tekla.com/topic/en/18/43/2bc63067-81ca-5ba6-cf20-efa1c134ea97)
+
+#### `Select(String)(...)`
+
+Selects the parametric profile item in the profile database using the given name.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/33bea54e-b358-cf68-e3eb-0b3de35a8e1a)
+
+#### `Select.(...)`
+
+Selects the profile item in the profile database.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/90db4650-0ec0-3f08-dcc6-595f25789b73)
+
+#### `SelectByPrefix(...)`
+
+Selects the parametric profile item in the profile database using the given prefix.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/e2ac6fd0-46c5-ddee-3d5e-37ce5cfc9fcb)
+
+#### `SelectByProfileName(...)`
+
+Selects the parametric profile item in the profile database using the given name.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/161262ed-bbdc-6520-94cc-85293c837c1b)
+
+#### `SelectByTypeAndSubtype(...)`
+
+Selects the parametric profile item in the profile database using the given type and subtype.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/d02e6280-4832-b8ad-6faa-efc77b52de69)
+
+#### `SelectCrossSections(...)`
+
+Selects the profile item cross section in the profile database.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/f88821da-0793-3a27-6c20-2112029268fb)
+
+#### `SetEquivalentType(...)`
+
+Sets the equivalent type for the specified cross section.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/935df01d-74a9-b6f3-5826-9b2d34a5aa52)
+
+### Properties
+- `aProfileItemCrossSections` (object, get/set) — An array list with the profile item cross-sections.
+- `aProfileItemParameters` (object, get/set) — An array list with the profile item parameters.
+- `IsMultiCrossSectionUserParametric` (object, get/set) — Whether the profile is a parametric user-defined multi cross section profile.
+- `IsSketchedUserParametric` (object, get/set) — Whether the profile is a parametric user-defined sketched profile.
+- `NumberOfCrossSections` (object, get/set) — The number of cross sections in the profile item.
+- `ParameterString` (object, get/set) — The profile item parameter string.
+- `ProfileItemCrossSections` (object, get/set) — The list of profile item cross-sections.
+- `ProfileItemSubType` (object, get/set) — The profile item subtype.
+- `ProfileItemType` (object, get/set) — The profile item type.
+- `ProfilePrefix` (object, get/set) — The parametric profile item prefix.
+
+## PrinterItem (class)
+
+The PrinterItem class contains information about the printers in the Tekla Structures catalog.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/cfcf8cd5-e9f5-e0aa-8773-3f607dba8404)
+
+### Constructors
+- `PrinterItem(...)` — Creates a new printer item instance.
+
+### Properties
+- `Device` (object, get/set) — The actual printer device used in the printing.
+- `Extension` (object, get/set) — The printer item's default file extension which is used when printing to a file.
+- `Name` (object, get/set) — The printer item's name which Tekla Structures uses to fetch all the item's default properties in the printing process.
+- `PrintAreaHeigth` (object, get/set) — The printer item's print area height.
+- `PrintAreaWidth` (object, get/set) — The printer item's print area width.
+
+## PrinterItemEnumerator (class)
+
+The PrinterItemEnumerator class allows to loop through the catalog printer items.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/132ffaaa-76cc-e3d2-ffac-27b40b486f31)
+
+### Methods
+#### `GetSize(...)`
+
+Returns the total amout of items.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/9f84ae90-258f-7157-8edf-44306d49b891)
+
+#### `MoveNext(...)`
+
+Moves to the next item in the enumerator.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/c8559650-3ec2-6577-f722-d129c6ed86e1)
+
+#### `Reset(...)`
+
+Resets the enumerator to the beginning.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/d7b01b70-0226-b4b8-d384-224406109aa5)
+
+### Properties
+- `Current` (object, get/set) — Returns a printer item instance of the current element.
+
+## ProfileItem (class)
+
+The ProfileItem abstract class contains the common information of catalog profiles (parametric and library).
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/4f68f2b3-0aff-93e7-d06f-aa8cea335f61)
+
+### Methods
+#### `AddCrossSection(...)`
+
+Adds the cross section to a profile.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/4e6a9522-3637-c6d8-0156-1c0da42950b6)
+
+#### `DeleteCrossSection(...)`
+
+Deletes the cross section of a profile.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/1e4bdd8d-a3d7-7aac-9157-4c5f373471e8)
+
+#### `Export(...)`
+
+Exports the profile item in the profile database to given file name. Currently library profiles, sketch profiles and clb profiles are supported. Library profiles are exported to *.lis format. Sketch profiles are exported to *.uel format. Clb profiles are exported to *.clb format. If path is not given profile is exported to model folder. If filename is empty profile name or prefix is used as filename.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/24d7de14-d3e6-314a-0e91-e57dab6ab0e7)
+
+#### `GetCrossSection(...)`
+
+Returns list of cross section points of inner surfaces from the profile item.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/9a9c5248-16b2-338f-062f-bfc58c4738e5)
+
+#### `GetHighAccuracyCrossSection(...)`
+
+Get cross section with high accuracy.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/285dde88-c699-5213-abc8-fa5f4c951bfe)
+
+#### `GetProfileItemSubTypes(ProfileItem, ProfileItem.ProfileItemTypeEnum)(...)`
+
+
+
+[Docs](https://developer.tekla.com/topic/en/18/43/1c3c5a2f-8603-df13-d55d-07ad12763469)
+
+#### `GetProfileItemSubTypes.(...)`
+
+Selects the profile item and updates the sub types in the profile database.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/8470624e-f868-9cd5-c674-41da81101565)
+
+#### `IsProfileUserDefined(...)`
+
+Whether the profile is a fixed user-defined profile.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/645e4bae-5cca-9fa0-6a29-2cae47b32227)
+
+#### `IsProfileUserParametric(...)`
+
+Whether the profile is a parametric user-defined profile. If so, the prefix can be asked by type and subtype.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/ee8579f8-e74e-9ed2-d500-eaae92d78d76)
+
+#### `ModifyCrossSection(...)`
+
+Modifies the cross section of a profile.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/3770cf41-a91e-a2b7-e61e-45e324e16afe)
+
+#### `ModifyProfileItemAnalysisParameter(...)`
+
+Modify analysis parameter of library profile item. Modify is needed for profile item for updating changes to profile database
+
+[Docs](https://developer.tekla.com/topic/en/18/43/8a875a37-33c2-54dd-3563-0ac9668839eb)
+
+#### `ModifyProfileItemParameter(...)`
+
+Modify parameter of library profile item. Modify is needed for profile item for updating changes to profile database
+
+[Docs](https://developer.tekla.com/topic/en/18/43/b8f040eb-f414-8c30-cb64-cf68921818db)
+
+#### `ModifyProfileItemUserParameter(...)`
+
+Modify user parameter of library profile item. Modify is needed for profile item for updating changes to profile database
+
+[Docs](https://developer.tekla.com/topic/en/18/43/2bc63067-81ca-5ba6-cf20-efa1c134ea97)
+
+#### `Select(...)`
+
+Selects the profile item in the profile database.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/90db4650-0ec0-3f08-dcc6-595f25789b73)
+
+#### `SelectCrossSections(...)`
+
+Selects the profile item cross section in the profile database.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/f88821da-0793-3a27-6c20-2112029268fb)
+
+#### `SetEquivalentType(...)`
+
+Sets the equivalent type for the specified cross section.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/935df01d-74a9-b6f3-5826-9b2d34a5aa52)
+
+### Properties
+- `aProfileItemCrossSections` (object, get/set) — An array list with the profile item cross-sections.
+- `aProfileItemParameters` (object, get/set) — An array list with the profile item parameters.
+- `IsMultiCrossSectionUserParametric` (object, get/set) — Whether the profile is a parametric user-defined multi cross section profile.
+- `IsSketchedUserParametric` (object, get/set) — Whether the profile is a parametric user-defined sketched profile.
+- `NumberOfCrossSections` (object, get/set) — The number of cross sections in the profile item.
+- `ParameterString` (object, get/set) — The profile item parameter string.
+- `ProfileItemCrossSections` (object, get/set) — The list of profile item cross-sections.
+- `ProfileItemSubType` (object, get/set) — The profile item subtype.
+- `ProfileItemType` (object, get/set) — The profile item type.
+
+## ProfileItem.ProfileItemSubTypeEnum (enum)
+
+Defines the different profile item subtypes.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/5a60428d-3d51-b5a4-e7b3-2b04e749d1fc)
+
+### Values
+- `PROFILE_UNKNOWN_SUBTYPE` = `0` — The unknown subtype profile.
+- `PROFILE_I_HOT_ROLLED` = `1001` — The hot rolled I profile.
+- `PROFILE_I_WELDED_SYMMETRICAL` = `1002` — The welded symmetrical I profile.
+- `PROFILE_I_WELDED_UNSYMMETRICAL` = `1003` — The welded unsymmetrical I profile.
+- `PROFILE_I_WELDED_SYMMETRICAL2` = `1004` — The welded symmetrical, altering height, I profile.
+- `PROFILE_I_WELDED_UNSYMMETRICAL2` = `1005` — The welded unsymmetrical, altering height, I profile.
+- `PROFILE_L_HOT_ROLLED` = `2001` — The hot rolled L profile.
+- `PROFILE_L_COLD_ROLLED` = `2002` — The cold rolled L profile.
+- `PROFILE_Z_COLD_ROLLED` = `3001` — The cold rolled Z profile.
+- `PROFILE_U_HOT_ROLLED` = `4001` — The hot rolled U profile.
+- `PROFILE_U_COLD_ROLLED` = `4002` — The cold rolled U profile.
+- `PROFILE_PL_DEFAULT` = `5001` — The default plate profile.
+- `PROFILE_D_CIRCULAR` = `6001` — The default circular section profile.
+- `PROFILE_D_ELLIPTICAL` = `6002` — The elliptical circular section profile.
+- `PROFILE_PD_CIRCULAR` = `7001` — The default circular hollow section profile.
+- `PROFILE_PD_ELLIPTICAL` = `7002` — The elliptical circular hollow section profile.
+- `PROFILE_PD_CIRCULAR_TAPERED` = `7003` — The tapered circular hollow section profile.
+- `PROFILE_P_SQUARE` = `8001` — The square hollow section profile.
+- `PROFILE_P_RECTANGULAR` = `8002` — The rectangular hollow section profile.
+- `PROFILE_P_ALTERING_HEIGHT` = `8003` — The altering height hollow section profile.
+- `PROFILE_C_HOT_ROLLED` = `9001` — The hot rolled C profile.
+- `PROFILE_C_COLD_ROLLED` = `9002` — The cold rolled C profile.
+- `PROFILE_T_HOT_ROLLED` = `10001` — The hot rolled T profile.
+- `PROFILE_T_PARAMETRIC` = `10002` — The parametric T profile.
+- `PROFILE_HK_SYMMETRICAL` = `11001` — The symmetrical welded box profile.
+- `PROFILE_HK_UNSYMMETRICAL` = `11002` — The unsymmetrical welded box profile.
+- `PROFILE_HQ_CENTERED` = `13001` — The centered HQ profile.
+- `PROFILE_HQ_NOT_CENTERED` = `13002` — The not centered HQ profile.
+- `PROFILE_ZZ_SYMMETRICAL` = `15001` — The symmetrical ZZ profile.
+- `PROFILE_ZZ_NOT_SYMMETRICAL` = `15002` — The unsymmetrical ZZ profile.
+- `PROFILE_CC_SYMMETRICAL` = `16001` — The symmetrical CC profile.
+- `PROFILE_CC_NOT_SYMMETRICAL` = `16002` — The unsymmetrical CC profile.
+- `PROFILE_CW_SYMMETRICAL` = `17001` — The symmetrical CW profile.
+- `PROFILE_CW_UNSYMMETRICAL` = `17002` — The unsymmetrical CW profile.
+- `PROFILE_CU_SYMMETRICAL` = `18001` — The symmetrical CU profile.
+- `PROFILE_CU_NOT_SYMMETRICAL` = `18002` — The unsymmetrical CU profile.
+- `PROFILE_EB_SYMMETRICAL` = `19001` — The symmetrical EB profile.
+- `PROFILE_EB_NOT_SYMMETRICAL` = `19002` — The unsymmetrical EB profile.
+- `PROFILE_BF_DEFAULT` = `20001` — The default BF profile.
+- `PROFILE_SPD_CIRCULAR` = `21001` — The circular SPD profile.
+- `PROFILE_SPD_ELLIPTICAL` = `21002` — The elliptical SPD profile.
+- `PROFILE_SPD_CIRCULAR_TAPERED` = `21003` — The tapered circular SPD profile.
+- `PROFILE_EC_SYMMETRICAL` = `22001` — The symmetrical EC profile.
+- `PROFILE_EC_NOT_SYMMETRICAL` = `22002` — The unsymmetrical EC profile.
+- `PROFILE_ED_DEFAULT` = `23001` — The default ED profile.
+- `PROFILE_EE_DEFAULT` = `24001` — The default EE profile.
+- `PROFILE_EF_DEFAULT` = `25001` — The default EF profile.
+- `PROFILE_EZ_DEFAULT` = `26001` — The default EZ profile.
+- `PROFILE_EW_DEFAULT` = `27001` — The default EW profile.
+- `PROFILE_RCDL_SYMMETRICAL` = `102001` — The symmetrical RCDL profile.
+- `PROFILE_RCDL_UNSYMMETRICAL` = `102002` — The unsymmetrical RCDL profile.
+- `PROFILE_RCXX_DEFAULT` = `103001` — The RCXX default profile.
+- `PROFILE_RCL_DEFAULT` = `104001` — The RCL default profile.
+- `PROFILE_RCDX_SYMMETRICAL` = `105001` — The symmetrical RCDX profile.
+- `PROFILE_RCDX_UNSYMMETRICAL` = `105002` — The unsymmetrical RCDX profile.
+- `PROFILE_RCDX_UNSYMMETRICAL2` = `105003` — The unsymmetrical altered height RCDX profile.
+- `PROFILE_RCX_DEFAULT` = `106001` — The RCX default profile.
+
+## ProfileItem.ProfileItemTypeEnum (enum)
+
+Defines the different profile item types.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/94572333-9548-b55f-e9ec-167c0efc528e)
+
+### Values
+- `ALL_PROFILES` = `-1` — All profiles.
+- `PROFILE_UNKNOWN` = `0` — The unknown profile.
+- `PROFILE_I` = `1` — The I profile.
+- `PROFILE_L` = `2` — The L profile.
+- `PROFILE_Z` = `3` — The Z profile.
+- `PROFILE_U` = `4` — The U profile.
+- `PROFILE_PL` = `5` — The plate profile.
+- `PROFILE_D` = `6` — The circular section profile.
+- `PROFILE_PD` = `7` — The circular hollow section profile.
+- `PROFILE_P` = `8` — The rectangular hollow section profile.
+- `PROFILE_C` = `9` — The C profile.
+- `PROFILE_T` = `10` — The T profile.
+- `PROFILE_HK` = `11` — The welded box profile.
+- `PROFILE_HQ` = `13` — The HQ profile
+- `PROFILE_ZZ` = `15` — The ZZ profile.
+- `PROFILE_CC` = `16` — The CC profile.
+- `PROFILE_CW` = `17` — The CW profile.
+- `PROFILE_CU` = `18` — The CU profile.
+- `PROFILE_EB` = `19` — The EB profile.
+- `PROFILE_BF` = `20` — The BF profile.
+- `PROFILE_SPD` = `21` — The SPD profile.
+- `PROFILE_EC` = `22` — The EC profile.
+- `PROFILE_ED` = `23` — The ED profile.
+- `PROFILE_EE` = `24` — The EE profile.
+- `PROFILE_EF` = `25` — The EF profile.
+- `PROFILE_EZ` = `26` — The EZ profile.
+- `PROFILE_EW` = `27` — The EW profile.
+- `PROFILE_POLYGON_PLATE` = `51` — The polygon plate profile.
+- `PROFILE_FPL` = `2` — The FPL profile.
+- `PROFILE_SP` = `101` — The SP profile.
+- `PROFILE_RCDL` = `102` — The RCDL profile.
+- `PROFILE_RCXX` = `103` — The RCXX profile.
+- `PROFILE_RCL` = `104` — The RCL profile.
+- `PROFILE_RCDX` = `105` — The RCDX profile.
+- `PROFILE_RCX` = `106` — The RCX profile.
+- `PROFILE_USER_DEFINED` = `998` — The user-defined, fixed profile.
+- `PROFILE_USER_PARAMETRIC` = `999` — The user-defined, parametric profile.
+
+## ProfileItemCrossSection (class)
+
+The ProfileItemCrossSection contains the information of the cross section information for multi-cross section profiles.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/89e71628-5e13-2b7e-d0e8-4ebc503cee62)
+
+### Constructors
+- `ProfileItemCrossSection(...)` — Initializes a new instance of the ProfileItemCrossSection class
+
+### Methods
+#### `AddProfileItemAnalysisParamter(...)`
+
+adds a new profile item analisis parameter.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/1fcd2d06-503e-f7e9-9837-1756ae102de0)
+
+#### `AddProfileItemParamter(...)`
+
+adds a new profile item parameter.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/0e81ef0a-d9ca-2db1-6937-c833eced17d5)
+
+#### `AddProfileItemUserParamter(...)`
+
+adds a new profile item user parameter.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/fb403a79-d9d4-f258-5ee6-8ad260b3f729)
+
+### Properties
+- `CrossSectionLocation` (object, get/set) — Gets or sets a value of the property CrossSectionLocation.
+- `CrossSectionNumber` (object, get/set) — Gets or sets a value of the property CrossSectionNumber.
+- `EquivalentType` (object, get/set) — Gets or sets a value of the property EquivalentType.
+- `Location` (object, get/set) — Gets or sets a value of the property Location.
+- `Number` (object, get/set) — Gets or sets a value of the property Number.
+- `NumberOfProfileItemAnalysisParameters` (object, get/set) — Gets or sets a value of the property NumberOfProfileItemAnalysisParameters.
+- `NumberOfProfileItemParameters` (object, get/set) — Gets or sets a value of the property NumberOfProfileItemParameters.
+- `NumberOfProfileItemUserParameters` (object, get/set) — Gets or sets a value of the property NumberOfProfileItemUserParameters.
+- `ProfileItemAnalysisParameters` (object, get/set) — Gets or sets a value of the property ProfileItemAnalysisParameters.
+- `ProfileItemParameters` (object, get/set) — Gets or sets a value of the property ProfileItemParameters.
+- `ProfileItemUserParameters` (object, get/set) — Gets or sets a value of the property ProfileItemUserParameters.
+- `ProfileSubType` (object, get/set) — Gets or sets a value of the property ProfileSubType.
+- `ProfileType` (object, get/set) — Gets or sets a value of the property ProfileType.
+
+## ProfileItemEnumerator (class)
+
+The ProfileItemEnumerator class allows to loop through the catalog profile items.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/62285dcc-e4e8-a121-ff28-2be8afdf5cc4)
+
+### Methods
+#### `GetSize(...)`
+
+Returns the total amout of items.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/089f4ae6-eddb-d928-c1be-39c62ab881aa)
+
+#### `MoveNext(...)`
+
+Moves to the next item in the enumerator.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/082a4e9c-78eb-f599-2c31-1cd02d530cab)
+
+#### `Reset(...)`
+
+Resets the enumerator to the beginning.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/8b2a71bb-ede6-eca5-c50b-8b5d5680ef64)
+
+### Properties
+- `Current` (object, get/set) — Returns a profile item instance of the current element.
+- `SelectInstances` (object, get/set) — Indicates that the instance Select() is called when the 'Current' item is asked from the enumerator. The user can set this to 'false' if no members are ever asked from the instance. This is the case when, for example, asking only for the available profile names or when only certain profiles need to be selected from the model. Without the selection the 'Current' item contains the profile name or the prefix and the profile type. Warning: normally the user should not change this value.
+
+## ProfileItemParameter (class)
+
+The ProfileItemParameter class contains the information of one profile parameter (property name, symbol, unit and unit type). A profile item can contain a maximum of 50 profile parameters.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/1f0dd6fa-80fc-e491-3232-a2ab83cbd1c8)
+
+### Constructors
+- `ProfileItemParameter(...)` — Initializes a new instance of the ProfileItemParameter class
+
+### Properties
+- `AlblString` (object, get/set) — Gets a translated albl string.
+- `CrossSectionNumber` (object, get/set) — The number of the cross section the parameter belongs to.
+- `IntegerValue` (object, get/set) — The integer value of the profile item parameter.
+- `ParameterUnitType` (object, get/set) — Defines the parameter unit type.
+- `Property` (object, get/set) — The description of the profile item parameter. Corresponds to the 'Property' in the Tekla Structures profile catalog dialog, and the 'Label in dialog box' in the variable dialog in the Sketch Editor.
+- `StringValue` (object, get/set) — The string value of the profile item parameter.
+- `Symbol` (object, get/set) — The symbol of the profile item parameter.
+- `Value` (object, get/set) — The value of the profile item parameter.
+
+## ProfileItemParameter.ParameterUnitTypeEnum (enum)
+
+Defines the different unit types of the profile item parameter.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/80be683f-4f20-cda9-044b-b1d5336794f0)
+
+### Values
+- `INPUT_BOOLEAN` = `-3` — The input boolean.
+- `INPUT_INTEGER` = `-2` — The input integer.
+- `INPUT_STRING` = `-1` — The input string.
+- `INPUT_NONE` = `0` — The input none.
+- `INPUT_RATIO_UNIT` = `1` — The input ratio unit.
+- `INPUT_STRAIN_UNIT` = `2` — The input strain unit.
+- `INPUT_ANGLE_UNIT` = `5` — The input angle unit.
+- `OUTPUT_ANGLE_UNIT` = `6` — The output angle unit.
+- `INPUT_SECTION_ANGLE_UNIT` = `7` — The input section angle unit.
+- `INPUT_LENGTH_UNIT` = `10` — The input length unit.
+- `OUTPUT_LENGTH_UNIT` = `11` — The output length unit.
+- `INPUT_DEFORMATION_UNIT` = `12` — The input deformation unit.
+- `OUTPUT_DEFORMATION_UNIT` = `13` — The output deformation unit.
+- `INPUT_DIMENSION_UNIT` = `14` — The input dimension unit.
+- `INPUT_RADIUSOFINERTIA_UNIT` = `16` — The input radius of inertia unit.
+- `INPUT_AREA_UNIT` = `20` — The input area unit.
+- `OUTPUT_REINFAREA_UNIT` = `21` — The output reinforced area unit.
+- `OUTPUT_TRANSVREINF_UNIT` = `22` — The output transverse reinforcement unit.
+- `INPUT_AREAPERLENGTH_UNIT` = `23` — The input area per length unit.
+- `OUTPUT_VOLUME_UNIT` = `30` — The output volume unit.
+- `INPUT_SECTIONMODULUS_UNIT` = `31` — The input section modulus unit.
+- `INPUT_VOLUME_UNIT` = `32` — The input volume unit.
+- `INPUT_MOMENTOFINERTIA_UNIT` = `40` — The input moment of inertia unit.
+- `INPUT_TORSIONCONSTANT_UNIT` = `41` — The input torsion constant unit.
+- `INPUT_WARPINGCONSTANT_UNIT` = `60` — The input warping constant unit.
+- `INPUT_FORCE_UNIT` = `100` — The input force unit.
+- `OUTPUT_FORCE_UNIT` = `101` — The output force unit.
+- `INPUT_WEIGHT_UNIT` = `102` — The input weight unit.
+- `OUTPUT_WEIGHT_UNIT` = `103` — The output weight unit.
+- `INPUT_DISTRIBLOAD_UNIT` = `110` — The input distributed load unit.
+- `OUTPUT_DISTRIBLOAD_UNIT` = `111` — The output distributed load unit.
+- `INPUT_SPRINGCONSTANT_UNIT` = `112` — The input spring constant unit.
+- `OUTPUT_MASSPERLENGTH_UNIT` = `113` — The output mass per length unit.
+- `INPUT_SURFACELOAD_UNIT` = `120` — The input surface load unit.
+- `OUTPUT_SURFACELOAD_UNIT` = `121` — The output surface load unit.
+- `INPUT_STRENGTH_UNIT` = `122` — The input strength unit.
+- `OUTPUT_STRESS_UNIT` = `123` — The output stress unit.
+- `INPUT_MODULUS_UNIT` = `124` — The input modulus unit.
+- `INPUT_DENSITY_UNIT` = `131` — The input density unit.
+- `INPUT_MOMENT_UNIT` = `200` — The input moment unit.
+- `OUTPUT_MOMENT_UNIT` = `201` — The output moment unit.
+- `INPUT_DISTRIBMOMENT_UNIT` = `205` — The input distributed moment unit.
+- `INPUT_ROTSPRINGCONST_UNIT` = `210` — The input rotation spring constant unit.
+- `INPUT_TEMPERATURE_UNIT` = `300` — The input temperature unit.
+- `OUTPUT_TEMPERATURE_UNIT` = `301` — The output temperature unit.
+- `INPUT_THERMDILATCOEFF_UNIT` = `310` — The input thermal dilatation coefficient unit.
+- `INPUT_FACTOR_UNIT` = `400` — The input factor unit.
+- `INPUT_DATE_UNIT` = `401` — The input date unit.
+- `INPUT_DATE_TIME_MIN_UNIT` = `402` — The input date time minutes unit.
+- `INPUT_DATE_TIME_SEC_UNIT` = `403` — The input date time seconds unit.
+- `INPUT_LENGTH_FRACTIONAL_IMPERIAL` = `1005` — The input length, fractional imperial.
+- `INPUT_DEFORMATION_FRACTIONAL_IMPERIAL` = `1305` — The input deformation, fractional imperial.
+- `INPUT_DIMENSION_FRACTIONAL_IMPERIAL` = `1405` — The input dimension, fractional imperial.
+- `INPUT_RADIUSOFINERTIA_FRACTIONAL_IMPERIAL` = `1605` — The radius of inertia, fractional imperial.
+- `OUTPUT_LENGTH_FRACTIONAL_IMPERIAL` = `1105` — The output length, fractional imperial.
+- `OUTPUT_DEFORMATION_FRACTIONAL_IMPERIAL` = `1305` — The output deformation, fractional imperial.
+
+## ProfileItemSubType (class)
+
+The ProfileItemSubType class contains the information of one profile item sub type (id, label, parameter string and bitmap name). A profile item can contain a maximum of 10 profile item sub types.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/4261fe17-2e20-9a8a-69e4-343d6e681651)
+
+### Constructors
+- `ProfileItemSubType(...)` — Initializes a new instance of the ProfileItemSubType class
+
+### Properties
+- `BitmapName` (object, get/set) — Gets a value of the property BitmapName.
+- `Label` (object, get/set) — Gets a value of the property Label.
+- `ParameterString` (object, get/set) — Gets a value of the property ParameterString.
+- `SubTypeId` (object, get/set) — Gets a value of the property SubTypeId.
+
+## ProfileName (class)
+
+The ProfileName class contains the name of the profile item.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/f9fe4bfc-f9e6-53a4-a547-c5d1746f4394)
+
+### Constructors
+- `ProfileName(...)` — Initializes a new instance of the ProfileName class
+
+### Properties
+- `Name` (object, get/set) — The profile item name.
+
+## RebarHeaderItem (class)
+
+The RebarHeaderItem class represents an item in the header of the rebar catalog (rebar_database.inp).
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/17d6a044-cf93-4155-dd90-aa924948be95)
+
+### Constructors
+- `RebarHeaderItem(...)` — Initializes a new instance of the RebarHeaderItem class.
+
+### Properties
+- `Name` (object, get/set) — Gets or sets the name.
+- `PropertyName` (object, get/set) — Gets or sets the property name.
+- `Type` (object, get/set) — Gets or sets the type.
+- `Units` (object, get/set) — Gets or sets the units.
+
+## RebarItem (class)
+
+The RebarItem class contains information from the rebars in the catalog (rebar_database.inp).
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/933c87fb-3e19-dd04-d5c3-92723fca54ca)
+
+### Constructors
+- `RebarItem(...)` — Creates a new rebar item instance.
+
+### Methods
+#### `Delete(...)`
+
+Deletes the rebar item from the rebar database.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/ed0d2530-6424-8337-3f7e-2cee77c6319d)
+
+#### `Export(...)`
+
+Exports the rebar item in the catlog to given file name. If path is not given rebar is exported to model folder. If filename is empty rebar name is used as filename.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/3feb12ed-4c12-9a6c-5dd2-41cbddedc126)
+
+#### `Insert(...)`
+
+Inserts the rebar item in the rebar database.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/304205d9-c7d3-7105-15f3-dce63768ce9a)
+
+#### `Modify(...)`
+
+Modifies the rebar item in the rebar database based on the given parameters.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/51fa7a7e-68a3-95d5-d6fe-a8d831f77ad4)
+
+#### `Select(String, Double, Boolean)(...)`
+
+Selects the rebar item in the rebar database.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/13cbd057-d553-bf4b-4e47-a153a7efdfa9)
+
+#### `Select(String, Double, Double, Boolean)(...)`
+
+Selects the rebar item in the rebar database.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/70937de3-c9ba-e60a-55c0-eb149ba46d7d)
+
+#### `Select(String, Double, String, Boolean)(...)`
+
+Selects the rebar item in the rebar database.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/0bd0ecb9-f9db-771e-f51e-2f9983b7aafb)
+
+#### `Select(String, String)(...)`
+
+Selects the rebar item in the rebar database.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/1a861995-0819-f921-aaab-563ae782ba56)
+
+#### `Select(String, String, Double)(...)`
+
+Selects the rebar item in the rebar database.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/dd2e488d-3a2a-581d-8ebe-c280fcbef5fb)
+
+#### `Select(String, String, String)(...)`
+
+Selects the rebar item in the rebar database.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/a5a6ae29-8271-2eae-e587-fe894af9120e)
+
+### Properties
+- `ActualDiameter` (object, get/set) — The rebar item's actual diameter.
+- `BendRadius` (object, get/set) — The rebar item's bending radius.
+- `Code` (object, get/set) — The rebar item's code.
+- `CrankedLength` (object, get/set) — Gets or sets the cranked length.
+- `CrankedLengthType` (object, get/set) — Gets or sets the cranked length type.
+- `CrankExtraOffset` (object, get/set) — Gets or sets the crank extra offset.
+- `CrankStraightLength` (object, get/set) — Gets or sets the crank straight length.
+- `CrossSectionArea` (object, get/set) — The rebar item's cross section area.
+- `CurveTolerance` (object, get/set) — Gets or sets the curve tolerance.
+- `ExtraPointShortening` (object, get/set) — Gets or sets the extra point shortening.
+- `Grade` (object, get/set) — The rebar item's grade.
+- `HookLength135Degrees` (object, get/set) — The rebar item's hook length for 135 degrees.
+- `HookLength180Degrees` (object, get/set) — The rebar item's hook length for 180 degrees.
+- `HookLength90Degrees` (object, get/set) — The rebar item's hook length for 90 degrees.
+- `HookRadius135Degrees` (object, get/set) — The rebar item's hook radius for 135 degrees.
+- `HookRadius180Degrees` (object, get/set) — The rebar item's hook radius for 180 degrees.
+- `HookRadius90Degrees` (object, get/set) — The rebar item's hook radius for 90 degrees.
+- `LapLength` (object, get/set) — Gets or sets the lap length.
+- `MaxRadiusRequiringBending` (object, get/set) — Gets or sets the max radius requiring bending.
+- `NominalDiameter` (object, get/set) — The rebar item's nominal diameter.
+- `Size` (object, get/set) — The rebar item's size.
+- `Usage` (object, get/set) — The rebar item's usage.
+- `WeightPerLenght` (object, get/set) — The rebar item's weight per lenght.
+
+## RebarItemEnumerator (class)
+
+The RebarItemEnumerator class allows to loop through the catalog rebar items.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/79244a17-2ec1-6047-bb54-fb7c63ad8d4b)
+
+### Methods
+#### `DeleteRebarItem(...)`
+
+Delete the RebarItem from the list
+
+[Docs](https://developer.tekla.com/topic/en/18/43/8134716e-7107-ace0-ee37-1762fdc6c6e5)
+
+#### `GetRebarHeaderItems(...)`
+
+Gets the header items from the rebar catalog header.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/15c513bc-268d-6adb-2484-6fc63f53586b)
+
+#### `GetSize(...)`
+
+Returns the total amout of items.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/143e5791-aab0-dd97-59e4-6dc160365bf8)
+
+#### `InsertRebarItem(...)`
+
+Insert the RebarItem in to the list
+
+[Docs](https://developer.tekla.com/topic/en/18/43/8ccbe8c7-936b-e7f7-5a8b-15bd890c35d7)
+
+#### `ModifyRebarItem(...)`
+
+Modify the RebarItem in the list
+
+[Docs](https://developer.tekla.com/topic/en/18/43/e12ff711-c46d-beba-9f0a-58c370a56a48)
+
+#### `MoveNext(...)`
+
+Moves to the next item in the enumerator.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/16173cf8-253b-7207-0efd-433facfb2a43)
+
+#### `RebarItemExists(...)`
+
+Check RebarItem is available in database file
+
+[Docs](https://developer.tekla.com/topic/en/18/43/91a4841a-1b14-8d2e-a919-f82ac6d98d04)
+
+#### `Reset(...)`
+
+Resets the enumerator to the beginning.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/ad0e7d04-4ef9-97a7-4bea-db64119745ee)
+
+#### `SelectRebarItem(String, Double, Boolean)(...)`
+
+Selects a rebar item in the rebar database with the given grade and nominal diameter.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/8070f297-24cb-845f-c6f3-a4c9f4cd18c5)
+
+#### `SelectRebarItem(String, Double, Double, Boolean)(...)`
+
+Selects a rebar item in the rebar database with the given grade, nominal diameter and bending radius.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/57ce99c3-1beb-75bf-b836-a72f15427a21)
+
+#### `SelectRebarItem(String, Double, String, Boolean)(...)`
+
+Selects a rebar item in the rebar database with the given grade, nominal diameter and bending radius.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/711493f8-9bba-e516-550a-e3121156d859)
+
+#### `SelectRebarItem(String, String)(...)`
+
+Selects a rebar item in the rebar database with the given grade and size.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/43cc4200-e00f-bc6b-7b54-5fe9aa9eca99)
+
+#### `SelectRebarItem(String, String, Double)(...)`
+
+Selects a rebar item in the rebar database with the given grade, size and bending radius.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/79ebffd5-4708-d0f0-4b97-850d7e31fd8c)
+
+#### `SelectRebarItem(String, String, String)(...)`
+
+Selects a rebar item in the rebar database with the given grade, size and usage.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/a39216d1-61a1-12bb-1df8-440b927be16d)
+
+#### `SelectRebarItem(String, String, String, String)(...)`
+
+Selects a rebar item in the rebar database with the given grade, size, usage and code.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/7804542c-1ac2-cdff-33bd-19b6a5d4f66b)
+
+### Properties
+- `Current` (object, get/set) — Returns a rebar item instance of the current element.
+
+## ShapeItem (class)
+
+The Shape class contains information about the shapes in the Tekla Structures shape catalog.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/3b2b9bdd-99b2-1ed9-3e1f-6a79989bfbd8)
+
+### Constructors
+- `ShapeItem(...)` — Creates a new shape instance.
+
+### Methods
+#### `CleanAndModify(...)`
+
+Cleans and stores the brep into the shape catalog
+
+[Docs](https://developer.tekla.com/topic/en/18/43/4edee409-2a8c-032a-7970-1ffafd7de5d2)
+
+#### `Delete(...)`
+
+Deletes a shape from shape catalog based on the shape name.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/8c1f5ced-f600-2cea-a417-a76c1d7dded0)
+
+#### `DeleteMetadata(...)`
+
+Delete the Shape item's metadata.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/76dde3bd-f5f5-1871-781d-9ed67bc3627f)
+
+#### `Export(...)`
+
+Exports the shape item in *.tsc-format to the to given file name. If path is not given shape is exported to model folder. If filename is empty shape name is used as filename.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/c627bccd-30f5-48b6-0ed0-158be2852701)
+
+#### `GetAllMetadataKeys(...)`
+
+Get the Shape item's metadata keys.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/ff0a336a-d372-dee9-0668-a42a5a154dd6)
+
+#### `GetInstanceCount(...)`
+
+Get the number of instances used in the model of a shape
+
+[Docs](https://developer.tekla.com/topic/en/18/43/42331a86-fac0-a1be-b369-7e3274919ce5)
+
+#### `GetMetadata(...)`
+
+Get the Shape item's metadata.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/1b91542e-8190-0ef5-0b9f-b31aa67cf9eb)
+
+#### `Insert(...)`
+
+Inserts a shape to the shape catalog based on the shape geometry (does not allow duplicate geometry).
+
+[Docs](https://developer.tekla.com/topic/en/18/43/16c8423e-6b2e-db2c-d8d7-7f6e267eac0c)
+
+#### `InsertOrGetGuidsOfShapesWithMatchingGeometry(...)`
+
+Inserts a shape to the shape catalog based on the shape geometry (does not allow duplicate geometry). If, based on fingerprint, the geometry already exists it populates a list of Guids of shapes using that same geometry.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/c2fb6b7e-357a-84f5-2d75-5df5689de671)
+
+#### `InsertUsingNormals(...)`
+
+Inserts a shape to the shape catalog using the shape geometry. Uses vertex normals to determine edge visibility. If the normal vectors of the vertices belonging to one geometrical location are close enough, the edge will be considered smooth and will be marked as hidden.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/11c11135-9e1b-f831-fcd5-5c5c894ed8a2)
+
+#### `InsertUsingNormalsAllowDuplicates(...)`
+
+Inserts a shape to the shape catalog using the shape geometry allowing duplicates. Uses vertex normals to determine edge visibility. If the normal vectors of the vertices belonging to one geometrical location are close enough, the edge will be considered smooth and will be marked as hidden.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/7aa8d76b-bf72-dc00-4c25-9db20221065e)
+
+#### `Modify(...)`
+
+Modifies a shape in the shape catalog based on the shape name or if not found, based on shape guid.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/e26d3968-b0c4-cbe4-7072-5c594b6e10ee)
+
+#### `Rename(...)`
+
+Renames a shape in the shape catalog with the given shape name.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/e5d7d104-0f1a-2437-122c-c95d57bc1ecd)
+
+#### `Select(String)(...)`
+
+Selects the shape based on the given name from the database.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/78fd7218-d17a-1dd0-fd3c-bda69433da65)
+
+#### `Select.(...)`
+
+Selects the shape from the database based on the name given in this instance.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/44b27784-3b82-a5a3-48bd-8b6d31e62693)
+
+#### `SetHandlePoints(...)`
+
+Set the Shape item's Handle Points
+
+[Docs](https://developer.tekla.com/topic/en/18/43/32d1759c-965f-dda0-00c4-29c8348115f3)
+
+#### `SetMetadata(...)`
+
+Set the Shape item's metadata. Inserts the metadata if key is not found, otherwise modifies existing data.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/8053f599-8299-bd82-4c5b-85741968a43c)
+
+### Properties
+- `BrepType` (object, get/set) — Defines BrepType of shapes. @see enum BrepType
+- `Extrema` (object, get/set) — The extrema of the shape as an axis-aligned bounding box, as opposed to object-aligned
+- `Fingerprint` (object, get/set) — A fingerprint value calculated by Tekla Structures to provide quick comparison of geometries to avoid inserting same shape multiple times to the catalog. More rigorous comparison is done only for geometries that result in identical fingerprints.
+- `GeometryGuid` (object, get/set) — A unique identifier of the shape geometry, given initially by BrepStorage. This GUID is used as the body of the filename for the shape geometry information found in the ShapeGeometries directory
+- `GeometryHash` (object, get/set) — This obsolete property can still be used to store and externally provided unique hash value identifying the shape. However, Tekla Structures does not use this value internally for anything. It is strongly recommended to use the newer Fingerprint property for future implementations. That value is automatically calculated by Tekla Structures for all inserted shapes and is used internally for shape identification.
+- `Guid` (object, get/set) — A unique identifier of the actual shape, given initially by the ShapeCatalog. This GUID is used as the body of the filename for the shape information found in the Shape directory
+- `HandlePoints` (object, get/set) — Defines handle points of the shape.
+- `IsSolid` (object, get/set) — Set to true if the shape is detected by TS Core to be a valid solid
+- `Name` (object, get/set) — The shape Name
+- `ShapeFacetedBrep` (object, get/set) — The data structure containing the geometric information of the shape as a FacetedBRep
+- `UpAxis` (object, get/set) — The direction defining what is understood as "up" in the shape that the API user is providing. Typically this is the z-axis, if the data is in global coordinates, coming from a system where Z-axis points to global up direction. Possible values are: Undefined = 0, X_Axis = 1, Y_Axis = 2, Z_Axis = 3. It is highly recommendable to orient shapes in the Tekla Structures native way, that is x-axis on the extrusion line and Y-axis pointing up. NOTE: Specifying UpAxis to be ShapeUpAxis.Undefined may throw a ‘System.ArgumentOutOfRangeException’ exception in certain operations, because the system can not proceed without that information.
+
+## ShapeItemEnumerator (class)
+
+The ShapeItemEnumerator class allows to loop through the shape catalog items.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/fb2bc7c4-c0bc-7536-a3e9-9adaa1186d68)
+
+### Methods
+#### `GetSize(...)`
+
+Returns the total amount of items.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/f53a8688-6506-8c9c-8e75-3c2cdf477af7)
+
+#### `MoveNext(...)`
+
+Moves to the next item in the enumerator.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/6b563dd5-5bed-aeb1-4171-dee33e4ea36d)
+
+#### `Reset(...)`
+
+Resets the enumerator to the beginning.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/932e93cd-e0ef-c8a5-48c7-f176dcaff4b5)
+
+### Properties
+- `Current` (object, get/set) — Returns a shape item instance of the current element.
+
+## ShapeMetadataTypeEnum (enum)
+
+Represents data type or measurement unit of the specific metadata If this is updated, update ShapeMetadataType_e on the Core side
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/c664c68d-0e1f-afdd-716c-9736a174f994)
+
+### Values
+- `Text` = `0` — Default value is text
+- `DateTime` = `10` — Date
+- `Integer` = `11` — Integer
+- `Double` = `12` — Double, here precision controlled by TS-> Menu-> Settings-> Options-> Units and decimals -> Modeling -> Factor "XS_UNITDECIMALS_INPUT_FACTOR"
+- `Length` = `101` — Unit of length, here length refers to TS-> Menu-> Settings-> Options-> Units and decimals -> Catalogs -> Dimension. "XS_UNIT_INPUT_DIMENSION", "XS_UNITDECIMALS_INPUT_DIMENSION"
+- `Area` = `201` — Unit of area, here area refers to TS-> Menu-> Settings-> Options-> Units and decimals -> Catalogs -> Area. "XS_UNIT_INPUT_AREA", "XS_UNITDECIMALS_INPUT_AREA"
+- `Volume` = `301` — Unit of volume, here volume refers to TS-> Menu-> Settings-> Options-> Units and decimals -> Catalogs -> Volume. "XS_UNIT_INPUT_VOLUME", "XS_UNITDECIMALS_INPUT_VOLUME"
+- `Weight` = `401` — Unit of weight, here weight refers to TS-> Menu-> Settings-> Options-> Units and decimals -> Catalogs -> Weight. "XS_UNIT_INPUT_WEIGHT", "XS_UNITDECIMALS_INPUT_WEIGHT"
+
+## ShapeUpAxis (enum)
+
+Up axis direction
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/a182b297-b6de-a62e-79fa-91e7df0e72fc)
+
+### Values
+- `Undefined` = `0` — Undefined direction for axis. Should not be used in input.
+- `X_Axis` = `1` — X points up.
+- `Y_Axis` = `2` — Y points up.
+- `Z_Axis` = `3` — Z points up.
+
+## UserPropertyFieldTypeEnum (enum)
+
+The user property field type.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/8dd87f1e-3621-dc2e-f515-2d1678ef0e36)
+
+### Values
+- `FIELDTYPE_UNDEFINED` = `0` — The user property field type is undefined.
+- `FIELDTYPE_NUMBER` = `1` — The user property field type is number.
+- `FIELDTYPE_TEXT` = `2` — The user property field type is text.
+- `FIELDTYPE_DISTANCE` = `3` — The user property field type is distance.
+- `FIELDTYPE_PROFILE` = `4` — The user property field type is profile.
+- `FIELDTYPE_MATERIAL` = `5` — The user property field type is material.
+- `FIELDTYPE_TEXT_LIST_DISTANCE` = `6` — The user property field type is distance list.
+- `FIELDTYPE_FILE_IN` = `7` — The user property field type is file in.
+- `FIELDTYPE_FILE_OUT` = `8` — The user property field type is file out.
+- `FIELDTYPE_BOLT_STANDARD` = `9` — The user property field type is bolt standard.
+- `FIELDTYPE_BOLT_SIZE` = `10` — The user property field type is bolt size.
+- `FIELDTYPE_RATIO` = `11` — The user property field type is ratio.
+- `FIELDTYPE_STRAIN` = `12` — The user property field type is strain.
+- `FIELDTYPE_ANGLE` = `13` — The user property field type is angle.
+- `FIELDTYPE_DEFORMATION` = `14` — The user property field type is deformation.
+- `FIELDTYPE_DIMENSION` = `15` — The user property field type is dimension.
+- `FIELDTYPE_RADIUSOFINERTIA` = `16` — The user property field type is radius of inertia.
+- `FIELDTYPE_AREA` = `17` — The user property field type is area.
+- `FIELDTYPE_AREAPERLENGTH` = `18` — The user property field type is area/length.
+- `FIELDTYPE_SECTIONMODULUS` = `19` — The user property field type is section modulus.
+- `FIELDTYPE_MOMENTOFINERTIA` = `20` — The user property field type is moment of inertia.
+- `FIELDTYPE_TORSIONCONSTANT` = `21` — The user property field type is torsion constant.
+- `FIELDTYPE_WARPINGCONSTANT` = `22` — The user property field type is warping constant.
+- `FIELDTYPE_FORCE` = `23` — The user property field type is force.
+- `FIELDTYPE_WEIGHT` = `24` — The user property field type is weight.
+- `FIELDTYPE_DISTRIBLOAD` = `25` — The user property field type is distributed load.
+- `FIELDTYPE_SPRINGCONSTANT` = `26` — The user property field type is spring constant.
+- `FIELDTYPE_SURFACELOAD` = `27` — The user property field type is surface load.
+- `FIELDTYPE_STRENGTH` = `28` — The user property field type is strength.
+- `FIELDTYPE_MODULUS` = `29` — The user property field type is modulus.
+- `FIELDTYPE_DENSITY` = `30` — The user property field type is density.
+- `FIELDTYPE_MOMENT` = `31` — The user property field type is moment.
+- `FIELDTYPE_DISTRIBMOMENT` = `32` — The user property field type is distributed moment.
+- `FIELDTYPE_ROTSPRINGCONST` = `33` — The user property field type is rotational spring constant.
+- `FIELDTYPE_TEMPERATURE` = `34` — The user property field type is temperature.
+- `FIELDTYPE_THERMDILATCOEFF` = `35` — The user property field type is thermal coefficient.
+- `FIELDTYPE_ANALYSIS_RESTRAINT` = `36` — The user property field type is analysis restraint.
+- `FIELDTYPE_VOLUME` = `37` — The user property field type is volume.
+- `FIELDTYPE_REBAR_MAIN` = `38` — The user property field type is main reinforcement bar.
+- `FIELDTYPE_REBAR_STIRRUP` = `39` — The user property field type is stirrup reinforcement bar.
+- `FIELDTYPE_DATE` = `40` — The user property field type is date.
+- `FIELDTYPE_DATE_TIME_SEC` = `41` — The user property field type is date and time with seconds.
+- `FIELDTYPE_DATE_TIME_MIN` = `42` — The user property field type is date and time with minutes.
+- `FIELDTYPE_STUD_STANDARD` = `43` — The user property field type is stud standard.
+- `FIELDTYPE_STUD_SIZE` = `44` — The user property field type is stud size.
+- `FIELDTYPE_STUD_LENGTH` = `45` — The user property field type is stud length.
+- `FIELDTYPE_HOLE_TYPE` = `46` — The user property field type is hole type.
+- `FIELDTYPE_HOLE_DIRECTION` = `47` — The user property field type is hole direction.
+- `FIELDTYPE_WELD_TYPE` = `48` — The user property field type is weld type.
+- `FIELDTYPE_CHAMFER_TYPE` = `49` — The user property field type is chamfer type.
+- `FIELDTYPE_WELDING_SITE` = `50` — The user property field type is welding site.
+- `FIELDTYPE_FACTOR` = `51` — The user property field type is factor.
+- `FIELDTYPE_PART_NAME` = `52` — The user property field type is part name.
+- `FIELDTYPE_BOLT_TYPE` = `53` — The user property field type is bolt type.
+- `FIELDTYPE_COMPONENT_NAME` = `54` — The user property field type is component name.
+- `FIELDTYPE_REBAR_MESH` = `55` — The user property field type is rebar mesh.
+- `FIELDTYPE_USERDEFINED` = `56` — The user property field type is user defined.
+- `FIELDTYPE_YES_NO` = `57` — The user property field type is yes/no.
+- `FIELDTYPE_COMPONENT_STANDARD_FILE` = `58` — The user property field type is component standard file.
+- `FIELDTYPE_REBAR_GRADE` = `59` — The user property field type is reinforcement bar grade.
+- `FIELDTYPE_REBAR_RADIUS` = `60` — The user property field type is reinforcement bar radius.
+- `FIELDTYPE_REBAR_SIZE` = `61` — The user property field type is reinforcement bar size.
+- `FIELDTYPE_HOOK_SHAPE` = `62` — The user property field type is reinforcement bar hook shape.
+- `FIELDTYPE_CROSSBAR_POSITION` = `63` — The user property field type is reinforcement cross bar position.
+- `FIELDTYPE_REBAR_SPLIT_TARGET` = `64` — The user property field type is rebar split target.
+- `FIELDTYPE_REBAR_STAGGER_TYPE` = `65` — The user property field type is rebar stagger type.
+- `FIELDTYPE_REBAR_LAPPING_SIDE` = `66` — The user property field type is rebar lapping side.
+- `FIELDTYPE_REBAR_LAPPING_OFFSET_DIRECTION` = `67` — The user property field type is rebar lapping offset direction.
+- `FIELDTYPE_REBAR_LAPPING_OFFSET_TYPE` = `68` — The user property field type is rebar lapping offset type.
+- `FIELDTYPE_DISTANCE_LIST_TOTAL` = `69` — The user property field type is distance list total.
+- `FIELDTYPE_REBAR_LENGTH_ADJUSTMENT_TYPE` = `70` — The user property field type is rebar length adjustment type.
+- `FIELDTYPE_SHAPE` = `71` — The user property field type is shape.
+- `FIELDTYPE_PLAIN_HOLE_TYPE` = `72` — The user property field type is plain hole type.
+- `FIELDTYPE_MASS_FLOW` = `73` — The user property field type is mass flow.
+- `FIELDTYPE_VOLUME_FLOW` = `74` — The user property field type is volume flow.
+- `FIELDTYPE_HEAT_CAPACITY` = `75` — The user property field type is heat capacity.
+- `FIELDTYPE_PRESSURE_LOSS` = `76` — The user property field type is pressure loss.
+- `FIELDTYPE_VELOCITY` = `77` — The user property field type is velocity.
+- `FIELDTYPE_FLOW_COEFFICIENT` = `78` — The user property field type is flow coefficient.
+- `FIELDTYPE_DYNAMIC_VISCOSITY` = `79` — The user property field type is dynamic viscosity.
+- `FIELDTYPE_KINEMATIC_VISCOSITY` = `80` — The user property field type is kinematic viscosity.
+- `FIELDTYPE_POWER` = `81` — The user property field type is power.
+
+## UserPropertyItem (class)
+
+The UserPropertyItem class contains information about the user properties in the Tekla Structures catalog.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/1b99d080-81f2-5aed-63b2-9408018e79e4)
+
+### Constructors
+- `UserPropertyItem(...)` — Creates a new user property item instance.
+
+### Methods
+#### `AddToObjectType(...)`
+
+Adds the user property item to the given object type.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/7be988f0-9fd3-7d16-6e38-f65d98b7c422)
+
+#### `Delete(...)`
+
+Deletes the user property item from the database.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/ae8ea363-5ba4-8dd1-9047-a0ac98d4eb4f)
+
+#### `GetDefaultValue(Double.)(...)`
+
+Gets the default value of a double property.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/0d6f5378-603f-d5b6-5023-b2117b19ed7a)
+
+#### `GetDefaultValue(Int32.)(...)`
+
+Gets the default value of an integer property.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/4ce40f2a-3bdd-a3e2-383f-ba34d0890923)
+
+#### `GetDefaultValue(String.)(...)`
+
+Gets the default value of a string property.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/9aee87ff-94be-8506-3db5-025c3ffee451)
+
+#### `GetLabel(Boolean)(...)`
+
+Gets the label of the user property.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/18841e46-86a4-0941-eb7d-1bdd69976904)
+
+#### `GetLabel.(...)`
+
+Gets the label of the user property. Labels are translated when translation is available.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/03fdb5ab-ce53-fbda-e9e7-18f22fde4481)
+
+#### `GetObjectTypes(...)`
+
+Gets the object types which contain this user property item.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/dc091818-71be-e6e4-b292-73185fafeedc)
+
+#### `GetOptions(List.KeyValuePair.Double, String...)(...)`
+
+Gets the value options of a double property. Option strings are translated when translation is available.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/508fd0e9-fe08-eb93-fedd-4f3b52e073b2)
+
+#### `GetOptions(List.KeyValuePair.Double, String..., Boolean)(...)`
+
+Gets the value options of a double property.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/4f65183f-06de-d81c-48a9-ec1d346fc50d)
+
+#### `GetOptions(List.KeyValuePair.Int32, String...)(...)`
+
+Gets the value options of an integer property. Option strings are translated when translation is available.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/00d0baf4-c0ce-d26e-d037-f0c342d92103)
+
+#### `GetOptions(List.KeyValuePair.Int32, String..., Boolean)(...)`
+
+Gets the value options of an integer property.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/a9d61eee-15e4-687e-5ddf-1983dcc071ce)
+
+#### `GetOptions(List.KeyValuePair.String, String...)(...)`
+
+Gets the value options of a string property. Option strings are translated when translation is available.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/a4c8794d-754a-accd-a966-e934fcdc7514)
+
+#### `GetOptions(List.KeyValuePair.String, String..., Boolean)(...)`
+
+Gets the value options of a string property.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/c19871a3-e7e9-1974-1174-e27b24e8a5cc)
+
+#### `Insert(...)`
+
+Inserts the user property item to the database.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/47df9e60-ef7a-23f0-6e08-fd85a21b2be6)
+
+#### `Modify(...)`
+
+Modifies the user property item.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/44b393b8-36cb-4d17-b620-6e58d7fa3419)
+
+#### `RemoveFromObjectType(...)`
+
+Removes the user property item from the given object type.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/fb4c83dc-103a-28f3-5acf-402ef8bd8f92)
+
+#### `Select(...)`
+
+Selects by name the user property item from the database.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/6f324d5f-053a-8901-67f1-51e882ed9def)
+
+#### `SetDefaultValue(Double)(...)`
+
+Sets the default value of a double property.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/6270ebb7-1318-06d1-2bbc-efd908962c13)
+
+#### `SetDefaultValue(Int32)(...)`
+
+Sets the default value of an integer property.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/5165d6f9-44d7-840d-61df-ff0f976b27ea)
+
+#### `SetDefaultValue(String)(...)`
+
+Sets the default value of a string property.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/758fac4e-2e53-6483-86fc-57ebf8a819ad)
+
+#### `SetLabel(...)`
+
+Sets the label of the user property.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/682151bd-ed6f-08dc-c84d-d0f91bb708a7)
+
+#### `SetOptions(List.KeyValuePair.Double, String..)(...)`
+
+Sets the value options of a double property. The maximum count of options is 400.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/20d1c30f-74a1-995d-9972-fb0907950eab)
+
+#### `SetOptions(List.KeyValuePair.Int32, String..)(...)`
+
+Sets the value options of an integer property. The maximum count of options is 400.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/d27524ad-3dad-136a-19b7-fb462072afda)
+
+#### `SetOptions(List.KeyValuePair.String, String..)(...)`
+
+Sets the value options of a string property. The maximum count of options is 400.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/3004f766-2f4e-9a7b-3561-2b5030fadb0a)
+
+### Properties
+- `AffectsNumbering` (object, get/set) — Indicates whether the property value affects the numbering of objects.
+- `FieldType` (object, get/set) — The field type of the user property.
+- `Level` (object, get/set) — The level at which the user property has been defined.
+- `Name` (object, get/set) — The name of the user property.
+- `Type` (object, get/set) — The type of the user property.
+- `Unique` (object, get/set) — Indicates whether the property value is copied when the object is copied.
+- `Visibility` (object, get/set) — Indicates whether the property value is visible/editable.
+
+## UserPropertyItemEnumerator (class)
+
+The UserPropertyItemEnumerator class allows to loop through the user property items.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/ac5773e5-b29e-a74e-ed36-163d2f78cdac)
+
+### Methods
+#### `GetSize(...)`
+
+Returns the total amout of items.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/08edeb18-b3bc-a616-2b85-b3665fb08417)
+
+#### `MoveNext(...)`
+
+Moves to the next item in the enumerator.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/0b52f390-c822-76f2-82d3-0e016b43c0c9)
+
+#### `Reset(...)`
+
+Resets the enumerator to the beginning.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/2f41c308-cf0d-05b7-939b-cc7d38aa8713)
+
+### Properties
+- `Current` (object, get/set) — Returns a user property item instance of the current element.
+
+## UserPropertyLevelEnum (enum)
+
+The user property level.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/3809973f-fff1-b1d8-28d0-84d1de565582)
+
+### Values
+- `LEVEL_MODEL` = `1` — The user property has been defined as a model user property.
+- `LEVEL_PROJECT` = `2` — The user property has been defined as a project user property.
+- `LEVEL_FIRM` = `3` — The user property has been defined as a firm user property.
+- `LEVEL_ENVIRONMENT` = `4` — The user property has been defined as an environment user property.
+- `LEVEL_COMMONDEFAULT` = `5` — The user property has been defined as a common default user property.
+
+## UserPropertyName (class)
+
+The UserPropertyName class contains the name of the user property item.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/42e8df58-db5b-2799-58a9-9ba5cc5f9f99)
+
+### Constructors
+- `UserPropertyName(...)` — Initializes a new instance of the UserPropertyName class
+
+### Properties
+- `Name` (object, get/set) — The user property item name.
+
+## UserPropertyOption (class)
+
+The UserPropertyOption class contains the properties of a user property value option.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/86507770-2daf-f78b-4ecc-008b470b1721)
+
+### Constructors
+- `UserPropertyOption(...)` — Initializes a new instance of the UserPropertyOption class
+
+### Properties
+- `DoubleValue` (object, get/set) — The double value.
+- `IntValue` (object, get/set) — The integer value.
+- `OptionLabel` (object, get/set) — The option name.
+- `OptionLabelTranslated` (object, get/set) — The translated option name.
+- `StringValue` (object, get/set) — The string value.
+
+## UserPropertyVisibilityEnum (enum)
+
+The visibility of the user property.
+
+[Vendor docs](https://developer.tekla.com/topic/en/18/43/219352c9-b588-0b0b-133a-a94dd92eb15d)
+
+### Values
+- `VISIBILITY_NORMAL` = `0` — The user property is visible and the user can modify it.
+- `VISIBILITY_READONLY` = `1` — The user property is visible but the user cannot modify it.
+- `VISIBILITY_HIDDEN` = `2` — The user property is hidden.
+

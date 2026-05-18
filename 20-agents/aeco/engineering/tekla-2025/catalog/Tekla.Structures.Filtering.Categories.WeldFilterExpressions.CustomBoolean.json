@@ -1,0 +1,34 @@
+{
+  "name": "WeldFilterExpressions.CustomBoolean",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The CustomBoolean class represents a custom Boolean filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/6015254a-9089-eb89-a467-ba37102b1282",
+  "constructors": [
+    {
+      "name": "WeldFilterExpressions.CustomBoolean",
+      "signature": "WeldFilterExpressions.CustomBoolean(...)",
+      "summary": "Initializes a new instance of the CustomBoolean class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a4bd3929-f55f-b282-0f3e-71a4cee79fae"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

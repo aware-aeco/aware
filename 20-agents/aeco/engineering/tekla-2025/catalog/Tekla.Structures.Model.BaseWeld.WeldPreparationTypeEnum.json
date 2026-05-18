@@ -1,0 +1,34 @@
+{
+  "name": "BaseWeld.WeldPreparationTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "Weld preparation types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/13526ea5-f367-ea94-529d-03e7bd7427ca",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "PREPARATION_NONE",
+      "value": 0,
+      "summary": "No preparation."
+    },
+    {
+      "name": "PREPARATION_AUTO",
+      "value": 1,
+      "summary": "Auto preparation."
+    },
+    {
+      "name": "PREPARATION_MAIN",
+      "value": 2,
+      "summary": "Main part preparation."
+    },
+    {
+      "name": "PREPARATION_SECONDARY",
+      "value": 3,
+      "summary": "Secondary part preparation."
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "name": "PluginPickerInput",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PluginPickerInput class represents a predefined set of picker inputs that can be provided to a plug-in object. It replaces the interactive selection of points and/or objects by the user when the plug-in is inserted into a drawing through the API.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/1fbe56ff-0633-90a5-ef51-20307ee497cb",
+  "constructors": [
+    {
+      "name": "PluginPickerInput",
+      "signature": "PluginPickerInput(...)",
+      "summary": "Initializes a new instance of the PluginPickerInput class with an empty list of picker inputs.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f019f7ce-ff2b-12cb-ea56-a56f59b02ecd"
+    },
+    {
+      "name": "PluginPickerInput",
+      "signature": "PluginPickerInput(...)",
+      "summary": "Initializes a new instance of the PluginPickerInput class which contains a predefined sequence of inputs.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2374b83e-753e-6642-5ead-aeac0224baef"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "Add(...)",
+      "summary": "Appends a picker input to the plug-in input.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2e8405d4-bef2-bbf7-c056-e1f6c63c8352"
+    },
+    {
+      "name": "AddRange",
+      "signature": "AddRange(...)",
+      "summary": "Appends several picker inputs to the picker input sequence.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e5b2b352-1609-2d51-f946-15a3d19593a8"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

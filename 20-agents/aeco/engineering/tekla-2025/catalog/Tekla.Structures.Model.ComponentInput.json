@@ -1,0 +1,113 @@
+{
+  "name": "ComponentInput",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The ComponentInput class handles the input of component objects and positions. A component has one component input. The component input must include all the needed input objects and points in the correct order. For example, an input with a point and a part is different from an input of a part and a point. The maximum number of different input items in the collection is 10.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/2e678a2a-118b-ca18-2776-91cd29d4540c",
+  "constructors": [
+    {
+      "name": "ComponentInput",
+      "signature": "ComponentInput(...)",
+      "summary": "Creates a new component input object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ecb2502b-3309-5862-98e1-c0214ab99229"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddInputObject",
+      "signature": "AddInputObject(...)",
+      "summary": "Adds a model object to the component input.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a5d879e1-4952-2600-40db-fdab2637adae"
+    },
+    {
+      "name": "AddInputObjects",
+      "signature": "AddInputObjects(...)",
+      "summary": "Adds an array list of model objects to the component input.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f7711bd2-4bf6-9b33-dd62-dc5702e62a2b"
+    },
+    {
+      "name": "AddInputPolygon",
+      "signature": "AddInputPolygon(...)",
+      "summary": "Adds a polygon to the component input.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d50f8295-7d7b-90ce-e1a2-4a38b0a05826"
+    },
+    {
+      "name": "AddOneInputPosition",
+      "signature": "AddOneInputPosition(...)",
+      "summary": "Adds an input position to the component input.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8aca8df7-49a3-0a9c-b4cd-66ba8b611345"
+    },
+    {
+      "name": "AddTwoInputPositions",
+      "signature": "AddTwoInputPositions(...)",
+      "summary": "Adds two input positions to the component input.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/63f0c2d2-025a-9c81-915f-fd8df69f744a"
+    },
+    {
+      "name": "CopyTo",
+      "signature": "CopyTo(...)",
+      "summary": "Copies the elements of the ICollection to an Array, starting at a particular Array index.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/42454497-9e17-cd6b-cda6-b7ec6decbe1f"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "GetEnumerator(...)",
+      "summary": "Returns an enumerator that iterates through a collection.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c3e1a0fc-7e10-3647-deff-3a18bc3fb8c1"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the number of elements contained in the ICollection.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9e048423-e83e-e00c-93c2-65ab87a88fef"
+    },
+    {
+      "name": "IsSynchronized",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets a value indicating whether access to the ICollection is synchronized (thread safe).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f30221ee-a6ca-692f-ec1d-e383d109a6ff"
+    },
+    {
+      "name": "SyncRoot",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets an object that can be used to synchronize access to the ICollection.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a14dab55-81f7-7879-4d33-c8bbdd6bf9de"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

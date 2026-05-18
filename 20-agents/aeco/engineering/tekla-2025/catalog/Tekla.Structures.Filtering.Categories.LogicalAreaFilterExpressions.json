@@ -1,0 +1,14 @@
+{
+  "name": "LogicalAreaFilterExpressions",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The LogicalAreaFilterExpressions class contains all the logical area filter expressions.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/d227ac2c-0102-e9a3-0342-e56f20d43a38",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

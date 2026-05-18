@@ -1,0 +1,44 @@
+{
+  "name": "AnalysisDecomposedLoad.AnalysisDecomposedLoadDirectionEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "Defines the analysis decomposed load directions.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/ce99bc57-d5a5-eaa3-b501-aef9f163635e",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "X",
+      "value": 1,
+      "summary": "The analysis decomposed load direction is in the direction of the X-axis."
+    },
+    {
+      "name": "Y",
+      "value": 2,
+      "summary": "The analysis decomposed load direction is in the direction of the Y-axis."
+    },
+    {
+      "name": "Z",
+      "value": 3,
+      "summary": "The analysis decomposed load direction is in the direction of the Z-axis."
+    },
+    {
+      "name": "RX",
+      "value": 4,
+      "summary": "The analysis decomposed load direction is in the rotation of the X-axis."
+    },
+    {
+      "name": "RY",
+      "value": 5,
+      "summary": "The analysis decomposed load direction is in the rotation of the Y-axis."
+    },
+    {
+      "name": "RZ",
+      "value": 6,
+      "summary": "The analysis decomposed load direction is in the rotation of the Z-axis."
+    }
+  ]
+}

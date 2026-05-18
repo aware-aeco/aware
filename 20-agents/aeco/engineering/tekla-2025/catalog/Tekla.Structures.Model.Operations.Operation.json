@@ -1,0 +1,636 @@
+{
+  "name": "Operation",
+  "namespace": "Tekla.Structures.Model.Operations",
+  "kind": "class",
+  "summary": "The Operation class implements Tekla Structures level operations.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/d5bbc096-a164-49ea-16a8-3820e40b00be",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddToPourUnit",
+      "signature": "AddToPourUnit(...)",
+      "summary": "Adds model objects as part of a pour unit Model object types accepted are assembly types except cast in situ, reinforcements of different kind, components and bolts",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e0d977f1-f6d9-4b5d-09ff-39534452abbd"
+    },
+    {
+      "name": "CalculatePourUnits",
+      "signature": "CalculatePourUnits(...)",
+      "summary": "Calculate and assign objects to pour unit Model object types that are associated with pour unit are assembly types except cast in situ, reinforcements of different kind, components and screws",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/90216a45-57e6-4bd6-6338-f18371c6b2c2"
+    },
+    {
+      "name": "Combine(Beam, Beam)",
+      "signature": "Combine(Beam, Beam)(...)",
+      "summary": "Combines two beams into one beam.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ee549780-0d63-26ba-456a-49cfdb50da7b"
+    },
+    {
+      "name": "Combine(RebarGroup, RebarGroup)",
+      "signature": "Combine(RebarGroup, RebarGroup)(...)",
+      "summary": "Combines two rebar groups into one rebar group.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3147d034-cbbc-cd89-46ee-142d4658e591"
+    },
+    {
+      "name": "Combine(SingleRebar, SingleRebar)",
+      "signature": "Combine(SingleRebar, SingleRebar)(...)",
+      "summary": "Combines two single rebars into one rebar.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/102fb25d-b5f4-6506-136d-36f88a02eb85"
+    },
+    {
+      "name": "ConvertPartToItem",
+      "signature": "ConvertPartToItem(...)",
+      "summary": "Convert a part to an item. This will also create a new shape in the shape catalog.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/92da650f-fa05-8dc5-d313-ca063058634d"
+    },
+    {
+      "name": "CopyObject(ModelObject, Vector)",
+      "signature": "CopyObject(ModelObject, Vector)(...)",
+      "summary": "Copies the model object using the given translation vector.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9ff01c4b-9f9a-aedd-731b-c8e5b04f50e0"
+    },
+    {
+      "name": "CopyObject(ModelObject, CoordinateSystem, CoordinateSystem)",
+      "signature": "CopyObject(ModelObject, CoordinateSystem, CoordinateSystem)(...)",
+      "summary": "Copies the model object between the given translation coordinate systems.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d67c7649-00ef-f48a-bbf8-5bedf53ce30d"
+    },
+    {
+      "name": "CreateBentPlateByFaces(Part, IList.Point., Part, IList.Point.)",
+      "signature": "CreateBentPlateByFaces(Part, IList.Point., Part, IList.Point.)(...)",
+      "summary": "Modifies the first plate by adding a cylindrical bend that connects it to the second plate creating a new BentPlate instance based on two parts and selected faces in each part. See CreateBentPlateByFaces(Part, IList.Point., Part, IList.Point., BentPlate.BendShape).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1d1f228a-de86-1150-f8eb-12ab1cfc98f9"
+    },
+    {
+      "name": "CreateBentPlateByFaces(Part, Face, Part, Face)",
+      "signature": "CreateBentPlateByFaces(Part, Face, Part, Face)(...)",
+      "summary": "Modifies the first plate by adding a cylindrical bend that connects it to the second plate creating a new BentPlate instance based on two parts and selected faces in each part. See CreateBentPlateByFaces(Part, Face, Part, Face, BentPlate.BendShape).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f401c9ed-80c1-f692-6736-73d779c8577e"
+    },
+    {
+      "name": "CreateBentPlateByFaces(Part, IList.Point., Part, IList.Point., Double)",
+      "signature": "CreateBentPlateByFaces(Part, IList.Point., Part, IList.Point., Double)(...)",
+      "summary": "Modifies the first plate by adding a bend that connects it to the second plate creating a new BentPlate instance based on two parts, selected faces in each part and radius. This method can change GUID when using from plug-ins. To keep GUID, use AddLeg(ConnectiveGeometry, LineSegment, ConnectiveGeometry, LineSegment, Double).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c7e50f00-b8cd-3418-4bfb-561fdf9bae0c"
+    },
+    {
+      "name": "CreateBentPlateByFaces(Part, IList.Point., Part, IList.Point., BentPlate.BendShape)",
+      "signature": "CreateBentPlateByFaces(Part, IList.Point., Part, IList.Point., BentPlate.BendShape)(...)",
+      "summary": "Modifies the first plate by adding a bend that connects it to the second plate creating a new BentPlate instance based on two parts and selected faces in each part. This method can change GUID when using from plug-ins. To keep GUID, use AddLeg(ConnectiveGeometry, LineSegment, ConnectiveGeometry, LineSegment, BentPlate.BendShape).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0dca7df4-8430-6f6c-e648-2d40134a06a7"
+    },
+    {
+      "name": "CreateBentPlateByFaces(Part, Face, Part, Face, Double)",
+      "signature": "CreateBentPlateByFaces(Part, Face, Part, Face, Double)(...)",
+      "summary": "Modifies the first plate by adding a bend that connects it to the second plate creating a new BentPlate instance based on two parts and selected faces in each part and radius. This method can change GUID when using from plug-ins. To keep GUID, use AddLeg(ConnectiveGeometry, LineSegment, ConnectiveGeometry, LineSegment, Double).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3001ef45-94f0-0b94-2843-907272f839e5"
+    },
+    {
+      "name": "CreateBentPlateByFaces(Part, Face, Part, Face, BentPlate.BendShape)",
+      "signature": "CreateBentPlateByFaces(Part, Face, Part, Face, BentPlate.BendShape)(...)",
+      "summary": "Modifies the first plate by adding a bend that connects it to the second plate creating a new BentPlate instance based on two parts and selected faces in each part. This method can change GUID when using from plug-ins. To keep GUID, use AddLeg(ConnectiveGeometry, LineSegment, ConnectiveGeometry, LineSegment, BentPlate.BendShape).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/621e8e34-f192-2b5e-4be6-03ef655300ca"
+    },
+    {
+      "name": "CreateBentPlateByParts(Part, Part)",
+      "signature": "CreateBentPlateByParts(Part, Part)(...)",
+      "summary": "Modifies the first plate by adding a cylindrical bend that connects it to the second plate creating a new BentPlate instance based on two parts. See CreateBentPlateByParts(Part, Part, BentPlate.BendShape).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/693a8447-9e68-ed71-dc28-fb0a1753e45a"
+    },
+    {
+      "name": "CreateBentPlateByParts(Part, Part, Double)",
+      "signature": "CreateBentPlateByParts(Part, Part, Double)(...)",
+      "summary": "Modifies the first plate by adding a bend that connects it to the second plate creating a new BentPlate instance based on two parts and a radius. This method can change GUID when using from plug-ins. To keep GUID, use AddLeg(ConnectiveGeometry, ConnectiveGeometry, Double).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/49a6d6e3-83ec-e179-c4c0-7545a44723d6"
+    },
+    {
+      "name": "CreateBentPlateByParts(Part, Part, BentPlate.BendShape)",
+      "signature": "CreateBentPlateByParts(Part, Part, BentPlate.BendShape)(...)",
+      "summary": "Modifies the first plate by adding a bend that connects it to the second plate creating a new BentPlate instance based on two parts. This method can change GUID when using from plug-ins. To keep GUID, use AddLeg(ConnectiveGeometry, ConnectiveGeometry, BentPlate.BendShape).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a9f4e2ea-0881-3278-a468-ff1d483544d3"
+    },
+    {
+      "name": "CreateConicalBentPlateByFaces(Part, IList.Point., Part, IList.Point., Double, Double)",
+      "signature": "CreateConicalBentPlateByFaces(Part, IList.Point., Part, IList.Point., Double, Double)(...)",
+      "summary": "Modifies the first plate by adding a conical bend that connects it to the second plate creating a new BentPlate instance based on two parts, selected faces in each part and radius. This method can change GUID when using from plug-ins. To keep GUID, use AddLeg(ConnectiveGeometry, LineSegment, ConnectiveGeometry, LineSegment, Double).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b70630f0-c290-2237-1249-f37b1e6d4469"
+    },
+    {
+      "name": "CreateConicalBentPlateByFaces(Part, Face, Part, Face, Double, Double)",
+      "signature": "CreateConicalBentPlateByFaces(Part, Face, Part, Face, Double, Double)(...)",
+      "summary": "Modifies the first plate by adding a conical bend that connects it to the second plate creating a new BentPlate instance based on two parts and selected faces in each part, and the largest radius of the conical section and the cone aperture. This method can change GUID when using from plug-ins. To keep GUID, use AddLeg(ConnectiveGeometry, LineSegment, ConnectiveGeometry, LineSegment, Double).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3e17cb16-5db2-96ff-a9bc-7b6ac320e2b9"
+    },
+    {
+      "name": "CreateConicalBentPlateByPartsAndAperture",
+      "signature": "CreateConicalBentPlateByPartsAndAperture(...)",
+      "summary": "Modifies the first plate by adding a conical bend that connects it to the second plate creating a new BentPlate instance based on two parts. The resulting bend will have the given aperture and the provided larger radius.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ec65a439-38a2-82af-b6bf-a97b395a9b70"
+    },
+    {
+      "name": "CreateConicalBentPlateByPartsAndTwoRadiuses",
+      "signature": "CreateConicalBentPlateByPartsAndTwoRadiuses(...)",
+      "summary": "Modifies the first plate by adding a conical bend that connects it to the second plate creating a new BentPlate instance based on two parts. The resulting bend will have the two given radiuses.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/986edfe5-9465-7814-159b-cef1dee20d5a"
+    },
+    {
+      "name": "CreateDGNv8Export",
+      "signature": "CreateDGNv8Export(...)",
+      "summary": "Dgn export from all or selected objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/470aa2f9-a4d1-5ba5-9675-7f88e88a08d7"
+    },
+    {
+      "name": "CreateIFC4ExportFromAll",
+      "signature": "CreateIFC4ExportFromAll(...)",
+      "summary": "Creates IFC4 export from all objects using the given file name. See Tekla Structures Help for more information about IFC4 export files.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/35b592da-834c-6c6f-b8ee-5cb14b2d8df0"
+    },
+    {
+      "name": "CreateIFC4ExportFromSelected",
+      "signature": "CreateIFC4ExportFromSelected(...)",
+      "summary": "Creates IFC4 export from the selected parts using the given file name. See Tekla Structures Help for more information about IFC4 export files.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2e42dad3-18a9-cf38-79a7-f9ca7ddbee07"
+    },
+    {
+      "name": "CreateMISFileFromAll",
+      "signature": "CreateMISFileFromAll(...)",
+      "summary": "Creates MIS files from all parts using the given file name. See Tekla Structures Help for more information about MIS files.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3090fd50-4614-041c-e0cf-85edc182e5c5"
+    },
+    {
+      "name": "CreateMISFileFromSelected",
+      "signature": "CreateMISFileFromSelected(...)",
+      "summary": "Creates MIS files from the selected parts using the given file name. See Tekla Structures Help for more information about MIS files.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4d66ce5b-826f-0efd-a9cd-e6ca304e2d93"
+    },
+    {
+      "name": "CreateNCFilesByPartId",
+      "signature": "CreateNCFilesByPartId(...)",
+      "summary": "Creates NC files from the selected parts using the given NC template name. See Tekla Structures Help for more information about NC files.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/39156aa2-9243-836c-f5cd-66cef7b6728f"
+    },
+    {
+      "name": "CreateNCFilesFromAll(String, String)",
+      "signature": "CreateNCFilesFromAll(String, String)(...)",
+      "summary": "Creates NC files from all parts using the given NC template name. See Tekla Structures Help for more information about NC files.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/736ca893-968e-c433-7b5d-4830dd055711"
+    },
+    {
+      "name": "CreateNCFilesFromAll(String, String, Boolean, String, Boolean, String)",
+      "signature": "CreateNCFilesFromAll(String, String, Boolean, String, Boolean, String)(...)",
+      "summary": "Creates NC files from all parts using the given NC template name. See Tekla Structures Help for more information about NC files.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1b185764-bea1-d294-a375-c32ab26d4d64"
+    },
+    {
+      "name": "CreateNCFilesFromSelected(String, String)",
+      "signature": "CreateNCFilesFromSelected(String, String)(...)",
+      "summary": "Creates NC files from the selected parts using the given NC template name. See Tekla Structures Help for more information about NC files.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a832ed01-97e7-61c8-ee9e-bfdb0d0239ad"
+    },
+    {
+      "name": "CreateNCFilesFromSelected(String, String, Boolean, String, Boolean, String)",
+      "signature": "CreateNCFilesFromSelected(String, String, Boolean, String, Boolean, String)(...)",
+      "summary": "Creates NC files from the selected parts using the given NC template name. See Tekla Structures Help for more information about NC files.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8f4e08b2-41eb-d6a1-859d-ddb50111d9e5"
+    },
+    {
+      "name": "CreateReportFromAll",
+      "signature": "CreateReportFromAll(...)",
+      "summary": "Creates a report from all the objects using the given template name and filename. A template with the name given in the TemplateName parameter must exist in model folder or in the folder defined with the advanced option XS_TEMPLATE_DIRECTORY.If a path is not given in the filename, the file is created to the folder defined with the advanced option XS_REPORT_OUTPUT_DIRECTORY.If the given folder does not exist, the report creation fails.Internally, this method is asynchronous, and because of that the output file cannot be immediately available.See Tekla Structures Help for more information about reports.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b4ff470c-a784-75b1-3204-0bfe7cfcdf04"
+    },
+    {
+      "name": "CreateReportFromSelected",
+      "signature": "CreateReportFromSelected(...)",
+      "summary": "Creates a report from the selected objects using the given template name and filename. A template with the name given in the TemplateName parameter must exist in model folder or in the folder defined with the advanced option XS_TEMPLATE_DIRECTORY.If a path is not given in the filename, the file is created to the folder defined with the advanced option XS_REPORT_OUTPUT_DIRECTORY.If the given folder does not exist, the report creation fails.See Tekla Structures Help for more information about reports.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/20138139-84ec-063b-734f-d73210a43196"
+    },
+    {
+      "name": "CreateShapeFromGeometry",
+      "signature": "CreateShapeFromGeometry(...)",
+      "summary": "Create a new shape in the shape catalog, based on the part geometry.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f742bc27-2758-364e-bab3-51554907d1d3"
+    },
+    {
+      "name": "DisplayPrompt",
+      "signature": "DisplayPrompt(...)",
+      "summary": "Displays a message in the status bar.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0be24953-f509-559d-1682-51d772836434"
+    },
+    {
+      "name": "DisplayReport",
+      "signature": "DisplayReport(...)",
+      "summary": "Opens and displays a report with the given name. If a path is not given in the filename, the file is searched from the folder defined with the advanced option XS_REPORT_OUTPUT_DIRECTORY.See Tekla Structures Help for more information about reports.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f0341426-3054-511a-e795-d26e240bcd95"
+    },
+    {
+      "name": "ExplodeBentPlate",
+      "signature": "ExplodeBentPlate(...)",
+      "summary": "Deletes bentPlate and inserts ContourPlates instances equivalent to the ones used to create bentPlate. The ContourPlate created from the main polygon has the same identifier as bentPlate.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/90695733-55df-251e-05cd-b9115f915769"
+    },
+    {
+      "name": "GetHandlePoints",
+      "signature": "GetHandlePoints(...)",
+      "summary": "Get the Shape Item Handle Points",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/75751ea1-681e-d44e-de08-475b46d257df"
+    },
+    {
+      "name": "GetSimilarNumberedObjects",
+      "signature": "GetSimilarNumberedObjects(...)",
+      "summary": "Gets similar objects based on numbering of given object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5f906cbe-5507-55e3-d31f-00043acf148a"
+    },
+    {
+      "name": "Group",
+      "signature": "Group(...)",
+      "summary": "Groups a list of single rebars or rebar groups and creates a new rebar group.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/179f6a0a-95ea-6517-ddcd-b9a82c374d25"
+    },
+    {
+      "name": "Highlight",
+      "signature": "Highlight(...)",
+      "summary": "Highlight the list of objects from the user interface. Only the list of objects will be highlighted, the rest will be unhighlighted. But it will keep the status of the selected objects. To unhighlight give an empty list as a parameter.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b67e14f2-d5c5-c685-d527-b9d451460899"
+    },
+    {
+      "name": "IsMacroRunning",
+      "signature": "IsMacroRunning(...)",
+      "summary": "Returns true if a macro is running, false otherwise. Macros are saved as *.cs files in the folder defined with the XS_MACRO_DIRECTORY variable.See Tekla Structures Help for more information about macros.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2f242e58-9e53-908e-5f49-6e67f27b3ae4"
+    },
+    {
+      "name": "IsModelAutoSaved",
+      "signature": "IsModelAutoSaved(...)",
+      "summary": "Tells whether a model has auto saved information.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/afcedc6c-a2a5-12a2-f8f3-03f0a83283fa"
+    },
+    {
+      "name": "IsNumberingAllowed",
+      "signature": "IsNumberingAllowed(...)",
+      "summary": "Checks whether the numbering is allowed or not in the current configuration.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3bc7887e-5852-1d2f-1de8-b0eebb84b6f7"
+    },
+    {
+      "name": "IsNumberingUpToDate",
+      "signature": "IsNumberingUpToDate(...)",
+      "summary": "Checks whether the numbering is up-to-date for an assembly, part, rebar, surface treatment, pour object or break.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/27f48c6d-a775-ddf5-c54c-f168fc904322"
+    },
+    {
+      "name": "IsNumberingUpToDateAll",
+      "signature": "IsNumberingUpToDateAll(...)",
+      "summary": "Checks whether the numbering is up-to-date for every assembly, part and rebar on the model. Remarks Using this method is much faster than checking each object individually.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/92637418-2b30-ce77-7dc1-038322a9544a"
+    },
+    {
+      "name": "MoveObject(ModelObject, Vector)",
+      "signature": "MoveObject(ModelObject, Vector)(...)",
+      "summary": "Moves the model object using the given translation vector.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e0d1a2cd-6145-ff68-a8f0-f0e74c1dc78f"
+    },
+    {
+      "name": "MoveObject(ModelObject, CoordinateSystem, CoordinateSystem)",
+      "signature": "MoveObject(ModelObject, CoordinateSystem, CoordinateSystem)(...)",
+      "summary": "Moves the model object between the given translation coordinate systems.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c8c000f1-f5d4-0429-45c4-021bdf02036c"
+    },
+    {
+      "name": "ObjectMatchesToFilter(ModelObject, String)",
+      "signature": "ObjectMatchesToFilter(ModelObject, String)(...)",
+      "summary": "Checks whether the object matches to the criteria in the given filter.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/25fb8b93-31f3-5c3e-3538-263151971be2"
+    },
+    {
+      "name": "ObjectMatchesToFilter(ModelObject, FilterExpression)",
+      "signature": "ObjectMatchesToFilter(ModelObject, FilterExpression)(...)",
+      "summary": "Checks whether the object matches to the criteria in the given filter.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/05260766-8da9-47ba-7421-8dc18edce140"
+    },
+    {
+      "name": "Open(String)",
+      "signature": "Open(String)(...)",
+      "summary": "Opens a new model to Tekla Structures ignoring auto saved information.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2c908a15-5315-833e-9794-bf16a0687e3d"
+    },
+    {
+      "name": "Open(String, Boolean)",
+      "signature": "Open(String, Boolean)(...)",
+      "summary": "Opens a new model to Tekla Structures.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/90bb1f01-bf9a-9bab-6a7e-12ce9ca36a0b"
+    },
+    {
+      "name": "RemoveFromPourUnit",
+      "signature": "RemoveFromPourUnit(...)",
+      "summary": "Removes model object from pour unit Model object types accepted are assembly types except cast in situ, reinforcements of different kind, components and bolts",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ed267ff7-02e0-bd4c-36a8-bc7e258d3c83"
+    },
+    {
+      "name": "RunMacro",
+      "signature": "RunMacro(...)",
+      "summary": "Starts a macro with the given name. Throws an exception if the file is not found. Macros are saved as *.cs files in the folder defined with the XS_MACRO_DIRECTORY variable.It is possible to run drawing macros using relative paths.See Tekla Structures Help for more information about macros.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/42bee48d-632b-6b20-6c82-3e88af869716"
+    },
+    {
+      "name": "SaveAsWebModel",
+      "signature": "SaveAsWebModel(...)",
+      "summary": "Saves the current model as a web model. You can save the model as a web model that can be viewed via the Internet using a web browser (e.g. Internet Explorer).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/00aec8f7-3875-a8db-f76a-967ac47d9496"
+    },
+    {
+      "name": "SaveSelectedAsWebModel",
+      "signature": "SaveSelectedAsWebModel(...)",
+      "summary": "Saves the selected objects as a web model. You can save the selected objects as a web model that can be viewed via the Internet using a web browser (e.g. Internet Explorer).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7c54947d-03b0-32c4-5562-57889c799cf2"
+    },
+    {
+      "name": "SetHandlePoints",
+      "signature": "SetHandlePoints(...)",
+      "summary": "Set the Shape Item Handle Points",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7baa03fe-b8f6-c104-8642-747666367f6e"
+    },
+    {
+      "name": "ShowOnlySelected",
+      "signature": "ShowOnlySelected(...)",
+      "summary": "Show Only Selected objects in current view.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ef58f1d7-1bc2-ad42-f1f5-21f092444369"
+    },
+    {
+      "name": "Split(Beam, Point)",
+      "signature": "Split(Beam, Point)(...)",
+      "summary": "Splits the beam and creates a new one in the given position.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ade59197-8112-9d79-3d9d-0de5673413f1"
+    },
+    {
+      "name": "Split(CircleRebarGroup, Line)",
+      "signature": "Split(CircleRebarGroup, Line)(...)",
+      "summary": "Splits the circle rebar group and creates a new one in the given position.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/38823af2-3c64-c8c2-5399-b43e45fb039f"
+    },
+    {
+      "name": "Split(ContourPlate, Polygon)",
+      "signature": "Split(ContourPlate, Polygon)(...)",
+      "summary": "Splits the contour plate and creates a new one along the given polygon.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cc26cef4-45ff-a6aa-dc13-ba549930cf47"
+    },
+    {
+      "name": "Split(CurvedRebarGroup, Line)",
+      "signature": "Split(CurvedRebarGroup, Line)(...)",
+      "summary": "Splits the curved rebar group and creates a new one in the given position.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2aadb317-0235-c6e1-778a-dd605cf16913"
+    },
+    {
+      "name": "Split(LoftedPlate, Point)",
+      "signature": "Split(LoftedPlate, Point)(...)",
+      "summary": "Splits the lofted plate and creates a new one in the given position.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9f4fe99c-fdef-f833-52be-627717373b13"
+    },
+    {
+      "name": "Split(PolyBeam, Point)",
+      "signature": "Split(PolyBeam, Point)(...)",
+      "summary": "Splits the polybeam and creates a new one in the given position.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/060e6ed9-cce7-0799-e26b-19403dde7f61"
+    },
+    {
+      "name": "Split(RebarGroup, Line)",
+      "signature": "Split(RebarGroup, Line)(...)",
+      "summary": "Splits the rebar group and creates a new one in the given position.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e0678430-540d-a572-190e-7d35dfdae18d"
+    },
+    {
+      "name": "Split(SingleRebar, Line)",
+      "signature": "Split(SingleRebar, Line)(...)",
+      "summary": "Splits the single rebar and creates a new one in the given position.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e4368110-15e9-c24a-02d2-1bcee426db55"
+    },
+    {
+      "name": "SplitSlab",
+      "signature": "SplitSlab(...)",
+      "summary": "This command is meant for specifically splitting a concrete slab with advanced solid operations to create more robust and user friendly results than the command: public static ContourPlate Split(ContourPlate Object, Polygon SplitPolygon). No validation is done for the type, it is the caller\u0027s responsibility to call this only for valid types (slabs). Behavior for non-slabs is undetermined.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/82d2dc9c-b4c0-d413-4570-9c2e6ecb7f91"
+    },
+    {
+      "name": "Ungrouping(RebarGroup)",
+      "signature": "Ungrouping(RebarGroup)(...)",
+      "summary": "Ungroups the rebar group and creates new single rebars.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9c5db27f-c493-c9b1-2493-91cfc61bfb83"
+    },
+    {
+      "name": "Ungrouping(RebarMesh)",
+      "signature": "Ungrouping(RebarMesh)(...)",
+      "summary": "Ungroups the rebar mesh and creates new single rebars.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/02acb6c5-8915-ea56-1399-1a112a57961e"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

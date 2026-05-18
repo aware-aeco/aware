@@ -1,0 +1,39 @@
+{
+  "name": "GraphicPolyLine.LineType",
+  "namespace": "Tekla.Structures.Model.UI",
+  "kind": "enum",
+  "summary": "The appearance of the line. For instance solid, dashed or dotted.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/8ec1e804-dee5-66f5-5005-d52a8e7534b2",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Solid",
+      "value": 1,
+      "summary": "The solid line type."
+    },
+    {
+      "name": "Dashed1",
+      "value": 2,
+      "summary": "The first dashed line type."
+    },
+    {
+      "name": "Dashed2",
+      "value": 3,
+      "summary": "The second dashed line type."
+    },
+    {
+      "name": "DashedAndDotted",
+      "value": 4,
+      "summary": "The dashed and dotted line type."
+    },
+    {
+      "name": "Dotted",
+      "value": 5,
+      "summary": "The dotted line type."
+    }
+  ]
+}

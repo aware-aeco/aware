@@ -1,0 +1,24 @@
+{
+  "name": "DimensionSetBaseAttributes.ShortDimensionTypes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The position of the short dimension value.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/270e753d-29d1-436c-87f3-b61c61e63d66",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Inside",
+      "value": 0,
+      "summary": "The dimension value is set between the dimension lines when the dimension is too short."
+    },
+    {
+      "name": "Outside",
+      "value": 1,
+      "summary": "The dimension value is moved outside of the dimension when the dimension is too short."
+    }
+  ]
+}

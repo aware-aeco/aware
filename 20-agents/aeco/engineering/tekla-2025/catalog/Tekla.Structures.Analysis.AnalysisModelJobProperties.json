@@ -1,0 +1,121 @@
+{
+  "name": "AnalysisModelJobProperties",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisModelJobProperties class contains information related to analysis model job properties.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/20c301d6-c98c-adcb-321e-d6997db05993",
+  "constructors": [
+    {
+      "name": "AnalysisModelJobProperties",
+      "signature": "AnalysisModelJobProperties(...)",
+      "summary": "Initializes a new instance of the AnalysisModelJobProperties class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/82210e49-472b-fac3-950a-d4274f6a2775"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ApprovedDate",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The date of the approval.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a32aa702-ef31-e0e1-56e7-418700f077da"
+    },
+    {
+      "name": "ApprovedName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The name of approver.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dfbf2d69-2813-1e46-9db5-40822b3b6cc1"
+    },
+    {
+      "name": "CheckerDate",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The date of the checking.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6f8d03e1-52d9-0c40-9cad-a0685d9baf7b"
+    },
+    {
+      "name": "CheckerName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The name of the checker.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/01a46ec9-bce4-565a-6ed0-a52db2398e3a"
+    },
+    {
+      "name": "ClientName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The name of the client.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b71faeae-5902-0ea3-f369-404d7baef9a9"
+    },
+    {
+      "name": "EngineerDate",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The date of the engineering.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/009d2c4a-ff14-b921-de3a-47932ad38646"
+    },
+    {
+      "name": "EngineerName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The name of the engineer.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cbe5adc2-b296-ffc6-61eb-b4db5709e730"
+    },
+    {
+      "name": "JobComment",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The comment of the job.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d9b10624-3a88-2566-43ba-d3ee0fc54c6b"
+    },
+    {
+      "name": "JobName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The name of the job.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dc4e9882-7ecd-602c-1904-f3d4b9f6f671"
+    },
+    {
+      "name": "JobNumber",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The number of the job.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ea098c19-9987-7a29-2566-7f0a880118ce"
+    },
+    {
+      "name": "PartNumber",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The number of the part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7a4c52ac-3ef1-c797-9e91-ac4d66ef89f0"
+    },
+    {
+      "name": "ReferenceNumber",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The reference number.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/aab5444f-ee6d-0e91-9fee-51edf6a0de3f"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,24 @@
+{
+  "name": "AnalysisRestraintData.SupportedEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "Defines how the part is supported.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/6ecc5af2-b81e-eb95-6670-da5178419279",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CONNECTED",
+      "value": 0,
+      "summary": "The part is connected."
+    },
+    {
+      "name": "SUPPORTED",
+      "value": 1,
+      "summary": "The part is supported."
+    }
+  ]
+}

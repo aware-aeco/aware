@@ -1,0 +1,81 @@
+{
+  "name": "AnalysisModelIssue",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "Analysis model issue (error, warning, information)",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/99efdba4-1ad6-54f6-0635-643d0b7563e1",
+  "constructors": [
+    {
+      "name": "AnalysisModelIssue",
+      "signature": "AnalysisModelIssue(...)",
+      "summary": "Initializes a new instance of the AnalysisModelIssue class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0def0918-0b12-c6a0-8efd-db020b8fa89e"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AnalysisObjects",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis objects of the issue",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4e77f9b5-7e27-777f-a00e-fd313b6b5ad1"
+    },
+    {
+      "name": "Description",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the description of the issue, translated to the current language",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/31653d96-f182-f315-1126-537320a6139a"
+    },
+    {
+      "name": "Details",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the details of the issue, translated to the current language",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c0d1d645-a781-3922-a285-824912c04e78"
+    },
+    {
+      "name": "ModelObjects",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the model objects of the issue",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1ec97300-cdef-54bd-4762-da183004fc8a"
+    },
+    {
+      "name": "Positions",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the positions of the issue",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ff2f47ab-d234-da54-7fdc-8edf43708b27"
+    },
+    {
+      "name": "Severity",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the issue severity",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c8ebaf4b-1b1c-7003-4e97-6a3da8c3dc5a"
+    },
+    {
+      "name": "Type",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the issue type",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bae4ab82-fe67-0a0d-3864-daa5147030cb"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

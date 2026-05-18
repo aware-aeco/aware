@@ -1,0 +1,24 @@
+{
+  "name": "Angle.UnitType",
+  "namespace": "Tekla.Structures.Datatype",
+  "kind": "enum",
+  "summary": "The angle units.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/4f573ed1-28d7-08c2-766b-035f700015a2",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Degrees",
+      "value": 0,
+      "summary": "Represents an angle in degrees, with 0 degrees representing the empty angle and 360 the full angle"
+    },
+    {
+      "name": "Radians",
+      "value": 1,
+      "summary": "Represents an angle in radians, with 0 radians representing the empty angle and 2*PI the full angle"
+    }
+  ]
+}

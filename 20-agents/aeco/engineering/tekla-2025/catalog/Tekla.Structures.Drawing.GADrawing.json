@@ -1,0 +1,444 @@
+{
+  "name": "GADrawing",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The GADrawing class is for handling general arrangement drawings in Tekla Structures.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/fde93858-3caf-30b8-9473-62392b72a083",
+  "constructors": [
+    {
+      "name": "GADrawing",
+      "signature": "GADrawing(...)",
+      "summary": "Instantiates a new GA drawing using standard attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/24fada3c-a0fb-6fd1-0aec-240c1df19d8b"
+    },
+    {
+      "name": "GADrawing",
+      "signature": "GADrawing(...)",
+      "summary": "Instantiates a new GA drawing with the given attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/32cf717b-b8a6-62e6-9045-681dfe82fb3f"
+    },
+    {
+      "name": "GADrawing",
+      "signature": "GADrawing(...)",
+      "summary": "Instantiates a new GA drawing with the given name and attribute file.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dfe22a69-17fb-349b-12ee-76f3391e4686"
+    },
+    {
+      "name": "GADrawing",
+      "signature": "GADrawing(...)",
+      "summary": "Instantiates a new GA drawing with attributes. Loads the specified attribute file and overrides with the given layout attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f1ba4793-a13e-6f97-dd6f-696a23e10772"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CommitChanges.",
+      "signature": "CommitChanges.(...)",
+      "summary": "Commits the changes made to the drawings database so far. Commit inserts a kind of save-point into the database and the save-point will be retrieved if the user does undo. Commit also executes all messages. Please note that you need to also to save the drawings database to persists the changes to disk.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bc26a611-bd6a-535a-4461-943b8bf5351c"
+    },
+    {
+      "name": "CommitChanges(String)",
+      "signature": "CommitChanges(String)(...)",
+      "summary": "Commits the changes made to the drawings database so far. Commit inserts a kind of save-point into the database and the save-point will be retrieved if the user does undo. Commit also executes all messages. Please note that you need to also to save the drawings database to persists the changes to disk.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/92109855-5313-7446-bef4-ab6dde6875f1"
+    },
+    {
+      "name": "Delete",
+      "signature": "Delete(...)",
+      "summary": "Deletes the drawing. An active drawing cannot be deleted.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4bcff604-27c4-487f-bb7d-5d80a2d87d8b"
+    },
+    {
+      "name": "GetDoubleUserProperties(Dictionary.String, Double..)",
+      "signature": "GetDoubleUserProperties(Dictionary.String, Double..)(...)",
+      "summary": "Retrieves all double user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b25f0e6b-ab5c-154a-a45c-4f5868a20599"
+    },
+    {
+      "name": "GetDoubleUserProperties(List.String., Dictionary.String, Double..)",
+      "signature": "GetDoubleUserProperties(List.String., Dictionary.String, Double..)(...)",
+      "summary": "Retrieves all double user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7f327fc5-14b5-f534-da39-b68d3f87124a"
+    },
+    {
+      "name": "GetIntegerUserProperties(Dictionary.String, Int32..)",
+      "signature": "GetIntegerUserProperties(Dictionary.String, Int32..)(...)",
+      "summary": "Retrieves all integer user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/20a7d099-ebee-b016-ffc7-0181a1219405"
+    },
+    {
+      "name": "GetIntegerUserProperties(List.String., Dictionary.String, Int32..)",
+      "signature": "GetIntegerUserProperties(List.String., Dictionary.String, Int32..)(...)",
+      "summary": "Retrieves all integer user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde"
+    },
+    {
+      "name": "GetPlotFileName",
+      "signature": "GetPlotFileName(...)",
+      "summary": "Get plot file name.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fa70baa3-ad78-2e3c-88ca-0b77cb81cd21"
+    },
+    {
+      "name": "GetPlotFileNameExt",
+      "signature": "GetPlotFileNameExt(...)",
+      "summary": "Get plot file name.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6288f4e4-4baf-656d-57bb-c63dee354493"
+    },
+    {
+      "name": "GetSheet",
+      "signature": "GetSheet(...)",
+      "summary": "Gets the sheet of the drawing.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fe921886-00b9-57d3-0488-92bd25014c66"
+    },
+    {
+      "name": "GetStringUserProperties(Dictionary.String, String..)",
+      "signature": "GetStringUserProperties(Dictionary.String, String..)(...)",
+      "summary": "Retrieves all string user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a0039213-2e79-912f-5bdf-5e6dd417c092"
+    },
+    {
+      "name": "GetStringUserProperties(List.String., Dictionary.String, String..)",
+      "signature": "GetStringUserProperties(List.String., Dictionary.String, String..)(...)",
+      "summary": "Retrieves all string user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/474a80dc-539a-2734-4b5c-1ea52f86e750"
+    },
+    {
+      "name": "GetUserProperty(String, Double.)",
+      "signature": "GetUserProperty(String, Double.)(...)",
+      "summary": "Gets a double property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/203a39af-db6b-e317-5de3-f0301c1642f2"
+    },
+    {
+      "name": "GetUserProperty(String, Int32.)",
+      "signature": "GetUserProperty(String, Int32.)(...)",
+      "summary": "Gets an integer property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f773aabe-fe4e-dba3-bf33-f6f927441a85"
+    },
+    {
+      "name": "GetUserProperty(String, String.)",
+      "signature": "GetUserProperty(String, String.)(...)",
+      "summary": "Gets a string property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5335a30d-ac20-6231-5b02-22e14c6980a7"
+    },
+    {
+      "name": "Insert",
+      "signature": "Insert(...)",
+      "summary": "Inserts an empty general arrangement drawing. Views must be added separately. A drawing can be inserted only when there is no active drawing.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4c112d39-1b7a-b470-8dbd-5d649ca17b53"
+    },
+    {
+      "name": "IsSameDatabaseObject",
+      "signature": "IsSameDatabaseObject(...)",
+      "summary": "Returns true if the current object and the given object are referencing the same database object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6b1b3008-c9dd-5b97-0881-89ccc580b3e7"
+    },
+    {
+      "name": "Modify",
+      "signature": "Modify(...)",
+      "summary": "Applies the changes made to the drawing attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5907ed8e-4fb4-9aff-c374-6bf3b73fb003"
+    },
+    {
+      "name": "PlaceViews",
+      "signature": "PlaceViews(...)",
+      "summary": "Places views on the sheet. Computes the required size of the views to fit the parts, then places the views so that they fit on the sheet and do not overlap. Adjusts the sheet size if needed.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1e1578e4-084f-21a9-3d1a-2b03140440ce"
+    },
+    {
+      "name": "Select",
+      "signature": "Select(...)",
+      "summary": "Selects the drawing.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c55c986a-b3d9-5f73-567c-d020a31938e2"
+    },
+    {
+      "name": "SetUserProperty(String, Double)",
+      "signature": "SetUserProperty(String, Double)(...)",
+      "summary": "Sets a double property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/995715f7-c86c-86d0-359f-76dc4d14197a"
+    },
+    {
+      "name": "SetUserProperty(String, Int32)",
+      "signature": "SetUserProperty(String, Int32)(...)",
+      "summary": "Sets an integer property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/88a5c4aa-fb12-e341-ee9e-fcd3284fab68"
+    },
+    {
+      "name": "SetUserProperty(String, String)",
+      "signature": "SetUserProperty(String, String)(...)",
+      "summary": "Sets a string property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/633cfaf7-22e7-1bb1-6596-053d78749c52"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CommitMessage",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the commit message",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5a858feb-4be5-ee9a-282b-de13b8af44e8"
+    },
+    {
+      "name": "CreationDate",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The drawing creation date.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c297d2a7-c308-1933-941a-fdb0655ca633"
+    },
+    {
+      "name": "DrawingTypeStr",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The type of the drawing",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5de5ed25-f26f-9439-f0bf-36f03de7caf5"
+    },
+    {
+      "name": "IsFrozen",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Describes whether the drawing is frozen.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/50df949d-3fa1-400d-3984-9e950a763df2"
+    },
+    {
+      "name": "IsIssued",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Describes whether the drawing is issued.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2651cf51-7a25-2267-e730-51212490dec6"
+    },
+    {
+      "name": "IsIssuedButModified",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Describes whether the drawing is issued but modified since it was issued.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d48981b5-84af-dd2d-fcf1-818d8cd51d80"
+    },
+    {
+      "name": "IsLocked",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Describes whether the drawing is locked.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/777297e3-bbfb-bd43-7ec9-ab3565ecc572"
+    },
+    {
+      "name": "IsLockedBy",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the logged in username that set the drawing to locked",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/164a9577-0d7c-62cd-1455-e00cee56553f"
+    },
+    {
+      "name": "IsMasterDrawing",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Describes whether the drawing is a master drawing (shown with a special symbol on the drawing list).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fbcd3c79-a833-31d2-925f-90f6f2a9b078"
+    },
+    {
+      "name": "IsReadyForIssue",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Describes whether the drawing is ready for issue.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8486f012-71ab-3b2c-50c5-cda75db49f4e"
+    },
+    {
+      "name": "IsReadyForIssueBy",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the logged in username that set the drawing Ready for issue",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b9b775b6-74a6-3713-8300-e9683cf37959"
+    },
+    {
+      "name": "IssuingDate",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The drawing issuing date.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ce7b4ab7-719a-48f6-0b28-37f965c2da5c"
+    },
+    {
+      "name": "Layout",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the drawing layout attributes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/94310a12-1c98-349f-5e36-55173b4a350b"
+    },
+    {
+      "name": "Mark",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The drawing mark.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6406a2bb-762c-e74f-1187-72f96b56e76b"
+    },
+    {
+      "name": "ModificationDate",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The drawing modification date.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1fb58216-66de-5c2e-0f39-6576a2b677de"
+    },
+    {
+      "name": "Name",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The name of the drawing.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4ad02c9f-2df6-2068-9be4-83fadaf38da6"
+    },
+    {
+      "name": "OutputDate",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The drawing output date. XS_DISABLE_DRAWING_PLOT_DATE controls whether this date is set.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2485549b-2b7d-3ba9-56f8-b0034bbb5f87"
+    },
+    {
+      "name": "QueryReturnValue",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Status information about the latest database operation (select, insert, modify, delete).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d86cf9da-3acd-9719-d93c-e98d5fb25151"
+    },
+    {
+      "name": "SectionViewStartLabel",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the drawing attribute for start label of section view",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/597b76f9-5d72-f2ad-3332-36d691e1da5e"
+    },
+    {
+      "name": "Title1",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The first drawing title.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7d424425-4239-e682-eb78-ed1d9cf81ce1"
+    },
+    {
+      "name": "Title2",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The second drawing title.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a954e2a6-3063-13af-6bb2-9a07e815b6e2"
+    },
+    {
+      "name": "Title3",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The third drawing title.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f38c2d6a-8dcd-7463-189a-9d436569ab51"
+    },
+    {
+      "name": "UpToDateStatus",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the drawing up to date status.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8b173114-3484-c430-bc28-54df13edc433"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

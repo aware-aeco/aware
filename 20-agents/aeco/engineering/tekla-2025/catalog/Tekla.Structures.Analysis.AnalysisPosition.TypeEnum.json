@@ -1,0 +1,29 @@
+{
+  "name": "AnalysisPosition.TypeEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The position types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/6b37b8a9-fc3d-ad14-e3cd-ca5d0f84ee57",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "TYPE_NORMAL",
+      "value": 0,
+      "summary": "The normal type."
+    },
+    {
+      "name": "TYPE_SPLIT",
+      "value": 1,
+      "summary": "The split type."
+    },
+    {
+      "name": "TYPE_USER_SPLIT",
+      "value": 9,
+      "summary": "The user split type."
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "PourObjectFilterExpressions",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The PourObjectFilterExpressions class contains all the pour object filter expressions.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/8ed259af-5052-9508-f16b-e506f68560bd",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,287 @@
+{
+  "name": "StraightDimensionSet.StraightDimensionSetAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The StraightDimensionSetAttributes class contains the attributes for managing all the attributes of the straight dimension.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/f7cd1b5b-2dba-2eee-cf5d-198239da028b",
+  "constructors": [
+    {
+      "name": "StraightDimensionSet.StraightDimensionSetAttributes",
+      "signature": "StraightDimensionSet.StraightDimensionSetAttributes(...)",
+      "summary": "Creates a default straight dimension set attributes instance that loads standard attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f1dd4328-0dfb-cc3f-7294-0fdef9d14e2c"
+    },
+    {
+      "name": "StraightDimensionSet.StraightDimensionSetAttributes",
+      "signature": "StraightDimensionSet.StraightDimensionSetAttributes(...)",
+      "summary": "Creates a straight dimension set attributes instance that loads the specified attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/26f642dd-1220-2a47-2c85-41ce893777c2"
+    },
+    {
+      "name": "StraightDimensionSet.StraightDimensionSetAttributes",
+      "signature": "StraightDimensionSet.StraightDimensionSetAttributes(...)",
+      "summary": "Creates a default straight dimension set attributes instance that loads standard attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c161e0cf-61d8-a23d-4f20-7559f147d81c"
+    },
+    {
+      "name": "StraightDimensionSet.StraightDimensionSetAttributes",
+      "signature": "StraightDimensionSet.StraightDimensionSetAttributes(...)",
+      "summary": "Creates a straight dimension set attributes instance that loads the specified attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1cdc7eee-7cb2-672d-cca9-b721351b4cc0"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1af5065a-8f4d-e2a0-196f-d21a07480b5e"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "LoadAttributes(...)",
+      "summary": "Loads the attributes from the attribute file.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9aa1604e-5949-3a5a-2c9e-85648d2384b4"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Arrowhead",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The arrowhead attributes of the dimension.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4c332baa-e78d-9f49-d545-06db80ded057"
+    },
+    {
+      "name": "Color",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The color of the dimension line.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3a7bd26a-cd08-2c1a-acba-2e7f94097b15"
+    },
+    {
+      "name": "CombinedDimension",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Combines the attributes of the dimension.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ca230332-99c5-66ae-20dc-5a58c71bff7c"
+    },
+    {
+      "name": "DimensionType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The dimension type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e9b48a9a-4efe-a9c6-a925-e21fde10ea42"
+    },
+    {
+      "name": "Exaggeration",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The exaggeration attributes of the dimension.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/90dd4e87-697a-2d39-7b05-93c4d2ac21e3"
+    },
+    {
+      "name": "ExcludePartsAccordingToFilter",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Sets the filter to use for excluding parts from the tags. You may query the possible filters using StraightDimensionSet.GetAllExcludePartsAccordingToFilter()",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b3617d48-e2d4-dd4a-1cf0-3b5e7c642f8c"
+    },
+    {
+      "name": "ExtensionLine",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The extension line presentation of the dimension.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/65aa2600-a736-7e76-d820-ce9ee6a515f3"
+    },
+    {
+      "name": "Format",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The format attributes of the dimension.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fd6dddef-6baa-38c4-6cdc-7e0160288d45"
+    },
+    {
+      "name": "IncludePartCountInTag",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether the part count is included in at least one of the tag position, or set part count flag for all tag positions.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/11eb3d79-d849-7928-8ee0-9c16a048eab9"
+    },
+    {
+      "name": "IncludePartCountInTagA",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the part count is included in the tag A.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a864e0ac-dbf0-f08c-e47e-653ce03297eb"
+    },
+    {
+      "name": "IncludePartCountInTagB",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the part count is included in the tag B.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/45fb4c3d-60c0-4ca6-85bb-c62355ec1333"
+    },
+    {
+      "name": "IncludePartCountInTagC",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the part count is included in the tag C.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8fc870c7-93fd-0eee-ca8f-891f07d18206"
+    },
+    {
+      "name": "IncludePartCountInTagD",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the part count is included in the tag D.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c3553d2d-451c-d4fb-8940-3e93d2ce46be"
+    },
+    {
+      "name": "IncludePartCountInTagE",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the part count is included in the tag E.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c8a3fd22-eb95-02f1-7da3-b45b1e27427e"
+    },
+    {
+      "name": "IncludePartCountInTagF",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the part count is included in the tag F.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f9b7640f-63f5-b548-9738-7c094a9381d6"
+    },
+    {
+      "name": "IncludePartCountInTagG",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the part count is included in the tag G.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d409d3dd-00b8-588d-266d-86d0054c690c"
+    },
+    {
+      "name": "LeftLowerTag",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The left lower dimension tag.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5db9d456-48e5-e392-a83a-4adad041282f"
+    },
+    {
+      "name": "LeftMiddleTag",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The left middle dimension tag.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d87bda99-c934-dd60-7916-3fb2569757fb"
+    },
+    {
+      "name": "LeftUpperTag",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The left upper dimension tag.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d69d2ee3-e0f4-a0be-6af7-3f6d4c8fc9dc"
+    },
+    {
+      "name": "Placing",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The placing attributes of the dimension.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6ba9881d-4209-effd-6196-617b4cf9ddfe"
+    },
+    {
+      "name": "RightLowerTag",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The right lower dimension tag.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8086df71-93df-a3aa-74ad-0052d360fc39"
+    },
+    {
+      "name": "RightMiddleTag",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The right middle dimension tag.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6b0854b8-1c98-4884-69ff-7fe5868a3957"
+    },
+    {
+      "name": "RightUpperTag",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The right upper dimension tag.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b3cfbffe-39a3-3b31-55bb-684772b68f1d"
+    },
+    {
+      "name": "ShortDimension",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "How short dimensions are shown.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/03ac5f48-da18-c03f-ae56-b2ac594191c9"
+    },
+    {
+      "name": "Text",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The text attributes of the dimension.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4839ad95-c254-dcce-3452-d28af56facd4"
+    },
+    {
+      "name": "TransparentBackground",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The dimension text background transparency. (transparent/opaque)",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bca2692c-a7f6-294b-6193-21843d7a31eb"
+    },
+    {
+      "name": "TrueColor",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The true color (RGB enabled) of the dimension line.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6bbcbdef-4946-63a4-b32f-687678147016"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

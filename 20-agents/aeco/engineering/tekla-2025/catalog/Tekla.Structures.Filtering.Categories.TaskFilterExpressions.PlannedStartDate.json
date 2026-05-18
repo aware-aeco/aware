@@ -1,0 +1,34 @@
+{
+  "name": "TaskFilterExpressions.PlannedStartDate",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The PlannedStartDate class represents the planned start date filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/6491d728-41ee-da65-00da-88ac3dcb4c97",
+  "constructors": [
+    {
+      "name": "TaskFilterExpressions.PlannedStartDate",
+      "signature": "TaskFilterExpressions.PlannedStartDate(...)",
+      "summary": "Initializes a new instance of the PlannedStartDate class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/aacef478-50b6-aef6-3059-dffbc1b26137"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

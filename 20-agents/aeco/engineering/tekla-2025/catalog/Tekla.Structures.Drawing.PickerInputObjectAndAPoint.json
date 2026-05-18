@@ -1,0 +1,59 @@
+{
+  "name": "PickerInputObjectAndAPoint",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PickerInputObjectAndAPoint class represents a pick of an object in a view. It provides both the picked object and the point used to pick the object. Used for values asked by UI.Picker.PickObject(string Prompt, out DrawingObject PickedObject, out ViewBase PickedView, out Point PickedPoint).",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/e112c940-87e5-a405-7aff-c753132e3fd2",
+  "constructors": [
+    {
+      "name": "PickerInputObjectAndAPoint",
+      "signature": "PickerInputObjectAndAPoint(...)",
+      "summary": "Creates a new PickerInputObjectAndAPoint instance representing the pick of a drawing object and the coordinates of the point used to pick the object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b2245247-729e-3e04-697b-58c343f6c918"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/239a901f-aec1-7b2a-f509-0cdf9bae0c16"
+    }
+  ],
+  "properties": [
+    {
+      "name": "PickedObject",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the picked object in the view.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a20b2f43-6e83-71e0-039c-b26a2906a02a"
+    },
+    {
+      "name": "PickedPoint",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the picked point in the view coordinates.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d78e3ddf-7da5-dd49-e557-2d9ab711586a"
+    },
+    {
+      "name": "PickedView",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The view within which the pick occurred.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/aecacf99-0f9d-b781-aa92-7e9efb2986c0"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

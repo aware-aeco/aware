@@ -1,0 +1,49 @@
+{
+  "name": "MaterialItem.MaterialItemTypeEnum",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "enum",
+  "summary": "Defines the different material item types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/66c9dde4-2e2e-c54e-8e76-35853038601e",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "MATERIAL_UNKNOWN",
+      "value": 0,
+      "summary": "The unknown material item type."
+    },
+    {
+      "name": "MATERIAL_STEEL",
+      "value": 1,
+      "summary": "The steel material type."
+    },
+    {
+      "name": "MATERIAL_CONCRETE",
+      "value": 2,
+      "summary": "The concrete material type."
+    },
+    {
+      "name": "MATERIAL_TIMBER",
+      "value": 3,
+      "summary": "The timber material type."
+    },
+    {
+      "name": "MATERIAL_MISC",
+      "value": 4,
+      "summary": "The miscellaneous material type."
+    },
+    {
+      "name": "MATERIAL_REBAR",
+      "value": 5,
+      "summary": "The rebar material type."
+    },
+    {
+      "name": "MATERIAL_REBAR_MESH",
+      "value": 6,
+      "summary": "The rebar mesh material type."
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "name": "ErrorDialog",
+  "namespace": "Tekla.Structures.Dialog",
+  "kind": "class",
+  "summary": "The ErrorDialog class represents the common error dialog for the Open API.",
+  "base": "System.Windows.Forms.Form",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/b4c6e3f4-243d-34ee-f527-4bc0517919ed",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Show(Exception, ErrorDialog.Severity)",
+      "signature": "Show(Exception, ErrorDialog.Severity)(...)",
+      "summary": "Shows a new error dialog.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4c2c999d-3234-5abd-04ba-b9eb664972c6"
+    },
+    {
+      "name": "Show(String, List.String., ErrorDialog.Severity)",
+      "signature": "Show(String, List.String., ErrorDialog.Severity)(...)",
+      "summary": "Shows a new error dialog.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/db4cb25f-92be-3852-aa92-df83625e0677"
+    },
+    {
+      "name": "Show(String, String, ErrorDialog.Severity)",
+      "signature": "Show(String, String, ErrorDialog.Severity)(...)",
+      "summary": "Shows a new error dialog.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5292fa06-3a04-0624-86ac-2c1d1f0e7385"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

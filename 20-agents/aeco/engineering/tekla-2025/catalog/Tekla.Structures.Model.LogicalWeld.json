@@ -1,0 +1,789 @@
+{
+  "name": "LogicalWeld",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The LogicalWeld class represents a group of welds in the model. A logical weld contains a list of children welds. The primary properties need to be the same in all the children welds.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/fc9878e2-e8b0-356f-5c7c-d06b71bd3057",
+  "constructors": [
+    {
+      "name": "LogicalWeld",
+      "signature": "LogicalWeld(...)",
+      "summary": "Creates a new logical weld instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/34e55a9f-7474-29a7-dc05-f03a69bfedea"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddWeld",
+      "signature": "AddWeld(...)",
+      "summary": "Adds a weld to the logical weld.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ef69a589-32c7-e352-0a9c-488305acb6f5"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "CompareTo(...)",
+      "summary": "Compares Identifiers of model objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/79cca356-0c8a-e8fb-463a-34ad4141bec7"
+    },
+    {
+      "name": "Delete",
+      "signature": "Delete(...)",
+      "summary": "Deletes the logical weld instance with the given identifier from the model database and also the children welds.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/240d305f-c09e-ee5a-dc8c-99df3f1583e7"
+    },
+    {
+      "name": "Equals",
+      "signature": "Equals(...)",
+      "summary": "Check if Identifiers of model objects are same.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e4324265-2490-00de-4139-63a8f7acb492"
+    },
+    {
+      "name": "Explode",
+      "signature": "Explode(...)",
+      "summary": "Removes the logical weld from the model but not the children welds.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d016df9f-df30-cb0f-c9eb-bb011f353030"
+    },
+    {
+      "name": "GetAllReportProperties",
+      "signature": "GetAllReportProperties(...)",
+      "summary": "Retrieves all properties for the model object in one hashtable. Type for the returned value must be checked using type casting.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0708f404-ce77-28e1-4ebe-fa906f68bff8"
+    },
+    {
+      "name": "GetAllUserProperties",
+      "signature": "GetAllUserProperties(...)",
+      "summary": "Retrieves all properties for the model object in one hashtable. Type for the returned value must be checked using type casting.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/63b853a0-0af5-af9c-3ce7-05299664d7f8"
+    },
+    {
+      "name": "GetChildren",
+      "signature": "GetChildren(...)",
+      "summary": "Returns an enumerator of all the children model objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ce51ec40-310c-6067-a89f-f8d029aab747"
+    },
+    {
+      "name": "GetCoordinateSystem",
+      "signature": "GetCoordinateSystem(...)",
+      "summary": "Returns the coordinate system for the given model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8adfe9cd-f6e5-6474-1297-33c6270a7b0a"
+    },
+    {
+      "name": "GetCustomObjectType",
+      "signature": "GetCustomObjectType(...)",
+      "summary": "Gets custom object type name from an existing object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d3be2ba3-8533-7165-f2d3-a5aa9df556b8"
+    },
+    {
+      "name": "GetDoubleReportProperties",
+      "signature": "GetDoubleReportProperties(...)",
+      "summary": "Retrieves multiple double report properties for the model object. It is faster to fetch multiple properties at once.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f86f6c96-f738-49ca-16ba-f5634e862ba2"
+    },
+    {
+      "name": "GetDoubleUserProperties",
+      "signature": "GetDoubleUserProperties(...)",
+      "summary": "Retrieves all double properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6ead7a63-5f76-0631-d480-d46c27e882aa"
+    },
+    {
+      "name": "GetDynamicStringProperty",
+      "signature": "GetDynamicStringProperty(...)",
+      "summary": "Gets a dynamic string property from the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/415e86d9-7de6-ea53-ce68-20b3e67b8655"
+    },
+    {
+      "name": "GetFatherComponent",
+      "signature": "GetFatherComponent(...)",
+      "summary": "Returns the father component of the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a2c28f3f-52ff-50a8-1b32-10d18db5c31d"
+    },
+    {
+      "name": "GetHierarchicObjects",
+      "signature": "GetHierarchicObjects(...)",
+      "summary": "Returns an enumerator of all the connected hierarchic objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cc228ea0-267b-7d90-7441-c9efc1779b08"
+    },
+    {
+      "name": "GetIntegerReportProperties",
+      "signature": "GetIntegerReportProperties(...)",
+      "summary": "Retrieves multiple integer report properties for the model object. It is faster to fetch multiple properties at once.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2623a9c0-2a9c-e233-9daa-59f92ed51445"
+    },
+    {
+      "name": "GetIntegerUserProperties",
+      "signature": "GetIntegerUserProperties(...)",
+      "summary": "Retrieves all integer properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1b3c6f06-bc25-a54e-2a88-b60dc4a3c85e"
+    },
+    {
+      "name": "GetMainWeld",
+      "signature": "GetMainWeld(...)",
+      "summary": "Returns the main weld of the logical weld.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d3829427-28e0-3bff-60a4-25ee7ee40c95"
+    },
+    {
+      "name": "GetPhase",
+      "signature": "GetPhase(...)",
+      "summary": "Retrieves the phase of the model object (the phase number, the phase name, the phase comment and whether the phase is the current one or not).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/310f8b7a-c120-753a-35c9-f7c73a9806c9"
+    },
+    {
+      "name": "GetReportProperty(String, Double.)",
+      "signature": "GetReportProperty(String, Double.)(...)",
+      "summary": "Retrieves a double property of the report for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1c05aa56-5f42-be91-a59e-8d59a5549f45"
+    },
+    {
+      "name": "GetReportProperty(String, Int32.)",
+      "signature": "GetReportProperty(String, Int32.)(...)",
+      "summary": "Retrieves an integer property of the report for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ce8e4ca0-3750-3c9b-5ca8-27e48b45e0bd"
+    },
+    {
+      "name": "GetReportProperty(String, String.)",
+      "signature": "GetReportProperty(String, String.)(...)",
+      "summary": "Retrieves a string property of the report for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/70f212bb-ee70-e9e9-7ab6-d6a9d46f8de6"
+    },
+    {
+      "name": "GetSolid",
+      "signature": "GetSolid(...)",
+      "summary": "Method for getting the weld solid.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/319baa05-e7f2-e9ff-1f4f-c2a403dd71d1"
+    },
+    {
+      "name": "GetStringReportProperties",
+      "signature": "GetStringReportProperties(...)",
+      "summary": "Retrieves multiple string report properties for the model object. It is faster to fetch multiple properties at once.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5ff72da1-7382-f5d2-eb1d-c99b46239d42"
+    },
+    {
+      "name": "GetStringUserProperties",
+      "signature": "GetStringUserProperties(...)",
+      "summary": "Retrieves all string properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/67120e84-c820-9d52-12ae-c167c595842c"
+    },
+    {
+      "name": "GetUserProperty(String, Double.)",
+      "signature": "GetUserProperty(String, Double.)(...)",
+      "summary": "Retrieves a double property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/17cc8074-7955-32b5-2b4b-b169c45d4ee0"
+    },
+    {
+      "name": "GetUserProperty(String, Int32.)",
+      "signature": "GetUserProperty(String, Int32.)(...)",
+      "summary": "Retrieves an integer property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d9364c1d-5b57-6a31-4c13-01124058cfb2"
+    },
+    {
+      "name": "GetUserProperty(String, String.)",
+      "signature": "GetUserProperty(String, String.)(...)",
+      "summary": "Retrieves a string property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/214a886c-c18c-9b66-d7c9-fe84260962f2"
+    },
+    {
+      "name": "GetWeldGeometries",
+      "signature": "GetWeldGeometries(...)",
+      "summary": "Method for getting weld seam geometries. Every result represents one individual seam geometry in current weld.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/335a1753-ab21-bc4a-f02b-2dfa5e951c7a"
+    },
+    {
+      "name": "Insert",
+      "signature": "Insert(...)",
+      "summary": "Inserts the logical weld into the model database. All the attributes must be set.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6b3492fb-9680-cf6c-b510-8288abc5932f"
+    },
+    {
+      "name": "Modify",
+      "signature": "Modify(...)",
+      "summary": "Modifies the existing logical weld in the model database to match the current one.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fcdc94bf-e306-5d39-87e1-85800c1c3d02"
+    },
+    {
+      "name": "RemoveWeld",
+      "signature": "RemoveWeld(...)",
+      "summary": "Removes a weld from the logical weld.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f4110460-c769-2e5f-6e93-b5393091c033"
+    },
+    {
+      "name": "Select.",
+      "signature": "Select.(...)",
+      "summary": "Selects a logical weld from the model database. The logical weld identifier must be set.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/81e09766-4092-c4ac-03db-3bcaaaa6c3cd"
+    },
+    {
+      "name": "Select(BaseWeld)",
+      "signature": "Select(BaseWeld)(...)",
+      "summary": "Selects the logical weld that a child weld belongs to.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d483a81d-0da9-3473-7c51-d56982578e6a"
+    },
+    {
+      "name": "SetCustomObjectType",
+      "signature": "SetCustomObjectType(...)",
+      "summary": "Sets a custom object type name for an existing object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3d6fb91b-48a9-35ca-d498-526514344089"
+    },
+    {
+      "name": "SetDynamicStringProperty",
+      "signature": "SetDynamicStringProperty(...)",
+      "summary": "Sets a dynamic string property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4dab0254-09e5-5e61-c28b-1c12afab71a0"
+    },
+    {
+      "name": "SetLabel",
+      "signature": "SetLabel(...)",
+      "summary": "Sets a label for an object when a new instance is created, this method must be called before Insert. The label is used in plug-ins for identifying the changed object in modification.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3efcfc44-613a-e66b-9ebd-9f86df4f4036"
+    },
+    {
+      "name": "SetMainWeld",
+      "signature": "SetMainWeld(...)",
+      "summary": "Sets the main weld for the logical weld.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/855f0f29-503f-fea4-2e11-9a87a9ecd764"
+    },
+    {
+      "name": "SetPhase",
+      "signature": "SetPhase(...)",
+      "summary": "Sets the phase of the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ed80abcc-0ff7-d081-2229-e651f858a727"
+    },
+    {
+      "name": "SetUserProperties",
+      "signature": "SetUserProperties(...)",
+      "summary": "Sets multiple properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8659da37-d571-f03f-c666-5c9fa3b113f5"
+    },
+    {
+      "name": "SetUserProperty(String, Double)",
+      "signature": "SetUserProperty(String, Double)(...)",
+      "summary": "Sets a double property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5c585b8b-5c2e-7b75-2242-758f17429396"
+    },
+    {
+      "name": "SetUserProperty(String, Int32)",
+      "signature": "SetUserProperty(String, Int32)(...)",
+      "summary": "Sets an integer property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dd5b828d-3a87-bb58-5ac9-e1c3b4c2fe4b"
+    },
+    {
+      "name": "SetUserProperty(String, String)",
+      "signature": "SetUserProperty(String, String)(...)",
+      "summary": "Sets a string property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/80bf0348-b651-3d4a-862b-49c85bc924ab"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AdditionalSizeAbove",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the additional size above for combination welds.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dec36d74-ec0e-a9ab-85d0-5f07accaa56e"
+    },
+    {
+      "name": "AdditionalSizeBelow",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the additional size below for combination welds.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b844c81c-5192-2a71-6d18-51cf90ee6c6e"
+    },
+    {
+      "name": "AngleAbove",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the angle above.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d520111d-29eb-3041-be9b-a5beb50b5782"
+    },
+    {
+      "name": "AngleBelow",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the angle below.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b1e95dec-f510-8bf4-124f-fc6180d63e69"
+    },
+    {
+      "name": "AroundWeld",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the weld is an around weld (true) or an edge weld (false).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/50ecb6ce-e874-8787-8c9a-7fea29344860"
+    },
+    {
+      "name": "ConnectAssemblies",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether to connect a part or an assembly as a secondary part (false) or as a sub-assembly (true).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/132a2287-1c06-d008-8160-e2fa4f45226a"
+    },
+    {
+      "name": "ContourAbove",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the contour above.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ea2ad88c-b910-6997-5684-5155f77468a3"
+    },
+    {
+      "name": "ContourBelow",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the contour below.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/347ec769-6748-84cb-de23-36c7c323c101"
+    },
+    {
+      "name": "EffectiveThroatAbove",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the effective throat above.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6a837699-bec7-d0f0-4599-268543eff20a"
+    },
+    {
+      "name": "EffectiveThroatBelow",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the effective throat below.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/35e4c348-1c1d-43f9-c74e-49a51ef7f37f"
+    },
+    {
+      "name": "ElectrodeClassification",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the weld electrode classification.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/53836861-1484-b318-6e05-a4638ffc6942"
+    },
+    {
+      "name": "ElectrodeCoefficient",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the electrode strength coefficient.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/acf101c3-deea-b546-972d-7c6529ea547a"
+    },
+    {
+      "name": "ElectrodeStrength",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the electrode strength.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/293192d1-e25a-dc3c-4ffd-640f396de5ee"
+    },
+    {
+      "name": "FinishAbove",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the finish above.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fdf0f8a5-ee57-1c71-78c7-64dba6bf7e44"
+    },
+    {
+      "name": "FinishBelow",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the finish below.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b5e16c5f-8863-f26d-2dac-9b0381cadca5"
+    },
+    {
+      "name": "Identifier",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The identifier of the object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3704f321-8e6e-27e4-0752-adfaed74c69f"
+    },
+    {
+      "name": "IncrementAmountAbove",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the increment amount above.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bec421fa-8841-648e-b778-7e7ccacd0fc2"
+    },
+    {
+      "name": "IncrementAmountBelow",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the increment amount below.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/90d758df-15eb-2f93-0e1a-5c2ff33684a6"
+    },
+    {
+      "name": "IntermittentType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the weld intermittent type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4365e7a9-728b-f0d7-0f90-56716f9c9bdc"
+    },
+    {
+      "name": "IsUpToDate",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets if the object does not have a modification which is not shared.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bc992671-093f-44a9-5eeb-7d289fd00cc5"
+    },
+    {
+      "name": "LengthAbove",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the length above.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/eee93cfa-4db9-a580-4f2f-04f129622625"
+    },
+    {
+      "name": "LengthBelow",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the length below.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2b671483-ce4b-a3f6-acc8-73fe5f77d725"
+    },
+    {
+      "name": "MainObject",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the main part of the weld.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fe07c5d8-25b6-38b8-60aa-342b171d9fe1"
+    },
+    {
+      "name": "ModificationTime",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets latest time of the object was modified or created.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/28d2c3c4-efd2-b4ed-7e2c-93cfb6e3a57f"
+    },
+    {
+      "name": "NDTInspection",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the NDT inspection level.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/add69bb4-c55a-4b0a-e5a1-dce270a080aa"
+    },
+    {
+      "name": "PitchAbove",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the pitch above.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c876e860-c4ed-e3c5-6296-12a4fffef661"
+    },
+    {
+      "name": "PitchBelow",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the pitch below.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/118553fc-b740-5d19-efef-df82b2679e67"
+    },
+    {
+      "name": "Placement",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the weld placement.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/151c521a-82e2-ad8f-b278-0100046f52a4"
+    },
+    {
+      "name": "PrefixAboveLine",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the size prefix above the line.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/005431b4-e681-b547-61b6-7ac795e8e1f4"
+    },
+    {
+      "name": "PrefixBelowLine",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the size prefix below the line.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/78862f85-d7e8-8d57-33c9-dea6af07aafe"
+    },
+    {
+      "name": "Preparation",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the weld preparation.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b5e492f4-790b-16f9-b6ca-e8e348633244"
+    },
+    {
+      "name": "ProcessType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the process type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/219636d6-ead8-b45e-e894-2d1e890b962d"
+    },
+    {
+      "name": "ReferenceText",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the reference text.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9a4fa4cf-c34c-10fe-db17-e1f429dcc54f"
+    },
+    {
+      "name": "RootFaceAbove",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the root face above.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0453de5b-e8ec-14df-d5c2-16a007463810"
+    },
+    {
+      "name": "RootFaceBelow",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the root face below.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5fa48d51-1ec0-65ba-8b2b-cc8ccf43f28c"
+    },
+    {
+      "name": "RootOpeningAbove",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the root opening above.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ff98231c-bb9f-984e-3871-3f847368470a"
+    },
+    {
+      "name": "RootOpeningBelow",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the root opening below.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4392e9d6-352b-65e6-3e36-0b0c71b7144e"
+    },
+    {
+      "name": "SecondaryObject",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the secondary part of the weld.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/518bbb74-918b-0fe5-6e35-41216d328700"
+    },
+    {
+      "name": "ShopWeld",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the weld is a shop weld (true) or a site weld (false).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/039f4566-8153-c20d-04df-163fe389e499"
+    },
+    {
+      "name": "SizeAbove",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the size above.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c09eeb27-b8bf-6290-fd00-45ed94160c96"
+    },
+    {
+      "name": "SizeBelow",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the size below.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/821675a5-1aa0-e236-d21e-00e1a4245461"
+    },
+    {
+      "name": "Standard",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the weld detail/standard.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bc2b0af3-a8be-89dc-1289-3f4dd3a6580e"
+    },
+    {
+      "name": "StitchWeld",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the weld is stitched (true) or not stitched (false).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f3f56c8f-b077-b1d0-e638-6688a0f281f7"
+    },
+    {
+      "name": "TypeAbove",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type above.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0947e416-5a6a-1614-761b-1b3ad50c62f1"
+    },
+    {
+      "name": "TypeBelow",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type below.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2afb7988-44e4-2d17-a3e3-a6d7621ee60e"
+    },
+    {
+      "name": "WeldNumber",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the weld number.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1136a0cc-fdc1-f004-83e6-b25067e16693"
+    },
+    {
+      "name": "WeldNumberPrefix",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the weld number prefix.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7d46b612-92f7-9ab1-055d-6a562d3c290d"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

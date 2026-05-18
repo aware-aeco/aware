@@ -1,0 +1,392 @@
+{
+  "name": "Plugin",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The Plugin class represents a drawing plug-in.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/4b3cdf4c-0872-f97b-d56e-5209179f1fca",
+  "constructors": [
+    {
+      "name": "Plugin",
+      "signature": "Plugin(...)",
+      "summary": "Creates a new plug-in instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/45446813-1eb4-9eee-c13b-3796690ce071"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ApplyStandardValues",
+      "signature": "ApplyStandardValues(...)",
+      "summary": "Applies the values of the specified file as the default values for the dialog belonging to this plug-in. This will affect each Insert call of the plug-ins with the same name.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6c51b9d0-7066-d66d-27cd-9d428d3d1d72"
+    },
+    {
+      "name": "Delete",
+      "signature": "Delete(...)",
+      "summary": "Deletes the plug-in from the current drawing database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/84960371-6f53-b251-560c-d1a016ff3245"
+    },
+    {
+      "name": "GetDoubleAttribute",
+      "signature": "GetDoubleAttribute(...)",
+      "summary": "Gets the value of the specified double attribute of the plug-in.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8647b360-ba26-7611-8cd0-2050ad19102b"
+    },
+    {
+      "name": "GetDoubleUserProperties(Dictionary.String, Double..)",
+      "signature": "GetDoubleUserProperties(Dictionary.String, Double..)(...)",
+      "summary": "Retrieves all double user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b25f0e6b-ab5c-154a-a45c-4f5868a20599"
+    },
+    {
+      "name": "GetDoubleUserProperties(List.String., Dictionary.String, Double..)",
+      "signature": "GetDoubleUserProperties(List.String., Dictionary.String, Double..)(...)",
+      "summary": "Retrieves all double user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7f327fc5-14b5-f534-da39-b68d3f87124a"
+    },
+    {
+      "name": "GetDrawing",
+      "signature": "GetDrawing(...)",
+      "summary": "Gets the drawing where the drawing object is.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4e9beef3-2188-ab45-9f07-dbde351915bf"
+    },
+    {
+      "name": "GetIntAttribute",
+      "signature": "GetIntAttribute(...)",
+      "summary": "Gets the value of the specified int attribute of the plug-in.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a5b6c7c9-984f-0a3a-5d3b-fbbfd3294aa2"
+    },
+    {
+      "name": "GetIntegerUserProperties(Dictionary.String, Int32..)",
+      "signature": "GetIntegerUserProperties(Dictionary.String, Int32..)(...)",
+      "summary": "Retrieves all integer user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/20a7d099-ebee-b016-ffc7-0181a1219405"
+    },
+    {
+      "name": "GetIntegerUserProperties(List.String., Dictionary.String, Int32..)",
+      "signature": "GetIntegerUserProperties(List.String., Dictionary.String, Int32..)(...)",
+      "summary": "Retrieves all integer user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde"
+    },
+    {
+      "name": "GetRelatedObjects.",
+      "signature": "GetRelatedObjects.(...)",
+      "summary": "Gets the related objects of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149"
+    },
+    {
+      "name": "GetRelatedObjects(.Type.)",
+      "signature": "GetRelatedObjects(.Type.)(...)",
+      "summary": "Gets the related objects of the current object that are of certain types.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415"
+    },
+    {
+      "name": "GetStringAttribute",
+      "signature": "GetStringAttribute(...)",
+      "summary": "Gets the value of the specified string attribute of the plug-in.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/72af6d07-6045-1a47-376f-e03201f45b8e"
+    },
+    {
+      "name": "GetStringUserProperties(Dictionary.String, String..)",
+      "signature": "GetStringUserProperties(Dictionary.String, String..)(...)",
+      "summary": "Retrieves all string user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a0039213-2e79-912f-5bdf-5e6dd417c092"
+    },
+    {
+      "name": "GetStringUserProperties(List.String., Dictionary.String, String..)",
+      "signature": "GetStringUserProperties(List.String., Dictionary.String, String..)(...)",
+      "summary": "Retrieves all string user properties for the object with the given list of names.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/474a80dc-539a-2734-4b5c-1ea52f86e750"
+    },
+    {
+      "name": "GetUserProperty(String, Double.)",
+      "signature": "GetUserProperty(String, Double.)(...)",
+      "summary": "Gets a double property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/203a39af-db6b-e317-5de3-f0301c1642f2"
+    },
+    {
+      "name": "GetUserProperty(String, Int32.)",
+      "signature": "GetUserProperty(String, Int32.)(...)",
+      "summary": "Gets an integer property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f773aabe-fe4e-dba3-bf33-f6f927441a85"
+    },
+    {
+      "name": "GetUserProperty(String, String.)",
+      "signature": "GetUserProperty(String, String.)(...)",
+      "summary": "Gets a string property from the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5335a30d-ac20-6231-5b02-22e14c6980a7"
+    },
+    {
+      "name": "GetView",
+      "signature": "GetView(...)",
+      "summary": "Gets the view where the drawing object is.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ed3c08d7-c75f-2e18-ee97-fe2e096f29b5"
+    },
+    {
+      "name": "Insert",
+      "signature": "Insert(...)",
+      "summary": "Inserts the plug-in into the current drawing database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b0e118a0-f4da-3596-c616-08a5eef1a456"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e78bf0b7-77d4-d79d-221d-40ecc01d135e"
+    },
+    {
+      "name": "IsSameDatabaseObject",
+      "signature": "IsSameDatabaseObject(...)",
+      "summary": "Returns true if the current object and the given object are referencing the same database object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/675fe6a8-2f1f-6e66-07f4-768bc3a1c74b"
+    },
+    {
+      "name": "LoadStandardValues",
+      "signature": "LoadStandardValues(...)",
+      "summary": "Sets the values from the specified file to this plug-in.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/eed2c1f4-ccc7-2fbb-0a37-f060a84bdd24"
+    },
+    {
+      "name": "Modify",
+      "signature": "Modify(...)",
+      "summary": "Modifies the plug-in in the current drawing database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3bae715a-a26b-6c5b-c595-ab84a1d09c38"
+    },
+    {
+      "name": "Select",
+      "signature": "Select(...)",
+      "summary": "Selects the plug-in from the current drawing database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a891f7b9-5cbf-385f-fbba-470a10659e73"
+    },
+    {
+      "name": "SetAttribute(String, Double)",
+      "signature": "SetAttribute(String, Double)(...)",
+      "summary": "Sets the specified attribute of the plug-in to the given value. NOTE! Only works on already inserted plug-ins.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f105a4d9-b048-d920-d62f-9e7aa942b851"
+    },
+    {
+      "name": "SetAttribute(String, Int32)",
+      "signature": "SetAttribute(String, Int32)(...)",
+      "summary": "Sets the specified attribute of the plug-in to the given value. NOTE! Only works on already inserted plug-ins.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/65959646-4ec3-c048-f3c7-19baf38dd810"
+    },
+    {
+      "name": "SetAttribute(String, String)",
+      "signature": "SetAttribute(String, String)(...)",
+      "summary": "Sets the specified attribute of the plug-in to the given value. NOTE! Only works on already inserted plug-ins.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9cc2e355-1a58-ca88-6375-6d86b8bf01da"
+    },
+    {
+      "name": "SetPickerInput",
+      "signature": "SetPickerInput(...)",
+      "summary": "Defines the sequence of inputs to use in place of interactive picks when the plug-in is inserted to a drawing.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/37bc4b37-0684-8e0f-1792-9712b732790e"
+    },
+    {
+      "name": "SetUserProperty(String, Double)",
+      "signature": "SetUserProperty(String, Double)(...)",
+      "summary": "Sets a double property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/995715f7-c86c-86d0-359f-76dc4d14197a"
+    },
+    {
+      "name": "SetUserProperty(String, Int32)",
+      "signature": "SetUserProperty(String, Int32)(...)",
+      "summary": "Sets an integer property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/88a5c4aa-fb12-e341-ee9e-fcd3284fab68"
+    },
+    {
+      "name": "SetUserProperty(String, String)",
+      "signature": "SetUserProperty(String, String)(...)",
+      "summary": "Sets a string property for the drawing object. The object has to be in a drawing before the method can be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/633cfaf7-22e7-1bb1-6596-053d78749c52"
+    },
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Changes the string presentation of the drawing object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/23e70841-4b0d-9dc2-7a9b-f3b6d7eed19f"
+    },
+    {
+      "name": "TryGetAttribute(String, Double.)",
+      "signature": "TryGetAttribute(String, Double.)(...)",
+      "summary": "Gets the value of the specified double attribute of the plug-in.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/90f39e86-2f82-c971-61af-61736228eb01"
+    },
+    {
+      "name": "TryGetAttribute(String, Int32.)",
+      "signature": "TryGetAttribute(String, Int32.)(...)",
+      "summary": "Gets the value of the specified int attribute of the plug-in.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/136b2adb-3657-772c-ba38-f6fce33d1b50"
+    },
+    {
+      "name": "TryGetAttribute(String, String.)",
+      "signature": "TryGetAttribute(String, String.)(...)",
+      "summary": "Gets the value of the specified string attribute of the plug-in.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ba108b08-e074-f5c1-beb1-b8ad48eba1b3"
+    },
+    {
+      "name": "TrySetAttribute(String, Double)",
+      "signature": "TrySetAttribute(String, Double)(...)",
+      "summary": "Sets the specified attribute of the plug-in to the given value. NOTE! Only works on already inserted plug-ins.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/63d39896-bda4-c016-124d-51178e81773e"
+    },
+    {
+      "name": "TrySetAttribute(String, Int32)",
+      "signature": "TrySetAttribute(String, Int32)(...)",
+      "summary": "Sets the specified attribute of the plug-in to the given value. NOTE! Only works on already inserted plug-ins.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c50b08a0-129e-d671-adf3-40ae248dc941"
+    },
+    {
+      "name": "TrySetAttribute(String, String)",
+      "signature": "TrySetAttribute(String, String)(...)",
+      "summary": "Sets the specified attribute of the plug-in to the given value. NOTE! Only works on already inserted plug-ins.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f0d5baa8-6f9c-d8fd-103e-ebfbdefb4fb0"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Attributes",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the attributes of the current object. Only attributes of the same type as the object are allowed.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/664ac40b-0a25-9e60-787f-f01f109aab27"
+    },
+    {
+      "name": "Name",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the name of the plug-in.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fa3f6bd4-79ec-e8fb-ecaf-945254bc6906"
+    },
+    {
+      "name": "QueryReturnValue",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Status information about the latest database operation (select, insert, modify, delete).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d86cf9da-3acd-9719-d93c-e98d5fb25151"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

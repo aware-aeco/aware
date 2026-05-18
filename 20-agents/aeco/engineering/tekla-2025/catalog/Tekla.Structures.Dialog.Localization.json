@@ -1,0 +1,158 @@
+{
+  "name": "Localization",
+  "namespace": "Tekla.Structures.Dialog",
+  "kind": "class",
+  "summary": "The Localization class is for translating strings in .NET dialogs.",
+  "base": "System.MarshalByRefObject",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/1082f32b-492c-fd87-a2ba-b28a2359fc76",
+  "constructors": [
+    {
+      "name": "Localization",
+      "signature": "Localization(...)",
+      "summary": "Creates a new localization instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e487fb55-b975-20c5-3533-4f0c81666402"
+    },
+    {
+      "name": "Localization",
+      "signature": "Localization(...)",
+      "summary": "Creates a new localization instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ea5ac0bd-0aa6-25b0-caac-197ded02749b"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetLocalizationFileFullPath",
+      "signature": "GetLocalizationFileFullPath(...)",
+      "summary": "Returns localization file if found from environment",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/814de45d-06ca-db66-f8a5-3fb668445041"
+    },
+    {
+      "name": "GetText",
+      "signature": "GetText(...)",
+      "summary": "Gets the translation for the current language. The translations are searched with the given identifier string.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f8c92b4f-4ee9-fff6-8f2f-bc32c6558431"
+    },
+    {
+      "name": "LoadAidFile",
+      "signature": "LoadAidFile(...)",
+      "summary": "Loads the localization strings from an aid file. Several files may be used concurrently, just call LoadAidFile for each file. The translations are searched in the loading order and the first match is returned.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e5f64544-6122-615c-fe3f-fe55dfd3bb15"
+    },
+    {
+      "name": "LoadAilFile",
+      "signature": "LoadAilFile(...)",
+      "summary": "Loads the localization strings from an ail file. Several files may be used concurrently, just call LoadAilFile for each file. The translations are searched in the loading order and the first match is returned.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ce8fe818-f1b3-287c-2556-4aab6e4e4fde"
+    },
+    {
+      "name": "LoadFile",
+      "signature": "LoadFile(...)",
+      "summary": "Loads the localization strings from a file. Several files may be used concurrently, just call LoadFile for each file. The translations are searched in the loading order and the first match is returned. The method uses the extension of the filename to identify the file type (\u0022.xml\u0022, \u0022.aid\u0022 or \u0022.ail\u0022).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f3061153-fc54-871b-7a3a-a61c7700ead8"
+    },
+    {
+      "name": "LoadXMLFile",
+      "signature": "LoadXMLFile(...)",
+      "summary": "Loads the localization strings from an xml file. Several files may be used concurrently, just call LoadXMLFile for each file. The translations are searched in the loading order and the first match is returned.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/81d33ad8-0af5-e71e-f1e4-3e108eeef787"
+    },
+    {
+      "name": "Localize(ApplicationSettingsBase)",
+      "signature": "Localize(ApplicationSettingsBase)(...)",
+      "summary": "Localizes application settings.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8f64771f-7a89-67f8-7a18-e56d01b3260c"
+    },
+    {
+      "name": "Localize(Control)",
+      "signature": "Localize(Control)(...)",
+      "summary": "Localizes a control recursively.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/83044e33-c832-1e45-2e54-71a15be3b7ab"
+    },
+    {
+      "name": "Localize(MenuItem)",
+      "signature": "Localize(MenuItem)(...)",
+      "summary": "Localizes a MenuItem control recursively.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/985e14bc-0164-6f24-cc16-099d799c8527"
+    },
+    {
+      "name": "LocalizeToolTip",
+      "signature": "LocalizeToolTip(...)",
+      "summary": "Localizes a ToolTip control.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/88453655-72be-4c55-8bf7-4bb7fad8df80"
+    },
+    {
+      "name": "RegisterLocalizationCallback",
+      "signature": "RegisterLocalizationCallback(...)",
+      "summary": "Registers a localization callback which is used to translate the registered control types.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9c7c6069-4285-dda1-795d-a478948d46d5"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DefaultLocalizationFile",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The path and name of the default localization file.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cc1493a9-b4d4-3f10-8773-286705510632"
+    },
+    {
+      "name": "DefaultLocalizationPath",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The path and directory name where to find localization files.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/83869bed-fa42-34c0-17ff-7c7edd7f8e99"
+    },
+    {
+      "name": "Language",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the language that is currently used in Tekla Structures.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7159c444-339c-e989-f618-630efc21ff20"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

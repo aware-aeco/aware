@@ -1,0 +1,43 @@
+{
+  "name": "AnalysisObjectSelector",
+  "namespace": "Tekla.Structures.Analysis.UI",
+  "kind": "class",
+  "summary": "Get or set selected analysis objects in model views.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/e030d77d-a743-dc11-357f-42c32dab23e7",
+  "constructors": [
+    {
+      "name": "AnalysisObjectSelector",
+      "signature": "AnalysisObjectSelector(...)",
+      "summary": "Initializes a new instance of the AnalysisObjectSelector class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9a6b3fbd-4e63-e997-a9a5-9efb71d79f73"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetSelectedObjects",
+      "signature": "GetSelectedObjects(...)",
+      "summary": "Get the analysis objects selected in model views.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/67a2ab44-62cf-ee69-7f6b-c0231934cbeb"
+    },
+    {
+      "name": "SetSelectedObjects",
+      "signature": "SetSelectedObjects(...)",
+      "summary": "Set analysis objects as selected in model views.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/86208bd9-647e-0e3a-5dee-0cce9a4e50a2"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

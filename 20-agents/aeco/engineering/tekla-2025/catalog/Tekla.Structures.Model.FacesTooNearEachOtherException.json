@@ -1,0 +1,24 @@
+{
+  "name": "FacesTooNearEachOtherException",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The FacesTooNearEachOtherException class represents an error when, faces to be connected overlap.",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/3e31a78f-75c9-796d-7463-c0d60e28e905",
+  "constructors": [
+    {
+      "name": "FacesTooNearEachOtherException",
+      "signature": "FacesTooNearEachOtherException(...)",
+      "summary": "Initializes a new instance of the ExtensionIntersectsWithPlateException class with \u0022faces to be connected overlap\u0022 error message.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/785b7590-da23-6e89-e206-1051ad98e71a"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

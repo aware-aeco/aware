@@ -1,0 +1,24 @@
+{
+  "name": "SaveLoad.HelpFileTypeEnum",
+  "namespace": "Tekla.Structures.Dialog.UIControls",
+  "kind": "enum",
+  "summary": "The help file types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/0f621a6a-223f-9e74-662c-f09ce6316281",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "General",
+      "value": 0,
+      "summary": "The general help file; help.chm."
+    },
+    {
+      "name": "UserDefined",
+      "value": 1,
+      "summary": "The user defined help file."
+    }
+  ]
+}

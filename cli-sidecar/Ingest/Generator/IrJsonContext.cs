@@ -51,6 +51,12 @@ namespace AwareSidecar.Ingest;
 [JsonSerializable(typeof(List<ThrowsInfo>))]
 [JsonSerializable(typeof(List<string>))]
 [JsonSerializable(typeof(JsonElement))]
+// Tekla extractor (Phase B B1) emits enum values as either int or string into JsonElement
+// via JsonSerializer.SerializeToElement(value, IrJsonContext.Default.<Type>). Registering
+// the primitive metadata here keeps that path source-gen / AOT clean — no reflection
+// fallback at runtime.
+[JsonSerializable(typeof(int))]
+[JsonSerializable(typeof(string))]
 public partial class IrJsonContext : JsonSerializerContext
 {
 }

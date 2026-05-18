@@ -1,0 +1,65 @@
+{
+  "name": "StrandUnbondingData",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The StrandUnbondingData class represents the unbonding of a rebar strand.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/b532c1be-5eec-7820-26ff-12e6061d7c05",
+  "constructors": [
+    {
+      "name": "StrandUnbondingData",
+      "signature": "StrandUnbondingData(...)",
+      "summary": "Initializes a new strand unbonding data instance with empty attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5684df7a-066b-253a-bcb5-25fdc43f78c3"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "FromEnd",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The unbonding from the end of the strand.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d568a4ab-eb68-87b4-f518-bdce2209715e"
+    },
+    {
+      "name": "FromStart",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The unbonding from the start of the strand.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5664769d-1b68-043d-a4f1-fd769685a63d"
+    },
+    {
+      "name": "MiddleToEnd",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The unbonding from the middle of the strand to the end of the strand.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fb50d713-8c83-d437-5fe1-33644ac01f55"
+    },
+    {
+      "name": "MiddleToStart",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The unbonding from the middle of the strand to the start of the strand.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2a053f47-95fb-b978-822c-218392948e51"
+    },
+    {
+      "name": "StrandIndex",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The index of the strand.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/67ce1bc9-9bfb-b797-26b8-9b384cb0f3ba"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

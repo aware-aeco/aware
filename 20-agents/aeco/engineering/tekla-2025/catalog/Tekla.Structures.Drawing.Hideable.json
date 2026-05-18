@@ -1,0 +1,70 @@
+{
+  "name": "Hideable",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "Accesses the information if this object is hidden or not or if it should be.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/adf9e63b-0e5b-ebab-0181-098602515f7d",
+  "constructors": [
+    {
+      "name": "Hideable",
+      "signature": "Hideable(...)",
+      "summary": "Initializes a new instance of the Hideable class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c9bed68a-6ba7-6d00-6d7f-08ab0f55f711"
+    }
+  ],
+  "methods": [
+    {
+      "name": "HideFromDrawing",
+      "signature": "HideFromDrawing(...)",
+      "summary": "Hides this object from the whole drawing. Calling Modify on the object is required to hide the object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7feb0562-a85c-0504-cc94-ac7c4da2a769"
+    },
+    {
+      "name": "HideFromDrawingView",
+      "signature": "HideFromDrawingView(...)",
+      "summary": "Hides this object from the drawing view. Calling Modify on the object is required to hide the object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8bf4d843-e050-fc65-78c4-7e4eb98b11f3"
+    },
+    {
+      "name": "ShowInDrawing",
+      "signature": "ShowInDrawing(...)",
+      "summary": "Shows this object in the whole drawing. Calling Modify on the object is required to show the object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ad4c979a-4777-72b6-bff0-f9f01d86bfc2"
+    },
+    {
+      "name": "ShowInDrawingView",
+      "signature": "ShowInDrawingView(...)",
+      "summary": "Shows this object in the drawing view. Calling Modify on the object is required to show the object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/155059b7-6252-a8db-5e4c-7324b6442530"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsHidden",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Retrieves the information if this object is hidden or not.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/43ccc663-215b-dcb6-e19f-bbd5e93b56dc"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

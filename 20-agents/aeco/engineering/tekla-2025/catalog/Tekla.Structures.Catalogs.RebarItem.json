@@ -1,0 +1,300 @@
+{
+  "name": "RebarItem",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The RebarItem class contains information from the rebars in the catalog (rebar_database.inp).",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/933c87fb-3e19-dd04-d5c3-92723fca54ca",
+  "constructors": [
+    {
+      "name": "RebarItem",
+      "signature": "RebarItem(...)",
+      "summary": "Creates a new rebar item instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/17e86085-ff21-f828-ed6b-b79162fae1ee"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Delete",
+      "signature": "Delete(...)",
+      "summary": "Deletes the rebar item from the rebar database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ed0d2530-6424-8337-3f7e-2cee77c6319d"
+    },
+    {
+      "name": "Export",
+      "signature": "Export(...)",
+      "summary": "Exports the rebar item in the catlog to given file name. If path is not given rebar is exported to model folder. If filename is empty rebar name is used as filename.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3feb12ed-4c12-9a6c-5dd2-41cbddedc126"
+    },
+    {
+      "name": "Insert",
+      "signature": "Insert(...)",
+      "summary": "Inserts the rebar item in the rebar database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/304205d9-c7d3-7105-15f3-dce63768ce9a"
+    },
+    {
+      "name": "Modify",
+      "signature": "Modify(...)",
+      "summary": "Modifies the rebar item in the rebar database based on the given parameters.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/51fa7a7e-68a3-95d5-d6fe-a8d831f77ad4"
+    },
+    {
+      "name": "Select(String, String)",
+      "signature": "Select(String, String)(...)",
+      "summary": "Selects the rebar item in the rebar database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1a861995-0819-f921-aaab-563ae782ba56"
+    },
+    {
+      "name": "Select(String, Double, Boolean)",
+      "signature": "Select(String, Double, Boolean)(...)",
+      "summary": "Selects the rebar item in the rebar database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/13cbd057-d553-bf4b-4e47-a153a7efdfa9"
+    },
+    {
+      "name": "Select(String, String, Double)",
+      "signature": "Select(String, String, Double)(...)",
+      "summary": "Selects the rebar item in the rebar database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dd2e488d-3a2a-581d-8ebe-c280fcbef5fb"
+    },
+    {
+      "name": "Select(String, String, String)",
+      "signature": "Select(String, String, String)(...)",
+      "summary": "Selects the rebar item in the rebar database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a5a6ae29-8271-2eae-e587-fe894af9120e"
+    },
+    {
+      "name": "Select(String, Double, Double, Boolean)",
+      "signature": "Select(String, Double, Double, Boolean)(...)",
+      "summary": "Selects the rebar item in the rebar database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/70937de3-c9ba-e60a-55c0-eb149ba46d7d"
+    },
+    {
+      "name": "Select(String, Double, String, Boolean)",
+      "signature": "Select(String, Double, String, Boolean)(...)",
+      "summary": "Selects the rebar item in the rebar database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0bd0ecb9-f9db-771e-f51e-2f9983b7aafb"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ActualDiameter",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The rebar item\u0027s actual diameter.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e32ae790-fa80-79f9-d5a0-19c9f4425c94"
+    },
+    {
+      "name": "BendRadius",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The rebar item\u0027s bending radius.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5cf52a10-6050-b429-3400-65f3b99998f1"
+    },
+    {
+      "name": "Code",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The rebar item\u0027s code.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/66964f5c-55d9-d2f7-020b-97caddd3d4eb"
+    },
+    {
+      "name": "CrankedLength",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the cranked length.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/552b13f9-c649-225f-69b0-a4d323addf60"
+    },
+    {
+      "name": "CrankedLengthType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the cranked length type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8606e4fe-b59d-6693-ab21-bd2428ba65e7"
+    },
+    {
+      "name": "CrankExtraOffset",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the crank extra offset.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f7c58c62-9862-78e9-2b40-bbba7758f11c"
+    },
+    {
+      "name": "CrankStraightLength",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the crank straight length.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0798b97a-0d0a-de6b-ab98-af9115124574"
+    },
+    {
+      "name": "CrossSectionArea",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The rebar item\u0027s cross section area.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3c1a3cf3-bc2c-a0c0-2d13-25aaa8addcc4"
+    },
+    {
+      "name": "CurveTolerance",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the curve tolerance.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4c0d8460-a5a4-ebf1-3fad-d497edaa6456"
+    },
+    {
+      "name": "ExtraPointShortening",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the extra point shortening.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/88faac8b-66a6-a677-0c80-08a84e6ca903"
+    },
+    {
+      "name": "Grade",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The rebar item\u0027s grade.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4c271c19-e85b-8b3c-3ad1-dc3652660cca"
+    },
+    {
+      "name": "HookLength135Degrees",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The rebar item\u0027s hook length for 135 degrees.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/135a55bc-a7ca-0edf-8ecf-4eab750822d6"
+    },
+    {
+      "name": "HookLength180Degrees",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The rebar item\u0027s hook length for 180 degrees.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8b3e9a81-fb93-ba94-33f5-d7aa97f33d27"
+    },
+    {
+      "name": "HookLength90Degrees",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The rebar item\u0027s hook length for 90 degrees.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/97b76f2a-4009-5075-d931-ffc99ca756c7"
+    },
+    {
+      "name": "HookRadius135Degrees",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The rebar item\u0027s hook radius for 135 degrees.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d8076459-f151-252f-08c0-6ee54bbcae48"
+    },
+    {
+      "name": "HookRadius180Degrees",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The rebar item\u0027s hook radius for 180 degrees.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ef9d1e40-9a82-7c42-3907-2e9e754b6d95"
+    },
+    {
+      "name": "HookRadius90Degrees",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The rebar item\u0027s hook radius for 90 degrees.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bf800631-7571-ac02-9064-438c5b8bd870"
+    },
+    {
+      "name": "LapLength",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the lap length.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bcd45db2-81ce-1b37-35a8-160bfe586576"
+    },
+    {
+      "name": "MaxRadiusRequiringBending",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the max radius requiring bending.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/34e8d1f4-5387-2d46-5482-4e084aaa8c04"
+    },
+    {
+      "name": "NominalDiameter",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The rebar item\u0027s nominal diameter.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/188ad516-526a-8625-f055-63bf88a6332f"
+    },
+    {
+      "name": "Size",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The rebar item\u0027s size.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a230b0b4-d794-3fc9-8567-421e2701f999"
+    },
+    {
+      "name": "Usage",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The rebar item\u0027s usage.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/873cc11b-78fd-2c14-dd70-3d74304c39ce"
+    },
+    {
+      "name": "WeightPerLenght",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The rebar item\u0027s weight per lenght.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8daa366a-d601-ec56-a04d-a2343fc8a631"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

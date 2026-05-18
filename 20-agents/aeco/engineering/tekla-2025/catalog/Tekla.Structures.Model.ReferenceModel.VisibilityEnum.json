@@ -1,0 +1,24 @@
+{
+  "name": "ReferenceModel.VisibilityEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The visibility type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/2af7cd9d-3835-c661-a69c-a9f2cde183b7",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "HIDDEN",
+      "value": 0,
+      "summary": "The reference model is invisible in the model."
+    },
+    {
+      "name": "VISIBLE",
+      "value": 1,
+      "summary": "The reference model is visible in the model."
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "name": "NumberingSeries",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The NumberingSeries class describes how an object is to be numbered.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/8788e92a-0d78-4c24-a3cc-039b96c08789",
+  "constructors": [
+    {
+      "name": "NumberingSeries",
+      "signature": "NumberingSeries(...)",
+      "summary": "Instantiates a default numbering.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4db6eaec-ed68-7882-01c0-053368ca0e99"
+    },
+    {
+      "name": "NumberingSeries",
+      "signature": "NumberingSeries(...)",
+      "summary": "Instantiates a numbering series with the given arguments.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/adae8e7c-ca96-84ef-ec4a-9ed360001d7a"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Prefix",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The prefix in numbering.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/592cc01a-04b7-ed21-990c-a09da0151cbd"
+    },
+    {
+      "name": "StartNumber",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The start number in numbering.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b41ffdc1-71d5-3ade-fd67-bf91e835858c"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

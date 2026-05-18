@@ -1,0 +1,44 @@
+{
+  "name": "NumericOperatorType",
+  "namespace": "Tekla.Structures.Filtering",
+  "kind": "enum",
+  "summary": "The numeric operator type defines the operators between two numeric filter expressions.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/a6a61b2f-6808-ae6d-3c9c-009922276362",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "IS_EQUAL",
+      "value": 1,
+      "summary": "The \u0022is equal\u0022 operator."
+    },
+    {
+      "name": "IS_NOT_EQUAL",
+      "value": 2,
+      "summary": "The \u0022is not equal\u0022 operator."
+    },
+    {
+      "name": "SMALLER_THAN",
+      "value": 5,
+      "summary": "The \u0022smaller than\u0022 operator."
+    },
+    {
+      "name": "SMALLER_OR_EQUAL",
+      "value": 6,
+      "summary": "The \u0022smaller or equal\u0022 operator."
+    },
+    {
+      "name": "GREATER_THAN",
+      "value": 7,
+      "summary": "The \u0022greater than\u0022 operator."
+    },
+    {
+      "name": "GREATER_OR_EQUAL",
+      "value": 8,
+      "summary": "The \u0022greater or equal\u0022 operator."
+    }
+  ]
+}

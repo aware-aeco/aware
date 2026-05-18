@@ -1,0 +1,284 @@
+{
+  "name": "TeklaStructuresDatabaseTypeEnum",
+  "namespace": "Tekla.Structures",
+  "kind": "enum",
+  "summary": "The object types to be used in filter expressions.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/fa0bf845-2589-975e-2598-c8d53823bb09",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "UNKNOWN",
+      "value": 0,
+      "summary": "The unknown type."
+    },
+    {
+      "name": "POINT",
+      "value": 1,
+      "summary": "The point type, this is not a ModelObject."
+    },
+    {
+      "name": "PART",
+      "value": 2,
+      "summary": "The part type."
+    },
+    {
+      "name": "CONNECTION",
+      "value": 3,
+      "summary": "The connection type, used for details and seams as well."
+    },
+    {
+      "name": "COMPONENT",
+      "value": 4,
+      "summary": "The component type, used for macros, plug-ins and custom parts."
+    },
+    {
+      "name": "GRID",
+      "value": 7,
+      "summary": "The grid type."
+    },
+    {
+      "name": "FITTING",
+      "value": 9,
+      "summary": "The fitting type."
+    },
+    {
+      "name": "BOLT",
+      "value": 10,
+      "summary": "The bolt type."
+    },
+    {
+      "name": "PART_CUT",
+      "value": 11,
+      "summary": "The part cut type."
+    },
+    {
+      "name": "PLANE_CUT",
+      "value": 12,
+      "summary": "The plane cut type."
+    },
+    {
+      "name": "WELDING",
+      "value": 13,
+      "summary": "The welding type."
+    },
+    {
+      "name": "ASSEMBLY",
+      "value": 15,
+      "summary": "The assembly type."
+    },
+    {
+      "name": "CONSTRUCTION_LINE",
+      "value": 24,
+      "summary": "The construction line type, this is not a ModelObject."
+    },
+    {
+      "name": "PLANE",
+      "value": 30,
+      "summary": "The plane type, used for control planes and grid planes."
+    },
+    {
+      "name": "DRAWING",
+      "value": 34,
+      "summary": "The drawing."
+    },
+    {
+      "name": "DB_CONNECTION",
+      "value": 35,
+      "summary": "The connection type."
+    },
+    {
+      "name": "PART_ADD",
+      "value": 38,
+      "summary": "The part add type."
+    },
+    {
+      "name": "WELD_CUT",
+      "value": 39,
+      "summary": "The weld preparation."
+    },
+    {
+      "name": "CONSTRUCTION_CIRCLE",
+      "value": 42,
+      "summary": "The construction circle type, this is not a ModelObject."
+    },
+    {
+      "name": "CONSTRUCTION_ARC",
+      "value": 43,
+      "summary": "The construction arc"
+    },
+    {
+      "name": "DB_COMPONENT",
+      "value": 46,
+      "summary": "The component type."
+    },
+    {
+      "name": "REBAR",
+      "value": 47,
+      "summary": "The rebar type, used for single rebars, groups, meshes and strands."
+    },
+    {
+      "name": "FOREIGN_OBJECT",
+      "value": 48,
+      "summary": "The foreign object."
+    },
+    {
+      "name": "LOAD_LOAD",
+      "value": 49,
+      "summary": "The load type."
+    },
+    {
+      "name": "LOAD_POINT",
+      "value": 50,
+      "summary": "The load point type."
+    },
+    {
+      "name": "LOAD_LINE",
+      "value": 51,
+      "summary": "The load line type."
+    },
+    {
+      "name": "LOAD_AREA",
+      "value": 52,
+      "summary": "The load area type."
+    },
+    {
+      "name": "LOAD_UNIFORM",
+      "value": 53,
+      "summary": "The load uniform type."
+    },
+    {
+      "name": "LOAD_GROUP",
+      "value": 54,
+      "summary": "The load group type."
+    },
+    {
+      "name": "LOAD_TEMPERATURELOAD",
+      "value": 72,
+      "summary": "The temperature load type."
+    },
+    {
+      "name": "SURFACE_TREATMENT",
+      "value": 73,
+      "summary": "The surface treatment type."
+    },
+    {
+      "name": "REBAR_SPLICE",
+      "value": 74,
+      "summary": "The rebar splice type."
+    },
+    {
+      "name": "ANALYSIS_MODEL",
+      "value": 75,
+      "summary": "The analysis model."
+    },
+    {
+      "name": "ANALYSIS_PART",
+      "value": 76,
+      "summary": "The analysis part."
+    },
+    {
+      "name": "ANALYSIS_NODE",
+      "value": 77,
+      "summary": "The analysis node."
+    },
+    {
+      "name": "EDGE_CHAMFER",
+      "value": 79,
+      "summary": "The edge chamfer type."
+    },
+    {
+      "name": "TASK",
+      "value": 80,
+      "summary": "The task type."
+    },
+    {
+      "name": "TASK_DEPENDENCY",
+      "value": 81,
+      "summary": "The task dependency type."
+    },
+    {
+      "name": "TASK_WORKTYPE",
+      "value": 83,
+      "summary": "The task worktype type."
+    },
+    {
+      "name": "HIERARCHIC_DEFINITION",
+      "value": 84,
+      "summary": "The hierarchic definition type."
+    },
+    {
+      "name": "HIERARCHIC_OBJECT",
+      "value": 85,
+      "summary": "The hierarchic object type."
+    },
+    {
+      "name": "DB_POUR_BREAK",
+      "value": 89,
+      "summary": "The pour break type."
+    },
+    {
+      "name": "DB_POUR_OBJECT",
+      "value": 90,
+      "summary": "The pour object type."
+    },
+    {
+      "name": "REBARSET_ADDITION",
+      "value": 95,
+      "summary": "The rebar set addition type."
+    },
+    {
+      "name": "REBARSET_MODIFIER",
+      "value": 96,
+      "summary": "The rebar set modifier type."
+    },
+    {
+      "name": "SURFACE_OBJECT",
+      "value": 97,
+      "summary": "The surface object type"
+    },
+    {
+      "name": "BENT_PLATE",
+      "value": 98,
+      "summary": "The bent plate type"
+    },
+    {
+      "name": "HELIX",
+      "value": 99,
+      "summary": "The helix type"
+    },
+    {
+      "name": "DB_POUR_UNIT",
+      "value": 101,
+      "summary": "The pour unit type"
+    },
+    {
+      "name": "CONSTRUCTION_POLYCURVE",
+      "value": 103,
+      "summary": "The construction polycurve"
+    },
+    {
+      "name": "STOREY",
+      "value": 104,
+      "summary": "Building Hierarchy Storey"
+    },
+    {
+      "name": "BUILDING_SITE",
+      "value": 105,
+      "summary": "Building Hierarchy Building"
+    },
+    {
+      "name": "BUILDING",
+      "value": 106,
+      "summary": "Building Hierarchy Site"
+    },
+    {
+      "name": "SPACE",
+      "value": 108,
+      "summary": "Building Hierarchy Space"
+    }
+  ]
+}

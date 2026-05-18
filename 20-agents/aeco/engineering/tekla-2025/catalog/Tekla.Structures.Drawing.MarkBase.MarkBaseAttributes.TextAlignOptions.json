@@ -1,0 +1,29 @@
+{
+  "name": "MarkBase.MarkBaseAttributes.TextAlignOptions",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "Enumeration of the possible text alignment values.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/b95d051a-03df-2ce9-2ed6-62caf2b0d0df",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Left",
+      "value": 0,
+      "summary": "Text is left-aligned."
+    },
+    {
+      "name": "Center",
+      "value": 1,
+      "summary": "Text is center-aligned."
+    },
+    {
+      "name": "Right",
+      "value": 2,
+      "summary": "Text is right-aligned."
+    }
+  ]
+}

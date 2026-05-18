@@ -1,0 +1,42 @@
+{
+  "name": "InputObjectTypeAttribute",
+  "namespace": "Tekla.Structures.Plugins",
+  "kind": "class",
+  "summary": "The InputObjectTypeAttribute class is used for storing the type of the input. Based on the type the system can then correctly ask for user input in the creation. The attribute is initialized from the custom attribute [InputObjectType(ConnectionBase.InputObjectType.INPUTOBJECT_PART)] in the connection source.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/6d2240db-156e-3bf5-fd9d-10f29c411e8b",
+  "constructors": [
+    {
+      "name": "InputObjectTypeAttribute",
+      "signature": "InputObjectTypeAttribute(...)",
+      "summary": "The custom attribute [InputObjectType()] uses this to store the input object type to the system. This is not to be used by itself.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/59a94394-b7fa-f5d6-68f9-a06bc789a567"
+    },
+    {
+      "name": "InputObjectTypeAttribute",
+      "signature": "InputObjectTypeAttribute(...)",
+      "summary": "The custom attribute [InputObjectType()] uses this to store the input object type to the system. This is not to be used by itself.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/54383b32-3be1-c532-1245-3df5037b0f64"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Type",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The custom attribute [InputObjectType()] uses this to store the input object type to the system. This is not to be used by itself.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7a2c07a3-45a1-8c87-2d40-2e192b52f3e6"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

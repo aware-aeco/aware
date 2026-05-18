@@ -1,0 +1,123 @@
+{
+  "name": "DPMPrinterAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The DPMPrinterAttributes class contains the attributes for controlling the printing.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/898f2ba9-b17f-44cf-92b7-08949a658c8e",
+  "constructors": [
+    {
+      "name": "DPMPrinterAttributes",
+      "signature": "DPMPrinterAttributes(...)",
+      "summary": "Creates a new PrintAttributes instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4e28ab92-189a-5654-823a-7a7ec528ea2e"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0474757e-8df3-02dd-72e3-de832c6ada64"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ColorMode",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Output color mode.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ecf2e67b-aaf4-65d3-fb4a-ee1559b6efd4"
+    },
+    {
+      "name": "NumberOfCopies",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The number of copies of each drawing to print. Only applicable for printing to a printer.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d3527bdc-332e-96e6-be6d-471c810bf8db"
+    },
+    {
+      "name": "OpenFileWhenFinished",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Whether to open file when finished.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ed7babb1-bfe2-ef20-fa33-9fb07424bff9"
+    },
+    {
+      "name": "Orientation",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The print orientation type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d60a9653-a6b6-1f35-cc45-38aacba4effb"
+    },
+    {
+      "name": "OutputFileName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Output file name and path. Applicable in PDF printing.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/aee15875-6b7e-2fc7-4da3-cdd82ea526b8"
+    },
+    {
+      "name": "OutputType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The printing output type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/85b5538b-12ed-5907-f032-6a0371342651"
+    },
+    {
+      "name": "PaperSize",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The paper size name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5caa7129-84e0-1699-3375-cea569bd77d8"
+    },
+    {
+      "name": "PrinterName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The printer name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b5854827-80b5-d1d2-06f8-46859ecd148f"
+    },
+    {
+      "name": "PrintToMultipleSheet",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Whether to print to multiple sheets.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/52cc36c0-3c1b-a272-19e4-e509d2b58209"
+    },
+    {
+      "name": "ScaleFactor",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The print scale factor.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6b32540b-d784-5116-c375-8595b6ce9170"
+    },
+    {
+      "name": "ScalingMethod",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The print scaling method.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/366226f0-a9b1-61c6-2668-6fc26f5b71ea"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

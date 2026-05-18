@@ -1,0 +1,14 @@
+{
+  "name": "Events.SelectionChangeDelegate",
+  "namespace": "Tekla.Structures.Drawing.UI",
+  "kind": "delegate",
+  "summary": "The delegate to use for selection change.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/10c8f8a4-513d-aa67-a39d-d0dcb7e86846",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void SelectionChangeDelegate()"
+}

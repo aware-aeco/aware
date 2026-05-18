@@ -1,0 +1,141 @@
+{
+  "name": "Text.TextAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The TextAttributes class is the attributes class for the text.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/67e8c418-3157-dad6-7057-82f1e31c42c0",
+  "constructors": [
+    {
+      "name": "Text.TextAttributes",
+      "signature": "Text.TextAttributes(...)",
+      "summary": "Creates a new default text attributes instance that loads standard attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/87ec8fea-37c1-ba61-c008-064dfebf0ffd"
+    },
+    {
+      "name": "Text.TextAttributes",
+      "signature": "Text.TextAttributes(...)",
+      "summary": "Creates a new text attributes instance that loads the specified attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4607c21a-474a-1585-1a32-561432c6352e"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7ebbe26b-4b27-5290-0d70-7489b2a11e00"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "LoadAttributes(...)",
+      "summary": "Loads the attributes from the attribute file.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8b850f20-a238-96c8-db85-d1ff5e368993"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Alignment",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The text object\u0027s alignment (left, center, right).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/df32650b-84b9-2e04-7f67-ce6ecfdc2119"
+    },
+    {
+      "name": "Angle",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The angle of the text frame.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/90f2668c-6a11-ed21-92e6-93fca434d454"
+    },
+    {
+      "name": "ArrowHead",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The arrowhead of the leader line.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0fbcbd7c-314e-01a8-a716-5b64d00b19e2"
+    },
+    {
+      "name": "CustomPresentation",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Custom presentation GUID to be applied to the object type",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d21d46ac-0b75-3f32-c0b6-d162670ccb78"
+    },
+    {
+      "name": "Font",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The text object\u0027s font settings.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2c71e0b1-51d5-a5af-6c06-aa1373ae743b"
+    },
+    {
+      "name": "Frame",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The frame for the text.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0ca07a8c-8deb-b653-f3f8-66638225f2ff"
+    },
+    {
+      "name": "PlacingAttributes",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The placing attributes that the object should use. Using these you can specify whether the object is automatically arranged in the drawing or not.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/72f5a263-7f66-1a9f-cb0c-c8eebec0998b"
+    },
+    {
+      "name": "PreferredPlacing",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The type of placing the object should use. See the preferred placing types for different types of placing.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0b93a6a6-db66-05d6-500e-78bbc2fd3b9e"
+    },
+    {
+      "name": "RulerWidth",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the width in paper coordinates of the ruler to be used in word wrapping.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1ea56217-bbb4-7835-54d5-357aa5df562f"
+    },
+    {
+      "name": "TransparentBackground",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the background transparency is enabled for texts.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ed3a67de-497b-1171-945e-724c3126eb86"
+    },
+    {
+      "name": "UseWordWrapping",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether to [use word wrapping].",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0b592c9e-52ed-cd56-d462-4e2d40a241bd"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,61 @@
+{
+  "name": "DateTimeConstantFilterExpression",
+  "namespace": "Tekla.Structures.Filtering",
+  "kind": "class",
+  "summary": "The DateTimeConstantFilterExpression class represents a constant DateTime filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/3f04e5be-a631-37df-c552-5e1ce8c0dd5c",
+  "constructors": [
+    {
+      "name": "DateTimeConstantFilterExpression",
+      "signature": "DateTimeConstantFilterExpression(...)",
+      "summary": "Initializes a new instance of the DateTimeConstantFilterExpression class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/235208e5-6d3d-dbb3-090a-f2d57235daea"
+    },
+    {
+      "name": "DateTimeConstantFilterExpression",
+      "signature": "DateTimeConstantFilterExpression(...)",
+      "summary": "Initializes a new instance of the DateTimeConstantFilterExpression class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/541bc28c-eb8f-7790-bfce-b585e400f1f7"
+    },
+    {
+      "name": "DateTimeConstantFilterExpression",
+      "signature": "DateTimeConstantFilterExpression(...)",
+      "summary": "Initializes a new instance of the DateTimeConstantFilterExpression class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/af59f30f-3e3a-c8d6-087b-94926252f9d5"
+    },
+    {
+      "name": "DateTimeConstantFilterExpression",
+      "signature": "DateTimeConstantFilterExpression(...)",
+      "summary": "Initializes a new instance of the DateTimeConstantFilterExpression class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4989eac2-057d-5b26-1782-bcd688c6df87"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

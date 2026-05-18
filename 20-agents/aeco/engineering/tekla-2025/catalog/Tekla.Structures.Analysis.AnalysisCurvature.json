@@ -1,0 +1,41 @@
+{
+  "name": "AnalysisCurvature",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisCurvature class contains information related to analysis curvatures.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/b108b86e-c2e8-1ffd-c04b-c142bdc96cd2",
+  "constructors": [
+    {
+      "name": "AnalysisCurvature",
+      "signature": "AnalysisCurvature(...)",
+      "summary": "Initializes a new instance of the AnalysisCurvature class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2870f896-593d-5c75-582b-d70fa9316ae4"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Radius",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The radius of the beam curvature.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/13a26a4b-fc8e-6c2e-c391-e53f564679d0"
+    },
+    {
+      "name": "RadiusDirection",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The radius direction of the beam curvature.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2ec883ab-51d5-ecae-4cb6-47ff463934ed"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

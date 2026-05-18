@@ -1,0 +1,54 @@
+{
+  "name": "RebarSpacing.SpacingType",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "Defines the different spacing types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/9caee5b6-a3fd-09dd-da56-10a049e1f45a",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "UNDEFINED",
+      "value": 0,
+      "summary": "Undefined spacing."
+    },
+    {
+      "name": "EXACT_SPACINGS",
+      "value": 1,
+      "summary": "Explicitly defined exact spacings."
+    },
+    {
+      "name": "NUMBER_BARS",
+      "value": 2,
+      "summary": "Spacing by number of bars."
+    },
+    {
+      "name": "TARGET",
+      "value": 3,
+      "summary": "Spacing by target distance."
+    },
+    {
+      "name": "EXACT_FLEXIBLE_FIRST",
+      "value": 4,
+      "summary": "Exact spacing with flexible first space."
+    },
+    {
+      "name": "EXACT_FLEXIBLE_LAST",
+      "value": 5,
+      "summary": "Exact spacing with flexible last space."
+    },
+    {
+      "name": "EXACT_FLEXIBLE_FIRST_AND_LAST",
+      "value": 6,
+      "summary": "Exact spacing with flexible first and last space."
+    },
+    {
+      "name": "EXACT_FLEXIBLE_MIDDLE",
+      "value": 7,
+      "summary": "Exact spacing with flexible middle space."
+    }
+  ]
+}

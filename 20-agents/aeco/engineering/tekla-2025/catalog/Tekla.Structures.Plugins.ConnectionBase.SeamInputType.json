@@ -1,0 +1,24 @@
+{
+  "name": "ConnectionBase.SeamInputType",
+  "namespace": "Tekla.Structures.Plugins",
+  "kind": "enum",
+  "summary": "Defines the type of the input.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/2603c888-2ddc-b32a-6f25-c65e32d1ff78",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "INPUT_2_POINTS",
+      "value": 1,
+      "summary": "The input is two points. The data is returned as an array list of points."
+    },
+    {
+      "name": "INPUT_POLYGON",
+      "value": 2,
+      "summary": "The input is any number of points (a polygon). The data is returned as an array list of points."
+    }
+  ]
+}

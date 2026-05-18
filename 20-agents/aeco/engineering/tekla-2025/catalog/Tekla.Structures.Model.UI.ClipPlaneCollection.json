@@ -1,0 +1,58 @@
+{
+  "name": "ClipPlaneCollection",
+  "namespace": "Tekla.Structures.Model.UI",
+  "kind": "class",
+  "summary": "The ClipPlaneCollection class handles the collection of the clip planes.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/61f3cae0-4db3-2065-f576-1c27d4d48f26",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CopyTo",
+      "signature": "CopyTo(...)",
+      "summary": "Copies the elements of the ICollection to an Array, starting at a particular Array index.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bd115bad-d53a-1fd5-ba78-1caab791cded"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "GetEnumerator(...)",
+      "summary": "Returns an enumerator that iterates through a collection.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2f45c0e9-3626-4010-87c5-1d4e27fe8506"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the number of elements contained in the ICollection.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fde157af-5a22-4b11-b94a-0d5dad3ae648"
+    },
+    {
+      "name": "IsSynchronized",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets a value indicating whether access to the ICollection is synchronized (thread safe).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6f58d3bb-cddc-2f7e-aac4-f5e68d3396f4"
+    },
+    {
+      "name": "SyncRoot",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets an object that can be used to synchronize access to the ICollection.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/213f416b-8833-2213-9ae1-e1deacb841a5"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

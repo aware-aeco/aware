@@ -1,0 +1,57 @@
+{
+  "name": "RebarHeaderItem",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The RebarHeaderItem class represents an item in the header of the rebar catalog (rebar_database.inp).",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/17d6a044-cf93-4155-dd90-aa924948be95",
+  "constructors": [
+    {
+      "name": "RebarHeaderItem",
+      "signature": "RebarHeaderItem(...)",
+      "summary": "Initializes a new instance of the RebarHeaderItem class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/17fcc858-617d-be0c-c0cf-9c4db7e58301"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9c082ecb-4ad0-80f7-cdf7-f6c47d14d91c"
+    },
+    {
+      "name": "PropertyName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the property name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/37fb4ed3-f903-dd8c-1524-e21955ba23ee"
+    },
+    {
+      "name": "Type",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b21fe774-af9a-af08-3f91-04e7efe61b89"
+    },
+    {
+      "name": "Units",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the units.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/21c889e1-8947-0893-6b52-f0c9dbd86c72"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

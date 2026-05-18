@@ -1,0 +1,43 @@
+{
+  "name": "StructuresDialogArrayAttribute",
+  "namespace": "Tekla.Structures.Dialog",
+  "kind": "class",
+  "summary": "The StructuresDialogArrayAttribute class specifies the attribute name for which the attributed interface will be used as a list item definition. The attributed interface is used to define the structure of the DataGridView items. In other words it defines all the possible DataGridView columns. The interface is bound to the DataGridView by referencing the interface\u0027s attribute name from the DataGridView\u0027s Tag property.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/0f84d991-d0bb-53d0-9345-4cc00a58f738",
+  "constructors": [
+    {
+      "name": "StructuresDialogArrayAttribute",
+      "signature": "StructuresDialogArrayAttribute(...)",
+      "summary": "Initializes a new StructuresDialogArrayAttribute instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ec7df75f-cf20-23f8-8b73-811177aa0ad5"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Returns a string that represents the current StructuresDialogArrayAttribute object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/caeb7abd-abec-fb6a-c19e-36256e304ae0"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AttributeName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the attribute name of the interface.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9de03f35-f635-878b-78b9-bc7375e98e9b"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

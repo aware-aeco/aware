@@ -1,0 +1,69 @@
+{
+  "name": "LineTypes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The LineTypes class defines the possible line types that can be used by the drawing objects.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/d03ed4aa-3509-cc8a-04ef-9b56ae3fab9d",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "Clone(...)",
+      "summary": "Creates a new object that is a copy of the current instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1ed967ac-f07e-0cc1-c3c8-c2dba440dcc8"
+    },
+    {
+      "name": "Custom",
+      "signature": "Custom(...)",
+      "summary": "The Custom line type defines a line that is drawn using one of the custom line types, as specified by the CustomLineTypeName.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/14e7a45f-c8ba-cddd-f71f-768adacfea19"
+    },
+    {
+      "name": "Equals",
+      "signature": "Equals(...)",
+      "summary": "Returns true if the current object and the given object are equal.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b4e0cd18-0e45-28f4-dc2a-4ce9399f142c"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "GetHashCode(...)",
+      "summary": "Returns a hash code for the object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e76f3aa2-80f7-e0a1-47da-d7b8e484fbcf"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/50b5e14f-4a13-4df3-f496-0fe6c740a6af"
+    },
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Returns the LineTypes information as a string.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/33edfbad-ab7c-406a-fec4-5e932e3ea8aa"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

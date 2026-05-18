@@ -1,0 +1,178 @@
+{
+  "name": "Vector",
+  "namespace": "Tekla.Structures.Geometry3d",
+  "kind": "class",
+  "summary": "The Vector class defines a direction and magnitude from the current origin.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/b0d6ce02-e6ee-a703-e1ab-ae8dede8728b",
+  "constructors": [
+    {
+      "name": "Vector",
+      "signature": "Vector(...)",
+      "summary": "Instantiates a zero length vector.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/258de215-819f-1e43-7731-daa962ea0633"
+    },
+    {
+      "name": "Vector",
+      "signature": "Vector(...)",
+      "summary": "Instatiates a new vector with the given point.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1827a0b9-9e45-4a4e-3d8c-0851920dd98d"
+    },
+    {
+      "name": "Vector",
+      "signature": "Vector(...)",
+      "summary": "Instantiates a vector with the given coordinates.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/87408a39-bf21-9e4b-6e54-657376b1026d"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CompareTo",
+      "signature": "CompareTo(...)",
+      "summary": "Compares two points. To use binarysearch somekind of sorting should be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2f202828-05fd-220f-92b1-5b64372a4f7e"
+    },
+    {
+      "name": "Cross(Vector)",
+      "signature": "Cross(Vector)(...)",
+      "summary": "Returns a new cross product vector of the current vector and the given vector.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/71f0684a-6601-0fcd-277d-b3c480c84463"
+    },
+    {
+      "name": "Cross(Vector, Vector)",
+      "signature": "Cross(Vector, Vector)(...)",
+      "summary": "Returns a new cross product vector of the given two vectors.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5212d3aa-0c71-d610-2f74-a107e4fbe503"
+    },
+    {
+      "name": "Dot(Vector)",
+      "signature": "Dot(Vector)(...)",
+      "summary": "Returns a dot product of the current vector and the given vector.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5bf3f7da-a1b6-c2b0-1047-eb52545ea5a3"
+    },
+    {
+      "name": "Dot(Vector, Vector)",
+      "signature": "Dot(Vector, Vector)(...)",
+      "summary": "Returns a dot product of the given two vectors.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c68f1d16-b657-bfec-7779-59fa3745dfef"
+    },
+    {
+      "name": "Equals",
+      "signature": "Equals(...)",
+      "summary": "Returns true if the current object and the given object are equal.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dbca17f2-6730-e2c4-583c-90c74c72e0b0"
+    },
+    {
+      "name": "GetAngleBetween",
+      "signature": "GetAngleBetween(...)",
+      "summary": "Gets the angle (in radians) between the current vector and the given vector.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b55375f9-5252-e2e9-2589-5775e1bd3010"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "GetHashCode(...)",
+      "summary": "Returns a hash code for the point. Notice, in extremely rare cases, you might not get the same hash code for two points even though they are considered equal! This should, however, happen only in extremely rare cases!",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9f84f024-170b-5181-770d-5ed2f56332cd"
+    },
+    {
+      "name": "GetLength",
+      "signature": "GetLength(...)",
+      "summary": "Gets the length (magnitude) of a vector.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/91f7b218-3ef9-3c5e-6123-73dbe4d4b036"
+    },
+    {
+      "name": "GetNormal",
+      "signature": "GetNormal(...)",
+      "summary": "Returns a new normalized equivalent of the current vector.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/63f639b4-79da-d1b8-ec4e-8017837710d6"
+    },
+    {
+      "name": "Normalize.",
+      "signature": "Normalize.(...)",
+      "summary": "Normalizes the vector using the length 1.0 (the length of a unit vector).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/54721df5-3066-b8b0-a27e-1cad586e287a"
+    },
+    {
+      "name": "Normalize(Double)",
+      "signature": "Normalize(Double)(...)",
+      "summary": "Normalizes the vector using the given length.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/816a0090-f142-ebd4-31fd-1cf78d4ddd53"
+    },
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Formats the 3D vector into a string with fixed decimals, in the following way: \u0022(X, Y, Z)\u0022.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/af9ca1e1-e366-d66a-9c2b-24f2ea504c02"
+    },
+    {
+      "name": "Translate",
+      "signature": "Translate(...)",
+      "summary": "Translates the point using the given vector.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7ad7ecb9-acf3-7ed2-f2bc-aa52b99ceae6"
+    },
+    {
+      "name": "Zero",
+      "signature": "Zero(...)",
+      "summary": "Zeros all the members of the point.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9bf63e0c-fe71-40ae-e467-306f0a41f315"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

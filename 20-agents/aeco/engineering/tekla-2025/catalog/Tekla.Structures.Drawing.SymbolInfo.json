@@ -1,0 +1,60 @@
+{
+  "name": "SymbolInfo",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The SymbolInfo class holds symbol information: the symbol file and the symbol index in the symbol file.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/c9fe0d20-c02c-e062-a86e-ee0f3f1beb5a",
+  "constructors": [
+    {
+      "name": "SymbolInfo",
+      "signature": "SymbolInfo(...)",
+      "summary": "Creates a new symbol info instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c2857a80-734d-bee0-664d-69a24cd75ce5"
+    },
+    {
+      "name": "SymbolInfo",
+      "signature": "SymbolInfo(...)",
+      "summary": "Creates a new symbol info instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e34819cb-4777-06dd-5350-5db08ce8f96f"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/93299518-9929-1413-753b-a96c1aa722bc"
+    }
+  ],
+  "properties": [
+    {
+      "name": "SymbolFile",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the symbol file. E.g. \u0022xsteel\u0022.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6865275a-1fb5-1846-6caa-f66c564a5b70"
+    },
+    {
+      "name": "SymbolIndex",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the the symbol index. Throws an ArgumentOutOfRangeException if the symbol index is not in the range from 0 to 255.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/53b90a7a-4160-bd62-210b-7994f450d43c"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

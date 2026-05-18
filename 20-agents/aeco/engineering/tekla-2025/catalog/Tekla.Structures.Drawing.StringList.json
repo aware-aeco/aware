@@ -1,0 +1,169 @@
+{
+  "name": "StringList",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The StringList class defines a type safe string collection.",
+  "base": "System.Collections.CollectionBase",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/a6cf4d7f-3cda-d1ed-79ab-ac5ead707295",
+  "constructors": [
+    {
+      "name": "StringList",
+      "signature": "StringList(...)",
+      "summary": "Creates a new string list instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5216c6d3-56de-cea2-fe3e-463c71bbadeb"
+    },
+    {
+      "name": "StringList",
+      "signature": "StringList(...)",
+      "summary": "Creates a new string list instance with the given capacity.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6273ea53-624c-a29e-5c00-bb3097c1b319"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "Add(...)",
+      "summary": "Adds a new string to the end of the string list.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fc0068a0-ffb4-23a5-8a95-e02ec5836e20"
+    },
+    {
+      "name": "Contains",
+      "signature": "Contains(...)",
+      "summary": "Checks if the string is in the list.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7712ff56-f320-f4d0-6f98-900066e3c931"
+    },
+    {
+      "name": "GetRange",
+      "signature": "GetRange(...)",
+      "summary": "Gets a part of the string list.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/eea5d9d5-8b63-8bb6-ccc6-0231864fd401"
+    },
+    {
+      "name": "IndexOf(String)",
+      "signature": "IndexOf(String)(...)",
+      "summary": "Gets the index of the specified string.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d13aab21-684a-72f7-2c2e-bda2deae6bbe"
+    },
+    {
+      "name": "IndexOf(String, Int32)",
+      "signature": "IndexOf(String, Int32)(...)",
+      "summary": "Gets the index of the specified string between the index to start the search from and the end of the list.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/717ab436-5319-c27c-b63f-65db9a5425a7"
+    },
+    {
+      "name": "IndexOf(String, Int32, Int32)",
+      "signature": "IndexOf(String, Int32, Int32)(...)",
+      "summary": "Gets the index of the specified string between the index to start the search from and startIndex \u002B count.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/87ab9055-6834-3f94-0d08-56a5ed1c1183"
+    },
+    {
+      "name": "Insert",
+      "signature": "Insert(...)",
+      "summary": "Inserts the string to the specified index.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/be01405b-81c0-615a-0ffb-c002f21d4d0a"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/13fa4807-e6f2-2068-254c-6667ca2f9346"
+    },
+    {
+      "name": "LastIndexOf(String)",
+      "signature": "LastIndexOf(String)(...)",
+      "summary": "Searches for the last occurence of the string in the list.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/df56c09b-a83f-109d-cf47-79e93127f7f0"
+    },
+    {
+      "name": "LastIndexOf(String, Int32)",
+      "signature": "LastIndexOf(String, Int32)(...)",
+      "summary": "Searches for the last occurence of the string in the list.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9fc51a21-bcdb-ebb9-c2a9-d93434d5aedf"
+    },
+    {
+      "name": "LastIndexOf(String, Int32, Int32)",
+      "signature": "LastIndexOf(String, Int32, Int32)(...)",
+      "summary": "Searches for the last occurence of the string in the list.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/717161f2-b30e-d521-f960-b3d39925ae92"
+    },
+    {
+      "name": "Remove",
+      "signature": "Remove(...)",
+      "summary": "Removes the first occurence of the string from the list.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/29585d51-29fa-8ec1-51b4-a6d0ccc053b3"
+    },
+    {
+      "name": "RemoveRange",
+      "signature": "RemoveRange(...)",
+      "summary": "Removes a range of items starting from the given index.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/46812b00-070a-9e4a-adf1-e306fe85d657"
+    },
+    {
+      "name": "ToArray",
+      "signature": "ToArray(...)",
+      "summary": "Copies the strings to a string array.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6d363dd2-aa3c-ca8d-bc36-c873fee76eb3"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Item",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the string at the specified index.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bb71bbbc-9db2-d0c5-c35c-0ef1336bcba8"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

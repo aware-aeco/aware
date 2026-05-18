@@ -1,0 +1,54 @@
+{
+  "name": "ReinforcementBase.ReinforcementRepresentationTypes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The available reinforcement representation types. See Tekla Structures help, \u0022Reinforcement appearance\u0022, for more information.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/16b9e0af-60a4-8a44-1cbf-bb7be95cc3dd",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "SingleLine",
+      "value": 1,
+      "summary": "A single line with radiused bends."
+    },
+    {
+      "name": "DoubleLine",
+      "value": 2,
+      "summary": "The outline of a bar with radiused bends."
+    },
+    {
+      "name": "Filled",
+      "value": 3,
+      "summary": "A solid bar with radiused bends."
+    },
+    {
+      "name": "Stick",
+      "value": 4,
+      "summary": "A single line without radiused bends."
+    },
+    {
+      "name": "OutLine",
+      "value": 5,
+      "summary": "Shows the shape of the mesh using an outline rectangle or polygon, and a diagonal line. Only applies to reinforcement meshes."
+    },
+    {
+      "name": "DoubleLineFilledEnds",
+      "value": 6,
+      "summary": "The outline of a bar with radiused bends and filled bar ends."
+    },
+    {
+      "name": "SingleLineFilledEnds",
+      "value": 7,
+      "summary": "A single line with radiused bends and filled bar ends."
+    },
+    {
+      "name": "OutlineIgnoreHoles",
+      "value": 8,
+      "summary": "Shows the shape of the mesh using an outline rectangle or polygon, and a diagonal line. It ignores the holes in the meshes. Only applies to reinforcement meshes."
+    }
+  ]
+}

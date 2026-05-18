@@ -1,0 +1,34 @@
+{
+  "name": "RebarCranking.CrankedLengthTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The cranked length type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/390ab6ef-4ab1-2619-5da5-a82f4bfba90f",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "DIAGONAL_RATIO",
+      "value": 0,
+      "summary": "Diagonal ratio."
+    },
+    {
+      "name": "DIAGONAL_DISTANCE",
+      "value": 1,
+      "summary": "Diagonal distance."
+    },
+    {
+      "name": "HORIZONTAL_RATIO",
+      "value": 2,
+      "summary": "Horizontal ratio."
+    },
+    {
+      "name": "HORIZONTAL_DISTANCE",
+      "value": 3,
+      "summary": "Horizontal distance."
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "name": "FacetedBrepFaceHole",
+  "namespace": "Tekla.Structures.Geometry3d",
+  "kind": "class",
+  "summary": "The FacetedBrepFaceHole class defines a hole on a faceted BREP face. A FacetedBrepFaceHole cannot be instantiated directly. They are managed internally by a FacetedBrepFace. You can look also at the code example for the class FacetedBrepFace to see more examples.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/5e278d3b-6ae3-35bd-fd33-6bb3fac88cfd",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the count;",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/db69d7fe-3a31-1cc6-29a3-909e61ee4bfe"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets a value indicating whether this instance is read only.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/96116211-ffe5-f473-fe7b-966552794de0"
+    },
+    {
+      "name": "VerticeIndexes",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the vertice indexes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/95c7eb7a-9065-71b6-a7b4-cf39e39e5ad4"
+    },
+    {
+      "name": "Vertices",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the vertices.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/61fcd2a2-41ab-585c-d766-84b4296933eb"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

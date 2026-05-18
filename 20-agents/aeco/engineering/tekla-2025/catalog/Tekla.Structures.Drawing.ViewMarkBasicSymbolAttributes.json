@@ -1,0 +1,60 @@
+{
+  "name": "ViewMarkBasicSymbolAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The ViewMarkBasicSymbolAttributes class contains basic attributes for mark symbols.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/b01382aa-3575-dbde-21b4-23bf6c496c8b",
+  "constructors": [
+    {
+      "name": "ViewMarkBasicSymbolAttributes",
+      "signature": "ViewMarkBasicSymbolAttributes(...)",
+      "summary": "Creates a new mark symbol attributes instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e642fbb5-466f-b523-3381-1b41903c4046"
+    },
+    {
+      "name": "ViewMarkBasicSymbolAttributes",
+      "signature": "ViewMarkBasicSymbolAttributes(...)",
+      "summary": "Creates a new mark symbol attributes instance with the given size and shape.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f9d11249-f5d5-6f17-1490-ef2e50efb0da"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c5232b59-b0cc-d2d6-6ba6-26c04856847f"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Shape",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The shape of the mark symbol.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cb7ba4c8-149f-75f8-97ef-6faf5d7c5244"
+    },
+    {
+      "name": "Size",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The size of the mark symbol.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b9a42845-12ca-b7f2-d155-5f71af31cba0"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

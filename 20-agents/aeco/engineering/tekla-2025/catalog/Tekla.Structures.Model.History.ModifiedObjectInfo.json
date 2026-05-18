@@ -1,0 +1,13 @@
+{
+  "name": "ModifiedObjectInfo",
+  "namespace": "Tekla.Structures.Model.History",
+  "kind": "struct",
+  "summary": "Modification info returned by History.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/f6d9a86b-4488-1d50-ad4c-2c74d8a42f75",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

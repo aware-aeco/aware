@@ -1,0 +1,121 @@
+{
+  "name": "LineSegment",
+  "namespace": "Tekla.Structures.Geometry3d",
+  "kind": "class",
+  "summary": "The LineSegment class represents a single finite segment of a line in 3D space. See Line for the implementation of a straight line.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/e075bf75-c88c-4d32-eb59-077962e93594",
+  "constructors": [
+    {
+      "name": "LineSegment",
+      "signature": "LineSegment(...)",
+      "summary": "Instantiates a line segment with both the starting point and the end point zeroed.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/288cba9c-74f8-8f4b-c1eb-c9e3ba79eb51"
+    },
+    {
+      "name": "LineSegment",
+      "signature": "LineSegment(...)",
+      "summary": "Instantiates a line segment with the given points.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5946edeb-7982-dbce-eac3-28ab0478ce44"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "Clone(...)",
+      "summary": "Creates a copy of itself",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c81ac600-994d-2a96-c537-414a626db1ed"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "Equals(Object)(...)",
+      "summary": "Returns true if the objects are equal.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/08148a1d-6e76-8b28-eeae-52e13634094c"
+    },
+    {
+      "name": "Equals(ICurve)",
+      "signature": "Equals(ICurve)(...)",
+      "summary": "Returns true if the other curve is a line segment equal to this",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/77485a19-6d04-fc4e-4cf9-0e369a926157"
+    },
+    {
+      "name": "GetDirectionVector",
+      "signature": "GetDirectionVector(...)",
+      "summary": "Returns a new unit direction vector of a line segment.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7a0004f3-fada-07e1-a7c0-a897501b2a08"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "GetHashCode(...)",
+      "summary": "Returns a hash code for a line segment. Notice, in extremely rare cases, you might not get the same hash code for two line segments even though they are considered equal! This should, however, happen only in extremely rare cases!",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/39347eea-0647-bafb-9893-b512589edf21"
+    },
+    {
+      "name": "Length",
+      "signature": "Length(...)",
+      "summary": "Returns the length of a line segment.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6abe1629-ed9b-50a9-0761-d7d75ee187bc"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EndPoint",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the end point of the line segment",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a3e636ca-e515-aa08-4216-0bf83f2fdd8b"
+    },
+    {
+      "name": "Point1",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the start point of the line segment",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7ac4c182-f7e7-ee35-3702-86c94e027d78"
+    },
+    {
+      "name": "Point2",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the end point of the line segment",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4900e999-a079-cf74-c61c-b8c935671055"
+    },
+    {
+      "name": "StartPoint",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the start point of the line segment",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/81e67604-2845-b9ff-aff2-74e3d5b274a0"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

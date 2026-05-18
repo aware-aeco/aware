@@ -1,0 +1,51 @@
+{
+  "name": "PropertyElement.PropertyElementType.MergedMarkPropertyElementTypes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The MergedMarkPropertyElementTypes class represents the available property element types for merged marks.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/d6a251ce-4150-4159-9c56-e9edf31af3eb",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "BlockPrefix",
+      "signature": "BlockPrefix(...)",
+      "summary": "Returns the block prefix property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4ee576e6-627e-4ef0-0237-96210ab2f571"
+    },
+    {
+      "name": "DistancesBetweenGroups",
+      "signature": "DistancesBetweenGroups(...)",
+      "summary": "Returns the distances between groups property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/abb53463-74f5-2082-f65f-a22b569f8a76"
+    },
+    {
+      "name": "SingleMarkContent",
+      "signature": "SingleMarkContent(...)",
+      "summary": "Returns the single mark content property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d0ce8586-96a1-6fa1-ac45-f19c2d1e0392"
+    },
+    {
+      "name": "SymbolSeparatingBlocksInMarks",
+      "signature": "SymbolSeparatingBlocksInMarks(...)",
+      "summary": "Returns the symbol separating blocks in marks property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ad717bd5-04a5-8531-0633-aafef9ef4aa2"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

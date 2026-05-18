@@ -1,0 +1,114 @@
+{
+  "name": "AnalysisDesignParameterBase",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisDesignParameterBase class contains base information related to analysis design parameters.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/eedee4c6-7724-7b18-f12c-64f2462a82b8",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Modify",
+      "signature": "Modify(...)",
+      "summary": "Modifies an analysis design parameter at the database. Inserts if parameter does not exist.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ba96bb8e-a7b4-4531-8f46-acb145de22d0"
+    },
+    {
+      "name": "Select",
+      "signature": "Select(...)",
+      "summary": "Selects an analysis object from the database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/838ad5fe-ed14-8f58-d432-efd635e6c7ea"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AnalysisModelName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis model name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/820dc60f-92bc-f84c-9b4f-bf71faf2b76a"
+    },
+    {
+      "name": "AnalysisObjectType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2a2631ed-5e7b-7e60-f1d2-52186a5a17c4"
+    },
+    {
+      "name": "FatherObject2ID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3cc2e3ff-3afd-4def-2559-7c1827233bec"
+    },
+    {
+      "name": "FatherObject2Type",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7b5d643a-2a12-5281-7f65-a312171bafcc"
+    },
+    {
+      "name": "FatherObjectID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7e55f4c8-ca1a-2761-edd6-2b69663ff941"
+    },
+    {
+      "name": "FatherObjectType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/739bcea1-858d-70e2-ff0d-9c4928129c3e"
+    },
+    {
+      "name": "ID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/289caef6-9b6e-cd4c-dcbc-6397be2f9de0"
+    },
+    {
+      "name": "IsGeneral",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the design parameter is general.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/49744ae8-1ba6-49de-b508-4c29afa4186a"
+    },
+    {
+      "name": "Name",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name of the analysis design parameter.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/573036a1-105c-02e8-a7bf-711d1f41476a"
+    },
+    {
+      "name": "Unit",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the unit of the analysis design parameter.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f70ac0ea-558b-84ad-d34e-710ae1a4f6d3"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

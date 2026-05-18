@@ -1,0 +1,113 @@
+{
+  "name": "AnalysisCompositeBeam",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisCompositeBeam class contains information related to analysis composite beams.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/0841f981-87ab-b1ee-55e4-2ad372f7a37e",
+  "constructors": [
+    {
+      "name": "AnalysisCompositeBeam",
+      "signature": "AnalysisCompositeBeam(...)",
+      "summary": "Initializes a new instance of the AnalysisCompositeBeam class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/06102a2b-cca8-2f4b-ecd1-882e31151667"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Composite",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the beam is composite.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b49deeb9-40f9-cd16-653b-c4402fd1c005"
+    },
+    {
+      "name": "ConcreteStrength",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The strength of the concrete of the analysis composite beam.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4159729e-3f02-4f31-3f8b-b1c2555e0e45"
+    },
+    {
+      "name": "RibDirection",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The direction of the rib of the analysis composite beam (in the global coordinate system).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/455fee4d-6b41-9dce-dc0b-2e5d8300fd02"
+    },
+    {
+      "name": "RibHeight",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The height of the rib of the analysis composite beam.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e988dc62-ccca-667f-e6e5-3b3b7216c674"
+    },
+    {
+      "name": "RibWidth",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The width of the rib of the analysis composite beam.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bd7b9975-0e7b-6157-f1d1-f688e4d82fcf"
+    },
+    {
+      "name": "SlabMaterial",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The slab material of the analysis composite beam.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bd030c96-d46f-ad31-7b8c-d535eb5acf4e"
+    },
+    {
+      "name": "SlabThickness",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The thickness of the slab of the analysis composite beam.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c6c37ee8-0b1f-d9f1-9776-114984071928"
+    },
+    {
+      "name": "SlabWidthLeft",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The left width of the slab of the analysis composite beam.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/eadf2d45-92f8-8966-19e9-b5016eee3834"
+    },
+    {
+      "name": "SlabWidthRight",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The right width of the slab of the analysis composite beam.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ded844ec-7bc7-bcce-0def-b12640b63931"
+    },
+    {
+      "name": "StudDiameter",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The diameter of the stud of the analysis composite beam.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cff2e4b0-e73c-d9d9-d44a-8db92b8797fa"
+    },
+    {
+      "name": "StudLength",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The length of the stud of the analysis composite beam.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ddcb7003-138f-7548-b8d9-160e13e378b7"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

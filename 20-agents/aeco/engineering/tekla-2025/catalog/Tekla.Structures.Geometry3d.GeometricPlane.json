@@ -1,0 +1,78 @@
+{
+  "name": "GeometricPlane",
+  "namespace": "Tekla.Structures.Geometry3d",
+  "kind": "class",
+  "summary": "The GeometricPlane class represents a 3d geometric plane.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/cfcb353e-74cf-bffb-3b89-9b22f9d5e2e4",
+  "constructors": [
+    {
+      "name": "GeometricPlane",
+      "signature": "GeometricPlane(...)",
+      "summary": "Instantiates an XY-plane with the origin at (0,0,0).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/68219778-db02-bba3-d8b4-c639a0e84528"
+    },
+    {
+      "name": "GeometricPlane",
+      "signature": "GeometricPlane(...)",
+      "summary": "Instantiates a plane defined by the given coordinate system.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8fc2061f-88af-4f7a-700e-82b208d463aa"
+    },
+    {
+      "name": "GeometricPlane",
+      "signature": "GeometricPlane(...)",
+      "summary": "Instantiates a plane defined by the given origin point and normal vector.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/eb8134d9-731a-4efb-ec8e-2c1400d0b5a8"
+    },
+    {
+      "name": "GeometricPlane",
+      "signature": "GeometricPlane(...)",
+      "summary": "Instantiates a plane defined by the given origin, X-axis vector and Y-axis vector.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3050d844-f011-429c-7570-9b07cf9d8af4"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetNormal",
+      "signature": "GetNormal(...)",
+      "summary": "Returns a normalized normal vector of the plane.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0d4be4d7-ed58-feb0-756c-76428dd49e0d"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Normal",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The normal vector of the plane.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/78b3578b-212a-a807-c3c2-a125d450e050"
+    },
+    {
+      "name": "Origin",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The origin point of the plane.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/21075e78-07ec-da42-7113-06fc19e3c38d"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

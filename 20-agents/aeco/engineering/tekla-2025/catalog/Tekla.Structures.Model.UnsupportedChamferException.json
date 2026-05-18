@@ -1,0 +1,24 @@
+{
+  "name": "UnsupportedChamferException",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The UnsupportedChamferException class represents an error when, plates containing unsupported chamfer information.",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/7ab3fa5a-0958-525d-91a2-87eaf92f798d",
+  "constructors": [
+    {
+      "name": "UnsupportedChamferException",
+      "signature": "UnsupportedChamferException(...)",
+      "summary": "Initializes a new instance of the UnsupportedChamferException class with \u0022Plates containing unsupported chamfer information\u0022 error message.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/374d6ad1-d829-aedd-407b-22c16038d78a"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

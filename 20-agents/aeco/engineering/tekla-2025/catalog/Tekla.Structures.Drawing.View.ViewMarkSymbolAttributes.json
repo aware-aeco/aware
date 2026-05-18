@@ -1,0 +1,76 @@
+{
+  "name": "View.ViewMarkSymbolAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The ViewMarkSymbolAttributes class contains symbol attributes for view mark tags.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/2db7869f-e77d-a9a1-c2fa-f1f737208f33",
+  "constructors": [
+    {
+      "name": "View.ViewMarkSymbolAttributes",
+      "signature": "View.ViewMarkSymbolAttributes(...)",
+      "summary": "Creates a new mark symbol attributes instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a6544726-bfa5-70d5-ec2e-9d534a31b373"
+    },
+    {
+      "name": "View.ViewMarkSymbolAttributes",
+      "signature": "View.ViewMarkSymbolAttributes(...)",
+      "summary": "Creates a new mark symbol attributes instance with the given size, shape, line length type and line length.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/269cb718-a447-8a68-f805-b0594b68e211"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/55a27e06-da69-f6ab-6337-1b71216f247d"
+    }
+  ],
+  "properties": [
+    {
+      "name": "LineLength",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The label line length in the case of custom length.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a402f245-6d2e-fe3a-8f5c-ef43da10fdc4"
+    },
+    {
+      "name": "LineLengthType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The label line length type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/070b8c00-2e3a-9ad8-4ede-86451867d018"
+    },
+    {
+      "name": "Shape",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The shape of the mark symbol.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cb7ba4c8-149f-75f8-97ef-6faf5d7c5244"
+    },
+    {
+      "name": "Size",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The size of the mark symbol.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b9a42845-12ca-b7f2-d155-5f71af31cba0"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

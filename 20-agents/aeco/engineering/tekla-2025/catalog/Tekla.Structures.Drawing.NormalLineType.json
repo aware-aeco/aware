@@ -1,0 +1,60 @@
+{
+  "name": "NormalLineType",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The NormalLineType class defines the non-custom line types that can be used by the drawing objects.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/c9aca42d-ba9e-3f0b-6a12-e49e2ea9ab3d",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "Clone(...)",
+      "summary": "Creates a new object that is a copy of the current instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/21c01554-a250-befd-9455-5c733dfb448c"
+    },
+    {
+      "name": "Equals",
+      "signature": "Equals(...)",
+      "summary": "Returns true if the current object and the given object are equal.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/aa24fb70-37d2-a1f5-f78c-cca72c8e38bd"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "GetHashCode(...)",
+      "summary": "Returns a hash code for the object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9f419242-f76c-753a-bab8-8ca3145178ab"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/89683344-0ce4-1b8c-1dd2-0122a8d8d67c"
+    },
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Returns the LineTypes information as a string.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/33edfbad-ab7c-406a-fec4-5e932e3ea8aa"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

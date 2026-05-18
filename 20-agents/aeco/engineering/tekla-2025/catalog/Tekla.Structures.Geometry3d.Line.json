@@ -1,0 +1,68 @@
+{
+  "name": "Line",
+  "namespace": "Tekla.Structures.Geometry3d",
+  "kind": "class",
+  "summary": "The Line class represents a single infinite line in 3D space. See LineSegment for the implementation of a segment of a line.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/abc6b564-46d8-8c73-982a-a898f4337cc2",
+  "constructors": [
+    {
+      "name": "Line",
+      "signature": "Line(...)",
+      "summary": "Instantiates a line with an undefined direction.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8cd820e9-a717-89dc-2431-115170ee8252"
+    },
+    {
+      "name": "Line",
+      "signature": "Line(...)",
+      "summary": "Instantiates a line defined by the given line segment.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6879ce85-1277-bcc3-cb12-8ff8678193df"
+    },
+    {
+      "name": "Line",
+      "signature": "Line(...)",
+      "summary": "Instantiates a line defined by the given points.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b5ff1655-2aad-508c-c415-d4149a0c84f6"
+    },
+    {
+      "name": "Line",
+      "signature": "Line(...)",
+      "summary": "Instantiates a line defined by the given point and direction vector.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/98323580-85af-a06f-8ba7-638d0d2a644a"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Direction",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The direction vector of the line.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/37db5e9f-ecf8-d861-da47-d9df0fbdc9f6"
+    },
+    {
+      "name": "Origin",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The origin of the line.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e82fbff0-b644-fb68-2cbc-779c5a0d69da"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

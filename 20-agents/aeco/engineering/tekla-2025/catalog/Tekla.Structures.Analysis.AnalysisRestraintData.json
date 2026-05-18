@@ -1,0 +1,145 @@
+{
+  "name": "AnalysisRestraintData",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisRestraintData class contains the restraint data for an analysis part.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/3d4a69be-8813-ff6a-3d3b-9489ea90bd39",
+  "constructors": [
+    {
+      "name": "AnalysisRestraintData",
+      "signature": "AnalysisRestraintData(...)",
+      "summary": "Creates a new instance of an analysis restraint data.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5a65503b-2889-7640-cdcf-d8dc11c6cffd"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "LocalCoordinateSystem",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The local coordinate system.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2c5efbec-00d6-2b21-fada-ecfeac4cc93a"
+    },
+    {
+      "name": "ReleaseType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The release type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/acba67fd-96e3-0cf8-9341-49bf2de0b953"
+    },
+    {
+      "name": "RxSpring",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The rotation in the X-axis direction (Nmm/rad).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a06f6d4b-7512-9a52-2756-642d4c5f2211"
+    },
+    {
+      "name": "RxType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The restraint type for the rotation in the X-axis direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/78834b5d-aab0-7e78-2d66-faf17c8d54bb"
+    },
+    {
+      "name": "RySpring",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The rotation in the Y-axis direction (Nmm/rad).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f912f3d1-d78a-31e4-7c1d-cfb00c851c53"
+    },
+    {
+      "name": "RyType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The restraint type for the rotation in the Y-axis direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/417f5a2a-1a88-5d73-b73e-70520e3e0776"
+    },
+    {
+      "name": "RzSpring",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The rotation in the Z-axis direction (Nmm/rad).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2fc65925-8758-44c6-9bcd-7c85005ff649"
+    },
+    {
+      "name": "RzType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The restraint type for the rotation in the Z-axis direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/022b91c1-d098-8424-7bee-4fd531a8b5bc"
+    },
+    {
+      "name": "Supported",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The support condition.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f30163a1-666d-48dd-03fd-7cd71803ca8a"
+    },
+    {
+      "name": "UxSpring",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The displacement in the X-axis direction (N/mm).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/591ab526-7b5e-9a48-13de-f3c4f4c5c668"
+    },
+    {
+      "name": "UxType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The restraint type for the displacement in the X-axis direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2c511025-1969-46cd-d2a7-6c8ec709adba"
+    },
+    {
+      "name": "UySpring",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The displacement in the Y-axis direction (N/mm).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/950b8584-6b7c-9a8a-3982-1419053fb306"
+    },
+    {
+      "name": "UyType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The restraint type for the displacement in the Y-axis direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/240b9647-68ad-e4fd-f174-0769b9147bc2"
+    },
+    {
+      "name": "UzSpring",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The displacement in the Z-axis direction (N/mm).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5f75297e-f4d5-1bf0-062e-e00af5f3cbd5"
+    },
+    {
+      "name": "UzType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The restraint type for the displacement in the Z-axis direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f40b0a6b-bc8f-126c-cb0c-c1f1047d44ad"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

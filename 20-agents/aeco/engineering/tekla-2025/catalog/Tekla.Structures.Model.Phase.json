@@ -1,0 +1,166 @@
+{
+  "name": "Phase",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The Phase class defines a model object phase.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/2d4746c9-dc38-07d8-c644-b450af02d77d",
+  "constructors": [
+    {
+      "name": "Phase",
+      "signature": "Phase(...)",
+      "summary": "Instantiates a new phase with the phase number 0.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c76d3958-23ff-8663-e97b-d9e4bb93fb18"
+    },
+    {
+      "name": "Phase",
+      "signature": "Phase(...)",
+      "summary": "Instantiates a new phase with the given phase number.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1344d189-4729-3984-4cd2-7155e9be62f1"
+    },
+    {
+      "name": "Phase",
+      "signature": "Phase(...)",
+      "summary": "Instantiates a new phase with the given parameters.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/70da8fdf-5c15-5203-0274-c40564d23d17"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Delete",
+      "signature": "Delete(...)",
+      "summary": "Deletes a phase. The current phase cannot be deleted.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/908ebf19-ac2e-5ea5-089d-8729f93c2569"
+    },
+    {
+      "name": "GetUserProperty(String, Double.)",
+      "signature": "GetUserProperty(String, Double.)(...)",
+      "summary": "Retrieves a double property for the phase.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/88f635f5-af5a-f8de-142d-1f5aafe13cda"
+    },
+    {
+      "name": "GetUserProperty(String, Int32.)",
+      "signature": "GetUserProperty(String, Int32.)(...)",
+      "summary": "Retrieves an integer property for the phase.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1637afd3-9740-d429-3636-4c665df77bd1"
+    },
+    {
+      "name": "GetUserProperty(String, String.)",
+      "signature": "GetUserProperty(String, String.)(...)",
+      "summary": "Retrieves a string property for the phase.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3e94df7a-eb8d-986c-afd6-dd42c8d5cf16"
+    },
+    {
+      "name": "Insert",
+      "signature": "Insert(...)",
+      "summary": "Creates a new phase.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3016a6b5-374c-abdc-a3c2-936850c22d67"
+    },
+    {
+      "name": "Modify",
+      "signature": "Modify(...)",
+      "summary": "Modifies a phase.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1ca533f6-1cc6-47bb-9537-4812b55e976d"
+    },
+    {
+      "name": "Select",
+      "signature": "Select(...)",
+      "summary": "Selects a phase.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d107679d-0cab-291b-450e-82917ee51d77"
+    },
+    {
+      "name": "SetUserProperty(String, Double)",
+      "signature": "SetUserProperty(String, Double)(...)",
+      "summary": "Sets a double property for the phase.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1b34bb94-be9d-b762-c6aa-c07f23a9aafe"
+    },
+    {
+      "name": "SetUserProperty(String, Int32)",
+      "signature": "SetUserProperty(String, Int32)(...)",
+      "summary": "Sets an integer property for the phase.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0fdc9fd6-07ce-feb9-4448-91f3279ec822"
+    },
+    {
+      "name": "SetUserProperty(String, String)",
+      "signature": "SetUserProperty(String, String)(...)",
+      "summary": "Sets a string property for the phase.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b6766490-3722-2bce-5ed3-f7c91182df8e"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsCurrentPhase",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The value is 1 if the phase is the current phase, 0 otherwise.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a59a8692-109a-04c4-6ef6-662146779677"
+    },
+    {
+      "name": "PhaseComment",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The phase comment.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3bce3d48-4395-5905-5854-1510937198e8"
+    },
+    {
+      "name": "PhaseName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The phase name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b474b01a-d2ec-c86f-57fc-9098ff730a9c"
+    },
+    {
+      "name": "PhaseNumber",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The phase number.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9ae5e24a-f604-cc59-caae-fd49c2e3c32b"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

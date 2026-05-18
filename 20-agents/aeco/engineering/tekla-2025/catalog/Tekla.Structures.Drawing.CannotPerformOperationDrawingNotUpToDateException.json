@@ -1,0 +1,24 @@
+{
+  "name": "CannotPerformOperationDrawingNotUpToDateException",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The CannotPerformOperationDrawingNotUpToDateException class defines the exception that is thrown when a user tries to do an operation which requires that the drawing is active.",
+  "base": "System.ApplicationException",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/8b0e3916-a1a7-38fe-717e-487e8997f1b7",
+  "constructors": [
+    {
+      "name": "CannotPerformOperationDrawingNotUpToDateException",
+      "signature": "CannotPerformOperationDrawingNotUpToDateException(...)",
+      "summary": "Creates a new cannot perform operation drawing not up to date exception instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/28341f63-9e49-699a-fccc-29843f8899e0"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

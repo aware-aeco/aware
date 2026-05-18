@@ -1,0 +1,24 @@
+{
+  "name": "PlacingBase",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PlacingBase class is the base class for placing types. If you set a user defined Placing to an object it will override the PreferredPlacingType set in the object\u0027s attributes. Please note that not all objects accept all types. If you try to use the wrong type it will not be accepted (Insert, Modify will fail). (It is strongly recommended to use the PreferredPlacingTypes to assign new Placings to objects.)",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/cef90e8e-aad5-4ce3-8efe-9d223a56b4e1",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/15f0b136-8c99-9174-4b69-90dcd3963d00"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

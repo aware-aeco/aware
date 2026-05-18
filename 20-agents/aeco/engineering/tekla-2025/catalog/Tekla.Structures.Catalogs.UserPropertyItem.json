@@ -1,0 +1,307 @@
+{
+  "name": "UserPropertyItem",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The UserPropertyItem class contains information about the user properties in the Tekla Structures catalog.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/1b99d080-81f2-5aed-63b2-9408018e79e4",
+  "constructors": [
+    {
+      "name": "UserPropertyItem",
+      "signature": "UserPropertyItem(...)",
+      "summary": "Creates a new user property item instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4159e4ec-53ea-1507-ff7c-0faa843ac973"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddToObjectType",
+      "signature": "AddToObjectType(...)",
+      "summary": "Adds the user property item to the given object type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7be988f0-9fd3-7d16-6e38-f65d98b7c422"
+    },
+    {
+      "name": "Delete",
+      "signature": "Delete(...)",
+      "summary": "Deletes the user property item from the database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ae8ea363-5ba4-8dd1-9047-a0ac98d4eb4f"
+    },
+    {
+      "name": "GetDefaultValue(Double.)",
+      "signature": "GetDefaultValue(Double.)(...)",
+      "summary": "Gets the default value of a double property.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0d6f5378-603f-d5b6-5023-b2117b19ed7a"
+    },
+    {
+      "name": "GetDefaultValue(Int32.)",
+      "signature": "GetDefaultValue(Int32.)(...)",
+      "summary": "Gets the default value of an integer property.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4ce40f2a-3bdd-a3e2-383f-ba34d0890923"
+    },
+    {
+      "name": "GetDefaultValue(String.)",
+      "signature": "GetDefaultValue(String.)(...)",
+      "summary": "Gets the default value of a string property.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9aee87ff-94be-8506-3db5-025c3ffee451"
+    },
+    {
+      "name": "GetLabel.",
+      "signature": "GetLabel.(...)",
+      "summary": "Gets the label of the user property. Labels are translated when translation is available.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/03fdb5ab-ce53-fbda-e9e7-18f22fde4481"
+    },
+    {
+      "name": "GetLabel(Boolean)",
+      "signature": "GetLabel(Boolean)(...)",
+      "summary": "Gets the label of the user property.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/18841e46-86a4-0941-eb7d-1bdd69976904"
+    },
+    {
+      "name": "GetObjectTypes",
+      "signature": "GetObjectTypes(...)",
+      "summary": "Gets the object types which contain this user property item.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dc091818-71be-e6e4-b292-73185fafeedc"
+    },
+    {
+      "name": "GetOptions(List.KeyValuePair.Double, String...)",
+      "signature": "GetOptions(List.KeyValuePair.Double, String...)(...)",
+      "summary": "Gets the value options of a double property. Option strings are translated when translation is available.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/508fd0e9-fe08-eb93-fedd-4f3b52e073b2"
+    },
+    {
+      "name": "GetOptions(List.KeyValuePair.Int32, String...)",
+      "signature": "GetOptions(List.KeyValuePair.Int32, String...)(...)",
+      "summary": "Gets the value options of an integer property. Option strings are translated when translation is available.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/00d0baf4-c0ce-d26e-d037-f0c342d92103"
+    },
+    {
+      "name": "GetOptions(List.KeyValuePair.String, String...)",
+      "signature": "GetOptions(List.KeyValuePair.String, String...)(...)",
+      "summary": "Gets the value options of a string property. Option strings are translated when translation is available.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a4c8794d-754a-accd-a966-e934fcdc7514"
+    },
+    {
+      "name": "GetOptions(List.KeyValuePair.Double, String..., Boolean)",
+      "signature": "GetOptions(List.KeyValuePair.Double, String..., Boolean)(...)",
+      "summary": "Gets the value options of a double property.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4f65183f-06de-d81c-48a9-ec1d346fc50d"
+    },
+    {
+      "name": "GetOptions(List.KeyValuePair.Int32, String..., Boolean)",
+      "signature": "GetOptions(List.KeyValuePair.Int32, String..., Boolean)(...)",
+      "summary": "Gets the value options of an integer property.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a9d61eee-15e4-687e-5ddf-1983dcc071ce"
+    },
+    {
+      "name": "GetOptions(List.KeyValuePair.String, String..., Boolean)",
+      "signature": "GetOptions(List.KeyValuePair.String, String..., Boolean)(...)",
+      "summary": "Gets the value options of a string property.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c19871a3-e7e9-1974-1174-e27b24e8a5cc"
+    },
+    {
+      "name": "Insert",
+      "signature": "Insert(...)",
+      "summary": "Inserts the user property item to the database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/47df9e60-ef7a-23f0-6e08-fd85a21b2be6"
+    },
+    {
+      "name": "Modify",
+      "signature": "Modify(...)",
+      "summary": "Modifies the user property item.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/44b393b8-36cb-4d17-b620-6e58d7fa3419"
+    },
+    {
+      "name": "RemoveFromObjectType",
+      "signature": "RemoveFromObjectType(...)",
+      "summary": "Removes the user property item from the given object type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fb4c83dc-103a-28f3-5acf-402ef8bd8f92"
+    },
+    {
+      "name": "Select",
+      "signature": "Select(...)",
+      "summary": "Selects by name the user property item from the database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6f324d5f-053a-8901-67f1-51e882ed9def"
+    },
+    {
+      "name": "SetDefaultValue(Double)",
+      "signature": "SetDefaultValue(Double)(...)",
+      "summary": "Sets the default value of a double property.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6270ebb7-1318-06d1-2bbc-efd908962c13"
+    },
+    {
+      "name": "SetDefaultValue(Int32)",
+      "signature": "SetDefaultValue(Int32)(...)",
+      "summary": "Sets the default value of an integer property.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5165d6f9-44d7-840d-61df-ff0f976b27ea"
+    },
+    {
+      "name": "SetDefaultValue(String)",
+      "signature": "SetDefaultValue(String)(...)",
+      "summary": "Sets the default value of a string property.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/758fac4e-2e53-6483-86fc-57ebf8a819ad"
+    },
+    {
+      "name": "SetLabel",
+      "signature": "SetLabel(...)",
+      "summary": "Sets the label of the user property.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/682151bd-ed6f-08dc-c84d-d0f91bb708a7"
+    },
+    {
+      "name": "SetOptions(List.KeyValuePair.Double, String..)",
+      "signature": "SetOptions(List.KeyValuePair.Double, String..)(...)",
+      "summary": "Sets the value options of a double property. The maximum count of options is 400.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/20d1c30f-74a1-995d-9972-fb0907950eab"
+    },
+    {
+      "name": "SetOptions(List.KeyValuePair.Int32, String..)",
+      "signature": "SetOptions(List.KeyValuePair.Int32, String..)(...)",
+      "summary": "Sets the value options of an integer property. The maximum count of options is 400.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d27524ad-3dad-136a-19b7-fb462072afda"
+    },
+    {
+      "name": "SetOptions(List.KeyValuePair.String, String..)",
+      "signature": "SetOptions(List.KeyValuePair.String, String..)(...)",
+      "summary": "Sets the value options of a string property. The maximum count of options is 400.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3004f766-2f4e-9a7b-3561-2b5030fadb0a"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AffectsNumbering",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the property value affects the numbering of objects.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f6c967b5-c088-98ae-4f0d-56e09096828d"
+    },
+    {
+      "name": "FieldType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The field type of the user property.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4cb141d4-3cbc-1634-82ca-1a25ba1d3be9"
+    },
+    {
+      "name": "Level",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The level at which the user property has been defined.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/058ba780-a8d8-bb9d-85ae-9f7fe10f472b"
+    },
+    {
+      "name": "Name",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The name of the user property.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/39fc11e8-f3d3-3506-2afa-6357b6cb1da8"
+    },
+    {
+      "name": "Type",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The type of the user property.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/be8e6cfc-3c00-2817-cff4-c0d25bb9fa1b"
+    },
+    {
+      "name": "Unique",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the property value is copied when the object is copied.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4cf4699b-b676-71b4-af5c-c4847e952613"
+    },
+    {
+      "name": "Visibility",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the property value is visible/editable.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/697f7712-139a-101a-d4b7-e230192eb91d"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

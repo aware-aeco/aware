@@ -1,0 +1,52 @@
+{
+  "name": "TemplateInfo",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The TemplateInfo class holds template information.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/874545f9-0b80-904b-71b8-5a002ac6fcd8",
+  "constructors": [
+    {
+      "name": "TemplateInfo",
+      "signature": "TemplateInfo(...)",
+      "summary": "Creates a new template info instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c36eaaae-1f1e-0fa9-31c2-fc47d59f445c"
+    },
+    {
+      "name": "TemplateInfo",
+      "signature": "TemplateInfo(...)",
+      "summary": "Creates a new template info instance with the given template file name.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6a77025c-1898-05dd-7305-9b0d6ed2edcf"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bd278648-b27d-782e-56a4-9a48782ae669"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name of the template file. E.g. \u0022revision\u0022.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/667c57d9-3a9d-21b1-a6ce-8baf6e74e6ef"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,14 @@
+{
+  "name": "CatalogItemEnumeratorInitializationException",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The CatalogItemEnumeratorInitializationException class represents an error that occurred during the catalog item enumerator initialization. This class cannot be inherited.",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/17d12340-b3ce-add9-a3e8-10911fbc6b86",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,101 @@
+{
+  "name": "Bolt.BoltAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The BoltAttributes class is the attributes class for the bolt.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/7edfee41-9b01-8791-1650-e4b2e91a169b",
+  "constructors": [
+    {
+      "name": "Bolt.BoltAttributes",
+      "signature": "Bolt.BoltAttributes(...)",
+      "summary": "Creates a new default bolt attributes instance that loads standard attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/542701da-0bbe-cb75-0c28-5aa0e10e4948"
+    },
+    {
+      "name": "Bolt.BoltAttributes",
+      "signature": "Bolt.BoltAttributes(...)",
+      "summary": "Creates a new bolt attributes instance that loads the specified attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2b963373-96fe-21d5-e914-56f7fab9655c"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/54817577-3916-4204-aee7-4746a827260f"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "LoadAttributes(...)",
+      "summary": "Loads the attributes from the attribute file.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/544b8092-9dc3-ef98-1b98-6c8c619f4714"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Color",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The color of the bolt.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5c0cb05c-1be0-ab95-91c0-2f883309a178"
+    },
+    {
+      "name": "CustomPresentation",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Custom presentation GUID to be applied to the bolt",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f4b99547-ad70-ec8b-71ca-fc5f08cb1e96"
+    },
+    {
+      "name": "Representation",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The representation type of the bolt.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/271c934c-0ec8-5f75-03a7-4678b1f44656"
+    },
+    {
+      "name": "SymbolContainsAxis",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "True if the bolt symbol contains an axis.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9715fe7b-79bd-d6a4-a1d5-46c81996daeb"
+    },
+    {
+      "name": "SymbolContainsHole",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "True if the bolt symbol contains a hole.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/84dc92c0-7b8a-ec4d-01b3-3e2cc16cee22"
+    },
+    {
+      "name": "TrueColor",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The true color (RGB enabled) of the bolt.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4568ca51-ab8a-2ee9-9c5c-31614e3d638c"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

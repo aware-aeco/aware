@@ -1,0 +1,41 @@
+{
+  "name": "IPlacing",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "interface",
+  "summary": "The IPlacing interface is for objects that can have different placings.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/560a76d0-1e87-ff6f-4905-ed9bfb167eb8",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetObjects.",
+      "signature": "GetObjects.(...)",
+      "summary": "Gets the children of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e548034d-415e-3fc3-844f-780bc5d2e7c2"
+    },
+    {
+      "name": "GetObjects(.Type.)",
+      "signature": "GetObjects(.Type.)(...)",
+      "summary": "Gets the children of the current object that are of certain types.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7b2c4ae3-77ab-3ff9-2e07-a39e04badc8f"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Placing",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The current placing of the object. See PlacingTypes for different placing options.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c51eee6c-7542-f6fb-6350-0e611863ecf8"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

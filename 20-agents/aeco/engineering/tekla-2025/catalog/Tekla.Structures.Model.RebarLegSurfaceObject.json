@@ -1,0 +1,437 @@
+{
+  "name": "RebarLegSurfaceObject",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The RebarLegSurfaceObject class represents a polymesh surface for generating rebar legs in a RebarSet.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/091450f3-68ea-a337-38cd-1b32ff9c2a00",
+  "constructors": [
+    {
+      "name": "RebarLegSurfaceObject",
+      "signature": "RebarLegSurfaceObject(...)",
+      "summary": "Initializes a new instance of the RebarLegSurfaceObject class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ce74e88a-8553-8e7d-b00c-c68f18eca33d"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CompareTo",
+      "signature": "CompareTo(...)",
+      "summary": "Compares Identifiers of model objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/79cca356-0c8a-e8fb-463a-34ad4141bec7"
+    },
+    {
+      "name": "Delete",
+      "signature": "Delete(...)",
+      "summary": "Deletes the model object from the model database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/67b92503-1679-fcb5-036a-503a581495a5"
+    },
+    {
+      "name": "Equals",
+      "signature": "Equals(...)",
+      "summary": "Check if Identifiers of model objects are same.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e4324265-2490-00de-4139-63a8f7acb492"
+    },
+    {
+      "name": "GetAllReportProperties",
+      "signature": "GetAllReportProperties(...)",
+      "summary": "Retrieves all properties for the model object in one hashtable. Type for the returned value must be checked using type casting.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0708f404-ce77-28e1-4ebe-fa906f68bff8"
+    },
+    {
+      "name": "GetAllUserProperties",
+      "signature": "GetAllUserProperties(...)",
+      "summary": "Retrieves all properties for the model object in one hashtable. Type for the returned value must be checked using type casting.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/63b853a0-0af5-af9c-3ce7-05299664d7f8"
+    },
+    {
+      "name": "GetChildren",
+      "signature": "GetChildren(...)",
+      "summary": "Returns an enumerator of all the children model objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ce51ec40-310c-6067-a89f-f8d029aab747"
+    },
+    {
+      "name": "GetCoordinateSystem",
+      "signature": "GetCoordinateSystem(...)",
+      "summary": "Returns the coordinate system for the given model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8adfe9cd-f6e5-6474-1297-33c6270a7b0a"
+    },
+    {
+      "name": "GetCustomObjectType",
+      "signature": "GetCustomObjectType(...)",
+      "summary": "Gets custom object type name from an existing object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d3be2ba3-8533-7165-f2d3-a5aa9df556b8"
+    },
+    {
+      "name": "GetDoubleReportProperties",
+      "signature": "GetDoubleReportProperties(...)",
+      "summary": "Retrieves multiple double report properties for the model object. It is faster to fetch multiple properties at once.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f86f6c96-f738-49ca-16ba-f5634e862ba2"
+    },
+    {
+      "name": "GetDoubleUserProperties",
+      "signature": "GetDoubleUserProperties(...)",
+      "summary": "Retrieves all double properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6ead7a63-5f76-0631-d480-d46c27e882aa"
+    },
+    {
+      "name": "GetDynamicStringProperty",
+      "signature": "GetDynamicStringProperty(...)",
+      "summary": "Gets a dynamic string property from the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/415e86d9-7de6-ea53-ce68-20b3e67b8655"
+    },
+    {
+      "name": "GetFatherComponent",
+      "signature": "GetFatherComponent(...)",
+      "summary": "Returns the father component of the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a2c28f3f-52ff-50a8-1b32-10d18db5c31d"
+    },
+    {
+      "name": "GetHierarchicObjects",
+      "signature": "GetHierarchicObjects(...)",
+      "summary": "Returns an enumerator of all the connected hierarchic objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cc228ea0-267b-7d90-7441-c9efc1779b08"
+    },
+    {
+      "name": "GetIntegerReportProperties",
+      "signature": "GetIntegerReportProperties(...)",
+      "summary": "Retrieves multiple integer report properties for the model object. It is faster to fetch multiple properties at once.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2623a9c0-2a9c-e233-9daa-59f92ed51445"
+    },
+    {
+      "name": "GetIntegerUserProperties",
+      "signature": "GetIntegerUserProperties(...)",
+      "summary": "Retrieves all integer properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1b3c6f06-bc25-a54e-2a88-b60dc4a3c85e"
+    },
+    {
+      "name": "GetPhase",
+      "signature": "GetPhase(...)",
+      "summary": "Retrieves the phase of the model object (the phase number, the phase name, the phase comment and whether the phase is the current one or not).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/310f8b7a-c120-753a-35c9-f7c73a9806c9"
+    },
+    {
+      "name": "GetReportProperty(String, Double.)",
+      "signature": "GetReportProperty(String, Double.)(...)",
+      "summary": "Retrieves a double property of the report for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1c05aa56-5f42-be91-a59e-8d59a5549f45"
+    },
+    {
+      "name": "GetReportProperty(String, Int32.)",
+      "signature": "GetReportProperty(String, Int32.)(...)",
+      "summary": "Retrieves an integer property of the report for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ce8e4ca0-3750-3c9b-5ca8-27e48b45e0bd"
+    },
+    {
+      "name": "GetReportProperty(String, String.)",
+      "signature": "GetReportProperty(String, String.)(...)",
+      "summary": "Retrieves a string property of the report for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/70f212bb-ee70-e9e9-7ab6-d6a9d46f8de6"
+    },
+    {
+      "name": "GetStringReportProperties",
+      "signature": "GetStringReportProperties(...)",
+      "summary": "Retrieves multiple string report properties for the model object. It is faster to fetch multiple properties at once.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5ff72da1-7382-f5d2-eb1d-c99b46239d42"
+    },
+    {
+      "name": "GetStringUserProperties",
+      "signature": "GetStringUserProperties(...)",
+      "summary": "Retrieves all string properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/67120e84-c820-9d52-12ae-c167c595842c"
+    },
+    {
+      "name": "GetUserProperty(String, Double.)",
+      "signature": "GetUserProperty(String, Double.)(...)",
+      "summary": "Retrieves a double property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/17cc8074-7955-32b5-2b4b-b169c45d4ee0"
+    },
+    {
+      "name": "GetUserProperty(String, Int32.)",
+      "signature": "GetUserProperty(String, Int32.)(...)",
+      "summary": "Retrieves an integer property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d9364c1d-5b57-6a31-4c13-01124058cfb2"
+    },
+    {
+      "name": "GetUserProperty(String, String.)",
+      "signature": "GetUserProperty(String, String.)(...)",
+      "summary": "Retrieves a string property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/214a886c-c18c-9b66-d7c9-fe84260962f2"
+    },
+    {
+      "name": "Insert",
+      "signature": "Insert(...)",
+      "summary": "Inserts the leg surface object into the model database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/afd1ef63-e101-de50-6924-24233faee019"
+    },
+    {
+      "name": "Modify",
+      "signature": "Modify(...)",
+      "summary": "Modifies the existing leg surface object in the model database to match the current one.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/aeaf0c95-87ef-8005-30ea-cdd53e7121c0"
+    },
+    {
+      "name": "Select",
+      "signature": "Select(...)",
+      "summary": "Selects the leg surface object from the model database. The identifier must be set.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3506c9e0-8f2b-afea-17e0-9896e389c1f7"
+    },
+    {
+      "name": "SetCustomObjectType",
+      "signature": "SetCustomObjectType(...)",
+      "summary": "Sets a custom object type name for an existing object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3d6fb91b-48a9-35ca-d498-526514344089"
+    },
+    {
+      "name": "SetDynamicStringProperty",
+      "signature": "SetDynamicStringProperty(...)",
+      "summary": "Sets a dynamic string property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4dab0254-09e5-5e61-c28b-1c12afab71a0"
+    },
+    {
+      "name": "SetLabel",
+      "signature": "SetLabel(...)",
+      "summary": "Sets a label for an object when a new instance is created, this method must be called before Insert. The label is used in plug-ins for identifying the changed object in modification.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3efcfc44-613a-e66b-9ebd-9f86df4f4036"
+    },
+    {
+      "name": "SetPhase",
+      "signature": "SetPhase(...)",
+      "summary": "Sets the phase of the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ed80abcc-0ff7-d081-2229-e651f858a727"
+    },
+    {
+      "name": "SetUserProperties",
+      "signature": "SetUserProperties(...)",
+      "summary": "Sets multiple properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8659da37-d571-f03f-c666-5c9fa3b113f5"
+    },
+    {
+      "name": "SetUserProperty(String, Double)",
+      "signature": "SetUserProperty(String, Double)(...)",
+      "summary": "Sets a double property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5c585b8b-5c2e-7b75-2242-758f17429396"
+    },
+    {
+      "name": "SetUserProperty(String, Int32)",
+      "signature": "SetUserProperty(String, Int32)(...)",
+      "summary": "Sets an integer property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dd5b828d-3a87-bb58-5ac9-e1c3b4c2fe4b"
+    },
+    {
+      "name": "SetUserProperty(String, String)",
+      "signature": "SetUserProperty(String, String)(...)",
+      "summary": "Sets a string property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/80bf0348-b651-3d4a-862b-49c85bc924ab"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AdditionalOffset",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the user defined offset of the rebar legs from the leg surface object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/86ef5236-c665-1dcc-f282-086058d4b6d2"
+    },
+    {
+      "name": "Class",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the class of the surface object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/17919b5e-9bcb-6725-1cdf-d3570667d411"
+    },
+    {
+      "name": "CreateHoles",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether CreateHoles parameter of the surface object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/89035134-fde8-c8cc-9dcb-9c0b8da06007"
+    },
+    {
+      "name": "Father",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the father object of the surface object. The father can be set only before the Insert(), otherwise exception is thrown.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/67bcc411-0ef3-8f49-7192-e0e1494c4209"
+    },
+    {
+      "name": "Identifier",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The identifier of the object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3704f321-8e6e-27e4-0752-adfaed74c69f"
+    },
+    {
+      "name": "IsUpToDate",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets if the object does not have a modification which is not shared.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bc992671-093f-44a9-5eeb-7d289fd00cc5"
+    },
+    {
+      "name": "LayerNumber",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the layer number of the leg surface object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fe958c6a-a72c-e523-8e6d-8e0160a8d6d2"
+    },
+    {
+      "name": "ModificationTime",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets latest time of the object was modified or created.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/28d2c3c4-efd2-b4ed-7e2c-93cfb6e3a57f"
+    },
+    {
+      "name": "Name",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name of the surface object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4ae54ebe-69f8-4057-a71a-4fa238d37609"
+    },
+    {
+      "name": "Polymesh",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the surface geometry brep.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e9c21f46-f316-e55a-f5ef-85faaad35b29"
+    },
+    {
+      "name": "RebarSet",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the RebarSet to which the leg surface object belongs.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1dcd28d9-7862-66ee-4bc5-71d372457f2b"
+    },
+    {
+      "name": "Type",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the surface object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c9d098e8-4dd1-635c-15b2-0e9c7cf5b375"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

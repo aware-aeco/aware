@@ -1,0 +1,52 @@
+{
+  "name": "ModelAccess",
+  "namespace": "Tekla.Structures.Dialog.UIControls",
+  "kind": "class",
+  "summary": "The ModelAccess class contains helper methods for connecting to and accessing the model and objects in the model. The class attempts to provide efficient but robust methods for connecting to and verifying the connection to the model.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/e5d4d0c9-e09a-5356-0836-2dc8e0ea5295",
+  "constructors": [
+    {
+      "name": "ModelAccess",
+      "signature": "ModelAccess(...)",
+      "summary": "Initializes a new instance of the ModelAccess class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/db5e5807-40fb-f4b1-6205-d24432464210"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ConnectToModel.",
+      "signature": "ConnectToModel.(...)",
+      "summary": "Gets a model connnection.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/112f2b0f-baa5-60ee-0a52-93a9cfaf4c93"
+    },
+    {
+      "name": "ConnectToModel(Boolean.)",
+      "signature": "ConnectToModel(Boolean.)(...)",
+      "summary": "Gets a model connection.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e07e7c5c-a968-97d5-b631-babec211bc26"
+    },
+    {
+      "name": "ConnectToModel(Model.)",
+      "signature": "ConnectToModel(Model.)(...)",
+      "summary": "Gets a model connection.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a013c153-5759-8c07-4ca8-d60053b82bc6"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

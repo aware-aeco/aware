@@ -1,0 +1,24 @@
+{
+  "name": "InsidePartHorizontalPlacingType",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The InsidePartHorizontalPlacingType class defines a placing type that places the object using the base line placing. The base line used is in the middle of the part, aligned with the part. In addition the object will be rotated to be horizontal in the drawing.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/99cc2760-105a-bb05-e486-17b846a7d172",
+  "constructors": [
+    {
+      "name": "InsidePartHorizontalPlacingType",
+      "signature": "InsidePartHorizontalPlacingType(...)",
+      "summary": "Creates a new inside part horizontal placing type instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0b1c6c93-884a-ed92-28d7-a9d77dd979ee"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

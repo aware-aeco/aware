@@ -1,0 +1,34 @@
+{
+  "name": "LogicalAreaFilterExpressions.CustomBoolean",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The CustomBoolean class represents a custom Boolean filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/471651b6-0e60-3d19-5120-99f1e0570f70",
+  "constructors": [
+    {
+      "name": "LogicalAreaFilterExpressions.CustomBoolean",
+      "signature": "LogicalAreaFilterExpressions.CustomBoolean(...)",
+      "summary": "Initializes a new instance of the CustomBoolean class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3f0f1af7-ffa5-d0d2-6f60-19979c00e347"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

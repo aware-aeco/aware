@@ -1,0 +1,60 @@
+{
+  "name": "ConicalSurfaceNode",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The ConicalSurfaceNode class represents conical surface geometry tree node.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/73922bd2-0f50-6751-da49-df7948f18e6a",
+  "constructors": [
+    {
+      "name": "ConicalSurfaceNode",
+      "signature": "ConicalSurfaceNode(...)",
+      "summary": "Initializes a new instance of the ConicalSurfaceNode class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3e70ff2f-e922-edcd-fbe0-f868cf3e294a"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AcceptVisitor",
+      "signature": "AcceptVisitor(...)",
+      "summary": "Entry method for the visitor pattern.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c4b3e931-c16e-9154-96b5-9c12cb81fd42"
+    },
+    {
+      "name": "Clone",
+      "signature": "Clone(...)",
+      "summary": "Creates a new object that is a copy of the current instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3c51f2ca-57da-3ecc-8a08-bba604b4c6b0"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsAutomatic",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets a value indicating whether this geometry node was automatically generated (returns false if it was originally a user-defined part)",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8e111624-05f3-3f95-51f5-6bedc676a42d"
+    },
+    {
+      "name": "Surface",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the conical surface geometry.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f3e157ea-0794-aee5-9043-9917a46c3919"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

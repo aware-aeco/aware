@@ -1,0 +1,24 @@
+{
+  "name": "DimensionSetBaseAttributes.Placings",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The placing types of the objects.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/666145f2-0e7a-4353-fff7-0b2204d43a2b",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Free",
+      "value": 0,
+      "summary": "The placing of the object is free."
+    },
+    {
+      "name": "Fixed",
+      "value": 1,
+      "summary": "The placing of the object is fixed."
+    }
+  ]
+}

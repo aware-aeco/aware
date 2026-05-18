@@ -1,0 +1,60 @@
+{
+  "name": "PlacingDirectionAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PlacingDirectionAttributes class contains the basic attributes for placing directions.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/d1a2b9c5-012d-c737-abc6-d5b7bac840ff",
+  "constructors": [
+    {
+      "name": "PlacingDirectionAttributes",
+      "signature": "PlacingDirectionAttributes(...)",
+      "summary": "Creates a new placing direction attributes instance. The positive and negative directions are set to false by default.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ed99e174-ab44-9625-2ad5-ee71a937d4e5"
+    },
+    {
+      "name": "PlacingDirectionAttributes",
+      "signature": "PlacingDirectionAttributes(...)",
+      "summary": "Creates a new placing direction attributes instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/15922e50-8d3e-034d-09c3-b89f028c0073"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9505e7d9-339c-5f35-f0bb-e40e256106e9"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Negative",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The negative direction of placing.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d641a90d-4d5c-e3a5-998f-ab485b26e5aa"
+    },
+    {
+      "name": "Positive",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The positive direction of placing.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1f6c0a01-0c74-6864-a9cb-7166ce3e76bc"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

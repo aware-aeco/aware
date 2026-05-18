@@ -1,0 +1,34 @@
+{
+  "name": "PourUnitFilterExpressions.Name",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The Name class represents the name filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/bf27cfab-0ac6-48f5-6f7f-a1fa26c54720",
+  "constructors": [
+    {
+      "name": "PourUnitFilterExpressions.Name",
+      "signature": "PourUnitFilterExpressions.Name(...)",
+      "summary": "Initializes a new instance of the Name class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/40a33cb4-133b-c3ee-a5cc-fb0f2834fc21"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,23 @@
+{
+  "name": "IAssemblable",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "interface",
+  "summary": "The IAssemblable interface dictates which model objects are capabable of belonging to an assembly at the leaf level.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/c937f46b-c437-8d96-0545-6067119dfea2",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetAssembly",
+      "signature": "GetAssembly(...)",
+      "summary": "Returns the assembly that the assemblable belongs to.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5d79c5f5-a401-ab6b-3566-ae4ae54054a4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

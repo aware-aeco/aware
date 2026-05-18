@@ -1,0 +1,24 @@
+{
+  "name": "InvalidRadiusException",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The InvalidRadiusException class represents an error when, cannot connect parts with a cylindrical section having the provided radius.",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/9f0fd914-78f1-fb5d-af93-9a736d9462d4",
+  "constructors": [
+    {
+      "name": "InvalidRadiusException",
+      "signature": "InvalidRadiusException(...)",
+      "summary": "Initializes a new instance of the InvalidRadiusException class with \u0022Cannot connect parts with a cylindrical section having the provided radius\u0022 error message.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/33751956-d5b3-22dc-72c2-9540f9bc88aa"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,131 @@
+{
+  "name": "AnalysisRigidDiaphragm",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisRigidDiaphragm class contains information related to analysis rigid diaphragms.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/504098c8-62bf-74ad-0484-83dbd264e7e2",
+  "constructors": [
+    {
+      "name": "AnalysisRigidDiaphragm",
+      "signature": "AnalysisRigidDiaphragm(...)",
+      "summary": "Initializes a new instance of the AnalysisRigidDiaphragm class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/590acb5e-03b1-a203-44a7-1095f115ac33"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Select",
+      "signature": "Select(...)",
+      "summary": "Selects an analysis rigid diaphragm. The ID has to be set.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d45af225-559c-3250-3bac-6dbe620a437f"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AnalysisModelName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis model name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/820dc60f-92bc-f84c-9b4f-bf71faf2b76a"
+    },
+    {
+      "name": "AnalysisObjectType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2a2631ed-5e7b-7e60-f1d2-52186a5a17c4"
+    },
+    {
+      "name": "ExtremaMaximum",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The maximum of the extrema (in the global coordinate system).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ec1fa465-ac61-49be-7285-06ed3d5e9795"
+    },
+    {
+      "name": "ExtremaMinimum",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The minimum of the extrema (in the global coordinate system).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9b515947-2a47-d97e-4a50-569410e1e0a7"
+    },
+    {
+      "name": "FatherObject2ID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3cc2e3ff-3afd-4def-2559-7c1827233bec"
+    },
+    {
+      "name": "FatherObject2Type",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7b5d643a-2a12-5281-7f65-a312171bafcc"
+    },
+    {
+      "name": "FatherObjectID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7e55f4c8-ca1a-2761-edd6-2b69663ff941"
+    },
+    {
+      "name": "FatherObjectType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/739bcea1-858d-70e2-ff0d-9c4928129c3e"
+    },
+    {
+      "name": "ID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/289caef6-9b6e-cd4c-dcbc-6397be2f9de0"
+    },
+    {
+      "name": "MasterNodeID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The identifier of the master node.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5cfb89a7-ccc2-3566-d6e3-0799447c6522"
+    },
+    {
+      "name": "PartIDs",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The part identifier.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f143f695-ccf0-433a-fec1-773af5420e44"
+    },
+    {
+      "name": "SlaveNodeIDs",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The slave node identifier.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d870690a-e437-cf35-3573-d9bf70791b61"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

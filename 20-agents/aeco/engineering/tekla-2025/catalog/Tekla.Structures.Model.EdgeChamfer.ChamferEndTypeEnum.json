@@ -1,0 +1,29 @@
+{
+  "name": "EdgeChamfer.ChamferEndTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The end type of the edge chamfer.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/bb703a65-2763-a1f7-5315-8973f2a01dd0",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "FULL",
+      "value": 0,
+      "summary": "The chamfer continues to the end of the edge."
+    },
+    {
+      "name": "STRAIGHT",
+      "value": 1,
+      "summary": "The chamfer end is straight at the given point."
+    },
+    {
+      "name": "BEVELLED",
+      "value": 2,
+      "summary": "The chamfer end is bevelled at the given point."
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "name": "AnalysisMaterial",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisMaterial class contains the material information.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/ef408345-da5e-30c3-daae-ed0ba09e502f",
+  "constructors": [
+    {
+      "name": "AnalysisMaterial",
+      "signature": "AnalysisMaterial(...)",
+      "summary": "Initializes a new instance of the AnalysisMaterial class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/86696dee-5d43-afd7-73ca-84d6ceaa7f86"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Select",
+      "signature": "Select(...)",
+      "summary": "Selects an analysis material. The AnalysisModelName and Name have to be set.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/33e681ec-38e0-1b5a-c4ae-a85d39a266d3"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AnalysisModelName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis model name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/820dc60f-92bc-f84c-9b4f-bf71faf2b76a"
+    },
+    {
+      "name": "AnalysisObjectType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2a2631ed-5e7b-7e60-f1d2-52186a5a17c4"
+    },
+    {
+      "name": "DampingFactor",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the damping factor of the material.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5f7fc9d1-e475-0dfb-0a26-94132c209fb3"
+    },
+    {
+      "name": "Density",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the density of the material.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1fa5ef8a-0a62-3514-a701-c72c49608eb2"
+    },
+    {
+      "name": "FatherObject2ID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3cc2e3ff-3afd-4def-2559-7c1827233bec"
+    },
+    {
+      "name": "FatherObject2Type",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7b5d643a-2a12-5281-7f65-a312171bafcc"
+    },
+    {
+      "name": "FatherObjectID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7e55f4c8-ca1a-2761-edd6-2b69663ff941"
+    },
+    {
+      "name": "FatherObjectType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/739bcea1-858d-70e2-ff0d-9c4928129c3e"
+    },
+    {
+      "name": "ID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/289caef6-9b6e-cd4c-dcbc-6397be2f9de0"
+    },
+    {
+      "name": "MaterialType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets tThe type of the material.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f6da373c-3f43-ee2f-590b-80a033aa51f1"
+    },
+    {
+      "name": "ModulusOfElasticity",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the modulus of elasticity of the analysis material.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1632268f-65e4-846d-6268-77039b228dd1"
+    },
+    {
+      "name": "Name",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name of the analysis material.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/59a7a179-335b-7689-9c6d-3d6781758a95"
+    },
+    {
+      "name": "PoissonsRatio",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Poisson\u0027s ratio of the analysis material.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/eb3f308d-f222-2b1d-bf1b-b54542430530"
+    },
+    {
+      "name": "ThermalDilatation",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the thermal dilatation of the analysis material.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1d5e47c0-3551-2dfd-9db8-78d6ec1a131b"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

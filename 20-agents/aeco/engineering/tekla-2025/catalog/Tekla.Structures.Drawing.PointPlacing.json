@@ -1,0 +1,34 @@
+{
+  "name": "PointPlacing",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PointPlacing class defines a placing where the object is placed at one point (the insertion point) without any additional placing options.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/2b95dd6f-0941-805a-9f6b-07976e857327",
+  "constructors": [
+    {
+      "name": "PointPlacing",
+      "signature": "PointPlacing(...)",
+      "summary": "Creates a new point placing instance. The value used for the placing is the parent object\u0027s insertion point in this case.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/146eaae7-ddda-4bab-80bc-488c5bce7744"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/be2242f1-aa49-fbdb-fc2e-ac7b35b4f910"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

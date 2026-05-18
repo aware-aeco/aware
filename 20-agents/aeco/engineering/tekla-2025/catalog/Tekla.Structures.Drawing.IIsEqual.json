@@ -1,0 +1,23 @@
+{
+  "name": "IIsEqual",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "interface",
+  "summary": "The IIsEqual interface is for comparing objects using the function IsEqual().",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/5269446d-386e-3171-79e1-c70d903bdb9d",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with the given object. Checks every field of both objects for equality.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f3ea1fd0-1de5-e6c6-e153-fd78b0c22e96"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

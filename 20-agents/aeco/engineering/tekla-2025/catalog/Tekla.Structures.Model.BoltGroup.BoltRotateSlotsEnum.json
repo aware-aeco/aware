@@ -1,0 +1,29 @@
+{
+  "name": "BoltGroup.BoltRotateSlotsEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The rotation of the slots (the holes).",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/b1a3f6e5-d6af-9968-310d-4de51286c668",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ROTATE_SLOTS_ODD",
+      "value": 0,
+      "summary": "The slots are crossed to odd parts."
+    },
+    {
+      "name": "ROTATE_SLOTS_EVEN",
+      "value": 1,
+      "summary": "The slots are crossed to even parts."
+    },
+    {
+      "name": "ROTATE_SLOTS_PARALLEL",
+      "value": 2,
+      "summary": "The slots are rotated to be parallel."
+    }
+  ]
+}

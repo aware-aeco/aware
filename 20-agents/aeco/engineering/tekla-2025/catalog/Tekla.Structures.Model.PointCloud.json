@@ -1,0 +1,185 @@
+{
+  "name": "PointCloud",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "Initializes a new instance of the PointCloud class.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/1b398fae-616f-2cfa-8940-23f4d30e11c5",
+  "constructors": [
+    {
+      "name": "PointCloud",
+      "signature": "PointCloud(...)",
+      "summary": "Creates a new point cloud instance using the given parameters.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a068cb0d-10d7-1df5-1669-4c5de43fc2e0"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Attach",
+      "signature": "Attach(...)",
+      "summary": "Attach this point cloud to model. Can select only Potree type point clouds immediately after attach. Others need to be selected manually after attach has been completed. Use AttachComplete() to find out, if attach process has completed.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/959ad250-6b61-2aa2-7fbb-d8517edebe11"
+    },
+    {
+      "name": "AttachComplete",
+      "signature": "AttachComplete(...)",
+      "summary": "Checks if the point cloud attach is complete. Needed when attaching non-Potree point cloud file, which needs conversion.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/75b49d08-b9b4-82d7-15c4-006d7bb75c77"
+    },
+    {
+      "name": "Detach",
+      "signature": "Detach(...)",
+      "summary": "Detach this point cloud from model.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d78949bd-39ae-6564-b318-5079c4f245cc"
+    },
+    {
+      "name": "GetPointClouds",
+      "signature": "GetPointClouds(...)",
+      "summary": "Utility function: Gets available point clouds.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1fea88c0-bef7-2351-4388-781f1da03780"
+    },
+    {
+      "name": "GetVisibleInViews",
+      "signature": "GetVisibleInViews(...)",
+      "summary": "Gets the views in which this point cloud is visible.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ea50246a-4f69-ea97-6a67-c7734d15b73a"
+    },
+    {
+      "name": "Select",
+      "signature": "Select(...)",
+      "summary": "Select point cloud by Guid, by Name, by OriginalPath or by Url.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1cf3df03-e26a-0776-d572-596b4756c9a1"
+    },
+    {
+      "name": "SetVisibility",
+      "signature": "SetVisibility(...)",
+      "summary": "Set point cloud visibility in given views.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8f10f866-0f6e-a6ba-0e8a-9918e1ed65f8"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BoundingBox",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the bounding box.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/651a561b-df65-b8b1-66ea-5e3d15eda604"
+    },
+    {
+      "name": "Guid",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the guid.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/76df24e7-f661-0a35-4788-6076891e39d8"
+    },
+    {
+      "name": "LocationBy",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the location by value: Empty for model origin, base point guid for base point.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2ec0b53e-f1cc-5bc9-1497-d8a3b26ea855"
+    },
+    {
+      "name": "Name",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the point clouds name. Abbreviated from the point cloud file name. Cannot be given by user.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ded67f88-684e-c758-f377-0f3536864b57"
+    },
+    {
+      "name": "OffsetX",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the offset X.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/96a9a11c-3d40-a8d6-112c-a23f04a3a61c"
+    },
+    {
+      "name": "OffsetY",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the offset Y.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/48b8f8fd-ce72-9d30-8018-ce365ab6e11a"
+    },
+    {
+      "name": "OffsetZ",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the offset Z.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1b93f42d-d7a2-a4ad-f5ec-2d4c82f0df0b"
+    },
+    {
+      "name": "OriginalPath",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the point clouds path (where it originally located).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/000aad6b-615b-83f1-c587-7fe6f9078e5d"
+    },
+    {
+      "name": "RotationZ",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the rotation Z.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bbba3da5-92a6-a94f-a2ca-6d2fa93beec5"
+    },
+    {
+      "name": "Scale",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the scale.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d62529b6-b836-04c6-bca4-6c8f9de6194b"
+    },
+    {
+      "name": "Url",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the point clouds URL without a file name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/41b518cc-f4dd-bd7d-fb3e-f04ad8c3cc70"
+    },
+    {
+      "name": "UseAutoCreatedBasePoint",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether an auto-created base point should be used. If set to true, LocationBy value is ignored.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/85622133-c258-586d-722b-18ca02c72067"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

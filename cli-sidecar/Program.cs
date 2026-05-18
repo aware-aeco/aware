@@ -92,6 +92,54 @@ internal static class Program
                     }
                     catch (Exception ex) { EmitError(envelope.Op, ex.Message); return 1; }
                 }
+                case "coverage-extract":
+                {
+                    var argsObj = envelope.Args.Deserialize(SidecarJsonContext.Default.CoverageExtractArgs);
+                    if (argsObj is null) { EmitError(envelope.Op, "missing args"); return 2; }
+                    if (string.IsNullOrEmpty(argsObj.Vendor)
+                        || string.IsNullOrEmpty(argsObj.Version)
+                        || string.IsNullOrEmpty(argsObj.OutPath))
+                    {
+                        EmitError(envelope.Op, "coverage-extract requires vendor, version, out_path");
+                        return 2;
+                    }
+                    try
+                    {
+                        // Synchronous wrapper around the per-vendor async extractor. We block
+                        // the Main thread on purpose — the sidecar is one-shot, no other work
+                        // is happening on this process.
+                        Ingest.CoverageIR ir = argsObj.Vendor.ToLowerInvariant() switch
+                        {
+                            "tekla" => Ingest.Extractors.Tekla.Extractor.Extract(argsObj.Version)
+                                .GetAwaiter().GetResult(),
+                            _ => throw new NotSupportedException(
+                                $"coverage-extract: vendor '{argsObj.Vendor}' has no extractor yet")
+                        };
+                        var outDir = Path.GetDirectoryName(argsObj.OutPath);
+                        if (!string.IsNullOrEmpty(outDir)) Directory.CreateDirectory(outDir);
+                        var json = JsonSerializer.Serialize(ir, Ingest.IrJsonContext.Default.CoverageIR);
+                        File.WriteAllText(argsObj.OutPath, json);
+                        EmitOk(envelope.Op, new ResponseData
+                        {
+                            Coverage = new CoverageGenerateResult
+                            {
+                                Manifest = argsObj.OutPath,            // re-using the field to carry the IR path back
+                                SkillCount = ir.types.Count,
+                                CatalogCount = ir.metadata.method_count + ir.metadata.event_count + ir.metadata.property_count,
+                                Total = ir.metadata.type_count,
+                                Skills = Array.Empty<string>(),
+                                Catalogs = Array.Empty<string>(),
+                            }
+                        });
+                        return 0;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.Error.WriteLine($"[coverage-extract] EXCEPTION: {ex}");
+                        EmitError(envelope.Op, $"{ex.GetType().Name}: {ex.Message}");
+                        return 1;
+                    }
+                }
                 case "coverage-generate":
                 {
                     var argsObj = envelope.Args.Deserialize(SidecarJsonContext.Default.CoverageGenerateArgs);
@@ -167,6 +215,7 @@ internal static class Program
 [JsonSerializable(typeof(FromComArgs))]
 [JsonSerializable(typeof(FromHeadersArgs))]
 [JsonSerializable(typeof(CoverageGenerateArgs))]
+[JsonSerializable(typeof(CoverageExtractArgs))]
 [JsonSerializable(typeof(OkResponse))]
 [JsonSerializable(typeof(ErrorResponse))]
 [JsonSerializable(typeof(ResponseData))]

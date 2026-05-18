@@ -1,0 +1,78 @@
+{
+  "name": "FormBorders",
+  "namespace": "Tekla.Structures.Dialog",
+  "kind": "class",
+  "summary": "The FormBorders class handles the storing and restoring of the form size and location.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/38618d89-2dee-bf3e-83c3-a3b07acd4443",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CheckScreenPosition(Form)",
+      "signature": "CheckScreenPosition(Form)(...)",
+      "summary": "Moves form to primary screen.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5bd0931f-14c8-aee1-586a-e08ff7e2ff29"
+    },
+    {
+      "name": "CheckScreenPosition(Window)",
+      "signature": "CheckScreenPosition(Window)(...)",
+      "summary": "Moves window to primary screen.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/de2a2b42-d0cf-6d8d-392f-053250d8565e"
+    },
+    {
+      "name": "IsOnActiveDisplays",
+      "signature": "IsOnActiveDisplays(...)",
+      "summary": "Checks form quadrants to be sure full extents is on a single screen",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f2d7a679-8079-fe12-a885-46ca66614dac"
+    },
+    {
+      "name": "RestoreFormSizeAndLocation(Form)",
+      "signature": "RestoreFormSizeAndLocation(Form)(...)",
+      "summary": "Restores the form size and location from the registry.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/30de9914-2bcc-b7ea-5ad6-e0c94bed5ee8"
+    },
+    {
+      "name": "RestoreFormSizeAndLocation(Window)",
+      "signature": "RestoreFormSizeAndLocation(Window)(...)",
+      "summary": "Restores the WPF window size and location from the registry.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a0beb78e-66ee-619d-fb5a-e69f327c566b"
+    },
+    {
+      "name": "StoreFormSizeAndLocation(Form)",
+      "signature": "StoreFormSizeAndLocation(Form)(...)",
+      "summary": "Stores the form size and location into the registry.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2eaff581-4e11-bf5f-ba5d-07c079b015c8"
+    },
+    {
+      "name": "StoreFormSizeAndLocation(Window)",
+      "signature": "StoreFormSizeAndLocation(Window)(...)",
+      "summary": "Stores the window size and location into the registry.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/63047cff-3742-8792-52b6-ee14100ac1bf"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

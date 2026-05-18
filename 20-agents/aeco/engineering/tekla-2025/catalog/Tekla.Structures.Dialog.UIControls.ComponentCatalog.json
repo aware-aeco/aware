@@ -1,0 +1,68 @@
+{
+  "name": "ComponentCatalog",
+  "namespace": "Tekla.Structures.Dialog.UIControls",
+  "kind": "class",
+  "summary": "The ComponentCatalog class represents a group of controls to select components using the component catalog.",
+  "base": "System.Windows.Forms.UserControl",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/5b4207d7-2a3c-f34b-9cda-65386cf1f092",
+  "constructors": [
+    {
+      "name": "ComponentCatalog",
+      "signature": "ComponentCatalog(...)",
+      "summary": "Initializes a new instance of the ComponentCatalog class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8ee45b5b-82ba-4453-fd14-c50f0f7d02b6"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "SelectedComponentType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the selected component type in the control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/44c0f2f9-078f-c65a-08d5-743f52f83345"
+    },
+    {
+      "name": "SelectedName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the selected component name in the control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/49894df0-950b-98c1-612e-abb9592b3277"
+    },
+    {
+      "name": "SelectedNumber",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the selected component number in the control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b8b4e105-a3b2-d3ec-4997-d688fd532eeb"
+    }
+  ],
+  "events": [
+    {
+      "name": "SelectClicked",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler SelectClicked",
+      "summary": "The SelectClicked event is raised when the Select button is clicked.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b2e533a4-f75c-fe43-0d2c-b47f74f7c209",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "SelectionDone",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler SelectionDone",
+      "summary": "The SelectionDone event is raised when the selection has been done.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/83b4d55d-cef1-631e-0026-00bddd897eac",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

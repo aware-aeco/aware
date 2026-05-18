@@ -1,0 +1,68 @@
+{
+  "name": "MeshCatalog",
+  "namespace": "Tekla.Structures.Dialog.UIControls",
+  "kind": "class",
+  "summary": "The MeshCatalog class represents a group of controls to select meshes using the mesh catalogs.",
+  "base": "System.Windows.Forms.UserControl",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/ccb3ba76-9a72-37f5-5721-b1638bcd9cec",
+  "constructors": [
+    {
+      "name": "MeshCatalog",
+      "signature": "MeshCatalog(...)",
+      "summary": "Initiates a new instance of the control.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/295a1825-dee1-c0a8-29ca-fb62930a1b8c"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ButtonText",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets and sets the text of the button control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3a0ad0ad-b81b-b0bc-b3a6-02147e3cd44a"
+    },
+    {
+      "name": "SelectedMeshGrade",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The mesh grade in the control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6026be6c-542c-f65d-cacb-0b00e04dfbf4"
+    },
+    {
+      "name": "SelectedMeshName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The mesh name in the control.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cdee91a4-7825-b4b0-b2f8-c401b464330e"
+    }
+  ],
+  "events": [
+    {
+      "name": "SelectClicked",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler SelectClicked",
+      "summary": "The SelectClicked event is raised when the Select button is clicked.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/19fa75ac-8361-397c-f0ab-2d6f3ffb5540",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "SelectionDone",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler SelectionDone",
+      "summary": "The SelectionDone event is raised when the selection has been done.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1ac3f345-d39f-9fd2-4d18-8343990a198e",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

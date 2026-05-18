@@ -1,0 +1,39 @@
+{
+  "name": "DimensionSetBaseAttributes.FrameTypes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The frame types around the dimension values.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/64bbf0bb-5fe1-97d6-6bd5-11eb46ce9a07",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No frame."
+    },
+    {
+      "name": "Rectangle",
+      "value": 1,
+      "summary": "The frame is a rectangle."
+    },
+    {
+      "name": "Underline",
+      "value": 2,
+      "summary": "The frame is an underline."
+    },
+    {
+      "name": "RoundedRectangle",
+      "value": 3,
+      "summary": "The frame is a rectangle with rounded ends."
+    },
+    {
+      "name": "SharpenedRectangle",
+      "value": 8,
+      "summary": "The frame is a rectangle with sharpened ends."
+    }
+  ]
+}

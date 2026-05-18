@@ -1,0 +1,517 @@
+{
+  "name": "Grid",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The Grid class defines a user defined (possibly magnetic) set of planes helping in modeling work. A grid has grid plane instances as children.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/82142833-2bb4-61e8-88d3-e8b43a38ade2",
+  "constructors": [
+    {
+      "name": "Grid",
+      "signature": "Grid(...)",
+      "summary": "Creates a new grid instance. The default values are as follows: Name = \u0022Grid\u0022;CoordinateX = \u00220.00 4*3000.00\u0022;CoordinateY = \u00220.00 5*6000.00\u0022;CoordinateZ = \u00220.00 6000.00 8000.00 9000.00\u0022;LabelX = \u0022A B C D E\u0022;LabelY = \u00221 2 3 4 5 6\u0022;LabelZ = \u0022\u002B0 \u002B6000 \u002B8000 \u002B9000\u0022;ExtensionLeftX = 2000.0;ExtensionLeftY = 2000.0;ExtensionLeftZ = 2000.0;ExtensionRightX = 2000.0;ExtensionRightY = 2000.0;ExtensionRightZ = 2000.0;IsMagnetic = false;",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ab985a9b-19ed-0da9-821d-b23cdda34808"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CompareTo",
+      "signature": "CompareTo(...)",
+      "summary": "Compares Identifiers of model objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/79cca356-0c8a-e8fb-463a-34ad4141bec7"
+    },
+    {
+      "name": "Delete",
+      "signature": "Delete(...)",
+      "summary": "Deletes the grid with the given ID.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c1feb648-a138-5987-7bce-1375f684653a"
+    },
+    {
+      "name": "Equals",
+      "signature": "Equals(...)",
+      "summary": "Check if Identifiers of model objects are same.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e4324265-2490-00de-4139-63a8f7acb492"
+    },
+    {
+      "name": "GetAllReportProperties",
+      "signature": "GetAllReportProperties(...)",
+      "summary": "Retrieves all properties for the model object in one hashtable. Type for the returned value must be checked using type casting.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0708f404-ce77-28e1-4ebe-fa906f68bff8"
+    },
+    {
+      "name": "GetAllUserProperties",
+      "signature": "GetAllUserProperties(...)",
+      "summary": "Retrieves all properties for the model object in one hashtable. Type for the returned value must be checked using type casting.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/63b853a0-0af5-af9c-3ce7-05299664d7f8"
+    },
+    {
+      "name": "GetChildren",
+      "signature": "GetChildren(...)",
+      "summary": "Returns an enumerator of all the children model objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ce51ec40-310c-6067-a89f-f8d029aab747"
+    },
+    {
+      "name": "GetCoordinateSystem",
+      "signature": "GetCoordinateSystem(...)",
+      "summary": "Returns the coordinate system for the given model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8adfe9cd-f6e5-6474-1297-33c6270a7b0a"
+    },
+    {
+      "name": "GetCustomObjectType",
+      "signature": "GetCustomObjectType(...)",
+      "summary": "Gets custom object type name from an existing object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d3be2ba3-8533-7165-f2d3-a5aa9df556b8"
+    },
+    {
+      "name": "GetDoubleReportProperties",
+      "signature": "GetDoubleReportProperties(...)",
+      "summary": "Retrieves multiple double report properties for the model object. It is faster to fetch multiple properties at once.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f86f6c96-f738-49ca-16ba-f5634e862ba2"
+    },
+    {
+      "name": "GetDoubleUserProperties",
+      "signature": "GetDoubleUserProperties(...)",
+      "summary": "Retrieves all double properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6ead7a63-5f76-0631-d480-d46c27e882aa"
+    },
+    {
+      "name": "GetDynamicStringProperty",
+      "signature": "GetDynamicStringProperty(...)",
+      "summary": "Gets a dynamic string property from the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/415e86d9-7de6-ea53-ce68-20b3e67b8655"
+    },
+    {
+      "name": "GetFatherComponent",
+      "signature": "GetFatherComponent(...)",
+      "summary": "Returns the father component of the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a2c28f3f-52ff-50a8-1b32-10d18db5c31d"
+    },
+    {
+      "name": "GetHierarchicObjects",
+      "signature": "GetHierarchicObjects(...)",
+      "summary": "Returns an enumerator of all the connected hierarchic objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cc228ea0-267b-7d90-7441-c9efc1779b08"
+    },
+    {
+      "name": "GetIntegerReportProperties",
+      "signature": "GetIntegerReportProperties(...)",
+      "summary": "Retrieves multiple integer report properties for the model object. It is faster to fetch multiple properties at once.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2623a9c0-2a9c-e233-9daa-59f92ed51445"
+    },
+    {
+      "name": "GetIntegerUserProperties",
+      "signature": "GetIntegerUserProperties(...)",
+      "summary": "Retrieves all integer properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1b3c6f06-bc25-a54e-2a88-b60dc4a3c85e"
+    },
+    {
+      "name": "GetPhase",
+      "signature": "GetPhase(...)",
+      "summary": "Retrieves the phase of the model object (the phase number, the phase name, the phase comment and whether the phase is the current one or not).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/310f8b7a-c120-753a-35c9-f7c73a9806c9"
+    },
+    {
+      "name": "GetReportProperty(String, Double.)",
+      "signature": "GetReportProperty(String, Double.)(...)",
+      "summary": "Retrieves a double property of the report for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1c05aa56-5f42-be91-a59e-8d59a5549f45"
+    },
+    {
+      "name": "GetReportProperty(String, Int32.)",
+      "signature": "GetReportProperty(String, Int32.)(...)",
+      "summary": "Retrieves an integer property of the report for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ce8e4ca0-3750-3c9b-5ca8-27e48b45e0bd"
+    },
+    {
+      "name": "GetReportProperty(String, String.)",
+      "signature": "GetReportProperty(String, String.)(...)",
+      "summary": "Retrieves a string property of the report for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/70f212bb-ee70-e9e9-7ab6-d6a9d46f8de6"
+    },
+    {
+      "name": "GetStringReportProperties",
+      "signature": "GetStringReportProperties(...)",
+      "summary": "Retrieves multiple string report properties for the model object. It is faster to fetch multiple properties at once.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5ff72da1-7382-f5d2-eb1d-c99b46239d42"
+    },
+    {
+      "name": "GetStringUserProperties",
+      "signature": "GetStringUserProperties(...)",
+      "summary": "Retrieves all string properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/67120e84-c820-9d52-12ae-c167c595842c"
+    },
+    {
+      "name": "GetUserProperty(String, Double.)",
+      "signature": "GetUserProperty(String, Double.)(...)",
+      "summary": "Retrieves a double property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/17cc8074-7955-32b5-2b4b-b169c45d4ee0"
+    },
+    {
+      "name": "GetUserProperty(String, Int32.)",
+      "signature": "GetUserProperty(String, Int32.)(...)",
+      "summary": "Retrieves an integer property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d9364c1d-5b57-6a31-4c13-01124058cfb2"
+    },
+    {
+      "name": "GetUserProperty(String, String.)",
+      "signature": "GetUserProperty(String, String.)(...)",
+      "summary": "Retrieves a string property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/214a886c-c18c-9b66-d7c9-fe84260962f2"
+    },
+    {
+      "name": "Insert",
+      "signature": "Insert(...)",
+      "summary": "Inserts the grid into the model.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ee9fce8c-a744-1147-a10e-be0e5a353436"
+    },
+    {
+      "name": "Modify",
+      "signature": "Modify(...)",
+      "summary": "Modifies the grid with the given ID.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1ac56a24-5d36-2715-7dcc-9101041de4e9"
+    },
+    {
+      "name": "Select",
+      "signature": "Select(...)",
+      "summary": "Selects the grid with the given ID.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4a5978f8-bc16-99b9-be9a-69f02353d725"
+    },
+    {
+      "name": "SetCustomObjectType",
+      "signature": "SetCustomObjectType(...)",
+      "summary": "Sets a custom object type name for an existing object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3d6fb91b-48a9-35ca-d498-526514344089"
+    },
+    {
+      "name": "SetDynamicStringProperty",
+      "signature": "SetDynamicStringProperty(...)",
+      "summary": "Sets a dynamic string property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4dab0254-09e5-5e61-c28b-1c12afab71a0"
+    },
+    {
+      "name": "SetLabel",
+      "signature": "SetLabel(...)",
+      "summary": "Sets a label for an object when a new instance is created, this method must be called before Insert. The label is used in plug-ins for identifying the changed object in modification.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3efcfc44-613a-e66b-9ebd-9f86df4f4036"
+    },
+    {
+      "name": "SetPhase",
+      "signature": "SetPhase(...)",
+      "summary": "Sets the phase of the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ed80abcc-0ff7-d081-2229-e651f858a727"
+    },
+    {
+      "name": "SetUserProperties",
+      "signature": "SetUserProperties(...)",
+      "summary": "Sets multiple properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8659da37-d571-f03f-c666-5c9fa3b113f5"
+    },
+    {
+      "name": "SetUserProperty(String, Double)",
+      "signature": "SetUserProperty(String, Double)(...)",
+      "summary": "Sets a double property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5c585b8b-5c2e-7b75-2242-758f17429396"
+    },
+    {
+      "name": "SetUserProperty(String, Int32)",
+      "signature": "SetUserProperty(String, Int32)(...)",
+      "summary": "Sets an integer property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dd5b828d-3a87-bb58-5ac9-e1c3b4c2fe4b"
+    },
+    {
+      "name": "SetUserProperty(String, String)",
+      "signature": "SetUserProperty(String, String)(...)",
+      "summary": "Sets a string property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/80bf0348-b651-3d4a-862b-49c85bc924ab"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Color",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color of the grid.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/235cd13d-abcd-1576-a9e5-101a6db145b5"
+    },
+    {
+      "name": "CoordinateX",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The coordinates for the X-axis.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0d967ffc-ef52-eb5a-3195-4a7f7336f13b"
+    },
+    {
+      "name": "CoordinateY",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The coordinates for the Y-axis.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ca8e1027-8af7-5bf0-b58a-ba7dd6483409"
+    },
+    {
+      "name": "CoordinateZ",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The coordinates for the Z-axis.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/aa24647a-dfcd-e150-ff6a-c36fb061ac2f"
+    },
+    {
+      "name": "ExtensionForMagneticArea",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The extension for the magnetic area.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1453eaa9-f45a-30ce-dba4-f275a3923590"
+    },
+    {
+      "name": "ExtensionLeftX",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The extension to the left X-axis.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/04a3446e-63c8-68e6-98f5-92414b26aadf"
+    },
+    {
+      "name": "ExtensionLeftY",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The extension to the left Y-axis.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/43d3a160-f36c-f5f5-63f8-9749b8ea0280"
+    },
+    {
+      "name": "ExtensionLeftZ",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The extension to the left Z-axis.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8d3a1cd2-f493-a508-a3ab-11aa70aee551"
+    },
+    {
+      "name": "ExtensionRightX",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The extension to the right X-axis.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/93104d7b-944f-1779-e84c-2721a6f6dfb1"
+    },
+    {
+      "name": "ExtensionRightY",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The extension to the right Y-axis.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/005e6c80-3e78-b15a-4759-8186399218ee"
+    },
+    {
+      "name": "ExtensionRightZ",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The extension to the right Z-axis.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f9ed0535-a9e8-b256-1b3f-398a534a86da"
+    },
+    {
+      "name": "FontColor",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets font color for the grid labels",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c2eda3c9-54c5-7b6f-a3fc-f684bfec62ed"
+    },
+    {
+      "name": "FontSize",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets font size for the grid labels",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6d8e8383-3e43-60f9-ed5e-9c187c2b14ce"
+    },
+    {
+      "name": "Identifier",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The identifier of the object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3704f321-8e6e-27e4-0752-adfaed74c69f"
+    },
+    {
+      "name": "IsMagnetic",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether the grid is magnetic or not.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d54d3de5-3de1-c8eb-5419-7cdf4db721b0"
+    },
+    {
+      "name": "IsUpToDate",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets if the object does not have a modification which is not shared.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bc992671-093f-44a9-5eeb-7d289fd00cc5"
+    },
+    {
+      "name": "LabelX",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The labels for the X-axis.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ebb3051c-1636-75ee-1a14-e8315658aa91"
+    },
+    {
+      "name": "LabelY",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The labels for the Y-axis.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7634fb5a-f554-9bb2-d73d-ee83742517f3"
+    },
+    {
+      "name": "LabelZ",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The labels for the Z-axis.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2285844d-578f-d59d-6b92-fe30a5b45615"
+    },
+    {
+      "name": "ModificationTime",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets latest time of the object was modified or created.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/28d2c3c4-efd2-b4ed-7e2c-93cfb6e3a57f"
+    },
+    {
+      "name": "Name",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name of the grid.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8ae4e5a0-7211-3ee6-1bc2-103088d7cefa"
+    },
+    {
+      "name": "Origin",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the origin of the grid",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9f2b318e-f9cb-3a2c-6c7d-3a5931b66a14"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

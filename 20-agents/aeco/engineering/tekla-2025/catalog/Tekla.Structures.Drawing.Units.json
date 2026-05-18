@@ -1,0 +1,54 @@
+{
+  "name": "Units",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The available unit types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/a050ba82-07ea-f06f-3467-eaab7b462ca5",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Automatic",
+      "value": 0,
+      "summary": "Automatic, chooses the most appropriate unit for the current environment."
+    },
+    {
+      "name": "Millimeters",
+      "value": 1,
+      "summary": "Show the value in millimeters."
+    },
+    {
+      "name": "Centimeters",
+      "value": 2,
+      "summary": "Show the value in centimeters."
+    },
+    {
+      "name": "Meters",
+      "value": 3,
+      "summary": "Show the value in meters."
+    },
+    {
+      "name": "FeetAndInches",
+      "value": 4,
+      "summary": "Show the value in feet and inches."
+    },
+    {
+      "name": "CentimetersOrMeters",
+      "value": 5,
+      "summary": "Show the value in centimeters or meters whichever is more appropriate."
+    },
+    {
+      "name": "Inches",
+      "value": 6,
+      "summary": "Show the value in inches."
+    },
+    {
+      "name": "Feet",
+      "value": 7,
+      "summary": "Show the value in feet."
+    }
+  ]
+}

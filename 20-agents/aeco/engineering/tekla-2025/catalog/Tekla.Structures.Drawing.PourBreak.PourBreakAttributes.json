@@ -1,0 +1,77 @@
+{
+  "name": "PourBreak.PourBreakAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PourBreakAttributes class is the attributes class for the pour break.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/4fa0263e-e4ce-f9b7-70f4-2da5d9551389",
+  "constructors": [
+    {
+      "name": "PourBreak.PourBreakAttributes",
+      "signature": "PourBreak.PourBreakAttributes(...)",
+      "summary": "Creates a new default pour break attributes instance that loads standard attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b73ad236-69ac-b82a-4176-3a040d42fd38"
+    },
+    {
+      "name": "PourBreak.PourBreakAttributes",
+      "signature": "PourBreak.PourBreakAttributes(...)",
+      "summary": "Creates a new pour break attributes instance that loads the specified attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/12947121-206d-8518-0239-29f122fcb5cd"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b994540c-2208-45a6-70d7-2f5fee66233d"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "LoadAttributes(...)",
+      "summary": "Loads the attributes from the attribute file.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/50ff8c5e-d2a4-3fad-ed02-c8f4e9cc691b"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DrawHiddenLines",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether hidden lines are used to draw the pour break or not.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fed5d5d2-2906-28a7-227a-1c00dfbba087"
+    },
+    {
+      "name": "HiddenLines",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The hidden line type of the pour break.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9550bcee-886b-4715-43e9-194cca28f0b0"
+    },
+    {
+      "name": "VisibleLines",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The visible line type of the pour break.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ce089ce9-1143-f6a2-6991-cec0b2b9be5c"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

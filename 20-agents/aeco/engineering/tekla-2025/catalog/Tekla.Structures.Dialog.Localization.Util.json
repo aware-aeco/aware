@@ -1,0 +1,61 @@
+{
+  "name": "Localization.Util",
+  "namespace": "Tekla.Structures.Dialog",
+  "kind": "class",
+  "summary": "The Util class contains general localizers for different kinds of controls.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/aa928c88-9b75-5a1b-8794-73e855e9d5f0",
+  "constructors": [
+    {
+      "name": "Localization.Util",
+      "signature": "Localization.Util(...)",
+      "summary": "Initializes a new instance of the Localization.Util class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e8505c88-64bd-efed-efc5-46ca855f1ef4"
+    }
+  ],
+  "methods": [
+    {
+      "name": "LocalizeDataGridView",
+      "signature": "LocalizeDataGridView(...)",
+      "summary": "Localizes a DataGridView.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d441aa17-4e68-79e7-f9f5-d7335ede5bf3"
+    },
+    {
+      "name": "LocalizeImageListComboBox",
+      "signature": "LocalizeImageListComboBox(...)",
+      "summary": "Localizes an ImageListComboBox.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b545de48-174b-a35c-509f-59fa08f10ff9"
+    },
+    {
+      "name": "LocalizeListControl",
+      "signature": "LocalizeListControl(...)",
+      "summary": "Localizes a List control.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8acd981d-ed5c-9a67-9e3f-a2e962900e88"
+    },
+    {
+      "name": "LocalizeToolStrip",
+      "signature": "LocalizeToolStrip(...)",
+      "summary": "Localizes a ToolStrip.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3373bd2e-3e18-5f90-30e9-5fabcae9fb9b"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

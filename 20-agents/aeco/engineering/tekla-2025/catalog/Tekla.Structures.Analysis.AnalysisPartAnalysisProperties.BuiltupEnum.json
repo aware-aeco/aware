@@ -1,0 +1,44 @@
+{
+  "name": "AnalysisPartAnalysisProperties.BuiltupEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The builtup settings.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/1cb79936-3ab2-3121-88b4-0bac9e9c6e22",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "BUILTUP_AUTO",
+      "value": 9,
+      "summary": "The \u0022auto\u0022 builtup setting."
+    },
+    {
+      "name": "BUILTUP_NONE",
+      "value": 0,
+      "summary": "The \u0022none\u0022 builtup setting."
+    },
+    {
+      "name": "BUILTUP_MAIN_PART",
+      "value": 1,
+      "summary": "The \u0022main part\u0022 builtup setting."
+    },
+    {
+      "name": "BUILTUP_SUB_PART",
+      "value": 2,
+      "summary": "The \u0022sub part\u0022 builtup setting."
+    },
+    {
+      "name": "BUILTUP_SUB_PART_BEAM",
+      "value": 3,
+      "summary": "The \u0022part beam\u0022 builtup setting."
+    },
+    {
+      "name": "BUILTUP_SUB_PART_COLUMN",
+      "value": 4,
+      "summary": "The \u0022sub part column\u0022 builtup setting."
+    }
+  ]
+}

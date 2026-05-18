@@ -1,0 +1,24 @@
+{
+  "name": "DrawingSelector",
+  "namespace": "Tekla.Structures.Drawing.UI",
+  "kind": "class",
+  "summary": "The DrawingSelector class provides functionality for accessing the drawing list dialog.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/1bd3874e-2a25-28a2-62ee-6db4ffdeef5a",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetSelected",
+      "signature": "GetSelected(...)",
+      "summary": "Gets the drawings that are currently selected in the drawing list dialog.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ef028482-5c99-2d37-0d57-8998b46346de"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

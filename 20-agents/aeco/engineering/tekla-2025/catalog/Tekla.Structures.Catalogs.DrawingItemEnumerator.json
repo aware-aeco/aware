@@ -1,0 +1,51 @@
+{
+  "name": "DrawingItemEnumerator",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The DrawingItemEnumerator class allows to loop through the catalog drawing items.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/b1173c1b-55e1-315c-d1f0-0f85569c3290",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetSize",
+      "signature": "GetSize(...)",
+      "summary": "Returns the total amout of items.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8de3ed75-ca8d-b88d-c7b6-0fad5cd4f515"
+    },
+    {
+      "name": "MoveNext",
+      "signature": "MoveNext(...)",
+      "summary": "Moves to the next item in the enumerator.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fde8aa3f-601b-5d2c-3d3b-15c5b04d34b3"
+    },
+    {
+      "name": "Reset",
+      "signature": "Reset(...)",
+      "summary": "Resets the enumerator to the beginning.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6cf2a4dd-7afb-ac9e-550a-7ebff355061c"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Current",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns a drawing item instance of the current element.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/22e55b64-ab14-8840-4db2-171318c1ef2c"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

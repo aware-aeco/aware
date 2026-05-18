@@ -1,0 +1,34 @@
+{
+  "name": "OverlayModelEvents",
+  "namespace": "Tekla.Structures.Model.Internal.OverlayModel",
+  "kind": "class",
+  "summary": "Event class to allow the user to subscribe for OverlayModel events.",
+  "base": "System.MarshalByRefObject",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/209f899a-9f34-2277-f9d1-0bd4864eb214",
+  "constructors": [
+    {
+      "name": "OverlayModelEvents",
+      "signature": "OverlayModelEvents(...)",
+      "summary": "Initializes a new instance of the OverlayModelEvents class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/77bfed98-31fd-da50-1efc-27c68299fabb"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [
+    {
+      "name": "OverlayModelCollectionChanged",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler OverlayModelCollectionChanged",
+      "summary": "The OverlayModelCollectionChanged event is raised when an overlay model is changed (added/updated/removed).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/750c1e81-7bca-6605-4513-12880f3fe584",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

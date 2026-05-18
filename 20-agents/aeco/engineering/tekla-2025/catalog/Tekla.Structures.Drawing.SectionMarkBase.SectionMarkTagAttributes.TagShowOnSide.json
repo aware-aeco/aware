@@ -1,0 +1,29 @@
+{
+  "name": "SectionMarkBase.SectionMarkTagAttributes.TagShowOnSide",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The values that determine on which side(s) the mark tag text is shown.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/600a0cdd-702c-b984-b35e-5310be105fad",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ShowOnBothSides",
+      "value": 1,
+      "summary": "Show on both sides."
+    },
+    {
+      "name": "ShowOnLeftSideOnly",
+      "value": 2,
+      "summary": "Show only on the left side."
+    },
+    {
+      "name": "ShowOnRightSideOnly",
+      "value": 3,
+      "summary": "Show only on the right side."
+    }
+  ]
+}

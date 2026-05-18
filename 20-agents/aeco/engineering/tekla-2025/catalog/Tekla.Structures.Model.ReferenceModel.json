@@ -1,0 +1,559 @@
+{
+  "name": "ReferenceModel",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The ReferenceModel class contains methods related to reference models. A reference model is a reference of an external model.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/a1ca3d98-d440-e04c-ed85-901efed0470c",
+  "constructors": [
+    {
+      "name": "ReferenceModel",
+      "signature": "ReferenceModel(...)",
+      "summary": "Initializes a new instance of the ReferenceModel class. The default values are as follows: Filename = string.Empty; ActiveFilePath = string.Empty; ProjectGUID = Guid.Empty; ModelGUID = Guid.Empty; VersionGUID = Guid.Empty; Position = new Point(); Scale = 1.0; Visibility = VisibilityEnum.VISIBLE; BasePointGuid = string.Empty;",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f15584f1-9725-e751-f06b-9a84530672dc"
+    },
+    {
+      "name": "ReferenceModel",
+      "signature": "ReferenceModel(...)",
+      "summary": "Initializes a new instance of the ReferenceModel class. Creates a new reference model instance using the given filename, position and scale.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/de615462-d93e-5f37-fce6-fc0d2c0e89ff"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CompareTo",
+      "signature": "CompareTo(...)",
+      "summary": "Compares Identifiers of model objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/79cca356-0c8a-e8fb-463a-34ad4141bec7"
+    },
+    {
+      "name": "Delete",
+      "signature": "Delete(...)",
+      "summary": "Deletes the reference model with the given identifier.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/532a3f22-e1de-20e4-93f1-034f6702119c"
+    },
+    {
+      "name": "Equals",
+      "signature": "Equals(...)",
+      "summary": "Check if Identifiers of model objects are same.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e4324265-2490-00de-4139-63a8f7acb492"
+    },
+    {
+      "name": "GetAllReportProperties",
+      "signature": "GetAllReportProperties(...)",
+      "summary": "Retrieves all properties for the model object in one hashtable. Type for the returned value must be checked using type casting.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0708f404-ce77-28e1-4ebe-fa906f68bff8"
+    },
+    {
+      "name": "GetAllUserProperties",
+      "signature": "GetAllUserProperties(...)",
+      "summary": "Retrieves all properties for the model object in one hashtable. Type for the returned value must be checked using type casting.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/63b853a0-0af5-af9c-3ce7-05299664d7f8"
+    },
+    {
+      "name": "GetChildren",
+      "signature": "GetChildren(...)",
+      "summary": "Returns an enumerator of all the children reference model objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/729b427b-2ab5-8f20-1262-ec3ca0fae970"
+    },
+    {
+      "name": "GetConvertedObjects",
+      "signature": "GetConvertedObjects(...)",
+      "summary": "Returns an enumerator of model object converted from the reference model.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c4709708-9407-9313-d363-47fe73e1626d"
+    },
+    {
+      "name": "GetCoordinateSystem",
+      "signature": "GetCoordinateSystem(...)",
+      "summary": "Returns the coordinate system for the given model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8adfe9cd-f6e5-6474-1297-33c6270a7b0a"
+    },
+    {
+      "name": "GetCurrentRevision",
+      "signature": "GetCurrentRevision(...)",
+      "summary": "Gets the current revision.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e644c72a-529a-8dc7-f3d8-4f420743222a"
+    },
+    {
+      "name": "GetCustomObjectType",
+      "signature": "GetCustomObjectType(...)",
+      "summary": "Gets custom object type name from an existing object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d3be2ba3-8533-7165-f2d3-a5aa9df556b8"
+    },
+    {
+      "name": "GetDoubleReportProperties",
+      "signature": "GetDoubleReportProperties(...)",
+      "summary": "Retrieves multiple double report properties for the model object. It is faster to fetch multiple properties at once.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f86f6c96-f738-49ca-16ba-f5634e862ba2"
+    },
+    {
+      "name": "GetDoubleUserProperties",
+      "signature": "GetDoubleUserProperties(...)",
+      "summary": "Retrieves all double properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6ead7a63-5f76-0631-d480-d46c27e882aa"
+    },
+    {
+      "name": "GetDynamicStringProperty",
+      "signature": "GetDynamicStringProperty(...)",
+      "summary": "Gets a dynamic string property from the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/415e86d9-7de6-ea53-ce68-20b3e67b8655"
+    },
+    {
+      "name": "GetFatherComponent",
+      "signature": "GetFatherComponent(...)",
+      "summary": "Returns the father component of the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a2c28f3f-52ff-50a8-1b32-10d18db5c31d"
+    },
+    {
+      "name": "GetHierarchicObjects",
+      "signature": "GetHierarchicObjects(...)",
+      "summary": "Returns an enumerator of all the connected hierarchic objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cc228ea0-267b-7d90-7441-c9efc1779b08"
+    },
+    {
+      "name": "GetIntegerReportProperties",
+      "signature": "GetIntegerReportProperties(...)",
+      "summary": "Retrieves multiple integer report properties for the model object. It is faster to fetch multiple properties at once.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2623a9c0-2a9c-e233-9daa-59f92ed51445"
+    },
+    {
+      "name": "GetIntegerUserProperties",
+      "signature": "GetIntegerUserProperties(...)",
+      "summary": "Retrieves all integer properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1b3c6f06-bc25-a54e-2a88-b60dc4a3c85e"
+    },
+    {
+      "name": "GetPhase",
+      "signature": "GetPhase(...)",
+      "summary": "Retrieves the phase of the model object (the phase number, the phase name, the phase comment and whether the phase is the current one or not).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/310f8b7a-c120-753a-35c9-f7c73a9806c9"
+    },
+    {
+      "name": "GetReferenceModelObjectByExternalGuid",
+      "signature": "GetReferenceModelObjectByExternalGuid(...)",
+      "summary": "Gets reference model object by external (IFC) guid from this reference model.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6dcd0806-25ad-bcad-46ea-dd1d5a9214c1"
+    },
+    {
+      "name": "GetReferenceModelObjectGuidsByExternalGuids",
+      "signature": "GetReferenceModelObjectGuidsByExternalGuids(...)",
+      "summary": "Gets reference model object guids by external guids.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0a693785-9471-0c5e-a915-f09d0d1887fd"
+    },
+    {
+      "name": "GetReportProperty(String, Double.)",
+      "signature": "GetReportProperty(String, Double.)(...)",
+      "summary": "Retrieves a double property of the report for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1c05aa56-5f42-be91-a59e-8d59a5549f45"
+    },
+    {
+      "name": "GetReportProperty(String, Int32.)",
+      "signature": "GetReportProperty(String, Int32.)(...)",
+      "summary": "Retrieves an integer property of the report for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ce8e4ca0-3750-3c9b-5ca8-27e48b45e0bd"
+    },
+    {
+      "name": "GetReportProperty(String, String.)",
+      "signature": "GetReportProperty(String, String.)(...)",
+      "summary": "Retrieves a string property of the report for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/70f212bb-ee70-e9e9-7ab6-d6a9d46f8de6"
+    },
+    {
+      "name": "GetRevisions",
+      "signature": "GetRevisions(...)",
+      "summary": "Gets the reference models available revisions.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f1b36d75-032f-63b7-9d83-11ab4894bbd6"
+    },
+    {
+      "name": "GetStringReportProperties",
+      "signature": "GetStringReportProperties(...)",
+      "summary": "Retrieves multiple string report properties for the model object. It is faster to fetch multiple properties at once.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5ff72da1-7382-f5d2-eb1d-c99b46239d42"
+    },
+    {
+      "name": "GetStringUserProperties",
+      "signature": "GetStringUserProperties(...)",
+      "summary": "Retrieves all string properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/67120e84-c820-9d52-12ae-c167c595842c"
+    },
+    {
+      "name": "GetUserProperty(String, Double.)",
+      "signature": "GetUserProperty(String, Double.)(...)",
+      "summary": "Retrieves a double property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/17cc8074-7955-32b5-2b4b-b169c45d4ee0"
+    },
+    {
+      "name": "GetUserProperty(String, Int32.)",
+      "signature": "GetUserProperty(String, Int32.)(...)",
+      "summary": "Retrieves an integer property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d9364c1d-5b57-6a31-4c13-01124058cfb2"
+    },
+    {
+      "name": "GetUserProperty(String, String.)",
+      "signature": "GetUserProperty(String, String.)(...)",
+      "summary": "Retrieves a string property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/214a886c-c18c-9b66-d7c9-fe84260962f2"
+    },
+    {
+      "name": "Insert",
+      "signature": "Insert(...)",
+      "summary": "Inserts the reference model into the model.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cf21c60e-c8c7-d1e0-48a0-185f609601cc"
+    },
+    {
+      "name": "Modify",
+      "signature": "Modify(...)",
+      "summary": "Modifies the reference model with the given identifier.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/db7b2238-5e56-7adb-e06a-cc91f71d21fe"
+    },
+    {
+      "name": "RefreshFile",
+      "signature": "RefreshFile(...)",
+      "summary": "Reload the reference file from the location specified by Filename. If the file has changed, a new revision will be created and taken into use. Note that if a new revision was successfully created, the ActiveFilePath is changed.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/13291a3d-b362-4520-34c3-418563d3e06f"
+    },
+    {
+      "name": "RemoveRevision",
+      "signature": "RemoveRevision(...)",
+      "summary": "Removes the given revision from the reference model.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8eff93f8-cfed-5f17-8767-00bd2fe1c375"
+    },
+    {
+      "name": "Select",
+      "signature": "Select(...)",
+      "summary": "Selects the reference model with the given identifier.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/48df3abf-5d96-6af7-0921-a76530456bcd"
+    },
+    {
+      "name": "SetAsCurrentRevision(ReferenceModel.Revision)",
+      "signature": "SetAsCurrentRevision(ReferenceModel.Revision)(...)",
+      "summary": "Sets the given revision as current revision.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e311b023-4d53-2224-ef9a-b6134bba271e"
+    },
+    {
+      "name": "SetAsCurrentRevision(Int32, Int32)",
+      "signature": "SetAsCurrentRevision(Int32, Int32)(...)",
+      "summary": "Sets the given revision as current revision.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/194aca9c-df74-e1ad-be42-3eacbe3538d2"
+    },
+    {
+      "name": "SetCustomObjectType",
+      "signature": "SetCustomObjectType(...)",
+      "summary": "Sets a custom object type name for an existing object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3d6fb91b-48a9-35ca-d498-526514344089"
+    },
+    {
+      "name": "SetDynamicStringProperty",
+      "signature": "SetDynamicStringProperty(...)",
+      "summary": "Sets a dynamic string property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4dab0254-09e5-5e61-c28b-1c12afab71a0"
+    },
+    {
+      "name": "SetLabel",
+      "signature": "SetLabel(...)",
+      "summary": "Sets a label for an object when a new instance is created, this method must be called before Insert. The label is used in plug-ins for identifying the changed object in modification.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3efcfc44-613a-e66b-9ebd-9f86df4f4036"
+    },
+    {
+      "name": "SetPhase",
+      "signature": "SetPhase(...)",
+      "summary": "Sets the phase of the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ed80abcc-0ff7-d081-2229-e651f858a727"
+    },
+    {
+      "name": "SetUserProperties",
+      "signature": "SetUserProperties(...)",
+      "summary": "Sets multiple properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8659da37-d571-f03f-c666-5c9fa3b113f5"
+    },
+    {
+      "name": "SetUserProperty(String, Double)",
+      "signature": "SetUserProperty(String, Double)(...)",
+      "summary": "Sets a double property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5c585b8b-5c2e-7b75-2242-758f17429396"
+    },
+    {
+      "name": "SetUserProperty(String, Int32)",
+      "signature": "SetUserProperty(String, Int32)(...)",
+      "summary": "Sets an integer property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dd5b828d-3a87-bb58-5ac9-e1c3b4c2fe4b"
+    },
+    {
+      "name": "SetUserProperty(String, String)",
+      "signature": "SetUserProperty(String, String)(...)",
+      "summary": "Sets a string property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/80bf0348-b651-3d4a-862b-49c85bc924ab"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ActiveFilePath",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the path to the local copy of the current revision of the reference model.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3c1c0f43-f52b-5085-4ef6-58655d7bc3c4"
+    },
+    {
+      "name": "BasePointGuid",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The GUID of the used base point. Empty if base point is not used.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d6ddefc6-b5e1-bb72-510f-95335efb177e"
+    },
+    {
+      "name": "Filename",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The path to the original location of the reference file.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f3ff3c4b-2c32-39a0-be14-66042c056b65"
+    },
+    {
+      "name": "Identifier",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The identifier of the object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3704f321-8e6e-27e4-0752-adfaed74c69f"
+    },
+    {
+      "name": "IsUpToDate",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets if the object does not have a modification which is not shared.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bc992671-093f-44a9-5eeb-7d289fd00cc5"
+    },
+    {
+      "name": "ModelGUID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The ModelGUID of the reference model in the Project Center.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d2e10a77-c011-2a75-df20-ed87c40217c1"
+    },
+    {
+      "name": "ModificationTime",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets latest time of the object was modified or created.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/28d2c3c4-efd2-b4ed-7e2c-93cfb6e3a57f"
+    },
+    {
+      "name": "Position",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The position of the reference model.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e9866898-e925-be74-8f17-0672acb81c52"
+    },
+    {
+      "name": "ProjectGUID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The ProjectGUID of the reference model in the Project Center.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dff7c89a-b9fb-9733-42fb-89b29fde98d9"
+    },
+    {
+      "name": "Rotation",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets value of rotation around Z axis (degrees).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d8af5ec7-e279-0386-70a4-c465f8b889b9"
+    },
+    {
+      "name": "Rotation3D",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets value of 3d rotation.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5b7b42c6-6177-dcfc-8b19-0090b1ce1592"
+    },
+    {
+      "name": "Scale",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The scale of the reference model.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4718dbdd-7da0-84b5-73c7-d16ec0abad6c"
+    },
+    {
+      "name": "Title",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The reference model name(title).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ea2d3d2a-d901-360b-ccb7-057cb67b3d05"
+    },
+    {
+      "name": "UseWorkplane",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Sets whether workplane is used.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/90d6259f-4208-3a93-66a4-2310a3b8cce6"
+    },
+    {
+      "name": "VersionGUID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The VersionGUID of the reference model in the Project Center.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3a37e61a-7983-3810-26ea-d831d33328da"
+    },
+    {
+      "name": "Visibility",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The visibility of the reference model in the model view.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1bcae36b-02a6-304d-dc03-f05f5f435e60"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

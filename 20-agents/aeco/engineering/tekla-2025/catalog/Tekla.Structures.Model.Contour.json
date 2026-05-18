@@ -1,0 +1,61 @@
+{
+  "name": "Contour",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The Contour class defines a possibly chamfered contour. Contours must not have loops.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/903abf10-4c92-e708-533a-88c7cebfd501",
+  "constructors": [
+    {
+      "name": "Contour",
+      "signature": "Contour(...)",
+      "summary": "Instantiates an empty contour.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/15d7597a-5f33-461c-dbfa-b1a7e28a5e56"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddContourPoint",
+      "signature": "AddContourPoint(...)",
+      "summary": "Adds a new contour point to the contour. Do not add the same contour point twice.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/758831d8-d612-1ccd-aa64-e3c0d07baa1d"
+    },
+    {
+      "name": "CalculatePolygon",
+      "signature": "CalculatePolygon(...)",
+      "summary": "Calculate a polygon approximating the contour with chamfers evaluated.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f5c142bc-8a2b-dee2-5b19-26863e8410a0"
+    },
+    {
+      "name": "GetPolycurve",
+      "signature": "GetPolycurve(...)",
+      "summary": "Gets the contour geometry as Polycurve",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1a21df7a-cb44-dada-7422-69a6052fad72"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ContourPoints",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The contour points belonging to the contour.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d2954bb2-8f54-25bd-3965-e5b4dc2dad2e"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

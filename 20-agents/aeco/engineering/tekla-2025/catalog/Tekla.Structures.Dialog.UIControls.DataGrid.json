@@ -1,0 +1,24 @@
+{
+  "name": "DataGrid",
+  "namespace": "Tekla.Structures.Dialog.UIControls",
+  "kind": "class",
+  "summary": "The DataGrid class represents a data grid control that can contain images.",
+  "base": "System.Windows.Forms.DataGridView",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/15327883-bd73-f2c5-ce5d-79cb2ef01153",
+  "constructors": [
+    {
+      "name": "DataGrid",
+      "signature": "DataGrid(...)",
+      "summary": "Initializes a new instance of the DataGrid class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/35d1c732-b10e-ca7f-1542-4606fd1f2cb4"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

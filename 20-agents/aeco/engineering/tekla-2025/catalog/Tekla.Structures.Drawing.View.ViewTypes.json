@@ -1,0 +1,64 @@
+{
+  "name": "View.ViewTypes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The possible types of views.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/e2c4286c-cf79-8fb8-cad3-db5fa4ea7030",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "UnknownViewType",
+      "value": 0,
+      "summary": "The view type is not known."
+    },
+    {
+      "name": "FrontView",
+      "value": 1,
+      "summary": "Front side view of the part."
+    },
+    {
+      "name": "TopView",
+      "value": 2,
+      "summary": "Top side view of the part."
+    },
+    {
+      "name": "BackView",
+      "value": 3,
+      "summary": "Back side view of the part."
+    },
+    {
+      "name": "BottomView",
+      "value": 4,
+      "summary": "Bottom side view of the part."
+    },
+    {
+      "name": "EndView",
+      "value": 5,
+      "summary": "End side view of the part."
+    },
+    {
+      "name": "SectionView",
+      "value": 6,
+      "summary": "Section view of the part."
+    },
+    {
+      "name": "ModelView",
+      "value": 7,
+      "summary": "Model view of the part."
+    },
+    {
+      "name": "DetailView",
+      "value": 8,
+      "summary": "Detail view of the part."
+    },
+    {
+      "name": "_3DView",
+      "value": 9,
+      "summary": "3d view of the part."
+    }
+  ]
+}

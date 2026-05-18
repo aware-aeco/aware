@@ -1,0 +1,24 @@
+{
+  "name": "View.ViewRenderingType",
+  "namespace": "Tekla.Structures.Model.UI",
+  "kind": "enum",
+  "summary": "The view rendering types. Only rendered views can be modified.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/d557ee40-145a-970a-7ed2-b5921a08d959",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "WIREFRAME_VIEW",
+      "value": 0,
+      "summary": "The wireframe view type."
+    },
+    {
+      "name": "RENDERED_VIEW",
+      "value": 1,
+      "summary": "The rendered view type."
+    }
+  ]
+}

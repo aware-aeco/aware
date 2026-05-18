@@ -1,0 +1,70 @@
+{
+  "name": "ReportTemplateElement",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The ReportTemplateElement class represents a template in the Tekla Structures template library.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/0a6690c4-2eca-a4d2-427f-e044282fc4c3",
+  "constructors": [
+    {
+      "name": "ReportTemplateElement",
+      "signature": "ReportTemplateElement(...)",
+      "summary": "Creates a new report template element instance with the default template.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/aa0f5eeb-2bc6-9b05-445f-753a9ec9ba21"
+    },
+    {
+      "name": "ReportTemplateElement",
+      "signature": "ReportTemplateElement(...)",
+      "summary": "Creates a new report template element instance with the given template.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dc247c2b-5cd1-0290-4115-5636b902c23e"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "Clone(...)",
+      "summary": "Clones the object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9e4ac224-4776-92ab-a8ac-25a05d262bc6"
+    },
+    {
+      "name": "GetUnformattedString",
+      "signature": "GetUnformattedString(...)",
+      "summary": "Returns the content as a string without formatting.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/89abb5d5-b23f-ede9-1455-76d6c947e420"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f6040361-088b-3a59-e2d2-82f7bd06fea4"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Template",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The template.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/65a76ad0-3f28-95a1-93da-7835a14fb917"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,34 @@
+{
+  "name": "PluginBase.InputObjectDependency",
+  "namespace": "Tekla.Structures.Plugins",
+  "kind": "enum",
+  "summary": "Defines the input object dependency type for model plug-ins.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/9b621f28-934e-90ec-2996-fac877e7de20",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NOT_DEPENDENT",
+      "value": 0,
+      "summary": "No dependency on input. Typically this type is applied to the import and export functionality. Not-dependent plug-ins are executed from the plug-in dialog instead of the component catalog. The created objects do not have any relation to the plug-in anymore. The plug-in dialog cannot be opened from the created objects. Note! The system does not automatically save a rollback point to the database for non-dependent plug-ins. If new objects are created, CommitChanges needs to be called at the end of the Run method."
+    },
+    {
+      "name": "DEPENDENT",
+      "value": 1,
+      "summary": "Dependent on input. The plug-in is executed if e.g. the definition points or the profile of the input part change. Boolean operations to the input part do not cause plug-in execution."
+    },
+    {
+      "name": "GEOMETRICALLY_DEPENDENT",
+      "value": 2,
+      "summary": "Geometrically dependent on input. The plug-in is executed if the input part geometry changes i.e. if the input part is fitted."
+    },
+    {
+      "name": "NOT_DEPENDENT_MODIFIABLE",
+      "value": 3,
+      "summary": "No dependency on input but the instance is modifiable in the model. The created objects have a relation to the plug-in. The plug-in dialog can be opened from the created objects."
+    }
+  ]
+}

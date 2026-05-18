@@ -1,0 +1,304 @@
+{
+  "name": "AnalysisSubSection.AnalysisSubSectionSubTypeEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "Defines the subsection subtypes.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/7a6c4915-7fbc-2ebd-9d47-6200f3d9f91b",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "UNKNOWN_SUBTYPE",
+      "value": 0,
+      "summary": "The subsection subtype is unknown."
+    },
+    {
+      "name": "I_HOT_ROLLED",
+      "value": 1001,
+      "summary": "The hot rolled I profile."
+    },
+    {
+      "name": "I_WELDED_SYMMETRICAL",
+      "value": 1002,
+      "summary": "The first symmetrically welded I profile."
+    },
+    {
+      "name": "I_WELDED_UNSYMMETRICAL",
+      "value": 1003,
+      "summary": "The first unsymmetrically welded I profile."
+    },
+    {
+      "name": "I_WELDED_SYMMETRICAL2",
+      "value": 1004,
+      "summary": "The second symmetrically welded I profile."
+    },
+    {
+      "name": "I_WELDED_UNSYMMETRICAL2",
+      "value": 1005,
+      "summary": "The second unsymmetrically welded I profile."
+    },
+    {
+      "name": "L_HOT_ROLLED",
+      "value": 2001,
+      "summary": "The hot rolled L profile."
+    },
+    {
+      "name": "L_COLD_ROLLED",
+      "value": 2002,
+      "summary": "The cold rolled L profile."
+    },
+    {
+      "name": "Z_COLD_ROLLED",
+      "value": 3001,
+      "summary": "The cold rolled Z profile."
+    },
+    {
+      "name": "U_HOT_ROLLED",
+      "value": 4001,
+      "summary": "The hot rolled U profile."
+    },
+    {
+      "name": "U_COLD_ROLLED",
+      "value": 4002,
+      "summary": "The cold rolled U profile."
+    },
+    {
+      "name": "PL_DEFAULT",
+      "value": 5001,
+      "summary": "The default PL profile."
+    },
+    {
+      "name": "D_CIRCULAR",
+      "value": 6001,
+      "summary": "The circular D profile."
+    },
+    {
+      "name": "D_ELLIPTICAL",
+      "value": 6002,
+      "summary": "The elliptical D profile."
+    },
+    {
+      "name": "PD_CIRCULAR",
+      "value": 7001,
+      "summary": "The circular PD profile."
+    },
+    {
+      "name": "PD_ELLIPTICAL",
+      "value": 7002,
+      "summary": "The elliptical PD profile."
+    },
+    {
+      "name": "PD_CIRCULAR_TAPERED",
+      "value": 7003,
+      "summary": "The circular tapered PD profile."
+    },
+    {
+      "name": "P_SQUARE",
+      "value": 8001,
+      "summary": "The square P profile."
+    },
+    {
+      "name": "P_RECTANGULAR",
+      "value": 8002,
+      "summary": "The rectangular P profile."
+    },
+    {
+      "name": "P_ALTERING_HEIGHT",
+      "value": 8003,
+      "summary": "The altering height P profile."
+    },
+    {
+      "name": "C_HOT_ROLLED",
+      "value": 9001,
+      "summary": "The hot rolled C profile."
+    },
+    {
+      "name": "C_COLD_ROLLED",
+      "value": 9002,
+      "summary": "The cold rolled C profile."
+    },
+    {
+      "name": "T_HOT_ROLLED",
+      "value": 10001,
+      "summary": "The hot rolled T profile."
+    },
+    {
+      "name": "T_PARAMETRIC",
+      "value": 10002,
+      "summary": "The parametric T profile."
+    },
+    {
+      "name": "HK_SYMMETRICAL",
+      "value": 11001,
+      "summary": "The symmetrical HK profile."
+    },
+    {
+      "name": "HK_UNSYMMETRICAL",
+      "value": 11002,
+      "summary": "The unsymmetrical HK profile."
+    },
+    {
+      "name": "HQ_CENTERED",
+      "value": 13001,
+      "summary": "The centered HQ profile."
+    },
+    {
+      "name": "HQ_NOT_CENTERED",
+      "value": 13002,
+      "summary": "The not centered HQ profile."
+    },
+    {
+      "name": "ZZ_SYMMETRICAL",
+      "value": 15001,
+      "summary": "The symmetrical ZZ profile."
+    },
+    {
+      "name": "ZZ_NOT_SYMMETRICAL",
+      "value": 15002,
+      "summary": "The unsymmetrical ZZ profile."
+    },
+    {
+      "name": "CC_SYMMETRICAL",
+      "value": 16001,
+      "summary": "The symmetrical CC profile."
+    },
+    {
+      "name": "CC_NOT_SYMMETRICAL",
+      "value": 16002,
+      "summary": "The unsymmetrical CC profile."
+    },
+    {
+      "name": "CW_SYMMETRICAL",
+      "value": 17001,
+      "summary": "The symmetrical CW profile."
+    },
+    {
+      "name": "CW_UNSYMMETRICAL",
+      "value": 17002,
+      "summary": "The unsymmetrical CW profile."
+    },
+    {
+      "name": "CU_SYMMETRICAL",
+      "value": 18001,
+      "summary": "The symmetrical CU profile."
+    },
+    {
+      "name": "CU_NOT_SYMMETRICAL",
+      "value": 18002,
+      "summary": "The unsymmetrical CU profile."
+    },
+    {
+      "name": "EB_SYMMETRICAL",
+      "value": 19001,
+      "summary": "The symmetrical EB profile."
+    },
+    {
+      "name": "EB_NOT_SYMMETRICAL",
+      "value": 19002,
+      "summary": "The unsymmetrical EB profile."
+    },
+    {
+      "name": "BF_DEFAULT",
+      "value": 20001,
+      "summary": "The default BF profile."
+    },
+    {
+      "name": "SPD_CIRCULAR",
+      "value": 21001,
+      "summary": "The circular SPD profile."
+    },
+    {
+      "name": "SPD_ELLIPTICAL",
+      "value": 21002,
+      "summary": "The elliptical SPD profile."
+    },
+    {
+      "name": "SPD_CIRCULAR_TAPERED",
+      "value": 21003,
+      "summary": "The circular tapered SPD profile."
+    },
+    {
+      "name": "EC_SYMMETRICAL",
+      "value": 22001,
+      "summary": "The symmetrical EC profile."
+    },
+    {
+      "name": "EC_NOT_SYMMETRICAL",
+      "value": 22002,
+      "summary": "The unsymmetrical EC profile."
+    },
+    {
+      "name": "ED_DEFAULT",
+      "value": 23001,
+      "summary": "The default ED profile."
+    },
+    {
+      "name": "EE_DEFAULT",
+      "value": 24001,
+      "summary": "The default EE profile."
+    },
+    {
+      "name": "EF_DEFAULT",
+      "value": 25001,
+      "summary": "The default EF profile."
+    },
+    {
+      "name": "EZ_DEFAULT",
+      "value": 26001,
+      "summary": "The default EZ profile."
+    },
+    {
+      "name": "EW_DEFAULT",
+      "value": 27001,
+      "summary": "The default EW profile."
+    },
+    {
+      "name": "RCDL_SYMMETRICAL",
+      "value": 102001,
+      "summary": "The symmetrical RCDL profile."
+    },
+    {
+      "name": "RCDL_UNSYMMETRICAL",
+      "value": 102002,
+      "summary": "The unsymmetrical RCDL profile."
+    },
+    {
+      "name": "RCXX_DEFAULT",
+      "value": 103001,
+      "summary": "The default RCXX profile."
+    },
+    {
+      "name": "RCL_DEFAULT",
+      "value": 104001,
+      "summary": "The default RCL profile."
+    },
+    {
+      "name": "RCDX_SYMMETRICAL",
+      "value": 105001,
+      "summary": "The symmetrical RCDX profile."
+    },
+    {
+      "name": "RCDX_UNSYMMETRICAL",
+      "value": 105002,
+      "summary": "The first unsymmetrical RCDX profile."
+    },
+    {
+      "name": "RCDX_UNSYMMETRICAL2",
+      "value": 105003,
+      "summary": "The second unsymmetrical RCDX profile."
+    },
+    {
+      "name": "RCX_DEFAULT",
+      "value": 106001,
+      "summary": "The default RCX profile."
+    },
+    {
+      "name": "COMPONENT_FIRST",
+      "value": 999001,
+      "summary": "The component first type."
+    }
+  ]
+}

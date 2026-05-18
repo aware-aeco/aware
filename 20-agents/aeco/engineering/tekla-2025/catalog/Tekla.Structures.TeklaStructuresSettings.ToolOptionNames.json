@@ -1,0 +1,14 @@
+{
+  "name": "TeklaStructuresSettings.ToolOptionNames",
+  "namespace": "Tekla.Structures",
+  "kind": "class",
+  "summary": "Tool option names.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/547f5380-8245-79e2-3758-11f811c4a0d4",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

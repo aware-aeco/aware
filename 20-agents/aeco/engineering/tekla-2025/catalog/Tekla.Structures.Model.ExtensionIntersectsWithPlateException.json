@@ -1,0 +1,24 @@
+{
+  "name": "ExtensionIntersectsWithPlateException",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The ExtensionIntersectsWithPlateException class represents an error when extension plate clashes with plates.",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/1e7f5097-9730-c720-48e0-e816e25bef98",
+  "constructors": [
+    {
+      "name": "ExtensionIntersectsWithPlateException",
+      "signature": "ExtensionIntersectsWithPlateException(...)",
+      "summary": "Initializes a new instance of the ExtensionIntersectsWithPlateException class with \u0022extension plate clashes with plates\u0022 error message.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5e024038-bdbb-739d-f33d-ef0c3c6ca131"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

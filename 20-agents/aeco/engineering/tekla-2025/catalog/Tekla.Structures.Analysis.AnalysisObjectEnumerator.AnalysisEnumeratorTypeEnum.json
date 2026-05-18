@@ -1,0 +1,49 @@
+{
+  "name": "AnalysisObjectEnumerator.AnalysisEnumeratorTypeEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The available enumerator types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/c0802039-8a74-6b35-75d9-e387925ec948",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ALL_SELECTED",
+      "value": 1,
+      "summary": "This selects all the user selected objects."
+    },
+    {
+      "name": "ALL_OBJECTS",
+      "value": 2,
+      "summary": "This selects all the objects."
+    },
+    {
+      "name": "ALL_OBJECTS_WITH_TYPE",
+      "value": 3,
+      "summary": "This selects all the objects with the given type as the \u0022subtype\u0022."
+    },
+    {
+      "name": "SUB_ANALYSIS_PARTS_OF_ANALYSIS_PART",
+      "value": 4,
+      "summary": "Sub analysis parts of analysis part."
+    },
+    {
+      "name": "MAIN_ANALYSIS_PARTS_OF_ANALYSIS_PART",
+      "value": 5,
+      "summary": "Main analysis parts of analysis part."
+    },
+    {
+      "name": "ANALYSIS_PARTS_BY_NODE",
+      "value": 6,
+      "summary": "Analysis parts connected to node."
+    },
+    {
+      "name": "ANALYSIS_NODELINKS_BY_NODE",
+      "value": 7,
+      "summary": "Analysis node links connected to node."
+    }
+  ]
+}

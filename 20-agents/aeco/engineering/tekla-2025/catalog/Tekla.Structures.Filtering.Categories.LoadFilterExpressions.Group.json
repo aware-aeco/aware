@@ -1,0 +1,34 @@
+{
+  "name": "LoadFilterExpressions.Group",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The Group class represents the group filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/b9e2aa08-6508-42b5-ac9d-09b8bbf27119",
+  "constructors": [
+    {
+      "name": "LoadFilterExpressions.Group",
+      "signature": "LoadFilterExpressions.Group(...)",
+      "summary": "Initializes a new instance of the Group class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a73de887-d662-7b33-d370-b2e9a8be9585"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

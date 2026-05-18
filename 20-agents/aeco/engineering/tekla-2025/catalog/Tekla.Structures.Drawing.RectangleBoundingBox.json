@@ -1,0 +1,160 @@
+{
+  "name": "RectangleBoundingBox",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The RectangleBoundingBox class represents a bounding box for an object, i.e. the surrounding box of the object. The bounding box contains the calculated corner points of the box. The rectangle bounding box is inherited from the axis-aligned bounding box. The AABB also contains methods for getting the center point of the box.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/93efcf40-92db-3e7d-2cb4-5e220d916f5b",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Collide",
+      "signature": "Collide(...)",
+      "summary": "Checks if the current axis-aligned 3d bounding box collides with another given axis-aligned 3d bounding box. Both axis-aligned 3d bounding boxes need to be in the same coordinate system or in the same workplane, so that they are defined using the same axes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/057b4309-6593-9b8a-581e-8233518f597a"
+    },
+    {
+      "name": "CreateRectangleBoundingBox",
+      "signature": "CreateRectangleBoundingBox(...)",
+      "summary": "Creates a new RectangleBoundingBox with the given values.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c57f052a-b758-e28b-434d-8090532e341b"
+    },
+    {
+      "name": "GetCenterPoint",
+      "signature": "GetCenterPoint(...)",
+      "summary": "Returns the geometric center point of the current axis-aligned 3d bounding box.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/015fb65b-ad44-3e33-e891-0d9351e340cf"
+    },
+    {
+      "name": "GetCornerPoints",
+      "signature": "GetCornerPoints(...)",
+      "summary": "Returns all corner points of the current axis-aligned 3d bounding box.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5f6f6ca4-13aa-d956-047a-f84112c028bb"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d4a6968c-2054-eb16-a2bb-5fc4573e2a28"
+    },
+    {
+      "name": "IsInside(LineSegment)",
+      "signature": "IsInside(LineSegment)(...)",
+      "summary": "Checks if the given line segment is inside the current axis-aligned 3d bounding box.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/31e46219-4fba-b1da-4b5b-2ab276eef609"
+    },
+    {
+      "name": "IsInside(Point)",
+      "signature": "IsInside(Point)(...)",
+      "summary": "Checks if the given point is inside the current axis-aligned 3d bounding box.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/29c49520-1316-8e73-c29e-f4c1dd49711d"
+    },
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Returns the rectangle bounding box values as a string.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cc7026d3-a7d7-7763-b336-e2b914e42252"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AngleToAxis",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The angle of the bounding box in relation to the axis (the coordinate system\u0027s X-plane).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8a26053a-cda3-9d9c-7130-667c6195c74c"
+    },
+    {
+      "name": "Height",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The height of the bounding box.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0b4e03ab-a6d7-5f4d-4c32-752d06197238"
+    },
+    {
+      "name": "LowerLeft",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The lower left corner point of the bounding box.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/95be0152-1eaa-6ba2-1e04-920e23f9a51b"
+    },
+    {
+      "name": "LowerRight",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The lower right corner point of the bounding box.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/266b2743-544f-a05c-b58a-f2a23d2d1dab"
+    },
+    {
+      "name": "MaxPoint",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The maximum point of the axis-aligned 3d bounding box.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ea0d7e90-c316-f57f-598e-f43fdeaa00f6"
+    },
+    {
+      "name": "MinPoint",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The minimum point of the axis-aligned 3d bounding box.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/829ce6ec-1a09-e265-17ab-328de948d864"
+    },
+    {
+      "name": "UpperLeft",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The upper left corner point of the bounding box.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8e89d33c-0c32-a9cc-c2c7-4a3d6d32f415"
+    },
+    {
+      "name": "UpperRight",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The upper right corner point of the bounding box.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4ee8ef1f-cc00-d074-009d-0953197a7d27"
+    },
+    {
+      "name": "Width",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The width of the bounding box.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a862fd9c-c54a-09c4-57e3-3bd6a232545b"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

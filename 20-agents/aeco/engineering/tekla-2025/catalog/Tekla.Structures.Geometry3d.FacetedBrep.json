@@ -1,0 +1,111 @@
+{
+  "name": "FacetedBrep",
+  "namespace": "Tekla.Structures.Geometry3d",
+  "kind": "class",
+  "summary": "The FacetedBrep class defines a faceted BREP.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/de56c80a-cf25-a6c3-42ee-195ee7615a12",
+  "constructors": [
+    {
+      "name": "FacetedBrep",
+      "signature": "FacetedBrep(...)",
+      "summary": "Initializes a new instance of the FacetedBrep class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/74f6a69b-0bf2-7aec-19b7-4597a96a7800"
+    },
+    {
+      "name": "FacetedBrep",
+      "signature": "FacetedBrep(...)",
+      "summary": "Initializes a new instance of the FacetedBrep class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7e47c578-f37f-e9f0-713d-f90c1acfe15d"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CheckForTwoManifold",
+      "signature": "CheckForTwoManifold(...)",
+      "summary": "Gets a value indicating whether this instance is 2-manifold.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7ed60d58-765f-eb09-d6e3-4fab3bbfd756"
+    },
+    {
+      "name": "GetInnerFace",
+      "signature": "GetInnerFace(...)",
+      "summary": "Gets the inner face at the specified index.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cff69feb-f110-d653-a99a-5ce21f4e314e"
+    },
+    {
+      "name": "GetInnerFaceCount",
+      "signature": "GetInnerFaceCount(...)",
+      "summary": "Gets the inner face count of the outer face at the specified index.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/885fcb90-953a-2c8f-0aa9-a636087c2f0a"
+    },
+    {
+      "name": "GetOuterFace",
+      "signature": "GetOuterFace(...)",
+      "summary": "Gets the outer face at the specified index.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/43194089-a2f0-b88b-ec45-94b6039e0393"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Faces",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the faces.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/29dece6c-3a94-7235-84e8-bebee02e09d6"
+    },
+    {
+      "name": "GetEdges",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the edges.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f70eccfb-0fb8-9c54-c9a3-c5c7c8db8180"
+    },
+    {
+      "name": "InnerWires",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the inner wires.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fbf699d1-391f-884c-a315-9dbdc6bf12ff"
+    },
+    {
+      "name": "OuterWires",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the outer wires.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0543cf25-a8b8-3b92-890f-fbab1afb4cdd"
+    },
+    {
+      "name": "Vertices",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the vertices.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/290c21fc-2017-f88f-644d-1e004bb2fdc5"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

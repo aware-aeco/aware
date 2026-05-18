@@ -1,0 +1,34 @@
+{
+  "name": "ConnectionStatusEnum",
+  "namespace": "Tekla.Structures",
+  "kind": "enum",
+  "summary": "The status type defines what the status of a connection or a detail is. In the model the color of the symbol (green, yellow, red) indicates the status.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/89082ad9-82c1-795c-0e98-24eb136ccfed",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "STATUS_UNKNOWN",
+      "value": 0,
+      "summary": "The status is unknown."
+    },
+    {
+      "name": "STATUS_OK",
+      "value": 1,
+      "summary": "The status is ok and the symbol color is green."
+    },
+    {
+      "name": "STATUS_WARNING",
+      "value": 2,
+      "summary": "The status indicates a warning and the symbol color is yellow."
+    },
+    {
+      "name": "STATUS_ERROR",
+      "value": 3,
+      "summary": "The status indicates an error and the symbol color is red."
+    }
+  ]
+}

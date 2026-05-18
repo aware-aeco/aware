@@ -1,0 +1,83 @@
+{
+  "name": "InvalidFilterExpressionException",
+  "namespace": "Tekla.Structures.Filtering",
+  "kind": "class",
+  "summary": "The InvalidFilterExpressionException class represents an error that occurred during the expression evaluation. This class cannot be inherited.",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/12183379-26b4-46ac-2d00-a72bfe9473e3",
+  "constructors": [
+    {
+      "name": "InvalidFilterExpressionException",
+      "signature": "InvalidFilterExpressionException(...)",
+      "summary": "Initializes a new instance of the InvalidFilterExpressionException class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8eaf62ae-7a89-5bae-984a-9c02cc70b5af"
+    },
+    {
+      "name": "InvalidFilterExpressionException",
+      "signature": "InvalidFilterExpressionException(...)",
+      "summary": "Initializes a new instance of the InvalidFilterExpressionException class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/abd9af64-bc7e-2567-fd60-eea290a4f9d4"
+    },
+    {
+      "name": "InvalidFilterExpressionException",
+      "signature": "InvalidFilterExpressionException(...)",
+      "summary": "Initializes a new instance of the InvalidFilterExpressionException class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2df51376-3bf6-c68d-5781-5f3da0d97d77"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Expression",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the invalid expression.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3534ae36-3b7c-0d09-4157-def6a5f5a6c3"
+    },
+    {
+      "name": "InvalidFilterExpressionExceptionReasonsType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the reason why the exception is thrown.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/55554ba0-9f36-dce7-bc6f-bb39542ecac5"
+    },
+    {
+      "name": "LeftExpression",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the invalid expression\u0027s left operand.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4b372ed6-8d1c-68fa-cf9f-e83cc5b3aa38"
+    },
+    {
+      "name": "OperatorType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the invalid expression\u0027s operator.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/72c647f4-c8f0-8e95-cbb8-5ce27ab6a29f"
+    },
+    {
+      "name": "RightExpression",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the invalid expression\u0027s right operand.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e1473223-4637-56f2-5f2d-9bbd11b60dd9"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,51 @@
+{
+  "name": "MaterialItemEnumerator",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The MaterialItemEnumerator class allows to loop through the catalog material items.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/9e82b720-28fa-dceb-f771-59865cd3a5dd",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetSize",
+      "signature": "GetSize(...)",
+      "summary": "Returns the total amout of items.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/11b98a3c-be43-b9dc-2d95-7e671b6c8549"
+    },
+    {
+      "name": "MoveNext",
+      "signature": "MoveNext(...)",
+      "summary": "Moves to the next item in the enumerator.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c37ba5f4-4b49-a60e-9e70-33ecae0c5251"
+    },
+    {
+      "name": "Reset",
+      "signature": "Reset(...)",
+      "summary": "Resets the enumerator to the beginning.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/88af2290-f975-1fbe-cd9e-7f3dd8d552d2"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Current",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns a material item instance of the current element.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/059ef1cd-53c7-7572-8864-9fb82ddf5272"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,24 @@
+{
+  "name": "CannotSetAttributeForPluginDueToIncorrectTypeException",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The CannotSetAttributeForPluginDueToIncorrectTypeException class defines the exception that is thrown when Plugin.SetAttribute is called but the type is incorrect.",
+  "base": "System.ApplicationException",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/788d7bc8-e2f4-45e4-5d97-dab2b698d816",
+  "constructors": [
+    {
+      "name": "CannotSetAttributeForPluginDueToIncorrectTypeException",
+      "signature": "CannotSetAttributeForPluginDueToIncorrectTypeException(...)",
+      "summary": "Creates a new CannotSetAttributeForPluginDueToIncorrectTypeException instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fe1c96cb-781f-c10f-2255-5f7fd835af49"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

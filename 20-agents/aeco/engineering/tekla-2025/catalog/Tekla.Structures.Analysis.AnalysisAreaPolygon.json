@@ -1,0 +1,143 @@
+{
+  "name": "AnalysisAreaPolygon",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisAreaPolygon class contains information related to analysis area polygons.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/9a4c35fa-8955-e019-2812-a8737c70355e",
+  "constructors": [
+    {
+      "name": "AnalysisAreaPolygon",
+      "signature": "AnalysisAreaPolygon(...)",
+      "summary": "Creates a new instance of the AnalysisAreaPolygon class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f8aab803-2bfe-5ef2-d7ba-cbb6362ca9a5"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "Add(...)",
+      "summary": "Adds a position to the analysis area polygon. Also adds an edge.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dcd56480-7cc2-7ec3-1bcd-bd9cb1cd6baf"
+    },
+    {
+      "name": "GetEdges",
+      "signature": "GetEdges(...)",
+      "summary": "Gets the edges of the area polygon.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4a17d0fa-4e43-7502-a6dd-fd2cefede0fc"
+    },
+    {
+      "name": "GetPositions",
+      "signature": "GetPositions(...)",
+      "summary": "Gets the positions of the area polygon.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/431e508a-512d-97ac-648e-5564b1adb941"
+    },
+    {
+      "name": "Insert",
+      "signature": "Insert(...)",
+      "summary": "Inserts an analysis area polygon. The AnalysisModelName has to be set.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5af081d1-cafd-db09-5aab-aaea9159158a"
+    },
+    {
+      "name": "Select",
+      "signature": "Select(...)",
+      "summary": "Selects an analysis area polygon. The AnalysisObjectType has to be set.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/08537d0f-a7c1-bdb6-243b-9fa55b88f3b6"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AnalysisModelName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis model name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/820dc60f-92bc-f84c-9b4f-bf71faf2b76a"
+    },
+    {
+      "name": "AnalysisObjectType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2a2631ed-5e7b-7e60-f1d2-52186a5a17c4"
+    },
+    {
+      "name": "Edges",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The edges of the area polygon.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2f6315f4-90d8-e179-b1f9-372d65b19ae8"
+    },
+    {
+      "name": "FatherObject2ID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3cc2e3ff-3afd-4def-2559-7c1827233bec"
+    },
+    {
+      "name": "FatherObject2Type",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7b5d643a-2a12-5281-7f65-a312171bafcc"
+    },
+    {
+      "name": "FatherObjectID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7e55f4c8-ca1a-2761-edd6-2b69663ff941"
+    },
+    {
+      "name": "FatherObjectType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/739bcea1-858d-70e2-ff0d-9c4928129c3e"
+    },
+    {
+      "name": "ID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/289caef6-9b6e-cd4c-dcbc-6397be2f9de0"
+    },
+    {
+      "name": "Positions",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The positions of the area polygon.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0cf92abe-0ce1-16bc-85f9-cd90d6f4b48f"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

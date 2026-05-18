@@ -1,0 +1,125 @@
+{
+  "name": "WeldMark.WeldMarkAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The WeldMarkAttributes class is the attributes class for the weld mark attributes.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/98722d9e-764f-601c-d375-077400a3052c",
+  "constructors": [
+    {
+      "name": "WeldMark.WeldMarkAttributes",
+      "signature": "WeldMark.WeldMarkAttributes(...)",
+      "summary": "Creates a new default weld mark attributes instance that loads standard attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5a044cdf-bad0-2769-c57b-e3edb322135e"
+    },
+    {
+      "name": "WeldMark.WeldMarkAttributes",
+      "signature": "WeldMark.WeldMarkAttributes(...)",
+      "summary": "Creates a new weld mark attributes instance that loads the specified attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a095c260-2033-20a0-2b73-6d916c6e6515"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/15f7400e-a8c0-6cef-0991-aa99d4daa923"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "LoadAttributes(...)",
+      "summary": "Loads the attributes from the attribute file.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9f018710-63bd-27fd-fa0f-8e8e34de85ab"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CustomPresentation",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Custom presentation GUID to be applied to the object type",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ba6f8f20-6eb3-864d-66c6-2a0a5cc54865"
+    },
+    {
+      "name": "Font",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The weld mark font settings.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ac6c1f53-e2d3-eda9-6d43-a4e1c9815e46"
+    },
+    {
+      "name": "SeamAbove",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The visibility of the seam above parameters.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/151e147f-a1fc-21c8-1cfc-c6f64bbbd82a"
+    },
+    {
+      "name": "SeamBelow",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The visibility of the seam below parameters.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bf18edbd-48b9-4ab4-19e5-40f9f69630ac"
+    },
+    {
+      "name": "ShowEdgeAround",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets visibility of the weld mark edge/around property.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b72baf9b-7562-9ebb-5fc5-327c7a7c726e"
+    },
+    {
+      "name": "ShowReferenceText",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets visibility of the weld mark reference text.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dd87ed4b-4bc5-ff97-754e-5502d5c938e8"
+    },
+    {
+      "name": "ShowWeldNumber",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The visibility of the weld number.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fe1d5f3f-1858-5466-9dd4-2627703fbb2d"
+    },
+    {
+      "name": "ShowWorkshopSite",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets visibility of the weld mark workshop/site property.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/43ad93f6-441d-9c3c-701a-678b6581adf9"
+    },
+    {
+      "name": "TransparentBackground",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Controls the text background transparency (transparent/opaque).",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fb833434-a07a-eaa3-8fa2-918e1904d2fa"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

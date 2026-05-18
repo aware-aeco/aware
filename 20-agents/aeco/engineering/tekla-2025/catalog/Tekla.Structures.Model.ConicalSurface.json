@@ -1,0 +1,148 @@
+{
+  "name": "ConicalSurface",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The ConicalSurface class defines a conical surface contour.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/782c39eb-4018-ceec-cbf2-c8502d926da0",
+  "constructors": [
+    {
+      "name": "ConicalSurface",
+      "signature": "ConicalSurface(...)",
+      "summary": "Initializes a new instance of the ConicalSurface class from a base arc, a height and a radius at the top. This is the recommended constructor if no intermediate points are desired along the lateral boundaries of the bend surface.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cf7ddcda-4d1e-a95d-e71a-f330b45e415c"
+    },
+    {
+      "name": "ConicalSurface",
+      "signature": "ConicalSurface(...)",
+      "summary": "Initializes a new instance of the ConicalSurface class from the cone lateral boundaries and the center line. This is the recommended constructor if fine grained control is desired over the lateral boundaries of the surface.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d94ecfcc-ef51-4b3b-1b83-c6ac14908c53"
+    },
+    {
+      "name": "ConicalSurface",
+      "signature": "ConicalSurface(...)",
+      "summary": "Initializes a new instance of the ConicalSurface class with given parameters. The boundaries are defined by the lateral boundaries (i.e. the points on the sides of the curved part of the cone). The side boundaries are defined by the two first points and the two last points of the lateral boundaries.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/43cec9ef-0fe4-08c9-385e-1ee86acde3bc"
+    },
+    {
+      "name": "ConicalSurface",
+      "signature": "ConicalSurface(...)",
+      "summary": "Initializes a new instance of the ConicalSurface class with given parameters. The boundaries are defined by the side boundaries (i.e. generator lines of the cone).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2cae7553-966b-4bc9-6f25-b0ffa04d86fb"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Apex",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the apex of the cone. If it does not exist, it returns null",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/16daf4e0-192c-7a85-a563-5128aceb897a"
+    },
+    {
+      "name": "CenterLine",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the center line of the bend surface (i.e. the line that crosses every circular cross section of the bend at their center point)",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/78ad80f3-7d13-f96d-685d-865a7e3976ec"
+    },
+    {
+      "name": "EndFaceNormal1",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the first end face normal.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/70849150-4c76-34aa-e72a-89580699ae2a"
+    },
+    {
+      "name": "EndFaceNormal2",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the second end face normal.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/28d12dcf-645f-66aa-62ee-f8322ad62b2f"
+    },
+    {
+      "name": "IntersectionLine",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets intersection line.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fbab0d0f-4dc4-1103-7559-d5a9684205bf"
+    },
+    {
+      "name": "InwardCurved",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the direction of the curve - true if the curve is oriented towards the intersection line, false otherwise.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6f2c0005-3cc5-796d-7344-72194d034bca"
+    },
+    {
+      "name": "LateralBoundary1",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the first lateral boundary",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4631bf54-f5cb-0f5b-ce09-30d67a187605"
+    },
+    {
+      "name": "LateralBoundary2",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the second lateral boundary",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/617b86bd-42b9-b03a-cbe3-5735acc0c2f6"
+    },
+    {
+      "name": "Radiuses",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets radiuses of the conical surface. The first radius corresponds to the section located in the first point of the side boundary 1, and the second radius corresponds to the section located in the second point of the side boundary 1.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/53423815-b334-f05b-740c-b004ae09774c"
+    },
+    {
+      "name": "RotationAxis",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the unit vector that defines the rotation axis (for counter clockwise rotations) of the lateral boundaries of the surface. This axis is always parallel to the direction of the center line.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ea47d52c-f73d-35a6-b5c2-8e0dddbf47a6"
+    },
+    {
+      "name": "SideBoundary1",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the first side boundary.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e1a99e24-cbf3-7bd0-1024-277f98ea299a"
+    },
+    {
+      "name": "SideBoundary2",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the second side boundary.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d48a23c8-61d5-2434-8fe7-01291537e4d3"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

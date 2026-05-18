@@ -1,0 +1,54 @@
+{
+  "name": "BaseRebarGroup.RebarGroupSpacingTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The ways to distribute the reinforcing bars with different spacings.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/30e7f555-8816-41d5-f79f-e902c423bc81",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "SPACING_TYPE_UNDEFINED",
+      "value": 0,
+      "summary": "The undefined spacing type."
+    },
+    {
+      "name": "SPACING_TYPE_EXACT_SPACINGS",
+      "value": 1,
+      "summary": "The bars are distributed using the spacing values."
+    },
+    {
+      "name": "SPACING_TYPE_EXACT_NUMBER",
+      "value": 2,
+      "summary": "Equal distribution by the number of reinforcing bars."
+    },
+    {
+      "name": "SPACING_TYPE_TARGET_SPACE",
+      "value": 3,
+      "summary": "Equal distribution by the target spacing value."
+    },
+    {
+      "name": "SPACING_TYPE_EXACT_SPACE_FLEX_AT_START",
+      "value": 4,
+      "summary": "Distribution by the exact spacing value with a flexible first space."
+    },
+    {
+      "name": "SPACING_TYPE_EXACT_SPACE_FLEX_AT_END",
+      "value": 5,
+      "summary": "Distribution by the exact spacing value with a flexible last space."
+    },
+    {
+      "name": "SPACING_TYPE_EXACT_SPACE_FLEX_AT_BOTH",
+      "value": 6,
+      "summary": "Distribution by the exact spacing value with flexible first and last spaces."
+    },
+    {
+      "name": "SPACING_TYPE_EXACT_SPACE_FLEX_AT_MIDDLE",
+      "value": 7,
+      "summary": "Distribution by the exact spacing value with a flexible middle space."
+    }
+  ]
+}

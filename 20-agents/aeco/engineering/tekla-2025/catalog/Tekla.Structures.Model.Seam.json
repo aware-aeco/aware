@@ -1,0 +1,573 @@
+{
+  "name": "Seam",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The Seam class represents a seam. A seam is something that connects a main part to other parts along an edge.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/99d98d23-1040-9c9e-cab2-4d89c1e43f1e",
+  "constructors": [
+    {
+      "name": "Seam",
+      "signature": "Seam(...)",
+      "summary": "Creates a new seam instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/95181cfe-fae7-7a1c-e897-c372db0904f6"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CompareTo",
+      "signature": "CompareTo(...)",
+      "summary": "Compares Identifiers of model objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/79cca356-0c8a-e8fb-463a-34ad4141bec7"
+    },
+    {
+      "name": "Delete",
+      "signature": "Delete(...)",
+      "summary": "Deletes the seam instance with the given ID from the model database.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7db02b19-2b09-df66-8376-19b030000fd7"
+    },
+    {
+      "name": "Equals",
+      "signature": "Equals(...)",
+      "summary": "Check if Identifiers of model objects are same.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e4324265-2490-00de-4139-63a8f7acb492"
+    },
+    {
+      "name": "GetAllReportProperties",
+      "signature": "GetAllReportProperties(...)",
+      "summary": "Retrieves all properties for the model object in one hashtable. Type for the returned value must be checked using type casting.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0708f404-ce77-28e1-4ebe-fa906f68bff8"
+    },
+    {
+      "name": "GetAllUserProperties",
+      "signature": "GetAllUserProperties(...)",
+      "summary": "Retrieves all properties for the model object in one hashtable. Type for the returned value must be checked using type casting.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/63b853a0-0af5-af9c-3ce7-05299664d7f8"
+    },
+    {
+      "name": "GetAttribute(String, Double.)",
+      "signature": "GetAttribute(String, Double.)(...)",
+      "summary": "Retrieves the attribute with the given name.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a347ce9e-865f-554d-140f-9a65728b24a3"
+    },
+    {
+      "name": "GetAttribute(String, Int32.)",
+      "signature": "GetAttribute(String, Int32.)(...)",
+      "summary": "Retrieves the attribute with the given name.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2c48112c-5580-99f3-6c35-70fd5f538b09"
+    },
+    {
+      "name": "GetAttribute(String, String.)",
+      "signature": "GetAttribute(String, String.)(...)",
+      "summary": "Retrieves the attribute with the given name.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c8652aa1-9069-88f2-b821-3afdd68e7ca5"
+    },
+    {
+      "name": "GetChildren",
+      "signature": "GetChildren(...)",
+      "summary": "Returns an enumerator of all the children model objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ce51ec40-310c-6067-a89f-f8d029aab747"
+    },
+    {
+      "name": "GetCoordinateSystem",
+      "signature": "GetCoordinateSystem(...)",
+      "summary": "Returns the coordinate system for the given model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8adfe9cd-f6e5-6474-1297-33c6270a7b0a"
+    },
+    {
+      "name": "GetCustomObjectType",
+      "signature": "GetCustomObjectType(...)",
+      "summary": "Gets custom object type name from an existing object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d3be2ba3-8533-7165-f2d3-a5aa9df556b8"
+    },
+    {
+      "name": "GetDoubleReportProperties",
+      "signature": "GetDoubleReportProperties(...)",
+      "summary": "Retrieves multiple double report properties for the model object. It is faster to fetch multiple properties at once.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f86f6c96-f738-49ca-16ba-f5634e862ba2"
+    },
+    {
+      "name": "GetDoubleUserProperties",
+      "signature": "GetDoubleUserProperties(...)",
+      "summary": "Retrieves all double properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6ead7a63-5f76-0631-d480-d46c27e882aa"
+    },
+    {
+      "name": "GetDynamicStringProperty",
+      "signature": "GetDynamicStringProperty(...)",
+      "summary": "Gets a dynamic string property from the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/415e86d9-7de6-ea53-ce68-20b3e67b8655"
+    },
+    {
+      "name": "GetFatherComponent",
+      "signature": "GetFatherComponent(...)",
+      "summary": "Returns the father component of the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a2c28f3f-52ff-50a8-1b32-10d18db5c31d"
+    },
+    {
+      "name": "GetHierarchicObjects",
+      "signature": "GetHierarchicObjects(...)",
+      "summary": "Returns an enumerator of all the connected hierarchic objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cc228ea0-267b-7d90-7441-c9efc1779b08"
+    },
+    {
+      "name": "GetInputPolygon",
+      "signature": "GetInputPolygon(...)",
+      "summary": "Returns the input polygon of the seam.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6ed2fd6f-9e42-f82d-b0c0-e0702ac27519"
+    },
+    {
+      "name": "GetIntegerReportProperties",
+      "signature": "GetIntegerReportProperties(...)",
+      "summary": "Retrieves multiple integer report properties for the model object. It is faster to fetch multiple properties at once.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2623a9c0-2a9c-e233-9daa-59f92ed51445"
+    },
+    {
+      "name": "GetIntegerUserProperties",
+      "signature": "GetIntegerUserProperties(...)",
+      "summary": "Retrieves all integer properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1b3c6f06-bc25-a54e-2a88-b60dc4a3c85e"
+    },
+    {
+      "name": "GetPhase",
+      "signature": "GetPhase(...)",
+      "summary": "Retrieves the phase of the model object (the phase number, the phase name, the phase comment and whether the phase is the current one or not).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/310f8b7a-c120-753a-35c9-f7c73a9806c9"
+    },
+    {
+      "name": "GetPrimaryObject",
+      "signature": "GetPrimaryObject(...)",
+      "summary": "Returns the primary object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a410c572-b40d-070c-f332-91f6f5fd8925"
+    },
+    {
+      "name": "GetReportProperty(String, Double.)",
+      "signature": "GetReportProperty(String, Double.)(...)",
+      "summary": "Retrieves a double property of the report for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1c05aa56-5f42-be91-a59e-8d59a5549f45"
+    },
+    {
+      "name": "GetReportProperty(String, Int32.)",
+      "signature": "GetReportProperty(String, Int32.)(...)",
+      "summary": "Retrieves an integer property of the report for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ce8e4ca0-3750-3c9b-5ca8-27e48b45e0bd"
+    },
+    {
+      "name": "GetReportProperty(String, String.)",
+      "signature": "GetReportProperty(String, String.)(...)",
+      "summary": "Retrieves a string property of the report for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/70f212bb-ee70-e9e9-7ab6-d6a9d46f8de6"
+    },
+    {
+      "name": "GetSecondaryObjects",
+      "signature": "GetSecondaryObjects(...)",
+      "summary": "Returns an array list containing all the secondary objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4637ebb5-1624-f867-8d6c-b0317513ce8c"
+    },
+    {
+      "name": "GetStartAndEndPositions",
+      "signature": "GetStartAndEndPositions(...)",
+      "summary": "Returns the start and end points of the seam.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/db1a0567-7d4c-f6e8-084a-c504f1542e16"
+    },
+    {
+      "name": "GetStringReportProperties",
+      "signature": "GetStringReportProperties(...)",
+      "summary": "Retrieves multiple string report properties for the model object. It is faster to fetch multiple properties at once.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5ff72da1-7382-f5d2-eb1d-c99b46239d42"
+    },
+    {
+      "name": "GetStringUserProperties",
+      "signature": "GetStringUserProperties(...)",
+      "summary": "Retrieves all string properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/67120e84-c820-9d52-12ae-c167c595842c"
+    },
+    {
+      "name": "GetUserProperty(String, Double.)",
+      "signature": "GetUserProperty(String, Double.)(...)",
+      "summary": "Retrieves a double property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/17cc8074-7955-32b5-2b4b-b169c45d4ee0"
+    },
+    {
+      "name": "GetUserProperty(String, Int32.)",
+      "signature": "GetUserProperty(String, Int32.)(...)",
+      "summary": "Retrieves an integer property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d9364c1d-5b57-6a31-4c13-01124058cfb2"
+    },
+    {
+      "name": "GetUserProperty(String, String.)",
+      "signature": "GetUserProperty(String, String.)(...)",
+      "summary": "Retrieves a string property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/214a886c-c18c-9b66-d7c9-fe84260962f2"
+    },
+    {
+      "name": "Insert",
+      "signature": "Insert(...)",
+      "summary": "Inserts the seam into the model database. All the attributes must be set.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bba02635-2aca-b896-0aa6-ada425872e8d"
+    },
+    {
+      "name": "LoadAttributesFromFile",
+      "signature": "LoadAttributesFromFile(...)",
+      "summary": "Loads the attributes for the component from the given file. These attributes will be loaded before all the attributes that have been set with the SetAttribute methods, so any attributes that are set with SetAttribute will override those loaded from the given standard file.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/acc9930a-aa6f-667c-0878-7ea80ce416b8"
+    },
+    {
+      "name": "Modify",
+      "signature": "Modify(...)",
+      "summary": "Modifies the existing seam in the model database to match the current one.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4aec1556-5235-88c8-7683-28eaabfab252"
+    },
+    {
+      "name": "Select",
+      "signature": "Select(...)",
+      "summary": "Selects a seam from the model database. The seam ID must be set.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a1f1ae56-1b21-a475-f889-10c3e4f6e3d4"
+    },
+    {
+      "name": "SetAttribute(String, Double)",
+      "signature": "SetAttribute(String, Double)(...)",
+      "summary": "Sets the attribute\u0027s value to the given value.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/785d0216-df12-53fc-344b-a2e67001cf3c"
+    },
+    {
+      "name": "SetAttribute(String, Int32)",
+      "signature": "SetAttribute(String, Int32)(...)",
+      "summary": "Sets the attribute\u0027s value to the given value.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/797240ce-567c-bff9-2a60-6359cc909ce0"
+    },
+    {
+      "name": "SetAttribute(String, String)",
+      "signature": "SetAttribute(String, String)(...)",
+      "summary": "Sets the attribute\u0027s value to the given value.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6f0f7c8f-c5d2-8012-9faf-f68991966ff5"
+    },
+    {
+      "name": "SetCustomObjectType",
+      "signature": "SetCustomObjectType(...)",
+      "summary": "Sets a custom object type name for an existing object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3d6fb91b-48a9-35ca-d498-526514344089"
+    },
+    {
+      "name": "SetDynamicStringProperty",
+      "signature": "SetDynamicStringProperty(...)",
+      "summary": "Sets a dynamic string property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4dab0254-09e5-5e61-c28b-1c12afab71a0"
+    },
+    {
+      "name": "SetInputPolygon",
+      "signature": "SetInputPolygon(...)",
+      "summary": "Sets the input polygon of the seam.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/50bba7e4-0230-7108-37ba-24ef6beecc84"
+    },
+    {
+      "name": "SetInputPositions",
+      "signature": "SetInputPositions(...)",
+      "summary": "Sets the start and end point of the seam.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/12e43c2f-be73-1f45-8c8b-fc38d6b4ef2e"
+    },
+    {
+      "name": "SetLabel",
+      "signature": "SetLabel(...)",
+      "summary": "Sets a label for an object when a new instance is created, this method must be called before Insert. The label is used in plug-ins for identifying the changed object in modification.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3efcfc44-613a-e66b-9ebd-9f86df4f4036"
+    },
+    {
+      "name": "SetPhase",
+      "signature": "SetPhase(...)",
+      "summary": "Sets the phase of the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ed80abcc-0ff7-d081-2229-e651f858a727"
+    },
+    {
+      "name": "SetPrimaryObject",
+      "signature": "SetPrimaryObject(...)",
+      "summary": "Sets the primary object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6e5d9a16-126d-9c68-df4f-df73c8f26bf1"
+    },
+    {
+      "name": "SetSecondaryObject",
+      "signature": "SetSecondaryObject(...)",
+      "summary": "Sets the secondary object of the seam. Use this method if you wish to add only one secondary object to the seam.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a578f577-d277-ddc1-c792-b9e600789340"
+    },
+    {
+      "name": "SetSecondaryObjects",
+      "signature": "SetSecondaryObjects(...)",
+      "summary": "Sets the secondary objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d291129c-af81-476c-24af-88fba69e40b5"
+    },
+    {
+      "name": "SetUserProperties",
+      "signature": "SetUserProperties(...)",
+      "summary": "Sets multiple properties for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8659da37-d571-f03f-c666-5c9fa3b113f5"
+    },
+    {
+      "name": "SetUserProperty(String, Double)",
+      "signature": "SetUserProperty(String, Double)(...)",
+      "summary": "Sets a double property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5c585b8b-5c2e-7b75-2242-758f17429396"
+    },
+    {
+      "name": "SetUserProperty(String, Int32)",
+      "signature": "SetUserProperty(String, Int32)(...)",
+      "summary": "Sets an integer property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dd5b828d-3a87-bb58-5ac9-e1c3b4c2fe4b"
+    },
+    {
+      "name": "SetUserProperty(String, String)",
+      "signature": "SetUserProperty(String, String)(...)",
+      "summary": "Sets a string property for the model object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/80bf0348-b651-3d4a-862b-49c85bc924ab"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AutoDirectionType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The auto direction type. Default value is AUTODIR_BASIC. Value should be AUTODIR_NA to set direction with UpVector property. Value should be AUTODIR_FROM_ATTRIBUTE_FILE to set direction with seam attribute file.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/12ed231c-ad68-ec03-c458-0c4927b5c28e"
+    },
+    {
+      "name": "AutoPosition",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The auto position type. Defines that the seam will internally evaluate the final position more accurately. The input positions are still needed for reference.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6a974097-11fd-f0e7-81f2-67e3fe993de8"
+    },
+    {
+      "name": "Class",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The class of the seam.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/78c976fd-d8f9-a63a-724d-bb9f15455316"
+    },
+    {
+      "name": "Code",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The code of the seam. The code can be used to classify the seam. The code can be reported and shown in drawings. The maximum length of the string is 20 characters.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/058470d9-9e90-74ff-2c45-cc23f30cb65b"
+    },
+    {
+      "name": "Identifier",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The identifier of the object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3704f321-8e6e-27e4-0752-adfaed74c69f"
+    },
+    {
+      "name": "IsUpToDate",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets if the object does not have a modification which is not shared.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bc992671-093f-44a9-5eeb-7d289fd00cc5"
+    },
+    {
+      "name": "ModificationTime",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets latest time of the object was modified or created.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/28d2c3c4-efd2-b4ed-7e2c-93cfb6e3a57f"
+    },
+    {
+      "name": "Name",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The name of the component. The name identifies custom components or plug-ins.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1f124aa1-fa9a-b88f-76e5-0f9bc57c8c55"
+    },
+    {
+      "name": "Number",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The number of the component. A number greater than zero identifies system components, for custom components the number is CUSTOM_OBJECT_NUMBER, and for plug-ins the number is PLUGIN_OBJECT_NUMBER.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0db6aac9-42d4-d3f9-0457-51e98f155cdb"
+    },
+    {
+      "name": "Status",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The read only status of the seam. The status can be reported and shown in drawings. The color of the connection symbol in the model indicates the status of the seam.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1e9eb9b5-7b33-711e-237f-7eb459fe5ab6"
+    },
+    {
+      "name": "UpVector",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "A vector indicating which direction is considered the up direction for the seam.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2441d073-9339-6869-ae36-4b347767fbd5"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

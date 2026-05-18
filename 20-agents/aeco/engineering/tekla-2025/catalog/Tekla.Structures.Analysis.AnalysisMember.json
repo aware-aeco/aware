@@ -1,0 +1,165 @@
+{
+  "name": "AnalysisMember",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisMember class contains information related to analysis members.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/714466d6-06c3-35b3-2a23-0895a5394913",
+  "constructors": [
+    {
+      "name": "AnalysisMember",
+      "signature": "AnalysisMember(...)",
+      "summary": "Initializes a new instance of the AnalysisMember class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4bb077fb-685b-841d-28b6-eb6f3c0c128f"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CopyData",
+      "signature": "CopyData(...)",
+      "summary": "Copies data from another analysis member.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7b9bab44-4378-ccac-812d-feabc828a0ba"
+    },
+    {
+      "name": "Modify",
+      "signature": "Modify(...)",
+      "summary": "Modifies an analysis member. The AnalysisModelName has to be set.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bea6cbda-7622-5b8d-4acf-2a6883299bc8"
+    },
+    {
+      "name": "Select",
+      "signature": "Select(...)",
+      "summary": "Selects an analysis member. The AnalysisModelName and ID have to be set.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2145077e-6a7d-dc86-b945-0929c497d700"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AnalysisDesignCode",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis design code of the member.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bf127628-0931-ee6c-4ef9-b417ad5ffc7d"
+    },
+    {
+      "name": "AnalysisModelName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis model name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/820dc60f-92bc-f84c-9b4f-bf71faf2b76a"
+    },
+    {
+      "name": "AnalysisObjectType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2a2631ed-5e7b-7e60-f1d2-52186a5a17c4"
+    },
+    {
+      "name": "Composite",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the composite settings of the member.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2709053b-9738-73b0-fec3-ad25c5dbcac2"
+    },
+    {
+      "name": "Curvature",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the beam curvature of the member.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/93f475eb-c5f7-9078-c0ed-0ae24e5c69a3"
+    },
+    {
+      "name": "End",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis beam end settings at the end of the member.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/940d1088-5508-cb93-a995-d57a3a11a2ff"
+    },
+    {
+      "name": "FatherObject2ID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3cc2e3ff-3afd-4def-2559-7c1827233bec"
+    },
+    {
+      "name": "FatherObject2Type",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7b5d643a-2a12-5281-7f65-a312171bafcc"
+    },
+    {
+      "name": "FatherObjectID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7e55f4c8-ca1a-2761-edd6-2b69663ff941"
+    },
+    {
+      "name": "FatherObjectType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/739bcea1-858d-70e2-ff0d-9c4928129c3e"
+    },
+    {
+      "name": "ID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/289caef6-9b6e-cd4c-dcbc-6397be2f9de0"
+    },
+    {
+      "name": "Label",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the label of the analysis member.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3394b21b-b97e-29d1-7b03-da7fe983205c"
+    },
+    {
+      "name": "Material",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the material of the analysis member.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/de7414ff-77ff-7642-bac5-1be3af70358c"
+    },
+    {
+      "name": "Start",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis beam end settings at the start of the member.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e45a3d95-41f8-9435-1d05-bfe863f56026"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

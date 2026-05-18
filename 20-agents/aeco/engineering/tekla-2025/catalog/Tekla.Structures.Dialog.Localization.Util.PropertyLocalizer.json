@@ -1,0 +1,34 @@
+{
+  "name": "Localization.Util.PropertyLocalizer",
+  "namespace": "Tekla.Structures.Dialog",
+  "kind": "class",
+  "summary": "The PropertyLocalizer class localizes properties.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/165a5181-3757-e188-e0eb-ba009b65c83f",
+  "constructors": [
+    {
+      "name": "Localization.Util.PropertyLocalizer",
+      "signature": "Localization.Util.PropertyLocalizer(...)",
+      "summary": "Creates a new instance of the localizer.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2326a892-e00f-756f-988c-d4c81592e693"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Localize",
+      "signature": "Localize(...)",
+      "summary": "Localizes the object with the given localization instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f0d889df-cd25-7dd5-b112-9359562b4e68"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

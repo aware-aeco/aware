@@ -1,0 +1,44 @@
+{
+  "name": "FilterExpressionFileType",
+  "namespace": "Tekla.Structures.Filtering",
+  "kind": "enum",
+  "summary": "The filter expression file type defines the filter expression file types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/85c8b3b7-5a40-6a3b-a4d8-23be21cd57fd",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "OBJECT_GROUP_SELECTION",
+      "value": 0,
+      "summary": "The object group selection filter."
+    },
+    {
+      "name": "OBJECT_GROUP_VIEW",
+      "value": 1,
+      "summary": "The object group view filter."
+    },
+    {
+      "name": "DRAWING_SINGLE_PART",
+      "value": 2,
+      "summary": "The drawing single part filter."
+    },
+    {
+      "name": "DRAWING_ASSEMBLY",
+      "value": 3,
+      "summary": "The drawing assembly filter."
+    },
+    {
+      "name": "DRAWING_CAST_UNIT",
+      "value": 4,
+      "summary": "The drawing cast unit filter."
+    },
+    {
+      "name": "DRAWING_GENERAL",
+      "value": 5,
+      "summary": "The drawing general filter."
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "InvalidFilterExpressionExceptionReasonsType",
+  "namespace": "Tekla.Structures.Filtering",
+  "kind": "enum",
+  "summary": "The invalid filter expression exception reasons type defines the possible reasons for the InvalidFilterExpressionException.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/857010f3-9b55-4a4b-4c96-d0d53ece3e56",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "TOO_MANY_NESTED_COLLECTIONS",
+      "value": 0,
+      "summary": "There are too many nested collections."
+    }
+  ]
+}

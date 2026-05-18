@@ -1,0 +1,147 @@
+{
+  "name": "AnalysisDecomposedSelfweightLoad",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisDecomposedSelfweightLoad class contains information of decomposed selfweight loads.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/d957d7ca-bf9f-ae3c-2a91-d4e9543f8337",
+  "constructors": [
+    {
+      "name": "AnalysisDecomposedSelfweightLoad",
+      "signature": "AnalysisDecomposedSelfweightLoad(...)",
+      "summary": "Initializes a new instance of the AnalysisDecomposedSelfweightLoad class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/72fc9bc5-167a-cab6-41d9-67c559181b88"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Select",
+      "signature": "Select(...)",
+      "summary": "Selects an analysis decomposed selfweight load.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0979f81f-5085-6ac2-4fa9-71b328f7e938"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AnalysisLoadType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the analysis decomposed load.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ace48bcf-1b30-ca15-3729-d103b4ed9868"
+    },
+    {
+      "name": "AnalysisModelName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis model name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/820dc60f-92bc-f84c-9b4f-bf71faf2b76a"
+    },
+    {
+      "name": "AnalysisObjectType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2a2631ed-5e7b-7e60-f1d2-52186a5a17c4"
+    },
+    {
+      "name": "Directions",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The directions of the decomposed selfweight load.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6b304b95-c715-7b3a-6057-510627fc06a1"
+    },
+    {
+      "name": "Factors",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The factors of the decomposed selfweight load.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9ffe3810-473b-65e1-8b83-9a59ac24dd4c"
+    },
+    {
+      "name": "FatherObject2ID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3cc2e3ff-3afd-4def-2559-7c1827233bec"
+    },
+    {
+      "name": "FatherObject2Type",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7b5d643a-2a12-5281-7f65-a312171bafcc"
+    },
+    {
+      "name": "FatherObjectID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7e55f4c8-ca1a-2761-edd6-2b69663ff941"
+    },
+    {
+      "name": "FatherObjectType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/739bcea1-858d-70e2-ff0d-9c4928129c3e"
+    },
+    {
+      "name": "ID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/289caef6-9b6e-cd4c-dcbc-6397be2f9de0"
+    },
+    {
+      "name": "ModelLoadGroupID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the load group.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/213762ac-ac77-9169-cdeb-e113e53ff81e"
+    },
+    {
+      "name": "ModelLoadID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the model load.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6ba8c478-1e4a-124c-935d-461588f5c31e"
+    },
+    {
+      "name": "ObjectAttachedToID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the object the load is attached to.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d65aaf5e-3329-e257-1e60-238ce61d2a50"
+    },
+    {
+      "name": "ObjectAttachedToType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the object the load is attached to.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4a5461b3-8bfa-7f30-bed9-781f67facf46"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

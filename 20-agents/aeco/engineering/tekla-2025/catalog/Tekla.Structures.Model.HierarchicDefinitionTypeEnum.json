@@ -1,0 +1,39 @@
+{
+  "name": "HierarchicDefinitionTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "Defines the different types of classification hierarchies.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/07fc35c8-a364-8d68-e9cb-4798407bf2b7",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "DOT_HIERARCHIC_CUSTOM_TYPE",
+      "value": 0,
+      "summary": "The custom type classification hierarchy."
+    },
+    {
+      "name": "DOT_HIERARCHIC_LOGICAL_BUILDING_AREA",
+      "value": 1,
+      "summary": "The logical building area classification hierarchy."
+    },
+    {
+      "name": "DOT_HIERARCHIC_OBJECT_TYPE",
+      "value": 2,
+      "summary": "The object type classification hierarchy."
+    },
+    {
+      "name": "DOT_HIERARCHIC_TASK_WORK_TYPE",
+      "value": 3,
+      "summary": "The task work type classification hierarchy."
+    },
+    {
+      "name": "DOT_HIERARCHIC_TASK_SCENARIO",
+      "value": 4,
+      "summary": "The task scenario classification hierarchy."
+    }
+  ]
+}

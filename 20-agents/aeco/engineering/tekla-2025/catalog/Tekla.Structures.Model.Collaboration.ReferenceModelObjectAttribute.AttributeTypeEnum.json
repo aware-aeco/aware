@@ -1,0 +1,84 @@
+{
+  "name": "ReferenceModelObjectAttribute.AttributeTypeEnum",
+  "namespace": "Tekla.Structures.Model.Collaboration",
+  "kind": "enum",
+  "summary": "All the reference model object attribute types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/991eba0d-eea8-87a6-6b61-ce8a7f07c6f9",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ATTRIBUTETYPE_INVALID",
+      "value": 0,
+      "summary": "The invalid attribute type."
+    },
+    {
+      "name": "ATTRIBUTETYPE_IFC2X3_PARAMETRICOBJECT_CSHAPEPROFILE",
+      "value": 3,
+      "summary": "The C-shape profile attribute type."
+    },
+    {
+      "name": "ATTRIBUTETYPE_IFC2X3_PARAMETRICOBJECT_CIRCLEHOLLOWPROFILE",
+      "value": 4,
+      "summary": "The circular and hollow profile attribute type."
+    },
+    {
+      "name": "ATTRIBUTETYPE_IFC2X3_PARAMETRICOBJECT_CIRCLEPROFILE",
+      "value": 5,
+      "summary": "The circular profile attribute type."
+    },
+    {
+      "name": "ATTRIBUTETYPE_IFC2X3_PARAMETRICOBJECT_ELLIPSEPROFILE",
+      "value": 6,
+      "summary": "The ellipse profile attribute type."
+    },
+    {
+      "name": "ATTRIBUTETYPE_IFC2X3_PARAMETRICOBJECT_ISHAPEPROFILE",
+      "value": 7,
+      "summary": "The I-shape profile attribute type."
+    },
+    {
+      "name": "ATTRIBUTETYPE_IFC2X3_PARAMETRICOBJECT_LSHAPEPROFILE",
+      "value": 8,
+      "summary": "The L-shape profile attribute type."
+    },
+    {
+      "name": "ATTRIBUTETYPE_IFC2X3_PARAMETRICOBJECT_RECTANGLEHOLLOWPROFILE",
+      "value": 9,
+      "summary": "The rectangular and hollow profile attribute type."
+    },
+    {
+      "name": "ATTRIBUTETYPE_IFC2X3_PARAMETRICOBJECT_RECTANGLEPROFILE",
+      "value": 10,
+      "summary": "The rectangular profile attribute type."
+    },
+    {
+      "name": "ATTRIBUTETYPE_IFC2X3_PARAMETRICOBJECT_TSHAPEPROFILE",
+      "value": 11,
+      "summary": "The T-shape profile attribute type."
+    },
+    {
+      "name": "ATTRIBUTETYPE_IFC2X3_PARAMETRICOBJECT_USHAPEPROFILE",
+      "value": 12,
+      "summary": "The U-shape profile attribute type."
+    },
+    {
+      "name": "ATTRIBUTETYPE_IFC2X3_PARAMETRICOBJECT_ZSHAPEPROFILE",
+      "value": 13,
+      "summary": "The Z-shape profile attribute type."
+    },
+    {
+      "name": "ATTRIBUTETYPE_PARAMETRICOBJECT_CUSTOMPROFILE",
+      "value": 14,
+      "summary": "The custom profile attribute type."
+    },
+    {
+      "name": "ATTRIBUTETYPE_PARAMETRICOBJECT_OBB",
+      "value": 29,
+      "summary": "The object bounding box (OBB) attribute type."
+    }
+  ]
+}

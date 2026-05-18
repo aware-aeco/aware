@@ -1,0 +1,24 @@
+{
+  "name": "Tree",
+  "namespace": "Tekla.Structures.Dialog.UIControls",
+  "kind": "class",
+  "summary": "The Tree class represents a tree view control that can contain images.",
+  "base": "System.Windows.Forms.TreeView",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/e0116c1a-12bc-7035-20de-a2e3531be1b1",
+  "constructors": [
+    {
+      "name": "Tree",
+      "signature": "Tree(...)",
+      "summary": "Initializes a new instance of the Tree class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/85d05369-1b18-440a-0bbd-ce23169d8bbf"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,41 @@
+{
+  "name": "AnalysisSupport",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisSupport class contains information related to analysis supports.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/5ce94939-b93c-f0fa-d7ac-5e15f77661bb",
+  "constructors": [
+    {
+      "name": "AnalysisSupport",
+      "signature": "AnalysisSupport(...)",
+      "summary": "Initializes a new instance of the AnalysisSupport class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0c04b2b1-43fa-041c-d1b7-7e95c5d52f76"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Spring",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The spring values of the connectivity.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/041d99af-42f3-ceaf-db38-2a4b2971820f"
+    },
+    {
+      "name": "Support",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The connectivity type of the connectivity.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dfea8988-ddf4-2105-f8fd-e9bef8442d68"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

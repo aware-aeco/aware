@@ -1,0 +1,64 @@
+{
+  "name": "SectionMarkBase.SectionMarkSymbol.SymbolShapes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The possible shapes of the section mark symbol.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/0a5890e1-e6db-7652-7fad-2dbfd157e0fa",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 1,
+      "summary": "No symbol."
+    },
+    {
+      "name": "SymbolShape1",
+      "value": 101,
+      "summary": "The triangle with black and white halves."
+    },
+    {
+      "name": "SymbolShape2",
+      "value": 102,
+      "summary": "The arrow line pointing to an orthogonal straight line."
+    },
+    {
+      "name": "SymbolShape3",
+      "value": 103,
+      "summary": "The line with half of an arrow end."
+    },
+    {
+      "name": "SymbolShape4",
+      "value": 104,
+      "summary": "The rectangle shape with very small height."
+    },
+    {
+      "name": "SymbolShape5",
+      "value": 105,
+      "summary": "The triangle and circle shapes mixed. The circle partly hides the triangle."
+    },
+    {
+      "name": "SymbolShape6",
+      "value": 106,
+      "summary": "The triangle and circle shapes mixed. The triangle is on top."
+    },
+    {
+      "name": "SymbolShape7",
+      "value": 107,
+      "summary": "The triangle shape without content."
+    },
+    {
+      "name": "SymbolShape8",
+      "value": 108,
+      "summary": "The triangle shape filled in black."
+    },
+    {
+      "name": "Custom",
+      "value": 4,
+      "summary": "The custom shape."
+    }
+  ]
+}

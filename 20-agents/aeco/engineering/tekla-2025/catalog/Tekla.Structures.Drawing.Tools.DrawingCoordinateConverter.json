@@ -1,0 +1,43 @@
+{
+  "name": "DrawingCoordinateConverter",
+  "namespace": "Tekla.Structures.Drawing.Tools",
+  "kind": "class",
+  "summary": "The DrawingCoordinateConverter class is used to move coordinates from one view to another. This tool takes into account the empty areas in the views.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/099ea58a-7599-6e40-2bf9-d1286fd38891",
+  "constructors": [
+    {
+      "name": "DrawingCoordinateConverter",
+      "signature": "DrawingCoordinateConverter(...)",
+      "summary": "Initializes a new instance of the DrawingCoordinateConverter class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d4f940d9-e248-472a-30a1-ff2740c91015"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Convert(ViewBase, ViewBase, PointList)",
+      "signature": "Convert(ViewBase, ViewBase, PointList)(...)",
+      "summary": "Converts a list of coordinate points from one view\u0027s coordinate system to another view\u0027s coordinate system.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cde655e6-530b-715c-d3a2-8ff1d6c7598b"
+    },
+    {
+      "name": "Convert(ViewBase, ViewBase, Point)",
+      "signature": "Convert(ViewBase, ViewBase, Point)(...)",
+      "summary": "Converts one coordinate point from one view\u0027s coordinate system to another view\u0027s coordinate system.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/77a94c8e-e6bc-5d60-c364-c4b4e45d5eb4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

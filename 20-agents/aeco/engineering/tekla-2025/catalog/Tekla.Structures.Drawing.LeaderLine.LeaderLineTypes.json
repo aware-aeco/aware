@@ -1,0 +1,34 @@
+{
+  "name": "LeaderLine.LeaderLineTypes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The different types of leader lines available.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/7cf6ff97-74c7-7dab-6c0b-1daf30c10428",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Undefined",
+      "value": 0,
+      "summary": "No type defined yet (this means that the leader line isn\u0027t selected yet)."
+    },
+    {
+      "name": "NormalLeaderLine",
+      "value": 1,
+      "summary": "The standard leader line type. Its start point and elbow points can be freely modified. The end point is read-only information."
+    },
+    {
+      "name": "SupportLeaderLine",
+      "value": 2,
+      "summary": "The support leader line type, used in reinforcement marks with parallel leader lines. All leader line information is read-only."
+    },
+    {
+      "name": "ExtensionLeaderLine",
+      "value": 3,
+      "summary": "The type for the extension leader lines (enabled by the usage of an advanced option). All leader line information is read-only."
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "name": "WpfSteelFinishComboBox",
+  "namespace": "Tekla.Structures.Dialog.UIControls",
+  "kind": "class",
+  "summary": "The WpfSteelFinishComboBox class represents a control to select the steel finish from the list.",
+  "base": "System.Windows.Controls.ComboBox",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/a7063f50-c3b8-e569-ce78-14be1adc7c71",
+  "constructors": [
+    {
+      "name": "WpfSteelFinishComboBox",
+      "signature": "WpfSteelFinishComboBox(...)",
+      "summary": "Initiates a new instance of the control.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fa34e0ec-844a-2630-5d01-3b7fa6922923"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Finish",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the finish value",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ab618289-8f17-097f-1263-8cd856e824bf"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

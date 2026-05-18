@@ -1,0 +1,86 @@
+{
+  "name": "PlacingDistanceAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PlacingDistanceAttributes class contains the basic attributes for placing distances.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/63b1eb62-5a40-d347-0a8a-46e21aa63e49",
+  "constructors": [
+    {
+      "name": "PlacingDistanceAttributes",
+      "signature": "PlacingDistanceAttributes(...)",
+      "summary": "Initializes a new instance of the PlacingDistanceAttributes class. The default values are a 0.0 search margin and a 0.0 minimal distance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e3ad5d7b-58a3-af19-c150-655cd98309b3"
+    },
+    {
+      "name": "PlacingDistanceAttributes",
+      "signature": "PlacingDistanceAttributes(...)",
+      "summary": "Creates a new placing distance attributes instance with the given search marginal and minimal distance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2f0e28da-9fa3-686a-800a-9328cf1535f6"
+    },
+    {
+      "name": "PlacingDistanceAttributes",
+      "signature": "PlacingDistanceAttributes(...)",
+      "summary": "Creates a new placing distance attributes instance with the given search margin, minimal and maximal distance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/91eae0c6-7997-0964-c668-75d4a59a14bb"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "Clone(...)",
+      "summary": "Creates a new object that is a copy of the current instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b6d8d2ac-5201-c26c-4db8-c01199cdcdd4"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f6c990a4-f8d1-b02b-2b83-2f794879511e"
+    }
+  ],
+  "properties": [
+    {
+      "name": "MaximalDistance",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the maximal distance for placing.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b07ec359-59aa-7335-d38f-52b0f6568f93"
+    },
+    {
+      "name": "MinimalDistance",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the minimal distance for placing.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/848e4553-5dc0-f7db-6b40-17bc58a46329"
+    },
+    {
+      "name": "SearchMargin",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the search marginal for placing.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/36613587-5913-de33-97b2-117c737befd2"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,24 @@
+{
+  "name": "AnalysisPartAreaAttributes.AreaElementTypeEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The area element types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/1b857ade-0ac9-4dbc-20a0-97b26afcc5f8",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "AREA_ELEMENT_TYPE_TRIANGULAR",
+      "value": 0,
+      "summary": "The triangular area element type."
+    },
+    {
+      "name": "AREA_ELEMENT_TYPE_QUADRILATERAL",
+      "value": 1,
+      "summary": "The quadrilateral area element type."
+    }
+  ]
+}

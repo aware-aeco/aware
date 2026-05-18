@@ -1,0 +1,43 @@
+{
+  "name": "ProfileConversion",
+  "namespace": "Tekla.Structures.Dialog",
+  "kind": "class",
+  "summary": "The ProfileConversion class provides functionalities to convert profile strings from/to current units (set in \u0022Units and decimals, Catalog, Profiles, Section Dimension\u0022 options).",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/5badd92c-86d5-4a1d-9ce9-3d03537ff562",
+  "constructors": [
+    {
+      "name": "ProfileConversion",
+      "signature": "ProfileConversion(...)",
+      "summary": "Initializes a new instance of the ProfileConversion class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/324ec53a-97a8-5fb3-7d00-4cd2f6af6ad5"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ConvertFromCurrentUnits",
+      "signature": "ConvertFromCurrentUnits(...)",
+      "summary": "Converts a profile string from current units to internal units (set in Units and decimals options).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9d8e9aad-e97f-8cba-98f6-3648ca66d6a9"
+    },
+    {
+      "name": "ConvertToCurrentUnits",
+      "signature": "ConvertToCurrentUnits(...)",
+      "summary": "Converts a profile string from internal units to current units (set in Units and decimals options).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/46ce1d12-a1f5-19e1-129f-94893992d71c"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

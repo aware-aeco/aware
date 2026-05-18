@@ -1,0 +1,145 @@
+{
+  "name": "ComponentOptions",
+  "namespace": "Tekla.Structures",
+  "kind": "class",
+  "summary": "The ComponentOptions class represents the component options.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/af50ad50-32e9-d812-74ef-dfe45170f2b0",
+  "constructors": [
+    {
+      "name": "ComponentOptions",
+      "signature": "ComponentOptions(...)",
+      "summary": "Initializes a new instance of the ComponentOptions class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bcc8d2c4-bdfb-49f6-f564-ed445ec29cde"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AssemblyLoosePartPositionPrefix",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The assembly loose position prefix.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/96ad97cc-30e8-dca5-56c9-e23eed60bac8"
+    },
+    {
+      "name": "AssemblyLoosePartStartNumber",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The assembly loose part number.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/96e880b7-2759-093b-7874-d0c8c1a53eab"
+    },
+    {
+      "name": "BoltEdgeDistanceFactor",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The factor of bolt edge distance.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f51387da-ee0c-ccc0-d976-85663b794504"
+    },
+    {
+      "name": "BoltEdgeDistanceReference",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The bolt edge distance reference.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/73ab5817-9b38-26e7-9f40-450cee6fa137"
+    },
+    {
+      "name": "BoltSize",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The bolt size.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a85936c5-51b8-f231-b5a0-fb8a4d4b4dab"
+    },
+    {
+      "name": "BoltStandard",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The bolt standard.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/39994c58-fa64-b729-949c-5967b1f98064"
+    },
+    {
+      "name": "FoldedPlateProfileName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The folded plate profile name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7ca82afe-5f80-ac9d-21e0-2201e8f713dc"
+    },
+    {
+      "name": "LoosePartPositionPrefix",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The loose part position prefix.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3d798821-2386-12ac-7cde-7a906ce9792b"
+    },
+    {
+      "name": "LoosePartStartNumber",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The loose part start number.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/aad198ff-fca2-7f60-0ce6-ad490df4b481"
+    },
+    {
+      "name": "PartMaterial",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The part material.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8e696437-1feb-b392-506a-8198c3b1e7f6"
+    },
+    {
+      "name": "PartWeldedToPrimaryPositionPrefix",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The part welded to primary position prefix.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/13938c88-feaf-ea7a-bc04-f41f0f0f9ae5"
+    },
+    {
+      "name": "PartWeldedToPrimaryStartNumber",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The part welded to primary start number.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/aff7a28a-9001-c3b3-758d-c94fda221722"
+    },
+    {
+      "name": "PartWeldedToSecondaryPositionPrefix",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The part welded to secondary position prefix.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/65330e3c-28f8-dafe-4711-5a1eb76c117e"
+    },
+    {
+      "name": "PartWeldedToSecondaryStartNumber",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The part welded to secondary start number.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f2e19ff6-c33e-82ac-13c1-873f2a5c9f3c"
+    },
+    {
+      "name": "PlateProfileName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The plate profile name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c293d03c-2b72-d63c-1d15-428366f044c1"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

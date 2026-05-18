@@ -1,0 +1,61 @@
+{
+  "name": "GraphicObject.GraphicObjectAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The GraphicObjectAttributes class is the attributes class of the graphic object.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/769dd789-cb81-512f-c2da-32d369b422ad",
+  "constructors": [
+    {
+      "name": "GraphicObject.GraphicObjectAttributes",
+      "signature": "GraphicObject.GraphicObjectAttributes(...)",
+      "summary": "Creates a new graphic object attributes instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bb86d9ab-f988-e24f-6dea-3b32062c7e03"
+    },
+    {
+      "name": "GraphicObject.GraphicObjectAttributes",
+      "signature": "GraphicObject.GraphicObjectAttributes(...)",
+      "summary": "Creates a new graphic object attributes instance using the given attribute file\u0027s filename.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/196cd0f0-2ac5-3962-5ca0-3c24c765d5bb"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/da11fa4f-a98d-c770-d0e2-f458bc3b82dc"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "LoadAttributes(...)",
+      "summary": "Loads the attributes from the specified file.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5597a575-45e2-aa83-6576-390f23af3e48"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Line",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The line attributes of the graphic object. A graphic object always consists of lines.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3483367b-c555-6997-e0a4-988358d7ce9b"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

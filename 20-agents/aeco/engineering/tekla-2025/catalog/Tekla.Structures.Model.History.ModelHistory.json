@@ -1,0 +1,123 @@
+{
+  "name": "ModelHistory",
+  "namespace": "Tekla.Structures.Model.History",
+  "kind": "class",
+  "summary": "The ModelHistory class provides history information about the objects of the model that is currently open in Tekla Structures.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/5a668281-0f9c-ade2-1c56-79c088d75a34",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetCurrentModificationStamp",
+      "signature": "GetCurrentModificationStamp(...)",
+      "summary": "Gets the current modification stamp from the model.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/28d800d0-50b6-521e-b252-add1b7a3baef"
+    },
+    {
+      "name": "GetDeletedObjects",
+      "signature": "GetDeletedObjects(...)",
+      "summary": "Gets a list of the objects that have been deleted after the modification stamp.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8e9cf21c-7ac8-3fa2-40a0-25a3bee15316"
+    },
+    {
+      "name": "GetDeletedObjectsWithType",
+      "signature": "GetDeletedObjectsWithType(...)",
+      "summary": "Gets based on type a list of the objects that have been deleted after the modification stamp.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e1c9f788-42fe-130d-13aa-265d640884b7"
+    },
+    {
+      "name": "GetLocalChanges",
+      "signature": "GetLocalChanges(...)",
+      "summary": "Get changes which are not written out.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f8ecb33f-ac31-cc71-f7fc-016d53149a5c"
+    },
+    {
+      "name": "GetModifications(String, ModificationStamp)",
+      "signature": "GetModifications(String, ModificationStamp)(...)",
+      "summary": "Lookup modifications since previous call of TakeModifications() without resetting the modstamp",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f11c9055-8f2d-0b10-c2ba-4c8ee603e71f"
+    },
+    {
+      "name": "GetModifications(String, IEnumerable.ModelObject.ModelObjectEnum., ModificationStamp)",
+      "signature": "GetModifications(String, IEnumerable.ModelObject.ModelObjectEnum., ModificationStamp)(...)",
+      "summary": "Lookup modifications since previous call of TakeModifications() without resetting the modstamp, with object type filtering",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8c2480d8-c493-0d4b-fee8-9671f447392d"
+    },
+    {
+      "name": "GetModifiedObjects",
+      "signature": "GetModifiedObjects(...)",
+      "summary": "Gets a list of the objects that have been added or modified after the modification stamp.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a8255b6d-95d4-e938-e3a2-c88e86018c8f"
+    },
+    {
+      "name": "GetModifiedObjectsWithType",
+      "signature": "GetModifiedObjectsWithType(...)",
+      "summary": "Gets based on type a list of the objects that have been added or modified after the modification stamp.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/03657be1-bce3-21b4-6563-ad3c91ffdf5f"
+    },
+    {
+      "name": "GetNotSharedObjects",
+      "signature": "GetNotSharedObjects(...)",
+      "summary": "Get object which are was created or modified since last ModelSharing WriteOut.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/416c88f3-4e62-2ec5-ec11-9a2b10921f3e"
+    },
+    {
+      "name": "TakeModifications(String, ModificationStamp)",
+      "signature": "TakeModifications(String, ModificationStamp)(...)",
+      "summary": "Take modifications since previous call.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bef670da-b23b-8b62-bcc6-259c2bc5c819"
+    },
+    {
+      "name": "TakeModifications(String, IEnumerable.ModelObject.ModelObjectEnum., ModificationStamp)",
+      "signature": "TakeModifications(String, IEnumerable.ModelObject.ModelObjectEnum., ModificationStamp)(...)",
+      "summary": "Take modifications since previous call, with object type filtering.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/780d29e6-388d-2137-c685-b603abcbeb7f"
+    },
+    {
+      "name": "UpdateModificationStampToLatest",
+      "signature": "UpdateModificationStampToLatest(...)",
+      "summary": "Updates the modification stamp to latest.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/27c4394a-6ec7-41e4-ddc0-48de631b64a6"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

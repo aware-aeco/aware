@@ -1,0 +1,29 @@
+{
+  "name": "Operation.UnselectedModeEnum",
+  "namespace": "Tekla.Structures.Model.Operations",
+  "kind": "enum",
+  "summary": "Specifies what ShowOnlySelected(Operation.UnselectedModeEnum) should do to unselected parts.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/84bd970f-43fd-db25-3195-d3a5901fe7d4",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Hidden",
+      "value": 0,
+      "summary": "Completely hide."
+    },
+    {
+      "name": "Transparent",
+      "value": 1,
+      "summary": "Make almost transparent."
+    },
+    {
+      "name": "AsSticks",
+      "value": 2,
+      "summary": "Show as sticks."
+    }
+  ]
+}

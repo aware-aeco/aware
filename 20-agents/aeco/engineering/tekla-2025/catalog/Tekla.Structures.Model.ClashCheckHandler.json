@@ -1,0 +1,60 @@
+{
+  "name": "ClashCheckHandler",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The ClashCheckHandler class contains clash check methods.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/788112d7-7e99-4d1c-c631-4c1a23366696",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetIntersectionBoundingBoxes",
+      "signature": "GetIntersectionBoundingBoxes(...)",
+      "summary": "Get a list of bounding boxes (AABB) of the clashing volumes of two objects.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/73b07f50-4b4c-cfe3-1e89-d723db38ac7e"
+    },
+    {
+      "name": "RunClashCheck",
+      "signature": "RunClashCheck(...)",
+      "summary": "Starts the clash checking. Uses advanced options sa option values.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/866f01a1-9f7b-64ff-5131-476f1162d5db"
+    },
+    {
+      "name": "RunClashCheckWithOptions(Boolean, Boolean, Double, Boolean)",
+      "signature": "RunClashCheckWithOptions(Boolean, Boolean, Double, Boolean)(...)",
+      "summary": "Starts the clash checking with options.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/efdedd8f-706d-e77e-0f49-3647b6a78ebe"
+    },
+    {
+      "name": "RunClashCheckWithOptions(Boolean, Boolean, Boolean, Double, Boolean)",
+      "signature": "RunClashCheckWithOptions(Boolean, Boolean, Boolean, Double, Boolean)(...)",
+      "summary": "Starts the clash checking with options.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/69286754-a3b8-f783-0f47-ba35a9d72ff9"
+    },
+    {
+      "name": "StopClashCheck",
+      "signature": "StopClashCheck(...)",
+      "summary": "Stops the clash checking.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a392ba3f-5f87-3d4d-e65e-15c1960e947a"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

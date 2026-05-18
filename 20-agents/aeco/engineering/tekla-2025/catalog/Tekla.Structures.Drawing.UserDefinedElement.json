@@ -1,0 +1,94 @@
+{
+  "name": "UserDefinedElement",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The UserDefinedElement class represents a user-defined attribute specified by its name. A user-defined element is converted into a textual value before it is drawn.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/d2294ddd-0810-2f6c-e414-9e64867bc2e1",
+  "constructors": [
+    {
+      "name": "UserDefinedElement",
+      "signature": "UserDefinedElement(...)",
+      "summary": "Creates a new user-defined element instance with the given name.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/aac9be57-cd98-16d8-23a8-20273baa47fb"
+    },
+    {
+      "name": "UserDefinedElement",
+      "signature": "UserDefinedElement(...)",
+      "summary": "Creates a new user-defined element instance with the given name and font.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0f57f5a7-69e4-de71-2d1f-e22a3bc08cc2"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "Clone(...)",
+      "summary": "Clones the object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9d8c81d8-26c1-6ef9-1130-663591375ba2"
+    },
+    {
+      "name": "GetUnformattedString",
+      "signature": "GetUnformattedString(...)",
+      "summary": "Returns the content as a string without formatting.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2471ba47-3a7d-b112-a1f7-1999248324b3"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7267437d-5400-eab8-2d2c-0f7bb7aacea1"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Font",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The font of the user-defined attribute.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/98725c78-dde1-eb9c-917a-bd3cae388b62"
+    },
+    {
+      "name": "Name",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The name of the user-defined attribute.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/019a1115-d76d-b4dd-fdf8-4ed8b8abe55d"
+    },
+    {
+      "name": "Unit",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the unit attributes.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/64482602-f8f2-b35a-d8c7-fb5ac9fca166"
+    },
+    {
+      "name": "Value",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The value of the user-defined attribute.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c1da33e0-af63-7ea1-b991-8356d45b2205"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

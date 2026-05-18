@@ -1,0 +1,24 @@
+{
+  "name": "Loop",
+  "namespace": "Tekla.Structures.Solid",
+  "kind": "class",
+  "summary": "The Loop class represents a single loop in a face.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/2fa3c91f-d68b-9348-077b-f1fdde502ef6",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetVertexEnumerator",
+      "signature": "GetVertexEnumerator(...)",
+      "summary": "Gets a new vertex enumerator.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ff661a24-9b92-f3e4-7db9-4c062f71f19a"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

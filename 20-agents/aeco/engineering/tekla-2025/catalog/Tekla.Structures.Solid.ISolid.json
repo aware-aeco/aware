@@ -1,0 +1,49 @@
+{
+  "name": "ISolid",
+  "namespace": "Tekla.Structures.Solid",
+  "kind": "interface",
+  "summary": "The ISolid interface represents a physical object in the model or a drawing created by a part instance. The solid instance can be used to query the actual geometry of the part.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/3c08ad50-3fdd-a6f7-05b9-fb07c1e25ea9",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetEdgeEnumerator",
+      "signature": "GetEdgeEnumerator(...)",
+      "summary": "Returns a new edge enumerator in the current plane.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b46e8163-fd7e-cc0a-0f5b-c8d33432af00"
+    },
+    {
+      "name": "GetFaceEnumerator",
+      "signature": "GetFaceEnumerator(...)",
+      "summary": "Returns a new face enumerator in the current plane.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/385e2055-7a80-6f26-e2ad-a8627797c834"
+    }
+  ],
+  "properties": [
+    {
+      "name": "MaximumPoint",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The maximum axis-aligned point of the solid in the current plane.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/aa795eaa-5c8b-e5d5-0329-9b2293a07aa3"
+    },
+    {
+      "name": "MinimumPoint",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The minimum axis-aligned point of the solid in the current plane.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f30b6610-f43e-7abc-2fa4-71e33bc0a4b7"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

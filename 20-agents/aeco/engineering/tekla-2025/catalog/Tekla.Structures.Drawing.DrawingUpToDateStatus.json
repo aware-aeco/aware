@@ -1,0 +1,89 @@
+{
+  "name": "DrawingUpToDateStatus",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The drawing up to date status.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/f3ce4eac-1589-801a-b1e2-5009757ab10f",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "DrawingIsUpToDate",
+      "value": 1,
+      "summary": "The drawing is up to date."
+    },
+    {
+      "name": "PartsWereModified",
+      "value": 2,
+      "summary": "Some parts in the drawing were modified since the last update."
+    },
+    {
+      "name": "DrawingIsUpToDateButMayNeedChecking",
+      "value": 4,
+      "summary": "The drawing is up to date but may need checking."
+    },
+    {
+      "name": "IncludedDrawingModified",
+      "value": 5,
+      "summary": "The included drawing was modified."
+    },
+    {
+      "name": "OriginalPartDeleted",
+      "value": 6,
+      "summary": "The original part from which the drawing was created was deleted since the last update."
+    },
+    {
+      "name": "AllPartsDeleted",
+      "value": 7,
+      "summary": "All parts were deleted."
+    },
+    {
+      "name": "NumberOfPartsInNumberingSeriesIncreased",
+      "value": 8,
+      "summary": "The number of parts in the numbering series has increased since the last update."
+    },
+    {
+      "name": "NumberOfPartsInNumberingSeriesDecreased",
+      "value": 9,
+      "summary": "The number of parts in the numbering series has decreased since the last update."
+    },
+    {
+      "name": "DrawingWasCloned",
+      "value": 10,
+      "summary": "The drawing was cloned from another drawing."
+    },
+    {
+      "name": "DrawingWasUpdated",
+      "value": 11,
+      "summary": "The drawing was updated."
+    },
+    {
+      "name": "CopiedViewChanged",
+      "value": 12,
+      "summary": "The copied view changed."
+    },
+    {
+      "name": "DrawingWasSplitted",
+      "value": 13,
+      "summary": "The drawing was splitted (cloned) during numbering."
+    },
+    {
+      "name": "MovedViewDeleted",
+      "value": 14,
+      "summary": "The moved view was deleted."
+    },
+    {
+      "name": "MovedViewLabelChanged",
+      "value": 15,
+      "summary": "The moved view symbol has changed."
+    },
+    {
+      "name": "DrawingWasClonedFromCloud",
+      "value": 16,
+      "summary": "The drawing was cloned from another drawing in cloud service."
+    }
+  ]
+}

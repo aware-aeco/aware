@@ -1,0 +1,23 @@
+{
+  "name": "RebarSpacing.Offset",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "struct",
+  "summary": "Defines parameters associated with the start and end of the spacing.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/62642faf-3c5e-66fd-2e26-bd3811a02ee9",
+  "constructors": [
+    {
+      "name": "RebarSpacing.Offset",
+      "signature": "RebarSpacing.Offset(...)",
+      "summary": "Initializes a new instance of the RebarSpacing.Offset struct.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b5add492-9940-04bd-997b-cac8abfcb027"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

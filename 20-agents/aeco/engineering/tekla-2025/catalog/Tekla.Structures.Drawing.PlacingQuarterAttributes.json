@@ -1,0 +1,85 @@
+{
+  "name": "PlacingQuarterAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PlacingQuarterAttributes class contains the basic attributes for placing quarters.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/c71a59d4-6836-e9f2-a51e-09c64d4ed72d",
+  "constructors": [
+    {
+      "name": "PlacingQuarterAttributes",
+      "signature": "PlacingQuarterAttributes(...)",
+      "summary": "Creates a new placing quarter attributes instance. The default parameters are: TopLeft = true, TopRight = true, BottomLeft = true, BottomRight = true.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d26de711-bfa8-a2cc-b89c-c6128e6c130d"
+    },
+    {
+      "name": "PlacingQuarterAttributes",
+      "signature": "PlacingQuarterAttributes(...)",
+      "summary": "Creates a new placing quarter attributes instance with the given parameters.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5e018245-f171-cd9d-fdcf-c7edbff412cb"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "Clone(...)",
+      "summary": "Creates a new object that is a copy of the current instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3528770e-cd45-9205-73d7-b00c3e84a270"
+    },
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c39a275d-9cb2-f970-34d2-f2fcf3beacb2"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BottomLeft",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines whether the object can search for a suitable location in the bottom left direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/801891a0-aa0d-29b8-2846-9f62c17244e7"
+    },
+    {
+      "name": "BottomRight",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines whether the object can search for a suitable location in the bottom right direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e84d85fe-e12a-9d2d-a8df-aee889c45d1b"
+    },
+    {
+      "name": "TopLeft",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines whether the object can search for a suitable location in the top left direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d0c243c1-1a55-6b59-aba2-a09f5d0839f8"
+    },
+    {
+      "name": "TopRight",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines whether the object can search for a suitable location in the top right direction.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e982ea3e-7a91-f704-3a3f-bc013f2081cb"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,68 @@
+{
+  "name": "CustomPartBase",
+  "namespace": "Tekla.Structures.Plugins",
+  "kind": "class",
+  "summary": "The CustomPartBase class is a base class for defining custom parts. These types are more specialized and restricted by the input values than the ones derived from PluginBase. The coordinate system for connections, details and seams is explained in the Tekla Structures help, in the part about the position type of custom components. The position type defines the origin of the custom component, relative to the main part.",
+  "base": "System.MarshalByRefObject",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/b498d9fd-0928-7653-c323-d66cfb18f678",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "IsDefaultValue(Double)",
+      "signature": "IsDefaultValue(Double)(...)",
+      "summary": "Returns true if the given value is set to the default value for this type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0d112a60-b9ba-0cdc-49a9-b85f4a0d3557"
+    },
+    {
+      "name": "IsDefaultValue(Int32)",
+      "signature": "IsDefaultValue(Int32)(...)",
+      "summary": "Returns true if the given value is set to the default value for this type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6dbb47e9-a1c7-82ca-4b8e-d5fa5bc2a7fc"
+    },
+    {
+      "name": "IsDefaultValue(String)",
+      "signature": "IsDefaultValue(String)(...)",
+      "summary": "Returns true if the given value is set to the default value (empty string).",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/43ce7a81-3e9e-0ae0-8030-c9d8a06534ff"
+    },
+    {
+      "name": "Run",
+      "signature": "Run(...)",
+      "summary": "The main method of the component. Inside Run the user can implement the logic based on the user given attributes and input. Inside the method input can be found from the provided properties: Primary, Secondaries and Positions.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2785e532-af81-6a7d-ef0c-9f615039a143"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Identifier",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The identifier of the executable plug-in instance.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c56aebfc-751e-97f0-5755-ff5ceaed6c53"
+    },
+    {
+      "name": "Positions",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The positional attributes for a custom part instance.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e839a39c-c161-1a90-e8d1-dc166b258473"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,61 @@
+{
+  "name": "DistanceListConverter",
+  "namespace": "Tekla.Structures.Datatype",
+  "kind": "class",
+  "summary": "The DistanceListConverter class converts types to and from the distance list type.",
+  "base": "System.ComponentModel.TypeConverter",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/79b0f524-b30b-9529-2b3a-cc7bedde4289",
+  "constructors": [
+    {
+      "name": "DistanceListConverter",
+      "signature": "DistanceListConverter(...)",
+      "summary": "Initializes a new instance of the DistanceListConverter class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d73f64fa-eff4-2a17-609e-6478c3157121"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CanConvertFrom",
+      "signature": "CanConvertFrom(...)",
+      "summary": "Checks whether the conversion can be made from the source type to the distance list type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/250881a7-3803-8251-d282-682d3d36bbf4"
+    },
+    {
+      "name": "CanConvertTo",
+      "signature": "CanConvertTo(...)",
+      "summary": "Checks whether the conversion can be made from the distance list type to the destination type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/80ab11a8-d1a0-bf20-ee5c-37ec607b61a8"
+    },
+    {
+      "name": "ConvertFrom",
+      "signature": "ConvertFrom(...)",
+      "summary": "Converts an object from the given culture to the distance list type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ea469854-98c0-fe1a-9d60-d55ad38a123f"
+    },
+    {
+      "name": "ConvertTo",
+      "signature": "ConvertTo(...)",
+      "summary": "Converts an object from the distance list type to the given destination type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5b0d37bf-9fc8-5611-2ae2-952e4c48aaad"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

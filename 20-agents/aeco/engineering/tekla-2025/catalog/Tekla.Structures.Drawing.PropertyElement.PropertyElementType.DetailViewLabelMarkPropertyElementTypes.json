@@ -1,0 +1,60 @@
+{
+  "name": "PropertyElement.PropertyElementType.DetailViewLabelMarkPropertyElementTypes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The DetailViewLabelMarkPropertyElementTypes class represents the available property element types for detail view label marks.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/5745efac-809b-be8c-b39b-9b92abb0ac2e",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "DetailName",
+      "signature": "DetailName(...)",
+      "summary": "Returns the detail name property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7bd6ac56-ff80-3f6a-35d7-1a9f6f79298a"
+    },
+    {
+      "name": "DrawingName",
+      "signature": "DrawingName(...)",
+      "summary": "Returns the drawing name property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8eebf810-7b54-cb4c-9866-a3494fb206d5"
+    },
+    {
+      "name": "Scale",
+      "signature": "Scale(...)",
+      "summary": "Returns the scale property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9848474b-543b-692c-cb2e-63ad562b1448"
+    },
+    {
+      "name": "SourceDrawingName",
+      "signature": "SourceDrawingName(...)",
+      "summary": "Returns the source drawing name property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1e57bf7b-e2b8-6ba8-859c-340fa7d23ed8"
+    },
+    {
+      "name": "SourceDrawingNameWhenMoved",
+      "signature": "SourceDrawingNameWhenMoved(...)",
+      "summary": "Returns the source drawing name when moved property element type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ea2257ad-e829-0e9f-926b-33f93bbfacbc"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

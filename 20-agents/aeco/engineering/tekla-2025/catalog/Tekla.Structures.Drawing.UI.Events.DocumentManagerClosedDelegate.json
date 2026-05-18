@@ -1,0 +1,14 @@
+{
+  "name": "Events.DocumentManagerClosedDelegate",
+  "namespace": "Tekla.Structures.Drawing.UI",
+  "kind": "delegate",
+  "summary": "The delegate to use for the document manager closing.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/b911c9af-e21a-db2c-3040-a7111731da91",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void DocumentManagerClosedDelegate()"
+}

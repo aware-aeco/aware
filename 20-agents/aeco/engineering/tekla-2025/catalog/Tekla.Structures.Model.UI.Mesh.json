@@ -1,0 +1,86 @@
+{
+  "name": "Mesh",
+  "namespace": "Tekla.Structures.Model.UI",
+  "kind": "class",
+  "summary": "The Mesh class represents a mesh for drawing three-dimensional data.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/9eed1ebf-ebb2-6585-332d-92b29e940c47",
+  "constructors": [
+    {
+      "name": "Mesh",
+      "signature": "Mesh(...)",
+      "summary": "Creates a new empty mesh instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/91ace5da-fcd4-85a1-0dd3-66a4e855ec38"
+    },
+    {
+      "name": "Mesh",
+      "signature": "Mesh(...)",
+      "summary": "Creates a new mesh instance with the given points, triangles and lines. Does not check the indices in the given triangles and lines array lists for correctness.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f1a7c01a-71d0-e83f-236e-e6cab9855230"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddLine",
+      "signature": "AddLine(...)",
+      "summary": "Adds a new line in the mesh.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/de40b8cb-02a7-71d7-1799-a6c0523599a2"
+    },
+    {
+      "name": "AddPoint",
+      "signature": "AddPoint(...)",
+      "summary": "Adds a new point in the mesh.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0c6131d0-41bc-1a0a-e823-7275f1be56ea"
+    },
+    {
+      "name": "AddTriangle",
+      "signature": "AddTriangle(...)",
+      "summary": "Adds a new triangle in the mesh.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4f77e473-ca53-1251-8c4e-e0d4c52b9b37"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Lines",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "An array list of indices (as integers) pointing to the points array list. Two consecutive indices always represent a single line.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e35353ba-435b-88f2-ce85-867dfa0d7cf5"
+    },
+    {
+      "name": "Points",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "An array list of point objects representing the mesh points.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4aced0f5-6e03-3fd0-4f6f-3f4d0612902c"
+    },
+    {
+      "name": "Triangles",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "An array list of indices (as integers) pointing to the points array list. Three consecutive indices always represent a single triangle.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1563efcf-c0c9-c086-c1fb-d6924638b680"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

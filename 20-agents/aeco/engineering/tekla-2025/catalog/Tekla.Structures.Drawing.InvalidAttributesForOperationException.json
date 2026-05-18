@@ -1,0 +1,24 @@
+{
+  "name": "InvalidAttributesForOperationException",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The InvalidAttributesForOperationException class defines the exception that is thrown when an object\u0027s attributes are set to something that is not valid for the object.",
+  "base": "System.ApplicationException",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/13384446-c2d4-0dc5-5a3e-e88fe4fcfe8a",
+  "constructors": [
+    {
+      "name": "InvalidAttributesForOperationException",
+      "signature": "InvalidAttributesForOperationException(...)",
+      "summary": "Creates a new exception instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7fd46a12-aff0-1894-d358-64b90260b3ce"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

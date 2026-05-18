@@ -1,0 +1,34 @@
+{
+  "name": "AnalysisObjectPicker.PickObjectType",
+  "namespace": "Tekla.Structures.Analysis.UI",
+  "kind": "enum",
+  "summary": "The possible pick object types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/13b8b9fe-ca41-81c0-dd39-2a5f269ce8c0",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "AnalysisObject",
+      "value": 0,
+      "summary": "Any analysis object."
+    },
+    {
+      "name": "AnalysisPart",
+      "value": 1,
+      "summary": "Analysis part object."
+    },
+    {
+      "name": "AnalysisNode",
+      "value": 2,
+      "summary": "Analysis node object."
+    },
+    {
+      "name": "AnalysisNodeLink",
+      "value": 3,
+      "summary": "Analysis node link object."
+    }
+  ]
+}

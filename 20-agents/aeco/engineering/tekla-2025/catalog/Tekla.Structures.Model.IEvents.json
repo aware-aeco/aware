@@ -1,0 +1,267 @@
+{
+  "name": "IEvents",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "interface",
+  "summary": "Interface for the Events class allows the user to register event listeners for Model events. This interface allows the Marshaling of the Events class with Trimble.Remoting",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/54bfb640-73cf-907f-a432-96246eca23ca",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "OnClipPlaneChanged",
+      "signature": "OnClipPlaneChanged(...)",
+      "summary": "Called when user inserts, updates or deletes a clip plane.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c37bfe9c-c675-7019-fce7-92e7e00ac0d3"
+    },
+    {
+      "name": "OnHiddenObjectsChanged",
+      "signature": "OnHiddenObjectsChanged(...)",
+      "summary": "Called when objects are set to hidden or view is redrawn",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/98996a2a-e743-b61f-672f-24d68eb39832"
+    },
+    {
+      "name": "OnInterrupted",
+      "signature": "OnInterrupted(...)",
+      "summary": "Called when user interrupts.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/adb85435-860d-1fe0-0075-337112cfa0ce"
+    },
+    {
+      "name": "OnModelSaveInfo",
+      "signature": "OnModelSaveInfo(...)",
+      "summary": "Called when model is saved.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a583e0b1-10d5-7a6c-f68f-43a06553236d"
+    },
+    {
+      "name": "OnTemporaryStatesChanged",
+      "signature": "OnTemporaryStatesChanged(...)",
+      "summary": "Called when the temporary states are changed.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c5c53a9a-e57f-7f37-0322-047d8aef2e1c"
+    },
+    {
+      "name": "OnUndoClicked",
+      "signature": "OnUndoClicked(...)",
+      "summary": "Called when user clicks undo.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/69c17382-2e77-f635-a3a8-5765de998eda"
+    },
+    {
+      "name": "OnViewClosed",
+      "signature": "OnViewClosed(...)",
+      "summary": "Called when a view is closed.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1400ea41-9ffe-d039-2935-970c210d98b0"
+    },
+    {
+      "name": "Register",
+      "signature": "Register(...)",
+      "summary": "Registers the instance to listen to the specified events. More event delegates should not be added without calling UnRegister first.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d0730bc4-a833-068f-d632-6916bd501832"
+    },
+    {
+      "name": "UnRegister",
+      "signature": "UnRegister(...)",
+      "summary": "Unregisters the instance from listening to events.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f3c67e22-daa9-f10a-68d7-eeda79d6c10f"
+    }
+  ],
+  "properties": [],
+  "events": [
+    {
+      "name": "ClashCheckDone",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler ClashCheckDone",
+      "summary": "The ClashCheckDone event is raised just after clash check is completed.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e0dd04f8-a536-e2c0-a8d0-e7527e7dd829",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ClashDetected",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler ClashDetected",
+      "summary": "The ClashDetected event is raised just after the detection of each clash. The clash information is saved before the event is triggered.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/410049d9-af0c-4049-52e6-f558b577d34b",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ClipPlaneChanged",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler ClipPlaneChanged",
+      "summary": "Occurs when clip plane is changed.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ca0c7199-f018-3c28-5b9f-332caebb9e4b",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "CommandStatusChange",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler CommandStatusChange",
+      "summary": "The CommandStatusChange event is raised when a command is started/ended.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e9291cd7-830b-a215-9520-917294174dc7",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Interrupted",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler Interrupted",
+      "summary": "Occurs when user interrupts.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3a0a0ed7-6297-8aba-3edb-6d1e09dfa429",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ModelChanged",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler ModelChanged",
+      "summary": "The ModelChanged event is raised just after some changes have been made to the model. Note, this event is however not triggered when UNDO or REDO are performed.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/00930987-8efe-41ab-e124-6d9d5c00fe12",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ModelLoad",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler ModelLoad",
+      "summary": "The ModelLoad event is raised just after a model has been loaded.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/040b1b98-1abb-f840-d794-a834e9cece9b",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ModelLoadInfo",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler ModelLoadInfo",
+      "summary": "The ModelLoadInfo event is raised just after a model has been loaded with the model load information as a string parameter.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/eeef8696-14ac-ed0f-2f32-f517de721303",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ModelObjectChanged",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler ModelObjectChanged",
+      "summary": "The ModelObjectChanged event is raised just after some changes have been made to the model objects. Note, this event is triggered when UNDO or REDO are performed!!",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b3deb34d-bf92-ac3c-7ad7-44741c2d565a",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ModelObjectNumbered",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler ModelObjectNumbered",
+      "summary": "The ModelObjectNumbered event is raised when model object is numbered.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/14649407-f014-ce82-2c3c-112c81bb0a34",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ModelSave",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler ModelSave",
+      "summary": "The ModelSave event is raised just after a model has been saved.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8238325b-a4e0-e7df-d735-2c2baf3f94b0",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ModelSaveAs",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler ModelSaveAs",
+      "summary": "The ModelSaveAs event is raised just after a model has been saved using save as.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5673f9ff-d163-61b1-6ac9-385d67ab8487",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ModelSaveInfo",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler ModelSaveInfo",
+      "summary": "The ModelSave event is raised just after a model has been saved with the model save information as a string parameter.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f3aa5f94-d3d4-a4da-b57b-b7d948c0e1a9",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ModelUnloading",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler ModelUnloading",
+      "summary": "The ModelUnloading event is raised just before the model is unloaded.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b560ae15-4784-0898-3193-d8da77b8e09e",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Numbering",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler Numbering",
+      "summary": "The Numbering event is raised just after a model has been numbered.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/eef0a75c-c885-2b43-b979-6eaf5df12a5d",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ProjectInfoChanged",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler ProjectInfoChanged",
+      "summary": "The ProjectInfoChanged event is raised just after some changes have been made to the project info. Note, this event is however not triggered when UNDO or REDO are performed.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c788e409-8eb6-b735-061d-15ffebe8e047",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "SelectionChange",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler SelectionChange",
+      "summary": "The SelectionChange event is raised when the user changes the current selection inside Tekla Structures.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b7d4c817-4945-bc48-d7f0-4214aaf36ab2",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "TeklaStructuresExit",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler TeklaStructuresExit",
+      "summary": "The TeklaStructuresExit event is raised just before Tekla Structures exits. After this event has been called the user will no longer be able to perform any calls to Tekla Structures.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7c70898a-bda9-cb2b-63a6-4dec85d477bd",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ViewCameraChanged",
+      "delegate": "EventHandler",
+      "signature": "event EventHandler ViewCameraChanged",
+      "summary": "Occurs when view camera is changed.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dd9dc833-4465-0ef8-5ed2-ac785c96eb4e",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

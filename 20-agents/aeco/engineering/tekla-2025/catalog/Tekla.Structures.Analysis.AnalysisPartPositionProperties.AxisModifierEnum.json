@@ -1,0 +1,29 @@
+{
+  "name": "AnalysisPartPositionProperties.AxisModifierEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "The axis modifiers.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/43932d24-9b30-d746-131f-0c19730c88ad",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "AXIS_MODIFIER_NONE",
+      "value": 0,
+      "summary": "The axis modifier is \u0022none\u0022."
+    },
+    {
+      "name": "AXIS_MODIFIER_FIXED_COORDINATE",
+      "value": 1,
+      "summary": "The axis modifier is \u0022fixed coordinate\u0022."
+    },
+    {
+      "name": "AXIS_MODIFIER_NEAREST_GRID",
+      "value": 2,
+      "summary": "The axis modifier is \u0022nearest grid\u0022."
+    }
+  ]
+}

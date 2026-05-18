@@ -1,0 +1,24 @@
+{
+  "name": "SelfIntersectingSurfaceException",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "This class represent an exception thrown when the an operation on a lofted plate has been determined to cause a self intersecting surface",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/9f7aca96-ef41-ae5f-d61a-43d8bc994304",
+  "constructors": [
+    {
+      "name": "SelfIntersectingSurfaceException",
+      "signature": "SelfIntersectingSurfaceException(...)",
+      "summary": "Constructs an instance of the class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/59406ad8-4e36-a644-0db0-3d86cd2d3dbd"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

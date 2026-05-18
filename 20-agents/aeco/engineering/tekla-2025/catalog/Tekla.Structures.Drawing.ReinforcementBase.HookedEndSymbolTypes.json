@@ -1,0 +1,29 @@
+{
+  "name": "ReinforcementBase.HookedEndSymbolTypes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The available hooked end symbol types. See Tekla Structures help, \u0022Reinforcement appearance\u0022, for more information.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/8e4956a2-6d10-7e8e-7aa9-fd0338c4ef15",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NoHook",
+      "value": 1,
+      "summary": "No hook symbol."
+    },
+    {
+      "name": "HalfHook",
+      "value": 2,
+      "summary": "The half hook symbol."
+    },
+    {
+      "name": "FullHook",
+      "value": 3,
+      "summary": "The full hook symbol."
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "name": "InputItem.InputTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "Defines the type of the input.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/a0433c89-2537-7cbc-0224-d7f60ed163d3",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "INPUT_1_POINT",
+      "value": 0,
+      "summary": "The input is one point. The data is returned as a point."
+    },
+    {
+      "name": "INPUT_2_POINTS",
+      "value": 1,
+      "summary": "The input is two points. The data is returned as an array list of points."
+    },
+    {
+      "name": "INPUT_POLYGON",
+      "value": 2,
+      "summary": "The input is any number of points (a polygon). The data is returned as an array list of points."
+    },
+    {
+      "name": "INPUT_1_OBJECT",
+      "value": 3,
+      "summary": "The input is one model object. The data is returned as a model object."
+    },
+    {
+      "name": "INPUT_N_OBJECTS",
+      "value": 4,
+      "summary": "The input is any number of model objects. The data is returned as an array list of model objects."
+    }
+  ]
+}

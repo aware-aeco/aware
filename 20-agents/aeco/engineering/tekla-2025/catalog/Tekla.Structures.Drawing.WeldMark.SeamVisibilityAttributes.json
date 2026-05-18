@@ -1,0 +1,124 @@
+{
+  "name": "WeldMark.SeamVisibilityAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The SeamVisibilityAttributes class is the attributes class for the weld seam visibility.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/853a2750-92ba-db30-78e3-543bbe6914d1",
+  "constructors": [
+    {
+      "name": "WeldMark.SeamVisibilityAttributes",
+      "signature": "WeldMark.SeamVisibilityAttributes(...)",
+      "summary": "Creates a new weld seam visibility attributes instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/63965ae4-4b15-bd69-718a-2dd70ba54d48"
+    },
+    {
+      "name": "WeldMark.SeamVisibilityAttributes",
+      "signature": "WeldMark.SeamVisibilityAttributes(...)",
+      "summary": "Creates a new weld seam visibility attributes instance with the given attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/06f29061-6d5e-ce1a-1e28-ebe80c13eec7"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e1d49834-4506-32f5-7fe4-0dab996df6af"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ShowAngle",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the seam angle is visible.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6979bc95-b78f-4088-735d-c782834a6338"
+    },
+    {
+      "name": "ShowContour",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the seam contour is visible.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f44da5bd-3c33-f3ef-ec39-4039fc2ec14a"
+    },
+    {
+      "name": "ShowEffectiveThroat",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the seam effective throat is visible.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f09792d8-8200-6126-d2e2-6f1d4f8cb24c"
+    },
+    {
+      "name": "ShowFinish",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the seam finish is visible.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3f2d2400-cd34-d777-2d8a-5d4ece5e9c6b"
+    },
+    {
+      "name": "ShowLength",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the seam length is visible.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/63186545-7143-70e6-0b90-0b45e461240d"
+    },
+    {
+      "name": "ShowPitch",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the seam pitch is visible.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b6ba5258-4634-a377-6b38-174ea59d0758"
+    },
+    {
+      "name": "ShowPrefix",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the seam prefix is visible.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ca8ebfe2-56e5-e6a0-6eae-8c90f7704f2c"
+    },
+    {
+      "name": "ShowRootOpening",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the seam root opening is visible.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1ec7687e-fcc6-ecf5-fcc2-9ffe40f324c8"
+    },
+    {
+      "name": "ShowSize",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the seam size is visible.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d75bcb46-cbc2-4dac-5d8d-abccd24732bd"
+    },
+    {
+      "name": "ShowType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the seam type is visible.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/96f44f23-4f1a-14d0-73bd-1ba54ed296c9"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

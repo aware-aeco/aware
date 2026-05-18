@@ -1,0 +1,106 @@
+{
+  "name": "GraphicsDrawer",
+  "namespace": "Tekla.Structures.Model.UI",
+  "kind": "class",
+  "summary": "The GraphicsDrawer class draws temporary graphics in the currently active rendered view in Tekla Structures.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/8092772c-d824-bb09-119a-66be50652cdd",
+  "constructors": [
+    {
+      "name": "GraphicsDrawer",
+      "signature": "GraphicsDrawer(...)",
+      "summary": "Creates a new graphics drawer instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4d8ff2a4-97c4-2248-ef72-09ec20d71b57"
+    }
+  ],
+  "methods": [
+    {
+      "name": "DrawLineSegment(LineSegment, Color)",
+      "signature": "DrawLineSegment(LineSegment, Color)(...)",
+      "summary": "Draws a temporary line segment in the currently active rendered view.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/47539009-0382-e285-cb13-897763966564"
+    },
+    {
+      "name": "DrawLineSegment(Point, Point, Color)",
+      "signature": "DrawLineSegment(Point, Point, Color)(...)",
+      "summary": "Draws a temporary line segment in the currently active rendered view.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1dbfa523-0c96-1182-67f9-6b97cb659d4c"
+    },
+    {
+      "name": "DrawMeshLines",
+      "signature": "DrawMeshLines(...)",
+      "summary": "Draws the mesh lines as temporary graphics in the currently active Tekla Structures rendered view.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/51ab9888-d8b4-5567-e892-800ccc2421cb"
+    },
+    {
+      "name": "DrawMeshSurface",
+      "signature": "DrawMeshSurface(...)",
+      "summary": "Draws the mesh surface as temporary graphics in the currently active Tekla Structures rendered view. The counterclockwise sides of the mesh triangles are drawn.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e84b3995-55be-c1ab-5d03-6fe1cfa88910"
+    },
+    {
+      "name": "DrawPolyLine",
+      "signature": "DrawPolyLine(...)",
+      "summary": "Draw a temporary polyline into all open Tekla Structures views.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/97b4045b-be65-c41a-32bc-740e4d96d702"
+    },
+    {
+      "name": "DrawText",
+      "signature": "DrawText(...)",
+      "summary": "Draws a temporary text in the currently active rendered view.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b52f67f7-5eab-6845-165e-28d1fd7f05df"
+    },
+    {
+      "name": "DrawTextToView",
+      "signature": "DrawTextToView(...)",
+      "summary": "Draws a temporary text to the specified view. You can set the view Identifier.ID = 0 for current active view.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/df22dab0-8c2f-24dd-8c0c-2296f00bed91"
+    },
+    {
+      "name": "RemoveTemporaryGraphicsObject",
+      "signature": "RemoveTemporaryGraphicsObject(...)",
+      "summary": "Remove a temporary graphic object from all views.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ed6abf2c-2620-83d6-8236-184adcb99bc6"
+    },
+    {
+      "name": "RemoveTemporaryGraphicsObjects",
+      "signature": "RemoveTemporaryGraphicsObjects(...)",
+      "summary": "Remove a list of temporary graphic objects from all views.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a7735db7-bffa-c22a-cb4b-2af599a0c709"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

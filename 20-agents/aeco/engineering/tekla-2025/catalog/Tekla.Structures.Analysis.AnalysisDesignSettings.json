@@ -1,0 +1,73 @@
+{
+  "name": "AnalysisDesignSettings",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisDesignSettings class contains information about analysis design settings.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/bc513219-786a-654a-ca22-1c340ddca845",
+  "constructors": [
+    {
+      "name": "AnalysisDesignSettings",
+      "signature": "AnalysisDesignSettings(...)",
+      "summary": "Creates a new analysis design settings instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c05542b8-ffe7-4c8f-6a5b-ad70863e714f"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ConcreteDesignCode",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The concrete design code.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bd31ee22-7db9-9281-c9c8-ce8a1d0070da"
+    },
+    {
+      "name": "ConcreteDesignMethod",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The concrete design method.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3a48ac7c-2058-ea6b-aa2e-221570517b91"
+    },
+    {
+      "name": "SteelDesignCode",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The steel design code.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/343674a0-ba53-1f22-e015-85c41aeff8ad"
+    },
+    {
+      "name": "SteelDesignMethod",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The steel design method.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/baa15c2a-8287-081d-480e-ed982093aac3"
+    },
+    {
+      "name": "TimberDesignCode",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The timber design code.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d7bb9459-ca5a-6df7-ceca-19519e4fb381"
+    },
+    {
+      "name": "TimberDesignMethod",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The timber design method.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3cefba0c-65ea-7993-dea0-27be0ec8876b"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

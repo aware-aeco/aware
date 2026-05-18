@@ -1,0 +1,34 @@
+{
+  "name": "LogicalAreaFilterExpressions.Section",
+  "namespace": "Tekla.Structures.Filtering.Categories",
+  "kind": "class",
+  "summary": "The Section class represents the section filter expression.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/2895e56c-1e88-8685-9b96-b688289efacb",
+  "constructors": [
+    {
+      "name": "LogicalAreaFilterExpressions.Section",
+      "signature": "LogicalAreaFilterExpressions.Section(...)",
+      "summary": "Initializes a new instance of the Section class.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ce664b86-51f5-ec67-521b-e9974cf78dac"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Creates a string representation of the current object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c0294f6e-dcc4-d468-68e5-c1563f7927c4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

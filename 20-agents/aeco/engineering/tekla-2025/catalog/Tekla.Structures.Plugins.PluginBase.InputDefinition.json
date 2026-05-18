@@ -1,0 +1,70 @@
+{
+  "name": "PluginBase.InputDefinition",
+  "namespace": "Tekla.Structures.Plugins",
+  "kind": "class",
+  "summary": "The InputDefinition class is a class for defining the plug-in dependency over the input (points or identifiers). The user implemented method DefineInput() of the PluginBase interface should return an array list of input definition instances. This defines the points and identifiers the plug-in will receive as input when the Run() method is called.",
+  "base": "System.MarshalByRefObject",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/5a24f6b6-72e1-ef1b-1dfd-c51d9b39e460",
+  "constructors": [
+    {
+      "name": "PluginBase.InputDefinition",
+      "signature": "PluginBase.InputDefinition(...)",
+      "summary": "Creates a new input definition instance with multiple point or identifier instances.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c3369b9a-adf0-7b86-dae3-e026f4fb63ba"
+    },
+    {
+      "name": "PluginBase.InputDefinition",
+      "signature": "PluginBase.InputDefinition(...)",
+      "summary": "Creates a new input definition instance with one identifier.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/11449c09-91f9-8f7f-bfb8-948237ce12fb"
+    },
+    {
+      "name": "PluginBase.InputDefinition",
+      "signature": "PluginBase.InputDefinition(...)",
+      "summary": "Creates a new input definition instance with one point.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/bb9f6b4e-47dc-376a-41ff-ff76a48396ed"
+    },
+    {
+      "name": "PluginBase.InputDefinition",
+      "signature": "PluginBase.InputDefinition(...)",
+      "summary": "Creates a new input definition instance with two points.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/221b36d2-427a-77fb-ebf0-7d0287c3fdb2"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetInput",
+      "signature": "GetInput(...)",
+      "summary": "Returns the input Tekla Structures gave to the plug-in. The input is either a point instance, an identifier instance, an array list of points or an array list of identifiers. This is based on the input format returned from the DefineInput() method.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ea126692-d899-a70f-46e5-14e462635aa5"
+    },
+    {
+      "name": "GetInputType",
+      "signature": "GetInputType(...)",
+      "summary": "Returns the type of the input the current instance contains.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4262e736-6d4a-89ba-0950-5e1d7902a34e"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

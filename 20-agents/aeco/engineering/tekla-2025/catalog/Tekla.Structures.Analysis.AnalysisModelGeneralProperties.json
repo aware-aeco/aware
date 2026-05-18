@@ -1,0 +1,105 @@
+{
+  "name": "AnalysisModelGeneralProperties",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisModelGeneralProperties class contains the general property information for an analysis model.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/535258bb-120b-fa8a-590c-32e2395a6ead",
+  "constructors": [
+    {
+      "name": "AnalysisModelGeneralProperties",
+      "signature": "AnalysisModelGeneralProperties(...)",
+      "summary": "Creates a new analysis model general properties instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5bb10cba-2243-cff6-06a7-d730c10fe46f"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AnalysisEngineName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The name of the analysis engine.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7d2381fa-b80d-f35a-2992-fa2a3379f2a1"
+    },
+    {
+      "name": "ExtendedClashCheck",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines whether the extended clash check is used.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f437a0d2-b44c-6c81-e77c-3017878704ed"
+    },
+    {
+      "name": "FilterName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The name of the filter.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9890506b-e3ab-64ba-50e6-9697b6dff1ba"
+    },
+    {
+      "name": "MemberAxisLocation",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The location of the member axis.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a14c4a6f-6fd3-902f-999a-15c44eaeb0ad"
+    },
+    {
+      "name": "MemberEndReleaseMethodByConnection",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines whether the support conditions of connections or parts are used.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8c0bf5fe-6780-b785-d432-b92565071496"
+    },
+    {
+      "name": "ModalAnalysisModel",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines whether the modal analysis properties are used instead of the static load combinations.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/493ead46-853f-51fa-e8fe-ad30885a413a"
+    },
+    {
+      "name": "ModelCreationType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The model creation type.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3d7f082e-13d0-0a0f-5b4a-d1ddec615bb5"
+    },
+    {
+      "name": "ModelMerging",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines whether the model merging is used.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e8056256-d678-f448-bf4f-9f35b0126503"
+    },
+    {
+      "name": "ModelName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The name of the model.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/46c10f50-1372-e18b-fa04-ec78182bd67d"
+    },
+    {
+      "name": "NodeDefinition",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines how the nodes and node positions are defined.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/96b5d452-0815-d0dd-3804-f67f48e4ee51"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

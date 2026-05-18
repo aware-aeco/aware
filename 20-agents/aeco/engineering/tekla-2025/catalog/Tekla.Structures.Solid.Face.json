@@ -1,0 +1,41 @@
+{
+  "name": "Face",
+  "namespace": "Tekla.Structures.Solid",
+  "kind": "class",
+  "summary": "The Face class represents a single face in a solid.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/5831d571-d8ee-b975-19be-799d8dcb1439",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetLoopEnumerator",
+      "signature": "GetLoopEnumerator(...)",
+      "summary": "Gets a new loop enumerator for enumerating through the face\u0027s loops.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0d4e4992-db2c-3dad-c8a8-87ed34a7f270"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Normal",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The normal vector of the face.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5d7cee50-60ae-2bfc-2955-a54a3df027b9"
+    },
+    {
+      "name": "OriginPartId",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The part id of the part that this face originated from. For example, a face create by a part cut has the id of the cutting part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a7fe755e-a51a-90f4-cd71-76d3bb2511a1"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

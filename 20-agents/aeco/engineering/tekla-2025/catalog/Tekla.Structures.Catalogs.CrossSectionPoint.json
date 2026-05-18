@@ -1,0 +1,88 @@
+{
+  "name": "CrossSectionPoint",
+  "namespace": "Tekla.Structures.Catalogs",
+  "kind": "class",
+  "summary": "The CrossSectionPoint class defines a point with possible chamfering information",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/86912ba9-9e66-d9a2-21a0-9fb0e808f7ae",
+  "constructors": [
+    {
+      "name": "CrossSectionPoint",
+      "signature": "CrossSectionPoint(...)",
+      "summary": "Creates a new cross section point instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cb275ac4-9a39-94d2-1463-e151552ea773"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CompareTo",
+      "signature": "CompareTo(...)",
+      "summary": "Compares two points. To use binarysearch somekind of sorting should be used.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2f202828-05fd-220f-92b1-5b64372a4f7e"
+    },
+    {
+      "name": "Equals",
+      "signature": "Equals(...)",
+      "summary": "Returns true if the current object and the given object are equal.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dbca17f2-6730-e2c4-583c-90c74c72e0b0"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "GetHashCode(...)",
+      "summary": "Returns a hash code for the point. Notice, in extremely rare cases, you might not get the same hash code for two points even though they are considered equal! This should, however, happen only in extremely rare cases!",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9f84f024-170b-5181-770d-5ed2f56332cd"
+    },
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Formats the point into a string.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/63db29a6-32f7-6696-31eb-a6084dcb62cd"
+    },
+    {
+      "name": "Translate",
+      "signature": "Translate(...)",
+      "summary": "Translates the point using the given vector.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7ad7ecb9-acf3-7ed2-f2bc-aa52b99ceae6"
+    },
+    {
+      "name": "Zero",
+      "signature": "Zero(...)",
+      "summary": "Zeros all the members of the point.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9bf63e0c-fe71-40ae-e467-306f0a41f315"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Chamfer",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The chamfer for the cross section point.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/271ac3a4-2256-ef73-4eae-316848f16266"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

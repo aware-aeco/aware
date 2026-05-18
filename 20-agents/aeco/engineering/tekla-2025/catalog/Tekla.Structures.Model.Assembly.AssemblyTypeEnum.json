@@ -1,0 +1,44 @@
+{
+  "name": "Assembly.AssemblyTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The assembly types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/b5783436-5017-c594-0f5f-3c437e0e1108",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "STEEL_ASSEMBLY",
+      "value": 0,
+      "summary": "The steel assembly type."
+    },
+    {
+      "name": "PRECAST_ASSEMBLY",
+      "value": 1,
+      "summary": "The precast assembly type."
+    },
+    {
+      "name": "IN_SITU_ASSEMBLY",
+      "value": 2,
+      "summary": "The in-situ assembly type."
+    },
+    {
+      "name": "TIMBER_ASSEMBLY",
+      "value": 3,
+      "summary": "The timber assembly type."
+    },
+    {
+      "name": "UNKNOWN_ASSEMBLY",
+      "value": 4,
+      "summary": "The unknown assembly type."
+    },
+    {
+      "name": "REBAR_ASSEMBLY",
+      "value": 5,
+      "summary": "The rebar assembly type."
+    }
+  ]
+}

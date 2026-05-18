@@ -1,0 +1,24 @@
+{
+  "name": "RebarLapping.LapPlacementEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "The placement of the lap relative to the associated RebarLegFace.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/11808979-1497-c22c-6dba-ba217bd0bf64",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ON_LEG_FACE",
+      "value": 0,
+      "summary": "On leg face."
+    },
+    {
+      "name": "PERPENDICULAR_TO_LEG_FACE",
+      "value": 1,
+      "summary": "Perpendicular to leg face."
+    }
+  ]
+}

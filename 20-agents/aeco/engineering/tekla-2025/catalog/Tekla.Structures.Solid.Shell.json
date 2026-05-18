@@ -1,0 +1,33 @@
+{
+  "name": "Shell",
+  "namespace": "Tekla.Structures.Solid",
+  "kind": "class",
+  "summary": "The Shell class represents a single shell in a solid.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/60711cf3-1397-9ec4-0740-4ca81fd8befd",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetEdgeEnumerator",
+      "signature": "GetEdgeEnumerator(...)",
+      "summary": "Returns a new edge enumerator in the current plane.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/98de58ec-a62d-393a-9816-7a8398b2e1cb"
+    },
+    {
+      "name": "GetFaceEnumerator",
+      "signature": "GetFaceEnumerator(...)",
+      "summary": "Returns a new face enumerator in the current plane.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f9e3233e-bebd-896f-b713-4755424f71e1"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

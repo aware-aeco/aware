@@ -1,0 +1,29 @@
+{
+  "name": "BaseWeld.WeldPlacementTypeEnum",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "enum",
+  "summary": "Weld placement types.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/209c02ef-b1d1-5629-05ad-7f988523ce36",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "PLACEMENT_AUTO",
+      "value": 0,
+      "summary": "Auto placement."
+    },
+    {
+      "name": "PLACEMENT_MAIN",
+      "value": 1,
+      "summary": "Main part placement."
+    },
+    {
+      "name": "PLACEMENT_SECONDARY",
+      "value": 2,
+      "summary": "Secondary part placement."
+    }
+  ]
+}

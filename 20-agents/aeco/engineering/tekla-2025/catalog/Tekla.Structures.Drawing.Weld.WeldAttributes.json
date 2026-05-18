@@ -1,0 +1,101 @@
+{
+  "name": "Weld.WeldAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The WeldAttributes class is the attributes class for the weld.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/624aa0ff-13ca-e29c-8b7e-91338f265e8a",
+  "constructors": [
+    {
+      "name": "Weld.WeldAttributes",
+      "signature": "Weld.WeldAttributes(...)",
+      "summary": "Creates a new default weld attributes instance that loads standard attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/952b80fc-e7a8-059c-9cb2-17798a91deab"
+    },
+    {
+      "name": "Weld.WeldAttributes",
+      "signature": "Weld.WeldAttributes(...)",
+      "summary": "Creates a new weld attributes instance that loads the specified attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/8e310c2f-e972-ef8b-7389-20cee98f7c41"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/324f5eed-802f-1847-a2e3-e205fae092d3"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "LoadAttributes(...)",
+      "summary": "Loads the attributes from the attribute file.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/610dd09a-8447-6f6d-22bf-45c35819209f"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CustomPresentation",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Custom presentation GUID to be applied to the weld",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5bc6e106-a99d-bee1-59b7-8851a6c14cac"
+    },
+    {
+      "name": "DrawHiddenLines",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "True if hidden lines are drawn.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/78366e07-8518-3e0d-ca4d-ce3dbafbb7d4"
+    },
+    {
+      "name": "DrawOwnHiddenLines",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "True if own hidden lines are drawn.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5f841a01-6b14-4a6d-f543-5fe6647bcce3"
+    },
+    {
+      "name": "HiddenLines",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The line type of hidden lines.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ddf1569b-3307-1767-6d63-7bc1187098a9"
+    },
+    {
+      "name": "Representation",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The representation of the weld.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/f6b500bd-017b-bff3-1860-20d7901a0012"
+    },
+    {
+      "name": "VisibleLines",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The line type of visible lines.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/36c2e6b0-09b5-052c-1108-b692845cbfd3"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

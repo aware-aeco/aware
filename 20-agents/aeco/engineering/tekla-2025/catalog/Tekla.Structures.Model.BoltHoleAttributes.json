@@ -1,0 +1,65 @@
+{
+  "name": "BoltHoleAttributes",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The bolt hole attributes.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/422ddb23-4ec9-3422-853d-aac6c307683d",
+  "constructors": [
+    {
+      "name": "BoltHoleAttributes",
+      "signature": "BoltHoleAttributes(...)",
+      "summary": "Creates a new bolt hole attributes instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b15069fc-3049-70d9-dfad-94daa7c42521"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "HoleType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The special hole type: oversized, tapped, slotted, blind or no hole.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1c580078-0f5f-894b-adc7-9134d3524ce8"
+    },
+    {
+      "name": "LongHoleX",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The long hole X value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/af1dcdd2-f394-f08e-c9f8-43a0276bb02b"
+    },
+    {
+      "name": "LongHoleY",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The long hole Y value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/106f36f5-5af1-bf12-f517-043ce038df72"
+    },
+    {
+      "name": "SlotOffsetX",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The slot offset X value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/faac5fe0-0294-e32f-3083-1580035fe168"
+    },
+    {
+      "name": "SlotOffsetY",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The slot offset Y value.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7c209d8a-d381-4dad-bfe1-282df09adf27"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

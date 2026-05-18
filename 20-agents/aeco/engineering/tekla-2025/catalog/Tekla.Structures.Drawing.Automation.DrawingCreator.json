@@ -1,0 +1,42 @@
+{
+  "name": "DrawingCreator",
+  "namespace": "Tekla.Structures.Drawing.Automation",
+  "kind": "class",
+  "summary": "The DrawingCreator class is for handling the creation of drawings using the built-in logic of Tekla Structures.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/f976051e-3068-321a-e408-f370c1ac0bf5",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateDrawings(AutoDrawingRule, Identifier)",
+      "signature": "CreateDrawings(AutoDrawingRule, Identifier)(...)",
+      "summary": "Creates drawings using the AutoDrawing tool of Tekla Structures.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/76d514c8-aa1c-c10a-014a-62dd24b119ed"
+    },
+    {
+      "name": "CreateDrawings(AutoDrawingRule, List.Identifier., AutoDrawingsStatusEnum.)",
+      "signature": "CreateDrawings(AutoDrawingRule, List.Identifier., AutoDrawingsStatusEnum.)(...)",
+      "summary": "Creates drawings using the AutoDrawing tool of Tekla Structures.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/be9b7c58-c015-fd84-1bb8-ec0094be3a92"
+    },
+    {
+      "name": "CreateDrawings(AutoDrawingRule, Identifier, AutoDrawingsStatusEnum.)",
+      "signature": "CreateDrawings(AutoDrawingRule, Identifier, AutoDrawingsStatusEnum.)(...)",
+      "summary": "Creates drawings using the AutoDrawing tool of Tekla Structures.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7eac6939-0fe3-e07b-3dc7-7bc1804527c8"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

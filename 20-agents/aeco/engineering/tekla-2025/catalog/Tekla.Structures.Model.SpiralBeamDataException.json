@@ -1,0 +1,24 @@
+{
+  "name": "SpiralBeamDataException",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "class",
+  "summary": "The SpiralBeamDataException class represents an error that occurred during the spiral beam creation or modification.",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/031dfd58-7798-4ded-5a3a-3e35e02069d8",
+  "constructors": [
+    {
+      "name": "SpiralBeamDataException",
+      "signature": "SpiralBeamDataException(...)",
+      "summary": "Initializes a new instance of the SpiralBeamDataException class with spiral beam error message based on status.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/a63fc625-3f24-578b-ec7d-e689a896c163"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

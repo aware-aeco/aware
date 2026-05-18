@@ -1,0 +1,87 @@
+{
+  "name": "String",
+  "namespace": "Tekla.Structures.Datatype",
+  "kind": "struct",
+  "summary": "The String datatype.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/c6f0455d-cb51-99fe-67f7-a6911dbc4728",
+  "constructors": [
+    {
+      "name": "String",
+      "signature": "String(...)",
+      "summary": "Creates a new string datatype instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cb182412-94ed-af7a-6422-541f952605e5"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "Equals(...)",
+      "summary": "Returns a value that indicates whether the current instance is equal to the given object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4a48baa2-e08b-c323-9af4-bc85d98374c7"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "GetHashCode(...)",
+      "summary": "Returns the hash code for the current instance.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9b470039-311f-4fef-091e-1020fecbd875"
+    },
+    {
+      "name": "GetSchema",
+      "signature": "GetSchema(...)",
+      "summary": "Gets the XML Schema for the datatype.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/df3587f8-158f-a003-199a-fcd09507d3bc"
+    },
+    {
+      "name": "ReadXml",
+      "signature": "ReadXml(...)",
+      "summary": "Parses a new value from the given reader.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dc6b9b85-747e-b9db-a1ea-90973214c356"
+    },
+    {
+      "name": "ToString",
+      "signature": "ToString(...)",
+      "summary": "Returns the string representation of the object.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/81162790-c961-4843-fd25-cf51887f820f"
+    },
+    {
+      "name": "WriteXml",
+      "signature": "WriteXml(...)",
+      "summary": "Writes the value as XML to the given writer.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c05d5763-61c6-b80c-87d1-95e9d1b985aa"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Value",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The value of the string datatype.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/1b129c2a-9e01-3985-4180-ffea27651b11"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

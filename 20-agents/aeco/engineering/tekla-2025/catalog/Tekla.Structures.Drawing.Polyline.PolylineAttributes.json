@@ -1,0 +1,69 @@
+{
+  "name": "Polyline.PolylineAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The PolylineAttributes class is the attributes class of the polyline.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/8682dcd0-7945-40e4-ebbd-54033e315020",
+  "constructors": [
+    {
+      "name": "Polyline.PolylineAttributes",
+      "signature": "Polyline.PolylineAttributes(...)",
+      "summary": "Creates a new default polyline attributes instance that loads standard attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/edfe6f97-297c-6200-ad30-2b864990a3f5"
+    },
+    {
+      "name": "Polyline.PolylineAttributes",
+      "signature": "Polyline.PolylineAttributes(...)",
+      "summary": "Creates a new polyline attributes instance that loads the specified attributes.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fee35a5f-58c6-6491-2cf4-986643d5b447"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/404136cb-bdc9-a35f-5793-d0412c18b305"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "LoadAttributes(...)",
+      "summary": "Loads the attributes from the attribute file.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/cb4bb2c3-a745-825c-37b5-446de54da1cf"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Arrowhead",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The arrowhead attributes of the open graphic object. The end points of an open graphic object can contain arrowheads.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/fc9e61df-70b7-4271-ac40-f00c1772e151"
+    },
+    {
+      "name": "Line",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The line attributes of the graphic object. A graphic object always consists of lines.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3483367b-c555-6997-e0a4-988358d7ce9b"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

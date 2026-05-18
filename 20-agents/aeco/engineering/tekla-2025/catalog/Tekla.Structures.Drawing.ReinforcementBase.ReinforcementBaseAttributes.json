@@ -1,0 +1,82 @@
+{
+  "name": "ReinforcementBase.ReinforcementBaseAttributes",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "class",
+  "summary": "The ReinforcementBaseAttributes class is the attributes class for the reinforcement.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/184f289b-bf2a-1406-6387-c9db0de79a39",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "IsEqual",
+      "signature": "IsEqual(...)",
+      "summary": "Compares the current object with an object of the same type.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/787be2aa-0991-a803-fcd1-9548946d766e"
+    },
+    {
+      "name": "LoadAttributes",
+      "signature": "LoadAttributes(...)",
+      "summary": "Loads the attributes from the attribute file.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/d0b91e0d-69ce-a357-cb15-716ca34687ce"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CustomPresentation",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Custom presentation GUID to be applied to the object type",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3e55c0c1-b98b-cb5c-7fe8-61848e7d63bb"
+    },
+    {
+      "name": "HiddenLines",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The line type of the hidden lines of the reinforcement.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/86e209b5-bbfa-0173-2611-2841e4347b26"
+    },
+    {
+      "name": "HideLinesHiddenByPart",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines whether lines hidden by parts should be hidden or not.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/00ce7d59-4615-5a34-4480-b98ee6a5d2df"
+    },
+    {
+      "name": "HideLinesHiddenByReinforcement",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines whether lines hidden by reinforcements should be hidden or not.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/9e256a41-9554-cb2b-6a61-d4ee871f48ab"
+    },
+    {
+      "name": "ReinforcementRepresentation",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The representation of reinforcing bars.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4f1a4150-3fad-3e48-cf92-f50137a58be7"
+    },
+    {
+      "name": "VisibleLines",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The line type of the visible lines of the reinforcement.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/345d0b9c-ab66-7be5-d6d9-94ea71b8165e"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,254 @@
+{
+  "name": "AnalysisCrossSection",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "class",
+  "summary": "The AnalysisCrossSection class contains information related to analysis cross sections.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/5f39479f-2ea4-9799-a226-6ed9360a9da4",
+  "constructors": [
+    {
+      "name": "AnalysisCrossSection",
+      "signature": "AnalysisCrossSection(...)",
+      "summary": "Creates a new instance of an analysis cross section.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/69353284-0624-c0df-d4fb-478aa10f3ac2"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Delete",
+      "signature": "Delete(...)",
+      "summary": "Deletes an analysis cross section. The AnalysisModelName and ID have to be set.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2dda6dcb-28dc-50c6-bba0-e0681d0e086a"
+    },
+    {
+      "name": "GetCrossSectionGroup",
+      "signature": "GetCrossSectionGroup(...)",
+      "summary": "Gets the cross section group.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/907ce96f-4947-c62d-fe9d-acad76f92dad"
+    },
+    {
+      "name": "Insert",
+      "signature": "Insert(...)",
+      "summary": "Inserts an analysis cross section. The AnalysisModelName has to be set.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/ec7fbfb2-4c6f-0125-d408-12fd89973166"
+    },
+    {
+      "name": "Select",
+      "signature": "Select(...)",
+      "summary": "Selects an analysis cross section. The AnalysisModelName and ID/Name have to be set.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3fb513b9-840d-175c-a250-9e1f2f642a4a"
+    }
+  ],
+  "properties": [
+    {
+      "name": "A",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The cross section area (m2) of the analysis cross section.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dd8a3410-d71e-38d5-4739-d66c2cf0282f"
+    },
+    {
+      "name": "AnalysisModelName",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the analysis model name.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/820dc60f-92bc-f84c-9b4f-bf71faf2b76a"
+    },
+    {
+      "name": "AnalysisObjectType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2a2631ed-5e7b-7e60-f1d2-52186a5a17c4"
+    },
+    {
+      "name": "AnalysisSubSections",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The subsections of the analysis cross section.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/78fd5c13-37a4-882e-1326-c35ea8f25394"
+    },
+    {
+      "name": "Avy",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The shear area for loads parallel to the Y-axis (m2) of the analysis cross section.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/18401b1a-6936-738f-845c-be6cd4e1cb4a"
+    },
+    {
+      "name": "Avz",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The shear area for loads parallel to the Z-axis (m2) of the analysis cross section.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/c856ac1e-209d-33e9-a1a8-c9d7295e116d"
+    },
+    {
+      "name": "Calculated",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether section values have been calculated.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/0735adfd-e600-1fd7-6420-08c4848a34ff"
+    },
+    {
+      "name": "FatherObject2ID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3cc2e3ff-3afd-4def-2559-7c1827233bec"
+    },
+    {
+      "name": "FatherObject2Type",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7b5d643a-2a12-5281-7f65-a312171bafcc"
+    },
+    {
+      "name": "FatherObjectID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the father part.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7e55f4c8-ca1a-2761-edd6-2b69663ff941"
+    },
+    {
+      "name": "FatherObjectType",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the type of the father object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/739bcea1-858d-70e2-ff0d-9c4928129c3e"
+    },
+    {
+      "name": "G",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The mass per unit of length (kg/m) of the analysis cross section.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/5bdb45e1-9643-a58d-df56-f5e6a77cc531"
+    },
+    {
+      "name": "ID",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the identifier of the analysis object.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/289caef6-9b6e-cd4c-dcbc-6397be2f9de0"
+    },
+    {
+      "name": "It",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The torsion moment (m4) of the analysis cross section.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/3129694c-0238-69df-42cb-1ce1f93f94c7"
+    },
+    {
+      "name": "Iw",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The warping constant (m6) of the analysis cross section.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/2ee7f483-2413-8622-5bf1-1310dbb0f664"
+    },
+    {
+      "name": "Iy",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The radius of gyration about the Y-axis (m) of the analysis cross section.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/7a347215-aca4-b94a-6cb7-216549630384"
+    },
+    {
+      "name": "Iyy",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The moment of inertia about the Y-axis (m4) of the analysis cross section.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4fabd82b-800c-3124-7840-ee392ca636d4"
+    },
+    {
+      "name": "Iz",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The radius of gyration about the Z-axis (m) of the analysis cross section.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4ae97500-f329-1bb7-05a5-5e987eddc2e7"
+    },
+    {
+      "name": "Izz",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The moment of inertia about the Z-axis (m4) of the analysis cross section.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/abeb16a4-65de-d66a-1761-1f03ba0d608c"
+    },
+    {
+      "name": "Name",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The name of the analysis cross section.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/e90b4937-ca8b-7c02-65ef-94e6c85a921a"
+    },
+    {
+      "name": "Wplyy",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The plastic modulus about the Y-axis (m3) of the analysis cross section.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/42ef3273-238b-df93-c45f-d80b69f971db"
+    },
+    {
+      "name": "Wplzz",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The plastic modulus about the Z-axis (m3) of the analysis cross section.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/dbe4c2f6-032d-56a1-37a5-e6836a5810cd"
+    },
+    {
+      "name": "Wyy",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The elastic modulus about the Y-axis (m3) of the analysis cross section.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/047df163-28d9-87a0-3d4b-c1b27bc4f9e1"
+    },
+    {
+      "name": "Wzz",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "The elastic modulus about the Z-axis (m3) of the analysis cross section.",
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b2f59284-c24c-7cad-4cff-5267b175111e"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

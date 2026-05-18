@@ -1,0 +1,61 @@
+{
+  "name": "Operation.ProgressBar",
+  "namespace": "Tekla.Structures.Model.Operations",
+  "kind": "class",
+  "summary": "The ProgressBar class implements progress bar with cancel button.",
+  "base": "System.Object",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/0f2ddcb2-4dc5-597a-4ed6-237543023362",
+  "constructors": [
+    {
+      "name": "Operation.ProgressBar",
+      "signature": "Operation.ProgressBar(...)",
+      "summary": "Initializes a new instance of the Operation.ProgressBar class",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/82421948-7edb-858d-bb33-899ac171f34f"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Canceled",
+      "signature": "Canceled(...)",
+      "summary": "Check if cancel has been pressed.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/65b92871-fd3b-0b78-8047-52a5973e9271"
+    },
+    {
+      "name": "Close",
+      "signature": "Close(...)",
+      "summary": "Close progress bar. Can be called even if Display was not successful.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/b0de203c-dfc1-a501-a91b-29428d25567a"
+    },
+    {
+      "name": "Display",
+      "signature": "Display(...)",
+      "summary": "Display progress bar dialog with cancel button. Display will fail if progress bar is already displayed.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/6758e312-e9fb-ddeb-9631-20faa288a575"
+    },
+    {
+      "name": "SetProgress",
+      "signature": "SetProgress(...)",
+      "summary": "Update status information on the progress bar.",
+      "params": [],
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/18/43/4868a504-d0dd-c456-1f41-48eb4ebf8443"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

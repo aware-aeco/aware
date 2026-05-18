@@ -1,0 +1,209 @@
+{
+  "name": "AnalysisObject.AnalysisObjectEnum",
+  "namespace": "Tekla.Structures.Analysis",
+  "kind": "enum",
+  "summary": "All subclasses of analysis objects are defined here. This enumeration can be used to select certain types of analysis objects.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/e1b54325-7dfc-88e4-92bb-830979fdb059",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ANALYSIS_NOT_DEFINED",
+      "value": 0,
+      "summary": "The analysis object type is not defined."
+    },
+    {
+      "name": "ANALYSIS_MODEL",
+      "value": 1,
+      "summary": "This type is for selecting analysis models from the current Tekla Structures model."
+    },
+    {
+      "name": "ANALYSIS_PART",
+      "value": 2,
+      "summary": "This type is for selecting analysis parts from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_BAR",
+      "value": 3,
+      "summary": "This type is for selecting analysis bars from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_AREA",
+      "value": 4,
+      "summary": "This type is for selecting analysis areas from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_VOLUME",
+      "value": 5,
+      "summary": "This type is for selecting analysis volumes from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_MEMBER",
+      "value": 6,
+      "summary": "This type is for selecting analysis members from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_DECOMPOSED_LOAD_NODE",
+      "value": 7,
+      "summary": "This type is for selecting decomposed node loads from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_DECOMPOSED_LOAD_BAR",
+      "value": 8,
+      "summary": "This type is for selecting decomposed bar loads from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_DECOMPOSED_LOAD_AREA",
+      "value": 9,
+      "summary": "This type is for selecting decomposed area loads from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_DECOMPOSED_LOAD_MEMBER",
+      "value": 10,
+      "summary": "This type is for selecting decomposed member loads from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_DECOMPOSED_LOAD_SELFWEIGHT",
+      "value": 11,
+      "summary": "This type is for selecting decomposed selfweight loads from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_DECOMPOSED_LOAD_TEMPERATURE",
+      "value": 12,
+      "summary": "This type is for selecting decomposed temperature loads from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_AREA_POLYGON",
+      "value": 13,
+      "summary": "This type is for selecting area polygons from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_AREA_HOLE",
+      "value": 14,
+      "summary": "This type is for selecting area holes from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_EDGE",
+      "value": 15,
+      "summary": "This type is for selecting area edges from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_EDGE_HOLE",
+      "value": 16,
+      "summary": "This type is for selecting area hole edges from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_POSITION_BAR",
+      "value": 17,
+      "summary": "This type is for selecting bar positions from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_POSITION_AREA",
+      "value": 18,
+      "summary": "This type is for selecting area polygon positions from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_POSITION_AREA_INNER",
+      "value": 19,
+      "summary": "This type is for selecting area inner positions from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_POSITION_AREA_HOLE",
+      "value": 20,
+      "summary": "This type is for selecting area hole positions from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_POSITION_EDGE_SPLIT",
+      "value": 21,
+      "summary": "This type is for selecting edge split positions from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_POSITION_EDGE_SPLIT_HOLE",
+      "value": 22,
+      "summary": "This type is for selecting edge split hole positions from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_POSITION_FACE",
+      "value": 23,
+      "summary": "This type is for selecting face positions from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_NODE",
+      "value": 24,
+      "summary": "This type is for selecting analysis nodes from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_NODE_LINK",
+      "value": 25,
+      "summary": "This type is for selecting analysis node links from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_DESIGN_PARAMETER",
+      "value": 26,
+      "summary": "This type is for selecting analysis design parameters from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_DESIGN_PARAMETER_MULTI",
+      "value": 27,
+      "summary": "This type is for selecting analysis design multi parameters from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_MODEL_CONNECTIVITY_RULE",
+      "value": 28,
+      "summary": "This type is for selecting analysis connectivity rules from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_FACE",
+      "value": 29,
+      "summary": "This type is for selecting analysis faces from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_VOLUME_ITEM",
+      "value": 30,
+      "summary": "This type is for selecting analysis volume items from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_CROSS_SECTION",
+      "value": 31,
+      "summary": "This type is for selecting analysis cross sections from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_SUB_SECTION",
+      "value": 32,
+      "summary": "This type is for selecting analysis subsections from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_MATERIAL",
+      "value": 33,
+      "summary": "This type is for selecting analysis materials from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_CROSS_SECTION_GROUP",
+      "value": 34,
+      "summary": "This type is for selecting analysis cross section groups from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_RIGID_DIAPHRAGM",
+      "value": 35,
+      "summary": "This type is for selecting analysis rigid diaphragms from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_LOAD_GROUP",
+      "value": 36,
+      "summary": "This type is for selecting analysis load groups from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_LOAD_COMBINATION",
+      "value": 37,
+      "summary": "This type is for selecting analysis load combinations from the current analysis model."
+    },
+    {
+      "name": "ANALYSIS_MODEL_LOAD",
+      "value": 38,
+      "summary": "This type is for selecting model loads from the current analysis model."
+    }
+  ]
+}

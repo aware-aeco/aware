@@ -1,0 +1,14 @@
+{
+  "name": "Events.ModelObjectNumberedDelegate",
+  "namespace": "Tekla.Structures.Model",
+  "kind": "delegate",
+  "summary": "The delegate to use for model objects which are numbered. ModelObjects contain only identifier information. If properties need to be checked, Select() for object is required.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/845f67a0-ae66-a0e9-f511-a7bf3fd6898a",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void ModelObjectNumberedDelegate( List\u003CModelObject\u003E Objects )"
+}

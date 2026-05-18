@@ -1,0 +1,34 @@
+{
+  "name": "TextAlignment",
+  "namespace": "Tekla.Structures.Drawing",
+  "kind": "enum",
+  "summary": "The alignment of the text.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/topic/en/18/43/730bcec8-2bb6-29dd-7010-4d5e0f27d0ad",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Left",
+      "value": 0,
+      "summary": "The left aligned text."
+    },
+    {
+      "name": "Center",
+      "value": 1,
+      "summary": "The center aligned text."
+    },
+    {
+      "name": "Right",
+      "value": 2,
+      "summary": "The right aligned text."
+    },
+    {
+      "name": "LeaderLine",
+      "value": 3,
+      "summary": "The text is aligned to leader line direction"
+    }
+  ]
+}
