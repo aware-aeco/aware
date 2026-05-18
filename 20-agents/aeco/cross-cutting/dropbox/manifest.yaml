@@ -1,0 +1,298 @@
+agent:        dropbox
+version:      v2
+display-name: Dropbox
+description: |
+  Cross-cutting file storage + sharing for AECO firms running Dropbox
+  Business as their CDE (especially mid-sized + smaller firms that don't
+  run ACC, Aconex, or Trimble Connect). Wraps the Dropbox v2 REST API.
+
+  Sibling of `microsoft-365` (M365 file surface) and `google-workspace`
+  (Drive surface) — same shape, different vendor. AWARE doesn't care
+  which one the firm picked; pick the agent matching the firm's actual
+  CDE.
+
+  Scope: file ops (upload / download / list / share / move / delete) +
+  Paper notebooks + team admin. Sign (e-signature) is a separate
+  vendor product with its own API; future `dropbox-sign` agent.
+
+stateful: false
+
+vendor:   dropbox
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/cross-cutting/dropbox
+keywords: [aware, dropbox, file-storage, cde, cross-cutting, sharing, paper, business]
+
+provenance:
+  generated-by:     hand-curated
+  generator-version: 0.25.0
+  source:
+    type:    docs
+    primary: https://www.dropbox.com/developers/documentation/http/documentation
+  refined-by:       [pawellisowski]
+  generated-at:     2026-05-18T08:00:00Z
+
+requires:
+  network:
+    - https://api.dropboxapi.com
+    - https://content.dropboxapi.com
+    - https://api.dropbox.com
+  secrets:
+    - dropbox
+  filesystem:
+    - read:  '*'
+    - write: '*'
+
+transport:
+  cli:
+    binary: aware-dropbox
+  rest:
+    base: https://api.dropboxapi.com/2/
+
+commands:
+
+  # ---- Files -----------------------------------------------------------
+
+  files.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List files + folders under a path. Returns one record per entry
+      with size, modified-at, and the Dropbox path-id (stable across
+      moves). Read-only.
+    inputs:
+      path:
+        type: string
+        description: Folder path (e.g. `/Projects/Acme/Tender`). Empty = root.
+      recursive:
+        type: boolean
+        default: false
+    outputs:
+      type: single
+      schema:
+        entries:
+          type: array
+          items:
+            id:           string
+            path:         string
+            kind:         string  # file | folder | deleted
+            size-bytes:   number
+            modified-at:  string
+
+  files.upload:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Upload a local file to a Dropbox path. Uses session-upload for
+      files > 150 MB. Set `overwrite: true` to replace an existing
+      file at the destination.
+    inputs:
+      local-path:
+        type: string
+      remote-path:
+        type: string
+        description: Full Dropbox path, e.g. `/Projects/Acme/Tender/A-100.pdf`.
+      overwrite:
+        type: boolean
+        default: false
+    outputs:
+      type: single
+      schema:
+        id:          string
+        path:        string
+        size-bytes:  number
+        rev:         string
+
+  files.download:
+    lifecycle: single
+    category: curated
+    description: Download a Dropbox file to a local path. Read-only.
+    inputs:
+      remote-path: string
+      local-path:  string
+    outputs:
+      type: single
+      schema:
+        path:        string
+        size-bytes:  number
+
+  files.delete:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Soft-delete a file / folder (Dropbox retains for 30 days). Pair
+      with `files.list-deleted` + `files.restore` for undo.
+    inputs:
+      remote-path: string
+    outputs:
+      type: single
+      schema:
+        deleted-path: string
+
+  files.move:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Move / rename a file or folder. The "supersede Rev D → Rev E"
+      detailer flow — move old revision to an archive folder.
+    inputs:
+      from-path: string
+      to-path:   string
+    outputs:
+      type: single
+      schema:
+        new-path: string
+
+  # ---- Sharing ---------------------------------------------------------
+
+  sharing.create-link:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Create a shareable link to a file or folder. Returns the URL +
+      visibility settings. Default permission = view-only.
+    inputs:
+      remote-path:
+        type: string
+      access:
+        type: enum
+        values: [view, edit]
+        default: view
+      expires-at:
+        type: string
+        description: Optional ISO 8601 expiry (Dropbox Business only).
+      password:
+        type: string
+        description: Optional password (Dropbox Business only).
+    outputs:
+      type: single
+      schema:
+        url:         string
+        expires-at:  string
+        access:      string
+
+  sharing.list-links:
+    lifecycle: single
+    category: curated
+    description: |
+      List all shared links the user has created. Used by tender-pack
+      audit flows — "who did we share this with, when, and is the
+      link still active?" Read-only.
+    inputs:
+      remote-path:
+        type: string
+        description: Optional — filter to links pointing at this path.
+    outputs:
+      type: single
+      schema:
+        links:
+          type: array
+          items:
+            url:          string
+            remote-path:  string
+            access:       string
+            expires-at:   string
+            created-at:   string
+
+  sharing.add-folder-member:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Add a member (email) to a shared folder with explicit access
+      level. The "share the tender folder with consultants" verb.
+    inputs:
+      folder-path:
+        type: string
+      emails:
+        type: array
+        items: string
+      access:
+        type: enum
+        values: [viewer, editor]
+        default: viewer
+      send-notification:
+        type: boolean
+        default: false
+        description: If true, Dropbox sends a notification email.
+    outputs:
+      type: single
+      schema:
+        added: number
+
+  # ---- Paper (Dropbox's notebook product) ------------------------------
+
+  paper.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List Paper documents in the user's workspace. Read-only.
+    inputs:
+      filter-by:
+        type: enum
+        values: [docs-created, docs-accessed]
+        default: docs-accessed
+    outputs:
+      type: single
+      schema:
+        docs:
+          type: array
+          items:
+            doc-id:        string
+            title:         string
+            last-updated:  string
+            web-url:       string
+
+  paper.export:
+    lifecycle: single
+    category: curated
+    description: |
+      Export a Paper document as Markdown / HTML / PDF / DOCX. Used
+      by archive flows + transcription into project deliverables.
+      Read-only against Paper; writes the export file.
+    inputs:
+      doc-id:
+        type: string
+      output-path:
+        type: string
+      format:
+        type: enum
+        values: [markdown, html, pdf, docx]
+        default: markdown
+    outputs:
+      type: single
+      schema:
+        path:        string
+        size-bytes:  number
+
+  # ---- Team admin (Business tier) --------------------------------------
+
+  team.list-members:
+    lifecycle: single
+    category: curated
+    description: |
+      List Dropbox Business team members. Read-only. Used by
+      BIM-manager onboarding flows — "who's on the team for this
+      project?" Requires Business admin scope.
+    inputs:
+      status:
+        type: enum
+        values: [active, suspended, removed, any]
+        default: active
+    outputs:
+      type: single
+      schema:
+        members:
+          type: array
+          items:
+            email:         string
+            name:          string
+            role:          string
+            status:        string
+
+skills:
+  - dropbox-vs-acc-vs-trimble.md
+  - sharing-strategy.md

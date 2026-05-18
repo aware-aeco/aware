@@ -4,7 +4,7 @@ use assert_cmd::Command;
 use predicates::prelude::*;
 
 #[test]
-fn doctor_reports_fiftysix_agents_and_seven_apps() {
+fn doctor_reports_fiftyseven_agents_and_seven_apps() {
     let home = common::aware_home();
     Command::cargo_bin("aware")
         .unwrap()
@@ -13,9 +13,9 @@ fn doctor_reports_fiftysix_agents_and_seven_apps() {
         .assert()
         .success()
         .stdout(predicate::str::contains("CLI:"))
-        .stdout(predicate::str::contains("aware v0.25.0"))
+        .stdout(predicate::str::contains("aware v0.26.0"))
         .stdout(predicate::str::contains("Filesystem:"))
-        .stdout(predicate::str::contains("56 installed"))
+        .stdout(predicate::str::contains("57 installed"))
         .stdout(predicate::str::contains("7 installed"));
 }
 

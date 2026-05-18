@@ -291,6 +291,143 @@ commands:
         message-name: string
         web-url:      string
 
+  chat.post-with-card:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Post a Card v2 message to a Google Chat space — the rich-data
+      equivalent of `microsoft-365.teams.channel.post-with-card`. Cards
+      render rows as a key-value list with optional action buttons.
+    inputs:
+      space-id:
+        type: string
+      title:
+        type: string
+      rows:
+        type: array
+        description: |
+          Each row is `{ label, value }`. Renders as a Card v2 KeyValue
+          widget. For richer layouts, pass raw `card` JSON instead.
+      card:
+        type: object
+        description: |
+          Optional Card v2 JSON. If provided, `rows` is ignored.
+    outputs:
+      type: single
+      schema:
+        message-name: string
+        web-url:      string
+
+  # ---- Google Forms -----------------------------------------------------
+
+  forms.list:
+    lifecycle: single
+    category: curated
+    description: |
+      List Google Forms the user has access to. Read-only. Used as the
+      "what intake forms are live" verb — RFI intake, site-survey
+      forms, snagging-checklist forms.
+    inputs:
+      query:
+        type: string
+        description: Optional Drive search filter (e.g. `name contains 'RFI'`).
+    outputs:
+      type: single
+      schema:
+        forms:
+          type: array
+          items:
+            form-id:    string
+            title:      string
+            web-url:    string
+
+  forms.responses.list:
+    lifecycle: single
+    category: curated
+    description: |
+      Pull responses from a Google Form. The "what did people submit
+      since last Friday" verb — pairs with the BIM-manager Monday
+      audit flow. Read-only.
+    inputs:
+      form-id:
+        type: string
+      since:
+        type: string
+        description: Optional ISO 8601 cutoff.
+    outputs:
+      type: single
+      schema:
+        responses:
+          type: array
+          items:
+            response-id: string
+            submitted-at: string
+            respondent:  string
+            answers:     object
+
+  # ---- Google Slides ----------------------------------------------------
+
+  slides.export-pdf:
+    lifecycle: single
+    category: curated
+    description: |
+      Export a Google Slides deck as PDF. The designer / architect
+      "client-deck issue" verb — pair with `drive.share` to ship the
+      PDF straight to the client folder. Read-only against the deck;
+      writes a new PDF.
+    inputs:
+      presentation-id:
+        type: string
+      output-path:
+        type: string
+    outputs:
+      type: single
+      schema:
+        path:        string
+        page-count:  number
+        size-bytes:  number
+
+  slides.replace-text:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Bulk-replace `{{ token }}` placeholders in a Slides deck with
+      values from a context object. The "project-prefix template
+      filler" verb — sub `{{ project-name }}`, `{{ run-date }}` etc
+      before export.
+    inputs:
+      presentation-id:
+        type: string
+      replacements:
+        type: object
+        description: Map of `{{ token }}` → replacement string.
+    outputs:
+      type: single
+      schema:
+        replaced-count: number
+
+  # ---- Google Meet ------------------------------------------------------
+
+  meet.create:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Create a standalone Google Meet link (not tied to a calendar
+      event). Used by ad-hoc coordination flows — "we need a quick
+      walk-through call; here's the link."
+    inputs:
+      title:
+        type: string
+        description: Optional meeting title (defaults to "AWARE meeting").
+    outputs:
+      type: single
+      schema:
+        meet-id:   string
+        meet-url:  string
+
   # ---- Tasks ------------------------------------------------------------
 
   tasks.create:
