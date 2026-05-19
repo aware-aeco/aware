@@ -1,0 +1,172 @@
+{
+  "name": "Dictionary",
+  "namespace": "Layout",
+  "kind": "class",
+  "summary": "This is the interface to a LayOut dictionary. A Dictionary wraps key/value pairs.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Layout/Dictionary.html",
+  "constructors": [
+    {
+      "name": "initialize",
+      "signature": "Dictionary(dict)",
+      "summary": "The #initialize method creates a new Layout::Dictionary.",
+      "remarks": "The #initialize method creates a new Layout::Dictionary.",
+      "params": [
+        {
+          "name": "hash",
+          "type": "Hash, Layout::Dictionary",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "if dict isn\u0027t a dictionary or hash"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Dictionary.html#initialize-instance_method"
+    }
+  ],
+  "methods": [
+    {
+      "name": "delete_key",
+      "signature": "delete_key(key) =\u003E String, ...",
+      "summary": "The #delete_key method deletes a key/value pair from the dictionary.",
+      "remarks": "The #delete_key method deletes a key/value pair from the dictionary.",
+      "params": [
+        {
+          "name": "key",
+          "type": "String",
+          "doc": "The key to be deleted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String, Boolean, Integer, Float, Layout::Dictionary, nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Dictionary.html#delete_key-instance_method"
+    },
+    {
+      "name": "each",
+      "signature": "each {|key, value| ... } =\u003E Object",
+      "summary": "The #each_pair method is an alias for #each.",
+      "remarks": "The #each_pair method is an alias for #each.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Dictionary.html#each-instance_method"
+    },
+    {
+      "name": "each_key",
+      "signature": "each_key {|key| ... } =\u003E Object",
+      "summary": "The #each_key method iterates through all of the dictionary keys.",
+      "remarks": "The #each_key method iterates through all of the dictionary keys.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Dictionary.html#each_key-instance_method"
+    },
+    {
+      "name": "each_pair",
+      "signature": "each_pair {|key, value| ... } =\u003E Object",
+      "summary": "The #each_pair method is an alias for #each.",
+      "remarks": "The #each_pair method is an alias for #each.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Dictionary.html#each_pair-instance_method"
+    },
+    {
+      "name": "empty?",
+      "signature": "empty? =\u003E Boolean",
+      "summary": "The #empty? method checks if the dictionary is empty.",
+      "remarks": "The #empty? method checks if the dictionary is empty.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Dictionary.html#empty?-instance_method"
+    },
+    {
+      "name": "keys",
+      "signature": "keys =\u003E Array\u003CString\u003E",
+      "summary": "The #keys method retrieves an array with all of the dictionary keys.",
+      "remarks": "The #keys method retrieves an array with all of the dictionary keys.",
+      "params": [],
+      "returns": {
+        "type": "Array\u003CString\u003E",
+        "doc": "an array of keys within the dictionary if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Dictionary.html#keys-instance_method"
+    },
+    {
+      "name": "length",
+      "signature": "length =\u003E Integer",
+      "summary": "The #length method retrieves the size (number of elements) of a dictionary.",
+      "remarks": "The #length method retrieves the size (number of elements) of a dictionary.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Dictionary.html#length-instance_method"
+    },
+    {
+      "name": "size",
+      "signature": "size =\u003E Integer",
+      "summary": "The #length method retrieves the size (number of elements) of a dictionary.",
+      "remarks": "The #length method retrieves the size (number of elements) of a dictionary.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Dictionary.html#size-instance_method"
+    },
+    {
+      "name": "values",
+      "signature": "values =\u003E Array\u003CObject\u003E",
+      "summary": "The #values method retrieves an array with all of the dictionary values.",
+      "remarks": "The #values method retrieves an array with all of the dictionary values.",
+      "params": [],
+      "returns": {
+        "type": "Array\u003CObject\u003E",
+        "doc": "an array of values within the dictionary if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Dictionary.html#values-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "[]",
+      "type": "String, Boolean, Integer, Float, Layout::Dictionary, nil",
+      "getter": true,
+      "setter": true,
+      "summary": "The #[] method retrieves the value for a given key.",
+      "remarks": "The #[] method retrieves the value for a given key.",
+      "doc_url": "https://ruby.sketchup.com/Layout/Dictionary.html#[]-instance_method"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

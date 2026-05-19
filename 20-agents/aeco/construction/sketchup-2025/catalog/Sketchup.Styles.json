@@ -1,0 +1,228 @@
+{
+  "name": "Styles",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "The Styles class contains methods for manipulating a collection of styles in a model. Typically, you will access this via the active_model: There are two objects of this class that play important roles: the #selected_style and the #active_style. The latter is a temporary copy made from the #selected_style that allows the user to edit the style without committing to save anything. To save the changes, one should use #update_selected_style.",
+  "base": "Entity",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/Styles.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "[]",
+      "signature": "[](name) =\u003E Sketchup::Style? | [](index) =\u003E Sketchup::Style?",
+      "summary": "The #[] method is used to retrieves a style by either name or index.",
+      "remarks": "The #[] method is used to retrieves a style by either name or index.",
+      "params": [
+        {
+          "name": "name",
+          "type": "String",
+          "doc": "The name of the style to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::Style, nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Styles.html#[]-instance_method"
+    },
+    {
+      "name": "active_style",
+      "signature": "active_style =\u003E Sketchup::Style",
+      "summary": "The #active_style method is used to retrieve the active style.",
+      "remarks": "The #active_style method is used to retrieve the active style. While #selected_style is the style being selected in the Style Browser, the ##active_style is a different object also including any unsaved style changes. These changes are silently dropped once a new style is selected. To save these changes to the selected style, call ##update_selected_style.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::Style",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Styles.html#active_style-instance_method"
+    },
+    {
+      "name": "active_style_changed",
+      "signature": "active_style_changed =\u003E Boolean",
+      "summary": "The #active_style_changed method tells you if the active style has been edited by the user since it was last saved.",
+      "remarks": "The #active_style_changed method tells you if the active style has been edited by the user since it was last saved.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Styles.html#active_style_changed-instance_method"
+    },
+    {
+      "name": "add_style",
+      "signature": "add_style(filename, select) =\u003E Boolean | add_style(filename, select = false) =\u003E Sketchup::Style?",
+      "summary": "The #add_style method is used to create and load a style from the given file.",
+      "remarks": "The #add_style method is used to create and load a style from the given file.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "String",
+          "doc": "The file path to the style file.",
+          "optional": false
+        },
+        {
+          "name": "select",
+          "type": "Boolean",
+          "doc": "true if you want to set the style to be the active style.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Styles.html#add_style-instance_method"
+    },
+    {
+      "name": "count",
+      "signature": "count =\u003E Integer",
+      "summary": "Note: Since SketchUp 2014 the count method is inherited from Ruby\u0027s Enumerable mix-in module.",
+      "remarks": "Note: Since SketchUp 2014 the count method is inherited from Ruby\u0027s Enumerable mix-in module. Prior to that the #count method is an alias for #length.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Styles.html#count-instance_method"
+    },
+    {
+      "name": "each",
+      "signature": "each {|style| ... } =\u003E nil",
+      "summary": "The #each method is used to iterate through styles.",
+      "remarks": "The #each method is used to iterate through styles.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Styles.html#each-instance_method"
+    },
+    {
+      "name": "length",
+      "signature": "length =\u003E Integer",
+      "summary": "The #length method is an alias of #size.",
+      "remarks": "The #length method is an alias of #size.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Styles.html#length-instance_method"
+    },
+    {
+      "name": "parent",
+      "signature": "parent =\u003E Sketchup::Model",
+      "summary": "The #parent method is used to return the model for the styles.",
+      "remarks": "The #parent method is used to return the model for the styles.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::Model",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Styles.html#parent-instance_method"
+    },
+    {
+      "name": "purge_unused",
+      "signature": "purge_unused =\u003E nil",
+      "summary": "The #purge_unused method is used to remove unused styles from the model.",
+      "remarks": "The #purge_unused method is used to remove unused styles from the model.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Styles.html#purge_unused-instance_method"
+    },
+    {
+      "name": "remove_style",
+      "signature": "remove_style(style) =\u003E nil",
+      "summary": "The #remove_style method is used to remove a Sketchup::Style from the Sketchup::Styles.",
+      "remarks": "The #remove_style method is used to remove a Sketchup::Style from the Sketchup::Styles.",
+      "params": [
+        {
+          "name": "style",
+          "type": "Sketchup::Style",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "If the style is not found in the Styles collection."
+        },
+        {
+          "type": "ArgumentError",
+          "when": "If the styles contains only one style."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Styles.html#remove_style-instance_method"
+    },
+    {
+      "name": "size",
+      "signature": "size =\u003E Integer",
+      "summary": "The #size method is used to retrieve the number of styles in the collection.",
+      "remarks": "The #size method is used to retrieve the number of styles in the collection.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Styles.html#size-instance_method"
+    },
+    {
+      "name": "update_selected_style",
+      "signature": "update_selected_style =\u003E nil",
+      "summary": "The #update_selected_style method commits the current style settings to the style selected in the Style Browser.",
+      "remarks": "The #update_selected_style method commits the current style settings to the style selected in the Style Browser.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Styles.html#update_selected_style-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "selected_style",
+      "type": "Sketchup::Style",
+      "getter": true,
+      "setter": true,
+      "summary": "The #selected_style method is used to retrieve the style currently selected in the Styles Browser.",
+      "remarks": "The #selected_style method is used to retrieve the style currently selected in the Styles Browser.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Styles.html#selected_style-instance_method"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

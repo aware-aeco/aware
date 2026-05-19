@@ -1,0 +1,41 @@
+{
+  "name": "ShadowInfoObserver",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "This class is abstract. To implement this observer, create a Ruby class of this type, override the desired methods, and add an instance of the observer to the ShadowInfo object. This observer interface is implemented to react to changes to the shadow settings.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/ShadowInfoObserver.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "onShadowInfoChanged",
+      "signature": "onShadowInfoChanged(shadow_info, type) =\u003E nil",
+      "summary": "The #onShadowInfoChanged method is invoked whenever the user alters a setting inside the Shadows and Model Info dialogs.",
+      "remarks": "The #onShadowInfoChanged method is invoked whenever the user alters a setting inside the Shadows and Model Info dialogs. The type parameter contains a number identifying which option was altered. Here are the types to expect: 0 = Time/Date sliders 1 = Display Shadows checkbox 2 = Light/Dark sliders 3 = Geographic Location (in Model Info \u003E Location) 4 = Solar Orientation (in Model Info \u003E Location) 7 = Use Sun for Shading checkbox 8 = Display from Edges checkbox 9 = Display on Ground checkbox 10 = Display on Faces checkbox",
+      "params": [
+        {
+          "name": "shadow_info",
+          "type": "Sketchup::ShadowInfo",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "Integer",
+          "doc": "A number identifying which setting was changed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/ShadowInfoObserver.html#onShadowInfoChanged-instance_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

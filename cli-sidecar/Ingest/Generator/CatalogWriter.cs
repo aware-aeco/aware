@@ -37,11 +37,25 @@ public static class CatalogWriter
         foreach (var t in ir.types)
         {
             var safeName = SanitizeForFilename(t.name);
-            var filename = $"{t.@namespace}.{safeName}.json";
+            var safeNamespace = SanitizeNamespaceForFilename(t.@namespace);
+            // Top-level types (Ruby's root namespace, e.g. `Array`, `LanguageHandler`) come
+            // through with empty namespace — emit the bare type name to avoid a leading dot.
+            var filename = string.IsNullOrEmpty(safeNamespace)
+                ? $"{safeName}.json"
+                : $"{safeNamespace}.{safeName}.json";
             result[filename] = JsonSerializer.Serialize(t, IrJsonContext.Default.TypeInfo);
         }
         return result;
     }
+
+    /// <summary>
+    /// Replace Ruby's `::` namespace separator with `.` so the filename layout is identical to
+    /// what .NET vendor agents produce. The catalog JSON inside the file keeps the original
+    /// namespace verbatim (with `::`), so downstream tools see the true vendor name. Only the
+    /// filename is normalised.
+    /// </summary>
+    static string SanitizeNamespaceForFilename(string @namespace) =>
+        (@namespace ?? "").Replace("::", ".", StringComparison.Ordinal);
 
     /// <summary>
     /// Rewrite a vendor type name into a filesystem-safe variant for use as a catalog

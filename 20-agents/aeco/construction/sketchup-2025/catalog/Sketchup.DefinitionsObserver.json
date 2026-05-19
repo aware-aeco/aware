@@ -1,0 +1,115 @@
+{
+  "name": "DefinitionsObserver",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "This class is abstract. To implement this observer, create a Ruby class of this type, override the desired methods, and add an instance of the observer to the collection of interest. This observer interface is implemented to react to events on a definitions collection.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/DefinitionsObserver.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "onComponentAdded",
+      "signature": "onComponentAdded(definitions, definition) =\u003E nil",
+      "summary": "The #onComponentAdded method is called whenever a definition is added to the definitions collection.",
+      "remarks": "The #onComponentAdded method is called whenever a definition is added to the definitions collection.",
+      "params": [
+        {
+          "name": "definitions",
+          "type": "Sketchup::DefinitionList",
+          "optional": false
+        },
+        {
+          "name": "definition",
+          "type": "Sketchup::ComponentDefinition",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/DefinitionsObserver.html#onComponentAdded-instance_method"
+    },
+    {
+      "name": "onComponentPropertiesChanged",
+      "signature": "onComponentPropertiesChanged(definitions, definition) =\u003E nil",
+      "summary": "The #onComponentPropertiesChanged method is called whenever a definition\u0027s name or description are changed.",
+      "remarks": "The #onComponentPropertiesChanged method is called whenever a definition\u0027s name or description are changed. This does not fire when \u201CGlue To\u201D, \u201CCuts Opening\u201D, or \u201CFace Camera\u201D settings are changed.",
+      "params": [
+        {
+          "name": "definitions",
+          "type": "Sketchup::DefinitionList",
+          "optional": false
+        },
+        {
+          "name": "definition",
+          "type": "Sketchup::ComponentDefinition",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/DefinitionsObserver.html#onComponentPropertiesChanged-instance_method"
+    },
+    {
+      "name": "onComponentRemoved",
+      "signature": "onComponentRemoved(definitions, definition) =\u003E nil",
+      "summary": "Note: This methods fires twice for each Component/Group erased.",
+      "remarks": "Note: This methods fires twice for each Component/Group erased. The #onComponentAdded method is called whenever a definition is removed from the definitions collection.",
+      "params": [
+        {
+          "name": "definitions",
+          "type": "Sketchup::DefinitionList",
+          "optional": false
+        },
+        {
+          "name": "definition",
+          "type": "Sketchup::ComponentDefinition",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/DefinitionsObserver.html#onComponentRemoved-instance_method"
+    },
+    {
+      "name": "onComponentTypeChanged",
+      "signature": "onComponentTypeChanged(definitions, definition) =\u003E nil",
+      "summary": "The #onComponentTypeChanged event is fired when a component is converted to a group or vice versa.",
+      "remarks": "The #onComponentTypeChanged event is fired when a component is converted to a group or vice versa. (In the underlying implementation, Groups are just a special kind of definition that is allowed to only have a single instance.)",
+      "params": [
+        {
+          "name": "definitions",
+          "type": "Sketchup::DefinitionList",
+          "optional": false
+        },
+        {
+          "name": "definition",
+          "type": "Sketchup::ComponentDefinition",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/DefinitionsObserver.html#onComponentTypeChanged-instance_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

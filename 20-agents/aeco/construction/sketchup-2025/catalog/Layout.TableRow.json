@@ -1,0 +1,42 @@
+{
+  "name": "TableRow",
+  "namespace": "Layout",
+  "kind": "class",
+  "summary": "A TableColumn is a single row from a table.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Layout/TableRow.html",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "bottom_edge_style",
+      "type": "Layout::Style",
+      "getter": true,
+      "setter": true,
+      "summary": "The #bottom_edge_style method returns the Style of a Layout::TableRow\u0027s bottom edge.",
+      "remarks": "The #bottom_edge_style method returns the Style of a Layout::TableRow\u0027s bottom edge.",
+      "doc_url": "https://ruby.sketchup.com/Layout/TableRow.html#bottom_edge_style-instance_method"
+    },
+    {
+      "name": "height",
+      "type": "Float",
+      "getter": true,
+      "setter": true,
+      "summary": "The #height method returns the height of the Layout::TableRow.",
+      "remarks": "The #height method returns the height of the Layout::TableRow.",
+      "doc_url": "https://ruby.sketchup.com/Layout/TableRow.html#height-instance_method"
+    },
+    {
+      "name": "top_edge_style",
+      "type": "Layout::Style",
+      "getter": true,
+      "setter": true,
+      "summary": "The #top_edge_style method returns the Style of a Layout::TableRow\u0027s top edge.",
+      "remarks": "The #top_edge_style method returns the Style of a Layout::TableRow\u0027s top edge.",
+      "doc_url": "https://ruby.sketchup.com/Layout/TableRow.html#top_edge_style-instance_method"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

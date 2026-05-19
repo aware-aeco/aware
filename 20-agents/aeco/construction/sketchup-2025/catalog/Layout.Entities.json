@@ -1,0 +1,91 @@
+{
+  "name": "Entities",
+  "namespace": "Layout",
+  "kind": "class",
+  "summary": "The Entities class is a container class for Entitys. A Entities object is different from a SketchUp::Entities object in that it is read-only. Adding or removing Entitys from a Document happens with the Document#add_entity and Document#remove_entity methods. The Entities from AngularDimension#entities, Label#entities, LinearDimension#entities, or Table#entities contains the Entitys that represent the Entity in its exploded form. The Entities from Group#entities contains all the Entitys that belong to the Group. The Entities from Page#entities contains all of the Entitys on both shared and non-shared Layers. This class is used to iterate through the Entitys in draw order or pick order (reverse draw order) using the #each and #reverse_each methods. The Entities from Document#shared_entities contains all of the Entitys that belong on all shared Layers. The Entities from Page#nonshared_entities contains all of the Entitys that belong to that Page. The Entities from LayerInstance#entities contains all of the Entitys that belong on that LayerInstance.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Layout/Entities.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "[]",
+      "signature": "[](index) =\u003E Layout::Entity",
+      "summary": "The #[] method returns the Layout::Entity at the given index.",
+      "remarks": "The #[] method returns the Layout::Entity at the given index. This method is not valid for use when the Layout::Entities object came from a Page.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Integer",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Layout::Entity",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "if this came from a Page"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Entities.html#[]-instance_method"
+    },
+    {
+      "name": "each",
+      "signature": "each(flags = {}) {|entity| ... } =\u003E Object",
+      "summary": "Note: Don\u0027t remove content from this collection while iterating over it with #each.",
+      "remarks": "Note: Don\u0027t remove content from this collection while iterating over it with #each. This would change the size of the collection and cause elements to be skipped as the indices change. Instead copy the current collection to an array using to_a and then use each on the array, when removing content. The #each method iterates through all of the Layout::Entitys. When iterating over a LayerInstance\u0027s Layout::Entities, it is not necessary to provide a flags Hash. When iterating over a Page\u0027s Layout::Entities, the flags Hash is optional; providing no Hash will result in iterating over all Layout::Entitys, including those on hidden or locked Layers. Valid symbols for the Hash are :skip_hidden and :skip_locked.",
+      "params": [
+        {
+          "name": "flags",
+          "type": "Hash{Symbol =\u003E Boolean}",
+          "doc": "A hash that allows skipping of Layout::Entitys on hidden or locked Layers",
+          "optional": true,
+          "default": "{}"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Entities.html#each-instance_method"
+    },
+    {
+      "name": "length",
+      "signature": "length =\u003E Integer Also known as: size",
+      "summary": "The #length method returns the number of Layout::Entitys.",
+      "remarks": "The #length method returns the number of Layout::Entitys.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Entities.html#length-instance_method"
+    },
+    {
+      "name": "reverse_each",
+      "signature": "reverse_each {|entity| ... } =\u003E Object | reverse_each(flags) {|entity| ... } =\u003E Object",
+      "summary": "The #reverse_each method iterates through all of the Layout::Entitys in reverse order.",
+      "remarks": "The #reverse_each method iterates through all of the Layout::Entitys in reverse order. When iterating over a LayerInstance\u0027s Layout::Entities, it is not necessary to provide a flags Hash. When iterating over a Page\u0027s Layout::Entities, the flags Hash is optional; providing no Hash will result in iterating over all Layout::Entitys, including those on hidden or locked Layers. Valid symbols for the Hash are :skip_hidden and :skip_locked.",
+      "params": [
+        {
+          "name": "flags",
+          "type": "Hash{Symbol =\u003E Boolean}",
+          "doc": "A hash that allows skipping of Layout::Entitys on hidden or locked Layers.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Entities.html#reverse_each-instance_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}
