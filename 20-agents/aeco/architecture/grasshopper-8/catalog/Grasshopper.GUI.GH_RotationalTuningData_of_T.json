@@ -1,0 +1,143 @@
+{
+  "name": "GH_RotationalTuningData\u003CT\u003E",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Utility class for keeping track of rotational mouse events.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_RotationalTuningData_1.htm",
+  "constructors": [
+    {
+      "name": "GH_RotationalTuningData\u003CT\u003E(T, PointF)",
+      "signature": "public GH_RotationalTuningData(T initialValue, PointF pivot)",
+      "summary": "Create a new instance of the rotational tuning data.",
+      "params": [
+        {
+          "name": "initialValue",
+          "type": "T",
+          "doc": "Initial value to store. Whatever you want it to be.",
+          "optional": false
+        },
+        {
+          "name": "pivot",
+          "type": "System.Drawing.PointF",
+          "doc": "Center of rotation.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_RotationalTuningData_1__ctor.htm"
+    },
+    {
+      "name": "GH_RotationalTuningData\u003CT\u003E(T, PointF, PointF)",
+      "signature": "public GH_RotationalTuningData(T initialValue, PointF pivot, PointF initialPoint)",
+      "summary": "Create a new instance of the rotational tuning data.",
+      "params": [
+        {
+          "name": "initialValue",
+          "type": "T",
+          "doc": "Initial value to store. Whatever you want it to be.",
+          "optional": false
+        },
+        {
+          "name": "pivot",
+          "type": "System.Drawing.PointF",
+          "doc": "Center of rotation.",
+          "optional": false
+        },
+        {
+          "name": "initialPoint",
+          "type": "System.Drawing.PointF",
+          "doc": "First point of track.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_RotationalTuningData_1__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddFrame",
+      "signature": "public void AddFrame(PointF point)",
+      "summary": "Grow the tuning track by one point and compute the angle.",
+      "params": [
+        {
+          "name": "point",
+          "type": "System.Drawing.PointF",
+          "doc": "Point (in canvas coordinates) to record.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_RotationalTuningData_1_AddFrame.htm"
+    },
+    {
+      "name": "TotalAngle",
+      "signature": "public double TotalAngle()",
+      "summary": "Compute the total angle from the first to the last frame.",
+      "params": [],
+      "returns": {
+        "type": "Double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_RotationalTuningData_1_TotalAngle.htm"
+    },
+    {
+      "name": "TotalTurns",
+      "signature": "public double TotalTurns()",
+      "summary": "Compute the total number of full turns from the first to the last frame.",
+      "params": [],
+      "returns": {
+        "type": "Double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_RotationalTuningData_1_TotalTurns.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Frame",
+      "type": "GH_RotationalFrame",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the frame at the given index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_RotationalTuningData_1_Frame.htm"
+    },
+    {
+      "name": "FrameCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the total number of recorded frames.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_RotationalTuningData_1_FrameCount.htm"
+    },
+    {
+      "name": "InitialValue",
+      "type": "T",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the initial value.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_RotationalTuningData_1_InitialValue.htm"
+    },
+    {
+      "name": "Pivot",
+      "type": "PointF",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the rotational pivot. You only need to set this if the pivot changes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_RotationalTuningData_1_Pivot.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

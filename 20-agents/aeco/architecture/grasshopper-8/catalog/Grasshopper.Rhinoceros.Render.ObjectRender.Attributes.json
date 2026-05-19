@@ -1,0 +1,101 @@
+{
+  "name": "ObjectRender.Attributes",
+  "namespace": "Grasshopper.Rhinoceros.Render",
+  "kind": "struct",
+  "summary": "(No description provided in vendor docs for Grasshopper.Rhinoceros.Render.ObjectRender.Attributes.)",
+  "base": "GH_ISerializable",
+  "interfaces": [
+    "IEquatable\u003CObjectRender.Attributes\u003E"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Rhinoceros_Render_ObjectRender_Attributes.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Equals(ObjectRender.Attributes)",
+      "signature": "public bool Equals(ObjectRender.Attributes other)",
+      "summary": "",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Rhinoceros.Render.ObjectRender.Attributes",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Render_ObjectRender_Attributes_Equals.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object other)",
+      "summary": "(Overrides ValueType.Equals(Object).)",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Render_ObjectRender_Attributes_Equals_1.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "(Overrides ValueType.GetHashCode().)",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Render_ObjectRender_Attributes_GetHashCode.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CastsShadows",
+      "type": "Nullable\u003CBoolean\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Render_ObjectRender_Attributes_CastsShadows.htm"
+    },
+    {
+      "name": "Material",
+      "type": "Nullable\u003CObjectRenderMaterial.Value\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Render_ObjectRender_Attributes_Material.htm"
+    },
+    {
+      "name": "MeshingParameters",
+      "type": "ModelMeshingParameters",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Render_ObjectRender_Attributes_MeshingParameters.htm"
+    },
+    {
+      "name": "ReceivesShadows",
+      "type": "Nullable\u003CBoolean\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Render_ObjectRender_Attributes_ReceivesShadows.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

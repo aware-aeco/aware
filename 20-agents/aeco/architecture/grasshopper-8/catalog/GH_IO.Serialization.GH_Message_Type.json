@@ -1,0 +1,29 @@
+{
+  "name": "GH_Message_Type",
+  "namespace": "GH_IO.Serialization",
+  "kind": "enum",
+  "summary": "Message type flag.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_GH_IO_Serialization_GH_Message_Type.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "info",
+      "value": 0,
+      "summary": "Indicates a message represents information."
+    },
+    {
+      "name": "warning",
+      "value": 1,
+      "summary": "Indicates the message represents a warning. Warnings are not severe enough to be regarded as IO errors."
+    },
+    {
+      "name": "error",
+      "value": 2,
+      "summary": "Indicates the message represents an error. Errors mean (de)serialization failed (partially)."
+    }
+  ]
+}

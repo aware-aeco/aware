@@ -1,0 +1,52 @@
+{
+  "name": "GH_TreeIndex",
+  "namespace": "Grasshopper.Kernel.Data",
+  "kind": "struct",
+  "summary": "Represents a single unique location in a DataTree.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Data_GH_TreeIndex.htm",
+  "constructors": [
+    {
+      "name": "GH_TreeIndex",
+      "signature": "public GH_TreeIndex(GH_Path path, int item)",
+      "summary": "Create a new instance of the GH_TreeIndex structure with preset path and item index.",
+      "params": [
+        {
+          "name": "path",
+          "type": "Grasshopper.Kernel.Data.GH_Path",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_TreeIndex__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Item",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the item index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_TreeIndex_Item.htm"
+    },
+    {
+      "name": "Path",
+      "type": "GH_Path",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Path identifier.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_TreeIndex_Path.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

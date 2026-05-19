@@ -1,0 +1,34 @@
+{
+  "name": "GH_Arrange",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates possible types of object arrangement.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_Arrange.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "MoveToFront",
+      "value": 0,
+      "summary": "Put the objects on the top of the stack."
+    },
+    {
+      "name": "MoveForwards",
+      "value": 1,
+      "summary": "Objects are inserted above the first occluding object."
+    },
+    {
+      "name": "MoveToBack",
+      "value": 2,
+      "summary": "Put the objects on the bottom of the stack."
+    },
+    {
+      "name": "MoveBackwards",
+      "value": 3,
+      "summary": "Objects are inserted below the first occluded object."
+    }
+  ]
+}

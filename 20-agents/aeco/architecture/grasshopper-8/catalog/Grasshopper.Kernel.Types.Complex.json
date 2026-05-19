@@ -1,0 +1,734 @@
+{
+  "name": "Complex",
+  "namespace": "Grasshopper.Kernel.Types",
+  "kind": "struct",
+  "summary": "Complex number type in Grasshopper. Do not confuse with GH_Complex which is the IGH_Goo implementation of ComplexNumber.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Types_Complex.htm",
+  "constructors": [
+    {
+      "name": "Complex(Double)",
+      "signature": "public Complex(double real_component)",
+      "summary": "Initializes a new instance of the Complex class",
+      "params": [
+        {
+          "name": "real_component",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex__ctor.htm"
+    },
+    {
+      "name": "Complex(Double, Double)",
+      "signature": "public Complex(double real_component, double imaginary_component)",
+      "summary": "Initializes a new instance of the Complex class",
+      "params": [
+        {
+          "name": "real_component",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "imaginary_component",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ACos",
+      "signature": "public Complex ACos()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_ACos.htm"
+    },
+    {
+      "name": "ASin",
+      "signature": "public Complex ASin()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_ASin.htm"
+    },
+    {
+      "name": "ATan",
+      "signature": "public Complex ATan()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_ATan.htm"
+    },
+    {
+      "name": "Cos",
+      "signature": "public Complex Cos()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_Cos.htm"
+    },
+    {
+      "name": "Cosecant",
+      "signature": "public Complex Cosecant()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_Cosecant.htm"
+    },
+    {
+      "name": "CoTan",
+      "signature": "public Complex CoTan()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_CoTan.htm"
+    },
+    {
+      "name": "Exponential",
+      "signature": "public Complex Exponential()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_Exponential.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "(Overrides ValueType.GetHashCode().)",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_GetHashCode.htm"
+    },
+    {
+      "name": "Log",
+      "signature": "public Complex Log()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_Log.htm"
+    },
+    {
+      "name": "Log10",
+      "signature": "public Complex Log10()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_Log10.htm"
+    },
+    {
+      "name": "Modulus",
+      "signature": "public double Modulus()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_Modulus.htm"
+    },
+    {
+      "name": "ModulusSquared",
+      "signature": "public double ModulusSquared()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_ModulusSquared.htm"
+    },
+    {
+      "name": "Power",
+      "signature": "public Complex Power(Complex exponent)",
+      "summary": "",
+      "params": [
+        {
+          "name": "exponent",
+          "type": "Grasshopper.Kernel.Types.Complex",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_Power.htm"
+    },
+    {
+      "name": "Root",
+      "signature": "public Complex Root(Complex rootexponent)",
+      "summary": "",
+      "params": [
+        {
+          "name": "rootexponent",
+          "type": "Grasshopper.Kernel.Types.Complex",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_Root.htm"
+    },
+    {
+      "name": "Secant",
+      "signature": "public Complex Secant()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_Secant.htm"
+    },
+    {
+      "name": "Sin",
+      "signature": "public Complex Sin()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_Sin.htm"
+    },
+    {
+      "name": "Square",
+      "signature": "public Complex Square()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_Square.htm"
+    },
+    {
+      "name": "SquareRoot",
+      "signature": "public Complex SquareRoot()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_SquareRoot.htm"
+    },
+    {
+      "name": "Tan",
+      "signature": "public Complex Tan()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_Tan.htm"
+    },
+    {
+      "name": "Addition(Complex, Complex)",
+      "signature": "public static Complex operator \u002B(Complex A, Complex B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Types.Complex",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Types.Complex",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_op_Addition.htm"
+    },
+    {
+      "name": "Addition(Complex, Double)",
+      "signature": "public static Complex operator \u002B(Complex A, double B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Types.Complex",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_op_Addition_1.htm"
+    },
+    {
+      "name": "Addition(Double, Complex)",
+      "signature": "public static Complex operator \u002B(double A, Complex B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Types.Complex",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_op_Addition_2.htm"
+    },
+    {
+      "name": "Division(Complex, Complex)",
+      "signature": "public static Complex operator /(Complex dividend, Complex divisor)",
+      "summary": "",
+      "params": [
+        {
+          "name": "dividend",
+          "type": "Grasshopper.Kernel.Types.Complex",
+          "optional": false
+        },
+        {
+          "name": "divisor",
+          "type": "Grasshopper.Kernel.Types.Complex",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_op_Division.htm"
+    },
+    {
+      "name": "Division(Complex, Double)",
+      "signature": "public static Complex operator /(Complex dividend, double divisor)",
+      "summary": "",
+      "params": [
+        {
+          "name": "dividend",
+          "type": "Grasshopper.Kernel.Types.Complex",
+          "optional": false
+        },
+        {
+          "name": "divisor",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_op_Division_1.htm"
+    },
+    {
+      "name": "Division(Double, Complex)",
+      "signature": "public static Complex operator /(double dividend, Complex divisor)",
+      "summary": "",
+      "params": [
+        {
+          "name": "dividend",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "divisor",
+          "type": "Grasshopper.Kernel.Types.Complex",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_op_Division_2.htm"
+    },
+    {
+      "name": "Multiply(Complex, Complex)",
+      "signature": "public static Complex operator *(Complex A, Complex B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Types.Complex",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Types.Complex",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_op_Multiply.htm"
+    },
+    {
+      "name": "Multiply(Complex, Double)",
+      "signature": "public static Complex operator *(Complex A, double B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Types.Complex",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_op_Multiply_1.htm"
+    },
+    {
+      "name": "Multiply(Double, Complex)",
+      "signature": "public static Complex operator *(double A, Complex B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Types.Complex",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_op_Multiply_2.htm"
+    },
+    {
+      "name": "Subtraction(Complex, Complex)",
+      "signature": "public static Complex operator -(Complex A, Complex B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Types.Complex",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Types.Complex",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_op_Subtraction.htm"
+    },
+    {
+      "name": "Subtraction(Complex, Double)",
+      "signature": "public static Complex operator -(Complex A, double B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Types.Complex",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_op_Subtraction_1.htm"
+    },
+    {
+      "name": "Subtraction(Double, Complex)",
+      "signature": "public static Complex operator -(double A, Complex B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Types.Complex",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_op_Subtraction_2.htm"
+    },
+    {
+      "name": "UnaryNegation",
+      "signature": "public static Complex operator -(Complex subtrahend)",
+      "summary": "",
+      "params": [
+        {
+          "name": "subtrahend",
+          "type": "Grasshopper.Kernel.Types.Complex",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_op_UnaryNegation.htm"
+    },
+    {
+      "name": "UnaryPlus",
+      "signature": "public static Complex operator \u002B(Complex summand)",
+      "summary": "",
+      "params": [
+        {
+          "name": "summand",
+          "type": "Grasshopper.Kernel.Types.Complex",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Complex",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Complex_op_UnaryPlus.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Argument",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the complex argument.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_Complex_Argument.htm"
+    },
+    {
+      "name": "ComplexUnit",
+      "type": "Complex",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_Complex_ComplexUnit.htm"
+    },
+    {
+      "name": "Imaginary",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the imaginary component of the Complex number.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_Complex_Imaginary.htm"
+    },
+    {
+      "name": "Infinity",
+      "type": "Complex",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_Complex_Infinity.htm"
+    },
+    {
+      "name": "IsReal",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether this complex number only has a real component.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_Complex_IsReal.htm"
+    },
+    {
+      "name": "IsRealNonNegative",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether this complex number only has a positive real component.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_Complex_IsRealNonNegative.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the validity of this number.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_Complex_IsValid.htm"
+    },
+    {
+      "name": "IsZero",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether or not this complex number equals {0.0; 0.0}",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_Complex_IsZero.htm"
+    },
+    {
+      "name": "NaN",
+      "type": "Complex",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_Complex_NaN.htm"
+    },
+    {
+      "name": "NegativeInfinity",
+      "type": "Complex",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_Complex_NegativeInfinity.htm"
+    },
+    {
+      "name": "Real",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the real component of the Complex number.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_Complex_Real.htm"
+    },
+    {
+      "name": "Zero",
+      "type": "Complex",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_Complex_Zero.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

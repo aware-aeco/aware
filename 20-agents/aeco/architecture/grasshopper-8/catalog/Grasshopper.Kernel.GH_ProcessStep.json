@@ -1,0 +1,34 @@
+{
+  "name": "GH_ProcessStep",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates all possible solution states in which the document can be.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_ProcessStep.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "PreProcess",
+      "value": 0,
+      "summary": "The document is ready for a new solution"
+    },
+    {
+      "name": "Process",
+      "value": 1,
+      "summary": "The document is currently calculating a new solution, no changes are allowed during this phase"
+    },
+    {
+      "name": "PostProcess",
+      "value": 2,
+      "summary": "The document has completed a solution, and nothing has changed since."
+    },
+    {
+      "name": "Aborted",
+      "value": 3,
+      "summary": "The last solution has been aborted before it reached completion."
+    }
+  ]
+}

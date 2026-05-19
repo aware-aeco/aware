@@ -1,0 +1,189 @@
+{
+  "name": "GH_RenderArgs",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "This class is passed to objects that implement IGH_RenderAwareData or IGH_RenderAwareObject during render queue operations.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_RenderArgs.htm",
+  "constructors": [
+    {
+      "name": "GH_RenderArgs(RhinoDoc, ViewportInfo, RenderPrimitiveList, Guid, Dictionary\u003CInt32, RenderMaterial\u003E)",
+      "signature": "[ObsoleteAttribute] public GH_RenderArgs(RhinoDoc doc, ViewportInfo vp, RenderPrimitiveList geometry, Guid id, Dictionary\u003Cint, RenderMaterial\u003E materialCache)",
+      "summary": "Create new render arguments.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "RhinoDoc",
+          "doc": "Rhino document.",
+          "optional": false
+        },
+        {
+          "name": "vp",
+          "type": "ViewportInfo",
+          "doc": "Viewport.",
+          "optional": false
+        },
+        {
+          "name": "geometry",
+          "type": "RenderPrimitiveList",
+          "doc": "Geometry list.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "Render plugin id.",
+          "optional": false
+        },
+        {
+          "name": "materialCache",
+          "type": "System.Collections.Generic.Dictionary\u003CInt32,RenderMaterial\u003E",
+          "doc": "Material cache - can be Nothing.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_RenderArgs__ctor_1.htm"
+    },
+    {
+      "name": "GH_RenderArgs(RhinoDoc, ViewportInfo, RenderPrimitiveList, Guid, RenderMaterial, RenderMaterial)",
+      "signature": "[ObsoleteAttribute] public GH_RenderArgs(RhinoDoc doc, ViewportInfo vp, RenderPrimitiveList geometry, Guid id, RenderMaterial matNormal, RenderMaterial matSelected)",
+      "summary": "Create new render arguments.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "RhinoDoc",
+          "doc": "Rhino document.",
+          "optional": false
+        },
+        {
+          "name": "vp",
+          "type": "ViewportInfo",
+          "doc": "Viewport.",
+          "optional": false
+        },
+        {
+          "name": "geometry",
+          "type": "RenderPrimitiveList",
+          "doc": "Geometry list.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "Render plugin id.",
+          "optional": false
+        },
+        {
+          "name": "matNormal",
+          "type": "RenderMaterial",
+          "doc": "Material for unselected objects.",
+          "optional": false
+        },
+        {
+          "name": "matSelected",
+          "type": "RenderMaterial",
+          "doc": "Material for selected objects.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_RenderArgs__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "PopModelTransform",
+      "signature": "public Transform PopModelTransform()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Transform",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_RenderArgs_PopModelTransform.htm"
+    },
+    {
+      "name": "PushModelTransform",
+      "signature": "public void PushModelTransform(Transform transform)",
+      "summary": "",
+      "params": [
+        {
+          "name": "transform",
+          "type": "Transform",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_RenderArgs_PushModelTransform.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the rhino document from whence the render originated.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_RenderArgs_Document.htm"
+    },
+    {
+      "name": "MaterialNormal",
+      "type": "RenderMaterial",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the material hint to use for unselected objects.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_RenderArgs_MaterialNormal.htm"
+    },
+    {
+      "name": "MaterialSelected",
+      "type": "RenderMaterial",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the material hint to use for selected objects.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_RenderArgs_MaterialSelected.htm"
+    },
+    {
+      "name": "ModelTransform",
+      "type": "Transform",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the current model transform.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_RenderArgs_ModelTransform.htm"
+    },
+    {
+      "name": "PluginId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the render plugin id that is about to render this geometry.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_RenderArgs_PluginId.htm"
+    },
+    {
+      "name": "Viewport",
+      "type": "ViewportInfo",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the viewport details involved in this rendering.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_RenderArgs_Viewport.htm"
+    },
+    {
+      "name": "ViewportName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the viewport name involved in this rendering.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_RenderArgs_ViewportName.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,342 @@
+{
+  "name": "GH_Painter",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "class",
+  "summary": "This class performs most of the drawing operations required for Grasshopper Canvas controls.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_Painter.htm",
+  "constructors": [
+    {
+      "name": "GH_Painter",
+      "signature": "public GH_Painter(GH_Canvas owner)",
+      "summary": "Constructor.",
+      "params": [
+        {
+          "name": "owner",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "doc": "Canvas that owns this painter object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Painter__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ConnectionPath",
+      "signature": "public static GraphicsPath ConnectionPath(PointF pointA, PointF pointB, GH_WireDirection directionA, GH_WireDirection directionB)",
+      "summary": "",
+      "params": [
+        {
+          "name": "pointA",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        },
+        {
+          "name": "pointB",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        },
+        {
+          "name": "directionA",
+          "type": "Grasshopper.GUI.Canvas.GH_WireDirection",
+          "optional": false
+        },
+        {
+          "name": "directionB",
+          "type": "Grasshopper.GUI.Canvas.GH_WireDirection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GraphicsPath",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Painter_ConnectionPath.htm"
+    },
+    {
+      "name": "ConnectionPathBezier",
+      "signature": "public static BezierF ConnectionPathBezier(PointF source, PointF target)",
+      "summary": "",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BezierF",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Painter_ConnectionPathBezier.htm"
+    },
+    {
+      "name": "ConnectionVisible",
+      "signature": "public bool ConnectionVisible(PointF a, PointF b)",
+      "summary": "Test whether a wire ought to be drawn at all.",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Drawing.PointF",
+          "doc": "Start point of wire.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "System.Drawing.PointF",
+          "doc": "End point of wire.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the wire is visible and ought to be drawn."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Painter_ConnectionVisible.htm"
+    },
+    {
+      "name": "DetermineWireType",
+      "signature": "public static GH_WireType DetermineWireType(IGH_Structure target)",
+      "summary": "Utility method for determining wire display types.",
+      "params": [
+        {
+          "name": "target",
+          "type": "Grasshopper.Kernel.Data.IGH_Structure",
+          "doc": "Pointer to transfer data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_WireType",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Painter_DetermineWireType.htm"
+    },
+    {
+      "name": "DrawBackground",
+      "signature": "public void DrawBackground(GH_Viewport viewport)",
+      "summary": "",
+      "params": [
+        {
+          "name": "viewport",
+          "type": "Grasshopper.GUI.Canvas.GH_Viewport",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Painter_DrawBackground.htm"
+    },
+    {
+      "name": "DrawConnection",
+      "signature": "public void DrawConnection(PointF pointA, PointF pointB, GH_WireDirection directionA, GH_WireDirection directionB, bool selectedA, bool selectedB, GH_WireType type)",
+      "summary": "",
+      "params": [
+        {
+          "name": "pointA",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        },
+        {
+          "name": "pointB",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        },
+        {
+          "name": "directionA",
+          "type": "Grasshopper.GUI.Canvas.GH_WireDirection",
+          "optional": false
+        },
+        {
+          "name": "directionB",
+          "type": "Grasshopper.GUI.Canvas.GH_WireDirection",
+          "optional": false
+        },
+        {
+          "name": "selectedA",
+          "type": "System.Boolean",
+          "optional": false
+        },
+        {
+          "name": "selectedB",
+          "type": "System.Boolean",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "Grasshopper.GUI.Canvas.GH_WireType",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Painter_DrawConnection.htm"
+    },
+    {
+      "name": "DrawMiddleGround",
+      "signature": "public void DrawMiddleGround(GH_Document doc, GH_CanvasChannel channel)",
+      "summary": "",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "optional": false
+        },
+        {
+          "name": "channel",
+          "type": "Grasshopper.GUI.Canvas.GH_CanvasChannel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Painter_DrawMiddleGround.htm"
+    },
+    {
+      "name": "DrawNoDocumentMessage",
+      "signature": "public void DrawNoDocumentMessage()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Painter_DrawNoDocumentMessage.htm"
+    },
+    {
+      "name": "DrawNULLBuffer",
+      "signature": "public void DrawNULLBuffer()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Painter_DrawNULLBuffer.htm"
+    },
+    {
+      "name": "DrawPivots",
+      "signature": "public void DrawPivots(GH_Document doc)",
+      "summary": "",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Painter_DrawPivots.htm"
+    },
+    {
+      "name": "DrawRecipientLinks(GH_Document)",
+      "signature": "public void DrawRecipientLinks(GH_Document doc)",
+      "summary": "",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Painter_DrawRecipientLinks.htm"
+    },
+    {
+      "name": "DrawRecipientLinks(IGH_Param)",
+      "signature": "protected void DrawRecipientLinks(IGH_Param param)",
+      "summary": "",
+      "params": [
+        {
+          "name": "param",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Painter_DrawRecipientLinks_1.htm"
+    },
+    {
+      "name": "DrawStateFlags",
+      "signature": "public void DrawStateFlags(GH_Document doc)",
+      "summary": "",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Painter_DrawStateFlags.htm"
+    },
+    {
+      "name": "GenerateWirePen_Fill",
+      "signature": "public Brush GenerateWirePen_Fill(PointF a, PointF b, bool asel, bool bsel, bool empty)",
+      "summary": "",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        },
+        {
+          "name": "asel",
+          "type": "System.Boolean",
+          "optional": false
+        },
+        {
+          "name": "bsel",
+          "type": "System.Boolean",
+          "optional": false
+        },
+        {
+          "name": "empty",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brush",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Painter_GenerateWirePen_Fill.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,75 @@
+{
+  "name": "GH_DocumentTree",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Represents a hierarchical tree of documents that are subsidiary to one another.",
+  "interfaces": [
+    "IGH_DebugDescription"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_DocumentTree.htm",
+  "constructors": [
+    {
+      "name": "GH_DocumentTree",
+      "signature": "public GH_DocumentTree(GH_Document root)",
+      "summary": "Create a new document tree.",
+      "params": [
+        {
+          "name": "root",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "doc": "Root document.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentTree__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AppendToDebugLog",
+      "signature": "public void AppendToDebugLog(GH_DebugDescriptionWriter writer)",
+      "summary": "",
+      "params": [
+        {
+          "name": "writer",
+          "type": "Grasshopper.Kernel.GH_DebugDescriptionWriter",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentTree_AppendToDebugLog.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "FlatCollection",
+      "type": "IEnumerable\u003CGH_Document\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a flat collection of all documents. The most subsidiary documents are at the start of the collection.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentTree_FlatCollection.htm"
+    },
+    {
+      "name": "Root",
+      "type": "GH_DocumentTreeNode",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the root node for this document.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentTree_Root.htm"
+    },
+    {
+      "name": "RootDocument",
+      "type": "GH_Document",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the document inside the root node of this tree.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentTree_RootDocument.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

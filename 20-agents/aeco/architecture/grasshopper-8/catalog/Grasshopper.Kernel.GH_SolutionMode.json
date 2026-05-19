@@ -1,0 +1,29 @@
+{
+  "name": "GH_SolutionMode",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates all solution modes.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_SolutionMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Default",
+      "value": 0,
+      "summary": "Represents the standard mode, error messages are displayed in custom forms."
+    },
+    {
+      "name": "CommandLine",
+      "value": 1,
+      "summary": "Represents reduced feedback mode. All messages are send to the Rhino command history, which is thread safe."
+    },
+    {
+      "name": "Silent",
+      "value": 2,
+      "summary": "Represents null feedback mode. No messages are send to any GUI."
+    }
+  ]
+}

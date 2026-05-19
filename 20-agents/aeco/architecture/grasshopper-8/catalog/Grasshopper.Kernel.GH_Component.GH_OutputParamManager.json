@@ -1,0 +1,3227 @@
+{
+  "name": "GH_Component.GH_OutputParamManager",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "This class is used during Component construction to add output parameters.",
+  "base": "GH_ParamManager",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_Component_GH_OutputParamManager.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddArcParameter",
+      "signature": "public int AddArcParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a 3D Arc parameter to the output list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddArcParameter.htm"
+    },
+    {
+      "name": "AddBooleanParameter",
+      "signature": "public int AddBooleanParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Boolean parameter to the output list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddBooleanParameter.htm"
+    },
+    {
+      "name": "AddBoxParameter",
+      "signature": "public int AddBoxParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a 3D Box parameter to the output list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddBoxParameter.htm"
+    },
+    {
+      "name": "AddBrepParameter",
+      "signature": "public int AddBrepParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Brep parameter to the output list of this component. Brep parameters can handle both trimmed and untrimmed single or multi-faced Breps.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddBrepParameter.htm"
+    },
+    {
+      "name": "AddCircleParameter",
+      "signature": "public int AddCircleParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a 3D Circle parameter to the output list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddCircleParameter.htm"
+    },
+    {
+      "name": "AddColourParameter",
+      "signature": "public int AddColourParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a ARGB Colour parameter to the output list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddColourParameter.htm"
+    },
+    {
+      "name": "AddComplexNumberParameter",
+      "signature": "public int AddComplexNumberParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Complex Number parameter to the output list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddComplexNumberParameter.htm"
+    },
+    {
+      "name": "AddCultureParameter",
+      "signature": "public int AddCultureParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Culture parameter to the output list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddCultureParameter.htm"
+    },
+    {
+      "name": "AddCurveParameter",
+      "signature": "public int AddCurveParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Curve parameter to the output list of this component. Curve parameters can handle all curve types (Lines, Polylines, Circles, Arcs, NurbsCurves etc.)",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddCurveParameter.htm"
+    },
+    {
+      "name": "AddFieldParameter",
+      "signature": "public int AddFieldParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Field parameter to the output list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddFieldParameter.htm"
+    },
+    {
+      "name": "AddGenericParameter",
+      "signature": "public int AddGenericParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Generic parameter to the output list of this component. Generic parameters can handle all types of data.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddGenericParameter.htm"
+    },
+    {
+      "name": "AddGeometryParameter",
+      "signature": "public int AddGeometryParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Geometry parameter to the output list of this component. Geometry parameters can handle all types that represent actual shapes.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddGeometryParameter.htm"
+    },
+    {
+      "name": "AddGroupParameter",
+      "signature": "public int AddGroupParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Transform Group parameter to the output list of this component. Groups are collections of geometry that are transformed as one, they are not the same as Rhino groups.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddGroupParameter.htm"
+    },
+    {
+      "name": "AddIntegerParameter",
+      "signature": "public int AddIntegerParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Integer parameter to the output list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddIntegerParameter.htm"
+    },
+    {
+      "name": "AddInterval2DParameter",
+      "signature": "public int AddInterval2DParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Interval2D (i.e. uv domain) parameter to the output list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddInterval2DParameter.htm"
+    },
+    {
+      "name": "AddIntervalParameter",
+      "signature": "public int AddIntervalParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Interval (i.e. numeric domain) parameter to the output list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddIntervalParameter.htm"
+    },
+    {
+      "name": "AddLineParameter",
+      "signature": "public int AddLineParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a 3D Line parameter to the output list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddLineParameter.htm"
+    },
+    {
+      "name": "AddMatrixParameter",
+      "signature": "public int AddMatrixParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Matrix parameter to the output list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddMatrixParameter.htm"
+    },
+    {
+      "name": "AddMeshFaceParameter",
+      "signature": "public int AddMeshFaceParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a topological MeshFace parameter to the output list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddMeshFaceParameter.htm"
+    },
+    {
+      "name": "AddMeshParameter",
+      "signature": "public int AddMeshParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Mesh parameter to the output list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddMeshParameter.htm"
+    },
+    {
+      "name": "AddNumberParameter",
+      "signature": "public int AddNumberParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a floating point Number parameter to the output list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddNumberParameter.htm"
+    },
+    {
+      "name": "AddParameter(IGH_Param)",
+      "signature": "public int AddParameter(IGH_Param param)",
+      "summary": "Generic parameter addition. If you cannot use one of the utility methods provided by this class, you can register a customized parameter using this method.",
+      "params": [
+        {
+          "name": "param",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "doc": "The parameter to add.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Index of the newly added parameter."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddParameter.htm"
+    },
+    {
+      "name": "AddParameter(IGH_Param, String, String, String, GH_ParamAccess)",
+      "signature": "public int AddParameter(IGH_Param param, string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Generic parameter addition. If you cannot use one of the utility methods provided by this class, you can register a customized parameter using this method.",
+      "params": [
+        {
+          "name": "param",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "doc": "The parameter to add.",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Index of the newly added parameter."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddParameter_1.htm"
+    },
+    {
+      "name": "AddPathParameter",
+      "signature": "public int AddPathParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Data Path parameter to the output list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddPathParameter.htm"
+    },
+    {
+      "name": "AddPlaneParameter",
+      "signature": "public int AddPlaneParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a 3D Plane parameter to the output list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddPlaneParameter.htm"
+    },
+    {
+      "name": "AddPointParameter",
+      "signature": "public int AddPointParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a 3D Point parameter to the output list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddPointParameter.htm"
+    },
+    {
+      "name": "AddRectangleParameter",
+      "signature": "public int AddRectangleParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a 3D Rectangle parameter to the output list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddRectangleParameter.htm"
+    },
+    {
+      "name": "AddSubDParameter",
+      "signature": "public int AddSubDParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Sub-D parameter to the output list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddSubDParameter.htm"
+    },
+    {
+      "name": "AddSurfaceParameter",
+      "signature": "public int AddSurfaceParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Surface parameter to the output list of this component. Surface parameters can handle both trimmed and untrimmed single-faced Breps.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddSurfaceParameter.htm"
+    },
+    {
+      "name": "AddTextParameter",
+      "signature": "public int AddTextParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Text parameter to the output list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddTextParameter.htm"
+    },
+    {
+      "name": "AddTimeParameter",
+      "signature": "public int AddTimeParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Time parameter to the output list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddTimeParameter.htm"
+    },
+    {
+      "name": "AddTransformParameter",
+      "signature": "public int AddTransformParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Transformation parameter to the output list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddTransformParameter.htm"
+    },
+    {
+      "name": "AddVectorParameter",
+      "signature": "public int AddVectorParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a 3D Vector parameter to the output list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use SetData(), SetDataList() or SetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_AddVectorParameter.htm"
+    },
+    {
+      "name": "HideParameter",
+      "signature": "public override void HideParameter(int index)",
+      "summary": "Hide a specific output parameter. If the parameter at the given index implement IGH_PreviewObject then the Hidden flag will be set to True. Otherwise, nothing will happen.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of parameter to hide.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_HideParameter.htm"
+    },
+    {
+      "name": "Register_2DIntervalParam(String, String, String)",
+      "signature": "public void Register_2DIntervalParam(string name, string nickname, string description)",
+      "summary": "Register a new two-dimensional OnInterval parameter",
+      "remarks": "See AlsoReferenceGH_Component.GH_OutputParamManager ClassRegister_2DIntervalParam OverloadGrasshopper.Kernel Namespace",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_2DIntervalParam.htm"
+    },
+    {
+      "name": "Register_2DIntervalParam(String, String, String, GH_ParamAccess)",
+      "signature": "public void Register_2DIntervalParam(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Register a new two-dimensional OnInterval parameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_2DIntervalParam_1.htm"
+    },
+    {
+      "name": "Register_ArcParam(String, String, String)",
+      "signature": "public void Register_ArcParam(string name, string nickname, string description)",
+      "summary": "Register a new 3D arc parameter",
+      "remarks": "See AlsoReferenceGH_Component.GH_OutputParamManager ClassRegister_ArcParam OverloadGrasshopper.Kernel Namespace",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_ArcParam.htm"
+    },
+    {
+      "name": "Register_ArcParam(String, String, String, GH_ParamAccess)",
+      "signature": "public void Register_ArcParam(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Register a new 3D arc parameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_ArcParam_1.htm"
+    },
+    {
+      "name": "Register_BooleanParam(String, String, String)",
+      "signature": "public void Register_BooleanParam(string name, string nickname, string description)",
+      "summary": "Register a new Boolean primitive parameter",
+      "remarks": "See AlsoReferenceGH_Component.GH_OutputParamManager ClassRegister_BooleanParam OverloadGrasshopper.Kernel Namespace",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_BooleanParam.htm"
+    },
+    {
+      "name": "Register_BooleanParam(String, String, String, GH_ParamAccess)",
+      "signature": "public void Register_BooleanParam(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Register a new Boolean primitive parameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_BooleanParam_1.htm"
+    },
+    {
+      "name": "Register_BoxParam(String, String, String)",
+      "signature": "public void Register_BoxParam(string name, string nickname, string description)",
+      "summary": "Register a new 3D box parameter",
+      "remarks": "See AlsoReferenceGH_Component.GH_OutputParamManager ClassRegister_BoxParam OverloadGrasshopper.Kernel Namespace",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_BoxParam.htm"
+    },
+    {
+      "name": "Register_BoxParam(String, String, String, GH_ParamAccess)",
+      "signature": "public void Register_BoxParam(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Register a new 3D box parameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_BoxParam_1.htm"
+    },
+    {
+      "name": "Register_BRepParam(String, String, String)",
+      "signature": "public void Register_BRepParam(string name, string nickname, string description)",
+      "summary": "Register a new 3D Brep parameter",
+      "remarks": "See AlsoReferenceGH_Component.GH_OutputParamManager ClassRegister_BRepParam OverloadGrasshopper.Kernel Namespace",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_BRepParam.htm"
+    },
+    {
+      "name": "Register_BRepParam(String, String, String, GH_ParamAccess)",
+      "signature": "public void Register_BRepParam(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Register a new 3D Brep parameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_BRepParam_1.htm"
+    },
+    {
+      "name": "Register_CircleParam(String, String, String)",
+      "signature": "public void Register_CircleParam(string name, string nickname, string description)",
+      "summary": "Register a new 3D circle parameter",
+      "remarks": "See AlsoReferenceGH_Component.GH_OutputParamManager ClassRegister_CircleParam OverloadGrasshopper.Kernel Namespace",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_CircleParam.htm"
+    },
+    {
+      "name": "Register_CircleParam(String, String, String, GH_ParamAccess)",
+      "signature": "public void Register_CircleParam(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Register a new 3D circle parameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_CircleParam_1.htm"
+    },
+    {
+      "name": "Register_ColourParam(String, String, String)",
+      "signature": "public void Register_ColourParam(string name, string nickname, string description)",
+      "summary": "Register a new Colour primitive parameter",
+      "remarks": "See AlsoReferenceGH_Component.GH_OutputParamManager ClassRegister_ColourParam OverloadGrasshopper.Kernel Namespace",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_ColourParam.htm"
+    },
+    {
+      "name": "Register_ColourParam(String, String, String, GH_ParamAccess)",
+      "signature": "public void Register_ColourParam(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Register a new Colour primitive parameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_ColourParam_1.htm"
+    },
+    {
+      "name": "Register_ComplexParam(String, String, String)",
+      "signature": "public void Register_ComplexParam(string name, string nickname, string description)",
+      "summary": "Register a new Complex primitive parameter",
+      "remarks": "See AlsoReferenceGH_Component.GH_OutputParamManager ClassRegister_ComplexParam OverloadGrasshopper.Kernel Namespace",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_ComplexParam.htm"
+    },
+    {
+      "name": "Register_ComplexParam(String, String, String, GH_ParamAccess)",
+      "signature": "public void Register_ComplexParam(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Register a new Complex primitive parameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_ComplexParam_1.htm"
+    },
+    {
+      "name": "Register_CurveParam(String, String, String)",
+      "signature": "public void Register_CurveParam(string name, string nickname, string description)",
+      "summary": "Register a new 3D curve parameter",
+      "remarks": "See AlsoReferenceGH_Component.GH_OutputParamManager ClassRegister_CurveParam OverloadGrasshopper.Kernel Namespace",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_CurveParam.htm"
+    },
+    {
+      "name": "Register_CurveParam(String, String, String, GH_ParamAccess)",
+      "signature": "public void Register_CurveParam(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Register a new 3D curve parameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_CurveParam_1.htm"
+    },
+    {
+      "name": "Register_DoubleParam(String, String, String)",
+      "signature": "public void Register_DoubleParam(string name, string nickname, string description)",
+      "summary": "Register a new Double primitive parameter",
+      "remarks": "See AlsoReferenceGH_Component.GH_OutputParamManager ClassRegister_DoubleParam OverloadGrasshopper.Kernel Namespace",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_DoubleParam.htm"
+    },
+    {
+      "name": "Register_DoubleParam(String, String, String, GH_ParamAccess)",
+      "signature": "public void Register_DoubleParam(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Register a new Double primitive parameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_DoubleParam_1.htm"
+    },
+    {
+      "name": "Register_FieldParam(String, String, String)",
+      "signature": "public void Register_FieldParam(string name, string nickname, string description)",
+      "summary": "Register a new field parameter",
+      "remarks": "See AlsoReferenceGH_Component.GH_OutputParamManager ClassRegister_FieldParam OverloadGrasshopper.Kernel Namespace",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_FieldParam.htm"
+    },
+    {
+      "name": "Register_FieldParam(String, String, String, GH_ParamAccess)",
+      "signature": "public void Register_FieldParam(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Register a new field parameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_FieldParam_1.htm"
+    },
+    {
+      "name": "Register_GenericParam(String, String, String)",
+      "signature": "public void Register_GenericParam(string name, string nickname, string description)",
+      "summary": "Register a new Generic (Object) parameter",
+      "remarks": "See AlsoReferenceGH_Component.GH_OutputParamManager ClassRegister_GenericParam OverloadGrasshopper.Kernel Namespace",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_GenericParam.htm"
+    },
+    {
+      "name": "Register_GenericParam(String, String, String, GH_ParamAccess)",
+      "signature": "public void Register_GenericParam(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Register a new Generic (Object) parameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_GenericParam_1.htm"
+    },
+    {
+      "name": "Register_GeometryParam(String, String, String)",
+      "signature": "public void Register_GeometryParam(string name, string nickname, string description)",
+      "summary": "Register a new 3D geometry parameter",
+      "remarks": "See AlsoReferenceGH_Component.GH_OutputParamManager ClassRegister_GeometryParam OverloadGrasshopper.Kernel Namespace",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_GeometryParam.htm"
+    },
+    {
+      "name": "Register_GeometryParam(String, String, String, GH_ParamAccess)",
+      "signature": "public void Register_GeometryParam(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Register a new 3D geometry parameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_GeometryParam_1.htm"
+    },
+    {
+      "name": "Register_GroupParam(String, String, String)",
+      "signature": "public void Register_GroupParam(string name, string nickname, string description)",
+      "summary": "Register a new geometric group parameter",
+      "remarks": "See AlsoReferenceGH_Component.GH_OutputParamManager ClassRegister_GroupParam OverloadGrasshopper.Kernel Namespace",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_GroupParam.htm"
+    },
+    {
+      "name": "Register_GroupParam(String, String, String, GH_ParamAccess)",
+      "signature": "public void Register_GroupParam(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Register a new geometric group parameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_GroupParam_1.htm"
+    },
+    {
+      "name": "Register_IntegerParam(String, String, String)",
+      "signature": "public void Register_IntegerParam(string name, string nickname, string description)",
+      "summary": "Register a new Integer primitive parameter",
+      "remarks": "See AlsoReferenceGH_Component.GH_OutputParamManager ClassRegister_IntegerParam OverloadGrasshopper.Kernel Namespace",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_IntegerParam.htm"
+    },
+    {
+      "name": "Register_IntegerParam(String, String, String, GH_ParamAccess)",
+      "signature": "public void Register_IntegerParam(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Register a new Integer primitive parameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_IntegerParam_1.htm"
+    },
+    {
+      "name": "Register_IntervalParam(String, String, String)",
+      "signature": "public void Register_IntervalParam(string name, string nickname, string description)",
+      "summary": "Register a new Interval parameter",
+      "remarks": "See AlsoReferenceGH_Component.GH_OutputParamManager ClassRegister_IntervalParam OverloadGrasshopper.Kernel Namespace",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_IntervalParam.htm"
+    },
+    {
+      "name": "Register_IntervalParam(String, String, String, GH_ParamAccess)",
+      "signature": "public void Register_IntervalParam(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Register a new Interval parameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_IntervalParam_1.htm"
+    },
+    {
+      "name": "Register_LineParam(String, String, String)",
+      "signature": "public void Register_LineParam(string name, string nickname, string description)",
+      "summary": "Register a new 3D line parameter",
+      "remarks": "See AlsoReferenceGH_Component.GH_OutputParamManager ClassRegister_LineParam OverloadGrasshopper.Kernel Namespace",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_LineParam.htm"
+    },
+    {
+      "name": "Register_LineParam(String, String, String, GH_ParamAccess)",
+      "signature": "public void Register_LineParam(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Register a new 3D line parameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_LineParam_1.htm"
+    },
+    {
+      "name": "Register_MatrixParam(String, String, String)",
+      "signature": "public void Register_MatrixParam(string name, string nickname, string description)",
+      "summary": "Register a new matrix parameter",
+      "remarks": "See AlsoReferenceGH_Component.GH_OutputParamManager ClassRegister_MatrixParam OverloadGrasshopper.Kernel Namespace",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_MatrixParam.htm"
+    },
+    {
+      "name": "Register_MatrixParam(String, String, String, GH_ParamAccess)",
+      "signature": "public void Register_MatrixParam(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Register a new matrix parameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_MatrixParam_1.htm"
+    },
+    {
+      "name": "Register_MeshFaceParam(String, String, String)",
+      "signature": "public void Register_MeshFaceParam(string name, string nickname, string description)",
+      "summary": "Register a new 3D Mesh face parameter",
+      "remarks": "See AlsoReferenceGH_Component.GH_OutputParamManager ClassRegister_MeshFaceParam OverloadGrasshopper.Kernel Namespace",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_MeshFaceParam.htm"
+    },
+    {
+      "name": "Register_MeshFaceParam(String, String, String, GH_ParamAccess)",
+      "signature": "public void Register_MeshFaceParam(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Register a new 3D Mesh face parameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_MeshFaceParam_1.htm"
+    },
+    {
+      "name": "Register_MeshParam(String, String, String)",
+      "signature": "public void Register_MeshParam(string name, string nickname, string description)",
+      "summary": "Register a new 3D Mesh parameter",
+      "remarks": "See AlsoReferenceGH_Component.GH_OutputParamManager ClassRegister_MeshParam OverloadGrasshopper.Kernel Namespace",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_MeshParam.htm"
+    },
+    {
+      "name": "Register_MeshParam(String, String, String, GH_ParamAccess)",
+      "signature": "public void Register_MeshParam(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Register a new 3D Mesh parameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_MeshParam_1.htm"
+    },
+    {
+      "name": "Register_PathParam(String, String, String)",
+      "signature": "public void Register_PathParam(string name, string nickname, string description)",
+      "summary": "Register a new Data Structure path parameter",
+      "remarks": "See AlsoReferenceGH_Component.GH_OutputParamManager ClassRegister_PathParam OverloadGrasshopper.Kernel Namespace",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_PathParam.htm"
+    },
+    {
+      "name": "Register_PathParam(String, String, String, GH_ParamAccess)",
+      "signature": "public void Register_PathParam(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Register a new Data Structure path parameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_PathParam_1.htm"
+    },
+    {
+      "name": "Register_PlaneParam(String, String, String)",
+      "signature": "public void Register_PlaneParam(string name, string nickname, string description)",
+      "summary": "Register a new 3D plane parameter",
+      "remarks": "See AlsoReferenceGH_Component.GH_OutputParamManager ClassRegister_PlaneParam OverloadGrasshopper.Kernel Namespace",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_PlaneParam.htm"
+    },
+    {
+      "name": "Register_PlaneParam(String, String, String, GH_ParamAccess)",
+      "signature": "public void Register_PlaneParam(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Register a new 3D plane parameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_PlaneParam_1.htm"
+    },
+    {
+      "name": "Register_PointParam(String, String, String)",
+      "signature": "public void Register_PointParam(string name, string nickname, string description)",
+      "summary": "Register a new 3D point parameter",
+      "remarks": "See AlsoReferenceGH_Component.GH_OutputParamManager ClassRegister_PointParam OverloadGrasshopper.Kernel Namespace",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_PointParam.htm"
+    },
+    {
+      "name": "Register_PointParam(String, String, String, GH_ParamAccess)",
+      "signature": "public void Register_PointParam(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Register a new 3D point parameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_PointParam_1.htm"
+    },
+    {
+      "name": "Register_RectangleParam(String, String, String)",
+      "signature": "public void Register_RectangleParam(string name, string nickname, string description)",
+      "summary": "Register a new 3D rectangle parameter",
+      "remarks": "See AlsoReferenceGH_Component.GH_OutputParamManager ClassRegister_RectangleParam OverloadGrasshopper.Kernel Namespace",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_RectangleParam.htm"
+    },
+    {
+      "name": "Register_RectangleParam(String, String, String, GH_ParamAccess)",
+      "signature": "public void Register_RectangleParam(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Register a new 3D rectangle parameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_RectangleParam_1.htm"
+    },
+    {
+      "name": "Register_StringParam(String, String, String)",
+      "signature": "public void Register_StringParam(string name, string nickname, string description)",
+      "summary": "Register a new String primitive parameter",
+      "remarks": "See AlsoReferenceGH_Component.GH_OutputParamManager ClassRegister_StringParam OverloadGrasshopper.Kernel Namespace",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_StringParam.htm"
+    },
+    {
+      "name": "Register_StringParam(String, String, String, GH_ParamAccess)",
+      "signature": "public void Register_StringParam(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Register a new String primitive parameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_StringParam_1.htm"
+    },
+    {
+      "name": "Register_SurfaceParam(String, String, String)",
+      "signature": "public void Register_SurfaceParam(string name, string nickname, string description)",
+      "summary": "Register a new 3D surface parameter",
+      "remarks": "See AlsoReferenceGH_Component.GH_OutputParamManager ClassRegister_SurfaceParam OverloadGrasshopper.Kernel Namespace",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_SurfaceParam.htm"
+    },
+    {
+      "name": "Register_SurfaceParam(String, String, String, GH_ParamAccess)",
+      "signature": "public void Register_SurfaceParam(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Register a new 3D surface parameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_SurfaceParam_1.htm"
+    },
+    {
+      "name": "Register_TransformParam(String, String, String)",
+      "signature": "public void Register_TransformParam(string name, string nickname, string description)",
+      "summary": "Register a new Transform parameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_TransformParam.htm"
+    },
+    {
+      "name": "Register_TransformParam(String, String, String, GH_ParamAccess)",
+      "signature": "public void Register_TransformParam(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Register a new Transform parameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_TransformParam_1.htm"
+    },
+    {
+      "name": "Register_VectorParam(String, String, String)",
+      "signature": "public void Register_VectorParam(string name, string nickname, string description)",
+      "summary": "Register a new 3D vector parameter",
+      "remarks": "See AlsoReferenceGH_Component.GH_OutputParamManager ClassRegister_VectorParam OverloadGrasshopper.Kernel Namespace",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_VectorParam.htm"
+    },
+    {
+      "name": "Register_VectorParam(String, String, String, GH_ParamAccess)",
+      "signature": "public void Register_VectorParam(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Register a new 3D vector parameter",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Register_VectorParam_1.htm"
+    },
+    {
+      "name": "RegisterParam(IGH_Param)",
+      "signature": "public void RegisterParam(IGH_Param param)",
+      "summary": "Generic parameter registration. This class provides methods to register standard parameters, but if you have a special type you\u0027re in charge of setting it all up yourself.",
+      "params": [
+        {
+          "name": "param",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "doc": "The parameter to add",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_RegisterParam.htm"
+    },
+    {
+      "name": "RegisterParam(IGH_Param, GH_ParamAccess)",
+      "signature": "public void RegisterParam(IGH_Param param, GH_ParamAccess access)",
+      "summary": "Generic parameter registration. This class provides methods to register standard parameters, but if you have a special type you\u0027re in charge of setting it all up yourself.",
+      "params": [
+        {
+          "name": "param",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "doc": "The parameter to add.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_RegisterParam_1.htm"
+    },
+    {
+      "name": "RegisterParam(IGH_Param, String, String, String)",
+      "signature": "public void RegisterParam(IGH_Param param, string name, string nickname, string description)",
+      "summary": "Generic parameter registration. This class provides methods to register standard parameters, but if you have a special type you\u0027re in charge of setting it all up yourself.",
+      "remarks": "See AlsoReferenceGH_Component.GH_OutputParamManager ClassRegisterParam OverloadGrasshopper.Kernel Namespace",
+      "params": [
+        {
+          "name": "param",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "doc": "The parameter to add",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_RegisterParam_2.htm"
+    },
+    {
+      "name": "RegisterParam(IGH_Param, String, String, String, GH_ParamAccess)",
+      "signature": "public void RegisterParam(IGH_Param param, string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Generic parameter registration. This class provides methods to register standard parameters, but if you have a special type you\u0027re in charge of setting it all up yourself.",
+      "params": [
+        {
+          "name": "param",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "doc": "The parameter to add",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access, you should set this field if you intend to output lists here.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_RegisterParam_3.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Param",
+      "type": "IGH_Param",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the output parameter at the given index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_Param.htm"
+    },
+    {
+      "name": "ParamCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the number of output parameters already part of this component.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Component_GH_OutputParamManager_ParamCount.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,348 @@
+{
+  "name": "ModelViewport.Attributes",
+  "namespace": "Grasshopper.Rhinoceros.Display",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.Rhinoceros.Display.ModelViewport.Attributes.)",
+  "base": "ModelContent.Attributes",
+  "interfaces": [
+    "IEquatable\u003CModelViewport.Attributes\u003E"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Rhinoceros_Display_ModelViewport_Attributes.htm",
+  "constructors": [
+    {
+      "name": "ModelViewport.Attributes",
+      "signature": "public Attributes()",
+      "summary": "Initializes a new instance of the ModelViewport.Attributes class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelViewport_Attributes__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AsFrozen",
+      "signature": "protected internal virtual ModelContent.Attributes AsFrozen()",
+      "summary": "(Inherited from ModelContent.Attributes.)",
+      "params": [],
+      "returns": {
+        "type": "ModelContent.Attributes",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContent_Attributes_AsFrozen.htm"
+    },
+    {
+      "name": "Clone",
+      "signature": "public ModelData.Attributes Clone()",
+      "summary": "(Inherited from ModelData.Attributes.)",
+      "params": [],
+      "returns": {
+        "type": "ModelData.Attributes",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelData_Attributes_Clone.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object other)",
+      "summary": "(Inherited from ModelContent.Attributes.)",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContent_Attributes_Equals.htm"
+    },
+    {
+      "name": "Equals(Object, IEqualityComparer)",
+      "signature": "protected override bool Equals(Object other, IEqualityComparer comparer)",
+      "summary": "(Overrides ModelContent.Attributes.Equals(Object, IEqualityComparer).)",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Object",
+          "optional": false
+        },
+        {
+          "name": "comparer",
+          "type": "System.Collections.IEqualityComparer",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelViewport_Attributes_Equals.htm"
+    },
+    {
+      "name": "GetHashCode()",
+      "signature": "public override int GetHashCode()",
+      "summary": "(Inherited from ModelContent.Attributes.)",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContent_Attributes_GetHashCode.htm"
+    },
+    {
+      "name": "GetHashCode(IEqualityComparer)",
+      "signature": "protected override int GetHashCode(IEqualityComparer comparer)",
+      "summary": "(Overrides ModelContent.Attributes.GetHashCode(IEqualityComparer).)",
+      "params": [
+        {
+          "name": "comparer",
+          "type": "System.Collections.IEqualityComparer",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelViewport_Attributes_GetHashCode.htm"
+    },
+    {
+      "name": "IsValidContentName",
+      "signature": "protected internal virtual bool IsValidContentName(ModelContentName value, bool? parent)",
+      "summary": "(Inherited from ModelContent.Attributes.)",
+      "params": [
+        {
+          "name": "value",
+          "type": "Grasshopper.Rhinoceros.ModelContentName",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "System.Nullable\u003CBoolean\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContent_Attributes_IsValidContentName.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "protected internal override sealed bool Read(GH_IReader reader)",
+      "summary": "(Inherited from ModelContent.Attributes.)",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContent_Attributes_Read.htm"
+    },
+    {
+      "name": "ReadData",
+      "signature": "protected override bool ReadData(GH_IReader reader)",
+      "summary": "(Overrides ModelContent.Attributes.ReadData(GH_IReader).)",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelViewport_Attributes_ReadData.htm"
+    },
+    {
+      "name": "SubClone",
+      "signature": "protected virtual ModelData.Attributes SubClone()",
+      "summary": "(Inherited from ModelData.Attributes.)",
+      "params": [],
+      "returns": {
+        "type": "ModelData.Attributes",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelData_Attributes_SubClone.htm"
+    },
+    {
+      "name": "ToDetails",
+      "signature": "public override string ToDetails()",
+      "summary": "(Overrides ModelData.Attributes.ToDetails().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelViewport_Attributes_ToDetails.htm"
+    },
+    {
+      "name": "ToModelData",
+      "signature": "public override ModelData ToModelData()",
+      "summary": "(Overrides ModelData.Attributes.ToModelData().)",
+      "params": [],
+      "returns": {
+        "type": "ModelData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelViewport_Attributes_ToModelData.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Inherited from ModelContent.Attributes.)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContent_Attributes_ToString.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "protected internal override sealed bool Write(GH_IWriter writer)",
+      "summary": "(Inherited from ModelContent.Attributes.)",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContent_Attributes_Write.htm"
+    },
+    {
+      "name": "WriteData",
+      "signature": "protected override bool WriteData(GH_IWriter writer)",
+      "summary": "(Overrides ModelContent.Attributes.WriteData(GH_IWriter).)",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelViewport_Attributes_WriteData.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DisplayMode",
+      "type": "ModelDisplayMode",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Display_ModelViewport_Attributes_DisplayMode.htm"
+    },
+    {
+      "name": "Name",
+      "type": "ModelContentName",
+      "getter": true,
+      "setter": true,
+      "summary": "The last component of the element Path.",
+      "remarks": "Just \u0027Name\u0027 in case it is nested like \u0027Root::Parent::Name\u0027.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContent_Attributes_Name.htm"
+    },
+    {
+      "name": "Notes",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "(Inherited from ModelContent.Attributes.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContent_Attributes_Notes.htm"
+    },
+    {
+      "name": "Parent",
+      "type": "ModelContentName",
+      "getter": true,
+      "setter": true,
+      "summary": "Path of the parent element in \u0027Root::Parent\u0027 format if nested.",
+      "remarks": "Empty string in case it is not nested.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContent_Attributes_Parent.htm"
+    },
+    {
+      "name": "Path",
+      "type": "ModelContentName",
+      "getter": true,
+      "setter": true,
+      "summary": "Full content path in \u0027Root::Parent::Name\u0027 format if is nested.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContent_Attributes_Path.htm"
+    },
+    {
+      "name": "Tags",
+      "type": "ModelTags",
+      "getter": true,
+      "setter": true,
+      "summary": "(Inherited from ModelContent.Attributes.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContent_Attributes_Tags.htm"
+    },
+    {
+      "name": "UserText",
+      "type": "ModelUserText",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Display_ModelViewport_Attributes_UserText.htm"
+    },
+    {
+      "name": "View",
+      "type": "ModelView",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Display_ModelViewport_Attributes_View.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,433 @@
+{
+  "name": "ModelLinetype",
+  "namespace": "Grasshopper.Rhinoceros.Drafting",
+  "kind": "class",
+  "summary": "Represents a Rhino model linetype. Wraps the functionality of the Linetype type.",
+  "base": "ModelComponentContent",
+  "interfaces": [
+    "IGH_BakeAwareData"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Rhinoceros_Drafting_ModelLinetype.htm",
+  "constructors": [
+    {
+      "name": "ModelLinetype()",
+      "signature": "public ModelLinetype()",
+      "summary": "Initializes a new instance of the ModelLinetype class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ModelLinetype__ctor.htm"
+    },
+    {
+      "name": "ModelLinetype(ModelLinetype.Attributes)",
+      "signature": "public ModelLinetype(ModelLinetype.Attributes attributes)",
+      "summary": "Initializes a new instance of the ModelLinetype class",
+      "params": [
+        {
+          "name": "attributes",
+          "type": "Grasshopper.Rhinoceros.Drafting.ModelLinetype.Attributes",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ModelLinetype__ctor_1.htm"
+    },
+    {
+      "name": "ModelLinetype(Guid)",
+      "signature": "public ModelLinetype(Guid id)",
+      "summary": "Initializes a new instance of the ModelLinetype class",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ModelLinetype__ctor_3.htm"
+    },
+    {
+      "name": "ModelLinetype(Linetype)",
+      "signature": "public ModelLinetype(Linetype linetype)",
+      "summary": "Initializes a new instance of the ModelLinetype class",
+      "params": [
+        {
+          "name": "linetype",
+          "type": "Linetype",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ModelLinetype__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Cast",
+      "signature": "public static ModelLinetype Cast(Object source)",
+      "summary": "",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelLinetype",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ModelLinetype_Cast.htm"
+    },
+    {
+      "name": "CastTo\u003CT\u003E(T)",
+      "signature": "public override bool CastTo\u003CT\u003E(out T target)",
+      "summary": "(Inherited from ModelContent.)",
+      "params": [
+        {
+          "name": "target",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContent_CastTo__1.htm"
+    },
+    {
+      "name": "CastTo\u003CT\u003E(T)",
+      "signature": "public virtual bool CastTo\u003CT\u003E(out T target)",
+      "summary": "(Inherited from ModelData.)",
+      "params": [
+        {
+          "name": "target",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelData_CastTo__1.htm"
+    },
+    {
+      "name": "Equals(ModelContent)",
+      "signature": "public bool Equals(ModelContent other)",
+      "summary": "(Inherited from ModelContent.)",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Rhinoceros.ModelContent",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContent_Equals.htm"
+    },
+    {
+      "name": "Equals(ModelData)",
+      "signature": "public bool Equals(ModelData other)",
+      "summary": "(Inherited from ModelData.)",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Rhinoceros.ModelData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelData_Equals.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object other)",
+      "summary": "(Inherited from ModelContent.)",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContent_Equals_1.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "(Inherited from ModelContent.)",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContent_GetHashCode.htm"
+    },
+    {
+      "name": "ToAttributes",
+      "signature": "public ModelLinetype.Attributes ToAttributes()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "ModelLinetype.Attributes",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ModelLinetype_ToAttributes.htm"
+    },
+    {
+      "name": "ToDetails",
+      "signature": "public string ToDetails()",
+      "summary": "(Inherited from ModelData.)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelData_ToDetails.htm"
+    },
+    {
+      "name": "TooltipString",
+      "signature": "public override string TooltipString()",
+      "summary": "(Inherited from ModelContent.)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContent_TooltipString.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Inherited from ModelContent.)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContent_ToString.htm"
+    },
+    {
+      "name": "Implicit(ModelLinetype.Attributes to ModelLinetype)",
+      "signature": "public static implicit operator ModelLinetype (ModelLinetype.Attributes attributes)",
+      "summary": "",
+      "params": [
+        {
+          "name": "attributes",
+          "type": "Grasshopper.Rhinoceros.Drafting.ModelLinetype.Attributes",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelLinetype",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ModelLinetype_op_Implicit.htm"
+    },
+    {
+      "name": "Implicit(Linetype to ModelLinetype)",
+      "signature": "public static implicit operator ModelLinetype (Linetype linetype)",
+      "summary": "",
+      "params": [
+        {
+          "name": "linetype",
+          "type": "Linetype",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelLinetype",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ModelLinetype_op_Implicit_1.htm"
+    },
+    {
+      "name": "Implicit(String to ModelLinetype)",
+      "signature": "public static implicit operator ModelLinetype (string path)",
+      "summary": "",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelLinetype",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ModelLinetype_op_Implicit_2.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CapStyle",
+      "type": "Nullable\u003CLineCapStyle\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Drafting_ModelLinetype_CapStyle.htm"
+    },
+    {
+      "name": "Id",
+      "type": "Nullable\u003CGuid\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from ModelContent.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContent_Id.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from ModelContent.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContent_IsValid.htm"
+    },
+    {
+      "name": "JoinStyle",
+      "type": "Nullable\u003CLineJoinStyle\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Drafting_ModelLinetype_JoinStyle.htm"
+    },
+    {
+      "name": "Name",
+      "type": "ModelContentName",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides ModelContent.Name.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Drafting_ModelLinetype_Name.htm"
+    },
+    {
+      "name": "Notes",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from ModelContent.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContent_Notes.htm"
+    },
+    {
+      "name": "Parent",
+      "type": "ModelContentName",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from ModelContent.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContent_Parent.htm"
+    },
+    {
+      "name": "Path",
+      "type": "ModelContentName",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from ModelContent.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContent_Path.htm"
+    },
+    {
+      "name": "Segments",
+      "type": "IReadOnlyList\u003CDouble\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Drafting_ModelLinetype_Segments.htm"
+    },
+    {
+      "name": "Tags",
+      "type": "ModelTags",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from ModelContent.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContent_Tags.htm"
+    },
+    {
+      "name": "TaperPoints",
+      "type": "IReadOnlyList\u003CPoint2d\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Drafting_ModelLinetype_TaperPoints.htm"
+    },
+    {
+      "name": "Unset",
+      "type": "ModelLinetype",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Drafting_ModelLinetype_Unset.htm"
+    },
+    {
+      "name": "UserText",
+      "type": "ModelUserText",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from ModelComponentContent.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelComponentContent_UserText.htm"
+    },
+    {
+      "name": "Width",
+      "type": "Nullable\u003CDouble\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Drafting_ModelLinetype_Width.htm"
+    },
+    {
+      "name": "WidthUnits",
+      "type": "Nullable\u003CModelUnitSystem.Value\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Drafting_ModelLinetype_WidthUnits.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

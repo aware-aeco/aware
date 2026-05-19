@@ -1,0 +1,48 @@
+{
+  "name": "GH_DocumentTreeNode",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Represents a single node in a document tree.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_DocumentTreeNode.htm",
+  "constructors": [
+    {
+      "name": "GH_DocumentTreeNode",
+      "signature": "public GH_DocumentTreeNode(GH_Document node)",
+      "summary": "Create a new node instance.",
+      "params": [
+        {
+          "name": "node",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "doc": "Node base document.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentTreeNode__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "GH_Document",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the document at this node.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentTreeNode_Document.htm"
+    },
+    {
+      "name": "SubNodes",
+      "type": "List\u003CGH_DocumentTreeNode\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a collection of subnodes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentTreeNode_SubNodes.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

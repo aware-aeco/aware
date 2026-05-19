@@ -1,0 +1,34 @@
+{
+  "name": "GH_ExpandMode",
+  "namespace": "Grasshopper.Kernel.Data",
+  "kind": "enum",
+  "summary": "Enumerates the possible expansion modes for structure paths.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Data_GH_ExpandMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Indicates no expansion should take place."
+    },
+    {
+      "name": "SimpleReplace",
+      "value": 1,
+      "summary": "Paths are expanded and collisions are erased."
+    },
+    {
+      "name": "SimpleAppend",
+      "value": 2,
+      "summary": "Paths are expanded and merged with colliding paths."
+    },
+    {
+      "name": "Recursive",
+      "value": 3,
+      "summary": "Before a path is expanded, any collision is expanded first."
+    }
+  ]
+}

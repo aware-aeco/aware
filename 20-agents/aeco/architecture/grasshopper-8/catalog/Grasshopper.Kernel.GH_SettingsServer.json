@@ -1,0 +1,684 @@
+{
+  "name": "GH_SettingsServer",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "A single instance of this class is maintained at module level under the accessor \u0022Settings\u0022.",
+  "base": "GH_ISerializable",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_SettingsServer.htm",
+  "constructors": [
+    {
+      "name": "GH_SettingsServer(String)",
+      "signature": "public GH_SettingsServer(string databaseName)",
+      "summary": "Create a new instance of the GH_SettingsServer class. The server will be associated with a settings xml file in the %ApplicationData%\\Grasshopper\\ directory. If a file with the same name already exists, its settings will be automatically loaded.",
+      "params": [
+        {
+          "name": "databaseName",
+          "type": "System.String",
+          "doc": "The name of the settings server (equals the name of the xml file so it must adhere to FAT, FAT32 and NTFS naming conventions).",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer__ctor.htm"
+    },
+    {
+      "name": "GH_SettingsServer(String, Boolean)",
+      "signature": "public GH_SettingsServer(string databaseName, bool loadSettings)",
+      "summary": "Create a new instance of the GH_SettingsServer class. The server will be associated with a settings xml file in the %ApplicationData%\\Grasshopper\\ directory.",
+      "params": [
+        {
+          "name": "databaseName",
+          "type": "System.String",
+          "doc": "The name of the settings server (equals the name of the xml file so it must adhere to FAT, FAT32 and NTFS naming conventions).",
+          "optional": false
+        },
+        {
+          "name": "loadSettings",
+          "type": "System.Boolean",
+          "doc": "When true and a file with the same name already exists, its settings will be automatically loaded.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Destroy all settings.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_Clear.htm"
+    },
+    {
+      "name": "ConstainsEntry",
+      "signature": "public bool ConstainsEntry(string name)",
+      "summary": "Tests to see if a given entry is stored in this settings database.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Entry name to query.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the entry exists, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_ConstainsEntry.htm"
+    },
+    {
+      "name": "DeleteValue",
+      "signature": "public void DeleteValue(string key)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_DeleteValue.htm"
+    },
+    {
+      "name": "EntryNames",
+      "signature": "public List\u003Cstring\u003E EntryNames()",
+      "summary": "Gets a list of all the entry names in this settings.",
+      "params": [],
+      "returns": {
+        "type": "List\u003CString\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_EntryNames.htm"
+    },
+    {
+      "name": "EntryType",
+      "signature": "public GH_SettingsType EntryType(string name)",
+      "summary": "Gets the type of a specific entry.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name of entry.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_SettingsType",
+        "doc": "Type of entry. If entry doesn\u0027t exist, GH_SettingsType._unknown is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_EntryType.htm"
+    },
+    {
+      "name": "GetValue(String, Boolean)",
+      "signature": "public bool GetValue(string key, bool default)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_GetValue.htm"
+    },
+    {
+      "name": "GetValue(String, Byte)",
+      "signature": "public byte GetValue(string key, byte default)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Byte",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Byte",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_GetValue_1.htm"
+    },
+    {
+      "name": "GetValue(String, DateTime)",
+      "signature": "public DateTime GetValue(string key, DateTime default)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.DateTime",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DateTime",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_GetValue_2.htm"
+    },
+    {
+      "name": "GetValue(String, Double)",
+      "signature": "public double GetValue(string key, double default)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_GetValue_3.htm"
+    },
+    {
+      "name": "GetValue(String, Color)",
+      "signature": "public Color GetValue(string key, Color default)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Drawing.Color",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_GetValue_4.htm"
+    },
+    {
+      "name": "GetValue(String, Point)",
+      "signature": "public Point GetValue(string key, Point default)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Drawing.Point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_GetValue_5.htm"
+    },
+    {
+      "name": "GetValue(String, Rectangle)",
+      "signature": "public Rectangle GetValue(string key, Rectangle default)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Drawing.Rectangle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Rectangle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_GetValue_6.htm"
+    },
+    {
+      "name": "GetValue(String, Size)",
+      "signature": "public Size GetValue(string key, Size default)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Drawing.Size",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Size",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_GetValue_7.htm"
+    },
+    {
+      "name": "GetValue(String, Int32)",
+      "signature": "public int GetValue(string key, int default)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_GetValue_8.htm"
+    },
+    {
+      "name": "GetValue(String, String)",
+      "signature": "public string GetValue(string key, string default)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_GetValue_9.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "public bool Read(GH_IReader reader)",
+      "summary": "Low-level deserializer.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "doc": "Object to read from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_Read.htm"
+    },
+    {
+      "name": "SetValue(String)",
+      "signature": "public void SetValue(string key)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_SetValue.htm"
+    },
+    {
+      "name": "SetValue(String, Boolean)",
+      "signature": "public void SetValue(string key, bool value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_SetValue_1.htm"
+    },
+    {
+      "name": "SetValue(String, Byte)",
+      "signature": "public void SetValue(string key, byte value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Byte",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_SetValue_2.htm"
+    },
+    {
+      "name": "SetValue(String, DateTime)",
+      "signature": "public void SetValue(string key, DateTime value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.DateTime",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_SetValue_3.htm"
+    },
+    {
+      "name": "SetValue(String, Double)",
+      "signature": "public void SetValue(string key, double value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_SetValue_4.htm"
+    },
+    {
+      "name": "SetValue(String, Color)",
+      "signature": "public void SetValue(string key, Color value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Color",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_SetValue_5.htm"
+    },
+    {
+      "name": "SetValue(String, Point)",
+      "signature": "public void SetValue(string key, Point value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_SetValue_6.htm"
+    },
+    {
+      "name": "SetValue(String, Rectangle)",
+      "signature": "public void SetValue(string key, Rectangle value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Rectangle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_SetValue_7.htm"
+    },
+    {
+      "name": "SetValue(String, Size)",
+      "signature": "public void SetValue(string key, Size value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Size",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_SetValue_8.htm"
+    },
+    {
+      "name": "SetValue(String, Int32)",
+      "signature": "public void SetValue(string key, int value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_SetValue_9.htm"
+    },
+    {
+      "name": "SetValue(String, String)",
+      "signature": "public void SetValue(string key, string value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_SetValue_10.htm"
+    },
+    {
+      "name": "ShowSettingsBrowser",
+      "signature": "public void ShowSettingsBrowser(IWin32Window parent)",
+      "summary": "",
+      "params": [
+        {
+          "name": "parent",
+          "type": "System.Windows.Forms.IWin32Window",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_ShowSettingsBrowser.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public bool Write(GH_IWriter writer)",
+      "summary": "Low-level serializer.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "doc": "Object to write with. Writer must represent an empty archive chunk.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_Write.htm"
+    },
+    {
+      "name": "WritePersistentSettings",
+      "signature": "public void WritePersistentSettings()",
+      "summary": "Store all settings in the xml file now. You must call this function if you want the current settings to persist between sessions.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SettingsServer_WritePersistentSettings.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the total number of settings stored in this database.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_SettingsServer_Count.htm"
+    },
+    {
+      "name": "DatabaseName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of this settings database.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_SettingsServer_DatabaseName.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

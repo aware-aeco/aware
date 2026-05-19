@@ -1,0 +1,14 @@
+{
+  "name": "GH_Gradient.GradientChangedEventHandler",
+  "namespace": "Grasshopper.GUI.Gradient",
+  "kind": "delegate",
+  "summary": "(No description provided in vendor docs for Grasshopper.GUI.Gradient.GH_Gradient.GradientChangedEventHandler.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Gradient_GH_Gradient_GradientChangedEventHandler.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void GradientChangedEventHandler( Object sender, GH_GradientChangedEventArgs e )"
+}

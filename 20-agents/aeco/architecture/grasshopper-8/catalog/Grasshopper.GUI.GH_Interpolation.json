@@ -1,0 +1,44 @@
+{
+  "name": "GH_Interpolation",
+  "namespace": "Grasshopper.GUI",
+  "kind": "enum",
+  "summary": "Enumerates the possible animation progression types.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_Interpolation.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No animation occurs."
+    },
+    {
+      "name": "NearestNeighbour",
+      "value": 1,
+      "summary": "Animation interpolation is either equal to A or B, whichever is closest."
+    },
+    {
+      "name": "Linear",
+      "value": 2,
+      "summary": "Linear interpolation between A and B."
+    },
+    {
+      "name": "EaseIn",
+      "value": 3,
+      "summary": "Interpolation that has a derivative of zero at the start."
+    },
+    {
+      "name": "EaseOut",
+      "value": 4,
+      "summary": "Inteprolation that has a derivative of zero at the end."
+    },
+    {
+      "name": "EaseInAndOut",
+      "value": 5,
+      "summary": "Interpolation that has a derivative of zero at both ends."
+    }
+  ]
+}

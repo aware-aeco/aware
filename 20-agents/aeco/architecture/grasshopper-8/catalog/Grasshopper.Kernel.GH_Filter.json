@@ -1,0 +1,29 @@
+{
+  "name": "GH_Filter",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates all object Search filters.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_Filter.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "DontCare",
+      "value": 0,
+      "summary": "Property is ignored."
+    },
+    {
+      "name": "Include",
+      "value": 1,
+      "summary": "Objects are requires to have this state in order to be included."
+    },
+    {
+      "name": "Exclude",
+      "value": 2,
+      "summary": "Objects are not allowed to have this state in order to be included."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "name": "GH_PreviewMeshArgs",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "This class is passed to objects that implement IGH_PreviewData during mesh drawing operations.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_PreviewMeshArgs.htm",
+  "constructors": [
+    {
+      "name": "GH_PreviewMeshArgs",
+      "signature": "public GH_PreviewMeshArgs(RhinoViewport vp, DisplayPipeline pl, DisplayMaterial mat, MeshingParameters meshParams)",
+      "summary": "Initializes a new instance of the GH_PreviewMeshArgs class",
+      "params": [
+        {
+          "name": "vp",
+          "type": "RhinoViewport",
+          "optional": false
+        },
+        {
+          "name": "pl",
+          "type": "DisplayPipeline",
+          "optional": false
+        },
+        {
+          "name": "mat",
+          "type": "DisplayMaterial",
+          "optional": false
+        },
+        {
+          "name": "meshParams",
+          "type": "MeshingParameters",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PreviewMeshArgs__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Material",
+      "type": "DisplayMaterial",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the material in which meshes ought to be drawn.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_PreviewMeshArgs_Material.htm"
+    },
+    {
+      "name": "MeshingParameters",
+      "type": "MeshingParameters",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the meshing parameters which ought to be used for meshing breps and surfaces. If this property returns a null reference, meshes are supposed to be omitted.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_PreviewMeshArgs_MeshingParameters.htm"
+    },
+    {
+      "name": "Pipeline",
+      "type": "DisplayPipeline",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Display Pipeline we\u0027re currently drawing with.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_PreviewMeshArgs_Pipeline.htm"
+    },
+    {
+      "name": "Viewport",
+      "type": "RhinoViewport",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Viewport in which we\u0027re currently drawing.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_PreviewMeshArgs_Viewport.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

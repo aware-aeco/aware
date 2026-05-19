@@ -1,0 +1,214 @@
+{
+  "name": "GH_IndexRuleSet",
+  "namespace": "Grasshopper.Kernel.Data",
+  "kind": "class",
+  "summary": "A collection of index rules.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Data_GH_IndexRuleSet.htm",
+  "constructors": [
+    {
+      "name": "GH_IndexRuleSet",
+      "signature": "public GH_IndexRuleSet()",
+      "summary": "Blank constructor. Creates an empty collection of rules.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_IndexRuleSet__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddAnyDigitRule",
+      "signature": "public void AddAnyDigitRule()",
+      "summary": "Append a rule for any single digit.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_IndexRuleSet_AddAnyDigitRule.htm"
+    },
+    {
+      "name": "AddAnyDigitsRule",
+      "signature": "public void AddAnyDigitsRule()",
+      "summary": "Append a rule for any amount of digits.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_IndexRuleSet_AddAnyDigitsRule.htm"
+    },
+    {
+      "name": "AddDigitPatternRule(Int32[])",
+      "signature": "public void AddDigitPatternRule(int[] pattern)",
+      "summary": "Append a rule for filtering digit patterns.",
+      "params": [
+        {
+          "name": "pattern",
+          "type": "System.Int32[]",
+          "doc": "Complete pattern. A complete pattern consists of at least three integers, the first one signifying the pattern lower bound, the last one signifying the patters upper bound (use Int32.MaxValue is you do not want to enforce an upper bound), and at least one integer in between defining the pattern growth.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_IndexRuleSet_AddDigitPatternRule_2.htm"
+    },
+    {
+      "name": "AddDigitPatternRule(Int32, Int32)",
+      "signature": "public void AddDigitPatternRule(int firstDigit, int nextDigit)",
+      "summary": "Append a rule for filtering digit patterns. This pattern does not have an upper bound.",
+      "params": [
+        {
+          "name": "firstDigit",
+          "type": "System.Int32",
+          "doc": "First digit in pattern.",
+          "optional": false
+        },
+        {
+          "name": "nextDigit",
+          "type": "System.Int32",
+          "doc": "Next digit in pattern.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_IndexRuleSet_AddDigitPatternRule.htm"
+    },
+    {
+      "name": "AddDigitPatternRule(Int32, Int32, Int32)",
+      "signature": "public void AddDigitPatternRule(int firstDigit, int nextDigit, int lastDigit)",
+      "summary": "Append a rule for filtering digit patterns.",
+      "params": [
+        {
+          "name": "firstDigit",
+          "type": "System.Int32",
+          "doc": "First digit in pattern.",
+          "optional": false
+        },
+        {
+          "name": "nextDigit",
+          "type": "System.Int32",
+          "doc": "Next digit in pattern.",
+          "optional": false
+        },
+        {
+          "name": "lastDigit",
+          "type": "System.Int32",
+          "doc": "Last digit in pattern.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_IndexRuleSet_AddDigitPatternRule_1.htm"
+    },
+    {
+      "name": "AddDigitRule",
+      "signature": "public void AddDigitRule(int digit, bool invert)",
+      "summary": "Append a single digit rule.",
+      "params": [
+        {
+          "name": "digit",
+          "type": "System.Int32",
+          "doc": "Digit to filter.",
+          "optional": false
+        },
+        {
+          "name": "invert",
+          "type": "System.Boolean",
+          "doc": "If true, the digit will be filtered against rather than for.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_IndexRuleSet_AddDigitRule.htm"
+    },
+    {
+      "name": "AddRangePatternRule",
+      "signature": "public void AddRangePatternRule(GH_IndexRange[] pattern)",
+      "summary": "Append a rule for filtering range patterns.",
+      "params": [
+        {
+          "name": "pattern",
+          "type": "Grasshopper.Kernel.Data.GH_IndexRange[]",
+          "doc": "Complete pattern. A complete pattern consists of at least three ranges, the first one signifying the pattern lower bound, the last one signifying the patters upper bound (use GH_IndexRange.MaxValue is you do not want to enforce an upper bound), and at least one range in between defining the pattern growth.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_IndexRuleSet_AddRangePatternRule.htm"
+    },
+    {
+      "name": "AddRangeRule",
+      "signature": "public void AddRangeRule(GH_IndexRange range, bool invert)",
+      "summary": "Append a single range rule.",
+      "params": [
+        {
+          "name": "range",
+          "type": "Grasshopper.Kernel.Data.GH_IndexRange",
+          "doc": "Range to filter.",
+          "optional": false
+        },
+        {
+          "name": "invert",
+          "type": "System.Boolean",
+          "doc": "If true, the range will be filtered against rather than for.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_IndexRuleSet_AddRangeRule.htm"
+    },
+    {
+      "name": "Evaluate",
+      "signature": "public GH_RuleResult Evaluate(int index)",
+      "summary": "Evaluate the index given the local rules.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index to evaluate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_RuleResult",
+        "doc": "The result of the evaluation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_IndexRuleSet_Evaluate.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of rules defined in this collection.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_IndexRuleSet_Count.htm"
+    },
+    {
+      "name": "Rule",
+      "type": "IGH_IndexRule",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the rule at the specified index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_IndexRuleSet_Rule.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

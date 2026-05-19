@@ -1,0 +1,48 @@
+{
+  "name": "GH_IXmlSupport",
+  "namespace": "GH_IO.Serialization",
+  "kind": "interface",
+  "summary": "Interface which declares all methods required for objects that can be (de)serialized to and from an Xml archive.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_GH_IO_Serialization_GH_IXmlSupport.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Read",
+      "signature": "void Read(XmlNode node)",
+      "summary": "Called when an object is required to deserialize itself.",
+      "params": [
+        {
+          "name": "node",
+          "type": "System.Xml.XmlNode",
+          "doc": "Node object to be used for deserialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IXmlSupport_Read.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "void Write(XmlWriter writer)",
+      "summary": "Called when an object is required to serialize itself.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.Xml.XmlWriter",
+          "doc": "Writer object to be used for serialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IXmlSupport_Write.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

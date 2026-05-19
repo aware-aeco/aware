@@ -1,0 +1,14 @@
+{
+  "name": "GH_Animator\u003CT\u003E.Interpolate",
+  "namespace": "Grasshopper.GUI",
+  "kind": "delegate",
+  "summary": "Delegate for interpolating values.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_Animator_1_Interpolate.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate T Interpolate( T A, T B, double factor )"
+}

@@ -1,0 +1,96 @@
+{
+  "name": "GH_MaterialPreviewControl",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Offers a frontend for Grasshopper Material previews.",
+  "base": "UserControl",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_MaterialPreviewControl.htm",
+  "constructors": [
+    {
+      "name": "GH_MaterialPreviewControl",
+      "signature": "public GH_MaterialPreviewControl()",
+      "summary": "Initializes a new instance of the GH_MaterialPreviewControl class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_MaterialPreviewControl__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "protected override void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the GH_MaterialPreviewControl and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_MaterialPreviewControl_Dispose.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Colour",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the colour of this preview.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_MaterialPreviewControl_Colour.htm"
+    },
+    {
+      "name": "Selected",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Selected state of this preview. Selected previews have thick borders drawn around them.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_MaterialPreviewControl_Selected.htm"
+    },
+    {
+      "name": "SelectOnClick",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether this control can be selected.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_MaterialPreviewControl_SelectOnClick.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "ColourChanged",
+      "delegate": "Grasshopper.GUI.GH_MaterialPreviewControl.ColourChangedEventHandler",
+      "signature": "public event GH_MaterialPreviewControl.ColourChangedEventHandler ColourChanged",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_GUI_GH_MaterialPreviewControl_ColourChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "MaterialImagePostPaint",
+      "delegate": "Grasshopper.GUI.GH_MaterialPreviewControl.MaterialImagePostPaintEventHandler",
+      "signature": "public event GH_MaterialPreviewControl.MaterialImagePostPaintEventHandler MaterialImagePostPaint",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_GUI_GH_MaterialPreviewControl_MaterialImagePostPaint.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "SelectedChanged",
+      "delegate": "Grasshopper.GUI.GH_MaterialPreviewControl.SelectedChangedEventHandler",
+      "signature": "public event GH_MaterialPreviewControl.SelectedChangedEventHandler SelectedChanged",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_GUI_GH_MaterialPreviewControl_SelectedChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

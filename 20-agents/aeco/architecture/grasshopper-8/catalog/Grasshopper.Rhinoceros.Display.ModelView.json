@@ -1,0 +1,337 @@
+{
+  "name": "ModelView",
+  "namespace": "Grasshopper.Rhinoceros.Display",
+  "kind": "class",
+  "summary": "Represents a 3D view frustum. Wraps the functionality of the ViewportInfo type.",
+  "interfaces": [
+    "IGH_GeometricGoo",
+    "IEquatable\u003CModelView\u003E",
+    "IGH_PreviewData",
+    "IGH_BakeAwareData"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Rhinoceros_Display_ModelView.htm",
+  "constructors": [
+    {
+      "name": "ModelView()",
+      "signature": "public ModelView()",
+      "summary": "Initializes a new instance of the ModelView class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelView__ctor.htm"
+    },
+    {
+      "name": "ModelView(Guid)",
+      "signature": "public ModelView(Guid ref_guid)",
+      "summary": "Create a new referenced view that references a RhinoView or NamedView object with the specified ref_guid.",
+      "params": [
+        {
+          "name": "ref_guid",
+          "type": "System.Guid",
+          "doc": "ID of viewport object to reference.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelView__ctor_7.htm"
+    },
+    {
+      "name": "ModelView(ModelView)",
+      "signature": "public ModelView(ModelView other)",
+      "summary": "Initializes a new instance of the ModelView class",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Rhinoceros.Display.ModelView",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelView__ctor_1.htm"
+    },
+    {
+      "name": "ModelView(RhinoView)",
+      "signature": "public ModelView(RhinoView view)",
+      "summary": "Initializes a new instance of the ModelView class",
+      "params": [
+        {
+          "name": "view",
+          "type": "RhinoView",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelView__ctor_2.htm"
+    },
+    {
+      "name": "ModelView(RhinoViewport)",
+      "signature": "public ModelView(RhinoViewport viewport)",
+      "summary": "Initializes a new instance of the ModelView class",
+      "params": [
+        {
+          "name": "viewport",
+          "type": "RhinoViewport",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelView__ctor_3.htm"
+    },
+    {
+      "name": "ModelView(ViewInfo)",
+      "signature": "public ModelView(ViewInfo viewInfo)",
+      "summary": "Initializes a new instance of the ModelView class",
+      "params": [
+        {
+          "name": "viewInfo",
+          "type": "ViewInfo",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelView__ctor_4.htm"
+    },
+    {
+      "name": "ModelView(ViewportInfo)",
+      "signature": "public ModelView(ViewportInfo viewportInfo)",
+      "summary": "Initializes a new instance of the ModelView class",
+      "params": [
+        {
+          "name": "viewportInfo",
+          "type": "ViewportInfo",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelView__ctor_5.htm"
+    },
+    {
+      "name": "ModelView(ViewportInfo, String)",
+      "signature": "public ModelView(ViewportInfo viewportInfo, string title)",
+      "summary": "Initializes a new instance of the ModelView class",
+      "params": [
+        {
+          "name": "viewportInfo",
+          "type": "ViewportInfo",
+          "optional": false
+        },
+        {
+          "name": "title",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelView__ctor_6.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Cast",
+      "signature": "public static ModelView Cast(Object data)",
+      "summary": "",
+      "params": [
+        {
+          "name": "data",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelView",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelView_Cast.htm"
+    },
+    {
+      "name": "CastTo\u003CQ\u003E",
+      "signature": "internal bool CastTo\u003CQ\u003E(out Q target)",
+      "summary": "",
+      "params": [
+        {
+          "name": "target",
+          "type": "Q",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelView_CastTo__1.htm"
+    },
+    {
+      "name": "Equals(ModelView)",
+      "signature": "public bool Equals(ModelView other)",
+      "summary": "",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Rhinoceros.Display.ModelView",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelView_Equals.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object other)",
+      "summary": "(Overrides Object.Equals(Object).)",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelView_Equals_1.htm"
+    },
+    {
+      "name": "GetBoundingBox",
+      "signature": "public BoundingBox GetBoundingBox(Transform xform)",
+      "summary": "",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Transform",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelView_GetBoundingBox.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "(Overrides Object.GetHashCode().)",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelView_GetHashCode.htm"
+    },
+    {
+      "name": "Morph",
+      "signature": "public IGH_GeometricGoo Morph(SpaceMorph xmorph)",
+      "summary": "",
+      "params": [
+        {
+          "name": "xmorph",
+          "type": "SpaceMorph",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IGH_GeometricGoo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelView_Morph.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides Object.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelView_ToString.htm"
+    },
+    {
+      "name": "ToViewportInfo",
+      "signature": "public ViewportInfo ToViewportInfo()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "ViewportInfo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelView_ToViewportInfo.htm"
+    },
+    {
+      "name": "Transform",
+      "signature": "public IGH_GeometricGoo Transform(Transform xform)",
+      "summary": "",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Transform",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IGH_GeometricGoo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Display_ModelView_Transform.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Display_ModelView_IsValid.htm"
+    },
+    {
+      "name": "Title",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Display_ModelView_Title.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

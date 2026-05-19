@@ -1,0 +1,833 @@
+{
+  "name": "GH_CapsuleRenderEngine",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "class",
+  "summary": "Provides basic Render methods for capsule display. You typically don\u0027t need this class, just use the Render() overloads on GH_Capsule directly.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_CapsuleRenderEngine.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateHighlightBar(Rectangle, Int32, Int32)",
+      "signature": "public static GraphicsPath CreateHighlightBar(Rectangle rec, int radius, int size)",
+      "summary": "Static (Shared in VB) method for creating Grasshopper Capsule highlight fills.",
+      "params": [
+        {
+          "name": "rec",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Rectangle for entire fill.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Int32",
+          "doc": "Corner radius.",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "System.Int32",
+          "doc": "Highlight fill height.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GraphicsPath",
+        "doc": "Graphics path that describes the highlight fill shape."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CapsuleRenderEngine_CreateHighlightBar.htm"
+    },
+    {
+      "name": "CreateHighlightBar(Rectangle, Int32, Int32, Int32)",
+      "signature": "public static GraphicsPath CreateHighlightBar(Rectangle rec, int R0, int R1, int size)",
+      "summary": "Static (Shared in VB) method for creating Grasshopper Capsule highlight fills.",
+      "params": [
+        {
+          "name": "rec",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Rectangle for entire fill.",
+          "optional": false
+        },
+        {
+          "name": "R0",
+          "type": "System.Int32",
+          "doc": "Radius of upper left corner.",
+          "optional": false
+        },
+        {
+          "name": "R1",
+          "type": "System.Int32",
+          "doc": "Radius of upper right corner.",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "System.Int32",
+          "doc": "Highlight fill height.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GraphicsPath",
+        "doc": "Graphics path that describes the highlight fill shape."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CapsuleRenderEngine_CreateHighlightBar_2.htm"
+    },
+    {
+      "name": "CreateHighlightBar(Rectangle, Int32, Int32, Boolean, Boolean)",
+      "signature": "public static GraphicsPath CreateHighlightBar(Rectangle rec, int radius, int size, bool jaggedLeft, bool jaggedRight)",
+      "summary": "Static (Shared in VB) method for creating Grasshopper Capsule highlight fills.",
+      "params": [
+        {
+          "name": "rec",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Rectangle for entire fill.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Int32",
+          "doc": "Corner radius.",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "System.Int32",
+          "doc": "Highlight fill height.",
+          "optional": false
+        },
+        {
+          "name": "jaggedLeft",
+          "type": "System.Boolean",
+          "optional": false
+        },
+        {
+          "name": "jaggedRight",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GraphicsPath",
+        "doc": "Graphics path that describes the highlight fill shape."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CapsuleRenderEngine_CreateHighlightBar_1.htm"
+    },
+    {
+      "name": "CreateHighlightBar(Rectangle, Int32, Int32, Int32, Boolean, Boolean)",
+      "signature": "public static GraphicsPath CreateHighlightBar(Rectangle rec, int R0, int R1, int size, bool jaggedLeft, bool jaggedRight)",
+      "summary": "Static (Shared in VB) method for creating Grasshopper Capsule highlight fills.",
+      "params": [
+        {
+          "name": "rec",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Rectangle for entire fill.",
+          "optional": false
+        },
+        {
+          "name": "R0",
+          "type": "System.Int32",
+          "doc": "Radius of upper left corner.",
+          "optional": false
+        },
+        {
+          "name": "R1",
+          "type": "System.Int32",
+          "doc": "Radius of upper right corner.",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "System.Int32",
+          "doc": "Highlight fill height.",
+          "optional": false
+        },
+        {
+          "name": "jaggedLeft",
+          "type": "System.Boolean",
+          "optional": false
+        },
+        {
+          "name": "jaggedRight",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GraphicsPath",
+        "doc": "Graphics path that describes the highlight fill shape."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CapsuleRenderEngine_CreateHighlightBar_3.htm"
+    },
+    {
+      "name": "CreateJaggedRectangle",
+      "signature": "public static GraphicsPath CreateJaggedRectangle(RectangleF rec, float R0, float R1, float R2, float R3, bool jaggedLeft, bool jaggedRight)",
+      "summary": "Static (Shared in VB) method for creating rectangles with rounded corners.",
+      "params": [
+        {
+          "name": "rec",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Rectangle to fillet. Rectangles smaller than 3 pixels wide/high will be grown.",
+          "optional": false
+        },
+        {
+          "name": "R0",
+          "type": "System.Single",
+          "doc": "Radius of upper left corner. Zero or negative values omit fillets.",
+          "optional": false
+        },
+        {
+          "name": "R1",
+          "type": "System.Single",
+          "doc": "Radius of upper right corner. Zero or negative values omit fillets.",
+          "optional": false
+        },
+        {
+          "name": "R2",
+          "type": "System.Single",
+          "doc": "Radius of lower right corner. Zero or negative values omit fillets.",
+          "optional": false
+        },
+        {
+          "name": "R3",
+          "type": "System.Single",
+          "doc": "Radius of lower left corner. Zero or negative values omit fillets.",
+          "optional": false
+        },
+        {
+          "name": "jaggedLeft",
+          "type": "System.Boolean",
+          "doc": "If true, the left edge of the rectangle will be jagged and R0 and R3 will be ignored.",
+          "optional": false
+        },
+        {
+          "name": "jaggedRight",
+          "type": "System.Boolean",
+          "doc": "If true, the right edge of the rectangle will be jagged and R1 and R2 will be ignored.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GraphicsPath",
+        "doc": "Graphics path that describes the rounded rectangle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CapsuleRenderEngine_CreateJaggedRectangle.htm"
+    },
+    {
+      "name": "CreateRoundedRectangle(Rectangle, Int32)",
+      "signature": "public static GraphicsPath CreateRoundedRectangle(Rectangle rec, int radius)",
+      "summary": "Static (Shared in VB) method for creating rectangles with rounded corners.",
+      "params": [
+        {
+          "name": "rec",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Rectangle to fillet. Rectangles smaller than 3 pixels wide/high will be grown.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Int32",
+          "doc": "Radius of corner fillets.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GraphicsPath",
+        "doc": "Graphics path that describes the rounded rectangle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CapsuleRenderEngine_CreateRoundedRectangle.htm"
+    },
+    {
+      "name": "CreateRoundedRectangle(RectangleF, Single)",
+      "signature": "public static GraphicsPath CreateRoundedRectangle(RectangleF rec, float radius)",
+      "summary": "Static (Shared in VB) method for creating rectangles with rounded corners.",
+      "params": [
+        {
+          "name": "rec",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Rectangle to fillet. Rectangles smaller than 3 pixels wide/high will be grown.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Single",
+          "doc": "Radius of corner fillets.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GraphicsPath",
+        "doc": "Graphics path that describes the rounded rectangle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CapsuleRenderEngine_CreateRoundedRectangle_2.htm"
+    },
+    {
+      "name": "CreateRoundedRectangle(Rectangle, Int32, Int32, Int32, Int32)",
+      "signature": "public static GraphicsPath CreateRoundedRectangle(Rectangle rec, int R0, int R1, int R2, int R3)",
+      "summary": "Static (Shared in VB) method for creating rectangles with rounded corners.",
+      "params": [
+        {
+          "name": "rec",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Rectangle to fillet. Rectangles smaller than 3 pixels wide/high will be grown.",
+          "optional": false
+        },
+        {
+          "name": "R0",
+          "type": "System.Int32",
+          "doc": "Radius of upper left corner. Zero or negative values omit fillets.",
+          "optional": false
+        },
+        {
+          "name": "R1",
+          "type": "System.Int32",
+          "doc": "Radius of upper right corner. Zero or negative values omit fillets.",
+          "optional": false
+        },
+        {
+          "name": "R2",
+          "type": "System.Int32",
+          "doc": "Radius of lower right corner. Zero or negative values omit fillets.",
+          "optional": false
+        },
+        {
+          "name": "R3",
+          "type": "System.Int32",
+          "doc": "Radius of lower left corner. Zero or negative values omit fillets.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GraphicsPath",
+        "doc": "Graphics path that describes the rounded rectangle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CapsuleRenderEngine_CreateRoundedRectangle_1.htm"
+    },
+    {
+      "name": "CreateRoundedRectangle(RectangleF, Single, Single, Single, Single)",
+      "signature": "public static GraphicsPath CreateRoundedRectangle(RectangleF rec, float R0, float R1, float R2, float R3)",
+      "summary": "Static (Shared in VB) method for creating rectangles with rounded corners.",
+      "params": [
+        {
+          "name": "rec",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Rectangle to fillet. Rectangles smaller than 3 pixels wide/high will be grown.",
+          "optional": false
+        },
+        {
+          "name": "R0",
+          "type": "System.Single",
+          "doc": "Radius of upper left corner. Zero or negative values omit fillets.",
+          "optional": false
+        },
+        {
+          "name": "R1",
+          "type": "System.Single",
+          "doc": "Radius of upper right corner. Zero or negative values omit fillets.",
+          "optional": false
+        },
+        {
+          "name": "R2",
+          "type": "System.Single",
+          "doc": "Radius of lower right corner. Zero or negative values omit fillets.",
+          "optional": false
+        },
+        {
+          "name": "R3",
+          "type": "System.Single",
+          "doc": "Radius of lower left corner. Zero or negative values omit fillets.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GraphicsPath",
+        "doc": "Graphics path that describes the rounded rectangle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CapsuleRenderEngine_CreateRoundedRectangle_3.htm"
+    },
+    {
+      "name": "GetImpliedPalette",
+      "signature": "public static GH_Palette GetImpliedPalette(IGH_ActiveObject obj)",
+      "summary": "Static (Shared in VB) method for solving which palette is the default given a specific object\u0027s properties. Default palettes are either GH_Palette.Normal, GH_Palette.Warning or GH_Palette.Error depending on the objects\u0027 runtime message level.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Grasshopper.Kernel.IGH_ActiveObject",
+          "doc": "Object to evaluate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Palette",
+        "doc": "The default palette."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CapsuleRenderEngine_GetImpliedPalette.htm"
+    },
+    {
+      "name": "GetImpliedStyle(GH_Palette, IGH_Attributes)",
+      "signature": "public static GH_PaletteStyle GetImpliedStyle(GH_Palette palette, IGH_Attributes attributes)",
+      "summary": "Static (Shared in VB) method for solving which palette style is implied by the properties.",
+      "params": [
+        {
+          "name": "palette",
+          "type": "Grasshopper.GUI.Canvas.GH_Palette",
+          "doc": "Palette hint.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Grasshopper.Kernel.IGH_Attributes",
+          "doc": "Attributes to parse for style details.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_PaletteStyle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CapsuleRenderEngine_GetImpliedStyle.htm"
+    },
+    {
+      "name": "GetImpliedStyle(GH_Palette, Boolean, Boolean, Boolean)",
+      "signature": "public static GH_PaletteStyle GetImpliedStyle(GH_Palette palette, bool selected, bool locked, bool hidden)",
+      "summary": "Static (Shared in VB) method for solving which palette style is implied by the properties.",
+      "params": [
+        {
+          "name": "palette",
+          "type": "Grasshopper.GUI.Canvas.GH_Palette",
+          "doc": "Palette hint.",
+          "optional": false
+        },
+        {
+          "name": "selected",
+          "type": "System.Boolean",
+          "doc": "Specifies whether the selected flavour of a palette needs to be returned.",
+          "optional": false
+        },
+        {
+          "name": "locked",
+          "type": "System.Boolean",
+          "doc": "If True, the returned palette style is always Locked.",
+          "optional": false
+        },
+        {
+          "name": "hidden",
+          "type": "System.Boolean",
+          "doc": "If True, the returned palette style is always Hidden.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_PaletteStyle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CapsuleRenderEngine_GetImpliedStyle_1.htm"
+    },
+    {
+      "name": "RenderAlphaFill",
+      "signature": "public void RenderAlphaFill(Graphics G)",
+      "summary": "Render a standard transparancy background hatch. This is only needed when the capsule background colour is not fully opaque. This is usually the second stage in a capsule rendering, right after the Grips are drawn.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CapsuleRenderEngine_RenderAlphaFill.htm"
+    },
+    {
+      "name": "RenderBackground",
+      "signature": "public void RenderBackground(Graphics G, float zoom, GH_PaletteStyle style)",
+      "summary": "Render a default capsule background fill. This is usually the third stage in a capsule rendering.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "zoom",
+          "type": "System.Single",
+          "doc": "Zoom of graphics object.",
+          "optional": false
+        },
+        {
+          "name": "style",
+          "type": "Grasshopper.GUI.Canvas.GH_PaletteStyle",
+          "doc": "Final style to draw with.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CapsuleRenderEngine_RenderBackground.htm"
+    },
+    {
+      "name": "RenderBackground_Alternative",
+      "signature": "public void RenderBackground_Alternative(Graphics G, Color colourOverride, bool drawAlphaGrid)",
+      "summary": "Render a custom capsule background fill. This is usually the third stage in a capsule rendering.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "colourOverride",
+          "type": "System.Drawing.Color",
+          "doc": "Custom background colour.",
+          "optional": false
+        },
+        {
+          "name": "drawAlphaGrid",
+          "type": "System.Boolean",
+          "doc": "If true, and the background colour is not opaque, an alpha grid will be drawn as well.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CapsuleRenderEngine_RenderBackground_Alternative.htm"
+    },
+    {
+      "name": "RenderBoundaryDots",
+      "signature": "public void RenderBoundaryDots(Graphics G, int count, GH_PaletteStyle style)",
+      "summary": "Render a collection of boundary dots along the top edge of the capsule.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "System.Int32",
+          "doc": "Number of dots to render.",
+          "optional": false
+        },
+        {
+          "name": "style",
+          "type": "Grasshopper.GUI.Canvas.GH_PaletteStyle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CapsuleRenderEngine_RenderBoundaryDots.htm"
+    },
+    {
+      "name": "RenderGrips",
+      "signature": "public void RenderGrips(Graphics G)",
+      "summary": "Render all the grips associates with the capsule. Grips are not drawn if the zoom level is less than 50%. This is usually the first stage in a Capsule rendering.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CapsuleRenderEngine_RenderGrips.htm"
+    },
+    {
+      "name": "RenderGrips_Alternative",
+      "signature": "public void RenderGrips_Alternative(Graphics G)",
+      "summary": "Render all the grips associates with the capsule as semi-circles. This is needed if the capsule background is not fully opaque. Grips are not drawn if the zoom level is less than 50%. This is usually the first stage in a Capsule rendering.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CapsuleRenderEngine_RenderGrips_Alternative.htm"
+    },
+    {
+      "name": "RenderHighlight",
+      "signature": "public void RenderHighlight(Graphics G)",
+      "summary": "Render a highlight bar. This is highly zoom-dependant. Highlight rendering is usually the fourth stage in a Capsule Rendering, after the background but prior to the edges.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CapsuleRenderEngine_RenderHighlight.htm"
+    },
+    {
+      "name": "RenderIcon(Graphics, Image, Int32, Int32)",
+      "signature": "public void RenderIcon(Graphics G, Image icon, int offsetX = 0, int offsetY = 0)",
+      "summary": "Render an image icon centered into the box. If the content box has been defined the icon will be centered there, otherwise the outline box will be used.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics surface to draw onto.",
+          "optional": false
+        },
+        {
+          "name": "icon",
+          "type": "System.Drawing.Image",
+          "doc": "Icon to draw.",
+          "optional": false
+        },
+        {
+          "name": "offsetX",
+          "type": "System.Int32",
+          "doc": "Additional x-offset (in original pixel units).",
+          "optional": true
+        },
+        {
+          "name": "offsetY",
+          "type": "System.Int32",
+          "doc": "Additional y-offset (in original pixel units).",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CapsuleRenderEngine_RenderIcon_1.htm"
+    },
+    {
+      "name": "RenderIcon(Graphics, Image, RectangleF, Int32, Int32)",
+      "signature": "public void RenderIcon(Graphics G, Image icon, RectangleF box, int offsetX = 0, int offsetY = 0)",
+      "summary": "Render an image icon centered into the box. If the content box has been defined the icon will be centered there, otherwise the outline box will be used.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics surface to draw onto.",
+          "optional": false
+        },
+        {
+          "name": "icon",
+          "type": "System.Drawing.Image",
+          "doc": "Icon to draw.",
+          "optional": false
+        },
+        {
+          "name": "box",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Box override.",
+          "optional": false
+        },
+        {
+          "name": "offsetX",
+          "type": "System.Int32",
+          "doc": "Additional x-offset (in original pixel units).",
+          "optional": true
+        },
+        {
+          "name": "offsetY",
+          "type": "System.Int32",
+          "doc": "Additional y-offset (in original pixel units).",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CapsuleRenderEngine_RenderIcon.htm"
+    },
+    {
+      "name": "RenderInputGrip",
+      "signature": "public static void RenderInputGrip(Graphics G, float zoom, PointF loc, bool full)",
+      "summary": "Static (Shared in VB) method to render a default input grip.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics objects to draw with.",
+          "optional": false
+        },
+        {
+          "name": "zoom",
+          "type": "System.Single",
+          "doc": "Zoom level of graphics surface.",
+          "optional": false
+        },
+        {
+          "name": "loc",
+          "type": "System.Drawing.PointF",
+          "doc": "Location of grip.",
+          "optional": false
+        },
+        {
+          "name": "full",
+          "type": "System.Boolean",
+          "doc": "If true, a complete circular grip will be draw. If false, a semi-circular grip will be drawn.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CapsuleRenderEngine_RenderInputGrip.htm"
+    },
+    {
+      "name": "RenderMessage",
+      "signature": "public Rectangle RenderMessage(Graphics G, string message, GH_PaletteStyle style)",
+      "summary": "Render a text message underneath the capsule.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "Message to draw.",
+          "optional": false
+        },
+        {
+          "name": "style",
+          "type": "Grasshopper.GUI.Canvas.GH_PaletteStyle",
+          "doc": "Style to use.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Rectangle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CapsuleRenderEngine_RenderMessage.htm"
+    },
+    {
+      "name": "RenderOutlines",
+      "signature": "public void RenderOutlines(Graphics G, float zoom, GH_PaletteStyle style)",
+      "summary": "Render default capsule outlines. If the zoom factor is less than 50% the inner outline is not drawn. This is usually the fifth stage in a Capsule rendering.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "zoom",
+          "type": "System.Single",
+          "doc": "Zoom level of graphics object.",
+          "optional": false
+        },
+        {
+          "name": "style",
+          "type": "Grasshopper.GUI.Canvas.GH_PaletteStyle",
+          "doc": "Palette style that defines edge properties.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CapsuleRenderEngine_RenderOutlines.htm"
+    },
+    {
+      "name": "RenderOutputGrip",
+      "signature": "public static void RenderOutputGrip(Graphics G, float zoom, PointF loc, bool full)",
+      "summary": "Static (Shared in VB) method to render a default output grip.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics objects to draw with.",
+          "optional": false
+        },
+        {
+          "name": "zoom",
+          "type": "System.Single",
+          "doc": "Zoom level of graphics surface.",
+          "optional": false
+        },
+        {
+          "name": "loc",
+          "type": "System.Drawing.PointF",
+          "doc": "Location of grip.",
+          "optional": false
+        },
+        {
+          "name": "full",
+          "type": "System.Boolean",
+          "doc": "If true, a complete circular grip will be draw. If false, a semi-circular grip will be drawn.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CapsuleRenderEngine_RenderOutputGrip.htm"
+    },
+    {
+      "name": "RenderText",
+      "signature": "public void RenderText(Graphics G, Color colour)",
+      "summary": "Render the capsule text. This is usually the sixth and final stage in a capsule rendering.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "doc": "Colour of text.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CapsuleRenderEngine_RenderText.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

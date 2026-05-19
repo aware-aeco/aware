@@ -1,0 +1,14 @@
+{
+  "name": "GH_NamedView.SmoothFrameEventHandler",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "delegate",
+  "summary": "(No description provided in vendor docs for Grasshopper.GUI.Canvas.GH_NamedView.SmoothFrameEventHandler.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_NamedView_SmoothFrameEventHandler.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void SmoothFrameEventHandler( GH_NamedView sender, GH_Canvas canvas )"
+}

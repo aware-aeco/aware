@@ -1,0 +1,51 @@
+{
+  "name": "IGH_Rule",
+  "namespace": "Grasshopper.Kernel.Data",
+  "kind": "interface",
+  "summary": "Interface for individual pattern elements.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Data_IGH_Rule.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Apply",
+      "signature": "bool Apply(int number)",
+      "summary": "Applies this rule to an integer.",
+      "params": [
+        {
+          "name": "number",
+          "type": "System.Int32",
+          "doc": "Integer to match.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the integer passes the rule test."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_IGH_Rule_Apply.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Kind",
+      "type": "GH_RuleKind",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the type of rule.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_IGH_Rule_Kind.htm"
+    },
+    {
+      "name": "Notation",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the string notation (representation) for this rule.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_IGH_Rule_Notation.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

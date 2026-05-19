@@ -1,0 +1,150 @@
+{
+  "name": "Translation",
+  "namespace": "Grasshopper.Kernel.Types.Transforms",
+  "kind": "class",
+  "summary": "Implements a translation (Move) transformation.",
+  "interfaces": [
+    "ITransform"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Types_Transforms_Translation.htm",
+  "constructors": [
+    {
+      "name": "Translation()",
+      "signature": "public Translation()",
+      "summary": "Initializes a new instance of the Translation class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Transforms_Translation__ctor.htm"
+    },
+    {
+      "name": "Translation(Vector3d)",
+      "signature": "public Translation(Vector3d translation)",
+      "summary": "Initializes a new instance of the Translation class",
+      "params": [
+        {
+          "name": "translation",
+          "type": "Vector3d",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Transforms_Translation__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Duplicate",
+      "signature": "public ITransform Duplicate()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "ITransform",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Transforms_Translation_Duplicate.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "public bool Read(GH_IReader reader)",
+      "summary": "",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Transforms_Translation_Read.htm"
+    },
+    {
+      "name": "Reverse",
+      "signature": "public ITransform Reverse()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "ITransform",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Transforms_Translation_Reverse.htm"
+    },
+    {
+      "name": "ToMatrix",
+      "signature": "public Transform ToMatrix()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Transform",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Transforms_Translation_ToMatrix.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides Object.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Transforms_Translation_ToString.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public bool Write(GH_IWriter writer)",
+      "summary": "",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_Transforms_Translation_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_Transforms_Translation_Name.htm"
+    },
+    {
+      "name": "TranslationVector",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_Transforms_Translation_TranslationVector.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

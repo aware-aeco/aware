@@ -1,0 +1,54 @@
+{
+  "name": "GH_ScriptVariantType",
+  "namespace": "Grasshopper.Kernel.Expressions",
+  "kind": "enum",
+  "summary": "(No description provided in vendor docs for Grasshopper.Kernel.Expressions.GH_ScriptVariantType.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Expressions_GH_ScriptVariantType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "nothing",
+      "value": 0
+    },
+    {
+      "name": "boolean",
+      "value": 1
+    },
+    {
+      "name": "integer",
+      "value": 2
+    },
+    {
+      "name": "double",
+      "value": 3
+    },
+    {
+      "name": "string",
+      "value": 5
+    },
+    {
+      "name": "datetime",
+      "value": 6
+    },
+    {
+      "name": "point",
+      "value": 10
+    },
+    {
+      "name": "vector",
+      "value": 11
+    },
+    {
+      "name": "plane",
+      "value": 12
+    },
+    {
+      "name": "object",
+      "value": 20
+    }
+  ]
+}

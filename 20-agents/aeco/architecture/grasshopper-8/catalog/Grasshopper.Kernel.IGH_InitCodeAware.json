@@ -1,0 +1,31 @@
+{
+  "name": "IGH_InitCodeAware",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "Implement this interface in your IGH_DocumentObject class if you want to handle initialization codes from Canvas Search boxes.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_IGH_InitCodeAware.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "SetInitCode",
+      "signature": "void SetInitCode(string code)",
+      "summary": "This method will be called when the user inserts an object via the Canvas Search popup and supplies an \u0022=XXXX\u0022 string init code. Do not throw exceptions in this method! Either handle the code correctly or ignore it.",
+      "params": [
+        {
+          "name": "code",
+          "type": "System.String",
+          "doc": "The portion after the first \u0022=\u0022 symbol.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_InitCodeAware_SetInitCode.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

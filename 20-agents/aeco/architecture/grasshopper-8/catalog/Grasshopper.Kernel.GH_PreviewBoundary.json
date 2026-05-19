@@ -1,0 +1,115 @@
+{
+  "name": "GH_PreviewBoundary",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "A closed boundary for filtering previewed objects.",
+  "base": "GH_ISerializable",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_PreviewBoundary.htm",
+  "constructors": [
+    {
+      "name": "GH_PreviewBoundary",
+      "signature": "public GH_PreviewBoundary(PointF[] points)",
+      "summary": "Create a new preview boundary.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Drawing.PointF[]",
+          "doc": "Points on boundary.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PreviewBoundary__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsVisible",
+      "signature": "public bool IsVisible(IGH_DocumentObject obj)",
+      "summary": "Gets whether a specific object is visible within this boundary.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Grasshopper.Kernel.IGH_DocumentObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PreviewBoundary_IsVisible.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "public bool Read(GH_IReader reader)",
+      "summary": "",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PreviewBoundary_Read.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public bool Write(GH_IWriter writer)",
+      "summary": "",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PreviewBoundary_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Boundary",
+      "type": "Region",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the boundary region.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_PreviewBoundary_Boundary.htm"
+    },
+    {
+      "name": "Limits",
+      "type": "RectangleF",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the limits of the boundary.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_PreviewBoundary_Limits.htm"
+    },
+    {
+      "name": "Points",
+      "type": "PointF[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the array of points this boundary was made from.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_PreviewBoundary_Points.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

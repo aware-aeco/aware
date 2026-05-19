@@ -1,0 +1,73 @@
+{
+  "name": "GH_ParameterContext",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Data passed to IGH_ContextualParameter.AutoAssignContextualData to help define a context state of Rhino/Grasshopper",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_ParameterContext.htm",
+  "constructors": [
+    {
+      "name": "GH_ParameterContext",
+      "signature": "public GH_ParameterContext(string name, RhinoDoc rhDoc, RunMode runmode)",
+      "summary": "Initializes a new instance of the GH_ParameterContext class",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "rhDoc",
+          "type": "RhinoDoc",
+          "optional": false
+        },
+        {
+          "name": "runmode",
+          "type": "RunMode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_ParameterContext__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "IsScripted",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_ParameterContext_IsScripted.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_ParameterContext_Name.htm"
+    },
+    {
+      "name": "RhinoDoc",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_ParameterContext_RhinoDoc.htm"
+    },
+    {
+      "name": "SolveIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_ParameterContext_SolveIndex.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

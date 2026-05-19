@@ -1,0 +1,173 @@
+{
+  "name": "GH_IChunk",
+  "namespace": "GH_IO.Serialization",
+  "kind": "interface",
+  "summary": "Base interface for all Archive Chunks.",
+  "interfaces": [
+    "GH_IBinarySupport",
+    "GH_IXmlSupport"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_GH_IO_Serialization_GH_IChunk.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddMessage",
+      "signature": "void AddMessage(string m, GH_Message_Type t)",
+      "summary": "Log a new message with the top-level archive. Messages are collected during read/write operations, and can be displayed to the user upon completion using GH_Archive.ShowMessageLog().",
+      "params": [
+        {
+          "name": "m",
+          "type": "System.String",
+          "doc": "Message text.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "GH_IO.Serialization.GH_Message_Type",
+          "doc": "Message type.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IChunk_AddMessage.htm"
+    },
+    {
+      "name": "Read(BinaryReader)",
+      "signature": "void Read(BinaryReader reader)",
+      "summary": "Called when an object is required to deserialize itself.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "doc": "Reader object to be used for deserialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IBinarySupport_Read.htm"
+    },
+    {
+      "name": "Read(XmlNode)",
+      "signature": "void Read(XmlNode node)",
+      "summary": "Called when an object is required to deserialize itself.",
+      "params": [
+        {
+          "name": "node",
+          "type": "System.Xml.XmlNode",
+          "doc": "Node object to be used for deserialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IXmlSupport_Read.htm"
+    },
+    {
+      "name": "Write(BinaryWriter)",
+      "signature": "void Write(BinaryWriter writer)",
+      "summary": "Called when an object is required to serialize itself.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "doc": "Writer object to be used for serialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IBinarySupport_Write.htm"
+    },
+    {
+      "name": "Write(XmlWriter)",
+      "signature": "void Write(XmlWriter writer)",
+      "summary": "Called when an object is required to serialize itself.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.Xml.XmlWriter",
+          "doc": "Writer object to be used for serialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Serialization_GH_IXmlSupport_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Archive",
+      "type": "GH_Archive",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a pointer to the archive that owns the Root of the tree this chunk belongs to.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_Serialization_GH_IChunk_Archive.htm"
+    },
+    {
+      "name": "ArchiveLocation",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a string representing the URI with which the archive is associated. The location may be a null string.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_Serialization_GH_IChunk_ArchiveLocation.htm"
+    },
+    {
+      "name": "ChunkCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of child chunks contained in this chunk. The set of all child chunks is referred to as a \u0027litter\u0027.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_Serialization_GH_IChunk_ChunkCount.htm"
+    },
+    {
+      "name": "Chunks",
+      "type": "List\u003CGH_IChunk\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a pointer to the internal list of child chunks. Do not access this list unless you know what you are doing.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_Serialization_GH_IChunk_Chunks.htm"
+    },
+    {
+      "name": "Index",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the index of this chunk. The index is set by the owner of this chunk. Indices smaller than zero imply no index has been set. The combination of name\u002Bindex is always unique among a set of chunks in the same litter.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_Serialization_GH_IChunk_Index.htm"
+    },
+    {
+      "name": "ItemCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of items contained in this chunk.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_Serialization_GH_IChunk_ItemCount.htm"
+    },
+    {
+      "name": "Items",
+      "type": "List\u003CGH_Item\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a pointer to the internal list of items. Do not access this list unless you know what you are doing.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_Serialization_GH_IChunk_Items.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of this chunk. The name is set by the owner of this chunk. Names must be at least 1 character long. The combination of name\u002Bindex is always unique among a set of chunks in a single litter.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_Serialization_GH_IChunk_Name.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,356 @@
+{
+  "name": "GH_GeometricGooWrapper",
+  "namespace": "Grasshopper.Kernel.Types",
+  "kind": "class",
+  "summary": "Utility class for maintaining all kinds of IGH_GeometricGoo types.",
+  "interfaces": [
+    "IGH_GeometricGoo"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Types_GH_GeometricGooWrapper.htm",
+  "constructors": [
+    {
+      "name": "GH_GeometricGooWrapper()",
+      "signature": "public GH_GeometricGooWrapper()",
+      "summary": "Initializes a new instance of the GH_GeometricGooWrapper class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGooWrapper__ctor.htm"
+    },
+    {
+      "name": "GH_GeometricGooWrapper(IGH_GeometricGoo)",
+      "signature": "public GH_GeometricGooWrapper(IGH_GeometricGoo goo)",
+      "summary": "Initializes a new instance of the GH_GeometricGooWrapper class",
+      "params": [
+        {
+          "name": "goo",
+          "type": "Grasshopper.Kernel.Types.IGH_GeometricGoo",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGooWrapper__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CastFrom",
+      "signature": "public bool CastFrom(Object source)",
+      "summary": "",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGooWrapper_CastFrom.htm"
+    },
+    {
+      "name": "CastTo\u003CT\u003E",
+      "signature": "public bool CastTo\u003CT\u003E(ref T target)",
+      "summary": "",
+      "params": [
+        {
+          "name": "target",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGooWrapper_CastTo__1.htm"
+    },
+    {
+      "name": "ClearCaches",
+      "signature": "public void ClearCaches()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGooWrapper_ClearCaches.htm"
+    },
+    {
+      "name": "Duplicate",
+      "signature": "public IGH_Goo Duplicate()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IGH_Goo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGooWrapper_Duplicate.htm"
+    },
+    {
+      "name": "DuplicateGeometry",
+      "signature": "public IGH_GeometricGoo DuplicateGeometry()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IGH_GeometricGoo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGooWrapper_DuplicateGeometry.htm"
+    },
+    {
+      "name": "EmitProxy",
+      "signature": "public IGH_GooProxy EmitProxy()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IGH_GooProxy",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGooWrapper_EmitProxy.htm"
+    },
+    {
+      "name": "GetBoundingBox",
+      "signature": "public BoundingBox GetBoundingBox(Transform xform)",
+      "summary": "",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Transform",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGooWrapper_GetBoundingBox.htm"
+    },
+    {
+      "name": "LoadGeometry()",
+      "signature": "public bool LoadGeometry()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGooWrapper_LoadGeometry.htm"
+    },
+    {
+      "name": "LoadGeometry(RhinoDoc)",
+      "signature": "public bool LoadGeometry(RhinoDoc doc)",
+      "summary": "",
+      "params": [
+        {
+          "name": "doc",
+          "type": "RhinoDoc",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGooWrapper_LoadGeometry_1.htm"
+    },
+    {
+      "name": "Morph",
+      "signature": "public IGH_GeometricGoo Morph(SpaceMorph xmorph)",
+      "summary": "",
+      "params": [
+        {
+          "name": "xmorph",
+          "type": "SpaceMorph",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IGH_GeometricGoo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGooWrapper_Morph.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "public bool Read(GH_IReader reader)",
+      "summary": "",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGooWrapper_Read.htm"
+    },
+    {
+      "name": "ScriptVariable",
+      "signature": "public Object ScriptVariable()",
+      "summary": "This function will be called when the local IGH_Goo instance disapears into a user Script. This would be an excellent place to cast your IGH_Goo type to a simple data type.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "The object that represents this IGH_Goo instance in a script."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGooWrapper_ScriptVariable.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides Object.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGooWrapper_ToString.htm"
+    },
+    {
+      "name": "Transform",
+      "signature": "public IGH_GeometricGoo Transform(Transform xform)",
+      "summary": "",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Transform",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IGH_GeometricGoo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGooWrapper_Transform.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public bool Write(GH_IWriter writer)",
+      "summary": "",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGooWrapper_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Boundingbox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GeometricGooWrapper_Boundingbox.htm"
+    },
+    {
+      "name": "InternalGoo",
+      "type": "IGH_GeometricGoo",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GeometricGooWrapper_InternalGoo.htm"
+    },
+    {
+      "name": "IsGeometryLoaded",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GeometricGooWrapper_IsGeometryLoaded.htm"
+    },
+    {
+      "name": "IsReferencedGeometry",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GeometricGooWrapper_IsReferencedGeometry.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GeometricGooWrapper_IsValid.htm"
+    },
+    {
+      "name": "IsValidWhyNot",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GeometricGooWrapper_IsValidWhyNot.htm"
+    },
+    {
+      "name": "ReferenceID",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GeometricGooWrapper_ReferenceID.htm"
+    },
+    {
+      "name": "TypeDescription",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GeometricGooWrapper_TypeDescription.htm"
+    },
+    {
+      "name": "TypeName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GeometricGooWrapper_TypeName.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

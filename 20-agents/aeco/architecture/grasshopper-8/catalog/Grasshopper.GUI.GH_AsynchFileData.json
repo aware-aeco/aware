@@ -1,0 +1,147 @@
+{
+  "name": "GH_AsynchFileData",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "This class provides asynchronous methods to keep tabs on a file.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_AsynchFileData.htm",
+  "constructors": [
+    {
+      "name": "GH_AsynchFileData",
+      "signature": "public GH_AsynchFileData(string filePath, bool harvestThumbnail, GH_AsynchFileData.FileChangedDelegate callback)",
+      "summary": "Asynchronous constructor. File properties will be loaded asychronously.",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "System.String",
+          "doc": "Location of file",
+          "optional": false
+        },
+        {
+          "name": "harvestThumbnail",
+          "type": "System.Boolean",
+          "doc": "If true, thumbnail data will be loaded.",
+          "optional": false
+        },
+        {
+          "name": "callback",
+          "type": "Grasshopper.GUI.GH_AsynchFileData.FileChangedDelegate",
+          "doc": "Callback delegate for file changes.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_AsynchFileData__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the GH_AsynchFileData",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_AsynchFileData_Dispose.htm"
+    },
+    {
+      "name": "UpdateProperties",
+      "signature": "public void UpdateProperties()",
+      "summary": "Updates all file properties on the thread on which this method is called.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_AsynchFileData_UpdateProperties.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Callback",
+      "type": "GH_AsynchFileData.FileChangedDelegate",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the callback delegate to be used when properties are updated.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_AsynchFileData_Callback.htm"
+    },
+    {
+      "name": "FileCreated",
+      "type": "DateTime",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the date at which the file was created.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_AsynchFileData_FileCreated.htm"
+    },
+    {
+      "name": "FileExists",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether the file exists. Note that this property returns false if DataExists=False, regardless of whether the file exists.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_AsynchFileData_FileExists.htm"
+    },
+    {
+      "name": "FileLastChanged",
+      "type": "DateTime",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the date at which the file was last changed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_AsynchFileData_FileLastChanged.htm"
+    },
+    {
+      "name": "FileSize",
+      "type": "Int64",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the size of the file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_AsynchFileData_FileSize.htm"
+    },
+    {
+      "name": "FileThumbnail",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the thumbnail bitmap associated with the file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_AsynchFileData_FileThumbnail.htm"
+    },
+    {
+      "name": "HarvestThumbnail",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether the thumbnail ought to be parsed. At the moment this only makes sense for GH/GHX files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_AsynchFileData_HarvestThumbnail.htm"
+    },
+    {
+      "name": "IsFileData",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether the data has been retrieved at least once.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_AsynchFileData_IsFileData.htm"
+    },
+    {
+      "name": "FilePath",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the location this instance is watching.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_GH_AsynchFileData_FilePath.htm"
+    },
+    {
+      "name": "IsLocal",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether Grasshopper thinks the file it is watching is on a local machine.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_GH_AsynchFileData_IsLocal.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,330 @@
+{
+  "name": "GH_CanvasDropTargetValidator",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "class",
+  "summary": "Utility validator for restricting component creation.",
+  "base": "GH_CanvasValidator",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_CanvasDropTargetValidator.htm",
+  "constructors": [
+    {
+      "name": "GH_CanvasDropTargetValidator",
+      "signature": "public GH_CanvasDropTargetValidator()",
+      "summary": "Initializes a new instance of the GH_CanvasDropTargetValidator class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasDropTargetValidator__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddedToCanvas",
+      "signature": "public override void AddedToCanvas(GH_Canvas canvas)",
+      "summary": "(Overrides GH_CanvasValidator.AddedToCanvas(GH_Canvas).)",
+      "params": [
+        {
+          "name": "canvas",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasDropTargetValidator_AddedToCanvas.htm"
+    },
+    {
+      "name": "AppliesToDocument",
+      "signature": "public override bool AppliesToDocument(Guid id)",
+      "summary": "(Overrides GH_CanvasValidator.AppliesToDocument(Guid).)",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasDropTargetValidator_AppliesToDocument.htm"
+    },
+    {
+      "name": "CanAcceptObject",
+      "signature": "public override bool CanAcceptObject(Guid id)",
+      "summary": "(Overrides GH_CanvasValidator.CanAcceptObject(Guid).)",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasDropTargetValidator_CanAcceptObject.htm"
+    },
+    {
+      "name": "CanCreateObject",
+      "signature": "public override bool CanCreateObject(Guid id, PointF pt)",
+      "summary": "(Overrides GH_CanvasValidator.CanCreateObject(Guid, PointF).)",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "optional": false
+        },
+        {
+          "name": "pt",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasDropTargetValidator_CanCreateObject.htm"
+    },
+    {
+      "name": "CanCreateWire",
+      "signature": "public virtual bool CanCreateWire(IGH_Param source, IGH_Param target)",
+      "summary": "(Inherited from GH_CanvasValidator.)",
+      "params": [
+        {
+          "name": "source",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasValidator_CanCreateWire.htm"
+    },
+    {
+      "name": "CanDeleteObject",
+      "signature": "public override bool CanDeleteObject(IGH_DocumentObject object)",
+      "summary": "(Overrides GH_CanvasValidator.CanDeleteObject(IGH_DocumentObject).)",
+      "params": [
+        {
+          "name": "object",
+          "type": "Grasshopper.Kernel.IGH_DocumentObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasDropTargetValidator_CanDeleteObject.htm"
+    },
+    {
+      "name": "CanDeleteWire",
+      "signature": "public virtual bool CanDeleteWire(IGH_Param source, IGH_Param target)",
+      "summary": "(Inherited from GH_CanvasValidator.)",
+      "params": [
+        {
+          "name": "source",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasValidator_CanDeleteWire.htm"
+    },
+    {
+      "name": "CanDragObject",
+      "signature": "public override bool CanDragObject(IGH_DocumentObject object, PointF dragFromPoint)",
+      "summary": "(Overrides GH_CanvasValidator.CanDragObject(IGH_DocumentObject, PointF).)",
+      "params": [
+        {
+          "name": "object",
+          "type": "Grasshopper.Kernel.IGH_DocumentObject",
+          "optional": false
+        },
+        {
+          "name": "dragFromPoint",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasDropTargetValidator_CanDragObject.htm"
+    },
+    {
+      "name": "CanNavigateCanvas",
+      "signature": "public virtual bool CanNavigateCanvas()",
+      "summary": "(Inherited from GH_CanvasValidator.)",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasValidator_CanNavigateCanvas.htm"
+    },
+    {
+      "name": "CanShowCanvasMenu",
+      "signature": "public override bool CanShowCanvasMenu(PointF pt)",
+      "summary": "(Overrides GH_CanvasValidator.CanShowCanvasMenu(PointF).)",
+      "params": [
+        {
+          "name": "pt",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasDropTargetValidator_CanShowCanvasMenu.htm"
+    },
+    {
+      "name": "CanShowComponentSearchBox",
+      "signature": "public override bool CanShowComponentSearchBox(PointF pt)",
+      "summary": "(Overrides GH_CanvasValidator.CanShowComponentSearchBox(PointF).)",
+      "params": [
+        {
+          "name": "pt",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasDropTargetValidator_CanShowComponentSearchBox.htm"
+    },
+    {
+      "name": "CanShowObjectMenu",
+      "signature": "public virtual bool CanShowObjectMenu(IGH_DocumentObject object)",
+      "summary": "(Inherited from GH_CanvasValidator.)",
+      "params": [
+        {
+          "name": "object",
+          "type": "Grasshopper.Kernel.IGH_DocumentObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasValidator_CanShowObjectMenu.htm"
+    },
+    {
+      "name": "RemovedFromCanvas",
+      "signature": "public override void RemovedFromCanvas(GH_Canvas canvas)",
+      "summary": "(Overrides GH_CanvasValidator.RemovedFromCanvas(GH_Canvas).)",
+      "params": [
+        {
+          "name": "canvas",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasDropTargetValidator_RemovedFromCanvas.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Canvas",
+      "type": "GH_Canvas",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the canvas this validator is associated with.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_CanvasValidator_Canvas.htm"
+    },
+    {
+      "name": "Document",
+      "type": "GH_Document",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the document (if it exists) that is currently loaded in the canvas.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_CanvasValidator_Document.htm"
+    },
+    {
+      "name": "DropDelegate",
+      "type": "Action",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the delegate to be invoked when a component is dropped inside the dropregion.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_CanvasDropTargetValidator_DropDelegate.htm"
+    },
+    {
+      "name": "DropID",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the ID for the allowed component.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_CanvasDropTargetValidator_DropID.htm"
+    },
+    {
+      "name": "DropRegion",
+      "type": "RectangleF",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the dropregion for this validator. Regions are cloned so you can dispose of the original immedately after assignment.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_CanvasDropTargetValidator_DropRegion.htm"
+    },
+    {
+      "name": "DropText",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the text to display.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_CanvasDropTargetValidator_DropText.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

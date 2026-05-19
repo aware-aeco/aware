@@ -1,0 +1,60 @@
+{
+  "name": "GH_IconPicker",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Provides a standard icon selection interface.",
+  "base": "UserControl",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_IconPicker.htm",
+  "constructors": [
+    {
+      "name": "GH_IconPicker",
+      "signature": "public GH_IconPicker()",
+      "summary": "Initializes a new instance of the GH_IconPicker class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_IconPicker__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "protected override void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the GH_IconPicker and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_IconPicker_Dispose.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Icon",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the icon to be displayed in this picker.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_IconPicker_Icon.htm"
+    },
+    {
+      "name": "IconChanged",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not the icon has been changed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_IconPicker_IconChanged.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,29 @@
+{
+  "name": "GH_ObjectType",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates all types of object that can be referenced by a GH_ObjectProxy instance.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_ObjectType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Object type is unset."
+    },
+    {
+      "name": "CompiledObject",
+      "value": 1,
+      "summary": "Represents a compiled object inside a GHA assembly."
+    },
+    {
+      "name": "UserObject",
+      "value": 2,
+      "summary": "Represents a user defined object in a remote file."
+    }
+  ]
+}

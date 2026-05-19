@@ -1,0 +1,138 @@
+{
+  "name": "GH_Alias",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Represents a single alias|target combo.",
+  "interfaces": [
+    "IComparable\u003CGH_Alias\u003E"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_Alias.htm",
+  "constructors": [
+    {
+      "name": "GH_Alias()",
+      "signature": "public GH_Alias()",
+      "summary": "Initializes a new instance of the GH_Alias class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Alias__ctor.htm"
+    },
+    {
+      "name": "GH_Alias(GH_Alias)",
+      "signature": "public GH_Alias(GH_Alias other)",
+      "summary": "Initializes a new instance of the GH_Alias class",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Kernel.GH_Alias",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Alias__ctor_1.htm"
+    },
+    {
+      "name": "GH_Alias(String, Guid)",
+      "signature": "public GH_Alias(string alias, Guid target)",
+      "summary": "Initializes a new instance of the GH_Alias class",
+      "params": [
+        {
+          "name": "alias",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Alias__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AliasToString",
+      "signature": "public static string AliasToString(IEnumerable\u003Cstring\u003E aliases)",
+      "summary": "",
+      "params": [
+        {
+          "name": "aliases",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Alias_AliasToString.htm"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "public int CompareTo(GH_Alias other)",
+      "summary": "",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Kernel.GH_Alias",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Alias_CompareTo.htm"
+    },
+    {
+      "name": "StringToAlias",
+      "signature": "public static string[] StringToAlias(string text)",
+      "summary": "",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String[]",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Alias_StringToAlias.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Alias",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the alias string.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Alias_Alias.htm"
+    },
+    {
+      "name": "Target",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the alias target.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Alias_Target.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

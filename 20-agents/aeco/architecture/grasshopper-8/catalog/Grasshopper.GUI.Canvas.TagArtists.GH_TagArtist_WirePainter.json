@@ -1,0 +1,85 @@
+{
+  "name": "GH_TagArtist_WirePainter",
+  "namespace": "Grasshopper.GUI.Canvas.TagArtists",
+  "kind": "class",
+  "summary": "IGH_TagArtist implementation for drawing individual wires.",
+  "base": "GH_TagArtist",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Canvas_TagArtists_GH_TagArtist_WirePainter.htm",
+  "constructors": [
+    {
+      "name": "GH_TagArtist_WirePainter",
+      "signature": "public GH_TagArtist_WirePainter(IGH_Param source, IGH_Param target, Color colour, int width)",
+      "summary": "Initializes a new instance of the GH_TagArtist_WirePainter class",
+      "params": [
+        {
+          "name": "source",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_TagArtists_GH_TagArtist_WirePainter__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Paint",
+      "signature": "public override void Paint(GH_Canvas canvas, GH_CanvasChannel channel)",
+      "summary": "(Overrides GH_TagArtist.Paint(GH_Canvas, GH_CanvasChannel).)",
+      "params": [
+        {
+          "name": "canvas",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "optional": false
+        },
+        {
+          "name": "channel",
+          "type": "Grasshopper.GUI.Canvas.GH_CanvasChannel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_TagArtists_GH_TagArtist_WirePainter_Paint.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ID",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the ID of this TagArtist object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_TagArtists_GH_TagArtist_ID.htm"
+    },
+    {
+      "name": "WirePainter_ID",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_TagArtists_GH_TagArtist_WirePainter_WirePainter_ID.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

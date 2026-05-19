@@ -1,0 +1,26 @@
+{
+  "name": "GH_GripSide",
+  "namespace": "Grasshopper.GUI.Gradient",
+  "kind": "enum",
+  "summary": "Enumerates the possible types of colour-in/colour-out behaviours of Gradient Grips.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Gradient_GH_GripSide.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Both",
+      "value": 0
+    },
+    {
+      "name": "Left",
+      "value": 1
+    },
+    {
+      "name": "Right",
+      "value": 2
+    }
+  ]
+}

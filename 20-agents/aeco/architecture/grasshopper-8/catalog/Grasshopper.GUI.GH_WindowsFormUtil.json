@@ -1,0 +1,208 @@
+{
+  "name": "GH_WindowsFormUtil",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Exposes some static (Shared) utility functions for positioning custom windows.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_WindowsFormUtil.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CenterFormOnCursor(Form, Boolean)",
+      "signature": "public static void CenterFormOnCursor(Form F, bool limitToScreen)",
+      "summary": "Positions a Form so that it is centered around the cursor",
+      "params": [
+        {
+          "name": "F",
+          "type": "System.Windows.Forms.Form",
+          "doc": "The Form to adjust",
+          "optional": false
+        },
+        {
+          "name": "limitToScreen",
+          "type": "System.Boolean",
+          "doc": "If True, the Form won\u0027t be allowed to extend beyond the limits of the screen containing the cursor.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_WindowsFormUtil_CenterFormOnCursor_1.htm"
+    },
+    {
+      "name": "CenterFormOnCursor(Window, Boolean)",
+      "signature": "public static void CenterFormOnCursor(Window F, bool limitToScreen)",
+      "summary": "Positions a Form so that it is centered around the cursor",
+      "params": [
+        {
+          "name": "F",
+          "type": "Window",
+          "doc": "The Form to adjust",
+          "optional": false
+        },
+        {
+          "name": "limitToScreen",
+          "type": "System.Boolean",
+          "doc": "If True, the Form won\u0027t be allowed to extend beyond the limits of the screen containing the cursor.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_WindowsFormUtil_CenterFormOnCursor.htm"
+    },
+    {
+      "name": "CenterFormOnEditor(Form, Boolean)",
+      "signature": "public static void CenterFormOnEditor(Form F, bool limitToScreen)",
+      "summary": "Positions a Form so that it is centered on the active editor. If the editor doesn\u0027t exist or is hidden, the form will be centered on the screen instead.",
+      "params": [
+        {
+          "name": "F",
+          "type": "System.Windows.Forms.Form",
+          "doc": "The Form to adjust",
+          "optional": false
+        },
+        {
+          "name": "limitToScreen",
+          "type": "System.Boolean",
+          "doc": "If True, the Form won\u0027t be allowed to extend beyond the limits of the screen containing the cursor.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_WindowsFormUtil_CenterFormOnEditor_1.htm"
+    },
+    {
+      "name": "CenterFormOnEditor(Window, Boolean)",
+      "signature": "public static void CenterFormOnEditor(Window F, bool limitToScreen)",
+      "summary": "Positions a Form so that it is centered on the active editor. If the editor doesn\u0027t exist or is hidden, the form will be centered on the screen instead.",
+      "params": [
+        {
+          "name": "F",
+          "type": "Window",
+          "doc": "The Form to adjust",
+          "optional": false
+        },
+        {
+          "name": "limitToScreen",
+          "type": "System.Boolean",
+          "doc": "If True, the Form won\u0027t be allowed to extend beyond the limits of the screen containing the cursor.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_WindowsFormUtil_CenterFormOnEditor.htm"
+    },
+    {
+      "name": "CenterFormOnScreen(Form, Boolean)",
+      "signature": "public static void CenterFormOnScreen(Form F, bool limitToScreen)",
+      "summary": "Positions a Form so that it is centered on the current screen. The current screen being defined as the screen containing the cursor.",
+      "params": [
+        {
+          "name": "F",
+          "type": "System.Windows.Forms.Form",
+          "doc": "The Form to adjust",
+          "optional": false
+        },
+        {
+          "name": "limitToScreen",
+          "type": "System.Boolean",
+          "doc": "If True, the Form won\u0027t be allowed to extend beyond the limits of the active screen.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_WindowsFormUtil_CenterFormOnScreen_1.htm"
+    },
+    {
+      "name": "CenterFormOnScreen(Window, Boolean)",
+      "signature": "public static void CenterFormOnScreen(Window F, bool limitToScreen)",
+      "summary": "Positions a Form so that it is centered on the current screen. The current screen being defined as the screen containing the cursor.",
+      "params": [
+        {
+          "name": "F",
+          "type": "Window",
+          "doc": "The Form to adjust",
+          "optional": false
+        },
+        {
+          "name": "limitToScreen",
+          "type": "System.Boolean",
+          "doc": "If True, the Form won\u0027t be allowed to extend beyond the limits of the active screen.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_WindowsFormUtil_CenterFormOnScreen.htm"
+    },
+    {
+      "name": "CenterFormOnWindow(Form, Form, Boolean)",
+      "signature": "public static void CenterFormOnWindow(Form F, Form parentWindow, bool limitToScreen)",
+      "summary": "Positions a Form so that it is centered on the supplied window. If the window doesn\u0027t exist or is hidden, the form will be centered on the screen instead.",
+      "params": [
+        {
+          "name": "F",
+          "type": "System.Windows.Forms.Form",
+          "doc": "The Form to adjust",
+          "optional": false
+        },
+        {
+          "name": "parentWindow",
+          "type": "System.Windows.Forms.Form",
+          "optional": false
+        },
+        {
+          "name": "limitToScreen",
+          "type": "System.Boolean",
+          "doc": "If True, the Form won\u0027t be allowed to extend beyond the limits of the screen containing the cursor.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_WindowsFormUtil_CenterFormOnWindow_1.htm"
+    },
+    {
+      "name": "CenterFormOnWindow(Window, Window, Boolean)",
+      "signature": "public static void CenterFormOnWindow(Window F, Window parentWindow, bool limitToScreen)",
+      "summary": "Positions a Form so that it is centered on the supplied window. If the window doesn\u0027t exist or is hidden, the form will be centered on the screen instead.",
+      "params": [
+        {
+          "name": "F",
+          "type": "Window",
+          "doc": "The Form to adjust",
+          "optional": false
+        },
+        {
+          "name": "parentWindow",
+          "type": "Window",
+          "optional": false
+        },
+        {
+          "name": "limitToScreen",
+          "type": "System.Boolean",
+          "doc": "If True, the Form won\u0027t be allowed to extend beyond the limits of the screen containing the cursor.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_WindowsFormUtil_CenterFormOnWindow.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

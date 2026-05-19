@@ -1,0 +1,53 @@
+{
+  "name": "GH_CanvasDocumentChangedEventArgs",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "class",
+  "summary": "These arguments are used in the DocumentChanged event on GH_Canvas.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_CanvasDocumentChangedEventArgs.htm",
+  "constructors": [
+    {
+      "name": "GH_CanvasDocumentChangedEventArgs",
+      "signature": "public GH_CanvasDocumentChangedEventArgs(GH_Document newDoc, GH_Document oldDoc)",
+      "summary": "Initializes a new instance of the GH_CanvasDocumentChangedEventArgs class",
+      "params": [
+        {
+          "name": "newDoc",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "optional": false
+        },
+        {
+          "name": "oldDoc",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasDocumentChangedEventArgs__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "NewDocument",
+      "type": "GH_Document",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the document which has just been loaded into the canvas.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_CanvasDocumentChangedEventArgs_NewDocument.htm"
+    },
+    {
+      "name": "OldDocument",
+      "type": "GH_Document",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the document which was previously loaded into the canvas.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_CanvasDocumentChangedEventArgs_OldDocument.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

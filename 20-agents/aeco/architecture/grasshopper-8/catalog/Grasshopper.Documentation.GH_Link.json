@@ -1,0 +1,280 @@
+{
+  "name": "GH_Link",
+  "namespace": "Grasshopper.Documentation",
+  "kind": "class",
+  "summary": "Represents a link to another location in the Help or some external address.",
+  "interfaces": [
+    "IGH_Content"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Documentation_GH_Link.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateExternalLink(String, String)",
+      "signature": "public static GH_Link CreateExternalLink(string text, string url)",
+      "summary": "",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "url",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Link",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Documentation_GH_Link_CreateExternalLink.htm"
+    },
+    {
+      "name": "CreateExternalLink(String, String, String)",
+      "signature": "public static GH_Link CreateExternalLink(string text, string url, string tooltip)",
+      "summary": "",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "url",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "tooltip",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Link",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Documentation_GH_Link_CreateExternalLink_1.htm"
+    },
+    {
+      "name": "CreateGlossaryLink(String)",
+      "signature": "public static GH_Link CreateGlossaryLink(string text)",
+      "summary": "",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Link",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Documentation_GH_Link_CreateGlossaryLink.htm"
+    },
+    {
+      "name": "CreateGlossaryLink(String, String)",
+      "signature": "public static GH_Link CreateGlossaryLink(string text, string glossaryEntry)",
+      "summary": "",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "glossaryEntry",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Link",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Documentation_GH_Link_CreateGlossaryLink_1.htm"
+    },
+    {
+      "name": "CreateSharedLink(String, String)",
+      "signature": "public static GH_Link CreateSharedLink(string linkId, string target)",
+      "summary": "",
+      "params": [
+        {
+          "name": "linkId",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Link",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Documentation_GH_Link_CreateSharedLink.htm"
+    },
+    {
+      "name": "CreateSharedLink(String, String, String)",
+      "signature": "public static GH_Link CreateSharedLink(string linkId, string target, string tooltip)",
+      "summary": "",
+      "params": [
+        {
+          "name": "linkId",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "tooltip",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Link",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Documentation_GH_Link_CreateSharedLink_1.htm"
+    },
+    {
+      "name": "CreateTopicLink(String, String)",
+      "signature": "public static GH_Link CreateTopicLink(string text, string topicName)",
+      "summary": "",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "topicName",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Link",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Documentation_GH_Link_CreateTopicLink.htm"
+    },
+    {
+      "name": "CreateTopicLink(String, String, String)",
+      "signature": "public static GH_Link CreateTopicLink(string text, string topicName, string tooltip)",
+      "summary": "",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "topicName",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "tooltip",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Link",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Documentation_GH_Link_CreateTopicLink_1.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides Object.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Documentation_GH_Link_ToString.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Destination",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the link target.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Documentation_GH_Link_Destination.htm"
+    },
+    {
+      "name": "IsSharedLink",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether this link is a shared link. A shared link should not have text but it should have a non-empty LinkId.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Documentation_GH_Link_IsSharedLink.htm"
+    },
+    {
+      "name": "LinkId",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the link ID. The link ID is only used for shared links.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Documentation_GH_Link_LinkId.htm"
+    },
+    {
+      "name": "Target",
+      "type": "GH_Target",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the link type.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Documentation_GH_Link_Target.htm"
+    },
+    {
+      "name": "Text",
+      "type": "IGH_Content",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the list text.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Documentation_GH_Link_Text.htm"
+    },
+    {
+      "name": "Tooltip",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the link tooltip text.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Documentation_GH_Link_Tooltip.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

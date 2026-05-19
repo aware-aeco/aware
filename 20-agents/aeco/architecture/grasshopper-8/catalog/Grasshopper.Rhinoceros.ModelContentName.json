@@ -1,0 +1,442 @@
+{
+  "name": "ModelContentName",
+  "namespace": "Grasshopper.Rhinoceros",
+  "kind": "struct",
+  "summary": "(No description provided in vendor docs for Grasshopper.Rhinoceros.ModelContentName.)",
+  "interfaces": [
+    "IEquatable\u003CModelContentName\u003E",
+    "IComparable\u003CModelContentName\u003E",
+    "IComparable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Rhinoceros_ModelContentName.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Combine",
+      "signature": "public static ModelContentName Combine(params ModelContentName[] paths)",
+      "summary": "",
+      "params": [
+        {
+          "name": "paths",
+          "type": "Grasshopper.Rhinoceros.ModelContentName[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelContentName",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContentName_Combine.htm"
+    },
+    {
+      "name": "CompareTo(ModelContentName)",
+      "signature": "public int CompareTo(ModelContentName other)",
+      "summary": "",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Rhinoceros.ModelContentName",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContentName_CompareTo.htm"
+    },
+    {
+      "name": "CompareTo(Object)",
+      "signature": "public int CompareTo(Object obj)",
+      "summary": "",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContentName_CompareTo_1.htm"
+    },
+    {
+      "name": "Equals(ModelContentName)",
+      "signature": "public bool Equals(ModelContentName other)",
+      "summary": "",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Rhinoceros.ModelContentName",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContentName_Equals.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "(Overrides ValueType.Equals(Object).)",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContentName_Equals_1.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "(Overrides ValueType.GetHashCode().)",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContentName_GetHashCode.htm"
+    },
+    {
+      "name": "Split",
+      "signature": "public string[] Split()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "String[]",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContentName_Split.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides ValueType.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContentName_ToString.htm"
+    },
+    {
+      "name": "Division",
+      "signature": "public static ModelContentName operator /(ModelContentName left, ModelContentName right)",
+      "summary": "",
+      "params": [
+        {
+          "name": "left",
+          "type": "Grasshopper.Rhinoceros.ModelContentName",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "Grasshopper.Rhinoceros.ModelContentName",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelContentName",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContentName_op_Division.htm"
+    },
+    {
+      "name": "Equality(ModelContentName, ModelContentName)",
+      "signature": "public static bool operator ==(ModelContentName left, ModelContentName right)",
+      "summary": "",
+      "params": [
+        {
+          "name": "left",
+          "type": "Grasshopper.Rhinoceros.ModelContentName",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "Grasshopper.Rhinoceros.ModelContentName",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContentName_op_Equality.htm"
+    },
+    {
+      "name": "Equality(ModelContentName, String)",
+      "signature": "public static bool operator ==(ModelContentName left, string right)",
+      "summary": "",
+      "params": [
+        {
+          "name": "left",
+          "type": "Grasshopper.Rhinoceros.ModelContentName",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContentName_op_Equality_1.htm"
+    },
+    {
+      "name": "Equality(String, ModelContentName)",
+      "signature": "public static bool operator ==(string left, ModelContentName right)",
+      "summary": "",
+      "params": [
+        {
+          "name": "left",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "Grasshopper.Rhinoceros.ModelContentName",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContentName_op_Equality_2.htm"
+    },
+    {
+      "name": "Implicit(ModelContentName to String)",
+      "signature": "public static implicit operator string (ModelContentName value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "Grasshopper.Rhinoceros.ModelContentName",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContentName_op_Implicit.htm"
+    },
+    {
+      "name": "Implicit(String to ModelContentName)",
+      "signature": "public static implicit operator ModelContentName (string value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelContentName",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContentName_op_Implicit_1.htm"
+    },
+    {
+      "name": "Inequality(ModelContentName, ModelContentName)",
+      "signature": "public static bool operator !=(ModelContentName left, ModelContentName right)",
+      "summary": "",
+      "params": [
+        {
+          "name": "left",
+          "type": "Grasshopper.Rhinoceros.ModelContentName",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "Grasshopper.Rhinoceros.ModelContentName",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContentName_op_Inequality.htm"
+    },
+    {
+      "name": "Inequality(ModelContentName, String)",
+      "signature": "public static bool operator !=(ModelContentName left, string right)",
+      "summary": "",
+      "params": [
+        {
+          "name": "left",
+          "type": "Grasshopper.Rhinoceros.ModelContentName",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContentName_op_Inequality_1.htm"
+    },
+    {
+      "name": "Inequality(String, ModelContentName)",
+      "signature": "public static bool operator !=(string left, ModelContentName right)",
+      "summary": "",
+      "params": [
+        {
+          "name": "left",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "Grasshopper.Rhinoceros.ModelContentName",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContentName_op_Inequality_2.htm"
+    },
+    {
+      "name": "OnesComplement",
+      "signature": "public static ModelContentName operator ~(ModelContentName value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "Grasshopper.Rhinoceros.ModelContentName",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelContentName",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelContentName_op_OnesComplement.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsDefault",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContentName_IsDefault.htm"
+    },
+    {
+      "name": "IsDefaultOrEmpty",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContentName_IsDefaultOrEmpty.htm"
+    },
+    {
+      "name": "IsEmpty",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContentName_IsEmpty.htm"
+    },
+    {
+      "name": "Parent",
+      "type": "ModelContentName",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContentName_Parent.htm"
+    },
+    {
+      "name": "Separator",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContentName_Separator.htm"
+    },
+    {
+      "name": "Stem",
+      "type": "ModelContentName",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_ModelContentName_Stem.htm"
+    },
+    {
+      "name": "Comparer",
+      "type": "StringComparer",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Rhinoceros_ModelContentName_Comparer.htm"
+    },
+    {
+      "name": "Empty",
+      "type": "ModelContentName",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Rhinoceros_ModelContentName_Empty.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

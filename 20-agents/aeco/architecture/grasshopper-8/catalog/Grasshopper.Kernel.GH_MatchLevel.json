@@ -1,0 +1,59 @@
+{
+  "name": "GH_MatchLevel",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "All possible string matching schemes.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_MatchLevel.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No match is performed."
+    },
+    {
+      "name": "Exact",
+      "value": 1,
+      "summary": "String must match the key exactly."
+    },
+    {
+      "name": "Start",
+      "value": 2,
+      "summary": "String must start with the key."
+    },
+    {
+      "name": "WordExact",
+      "value": 4,
+      "summary": "String must contain word that is an exact match with the key."
+    },
+    {
+      "name": "WordStart",
+      "value": 8,
+      "summary": "String must contain a word that starts with the key."
+    },
+    {
+      "name": "Contains",
+      "value": 16,
+      "summary": "String must contain the key."
+    },
+    {
+      "name": "Fuzzy",
+      "value": 32,
+      "summary": "String must contain word that is somewhat similar to the key."
+    },
+    {
+      "name": "AllClean",
+      "value": 31,
+      "summary": "Represents all match types except fuzzy matching."
+    },
+    {
+      "name": "All",
+      "value": 63,
+      "summary": "Represents all match types."
+    }
+  ]
+}

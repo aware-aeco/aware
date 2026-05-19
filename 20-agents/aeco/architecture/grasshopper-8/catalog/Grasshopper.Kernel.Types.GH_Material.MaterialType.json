@@ -1,0 +1,34 @@
+{
+  "name": "GH_Material.MaterialType",
+  "namespace": "Grasshopper.Kernel.Types",
+  "kind": "enum",
+  "summary": "Enumerates the possible material types.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Types_GH_Material_MaterialType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Shader",
+      "value": 0,
+      "summary": "Display shader, very basic colour information, nothing more."
+    },
+    {
+      "name": "RhinoMaterial",
+      "value": 1,
+      "summary": "A material from the Rhino document, identified by ID."
+    },
+    {
+      "name": "XmlMaterial",
+      "value": 2,
+      "summary": "A material defined by an RDK Xml string."
+    },
+    {
+      "name": "RmtlMaterial",
+      "value": 3,
+      "summary": "A material loaded from an RMTL file."
+    }
+  ]
+}

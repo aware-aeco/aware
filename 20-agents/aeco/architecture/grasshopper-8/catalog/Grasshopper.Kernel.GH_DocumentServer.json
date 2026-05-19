@@ -1,0 +1,357 @@
+{
+  "name": "GH_DocumentServer",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Manages and maintains a collection of GH_Documents.",
+  "interfaces": [
+    "IEnumerable\u003CGH_Document\u003E"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_DocumentServer.htm",
+  "constructors": [
+    {
+      "name": "GH_DocumentServer",
+      "signature": "public GH_DocumentServer()",
+      "summary": "Initializes a new instance of the GH_DocumentServer class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentServer__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddDocument(GH_Document)",
+      "signature": "public void AddDocument(GH_Document document)",
+      "summary": "Add a new document to the global list. If the document is already registered nothing will happen. This also applies to a different document which points to the same file path",
+      "params": [
+        {
+          "name": "document",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "doc": "Document to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when the document is a null reference."
+        },
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown when the document doesn\u0027t have top-level rank."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentServer_AddDocument.htm"
+    },
+    {
+      "name": "AddDocument(GH_Document, Boolean)",
+      "signature": "public void AddDocument(GH_Document document, out bool success)",
+      "summary": "Add a new document to the global list. If the document is already registered nothing will happen. This also applies to a different document which points to the same file path",
+      "params": [
+        {
+          "name": "document",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "doc": "Document to add.",
+          "optional": false
+        },
+        {
+          "name": "success",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown when the document is a null reference."
+        },
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown when the document doesn\u0027t have top-level rank."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentServer_AddDocument_1.htm"
+    },
+    {
+      "name": "AddDocument(String, Boolean)",
+      "signature": "public GH_Document AddDocument(string filepath, bool makeActive)",
+      "summary": "Add a new document to the global list. If there already is a document with the given path, it will be made active.",
+      "params": [
+        {
+          "name": "filepath",
+          "type": "System.String",
+          "doc": "Filepath to document.",
+          "optional": false
+        },
+        {
+          "name": "makeActive",
+          "type": "System.Boolean",
+          "doc": "If true, the document will be loaded into the main canvas.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Document",
+        "doc": "The document that was added or activated, or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentServer_AddDocument_2.htm"
+    },
+    {
+      "name": "AddNewDocument",
+      "signature": "public GH_Document AddNewDocument()",
+      "summary": "Adds a new document to the global list. If a template file has been set, this document will be based on the template.",
+      "params": [],
+      "returns": {
+        "type": "GH_Document",
+        "doc": "The document thaw was added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentServer_AddNewDocument.htm"
+    },
+    {
+      "name": "Contains",
+      "signature": "public bool Contains(GH_Document doc)",
+      "summary": "Gets a value indicating whether or not the given document is inside the list.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentServer_Contains.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator GetEnumerator()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentServer_GetEnumerator.htm"
+    },
+    {
+      "name": "GetEnumerator_Generic",
+      "signature": "public IEnumerator\u003CGH_Document\u003E GetEnumerator_Generic()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CGH_Document\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentServer_GetEnumerator_Generic.htm"
+    },
+    {
+      "name": "IndexOf(GH_Document)",
+      "signature": "public int IndexOf(GH_Document doc)",
+      "summary": "Gets the index of the given document.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "doc": "Document to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the given document or -1 if the document is not in the global list."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentServer_IndexOf.htm"
+    },
+    {
+      "name": "IndexOf(String)",
+      "signature": "public int IndexOf(string filepath)",
+      "summary": "Gets the index of the document that matches the filepath.",
+      "params": [
+        {
+          "name": "filepath",
+          "type": "System.String",
+          "doc": "File path URI to match.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the document that matches the given path or -1 if no document match is found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentServer_IndexOf_1.htm"
+    },
+    {
+      "name": "IndexOfAutoSave",
+      "signature": "public int IndexOfAutoSave(string autoSavePath)",
+      "summary": "Gets the document index that is associated with the specified autosave location.",
+      "params": [
+        {
+          "name": "autoSavePath",
+          "type": "System.String",
+          "doc": "The full path (directory, filename and extension) of the autosave file to test against.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the document that matches the given autosave path or -1 if no document match is found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentServer_IndexOfAutoSave.htm"
+    },
+    {
+      "name": "NextAvailableDocument",
+      "signature": "public GH_Document NextAvailableDocument()",
+      "summary": "Gets the most important, non-active document.",
+      "params": [],
+      "returns": {
+        "type": "GH_Document",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentServer_NextAvailableDocument.htm"
+    },
+    {
+      "name": "PromoteDocument",
+      "signature": "public void PromoteDocument(GH_Document document)",
+      "summary": "Push a document to the top of the list, meaning it will be first in line when a new default document needs to be selected.",
+      "params": [
+        {
+          "name": "document",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "doc": "Document to promote.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentServer_PromoteDocument.htm"
+    },
+    {
+      "name": "RemoveAllDocuments",
+      "signature": "public void RemoveAllDocuments()",
+      "summary": "Remove all documents in the global list.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentServer_RemoveAllDocuments.htm"
+    },
+    {
+      "name": "RemoveDocument",
+      "signature": "public void RemoveDocument(GH_Document document)",
+      "summary": "Removes a specific document from the global list. If the document isn\u0027t registered nothing will happen. If the document is owned by an IGH_DocumentOwner, the owner will be informed of the removal.",
+      "params": [
+        {
+          "name": "document",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "doc": "Document to remove.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentServer_RemoveDocument.htm"
+    },
+    {
+      "name": "SafeRemoveDocument",
+      "signature": "public bool SafeRemoveDocument(GH_Document document)",
+      "summary": "Remove a document correctly from the server. This method shows user-interface prompts if there is unsaved data and will also save if needed.",
+      "params": [
+        {
+          "name": "document",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "doc": "Document to remove.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the document was removed, false if otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentServer_SafeRemoveDocument.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "GH_Document",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the document at the given index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentServer_Document.htm"
+    },
+    {
+      "name": "DocumentCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of documents stored in the global list.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentServer_DocumentCount.htm"
+    },
+    {
+      "name": "DocumentNames",
+      "type": "List\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a string collection containing all the names of the documents in the global list.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentServer_DocumentNames.htm"
+    },
+    {
+      "name": "ModifiedDocumentCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the total number of modified (unsaved) documents.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentServer_ModifiedDocumentCount.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "DocumentAdded",
+      "delegate": "Grasshopper.Kernel.GH_DocumentServer.DocumentAddedEventHandler",
+      "signature": "public event GH_DocumentServer.DocumentAddedEventHandler DocumentAdded",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_Kernel_GH_DocumentServer_DocumentAdded.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DocumentRemoved",
+      "delegate": "Grasshopper.Kernel.GH_DocumentServer.DocumentRemovedEventHandler",
+      "signature": "public event GH_DocumentServer.DocumentRemovedEventHandler DocumentRemoved",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_Kernel_GH_DocumentServer_DocumentRemoved.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

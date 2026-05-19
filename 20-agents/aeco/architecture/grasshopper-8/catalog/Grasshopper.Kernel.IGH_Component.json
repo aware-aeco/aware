@@ -1,0 +1,378 @@
+{
+  "name": "IGH_Component",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "Base interface for all GH_Component types. Do not implement this interface from scratch, inherit from GH_Component instead.",
+  "interfaces": [
+    "IGH_ActiveObject",
+    "IGH_PreviewObject",
+    "IGH_BakeAwareObject"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_IGH_Component.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddRuntimeMessage",
+      "signature": "void AddRuntimeMessage(GH_RuntimeMessageLevel Type, string Message)",
+      "summary": "Add a new message to this object. Valid message type flags are Warning and Error. If the Message string is empty or zero-length no message is added.",
+      "params": [
+        {
+          "name": "Type",
+          "type": "Grasshopper.Kernel.GH_RuntimeMessageLevel",
+          "doc": "Type of message. Only Warnings and Errors are recorded.",
+          "optional": false
+        },
+        {
+          "name": "Message",
+          "type": "System.String",
+          "doc": "Content of message.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_ActiveObject_AddRuntimeMessage.htm"
+    },
+    {
+      "name": "BakeGeometry(RhinoDoc, List\u003CGuid\u003E)",
+      "signature": "void BakeGeometry(RhinoDoc doc, List\u003CGuid\u003E obj_ids)",
+      "summary": "Bake all the goemetry in this object in the given Rhino document.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "RhinoDoc",
+          "doc": "Document to bake into.",
+          "optional": false
+        },
+        {
+          "name": "obj_ids",
+          "type": "System.Collections.Generic.List\u003CGuid\u003E",
+          "doc": "All bake objects IDs will be appended to this list.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_BakeAwareObject_BakeGeometry_1.htm"
+    },
+    {
+      "name": "BakeGeometry(RhinoDoc, ObjectAttributes, List\u003CGuid\u003E)",
+      "signature": "void BakeGeometry(RhinoDoc doc, ObjectAttributes att, List\u003CGuid\u003E obj_ids)",
+      "summary": "Bake all the goemetry in this object in the given Rhino document.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "RhinoDoc",
+          "doc": "Document to bake into.",
+          "optional": false
+        },
+        {
+          "name": "att",
+          "type": "ObjectAttributes",
+          "doc": "Attributes to use for baked geometry.",
+          "optional": false
+        },
+        {
+          "name": "obj_ids",
+          "type": "System.Collections.Generic.List\u003CGuid\u003E",
+          "doc": "All bake objects IDs will be appended to this list.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_BakeAwareObject_BakeGeometry.htm"
+    },
+    {
+      "name": "ClearData",
+      "signature": "void ClearData()",
+      "summary": "This function is called whenever the object needs to clear all solution data. This usually amounts to wiping volatile caches and messages. This function will not affect any other objects, but it will set the Phase flag to Blank",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_ActiveObject_ClearData.htm"
+    },
+    {
+      "name": "ClearRuntimeMessages",
+      "signature": "void ClearRuntimeMessages()",
+      "summary": "Clear all message lists.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_ActiveObject_ClearRuntimeMessages.htm"
+    },
+    {
+      "name": "CollectData",
+      "signature": "void CollectData()",
+      "summary": "This function is called whenever the object is required to collect all data. Either from Persistent records, from source params or whatever. This step is only performed if the phase flag is Blank or Failed. Upon completion, the phase flag will be set to Collected",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_ActiveObject_CollectData.htm"
+    },
+    {
+      "name": "ComputeData",
+      "signature": "void ComputeData()",
+      "summary": "This function is called whenever the object is required to generate new data. This step is only performed by some objects and only when the Phase flag is Collected. Upon completion, the Phase will be Computed. If this object throws exceptions, it is the responsibility of the caller to set the Phase flag to Failed.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_ActiveObject_ComputeData.htm"
+    },
+    {
+      "name": "DependsOn",
+      "signature": "bool DependsOn(IGH_ActiveObject PotentialSource)",
+      "summary": "Solve the inheritance relationship between this object and a potential parental object.",
+      "params": [
+        {
+          "name": "PotentialSource",
+          "type": "Grasshopper.Kernel.IGH_ActiveObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_ActiveObject_DependsOn.htm"
+    },
+    {
+      "name": "DrawViewportMeshes",
+      "signature": "void DrawViewportMeshes(IGH_PreviewArgs args)",
+      "summary": "Implement this function to draw all shaded meshes. If the viewport does not support shading, this function will not be called.",
+      "params": [
+        {
+          "name": "args",
+          "type": "Grasshopper.Kernel.IGH_PreviewArgs",
+          "doc": "Draw operation arguments.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_PreviewObject_DrawViewportMeshes.htm"
+    },
+    {
+      "name": "DrawViewportWires",
+      "signature": "void DrawViewportWires(IGH_PreviewArgs args)",
+      "summary": "Implement this function to draw all wire and point geometry previews.",
+      "params": [
+        {
+          "name": "args",
+          "type": "Grasshopper.Kernel.IGH_PreviewArgs",
+          "doc": "Draw operation arguments.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_PreviewObject_DrawViewportWires.htm"
+    },
+    {
+      "name": "RegisterRemoteIDs",
+      "signature": "void RegisterRemoteIDs(GH_GuidTable id_list)",
+      "summary": "If this object depends on Rhino Objects, you must register the UUIDs of those objects. Failure to do so will result in faulty event handling.",
+      "params": [
+        {
+          "name": "id_list",
+          "type": "GH_GuidTable",
+          "doc": "The object ID database Grasshopper is responsive to.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_ActiveObject_RegisterRemoteIDs.htm"
+    },
+    {
+      "name": "RuntimeMessages",
+      "signature": "IList\u003Cstring\u003E RuntimeMessages(GH_RuntimeMessageLevel level)",
+      "summary": "Gets the list of cached runtime messages that were recorded during solver-time processes.",
+      "params": [
+        {
+          "name": "level",
+          "type": "Grasshopper.Kernel.GH_RuntimeMessageLevel",
+          "doc": "Runtime message type to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IList\u003CString\u003E",
+        "doc": "A list of runtime message strings."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_ActiveObject_RuntimeMessages.htm"
+    },
+    {
+      "name": "SDKCompliancy",
+      "signature": "bool SDKCompliancy(int exeVersion, int exeServiceRelease)",
+      "summary": "Test whether this object is compliant with a given Rhino version.",
+      "params": [
+        {
+          "name": "exeVersion",
+          "type": "System.Int32",
+          "doc": "Rhino major release (4, 5, ...).",
+          "optional": false
+        },
+        {
+          "name": "exeServiceRelease",
+          "type": "System.Int32",
+          "doc": "Rhino minor (service) release.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if this object is compliant with the given Rhino release."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_ActiveObject_SDKCompliancy.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ClippingBox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the clipping box for this object. The clipping box is typically the union of the boundingboxes of all the geometry that is drawn by this object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_PreviewObject_ClippingBox.htm"
+    },
+    {
+      "name": "Hidden",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether or not this object is currently drawing preview flags.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_PreviewObject_Hidden.htm"
+    },
+    {
+      "name": "InConstructor",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the constructor flag for this instance. If InConstructor = True, it means the component is still registering parameters and the layout is not yet complete.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Component_InConstructor.htm"
+    },
+    {
+      "name": "IsBakeCapable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not the object can potentially Bake data in its current state.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_BakeAwareObject_IsBakeCapable.htm"
+    },
+    {
+      "name": "IsDataProvider",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether or not this object is capable of emitting data.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_ActiveObject_IsDataProvider.htm"
+    },
+    {
+      "name": "IsPreviewCapable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not this object (in its current state) can draw geometric previews at all.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_PreviewObject_IsPreviewCapable.htm"
+    },
+    {
+      "name": "IsValidMasterParameterIndex",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether the MasterParameterIndex property identifies a valid parameter.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Component_IsValidMasterParameterIndex.htm"
+    },
+    {
+      "name": "Locked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the locked flag of this object. Locked objects are ignored during solutions.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_ActiveObject_Locked.htm"
+    },
+    {
+      "name": "MasterParameterIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the master parameter index override. Negative indices or indices larger than or equal to the input parameter count will be ignored and regular master parameter detection will kick in.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Component_MasterParameterIndex.htm"
+    },
+    {
+      "name": "Message",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a custom message to be displayed underneath the component.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Component_Message.htm"
+    },
+    {
+      "name": "MutableNickName",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value that enables Nick name changes through the menu. The default is TRUE.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_ActiveObject_MutableNickName.htm"
+    },
+    {
+      "name": "Params",
+      "type": "GH_ComponentParamServer",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Params object that managed input and output parameters.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Component_Params.htm"
+    },
+    {
+      "name": "Phase",
+      "type": "GH_SolutionPhase",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the solution phase in which this object is currently stuck.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_ActiveObject_Phase.htm"
+    },
+    {
+      "name": "ProcessorTime",
+      "type": "TimeSpan",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the most recent measured processor time.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_ActiveObject_ProcessorTime.htm"
+    },
+    {
+      "name": "RunCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating how many times the SolveInstance method was called on this component during the last solution. This property will return -1 if no valid runcount is available.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Component_RunCount.htm"
+    },
+    {
+      "name": "RuntimeMessageLevel",
+      "type": "GH_RuntimeMessageLevel",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the worst-case level of all messages. I.e. if only warnings have been recorded, the level will be ::warning. If even a single error exists, the level will be ::error.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_ActiveObject_RuntimeMessageLevel.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

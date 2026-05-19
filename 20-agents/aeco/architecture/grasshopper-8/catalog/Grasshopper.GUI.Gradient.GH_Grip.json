@@ -1,0 +1,244 @@
+{
+  "name": "GH_Grip",
+  "namespace": "Grasshopper.GUI.Gradient",
+  "kind": "class",
+  "summary": "Represents a grip in a gradient. A grip defines both where and how the colour of a gradient changes.",
+  "interfaces": [
+    "IComparable\u003CGH_Grip\u003E",
+    "GH_ISerializable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Gradient_GH_Grip.htm",
+  "constructors": [
+    {
+      "name": "GH_Grip()",
+      "signature": "public GH_Grip()",
+      "summary": "Initializes a new instance of the GH_Grip class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Gradient_GH_Grip__ctor.htm"
+    },
+    {
+      "name": "GH_Grip(GH_Grip)",
+      "signature": "public GH_Grip(GH_Grip other)",
+      "summary": "Initializes a new instance of the GH_Grip class",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.GUI.Gradient.GH_Grip",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Gradient_GH_Grip__ctor_1.htm"
+    },
+    {
+      "name": "GH_Grip(Double, Color)",
+      "signature": "public GH_Grip(double parameter, Color colour)",
+      "summary": "Initializes a new instance of the GH_Grip class",
+      "params": [
+        {
+          "name": "parameter",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Gradient_GH_Grip__ctor_2.htm"
+    },
+    {
+      "name": "GH_Grip(Double, Color, Color)",
+      "signature": "public GH_Grip(double parameter, Color colourLeft, Color colourRight)",
+      "summary": "Initializes a new instance of the GH_Grip class",
+      "params": [
+        {
+          "name": "parameter",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "colourLeft",
+          "type": "System.Drawing.Color",
+          "optional": false
+        },
+        {
+          "name": "colourRight",
+          "type": "System.Drawing.Color",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Gradient_GH_Grip__ctor_3.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Blend",
+      "signature": "public static Color Blend(Color A, Color B, double t)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Drawing.Color",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Drawing.Color",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Gradient_GH_Grip_Blend.htm"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "public int CompareTo(GH_Grip other)",
+      "summary": "",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.GUI.Gradient.GH_Grip",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Gradient_GH_Grip_CompareTo.htm"
+    },
+    {
+      "name": "MutateId",
+      "signature": "public void MutateId()",
+      "summary": "Create a new grip ID.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Gradient_GH_Grip_MutateId.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "public bool Read(GH_IReader reader)",
+      "summary": "",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Gradient_GH_Grip_Read.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public bool Write(GH_IWriter writer)",
+      "summary": "",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Gradient_GH_Grip_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ColourLeft",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the colour to the left of this grip.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Gradient_GH_Grip_ColourLeft.htm"
+    },
+    {
+      "name": "ColourRight",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the colour to the right of this grip.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Gradient_GH_Grip_ColourRight.htm"
+    },
+    {
+      "name": "GripId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Grip ID.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Gradient_GH_Grip_GripId.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether this grip is valid. A valid grip must have a non-empty Id and a non-NaN parameter.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Gradient_GH_Grip_IsValid.htm"
+    },
+    {
+      "name": "Parameter",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the numeric parameter of the grip.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Gradient_GH_Grip_Parameter.htm"
+    },
+    {
+      "name": "Selected",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether this grip is selected. Selection state is not (de)serialized.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Gradient_GH_Grip_Selected.htm"
+    },
+    {
+      "name": "Type",
+      "type": "GH_GripType",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether the colour across this grip is smooth.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Gradient_GH_Grip_Type.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

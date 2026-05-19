@@ -1,0 +1,75 @@
+{
+  "name": "IGH_BakeAwareObject",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "Implement this interface on your IGH_ActiveObject if you want to participate in the Bake GUI.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_IGH_BakeAwareObject.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "BakeGeometry(RhinoDoc, List\u003CGuid\u003E)",
+      "signature": "void BakeGeometry(RhinoDoc doc, List\u003CGuid\u003E obj_ids)",
+      "summary": "Bake all the goemetry in this object in the given Rhino document.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "RhinoDoc",
+          "doc": "Document to bake into.",
+          "optional": false
+        },
+        {
+          "name": "obj_ids",
+          "type": "System.Collections.Generic.List\u003CGuid\u003E",
+          "doc": "All bake objects IDs will be appended to this list.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_BakeAwareObject_BakeGeometry_1.htm"
+    },
+    {
+      "name": "BakeGeometry(RhinoDoc, ObjectAttributes, List\u003CGuid\u003E)",
+      "signature": "void BakeGeometry(RhinoDoc doc, ObjectAttributes att, List\u003CGuid\u003E obj_ids)",
+      "summary": "Bake all the goemetry in this object in the given Rhino document.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "RhinoDoc",
+          "doc": "Document to bake into.",
+          "optional": false
+        },
+        {
+          "name": "att",
+          "type": "ObjectAttributes",
+          "doc": "Attributes to use for baked geometry.",
+          "optional": false
+        },
+        {
+          "name": "obj_ids",
+          "type": "System.Collections.Generic.List\u003CGuid\u003E",
+          "doc": "All bake objects IDs will be appended to this list.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_BakeAwareObject_BakeGeometry.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsBakeCapable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not the object can potentially Bake data in its current state.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_BakeAwareObject_IsBakeCapable.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

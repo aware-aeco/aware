@@ -1,0 +1,46 @@
+{
+  "name": "IGH_BakeAwareData",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "Implement this interface in your IGH_Goo data type if you want to be included in baking operations.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_IGH_BakeAwareData.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "BakeGeometry",
+      "signature": "bool BakeGeometry(RhinoDoc doc, ObjectAttributes att, out Guid obj_guid)",
+      "summary": "Bake an object in the given Rhino document.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "RhinoDoc",
+          "doc": "Document to bake into.",
+          "optional": false
+        },
+        {
+          "name": "att",
+          "type": "ObjectAttributes",
+          "doc": "Attributes to bake with (should not be null).",
+          "optional": false
+        },
+        {
+          "name": "obj_guid",
+          "type": "System.Guid",
+          "doc": "The id of the baked object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success. If False, obj_guid and obj_inst are not guaranteed to be valid pointers."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_BakeAwareData_BakeGeometry.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

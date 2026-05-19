@@ -1,0 +1,29 @@
+{
+  "name": "GH_PreviewMode",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Lists all possible Grasshopper preview modes.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_PreviewMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Disabled",
+      "value": 0,
+      "summary": "Preview is not drawn in the Rhino viewports."
+    },
+    {
+      "name": "Wireframe",
+      "value": 1,
+      "summary": "Only wireframe preview is drawn in the Rhino Viewports."
+    },
+    {
+      "name": "Shaded",
+      "value": 2,
+      "summary": "Wireframe and shaded previews are drawn in the Rhino Viewports."
+    }
+  ]
+}

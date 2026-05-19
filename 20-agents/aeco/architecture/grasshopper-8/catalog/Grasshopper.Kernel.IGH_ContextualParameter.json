@@ -1,0 +1,91 @@
+{
+  "name": "IGH_ContextualParameter",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "Base interface for contextual parameters. This makes accessing non-strongly-typed functionality easier.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_IGH_ContextualParameter.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AssignContextualData",
+      "signature": "void AssignContextualData(IEnumerable data)",
+      "summary": "Assign a collection of values as contextual data.",
+      "params": [
+        {
+          "name": "data",
+          "type": "System.Collections.IEnumerable",
+          "doc": "Data to assign. Should be of expected type.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_ContextualParameter_AssignContextualData.htm"
+    },
+    {
+      "name": "AutoAssignContextualData",
+      "signature": "bool AutoAssignContextualData(GH_ParameterContext context)",
+      "summary": "Use the in-build getter UI to assign data to the parameter.",
+      "params": [
+        {
+          "name": "context",
+          "type": "Grasshopper.Kernel.GH_ParameterContext",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_ContextualParameter_AutoAssignContextualData.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AtLeast",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Minimum number of inputs to request",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_ContextualParameter_AtLeast.htm"
+    },
+    {
+      "name": "AtMost",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Maximum number of inputs to request.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_ContextualParameter_AtMost.htm"
+    },
+    {
+      "name": "ContextualData",
+      "type": "IEnumerable\u003CObject\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Iterate over all specified contextual values.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_ContextualParameter_ContextualData.htm"
+    },
+    {
+      "name": "Immediate",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether this parameter triggers immediate updates from inside its getter. Immediacy is important for a smooth experience, but it maybe disabled if the expected recalculation time becomes excessive.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_ContextualParameter_Immediate.htm"
+    },
+    {
+      "name": "Prompt",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the prompt to be displayed while asking the user to enter data. The prompt string may contain \u0027{0}\u0027 fields which will be populated with the amount of values picked so far.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_ContextualParameter_Prompt.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

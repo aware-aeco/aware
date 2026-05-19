@@ -1,0 +1,25 @@
+{
+  "name": "GH_DoubleBufferedPanel",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Derives from Windows.Forms.Panel but overrides certain flags that improve on-screen rendering. Use panel if you want to have a custom drawn control that is under the control of the owner form.",
+  "base": "Panel",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_DoubleBufferedPanel.htm",
+  "constructors": [
+    {
+      "name": "GH_DoubleBufferedPanel",
+      "signature": "public GH_DoubleBufferedPanel()",
+      "summary": "Initializes a new instance of the GH_DoubleBufferedPanel class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_DoubleBufferedPanel__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

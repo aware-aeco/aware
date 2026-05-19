@@ -1,0 +1,94 @@
+{
+  "name": "GH_SamplingSphere",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Represents a coloured sphere that can be sampled at various rotations.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_SamplingSphere.htm",
+  "constructors": [
+    {
+      "name": "GH_SamplingSphere",
+      "signature": "public GH_SamplingSphere(int size)",
+      "summary": "Initializes a new instance of the GH_SamplingSphere class",
+      "params": [
+        {
+          "name": "size",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_SamplingSphere__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "SampleSphere(Sphere)",
+      "signature": "public Point2d[, ] SampleSphere(Sphere sphere)",
+      "summary": "Sample the UV locations of a sphere. The sphere should be centered on the world origin.",
+      "params": [
+        {
+          "name": "sphere",
+          "type": "Sphere",
+          "doc": "Sphere to sample.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2d[,]",
+        "doc": "A two-dimensional array of Sphere UV locations, one for each sample point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_SamplingSphere_SampleSphere.htm"
+    },
+    {
+      "name": "SampleSphere(Sphere, GH_MemoryBitmap)",
+      "signature": "public Bitmap SampleSphere(Sphere sphere, GH_MemoryBitmap texture)",
+      "summary": "Sample a sphere with a UV texture and return a bitmap of sampled values.",
+      "params": [
+        {
+          "name": "sphere",
+          "type": "Sphere",
+          "doc": "Sphere to sample, it should be centered on the world origin.",
+          "optional": false
+        },
+        {
+          "name": "texture",
+          "type": "Grasshopper.Kernel.GH_MemoryBitmap",
+          "doc": "Texture to sample, the texture will not be modified.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "A bitmap of Size x Size pixels."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_SamplingSphere_SampleSphere_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "SampleCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the total number of samples contained in this sampling grid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_SamplingSphere_SampleCount.htm"
+    },
+    {
+      "name": "Size",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the size of this sample grid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_SamplingSphere_Size.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

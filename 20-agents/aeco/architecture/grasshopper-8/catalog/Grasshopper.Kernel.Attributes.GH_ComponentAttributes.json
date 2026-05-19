@@ -1,0 +1,909 @@
+{
+  "name": "GH_ComponentAttributes",
+  "namespace": "Grasshopper.Kernel.Attributes",
+  "kind": "class",
+  "summary": "These Attributes are the default for GH_Components.",
+  "base": "GH_Attributes\u003CIGH_Component\u003E",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Attributes_GH_ComponentAttributes.htm",
+  "constructors": [
+    {
+      "name": "GH_ComponentAttributes",
+      "signature": "public GH_ComponentAttributes(IGH_Component component)",
+      "summary": "Initializes a new instance of the GH_ComponentAttributes class",
+      "params": [
+        {
+          "name": "component",
+          "type": "Grasshopper.Kernel.IGH_Component",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Attributes_GH_ComponentAttributes__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AppendToAttributeTree",
+      "signature": "public override void AppendToAttributeTree(List\u003CIGH_Attributes\u003E attributes)",
+      "summary": "(Overrides GH_Attributes\u003CT\u003E.AppendToAttributeTree(List\u003CIGH_Attributes\u003E).)",
+      "params": [
+        {
+          "name": "attributes",
+          "type": "System.Collections.Generic.List\u003CIGH_Attributes\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Attributes_GH_ComponentAttributes_AppendToAttributeTree.htm"
+    },
+    {
+      "name": "ExpireLayout",
+      "signature": "public override void ExpireLayout()",
+      "summary": "(Overrides GH_Attributes\u003CT\u003E.ExpireLayout().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Attributes_GH_ComponentAttributes_ExpireLayout.htm"
+    },
+    {
+      "name": "InvalidateCanvas",
+      "signature": "public override bool InvalidateCanvas(GH_Canvas canvas, GH_CanvasMouseEvent e)",
+      "summary": "The canvas must be invalidated when the mouse is near enough and this component has variable parameters.",
+      "params": [
+        {
+          "name": "canvas",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "Grasshopper.GUI.GH_CanvasMouseEvent",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Attributes_GH_ComponentAttributes_InvalidateCanvas.htm"
+    },
+    {
+      "name": "IsMenuRegion",
+      "signature": "public virtual bool IsMenuRegion(PointF point)",
+      "summary": "Determines whether a point is available for context menu popups. By default, IsMenuRegion calls IsPickRegion(PointF).",
+      "params": [
+        {
+          "name": "point",
+          "type": "System.Drawing.PointF",
+          "doc": "Point location to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Attributes_1_IsMenuRegion.htm"
+    },
+    {
+      "name": "IsPickRegion(PointF)",
+      "signature": "public override bool IsPickRegion(PointF point)",
+      "summary": "(Overrides GH_Attributes\u003CT\u003E.IsPickRegion(PointF).)",
+      "params": [
+        {
+          "name": "point",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Attributes_GH_ComponentAttributes_IsPickRegion.htm"
+    },
+    {
+      "name": "IsPickRegion(RectangleF, GH_PickBox)",
+      "signature": "public virtual bool IsPickRegion(RectangleF box, GH_PickBox method)",
+      "summary": "Determines whether a rectangle is a valid pick region for this object. By default, the picking rectangle is intersected with the Bounds rectangle.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Selection box.",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "type": "Grasshopper.Kernel.GH_PickBox",
+          "doc": "Selection method.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Attributes_1_IsPickRegion_1.htm"
+    },
+    {
+      "name": "IsTooltipRegion",
+      "signature": "public virtual bool IsTooltipRegion(PointF point)",
+      "summary": "Determines whether a point is available for tooltip popups. By default, IsMenuRegion calls IsTooltipRegion(PointF).",
+      "params": [
+        {
+          "name": "point",
+          "type": "System.Drawing.PointF",
+          "doc": "Point location to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Attributes_1_IsTooltipRegion.htm"
+    },
+    {
+      "name": "Layout",
+      "signature": "protected override void Layout()",
+      "summary": "(Overrides GH_Attributes\u003CT\u003E.Layout().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Attributes_GH_ComponentAttributes_Layout.htm"
+    },
+    {
+      "name": "LayoutBounds",
+      "signature": "public static RectangleF LayoutBounds(IGH_Component owner, RectangleF bounds)",
+      "summary": "",
+      "params": [
+        {
+          "name": "owner",
+          "type": "Grasshopper.Kernel.IGH_Component",
+          "optional": false
+        },
+        {
+          "name": "bounds",
+          "type": "System.Drawing.RectangleF",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RectangleF",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Attributes_GH_ComponentAttributes_LayoutBounds.htm"
+    },
+    {
+      "name": "LayoutComponentBox",
+      "signature": "public static RectangleF LayoutComponentBox(IGH_Component owner)",
+      "summary": "Utility layout method for GH_Component style UI.",
+      "params": [
+        {
+          "name": "owner",
+          "type": "Grasshopper.Kernel.IGH_Component",
+          "doc": "Component to layout.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RectangleF",
+        "doc": "The rectangle describing the box of the component name/icon."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Attributes_GH_ComponentAttributes_LayoutComponentBox.htm"
+    },
+    {
+      "name": "LayoutInputParams",
+      "signature": "public static void LayoutInputParams(IGH_Component owner, RectangleF componentBox)",
+      "summary": "",
+      "params": [
+        {
+          "name": "owner",
+          "type": "Grasshopper.Kernel.IGH_Component",
+          "optional": false
+        },
+        {
+          "name": "componentBox",
+          "type": "System.Drawing.RectangleF",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Attributes_GH_ComponentAttributes_LayoutInputParams.htm"
+    },
+    {
+      "name": "LayoutOutputParams",
+      "signature": "public static void LayoutOutputParams(IGH_Component owner, RectangleF componentBox)",
+      "summary": "",
+      "params": [
+        {
+          "name": "owner",
+          "type": "Grasshopper.Kernel.IGH_Component",
+          "optional": false
+        },
+        {
+          "name": "componentBox",
+          "type": "System.Drawing.RectangleF",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Attributes_GH_ComponentAttributes_LayoutOutputParams.htm"
+    },
+    {
+      "name": "NewInstanceGuid()",
+      "signature": "public void NewInstanceGuid()",
+      "summary": "Generate a new instance GUID for the owner object.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Attributes_1_NewInstanceGuid.htm"
+    },
+    {
+      "name": "NewInstanceGuid(Guid)",
+      "signature": "public void NewInstanceGuid(Guid newId)",
+      "summary": "Generate a new instance GUID for the owner object. Do not use this overload unless you\u0027re \u003E 1.95m and called David.",
+      "params": [
+        {
+          "name": "newId",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Attributes_1_NewInstanceGuid_1.htm"
+    },
+    {
+      "name": "PerformLayout",
+      "signature": "public void PerformLayout()",
+      "summary": "Recompute the layout for these attributes. This function is automatically called during Drawing operations, so you typically don\u0027t have to.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Attributes_1_PerformLayout.htm"
+    },
+    {
+      "name": "PrepareForRender",
+      "signature": "protected virtual void PrepareForRender(GH_Canvas canvas)",
+      "summary": "This method will always be called exactly once prior to Render(). This would be a good place to make sure all the necessary GUI data is up and running.",
+      "params": [
+        {
+          "name": "canvas",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "doc": "Canvas that is about to render these attributes.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Attributes_1_PrepareForRender.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "public virtual bool Read(GH_IReader reader)",
+      "summary": "(Inherited from GH_Attributes\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Attributes_1_Read.htm"
+    },
+    {
+      "name": "Render",
+      "signature": "protected override void Render(GH_Canvas canvas, Graphics graphics, GH_CanvasChannel channel)",
+      "summary": "(Overrides GH_Attributes\u003CT\u003E.Render(GH_Canvas, Graphics, GH_CanvasChannel).)",
+      "params": [
+        {
+          "name": "canvas",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "optional": false
+        },
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "optional": false
+        },
+        {
+          "name": "channel",
+          "type": "Grasshopper.GUI.Canvas.GH_CanvasChannel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Attributes_GH_ComponentAttributes_Render.htm"
+    },
+    {
+      "name": "RenderComponentCapsule(GH_Canvas, Graphics)",
+      "signature": "protected void RenderComponentCapsule(GH_Canvas canvas, Graphics graphics)",
+      "summary": "Utility function, draws the complete component capsule including all parameter data.",
+      "params": [
+        {
+          "name": "canvas",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "doc": "Canvas to draw into.",
+          "optional": false
+        },
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Attributes_GH_ComponentAttributes_RenderComponentCapsule.htm"
+    },
+    {
+      "name": "RenderComponentCapsule(GH_Canvas, Graphics, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean)",
+      "signature": "protected void RenderComponentCapsule(GH_Canvas canvas, Graphics graphics, bool drawComponentBaseBox, bool drawComponentNameBox, bool drawJaggedEdges, bool drawParameterGrips, bool drawParameterNames, bool drawZuiElements)",
+      "summary": "Utility function, draws the component capsule including all specified elements.",
+      "params": [
+        {
+          "name": "canvas",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "doc": "Canvas to draw into.",
+          "optional": false
+        },
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        },
+        {
+          "name": "drawComponentBaseBox",
+          "type": "System.Boolean",
+          "doc": "If true, will draw the component background box.",
+          "optional": false
+        },
+        {
+          "name": "drawComponentNameBox",
+          "type": "System.Boolean",
+          "doc": "If true, will draw component nickname/icon element.",
+          "optional": false
+        },
+        {
+          "name": "drawJaggedEdges",
+          "type": "System.Boolean",
+          "doc": "If true, parameterless sides will have jagged edges drawn on them.",
+          "optional": false
+        },
+        {
+          "name": "drawParameterGrips",
+          "type": "System.Boolean",
+          "doc": "If true, will draw parameter grips.",
+          "optional": false
+        },
+        {
+          "name": "drawParameterNames",
+          "type": "System.Boolean",
+          "doc": "If true, will draw parameter nicknames.",
+          "optional": false
+        },
+        {
+          "name": "drawZuiElements",
+          "type": "System.Boolean",
+          "doc": "If true, will draw ZUI variable parameter interface.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Attributes_GH_ComponentAttributes_RenderComponentCapsule_1.htm"
+    },
+    {
+      "name": "RenderComponentParameters",
+      "signature": "public static void RenderComponentParameters(GH_Canvas canvas, Graphics graphics, IGH_Component owner, GH_PaletteStyle style)",
+      "summary": "Utility method for rendering all component parameters.",
+      "params": [
+        {
+          "name": "canvas",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "doc": "Canvas to draw to.",
+          "optional": false
+        },
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics to draw with.",
+          "optional": false
+        },
+        {
+          "name": "owner",
+          "type": "Grasshopper.Kernel.IGH_Component",
+          "doc": "Component to draw parameters for.",
+          "optional": false
+        },
+        {
+          "name": "style",
+          "type": "Grasshopper.GUI.Canvas.GH_PaletteStyle",
+          "doc": "Component capsule palette style.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Attributes_GH_ComponentAttributes_RenderComponentParameters.htm"
+    },
+    {
+      "name": "RenderIncomingWires(GH_Painter, IEnumerable\u003CIGH_Param\u003E, GH_ParamWireDisplay)",
+      "signature": "protected void RenderIncomingWires(GH_Painter painter, IEnumerable\u003CIGH_Param\u003E sources, GH_ParamWireDisplay style)",
+      "summary": "Utility function for derived classes. This method draws all the wires going into the left side of the attributes.",
+      "params": [
+        {
+          "name": "painter",
+          "type": "Grasshopper.GUI.Canvas.GH_Painter",
+          "doc": "The graphics object to paint with",
+          "optional": false
+        },
+        {
+          "name": "sources",
+          "type": "System.Collections.Generic.IEnumerable\u003CIGH_Param\u003E",
+          "doc": "A list of sources that will be connected with the input grip of this attribute",
+          "optional": false
+        },
+        {
+          "name": "style",
+          "type": "Grasshopper.Kernel.GH_ParamWireDisplay",
+          "doc": "Style for wire display.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Attributes_1_RenderIncomingWires.htm"
+    },
+    {
+      "name": "RenderIncomingWires(GH_Painter, IEnumerable\u003CIGH_Param\u003E, IEnumerable\u003CPen\u003E)",
+      "signature": "protected void RenderIncomingWires(GH_Painter painter, IEnumerable\u003CIGH_Param\u003E sources, IEnumerable\u003CPen\u003E styles)",
+      "summary": "Utility function for derived classes. This method draws all the wires going into the left side of the attributes.",
+      "params": [
+        {
+          "name": "painter",
+          "type": "Grasshopper.GUI.Canvas.GH_Painter",
+          "doc": "The graphics object to paint with",
+          "optional": false
+        },
+        {
+          "name": "sources",
+          "type": "System.Collections.Generic.IEnumerable\u003CIGH_Param\u003E",
+          "doc": "A list of sources that will be connected with the input grip of this attribute",
+          "optional": false
+        },
+        {
+          "name": "styles",
+          "type": "System.Collections.Generic.IEnumerable\u003CPen\u003E",
+          "doc": "A collection of pen objects to use for each source. If a pen is null, the default wire style will be used instead.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Attributes_1_RenderIncomingWires_1.htm"
+    },
+    {
+      "name": "RenderToCanvas",
+      "signature": "public void RenderToCanvas(GH_Canvas canvas, GH_CanvasChannel channel)",
+      "summary": "Render these attributes into a Canvas control. This function places calls to PrepareForRender() and Render(), you should override those.",
+      "params": [
+        {
+          "name": "canvas",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "doc": "Canvas to draw on.",
+          "optional": false
+        },
+        {
+          "name": "channel",
+          "type": "Grasshopper.GUI.Canvas.GH_CanvasChannel",
+          "doc": "Current drawing channel.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Attributes_1_RenderToCanvas.htm"
+    },
+    {
+      "name": "RenderVariableParameterUI",
+      "signature": "protected void RenderVariableParameterUI(GH_Canvas canvas, Graphics graphics)",
+      "summary": "",
+      "params": [
+        {
+          "name": "canvas",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "optional": false
+        },
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Attributes_GH_ComponentAttributes_RenderVariableParameterUI.htm"
+    },
+    {
+      "name": "RespondToKeyDown",
+      "signature": "public virtual GH_ObjectResponse RespondToKeyDown(GH_Canvas sender, KeyEventArgs e)",
+      "summary": "(Inherited from GH_Attributes\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "sender",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "System.Windows.Forms.KeyEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ObjectResponse",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Attributes_1_RespondToKeyDown.htm"
+    },
+    {
+      "name": "RespondToKeyUp",
+      "signature": "public virtual GH_ObjectResponse RespondToKeyUp(GH_Canvas sender, KeyEventArgs e)",
+      "summary": "(Inherited from GH_Attributes\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "sender",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "System.Windows.Forms.KeyEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ObjectResponse",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Attributes_1_RespondToKeyUp.htm"
+    },
+    {
+      "name": "RespondToMouseDoubleClick",
+      "signature": "public virtual GH_ObjectResponse RespondToMouseDoubleClick(GH_Canvas sender, GH_CanvasMouseEvent e)",
+      "summary": "(Inherited from GH_Attributes\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "sender",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "Grasshopper.GUI.GH_CanvasMouseEvent",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ObjectResponse",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Attributes_1_RespondToMouseDoubleClick.htm"
+    },
+    {
+      "name": "RespondToMouseDown",
+      "signature": "public override GH_ObjectResponse RespondToMouseDown(GH_Canvas sender, GH_CanvasMouseEvent e)",
+      "summary": "(Overrides GH_Attributes\u003CT\u003E.RespondToMouseDown(GH_Canvas, GH_CanvasMouseEvent).)",
+      "params": [
+        {
+          "name": "sender",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "Grasshopper.GUI.GH_CanvasMouseEvent",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ObjectResponse",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Attributes_GH_ComponentAttributes_RespondToMouseDown.htm"
+    },
+    {
+      "name": "RespondToMouseMove",
+      "signature": "public virtual GH_ObjectResponse RespondToMouseMove(GH_Canvas sender, GH_CanvasMouseEvent e)",
+      "summary": "(Inherited from GH_Attributes\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "sender",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "Grasshopper.GUI.GH_CanvasMouseEvent",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ObjectResponse",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Attributes_1_RespondToMouseMove.htm"
+    },
+    {
+      "name": "RespondToMouseUp",
+      "signature": "public virtual GH_ObjectResponse RespondToMouseUp(GH_Canvas sender, GH_CanvasMouseEvent e)",
+      "summary": "(Inherited from GH_Attributes\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "sender",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "Grasshopper.GUI.GH_CanvasMouseEvent",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ObjectResponse",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Attributes_1_RespondToMouseUp.htm"
+    },
+    {
+      "name": "SetupTooltip",
+      "signature": "public override void SetupTooltip(PointF canvasPoint, GH_TooltipDisplayEventArgs e)",
+      "summary": "(Overrides GH_Attributes\u003CT\u003E.SetupTooltip(PointF, GH_TooltipDisplayEventArgs).)",
+      "params": [
+        {
+          "name": "canvasPoint",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "Grasshopper.GUI.GH_TooltipDisplayEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Attributes_GH_ComponentAttributes_SetupTooltip.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public virtual bool Write(GH_IWriter writer)",
+      "summary": "(Inherited from GH_Attributes\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Attributes_1_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AllowMessageBalloon",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether these attributes allow warning and error balloons to be drawn on top of them.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Attributes_1_AllowMessageBalloon.htm"
+    },
+    {
+      "name": "Bounds",
+      "type": "RectangleF",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the rectangle that contains the active content of the attributes. Typically the Contents determine the active area for menus, tooltips etc. Attributes are not supposed to draw objects beyond the Bounds.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Attributes_1_Bounds.htm"
+    },
+    {
+      "name": "ContentBox",
+      "type": "RectangleF",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the bounds of the component area of the attributes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Attributes_GH_ComponentAttributes_ContentBox.htm"
+    },
+    {
+      "name": "DocObject",
+      "type": "IGH_DocumentObject",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the owner object of these attributes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Attributes_1_DocObject.htm"
+    },
+    {
+      "name": "GetTopLevel",
+      "type": "IGH_Attributes",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the top-level attributes of the attribute stack these attributes belong to.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Attributes_1_GetTopLevel.htm"
+    },
+    {
+      "name": "HasInputGrip",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides GH_Attributes\u003CT\u003E.HasInputGrip.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Attributes_GH_ComponentAttributes_HasInputGrip.htm"
+    },
+    {
+      "name": "HasOutputGrip",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides GH_Attributes\u003CT\u003E.HasOutputGrip.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Attributes_GH_ComponentAttributes_HasOutputGrip.htm"
+    },
+    {
+      "name": "InputGrip",
+      "type": "PointF",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the input grip location for these attributes. If HasInputGrip equals False, this point is meaningless.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Attributes_1_InputGrip.htm"
+    },
+    {
+      "name": "InstanceGuid",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the instance ID of the document object that owns these attributes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Attributes_1_InstanceGuid.htm"
+    },
+    {
+      "name": "IsTopLevel",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether these attributes are top_level (i.e. no Parent attributes)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Attributes_1_IsTopLevel.htm"
+    },
+    {
+      "name": "OutputGrip",
+      "type": "PointF",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the output grip location for these attributes. If HasOutputGrip equals False, this point is meaningless.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Attributes_1_OutputGrip.htm"
+    },
+    {
+      "name": "Owner",
+      "type": "T",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the type-safe owner object of these attributes. This property is identical to the DocObject property.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Attributes_1_Owner.htm"
+    },
+    {
+      "name": "Parent",
+      "type": "IGH_Attributes",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the parent attributes. Top level attributes do not have parents.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Attributes_1_Parent.htm"
+    },
+    {
+      "name": "PathName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides GH_Attributes\u003CT\u003E.PathName.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Attributes_GH_ComponentAttributes_PathName.htm"
+    },
+    {
+      "name": "Pivot",
+      "type": "PointF",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the pivot for these attributes. The pivot controls the general placement of the attributes. If you want to move the attributes, change the pivot location.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Attributes_1_Pivot.htm"
+    },
+    {
+      "name": "Selected",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the selected state of the top-level attributes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Attributes_1_Selected.htm"
+    },
+    {
+      "name": "TooltipEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the tooltip enabled value. If False, no further tooltip functions will be called.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Attributes_1_TooltipEnabled.htm"
+    },
+    {
+      "name": "m_innerBounds",
+      "type": "RectangleF",
+      "getter": true,
+      "setter": false,
+      "summary": "Represents the Rectangle that contains the component black box.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Attributes_GH_ComponentAttributes_m_innerBounds.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

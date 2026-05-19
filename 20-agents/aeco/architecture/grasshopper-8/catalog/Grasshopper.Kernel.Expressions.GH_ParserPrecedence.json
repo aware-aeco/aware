@@ -1,0 +1,46 @@
+{
+  "name": "GH_ParserPrecedence",
+  "namespace": "Grasshopper.Kernel.Expressions",
+  "kind": "enum",
+  "summary": "(No description provided in vendor docs for Grasshopper.Kernel.Expressions.GH_ParserPrecedence.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Expressions_GH_ParserPrecedence.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Invalid",
+      "value": -1
+    },
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "Level0",
+      "value": 1
+    },
+    {
+      "name": "Level1",
+      "value": 2
+    },
+    {
+      "name": "Level2",
+      "value": 3
+    },
+    {
+      "name": "Level3",
+      "value": 4
+    },
+    {
+      "name": "Level4",
+      "value": 5
+    },
+    {
+      "name": "Level5",
+      "value": 6
+    }
+  ]
+}

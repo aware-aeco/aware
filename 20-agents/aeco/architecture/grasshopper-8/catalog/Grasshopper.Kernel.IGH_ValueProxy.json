@@ -1,0 +1,130 @@
+{
+  "name": "IGH_ValueProxy",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "(No description provided in vendor docs for Grasshopper.Kernel.IGH_ValueProxy.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_IGH_ValueProxy.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Duplicate",
+      "signature": "IGH_ValueProxy Duplicate()",
+      "summary": "Create an exact duplicate of the type.",
+      "remarks": "Implementors: Do not maintain references to class instances. Copy EVERYTHING.",
+      "params": [],
+      "returns": {
+        "type": "IGH_ValueProxy",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_ValueProxy_Duplicate.htm"
+    },
+    {
+      "name": "FromString",
+      "signature": "bool FromString(string in)",
+      "summary": "If IsParsable(), then attempts to convert the string to a generic type value",
+      "params": [
+        {
+          "name": "in",
+          "type": "System.String",
+          "doc": "The String to parse",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure. This method should not throw exceptions."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_ValueProxy_FromString.htm"
+    },
+    {
+      "name": "MutateString",
+      "signature": "string MutateString(string in)",
+      "summary": "Munge a string to remove obvious errors on account of the user.",
+      "params": [
+        {
+          "name": "in",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_ValueProxy_MutateString.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "Returns a String description of the current value.",
+      "remarks": "If the implementation IsParsable(), then this representation must be in parsable format.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_ValueProxy_ToString.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsParsable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not the type can be instantiated from a String",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_ValueProxy_IsParsable.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not the current value is valid",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_ValueProxy_IsValid.htm"
+    },
+    {
+      "name": "ProxyName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a human-friendly name description of the template type",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_ValueProxy_ProxyName.htm"
+    },
+    {
+      "name": "ProxyType",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the System.Type description of the template type",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_ValueProxy_ProxyType.htm"
+    },
+    {
+      "name": "ProxyValue",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets an instance of the local template type object",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_ValueProxy_ProxyValue.htm"
+    },
+    {
+      "name": "UserString",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the user-defined string that describes this proxy This only really makes sense if the Proxy is Parsable.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_ValueProxy_UserString.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

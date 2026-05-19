@@ -1,0 +1,79 @@
+{
+  "name": "GH_RuleSequence",
+  "namespace": "Grasshopper.Kernel.Data",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.Kernel.Data.GH_RuleSequence.)",
+  "interfaces": [
+    "IGH_Rule"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Data_GH_RuleSequence.htm",
+  "constructors": [
+    {
+      "name": "GH_RuleSequence",
+      "signature": "public GH_RuleSequence(IEnumerable\u003Cint\u003E sequence, int limit, bool negate)",
+      "summary": "Initializes a new instance of the GH_RuleSequence class",
+      "params": [
+        {
+          "name": "sequence",
+          "type": "System.Collections.Generic.IEnumerable\u003CInt32\u003E",
+          "optional": false
+        },
+        {
+          "name": "limit",
+          "type": "System.Int32",
+          "optional": false
+        },
+        {
+          "name": "negate",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_RuleSequence__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Apply",
+      "signature": "public bool Apply(int number)",
+      "summary": "",
+      "params": [
+        {
+          "name": "number",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_RuleSequence_Apply.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Kind",
+      "type": "GH_RuleKind",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_RuleSequence_Kind.htm"
+    },
+    {
+      "name": "Notation",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_RuleSequence_Notation.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

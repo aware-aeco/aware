@@ -1,0 +1,448 @@
+{
+  "name": "Utility",
+  "namespace": "Grasshopper",
+  "kind": "class",
+  "summary": "Class with useful static methods.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Utility.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "DocumentAngleTolerance",
+      "signature": "public static double DocumentAngleTolerance()",
+      "summary": "Returns the Angle Tolerance in degrees for the model document",
+      "params": [],
+      "returns": {
+        "type": "Double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Utility_DocumentAngleTolerance.htm"
+    },
+    {
+      "name": "DocumentTolerance",
+      "signature": "public static double DocumentTolerance()",
+      "summary": "Returns the Absolute Tolerance of the model document",
+      "params": [],
+      "returns": {
+        "type": "Double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Utility_DocumentTolerance.htm"
+    },
+    {
+      "name": "DocumentUnits",
+      "signature": "public static string DocumentUnits()",
+      "summary": "Returns the unit system for the model document",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Utility_DocumentUnits.htm"
+    },
+    {
+      "name": "FixNewlines(String)",
+      "signature": "public static string FixNewlines(string text)",
+      "summary": "Make sure all newlines in a string adhere to the current platform standard.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to fix.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Utility_FixNewlines.htm"
+    },
+    {
+      "name": "FixNewlines(String, String)",
+      "signature": "public static string FixNewlines(string text, string newLinePattern)",
+      "summary": "Make sure all newlines in a string have a specific pattern.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to fix.",
+          "optional": false
+        },
+        {
+          "name": "newLinePattern",
+          "type": "System.String",
+          "doc": "Newline string to use.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "Fixed string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Utility_FixNewlines_1.htm"
+    },
+    {
+      "name": "InvokeDownloader",
+      "signature": "public static void InvokeDownloader(string sourceUri, string targetUri, bool silent)",
+      "summary": "Start an asynchronous download operation. The download runs in a separate appdomain. After triggering that process this method returns immediately.",
+      "params": [
+        {
+          "name": "sourceUri",
+          "type": "System.String",
+          "doc": "Uri of data to download.",
+          "optional": false
+        },
+        {
+          "name": "targetUri",
+          "type": "System.String",
+          "doc": "Uri of file on local disk where to store downloaded data.",
+          "optional": false
+        },
+        {
+          "name": "silent",
+          "type": "System.Boolean",
+          "doc": "If true the download will not display any user interface.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Utility_InvokeDownloader.htm"
+    },
+    {
+      "name": "InvokeGetter",
+      "signature": "public static Object InvokeGetter(Object target, string property)",
+      "summary": "Call a getter property via its name.",
+      "params": [
+        {
+          "name": "target",
+          "type": "System.Object",
+          "doc": "Object to invoke on.",
+          "optional": false
+        },
+        {
+          "name": "property",
+          "type": "System.String",
+          "doc": "Name of property to invoke.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "The return value of the method."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Utility_InvokeGetter.htm"
+    },
+    {
+      "name": "InvokeGetterSafe",
+      "signature": "public static Object InvokeGetterSafe(Object target, string property)",
+      "summary": "Call a getter property via its name. No exceptions are thrown.",
+      "params": [
+        {
+          "name": "target",
+          "type": "System.Object",
+          "doc": "Object to invoke on.",
+          "optional": false
+        },
+        {
+          "name": "property",
+          "type": "System.String",
+          "doc": "Name of property to invoke.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "The return value of the method."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Utility_InvokeGetterSafe.htm"
+    },
+    {
+      "name": "InvokeMethod(Object, String)",
+      "signature": "public static Object InvokeMethod(Object target, string method)",
+      "summary": "Call a method via its name.",
+      "params": [
+        {
+          "name": "target",
+          "type": "System.Object",
+          "doc": "Object to invoke on.",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "type": "System.String",
+          "doc": "Name of method to invoke.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "The return value of the method."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Utility_InvokeMethod.htm"
+    },
+    {
+      "name": "InvokeMethod(Object, String, Object[])",
+      "signature": "public static Object InvokeMethod(Object target, string method, params Object[] params)",
+      "summary": "Call a method via its name.",
+      "params": [
+        {
+          "name": "target",
+          "type": "System.Object",
+          "doc": "Object to invoke on.",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "type": "System.String",
+          "doc": "Name of method to invoke.",
+          "optional": false
+        },
+        {
+          "name": "params",
+          "type": "System.Object[]",
+          "doc": "Arguments for method.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "The return value of the method."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Utility_InvokeMethod_1.htm"
+    },
+    {
+      "name": "InvokeMethodSafe(Object, String)",
+      "signature": "public static Object InvokeMethodSafe(Object target, string method)",
+      "summary": "Call a method via its name. No exceptions are thrown.",
+      "params": [
+        {
+          "name": "target",
+          "type": "System.Object",
+          "doc": "Object to invoke on.",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "type": "System.String",
+          "doc": "Name of method to invoke.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "The return value of the method."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Utility_InvokeMethodSafe.htm"
+    },
+    {
+      "name": "InvokeMethodSafe(Object, String, Object[])",
+      "signature": "public static Object InvokeMethodSafe(Object target, string method, params Object[] params)",
+      "summary": "Call a method via its name. No exceptions are thrown.",
+      "params": [
+        {
+          "name": "target",
+          "type": "System.Object",
+          "doc": "Object to invoke on.",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "type": "System.String",
+          "doc": "Name of method to invoke.",
+          "optional": false
+        },
+        {
+          "name": "params",
+          "type": "System.Object[]",
+          "doc": "Arguments for method.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "The return value of the method."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Utility_InvokeMethodSafe_1.htm"
+    },
+    {
+      "name": "InvokeSetter",
+      "signature": "public static void InvokeSetter(Object target, string property, Object value)",
+      "summary": "Call a setter property via its name.",
+      "params": [
+        {
+          "name": "target",
+          "type": "System.Object",
+          "doc": "Object to invoke on.",
+          "optional": false
+        },
+        {
+          "name": "property",
+          "type": "System.String",
+          "doc": "Name of property to invoke.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Utility_InvokeSetter.htm"
+    },
+    {
+      "name": "InvokeSetterSafe",
+      "signature": "public static void InvokeSetterSafe(Object target, string property, Object value)",
+      "summary": "Call a setter property via its name. No exceptions are thrown.",
+      "params": [
+        {
+          "name": "target",
+          "type": "System.Object",
+          "doc": "Object to invoke on.",
+          "optional": false
+        },
+        {
+          "name": "property",
+          "type": "System.String",
+          "doc": "Name of property to invoke.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Utility_InvokeSetterSafe.htm"
+    },
+    {
+      "name": "LikeOperator",
+      "signature": "public static bool LikeOperator(string text, string pattern)",
+      "summary": "Exposes the VB.NET Like operator as a static method.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "pattern",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Utility_LikeOperator.htm"
+    },
+    {
+      "name": "SetDefaultTolerances",
+      "signature": "public static void SetDefaultTolerances(double absoluteTolerance, double angleToleranceDegrees)",
+      "summary": "Utility function to set absolute and angle tolerance fields.",
+      "params": [
+        {
+          "name": "absoluteTolerance",
+          "type": "System.Double",
+          "doc": "Value to set model absolute tolerance",
+          "optional": false
+        },
+        {
+          "name": "angleToleranceDegrees",
+          "type": "System.Double",
+          "doc": "Value to set model angle tolerance in degrees",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Utility_SetDefaultTolerances.htm"
+    },
+    {
+      "name": "SetDefaultUnits",
+      "signature": "public static void SetDefaultUnits(string modelUnits)",
+      "summary": "Utility function to set model unit fields",
+      "params": [
+        {
+          "name": "modelUnits",
+          "type": "System.String",
+          "doc": "Value to set default model units",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Utility_SetDefaultUnits.htm"
+    },
+    {
+      "name": "TernaryIf\u003CT\u003E",
+      "signature": "[ObsoleteAttribute(\u0022Ternary conditionals are now part of the standard C# and VB language spec. Consider using those instead.\u0022)] public static T TernaryIf\u003CT\u003E(bool condition, T A, T B)",
+      "summary": "Type safe implementation of the IIf conditional statement.",
+      "params": [
+        {
+          "name": "condition",
+          "type": "System.Boolean",
+          "doc": "If True, A is returned.",
+          "optional": false
+        },
+        {
+          "name": "A",
+          "type": "T",
+          "doc": "Value to return when condition evaluates to true.",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "T",
+          "doc": "Value to return when condition evaluates to false.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Utility_TernaryIf__1.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

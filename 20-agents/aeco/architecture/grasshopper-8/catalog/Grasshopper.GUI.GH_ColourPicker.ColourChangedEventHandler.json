@@ -1,0 +1,14 @@
+{
+  "name": "GH_ColourPicker.ColourChangedEventHandler",
+  "namespace": "Grasshopper.GUI",
+  "kind": "delegate",
+  "summary": "(No description provided in vendor docs for Grasshopper.GUI.GH_ColourPicker.ColourChangedEventHandler.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_ColourPicker_ColourChangedEventHandler.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void ColourChangedEventHandler( Object sender, GH_ColourPickerEventArgs e )"
+}

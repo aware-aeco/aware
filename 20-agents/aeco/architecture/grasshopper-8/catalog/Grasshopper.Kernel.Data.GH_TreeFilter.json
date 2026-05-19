@@ -1,0 +1,265 @@
+{
+  "name": "GH_TreeFilter",
+  "namespace": "Grasshopper.Kernel.Data",
+  "kind": "class",
+  "summary": "Represents a collection of rules for validating DataTree paths and indices.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Data_GH_TreeFilter.htm",
+  "constructors": [
+    {
+      "name": "GH_TreeFilter",
+      "signature": "public GH_TreeFilter()",
+      "summary": "Initializes a new instance of the GH_TreeFilter class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_TreeFilter__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "FindItemBrackets",
+      "signature": "public static bool FindItemBrackets(string text, out int index0, out int index1)",
+      "summary": "Locate the two parenthesis that delineate the index segment of an Index Rule set.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "String to search.",
+          "optional": false
+        },
+        {
+          "name": "index0",
+          "type": "System.Int32",
+          "doc": "Index of opening parenthesis.",
+          "optional": false
+        },
+        {
+          "name": "index1",
+          "type": "System.Int32",
+          "doc": "Index of closing parenthesis.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if valid parenthesis were found, false if not."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_TreeFilter_FindItemBrackets.htm"
+    },
+    {
+      "name": "FindNextLevelChar",
+      "signature": "public static int FindNextLevelChar(string text, int index, char char)",
+      "summary": "Find the next occurance of a char in a string that is level with the search start index.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "String to search.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index to search from.",
+          "optional": false
+        },
+        {
+          "name": "char",
+          "type": "System.Char",
+          "doc": "Char to match.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the first level character match or -1 if no such character could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_TreeFilter_FindNextLevelChar.htm"
+    },
+    {
+      "name": "FindPathBrackets",
+      "signature": "public static bool FindPathBrackets(string text, out int index0, out int index1)",
+      "summary": "Locate the two curly brackets that delineate the path segment of an Index Rule set.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "String to search.",
+          "optional": false
+        },
+        {
+          "name": "index0",
+          "type": "System.Int32",
+          "doc": "Index of opening curly bracket.",
+          "optional": false
+        },
+        {
+          "name": "index1",
+          "type": "System.Int32",
+          "doc": "Index of closing curly bracket.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if valid brackets were found, false if not."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_TreeFilter_FindPathBrackets.htm"
+    },
+    {
+      "name": "FindPrevLevelChar",
+      "signature": "public static int FindPrevLevelChar(string text, int index, char char)",
+      "summary": "Find the previous occurance of a char in a string that is level with the search start index.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "String to search.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index to search from.",
+          "optional": false
+        },
+        {
+          "name": "char",
+          "type": "System.Char",
+          "doc": "Char to match.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the first level character match or -1 if no such character could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_TreeFilter_FindPrevLevelChar.htm"
+    },
+    {
+      "name": "ParsePattern",
+      "signature": "public static GH_TreeFilter ParsePattern(string filter)",
+      "summary": "Parses a textual filter and returns an instance of the GH_TreeFilter. If the filter cannot be parsed an exception will be thrown.",
+      "params": [
+        {
+          "name": "filter",
+          "type": "System.String",
+          "doc": "Filter to parse.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_TreeFilter",
+        "doc": "An instance of GH_TreeFilter describing the textual filter."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_TreeFilter_ParsePattern.htm"
+    },
+    {
+      "name": "SplitStringWithExpressions",
+      "signature": "public static List\u003Cstring\u003E SplitStringWithExpressions(string text, char separator)",
+      "summary": "Split a string into segments using level-aware split. This method throws exceptions if the input string is not correctly formatted.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "String to split.",
+          "optional": false
+        },
+        {
+          "name": "separator",
+          "type": "System.Char",
+          "doc": "Splitting character.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CString\u003E",
+        "doc": "A list of string segments."
+      },
+      "throws": [
+        {
+          "type": "GH_BracketMismatchException",
+          "when": "Thrown when the opening and closing brackets don\u0027t add up."
+        },
+        {
+          "type": "GH_StringMismatchException",
+          "when": "Thrown when the string delimeter symbols don\u0027t add up."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_TreeFilter_SplitStringWithExpressions.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ItemClose",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Data_GH_TreeFilter_ItemClose.htm"
+    },
+    {
+      "name": "ItemOpen",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Data_GH_TreeFilter_ItemOpen.htm"
+    },
+    {
+      "name": "PathClose",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Data_GH_TreeFilter_PathClose.htm"
+    },
+    {
+      "name": "PathOpen",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Data_GH_TreeFilter_PathOpen.htm"
+    },
+    {
+      "name": "PathSeparator",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Data_GH_TreeFilter_PathSeparator.htm"
+    },
+    {
+      "name": "SegmentSeparator",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Data_GH_TreeFilter_SegmentSeparator.htm"
+    },
+    {
+      "name": "StringDelimeter",
+      "type": "Char",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_Data_GH_TreeFilter_StringDelimeter.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

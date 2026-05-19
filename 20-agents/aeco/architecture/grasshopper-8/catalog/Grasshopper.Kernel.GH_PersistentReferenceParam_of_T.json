@@ -1,0 +1,2585 @@
+{
+  "name": "GH_PersistentReferenceParam\u003CT\u003E",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.Kernel.GH_PersistentReferenceParam\u003CT\u003E.)",
+  "base": "GH_PersistentParam\u003CT\u003E",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_PersistentReferenceParam_1.htm",
+  "constructors": [
+    {
+      "name": "GH_PersistentReferenceParam\u003CT\u003E",
+      "signature": "protected GH_PersistentReferenceParam(GH_InstanceDescription nTag)",
+      "summary": "Initializes a new instance of the GH_PersistentReferenceParam\u003CT\u003E class",
+      "params": [
+        {
+          "name": "nTag",
+          "type": "Grasshopper.Kernel.GH_InstanceDescription",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PersistentReferenceParam_1__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddedToDocument",
+      "signature": "public virtual void AddedToDocument(GH_Document document)",
+      "summary": "This method will be called when an object is added to a document. Override this method if you want to handle such events.",
+      "params": [
+        {
+          "name": "document",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "doc": "Document that now owns this object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_AddedToDocument.htm"
+    },
+    {
+      "name": "AddRuntimeMessage",
+      "signature": "public virtual void AddRuntimeMessage(GH_RuntimeMessageLevel level, string text)",
+      "summary": "Add a new message to this object. Valid message type flags are Warning and Error. If the Message string is empty or zero-length no message is added.",
+      "params": [
+        {
+          "name": "level",
+          "type": "Grasshopper.Kernel.GH_RuntimeMessageLevel",
+          "doc": "Type of message. Only Warnings and Errors are recorded.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Content of message.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_ActiveObject_AddRuntimeMessage.htm"
+    },
+    {
+      "name": "AddSource(IGH_Param)",
+      "signature": "public virtual void AddSource(IGH_Param source)",
+      "summary": "Append a new Source parameter to the end of the Sources list. Sources provide this parameter with data at runtime.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "doc": "Source to append.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_AddSource.htm"
+    },
+    {
+      "name": "AddSource(IGH_Param, Int32)",
+      "signature": "public virtual void AddSource(IGH_Param source, int index)",
+      "summary": "Insert a new Source parameter into the Sources list. Sources provide this parameter with data at runtime.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "doc": "Source to append.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Insertion index of source.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_AddSource_1.htm"
+    },
+    {
+      "name": "AddVolatileData(GH_Path, Int32, Object)",
+      "signature": "public bool AddVolatileData(GH_Path path, int index, Object data)",
+      "summary": "Inserts an item of volatile data into the data structure.",
+      "params": [
+        {
+          "name": "path",
+          "type": "Grasshopper.Kernel.Data.GH_Path",
+          "doc": "The branch path of the data. If the path doesn\u0027t exist yet, it will be created.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The item index of the data. If the path doesn\u0027t contain the index yet, it will be enlarged to encompass the index.",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "System.Object",
+          "doc": "The data to store.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, False on failure. If the data cannot be converted, the topology will remain unmolested."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_AddVolatileData.htm"
+    },
+    {
+      "name": "AddVolatileDataList(GH_Path, List\u003CT\u003E)",
+      "signature": "public bool AddVolatileDataList(GH_Path path, List\u003CT\u003E list)",
+      "summary": "(Inherited from GH_Param\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "path",
+          "type": "Grasshopper.Kernel.Data.GH_Path",
+          "optional": false
+        },
+        {
+          "name": "list",
+          "type": "System.Collections.Generic.List\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_AddVolatileDataList.htm"
+    },
+    {
+      "name": "AddVolatileDataList(GH_Path, IEnumerable)",
+      "signature": "public bool AddVolatileDataList(GH_Path path, IEnumerable list)",
+      "summary": "(Inherited from GH_Param\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "path",
+          "type": "Grasshopper.Kernel.Data.GH_Path",
+          "optional": false
+        },
+        {
+          "name": "list",
+          "type": "System.Collections.IEnumerable",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_AddVolatileDataList_1.htm"
+    },
+    {
+      "name": "AddVolatileDataTree(GH_Structure\u003CT\u003E)",
+      "signature": "public bool AddVolatileDataTree(GH_Structure\u003CT\u003E tree)",
+      "summary": "(Inherited from GH_Param\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "tree",
+          "type": "Grasshopper.Kernel.Data.GH_Structure\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_AddVolatileDataTree.htm"
+    },
+    {
+      "name": "AddVolatileDataTree(IGH_Structure)",
+      "signature": "public bool AddVolatileDataTree(IGH_Structure tree)",
+      "summary": "(Inherited from GH_Param\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "tree",
+          "type": "Grasshopper.Kernel.Data.IGH_Structure",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_AddVolatileDataTree_1.htm"
+    },
+    {
+      "name": "AppendAdditionalMenuItems",
+      "signature": "public override void AppendAdditionalMenuItems(ToolStripDropDown menu)",
+      "summary": "(Inherited from GH_PersistentParam\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PersistentParam_1_AppendAdditionalMenuItems.htm"
+    },
+    {
+      "name": "AppendMenuItems",
+      "signature": "public override bool AppendMenuItems(ToolStripDropDown menu)",
+      "summary": "This function is called when a context menu is about to be displayed. Override it to set custom items. GH_ActiveObject will already populate the menu with default items, if you merely wish to insert object-specific menu item, consider overriding AppendAdditionalMenuItems instead.",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "doc": "Menu object to populate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "If true, the menu will be displayed, if false the menu will be supressed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_ActiveObject_AppendMenuItems.htm"
+    },
+    {
+      "name": "Cast_Object",
+      "signature": "protected T Cast_Object(Object data)",
+      "summary": "Attempts to convert the Object reference into an instance of T. This method will perform a direct cast if possible or it will call Casting functions on T or Data if they exist. Data will not be duplicated unless a type conversion is required.",
+      "params": [
+        {
+          "name": "data",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "doc": "The cast value or Nothing on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_Cast_Object.htm"
+    },
+    {
+      "name": "ClearData",
+      "signature": "public override void ClearData()",
+      "summary": "(Overrides GH_Param\u003CT\u003E.ClearData().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PersistentReferenceParam_1_ClearData.htm"
+    },
+    {
+      "name": "ClearProxySources",
+      "signature": "public virtual void ClearProxySources()",
+      "summary": "Remove all proxy sources without attempting to relink them.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_ClearProxySources.htm"
+    },
+    {
+      "name": "ClearRuntimeMessages",
+      "signature": "public virtual void ClearRuntimeMessages()",
+      "summary": "Destroy all warning and error lists",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_ActiveObject_ClearRuntimeMessages.htm"
+    },
+    {
+      "name": "CollectData",
+      "signature": "public override sealed void CollectData()",
+      "summary": "(Inherited from GH_Param\u003CT\u003E.)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_CollectData.htm"
+    },
+    {
+      "name": "CollectVolatileData_Custom",
+      "signature": "protected override sealed void CollectVolatileData_Custom()",
+      "summary": "(Inherited from GH_PersistentParam\u003CT\u003E.)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PersistentParam_1_CollectVolatileData_Custom.htm"
+    },
+    {
+      "name": "CollectVolatileData_FromSources",
+      "signature": "protected virtual void CollectVolatileData_FromSources()",
+      "summary": "This method collects volatile data from all the source parameters.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_CollectVolatileData_FromSources.htm"
+    },
+    {
+      "name": "ComputeData",
+      "signature": "public override sealed void ComputeData()",
+      "summary": "(Inherited from GH_Param\u003CT\u003E.)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_ComputeData.htm"
+    },
+    {
+      "name": "ConversionCallback",
+      "signature": "protected virtual void ConversionCallback(Object source, T target)",
+      "summary": "This method is called whenever a successful conversion takes place from some source data into local target data. Override it if you wish to keep tabs on conversions.",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Object",
+          "doc": "Source data (never null).",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "T",
+          "doc": "Target data (never null).",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_ConversionCallback.htm"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "public void CopyFrom(IGH_InstanceDescription other)",
+      "summary": "Copy all fields (except the instance ID) from another instance description.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Kernel.IGH_InstanceDescription",
+          "doc": "Object to mimic.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_InstanceDescription_CopyFrom.htm"
+    },
+    {
+      "name": "CreateAttributes",
+      "signature": "public override void CreateAttributes()",
+      "summary": "(Inherited from GH_Param\u003CT\u003E.)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_CreateAttributes.htm"
+    },
+    {
+      "name": "CreateProxySources",
+      "signature": "public virtual void CreateProxySources()",
+      "summary": "Convert all proper source parameters into proxy sources.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_CreateProxySources.htm"
+    },
+    {
+      "name": "DependsOn",
+      "signature": "public override bool DependsOn(IGH_ActiveObject potential_source)",
+      "summary": "(Inherited from GH_Param\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "potential_source",
+          "type": "Grasshopper.Kernel.IGH_ActiveObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_DependsOn.htm"
+    },
+    {
+      "name": "DestroyIconCache",
+      "signature": "protected void DestroyIconCache()",
+      "summary": "Call this method to erase the existing icon cache. You must call this if you want to change the display icon of an object.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_DestroyIconCache.htm"
+    },
+    {
+      "name": "DocumentContextChanged",
+      "signature": "public virtual void DocumentContextChanged(GH_Document document, GH_DocumentContext context)",
+      "summary": "This method will be called when the document that owns this object moves into a different context.",
+      "params": [
+        {
+          "name": "document",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "doc": "Document that owns this object.",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Grasshopper.Kernel.GH_DocumentContext",
+          "doc": "The reason for this event.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_DocumentContextChanged.htm"
+    },
+    {
+      "name": "ExpireDownStreamObjects",
+      "signature": "protected override void ExpireDownStreamObjects()",
+      "summary": "(Inherited from GH_Param\u003CT\u003E.)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_ExpireDownStreamObjects.htm"
+    },
+    {
+      "name": "ExpirePreview",
+      "signature": "public virtual void ExpirePreview(bool redraw)",
+      "summary": "Call this function when you suspect that the preview has expired for this object. This will cause the display cache to be eradicated.",
+      "params": [
+        {
+          "name": "redraw",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_ExpirePreview.htm"
+    },
+    {
+      "name": "ExpireSolution",
+      "signature": "public override void ExpireSolution(bool recompute)",
+      "summary": "Informs the document that owns this object that the solution has expired. The current object will be set to BLANK as a result. This method is recursive, it will also expire any and all objects which depend on this object. If you want a less destructive expiration, consider using ClearData(). If this object is already Blank, you should consider not expiring it.",
+      "params": [
+        {
+          "name": "recompute",
+          "type": "System.Boolean",
+          "doc": "If True, the document will be instructed to solve the new state.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_ActiveObject_ExpireSolution.htm"
+    },
+    {
+      "name": "ExpireSolutionTopLevel",
+      "signature": "public void ExpireSolutionTopLevel(bool recompute)",
+      "summary": "Invoke the Expiresolution(bool) method on the toplevel object.",
+      "params": [
+        {
+          "name": "recompute",
+          "type": "System.Boolean",
+          "doc": "If true, a new computation will start right away.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_ExpireSolutionTopLevel.htm"
+    },
+    {
+      "name": "Format",
+      "signature": "protected virtual string Format(T Data)",
+      "summary": "Returns \u0022Null\u0022 if the data is a null reference, otherwise calls ToString() on the Data instance.",
+      "params": [
+        {
+          "name": "Data",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_Format.htm"
+    },
+    {
+      "name": "GetValue(String, Boolean)",
+      "signature": "protected bool GetValue(string valueName, bool default)",
+      "summary": "Get a boolean value from the component value table.",
+      "params": [
+        {
+          "name": "valueName",
+          "type": "System.String",
+          "doc": "Name of boolean to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Boolean",
+          "doc": "Default value to return in case of missing named value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "The boolean value with the given name of the default value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_GetValue.htm"
+    },
+    {
+      "name": "GetValue(String, Double)",
+      "signature": "protected double GetValue(string valueName, double default)",
+      "summary": "Get a double value from the component value table.",
+      "params": [
+        {
+          "name": "valueName",
+          "type": "System.String",
+          "doc": "Name of double to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Double",
+          "doc": "Default value to return in case of missing named value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The double value with the given name of the default value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_GetValue_1.htm"
+    },
+    {
+      "name": "GetValue(String, Color)",
+      "signature": "protected Color GetValue(string valueName, Color default)",
+      "summary": "Get a color value from the component value table.",
+      "params": [
+        {
+          "name": "valueName",
+          "type": "System.String",
+          "doc": "Name of color to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Drawing.Color",
+          "doc": "Default value to return in case of missing named value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "The color value with the given name of the default value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_GetValue_2.htm"
+    },
+    {
+      "name": "GetValue(String, Int32)",
+      "signature": "protected int GetValue(string valueName, int default)",
+      "summary": "Get an integer value from the component value table.",
+      "params": [
+        {
+          "name": "valueName",
+          "type": "System.String",
+          "doc": "Name of integer to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Int32",
+          "doc": "Default value to return in case of missing named value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The integer value with the given name of the default value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_GetValue_3.htm"
+    },
+    {
+      "name": "GetValue(String, String)",
+      "signature": "protected string GetValue(string valueName, string default)",
+      "summary": "Get a string value from the component value table.",
+      "params": [
+        {
+          "name": "valueName",
+          "type": "System.String",
+          "doc": "Name of string to retrieve.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.String",
+          "doc": "Default value to return in case of missing named value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The string value with the given name of the default value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_GetValue_4.htm"
+    },
+    {
+      "name": "HtmlHelp_Source",
+      "signature": "protected internal virtual string HtmlHelp_Source()",
+      "summary": "Return a String which contains HTML formatted source for the help topic. If you want to pass a URL that points to a remote page, then prefix the URL with a GOTO: tag, like so: GOTO:http://www.YourWebAddressHere.com",
+      "remarks": "You can use the GUI.GH_HtmlFormatter class to generate an HTML page which conforms to Grasshopper Help standards",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_HtmlHelp_Source.htm"
+    },
+    {
+      "name": "InstantiateT",
+      "signature": "protected override T InstantiateT()",
+      "summary": "(Overrides GH_Param\u003CT\u003E.InstantiateT().)",
+      "params": [],
+      "returns": {
+        "type": "T",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PersistentReferenceParam_1_InstantiateT.htm"
+    },
+    {
+      "name": "IsolateObject",
+      "signature": "public override void IsolateObject()",
+      "summary": "(Inherited from GH_Param\u003CT\u003E.)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_IsolateObject.htm"
+    },
+    {
+      "name": "Menu_AppendBakeItem",
+      "signature": "protected void Menu_AppendBakeItem(ToolStripDropDown menu)",
+      "summary": "Append the default Bake menu item.",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_ActiveObject_Menu_AppendBakeItem.htm"
+    },
+    {
+      "name": "Menu_AppendDestroyPersistent",
+      "signature": "protected virtual void Menu_AppendDestroyPersistent(ToolStripDropDown menu)",
+      "summary": "(Inherited from GH_PersistentParam\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PersistentParam_1_Menu_AppendDestroyPersistent.htm"
+    },
+    {
+      "name": "Menu_AppendDisconnectWires",
+      "signature": "protected void Menu_AppendDisconnectWires(ToolStripDropDown menu)",
+      "summary": "(Inherited from GH_Param\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_Menu_AppendDisconnectWires.htm"
+    },
+    {
+      "name": "Menu_AppendEnableItem",
+      "signature": "protected void Menu_AppendEnableItem(ToolStripDropDown menu)",
+      "summary": "Append the default Enable/Disable menu item.",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_ActiveObject_Menu_AppendEnableItem.htm"
+    },
+    {
+      "name": "Menu_AppendExtractParameter",
+      "signature": "protected virtual void Menu_AppendExtractParameter(ToolStripDropDown menu)",
+      "summary": "(Inherited from GH_PersistentParam\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PersistentParam_1_Menu_AppendExtractParameter.htm"
+    },
+    {
+      "name": "Menu_AppendFlattenParameter",
+      "signature": "protected void Menu_AppendFlattenParameter(ToolStripDropDown menu)",
+      "summary": "(Inherited from GH_Param\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_Menu_AppendFlattenParameter.htm"
+    },
+    {
+      "name": "Menu_AppendGraftParameter",
+      "signature": "protected void Menu_AppendGraftParameter(ToolStripDropDown menu)",
+      "summary": "(Inherited from GH_Param\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_Menu_AppendGraftParameter.htm"
+    },
+    {
+      "name": "Menu_AppendInternaliseData",
+      "signature": "protected virtual void Menu_AppendInternaliseData(ToolStripDropDown menu)",
+      "summary": "(Inherited from GH_PersistentParam\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PersistentParam_1_Menu_AppendInternaliseData.htm"
+    },
+    {
+      "name": "Menu_AppendManageCollection",
+      "signature": "protected virtual void Menu_AppendManageCollection(ToolStripDropDown menu)",
+      "summary": "(Inherited from GH_PersistentParam\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PersistentParam_1_Menu_AppendManageCollection.htm"
+    },
+    {
+      "name": "Menu_AppendObjectHelp",
+      "signature": "protected void Menu_AppendObjectHelp(ToolStripDropDown menu)",
+      "summary": "Appends the default object Help menu item.",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_Menu_AppendObjectHelp.htm"
+    },
+    {
+      "name": "Menu_AppendObjectName",
+      "signature": "protected void Menu_AppendObjectName(ToolStripDropDown menu)",
+      "summary": "Appends the old-fashioned object name menu item. If you also want the Display mode toggle then use Menu_AppendObjectNameEx()",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_Menu_AppendObjectName.htm"
+    },
+    {
+      "name": "Menu_AppendObjectNameEx",
+      "signature": "protected void Menu_AppendObjectNameEx(ToolStripDropDown menu)",
+      "summary": "Appends the default object name \u002B display mode menu item.",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_Menu_AppendObjectNameEx.htm"
+    },
+    {
+      "name": "Menu_AppendPreviewItem",
+      "signature": "protected void Menu_AppendPreviewItem(ToolStripDropDown menu)",
+      "summary": "Append the default Show/Hide preview menu item.",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_ActiveObject_Menu_AppendPreviewItem.htm"
+    },
+    {
+      "name": "Menu_AppendPrincipalParameter",
+      "signature": "protected void Menu_AppendPrincipalParameter(ToolStripDropDown menu)",
+      "summary": "(Inherited from GH_Param\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_Menu_AppendPrincipalParameter.htm"
+    },
+    {
+      "name": "Menu_AppendPromptMore",
+      "signature": "protected virtual void Menu_AppendPromptMore(ToolStripDropDown menu)",
+      "summary": "(Inherited from GH_PersistentParam\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PersistentParam_1_Menu_AppendPromptMore.htm"
+    },
+    {
+      "name": "Menu_AppendPromptOne",
+      "signature": "protected virtual void Menu_AppendPromptOne(ToolStripDropDown menu)",
+      "summary": "(Inherited from GH_PersistentParam\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PersistentParam_1_Menu_AppendPromptOne.htm"
+    },
+    {
+      "name": "Menu_AppendPublish",
+      "signature": "protected void Menu_AppendPublish(ToolStripDropDown menu)",
+      "summary": "Appends the default item for publishing to RCP. This menu will only appear if the current class implement IRcpAwareObject",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_Menu_AppendPublish.htm"
+    },
+    {
+      "name": "Menu_AppendReverseParameter",
+      "signature": "protected void Menu_AppendReverseParameter(ToolStripDropDown menu)",
+      "summary": "(Inherited from GH_Param\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_Menu_AppendReverseParameter.htm"
+    },
+    {
+      "name": "Menu_AppendRuntimeMessages",
+      "signature": "protected void Menu_AppendRuntimeMessages(ToolStripDropDown menu)",
+      "summary": "Append the default warnings and errors menu items.",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_ActiveObject_Menu_AppendRuntimeMessages.htm"
+    },
+    {
+      "name": "Menu_AppendSimplifyParameter",
+      "signature": "protected void Menu_AppendSimplifyParameter(ToolStripDropDown menu)",
+      "summary": "(Inherited from GH_Param\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_Menu_AppendSimplifyParameter.htm"
+    },
+    {
+      "name": "Menu_AppendWireDisplay",
+      "signature": "protected void Menu_AppendWireDisplay(ToolStripDropDown menu)",
+      "summary": "(Inherited from GH_Param\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "menu",
+          "type": "System.Windows.Forms.ToolStripDropDown",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_Menu_AppendWireDisplay.htm"
+    },
+    {
+      "name": "Menu_CreateMultilineTextEditItem",
+      "signature": "protected ToolStripMenuItem Menu_CreateMultilineTextEditItem()",
+      "summary": "This function returns a ToolstripMenuItem that embeds a multi-line textbox for editing persistent data. Only call this method if you know that your parameter type supports proxies.",
+      "params": [],
+      "returns": {
+        "type": "ToolStripMenuItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PersistentParam_1_Menu_CreateMultilineTextEditItem.htm"
+    },
+    {
+      "name": "Menu_CustomMultiValueItem",
+      "signature": "protected virtual ToolStripMenuItem Menu_CustomMultiValueItem()",
+      "summary": "(Inherited from GH_PersistentParam\u003CT\u003E.)",
+      "params": [],
+      "returns": {
+        "type": "ToolStripMenuItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PersistentParam_1_Menu_CustomMultiValueItem.htm"
+    },
+    {
+      "name": "Menu_CustomSingleValueItem",
+      "signature": "protected virtual ToolStripMenuItem Menu_CustomSingleValueItem()",
+      "summary": "(Inherited from GH_PersistentParam\u003CT\u003E.)",
+      "params": [],
+      "returns": {
+        "type": "ToolStripMenuItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PersistentParam_1_Menu_CustomSingleValueItem.htm"
+    },
+    {
+      "name": "MovedBetweenDocuments",
+      "signature": "public virtual void MovedBetweenDocuments(GH_Document oldDocument, GH_Document newDocument)",
+      "summary": "This method will be called when an object is moved from one document to another. Override this method if you want to handle such events.",
+      "params": [
+        {
+          "name": "oldDocument",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "doc": "Document that used to own this object.",
+          "optional": false
+        },
+        {
+          "name": "newDocument",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "doc": "Document that now owns ths object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_MovedBetweenDocuments.htm"
+    },
+    {
+      "name": "NewInstanceGuid()",
+      "signature": "public void NewInstanceGuid()",
+      "summary": "Generate a new random instance GUID",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_InstanceDescription_NewInstanceGuid.htm"
+    },
+    {
+      "name": "NewInstanceGuid(Guid)",
+      "signature": "public void NewInstanceGuid(Guid UUID)",
+      "summary": "Set the instance ID to be a specific GUID. This is very dangerous, only use this function if you\u0027re 6\u00224\u0027 and your first name is David.",
+      "params": [
+        {
+          "name": "UUID",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_InstanceDescription_NewInstanceGuid_1.htm"
+    },
+    {
+      "name": "OnAttributesChanged",
+      "signature": "public void OnAttributesChanged()",
+      "summary": "Raises the AttributesChanged event on the toplevel object.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_OnAttributesChanged.htm"
+    },
+    {
+      "name": "OnDisplayExpired",
+      "signature": "public void OnDisplayExpired(bool redraw)",
+      "summary": "Raises the DisplayExpired event on the toplevel object.",
+      "params": [
+        {
+          "name": "redraw",
+          "type": "System.Boolean",
+          "doc": "If True, the canvas will be immediately redrawn.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_OnDisplayExpired.htm"
+    },
+    {
+      "name": "OnObjectChanged(GH_ObjectChangedEventArgs)",
+      "signature": "public void OnObjectChanged(GH_ObjectChangedEventArgs e)",
+      "summary": "(Inherited from GH_DocumentObject.)",
+      "params": [
+        {
+          "name": "e",
+          "type": "Grasshopper.Kernel.GH_ObjectChangedEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_OnObjectChanged.htm"
+    },
+    {
+      "name": "OnObjectChanged(GH_ObjectEventType)",
+      "signature": "public void OnObjectChanged(GH_ObjectEventType eventType)",
+      "summary": "(Inherited from GH_DocumentObject.)",
+      "params": [
+        {
+          "name": "eventType",
+          "type": "Grasshopper.Kernel.GH_ObjectEventType",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_OnObjectChanged_1.htm"
+    },
+    {
+      "name": "OnObjectChanged(String)",
+      "signature": "public void OnObjectChanged(string customEvent)",
+      "summary": "(Inherited from GH_DocumentObject.)",
+      "params": [
+        {
+          "name": "customEvent",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_OnObjectChanged_3.htm"
+    },
+    {
+      "name": "OnObjectChanged(GH_ObjectEventType, Object)",
+      "signature": "public void OnObjectChanged(GH_ObjectEventType eventType, Object tag)",
+      "summary": "(Inherited from GH_DocumentObject.)",
+      "params": [
+        {
+          "name": "eventType",
+          "type": "Grasshopper.Kernel.GH_ObjectEventType",
+          "optional": false
+        },
+        {
+          "name": "tag",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_OnObjectChanged_2.htm"
+    },
+    {
+      "name": "OnObjectChanged(String, Object)",
+      "signature": "public void OnObjectChanged(string customEvent, Object tag)",
+      "summary": "(Inherited from GH_DocumentObject.)",
+      "params": [
+        {
+          "name": "customEvent",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "tag",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_OnObjectChanged_4.htm"
+    },
+    {
+      "name": "OnPingDocument",
+      "signature": "public GH_Document OnPingDocument()",
+      "summary": "Raise the PingDocument Event on the toplevel object and try to find the document which owns this object.",
+      "params": [],
+      "returns": {
+        "type": "GH_Document",
+        "doc": "The document which owns this object if successful, or nothing if no document owns this object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_OnPingDocument.htm"
+    },
+    {
+      "name": "OnPreviewExpired",
+      "signature": "public void OnPreviewExpired(bool redraw)",
+      "summary": "Raises the PreviewExpired event on the toplevel object.",
+      "params": [
+        {
+          "name": "redraw",
+          "type": "System.Boolean",
+          "doc": "If True, the viewports will be immediately redrawn.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_OnPreviewExpired.htm"
+    },
+    {
+      "name": "OnSolutionExpired",
+      "signature": "public void OnSolutionExpired(bool recompute)",
+      "summary": "Raises the SolutionExpired event on the toplevel object. You probably want to call ExpireSolution() instead of this method directly.",
+      "params": [
+        {
+          "name": "recompute",
+          "type": "System.Boolean",
+          "doc": "If True, the solution will be immediately recalculated.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_OnSolutionExpired.htm"
+    },
+    {
+      "name": "OnVolatileDataCollected",
+      "signature": "protected override void OnVolatileDataCollected()",
+      "summary": "(Overrides GH_Param\u003CT\u003E.OnVolatileDataCollected().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PersistentReferenceParam_1_OnVolatileDataCollected.htm"
+    },
+    {
+      "name": "PreferredCast",
+      "signature": "protected virtual T PreferredCast(Object data)",
+      "summary": "Implement this function if you\u0027re certain that you\u0027ll be confronted with very common casts. For example, GH_Point has a preferred cast from Rhino.Geometry.Point3d and GH_Number has a preferred cast from System.Double.",
+      "params": [
+        {
+          "name": "data",
+          "type": "System.Object",
+          "doc": "Data to convert. Data is never null.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "doc": "An instance of T or null if you did not handle the cast."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_PreferredCast.htm"
+    },
+    {
+      "name": "PrepareForPrompt",
+      "signature": "protected virtual void PrepareForPrompt()",
+      "summary": "(Inherited from GH_PersistentParam\u003CT\u003E.)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PersistentParam_1_PrepareForPrompt.htm"
+    },
+    {
+      "name": "Preview_ComputeClippingBox",
+      "signature": "protected BoundingBox Preview_ComputeClippingBox()",
+      "summary": "This function can be used to iterate over all items in the Volatile data tree and collect the union clipping box of all non-null items that implement Preview.IGH_PreviewData. This function requires a lot of TypeOf and DirectCasting, so if you\u0027re worried about performance you should consider doing this yourself.",
+      "params": [],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "The clipping box for all valid items."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_Preview_ComputeClippingBox.htm"
+    },
+    {
+      "name": "Preview_DrawMeshes",
+      "signature": "protected void Preview_DrawMeshes(IGH_PreviewArgs args)",
+      "summary": "This function can be used to iterate over all items in the Volatile data tree and call DrawViewportWires on each item that implements Preview.IGH_PreviewData. This function requires a lot of TypeOf and DirectCasting, so if you\u0027re worried about performance you should consider doing this yourself.",
+      "params": [
+        {
+          "name": "args",
+          "type": "Grasshopper.Kernel.IGH_PreviewArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_Preview_DrawMeshes.htm"
+    },
+    {
+      "name": "Preview_DrawWires",
+      "signature": "protected void Preview_DrawWires(IGH_PreviewArgs args)",
+      "summary": "This function can be used to iterate over all items in the Volatile data tree and call DrawViewportWires on each item that implements Preview.IGH_PreviewData. This function requires a lot of TypeOf and DirectCasting, so if you\u0027re worried about performance you should consider doing this yourself.",
+      "params": [
+        {
+          "name": "args",
+          "type": "Grasshopper.Kernel.IGH_PreviewArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_Preview_DrawWires.htm"
+    },
+    {
+      "name": "Prompt_ManageCollection",
+      "signature": "protected virtual bool Prompt_ManageCollection(GH_Structure\u003CT\u003E values)",
+      "summary": "(Inherited from GH_PersistentParam\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "values",
+          "type": "Grasshopper.Kernel.Data.GH_Structure\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PersistentParam_1_Prompt_ManageCollection.htm"
+    },
+    {
+      "name": "Prompt_Plural",
+      "signature": "protected abstract GH_GetterResult Prompt_Plural(ref List\u003CT\u003E values)",
+      "summary": "(Inherited from GH_PersistentParam\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.List\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_GetterResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PersistentParam_1_Prompt_Plural.htm"
+    },
+    {
+      "name": "Prompt_Singular",
+      "signature": "protected abstract GH_GetterResult Prompt_Singular(ref T value)",
+      "summary": "(Inherited from GH_PersistentParam\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "value",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_GetterResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PersistentParam_1_Prompt_Singular.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "public override bool Read(GH_IReader reader)",
+      "summary": "(Inherited from GH_PersistentParam\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PersistentParam_1_Read.htm"
+    },
+    {
+      "name": "ReadFull",
+      "signature": "public virtual bool ReadFull(GH_IReader reader)",
+      "summary": "GH_InstanceDescription does not by default serialize all fields. Use this function to read all fields from the archive. This method is compatible with the default Write()/Read() operations.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "doc": "Writer for deserialization.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_InstanceDescription_ReadFull.htm"
+    },
+    {
+      "name": "RecordPersistentDataEvent",
+      "signature": "protected void RecordPersistentDataEvent(string name)",
+      "summary": "Add an undo record that stores changes to persistent data.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name of undo record.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PersistentParam_1_RecordPersistentDataEvent.htm"
+    },
+    {
+      "name": "RecordUndoEvent(GH_UndoRecord)",
+      "signature": "public void RecordUndoEvent(GH_UndoRecord record)",
+      "summary": "Record an entire undo record.",
+      "params": [
+        {
+          "name": "record",
+          "type": "Grasshopper.Kernel.Undo.GH_UndoRecord",
+          "doc": "Record to push.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_RecordUndoEvent.htm"
+    },
+    {
+      "name": "RecordUndoEvent(String)",
+      "signature": "public Guid RecordUndoEvent(string undoName)",
+      "summary": "Record a generic object change undo event.",
+      "params": [
+        {
+          "name": "undoName",
+          "type": "System.String",
+          "doc": "Name of undo record.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "The ID of the newly added record or Guid.Empty on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_RecordUndoEvent_1.htm"
+    },
+    {
+      "name": "RecordUndoEvent(String, IGH_UndoAction)",
+      "signature": "public Guid RecordUndoEvent(string undoName, IGH_UndoAction action)",
+      "summary": "Record a specific object change undo event.",
+      "params": [
+        {
+          "name": "undoName",
+          "type": "System.String",
+          "doc": "Name of undo record.",
+          "optional": false
+        },
+        {
+          "name": "action",
+          "type": "Grasshopper.Kernel.Undo.IGH_UndoAction",
+          "doc": "Undo action to record.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "The ID of the newly added record or Guid.Empty on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_RecordUndoEvent_2.htm"
+    },
+    {
+      "name": "RecoverFromPrompt",
+      "signature": "protected virtual void RecoverFromPrompt()",
+      "summary": "(Inherited from GH_PersistentParam\u003CT\u003E.)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PersistentParam_1_RecoverFromPrompt.htm"
+    },
+    {
+      "name": "RegisterRemoteIDs",
+      "signature": "public virtual void RegisterRemoteIDs(GH_GuidTable id_list)",
+      "summary": "Override this function if you want object changes in the Rhino document to trigger a new solution.",
+      "params": [
+        {
+          "name": "id_list",
+          "type": "GH_GuidTable",
+          "doc": "The object ID database Grasshopper is responsive to.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_ActiveObject_RegisterRemoteIDs.htm"
+    },
+    {
+      "name": "RegisterRemoteIDsUtil",
+      "signature": "protected void RegisterRemoteIDsUtil(GH_GuidTable table)",
+      "summary": "Utility function which treats all data in the Volatile cache as IGH_GeometricGoo and registers all referenced objects. Call this function from within RegisterRemoteIDs() if you are absolutely sure that all the items in volatiledata implement IGH_GeometricGoo.",
+      "params": [
+        {
+          "name": "table",
+          "type": "GH_GuidTable",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_RegisterRemoteIDsUtil.htm"
+    },
+    {
+      "name": "RelinkProxySources",
+      "signature": "public virtual bool RelinkProxySources(GH_Document document)",
+      "summary": "Attempt to replace all proxy sources with real sources. Proxy sources are used during file IO, when actual sources might not be available yet. Once an IO operation has been completed there should be no more proxy sources.",
+      "params": [
+        {
+          "name": "document",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "doc": "The document from which to harvest the real source parameters.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_RelinkProxySources.htm"
+    },
+    {
+      "name": "RemoveAllSources",
+      "signature": "public virtual void RemoveAllSources()",
+      "summary": "Remove all sources from this parameter.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_RemoveAllSources.htm"
+    },
+    {
+      "name": "RemovedFromDocument",
+      "signature": "public virtual void RemovedFromDocument(GH_Document document)",
+      "summary": "This method will be called when an object is removed from a document. Override this method if you want to handle such events.",
+      "params": [
+        {
+          "name": "document",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "doc": "Document that now no longer owns this object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_RemovedFromDocument.htm"
+    },
+    {
+      "name": "RemoveEffects",
+      "signature": "public virtual void RemoveEffects()",
+      "summary": "Remove all post-process effects. Note to implementors, you must call the base method if you override this function.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_RemoveEffects.htm"
+    },
+    {
+      "name": "RemoveSource(Guid)",
+      "signature": "public virtual void RemoveSource(Guid source_id)",
+      "summary": "Remove the specified source from this parameter.",
+      "params": [
+        {
+          "name": "source_id",
+          "type": "System.Guid",
+          "doc": "InstanceID of source to remove.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_RemoveSource_1.htm"
+    },
+    {
+      "name": "RemoveSource(IGH_Param)",
+      "signature": "public virtual void RemoveSource(IGH_Param source)",
+      "summary": "Remove the specified source from this parameter.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "doc": "Source to remove.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_RemoveSource.htm"
+    },
+    {
+      "name": "Render_AppendGeometry",
+      "signature": "[ObsoleteAttribute] protected void Render_AppendGeometry(GH_RenderArgs args)",
+      "summary": "This function has been emptied because it is Obsolete.",
+      "params": [
+        {
+          "name": "args",
+          "type": "Grasshopper.Kernel.GH_RenderArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_Render_AppendGeometry.htm"
+    },
+    {
+      "name": "ReplaceSource(Guid, IGH_Param)",
+      "signature": "public virtual void ReplaceSource(Guid old_source_id, IGH_Param new_source)",
+      "summary": "Replace an existing source with a new one. If the old_source does not exist in this parameter, nothing happens.",
+      "params": [
+        {
+          "name": "old_source_id",
+          "type": "System.Guid",
+          "doc": "Source to replace.",
+          "optional": false
+        },
+        {
+          "name": "new_source",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "doc": "Source to replace with.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_ReplaceSource_1.htm"
+    },
+    {
+      "name": "ReplaceSource(IGH_Param, IGH_Param)",
+      "signature": "public virtual void ReplaceSource(IGH_Param old_source, IGH_Param new_source)",
+      "summary": "Replace an existing source with a new one. If the old_source does not exist in this parameter, nothing happens.",
+      "params": [
+        {
+          "name": "old_source",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "doc": "Source to replace.",
+          "optional": false
+        },
+        {
+          "name": "new_source",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "doc": "Source to replace with.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_ReplaceSource.htm"
+    },
+    {
+      "name": "RuntimeMessages",
+      "signature": "public virtual IList\u003Cstring\u003E RuntimeMessages(GH_RuntimeMessageLevel level)",
+      "summary": "Gets the list of cached runtime messages that were recorded during solver-time processes.",
+      "params": [
+        {
+          "name": "level",
+          "type": "Grasshopper.Kernel.GH_RuntimeMessageLevel",
+          "doc": "Runtime message type to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IList\u003CString\u003E",
+        "doc": "A list of runtime message strings."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_ActiveObject_RuntimeMessages.htm"
+    },
+    {
+      "name": "SDKCompliancy",
+      "signature": "public virtual bool SDKCompliancy(int exeVersion, int exeServiceRelease)",
+      "summary": "Test whether this object is compliant with a given Rhino version.",
+      "params": [
+        {
+          "name": "exeVersion",
+          "type": "System.Int32",
+          "doc": "Rhino major release (4, 5, ...).",
+          "optional": false
+        },
+        {
+          "name": "exeServiceRelease",
+          "type": "System.Int32",
+          "doc": "Rhino minor (service) release.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if this object is compliant with the given Rhino release."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_ActiveObject_SDKCompliancy.htm"
+    },
+    {
+      "name": "SetIconOverride",
+      "signature": "public void SetIconOverride(Bitmap customIcon)",
+      "summary": "Set a new custom icon override for this object.",
+      "params": [
+        {
+          "name": "customIcon",
+          "type": "System.Drawing.Bitmap",
+          "doc": "Icon override. Should be a 24x24 image.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_SetIconOverride.htm"
+    },
+    {
+      "name": "SetPersistentData(GH_Structure\u003CT\u003E)",
+      "signature": "public void SetPersistentData(GH_Structure\u003CT\u003E items)",
+      "summary": "Assign a tree of items to the persistent data. This method will erase any existing data, record an undo event, raise the OnObjectChanged event for PersistentData flags and place a call to ExpireSolution(False). If you want to add a tree of data, you should use the appropriate overload for this method.",
+      "params": [
+        {
+          "name": "items",
+          "type": "Grasshopper.Kernel.Data.GH_Structure\u003CT\u003E",
+          "doc": "Items to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PersistentParam_1_SetPersistentData.htm"
+    },
+    {
+      "name": "SetPersistentData(IEnumerable\u003CT\u003E)",
+      "signature": "public void SetPersistentData(IEnumerable\u003CT\u003E items)",
+      "summary": "Assign a list of items to the persistent data. This method will erase any existing data, record an undo event, raise the OnObjectChanged event for PersistentData flags and place a call to ExpireSolution(False). If you want to add a tree of data, you should use the appropriate overload for this method.",
+      "params": [
+        {
+          "name": "items",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "doc": "Items to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PersistentParam_1_SetPersistentData_1.htm"
+    },
+    {
+      "name": "SetPersistentData(Object[])",
+      "signature": "public void SetPersistentData(params Object[] values)",
+      "summary": "Add a collection of values to the persistent data.",
+      "params": [
+        {
+          "name": "values",
+          "type": "System.Object[]",
+          "doc": "Values to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PersistentParam_1_SetPersistentData_2.htm"
+    },
+    {
+      "name": "SetPrincipal",
+      "signature": "public bool SetPrincipal(bool set, bool recordUndo, bool recompute)",
+      "summary": "Set the principal parameter state.",
+      "params": [
+        {
+          "name": "set",
+          "type": "System.Boolean",
+          "optional": false
+        },
+        {
+          "name": "recordUndo",
+          "type": "System.Boolean",
+          "optional": false
+        },
+        {
+          "name": "recompute",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_SetPrincipal.htm"
+    },
+    {
+      "name": "SetValue(String, Boolean)",
+      "signature": "protected void SetValue(string valueName, bool value)",
+      "summary": "Set a named value. This value will be serialized with the component.",
+      "params": [
+        {
+          "name": "valueName",
+          "type": "System.String",
+          "doc": "Name of value.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "Value itself.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_SetValue.htm"
+    },
+    {
+      "name": "SetValue(String, Double)",
+      "signature": "protected void SetValue(string valueName, double value)",
+      "summary": "Set a named value. This value will be serialized with the component.",
+      "params": [
+        {
+          "name": "valueName",
+          "type": "System.String",
+          "doc": "Name of value.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "Value itself.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_SetValue_1.htm"
+    },
+    {
+      "name": "SetValue(String, Color)",
+      "signature": "protected void SetValue(string valueName, Color value)",
+      "summary": "Set a named value. This value will be serialized with the component.",
+      "params": [
+        {
+          "name": "valueName",
+          "type": "System.String",
+          "doc": "Name of value.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Color",
+          "doc": "Value itself.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_SetValue_2.htm"
+    },
+    {
+      "name": "SetValue(String, Int32)",
+      "signature": "protected void SetValue(string valueName, int value)",
+      "summary": "Set a named value. This value will be serialized with the component.",
+      "params": [
+        {
+          "name": "valueName",
+          "type": "System.String",
+          "doc": "Name of value.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "Value itself.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_SetValue_3.htm"
+    },
+    {
+      "name": "SetValue(String, String)",
+      "signature": "protected void SetValue(string valueName, string value)",
+      "summary": "Set a named value. This value will be serialized with the component.",
+      "params": [
+        {
+          "name": "valueName",
+          "type": "System.String",
+          "doc": "Name of value.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "Value itself.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_SetValue_4.htm"
+    },
+    {
+      "name": "TriggerAutoSave()",
+      "signature": "public void TriggerAutoSave()",
+      "summary": "Triggers the AutoSave function on the owner document with the object_changed flag.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_TriggerAutoSave.htm"
+    },
+    {
+      "name": "TriggerAutoSave(GH_AutoSaveTrigger)",
+      "signature": "public void TriggerAutoSave(GH_AutoSaveTrigger trigger)",
+      "summary": "Triggers the AutoSave function on the owner document with a custom flag.",
+      "params": [
+        {
+          "name": "trigger",
+          "type": "Grasshopper.Kernel.GH_AutoSaveTrigger",
+          "doc": "Reason for the autosave operation. It is possible that a user has decided to avoid autosave events for specific types, so if you can, try and provide a correct trigger flag.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_TriggerAutoSave_1.htm"
+    },
+    {
+      "name": "TriggerAutoSave(Guid)",
+      "signature": "public void TriggerAutoSave(Guid id)",
+      "summary": "Triggers the AutoSave function on the owner document with the object_changed flag.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "ID of autosave event. Consecutive autosave requests with the same ID will be ignored.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_TriggerAutoSave_3.htm"
+    },
+    {
+      "name": "TriggerAutoSave(GH_AutoSaveTrigger, Guid)",
+      "signature": "public void TriggerAutoSave(GH_AutoSaveTrigger trigger, Guid id)",
+      "summary": "Triggers the AutoSave function on the owner document with a custom flag.",
+      "params": [
+        {
+          "name": "trigger",
+          "type": "Grasshopper.Kernel.GH_AutoSaveTrigger",
+          "doc": "Reason for the autosave operation. It is possible that a user has decided to avoid autosave events for specific types, so if you can, try and provide a correct trigger flag.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "ID of autosave event. Consecutive autosave requests with the same ID will be ignored.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_TriggerAutoSave_2.htm"
+    },
+    {
+      "name": "ValuesChanged",
+      "signature": "protected virtual void ValuesChanged()",
+      "summary": "Override this method if you want to respond to changes to the value table. The base implementation is empty, so you don\u0027t have to call it.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentObject_ValuesChanged.htm"
+    },
+    {
+      "name": "VolatileDataDescription",
+      "signature": "protected virtual string VolatileDataDescription()",
+      "summary": "This method is called to populate the Tooltip data description field.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_Param_1_VolatileDataDescription.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public override bool Write(GH_IWriter writer)",
+      "summary": "(Inherited from GH_PersistentParam\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_PersistentParam_1_Write.htm"
+    },
+    {
+      "name": "WriteFull",
+      "signature": "public virtual bool WriteFull(GH_IWriter writer)",
+      "summary": "GH_InstanceDescription does not by default serialize all fields. Use this function to write all fields to the archive. This method is compatible with the default Write()/Read() operations.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "doc": "Writer for serialization.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_InstanceDescription_WriteFull.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Access",
+      "type": "GH_ParamAccess",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Access level for this parameter.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Param_1_Access.htm"
+    },
+    {
+      "name": "Attributes",
+      "type": "IGH_Attributes",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the attributes that are associated with this object. Only set custom attributes if you know what you are doing.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentObject_Attributes.htm"
+    },
+    {
+      "name": "Category",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Category in which this object belongs. If HasCategory() returns false, this field has no meaning.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_InstanceDescription_Category.htm"
+    },
+    {
+      "name": "ComponentGuid",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a consistent ID for this object type. Every object must supply a unique and unchanging ID that is used to identify objects of the same type.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentObject_ComponentGuid.htm"
+    },
+    {
+      "name": "DataMapping",
+      "type": "GH_DataMapping",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the data mapping of this Parameter.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Param_1_DataMapping.htm"
+    },
+    {
+      "name": "DataType",
+      "type": "GH_ParamData",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the type of data stored in this parameter.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_PersistentParam_1_DataType.htm"
+    },
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the description of the object. This field typically remains fixed during the lifetime of an object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_InstanceDescription_Description.htm"
+    },
+    {
+      "name": "Exposure",
+      "type": "GH_Exposure",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the exposure of this object in the Graphical User Interface. The default is to expose everywhere.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentObject_Exposure.htm"
+    },
+    {
+      "name": "HasCategory",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether or not the Category field has been set.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_InstanceDescription_HasCategory.htm"
+    },
+    {
+      "name": "HasProxySources",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not this parameter maintains proxy sources. Proxy sources are used during file IO, when actual sources might not be available yet. Once an IO operation has been completed there should be no more proxy sources.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Param_1_HasProxySources.htm"
+    },
+    {
+      "name": "HasSubCategory",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether or not the SubCategory field has been set.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_InstanceDescription_HasSubCategory.htm"
+    },
+    {
+      "name": "Icon",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides GH_DocumentObject.Icon.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_PersistentReferenceParam_1_Icon.htm"
+    },
+    {
+      "name": "Icon_24x24",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "The icon associated with this object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentObject_Icon_24x24.htm"
+    },
+    {
+      "name": "Icon_24x24_Locked",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "The greyscale icon of this object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentObject_Icon_24x24_Locked.htm"
+    },
+    {
+      "name": "IconCapableUI",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "By default the NickName menu item supports the Icon Mode override toggle. If your UI is not capable of displaying icons, then override this property and return False.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_ActiveObject_IconCapableUI.htm"
+    },
+    {
+      "name": "IconDisplayMode",
+      "type": "GH_IconDisplayMode",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the current display mode of the object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentObject_IconDisplayMode.htm"
+    },
+    {
+      "name": "InstanceDescription",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the description of this instance. The default description is about the amount and source of the local values.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Param_1_InstanceDescription.htm"
+    },
+    {
+      "name": "InstanceGuid",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the ID of this runtime instance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_InstanceDescription_InstanceGuid.htm"
+    },
+    {
+      "name": "IsDataProvider",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from GH_Param\u003CT\u003E.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Param_1_IsDataProvider.htm"
+    },
+    {
+      "name": "IsPrincipal",
+      "type": "GH_PrincipalState",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether this parameter is a principal parameter. Principal parameters are maintained by components and are not part of the IGH_Param interface.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Param_1_IsPrincipal.htm"
+    },
+    {
+      "name": "Keywords",
+      "type": "IEnumerable\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a list of additional keywords that describe the object. Typically this list is empty but you can override this property to aid in object searches.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_InstanceDescription_Keywords.htm"
+    },
+    {
+      "name": "Kind",
+      "type": "GH_ParamKind",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the parameter kind. The kind is evaluated lazily and cached.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Param_1_Kind.htm"
+    },
+    {
+      "name": "Locked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the enabled flag of this object. Disabled objects are ignored during solutions.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_ActiveObject_Locked.htm"
+    },
+    {
+      "name": "MutableNickName",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value that enables Nick name changes through the menu. The default is TRUE.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_ActiveObject_MutableNickName.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name of the object. This field typically remains fixed during the lifetime of an object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_InstanceDescription_Name.htm"
+    },
+    {
+      "name": "NickName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the nickname of the object. This field can be changed by the user.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_InstanceDescription_NickName.htm"
+    },
+    {
+      "name": "Obsolete",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether this object is obsolete. Default implementation returns true if the class name contains the string \u0022OBSOLETE\u0022 or if this class has been decorated with the ObsoleteAttribute. You are free to override this if you want, but I suggest adding the ObsoleteAttribute instead.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentObject_Obsolete.htm"
+    },
+    {
+      "name": "Optional",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether or not this parameter is considered optional by the owner component. Empty, non-optional parameters prevent the component from being solved.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Param_1_Optional.htm"
+    },
+    {
+      "name": "PersistentData",
+      "type": "GH_Structure\u003CT\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the persistent data stored in this parameter. If you modify the persistent data, be sure to call the: OnObjectChanged(GH_ObjectEventType.PersistentData) event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_PersistentParam_1_PersistentData.htm"
+    },
+    {
+      "name": "PersistentDataCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of persistent data items stored in this parameter.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_PersistentParam_1_PersistentDataCount.htm"
+    },
+    {
+      "name": "Phase",
+      "type": "GH_SolutionPhase",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the solution phase this object is currenly in.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_ActiveObject_Phase.htm"
+    },
+    {
+      "name": "ProcessorTime",
+      "type": "TimeSpan",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from GH_Param\u003CT\u003E.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Param_1_ProcessorTime.htm"
+    },
+    {
+      "name": "ProxySourceCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of proxy sources for this parameter. Proxy sources are used during file IO, when actual sources might not be available yet. Once an IO operation has been completed there should be no more proxy sources.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Param_1_ProxySourceCount.htm"
+    },
+    {
+      "name": "Recipients",
+      "type": "IList\u003CIGH_Param\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a list of all the recipients of this parameter. I.e. a recipient has this parameter as one of the sources. The Recipient list is maintained by the parameter, do not modify it yourself.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Param_1_Recipients.htm"
+    },
+    {
+      "name": "Reverse",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the data reverse modifier of this parameter.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Param_1_Reverse.htm"
+    },
+    {
+      "name": "RuntimeMessageLevel",
+      "type": "GH_RuntimeMessageLevel",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the worst case flag for the current object If the object contains at least 1 error, the result is Error.If the object contains at least 1 warning, the result is Warning.If the object contains at least 1 message, the result is Remark.If the object contains no errors, no warnings and no messages, the result is Blank.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_ActiveObject_RuntimeMessageLevel.htm"
+    },
+    {
+      "name": "Simplify",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the simplify modifier for this parameter.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Param_1_Simplify.htm"
+    },
+    {
+      "name": "SourceCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of sources for this parameter.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Param_1_SourceCount.htm"
+    },
+    {
+      "name": "Sources",
+      "type": "IList\u003CIGH_Param\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a list of source parameters. Do not modify this list, if you wish to add or remove sources, use dedicated functions like AddSource() and RemoveSource() instead.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Param_1_Sources.htm"
+    },
+    {
+      "name": "StateTags",
+      "type": "GH_StateTagList",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets all the StateTags that are associated with this parameter. A state tag is a visual feedback icon that represents specific internal settings.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Param_1_StateTags.htm"
+    },
+    {
+      "name": "SubCategory",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the SubCategory in which this object belongs. If HasSubCategory() returns false, this field has no meaning.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_InstanceDescription_SubCategory.htm"
+    },
+    {
+      "name": "Type",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Framework Type descriptor for the stored Data.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Param_1_Type.htm"
+    },
+    {
+      "name": "TypeName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides GH_Param\u003CT\u003E.TypeName.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_PersistentReferenceParam_1_TypeName.htm"
+    },
+    {
+      "name": "VolatileData",
+      "type": "IGH_Structure",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from GH_Param\u003CT\u003E.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Param_1_VolatileData.htm"
+    },
+    {
+      "name": "VolatileDataCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from GH_Param\u003CT\u003E.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Param_1_VolatileDataCount.htm"
+    },
+    {
+      "name": "WireDisplay",
+      "type": "GH_ParamWireDisplay",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the wire display style for this parameter. Wire display only affects the wires connected to the parameter input.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_Param_1_WireDisplay.htm"
+    },
+    {
+      "name": "m_attributes",
+      "type": "IGH_Attributes",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from GH_DocumentObject.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_GH_DocumentObject_m_attributes.htm"
+    },
+    {
+      "name": "m_data",
+      "type": "GH_Structure\u003CT\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Contains the runtime data for this parameter, also known as \u0022Volatile\u0022 data.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_GH_Param_1_m_data.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "AttributesChanged",
+      "delegate": "Grasshopper.Kernel.IGH_DocumentObject.AttributesChangedEventHandler",
+      "signature": "public event IGH_DocumentObject.AttributesChangedEventHandler AttributesChanged",
+      "summary": "Raised whenever the number or kind of attributes changes. This event is handled by GH_Documents who subsequently wipe their attribute caches.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_Kernel_GH_DocumentObject_AttributesChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DisplayExpired",
+      "delegate": "Grasshopper.Kernel.IGH_DocumentObject.DisplayExpiredEventHandler",
+      "signature": "public event IGH_DocumentObject.DisplayExpiredEventHandler DisplayExpired",
+      "summary": "Raised whenever the display (on the Canvas) of a certain object becomes invalid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_Kernel_GH_DocumentObject_DisplayExpired.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ObjectChanged",
+      "delegate": "Grasshopper.Kernel.IGH_DocumentObject.ObjectChangedEventHandler",
+      "signature": "public event IGH_DocumentObject.ObjectChangedEventHandler ObjectChanged",
+      "summary": "(Inherited from GH_DocumentObject.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_Kernel_GH_DocumentObject_ObjectChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "PingDocument",
+      "delegate": "Grasshopper.Kernel.IGH_DocumentObject.PingDocumentEventHandler",
+      "signature": "public event IGH_DocumentObject.PingDocumentEventHandler PingDocument",
+      "summary": "Raised whenever an object needs to know which GH_Document it belongs to.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_Kernel_GH_DocumentObject_PingDocument.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "PreviewExpired",
+      "delegate": "Grasshopper.Kernel.IGH_DocumentObject.PreviewExpiredEventHandler",
+      "signature": "public event IGH_DocumentObject.PreviewExpiredEventHandler PreviewExpired",
+      "summary": "Raised whenever the display (in the Rhino viewports) of a certain object becomes invalid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_Kernel_GH_DocumentObject_PreviewExpired.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "SolutionExpired",
+      "delegate": "Grasshopper.Kernel.IGH_DocumentObject.SolutionExpiredEventHandler",
+      "signature": "public event IGH_DocumentObject.SolutionExpiredEventHandler SolutionExpired",
+      "summary": "Raised whenever the solution of a certain object becomes invalid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_Kernel_GH_DocumentObject_SolutionExpired.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

@@ -1,0 +1,415 @@
+{
+  "name": "GH_UpgradeUtil",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Exposes several utility functions for migrating parameters and wires between components useful while upgrading components.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_UpgradeUtil.htm",
+  "constructors": [
+    {
+      "name": "GH_UpgradeUtil",
+      "signature": "public GH_UpgradeUtil()",
+      "summary": "Initializes a new instance of the GH_UpgradeUtil class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_UpgradeUtil__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "MigrateInputParameters(IGH_Component, IGH_Component)",
+      "signature": "public static bool MigrateInputParameters(IGH_Component source, IGH_Component target)",
+      "summary": "Migrate all input parameters.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Grasshopper.Kernel.IGH_Component",
+          "doc": "Source component.",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "Grasshopper.Kernel.IGH_Component",
+          "doc": "Target component.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_UpgradeUtil_MigrateInputParameters.htm"
+    },
+    {
+      "name": "MigrateInputParameters(IGH_Component, IGH_Component, Int32[], Int32[])",
+      "signature": "public static bool MigrateInputParameters(IGH_Component source, IGH_Component target, int[] index0, int[] index1)",
+      "summary": "Migrate a bunch of input parameters.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Grasshopper.Kernel.IGH_Component",
+          "doc": "Source component.",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "Grasshopper.Kernel.IGH_Component",
+          "doc": "Target component.",
+          "optional": false
+        },
+        {
+          "name": "index0",
+          "type": "System.Int32[]",
+          "doc": "List of input indices to migrate.",
+          "optional": false
+        },
+        {
+          "name": "index1",
+          "type": "System.Int32[]",
+          "doc": "Matching list of target indices.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_UpgradeUtil_MigrateInputParameters_1.htm"
+    },
+    {
+      "name": "MigrateOutputParameters(IGH_Component, IGH_Component)",
+      "signature": "public static bool MigrateOutputParameters(IGH_Component source, IGH_Component target)",
+      "summary": "Migrate all output parameters.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Grasshopper.Kernel.IGH_Component",
+          "doc": "Source component.",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "Grasshopper.Kernel.IGH_Component",
+          "doc": "Target component.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_UpgradeUtil_MigrateOutputParameters.htm"
+    },
+    {
+      "name": "MigrateOutputParameters(IGH_Component, IGH_Component, Int32[], Int32[])",
+      "signature": "public static bool MigrateOutputParameters(IGH_Component source, IGH_Component target, int[] index0, int[] index1)",
+      "summary": "Migrate a bunch of output parameters.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Grasshopper.Kernel.IGH_Component",
+          "doc": "Source component.",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "Grasshopper.Kernel.IGH_Component",
+          "doc": "Target component.",
+          "optional": false
+        },
+        {
+          "name": "index0",
+          "type": "System.Int32[]",
+          "doc": "List of output indices to migrate.",
+          "optional": false
+        },
+        {
+          "name": "index1",
+          "type": "System.Int32[]",
+          "doc": "Matching list of target indices.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_UpgradeUtil_MigrateOutputParameters_1.htm"
+    },
+    {
+      "name": "MigrateRecipients(IEnumerable\u003CIGH_Param\u003E, IGH_Param)",
+      "signature": "public static int MigrateRecipients(IEnumerable\u003CIGH_Param\u003E recipients, IGH_Param target)",
+      "summary": "Utility method for bulk assigning a bunch of sources.",
+      "params": [
+        {
+          "name": "recipients",
+          "type": "System.Collections.Generic.IEnumerable\u003CIGH_Param\u003E",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_UpgradeUtil_MigrateRecipients_1.htm"
+    },
+    {
+      "name": "MigrateRecipients(IGH_Param, IGH_Param)",
+      "signature": "public static int MigrateRecipients(IGH_Param from, IGH_Param to)",
+      "summary": "Migrate all recipients from A to B, while maintaining order.",
+      "params": [
+        {
+          "name": "from",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "doc": "Parameter to move recipients from.",
+          "optional": false
+        },
+        {
+          "name": "to",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "doc": "Parameter to move recipients to.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Number of recipients migrated."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_UpgradeUtil_MigrateRecipients.htm"
+    },
+    {
+      "name": "MigrateSources(IEnumerable\u003CIGH_Param\u003E, IGH_Param)",
+      "signature": "public static int MigrateSources(IEnumerable\u003CIGH_Param\u003E sources, IGH_Param target)",
+      "summary": "Utility method for bulk assigning a bunch of sources.",
+      "params": [
+        {
+          "name": "sources",
+          "type": "System.Collections.Generic.IEnumerable\u003CIGH_Param\u003E",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_UpgradeUtil_MigrateSources_1.htm"
+    },
+    {
+      "name": "MigrateSources(IGH_Param, IGH_Param)",
+      "signature": "public static int MigrateSources(IGH_Param from, IGH_Param to)",
+      "summary": "Migrate all sources from A to B, while maintaining order.",
+      "params": [
+        {
+          "name": "from",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "doc": "Parameter to move sources from.",
+          "optional": false
+        },
+        {
+          "name": "to",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "doc": "Parameter to move sources to.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Number of sources migrated."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_UpgradeUtil_MigrateSources.htm"
+    },
+    {
+      "name": "ReplaceInputParameters",
+      "signature": "public static void ReplaceInputParameters(IGH_Component source, IGH_Component target)",
+      "summary": "Move all input parameters from one component to another. Only use this function if the target component can handle the input layout of the source component.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Grasshopper.Kernel.IGH_Component",
+          "doc": "Component to move parameters from.",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "Grasshopper.Kernel.IGH_Component",
+          "doc": "Component to move parameters to.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_UpgradeUtil_ReplaceInputParameters.htm"
+    },
+    {
+      "name": "ReplaceOutputParameters",
+      "signature": "public static void ReplaceOutputParameters(IGH_Component source, IGH_Component target)",
+      "summary": "Move all output parameters from one component to another. Only use this function if the target component can handle the output layout of the source component.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Grasshopper.Kernel.IGH_Component",
+          "doc": "Component to move parameters from.",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "Grasshopper.Kernel.IGH_Component",
+          "doc": "Component to move parameters to.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_UpgradeUtil_ReplaceOutputParameters.htm"
+    },
+    {
+      "name": "SwapComponents(IGH_Component, IGH_Component)",
+      "signature": "public static bool SwapComponents(IGH_Component oldComponent, IGH_Component newComponent)",
+      "summary": "Replace an existing component with a different one. All parameters (input and output) will be migrated.",
+      "params": [
+        {
+          "name": "oldComponent",
+          "type": "Grasshopper.Kernel.IGH_Component",
+          "doc": "Component current in a GH_Document.",
+          "optional": false
+        },
+        {
+          "name": "newComponent",
+          "type": "Grasshopper.Kernel.IGH_Component",
+          "doc": "Component to swap.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_UpgradeUtil_SwapComponents.htm"
+    },
+    {
+      "name": "SwapComponents(IGH_Component, Guid)",
+      "signature": "public static IGH_Component SwapComponents(IGH_Component oldComponent, Guid newComponentGuid)",
+      "summary": "Replace an existing component with a different one. All parameters (input and output) will be migrated.",
+      "params": [
+        {
+          "name": "oldComponent",
+          "type": "Grasshopper.Kernel.IGH_Component",
+          "doc": "Component current in a GH_Document.",
+          "optional": false
+        },
+        {
+          "name": "newComponentGuid",
+          "type": "System.Guid",
+          "doc": "ComponentGuid of the component to add.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IGH_Component",
+        "doc": "Component that was added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_UpgradeUtil_SwapComponents_2.htm"
+    },
+    {
+      "name": "SwapComponents(IGH_Component, IGH_Component, Boolean)",
+      "signature": "public static bool SwapComponents(IGH_Component oldComponent, IGH_Component newComponent, bool migrateParameters)",
+      "summary": "Replace an existing component with a different one. All parameters (input and output) will be migrated.",
+      "params": [
+        {
+          "name": "oldComponent",
+          "type": "Grasshopper.Kernel.IGH_Component",
+          "doc": "Component current in a GH_Document.",
+          "optional": false
+        },
+        {
+          "name": "newComponent",
+          "type": "Grasshopper.Kernel.IGH_Component",
+          "doc": "Component to swap.",
+          "optional": false
+        },
+        {
+          "name": "migrateParameters",
+          "type": "System.Boolean",
+          "doc": "If true, all parameters will be moved from old to new.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_UpgradeUtil_SwapComponents_1.htm"
+    },
+    {
+      "name": "SwapComponents(IGH_Component, Guid, Boolean)",
+      "signature": "public static IGH_Component SwapComponents(IGH_Component oldComponent, Guid newComponentGuid, bool migrateParameters)",
+      "summary": "Replace an existing component with a different one. All parameters (input and output) will be migrated.",
+      "params": [
+        {
+          "name": "oldComponent",
+          "type": "Grasshopper.Kernel.IGH_Component",
+          "doc": "Component current in a GH_Document.",
+          "optional": false
+        },
+        {
+          "name": "newComponentGuid",
+          "type": "System.Guid",
+          "doc": "ComponentGuid of the component to add.",
+          "optional": false
+        },
+        {
+          "name": "migrateParameters",
+          "type": "System.Boolean",
+          "doc": "If true, all parameters will be moved from old to new.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IGH_Component",
+        "doc": "Component that was added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_UpgradeUtil_SwapComponents_3.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

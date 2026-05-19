@@ -1,0 +1,24 @@
+{
+  "name": "GH_UndoState",
+  "namespace": "Grasshopper.Kernel.Undo",
+  "kind": "enum",
+  "summary": "State enumeration for undo records.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Undo_GH_UndoState.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "undo",
+      "value": 0,
+      "summary": "Record can be undone."
+    },
+    {
+      "name": "redo",
+      "value": 1,
+      "summary": "Record can be redone"
+    }
+  ]
+}

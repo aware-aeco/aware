@@ -1,0 +1,115 @@
+{
+  "name": "GH_BoundingBox",
+  "namespace": "GH_IO.Types",
+  "kind": "struct",
+  "summary": "Represents a 3D bounding box, denoted by two points.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_GH_IO_Types_GH_BoundingBox.htm",
+  "constructors": [
+    {
+      "name": "GH_BoundingBox(GH_Point3D, GH_Point3D)",
+      "signature": "public GH_BoundingBox(GH_Point3D nMin, GH_Point3D nMax)",
+      "summary": "Constructor.",
+      "params": [
+        {
+          "name": "nMin",
+          "type": "GH_IO.Types.GH_Point3D",
+          "doc": "Minimum corner of box.",
+          "optional": false
+        },
+        {
+          "name": "nMax",
+          "type": "GH_IO.Types.GH_Point3D",
+          "doc": "Maximum corner of box.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Types_GH_BoundingBox__ctor.htm"
+    },
+    {
+      "name": "GH_BoundingBox(Double, Double, Double, Double, Double, Double)",
+      "signature": "public GH_BoundingBox(double Minx, double Miny, double Minz, double Maxx, double Maxy, double Maxz)",
+      "summary": "Constructor.",
+      "params": [
+        {
+          "name": "Minx",
+          "type": "System.Double",
+          "doc": "X coordinate of minimum corner.",
+          "optional": false
+        },
+        {
+          "name": "Miny",
+          "type": "System.Double",
+          "doc": "Y coordinate of minimum corner.",
+          "optional": false
+        },
+        {
+          "name": "Minz",
+          "type": "System.Double",
+          "doc": "Z coordinate of minimum corner.",
+          "optional": false
+        },
+        {
+          "name": "Maxx",
+          "type": "System.Double",
+          "doc": "X coordinate of maximum corner.",
+          "optional": false
+        },
+        {
+          "name": "Maxy",
+          "type": "System.Double",
+          "doc": "Y coordinate of maximum corner.",
+          "optional": false
+        },
+        {
+          "name": "Maxz",
+          "type": "System.Double",
+          "doc": "Z coordinate of maximum corner.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Types_GH_BoundingBox__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Converts this structure to a human-readable string.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A string representation of the box structure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Types_GH_BoundingBox_ToString.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Max",
+      "type": "GH_Point3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Maximum corner of box.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_GH_IO_Types_GH_BoundingBox_Max.htm"
+    },
+    {
+      "name": "Min",
+      "type": "GH_Point3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Minimum corner of box.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_GH_IO_Types_GH_BoundingBox_Min.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

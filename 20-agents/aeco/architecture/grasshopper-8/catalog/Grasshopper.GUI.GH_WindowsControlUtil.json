@@ -1,0 +1,62 @@
+{
+  "name": "GH_WindowsControlUtil",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Exposes some static (Shared) utility functions for setting text-rendering properties en masse.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_WindowsControlUtil.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "FixTextRenderingDefault(Control)",
+      "signature": "public static void FixTextRenderingDefault(Control control)",
+      "summary": "Sets the UseCompatibleTextRendering value to False on the control.",
+      "params": [
+        {
+          "name": "control",
+          "type": "System.Windows.Forms.Control",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_WindowsControlUtil_FixTextRenderingDefault_1.htm"
+    },
+    {
+      "name": "FixTextRenderingDefault(Control.ControlCollection)",
+      "signature": "public static void FixTextRenderingDefault(Control.ControlCollection iControls)",
+      "summary": "Recursively sets the UseCompatibleTextRendering value to False on each control.",
+      "params": [
+        {
+          "name": "iControls",
+          "type": "System.Windows.Forms.Control.ControlCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_WindowsControlUtil_FixTextRenderingDefault_2.htm"
+    },
+    {
+      "name": "FixTextRenderingDefault(IEnumerable\u003CControl\u003E)",
+      "signature": "public static void FixTextRenderingDefault(IEnumerable\u003CControl\u003E C)",
+      "summary": "",
+      "params": [
+        {
+          "name": "C",
+          "type": "System.Collections.Generic.IEnumerable\u003CControl\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_WindowsControlUtil_FixTextRenderingDefault.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

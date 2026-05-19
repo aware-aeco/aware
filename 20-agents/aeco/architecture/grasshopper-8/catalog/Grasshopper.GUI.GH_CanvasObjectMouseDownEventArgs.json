@@ -1,0 +1,61 @@
+{
+  "name": "GH_CanvasObjectMouseDownEventArgs",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Event arguments for the CanvasObjectMouseDown events.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_CanvasObjectMouseDownEventArgs.htm",
+  "constructors": [
+    {
+      "name": "GH_CanvasObjectMouseDownEventArgs",
+      "signature": "public GH_CanvasObjectMouseDownEventArgs(GH_Canvas sender, GH_RelevantObjectData object)",
+      "summary": "Initializes a new instance of the GH_CanvasObjectMouseDownEventArgs class",
+      "params": [
+        {
+          "name": "sender",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "optional": false
+        },
+        {
+          "name": "object",
+          "type": "Grasshopper.Kernel.GH_RelevantObjectData",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_CanvasObjectMouseDownEventArgs__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Canvas",
+      "type": "GH_Canvas",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_CanvasObjectMouseDownEventArgs_Canvas.htm"
+    },
+    {
+      "name": "Document",
+      "type": "GH_Document",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_CanvasObjectMouseDownEventArgs_Document.htm"
+    },
+    {
+      "name": "Object",
+      "type": "GH_RelevantObjectData",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_CanvasObjectMouseDownEventArgs_Object.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

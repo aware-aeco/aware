@@ -1,0 +1,29 @@
+{
+  "name": "GH_DataMapping",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates all parameter data mapping types.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_DataMapping.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Data is not mapped."
+    },
+    {
+      "name": "Flatten",
+      "value": 1,
+      "summary": "Data is flattened inside this parameter."
+    },
+    {
+      "name": "Graft",
+      "value": 2,
+      "summary": "Data is grafted inside this parameter."
+    }
+  ]
+}

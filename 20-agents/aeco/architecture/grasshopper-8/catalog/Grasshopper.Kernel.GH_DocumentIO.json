@@ -1,0 +1,511 @@
+{
+  "name": "GH_DocumentIO",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Provides basic IO operations for GH_Documents.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_DocumentIO.htm",
+  "constructors": [
+    {
+      "name": "GH_DocumentIO()",
+      "signature": "public GH_DocumentIO()",
+      "summary": "Create a new instance of GH_DocumentIO without an internal document.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentIO__ctor.htm"
+    },
+    {
+      "name": "GH_DocumentIO(GH_Document)",
+      "signature": "public GH_DocumentIO(GH_Document internal_doc)",
+      "summary": "Create a new instance of GH_DocumentIO with an internal document.",
+      "params": [
+        {
+          "name": "internal_doc",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "doc": "Document to internalise.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentIO__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ClearClipboard",
+      "signature": "public void ClearClipboard(GH_ClipboardType clipboard)",
+      "summary": "Clear the Clipboard Text content. This function wipes both the Text and UnicodeText clipboard fields.",
+      "params": [
+        {
+          "name": "clipboard",
+          "type": "Grasshopper.Kernel.GH_ClipboardType",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentIO_ClearClipboard.htm"
+    },
+    {
+      "name": "Copy(GH_ClipboardType)",
+      "signature": "public bool Copy(GH_ClipboardType clipboard)",
+      "summary": "Copy the internal document into the clipboard.",
+      "params": [
+        {
+          "name": "clipboard",
+          "type": "Grasshopper.Kernel.GH_ClipboardType",
+          "doc": "Specifies the clipboard type to use.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentIO_Copy.htm"
+    },
+    {
+      "name": "Copy(GH_ClipboardType, Boolean)",
+      "signature": "public bool Copy(GH_ClipboardType clipboard, bool limitToSelection)",
+      "summary": "Copy the internal document into the clipboard.",
+      "params": [
+        {
+          "name": "clipboard",
+          "type": "Grasshopper.Kernel.GH_ClipboardType",
+          "doc": "Specifies the clipboard type to use.",
+          "optional": false
+        },
+        {
+          "name": "limitToSelection",
+          "type": "System.Boolean",
+          "doc": "If true, only the selected objects will be copied.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentIO_Copy_1.htm"
+    },
+    {
+      "name": "Copy(GH_ClipboardType, IEnumerable\u003CGuid\u003E)",
+      "signature": "public bool Copy(GH_ClipboardType clipboard, IEnumerable\u003CGuid\u003E guids)",
+      "summary": "Copy the specified objects in the internal document into the clipboard.",
+      "params": [
+        {
+          "name": "clipboard",
+          "type": "Grasshopper.Kernel.GH_ClipboardType",
+          "doc": "Specifies the clipboard type to use.",
+          "optional": false
+        },
+        {
+          "name": "guids",
+          "type": "System.Collections.Generic.IEnumerable\u003CGuid\u003E",
+          "doc": "List of object ids to copy.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentIO_Copy_2.htm"
+    },
+    {
+      "name": "GetDocumentIcon",
+      "signature": "public static Bitmap GetDocumentIcon(string filePath, Size size)",
+      "summary": "Try and extract the icon image of a document. Not all gh/ghx files contain an icon so this function may return null. The document itself is not loaded and rendered, so the icon really has to be part of the file already.",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "System.String",
+          "doc": "Filepath to examine.",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "System.Drawing.Size",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "An icon bitmap on success or null on failure. Caller is responsible for disposing of the image."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentIO_GetDocumentIcon.htm"
+    },
+    {
+      "name": "GetDocumentThumbnail",
+      "signature": "public static Bitmap GetDocumentThumbnail(string filePath)",
+      "summary": "Try and extract the preview image of a document. Not all gh/ghx files contain a thumbnail so this function may return null. The document itself is not loaded and rendered, so the thumbnail really has to be part of the file already.",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "System.String",
+          "doc": "Filepath to examine.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "A preview bitmap on success or null on failure. Caller is responsible for disposing of the image."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentIO_GetDocumentThumbnail.htm"
+    },
+    {
+      "name": "Open()",
+      "signature": "public bool Open()",
+      "summary": "Perform a default Open operation and store the result as the internal document.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentIO_Open.htm"
+    },
+    {
+      "name": "Open(String)",
+      "signature": "public bool Open(string filePath)",
+      "summary": "Open the file at the given location.",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "System.String",
+          "doc": "Path of Grasshopper file to open.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentIO_Open_1.htm"
+    },
+    {
+      "name": "OpenDocumentDialog",
+      "signature": "public string OpenDocumentDialog(string path = null, string title = \u0022Open\u2026\u0022)",
+      "summary": "Display the Open GH/GHX dialog.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "Optional default path.",
+          "optional": true
+        },
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "Title of dialog.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "FileName specified via the Open dialog or null if the dialog was cancelled."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentIO_OpenDocumentDialog.htm"
+    },
+    {
+      "name": "Paste",
+      "signature": "public bool Paste(GH_ClipboardType clipboard)",
+      "summary": "Deserialize a Grasshopper document from the clipboard. On success, the internal document of this GH_DocumentIO instance will be set.",
+      "params": [
+        {
+          "name": "clipboard",
+          "type": "Grasshopper.Kernel.GH_ClipboardType",
+          "doc": "Specifies the clipboard type to use.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentIO_Paste.htm"
+    },
+    {
+      "name": "Save",
+      "signature": "public bool Save()",
+      "summary": "Perform a default Save operation on the internal document.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentIO_Save.htm"
+    },
+    {
+      "name": "SaveAs",
+      "signature": "public bool SaveAs()",
+      "summary": "Perform a default Save As operation on the internal document.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentIO_SaveAs.htm"
+    },
+    {
+      "name": "SaveAsCopyDocumentDialog",
+      "signature": "public string SaveAsCopyDocumentDialog(string path = null)",
+      "summary": "Display the Save As Copy GH/GHX dialog.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "Optional default path.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "FileName specified via the Save As Copy dialog or null if the dialog was cancelled."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentIO_SaveAsCopyDocumentDialog.htm"
+    },
+    {
+      "name": "SaveAsDocumentDialog",
+      "signature": "public string SaveAsDocumentDialog(string path = null)",
+      "summary": "Display the Save As GH/GHX dialog.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "Optional default path.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "FileName specified via the Save As dialog or null if the dialog was cancelled."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentIO_SaveAsDocumentDialog.htm"
+    },
+    {
+      "name": "SaveBackup",
+      "signature": "public bool SaveBackup()",
+      "summary": "Save a time-stamped copy of the current file.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentIO_SaveBackup.htm"
+    },
+    {
+      "name": "SaveDocumentDialog",
+      "signature": "public string SaveDocumentDialog(string path = null, string title = \u0022Save\u2026\u0022)",
+      "summary": "Display the Save GH/GHX dialog.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "Optional default path.",
+          "optional": true
+        },
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "Title of dialog.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "FileName specified via the Save dialog or null if the dialog was cancelled."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentIO_SaveDocumentDialog.htm"
+    },
+    {
+      "name": "SaveQuiet",
+      "signature": "public bool SaveQuiet(string path)",
+      "summary": "Quietly save a file to a given location.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentIO_SaveQuiet.htm"
+    },
+    {
+      "name": "ShowOverwriteDialog(String)",
+      "signature": "public static int ShowOverwriteDialog(string filename)",
+      "summary": "",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentIO_ShowOverwriteDialog.htm"
+    },
+    {
+      "name": "ShowOverwriteDialog(String, DateTime, DateTime)",
+      "signature": "public static int ShowOverwriteDialog(string filename, DateTime lastSave, DateTime fileOnDisk)",
+      "summary": "",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "lastSave",
+          "type": "System.DateTime",
+          "optional": false
+        },
+        {
+          "name": "fileOnDisk",
+          "type": "System.DateTime",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentIO_ShowOverwriteDialog_1.htm"
+    },
+    {
+      "name": "SubsidiaryDocumentSavePrompt(GH_Document)",
+      "signature": "public static DialogResult SubsidiaryDocumentSavePrompt(GH_Document document)",
+      "summary": "Display a \u0027stuff has changed do you want to save\u0027 message box with Yes/No/Cancel options.",
+      "params": [
+        {
+          "name": "document",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "doc": "Top level document.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DialogResult",
+        "doc": "Yes, No, Cancel or None state."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentIO_SubsidiaryDocumentSavePrompt.htm"
+    },
+    {
+      "name": "SubsidiaryDocumentSavePrompt(String, Boolean, Int32)",
+      "signature": "public static DialogResult SubsidiaryDocumentSavePrompt(string documentName, bool modified, int modifiedSubsidiaries)",
+      "summary": "Display a \u0027stuff has changed do you want to save\u0027 message box with Yes/No/Cancel options.",
+      "params": [
+        {
+          "name": "documentName",
+          "type": "System.String",
+          "doc": "Name of top level document.",
+          "optional": false
+        },
+        {
+          "name": "modified",
+          "type": "System.Boolean",
+          "doc": "Boolean indicating whether top-level document is modified.",
+          "optional": false
+        },
+        {
+          "name": "modifiedSubsidiaries",
+          "type": "System.Int32",
+          "doc": "Number of modified subsidiary documents.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DialogResult",
+        "doc": "Yes, No, Cancel or None state."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocumentIO_SubsidiaryDocumentSavePrompt_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DisableOverwriteProtection",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether the file overwrite protection dialog ought to be shown during risky saves.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentIO_DisableOverwriteProtection.htm"
+    },
+    {
+      "name": "Document",
+      "type": "GH_Document",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the internal document.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentIO_Document.htm"
+    },
+    {
+      "name": "IsDocument",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not this instance of GH_DocumentIO contains an internal document.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentIO_IsDocument.htm"
+    },
+    {
+      "name": "LocalClipboardContent",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the contents of the local clipboard.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocumentIO_LocalClipboardContent.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

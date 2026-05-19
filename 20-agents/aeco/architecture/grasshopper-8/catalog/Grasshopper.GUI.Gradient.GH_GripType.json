@@ -1,0 +1,24 @@
+{
+  "name": "GH_GripType",
+  "namespace": "Grasshopper.GUI.Gradient",
+  "kind": "enum",
+  "summary": "Enumerates the possible grip types.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Gradient_GH_GripType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Continuous",
+      "value": 0,
+      "summary": "Grip has the same colour coming in and going out."
+    },
+    {
+      "name": "Discontinuous",
+      "value": 1,
+      "summary": "Grip has a different colour coming in and going out."
+    }
+  ]
+}

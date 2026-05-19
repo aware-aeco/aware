@@ -1,0 +1,57 @@
+{
+  "name": "GH_CustomEventServer",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "RhinoCommon only event server.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_CustomEventServer.htm",
+  "constructors": [
+    {
+      "name": "GH_CustomEventServer",
+      "signature": "public GH_CustomEventServer(IGH_EventConsumer consumer)",
+      "summary": "Create and register a new event server.",
+      "params": [
+        {
+          "name": "consumer",
+          "type": "Grasshopper.Kernel.IGH_EventConsumer",
+          "doc": "Consumer object that owns this event server.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_CustomEventServer__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Enabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the enabled state flag for this event watcher.",
+      "remarks": "See AlsoReferenceGH_CustomEventServer ClassGrasshopper.Kernel Namespace",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_CustomEventServer_Enabled.htm"
+    },
+    {
+      "name": "GuidTable",
+      "type": "SortedDictionary\u003CGuid,UInt32\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets direct access to the internal guid table. The table contains pairs of object Ids and runtime serial numbers.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_CustomEventServer_GuidTable.htm"
+    },
+    {
+      "name": "GuidTableCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of stored ids in the Guid Table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_CustomEventServer_GuidTableCount.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

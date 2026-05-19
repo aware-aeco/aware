@@ -1,0 +1,166 @@
+{
+  "name": "IGH_ResponsiveObject",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "interface",
+  "summary": "If you wish to participate in Canvas UI events, you must implement this interface.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Canvas_IGH_ResponsiveObject.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "RespondToKeyDown",
+      "signature": "GH_ObjectResponse RespondToKeyDown(GH_Canvas sender, KeyEventArgs e)",
+      "summary": "",
+      "params": [
+        {
+          "name": "sender",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "System.Windows.Forms.KeyEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ObjectResponse",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_ResponsiveObject_RespondToKeyDown.htm"
+    },
+    {
+      "name": "RespondToKeyUp",
+      "signature": "GH_ObjectResponse RespondToKeyUp(GH_Canvas sender, KeyEventArgs e)",
+      "summary": "",
+      "params": [
+        {
+          "name": "sender",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "System.Windows.Forms.KeyEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ObjectResponse",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_ResponsiveObject_RespondToKeyUp.htm"
+    },
+    {
+      "name": "RespondToMouseDoubleClick",
+      "signature": "GH_ObjectResponse RespondToMouseDoubleClick(GH_Canvas sender, GH_CanvasMouseEvent e)",
+      "summary": "This function will be called whenever the left button is double-clicked over the canvas. If you are active, you will be the only object who gets called.",
+      "params": [
+        {
+          "name": "sender",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "doc": "Base canvas.",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "Grasshopper.GUI.GH_CanvasMouseEvent",
+          "doc": "Mouse event arguments.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ObjectResponse",
+        "doc": "All Response flags are valid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_ResponsiveObject_RespondToMouseDoubleClick.htm"
+    },
+    {
+      "name": "RespondToMouseDown",
+      "signature": "GH_ObjectResponse RespondToMouseDown(GH_Canvas sender, GH_CanvasMouseEvent e)",
+      "summary": "This function will be called whenever a mouse button is pressed over the canvas. If you are active, you will be the only object who gets called. If you are inactive, you might get called if nobody on top of you decides to become active.",
+      "params": [
+        {
+          "name": "sender",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "doc": "Base canvas.",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "Grasshopper.GUI.GH_CanvasMouseEvent",
+          "doc": "Mouse event arguments.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ObjectResponse",
+        "doc": "All Response flags are valid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_ResponsiveObject_RespondToMouseDown.htm"
+    },
+    {
+      "name": "RespondToMouseMove",
+      "signature": "GH_ObjectResponse RespondToMouseMove(GH_Canvas sender, GH_CanvasMouseEvent e)",
+      "summary": "This function will be called when the mouse moves across the canvas. If you are active, you will be the only object who gets called. If you are inactive, you might get called if nobody on top of you decides to become active.",
+      "params": [
+        {
+          "name": "sender",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "doc": "Base canvas.",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "Grasshopper.GUI.GH_CanvasMouseEvent",
+          "doc": "Mouse event arguments.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ObjectResponse",
+        "doc": "All Response flags are valid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_ResponsiveObject_RespondToMouseMove.htm"
+    },
+    {
+      "name": "RespondToMouseUp",
+      "signature": "GH_ObjectResponse RespondToMouseUp(GH_Canvas sender, GH_CanvasMouseEvent e)",
+      "summary": "This function will be called whenever a mouse button is released over the canvas. If you are active, you will be the only object who gets called. If you are inactive, you will not be called at all for MouseUp events.",
+      "params": [
+        {
+          "name": "sender",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "doc": "Base canvas.",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "Grasshopper.GUI.GH_CanvasMouseEvent",
+          "doc": "Mouse event arguments.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ObjectResponse",
+        "doc": "All Response flags are valid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_ResponsiveObject_RespondToMouseUp.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

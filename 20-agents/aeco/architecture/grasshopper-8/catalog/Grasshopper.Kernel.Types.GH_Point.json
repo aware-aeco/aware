@@ -1,0 +1,948 @@
+{
+  "name": "GH_Point",
+  "namespace": "Grasshopper.Kernel.Types",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.Kernel.Types.GH_Point.)",
+  "interfaces": [
+    "IGH_GeometricGoo",
+    "IGH_BakeAwareData",
+    "IGH_PreviewData"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_Types_GH_Point.htm",
+  "constructors": [
+    {
+      "name": "GH_Point()",
+      "signature": "public GH_Point()",
+      "summary": "Initializes a new instance of the GH_Point class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point__ctor.htm"
+    },
+    {
+      "name": "GH_Point(GH_Point)",
+      "signature": "public GH_Point(GH_Point iOther)",
+      "summary": "Initializes a new instance of the GH_Point class",
+      "params": [
+        {
+          "name": "iOther",
+          "type": "Grasshopper.Kernel.Types.GH_Point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point__ctor_1.htm"
+    },
+    {
+      "name": "GH_Point(Guid)",
+      "signature": "public GH_Point(Guid rh_obj_id)",
+      "summary": "Initializes a new instance of the GH_Point class",
+      "params": [
+        {
+          "name": "rh_obj_id",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point__ctor_3.htm"
+    },
+    {
+      "name": "GH_Point(Point3d)",
+      "signature": "public GH_Point(Point3d pt)",
+      "summary": "Initializes a new instance of the GH_Point class",
+      "params": [
+        {
+          "name": "pt",
+          "type": "Point3d",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BakeGeometry",
+      "signature": "public bool BakeGeometry(RhinoDoc doc, ObjectAttributes att, ref Guid obj_guid)",
+      "summary": "",
+      "params": [
+        {
+          "name": "doc",
+          "type": "RhinoDoc",
+          "optional": false
+        },
+        {
+          "name": "att",
+          "type": "ObjectAttributes",
+          "optional": false
+        },
+        {
+          "name": "obj_guid",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_BakeGeometry.htm"
+    },
+    {
+      "name": "CastFrom",
+      "signature": "public bool CastFrom(Object source)",
+      "summary": "",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_CastFrom.htm"
+    },
+    {
+      "name": "CastTo\u003CT\u003E",
+      "signature": "public bool CastTo\u003CT\u003E(out T target)",
+      "summary": "",
+      "params": [
+        {
+          "name": "target",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_CastTo__1.htm"
+    },
+    {
+      "name": "ClearCaches",
+      "signature": "public void ClearCaches()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_ClearCaches.htm"
+    },
+    {
+      "name": "CreateFromCoordinate",
+      "signature": "public void CreateFromCoordinate(Point3d pt)",
+      "summary": "Create a new point geometry instance based on a fixed coordinate",
+      "remarks": "This \u0027constructor\u0027 merely sets fields, it doesn\u0027t load the geometry and it doesn\u0027t perform validity checking.",
+      "params": [
+        {
+          "name": "pt",
+          "type": "Point3d",
+          "doc": "The coordinate for the point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_CreateFromCoordinate.htm"
+    },
+    {
+      "name": "CreateFromCurveDistance",
+      "signature": "public void CreateFromCurveDistance(Guid crv_id, Curve crv, double t, bool bFromStart)",
+      "summary": "Create new point geometry instance based on a curve distance parameter",
+      "remarks": "This \u0027constructor\u0027 merely sets fields, it doesn\u0027t load the geometry and it doesn\u0027t perform validity checking.",
+      "params": [
+        {
+          "name": "crv_id",
+          "type": "System.Guid",
+          "doc": "ID of the curve this object references",
+          "optional": false
+        },
+        {
+          "name": "crv",
+          "type": "Curve",
+          "doc": "The curve to act on",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "Parameter on the curve that controls the distance measurement",
+          "optional": false
+        },
+        {
+          "name": "bFromStart",
+          "type": "System.Boolean",
+          "doc": "True if the distance is to be measured from the start of the curve",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_CreateFromCurveDistance.htm"
+    },
+    {
+      "name": "CreateFromCurveRatio",
+      "signature": "public void CreateFromCurveRatio(Guid crv_id, Curve crv, double t)",
+      "summary": "Create new point geometry instance based on a curve parameter ratio",
+      "remarks": "This \u0027constructor\u0027 merely sets fields, it doesn\u0027t load the geometry and it doesn\u0027t perform validity checking.",
+      "params": [
+        {
+          "name": "crv_id",
+          "type": "System.Guid",
+          "doc": "ID of the curve this object references",
+          "optional": false
+        },
+        {
+          "name": "crv",
+          "type": "Curve",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "Parameter on curve in domain space",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_CreateFromCurveRatio.htm"
+    },
+    {
+      "name": "CreateFromEdgeDistance",
+      "signature": "public void CreateFromEdgeDistance(Guid brp_id, Curve edge, int e_index, double t, bool bFromStart)",
+      "summary": "Create new point geometry instance based on a curve distance parameter",
+      "remarks": "This \u0027constructor\u0027 merely sets fields, it doesn\u0027t load the geometry and it doesn\u0027t perform validity checking.",
+      "params": [
+        {
+          "name": "brp_id",
+          "type": "System.Guid",
+          "doc": "ID of the curve this object references",
+          "optional": false
+        },
+        {
+          "name": "edge",
+          "type": "Curve",
+          "doc": "The edge curve",
+          "optional": false
+        },
+        {
+          "name": "e_index",
+          "type": "System.Int32",
+          "doc": "Index of edge to reference",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "Parameter along the curve in curve domain space",
+          "optional": false
+        },
+        {
+          "name": "bFromStart",
+          "type": "System.Boolean",
+          "doc": "True if the distance is to be measured from the start of the curve",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_CreateFromEdgeDistance.htm"
+    },
+    {
+      "name": "CreateFromEdgeRatio",
+      "signature": "public void CreateFromEdgeRatio(Guid brp_id, Curve edge, int e_index, double t)",
+      "summary": "Create new point geometry instance based on an edge parameter ratio",
+      "remarks": "This \u0027constructor\u0027 merely sets fields, it doesn\u0027t load the geometry and it doesn\u0027t perform validity checking.",
+      "params": [
+        {
+          "name": "brp_id",
+          "type": "System.Guid",
+          "doc": "ID of the brep this object references",
+          "optional": false
+        },
+        {
+          "name": "edge",
+          "type": "Curve",
+          "doc": "The edge curve",
+          "optional": false
+        },
+        {
+          "name": "e_index",
+          "type": "System.Int32",
+          "doc": "Index of edge to reference",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "Parameter on edge in edge domain space",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_CreateFromEdgeRatio.htm"
+    },
+    {
+      "name": "CreateFromPointObject",
+      "signature": "public void CreateFromPointObject(Guid id)",
+      "summary": "Create a new point geometry instance based on point object ID. Technically this now also accepts Dot object IDs.",
+      "remarks": "This \u0027constructor\u0027 merely sets fields, it doesn\u0027t load the geometry and it doesn\u0027t perform validity checking.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "The identifier of the point object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_CreateFromPointObject.htm"
+    },
+    {
+      "name": "CreateFromSurfaceParam",
+      "signature": "public void CreateFromSurfaceParam(Guid brp_id, int f_index, Surface srf, double u, double v)",
+      "summary": "Create new point geometry instance based on a curve distance parameter",
+      "remarks": "This \u0027constructor\u0027 merely sets fields, it doesn\u0027t load the geometry and it doesn\u0027t perform validity checking.",
+      "params": [
+        {
+          "name": "brp_id",
+          "type": "System.Guid",
+          "doc": "ID of the curve this object references",
+          "optional": false
+        },
+        {
+          "name": "f_index",
+          "type": "System.Int32",
+          "doc": "Index of edge to reference",
+          "optional": false
+        },
+        {
+          "name": "srf",
+          "type": "Surface",
+          "doc": "Surface to work on",
+          "optional": false
+        },
+        {
+          "name": "u",
+          "type": "System.Double",
+          "doc": "Parameter in surface U direction",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Double",
+          "doc": "Parameter in surface V direction",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_CreateFromSurfaceParam.htm"
+    },
+    {
+      "name": "DrawViewportMeshes",
+      "signature": "public void DrawViewportMeshes(GH_PreviewMeshArgs args)",
+      "summary": "",
+      "params": [
+        {
+          "name": "args",
+          "type": "Grasshopper.Kernel.GH_PreviewMeshArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_DrawViewportMeshes.htm"
+    },
+    {
+      "name": "DrawViewportWires",
+      "signature": "public void DrawViewportWires(GH_PreviewWireArgs args)",
+      "summary": "",
+      "params": [
+        {
+          "name": "args",
+          "type": "Grasshopper.Kernel.GH_PreviewWireArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_DrawViewportWires.htm"
+    },
+    {
+      "name": "Duplicate",
+      "signature": "public IGH_Goo Duplicate()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IGH_Goo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_Duplicate.htm"
+    },
+    {
+      "name": "DuplicateGeometry",
+      "signature": "public IGH_GeometricGoo DuplicateGeometry()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IGH_GeometricGoo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_DuplicateGeometry.htm"
+    },
+    {
+      "name": "DuplicatePoint",
+      "signature": "public GH_Point DuplicatePoint()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "GH_Point",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_DuplicatePoint.htm"
+    },
+    {
+      "name": "EmitProxy",
+      "signature": "public IGH_GooProxy EmitProxy()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IGH_GooProxy",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_EmitProxy.htm"
+    },
+    {
+      "name": "EnsureReferenceData",
+      "signature": "public void EnsureReferenceData()",
+      "summary": "Creates new Reference data if it doesn\u0027t already exists",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_EnsureReferenceData.htm"
+    },
+    {
+      "name": "GetBoundingBox",
+      "signature": "public BoundingBox GetBoundingBox(Transform xform)",
+      "summary": "",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Transform",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_GetBoundingBox.htm"
+    },
+    {
+      "name": "LoadGeometry()",
+      "signature": "public bool LoadGeometry()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_LoadGeometry.htm"
+    },
+    {
+      "name": "LoadGeometry(RhinoDoc)",
+      "signature": "public bool LoadGeometry(RhinoDoc doc)",
+      "summary": "",
+      "params": [
+        {
+          "name": "doc",
+          "type": "RhinoDoc",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_LoadGeometry_1.htm"
+    },
+    {
+      "name": "Morph",
+      "signature": "public IGH_GeometricGoo Morph(SpaceMorph xmorph)",
+      "summary": "",
+      "params": [
+        {
+          "name": "xmorph",
+          "type": "SpaceMorph",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IGH_GeometricGoo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_Morph.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "public bool Read(GH_IReader reader)",
+      "summary": "",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_Read.htm"
+    },
+    {
+      "name": "ReferenceCurve()",
+      "signature": "public Curve ReferenceCurve()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Curve",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_ReferenceCurve.htm"
+    },
+    {
+      "name": "ReferenceCurve(RhinoObject)",
+      "signature": "public Curve ReferenceCurve(RhinoObject ref)",
+      "summary": "",
+      "params": [
+        {
+          "name": "ref",
+          "type": "RhinoObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Curve",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_ReferenceCurve_1.htm"
+    },
+    {
+      "name": "ReferenceIndex()",
+      "signature": "public int ReferenceIndex()",
+      "summary": "Retrieve the index of the point reference data.",
+      "remarks": "If there exists no reference data, -1 is returned.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the reference data. This index describes the sub-object of the reference."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_ReferenceIndex.htm"
+    },
+    {
+      "name": "ReferenceIndex(Int32)",
+      "signature": "public void ReferenceIndex(int new_index)",
+      "summary": "Sets the index of the point reference data.",
+      "remarks": "If there is no reference data, this function will create a new instance.",
+      "params": [
+        {
+          "name": "new_index",
+          "type": "System.Int32",
+          "doc": "The index to set. This index describes the sub-object of the reference.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_ReferenceIndex_1.htm"
+    },
+    {
+      "name": "ReferenceParam(Int32)",
+      "signature": "public double ReferenceParam(int index)",
+      "summary": "Retrieve the indexed param of the point reference data.",
+      "remarks": "If there exists no reference data, NaN is returned.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of parameter. Only 0 and 1 are valid values.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The indexed param of the reference data."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_ReferenceParam.htm"
+    },
+    {
+      "name": "ReferenceParam(Int32, Double)",
+      "signature": "public void ReferenceParam(int index, double new_param)",
+      "summary": "Sets the index of the point reference data.",
+      "remarks": "If there is no reference data, this function will create a new instance.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The index of the parameter. Only 0 and 1 are valid values.",
+          "optional": false
+        },
+        {
+          "name": "new_param",
+          "type": "System.Double",
+          "doc": "The new value of the parameter",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_ReferenceParam_1.htm"
+    },
+    {
+      "name": "ReferencesCurve",
+      "signature": "public bool ReferencesCurve()",
+      "summary": "Returns true if this point is based on a curve reference",
+      "remarks": "See AlsoReferenceGH_Point ClassGrasshopper.Kernel.Types Namespace",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_ReferencesCurve.htm"
+    },
+    {
+      "name": "ReferencesEdge",
+      "signature": "public bool ReferencesEdge()",
+      "summary": "Returns True if this point is based on an edge reference",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_ReferencesEdge.htm"
+    },
+    {
+      "name": "ReferenceSurface",
+      "signature": "public BrepFace ReferenceSurface()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "BrepFace",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_ReferenceSurface.htm"
+    },
+    {
+      "name": "ReferenceType()",
+      "signature": "public GH_PointRefType ReferenceType()",
+      "summary": "Retrieve the reference type of this point object.",
+      "params": [],
+      "returns": {
+        "type": "GH_PointRefType",
+        "doc": "The reference type as specified by the Reference Data. If there is no reference data, either Unset or Coordinate is returned depending on whether m_Point is a null reference."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_ReferenceType.htm"
+    },
+    {
+      "name": "ReferenceType(GH_PointRefType)",
+      "signature": "public void ReferenceType(GH_PointRefType new_type)",
+      "summary": "Sets the type of the point reference data.",
+      "remarks": "If there is no reference data, this function will create a new instance.",
+      "params": [
+        {
+          "name": "new_type",
+          "type": "Grasshopper.Kernel.Types.GH_PointRefType",
+          "doc": "The new type, if type = Coordinate or Unset, then the Reference data will be erased.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_ReferenceType_1.htm"
+    },
+    {
+      "name": "ScriptVariable",
+      "signature": "public Object ScriptVariable()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_ScriptVariable.htm"
+    },
+    {
+      "name": "SetReferenceParams",
+      "signature": "public void SetReferenceParams(double u, double v)",
+      "summary": "Sets both param values of the point reference",
+      "remarks": "If there is no reference data, this function will create a new instance.",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Double",
+          "doc": "The new u parameter",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Double",
+          "doc": "The new v parameter",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_SetReferenceParams.htm"
+    },
+    {
+      "name": "ShowReferenceDialog()",
+      "signature": "public DialogResult ShowReferenceDialog()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "DialogResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_ShowReferenceDialog.htm"
+    },
+    {
+      "name": "ShowReferenceDialog(IWin32Window)",
+      "signature": "public DialogResult ShowReferenceDialog(IWin32Window owner)",
+      "summary": "",
+      "params": [
+        {
+          "name": "owner",
+          "type": "System.Windows.Forms.IWin32Window",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DialogResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_ShowReferenceDialog_1.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides Object.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_ToString.htm"
+    },
+    {
+      "name": "Transform",
+      "signature": "public IGH_GeometricGoo Transform(Transform xform)",
+      "summary": "",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Transform",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IGH_GeometricGoo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_Transform.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public bool Write(GH_IWriter writer)",
+      "summary": "",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Point_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Boundingbox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Point_Boundingbox.htm"
+    },
+    {
+      "name": "ClippingBox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Point_ClippingBox.htm"
+    },
+    {
+      "name": "IsGeometryLoaded",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Point_IsGeometryLoaded.htm"
+    },
+    {
+      "name": "IsReferencedGeometry",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Point_IsReferencedGeometry.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Point_IsValid.htm"
+    },
+    {
+      "name": "IsValidWhyNot",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a string describing the state of \u0022invalidness\u0022. If the instance is valid, then this property should return Nothing or String.Empty.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Point_IsValidWhyNot.htm"
+    },
+    {
+      "name": "ReferenceData",
+      "type": "GH_PointRefData",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the reference data of this point geometry.",
+      "remarks": "Reference data can be Null",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Point_ReferenceData.htm"
+    },
+    {
+      "name": "ReferenceID",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Point_ReferenceID.htm"
+    },
+    {
+      "name": "TypeDescription",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Point_TypeDescription.htm"
+    },
+    {
+      "name": "TypeName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Point_TypeName.htm"
+    },
+    {
+      "name": "Value",
+      "type": "Point3d",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Point_Value.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

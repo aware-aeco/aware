@@ -1,0 +1,122 @@
+{
+  "name": "GH_FontList",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Represents the installed Font collection. This control allows both navigation and selection of Font Families.",
+  "base": "GH_DoubleBufferedPanel",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_FontList.htm",
+  "constructors": [
+    {
+      "name": "GH_FontList",
+      "signature": "public GH_FontList()",
+      "summary": "Initializes a new instance of the GH_FontList class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_FontList__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateFont",
+      "signature": "public Font CreateFont()",
+      "summary": "Create a font that best approximates the current settings.",
+      "params": [],
+      "returns": {
+        "type": "Font",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_FontList_CreateFont.htm"
+    },
+    {
+      "name": "OnPaint",
+      "signature": "protected override void OnPaint(PaintEventArgs e)",
+      "summary": "(Overrides Control.OnPaint(PaintEventArgs).)",
+      "params": [
+        {
+          "name": "e",
+          "type": "System.Windows.Forms.PaintEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_FontList_OnPaint.htm"
+    },
+    {
+      "name": "OnPaintBackground",
+      "signature": "protected override void OnPaintBackground(PaintEventArgs e)",
+      "summary": "(Overrides ScrollableControl.OnPaintBackground(PaintEventArgs).)",
+      "params": [
+        {
+          "name": "e",
+          "type": "System.Windows.Forms.PaintEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_FontList_OnPaintBackground.htm"
+    },
+    {
+      "name": "RecreateFontList",
+      "signature": "public void RecreateFontList()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_FontList_RecreateFontList.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DisplayText",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the placeholder string.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_FontList_DisplayText.htm"
+    },
+    {
+      "name": "Filter",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the filter string. You must call RecreateFontList() before the new font list is created.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_FontList_Filter.htm"
+    },
+    {
+      "name": "FontFamily",
+      "type": "FontFamily",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the selected font family.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_FontList_FontFamily.htm"
+    },
+    {
+      "name": "FontSize",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the font size.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_FontList_FontSize.htm"
+    },
+    {
+      "name": "FontStyle",
+      "type": "FontStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the font style for all families.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_FontList_FontStyle.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,40 @@
+{
+  "name": "GH_SolutionExpiredEventArgs",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Arguments for solution events.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_SolutionExpiredEventArgs.htm",
+  "constructors": [
+    {
+      "name": "GH_SolutionExpiredEventArgs",
+      "signature": "public GH_SolutionExpiredEventArgs(bool eRecompute)",
+      "summary": "Initializes a new instance of the GH_SolutionExpiredEventArgs class",
+      "params": [
+        {
+          "name": "eRecompute",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_SolutionExpiredEventArgs__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Recompute",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_SolutionExpiredEventArgs_Recompute.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

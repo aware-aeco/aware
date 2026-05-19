@@ -1,0 +1,14 @@
+{
+  "name": "DataTree\u003CT\u003E.DuplicateT",
+  "namespace": "Grasshopper",
+  "kind": "delegate",
+  "summary": "Duplication delegate used in the copy constructor. Implementation should never throw exceptions.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_DataTree_1_DuplicateT.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate T DuplicateT( T original )"
+}

@@ -1,0 +1,364 @@
+{
+  "name": "VersionNumber",
+  "namespace": "GH_IO",
+  "kind": "struct",
+  "summary": "Represents a product version number that encodes major, minor, time and build branch information. as major.minor.yyddd.hhmmb where: yy = year of build - 2000 ddd = year day of build (1-366) hh = hour of build mm = minute of build b = branch of build",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_GH_IO_VersionNumber.htm",
+  "constructors": [
+    {
+      "name": "VersionNumber(Version)",
+      "signature": "public VersionNumber(Version version)",
+      "summary": "Construct VersionNumber based on existing System.Version class.",
+      "params": [
+        {
+          "name": "version",
+          "type": "System.Version",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_VersionNumber__ctor_2.htm"
+    },
+    {
+      "name": "VersionNumber(Int32, Int32, DateTime, VersionNumber.Branch)",
+      "signature": "public VersionNumber(int major, int minor, DateTime time, VersionNumber.Branch buildBranch)",
+      "summary": "Initializes a new instance of the VersionNumber structure to the version specified by the parameters.",
+      "params": [
+        {
+          "name": "major",
+          "type": "System.Int32",
+          "doc": "The major version number (0 through 63).",
+          "optional": false
+        },
+        {
+          "name": "minor",
+          "type": "System.Int32",
+          "doc": "The minor version number (0 through 127).",
+          "optional": false
+        },
+        {
+          "name": "time",
+          "type": "System.DateTime",
+          "doc": "The time is the version time (January 1, 2000 00:00 through December 31 23:59). Seconds are ignored.",
+          "optional": false
+        },
+        {
+          "name": "buildBranch",
+          "type": "GH_IO.VersionNumber.Branch",
+          "doc": "The branch used to build the product (developer, trunk, release_candidate, or release).",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_VersionNumber__ctor.htm"
+    },
+    {
+      "name": "VersionNumber(Int32, Int32, Int32, Int32)",
+      "signature": "public VersionNumber(int majorVersionNumber, int minorVersionNumber, int versionQuartetYyddd, int versionQuartetHhmmb)",
+      "summary": "Initializes a new instance of the VersionNumber structure to the version specified by the version quartet values.",
+      "params": [
+        {
+          "name": "majorVersionNumber",
+          "type": "System.Int32",
+          "doc": "The major version number (0 through 63).",
+          "optional": false
+        },
+        {
+          "name": "minorVersionNumber",
+          "type": "System.Int32",
+          "doc": "The minor version number (0 through 127)",
+          "optional": false
+        },
+        {
+          "name": "versionQuartetYyddd",
+          "type": "System.Int32",
+          "doc": "The third version quartet value is (year - 2000)*1000 \u002B yday, where year is 2000 to 2099 and yday is 1 to the number of days in the specified year.",
+          "optional": false
+        },
+        {
+          "name": "versionQuartetHhmmb",
+          "type": "System.Int32",
+          "doc": "The forth version quartet value is (hour*1000 \u002B minute*10 \u002B branch) where hour is 0 to 23, minute is 0 to 59, and branch is 0 to 3.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_VersionNumber__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CompareTo(Object)",
+      "signature": "public int CompareTo(Object value)",
+      "summary": "Compares the value of this instance to a specified VersionNumber value and returns an integer that indicates whether this instance is earlier than, the same as, or later than the specified VersionNumber value.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Object",
+          "doc": "The object to compare to the current instance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "A signed number indicating the relative values of this instance and the value parameter. Less than zero indicates this instance is earier than value. Zero indicates this instance is the same as value. Greater than zero indicates this instance is later than value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_VersionNumber_CompareTo_1.htm"
+    },
+    {
+      "name": "CompareTo(VersionNumber)",
+      "signature": "public int CompareTo(VersionNumber value)",
+      "summary": "Compares the value of this instance to a specified VersionNumber value and returns an integer that indicates whether this instance is earlier than, the same as, or later than the specified VersionNumber value.",
+      "params": [
+        {
+          "name": "value",
+          "type": "GH_IO.VersionNumber",
+          "doc": "The object to compare to the current instance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "A signed number indicating the relative values of this instance and the value parameter. Less than zero indicates this instance is earier than value. Zero indicates this instance is the same as value. Greater than zero indicates this instance is later than value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_VersionNumber_CompareTo.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Converts the value of the current VersionNumber object to its equivalent string representation major.minor.yyddd.hhmmb. (Overrides ValueType.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_VersionNumber_ToString.htm"
+    },
+    {
+      "name": "ToVersion",
+      "signature": "public Version ToVersion()",
+      "summary": "Convert this VersionNumber class to System.Version()",
+      "params": [],
+      "returns": {
+        "type": "Version",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_VersionNumber_ToVersion.htm"
+    },
+    {
+      "name": "TryParse(String, VersionNumber)",
+      "signature": "public static bool TryParse(string s, out VersionNumber result)",
+      "summary": "Converts the specified string representation of a version number to its VersionNumber equivalent and returns a value that indicates whether the conversion succeeded.",
+      "params": [
+        {
+          "name": "s",
+          "type": "System.String",
+          "doc": "A string containing four integers separated by full stops in the format major.minor.yyddd.hhmmb, where yy is year-2000, ddd is the day of the year, hh is the hour, mm is the minute and b identifies the build branch.",
+          "optional": false
+        },
+        {
+          "name": "result",
+          "type": "GH_IO.VersionNumber",
+          "doc": "When this method returns, result contains the VersionNumber value equivalent to the version number contained in s, if the conversion succeeded, or VersionNumber.Unset if the conversion failed. The conversion fails if the s parameter is null, is an empty string (\u0022\u0022), or does not contain a valid string representation of version number. This parameter is passed uninitialized.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_VersionNumber_TryParse.htm"
+    },
+    {
+      "name": "TryParse(Version, VersionNumber)",
+      "signature": "public static bool TryParse(Version v, out VersionNumber result)",
+      "summary": "Attempt so convert the System.Version representation of a version number to its VersionNumber equivalent and returns a value that indicates whether the conversion succeeded.",
+      "params": [
+        {
+          "name": "v",
+          "type": "System.Version",
+          "doc": "A version number with quartet values (v.Major, v.Minor, v.Build, v.Revision) that are valid ((0 to 63),(0 to 127), (1 to 99365), (0 to 23593)).",
+          "optional": false
+        },
+        {
+          "name": "result",
+          "type": "GH_IO.VersionNumber",
+          "doc": "When this method returns, result contains the VersionNumber value equivalent to the version number contained in v, if the conversion succeeded, or VersionNumber.Unset if the conversion failed. The conversion fails if the v parameter is null, is an empty string (\u0022\u0022), or does not contain a valid string representation of version number. This parameter is passed uninitialized.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_VersionNumber_TryParse_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BuildBranch",
+      "type": "VersionNumber.Branch",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the build branch component of this instance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_VersionNumber_BuildBranch.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "True when all information in the VersionNumber has valid values.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_VersionNumber_IsValid.htm"
+    },
+    {
+      "name": "Major",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the major version number component of this instance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_VersionNumber_Major.htm"
+    },
+    {
+      "name": "MaxMajorVersionNumber",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "The largest possible valid value of VersionNumber.MajorVersionNumber.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_VersionNumber_MaxMajorVersionNumber.htm"
+    },
+    {
+      "name": "MaxMinorVersionNumber",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "The largest possible valid value of VersionNumber.MinorVersionNumber.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_VersionNumber_MaxMinorVersionNumber.htm"
+    },
+    {
+      "name": "MaxValid",
+      "type": "VersionNumber",
+      "getter": true,
+      "setter": false,
+      "summary": "The largest possible valid VersionNumber.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_VersionNumber_MaxValid.htm"
+    },
+    {
+      "name": "MaxValidBuildBranch",
+      "type": "VersionNumber.Branch",
+      "getter": true,
+      "setter": false,
+      "summary": "Represents the largest possible valid value of VersionNumber.BuildBranch. This field is read-only.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_VersionNumber_MaxValidBuildBranch.htm"
+    },
+    {
+      "name": "MaxValidTime",
+      "type": "DateTime",
+      "getter": true,
+      "setter": false,
+      "summary": "The largest possible valid value of VersionNumber.Time. This field is read-only.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_VersionNumber_MaxValidTime.htm"
+    },
+    {
+      "name": "MinMajorVersionNumber",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "The smallest possible valid value of VersionNumber.MajorVersionNumber.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_VersionNumber_MinMajorVersionNumber.htm"
+    },
+    {
+      "name": "MinMinorVersionNumber",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "The smallest possible valid value of VersionNumber.MinorVersionNumber.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_VersionNumber_MinMinorVersionNumber.htm"
+    },
+    {
+      "name": "Minor",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the minor version number component of this instance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_VersionNumber_Minor.htm"
+    },
+    {
+      "name": "MinValid",
+      "type": "VersionNumber",
+      "getter": true,
+      "setter": false,
+      "summary": "The smallest possible valid VersionNumber.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_VersionNumber_MinValid.htm"
+    },
+    {
+      "name": "MinValidBuildBranch",
+      "type": "VersionNumber.Branch",
+      "getter": true,
+      "setter": false,
+      "summary": "Represents the smallest possible valid value of VersionNumber.BuildBranch. This field is read-only.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_VersionNumber_MinValidBuildBranch.htm"
+    },
+    {
+      "name": "MinValidTime",
+      "type": "DateTime",
+      "getter": true,
+      "setter": false,
+      "summary": "The smallest possible valid value of VersionNumber.Time. This field is read-only.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_VersionNumber_MinValidTime.htm"
+    },
+    {
+      "name": "Time",
+      "type": "DateTime",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the version time component of this instance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_VersionNumber_Time.htm"
+    },
+    {
+      "name": "Unset",
+      "type": "VersionNumber",
+      "getter": true,
+      "setter": false,
+      "summary": "The Unset VersionNumber. VersionNumber.Unset.IsValid is false.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_VersionNumber_Unset.htm"
+    },
+    {
+      "name": "UnsetBuildBranch",
+      "type": "VersionNumber.Branch",
+      "getter": true,
+      "setter": false,
+      "summary": "The value of an Unset VersionNumber.BuildBranch.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_VersionNumber_UnsetBuildBranch.htm"
+    },
+    {
+      "name": "UnsetTime",
+      "type": "DateTime",
+      "getter": true,
+      "setter": false,
+      "summary": "The value of an Unset VersionNumber.Time.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_GH_IO_VersionNumber_UnsetTime.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

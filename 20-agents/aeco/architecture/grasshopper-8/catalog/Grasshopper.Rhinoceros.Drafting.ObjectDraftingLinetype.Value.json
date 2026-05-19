@@ -1,0 +1,313 @@
+{
+  "name": "ObjectDraftingLinetype.Value",
+  "namespace": "Grasshopper.Rhinoceros.Drafting",
+  "kind": "struct",
+  "summary": "(No description provided in vendor docs for Grasshopper.Rhinoceros.Drafting.ObjectDraftingLinetype.Value.)",
+  "base": "GH_ISerializable",
+  "interfaces": [
+    "IEquatable\u003CObjectDraftingLinetype.Value\u003E",
+    "IComparable\u003CObjectDraftingLinetype.Value\u003E",
+    "IComparable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Rhinoceros_Drafting_ObjectDraftingLinetype_Value.htm",
+  "constructors": [
+    {
+      "name": "ObjectDraftingLinetype.Value(ModelLinetype)",
+      "signature": "public Value(ModelLinetype value)",
+      "summary": "Initializes a new instance of the ObjectDraftingLinetype.Value class",
+      "params": [
+        {
+          "name": "value",
+          "type": "Grasshopper.Rhinoceros.Drafting.ModelLinetype",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDraftingLinetype_Value__ctor.htm"
+    },
+    {
+      "name": "ObjectDraftingLinetype.Value(ObjectLinetypeSource)",
+      "signature": "public Value(ObjectLinetypeSource source)",
+      "summary": "Initializes a new instance of the ObjectDraftingLinetype.Value class",
+      "params": [
+        {
+          "name": "source",
+          "type": "ObjectLinetypeSource",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDraftingLinetype_Value__ctor_1.htm"
+    },
+    {
+      "name": "ObjectDraftingLinetype.Value(ObjectLinetypeSource, ModelLinetype)",
+      "signature": "public Value(ObjectLinetypeSource source, ModelLinetype value)",
+      "summary": "Initializes a new instance of the ObjectDraftingLinetype.Value class",
+      "params": [
+        {
+          "name": "source",
+          "type": "ObjectLinetypeSource",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Grasshopper.Rhinoceros.Drafting.ModelLinetype",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDraftingLinetype_Value__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CompareTo(Object)",
+      "signature": "public int CompareTo(Object obj)",
+      "summary": "",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDraftingLinetype_Value_CompareTo_1.htm"
+    },
+    {
+      "name": "CompareTo(ObjectDraftingLinetype.Value)",
+      "signature": "public int CompareTo(ObjectDraftingLinetype.Value other)",
+      "summary": "",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Rhinoceros.Drafting.ObjectDraftingLinetype.Value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDraftingLinetype_Value_CompareTo.htm"
+    },
+    {
+      "name": "Deconstruct",
+      "signature": "public void Deconstruct(out ObjectLinetypeSource source, out ModelLinetype value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "source",
+          "type": "ObjectLinetypeSource",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Grasshopper.Rhinoceros.Drafting.ModelLinetype",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDraftingLinetype_Value_Deconstruct.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object other)",
+      "summary": "(Overrides ValueType.Equals(Object).)",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDraftingLinetype_Value_Equals_1.htm"
+    },
+    {
+      "name": "Equals(ObjectDraftingLinetype.Value)",
+      "signature": "public bool Equals(ObjectDraftingLinetype.Value other)",
+      "summary": "",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Rhinoceros.Drafting.ObjectDraftingLinetype.Value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDraftingLinetype_Value_Equals.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "(Overrides ValueType.GetHashCode().)",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDraftingLinetype_Value_GetHashCode.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides ValueType.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDraftingLinetype_Value_ToString.htm"
+    },
+    {
+      "name": "Implicit(ModelLinetype to ObjectDraftingLinetype.Value)",
+      "signature": "public static implicit operator ObjectDraftingLinetype.Value (ModelLinetype color)",
+      "summary": "",
+      "params": [
+        {
+          "name": "color",
+          "type": "Grasshopper.Rhinoceros.Drafting.ModelLinetype",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ObjectDraftingLinetype.Value",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDraftingLinetype_Value_op_Implicit.htm"
+    },
+    {
+      "name": "Implicit(ObjectLinetypeSource to ObjectDraftingLinetype.Value)",
+      "signature": "public static implicit operator ObjectDraftingLinetype.Value (ObjectLinetypeSource source)",
+      "summary": "",
+      "params": [
+        {
+          "name": "source",
+          "type": "ObjectLinetypeSource",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ObjectDraftingLinetype.Value",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDraftingLinetype_Value_op_Implicit_3.htm"
+    },
+    {
+      "name": "Implicit(ObjectDraftingLinetype.Value to ModelLinetype)",
+      "signature": "public static implicit operator ModelLinetype (ObjectDraftingLinetype.Value value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "Grasshopper.Rhinoceros.Drafting.ObjectDraftingLinetype.Value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelLinetype",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDraftingLinetype_Value_op_Implicit_2.htm"
+    },
+    {
+      "name": "Implicit(ObjectDraftingLinetype.Value to ObjectLinetypeSource)",
+      "signature": "public static implicit operator ObjectLinetypeSource (ObjectDraftingLinetype.Value value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "Grasshopper.Rhinoceros.Drafting.ObjectDraftingLinetype.Value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ObjectLinetypeSource",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_Drafting_ObjectDraftingLinetype_Value_op_Implicit_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ByLayer",
+      "type": "ObjectDraftingLinetype.Value",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Drafting_ObjectDraftingLinetype_Value_ByLayer.htm"
+    },
+    {
+      "name": "ByParent",
+      "type": "ObjectDraftingLinetype.Value",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Drafting_ObjectDraftingLinetype_Value_ByParent.htm"
+    },
+    {
+      "name": "Continuous",
+      "type": "ObjectDraftingLinetype.Value",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Drafting_ObjectDraftingLinetype_Value_Continuous.htm"
+    },
+    {
+      "name": "Linetype",
+      "type": "ModelLinetype",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Drafting_ObjectDraftingLinetype_Value_Linetype.htm"
+    },
+    {
+      "name": "Source",
+      "type": "ObjectLinetypeSource",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Rhinoceros_Drafting_ObjectDraftingLinetype_Value_Source.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

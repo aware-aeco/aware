@@ -1,0 +1,129 @@
+{
+  "name": "GH_CursorServer",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Class used to cache and set cursors.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_CursorServer.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AttachCursor",
+      "signature": "public bool AttachCursor(Control control, string name)",
+      "summary": "Attach a cursor to a control.",
+      "params": [
+        {
+          "name": "control",
+          "type": "System.Windows.Forms.Control",
+          "doc": "Control to assign cursor to.",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name of cursor to assign. This is the filename of the original cursor file minus the extension.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if cursor was assigned, or false if no matching cursor could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_CursorServer_AttachCursor.htm"
+    },
+    {
+      "name": "Cursor",
+      "signature": "public Cursor Cursor(string name)",
+      "summary": "Gets a cursor from the cache.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name of cursor to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Cursor",
+        "doc": "The cursor that is associated with the given name or null if not cursor could be matched."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_CursorServer_Cursor.htm"
+    },
+    {
+      "name": "IsCursor",
+      "signature": "public bool IsCursor(string name)",
+      "summary": "Test for the existence of a cursor.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Cursor name to test for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the cursor is cached."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_CursorServer_IsCursor.htm"
+    },
+    {
+      "name": "ReferenceCursors",
+      "signature": "public int ReferenceCursors(string folder)",
+      "summary": "Reference all the cursor files in a given directory.",
+      "params": [
+        {
+          "name": "folder",
+          "type": "System.String",
+          "doc": "Directory to parse.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of cursors referenced. Use the AttachCursor() method to assign a referenced cursor to a control."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_CursorServer_ReferenceCursors.htm"
+    },
+    {
+      "name": "ResetCursor",
+      "signature": "public bool ResetCursor(Control control)",
+      "summary": "Reset the cursor of the given control to default.",
+      "params": [
+        {
+          "name": "control",
+          "type": "System.Windows.Forms.Control",
+          "doc": "Control to reset.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if control was successfully reset, false if iControl is a null reference."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_CursorServer_ResetCursor.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of cached cursors.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_CursorServer_Count.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

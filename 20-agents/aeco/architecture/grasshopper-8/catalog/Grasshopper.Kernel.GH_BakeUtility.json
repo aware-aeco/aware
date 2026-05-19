@@ -1,0 +1,120 @@
+{
+  "name": "GH_BakeUtility",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "A utility class for baking. We heavily recommend you use this for any baking, as it handles invalid objects correctly.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_BakeUtility.htm",
+  "constructors": [
+    {
+      "name": "GH_BakeUtility",
+      "signature": "public GH_BakeUtility(GH_Document document)",
+      "summary": "Create a new baker.",
+      "params": [
+        {
+          "name": "document",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "doc": "Grasshopper document, if any.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_BakeUtility__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BakeObject",
+      "signature": "public bool BakeObject(Object obj, ObjectAttributes att, RhinoDoc doc)",
+      "summary": "Try and bake a single object.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "Object to bake, must at least implement IGH_BakeAwareData.",
+          "optional": false
+        },
+        {
+          "name": "att",
+          "type": "ObjectAttributes",
+          "doc": "Object attributes.",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "RhinoDoc",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if object was baked."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_BakeUtility_BakeObject.htm"
+    },
+    {
+      "name": "BakeObjects",
+      "signature": "public int BakeObjects(IEnumerable objects, ObjectAttributes att, RhinoDoc doc)",
+      "summary": "Bake a bunch of objects.",
+      "params": [
+        {
+          "name": "objects",
+          "type": "System.Collections.IEnumerable",
+          "doc": "Objects to bake.",
+          "optional": false
+        },
+        {
+          "name": "att",
+          "type": "ObjectAttributes",
+          "doc": "Attributes.",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "RhinoDoc",
+          "doc": "Document.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Number of successful bake operations."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_BakeUtility_BakeObjects.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BakedCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of successful baking operations.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_BakeUtility_BakedCount.htm"
+    },
+    {
+      "name": "BakedIds",
+      "type": "Guid[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets all collected object ids.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_BakeUtility_BakedIds.htm"
+    },
+    {
+      "name": "InvalidCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of invalid objects encountered.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_BakeUtility_InvalidCount.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

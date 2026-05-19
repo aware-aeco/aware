@@ -1,0 +1,60 @@
+{
+  "name": "IGH_FileDropTarget",
+  "namespace": "Grasshopper.GUI",
+  "kind": "interface",
+  "summary": "Implement this interface in your IGH_DocumentObject if you want to participate in Drag\u002BDrop events.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_IGH_FileDropTarget.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AcceptableFile",
+      "signature": "bool AcceptableFile(string path)",
+      "summary": "Gets a value indicating whether or not the path can be handled by the local object.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "Path to file in question.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the file can be handled, false if otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_IGH_FileDropTarget_AcceptableFile.htm"
+    },
+    {
+      "name": "HandleDrop",
+      "signature": "bool HandleDrop(string path, PointF mouse_pt)",
+      "summary": "Handle a file drop.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "Path of file to handle.",
+          "optional": false
+        },
+        {
+          "name": "mouse_pt",
+          "type": "System.Drawing.PointF",
+          "doc": "Point at which the drop occured.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_IGH_FileDropTarget_HandleDrop.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

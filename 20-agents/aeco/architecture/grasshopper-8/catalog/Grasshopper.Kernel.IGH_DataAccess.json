@@ -1,0 +1,616 @@
+{
+  "name": "IGH_DataAccess",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "Provides access to component parameters, in order to retrieve and assign data during solutions.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_IGH_DataAccess.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AbortComponentSolution",
+      "signature": "void AbortComponentSolution()",
+      "summary": "Call this method if you wish to stop solving this component.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DataAccess_AbortComponentSolution.htm"
+    },
+    {
+      "name": "BlitData\u003CQ\u003E",
+      "signature": "bool BlitData\u003CQ\u003E(int paramIndex, GH_Structure\u003CQ\u003E tree, bool overwrite) where Q : IGH_Goo",
+      "summary": "Creates a direct copy of an existing data structure. The existing generic instance must of the exact same type as the target parameter.",
+      "params": [
+        {
+          "name": "paramIndex",
+          "type": "System.Int32",
+          "doc": "Index of output parameter.",
+          "optional": false
+        },
+        {
+          "name": "tree",
+          "type": "Grasshopper.Kernel.Data.GH_Structure\u003CQ\u003E",
+          "doc": "Parameter whose data to blit",
+          "optional": false
+        },
+        {
+          "name": "overwrite",
+          "type": "System.Boolean",
+          "doc": "If true, any existing data will be removed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DataAccess_BlitData__1.htm"
+    },
+    {
+      "name": "DisableGapLogic()",
+      "signature": "void DisableGapLogic()",
+      "summary": "Call this function if you want to disable the gap null logic for the current iteration.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DataAccess_DisableGapLogic.htm"
+    },
+    {
+      "name": "DisableGapLogic(Int32)",
+      "signature": "void DisableGapLogic(int paramIndex)",
+      "summary": "Call this function if you want to disable the gap null logic for a specific output parameter.",
+      "params": [
+        {
+          "name": "paramIndex",
+          "type": "System.Int32",
+          "doc": "Index of output parameter to disable.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DataAccess_DisableGapLogic_1.htm"
+    },
+    {
+      "name": "GetData\u003CT\u003E(Int32, T)",
+      "signature": "bool GetData\u003CT\u003E(int index, ref T destination)",
+      "summary": "Retrieve data from an input parameter during GH_Component.SolveInstance().",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "optional": false
+        },
+        {
+          "name": "destination",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DataAccess_GetData__1.htm"
+    },
+    {
+      "name": "GetData\u003CT\u003E(String, T)",
+      "signature": "bool GetData\u003CT\u003E(string name, ref T destination)",
+      "summary": "Retrieve data from an input parameter during GH_Component.SolveInstance().",
+      "remarks": "Parameter access by index is faster, consider using the other overload if possible.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "destination",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DataAccess_GetData__1_1.htm"
+    },
+    {
+      "name": "GetDataList\u003CT\u003E(Int32, List\u003CT\u003E)",
+      "signature": "bool GetDataList\u003CT\u003E(int index, List\u003CT\u003E list)",
+      "summary": "Retrieve an entire list of data from an input parameter during GH_Component.SolveInstance().",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "optional": false
+        },
+        {
+          "name": "list",
+          "type": "System.Collections.Generic.List\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DataAccess_GetDataList__1.htm"
+    },
+    {
+      "name": "GetDataList\u003CT\u003E(String, List\u003CT\u003E)",
+      "signature": "bool GetDataList\u003CT\u003E(string name, List\u003CT\u003E list)",
+      "summary": "Retrieve an entire list of data from an input parameter during GH_Component.SolveInstance().",
+      "remarks": "Parameter access by index is faster, consider using the other overload if possible.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "list",
+          "type": "System.Collections.Generic.List\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DataAccess_GetDataList__1_1.htm"
+    },
+    {
+      "name": "GetDataTree\u003CT\u003E(Int32, GH_Structure\u003CT\u003E)",
+      "signature": "bool GetDataTree\u003CT\u003E(int index, out GH_Structure\u003CT\u003E tree) where T : IGH_Goo",
+      "summary": "Retrieve an entire data tree from an input parameter during GH_Component.SolveInstance().",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "optional": false
+        },
+        {
+          "name": "tree",
+          "type": "Grasshopper.Kernel.Data.GH_Structure\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DataAccess_GetDataTree__1.htm"
+    },
+    {
+      "name": "GetDataTree\u003CT\u003E(String, GH_Structure\u003CT\u003E)",
+      "signature": "bool GetDataTree\u003CT\u003E(string name, out GH_Structure\u003CT\u003E tree) where T : IGH_Goo",
+      "summary": "Retrieve an entire data tree from an input parameter during GH_Component.SolveInstance().",
+      "remarks": "Parameter access by index is faster, consider using the other overload if possible.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "tree",
+          "type": "Grasshopper.Kernel.Data.GH_Structure\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DataAccess_GetDataTree__1_1.htm"
+    },
+    {
+      "name": "IncrementIteration",
+      "signature": "void IncrementIteration()",
+      "summary": "Increments the iteration count by 1.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DataAccess_IncrementIteration.htm"
+    },
+    {
+      "name": "ParameterTargetIndex",
+      "signature": "int ParameterTargetIndex(int paramIndex)",
+      "summary": "Get the target index for the specified output parameter.",
+      "params": [
+        {
+          "name": "paramIndex",
+          "type": "System.Int32",
+          "doc": "Index of output parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DataAccess_ParameterTargetIndex.htm"
+    },
+    {
+      "name": "ParameterTargetPath",
+      "signature": "GH_Path ParameterTargetPath(int paramIndex)",
+      "summary": "Get the target path for the specified output parameter.",
+      "params": [
+        {
+          "name": "paramIndex",
+          "type": "System.Int32",
+          "doc": "Index of output parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Path",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DataAccess_ParameterTargetPath.htm"
+    },
+    {
+      "name": "SetData(Int32, Object)",
+      "signature": "bool SetData(int paramIndex, Object data)",
+      "summary": "Stores data in an output parameter during GH_Component.SolveInstance(). Use this function only for setting individual data items. If you want to set lists of data, you *must* call SetDataList() instead.",
+      "params": [
+        {
+          "name": "paramIndex",
+          "type": "System.Int32",
+          "doc": "Index of the output parameter at which to store the data.",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "System.Object",
+          "doc": "Data to store. Data will be converted if necessary, but it will not be duplicated automatically.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DataAccess_SetData.htm"
+    },
+    {
+      "name": "SetData(String, Object)",
+      "signature": "bool SetData(string paramName, Object data)",
+      "summary": "Stores data in an output parameter during GH_Component.SolveInstance().",
+      "remarks": "Parameter access by index is faster, consider using the other overload if possible.",
+      "params": [
+        {
+          "name": "paramName",
+          "type": "System.String",
+          "doc": "Name of the output parameter at which to store the data.",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "System.Object",
+          "doc": "Data to store. Data will be converted if necessary, but it will not be duplicated automatically.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DataAccess_SetData_2.htm"
+    },
+    {
+      "name": "SetData(Int32, Object, Int32)",
+      "signature": "bool SetData(int paramIndex, Object data, int itemIndexOverride)",
+      "summary": "Expert user function. Stores data in an output parameter during GH_Component.SolveInstance(). Use this function only for setting individual data items. If you want to set lists of data, you *must* call SetDataList() instead.",
+      "params": [
+        {
+          "name": "paramIndex",
+          "type": "System.Int32",
+          "doc": "Index of the output parameter at which to store the data.",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "System.Object",
+          "doc": "Data to store. Data will be converted if necessary, but it will not be duplicated automatically.",
+          "optional": false
+        },
+        {
+          "name": "itemIndexOverride",
+          "type": "System.Int32",
+          "doc": "Typically the item index is a result of Data matching logic. If you want to override the item index, then call this function.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DataAccess_SetData_1.htm"
+    },
+    {
+      "name": "SetDataList(Int32, IEnumerable)",
+      "signature": "bool SetDataList(int paramIndex, IEnumerable data)",
+      "summary": "Stores a list of data in an output parameter during GH_Component.SolveInstance().",
+      "params": [
+        {
+          "name": "paramIndex",
+          "type": "System.Int32",
+          "doc": "Index of the output parameter at which to store the list.",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "System.Collections.IEnumerable",
+          "doc": "Data to store. Data will be converted if necessary, but it will not be duplicated automatically.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DataAccess_SetDataList.htm"
+    },
+    {
+      "name": "SetDataList(String, IEnumerable)",
+      "signature": "bool SetDataList(string paramName, IEnumerable data)",
+      "summary": "Stores data in an output parameter during GH_Component.SolveInstance().",
+      "remarks": "Parameter access by index is faster, consider using the other overload if possible.",
+      "params": [
+        {
+          "name": "paramName",
+          "type": "System.String",
+          "doc": "Name of the parameter at which to store the data.",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "System.Collections.IEnumerable",
+          "doc": "Data to store. Data will be converted if necessary, but it will not be duplicated automatically.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DataAccess_SetDataList_2.htm"
+    },
+    {
+      "name": "SetDataList(Int32, IEnumerable, Int32)",
+      "signature": "bool SetDataList(int paramIndex, IEnumerable data, int listIndexOverride)",
+      "summary": "Expert user function. Stores a list of data in an output parameter during GH_Component.SolveInstance().",
+      "params": [
+        {
+          "name": "paramIndex",
+          "type": "System.Int32",
+          "doc": "Index of the output parameter at which to store the list.",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "System.Collections.IEnumerable",
+          "doc": "Data to store. Data will be converted if necessary, but it will not be duplicated automatically.",
+          "optional": false
+        },
+        {
+          "name": "listIndexOverride",
+          "type": "System.Int32",
+          "doc": "Typically the branch index is a result of Data matching logic. If you want to override the branch index, then call this function.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DataAccess_SetDataList_1.htm"
+    },
+    {
+      "name": "SetDataTree(Int32, IGH_DataTree)",
+      "signature": "bool SetDataTree(int paramIndex, IGH_DataTree tree)",
+      "summary": "Folds a utility tree representation into this tree.",
+      "params": [
+        {
+          "name": "paramIndex",
+          "type": "System.Int32",
+          "doc": "Index of output parameter to merge with.",
+          "optional": false
+        },
+        {
+          "name": "tree",
+          "type": "Grasshopper.Kernel.Data.IGH_DataTree",
+          "doc": "Tree to merge",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DataAccess_SetDataTree.htm"
+    },
+    {
+      "name": "SetDataTree(Int32, IGH_Structure)",
+      "signature": "bool SetDataTree(int paramIndex, IGH_Structure tree)",
+      "summary": "Folds a utility tree representation into this tree.",
+      "params": [
+        {
+          "name": "paramIndex",
+          "type": "System.Int32",
+          "doc": "Index of output parameter to merge with.",
+          "optional": false
+        },
+        {
+          "name": "tree",
+          "type": "Grasshopper.Kernel.Data.IGH_Structure",
+          "doc": "Tree to merge",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DataAccess_SetDataTree_1.htm"
+    },
+    {
+      "name": "Util_CountNonNullRefs\u003CT\u003E",
+      "signature": "int Util_CountNonNullRefs\u003CT\u003E(List\u003CT\u003E L)",
+      "summary": "Count all object references in L",
+      "params": [
+        {
+          "name": "L",
+          "type": "System.Collections.Generic.List\u003CT\u003E",
+          "doc": "List to parse",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Number of proper objects in L"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DataAccess_Util_CountNonNullRefs__1.htm"
+    },
+    {
+      "name": "Util_CountNullRefs\u003CT\u003E",
+      "signature": "int Util_CountNullRefs\u003CT\u003E(List\u003CT\u003E L)",
+      "summary": "Count all null references in L",
+      "params": [
+        {
+          "name": "L",
+          "type": "System.Collections.Generic.List\u003CT\u003E",
+          "doc": "List to parse",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Number of nulls in L"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DataAccess_Util_CountNullRefs__1.htm"
+    },
+    {
+      "name": "Util_EnsureNonNullCount\u003CT\u003E",
+      "signature": "bool Util_EnsureNonNullCount\u003CT\u003E(List\u003CT\u003E L, int N)",
+      "summary": "Tests a list to see if it contains sufficient non-null references.",
+      "params": [
+        {
+          "name": "L",
+          "type": "System.Collections.Generic.List\u003CT\u003E",
+          "doc": "List to parse",
+          "optional": false
+        },
+        {
+          "name": "N",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if L contains N or more non-null references."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DataAccess_Util_EnsureNonNullCount__1.htm"
+    },
+    {
+      "name": "Util_FirstNonNullItem\u003CT\u003E",
+      "signature": "int Util_FirstNonNullItem\u003CT\u003E(List\u003CT\u003E L)",
+      "summary": "Returns the index of the first non-null item in a list.",
+      "params": [
+        {
+          "name": "L",
+          "type": "System.Collections.Generic.List\u003CT\u003E",
+          "doc": "List to parse.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the first non-null item or -1 if no object reference could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DataAccess_Util_FirstNonNullItem__1.htm"
+    },
+    {
+      "name": "Util_RemoveNullRefs\u003CT\u003E",
+      "signature": "List\u003CT\u003E Util_RemoveNullRefs\u003CT\u003E(List\u003CT\u003E L)",
+      "summary": "Remove all null references from a list of items.",
+      "params": [
+        {
+          "name": "L",
+          "type": "System.Collections.Generic.List\u003CT\u003E",
+          "doc": "List to filter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CT\u003E",
+        "doc": "List containing only non-null items. References are shared with L"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DataAccess_Util_RemoveNullRefs__1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Iteration",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the current iteration count. The first time the SolveInstance() function is called on a component during a solution the Iteration counter will be zero. It will be incremented by one for every subsequent call.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_DataAccess_Iteration.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

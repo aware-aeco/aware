@@ -1,0 +1,39 @@
+{
+  "name": "GH_DigitScrollerEventArgs",
+  "namespace": "Grasshopper.GUI.Base",
+  "kind": "class",
+  "summary": "Arguments passed via GH_digitScrollerBase.ValueChanged events.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Base_GH_DigitScrollerEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Intermediate",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the change was an intermediate one.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerEventArgs_Intermediate.htm"
+    },
+    {
+      "name": "Scroller",
+      "type": "GH_DigitScrollerBase",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the instance of the scroller that raised the event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerEventArgs_Scroller.htm"
+    },
+    {
+      "name": "Value",
+      "type": "Decimal",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the new value of the slider. This value is cached, so even if the slider subsequently updates, this property remains constant.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_DigitScrollerEventArgs_Value.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

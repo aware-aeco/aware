@@ -1,0 +1,34 @@
+{
+  "name": "GH_BackgroundStyle",
+  "namespace": "Grasshopper.GUI.Theme",
+  "kind": "enum",
+  "summary": "Enumerates the pre-defined canvas background themes.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Theme_GH_BackgroundStyle.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Solid",
+      "value": 0,
+      "summary": "Canvas background will be a single, solid colour."
+    },
+    {
+      "name": "Hatch",
+      "value": 1,
+      "summary": "Canvas background will be a GDI hatch brush."
+    },
+    {
+      "name": "GradientLeftRight",
+      "value": 10,
+      "summary": "Canvas background will be a linear horizontal gradient."
+    },
+    {
+      "name": "GradientTopBottom",
+      "value": 11,
+      "summary": "Canvas background will be a linear vertical gradient."
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "name": "GH_SettingsType",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Lists all the data types available in the GH_SettingsServer class.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_SettingsType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "_unknown",
+      "value": -1
+    },
+    {
+      "name": "_null",
+      "value": 0
+    },
+    {
+      "name": "_boolean",
+      "value": 1
+    },
+    {
+      "name": "_byte",
+      "value": 2
+    },
+    {
+      "name": "_integer",
+      "value": 3
+    },
+    {
+      "name": "_double",
+      "value": 4
+    },
+    {
+      "name": "_string",
+      "value": 6
+    },
+    {
+      "name": "_date",
+      "value": 7
+    },
+    {
+      "name": "_color",
+      "value": 8
+    },
+    {
+      "name": "_point",
+      "value": 9
+    },
+    {
+      "name": "_size",
+      "value": 10
+    },
+    {
+      "name": "_rectangle",
+      "value": 11
+    }
+  ]
+}

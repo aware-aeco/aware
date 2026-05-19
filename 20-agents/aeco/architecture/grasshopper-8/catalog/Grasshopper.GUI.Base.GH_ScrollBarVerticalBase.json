@@ -1,0 +1,157 @@
+{
+  "name": "GH_ScrollBarVerticalBase",
+  "namespace": "Grasshopper.GUI.Base",
+  "kind": "class",
+  "summary": "Provides basic vertical scroll bar logic.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Base_GH_ScrollBarVerticalBase.htm",
+  "constructors": [
+    {
+      "name": "GH_ScrollBarVerticalBase",
+      "signature": "public GH_ScrollBarVerticalBase()",
+      "summary": "Initializes a new instance of the GH_ScrollBarVerticalBase class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ScrollBarVerticalBase__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BeginDrag",
+      "signature": "public void BeginDrag(RectangleF region, double start)",
+      "summary": "Start a new drag operation.",
+      "params": [
+        {
+          "name": "region",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Scroll bar region (the rectangle in which the scroll bar is allowed to move).",
+          "optional": false
+        },
+        {
+          "name": "start",
+          "type": "System.Double",
+          "doc": "Vertical offset of scroll drag.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ScrollBarVerticalBase_BeginDrag.htm"
+    },
+    {
+      "name": "ContinueDrag",
+      "signature": "public bool ContinueDrag(double position)",
+      "summary": "Continue a drag operation.",
+      "params": [
+        {
+          "name": "position",
+          "type": "System.Double",
+          "doc": "New offset hint.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the drag resulted in an offset change, false if not."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ScrollBarVerticalBase_ContinueDrag.htm"
+    },
+    {
+      "name": "ScrollBar(Rectangle)",
+      "signature": "public Rectangle ScrollBar(Rectangle rail)",
+      "summary": "Compute the size and position of the scroll bar in the scroll rail.",
+      "params": [
+        {
+          "name": "rail",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Rail for scroll bar to move around in.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Rectangle",
+        "doc": "A rectangle describing the location and extends of the scroll bar."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ScrollBarVerticalBase_ScrollBar.htm"
+    },
+    {
+      "name": "ScrollBar(RectangleF)",
+      "signature": "public RectangleF ScrollBar(RectangleF rail)",
+      "summary": "Compute the size and position of the scroll bar in the scroll rail.",
+      "params": [
+        {
+          "name": "rail",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Rail for scroll bar to move around in.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RectangleF",
+        "doc": "A rectangle describing the location and extends of the scroll bar."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_Base_GH_ScrollBarVerticalBase_ScrollBar_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Content",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the height of the content",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ScrollBarVerticalBase_Content.htm"
+    },
+    {
+      "name": "ContentOffset",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the vertical offset (in pixels) of the scrolled content.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ScrollBarVerticalBase_ContentOffset.htm"
+    },
+    {
+      "name": "Display",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the height of the display area.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ScrollBarVerticalBase_Display.htm"
+    },
+    {
+      "name": "Minimum",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the minimum height of the scrollbar.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ScrollBarVerticalBase_Minimum.htm"
+    },
+    {
+      "name": "Offset",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the offset of the scroller.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ScrollBarVerticalBase_Offset.htm"
+    },
+    {
+      "name": "OffsetNormalised",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the normalised offset of the scroller.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_Base_GH_ScrollBarVerticalBase_OffsetNormalised.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

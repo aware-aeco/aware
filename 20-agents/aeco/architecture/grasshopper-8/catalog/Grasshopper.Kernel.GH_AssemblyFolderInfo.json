@@ -1,0 +1,74 @@
+{
+  "name": "GH_AssemblyFolderInfo",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "struct",
+  "summary": "Represents a folder from which GHA files are loaded.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_AssemblyFolderInfo.htm",
+  "constructors": [
+    {
+      "name": "GH_AssemblyFolderInfo",
+      "signature": "public GH_AssemblyFolderInfo(string folder, GH_PluginFolderType type)",
+      "summary": "Initializes a new instance of the GH_AssemblyFolderInfo class",
+      "params": [
+        {
+          "name": "folder",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "Grasshopper.Kernel.GH_PluginFolderType",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_AssemblyFolderInfo__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides ValueType.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_GH_AssemblyFolderInfo_ToString.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "SearchOption",
+      "type": "SearchOption",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the search option to use when looking for GHA files in this folder.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_GH_AssemblyFolderInfo_SearchOption.htm"
+    },
+    {
+      "name": "Folder",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The actual full path to the folder.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_GH_AssemblyFolderInfo_Folder.htm"
+    },
+    {
+      "name": "Type",
+      "type": "GH_PluginFolderType",
+      "getter": true,
+      "setter": false,
+      "summary": "Identifies the type of assembly folder.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_Kernel_GH_AssemblyFolderInfo_Type.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

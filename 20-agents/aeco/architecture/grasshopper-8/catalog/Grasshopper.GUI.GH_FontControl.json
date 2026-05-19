@@ -1,0 +1,85 @@
+{
+  "name": "GH_FontControl",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Represents a control that offers both Font preview and Picking methods.",
+  "base": "UserControl",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_FontControl.htm",
+  "constructors": [
+    {
+      "name": "GH_FontControl",
+      "signature": "public GH_FontControl()",
+      "summary": "Initializes a new instance of the GH_FontControl class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_FontControl__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "protected override void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the GH_FontControl and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_FontControl_Dispose.htm"
+    },
+    {
+      "name": "OnLayout",
+      "signature": "protected override void OnLayout(LayoutEventArgs e)",
+      "summary": "Raises the Layout event.",
+      "params": [
+        {
+          "name": "e",
+          "type": "System.Windows.Forms.LayoutEventArgs",
+          "doc": "A LayoutEventArgs that contains the event data.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_FontControl_OnLayout.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AllowFamilyOverride",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_FontControl_AllowFamilyOverride.htm"
+    },
+    {
+      "name": "AllowSizeOverride",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_FontControl_AllowSizeOverride.htm"
+    },
+    {
+      "name": "AllowStyleOverride",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_FontControl_AllowStyleOverride.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

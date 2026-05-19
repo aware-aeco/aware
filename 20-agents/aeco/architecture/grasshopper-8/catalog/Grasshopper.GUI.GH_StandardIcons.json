@@ -1,0 +1,142 @@
+{
+  "name": "GH_StandardIcons",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Provides access to a set of standard icons.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_StandardIcons.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "BlankObjectIcon_24x24",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the base icon for objects; an empty white square.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_StandardIcons_BlankObjectIcon_24x24.htm"
+    },
+    {
+      "name": "BlankParameterIcon_24x24",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the base icon for parameters; an empty black hexagon.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_StandardIcons_BlankParameterIcon_24x24.htm"
+    },
+    {
+      "name": "ClusterIcon_24x24",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the icon used for clusters.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_StandardIcons_ClusterIcon_24x24.htm"
+    },
+    {
+      "name": "FileIconDll_32x32",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the file icon used for Dll files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_StandardIcons_FileIconDll_32x32.htm"
+    },
+    {
+      "name": "FileIconExe_32x32",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the file icon used for Exe files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_StandardIcons_FileIconExe_32x32.htm"
+    },
+    {
+      "name": "FileIconGH_32x36",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the file icon used for Grasshopper Binary files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_StandardIcons_FileIconGH_32x36.htm"
+    },
+    {
+      "name": "FileIconGha_32x32",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the file icon used for Gha files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_StandardIcons_FileIconGha_32x32.htm"
+    },
+    {
+      "name": "FileIconGHMissing_32x36",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the file icon used for missing Grasshopper Binary files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_StandardIcons_FileIconGHMissing_32x36.htm"
+    },
+    {
+      "name": "FileIconGHX_32x36",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the file icon used for Grasshopper Xml files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_StandardIcons_FileIconGHX_32x36.htm"
+    },
+    {
+      "name": "FileIconGHXMissing_32x36",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the file icon used for missing Grasshopper Xml files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_StandardIcons_FileIconGHXMissing_32x36.htm"
+    },
+    {
+      "name": "FileIconRhp_32x32",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the file icon used for Rhp files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_StandardIcons_FileIconRhp_32x32.htm"
+    },
+    {
+      "name": "FlattenIcon_24x24",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the trunk icon used to indicate flattening.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_StandardIcons_FlattenIcon_24x24.htm"
+    },
+    {
+      "name": "GraftIcon_24x24",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the twig icon used to indicate grafting.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_StandardIcons_GraftIcon_24x24.htm"
+    },
+    {
+      "name": "GroupIcon_24x24",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the icon used for canvas groups.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_StandardIcons_GroupIcon_24x24.htm"
+    },
+    {
+      "name": "UnknownObjectIcon_24x24",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the icon used for objects that do not have their own icon and unknown objects.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_StandardIcons_UnknownObjectIcon_24x24.htm"
+    },
+    {
+      "name": "UserObjectIcon_24x24",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the icon used for user objects.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_StandardIcons_UserObjectIcon_24x24.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

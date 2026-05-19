@@ -1,0 +1,419 @@
+{
+  "name": "ModelColor",
+  "namespace": "Grasshopper.Rhinoceros",
+  "kind": "struct",
+  "summary": "Represents a color stored on a model.",
+  "remarks": "This is an opaque representation of a color with conversion methods to and from other color types.",
+  "interfaces": [
+    "IGH_Goo",
+    "IFormattable",
+    "IEquatable\u003CModelColor\u003E",
+    "IComparable",
+    "IComparable\u003CModelColor\u003E"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Rhinoceros_ModelColor.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CompareTo",
+      "signature": "public int CompareTo(ModelColor other)",
+      "summary": "",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Rhinoceros.ModelColor",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelColor_CompareTo.htm"
+    },
+    {
+      "name": "Equals(ModelColor)",
+      "signature": "public bool Equals(ModelColor other)",
+      "summary": "",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Rhinoceros.ModelColor",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelColor_Equals.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object other)",
+      "summary": "(Overrides ValueType.Equals(Object).)",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelColor_Equals_1.htm"
+    },
+    {
+      "name": "FromArgb(Int32)",
+      "signature": "public static ModelColor FromArgb(int argb)",
+      "summary": "",
+      "params": [
+        {
+          "name": "argb",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelColor",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelColor_FromArgb_2.htm"
+    },
+    {
+      "name": "FromArgb(Byte, Byte, Byte)",
+      "signature": "public static ModelColor FromArgb(byte r, byte g, byte b)",
+      "summary": "",
+      "params": [
+        {
+          "name": "r",
+          "type": "System.Byte",
+          "optional": false
+        },
+        {
+          "name": "g",
+          "type": "System.Byte",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "System.Byte",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelColor",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelColor_FromArgb.htm"
+    },
+    {
+      "name": "FromArgb(Byte, Byte, Byte, Byte)",
+      "signature": "public static ModelColor FromArgb(byte a, byte r, byte g, byte b)",
+      "summary": "",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Byte",
+          "optional": false
+        },
+        {
+          "name": "r",
+          "type": "System.Byte",
+          "optional": false
+        },
+        {
+          "name": "g",
+          "type": "System.Byte",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "System.Byte",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelColor",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelColor_FromArgb_1.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "(Overrides ValueType.GetHashCode().)",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelColor_GetHashCode.htm"
+    },
+    {
+      "name": "ToArgb",
+      "signature": "public int ToArgb()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelColor_ToArgb.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides ValueType.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelColor_ToString.htm"
+    },
+    {
+      "name": "Equality(Color, ModelColor)",
+      "signature": "public static bool operator ==(Color left, ModelColor right)",
+      "summary": "",
+      "params": [
+        {
+          "name": "left",
+          "type": "System.Drawing.Color",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "Grasshopper.Rhinoceros.ModelColor",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelColor_op_Equality_2.htm"
+    },
+    {
+      "name": "Equality(ModelColor, ModelColor)",
+      "signature": "public static bool operator ==(ModelColor left, ModelColor right)",
+      "summary": "",
+      "params": [
+        {
+          "name": "left",
+          "type": "Grasshopper.Rhinoceros.ModelColor",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "Grasshopper.Rhinoceros.ModelColor",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelColor_op_Equality.htm"
+    },
+    {
+      "name": "Equality(ModelColor, Color)",
+      "signature": "public static bool operator ==(ModelColor left, Color right)",
+      "summary": "",
+      "params": [
+        {
+          "name": "left",
+          "type": "Grasshopper.Rhinoceros.ModelColor",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "System.Drawing.Color",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelColor_op_Equality_1.htm"
+    },
+    {
+      "name": "Explicit(ModelColor to ColorRGBA)",
+      "signature": "public static explicit operator ColorRGBA (ModelColor color)",
+      "summary": "",
+      "params": [
+        {
+          "name": "color",
+          "type": "Grasshopper.Rhinoceros.ModelColor",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorRGBA",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelColor_op_Explicit.htm"
+    },
+    {
+      "name": "Implicit(Color to ModelColor)",
+      "signature": "public static implicit operator ModelColor (Color color)",
+      "summary": "",
+      "params": [
+        {
+          "name": "color",
+          "type": "System.Drawing.Color",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelColor",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelColor_op_Implicit_2.htm"
+    },
+    {
+      "name": "Implicit(ColorRGBA to ModelColor)",
+      "signature": "public static implicit operator ModelColor (ColorRGBA color)",
+      "summary": "",
+      "params": [
+        {
+          "name": "color",
+          "type": "ColorRGBA",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModelColor",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelColor_op_Implicit_1.htm"
+    },
+    {
+      "name": "Implicit(ModelColor to Color)",
+      "signature": "public static implicit operator Color (ModelColor color)",
+      "summary": "",
+      "params": [
+        {
+          "name": "color",
+          "type": "Grasshopper.Rhinoceros.ModelColor",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelColor_op_Implicit.htm"
+    },
+    {
+      "name": "Inequality(Color, ModelColor)",
+      "signature": "public static bool operator !=(Color left, ModelColor right)",
+      "summary": "",
+      "params": [
+        {
+          "name": "left",
+          "type": "System.Drawing.Color",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "Grasshopper.Rhinoceros.ModelColor",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelColor_op_Inequality_2.htm"
+    },
+    {
+      "name": "Inequality(ModelColor, ModelColor)",
+      "signature": "public static bool operator !=(ModelColor left, ModelColor right)",
+      "summary": "",
+      "params": [
+        {
+          "name": "left",
+          "type": "Grasshopper.Rhinoceros.ModelColor",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "Grasshopper.Rhinoceros.ModelColor",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelColor_op_Inequality.htm"
+    },
+    {
+      "name": "Inequality(ModelColor, Color)",
+      "signature": "public static bool operator !=(ModelColor left, Color right)",
+      "summary": "",
+      "params": [
+        {
+          "name": "left",
+          "type": "Grasshopper.Rhinoceros.ModelColor",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "System.Drawing.Color",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Rhinoceros_ModelColor_op_Inequality_1.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

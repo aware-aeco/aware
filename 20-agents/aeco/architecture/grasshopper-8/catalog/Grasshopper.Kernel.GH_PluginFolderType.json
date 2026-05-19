@@ -1,0 +1,34 @@
+{
+  "name": "GH_PluginFolderType",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates the possible folder types for GH_AssemblyFolderInfo",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_PluginFolderType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Core",
+      "value": 0,
+      "summary": "The Core folder is the one where native Grasshopper GHA files are installed."
+    },
+    {
+      "name": "Default",
+      "value": 1,
+      "summary": "The Default folder is where Grasshopper puts 3rd party GHA files."
+    },
+    {
+      "name": "RhiFolder",
+      "value": 2,
+      "summary": "A RhiFolder folder is created by an RHI installer package."
+    },
+    {
+      "name": "UserFolder",
+      "value": 3,
+      "summary": "A UserFolder is created by the user via the _GrasshopperDeveloperSettings command."
+    }
+  ]
+}

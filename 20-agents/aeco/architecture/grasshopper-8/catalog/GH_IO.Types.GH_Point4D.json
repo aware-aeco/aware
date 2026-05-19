@@ -1,0 +1,96 @@
+{
+  "name": "GH_Point4D",
+  "namespace": "GH_IO.Types",
+  "kind": "struct",
+  "summary": "Represents a 4D point coordinate with double precision floating point components.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_GH_IO_Types_GH_Point4D.htm",
+  "constructors": [
+    {
+      "name": "GH_Point4D",
+      "signature": "public GH_Point4D(double nx, double ny, double nz, double nw)",
+      "summary": "Constructor.",
+      "params": [
+        {
+          "name": "nx",
+          "type": "System.Double",
+          "doc": "X coordinate of point.",
+          "optional": false
+        },
+        {
+          "name": "ny",
+          "type": "System.Double",
+          "doc": "Y coordinate of point.",
+          "optional": false
+        },
+        {
+          "name": "nz",
+          "type": "System.Double",
+          "doc": "Z coordinate of point.",
+          "optional": false
+        },
+        {
+          "name": "nw",
+          "type": "System.Double",
+          "doc": "W coordinate of point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Types_GH_Point4D__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Converts this structure to a human-readable string.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A string representation of the four-dimenionsional point structure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_GH_IO_Types_GH_Point4D_ToString.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "w",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "W coordinate of point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_GH_IO_Types_GH_Point4D_w.htm"
+    },
+    {
+      "name": "x",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "X coordinate of point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_GH_IO_Types_GH_Point4D_x.htm"
+    },
+    {
+      "name": "y",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Y coordinate of point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_GH_IO_Types_GH_Point4D_y.htm"
+    },
+    {
+      "name": "z",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Z coordinate of point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_GH_IO_Types_GH_Point4D_z.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

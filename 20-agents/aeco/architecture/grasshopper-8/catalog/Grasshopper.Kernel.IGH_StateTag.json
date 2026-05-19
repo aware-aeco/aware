@@ -1,0 +1,72 @@
+{
+  "name": "IGH_StateTag",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "A StateTag is a visual feedback mechanism that reflects a certain local setting of an Object.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_IGH_StateTag.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Render",
+      "signature": "void Render(Graphics graphics)",
+      "summary": "Render this tag into a graphics surface.",
+      "params": [
+        {
+          "name": "graphics",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw to.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_Kernel_IGH_StateTag_Render.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the description of this state tag.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_StateTag_Description.htm"
+    },
+    {
+      "name": "Icon",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the 16 by 16 pixel icon associated with this state tag.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_StateTag_Icon.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name field of this state tag.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_StateTag_Name.htm"
+    },
+    {
+      "name": "Stage",
+      "type": "Rectangle",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Stage rectangle for this state tag. Stages are assigned during Attribute Layout operations by owner objects.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_StateTag_Stage.htm"
+    },
+    {
+      "name": "StateDescription",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the state description of this tag. The state description appears in the Tooltip info field.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_Kernel_IGH_StateTag_StateDescription.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,99 @@
+{
+  "name": "GH_TooltipComponent",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "This component provides Grasshopper tooltip functionality through a winforms Component.",
+  "base": "Component",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_TooltipComponent.htm",
+  "constructors": [
+    {
+      "name": "GH_TooltipComponent",
+      "signature": "public GH_TooltipComponent()",
+      "summary": "Initializes a new instance of the GH_TooltipComponent class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_TooltipComponent__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Hide",
+      "signature": "public void Hide()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_TooltipComponent_Hide.htm"
+    },
+    {
+      "name": "IsTag",
+      "signature": "public bool IsTag(Object object)",
+      "summary": "Test whether the current Tooltip tag matches the object.",
+      "params": [
+        {
+          "name": "object",
+          "type": "System.Object",
+          "doc": "Object to test against tag.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the Tag and object are the same."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_TooltipComponent_IsTag.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Delay",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the delay (in milliseconds) for this tooltip to appear.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_TooltipComponent_Delay.htm"
+    },
+    {
+      "name": "Enabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Enabled flag.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_TooltipComponent_Enabled.htm"
+    },
+    {
+      "name": "Tag",
+      "type": "Object",
+      "getter": true,
+      "setter": true,
+      "summary": "Provides an easy way to store information on this Tooltip.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_TooltipComponent_Tag.htm"
+    },
+    {
+      "name": "Target",
+      "type": "Control",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the control this tooltip is tied to.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/P_Grasshopper_GUI_GH_TooltipComponent_Target.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "PopulateTooltip",
+      "delegate": "Grasshopper.GUI.GH_TooltipComponent.PopulateTooltipEventHandler",
+      "signature": "public event GH_TooltipComponent.PopulateTooltipEventHandler PopulateTooltip",
+      "summary": "This event is raised just prior to the tooltip display.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/E_Grasshopper_GUI_GH_TooltipComponent_PopulateTooltip.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

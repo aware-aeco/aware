@@ -1,0 +1,26 @@
+{
+  "name": "GH_Audience",
+  "namespace": "Grasshopper.Documentation",
+  "kind": "enum",
+  "summary": "Enumerates the pre-defined target audiences used in the Grasshopper documentation.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Documentation_GH_Audience.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Beginner",
+      "value": 0
+    },
+    {
+      "name": "Intermediate",
+      "value": 1
+    },
+    {
+      "name": "Expert",
+      "value": 2
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "name": "GH_WireType",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "enum",
+  "summary": "Enumerates the different kinds of connecting wires.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_WireType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "dynamic",
+      "value": 0,
+      "summary": "Dynamic indicates the wire is in the process of being made."
+    },
+    {
+      "name": "generic",
+      "value": 2,
+      "summary": "Generic connector wire. Can\u0027t go wrong with generic."
+    },
+    {
+      "name": "faint",
+      "value": 3,
+      "summary": "Similar to generic, but less pronounced."
+    },
+    {
+      "name": "null",
+      "value": 4,
+      "summary": "Wire with null data transfer."
+    },
+    {
+      "name": "item",
+      "value": 5,
+      "summary": "Wire with a single data transfer."
+    },
+    {
+      "name": "list",
+      "value": 6,
+      "summary": "Wire with a single list transfer."
+    },
+    {
+      "name": "tree",
+      "value": 7,
+      "summary": "Wire with multiple list transfer."
+    },
+    {
+      "name": "dynamicAlternative1",
+      "value": 8,
+      "summary": "Wire type used by copyname=true wires."
+    }
+  ]
+}

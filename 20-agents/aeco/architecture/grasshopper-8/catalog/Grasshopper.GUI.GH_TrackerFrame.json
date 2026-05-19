@@ -1,0 +1,79 @@
+{
+  "name": "GH_TrackerFrame",
+  "namespace": "Grasshopper.GUI",
+  "kind": "struct",
+  "summary": "Represents a single frame in a mouse-tracker history. A frame represents all relevant mouse and keyboard data at a given time.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_GUI_GH_TrackerFrame.htm",
+  "constructors": [
+    {
+      "name": "GH_TrackerFrame",
+      "signature": "public GH_TrackerFrame(Point position)",
+      "summary": "Initializes a new instance of the GH_TrackerFrame class",
+      "params": [
+        {
+          "name": "position",
+          "type": "System.Drawing.Point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/M_Grasshopper_GUI_GH_TrackerFrame__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Buttons",
+      "type": "MouseButtons",
+      "getter": true,
+      "setter": false,
+      "summary": "The state of the mouse buttons of the frame.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_GH_TrackerFrame_Buttons.htm"
+    },
+    {
+      "name": "Keys",
+      "type": "Keys",
+      "getter": true,
+      "setter": false,
+      "summary": "The state of the modifier keys (Contro, Shift and Alt) of the frame.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_GH_TrackerFrame_Keys.htm"
+    },
+    {
+      "name": "PositionControl",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "The position (in control coordinates) of the frame.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_GH_TrackerFrame_PositionControl.htm"
+    },
+    {
+      "name": "PositionScreen",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "The position (in screen coordinates) of the frame.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_GH_TrackerFrame_PositionScreen.htm"
+    },
+    {
+      "name": "Tag",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "Optional Tag object (to be supplied by user).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_GH_TrackerFrame_Tag.htm"
+    },
+    {
+      "name": "Time",
+      "type": "DateTime",
+      "getter": true,
+      "setter": false,
+      "summary": "The time at which this frame was recorded.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/F_Grasshopper_GUI_GH_TrackerFrame_Time.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

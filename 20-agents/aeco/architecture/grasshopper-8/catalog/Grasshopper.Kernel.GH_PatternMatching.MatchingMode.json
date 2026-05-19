@@ -1,0 +1,38 @@
+{
+  "name": "GH_PatternMatching.MatchingMode",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "(No description provided in vendor docs for Grasshopper.Kernel.GH_PatternMatching.MatchingMode.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/T_Grasshopper_Kernel_GH_PatternMatching_MatchingMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Equals",
+      "value": 0
+    },
+    {
+      "name": "Wildcards",
+      "value": 1
+    },
+    {
+      "name": "Regex",
+      "value": 2
+    },
+    {
+      "name": "Contains",
+      "value": 3
+    },
+    {
+      "name": "StartsWith",
+      "value": 4
+    },
+    {
+      "name": "EndsWith",
+      "value": 5
+    }
+  ]
+}
