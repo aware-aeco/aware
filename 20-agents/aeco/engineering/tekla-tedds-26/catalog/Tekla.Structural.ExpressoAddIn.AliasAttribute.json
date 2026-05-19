@@ -1,0 +1,52 @@
+{
+  "name": "AliasAttribute",
+  "namespace": "Tekla.Structural.ExpressoAddIn",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Tekla.Structural.ExpressoAddIn.AliasAttribute.)",
+  "base": "Attribute",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2026/tekla-structural-expressoaddin-aliasattribute-64128",
+  "constructors": [
+    {
+      "name": "AliasAttribute(string)",
+      "signature": "public AliasAttribute(string alias)",
+      "summary": "",
+      "params": [
+        {
+          "name": "alias",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/849f0f217ebd1cdb0a393ae3a204c240d16cee1c8f0e7f2f0bcfd5289323d538"
+    },
+    {
+      "name": "AliasAttribute(string, bool)",
+      "signature": "public AliasAttribute(string alias, bool aliasOnly)",
+      "summary": "",
+      "params": [
+        {
+          "name": "alias",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "aliasOnly",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/849f0f217ebd1cdb0a393ae3a204c240d16cee1c8f0e7f2f0bcfd5289323d538"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

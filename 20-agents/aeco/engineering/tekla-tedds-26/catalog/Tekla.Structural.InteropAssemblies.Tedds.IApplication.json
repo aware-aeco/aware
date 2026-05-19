@@ -1,0 +1,216 @@
+{
+  "name": "IApplication",
+  "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+  "kind": "interface",
+  "summary": "Interface for the Main application",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2026/tekla-structural-interopassemblies-tedds-iapplication-64135",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Activate()",
+      "signature": "void Activate()",
+      "summary": "Activates the user interface of the application",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/af0684849d8f93ec5a6a39b618034ad7b37f7a5ab59970268dabd913d9d21f4a"
+    },
+    {
+      "name": "Move(int, int)",
+      "signature": "void Move(int Left, int Top)",
+      "summary": "Move the applications main window",
+      "params": [
+        {
+          "name": "Left",
+          "type": "int",
+          "doc": "New position of left edge of window in screen co-ordinates",
+          "optional": false
+        },
+        {
+          "name": "Top",
+          "type": "int",
+          "doc": "New position of top edge of window in screen co-ordinates",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/e2494933c1fd5b4a31a2fcde3ba43eec6ecc4a463047910485860aa5afefea6f"
+    },
+    {
+      "name": "Quit(bool)",
+      "signature": "void Quit(bool SaveChanges)",
+      "summary": "Exit the application",
+      "params": [
+        {
+          "name": "SaveChanges",
+          "type": "bool",
+          "doc": "Determines whether changes to unsaved documents should be saved or discarded",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/1acbb71ed797106f3b430841e1721be0b1179e63fcb1fefeb4cc2bd40406043f"
+    },
+    {
+      "name": "Resize(int, int)",
+      "signature": "void Resize(int Width, int Height)",
+      "summary": "Size the applications main window",
+      "params": [
+        {
+          "name": "Width",
+          "type": "int",
+          "doc": "Width of window in pixels",
+          "optional": false
+        },
+        {
+          "name": "Height",
+          "type": "int",
+          "doc": "Height of window in pixels",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/0744c98b7353e04e55c9605b2d6150f965d126e1ea28c19e91517173ce9f0ceb"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ActiveDocument",
+      "type": "ITeddsDocument",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns active document",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/a323b04bcfc5d3da07d7e64208701f9ed205e09664fd665dff986cc826b1c3f4"
+    },
+    {
+      "name": "Build",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the version build number of the Tedds software",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/e4f081295405dcee2361ee5b690dbc8e78ffc2590f6d23ee2118c86c5edc5df7"
+    },
+    {
+      "name": "Documents",
+      "type": "ITeddsDocuments",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns A Documents collection which represents all the open documents",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/0f6d477a7d3fd31c517e9d6a205e06afcebe6c6502a37d3be04a6beebca436dd"
+    },
+    {
+      "name": "Height",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Height of the applications main window",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/1fb0d18a11bae5ac5f2e6c0310c788ee42cfc0f2c7005ffafeadb95a90d8d60a"
+    },
+    {
+      "name": "Left",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Position of the left edge of the applications main window",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/217bec789c2a60f690acbb6a49f6c9bb72794d76c400be1d3d3d86dab7fb4e23"
+    },
+    {
+      "name": "Project",
+      "type": "ITeddsProject",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the active project",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/607953a7a278d83b4bf03a8c36cd793e6ca99b93253969b06117555ed7083074"
+    },
+    {
+      "name": "Top",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Position of the top edge of the applications main window",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/ca8bb05487788b716ed4b6bd3387ae75780798683381c4d0c3503afd6d0f0da1"
+    },
+    {
+      "name": "Version",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the version number of the Tedds software",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/83de4e5d7614333942d82e32595919d720a557b8fde8695e189b09ff360f0ab0"
+    },
+    {
+      "name": "VersionLibraryMajor",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the major version number of the Tedds Engineering Library",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/442a3a994296012530aa8444679df1932cbeeb2883cb96a17b4cdd0ca1600041"
+    },
+    {
+      "name": "VersionLibraryMinor",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the minor version number of the Tedds Engineering Library",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/468126769f70b15d0bbfac21d8c2e5265ccbcd8f01f22ffa30e3772f1e2f8f90"
+    },
+    {
+      "name": "VersionMajor",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the major version number of the Tedds software",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/04d58e1295a817f60596b5eef9aaca0e1fd25c3ec32ed34b5dc9b38e89b21e2a"
+    },
+    {
+      "name": "VersionMinor",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the minor version number of the Tedds software",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/f8c9f0f064ace4027cee08d4351717c2e642e4c859de8dba8f26d0a7ef0224ce"
+    },
+    {
+      "name": "Visible",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Visibility status of the applications user interface",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/fa98b47ba13d4d137bbbe382921cb23a68908c0ddf62bb87d03027b06392d76f"
+    },
+    {
+      "name": "Width",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Width of the applications main window",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/4321c55cf45359cdf9edfc5a27f27a27f8cef0aa9973ba65595e99ffc7fa8efe"
+    },
+    {
+      "name": "WindowHandle",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the window handle of the applications main window",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/d5b8fba186d7730fed4334b0b80c9c3ce0b662b6a502b6d43a3d4774deb68a2b"
+    },
+    {
+      "name": "WindowState",
+      "type": "TdsWindowState",
+      "getter": true,
+      "setter": true,
+      "summary": "View state of the applications main window",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/3d29a6b5ef040dd1bb601409daf2314f282a0fe08e7bfe075e00da14417ee743"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

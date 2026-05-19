@@ -1,0 +1,39 @@
+﻿
+idx ns                                           name                 kind      result issues
+--- --                                           ----                 ----      ------ ------
+ 20 Tekla.Structural.InteropAssemblies.Tedds     TdsWindowState       enum      PASS         
+ 30 Tekla.Structural.InteropAssemblies.TeddsCalc IFunctions           interface PASS         
+ 23 Tekla.Structural.InteropAssemblies.TeddsCalc CalcProgressEvent    enum      PASS         
+  9 Tekla.Structural.InteropAssemblies.Tedds     ILibraryCalcItem     interface PASS         
+ 10 Tekla.Structural.InteropAssemblies.Tedds     IProjectFileItem     interface PASS         
+ 26 Tekla.Structural.InteropAssemblies.TeddsCalc CalcValueType        enum      PASS         
+ 31 Tekla.Structural.InteropAssemblies.TeddsCalc OutputFormat         enum      PASS         
+ 15 Tekla.Structural.InteropAssemblies.Tedds     ITeddsDocuments      interface PASS         
+  6 Tekla.Structural.ExpressoAddIn               ValidTypesAttribute  class     PASS         
+ 11 Tekla.Structural.InteropAssemblies.Tedds     IProjectFolderItem   interface PASS         
+  8 Tekla.Structural.InteropAssemblies.Tedds     IBimProject          interface PASS         
+ 29 Tekla.Structural.InteropAssemblies.TeddsCalc ICalculatorExEvents  interface PASS         
+  5 Tekla.Structural.ExpressoAddIn               UnitsAttribute       class     PASS         
+ 32 Tekla.Structural.InteropAssemblies.TeddsCalc VariableFormat       enum      PASS         
+  7 Tekla.Structural.InteropAssemblies.Tedds     IApplication         interface PASS         
+ 16 Tekla.Structural.InteropAssemblies.Tedds     ITeddsProject        interface PASS         
+ 13 Tekla.Structural.InteropAssemblies.Tedds     IProjectItems        interface PASS         
+ 24 Tekla.Structural.InteropAssemblies.TeddsCalc CalcStatus           enum      PASS         
+ 18 Tekla.Structural.InteropAssemblies.Tedds     TdsProjectSavePdf    enum      PASS         
+ 19 Tekla.Structural.InteropAssemblies.Tedds     TdsSaveOptions       enum      PASS         
+ 14 Tekla.Structural.InteropAssemblies.Tedds     ITeddsDocument       interface PASS         
+  2 Tekla.Structural.ExpressoAddIn               FieldOutput          enum      PASS         
+ 22 Tekla.Structural.InteropAssemblies.TeddsCalc CalcErrorType        enum      PASS         
+  4 Tekla.Structural.ExpressoAddIn               RequirementAttribute class     PASS         
+  0 Tekla.Structural.ExpressoAddIn               AliasAttribute       class     PASS         
+ 21 Tekla.Structural.InteropAssemblies.Tedds     _IApplicationEvents  interface PASS         
+ 12 Tekla.Structural.InteropAssemblies.Tedds     IProjectItem         interface PASS         
+ 17 Tekla.Structural.InteropAssemblies.Tedds     TdsCalcStatus        enum      PASS         
+  1 Tekla.Structural.ExpressoAddIn               FieldAttribute       class     PASS         
+ 25 Tekla.Structural.InteropAssemblies.TeddsCalc CalcValueFormat      enum      PASS         
+ 27 Tekla.Structural.InteropAssemblies.TeddsCalc ICalcValue           interface PASS         
+  3 Tekla.Structural.ExpressoAddIn               Requirement          enum      PASS         
+ 28 Tekla.Structural.InteropAssemblies.TeddsCalc ICalculator          interface PASS         
+
+
+

@@ -1,0 +1,34 @@
+{
+  "name": "Requirement",
+  "namespace": "Tekla.Structural.ExpressoAddIn",
+  "kind": "enum",
+  "summary": "(No description provided in vendor docs for Tekla.Structural.ExpressoAddIn.Requirement.)",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2026/tekla-structural-expressoaddin-requirement-64131",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Negative",
+      "value": 0
+    },
+    {
+      "name": "NonZero",
+      "value": 2
+    },
+    {
+      "name": "NonZeroNegative",
+      "value": 1
+    },
+    {
+      "name": "NonZeroPositive",
+      "value": 3
+    },
+    {
+      "name": "Positive",
+      "value": 4
+    }
+  ]
+}

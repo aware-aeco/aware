@@ -1,0 +1,39 @@
+{
+  "name": "TdsProjectSavePdf",
+  "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+  "kind": "enum",
+  "summary": "Save project to PDF options",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2026/tekla-structural-interopassemblies-tedds-tdsprojectsavepdf-64146",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "HideOptions",
+      "value": 4,
+      "summary": "Hide options user interface"
+    },
+    {
+      "name": "HideProgress",
+      "value": 8,
+      "summary": "Hide progress"
+    },
+    {
+      "name": "InsertDocPageBreaks",
+      "value": 16,
+      "summary": "Insert document page breaks"
+    },
+    {
+      "name": "OneFilePerDocument",
+      "value": 1,
+      "summary": "Save each document as a separate PDF"
+    },
+    {
+      "name": "ToDocumentFolder",
+      "value": 2,
+      "summary": "Save PDFs to document folder"
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "name": "IProjectFileItem",
+  "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+  "kind": "interface",
+  "summary": "Interface for a project file item",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2026/tekla-structural-interopassemblies-tedds-iprojectfileitem-64138",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Open()",
+      "signature": "ITeddsDocument Open()",
+      "summary": "Open the referenced file and return the ITeddsDocument interface",
+      "params": [],
+      "returns": {
+        "type": "ITeddsDocument",
+        "doc": "Opened document"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/8709ba851fc346ac762a3f2277591629d38fa02471af293b8d8e210a6e0f3c39"
+    }
+  ],
+  "properties": [
+    {
+      "name": "FullName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the full path and file name of the referenced file",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/dbabe2a39ba25a9d78cc97731ff1657aad2fb3ebd929a3362c769dadb17a969d"
+    },
+    {
+      "name": "IsFolder",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns whether the object is a folder",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/5b6e873a2b7ea16e567b59d40938b35a6e0b0f8bce0f17fd2811cd8669c7e68a"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "File name (excluding file extension)",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/eda9e4a6e3f519494af35d33b1cfb1e253dfbdb5615b491812ab65c275f0b4a4"
+    },
+    {
+      "name": "ParentFolder",
+      "type": "IProjectFolderItem",
+      "getter": true,
+      "setter": false,
+      "summary": "Parent folder in the project hierarchy",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/485751623f12f1a1b48992ff9c7b6258cc4efb33b08c67a53954f3da16604c0f"
+    },
+    {
+      "name": "Path",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the path of the referenced file",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/67f7d83b88fe02d884d26bd2bac57298d9b0894721abe307696534c47efb1df4"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

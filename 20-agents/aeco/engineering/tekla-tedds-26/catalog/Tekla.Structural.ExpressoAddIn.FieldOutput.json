@@ -1,0 +1,34 @@
+{
+  "name": "FieldOutput",
+  "namespace": "Tekla.Structural.ExpressoAddIn",
+  "kind": "enum",
+  "summary": "(No description provided in vendor docs for Tekla.Structural.ExpressoAddIn.FieldOutput.)",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2026/tekla-structural-expressoaddin-fieldoutput-64130",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "AsciiTextFile",
+      "value": 13
+    },
+    {
+      "name": "EnhancedMetafile",
+      "value": 30
+    },
+    {
+      "name": "PlainText",
+      "value": 11
+    },
+    {
+      "name": "ResultText",
+      "value": 16
+    },
+    {
+      "name": "Rtf",
+      "value": 15
+    }
+  ]
+}

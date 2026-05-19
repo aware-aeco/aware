@@ -1,0 +1,241 @@
+agent:        tekla-tedds-26.0
+version:      0.30.0
+sdk-target:   26.0
+display-name: tekla-tedds-26.0 (raw — 33 types, full coverage)
+
+description: |
+  Auto-generated from vendor docs (scrape: https://developer.tekla.com/doc/tekla-tedds/2026/64124)
+  on 2026-05-19.
+
+  Coverage: 33 types, 77 methods,
+  0 events, 71 properties.
+
+  Behavioral notes from vendor remarks/summary preserved per member.
+  See skills/ for narrative, catalog/ for structured per-type data.
+
+stateful: false
+
+vendor:   trimble
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/engineering/tekla-tedds-26.0
+keywords: [aeco, engineering, tedds, trimble, generated, raw, v0.30, full-coverage]
+
+provenance:
+  generated-by:     aware-agent-builder
+  generator-version: 0.30.0
+  source:
+    type: scrape
+    urls: ["https://developer.tekla.com/doc/tekla-tedds/2026/64124"]
+  generated-at: 2026-05-19T04:04:44.6042819Z
+
+transport:
+  cli:
+    binary: aware-tedds
+
+commands:
+  requirement-attribute-validate(iexpresso, object):
+    lifecycle: single
+    description: ""
+  units-attribute-get-unit(iexpresso):
+    lifecycle: single
+    description: ""
+  iapplication-activate():
+    lifecycle: single
+    description: Activates the user interface of the application
+  iapplication-move(int, int):
+    lifecycle: single
+    description: Move the applications main window
+  iapplication-quit(bool):
+    lifecycle: single
+    description: Exit the application
+  iapplication-resize(int, int):
+    lifecycle: single
+    description: Size the applications main window
+  iproject-file-item-open():
+    lifecycle: single
+    description: Open the referenced file and return the ITeddsDocument interface
+  iproject-item-remove():
+    lifecycle: single
+    description: Remove project item from the project
+  iproject-items-add-document(itedds-document):
+    lifecycle: single
+    description: Add an existing open document to the end of the collection of project items
+  iproject-items-add-file(string):
+    lifecycle: single
+    description: Add a reference to a Tedds document file to the end of the collection of project items
+  iproject-items-add-folder(string):
+    lifecycle: single
+    description: Add a new folder to the end of the collection of project items
+  iproject-items-add-from-path(string):
+    lifecycle: single
+    description: Add a single Tedds project file or a complete folder hierarchy from a full file path
+  iproject-items-get-enumerator():
+    lifecycle: single
+    description: Enumeration interface for iterating the items in the collection
+  iproject-items-remove(object):
+    lifecycle: single
+    description: Remove a project item from the collection
+  itedds-document-activate():
+    lifecycle: single
+    description: Activate this document
+  itedds-document-calculate():
+    lifecycle: single
+    description: Calculate document
+  itedds-document-calculate2():
+    lifecycle: single
+    description: Calculate the document and return the calculation status code
+  itedds-document-close(tds-save-options):
+    lifecycle: single
+    description: Close the document
+  itedds-document-save():
+    lifecycle: single
+    description: Save changes to the document
+  itedds-document-save-as(object):
+    lifecycle: single
+    description: Save document to a new file location
+  itedds-document-save-as-pdf(object):
+    lifecycle: single
+    description: Save the document in Adobe PDF format
+  itedds-documents-add():
+    lifecycle: single
+    description: Add a new document
+  itedds-documents-add2(string, string, string):
+    lifecycle: single
+    description: Add a new document using the specified Calc Item and input variables
+  itedds-documents-add3(string, string, string, string, string):
+    lifecycle: single
+    description: Add a new document using the specified Calc Item, input variables and pre-calculated RTF
+  itedds-documents-close(bool):
+    lifecycle: single
+    description: Close all documents
+  itedds-documents-get-enumerator():
+    lifecycle: single
+    description: Enumeration interface for iterating the items in the collection
+  itedds-documents-open(string):
+    lifecycle: single
+    description: Open an existing document
+  itedds-documents-save():
+    lifecycle: single
+    description: Saved changes to all open documents
+  itedds-project-calculate():
+    lifecycle: single
+    description: Calculate all documents in the project
+  itedds-project-close(object):
+    lifecycle: single
+    description: Close the active project
+  itedds-project-new(string):
+    lifecycle: single
+    description: Create a new project
+  itedds-project-open(string):
+    lifecycle: single
+    description: Open an existing project
+  itedds-project-save():
+    lifecycle: single
+    description: Save the active project file
+  itedds-project-save-as(object):
+    lifecycle: single
+    description: Save the active project file to a new location
+  itedds-project-save-as-pdf(string, tds-project-save-pdf):
+    lifecycle: single
+    description: Save all the documents in the project in PDF format
+  itedds-project-send-to-word(bool):
+    lifecycle: single
+    description: Export the project to Microsoft Word or Tedds for Word
+  itedds-project-set-bim-project(string, string):
+    lifecycle: single
+    description: Link the Tedds project to a BIM project
+  _iapplication-events-document-exported(itedds-document, string):
+    lifecycle: single
+    description: A document has been exported
+  _iapplication-events-project-bim-project-modified(itedds-project):
+    lifecycle: single
+    description: A project's BIM project modified
+  _iapplication-events-project-closed():
+    lifecycle: single
+    description: A project has been closed
+  _iapplication-events-project-created(itedds-project):
+    lifecycle: single
+    description: A new project has been created
+  _iapplication-events-project-opened(itedds-project):
+    lifecycle: single
+    description: A project has been opened
+  icalc-value-to-bool():
+    lifecycle: single
+    description: Returns the objects value converted to a boolean. Only applicable for objects of type Number.
+  icalc-value-to-double(string):
+    lifecycle: single
+    description: Returns the objects value converted to a double. Only applicable for CalcValue objects of type Number.
+  icalc-value-to-int():
+    lifecycle: single
+    description: Returns the objects value converted to an integer. Only applicable for CalcValue objects of type Number.
+  icalc-value-to-string(string, calc-value-format, int):
+    lifecycle: single
+    description: Returns the objects value represented as a string.
+  icalculator-copy-output-to-clipboard(output-format):
+    lifecycle: single
+    description: Copies the output item to the Windows clipboard in the specified format
+  icalculator-get-output(output-format):
+    lifecycle: single
+    description: Returns the documented output from the calculator in the specified format.
+  icalculator-get-variables(variable-format):
+    lifecycle: single
+    description: Returns all the variables defined in the calculator excluding temporary variables
+  icalculator-get-variables2(variable-format, bool):
+    lifecycle: single
+    description: Returns the current Document and Calc Section variables in the specified data format
+  icalculator-get-variables3(variable-format, bool, bool):
+    lifecycle: single
+    description: Returns the current Document and Calc Section variables in the specified data format
+  icalculator-initialize(string, string, string, int, int, int):
+    lifecycle: single
+    description: Initializes the calculator to start calculating
+  icalculator-initialize-calc(string, string, string, string, int, int, int):
+    lifecycle: single
+    description: Initializes the calculator and starts calculating using the specified Calc Library Item
+  icalculator-set-foreground-window(int):
+    lifecycle: single
+    description: Executes the Windows API function SetForegroundWindow from the Tedds calculator process.
+  icalculator-set-owner-window(int):
+    lifecycle: single
+    description: Sets which window owns the Tedds calculator's main window
+  icalculator-set-variables(string, variable-format):
+    lifecycle: single
+    description: Assign the specified variables to the calculator instance
+  icalculator-ex-events-calculating-error(calc-error-type, uint, string, string, string, uint, ref calc-status):
+    lifecycle: single
+    description: Calculating error event
+  icalculator-ex-events-calculating-progress(calc-progress-event, uint, string, ref calc-status):
+    lifecycle: single
+    description: Calculating progress event
+  icalculator-ex-events-undefined-variable(string, out string):
+    lifecycle: single
+    description: Undefined variable event
+  icalculator-ex-events-undefined-variable2(string, out string, out string):
+    lifecycle: single
+    description: Undefined variable event
+  ifunctions-add-section():
+    lifecycle: single
+    description: Add a new variable section using the Tedds 'AddSection' function. For information on Tedds calculation functions, use Tedds for Word and refer to the Tedds engineering library index at "Writing you...
+  ifunctions-eval(string):
+    lifecycle: single
+    description: Returns the result of calculating an expression using the Tedds 'Eval' function. For information on Tedds calculation functions, use Tedds for Word and refer to the Tedds engineering library index ...
+  ifunctions-get-var(string):
+    lifecycle: single
+    description: Returns the value of a named variable using the Tedds 'GetVar' function
+  ifunctions-set-section(int, string):
+    lifecycle: single
+    description: Set the active variable section using the Tedds 'SetSection' function. For information on Tedds calculation functions, use Tedds for Word and refer to the Tedds engineering library index at "Writin...
+  ifunctions-set-var(string, object, string, string):
+    lifecycle: single
+    description: Assigns a value to the named variable using the Tedds 'SetVar' function. For information on Tedds calculation functions, use Tedds for Word and refer to the Tedds engineering library index at "Writ...
+  ifunctions-set-var-expr(string, string, string):
+    lifecycle: single
+    description: Assigns an expression value to the named variable using the Tedds 'SetVar' function. For information on Tedds calculation functions, use Tedds for Word and refer to the Tedds engineering library in...
+  ifunctions-var-exists(string):
+    lifecycle: single
+    description: Returns true if the named variable already exists using the Tedds 'VarExists' function. For information on Tedds calculation functions, use Tedds for Word and refer to the Tedds engineering library...
+
+skills:
+  - tekla-structural-expressoaddin.md
+  - tekla-structural-interopassemblies-tedds.md
+  - tekla-structural-interopassemblies-teddscalc.md

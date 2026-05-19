@@ -1,0 +1,141 @@
+{
+  "name": "ICalcValue",
+  "namespace": "Tekla.Structural.InteropAssemblies.TeddsCalc",
+  "kind": "interface",
+  "summary": "Interface for an ICalcValue, the fundamental data type used by the calculator for input and output values",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2026/tekla-structural-interopassemblies-teddscalc-icalcvalue-64155",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ToBool()",
+      "signature": "bool ToBool()",
+      "summary": "Returns the objects value converted to a boolean. Only applicable for objects of type Number.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true if the object contains a non zero value; otherwise false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/b4fdc83e0046694954d62505f12c88689326d8fa91a1934fa6045addf7e17d76"
+    },
+    {
+      "name": "ToDouble(string)",
+      "signature": "double ToDouble(string units)",
+      "summary": "Returns the objects value converted to a double. Only applicable for CalcValue objects of type Number.",
+      "params": [
+        {
+          "name": "units",
+          "type": "string",
+          "doc": "Units to use for the conversion, if omitted the value will be returned in base units.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": "The objects numeric value in the specified units"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/0e4047330c7daa66f6d692e0d6fd0bf7a0c5406bf847ad3b2446a715a20657db"
+    },
+    {
+      "name": "ToInt()",
+      "signature": "int ToInt()",
+      "summary": "Returns the objects value converted to an integer. Only applicable for CalcValue objects of type Number.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "The objects value as an integer"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/9bcdc3eede78155e5168291a89eb96ce32646f90006eecd99409e7e8c7584126"
+    },
+    {
+      "name": "ToString(string, CalcValueFormat, int)",
+      "signature": "string ToString(string units, CalcValueFormat format = CalcValueFormat.Fixed, int precision = 3)",
+      "summary": "Returns the objects value represented as a string.",
+      "params": [
+        {
+          "name": "units",
+          "type": "string",
+          "doc": "Units to use for converting the numeric value, if omitted the value will be represented in base units.",
+          "optional": false
+        },
+        {
+          "name": "format",
+          "type": "CalcValueFormat",
+          "doc": "format Expression text format to use for representing the numerical value (E = Engineering, F = Fixed, G = General, S = Scientific, O = Data Input/Output, U = User input)",
+          "optional": false
+        },
+        {
+          "name": "precision",
+          "type": "int",
+          "doc": "Numeric precision to use",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "The objects value as a string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/a85846735f25776e4707ab06a57ec3b5dbcc30d13e6e3ceccf954bb55ac109e9"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Degrees",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the linear degrees dimension of the object. Only applicable for objects of type Number.",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/c0560fcd8bec23f2bd98746d3afb6d3778676b20074784b8ad202d9047c2a3f7"
+    },
+    {
+      "name": "IsDimensionless",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns whether the units of a numeric object has dimensions. Only applicable for objects of type Number.",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/0fc21d68fec212f26efc45491b5e139fdb2bc1f2846531682e71ce18a7522dfe"
+    },
+    {
+      "name": "Length",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the length dimension of the object. Only applicable for objects of type Number.",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/85a4d8dd74ab4214b34fc410c4fde5fca9aeb048db4a782a8b4c3976fd6ed844"
+    },
+    {
+      "name": "Mass",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the mass dimension of the object. Only applicable for objects of type Number.",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/5bea48166379dd295be7189bc520327f80d33c3f27a1f53148d694bc7ed5a58c"
+    },
+    {
+      "name": "Time",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the time dimension of the object. Only applicable for objects of type Number.",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/a9279fad27f01e01479aae57682c24711cbf08f8b106bae267f6adea75578f5a"
+    },
+    {
+      "name": "Type",
+      "type": "CalcValueType",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the objects data type",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/72b15e6e85f6bc6f80f5bdbfd22a389c49e6fbf3cdc4b2a4bd43b35a32d4e913"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

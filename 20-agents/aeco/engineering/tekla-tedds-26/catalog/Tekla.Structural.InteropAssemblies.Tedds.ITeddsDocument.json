@@ -1,0 +1,165 @@
+{
+  "name": "ITeddsDocument",
+  "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+  "kind": "interface",
+  "summary": "Interface for an open Document",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2026/tekla-structural-interopassemblies-tedds-iteddsdocument-64142",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Activate()",
+      "signature": "void Activate()",
+      "summary": "Activate this document",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/b72ce91ea2daab02e20725fd1b22c289fddebba79f7777b5e1ef1b64efaa5454"
+    },
+    {
+      "name": "Calculate()",
+      "signature": "void Calculate()",
+      "summary": "Calculate document",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/96565629bd31e7a5c2bd4002c8fad2bf50cff944022568d1d597ed1ca912e81d"
+    },
+    {
+      "name": "Calculate2()",
+      "signature": "TdsCalcStatus Calculate2()",
+      "summary": "Calculate the document and return the calculation status code",
+      "params": [],
+      "returns": {
+        "type": "TdsCalcStatus",
+        "doc": "Calculation status code"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/ab9a16f635d573a4fc1e06b05a63b116b5960ae0569e0e91e58340668e182645"
+    },
+    {
+      "name": "Close(TdsSaveOptions)",
+      "signature": "void Close(TdsSaveOptions SaveChanges)",
+      "summary": "Close the document",
+      "params": [
+        {
+          "name": "SaveChanges",
+          "type": "TdsSaveOptions",
+          "doc": "Determines whether changes should be saved or discarded",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/0724db0ab7e28031bfb8e4e94f0cd2bd38efcc782ffe9379f2ed90e3899640f3"
+    },
+    {
+      "name": "Save()",
+      "signature": "void Save()",
+      "summary": "Save changes to the document",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/98e1cb2125038836139c70819aaa8cae76dfa7f311a3b49a359cd9823cd8c91e"
+    },
+    {
+      "name": "SaveAs(object)",
+      "signature": "void SaveAs(object FileName)",
+      "summary": "Save document to a new file location",
+      "params": [
+        {
+          "name": "FileName",
+          "type": "object",
+          "doc": "Full path of file location",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/608135ecfcc6798c77a31e28dc96da4bbd4f2c5878e1fd1163f7f8d5ca156523"
+    },
+    {
+      "name": "SaveAsPdf(object)",
+      "signature": "void SaveAsPdf(object FileName)",
+      "summary": "Save the document in Adobe PDF format",
+      "params": [
+        {
+          "name": "FileName",
+          "type": "object",
+          "doc": "Full path and filename of location to save file",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/92bbbb7d8f2a0245f6c997d8c3b8302553b7a691691a2a26fd9cf3762273008c"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BimObjectId",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns a BIM object identifier associated with the document",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/9614d3353c3c3f0c31bfc4d2cdab2df968980c82ae25d4a02081b8a9dabac3f8"
+    },
+    {
+      "name": "CalcItem",
+      "type": "object",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a CalcItem object which represents the calculation associated with the document",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/1078e663367f2398f83e0cb212db89eeb03d7739f4dd1e4e49bc86ca6111d0cf"
+    },
+    {
+      "name": "FullName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the document full path and file name",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/1bdf50d1a7d631e259d1c3d592bad9c3726a3a2a8e2121c0d90615fff9218e98"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the documents name (excluding file extension)",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/40f3342913837c3aa8e38b9dfae4a36fc07ea0057cbfdf0c3bacb3e061442b96"
+    },
+    {
+      "name": "Path",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Return documents file path (excluding file name)",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/82e5a21e10e11d5dd2d345093d3a692dce772c1130fb2688acee4d84fac0c471"
+    },
+    {
+      "name": "Saved",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Saved status of document",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/30f3758481456595bf1e94c8a100ade1d711fa06c14e98772645eae6e3a0f549"
+    },
+    {
+      "name": "VariablesXml",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Variables defined in the document in the Tedds XML schema format",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/09bc3dd9cde0db0ca8e46bace6942dd16b398172bfff8c9d945ceca94139da44"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,138 @@
+{
+  "name": "RequirementAttribute",
+  "namespace": "Tekla.Structural.ExpressoAddIn",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Tekla.Structural.ExpressoAddIn.RequirementAttribute.)",
+  "base": "Attribute",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2026/tekla-structural-expressoaddin-requirementattribute-64132",
+  "constructors": [
+    {
+      "name": "RequirementAttribute(string, params char[])",
+      "signature": "public RequirementAttribute(string errorMessage, params char[] invalidChars)",
+      "summary": "",
+      "params": [
+        {
+          "name": "errorMessage",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "invalidChars",
+          "type": "char[]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/dd3ef7be9c8dbb26fe8bc4116cee14582a4244d5e58e423a831e5b34d6389f53"
+    },
+    {
+      "name": "RequirementAttribute(string, double, double)",
+      "signature": "public RequirementAttribute(string errorMessage, double min, double max)",
+      "summary": "",
+      "params": [
+        {
+          "name": "errorMessage",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "min",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "max",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/dd3ef7be9c8dbb26fe8bc4116cee14582a4244d5e58e423a831e5b34d6389f53"
+    },
+    {
+      "name": "RequirementAttribute(string, Func\u003Cstring, bool\u003E)",
+      "signature": "protected RequirementAttribute(string errorMessage, Func\u003Cstring, bool\u003E validator)",
+      "summary": "",
+      "params": [
+        {
+          "name": "errorMessage",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "validator",
+          "type": "Func\u003Cstring, bool\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/dd3ef7be9c8dbb26fe8bc4116cee14582a4244d5e58e423a831e5b34d6389f53"
+    },
+    {
+      "name": "RequirementAttribute(string, Requirement)",
+      "signature": "public RequirementAttribute(string errorMessage, Requirement requirement)",
+      "summary": "",
+      "params": [
+        {
+          "name": "errorMessage",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "requirement",
+          "type": "Requirement",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/dd3ef7be9c8dbb26fe8bc4116cee14582a4244d5e58e423a831e5b34d6389f53"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Validate(IExpresso, object)",
+      "signature": "protected virtual bool Validate(IExpresso expresso, object value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "expresso",
+          "type": "IExpresso",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/fb9fb084615248460ff035486dedca71c56abffcbd9d773ea3326b2f74a970a6"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ErrorMessage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/2bef399026a1d894aebe2a0955d3dddb23db1ca1362397ec48ded6881882d1af"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

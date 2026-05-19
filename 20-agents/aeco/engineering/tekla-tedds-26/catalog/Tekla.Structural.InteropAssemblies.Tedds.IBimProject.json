@@ -1,0 +1,38 @@
+{
+  "name": "IBimProject",
+  "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+  "kind": "interface",
+  "summary": "BIM project",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2026/tekla-structural-interopassemblies-tedds-ibimproject-64136",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ModelId",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Model identifier",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/924ee4068b149a18040089cf6f4944e46546b9359f0e7abc9a69870372337da7"
+    },
+    {
+      "name": "ProjectId",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Project identifier",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/f53ca8286491fa42d8684c0adbed5f3afa477235db41dffbf2b0824676968d03"
+    },
+    {
+      "name": "ServiceId",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Service provider identifier",
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/285bcadbe8eed7f574a826c2029407bfdf5a2d70e56c8e470539be989f2e21d0"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

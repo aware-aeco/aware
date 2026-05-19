@@ -1,0 +1,34 @@
+{
+  "name": "CalcStatus",
+  "namespace": "Tekla.Structural.InteropAssemblies.TeddsCalc",
+  "kind": "enum",
+  "summary": "Calculate status codes. Values less than zero are considered failures, values greater than zero are considered successful.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2026/tekla-structural-interopassemblies-teddscalc-calcstatus-64152",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Aborted",
+      "value": -1,
+      "summary": "Calculating was aborted"
+    },
+    {
+      "name": "Interrupted",
+      "value": 2,
+      "summary": "The user interrupted the calculation process therefore the state of the results and output is indeterminate"
+    },
+    {
+      "name": "NotInitialized",
+      "value": 0,
+      "summary": "The Tedds Calculator has not been initialized"
+    },
+    {
+      "name": "Ok",
+      "value": 1,
+      "summary": "Calculating completed successfully"
+    }
+  ]
+}

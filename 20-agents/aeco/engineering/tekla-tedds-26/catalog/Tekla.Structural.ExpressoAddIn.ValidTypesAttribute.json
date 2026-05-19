@@ -1,0 +1,31 @@
+{
+  "name": "ValidTypesAttribute",
+  "namespace": "Tekla.Structural.ExpressoAddIn",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Tekla.Structural.ExpressoAddIn.ValidTypesAttribute.)",
+  "base": "Attribute",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2026/tekla-structural-expressoaddin-validtypesattribute-64134",
+  "constructors": [
+    {
+      "name": "ValidTypesAttribute(params Type[])",
+      "signature": "public ValidTypesAttribute(params Type[] types)",
+      "summary": "",
+      "params": [
+        {
+          "name": "types",
+          "type": "Type[]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/562a24427daefbd3debee780df72712b5152195a05af1fee3a3e978fcb13822c"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

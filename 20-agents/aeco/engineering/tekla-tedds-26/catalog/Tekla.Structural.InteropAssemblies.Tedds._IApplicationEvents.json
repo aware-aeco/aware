@@ -1,0 +1,98 @@
+{
+  "name": "_IApplicationEvents",
+  "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+  "kind": "interface",
+  "summary": "Interface for Tedds application events",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2026/tekla-structural-interopassemblies-tedds-iapplicationevents-64149",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "DocumentExported(ITeddsDocument, string)",
+      "signature": "void DocumentExported(ITeddsDocument document, string fileName)",
+      "summary": "A document has been exported",
+      "params": [
+        {
+          "name": "document",
+          "type": "ITeddsDocument",
+          "doc": "The document that was exported",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "string",
+          "doc": "The filename of the document that was exported",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/783978bfae273b231e878a27dbe58cdc1cf878d71910c3ec33d41ff565187f88"
+    },
+    {
+      "name": "ProjectBimProjectModified(ITeddsProject)",
+      "signature": "void ProjectBimProjectModified(ITeddsProject project)",
+      "summary": "A project\u0027s BIM project modified",
+      "params": [
+        {
+          "name": "project",
+          "type": "ITeddsProject",
+          "doc": "The project that was modified",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/d6ae6e5b78aa170fac8d93c3aea4deb3287c4596f0a3f92ff12ba1e80106ba2f"
+    },
+    {
+      "name": "ProjectClosed()",
+      "signature": "void ProjectClosed()",
+      "summary": "A project has been closed",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/f70a6fb6bd6f50e3ee15b827a4c7fa07619ca8eb6eacec36700019a060bdf154"
+    },
+    {
+      "name": "ProjectCreated(ITeddsProject)",
+      "signature": "void ProjectCreated(ITeddsProject project)",
+      "summary": "A new project has been created",
+      "params": [
+        {
+          "name": "project",
+          "type": "ITeddsProject",
+          "doc": "The new project",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/364e05a164d560e8ea2757032d1208118e2494e464739b490301c86d7689733c"
+    },
+    {
+      "name": "ProjectOpened(ITeddsProject)",
+      "signature": "void ProjectOpened(ITeddsProject project)",
+      "summary": "A project has been opened",
+      "params": [
+        {
+          "name": "project",
+          "type": "ITeddsProject",
+          "doc": "The project that was opened",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/49/91f6856f2ed839f15f5b96314d914eb12180318e87b2deb35708bdcd3b7393ea"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}
