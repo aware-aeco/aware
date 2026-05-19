@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "2026.0",
+  "code": "var col1 = new Tekla.Structures.Model.Beam(new Tekla.Structures.Geometry3d.Point(0, 0, 0), new Tekla.Structures.Geometry3d.Point(0, 0, 4000));\ncol1.Profile.ProfileString = \"HEA200\"; col1.Material.MaterialString = \"S275\"; col1.Class = \"2\"; col1.Name = \"COLUMN A/1\";\nbool ok1 = col1.Insert();\n\nvar col2 = new Tekla.Structures.Model.Beam(new Tekla.Structures.Geometry3d.Point(5000, 0, 0), new Tekla.Structures.Geometry3d.Point(5000, 0, 4000));\ncol2.Profile.ProfileString = \"HEA200\"; col2.Material.MaterialString = \"S275\"; col2.Class = \"2\"; col2.Name = \"COLUMN A/2\";\nbool ok2 = col2.Insert();\n\nreturn new {\n    col_a1 = new { inserted = ok1, guid = col1.Identifier.GUID.ToString(), start = new { col1.StartPoint.X, col1.StartPoint.Y, col1.StartPoint.Z } },\n    col_a2 = new { inserted = ok2, guid = col2.Identifier.GUID.ToString(), start = new { col2.StartPoint.X, col2.StartPoint.Y, col2.StartPoint.Z } }\n};",
+  "args": {}
+}

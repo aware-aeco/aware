@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "2026.0",
+  "code": "string ifcPath = @\"C:\\Users\\bimst\\AppData\\Local\\Temp\\aware-test-export.ifc\";\nbool ok = false;\nstring err = null;\nlong size = 0;\ntry {\n    // IFCExportFlags is a struct (not an enum) — default-construct it for stock flags\n    var flags = default(Tekla.Structures.Model.Operations.Operation.IFCExportFlags);\n    ok = Tekla.Structures.Model.Operations.Operation.CreateIFC4ExportFromAll(\n        ifcPath,\n        Tekla.Structures.Model.Operations.Operation.IFCExportViewTypeEnum.REFERENCE_VIEW,\n        new string[] { },\n        Tekla.Structures.Model.Operations.Operation.ExportBasePoint.GLOBAL,\n        \"\",\n        \"\",\n        flags,\n        \"\"\n    );\n    if (System.IO.File.Exists(ifcPath)) size = new System.IO.FileInfo(ifcPath).Length;\n} catch (Exception ex) {\n    err = ex.GetType().Name + \": \" + ex.Message;\n}\nreturn new {\n    ok = ok,\n    file_path = ifcPath,\n    file_exists = System.IO.File.Exists(ifcPath),\n    file_size_bytes = size,\n    error = err\n};",
+  "args": {}
+}
