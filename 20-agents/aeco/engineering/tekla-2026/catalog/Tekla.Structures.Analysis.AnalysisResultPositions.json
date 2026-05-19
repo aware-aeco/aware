@@ -12,6 +12,7 @@
       "signature": "public AnalysisResultPositions()",
       "summary": "Creates a new analysis result positions instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/52837001-094d-3a53-1306-eefe18dd21c0"

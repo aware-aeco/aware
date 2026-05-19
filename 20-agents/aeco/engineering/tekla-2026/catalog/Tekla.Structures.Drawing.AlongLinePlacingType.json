@@ -12,6 +12,7 @@
       "signature": "public AlongLinePlacingType()",
       "summary": "Creates a new along line placing type instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/024dfa8d-07cd-fc9f-9ddd-4167fe297370"

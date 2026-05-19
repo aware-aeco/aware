@@ -52,6 +52,7 @@
       "signature": "public void Refresh()",
       "summary": "Refreshes the enumerator with latest data at database.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f6837180-aefb-6c1f-a2ef-a2a97595aadb"
@@ -61,6 +62,7 @@
       "signature": "public void Reset()",
       "summary": "Resets the enumerator to the beginning.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/31822a54-63fc-8431-ebe3-1201c2dfafc6"

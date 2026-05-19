@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/9fb6ce1a-0e8e-c0d0-fcc8-54b3f6a334cc",
   "constructors": [
     {
-      "name": "BooleanConstantFilterExpression",
+      "name": "BooleanConstantFilterExpression(Boolean)",
       "signature": "public BooleanConstantFilterExpression(bool Value)",
       "summary": "Initializes a new instance of the BooleanConstantFilterExpression class.",
       "params": [
@@ -19,12 +19,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/04b315c1-9446-8dcb-c972-67b23621dac3"
     },
     {
-      "name": "BooleanConstantFilterExpression",
+      "name": "BooleanConstantFilterExpression(Boolean, IFormatProvider)",
       "signature": "public BooleanConstantFilterExpression(bool Value, IFormatProvider Provider)",
       "summary": "Initializes a new instance of the BooleanConstantFilterExpression class.",
       "params": [
@@ -41,6 +42,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2fb83234-2427-808a-1bd6-e17c75ce5649"

@@ -12,6 +12,7 @@
       "signature": "public Polymesh()",
       "summary": "Initializes a new instance of the Polymesh class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/bbce8eb7-02e2-abac-8c0b-0c90901bc998"
@@ -102,6 +103,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/56c98044-7935-f0a3-bd35-adfae51376ec"
@@ -138,6 +140,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/fa3e031a-f57d-6525-c6d4-d3cbb8680918"
@@ -180,6 +183,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c98e4037-98cc-3ff2-a650-7b0bfa910cdc"

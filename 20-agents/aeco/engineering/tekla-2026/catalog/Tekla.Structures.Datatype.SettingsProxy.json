@@ -12,6 +12,7 @@
       "signature": "public SettingsProxy()",
       "summary": "Creates a new settings proxy instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8826bdeb-9325-8841-203b-a524429b072b"
@@ -56,6 +57,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2652bc46-1ae5-fcbb-f343-4960697413fc"

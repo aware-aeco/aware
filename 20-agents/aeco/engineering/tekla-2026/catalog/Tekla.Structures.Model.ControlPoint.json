@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/38b3f184-d532-5d3e-d59e-2d16a7e0f2d9",
   "constructors": [
     {
-      "name": "ControlPoint",
+      "name": "ControlPoint()",
       "signature": "public ControlPoint()",
       "summary": "Initializes a new instance of the ControlPoint class with zero members.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/328a1921-54bb-9aae-a407-72dcc9b72b9f"
     },
     {
-      "name": "ControlPoint",
+      "name": "ControlPoint(Point)",
       "signature": "public ControlPoint(Point existPoint)",
       "summary": "Initializes a new instance of the ControlPoint class with an existing point.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/702a0ea9-fac3-27d6-adf6-39042c9edb34"
@@ -815,7 +817,7 @@
     },
     {
       "name": "IsUpToDate",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": false,
       "summary": "Gets if the object does not have a modification which is not shared.",
@@ -823,7 +825,7 @@
     },
     {
       "name": "ModificationTime",
-      "type": "object",
+      "type": "Nullable\u003CDateTime\u003E",
       "getter": true,
       "setter": false,
       "summary": "Gets latest time of the object was modified or created.",

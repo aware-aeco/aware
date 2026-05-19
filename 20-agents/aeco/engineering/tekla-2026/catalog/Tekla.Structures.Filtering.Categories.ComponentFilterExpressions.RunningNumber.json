@@ -12,6 +12,7 @@
       "signature": "public RunningNumber()",
       "summary": "Initializes a new instance of the RunningNumber class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a3435639-e072-6459-22fb-50543873aad6"

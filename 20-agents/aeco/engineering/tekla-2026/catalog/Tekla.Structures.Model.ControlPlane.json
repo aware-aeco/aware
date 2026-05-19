@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/561ea178-df9a-d196-a846-e3223a8b202f",
   "constructors": [
     {
-      "name": "ControlPlane",
+      "name": "ControlPlane()",
       "signature": "public ControlPlane()",
       "summary": "Creates a new control plane instance. The default values are as follows: Plane = new Plane();IsMagnetic = false;Name = \u0022Plane\u0022;",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/fecb7883-666f-b0d9-de77-a2936ef5d522"
     },
     {
-      "name": "ControlPlane",
+      "name": "ControlPlane(Plane, Boolean)",
       "signature": "public ControlPlane(Plane P, bool IsMagnetic)",
       "summary": "Creates a new control plane instance taking the plane and magnetism as input.",
       "params": [
@@ -34,6 +35,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ae8ccdbd-9337-8f85-16df-40c7a10b1039"
@@ -829,7 +831,7 @@
     },
     {
       "name": "IsUpToDate",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": false,
       "summary": "Gets if the object does not have a modification which is not shared.",
@@ -837,7 +839,7 @@
     },
     {
       "name": "ModificationTime",
-      "type": "object",
+      "type": "Nullable\u003CDateTime\u003E",
       "getter": true,
       "setter": false,
       "summary": "Gets latest time of the object was modified or created.",

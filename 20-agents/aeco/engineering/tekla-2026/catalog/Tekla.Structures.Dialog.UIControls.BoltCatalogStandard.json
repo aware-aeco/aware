@@ -12,6 +12,7 @@
       "signature": "public BoltCatalogStandard()",
       "summary": "Initiates a new instance of the control.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0e29743c-5265-e086-9670-c07198cbd232"

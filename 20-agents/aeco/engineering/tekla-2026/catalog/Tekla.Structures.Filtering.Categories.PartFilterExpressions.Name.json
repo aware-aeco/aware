@@ -12,6 +12,7 @@
       "signature": "public Name()",
       "summary": "Initializes a new instance of the Name class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8369ecce-65da-c747-f0d5-1230225e50ba"

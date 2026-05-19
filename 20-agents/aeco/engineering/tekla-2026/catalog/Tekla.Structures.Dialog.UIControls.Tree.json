@@ -12,6 +12,7 @@
       "signature": "public Tree()",
       "summary": "Initializes a new instance of the Tree class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/85d05369-1b18-440a-0bbd-ce23169d8bbf"

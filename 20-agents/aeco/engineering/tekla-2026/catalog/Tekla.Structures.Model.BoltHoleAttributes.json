@@ -12,6 +12,7 @@
       "signature": "public BoltHoleAttributes()",
       "summary": "Creates a new bolt hole attributes instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b15069fc-3049-70d9-dfad-94daa7c42521"

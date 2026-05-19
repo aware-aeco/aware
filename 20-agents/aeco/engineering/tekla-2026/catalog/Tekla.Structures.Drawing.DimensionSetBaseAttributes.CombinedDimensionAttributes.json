@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/1f848894-eb94-d830-b612-4e021e78f6ed",
   "constructors": [
     {
-      "name": "DimensionSetBaseAttributes.CombinedDimensionAttributes",
+      "name": "DimensionSetBaseAttributes.CombinedDimensionAttributes()",
       "signature": "public CombinedDimensionAttributes()",
       "summary": "Creates a new combined dimension attributes instance. The defaults combine a minimum of three identical dimensions to be shown as the number of items times the length of the dimension.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3c38018e-b638-e437-bf43-ca53d9c74b32"
     },
     {
-      "name": "DimensionSetBaseAttributes.CombinedDimensionAttributes",
+      "name": "DimensionSetBaseAttributes.CombinedDimensionAttributes(Int32, DimensionSetBaseAttributes.CombineFormats)",
       "signature": "public CombinedDimensionAttributes(int minimumNumberToCombine, DimensionSetBaseAttributes.CombineFormats format)",
       "summary": "Creates a new combined dimension attributes instance with the given parameters.",
       "params": [
@@ -34,6 +35,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/95fc1a0c-f771-0bce-2916-900df5530f81"

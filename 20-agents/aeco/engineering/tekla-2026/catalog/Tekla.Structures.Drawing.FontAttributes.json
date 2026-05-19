@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/f0ae6595-19c8-88da-371c-e104b7d07388",
   "constructors": [
     {
-      "name": "FontAttributes",
+      "name": "FontAttributes()",
       "signature": "public FontAttributes()",
       "summary": "Creates a new font attributes instance. The default color is black, the height is 2.5, the font name is Arial and the values of italic and bold are false.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/15b525f4-742f-e7ce-c4ed-98b87a350278"
     },
     {
-      "name": "FontAttributes",
+      "name": "FontAttributes(DrawingColors, Double, String, Boolean, Boolean)",
       "signature": "public FontAttributes(DrawingColors color, double height, string fontName, bool italic, bool bold)",
       "summary": "Creates a new font attributes instance with the given parameters.",
       "params": [
@@ -52,12 +53,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/dc7f41a0-8b07-43ff-6524-c5f09295d33f"
     },
     {
-      "name": "FontAttributes",
+      "name": "FontAttributes(TeklaDrawingColor, Double, String, Boolean, Boolean)",
       "signature": "public FontAttributes(TeklaDrawingColor color, double height, string fontName, bool italic, bool bold)",
       "summary": "Creates a new font attributes instance with the given parameters.",
       "params": [
@@ -92,6 +94,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/90db3507-04de-d20a-ead3-57eee5db23e4"

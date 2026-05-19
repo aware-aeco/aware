@@ -12,6 +12,7 @@
       "signature": "public CatalogHandler()",
       "summary": "Creates a new catalog handler instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/04a294f3-deb5-5367-17fd-d9c8bfb4110e"
@@ -235,7 +236,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/992a8408-b4c2-c50f-895a-ea876c4c7333"
     },
     {
-      "name": "GetUserPropertyItems.",
+      "name": "GetUserPropertyItems()",
       "signature": "public UserPropertyItemEnumerator GetUserPropertyItems()",
       "summary": "Returns an enumerator of all user property items.",
       "params": [],

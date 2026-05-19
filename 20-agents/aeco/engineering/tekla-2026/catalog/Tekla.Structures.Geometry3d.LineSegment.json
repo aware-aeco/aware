@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/e075bf75-c88c-4d32-eb59-077962e93594",
   "constructors": [
     {
-      "name": "LineSegment",
+      "name": "LineSegment()",
       "signature": "public LineSegment()",
       "summary": "Instantiates a line segment with both the starting point and the end point zeroed.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/288cba9c-74f8-8f4b-c1eb-c9e3ba79eb51"
     },
     {
-      "name": "LineSegment",
+      "name": "LineSegment(Point, Point)",
       "signature": "public LineSegment(Point Point1, Point Point2)",
       "summary": "Instantiates a line segment with the given points.",
       "params": [
@@ -34,6 +35,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5946edeb-7982-dbce-eac3-28ab0478ce44"

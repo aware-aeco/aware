@@ -12,6 +12,7 @@
       "signature": "public TypeBelowLine()",
       "summary": "Initializes a new instance of the TypeBelowLine class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/69a24111-d9a8-0486-3d9d-5ad17069b596"

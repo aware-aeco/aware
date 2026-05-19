@@ -1,6 +1,6 @@
 ---
 name: tekla-tekla-structures-model-operations
-description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Model.Operations namespace — 13 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: GuidConversion, Operation.ReportParameters, Operation.ProgressBar, Operation, Operation.IFC2x3ExportFlags, Operation.IFCExportFlags, Operation.ExportBasePoint, Operation.IFC2x3ExportViewTypeEnum, and 5 more types.
+description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Model.Operations namespace — 13 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: GuidConversion, Operation, Operation.ProgressBar, Operation.ReportParameters, Operation.IFC2x3ExportFlags, Operation.IFCExportFlags, Operation.IFC2x3ExportViewTypeEnum, Operation.ExportBasePoint, and 5 more types.
 ---
 
 # Tekla.Structures.Model.Operations
@@ -39,6 +39,8 @@ Gets the new GUID.
 ## Operation (class)
 
 The Operation class implements Tekla Structures level operations.
+
+**Remarks:** Using this method is much faster than checking each object individually.
 
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/d5bbc096-a164-49ea-16a8-3820e40b00be)
 
@@ -196,7 +198,7 @@ Modifies the first plate by adding a bend that connects it to the second plate c
 
 #### `public static BentPlate CreateBentPlateByFaces(Part part1, IList<Point> face1, Part part2, IList<Point> face2)`
 
-Modifies the first plate by adding a cylindrical bend that connects it to the second plate creating a new BentPlate instance based on two parts and selected faces in each part. See CreateBentPlateByFaces(Part, IList.Point., Part, IList.Point., BentPlate.BendShape).
+Modifies the first plate by adding a cylindrical bend that connects it to the second plate creating a new BentPlate instance based on two parts and selected faces in each part. See CreateBentPlateByFaces(Part, IList<Point>, Part, IList<Point>, BentPlate.BendShape).
 
 **Parameters:**
 - `part1` (Tekla.Structures.Model.Part) — The first part.
@@ -1189,6 +1191,8 @@ Update status information on the progress bar.
 ## Operation.ReportParameters (class)
 
 Represents the parameters required for generating a report.
+
+**Remarks:** This class encapsulates various settings and options that define how a report is generated, including template names, file names, titles, and processing flags. It provides properties to specify whether the report is generated from selected objects or all objects, and allows customization of the report's appearance and format.
 
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/f3230537-529d-b6e5-72dc-e718a4190599)
 

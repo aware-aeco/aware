@@ -12,6 +12,7 @@
       "signature": "public Analysis()",
       "summary": "Initializes a new instance of the Analysis class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3197bc6b-758e-69aa-8274-63e69cad7e6d"

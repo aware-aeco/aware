@@ -22,7 +22,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c7b5ef15-0c29-6a2a-ef92-99fb8e0ed0b3"
     },
     {
-      "name": "GetAllObjects.",
+      "name": "GetAllObjects()",
       "signature": "public DrawingObjectEnumerator GetAllObjects()",
       "summary": "Gets all the objects and their children objects in the view.",
       "params": [],
@@ -55,7 +55,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d8756000-215b-c1e0-49c7-d36dc245bec8"
     },
     {
-      "name": "GetAllObjects(.Type.)",
+      "name": "GetAllObjects(.Type[])",
       "signature": "public DrawingObjectEnumerator GetAllObjects(Type[] TypeFilter)",
       "summary": "Gets all the objects and their children objects in the view that are of certain types.",
       "params": [
@@ -101,7 +101,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c51d1265-7cc9-ca4c-86b0-d76fe62d8be8"
     },
     {
-      "name": "GetDoubleUserProperties(Dictionary.String, Double..)",
+      "name": "GetDoubleUserProperties(Dictionary\u003CString, Double\u003E.)",
       "signature": "public bool GetDoubleUserProperties(out Dictionary\u003Cstring, double\u003E values)",
       "summary": "Retrieves all double user properties for the object with the given list of names.",
       "params": [
@@ -121,7 +121,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b25f0e6b-ab5c-154a-a45c-4f5868a20599"
     },
     {
-      "name": "GetDoubleUserProperties(List.String., Dictionary.String, Double..)",
+      "name": "GetDoubleUserProperties(List\u003CString\u003E, Dictionary\u003CString, Double\u003E.)",
       "signature": "public bool GetDoubleUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, double\u003E values)",
       "summary": "Retrieves all double user properties for the object with the given list of names.",
       "params": [
@@ -160,7 +160,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4e9beef3-2188-ab45-9f07-dbde351915bf"
     },
     {
-      "name": "GetIntegerUserProperties(Dictionary.String, Int32..)",
+      "name": "GetIntegerUserProperties(Dictionary\u003CString, Int32\u003E.)",
       "signature": "public bool GetIntegerUserProperties(out Dictionary\u003Cstring, int\u003E values)",
       "summary": "Retrieves all integer user properties for the object with the given list of names.",
       "params": [
@@ -180,7 +180,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/20a7d099-ebee-b016-ffc7-0181a1219405"
     },
     {
-      "name": "GetIntegerUserProperties(List.String., Dictionary.String, Int32..)",
+      "name": "GetIntegerUserProperties(List\u003CString\u003E, Dictionary\u003CString, Int32\u003E.)",
       "signature": "public bool GetIntegerUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, int\u003E values)",
       "summary": "Retrieves all integer user properties for the object with the given list of names.",
       "params": [
@@ -226,7 +226,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c59be515-bde2-42ef-2e58-fa8a4e0173ba"
     },
     {
-      "name": "GetObjects.",
+      "name": "GetObjects()",
       "signature": "public DrawingObjectEnumerator GetObjects()",
       "summary": "Gets the objects in the view. Does not return child objects (single dimensions, grid lines, views).",
       "params": [],
@@ -239,7 +239,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/bd691388-4a5f-d33f-3364-d516c037cb21"
     },
     {
-      "name": "GetObjects(.Type.)",
+      "name": "GetObjects(.Type[])",
       "signature": "public DrawingObjectEnumerator GetObjects(Type[] TypeFilter)",
       "summary": "Gets the objects in the view that are of certain types. Does not return child objects (single dimensions, grid lines, views).",
       "params": [
@@ -272,7 +272,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b34f08ba-6799-5511-dd98-8654ffbc1ebd"
     },
     {
-      "name": "GetRelatedObjects.",
+      "name": "GetRelatedObjects()",
       "signature": "public DrawingObjectEnumerator GetRelatedObjects()",
       "summary": "Gets the related objects of the current object.",
       "params": [],
@@ -285,7 +285,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/50820387-cee1-637a-318e-fb3e06780149"
     },
     {
-      "name": "GetRelatedObjects(.Type.)",
+      "name": "GetRelatedObjects(.Type[])",
       "signature": "public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)",
       "summary": "Gets the related objects of the current object that are of certain types.",
       "params": [
@@ -305,7 +305,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/01d5e137-fa4b-92d7-328b-69c974dc7415"
     },
     {
-      "name": "GetStringUserProperties(Dictionary.String, String..)",
+      "name": "GetStringUserProperties(Dictionary\u003CString, String\u003E.)",
       "signature": "public bool GetStringUserProperties(out Dictionary\u003Cstring, string\u003E values)",
       "summary": "Retrieves all string user properties for the object with the given list of names.",
       "params": [
@@ -325,7 +325,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a0039213-2e79-912f-5bdf-5e6dd417c092"
     },
     {
-      "name": "GetStringUserProperties(List.String., Dictionary.String, String..)",
+      "name": "GetStringUserProperties(List\u003CString\u003E, Dictionary\u003CString, String\u003E.)",
       "signature": "public bool GetStringUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, string\u003E values)",
       "summary": "Retrieves all string user properties for the object with the given list of names.",
       "params": [

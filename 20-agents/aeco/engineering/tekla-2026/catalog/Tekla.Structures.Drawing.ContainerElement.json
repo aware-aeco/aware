@@ -12,6 +12,7 @@
       "signature": "public ContainerElement()",
       "summary": "Initializes a new instance of the ContainerElement class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b003c6b2-b951-acc2-bb39-d10e5f3381e6"
@@ -30,6 +31,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/01ce5ad6-2d97-4dba-7a04-6459a4476c13"
@@ -39,6 +41,7 @@
       "signature": "public void Clear()",
       "summary": "Removes all elements from the container instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3ebf4c11-e7c8-6443-e915-da0b4ce362f8"
@@ -74,6 +77,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentNullException",

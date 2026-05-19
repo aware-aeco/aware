@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/49862649-da7c-2c72-554e-78cc2a2d7f6b",
   "constructors": [
     {
-      "name": "GridCylindricalSurface",
+      "name": "GridCylindricalSurface()",
       "signature": "public GridCylindricalSurface()",
       "summary": "Creates a new grid plane instance. The default values are as follows: CylinderBase = new Arc(new Point(0, 0, 0), new Point(6000, 0, 0), new Vector(0, 0, 1), Math.PI);CylinderHeight = 6000.0;Label = \u0022Default\u0022;IsMagnetic = false;ExtensionLeft = 2000.0;ExtensionRight = 2000.0;ExtensionBelow = 2000.0;ExtensionAbove = 2000.0;DrawingVisibility = false;",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6bf11062-86df-53e4-cfc0-ddfef2d7fde4"
     },
     {
-      "name": "GridCylindricalSurface",
+      "name": "GridCylindricalSurface(Arc, Double, String)",
       "signature": "public GridCylindricalSurface(Arc cylinderBase, double cylinderHeight, string label)",
       "summary": "Creates a new grid plane instance taking the plane and label as input.",
       "params": [
@@ -40,6 +41,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a5f3b960-2e39-f46b-9366-e2ddb6f6ac79"
@@ -899,7 +901,7 @@
     },
     {
       "name": "IsUpToDate",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": false,
       "summary": "Gets if the object does not have a modification which is not shared.",
@@ -915,7 +917,7 @@
     },
     {
       "name": "ModificationTime",
-      "type": "object",
+      "type": "Nullable\u003CDateTime\u003E",
       "getter": true,
       "setter": false,
       "summary": "Gets latest time of the object was modified or created.",

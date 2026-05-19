@@ -12,6 +12,7 @@
       "signature": "public Phase()",
       "summary": "Initializes a new instance of the Phase class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2d2568db-8d96-f551-bac3-b1fe407367c0"

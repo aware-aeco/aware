@@ -24,6 +24,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f4e807c2-66cc-df81-552b-3e0c422ac6b1"

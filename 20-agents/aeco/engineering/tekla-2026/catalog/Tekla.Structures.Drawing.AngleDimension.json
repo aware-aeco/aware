@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/31a8523d-decf-f1ff-75e6-b69b16d35454",
   "constructors": [
     {
-      "name": "AngleDimension",
+      "name": "AngleDimension(ViewBase, Point, Point, Point, Double)",
       "signature": "public AngleDimension(ViewBase View, Point Origin, Point Point1, Point Point2, double Distance)",
       "summary": "Creates a new angle dimension instance using three points.",
       "params": [
@@ -43,12 +43,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f95970b8-4c70-70d8-28f1-8c0600f0cb00"
     },
     {
-      "name": "AngleDimension",
+      "name": "AngleDimension(ViewBase, Point, Vector, Vector, Double)",
       "signature": "public AngleDimension(ViewBase View, Point Origin, Vector Vector1, Vector Vector2, double Distance)",
       "summary": "Creates a new angle dimension instance using the origin and two vectors relative to the origin.",
       "params": [
@@ -83,12 +84,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ee1950b6-3651-f58c-a547-6447ac00165f"
     },
     {
-      "name": "AngleDimension",
+      "name": "AngleDimension(ViewBase, Point, Point, Point, Double, AngleDimensionAttributes)",
       "signature": "public AngleDimension(ViewBase View, Point Origin, Point Point1, Point Point2, double Distance, AngleDimensionAttributes Attributes)",
       "summary": "Creates a new angle dimension instance using three points.",
       "params": [
@@ -129,12 +131,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/dc124a5a-5a48-707b-7eca-ae296144bc0e"
     },
     {
-      "name": "AngleDimension",
+      "name": "AngleDimension(ViewBase, Point, Vector, Vector, Double, AngleDimensionAttributes)",
       "signature": "public AngleDimension(ViewBase View, Point Origin, Vector Vector1, Vector Vector2, double Distance, AngleDimensionAttributes Attributes)",
       "summary": "Creates a new angle dimension instance using the origin and two vectors relative to the origin.",
       "params": [
@@ -175,6 +178,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ceea97d9-8f45-d58e-18b2-24c35abb9e96"
@@ -208,7 +212,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ac0311b8-f59b-bea7-5d4b-b9ac1f54d81f"
     },
     {
-      "name": "GetDimensionSet.",
+      "name": "GetDimensionSet()",
       "signature": "public override DimensionSetBase GetDimensionSet()",
       "summary": "The angle dimension doesn\u0027t have a dimension set.",
       "params": [],
@@ -251,7 +255,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/899bcaed-102c-53b2-c66a-cd0d267802a9"
     },
     {
-      "name": "GetDoubleUserProperties(Dictionary.String, Double..)",
+      "name": "GetDoubleUserProperties(Dictionary\u003CString, Double\u003E.)",
       "signature": "public bool GetDoubleUserProperties(out Dictionary\u003Cstring, double\u003E values)",
       "summary": "Retrieves all double user properties for the object with the given list of names.",
       "params": [
@@ -271,7 +275,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b25f0e6b-ab5c-154a-a45c-4f5868a20599"
     },
     {
-      "name": "GetDoubleUserProperties(List.String., Dictionary.String, Double..)",
+      "name": "GetDoubleUserProperties(List\u003CString\u003E, Dictionary\u003CString, Double\u003E.)",
       "signature": "public bool GetDoubleUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, double\u003E values)",
       "summary": "Retrieves all double user properties for the object with the given list of names.",
       "params": [
@@ -310,7 +314,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4e9beef3-2188-ab45-9f07-dbde351915bf"
     },
     {
-      "name": "GetIntegerUserProperties(Dictionary.String, Int32..)",
+      "name": "GetIntegerUserProperties(Dictionary\u003CString, Int32\u003E.)",
       "signature": "public bool GetIntegerUserProperties(out Dictionary\u003Cstring, int\u003E values)",
       "summary": "Retrieves all integer user properties for the object with the given list of names.",
       "params": [
@@ -330,7 +334,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/20a7d099-ebee-b016-ffc7-0181a1219405"
     },
     {
-      "name": "GetIntegerUserProperties(List.String., Dictionary.String, Int32..)",
+      "name": "GetIntegerUserProperties(List\u003CString\u003E, Dictionary\u003CString, Int32\u003E.)",
       "signature": "public bool GetIntegerUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, int\u003E values)",
       "summary": "Retrieves all integer user properties for the object with the given list of names.",
       "params": [
@@ -356,7 +360,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b485bd81-5ccf-68e4-0453-caea6b1d0dde"
     },
     {
-      "name": "GetRelatedObjects.",
+      "name": "GetRelatedObjects()",
       "signature": "public DrawingObjectEnumerator GetRelatedObjects()",
       "summary": "Gets the related objects of the current object.",
       "params": [],
@@ -369,7 +373,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/50820387-cee1-637a-318e-fb3e06780149"
     },
     {
-      "name": "GetRelatedObjects(.Type.)",
+      "name": "GetRelatedObjects(.Type[])",
       "signature": "public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)",
       "summary": "Gets the related objects of the current object that are of certain types.",
       "params": [
@@ -389,7 +393,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/01d5e137-fa4b-92d7-328b-69c974dc7415"
     },
     {
-      "name": "GetStringUserProperties(Dictionary.String, String..)",
+      "name": "GetStringUserProperties(Dictionary\u003CString, String\u003E.)",
       "signature": "public bool GetStringUserProperties(out Dictionary\u003Cstring, string\u003E values)",
       "summary": "Retrieves all string user properties for the object with the given list of names.",
       "params": [
@@ -409,7 +413,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a0039213-2e79-912f-5bdf-5e6dd417c092"
     },
     {
-      "name": "GetStringUserProperties(List.String., Dictionary.String, String..)",
+      "name": "GetStringUserProperties(List\u003CString\u003E, Dictionary\u003CString, String\u003E.)",
       "signature": "public bool GetStringUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, string\u003E values)",
       "summary": "Retrieves all string user properties for the object with the given list of names.",
       "params": [

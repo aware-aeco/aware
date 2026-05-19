@@ -12,6 +12,7 @@
       "signature": "public ActualStartDate()",
       "summary": "Initializes a new instance of the ActualStartDate class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7f5aecc3-4a34-d6b5-0222-98481e3d4005"

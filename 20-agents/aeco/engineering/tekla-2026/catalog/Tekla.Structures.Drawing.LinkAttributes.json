@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/4fe70624-5381-eb78-a7a4-17802129c21d",
   "constructors": [
     {
-      "name": "LinkAttributes",
+      "name": "LinkAttributes()",
       "signature": "public LinkAttributes()",
       "summary": "Creates a new link attributes instance using standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2c81606e-3122-e3a5-9809-84452a298578"
     },
     {
-      "name": "LinkAttributes",
+      "name": "LinkAttributes(String)",
       "signature": "public LinkAttributes(string AttributeFile)",
       "summary": "Creates a new link attributes instance loading the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/83226fd5-2624-a4ae-d6a9-954d94fde423"

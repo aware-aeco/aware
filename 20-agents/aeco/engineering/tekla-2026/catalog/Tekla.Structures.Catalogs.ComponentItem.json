@@ -12,6 +12,7 @@
       "signature": "public ComponentItem()",
       "summary": "Creates a new component item instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1050bcc8-4fcb-1d9b-b5e8-5a853a706ab6"
@@ -120,7 +121,7 @@
   "properties": [
     {
       "name": "AttributeFileExtension",
-      "type": "object",
+      "type": "String",
       "getter": true,
       "setter": false,
       "summary": "Gets the attribute file extension of item from the component database.",

@@ -12,6 +12,7 @@
       "signature": "public AnalysisDesignCode()",
       "summary": "Initializes a new instance of the AnalysisDesignCode class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f2259a2e-bd3b-10f6-3c88-c160011b9b21"

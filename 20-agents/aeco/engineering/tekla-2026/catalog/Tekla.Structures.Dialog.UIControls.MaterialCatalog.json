@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/18f14693-f93b-dd0c-d5ae-a997113bfd06",
   "constructors": [
     {
-      "name": "MaterialCatalog",
+      "name": "MaterialCatalog()",
       "signature": "public MaterialCatalog()",
       "summary": "Initiates a new instance of the control.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/dfdd86bd-78f2-5944-0289-1b735cdf1a21"
     },
     {
-      "name": "MaterialCatalog",
+      "name": "MaterialCatalog(String)",
       "signature": "public MaterialCatalog(string Material)",
       "summary": "Creates a new instance of the MaterialCatalog and will select the material (if available) in the tree.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0e0d7a1d-142f-2df1-57d0-9c1e4c56c007"

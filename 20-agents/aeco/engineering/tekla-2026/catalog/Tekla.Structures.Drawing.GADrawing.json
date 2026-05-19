@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/fde93858-3caf-30b8-9473-62392b72a083",
   "constructors": [
     {
-      "name": "GADrawing",
+      "name": "GADrawing()",
       "signature": "public GADrawing()",
       "summary": "Instantiates a new GA drawing using standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/24fada3c-a0fb-6fd1-0aec-240c1df19d8b"
     },
     {
-      "name": "GADrawing",
+      "name": "GADrawing(String)",
       "signature": "public GADrawing(string AttributeFile)",
       "summary": "Instantiates a new GA drawing with the given attributes.",
       "params": [
@@ -28,12 +29,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/32cf717b-b8a6-62e6-9045-681dfe82fb3f"
     },
     {
-      "name": "GADrawing",
+      "name": "GADrawing(String, String)",
       "signature": "public GADrawing(string Name, string AttributeFile)",
       "summary": "Instantiates a new GA drawing with the given name and attribute file.",
       "params": [
@@ -50,12 +52,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/dfe22a69-17fb-349b-12ee-76f3391e4686"
     },
     {
-      "name": "GADrawing",
+      "name": "GADrawing(String, Size)",
       "signature": "public GADrawing(string AttributeFile, Size SheetSize)",
       "summary": "Instantiates a new GA drawing with attributes. Loads the specified attribute file and overrides with the given layout attributes.",
       "params": [
@@ -72,6 +75,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f1ba4793-a13e-6f97-dd6f-696a23e10772"
@@ -79,7 +83,7 @@
   ],
   "methods": [
     {
-      "name": "CommitChanges.",
+      "name": "CommitChanges()",
       "signature": "public bool CommitChanges()",
       "summary": "Commits the changes made to the drawings database so far. Commit inserts a kind of save-point into the database and the save-point will be retrieved if the user does undo. Commit also executes all messages. Please note that you need to also to save the drawings database to persists the changes to disk.",
       "params": [],
@@ -130,7 +134,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4bcff604-27c4-487f-bb7d-5d80a2d87d8b"
     },
     {
-      "name": "GetDoubleUserProperties(Dictionary.String, Double..)",
+      "name": "GetDoubleUserProperties(Dictionary\u003CString, Double\u003E.)",
       "signature": "public bool GetDoubleUserProperties(out Dictionary\u003Cstring, double\u003E values)",
       "summary": "Retrieves all double user properties for the object with the given list of names.",
       "params": [
@@ -150,7 +154,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b25f0e6b-ab5c-154a-a45c-4f5868a20599"
     },
     {
-      "name": "GetDoubleUserProperties(List.String., Dictionary.String, Double..)",
+      "name": "GetDoubleUserProperties(List\u003CString\u003E, Dictionary\u003CString, Double\u003E.)",
       "signature": "public bool GetDoubleUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, double\u003E values)",
       "summary": "Retrieves all double user properties for the object with the given list of names.",
       "params": [
@@ -176,7 +180,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7f327fc5-14b5-f534-da39-b68d3f87124a"
     },
     {
-      "name": "GetIntegerUserProperties(Dictionary.String, Int32..)",
+      "name": "GetIntegerUserProperties(Dictionary\u003CString, Int32\u003E.)",
       "signature": "public bool GetIntegerUserProperties(out Dictionary\u003Cstring, int\u003E values)",
       "summary": "Retrieves all integer user properties for the object with the given list of names.",
       "params": [
@@ -196,7 +200,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/20a7d099-ebee-b016-ffc7-0181a1219405"
     },
     {
-      "name": "GetIntegerUserProperties(List.String., Dictionary.String, Int32..)",
+      "name": "GetIntegerUserProperties(List\u003CString\u003E, Dictionary\u003CString, Int32\u003E.)",
       "signature": "public bool GetIntegerUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, int\u003E values)",
       "summary": "Retrieves all integer user properties for the object with the given list of names.",
       "params": [
@@ -277,7 +281,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/fe921886-00b9-57d3-0488-92bd25014c66"
     },
     {
-      "name": "GetStringUserProperties(Dictionary.String, String..)",
+      "name": "GetStringUserProperties(Dictionary\u003CString, String\u003E.)",
       "signature": "public bool GetStringUserProperties(out Dictionary\u003Cstring, string\u003E values)",
       "summary": "Retrieves all string user properties for the object with the given list of names.",
       "params": [
@@ -297,7 +301,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a0039213-2e79-912f-5bdf-5e6dd417c092"
     },
     {
-      "name": "GetStringUserProperties(List.String., Dictionary.String, String..)",
+      "name": "GetStringUserProperties(List\u003CString\u003E, Dictionary\u003CString, String\u003E.)",
       "signature": "public bool GetStringUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, string\u003E values)",
       "summary": "Retrieves all string user properties for the object with the given list of names.",
       "params": [

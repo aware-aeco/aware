@@ -12,6 +12,7 @@
       "signature": "public LibraryProfileItem()",
       "summary": "Creates a new library profile item instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a0c0305b-1b8a-cfdb-5aa3-60caca650015"
@@ -170,7 +171,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/285dde88-c699-5213-abc8-fa5f4c951bfe"
     },
     {
-      "name": "GetProfileItemSubTypes.",
+      "name": "GetProfileItemSubTypes()",
       "signature": "public List\u003CProfileItemSubType\u003E GetProfileItemSubTypes()",
       "summary": "Selects the profile item and updates the sub types in the profile database.",
       "params": [],
@@ -319,7 +320,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2bc63067-81ca-5ba6-cf20-efa1c134ea97"
     },
     {
-      "name": "Select.",
+      "name": "Select()",
       "signature": "public virtual bool Select()",
       "summary": "Selects the profile item in the profile database.",
       "params": [],
@@ -442,7 +443,7 @@
     },
     {
       "name": "IsMultiCrossSectionUserParametric",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": false,
       "summary": "Whether the profile is a parametric user-defined multi cross section profile.",
@@ -450,7 +451,7 @@
     },
     {
       "name": "IsSketchedUserParametric",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": false,
       "summary": "Whether the profile is a parametric user-defined sketched profile.",

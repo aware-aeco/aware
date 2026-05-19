@@ -18,6 +18,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2cca90f4-76de-ce22-c564-0adb3b046ea9"
@@ -122,6 +123,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b88641ca-e4d7-28b6-cb2e-8132d8c2e4f0"
@@ -151,6 +153,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/fffa87a4-e597-9339-09eb-e4f6555929c7"

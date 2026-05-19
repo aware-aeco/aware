@@ -12,6 +12,7 @@
       "signature": "public UserPropertyOption()",
       "summary": "Initializes a new instance of the UserPropertyOption class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8a41ec50-f2b2-7b8b-09e3-92d0b240d691"

@@ -4,7 +4,11 @@
   "kind": "class",
   "summary": "Provides support for angles using either the current Tekla Structures units, or user defined units",
   "base": "System.Object",
-  "interfaces": [],
+  "interfaces": [
+    "IFormattable",
+    "IComparable\u003CAngle\u003E",
+    "IEquatable\u003CAngle\u003E"
+  ],
   "doc_url": "https://developer.tekla.com/topic/en/18/47/08e0a838-72ea-816e-f76e-3344b1d23e2f",
   "constructors": [],
   "methods": [
@@ -187,7 +191,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e50fed20-8e48-aa8a-defe-5dd610183f40"
     },
     {
-      "name": "ToString.",
+      "name": "ToString()",
       "signature": "public override string ToString()",
       "summary": "Converts the represented angle to a string in the current units",
       "params": [],

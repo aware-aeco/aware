@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/7989d6f9-a7df-43e3-a504-cd4c0b361b02",
   "constructors": [
     {
-      "name": "RebarSplice",
+      "name": "RebarSplice()",
       "signature": "public RebarSplice()",
       "summary": "Initializes a new rebar splice instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b44bfd8c-7503-bfeb-35a3-273e9c4c1b17"
     },
     {
-      "name": "RebarSplice",
+      "name": "RebarSplice(RebarGroup, RebarGroup)",
       "signature": "public RebarSplice(RebarGroup InputRebar1, RebarGroup InputRebar2)",
       "summary": "Initializes a new rebar splice instance with rebar groups to be joined.",
       "params": [
@@ -34,6 +35,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/58738b9c-62d5-be4b-8188-3db0e6f6c2e7"
@@ -837,7 +839,7 @@
     },
     {
       "name": "IsUpToDate",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": false,
       "summary": "Gets if the object does not have a modification which is not shared.",
@@ -853,7 +855,7 @@
     },
     {
       "name": "ModificationTime",
-      "type": "object",
+      "type": "Nullable\u003CDateTime\u003E",
       "getter": true,
       "setter": false,
       "summary": "Gets latest time of the object was modified or created.",

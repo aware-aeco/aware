@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/8788e92a-0d78-4c24-a3cc-039b96c08789",
   "constructors": [
     {
-      "name": "NumberingSeries",
+      "name": "NumberingSeries()",
       "signature": "public NumberingSeries()",
       "summary": "Instantiates a default numbering.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4db6eaec-ed68-7882-01c0-053368ca0e99"
     },
     {
-      "name": "NumberingSeries",
+      "name": "NumberingSeries(String, Int32)",
       "signature": "public NumberingSeries(string Prefix, int Number)",
       "summary": "Instantiates a numbering series with the given arguments.",
       "params": [
@@ -34,6 +35,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/adae8e7c-ca96-84ef-ec4a-9ed360001d7a"

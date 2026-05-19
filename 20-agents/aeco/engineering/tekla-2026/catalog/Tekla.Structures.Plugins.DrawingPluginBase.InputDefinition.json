@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/671978ea-ae03-3158-95ff-a55cbd398d67",
   "constructors": [
     {
-      "name": "DrawingPluginBase.InputDefinition",
+      "name": "DrawingPluginBase.InputDefinition(Identifier, List\u003CPoint\u003E)",
       "signature": "public InputDefinition(Identifier viewId, List\u003CPoint\u003E points)",
       "summary": "Creates a new input definition with multiple points.",
       "params": [
@@ -25,12 +25,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/320dae8b-7499-ba35-16a7-391fb28bd9d4"
     },
     {
-      "name": "DrawingPluginBase.InputDefinition",
+      "name": "DrawingPluginBase.InputDefinition(Identifier, Point)",
       "signature": "public InputDefinition(Identifier viewId, Point point)",
       "summary": "Creates a new input definition instance with one point.",
       "params": [
@@ -47,12 +48,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/858ba391-a1ad-6eb7-e58f-b62cdbfcf1f3"
     },
     {
-      "name": "DrawingPluginBase.InputDefinition",
+      "name": "DrawingPluginBase.InputDefinition(Identifier, Identifier)",
       "signature": "public InputDefinition(Identifier viewId, Identifier ObjectId)",
       "summary": "Creates a new input definition instance with one identifier.",
       "params": [
@@ -69,12 +71,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/31f5ea8d-6e32-c233-8385-4f1805279118"
     },
     {
-      "name": "DrawingPluginBase.InputDefinition",
+      "name": "DrawingPluginBase.InputDefinition(Identifier, Point, Point)",
       "signature": "public InputDefinition(Identifier viewId, Point point1, Point point2)",
       "summary": "Creates a new input definition instance with two points.",
       "params": [
@@ -97,12 +100,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8ade92e0-d3f7-afab-4031-04ba40d40464"
     },
     {
-      "name": "DrawingPluginBase.InputDefinition",
+      "name": "DrawingPluginBase.InputDefinition(Identifier, Point, Point, Point)",
       "signature": "public InputDefinition(Identifier viewId, Point point1, Point point2, Point point3)",
       "summary": "Creates a new input definition instance with three points.",
       "params": [
@@ -131,6 +135,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/74cad141-d5bd-1665-dd82-7c4fdf0837ae"

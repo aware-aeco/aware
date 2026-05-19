@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/782c39eb-4018-ceec-cbf2-c8502d926da0",
   "constructors": [
     {
-      "name": "ConicalSurface",
+      "name": "ConicalSurface(Arc, Double, Double)",
       "signature": "public ConicalSurface(Arc baseArc, double height, double radiusAtHeight)",
       "summary": "Initializes a new instance of the ConicalSurface class from a base arc, a height and a radius at the top. This is the recommended constructor if no intermediate points are desired along the lateral boundaries of the bend surface.",
       "params": [
@@ -31,6 +31,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentException",
@@ -41,7 +42,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/cf7ddcda-4d1e-a95d-e71a-f330b45e415c"
     },
     {
-      "name": "ConicalSurface",
+      "name": "ConicalSurface(List\u003CPoint\u003E, List\u003CPoint\u003E, Line, Vector)",
       "signature": "public ConicalSurface(List\u003CPoint\u003E lateralBoundary1, List\u003CPoint\u003E lateralBoundary2, Line centerLine, Vector rotationAxis)",
       "summary": "Initializes a new instance of the ConicalSurface class from the cone lateral boundaries and the center line. This is the recommended constructor if fine grained control is desired over the lateral boundaries of the surface.",
       "params": [
@@ -70,12 +71,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d94ecfcc-ef51-4b3b-1b83-c6ac14908c53"
     },
     {
-      "name": "ConicalSurface",
+      "name": "ConicalSurface(Vector, Vector, List\u003CPoint\u003E, List\u003CPoint\u003E)",
       "signature": "public ConicalSurface(Vector endFaceNormal1, Vector endFaceNormal2, List\u003CPoint\u003E lateralBoundary1, List\u003CPoint\u003E lateralBoundary2)",
       "summary": "Initializes a new instance of the ConicalSurface class with given parameters. The boundaries are defined by the lateral boundaries (i.e. the points on the sides of the curved part of the cone). The side boundaries are defined by the two first points and the two last points of the lateral boundaries.",
       "remarks": "This constructor may be numerically instable if the end faces are very close",
@@ -105,6 +107,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentNullException",
@@ -119,7 +122,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/43cec9ef-0fe4-08c9-385e-1ee86acde3bc"
     },
     {
-      "name": "ConicalSurface",
+      "name": "ConicalSurface(Vector, Vector, LineSegment, LineSegment)",
       "signature": "public ConicalSurface(Vector endFaceNormal1, Vector endFaceNormal2, LineSegment sideBoundary1, LineSegment sideBoundary2)",
       "summary": "Initializes a new instance of the ConicalSurface class with given parameters. The boundaries are defined by the side boundaries (i.e. generator lines of the cone).",
       "remarks": "This constructor may be numerically instable if the end faces are very close",
@@ -149,6 +152,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentNullException",

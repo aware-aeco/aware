@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/c62fa47a-7ee7-9f7c-7151-313d6b9aad25",
   "constructors": [
     {
-      "name": "HierarchicObject",
+      "name": "HierarchicObject()",
       "signature": "public HierarchicObject()",
       "summary": "Creates a new hierarchical object instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/206047e6-2573-b2c3-3775-410d0e310f27"
     },
     {
-      "name": "HierarchicObject",
+      "name": "HierarchicObject(Identifier)",
       "signature": "public HierarchicObject(Identifier ID)",
       "summary": "Instantiates a hierarchical object with a known identifier. The instantiation has to be done before the hierarchical definition instance can be selected.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b4c5e243-5015-0f66-bf02-005b916f5661"
@@ -879,7 +881,7 @@
     },
     {
       "name": "IsUpToDate",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": false,
       "summary": "Gets if the object does not have a modification which is not shared.",
@@ -887,7 +889,7 @@
     },
     {
       "name": "ModificationTime",
-      "type": "object",
+      "type": "Nullable\u003CDateTime\u003E",
       "getter": true,
       "setter": false,
       "summary": "Gets latest time of the object was modified or created.",

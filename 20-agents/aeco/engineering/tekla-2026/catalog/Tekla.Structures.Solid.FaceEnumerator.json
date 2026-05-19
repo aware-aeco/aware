@@ -4,7 +4,9 @@
   "kind": "class",
   "summary": "The FaceEnumerator class is used to enumerate the faces of a solid.",
   "base": "System.Object",
-  "interfaces": [],
+  "interfaces": [
+    "IEnumerator"
+  ],
   "doc_url": "https://developer.tekla.com/topic/en/18/47/ddfdfd4e-696e-a234-32b3-9cc3c7041cb3",
   "constructors": [],
   "methods": [
@@ -26,6 +28,7 @@
       "signature": "public void Reset()",
       "summary": "Resets the enumerator to the beginning.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/870623c5-5457-156a-56fd-4eb684ca26d5"

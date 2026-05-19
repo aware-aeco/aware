@@ -12,6 +12,7 @@
       "signature": "public AnalysisRigidDiaphragm()",
       "summary": "Initializes a new instance of the AnalysisRigidDiaphragm class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/590acb5e-03b1-a203-44a7-1095f115ac33"
@@ -23,6 +24,7 @@
       "signature": "public override void Select()",
       "summary": "Selects an analysis rigid diaphragm. The ID has to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d45af225-559c-3250-3bac-6dbe620a437f"

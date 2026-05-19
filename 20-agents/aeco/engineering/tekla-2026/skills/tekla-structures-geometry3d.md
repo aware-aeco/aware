@@ -1,6 +1,6 @@
 ---
 name: tekla-tekla-structures-geometry3d
-description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Geometry3d namespace — 27 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AABB, Arc, CoordinateSystem, Distance, FacetedBrep, FacetedBrepFaceHole, FacetedBrepFace, FacetedBrepWithNormals, and 19 more types.
+description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Geometry3d namespace — 27 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Arc, AABB, Distance, FacetedBrepFace, CoordinateSystem, FacetedBrep, FacetedBrepWithNormals, FacetedBrepFaceHole, and 19 more types.
 ---
 
 # Tekla.Structures.Geometry3d
@@ -645,7 +645,7 @@ Transposes a matrix. The resulting matrix is an inversion of the current matrix,
 [Docs](https://developer.tekla.com/topic/en/18/47/8801696e-5b19-3242-507c-28b3318ee3b4)
 
 ### Properties
-- `Item` (object, get/set) — Sets or gets the matrix element values.
+- `Item` (Double, get/set) — Sets or gets the matrix element values.
 
 ## MatrixFactory (class)
 
@@ -1224,6 +1224,14 @@ Returns a hash code for the point. Notice, in extremely rare cases, you might no
 
 [Docs](https://developer.tekla.com/topic/en/18/47/9f84f024-170b-5181-770d-5ed2f56332cd)
 
+#### `public override string ToString()`
+
+Formats the point into a string, using the current culture.
+
+**Returns:** `String` — The string that represents the point.
+
+[Docs](https://developer.tekla.com/topic/en/18/47/63db29a6-32f7-6696-31eb-a6084dcb62cd)
+
 #### `public string ToString(CultureInfo cultureInfo)`
 
 Formats the point into a string, using the provided culture.
@@ -1234,14 +1242,6 @@ Formats the point into a string, using the provided culture.
 **Returns:** `String` — The string that represents the point.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/176a7423-000a-5fb0-dab9-659b87bf1505)
-
-#### `public override string ToString()`
-
-Formats the point into a string, using the current culture.
-
-**Returns:** `String` — The string that represents the point.
-
-[Docs](https://developer.tekla.com/topic/en/18/47/63db29a6-32f7-6696-31eb-a6084dcb62cd)
 
 #### `public virtual void Translate(double X, double Y, double Z)`
 
@@ -1728,6 +1728,14 @@ Returns a new normalized equivalent of the current vector.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/63f639b4-79da-d1b8-ec4e-8017837710d6)
 
+#### `public double Normalize()`
+
+Normalizes the vector using the length 1.0 (the length of a unit vector).
+
+**Returns:** `Double` — The normalized vector's length.
+
+[Docs](https://developer.tekla.com/topic/en/18/47/54721df5-3066-b8b0-a27e-1cad586e287a)
+
 #### `public double Normalize(double NewLength)`
 
 Normalizes the vector using the given length.
@@ -1739,13 +1747,13 @@ Normalizes the vector using the given length.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/816a0090-f142-ebd4-31fd-1cf78d4ddd53)
 
-#### `public double Normalize()`
+#### `public override string ToString()`
 
-Normalizes the vector using the length 1.0 (the length of a unit vector).
+Formats the 3D vector into a string with fixed decimals, in the following way: "(X, Y, Z)".
 
-**Returns:** `Double` — The normalized vector's length.
+**Returns:** `String` — The string that represents the vector.
 
-[Docs](https://developer.tekla.com/topic/en/18/47/54721df5-3066-b8b0-a27e-1cad586e287a)
+[Docs](https://developer.tekla.com/topic/en/18/47/af9ca1e1-e366-d66a-9c2b-24f2ea504c02)
 
 #### `public string ToString(CultureInfo cultureInfo)`
 
@@ -1757,14 +1765,6 @@ Formats the point into a string, using the provided culture.
 **Returns:** `String` — The string that represents the point.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/176a7423-000a-5fb0-dab9-659b87bf1505)
-
-#### `public override string ToString()`
-
-Formats the 3D vector into a string with fixed decimals, in the following way: "(X, Y, Z)".
-
-**Returns:** `String` — The string that represents the vector.
-
-[Docs](https://developer.tekla.com/topic/en/18/47/af9ca1e1-e366-d66a-9c2b-24f2ea504c02)
 
 #### `public virtual void Translate(double X, double Y, double Z)`
 

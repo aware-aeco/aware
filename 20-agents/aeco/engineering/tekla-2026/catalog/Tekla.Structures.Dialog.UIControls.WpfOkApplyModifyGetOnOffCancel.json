@@ -4,7 +4,9 @@
   "kind": "class",
   "summary": "Interaction logic for WpfOkApplyModifyGetOnOffCancel.xaml",
   "base": "System.Windows.Controls.UserControl",
-  "interfaces": [],
+  "interfaces": [
+    "IComponentConnector"
+  ],
   "doc_url": "https://developer.tekla.com/topic/en/18/47/cc8aa487-0ba6-2426-b3b7-8dd26d8ca44e",
   "constructors": [
     {
@@ -12,6 +14,7 @@
       "signature": "public WpfOkApplyModifyGetOnOffCancel()",
       "summary": "Constructor",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3274c7de-caeb-49fd-b815-806d95b3cabd"
@@ -23,6 +26,7 @@
       "signature": "public void InitializeComponent()",
       "summary": "InitializeComponent",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/45362270-530d-9ea0-8cb4-1a76e52c6e5a"

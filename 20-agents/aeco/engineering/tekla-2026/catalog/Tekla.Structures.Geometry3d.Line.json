@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/abc6b564-46d8-8c73-982a-a898f4337cc2",
   "constructors": [
     {
-      "name": "Line",
+      "name": "Line()",
       "signature": "public Line()",
       "summary": "Instantiates a line with an undefined direction.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8cd820e9-a717-89dc-2431-115170ee8252"
     },
     {
-      "name": "Line",
+      "name": "Line(LineSegment)",
       "signature": "public Line(LineSegment LineSegment)",
       "summary": "Instantiates a line defined by the given line segment.",
       "params": [
@@ -28,12 +29,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6879ce85-1277-bcc3-cb12-8ff8678193df"
     },
     {
-      "name": "Line",
+      "name": "Line(Point, Point)",
       "signature": "public Line(Point p1, Point p2)",
       "summary": "Instantiates a line defined by the given points.",
       "params": [
@@ -50,12 +52,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b5ff1655-2aad-508c-c415-d4149a0c84f6"
     },
     {
-      "name": "Line",
+      "name": "Line(Point, Vector)",
       "signature": "public Line(Point Point, Vector Direction)",
       "summary": "Instantiates a line defined by the given point and direction vector.",
       "params": [
@@ -72,6 +75,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/98323580-85af-a06f-8ba7-638d0d2a644a"

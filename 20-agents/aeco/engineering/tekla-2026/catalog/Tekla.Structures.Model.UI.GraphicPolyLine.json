@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/6bdfc7b9-9538-09a9-5536-1c7f879a71ec",
   "constructors": [
     {
-      "name": "GraphicPolyLine",
+      "name": "GraphicPolyLine()",
       "signature": "public GraphicPolyLine()",
       "summary": "Create a black line with width 1 and solid line type.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/35132ae5-1dca-df7b-4bce-eb1a8eab51d4"
     },
     {
-      "name": "GraphicPolyLine",
+      "name": "GraphicPolyLine(Color, Int32, GraphicPolyLine.LineType)",
       "signature": "public GraphicPolyLine(Color color, int width, GraphicPolyLine.LineType type)",
       "summary": "Create a graphic polyline object with 0 points.",
       "params": [
@@ -40,12 +41,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a1f6c5af-3e21-16cc-eeb3-d90861989f11"
     },
     {
-      "name": "GraphicPolyLine",
+      "name": "GraphicPolyLine(PolyLine, Color, Int32, GraphicPolyLine.LineType)",
       "signature": "public GraphicPolyLine(PolyLine polyLine, Color color, int width, GraphicPolyLine.LineType type)",
       "summary": "Create a graphic polyline object.",
       "params": [
@@ -74,6 +76,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/384fb38c-d0ec-359a-2167-6c5a148478e7"

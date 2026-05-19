@@ -3,11 +3,12 @@
   "namespace": "Tekla.Structures.Datatype",
   "kind": "struct",
   "summary": "The Distance datatype.",
+  "remarks": "Distance stores, parses and formats distances in real world units.",
   "interfaces": [],
   "doc_url": "https://developer.tekla.com/topic/en/18/47/db01624c-588b-13b0-0d37-cae81b0408e4",
   "constructors": [
     {
-      "name": "Distance",
+      "name": "Distance(Double)",
       "signature": "public Distance(double millimeters)",
       "summary": "Initializes a new instance of the structure.",
       "params": [
@@ -18,12 +19,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a91ceb69-8f53-dfd6-5a1e-5357b1da3618"
     },
     {
-      "name": "Distance",
+      "name": "Distance(Double, Distance.UnitType)",
       "signature": "public Distance(double distance, Distance.UnitType unitType)",
       "summary": "Initializes a new instance of the structure.",
       "params": [
@@ -40,6 +42,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentException",
@@ -401,7 +404,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7f2527a1-966d-74e5-e167-d16511fb0566"
     },
     {
-      "name": "ToDecimalString.",
+      "name": "ToDecimalString()",
       "signature": "public string ToDecimalString()",
       "summary": "Converts the distance to a decimal string representation.",
       "params": [],
@@ -517,7 +520,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/de76014f-1500-125f-6f0a-1f4fd3017cb5"
     },
     {
-      "name": "ToFractionalFeetAndInchesString.",
+      "name": "ToFractionalFeetAndInchesString()",
       "signature": "public string ToFractionalFeetAndInchesString()",
       "summary": "Creates a string representation of the distance in feet and inches.",
       "params": [],
@@ -550,7 +553,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a34602fe-6adb-ce21-3b16-5b6258e88506"
     },
     {
-      "name": "ToFractionalInchesString.",
+      "name": "ToFractionalInchesString()",
       "signature": "public string ToFractionalInchesString()",
       "summary": "Creates a string representation of the distance in inches.",
       "params": [],
@@ -583,7 +586,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/735bbd44-6bf8-d628-c205-89d237f74583"
     },
     {
-      "name": "ToString.",
+      "name": "ToString()",
       "signature": "public override string ToString()",
       "summary": "Creates a string representation of the distance.",
       "params": [],

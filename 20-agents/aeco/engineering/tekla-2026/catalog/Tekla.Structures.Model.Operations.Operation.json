@@ -3,6 +3,7 @@
   "namespace": "Tekla.Structures.Model.Operations",
   "kind": "class",
   "summary": "The Operation class implements Tekla Structures level operations.",
+  "remarks": "Using this method is much faster than checking each object individually.",
   "base": "System.Object",
   "interfaces": [],
   "doc_url": "https://developer.tekla.com/topic/en/18/47/d5bbc096-a164-49ea-16a8-3820e40b00be",
@@ -258,9 +259,9 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2d75b51c-f658-03f0-dadb-7e2588e98461"
     },
     {
-      "name": "CreateBentPlateByFaces(Part, IList.Point., Part, IList.Point.)",
+      "name": "CreateBentPlateByFaces(Part, IList\u003CPoint\u003E, Part, IList\u003CPoint\u003E)",
       "signature": "public static BentPlate CreateBentPlateByFaces(Part part1, IList\u003CPoint\u003E face1, Part part2, IList\u003CPoint\u003E face2)",
-      "summary": "Modifies the first plate by adding a cylindrical bend that connects it to the second plate creating a new BentPlate instance based on two parts and selected faces in each part. See CreateBentPlateByFaces(Part, IList.Point., Part, IList.Point., BentPlate.BendShape).",
+      "summary": "Modifies the first plate by adding a cylindrical bend that connects it to the second plate creating a new BentPlate instance based on two parts and selected faces in each part. See CreateBentPlateByFaces(Part, IList\u003CPoint\u003E, Part, IList\u003CPoint\u003E, BentPlate.BendShape).",
       "params": [
         {
           "name": "part1",
@@ -334,7 +335,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f401c9ed-80c1-f692-6736-73d779c8577e"
     },
     {
-      "name": "CreateBentPlateByFaces(Part, IList.Point., Part, IList.Point., Double)",
+      "name": "CreateBentPlateByFaces(Part, IList\u003CPoint\u003E, Part, IList\u003CPoint\u003E, Double)",
       "signature": "public static BentPlate CreateBentPlateByFaces(Part part1, IList\u003CPoint\u003E face1, Part part2, IList\u003CPoint\u003E face2, double radius)",
       "summary": "Modifies the first plate by adding a bend that connects it to the second plate creating a new BentPlate instance based on two parts, selected faces in each part and radius. This method can change GUID when using from plug-ins. To keep GUID, use AddLeg(ConnectiveGeometry, LineSegment, ConnectiveGeometry, LineSegment, Double).",
       "params": [
@@ -387,7 +388,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c7e50f00-b8cd-3418-4bfb-561fdf9bae0c"
     },
     {
-      "name": "CreateBentPlateByFaces(Part, IList.Point., Part, IList.Point., BentPlate.BendShape)",
+      "name": "CreateBentPlateByFaces(Part, IList\u003CPoint\u003E, Part, IList\u003CPoint\u003E, BentPlate.BendShape)",
       "signature": "public static BentPlate CreateBentPlateByFaces(Part part1, IList\u003CPoint\u003E face1, Part part2, IList\u003CPoint\u003E face2, BentPlate.BendShape bendShape)",
       "summary": "Modifies the first plate by adding a bend that connects it to the second plate creating a new BentPlate instance based on two parts and selected faces in each part. This method can change GUID when using from plug-ins. To keep GUID, use AddLeg(ConnectiveGeometry, LineSegment, ConnectiveGeometry, LineSegment, BentPlate.BendShape).",
       "params": [
@@ -654,7 +655,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a9f4e2ea-0881-3278-a468-ff1d483544d3"
     },
     {
-      "name": "CreateConicalBentPlateByFaces(Part, IList.Point., Part, IList.Point., Double, Double)",
+      "name": "CreateConicalBentPlateByFaces(Part, IList\u003CPoint\u003E, Part, IList\u003CPoint\u003E, Double, Double)",
       "signature": "public static BentPlate CreateConicalBentPlateByFaces(Part part1, IList\u003CPoint\u003E face1, Part part2, IList\u003CPoint\u003E face2, double largestRadius, double halfAperture)",
       "summary": "Modifies the first plate by adding a conical bend that connects it to the second plate creating a new BentPlate instance based on two parts, selected faces in each part and radius. This method can change GUID when using from plug-ins. To keep GUID, use AddLeg(ConnectiveGeometry, LineSegment, ConnectiveGeometry, LineSegment, Double).",
       "params": [
@@ -972,7 +973,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d455e837-b27d-de76-3f8f-f4c8c98bc344"
     },
     {
-      "name": "CreateIFC4ExportFromAll(String, Operation.IFCExportViewTypeEnum, IEnumerable.String., Operation.ExportBasePoint, String, String, Operation.IFCExportFlags, String)",
+      "name": "CreateIFC4ExportFromAll(String, Operation.IFCExportViewTypeEnum, IEnumerable\u003CString\u003E, Operation.ExportBasePoint, String, String, Operation.IFCExportFlags, String)",
       "signature": "public static bool CreateIFC4ExportFromAll(string fullPathAndFileName, Operation.IFCExportViewTypeEnum exportViewType, IEnumerable\u003Cstring\u003E propertySets, Operation.ExportBasePoint locationByValue, string exportLayersAsValue, string objectColoring, Operation.IFCExportFlags flags, string basePointGuid)",
       "summary": "Creates IFC4 export from all objects using the given file name. See Tekla Structures Help for more information about IFC4 export files.",
       "params": [
@@ -1034,7 +1035,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/35b592da-834c-6c6f-b8ee-5cb14b2d8df0"
     },
     {
-      "name": "CreateIFC4ExportFromAll(String, Operation.IFCExportViewTypeEnum, Operation.IFCExportVersionEnum, IEnumerable.String., IEnumerable.String., Operation.ExportBasePoint, String, String, Operation.IFCExportFlags, String)",
+      "name": "CreateIFC4ExportFromAll(String, Operation.IFCExportViewTypeEnum, Operation.IFCExportVersionEnum, IEnumerable\u003CString\u003E, IEnumerable\u003CString\u003E, Operation.ExportBasePoint, String, String, Operation.IFCExportFlags, String)",
       "signature": "public static bool CreateIFC4ExportFromAll(string fullPathAndFileName, Operation.IFCExportViewTypeEnum exportViewType, Operation.IFCExportVersionEnum exportVersion, IEnumerable\u003Cstring\u003E attributesOverridesFileNames, IEnumerable\u003Cstring\u003E propertySets, Operation.ExportBasePoint locationByValue, string exportLayersAsValue, string objectColoring, Operation.IFCExportFlags flags, string basePointGuid)",
       "summary": "Creates IFC4 export from all objects using the given file name. See Tekla Structures Help for more information about IFC4 export files.",
       "params": [
@@ -1108,7 +1109,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/84a2b76e-89c5-4976-c391-de09f4f12712"
     },
     {
-      "name": "CreateIFC4ExportFromSelected(String, Operation.IFCExportViewTypeEnum, IEnumerable.String., Operation.ExportBasePoint, String, String, Operation.IFCExportFlags, String)",
+      "name": "CreateIFC4ExportFromSelected(String, Operation.IFCExportViewTypeEnum, IEnumerable\u003CString\u003E, Operation.ExportBasePoint, String, String, Operation.IFCExportFlags, String)",
       "signature": "public static bool CreateIFC4ExportFromSelected(string fullPathAndFileName, Operation.IFCExportViewTypeEnum exportViewType, IEnumerable\u003Cstring\u003E propertySets, Operation.ExportBasePoint locationByValue, string exportLayersAsValue, string objectColoring, Operation.IFCExportFlags flags, string basePointGuid)",
       "summary": "Creates IFC4 export from the selected parts using the given file name. See Tekla Structures Help for more information about IFC4 export files.",
       "params": [
@@ -1170,7 +1171,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2e42dad3-18a9-cf38-79a7-f9ca7ddbee07"
     },
     {
-      "name": "CreateIFC4ExportFromSelected(String, Operation.IFCExportViewTypeEnum, Operation.IFCExportVersionEnum, IEnumerable.String., IEnumerable.String., Operation.ExportBasePoint, String, String, Operation.IFCExportFlags, String)",
+      "name": "CreateIFC4ExportFromSelected(String, Operation.IFCExportViewTypeEnum, Operation.IFCExportVersionEnum, IEnumerable\u003CString\u003E, IEnumerable\u003CString\u003E, Operation.ExportBasePoint, String, String, Operation.IFCExportFlags, String)",
       "signature": "public static bool CreateIFC4ExportFromSelected(string fullPathAndFileName, Operation.IFCExportViewTypeEnum exportViewType, Operation.IFCExportVersionEnum exportVersion, IEnumerable\u003Cstring\u003E attributesOverridesFileNames, IEnumerable\u003Cstring\u003E propertySets, Operation.ExportBasePoint locationByValue, string exportLayersAsValue, string objectColoring, Operation.IFCExportFlags flags, string basePointGuid)",
       "summary": "Creates IFC4 export from the selected parts only using the given file name. See Tekla Structures Help for more information about IFC4 export files.",
       "params": [
@@ -2427,6 +2428,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ef58f1d7-1bc2-ad42-f1f5-21f092444369"

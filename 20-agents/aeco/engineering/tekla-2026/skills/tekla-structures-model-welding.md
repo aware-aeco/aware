@@ -1,6 +1,6 @@
 ---
 name: tekla-tekla-structures-model-welding
-description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Model.Welding namespace — 2 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: WeldSeamPositionEnum, WeldGeometry.
+description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Model.Welding namespace — 2 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: WeldGeometry, WeldSeamPositionEnum.
 ---
 
 # Tekla.Structures.Model.Welding

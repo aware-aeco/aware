@@ -12,6 +12,7 @@
       "signature": "public AnalysisLoadCombination()",
       "summary": "Initializes a new instance of the AnalysisLoadCombination class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/66bb9653-9eb6-594b-4de1-aa2e522b0853"
@@ -23,6 +24,7 @@
       "signature": "public void Delete()",
       "summary": "Deletes an analysis load combination. The AnalysisModelName and ID have to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/943ade7c-b4ff-bc04-439f-bc5a62bda9b0"
@@ -32,6 +34,7 @@
       "signature": "public void Insert()",
       "summary": "Inserts an analysis load combination. The AnalysisModelName has to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2fb0708b-a2a9-740b-b25e-8cab93c8f0e8"
@@ -41,6 +44,7 @@
       "signature": "public void Modify()",
       "summary": "Modifies an analysis load combination. The AnalysisModelName and ID have to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5b5a160e-31f8-767c-0533-ac0a0caf0854"
@@ -50,6 +54,7 @@
       "signature": "public override void Select()",
       "summary": "Selects an analysis load combination. The AnalysisModelName and ID have to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a035c2cd-3fbc-3158-6575-808a2262cbde"
@@ -84,6 +89,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2da09cbf-b58c-9aab-7c3a-e2a4797d2d8a"

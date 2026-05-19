@@ -12,6 +12,7 @@
       "signature": "public Series()",
       "summary": "Initializes a new instance of the Series class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/087ff9e1-4978-e388-efe3-0cf120d0005f"

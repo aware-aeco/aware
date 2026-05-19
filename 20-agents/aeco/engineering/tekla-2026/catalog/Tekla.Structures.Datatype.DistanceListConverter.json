@@ -12,6 +12,7 @@
       "signature": "public DistanceListConverter()",
       "summary": "Initializes a new instance of the DistanceListConverter class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d73f64fa-eff4-2a17-609e-6478c3157121"

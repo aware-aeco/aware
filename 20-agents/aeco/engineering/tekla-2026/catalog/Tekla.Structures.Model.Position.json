@@ -12,6 +12,7 @@
       "signature": "public Position()",
       "summary": "Creates a new position instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/834fc08c-1fae-ea4d-5a97-108e50750571"

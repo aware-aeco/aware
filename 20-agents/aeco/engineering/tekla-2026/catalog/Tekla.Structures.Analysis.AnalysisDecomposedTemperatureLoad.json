@@ -12,6 +12,7 @@
       "signature": "public AnalysisDecomposedTemperatureLoad()",
       "summary": "Initializes a new instance of the AnalysisDecomposedTemperatureLoad class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/01dc7836-0471-8f1b-69d4-2a17a2802ad0"
@@ -23,6 +24,7 @@
       "signature": "public override void Select()",
       "summary": "Selects an analysis decomposed temperature load.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/589d0e8d-a12f-70e0-0d38-6eaa5b6e4367"

@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/00d87eb4-0b57-590a-3618-375be64d212d",
   "constructors": [
     {
-      "name": "GridLine.GridLineAttributes",
+      "name": "GridLine.GridLineAttributes()",
       "signature": "public GridLineAttributes()",
       "summary": "Creates a new default grid line attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/acf39c54-8741-4f49-fe10-8f01313cbd0e"
     },
     {
-      "name": "GridLine.GridLineAttributes",
+      "name": "GridLine.GridLineAttributes(String)",
       "signature": "public GridLineAttributes(string AttributesFile)",
       "summary": "Creates a new grid line attributes instance that loads the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/932acd3c-11b9-ef68-9268-dce73113ef91"

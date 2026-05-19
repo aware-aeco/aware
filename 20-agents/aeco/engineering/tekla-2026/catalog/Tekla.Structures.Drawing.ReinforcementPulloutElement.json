@@ -12,6 +12,7 @@
       "signature": "public ReinforcementPulloutElement()",
       "summary": "Creates a new reinforcement pull-out element instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/873aaf7f-7233-de4d-ad0d-04a537a59d01"

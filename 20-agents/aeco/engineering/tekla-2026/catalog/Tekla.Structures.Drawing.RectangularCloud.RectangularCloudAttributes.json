@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/884bba0b-003b-00b2-91b4-7ec98cbbf103",
   "constructors": [
     {
-      "name": "RectangularCloud.RectangularCloudAttributes",
+      "name": "RectangularCloud.RectangularCloudAttributes()",
       "signature": "public RectangularCloudAttributes()",
       "summary": "Creates a new default rectangular cloud attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/54d28268-af89-87ea-a7e0-c44fa606ea37"
     },
     {
-      "name": "RectangularCloud.RectangularCloudAttributes",
+      "name": "RectangularCloud.RectangularCloudAttributes(String)",
       "signature": "public RectangularCloudAttributes(string AttributesFile)",
       "summary": "Creates a new rectangular cloud attributes instance that loads the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/876db353-614e-aa2a-e391-43df4572105f"

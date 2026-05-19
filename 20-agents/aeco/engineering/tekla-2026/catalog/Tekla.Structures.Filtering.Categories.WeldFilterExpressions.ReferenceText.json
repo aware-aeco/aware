@@ -12,6 +12,7 @@
       "signature": "public ReferenceText()",
       "summary": "Initializes a new instance of the ReferenceText class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/98808c5e-be0d-8c16-d8af-466bbc115d80"

@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/7f1413c6-c244-9485-97d7-4825df1f5e31",
   "constructors": [
     {
-      "name": "LineTypeAttributes",
+      "name": "LineTypeAttributes()",
       "signature": "public LineTypeAttributes()",
       "summary": "Creates a new line type attributes instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/72d543de-298d-71c8-87fb-2380870e74ec"
     },
     {
-      "name": "LineTypeAttributes",
+      "name": "LineTypeAttributes(LineTypes, DrawingColors)",
       "signature": "public LineTypeAttributes(LineTypes lineType, DrawingColors color)",
       "summary": "Creates a new line type attributes instance with the given line type and color.",
       "params": [
@@ -34,6 +35,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentOutOfRangeException",
@@ -44,7 +46,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/46d4e3b2-303a-bbff-cedd-1c4a84382c98"
     },
     {
-      "name": "LineTypeAttributes",
+      "name": "LineTypeAttributes(LineTypes, TeklaDrawingColor)",
       "signature": "public LineTypeAttributes(LineTypes lineType, TeklaDrawingColor color)",
       "summary": "Creates a new line type attributes instance with the given line type and color.",
       "params": [
@@ -61,6 +63,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/07be4b04-fc4d-b392-deee-619336f7e417"

@@ -12,6 +12,7 @@
       "signature": "public DataGrid()",
       "summary": "Initializes a new instance of the DataGrid class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/35d1c732-b10e-ca7f-1542-4606fd1f2cb4"

@@ -12,6 +12,7 @@
       "signature": "public PrimaryPart()",
       "summary": "Initializes a new instance of the PrimaryPart class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/891d13e8-9429-0b4a-2ec6-d176c4b33413"

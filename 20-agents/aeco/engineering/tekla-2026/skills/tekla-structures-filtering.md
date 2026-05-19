@@ -1,6 +1,6 @@
 ---
 name: tekla-tekla-structures-filtering
-description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Filtering namespace — 24 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: BinaryFilterExpression, BinaryFilterExpressionItem, BinaryFilterExpressionCollection, BooleanConstantFilterExpression, BooleanFilterExpression, DataFilterExpression, DateTimeConstantFilterExpression, DateTimeFilterExpression, and 16 more types.
+description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Filtering namespace — 24 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: BinaryFilterExpression, BinaryFilterExpressionItem, BinaryFilterExpressionCollection, BooleanFilterExpression, BooleanConstantFilterExpression, DataFilterExpression, DateTimeConstantFilterExpression, DateTimeFilterExpression, and 16 more types.
 ---
 
 # Tekla.Structures.Filtering
@@ -169,7 +169,7 @@ Creates a string representation of the current object.
 - `IsEnable` (Boolean, get/set) — Gets or sets the enabled state of the filter expression.
 - `IsReadOnly` (Boolean, get) — Gets a value indicating whether the collection is read-only.
 - `IsSynchronized` (Boolean, get) — Gets a value indicating whether the collection supports multithreading.
-- `Item` (object, get/set) — Gets or sets the item at a specific index.
+- `Item` (BinaryFilterExpressionItem, get/set) — Gets or sets the item at a specific index.
 - `SyncRoot` (Object, get) — Gets the root for synchronization.
 
 ## BinaryFilterExpressionItem (class)

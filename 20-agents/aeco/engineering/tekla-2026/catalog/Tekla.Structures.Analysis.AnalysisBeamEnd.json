@@ -12,6 +12,7 @@
       "signature": "public AnalysisBeamEnd()",
       "summary": "Initializes a new instance of the AnalysisBeamEnd class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/07d2e665-8eeb-da6c-ff38-560c31e3219d"

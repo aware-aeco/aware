@@ -12,6 +12,7 @@
       "signature": "public InsidePartHorizontalOrWithLeaderLinePlacingType()",
       "summary": "Creates a new inside part horizontal or with leader line placing type instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/08d14acc-76eb-f0c9-d3a3-1b4d1c34311e"

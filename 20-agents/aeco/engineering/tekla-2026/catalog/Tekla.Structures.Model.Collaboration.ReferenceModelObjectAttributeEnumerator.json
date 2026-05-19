@@ -19,6 +19,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8864905e-6c22-05fc-b778-873e3eae3f4a"
@@ -43,6 +44,7 @@
       "signature": "public void Reset()",
       "summary": "Resets the enumerator.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8372f374-6d18-d371-d1a7-ddd9e33c4b91"

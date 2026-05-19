@@ -12,6 +12,7 @@
       "signature": "public UnsupportedChamferException()",
       "summary": "Initializes a new instance of the UnsupportedChamferException class with \u0022Plates containing unsupported chamfer information\u0022 error message.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/374d6ad1-d829-aedd-407b-22c16038d78a"

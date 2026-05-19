@@ -19,6 +19,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6c64ffd8-6c28-0d37-9218-a7e38217ec9a"
@@ -37,6 +38,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/97fb70fe-2bf3-1123-3eaf-933faa33cd11"
@@ -53,6 +55,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/bd114c63-7989-e9dc-7120-19315857a5a3"
@@ -75,6 +78,7 @@
       "signature": "public void Modify()",
       "summary": "Modifies an analysis edge. The AnalysisModelName has to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6c457e77-05cc-2d55-e9bc-13da787aa80f"
@@ -84,6 +88,7 @@
       "signature": "public override void Select()",
       "summary": "Selects an analysis edge.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2b38b971-27ff-c814-1587-f036332eb619"

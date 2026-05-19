@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/12183379-26b4-46ac-2d00-a72bfe9473e3",
   "constructors": [
     {
-      "name": "InvalidFilterExpressionException",
+      "name": "InvalidFilterExpressionException(Expression, InvalidFilterExpressionExceptionReasonsType)",
       "signature": "public InvalidFilterExpressionException(Expression Expression, InvalidFilterExpressionExceptionReasonsType InvalidFilterExpressionExceptionReasonsType)",
       "summary": "Initializes a new instance of the InvalidFilterExpressionException class.",
       "params": [
@@ -25,12 +25,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8eaf62ae-7a89-5bae-984a-9c02cc70b5af"
     },
     {
-      "name": "InvalidFilterExpressionException",
+      "name": "InvalidFilterExpressionException(Expression, InvalidFilterExpressionExceptionReasonsType, Int32)",
       "signature": "public InvalidFilterExpressionException(Expression Expression, InvalidFilterExpressionExceptionReasonsType InvalidFilterExpressionExceptionReasonsType, int MaximumExpressionNumber)",
       "summary": "Initializes a new instance of the InvalidFilterExpressionException class.",
       "params": [
@@ -53,12 +54,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/abd9af64-bc7e-2567-fd60-eea290a4f9d4"
     },
     {
-      "name": "InvalidFilterExpressionException",
+      "name": "InvalidFilterExpressionException(Expression, OperatorType, Expression, InvalidFilterExpressionExceptionReasonsType)",
       "signature": "public InvalidFilterExpressionException(Expression LeftExpression, OperatorType OperatorType, Expression RightExpression, InvalidFilterExpressionExceptionReasonsType InvalidFilterExpressionExceptionReasonsType)",
       "summary": "Initializes a new instance of the InvalidFilterExpressionException class.",
       "params": [
@@ -87,6 +89,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2df51376-3bf6-c68d-5781-5f3da0d97d77"

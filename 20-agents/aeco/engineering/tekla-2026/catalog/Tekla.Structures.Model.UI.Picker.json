@@ -3,6 +3,7 @@
   "namespace": "Tekla.Structures.Model.UI",
   "kind": "class",
   "summary": "The Picker class can be used to query the user to do manual picks of objects and points from the Tekla Structures model. The methods throw an exception if the user interrupts (cancels) the pick command.",
+  "remarks": "Prompts Tekla Structures prefixes the given prompt with \u0022prompt_\u0022 and looks for a translation in the prompts.ail file. If the translation (e.g. \u0022prompt_Pick_first_position\u0022) is not found in the prompts.ail file, the prompt string is displayed as such. This feature can be used to give already translated strings to the picker.",
   "base": "System.Object",
   "interfaces": [],
   "doc_url": "https://developer.tekla.com/topic/en/18/47/cb1e9d5a-d5bc-21c7-44c2-8d2ed7be833b",
@@ -12,6 +13,7 @@
       "signature": "public Picker()",
       "summary": "Creates a new picker instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6d2f357b-8bd0-929b-7869-93762c8c99a7"
@@ -19,7 +21,7 @@
   ],
   "methods": [
     {
-      "name": "PickFace.",
+      "name": "PickFace()",
       "signature": "public PickInput PickFace()",
       "summary": "Queries the user to pick a face from the model.",
       "params": [],
@@ -52,7 +54,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/cff69c8b-cd58-440a-12ec-13070f79791b"
     },
     {
-      "name": "PickLine.",
+      "name": "PickLine()",
       "signature": "public ArrayList PickLine()",
       "summary": "Queries the user to pick a line from the model.",
       "params": [],
@@ -177,7 +179,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/18d61ce6-d498-ef54-9367-032b7ec75162"
     },
     {
-      "name": "PickPoint.",
+      "name": "PickPoint()",
       "signature": "public Point PickPoint()",
       "summary": "Queries the user to pick a point from the model.",
       "params": [],

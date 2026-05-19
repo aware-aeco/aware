@@ -9,7 +9,7 @@
   "constructors": [],
   "methods": [
     {
-      "name": "Get.",
+      "name": "Get()",
       "signature": "public static List\u003CCustomLineType\u003E Get()",
       "summary": "Gets all the available CustomLineType\u0027s.",
       "params": [],

@@ -12,6 +12,7 @@
       "signature": "public AnalysisPartCompositeProperties()",
       "summary": "Initializes a new instance of the AnalysisPartCompositeProperties class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/98248c1f-fbe0-5b8c-af6a-3137a20504c0"

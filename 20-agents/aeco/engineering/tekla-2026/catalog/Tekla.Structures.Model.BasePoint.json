@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/5c1b45f5-9a0b-cd81-ec51-dd4e21ff20ce",
   "constructors": [
     {
-      "name": "BasePoint",
+      "name": "BasePoint(String)",
       "signature": "public BasePoint(string name)",
       "summary": "Initializes a new instance of the BasePoint class.",
       "params": [
@@ -19,12 +19,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8c87f421-33b4-f3c9-d990-0b783916d515"
     },
     {
-      "name": "BasePoint",
+      "name": "BasePoint(Int32, Guid, String, String, String, String, Double, Double, Double, Double, Double, Double, Double, Double, Double, Boolean, Boolean)",
       "signature": "public BasePoint(int id, Guid guid, string initialGuid, string name, string description, string coordinateSystem, double northSouth, double eastWest, double elevation, double latitude, double longitude, double locationInModelX, double locationInModelY, double locationInModelZ, double angleToNorth, bool isProjectBasePoint, bool isCurrentBasePoint)",
       "summary": "Initializes a new instance of the BasePoint class.",
       "params": [
@@ -131,6 +132,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ad62fa0c-bd80-7dcc-2fdf-448db488152d"

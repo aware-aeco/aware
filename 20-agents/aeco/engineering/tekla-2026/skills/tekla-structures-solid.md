@@ -1,6 +1,6 @@
 ---
 name: tekla-tekla-structures-solid
-description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Solid namespace — 11 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: EdgeEnumerator, Edge, Face, FaceEnumerator, LoopEnumerator, Loop, Shell, ShellEnumerator, and 3 more types.
+description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Solid namespace — 11 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Edge, EdgeEnumerator, FaceEnumerator, Face, Loop, LoopEnumerator, Shell, ShellEnumerator, and 3 more types.
 ---
 
 # Tekla.Structures.Solid

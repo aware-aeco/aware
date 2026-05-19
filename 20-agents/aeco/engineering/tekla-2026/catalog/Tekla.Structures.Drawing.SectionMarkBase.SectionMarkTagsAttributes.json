@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/6a08c09a-d36f-31ec-a859-ff21cf495ba3",
   "constructors": [
     {
-      "name": "SectionMarkBase.SectionMarkTagsAttributes",
+      "name": "SectionMarkBase.SectionMarkTagsAttributes()",
       "signature": "public SectionMarkTagsAttributes()",
       "summary": "Creates a new mark tags attributes instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1233c31a-67c8-9bf2-6f2f-d95dbc3a581f"
     },
     {
-      "name": "SectionMarkBase.SectionMarkTagsAttributes",
+      "name": "SectionMarkBase.SectionMarkTagsAttributes(SectionMarkBase.SectionMarkTagAttributes, SectionMarkBase.SectionMarkTagAttributes, SectionMarkBase.SectionMarkTagAttributes, SectionMarkBase.SectionMarkTagAttributes, SectionMarkBase.SectionMarkTagAttributes)",
       "signature": "public SectionMarkTagsAttributes(SectionMarkBase.SectionMarkTagAttributes tagA1, SectionMarkBase.SectionMarkTagAttributes tagA2, SectionMarkBase.SectionMarkTagAttributes tagA3, SectionMarkBase.SectionMarkTagAttributes tagA4, SectionMarkBase.SectionMarkTagAttributes tagA5)",
       "summary": "Creates a new mark tags attributes instance.",
       "params": [
@@ -52,6 +53,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/56e39e2d-67ec-1a5f-5dd1-1472ca6c53f3"

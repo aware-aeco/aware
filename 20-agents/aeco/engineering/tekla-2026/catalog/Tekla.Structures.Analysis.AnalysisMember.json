@@ -12,6 +12,7 @@
       "signature": "public AnalysisMember()",
       "summary": "Initializes a new instance of the AnalysisMember class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4bb077fb-685b-841d-28b6-eb6f3c0c128f"
@@ -30,6 +31,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7b9bab44-4378-ccac-812d-feabc828a0ba"
@@ -39,6 +41,7 @@
       "signature": "public void Modify()",
       "summary": "Modifies an analysis member. The AnalysisModelName has to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/bea6cbda-7622-5b8d-4acf-2a6883299bc8"
@@ -48,6 +51,7 @@
       "signature": "public override void Select()",
       "summary": "Selects an analysis member. The AnalysisModelName and ID have to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2145077e-6a7d-dc86-b945-0929c497d700"

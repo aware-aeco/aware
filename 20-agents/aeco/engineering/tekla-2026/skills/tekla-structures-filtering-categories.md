@@ -1,6 +1,6 @@
 ---
 name: tekla-tekla-structures-filtering-categories
-description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Filtering.Categories namespace — 178 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AssemblyFilterExpressions, AssemblyFilterExpressions.CustomBoolean, AssemblyFilterExpressions.CustomDateTime, AssemblyFilterExpressions.CustomString, AssemblyFilterExpressions.CustomNumber, AssemblyFilterExpressions.Level, AssemblyFilterExpressions.Name, AssemblyFilterExpressions.IdNumber, and 170 more types.
+description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Filtering.Categories namespace — 178 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AssemblyFilterExpressions, AssemblyFilterExpressions.CustomBoolean, AssemblyFilterExpressions.CustomDateTime, AssemblyFilterExpressions.CustomNumber, AssemblyFilterExpressions.CustomString, AssemblyFilterExpressions.Guid, AssemblyFilterExpressions.IdNumber, AssemblyFilterExpressions.Level, and 170 more types.
 ---
 
 # Tekla.Structures.Filtering.Categories

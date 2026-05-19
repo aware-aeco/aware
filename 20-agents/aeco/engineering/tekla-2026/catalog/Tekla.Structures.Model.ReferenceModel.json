@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/a1ca3d98-d440-e04c-ed85-901efed0470c",
   "constructors": [
     {
-      "name": "ReferenceModel",
+      "name": "ReferenceModel()",
       "signature": "public ReferenceModel()",
       "summary": "Initializes a new instance of the ReferenceModel class. The default values are as follows: Filename = string.Empty; ActiveFilePath = string.Empty; ProjectGUID = Guid.Empty; ModelGUID = Guid.Empty; VersionGUID = Guid.Empty; Position = new Point(); Scale = 1.0; Visibility = VisibilityEnum.VISIBLE; BasePointGuid = string.Empty;",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f15584f1-9725-e751-f06b-9a84530672dc"
     },
     {
-      "name": "ReferenceModel",
+      "name": "ReferenceModel(String, Point, Double)",
       "signature": "public ReferenceModel(string filename, Point position, double scale)",
       "summary": "Initializes a new instance of the ReferenceModel class. Creates a new reference model instance using the given filename, position and scale.",
       "params": [
@@ -40,6 +41,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/de615462-d93e-5f37-fce6-fc0d2c0e89ff"
@@ -1009,7 +1011,7 @@
     },
     {
       "name": "IsUpToDate",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": false,
       "summary": "Gets if the object does not have a modification which is not shared.",
@@ -1025,7 +1027,7 @@
     },
     {
       "name": "ModificationTime",
-      "type": "object",
+      "type": "Nullable\u003CDateTime\u003E",
       "getter": true,
       "setter": false,
       "summary": "Gets latest time of the object was modified or created.",

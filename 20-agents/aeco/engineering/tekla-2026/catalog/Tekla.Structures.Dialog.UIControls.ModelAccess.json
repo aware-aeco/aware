@@ -12,6 +12,7 @@
       "signature": "public ModelAccess()",
       "summary": "Initializes a new instance of the ModelAccess class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/db5e5807-40fb-f4b1-6205-d24432464210"
@@ -19,7 +20,7 @@
   ],
   "methods": [
     {
-      "name": "ConnectToModel.",
+      "name": "ConnectToModel()",
       "signature": "public static Model ConnectToModel()",
       "summary": "Gets a model connnection.",
       "params": [],

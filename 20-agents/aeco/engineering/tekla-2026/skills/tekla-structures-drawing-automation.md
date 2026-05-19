@@ -1,6 +1,6 @@
 ---
 name: tekla-tekla-structures-drawing-automation
-description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Drawing.Automation namespace — 3 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AutoDrawingRule, AutoDrawingsStatusEnum, DrawingCreator.
+description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Drawing.Automation namespace — 3 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AutoDrawingRule, DrawingCreator, AutoDrawingsStatusEnum.
 ---
 
 # Tekla.Structures.Drawing.Automation

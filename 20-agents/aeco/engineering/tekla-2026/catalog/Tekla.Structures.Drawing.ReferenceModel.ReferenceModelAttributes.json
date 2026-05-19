@@ -12,6 +12,7 @@
       "signature": "public ReferenceModelAttributes()",
       "summary": "Creates a new default reference model attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/78942419-b13a-57df-558d-b08ff26b58bb"

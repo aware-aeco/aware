@@ -12,6 +12,7 @@
       "signature": "public DrawingHandler()",
       "summary": "Creates a new drawing handler instance, a \u0022handle\u0022 to Tekla.Structures.Drawing. When a drawing handler object is created, it is possible to ask the current active drawing in Tekla Structures, get a list of drawings or create a new drawing.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/080d8546-ab71-54e4-9570-0bf36043bba1"
@@ -19,7 +20,7 @@
   ],
   "methods": [
     {
-      "name": "CloseActiveDrawing.",
+      "name": "CloseActiveDrawing()",
       "signature": "public bool CloseActiveDrawing()",
       "summary": "Closes the drawing editor.",
       "params": [],
@@ -323,7 +324,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8769190b-de6e-2268-846a-3fe3ccbfc6f1"
     },
     {
-      "name": "PrintDrawings(List.Drawing., DPMPrinterAttributes)",
+      "name": "PrintDrawings(List\u003CDrawing\u003E, DPMPrinterAttributes)",
       "signature": "public bool PrintDrawings(List\u003CDrawing\u003E drawings, DPMPrinterAttributes printAttributes)",
       "summary": "Prints the list of drawings using the given printer attributes.",
       "remarks": "If there is an active drawing visible in the drawing editor and it is a different drawing to the specified drawings, the active drawing will be closed.",
@@ -359,7 +360,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8bbf61cb-24e0-da11-a4ba-e187133b4c55"
     },
     {
-      "name": "PrintDrawings(IEnumerable.Drawing., DPMPrinterAttributes, String)",
+      "name": "PrintDrawings(IEnumerable\u003CDrawing\u003E, DPMPrinterAttributes, String)",
       "signature": "public bool PrintDrawings(IEnumerable\u003CDrawing\u003E drawings, DPMPrinterAttributes printAttributes, string OutputFolder)",
       "summary": "Prints the list of drawings using the given printer attributes.",
       "remarks": "If there is an active drawing visible in the drawing editor and it is a different drawing to the specified drawings, the active drawing will be closed.",

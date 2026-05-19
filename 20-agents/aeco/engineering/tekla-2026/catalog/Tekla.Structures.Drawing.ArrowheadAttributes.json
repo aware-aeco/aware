@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/00085909-c077-e32b-79d7-fa0e543b5826",
   "constructors": [
     {
-      "name": "ArrowheadAttributes",
+      "name": "ArrowheadAttributes()",
       "signature": "public ArrowheadAttributes()",
       "summary": "Creates a new default arrowhead attributes instance. The default values are ArrowheadPositions.None, ArrowheadTypes.FilledArrow, height 2.0 and width 1.0.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5407d84b-fa5d-1ead-da9b-2bf62fe03e35"
     },
     {
-      "name": "ArrowheadAttributes",
+      "name": "ArrowheadAttributes(ArrowheadPositions, ArrowheadTypes, Double, Double)",
       "signature": "public ArrowheadAttributes(ArrowheadPositions arrowPosition, ArrowheadTypes head, double height, double width)",
       "summary": "Creates a new arrowhead attributes instance with the given parameters.",
       "params": [
@@ -46,6 +47,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7b7e4c81-9763-67b3-17ef-7367a4f3e733"

@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/20ac2e4d-1c1f-23f7-1cfa-3d94717b1751",
   "constructors": [
     {
-      "name": "Arc",
+      "name": "Arc(ViewBase, Arc, Arc.ArcAttributes)",
       "signature": "public Arc(ViewBase inView, Arc geometricalArc, Arc.ArcAttributes inAttributes)",
       "summary": "Creates a new arc instance with the given geometrical arc and specified attributes.",
       "params": [
@@ -28,12 +28,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/534f1b0f-73f6-61fd-5426-6466669af022"
     },
     {
-      "name": "Arc",
+      "name": "Arc(ViewBase, Point, Point, Double)",
       "signature": "public Arc(ViewBase inView, Point inPoint1, Point inPoint2, double inRadius)",
       "summary": "Creates a new arc instance with standard attributes and the given two points and radius.",
       "params": [
@@ -62,12 +63,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5cda93b9-aa9a-b754-0794-0751b1f1c662"
     },
     {
-      "name": "Arc",
+      "name": "Arc(ViewBase, Point, Point, Point)",
       "signature": "public Arc(ViewBase inView, Point inPoint1, Point inPoint2, Point inPoint3)",
       "summary": "Creates a new arc instance with standard attributes and the given three points.",
       "params": [
@@ -96,12 +98,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5697d354-2558-31b9-ec44-87fb3773a0f4"
     },
     {
-      "name": "Arc",
+      "name": "Arc(ViewBase, Point, Point, Double, Arc.ArcAttributes)",
       "signature": "public Arc(ViewBase inView, Point inPoint1, Point inPoint2, double inRadius, Arc.ArcAttributes inAttributes)",
       "summary": "Creates a new arc instance with the given two points, radius and specified attributes.",
       "params": [
@@ -136,12 +139,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4bdceb3d-f839-7015-6680-4f0517e7ae73"
     },
     {
-      "name": "Arc",
+      "name": "Arc(ViewBase, Point, Point, Point, Arc.ArcAttributes)",
       "signature": "public Arc(ViewBase inView, Point StartPoint, Point EndPoint, Point CenterPoint, Arc.ArcAttributes inAttributes)",
       "summary": "Creates a new arc instance with the given three points and specified attributes.",
       "params": [
@@ -176,6 +180,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/da010b41-e9c8-dbf4-a209-a2e6bbec4066"
@@ -196,7 +201,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3734c213-ded8-3f5c-dd47-cedf28799ca8"
     },
     {
-      "name": "GetDoubleUserProperties(Dictionary.String, Double..)",
+      "name": "GetDoubleUserProperties(Dictionary\u003CString, Double\u003E.)",
       "signature": "public bool GetDoubleUserProperties(out Dictionary\u003Cstring, double\u003E values)",
       "summary": "Retrieves all double user properties for the object with the given list of names.",
       "params": [
@@ -216,7 +221,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b25f0e6b-ab5c-154a-a45c-4f5868a20599"
     },
     {
-      "name": "GetDoubleUserProperties(List.String., Dictionary.String, Double..)",
+      "name": "GetDoubleUserProperties(List\u003CString\u003E, Dictionary\u003CString, Double\u003E.)",
       "signature": "public bool GetDoubleUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, double\u003E values)",
       "summary": "Retrieves all double user properties for the object with the given list of names.",
       "params": [
@@ -268,7 +273,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/684dc064-85c8-57eb-4b4d-175617808018"
     },
     {
-      "name": "GetIntegerUserProperties(Dictionary.String, Int32..)",
+      "name": "GetIntegerUserProperties(Dictionary\u003CString, Int32\u003E.)",
       "signature": "public bool GetIntegerUserProperties(out Dictionary\u003Cstring, int\u003E values)",
       "summary": "Retrieves all integer user properties for the object with the given list of names.",
       "params": [
@@ -288,7 +293,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/20a7d099-ebee-b016-ffc7-0181a1219405"
     },
     {
-      "name": "GetIntegerUserProperties(List.String., Dictionary.String, Int32..)",
+      "name": "GetIntegerUserProperties(List\u003CString\u003E, Dictionary\u003CString, Int32\u003E.)",
       "signature": "public bool GetIntegerUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, int\u003E values)",
       "summary": "Retrieves all integer user properties for the object with the given list of names.",
       "params": [
@@ -314,7 +319,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b485bd81-5ccf-68e4-0453-caea6b1d0dde"
     },
     {
-      "name": "GetRelatedObjects.",
+      "name": "GetRelatedObjects()",
       "signature": "public DrawingObjectEnumerator GetRelatedObjects()",
       "summary": "Gets the related objects of the current object.",
       "params": [],
@@ -327,7 +332,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/50820387-cee1-637a-318e-fb3e06780149"
     },
     {
-      "name": "GetRelatedObjects(.Type.)",
+      "name": "GetRelatedObjects(.Type[])",
       "signature": "public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)",
       "summary": "Gets the related objects of the current object that are of certain types.",
       "params": [
@@ -347,7 +352,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/01d5e137-fa4b-92d7-328b-69c974dc7415"
     },
     {
-      "name": "GetStringUserProperties(Dictionary.String, String..)",
+      "name": "GetStringUserProperties(Dictionary\u003CString, String\u003E.)",
       "signature": "public bool GetStringUserProperties(out Dictionary\u003Cstring, string\u003E values)",
       "summary": "Retrieves all string user properties for the object with the given list of names.",
       "params": [
@@ -367,7 +372,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a0039213-2e79-912f-5bdf-5e6dd417c092"
     },
     {
-      "name": "GetStringUserProperties(List.String., Dictionary.String, String..)",
+      "name": "GetStringUserProperties(List\u003CString\u003E, Dictionary\u003CString, String\u003E.)",
       "signature": "public bool GetStringUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, string\u003E values)",
       "summary": "Retrieves all string user properties for the object with the given list of names.",
       "params": [

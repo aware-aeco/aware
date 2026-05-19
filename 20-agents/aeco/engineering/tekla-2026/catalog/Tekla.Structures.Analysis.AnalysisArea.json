@@ -12,6 +12,7 @@
       "signature": "public AnalysisArea()",
       "summary": "Initializes a new instance of the AnalysisArea class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f7f705ba-ea6c-7249-7196-3bf143d66bc0"
@@ -23,6 +24,7 @@
       "signature": "public void Delete()",
       "summary": "Deletes an analysis area. Method is not implemented yet.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/afc5eb62-d1b4-41e2-f375-2a911ce2aa08"
@@ -58,6 +60,7 @@
       "signature": "public void Modify()",
       "summary": "Modifies an analysis area. Method is not implemented yet.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/bac7832b-0fb2-0f4a-8ad3-974f53791682"
@@ -67,6 +70,7 @@
       "signature": "public override void Select()",
       "summary": "Selects an analysis area. The AnalysisModelName and ID have to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d8032a19-efb2-cd48-99d5-f0bb7895330b"

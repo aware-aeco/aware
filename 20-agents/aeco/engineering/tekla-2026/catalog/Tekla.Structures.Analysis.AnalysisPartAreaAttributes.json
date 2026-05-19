@@ -12,6 +12,7 @@
       "signature": "public AnalysisPartAreaAttributes()",
       "summary": "Initializes a new instance of the AnalysisPartAreaAttributes class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/546c24c2-d079-2ca8-2124-c8fb67e90c59"

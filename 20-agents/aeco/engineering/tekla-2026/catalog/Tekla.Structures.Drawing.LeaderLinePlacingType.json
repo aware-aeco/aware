@@ -12,6 +12,7 @@
       "signature": "public LeaderLinePlacingType()",
       "summary": "Creates a new leader line placing type instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c6246ce3-1c52-cfc1-d90d-df0860745d32"

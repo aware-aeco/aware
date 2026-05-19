@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/874545f9-0b80-904b-71b8-5a002ac6fcd8",
   "constructors": [
     {
-      "name": "TemplateInfo",
+      "name": "TemplateInfo()",
       "signature": "public TemplateInfo()",
       "summary": "Creates a new template info instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c36eaaae-1f1e-0fa9-31c2-fc47d59f445c"
     },
     {
-      "name": "TemplateInfo",
+      "name": "TemplateInfo(String)",
       "signature": "public TemplateInfo(string TemplateFile)",
       "summary": "Creates a new template info instance with the given template file name.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6a77025c-1898-05dd-7305-9b0d6ed2edcf"

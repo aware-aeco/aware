@@ -12,6 +12,7 @@
       "signature": "public ViewCamera()",
       "summary": "Instantiates a new view camera instance with zero length vectors.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/127a00c3-072b-3fe2-f76a-d6671697d7fd"

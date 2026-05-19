@@ -12,6 +12,7 @@
       "signature": "public RebarCranking()",
       "summary": "Initializes a new instance of the RebarCranking class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f584a632-e75f-222b-6fbd-10e68ae62be8"

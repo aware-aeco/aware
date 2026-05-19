@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/d09ad3fe-1eb4-eb58-4017-0eed1f2e042a",
   "constructors": [
     {
-      "name": "ModificationStamp",
+      "name": "ModificationStamp()",
       "signature": "public ModificationStamp()",
       "summary": "Creates a new modification stamp instance where the current modification stamp is 0. Can be used for fetching all the created or deleted model objects from the model history.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5425bc7a-ca86-d72a-af4a-9f5668897282"
     },
     {
-      "name": "ModificationStamp",
+      "name": "ModificationStamp(Int32, Int32)",
       "signature": "public ModificationStamp(int LocalStamp, int ServerStamp)",
       "summary": "Creates a new modification stamp instance with the given local and server stamps. Can be used for fetching from the model history all the model objects that have been created or deleted after the specified stamp.",
       "params": [
@@ -34,6 +35,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/029f07f6-707a-1435-dba0-cbf55cf9533a"

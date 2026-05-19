@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/4bdbe4f7-156c-9d02-1b17-8b6423b2b501",
   "constructors": [
     {
-      "name": "CastUnitDrawing",
+      "name": "CastUnitDrawing(Identifier)",
       "signature": "public CastUnitDrawing(Identifier castUnitIdentifier)",
       "summary": "Instantiates a new cast unit drawing with standard attributes for a given cast unit.",
       "params": [
@@ -19,12 +19,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9cf541c7-20f2-b981-a27b-b055474728d4"
     },
     {
-      "name": "CastUnitDrawing",
+      "name": "CastUnitDrawing(Identifier, Int32)",
       "signature": "public CastUnitDrawing(Identifier castUnitIdentifier, int sheetNumber)",
       "summary": "Instantiates a new cast unit drawing with standard attributes and with a specified sheet number for a given cast unit.",
       "params": [
@@ -41,12 +42,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/06e1f0ca-7756-8e0e-e4c8-42d7fffc1d26"
     },
     {
-      "name": "CastUnitDrawing",
+      "name": "CastUnitDrawing(Identifier, String)",
       "signature": "public CastUnitDrawing(Identifier castUnitIdentifier, string AttributeFile)",
       "summary": "Instantiates a new cast unit drawing with given attributes for a given cast unit.",
       "params": [
@@ -63,12 +65,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/23ab9522-3376-c9ff-f61e-bac6dfb50ce4"
     },
     {
-      "name": "CastUnitDrawing",
+      "name": "CastUnitDrawing(Identifier, CastUnitDrawing.CastUnitDrawingCreationType)",
       "signature": "public CastUnitDrawing(Identifier castUnitIdentifier, CastUnitDrawing.CastUnitDrawingCreationType castUnitDrawingCreationType)",
       "summary": "Instantiates a new cast unit drawing with standard attributes for a given cast unit.",
       "params": [
@@ -85,12 +88,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/057e910d-0e39-4711-9dbc-86830853303a"
     },
     {
-      "name": "CastUnitDrawing",
+      "name": "CastUnitDrawing(Identifier, Int32, String)",
       "signature": "public CastUnitDrawing(Identifier castUnitIdentifier, int sheetNumber, string AttributeFile)",
       "summary": "Instantiates a new cast unit drawing with given attributes and with a specified sheet number for a given cast unit.",
       "params": [
@@ -113,12 +117,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/747495cd-cd35-8c9b-2d0c-815b77ccbeab"
     },
     {
-      "name": "CastUnitDrawing",
+      "name": "CastUnitDrawing(Identifier, CastUnitDrawing.CastUnitDrawingCreationType, Int32)",
       "signature": "public CastUnitDrawing(Identifier castUnitIdentifier, CastUnitDrawing.CastUnitDrawingCreationType castUnitDrawingCreationType, int sheetNumber)",
       "summary": "Instantiates a new cast unit drawing by id with standard attributes and with a specified sheet number for a given cast unit.",
       "params": [
@@ -141,12 +146,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4fd3cf64-061b-7233-bbf6-3dccd7dc4697"
     },
     {
-      "name": "CastUnitDrawing",
+      "name": "CastUnitDrawing(Identifier, CastUnitDrawing.CastUnitDrawingCreationType, String)",
       "signature": "public CastUnitDrawing(Identifier castUnitIdentifier, CastUnitDrawing.CastUnitDrawingCreationType castUnitDrawingCreationType, string AttributeFile)",
       "summary": "Instantiates a new cast unit drawing with given attributes for a given cast unit.",
       "params": [
@@ -169,12 +175,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8a4e135f-fbdd-7149-6c5f-0681db61e215"
     },
     {
-      "name": "CastUnitDrawing",
+      "name": "CastUnitDrawing(Identifier, CastUnitDrawing.CastUnitDrawingCreationType, Int32, String)",
       "signature": "public CastUnitDrawing(Identifier castUnitIdentifier, CastUnitDrawing.CastUnitDrawingCreationType castUnitDrawingCreationType, int sheetNumber, string AttributeFile)",
       "summary": "Instantiates a new cast unit drawing by id with given attributes and with a specified sheet number for a given cast unit.",
       "params": [
@@ -203,6 +210,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5031ff8e-c640-0f21-9b64-4c8721d160d0"
@@ -210,7 +218,7 @@
   ],
   "methods": [
     {
-      "name": "CommitChanges.",
+      "name": "CommitChanges()",
       "signature": "public bool CommitChanges()",
       "summary": "Commits the changes made to the drawings database so far. Commit inserts a kind of save-point into the database and the save-point will be retrieved if the user does undo. Commit also executes all messages. Please note that you need to also to save the drawings database to persists the changes to disk.",
       "params": [],
@@ -261,7 +269,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4bcff604-27c4-487f-bb7d-5d80a2d87d8b"
     },
     {
-      "name": "GetDoubleUserProperties(Dictionary.String, Double..)",
+      "name": "GetDoubleUserProperties(Dictionary\u003CString, Double\u003E.)",
       "signature": "public bool GetDoubleUserProperties(out Dictionary\u003Cstring, double\u003E values)",
       "summary": "Retrieves all double user properties for the object with the given list of names.",
       "params": [
@@ -281,7 +289,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b25f0e6b-ab5c-154a-a45c-4f5868a20599"
     },
     {
-      "name": "GetDoubleUserProperties(List.String., Dictionary.String, Double..)",
+      "name": "GetDoubleUserProperties(List\u003CString\u003E, Dictionary\u003CString, Double\u003E.)",
       "signature": "public bool GetDoubleUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, double\u003E values)",
       "summary": "Retrieves all double user properties for the object with the given list of names.",
       "params": [
@@ -307,7 +315,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7f327fc5-14b5-f534-da39-b68d3f87124a"
     },
     {
-      "name": "GetIntegerUserProperties(Dictionary.String, Int32..)",
+      "name": "GetIntegerUserProperties(Dictionary\u003CString, Int32\u003E.)",
       "signature": "public bool GetIntegerUserProperties(out Dictionary\u003Cstring, int\u003E values)",
       "summary": "Retrieves all integer user properties for the object with the given list of names.",
       "params": [
@@ -327,7 +335,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/20a7d099-ebee-b016-ffc7-0181a1219405"
     },
     {
-      "name": "GetIntegerUserProperties(List.String., Dictionary.String, Int32..)",
+      "name": "GetIntegerUserProperties(List\u003CString\u003E, Dictionary\u003CString, Int32\u003E.)",
       "signature": "public bool GetIntegerUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, int\u003E values)",
       "summary": "Retrieves all integer user properties for the object with the given list of names.",
       "params": [
@@ -408,7 +416,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/fe921886-00b9-57d3-0488-92bd25014c66"
     },
     {
-      "name": "GetStringUserProperties(Dictionary.String, String..)",
+      "name": "GetStringUserProperties(Dictionary\u003CString, String\u003E.)",
       "signature": "public bool GetStringUserProperties(out Dictionary\u003Cstring, string\u003E values)",
       "summary": "Retrieves all string user properties for the object with the given list of names.",
       "params": [
@@ -428,7 +436,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a0039213-2e79-912f-5bdf-5e6dd417c092"
     },
     {
-      "name": "GetStringUserProperties(List.String., Dictionary.String, String..)",
+      "name": "GetStringUserProperties(List\u003CString\u003E, Dictionary\u003CString, String\u003E.)",
       "signature": "public bool GetStringUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, string\u003E values)",
       "summary": "Retrieves all string user properties for the object with the given list of names.",
       "params": [

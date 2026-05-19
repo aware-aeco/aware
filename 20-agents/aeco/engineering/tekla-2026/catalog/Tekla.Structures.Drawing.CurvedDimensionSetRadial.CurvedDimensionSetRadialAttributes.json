@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/93e176d8-7aa3-89da-3e36-7968e250ef86",
   "constructors": [
     {
-      "name": "CurvedDimensionSetRadial.CurvedDimensionSetRadialAttributes",
+      "name": "CurvedDimensionSetRadial.CurvedDimensionSetRadialAttributes()",
       "signature": "public CurvedDimensionSetRadialAttributes()",
       "summary": "Creates a new curved dimension set radial attributes instance which loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9d529820-7919-5755-3a19-f8008d3186a4"
     },
     {
-      "name": "CurvedDimensionSetRadial.CurvedDimensionSetRadialAttributes",
+      "name": "CurvedDimensionSetRadial.CurvedDimensionSetRadialAttributes(Boolean)",
       "signature": "public CurvedDimensionSetRadialAttributes(bool SkipLoadingAttributes)",
       "summary": "Creates a new curved dimension set radial attributes instance which loads standard attributes. If it set to true attributes won\u0027t be lodaded.",
       "params": [
@@ -27,12 +28,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/310e73de-19dc-cc06-ebfb-43d7babfc4b2"
     },
     {
-      "name": "CurvedDimensionSetRadial.CurvedDimensionSetRadialAttributes",
+      "name": "CurvedDimensionSetRadial.CurvedDimensionSetRadialAttributes(String)",
       "signature": "public CurvedDimensionSetRadialAttributes(string AttributesFile)",
       "summary": "Creates a new curved dimension set radial attributes instance that loads the specified attributes.",
       "params": [
@@ -43,6 +45,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b2ed5466-761c-fdeb-26f8-2c7bedf88f63"

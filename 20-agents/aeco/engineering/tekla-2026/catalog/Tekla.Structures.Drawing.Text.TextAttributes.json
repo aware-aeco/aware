@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/67e8c418-3157-dad6-7057-82f1e31c42c0",
   "constructors": [
     {
-      "name": "Text.TextAttributes",
+      "name": "Text.TextAttributes()",
       "signature": "public TextAttributes()",
       "summary": "Creates a new default text attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/87ec8fea-37c1-ba61-c008-064dfebf0ffd"
     },
     {
-      "name": "Text.TextAttributes",
+      "name": "Text.TextAttributes(String)",
       "signature": "public TextAttributes(string AttributesFile)",
       "summary": "Creates a new text attributes instance that loads the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4607c21a-474a-1585-1a32-561432c6352e"

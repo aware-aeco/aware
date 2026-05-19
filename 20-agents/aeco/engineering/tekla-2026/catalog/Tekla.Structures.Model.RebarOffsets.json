@@ -12,6 +12,7 @@
       "signature": "public RebarOffsets()",
       "summary": "Initializes a new instance of the RebarOffsets class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5c8de5ba-62c5-b992-7741-28a16f128ff2"

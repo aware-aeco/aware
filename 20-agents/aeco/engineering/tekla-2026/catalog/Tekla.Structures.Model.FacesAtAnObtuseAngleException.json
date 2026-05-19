@@ -12,6 +12,7 @@
       "signature": "public FacesAtAnObtuseAngleException()",
       "summary": "Initializes a new instance of the FacesAtAnObtuseAngleException class with \u0022Faces to be connected are too steep of an angle\u0022 error message.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/334602ae-a367-6169-3a7e-ad4a63e33e54"

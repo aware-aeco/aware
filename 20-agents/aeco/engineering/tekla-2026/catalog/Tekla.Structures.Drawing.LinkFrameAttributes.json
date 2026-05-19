@@ -12,6 +12,7 @@
       "signature": "public LinkFrameAttributes()",
       "summary": "Initializes a new instance of the LinkFrameAttributes class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/39e5655a-9ad9-8848-9e2a-31a640bc4a9b"

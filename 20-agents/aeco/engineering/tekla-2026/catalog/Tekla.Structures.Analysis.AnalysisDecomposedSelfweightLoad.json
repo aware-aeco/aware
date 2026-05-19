@@ -12,6 +12,7 @@
       "signature": "public AnalysisDecomposedSelfweightLoad()",
       "summary": "Initializes a new instance of the AnalysisDecomposedSelfweightLoad class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/72fc9bc5-167a-cab6-41d9-67c559181b88"
@@ -23,6 +24,7 @@
       "signature": "public override void Select()",
       "summary": "Selects an analysis decomposed selfweight load.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0979f81f-5085-6ac2-4fa9-71b328f7e938"

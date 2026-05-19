@@ -4,20 +4,23 @@
   "kind": "class",
   "summary": "The WpfShapeCatalog class represents a group of controls to select shapes using the shape catalog.",
   "base": "System.Windows.Controls.UserControl",
-  "interfaces": [],
+  "interfaces": [
+    "IComponentConnector"
+  ],
   "doc_url": "https://developer.tekla.com/topic/en/18/47/8ded86a9-90a9-c7ba-9e81-a500d188759c",
   "constructors": [
     {
-      "name": "WpfShapeCatalog",
+      "name": "WpfShapeCatalog()",
       "signature": "public WpfShapeCatalog()",
       "summary": "Initializes a new instance of the ShapeCatalog class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/50083d0b-2059-a5d4-4ed5-cfaa2da7c2cc"
     },
     {
-      "name": "WpfShapeCatalog",
+      "name": "WpfShapeCatalog(String)",
       "signature": "public WpfShapeCatalog(string shape)",
       "summary": "Initializes a new instance of the ShapeCatalog class and will select the Shape (if available) in the tree.",
       "params": [
@@ -28,6 +31,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ca864005-02d8-28a7-0855-41b4a60efab9"
@@ -39,6 +43,7 @@
       "signature": "public void InitializeComponent()",
       "summary": "InitializeComponent",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7ea6ca8b-0b2d-50df-69c4-a6edf3aaea70"
@@ -55,6 +60,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6142c281-2aea-1606-72b4-abf7c44ed66e"

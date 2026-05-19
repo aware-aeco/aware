@@ -12,6 +12,7 @@
       "signature": "public NumberingSeries()",
       "summary": "Initializes a new instance of the NumberingSeries class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/59e50844-b1eb-f87a-1f68-976b2b3a2e8e"

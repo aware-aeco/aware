@@ -12,6 +12,7 @@
       "signature": "public PointList()",
       "summary": "Initializes a new instance of the PointList class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d92b0c94-891b-1fc5-088b-46434259b9d1"
@@ -50,6 +51,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/99fd5ef6-df1d-d958-1935-606fee669fab"
@@ -196,6 +198,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/74fe90d5-80cf-09d3-5a76-e136dfe6277e"
@@ -310,6 +313,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7742080a-5946-fc98-472b-25baddad1e51"
@@ -332,6 +336,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/53f1d876-8c57-2b85-a646-25903eff3636"

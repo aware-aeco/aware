@@ -39,6 +39,7 @@
       "signature": "public void Reset()",
       "summary": "Resets the enumerator to the beginning.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8b2a71bb-ede6-eca5-c50b-8b5d5680ef64"

@@ -25,6 +25,7 @@
           "optional": true
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c5afe6f9-2427-20d1-8590-dcd7d513e27e"
@@ -42,6 +43,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ea91906f-dfb0-e192-f2d5-c912453e9568"

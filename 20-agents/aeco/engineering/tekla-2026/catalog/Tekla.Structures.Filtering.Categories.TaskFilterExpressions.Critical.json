@@ -12,6 +12,7 @@
       "signature": "public Critical()",
       "summary": "Initializes a new instance of the Critical class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1d05292d-8ca8-68de-e124-a22f18d96d64"

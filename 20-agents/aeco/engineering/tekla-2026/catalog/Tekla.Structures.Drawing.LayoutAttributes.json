@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/1850def0-b58c-df22-0db5-e61ee3c34036",
   "constructors": [
     {
-      "name": "LayoutAttributes",
+      "name": "LayoutAttributes()",
       "signature": "[ObsoleteAttribute(\u0022This constructor is obsolete and may be removed in the future. Instead, use the constructor which takes a Drawing Type.\u0022, false)] public LayoutAttributes()",
       "summary": "Creates a new layout attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/938fa59a-b84b-9ea5-d944-133d69d35589"
     },
     {
-      "name": "LayoutAttributes",
+      "name": "LayoutAttributes(String)",
       "signature": "[ObsoleteAttribute(\u0022This constructor is obsolete and may be removed in the future. Instead, use the constructor which takes a Drawing Type.\u0022, false)] public LayoutAttributes(string AttributeFile)",
       "summary": "Creates a new layout attributes instance that loads drawing layout attributes from the specified attribute file.",
       "params": [
@@ -28,12 +29,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5cdf493a-df16-0949-6993-b25cc0c308c2"
     },
     {
-      "name": "LayoutAttributes",
+      "name": "LayoutAttributes(Drawing)",
       "signature": "public LayoutAttributes(Drawing Drawing)",
       "summary": "Creates a new layout attributes instance that loads standard attributes.",
       "params": [
@@ -44,12 +46,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/92d67225-8eb3-0d92-c4ae-ca7d56be457a"
     },
     {
-      "name": "LayoutAttributes",
+      "name": "LayoutAttributes(String, Drawing)",
       "signature": "public LayoutAttributes(string AttributeFile, Drawing Drawing)",
       "summary": "Creates a new layout attributes instance that loads drawing layout attributes from the specified attribute file.",
       "params": [
@@ -66,6 +69,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0948ada9-0299-3031-262a-2f60ece82d5c"

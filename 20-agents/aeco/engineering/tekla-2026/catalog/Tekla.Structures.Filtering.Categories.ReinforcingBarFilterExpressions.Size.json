@@ -12,6 +12,7 @@
       "signature": "public Size()",
       "summary": "Initializes a new instance of the Size class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/debc76bc-4880-92b4-fb48-fe8dead1e1df"

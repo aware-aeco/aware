@@ -4,7 +4,9 @@
   "kind": "class",
   "summary": "The LoopEnumerator class is used to enumerate the loops of a face instance.",
   "base": "System.Object",
-  "interfaces": [],
+  "interfaces": [
+    "IEnumerator"
+  ],
   "doc_url": "https://developer.tekla.com/topic/en/18/47/12ea17c8-9b81-5906-dc7f-d14bc934f7c0",
   "constructors": [],
   "methods": [
@@ -26,6 +28,7 @@
       "signature": "public void Reset()",
       "summary": "Resets the enumerator to the beginning.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d99626c8-ee72-cbfb-0edf-39323caa4db1"

@@ -20,6 +20,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5bd0931f-14c8-aee1-586a-e08ff7e2ff29"
@@ -36,6 +37,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/de2a2b42-d0cf-6d8d-392f-053250d8565e"
@@ -72,6 +74,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/30de9914-2bcc-b7ea-5ad6-e0c94bed5ee8"
@@ -88,6 +91,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a0beb78e-66ee-619d-fb5a-e69f327c566b"
@@ -104,6 +108,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2eaff581-4e11-bf5f-ba5d-07c079b015c8"
@@ -120,6 +125,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/63047cff-3742-8792-52b6-ee14100ac1bf"

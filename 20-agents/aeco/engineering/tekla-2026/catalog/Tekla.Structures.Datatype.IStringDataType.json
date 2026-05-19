@@ -3,7 +3,9 @@
   "namespace": "Tekla.Structures.Datatype",
   "kind": "interface",
   "summary": "The IStringDataType interface is an interface for the Tekla.Structures.Datatype.* types whose value is a string.",
-  "interfaces": [],
+  "interfaces": [
+    "IDataType"
+  ],
   "doc_url": "https://developer.tekla.com/topic/en/18/47/1e85ced4-506f-5a31-6997-b767a2749d02",
   "constructors": [],
   "methods": [],

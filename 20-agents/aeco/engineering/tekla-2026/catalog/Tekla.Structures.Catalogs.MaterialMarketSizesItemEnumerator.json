@@ -26,6 +26,7 @@
       "signature": "public void Reset()",
       "summary": "Resets the MaterialMarketSizesItemEnumerator to the beginning.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/137847a1-5995-9fe8-7b7a-9f6ef98b62a1"

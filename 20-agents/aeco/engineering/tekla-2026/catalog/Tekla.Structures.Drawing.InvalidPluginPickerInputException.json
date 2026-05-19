@@ -12,6 +12,7 @@
       "signature": "public InvalidPluginPickerInputException()",
       "summary": "Creates a new InvalidPluginPickerInputException instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/82bb81cd-0ac1-a7ee-6e95-9735592f0cfe"

@@ -12,6 +12,7 @@
       "signature": "public BindPropertyNameEditor()",
       "summary": "Initializes a new instance of the BindPropertyNameEditor class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/64c9d61a-ad0c-c99a-6468-fba85f1eed22"

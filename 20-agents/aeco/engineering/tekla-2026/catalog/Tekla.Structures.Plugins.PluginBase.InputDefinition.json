@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/5a24f6b6-72e1-ef1b-1dfd-c51d9b39e460",
   "constructors": [
     {
-      "name": "PluginBase.InputDefinition",
+      "name": "PluginBase.InputDefinition(ArrayList)",
       "signature": "public InputDefinition(ArrayList _Input)",
       "summary": "Creates a new input definition instance with multiple point or identifier instances.",
       "params": [
@@ -19,12 +19,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c3369b9a-adf0-7b86-dae3-e026f4fb63ba"
     },
     {
-      "name": "PluginBase.InputDefinition",
+      "name": "PluginBase.InputDefinition(Identifier)",
       "signature": "public InputDefinition(Identifier ID)",
       "summary": "Creates a new input definition instance with one identifier.",
       "params": [
@@ -35,12 +36,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/11449c09-91f9-8f7f-bfb8-948237ce12fb"
     },
     {
-      "name": "PluginBase.InputDefinition",
+      "name": "PluginBase.InputDefinition(Point)",
       "signature": "public InputDefinition(Point Point)",
       "summary": "Creates a new input definition instance with one point.",
       "params": [
@@ -51,12 +53,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/bb9f6b4e-47dc-376a-41ff-ff76a48396ed"
     },
     {
-      "name": "PluginBase.InputDefinition",
+      "name": "PluginBase.InputDefinition(Point, Point)",
       "signature": "public InputDefinition(Point P1, Point P2)",
       "summary": "Creates a new input definition instance with two points.",
       "params": [
@@ -73,6 +76,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/221b36d2-427a-77fb-ebf0-7d0287c3fdb2"

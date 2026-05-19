@@ -12,6 +12,7 @@
       "signature": "public ModelObjectSelector()",
       "summary": "Creates a new model object selector instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b472a494-e224-2f21-32e1-e9d0cdcfffd4"

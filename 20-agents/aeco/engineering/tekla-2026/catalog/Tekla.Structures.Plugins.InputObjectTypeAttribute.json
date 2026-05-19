@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/6d2240db-156e-3bf5-fd9d-10f29c411e8b",
   "constructors": [
     {
-      "name": "InputObjectTypeAttribute",
+      "name": "InputObjectTypeAttribute(Int32)",
       "signature": "public InputObjectTypeAttribute(int Type)",
       "summary": "The custom attribute [InputObjectType()] uses this to store the input object type to the system. This is not to be used by itself.",
       "params": [
@@ -19,12 +19,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/59a94394-b7fa-f5d6-68f9-a06bc789a567"
     },
     {
-      "name": "InputObjectTypeAttribute",
+      "name": "InputObjectTypeAttribute(ConnectionBase.InputObjectType)",
       "signature": "public InputObjectTypeAttribute(ConnectionBase.InputObjectType Type)",
       "summary": "The custom attribute [InputObjectType()] uses this to store the input object type to the system. This is not to be used by itself.",
       "params": [
@@ -35,6 +36,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/54383b32-3be1-c532-1245-3df5037b0f64"

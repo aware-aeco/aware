@@ -12,6 +12,7 @@
       "signature": "public NewLineElement()",
       "summary": "Initializes a new instance of the NewLineElement class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4aa0d9bb-e935-c797-f7d7-05cc947aeb8f"

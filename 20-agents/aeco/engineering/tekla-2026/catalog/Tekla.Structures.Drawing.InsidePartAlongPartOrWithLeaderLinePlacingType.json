@@ -12,6 +12,7 @@
       "signature": "public InsidePartAlongPartOrWithLeaderLinePlacingType()",
       "summary": "Creates a new inside part along part or with leader line placing type instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/08527666-646a-3e63-75e4-a074a9de4218"

@@ -12,6 +12,7 @@
       "signature": "public AnalysisConnectivity()",
       "summary": "Initializes a new instance of the AnalysisConnectivity class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e9b53827-e4dc-288c-132c-d79162dda8d4"

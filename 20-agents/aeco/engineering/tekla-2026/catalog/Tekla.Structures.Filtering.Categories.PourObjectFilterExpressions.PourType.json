@@ -12,6 +12,7 @@
       "signature": "public PourType()",
       "summary": "Initializes a new instance of the PourType class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2e33c1c0-f2bc-ac7e-b316-6615f3652b00"

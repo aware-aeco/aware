@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/f031cc4a-bd67-e91d-c143-8fdc4c580b35",
   "constructors": [
     {
-      "name": "Frame",
+      "name": "Frame(FrameTypes, DrawingColors)",
       "signature": "public Frame(FrameTypes FrameType, DrawingColors FrameColor)",
       "summary": "Creates a new frame instance with the specified frame type and color.",
       "params": [
@@ -25,12 +25,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c5dfc199-bba9-7ea4-fa78-2e04699ef901"
     },
     {
-      "name": "Frame",
+      "name": "Frame(FrameTypes, TeklaDrawingColor)",
       "signature": "public Frame(FrameTypes FrameType, TeklaDrawingColor FrameColor)",
       "summary": "Creates a new frame instance with the specified frame type and RGB color.",
       "params": [
@@ -47,6 +48,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a5e4882f-c238-88e3-4559-0dab5146a960"

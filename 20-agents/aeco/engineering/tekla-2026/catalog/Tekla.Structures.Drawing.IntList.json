@@ -12,6 +12,7 @@
       "signature": "public IntList()",
       "summary": "Initializes a new instance of the IntList class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c24fcfb8-5abc-12cd-027c-410bcadd886d"
@@ -180,6 +181,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c256012d-a9b7-0165-7a1c-f7a2c104147c"
@@ -294,6 +296,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/cd8e0284-12af-e850-bf04-e00168f6fe16"
@@ -316,6 +319,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/29b15dbf-aae0-4823-6696-87243ba20ad3"

@@ -12,6 +12,7 @@
       "signature": "public AnalysisModel()",
       "summary": "Initializes a new instance of the AnalysisModel class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2048b6d6-d56b-4b9b-02d7-4837d2ca1b5f"
@@ -23,6 +24,7 @@
       "signature": "public void Delete()",
       "summary": "Deletes an analysis model. The AnalysisModelName has to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0d04a451-e528-f758-6971-4f844133eef7"
@@ -45,6 +47,7 @@
       "signature": "public void Insert()",
       "summary": "Inserts a new analysis model into the Tekla Structures model. The AnalysisModelName has to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/cf8651fe-b4fe-9219-a849-978ef567254c"
@@ -54,15 +57,17 @@
       "signature": "public void Modify()",
       "summary": "Modifies an analysis model. The AnalysisModelName has to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/70a4a6f1-39f2-6e34-d1e5-fea6d37dc33f"
     },
     {
-      "name": "Select.",
+      "name": "Select()",
       "signature": "public override void Select()",
       "summary": "Selects an analysis model. Updates the model. The AnalysisModelName or ID has to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/754a6dbd-1581-b4bf-98cc-f4334db31c84"

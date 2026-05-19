@@ -1,6 +1,6 @@
 ---
 name: tekla-tekla-structures-analysis
-description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Analysis namespace — 121 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Analysis, AnalysisArea, AnalysisAreaPolygon, AnalysisBar, AnalysisConnectivity, AnalysisBeamEnd, AnalysisCompositeBeam, AnalysisCrossSection, and 113 more types.
+description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Analysis namespace — 121 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Analysis, AnalysisArea, AnalysisAreaPolygon, AnalysisBar, AnalysisBeamEnd, AnalysisConnectivity, AnalysisCompositeBeam, AnalysisCrossSection, and 113 more types.
 ---
 
 # Tekla.Structures.Analysis
@@ -1396,6 +1396,12 @@ Modifies an analysis model. The AnalysisModelName has to be set.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/70a4a6f1-39f2-6e34-d1e5-fea6d37dc33f)
 
+#### `public override void Select()`
+
+Selects an analysis model. Updates the model. The AnalysisModelName or ID has to be set.
+
+[Docs](https://developer.tekla.com/topic/en/18/47/754a6dbd-1581-b4bf-98cc-f4334db31c84)
+
 #### `public bool Select(bool update)`
 
 Selects an analysis model. The AnalysisModelName or ID has to be set.
@@ -1406,12 +1412,6 @@ Selects an analysis model. The AnalysisModelName or ID has to be set.
 **Returns:** `Boolean` — True if successful.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/6f0dc619-b143-ca2b-7fec-9f75294ba493)
-
-#### `public override void Select()`
-
-Selects an analysis model. Updates the model. The AnalysisModelName or ID has to be set.
-
-[Docs](https://developer.tekla.com/topic/en/18/47/754a6dbd-1581-b4bf-98cc-f4334db31c84)
 
 ### Properties
 - `AnalysisConnectivityRules` (AnalysisObjectEnumerator, get/set) — Gets or sets the analysis model connectivity rules.

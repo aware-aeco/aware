@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/038a7c51-a979-0b8a-8f4e-1b601f05e0f9",
   "constructors": [
     {
-      "name": "AnalysisDesignParameter",
+      "name": "AnalysisDesignParameter(Int32)",
       "signature": "public AnalysisDesignParameter(int materialType)",
       "summary": "Initializes a new instance of the AnalysisDesignParameter class.",
       "params": [
@@ -19,12 +19,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/975810c7-415f-d0c7-3179-5dd3ad67c64e"
     },
     {
-      "name": "AnalysisDesignParameter",
+      "name": "AnalysisDesignParameter(String, Int32, Identifier, Double)",
       "signature": "public AnalysisDesignParameter(string analysisModelName, int parameterId, Identifier partId, double value)",
       "summary": "Initializes a new instance of the AnalysisDesignParameter class.",
       "params": [
@@ -53,6 +54,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f37bbd36-db6e-2b5d-b674-9534a89d500a"
@@ -64,6 +66,7 @@
       "signature": "public override void Modify()",
       "summary": "Modifies an analysis design parameter. The ID has to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/39293609-a0f3-aa6b-1f08-fd1f8d0122fd"
@@ -73,6 +76,7 @@
       "signature": "public override void Select()",
       "summary": "Selects an analysis design parameter.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/fe470643-e424-a5c1-ab58-43510bd03610"

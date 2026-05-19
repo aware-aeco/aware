@@ -12,6 +12,7 @@
       "signature": "public AnalysisModelJobProperties()",
       "summary": "Initializes a new instance of the AnalysisModelJobProperties class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/82210e49-472b-fac3-950a-d4274f6a2775"

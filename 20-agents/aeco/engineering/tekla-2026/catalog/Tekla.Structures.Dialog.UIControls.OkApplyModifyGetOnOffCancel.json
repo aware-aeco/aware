@@ -12,6 +12,7 @@
       "signature": "public OkApplyModifyGetOnOffCancel()",
       "summary": "Initializes a new instance of the OkApplyModifyGetOnOffCancel class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0ede87ea-b9fc-eaae-2e78-8f17c69d93d4"

@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/4d60e400-344e-9cc9-f842-f5c9abd32819",
   "constructors": [
     {
-      "name": "Grid.GridAttributes",
+      "name": "Grid.GridAttributes()",
       "signature": "public GridAttributes()",
       "summary": "Creates a new default grid attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c1667790-1bf2-4aa7-7331-c8466f57d2e2"
     },
     {
-      "name": "Grid.GridAttributes",
+      "name": "Grid.GridAttributes(String)",
       "signature": "public GridAttributes(string AttributesFile)",
       "summary": "Creates a new grid attributes instance that loads the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/faaa9c92-45aa-a366-9556-3bb166729971"

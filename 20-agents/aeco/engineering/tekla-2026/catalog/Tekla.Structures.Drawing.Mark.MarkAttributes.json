@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/4dede4c2-574c-e381-baef-66b0c36c9fdf",
   "constructors": [
     {
-      "name": "Mark.MarkAttributes",
+      "name": "Mark.MarkAttributes(ModelObject)",
       "signature": "public MarkAttributes(ModelObject modelObject)",
       "summary": "Creates a new default mark attributes instance that loads standard attributes.",
       "params": [
@@ -19,12 +19,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/55adbd83-075e-cd7f-dcc6-febb43458147"
     },
     {
-      "name": "Mark.MarkAttributes",
+      "name": "Mark.MarkAttributes(ModelObject, String)",
       "signature": "public MarkAttributes(ModelObject modelObject, string AttributesFile)",
       "summary": "Creates a new mark attributes instance that loads the specified attributes.",
       "params": [
@@ -41,6 +42,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/cb2b168d-fa1e-c19e-1b5d-d28571e8edf0"

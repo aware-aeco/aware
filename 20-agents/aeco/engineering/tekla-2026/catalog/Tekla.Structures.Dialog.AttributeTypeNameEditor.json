@@ -12,6 +12,7 @@
       "signature": "public AttributeTypeNameEditor()",
       "summary": "Initializes a new instance of the AttributeTypeNameEditor class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ff8f4a9f-7247-975e-95cf-6f84a65a20d5"

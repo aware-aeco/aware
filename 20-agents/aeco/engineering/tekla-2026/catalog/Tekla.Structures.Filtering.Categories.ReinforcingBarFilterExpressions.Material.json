@@ -12,6 +12,7 @@
       "signature": "public Material()",
       "summary": "Initializes a new instance of the Material class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1cdf88b2-2721-028f-3f43-97670e88ee95"

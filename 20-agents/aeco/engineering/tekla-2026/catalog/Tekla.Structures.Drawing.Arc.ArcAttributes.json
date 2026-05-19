@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/fe75912d-5edb-8618-bff7-26101e15bcca",
   "constructors": [
     {
-      "name": "Arc.ArcAttributes",
+      "name": "Arc.ArcAttributes()",
       "signature": "public ArcAttributes()",
       "summary": "Creates a new default arc attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/67d7f502-b671-3f33-4a4b-5826bf5866b2"
     },
     {
-      "name": "Arc.ArcAttributes",
+      "name": "Arc.ArcAttributes(String)",
       "signature": "public ArcAttributes(string AttributesFile)",
       "summary": "Creates a new arc attributes instance that loads the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a247bdde-18a2-0907-fff5-9526491a4335"

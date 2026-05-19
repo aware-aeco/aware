@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/c111c59a-fcae-cf59-bb15-632fb811ce4a",
   "constructors": [
     {
-      "name": "Point",
+      "name": "Point()",
       "signature": "public Point()",
       "summary": "Instantiates a point with zero members.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/bb1f37d4-d8ea-9b9d-f203-6301f50c271d"
     },
     {
-      "name": "Point",
+      "name": "Point(Point)",
       "signature": "public Point(Point Point)",
       "summary": "Instantiates a point with the given other point.",
       "params": [
@@ -28,12 +29,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c0df4731-27ae-04e7-3660-b629dc2937e2"
     },
     {
-      "name": "Point",
+      "name": "Point(Double, Double)",
       "signature": "public Point(double X, double Y)",
       "summary": "Instantiates a point with the given coordinates and zero Z-coordinate.",
       "params": [
@@ -50,12 +52,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9046ba73-0fde-e632-73a1-0be2b88a3092"
     },
     {
-      "name": "Point",
+      "name": "Point(Double, Double, Double)",
       "signature": "public Point(double X, double Y, double Z)",
       "summary": "Instantiates a point with the given coordinates.",
       "params": [
@@ -78,6 +81,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e504de49-fbeb-0e44-7782-afe43545a2a0"
@@ -164,7 +168,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9f84f024-170b-5181-770d-5ed2f56332cd"
     },
     {
-      "name": "ToString.",
+      "name": "ToString()",
       "signature": "public override string ToString()",
       "summary": "Formats the point into a string, using the current culture.",
       "params": [],
@@ -219,6 +223,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7ad7ecb9-acf3-7ed2-f2bc-aa52b99ceae6"
@@ -228,6 +233,7 @@
       "signature": "public void Zero()",
       "summary": "Zeros all the members of the point.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9bf63e0c-fe71-40ae-e467-306f0a41f315"

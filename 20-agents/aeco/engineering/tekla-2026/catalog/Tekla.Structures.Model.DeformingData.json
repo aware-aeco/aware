@@ -12,6 +12,7 @@
       "signature": "public DeformingData()",
       "summary": "Instantiates a deforming data instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d519639c-0624-8119-df21-8ab77ab030e7"

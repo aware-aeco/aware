@@ -12,6 +12,7 @@
       "signature": "public AnalysisSubSection()",
       "summary": "Initializes a new instance of the AnalysisSubSection class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8137e14c-ba1f-85a6-ee8a-09fd57d70495"
@@ -23,6 +24,7 @@
       "signature": "public override void Select()",
       "summary": "Selects an analysis subsection. The analysis subsection identifier must be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/83c541c6-3c34-8a0b-1672-ac36de2181dc"

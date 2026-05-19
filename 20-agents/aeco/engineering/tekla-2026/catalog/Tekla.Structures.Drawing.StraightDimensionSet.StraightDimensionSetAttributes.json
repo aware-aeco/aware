@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/f7cd1b5b-2dba-2eee-cf5d-198239da028b",
   "constructors": [
     {
-      "name": "StraightDimensionSet.StraightDimensionSetAttributes",
+      "name": "StraightDimensionSet.StraightDimensionSetAttributes()",
       "signature": "[ObsoleteAttribute(\u0022This constructor is obsolete and may be removed in the future. Instead, use the constructor which takes a ModelObject.\u0022, false)] public StraightDimensionSetAttributes()",
       "summary": "Creates a default straight dimension set attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f1dd4328-0dfb-cc3f-7294-0fdef9d14e2c"
     },
     {
-      "name": "StraightDimensionSet.StraightDimensionSetAttributes",
+      "name": "StraightDimensionSet.StraightDimensionSetAttributes(String)",
       "signature": "[ObsoleteAttribute(\u0022This constructor is obsolete and may be removed in the future. Instead, use the constructor which takes a ModelObject and a string.\u0022, false)] public StraightDimensionSetAttributes(string AttributesFile)",
       "summary": "Creates a straight dimension set attributes instance that loads the specified attributes.",
       "params": [
@@ -28,12 +29,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/26f642dd-1220-2a47-2c85-41ce893777c2"
     },
     {
-      "name": "StraightDimensionSet.StraightDimensionSetAttributes",
+      "name": "StraightDimensionSet.StraightDimensionSetAttributes(ModelObject)",
       "signature": "public StraightDimensionSetAttributes(ModelObject modelObject)",
       "summary": "Creates a default straight dimension set attributes instance that loads standard attributes.",
       "params": [
@@ -44,12 +46,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c161e0cf-61d8-a23d-4f20-7559f147d81c"
     },
     {
-      "name": "StraightDimensionSet.StraightDimensionSetAttributes",
+      "name": "StraightDimensionSet.StraightDimensionSetAttributes(ModelObject, String)",
       "signature": "public StraightDimensionSetAttributes(ModelObject modelObject, string AttributesFile)",
       "summary": "Creates a straight dimension set attributes instance that loads the specified attributes.",
       "params": [
@@ -66,6 +69,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1cdc7eee-7cb2-672d-cca9-b721351b4cc0"

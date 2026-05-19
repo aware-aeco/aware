@@ -12,6 +12,7 @@
       "signature": "public Section()",
       "summary": "Initializes a new instance of the Section class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ce664b86-51f5-ec67-521b-e9974cf78dac"

@@ -4,7 +4,9 @@
   "kind": "class",
   "summary": "The PickerInput class instances can be provided as predefined results of requests through the methods of the UI.Picker class.",
   "base": "System.Object",
-  "interfaces": [],
+  "interfaces": [
+    "IIsEqual"
+  ],
   "doc_url": "https://developer.tekla.com/topic/en/18/47/af20a192-0a70-c008-9821-8a87646a472e",
   "constructors": [],
   "methods": [

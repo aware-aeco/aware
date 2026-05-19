@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/18fb56dd-64f5-6410-d628-9b71ef5585aa",
   "constructors": [
     {
-      "name": "Rotation3D",
+      "name": "Rotation3D()",
       "signature": "public Rotation3D()",
       "summary": "Initializes a new instance of the Rotation3D class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2f84822e-14e9-3665-0ec8-6addd504371c"
     },
     {
-      "name": "Rotation3D",
+      "name": "Rotation3D(Vector, Vector)",
       "signature": "public Rotation3D(Vector axisX, Vector axisY)",
       "summary": "Initializes a new instance of the Rotation3D class.",
       "params": [
@@ -34,6 +35,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/80111e03-1f33-7db7-adae-7c137beb6a74"

@@ -12,6 +12,7 @@
       "signature": "public RebarSpacing()",
       "summary": "Initializes a new instance of the RebarSpacing class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/865a444f-0d1c-0d8a-22bc-ac801310d1a7"
@@ -64,7 +65,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e25e1d85-f2fd-c378-2d88-d0593f44ef8b"
     },
     {
-      "name": "Create(RebarSpacing.Offset, RebarSpacing.Offset, IEnumerable.RebarSpacing.ExactSpacing.Element., RebarSpacing.ExactSpacing.Validation.)",
+      "name": "Create(RebarSpacing.Offset, RebarSpacing.Offset, IEnumerable\u003CRebarSpacing.ExactSpacing.Element\u003E, RebarSpacing.ExactSpacing.Validation.)",
       "signature": "public static RebarSpacing Create(RebarSpacing.Offset startOffset, RebarSpacing.Offset endOffset, IEnumerable\u003CRebarSpacing.ExactSpacing.Element\u003E elements, out RebarSpacing.ExactSpacing.Validation validation)",
       "summary": "Creates an exact spacing if the given elements are valid.",
       "params": [

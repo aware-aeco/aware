@@ -12,6 +12,7 @@
       "signature": "public CurvedDimensionSetHandler()",
       "summary": "Initializes a new instance of the CurvedDimensionSetHandler class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/75c8d7c5-1805-4eea-a8f9-0ac24f5859e7"

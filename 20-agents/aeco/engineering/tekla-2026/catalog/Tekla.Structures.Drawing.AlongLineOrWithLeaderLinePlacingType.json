@@ -12,6 +12,7 @@
       "signature": "public AlongLineOrWithLeaderLinePlacingType()",
       "summary": "Creates a new along line or with leader line placing type instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/45aaa392-1385-0596-78b9-359df2991016"

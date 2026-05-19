@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/cd91f00f-1681-cfc5-3616-ff8e229a29bc",
   "constructors": [
     {
-      "name": "ControlPolycurve",
+      "name": "ControlPolycurve()",
       "signature": "public ControlPolycurve()",
       "summary": "Initializes a new instance of the ControlPolycurve class. The default values are as follows: Color = ControlObjectColorEnum.BLUE;LineType = LineType.DashDot;",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a2d1a1cd-4bff-6165-905b-3847b42cdcc1"
     },
     {
-      "name": "ControlPolycurve",
+      "name": "ControlPolycurve(Polycurve)",
       "signature": "public ControlPolycurve(Polycurve geometry)",
       "summary": "Initializes a new instance of the ControlPolycurve class.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f73c75bd-a192-5ddc-5cf8-421fe2d3c893"
@@ -831,7 +833,7 @@
     },
     {
       "name": "IsUpToDate",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": false,
       "summary": "Gets if the object does not have a modification which is not shared.",
@@ -847,7 +849,7 @@
     },
     {
       "name": "ModificationTime",
-      "type": "object",
+      "type": "Nullable\u003CDateTime\u003E",
       "getter": true,
       "setter": false,
       "summary": "Gets latest time of the object was modified or created.",

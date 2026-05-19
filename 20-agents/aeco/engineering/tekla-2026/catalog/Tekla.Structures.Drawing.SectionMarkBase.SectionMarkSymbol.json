@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/b08c53a3-44f2-e297-c1ab-1c5b86fa7110",
   "constructors": [
     {
-      "name": "SectionMarkBase.SectionMarkSymbol",
+      "name": "SectionMarkBase.SectionMarkSymbol()",
       "signature": "public SectionMarkSymbol()",
       "summary": "Creates a new section mark symbol instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/eb214eed-2d5a-0dea-38ee-8daf9ea1c25d"
     },
     {
-      "name": "SectionMarkBase.SectionMarkSymbol",
+      "name": "SectionMarkBase.SectionMarkSymbol(SectionMarkBase.SectionMarkSymbol.SymbolShapes, Double, Point)",
       "signature": "public SectionMarkSymbol(SectionMarkBase.SectionMarkSymbol.SymbolShapes shape, double size, Point position)",
       "summary": "Creates a new section mark symbol instance with the given shape, size and position.",
       "params": [
@@ -40,6 +41,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b155096b-2ce3-3bbe-cdb1-d3883c4d25f0"

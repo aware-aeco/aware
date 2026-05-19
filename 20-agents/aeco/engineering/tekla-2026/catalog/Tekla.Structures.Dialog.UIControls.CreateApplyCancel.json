@@ -12,6 +12,7 @@
       "signature": "public CreateApplyCancel()",
       "summary": "Initializes CreateApplyCancel user control.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6116cfa4-3a81-10c8-2706-d2e129019330"

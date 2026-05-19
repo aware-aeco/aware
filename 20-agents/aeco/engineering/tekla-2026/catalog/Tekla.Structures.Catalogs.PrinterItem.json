@@ -12,6 +12,7 @@
       "signature": "public PrinterItem()",
       "summary": "Creates a new printer item instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/24fc1bda-8108-dd89-1cda-37ce79311adb"

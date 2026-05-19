@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/1082f32b-492c-fd87-a2ba-b28a2359fc76",
   "constructors": [
     {
-      "name": "Localization",
+      "name": "Localization()",
       "signature": "public Localization()",
       "summary": "Creates a new localization instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e487fb55-b975-20c5-3533-4f0c81666402"
     },
     {
-      "name": "Localization",
+      "name": "Localization(String, String)",
       "signature": "public Localization(string fileName, string language)",
       "summary": "Creates a new localization instance.",
       "params": [
@@ -34,6 +35,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ea5ac0bd-0aa6-25b0-caac-197ded02749b"
@@ -92,6 +94,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e5f64544-6122-615c-fe3f-fe55dfd3bb15"
@@ -108,6 +111,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ce8fe818-f1b3-287c-2556-4aab6e4e4fde"
@@ -124,6 +128,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f3061153-fc54-871b-7a3a-a61c7700ead8"
@@ -140,6 +145,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/81d33ad8-0af5-e71e-f1e4-3e108eeef787"
@@ -156,6 +162,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8f64771f-7a89-67f8-7a18-e56d01b3260c"
@@ -172,6 +179,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/83044e33-c832-1e45-2e54-71a15be3b7ab"
@@ -188,6 +196,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/985e14bc-0164-6f24-cc16-099d799c8527"
@@ -210,6 +219,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/88453655-72be-4c55-8bf7-4bb7fad8df80"
@@ -232,6 +242,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9c7c6069-4285-dda1-795d-a478948d46d5"

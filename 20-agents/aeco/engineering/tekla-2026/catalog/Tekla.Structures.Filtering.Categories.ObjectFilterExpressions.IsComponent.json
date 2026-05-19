@@ -12,6 +12,7 @@
       "signature": "public IsComponent()",
       "summary": "Initializes a new instance of the IsComponent class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/eafcecf5-b565-e3b3-ba9c-ca29bd08fbc3"

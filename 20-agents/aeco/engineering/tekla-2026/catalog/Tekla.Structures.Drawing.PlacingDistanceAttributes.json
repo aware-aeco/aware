@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/63b1eb62-5a40-d347-0a8a-46e21aa63e49",
   "constructors": [
     {
-      "name": "PlacingDistanceAttributes",
+      "name": "PlacingDistanceAttributes()",
       "signature": "public PlacingDistanceAttributes()",
       "summary": "Initializes a new instance of the PlacingDistanceAttributes class. The default values are a 0.0 search margin and a 0.0 minimal distance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e3ad5d7b-58a3-af19-c150-655cd98309b3"
     },
     {
-      "name": "PlacingDistanceAttributes",
+      "name": "PlacingDistanceAttributes(Double, Double)",
       "signature": "public PlacingDistanceAttributes(double searchMargin, double minimalDistance)",
       "summary": "Creates a new placing distance attributes instance with the given search marginal and minimal distance.",
       "params": [
@@ -34,12 +35,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2f0e28da-9fa3-686a-800a-9328cf1535f6"
     },
     {
-      "name": "PlacingDistanceAttributes",
+      "name": "PlacingDistanceAttributes(Double, Double, Double)",
       "signature": "public PlacingDistanceAttributes(double searchMargin, double minimalDistance, double maximalDistance)",
       "summary": "Creates a new placing distance attributes instance with the given search margin, minimal and maximal distance.",
       "params": [
@@ -62,6 +64,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/91eae0c6-7997-0964-c668-75d4a59a14bb"

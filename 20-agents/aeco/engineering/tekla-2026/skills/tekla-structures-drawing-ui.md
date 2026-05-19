@@ -1,6 +1,6 @@
 ---
 name: tekla-tekla-structures-drawing-ui
-description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Drawing.UI namespace — 14 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: DrawingSelector, DrawingObjectSelector, Events, Events.DrawingEditorClosedDelegate, IUIEvents, Picker, Events.DocumentManagerClosedDelegate, Events.DrawingListSelectionChangedDelegate, and 6 more types.
+description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Drawing.UI namespace — 14 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: DrawingObjectSelector, Events, DrawingSelector, IUIEvents, Picker, Events.DocumentManagerClosedDelegate, Events.DrawingEditorClosedDelegate, Events.DrawingEditorOpenedDelegate, and 6 more types.
 ---
 
 # Tekla.Structures.Drawing.UI
@@ -93,6 +93,8 @@ Gets the drawings that are currently selected in the drawing list dialog.
 ## Events (class)
 
 The Events class allows the user to register event listeners for drawing user interface events.
+
+**Remarks:** Asynchronous event handling Registered event handlers are called asynchronously so that many handlers may be running simultaneously. Event handlers are not guaranteed to be run in the same thread where they were registered. The asynchronous nature of the events requires the use of synchronization constructs on objects and data structures that are not defined to be thread safe.Microsoft's documentation about the lock statement: http://msdn.microsoft.com/en-us/library/c5kehkcz.aspxMicrosoft's documentation about delegates: http://msdn.microsoft.com/en-us/library/900fyy8e.aspxMicrosoft's documentation about managed threading: http://msdn.microsoft.com/en-us/library/1c9txz50.aspx
 
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/5e9a7269-86c0-e674-6b7d-775dd6d0ffc1)
 
@@ -384,6 +386,8 @@ The SelectionChange event is raised when the selection is changed in a Tekla Str
 ## Picker (class)
 
 The Picker class is used to pick points and objects in the drawing.
+
+**Remarks:** Prompts Tekla Structures prefixes the given prompt with "prompt_" and looks for a translation in the prompts.ail file. If the translation (e.g. "prompt_Pick_first_position") is not found in the prompts.ail file, the prompt string is displayed as such. This feature can be used to give already translated strings to the picker.
 
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/276155dd-edd3-807b-23e1-91517eaf2f13)
 

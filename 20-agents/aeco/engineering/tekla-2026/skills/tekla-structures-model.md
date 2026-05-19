@@ -1,6 +1,6 @@
 ---
 name: tekla-tekla-structures-model
-description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Model namespace — 304 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Assembly, BaseComponent, BaseRebarGroup, BasePoint, BaseRebarModifier, BaseWeld, Beam, BendSurface, and 296 more types.
+description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Model namespace — 304 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: BasePoint, Assembly, BaseComponent, BaseRebarGroup, BaseRebarModifier, BaseWeld, Beam, BendSurface, and 296 more types.
 ---
 
 # Tekla.Structures.Model
@@ -576,8 +576,8 @@ Sets a string property for the model object.
 ### Properties
 - `AssemblyNumber` (NumberingSeries, get/set) — Defines the numbering in the assembly sense. If the members are empty and zero, the main part attributes are used.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — The name of the assembly.
 
 ## Assembly.AssemblyTypeEnum (enum)
@@ -1063,8 +1063,8 @@ Sets a string property for the model object.
 
 ### Properties
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — The name of the component. The name identifies custom components or plug-ins.
 - `Number` (Int32, get/set) — The number of the component. A number greater than zero identifies system components, for custom components the number is CUSTOM_OBJECT_NUMBER, and for plug-ins the number is PLUGIN_OBJECT_NUMBER.
 
@@ -1747,8 +1747,8 @@ Sets a string property for the model object.
 - `Grade` (String, get/set) — Gets or sets the steel grade of the reinforcing bar. The grade indicates the strength of the steel used in reinforcing bars. It can also indicate other factors, such as the weldability or surface deformations of the bar.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
 - `InputPointDeformingState` (DeformingType, get/set) — Gets or sets the reinforcement input point deforming state.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — Gets or sets the name of the reinforcement.
 - `NumberingSeries` (NumberingSeries, get/set) — Gets or sets the numbering series of the reinforcement.
 - `OnPlaneOffsets` (ArrayList, get/set) — Gets or sets the double offset value for each leg on the same plane as the bar.
@@ -2184,8 +2184,8 @@ Sets a string property for the model object.
 - `FirstAffectedBar` (Int32, get/set) — Gets or sets the first affected bar. If set to zero, the first affected bar will be chosen automatically.
 - `FollowEdges` (Boolean, get/set) — Gets or sets a flag that indicates whether the modifier should attempt to follow the leg face edges located between its end points.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 
 ## BaseRebarModifier.AffectedRebarEnum (enum)
 
@@ -2633,11 +2633,11 @@ Sets a string property for the model object.
 - `IncrementAmountAbove` (Int32, get/set) — Gets or sets the increment amount above.
 - `IncrementAmountBelow` (Int32, get/set) — Gets or sets the increment amount below.
 - `IntermittentType` (BaseWeld.WeldIntermittentTypeEnum, get/set) — Gets or sets the weld intermittent type.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `LengthAbove` (Double, get/set) — Gets or sets the length above.
 - `LengthBelow` (Double, get/set) — Gets or sets the length below.
 - `MainObject` (ModelObject, get/set) — Gets or sets the main part of the weld.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `NDTInspection` (BaseWeld.WeldNDTInspectionEnum, get/set) — Gets or sets the NDT inspection level.
 - `PitchAbove` (Double, get/set) — Gets or sets the pitch above.
 - `PitchBelow` (Double, get/set) — Gets or sets the pitch below.
@@ -3113,6 +3113,14 @@ Retrieves a string property of the report for the model object.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/70f212bb-ee70-e9e9-7ab6-d6a9d46f8de6)
 
+#### `public Solid GetSolid()`
+
+Returns the solid of the part.
+
+**Returns:** `Solid` — The solid of the part.
+
+[Docs](https://developer.tekla.com/topic/en/18/47/7bd70e97-7c8b-823c-c7e1-da2ebe3dadaf)
+
 #### `public Solid GetSolid(FormingStates formingStates)`
 
 Returns the solid of the part.
@@ -3134,14 +3142,6 @@ Returns the solid of the part.
 **Returns:** `Solid` — The solid of the part.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/25f58541-37fe-c1ca-f384-065ecbe38e55)
-
-#### `public Solid GetSolid()`
-
-Returns the solid of the part.
-
-**Returns:** `Solid` — The solid of the part.
-
-[Docs](https://developer.tekla.com/topic/en/18/47/7bd70e97-7c8b-823c-c7e1-da2ebe3dadaf)
 
 #### `public bool GetStringReportProperties(ArrayList names, ref Hashtable values)`
 
@@ -3358,9 +3358,9 @@ Sets a string property for the model object.
 - `EndPointOffset` (Offset, get/set) — Gets or sets the beam's end point offset.
 - `Finish` (String, get/set) — Gets or sets the finish of the part.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `Material` (Material, get/set) — Gets or sets the material the part is made of.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — Gets or sets the name of the part.
 - `PartNumber` (NumberingSeries, get/set) — Gets or sets the part number. Defines the numbering in the part sense.
 - `Position` (Position, get/set) — Gets or sets the part position. Defines the way the part is positioned in the model.
@@ -3749,6 +3749,14 @@ Retrieves a string property of the report for the model object.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/70f212bb-ee70-e9e9-7ab6-d6a9d46f8de6)
 
+#### `public Solid GetSolid()`
+
+Returns the solid of the part.
+
+**Returns:** `Solid` — The solid of the part.
+
+[Docs](https://developer.tekla.com/topic/en/18/47/7bd70e97-7c8b-823c-c7e1-da2ebe3dadaf)
+
 #### `public Solid GetSolid(FormingStates formingStates)`
 
 Returns the solid of the part.
@@ -3770,14 +3778,6 @@ Returns the solid of the part.
 **Returns:** `Solid` — The solid of the part.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/25f58541-37fe-c1ca-f384-065ecbe38e55)
-
-#### `public Solid GetSolid()`
-
-Returns the solid of the part.
-
-**Returns:** `Solid` — The solid of the part.
-
-[Docs](https://developer.tekla.com/topic/en/18/47/7bd70e97-7c8b-823c-c7e1-da2ebe3dadaf)
 
 #### `public bool GetStringReportProperties(ArrayList names, ref Hashtable values)`
 
@@ -3991,9 +3991,9 @@ Sets a string property for the model object.
 - `Finish` (String, get/set) — Gets or sets the finish of the part.
 - `Geometry` (ConnectiveGeometry, get/set) — Gets or sets the geometry of the bent plate.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `Material` (Material, get/set) — Gets or sets the material the part is made of.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — Gets or sets the name of the part.
 - `PartNumber` (NumberingSeries, get/set) — Gets or sets the part number. Defines the numbering in the part sense.
 - `Position` (Position, get/set) — Gets or sets the part position. Defines the way the part is positioned in the model.
@@ -4588,6 +4588,14 @@ Retrieves a string property of the report for the model object.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/70f212bb-ee70-e9e9-7ab6-d6a9d46f8de6)
 
+#### `public Solid GetSolid()`
+
+Method for getting the solid information of the bolt group.
+
+**Returns:** `Solid` — The solid instance of the bolt group.
+
+[Docs](https://developer.tekla.com/topic/en/18/47/8db794a9-0fab-8338-811d-5a70711839d1)
+
 #### `public Solid GetSolid(bool withHighAccuracy)`
 
 Method for getting the solid information of the bolt group.
@@ -4598,14 +4606,6 @@ Method for getting the solid information of the bolt group.
 **Returns:** `Solid` — The solid instance of the bolt group.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/32e49ef9-ec57-ece5-011e-d4ebcd8afe6b)
-
-#### `public Solid GetSolid()`
-
-Method for getting the solid information of the bolt group.
-
-**Returns:** `Solid` — The solid instance of the bolt group.
-
-[Docs](https://developer.tekla.com/topic/en/18/47/8db794a9-0fab-8338-811d-5a70711839d1)
 
 #### `public bool GetStringReportProperties(ArrayList names, ref Hashtable values)`
 
@@ -4864,9 +4864,9 @@ Sets a string property for the model object.
 - `Hole5` (Boolean, get/set) — Indicates whether the hole 5 is used.
 - `HoleType` (BoltGroup.BoltHoleTypeEnum, get/set) — The special hole type: oversized, slotted, blind or no hole.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `Length` (Double, get/set) — The length. An extra variable that is only set when the bolt group is made of studs instead of bolts.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Nut1` (Boolean, get/set) — Indicates whether the nut 1 is used in the assembly.
 - `Nut2` (Boolean, get/set) — Indicates whether the nut 2 is used in the assembly.
 - `OtherPartsToBolt` (ArrayList, get) — The other parts to be bolted (read-only).
@@ -5132,6 +5132,14 @@ Retrieves a string property of the report for the model object.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/70f212bb-ee70-e9e9-7ab6-d6a9d46f8de6)
 
+#### `public Solid GetSolid()`
+
+Method for getting the solid information of the bolt group.
+
+**Returns:** `Solid` — The solid instance of the bolt group.
+
+[Docs](https://developer.tekla.com/topic/en/18/47/8db794a9-0fab-8338-811d-5a70711839d1)
+
 #### `public Solid GetSolid(bool withHighAccuracy)`
 
 Method for getting the solid information of the bolt group.
@@ -5142,14 +5150,6 @@ Method for getting the solid information of the bolt group.
 **Returns:** `Solid` — The solid instance of the bolt group.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/32e49ef9-ec57-ece5-011e-d4ebcd8afe6b)
-
-#### `public Solid GetSolid()`
-
-Method for getting the solid information of the bolt group.
-
-**Returns:** `Solid` — The solid instance of the bolt group.
-
-[Docs](https://developer.tekla.com/topic/en/18/47/8db794a9-0fab-8338-811d-5a70711839d1)
 
 #### `public bool GetStringReportProperties(ArrayList names, ref Hashtable values)`
 
@@ -5363,9 +5363,9 @@ Sets a string property for the model object.
 - `Hole5` (Boolean, get/set) — Indicates whether the hole 5 is used.
 - `HoleType` (BoltGroup.BoltHoleTypeEnum, get/set) — The special hole type: oversized, slotted, blind or no hole.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `Length` (Double, get/set) — The length. An extra variable that is only set when the bolt group is made of studs instead of bolts.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `NumberOfBolts` (Double, get/set) — The number of bolts in the circle.
 - `Nut1` (Boolean, get/set) — Indicates whether the nut 1 is used in the assembly.
 - `Nut2` (Boolean, get/set) — Indicates whether the nut 2 is used in the assembly.
@@ -5632,6 +5632,14 @@ Retrieves a string property of the report for the model object.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/70f212bb-ee70-e9e9-7ab6-d6a9d46f8de6)
 
+#### `public Solid GetSolid()`
+
+Method for getting the solid information of the bolt group.
+
+**Returns:** `Solid` — The solid instance of the bolt group.
+
+[Docs](https://developer.tekla.com/topic/en/18/47/8db794a9-0fab-8338-811d-5a70711839d1)
+
 #### `public Solid GetSolid(bool withHighAccuracy)`
 
 Method for getting the solid information of the bolt group.
@@ -5642,14 +5650,6 @@ Method for getting the solid information of the bolt group.
 **Returns:** `Solid` — The solid instance of the bolt group.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/32e49ef9-ec57-ece5-011e-d4ebcd8afe6b)
-
-#### `public Solid GetSolid()`
-
-Method for getting the solid information of the bolt group.
-
-**Returns:** `Solid` — The solid instance of the bolt group.
-
-[Docs](https://developer.tekla.com/topic/en/18/47/8db794a9-0fab-8338-811d-5a70711839d1)
 
 #### `public bool GetStringReportProperties(ArrayList names, ref Hashtable values)`
 
@@ -5862,9 +5862,9 @@ Sets a string property for the model object.
 - `Hole5` (Boolean, get/set) — Indicates whether the hole 5 is used.
 - `HoleType` (BoltGroup.BoltHoleTypeEnum, get/set) — The special hole type: oversized, slotted, blind or no hole.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `Length` (Double, get/set) — The length. An extra variable that is only set when the bolt group is made of studs instead of bolts.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Nut1` (Boolean, get/set) — Indicates whether the nut 1 is used in the assembly.
 - `Nut2` (Boolean, get/set) — Indicates whether the nut 2 is used in the assembly.
 - `OtherPartsToBolt` (ArrayList, get) — The other parts to be bolted (read-only).
@@ -6269,6 +6269,14 @@ Retrieves a string property of the report for the model object.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/70f212bb-ee70-e9e9-7ab6-d6a9d46f8de6)
 
+#### `public Solid GetSolid()`
+
+Method for getting the solid information of the bolt group.
+
+**Returns:** `Solid` — The solid instance of the bolt group.
+
+[Docs](https://developer.tekla.com/topic/en/18/47/8db794a9-0fab-8338-811d-5a70711839d1)
+
 #### `public Solid GetSolid(bool withHighAccuracy)`
 
 Method for getting the solid information of the bolt group.
@@ -6279,14 +6287,6 @@ Method for getting the solid information of the bolt group.
 **Returns:** `Solid` — The solid instance of the bolt group.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/32e49ef9-ec57-ece5-011e-d4ebcd8afe6b)
-
-#### `public Solid GetSolid()`
-
-Method for getting the solid information of the bolt group.
-
-**Returns:** `Solid` — The solid instance of the bolt group.
-
-[Docs](https://developer.tekla.com/topic/en/18/47/8db794a9-0fab-8338-811d-5a70711839d1)
 
 #### `public bool GetStringReportProperties(ArrayList names, ref Hashtable values)`
 
@@ -6499,9 +6499,9 @@ Sets a string property for the model object.
 - `Hole5` (Boolean, get/set) — Indicates whether the hole 5 is used.
 - `HoleType` (BoltGroup.BoltHoleTypeEnum, get/set) — The special hole type: oversized, slotted, blind or no hole.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `Length` (Double, get/set) — The length. An extra variable that is only set when the bolt group is made of studs instead of bolts.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Nut1` (Boolean, get/set) — Indicates whether the nut 1 is used in the assembly.
 - `Nut2` (Boolean, get/set) — Indicates whether the nut 2 is used in the assembly.
 - `OtherPartsToBolt` (ArrayList, get) — The other parts to be bolted (read-only).
@@ -6915,8 +6915,8 @@ Sets a string property for the model object.
 ### Properties
 - `Father` (ModelObject, get/set) — The father object of the boolean operation; the model object instance to operate on.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 
 ## BooleanPart (class)
 
@@ -7322,8 +7322,8 @@ Sets a string property for the model object.
 ### Properties
 - `Father` (ModelObject, get/set) — The father object of the boolean operation; the model object instance to operate on.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `OperativePart` (Part, get/set) — The part that does the boolean operation. When Insert() is called, this field is overwritten with a new part instance which is a copy of the original operative part. This part has the same identifier as the boolean part. Modifications (such as profile change) have to be made through the part instance and not the boolean part instance. The operative part's class must be BooleanOperativeClass.
 - `Type` (BooleanPart.BooleanTypeEnum, get/set) — Defines the boolean operation: an add or a cut.
 
@@ -7648,6 +7648,14 @@ Retrieves a string property of the report for the model object.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/70f212bb-ee70-e9e9-7ab6-d6a9d46f8de6)
 
+#### `public Solid GetSolid()`
+
+Returns the solid of the part.
+
+**Returns:** `Solid` — The solid of the part.
+
+[Docs](https://developer.tekla.com/topic/en/18/47/7bd70e97-7c8b-823c-c7e1-da2ebe3dadaf)
+
 #### `public Solid GetSolid(FormingStates formingStates)`
 
 Returns the solid of the part.
@@ -7669,14 +7677,6 @@ Returns the solid of the part.
 **Returns:** `Solid` — The solid of the part.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/25f58541-37fe-c1ca-f384-065ecbe38e55)
-
-#### `public Solid GetSolid()`
-
-Returns the solid of the part.
-
-**Returns:** `Solid` — The solid of the part.
-
-[Docs](https://developer.tekla.com/topic/en/18/47/7bd70e97-7c8b-823c-c7e1-da2ebe3dadaf)
 
 #### `public bool GetStringReportProperties(ArrayList names, ref Hashtable values)`
 
@@ -7891,9 +7891,9 @@ Sets a string property for the model object.
 - `EndPointOffset` (Offset, get/set) — Gets or sets the beam's end point offset.
 - `Finish` (String, get/set) — Gets or sets the finish of the part.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `Material` (Material, get/set) — Gets or sets the material the part is made of.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — Gets or sets the name of the part.
 - `PartNumber` (NumberingSeries, get/set) — Gets or sets the part number. Defines the numbering in the part sense.
 - `Position` (Position, get/set) — Gets or sets the part position. Defines the way the part is positioned in the model.
@@ -8504,8 +8504,8 @@ Sets a string property for the model object.
 - `Grade` (String, get/set) — Gets or sets the steel grade of the reinforcing bar. The grade indicates the strength of the steel used in reinforcing bars. It can also indicate other factors, such as the weldability or surface deformations of the bar.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
 - `InputPointDeformingState` (DeformingType, get/set) — Gets or sets the reinforcement input point deforming state.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — Gets or sets the name of the reinforcement.
 - `NumberingSeries` (NumberingSeries, get/set) — Gets or sets the numbering series of the reinforcement.
 - `OnPlaneOffsets` (ArrayList, get/set) — Gets or sets the double offset value for each leg on the same plane as the bar.
@@ -9142,8 +9142,8 @@ Sets a string property for the model object.
 
 ### Properties
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — The name of the component. The name identifies custom components or plug-ins.
 - `Number` (Int32, get/set) — The number of the component. A number greater than zero identifies system components, for custom components the number is CUSTOM_OBJECT_NUMBER, and for plug-ins the number is PLUGIN_OBJECT_NUMBER.
 
@@ -9816,8 +9816,8 @@ Sets a string property for the model object.
 - `Class` (Int32, get/set) — The class of the connection.
 - `Code` (String, get/set) — The code of the connection. The code can be used to classify the connection. The code of the connection can be reported and shown in drawings. The maximum length of the string is 20 characters.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — The name of the component. The name identifies custom components or plug-ins.
 - `Number` (Int32, get/set) — The number of the component. A number greater than zero identifies system components, for custom components the number is CUSTOM_OBJECT_NUMBER, and for plug-ins the number is PLUGIN_OBJECT_NUMBER.
 - `PositionType` (PositionTypeEnum, get/set) — The position type. When creating custom connections this attribute is not applied, instead the position type used when creating the custom connection is used.
@@ -10261,6 +10261,14 @@ Retrieves a string property of the report for the model object.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/70f212bb-ee70-e9e9-7ab6-d6a9d46f8de6)
 
+#### `public Solid GetSolid()`
+
+Returns the solid of the part.
+
+**Returns:** `Solid` — The solid of the part.
+
+[Docs](https://developer.tekla.com/topic/en/18/47/7bd70e97-7c8b-823c-c7e1-da2ebe3dadaf)
+
 #### `public Solid GetSolid(FormingStates formingStates)`
 
 Returns the solid of the part.
@@ -10282,14 +10290,6 @@ Returns the solid of the part.
 **Returns:** `Solid` — The solid of the part.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/25f58541-37fe-c1ca-f384-065ecbe38e55)
-
-#### `public Solid GetSolid()`
-
-Returns the solid of the part.
-
-**Returns:** `Solid` — The solid of the part.
-
-[Docs](https://developer.tekla.com/topic/en/18/47/7bd70e97-7c8b-823c-c7e1-da2ebe3dadaf)
 
 #### `public bool GetStringReportProperties(ArrayList names, ref Hashtable values)`
 
@@ -10505,11 +10505,11 @@ Sets a string property for the model object.
 - `DeformingData` (DeformingData, get/set) — Gets or sets the deforming data of the part.
 - `Finish` (String, get/set) — Gets or sets the finish of the part.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `LevelName` (String, get/set) — Gets or sets the level name.
 - `LevelOffset` (Double, get/set) — Gets or sets the level offset.
 - `Material` (Material, get/set) — Gets or sets the material the part is made of.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — Gets or sets the name of the part.
 - `PartNumber` (NumberingSeries, get/set) — Gets or sets the part number. Defines the numbering in the part sense.
 - `Position` (Position, get/set) — Gets or sets the part position. Defines the way the part is positioned in the model.
@@ -10578,6 +10578,14 @@ Sets the point's coordinates for the contour point.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/caa63223-3fa6-7f07-5e3f-1d8e7b7386d0)
 
+#### `public override string ToString()`
+
+Formats the point into a string, using the current culture.
+
+**Returns:** `String` — The string that represents the point.
+
+[Docs](https://developer.tekla.com/topic/en/18/47/63db29a6-32f7-6696-31eb-a6084dcb62cd)
+
 #### `public string ToString(CultureInfo cultureInfo)`
 
 Formats the point into a string, using the provided culture.
@@ -10588,14 +10596,6 @@ Formats the point into a string, using the provided culture.
 **Returns:** `String` — The string that represents the point.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/176a7423-000a-5fb0-dab9-659b87bf1505)
-
-#### `public override string ToString()`
-
-Formats the point into a string, using the current culture.
-
-**Returns:** `String` — The string that represents the point.
-
-[Docs](https://developer.tekla.com/topic/en/18/47/63db29a6-32f7-6696-31eb-a6084dcb62cd)
 
 #### `public virtual void Translate(double X, double Y, double Z)`
 
@@ -11012,9 +11012,9 @@ Sets a string property for the model object.
 - `Color` (ControlObjectColorEnum, get/set) — Gets or sets color of the control arc.
 - `Geometry` (Arc, get/set) — Gets or sets the arc geometry. The arc must not represent a complete circle (i.e. the arc angle must be less than 360 degrees).
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `LineType` (ControlObjectLineType, get/set) — The line type of the control arc.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 
 ## ControlCircle (class)
 
@@ -11411,9 +11411,9 @@ Sets a string property for the model object.
 - `Color` (ControlCircle.ControlCircleColorEnum, get/set) — Gets or sets the color of the control circle.
 - `Extension` (Double, get/set) — Gets or sets the extension of the control circle.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `LineType` (ControlObjectLineType, get/set) — The line type of the control circle.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Point1` (Point, get/set) — Gets or sets the first point. Point1 becomes the center point of the circle after selecting the control circle.
 - `Point2` (Point, get/set) — Gets or sets the second point. Point2 contains the original input Point1 after selecting the control circle.
 - `Point3` (Point, get/set) — Gets or sets the third point. Point3 contains the calculated result from the orthogonal point and the center point after selecting the control circle.
@@ -11831,10 +11831,10 @@ Sets a string property for the model object.
 - `Extension` (Double, get/set) — The extension of the control line.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
 - `IsMagnetic` (Boolean, get/set) — Determines whether the line is magnetic or not.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `Line` (LineSegment, get/set) — The line segment defining the position of the control line.
 - `LineType` (ControlObjectLineType, get/set) — The line type of the control line.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 
 ## ControlLine.ControlLineColorEnum (enum)
 
@@ -12277,8 +12277,8 @@ Sets a string property for the model object.
 ### Properties
 - `Identifier` (Identifier, get/set) — The identifier of the object.
 - `IsMagnetic` (Boolean, get/set) — Determines whether the plane is magnetic or not.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — The name of the control plane.
 - `Plane` (Plane, get/set) — The plane defining the position of the control plane.
 
@@ -12675,8 +12675,8 @@ Sets a string property for the model object.
 
 ### Properties
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Point` (Point, get/set) — Gets or sets the position of the control point.
 
 ## ControlPolycurve (class)
@@ -13074,9 +13074,9 @@ Sets a string property for the model object.
 - `Color` (ControlObjectColorEnum, get/set) — Gets or sets color of the Polycurve.
 - `Geometry` (Polycurve, get/set) — Gets or sets geometry list that defines geometry of the polycurve.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `LineType` (ControlObjectLineType, get/set) — Gets or sets the line type of the polycurve.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 
 ## CurvedRebarGroup (class)
 
@@ -13613,8 +13613,8 @@ Sets a string property for the model object.
 - `Grade` (String, get/set) — Gets or sets the steel grade of the reinforcing bar. The grade indicates the strength of the steel used in reinforcing bars. It can also indicate other factors, such as the weldability or surface deformations of the bar.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
 - `InputPointDeformingState` (DeformingType, get/set) — Gets or sets the reinforcement input point deforming state.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — Gets or sets the name of the reinforcement.
 - `NumberingSeries` (NumberingSeries, get/set) — Gets or sets the numbering series of the reinforcement.
 - `OnPlaneOffsets` (ArrayList, get/set) — Gets or sets the double offset value for each leg on the same plane as the bar.
@@ -14149,8 +14149,8 @@ Sets a string property for the model object.
 
 ### Properties
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — The name of the component. The name identifies custom components or plug-ins.
 - `Number` (Int32, get/set) — The number of the component. A number greater than zero identifies system components, for custom components the number is CUSTOM_OBJECT_NUMBER, and for plug-ins the number is PLUGIN_OBJECT_NUMBER.
 - `Position` (Position, get/set) — The way the custom part is positioned in the model.
@@ -14548,8 +14548,8 @@ Sets a string property for the model object.
 ### Properties
 - `Father` (ModelObject, get/set) — The father object of the boolean operation; the model object instance to operate on.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Plane` (Plane, get/set) — The plane that cuts the part.
 
 ## CylindricalSurface (class)
@@ -15134,8 +15134,8 @@ Sets a string property for the model object.
 - `Code` (String, get/set) — The code of the detail. The code can be used to classify the detail. The code can be reported and shown in drawings. The maximum length of the string is 20 characters.
 - `DetailType` (DetailTypeEnum, get/set) — The detail type.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — The name of the component. The name identifies custom components or plug-ins.
 - `Number` (Int32, get/set) — The number of the component. A number greater than zero identifies system components, for custom components the number is CUSTOM_OBJECT_NUMBER, and for plug-ins the number is PLUGIN_OBJECT_NUMBER.
 - `PositionType` (PositionTypeEnum, get/set) — The position type.
@@ -15556,8 +15556,8 @@ Sets a string property for the model object.
 - `FirstChamferEndType` (EdgeChamfer.ChamferEndTypeEnum, get/set) — The ChamferEndTypeEnum of the first end.
 - `FirstEnd` (Point, get/set) — The start point of the EdgeChamfer.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — The name of the EdgeChamfer instance.
 - `SecondBevelDimension` (Double, get/set) — The bevel dimension if the second end is bevelled.
 - `SecondChamferEndType` (EdgeChamfer.ChamferEndTypeEnum, get/set) — The ChamferEndTypeEnum of the second end.
@@ -15577,6 +15577,8 @@ The end type of the edge chamfer.
 ## Events (class)
 
 The Events class allows the user to register event listeners for model events.
+
+**Remarks:** Asynchronous event handling Registered event handlers are called asynchronously so that many handlers may be running simultaneously. Event handlers are not guaranteed to be run in the same thread where they were registered. The asynchronous nature of the events requires the use of synchronization constructs on objects and data structures that are not defined to be thread safe.Microsoft's documentation about the lock statement: http://msdn.microsoft.com/en-us/library/c5kehkcz.aspxMicrosoft's documentation about delegates: http://msdn.microsoft.com/en-us/library/900fyy8e.aspxMicrosoft's documentation about managed threading: http://msdn.microsoft.com/en-us/library/1c9txz50.aspx
 
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/8718989a-ebeb-cbd0-b920-08fb7a8ad3e4)
 
@@ -15773,7 +15775,7 @@ The ModelUnloading event is raised just before the model is unloaded.
 
 **Signature:** `public event Events.ModelLoadDelegate ModelUnloadingSync`
 
-The ModelUnloadingSync event is raised synchronously on the main thread just before the model is unloaded. Use this event only when core resources need be cleaned up before the model unloading proceeds. All UI-only related resource cleanup should be done in the async ModelUnloading event. OnModelUnloadingSync(String, .Object.)
+The ModelUnloadingSync event is raised synchronously on the main thread just before the model is unloaded. Use this event only when core resources need be cleaned up before the model unloading proceeds. All UI-only related resource cleanup should be done in the async ModelUnloading event. OnModelUnloadingSync(String, .Object[])
 
 [Docs](https://developer.tekla.com/topic/en/18/47/03f82a07-1d6c-a7df-323c-311d71808b8a)
 
@@ -16492,8 +16494,8 @@ Sets a string property for the model object.
 ### Properties
 - `Father` (ModelObject, get/set) — The father object of the boolean operation; the model object instance to operate on.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Plane` (Plane, get/set) — The plane that fits the part.
 
 ## GeneralConnectiveGeometryException (class)
@@ -16945,11 +16947,11 @@ Sets a string property for the model object.
 - `FontSize` (Int32, get/set) — Gets or sets font size for the grid labels
 - `Identifier` (Identifier, get/set) — The identifier of the object.
 - `IsMagnetic` (Boolean, get/set) — Gets or sets whether the grid is magnetic or not.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `LabelX` (String, get/set) — The labels for the X-axis.
 - `LabelY` (String, get/set) — The labels for the Y-axis.
 - `LabelZ` (String, get/set) — The labels for the Z-axis.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — Gets or sets the name of the grid.
 - `Origin` (Point, get/set) — Gets or sets the origin of the grid
 
@@ -17348,8 +17350,8 @@ Sets a string property for the model object.
 - `FontSize` (Int32, get/set) — Gets or sets font size for the grid labels
 - `Identifier` (Identifier, get/set) — The identifier of the object.
 - `IsMagnetic` (Boolean, get/set) — Gets or sets whether the grid is magnetic or not.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — Gets or sets the name of the grid.
 - `Origin` (Point, get/set) — Gets or sets the origin of the grid
 
@@ -17755,9 +17757,9 @@ Sets a string property for the model object.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
 - `IsMagnetic` (Boolean, get/set) — Whether the grid surface is magnetic or not.
 - `IsManual` (Boolean, get) — Gets or sets if the line was manually created.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `Label` (String, get/set) — The label for the grid surface.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Parent` (GridBase, get/set) — The parent grid of the grid surface.
 
 ## GridPlane (class)
@@ -18163,9 +18165,9 @@ Sets a string property for the model object.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
 - `IsMagnetic` (Boolean, get/set) — Whether the grid surface is magnetic or not.
 - `IsManual` (Boolean, get) — Gets or sets if the line was manually created.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `Label` (String, get/set) — The label for the grid surface.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Parent` (GridBase, get/set) — The parent grid of the grid surface.
 - `Plane` (Plane, get/set) — The plane defining the position of the grid plane.
 
@@ -18569,9 +18571,9 @@ Sets a string property for the model object.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
 - `IsMagnetic` (Boolean, get/set) — Whether the grid surface is magnetic or not.
 - `IsManual` (Boolean, get) — Gets or sets if the line was manually created.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `Label` (String, get/set) — The label for the grid surface.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Parent` (GridBase, get/set) — The parent grid of the grid surface.
 
 ## HierarchicDefinition (class)
@@ -18995,8 +18997,8 @@ Sets a string property for the model object.
 - `HierarchyIdentifier` (String, get/set) — The GUID of the hierarchical definition.
 - `HierarchyType` (HierarchicDefinitionTypeEnum, get/set) — The type of the hierarchical definition.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — The name of the hierarchical definition.
 
 ## HierarchicDefinitionTypeEnum (enum)
@@ -19430,8 +19432,8 @@ Sets a string property for the model object.
 - `Father` (HierarchicObject, get/set) — The father of the hierarchical object.
 - `HierarchicChildren` (ArrayList, get/set) — An array list that contains the hierarchical object's hierarchical children (of the type hierarchical object).
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — The name of the hierarchical object.
 
 ## IAssemblable (interface)
@@ -19918,7 +19920,7 @@ Represents the result of a sharing operation, including the result code.
 - `PathLengthLimit` (Int32, get) — Gets the maximum allowed length for the path which was exceeded.
 - `State` (SharingResultState, get) — Gets the state Structures process and current model after the sharing operations completes.
 
-## ISharingResult.T. (interface)
+## ISharingResult<T> (interface)
 
 Represents the result of a sharing operation, including the result code and associated data.
 
@@ -20410,10 +20412,10 @@ Sets a string property for the model object.
 - `FatherId` (Identifier, get/set) — The identifier of the father object that the load is attached to.
 - `Group` (LoadGroup, get/set) — The load group object for the load.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `LoadAttachment` (Load.LoadAttachmentEnum, get/set) — The load attachment.
 - `LoadDispersionAngle` (Double, get/set) — The load dispersion angle.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `PartFilter` (String, get/set) — The part filter.
 - `PartNames` (Load.LoadPartNamesEnum, get/set) — The part names.
 - `PrimaryAxisDirection` (Vector, get/set) — The vector for the primary axis direction.
@@ -20850,11 +20852,11 @@ Sets a string property for the model object.
 - `FatherId` (Identifier, get/set) — The identifier of the father object that the load is attached to.
 - `Group` (LoadGroup, get/set) — The load group object for the load.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `LoadAttachment` (Load.LoadAttachmentEnum, get/set) — The load attachment.
 - `LoadDispersionAngle` (Double, get/set) — The load dispersion angle.
 - `LoadForm` (LoadArea.AreaLoadFormEnum, get/set) — The load form.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `P1` (Vector, get/set) — The load magnitude vector P1. The values are given in the local coordinate system of the load (not in the current coordinate system).
 - `P2` (Vector, get/set) — The load magnitude vector P2. The values are given in the local coordinate system of the load (not in the current coordinate system).
 - `P3` (Vector, get/set) — The load magnitude vector P3. The values are given in the local coordinate system of the load (not in the current coordinate system).
@@ -21276,8 +21278,8 @@ Sets a string property for the model object.
 - `GroupType` (LoadGroup.LoadGroupType, get/set) — The load group type.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
 - `Incompatible` (Int32, get/set) — This variable is used to store information on which groups exclude each other in structural analysis load combination. Load combination is a process in which some simultaneously acting load groups are multiplied by their partial safety factors and combined with each other according to specific rules. To accurately combine loads which have the same load group type, you need to identify which load groups exclude each other, i.e. are incompatible. This variable stores one integer, and all groups who have this same integer are known to be incompatible with each other.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 
 ## LoadGroup.Colors (enum)
 
@@ -21798,11 +21800,11 @@ Sets a string property for the model object.
 - `FatherId` (Identifier, get/set) — The identifier of the father object that the load is attached to.
 - `Group` (LoadGroup, get/set) — The load group object for the load.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `LoadAttachment` (Load.LoadAttachmentEnum, get/set) — The load attachment.
 - `LoadDispersionAngle` (Double, get/set) — The load dispersion angle.
 - `LoadForm` (LoadLine.LineLoadFormEnum, get/set) — The load form.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `P1` (Vector, get/set) — The load magnitude vector at the start position. The values are given in the local coordinate system of the load (not in the current coordinate system).
 - `P2` (Vector, get/set) — The load magnitude vector at the end position. The values are given in the local coordinate system of the load (not in the current coordinate system).
 - `PartFilter` (String, get/set) — The part filter.
@@ -22226,10 +22228,10 @@ Sets a string property for the model object.
 - `FatherId` (Identifier, get/set) — The identifier of the father object that the load is attached to.
 - `Group` (LoadGroup, get/set) — The load group object for the load.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `LoadAttachment` (Load.LoadAttachmentEnum, get/set) — The load attachment.
 - `LoadDispersionAngle` (Double, get/set) — The load dispersion angle.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Moment` (Vector, get/set) — The moment vector. The values are given in the local coordinate system of the load (not in the current coordinate system).
 - `P` (Vector, get/set) — The load vector. The values are given in the local coordinate system of the load (not in the current coordinate system).
 - `PartFilter` (String, get/set) — The part filter.
@@ -22639,10 +22641,10 @@ Sets a string property for the model object.
 - `Group` (LoadGroup, get/set) — The load group object for the load.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
 - `InitialAxialElongation` (Double, get/set) — Gets or sets the initial axial elongation.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `LoadAttachment` (Load.LoadAttachmentEnum, get/set) — The load attachment.
 - `LoadDispersionAngle` (Double, get/set) — Property not supported in LoadTemperature class.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `PartFilter` (String, get/set) — The part filter.
 - `PartNames` (Load.LoadPartNamesEnum, get/set) — The part names.
 - `Position1` (Point, get/set) — Gets or sets the first input position point.
@@ -23054,10 +23056,10 @@ Sets a string property for the model object.
 - `FatherId` (Identifier, get/set) — The identifier of the father object that the load is attached to.
 - `Group` (LoadGroup, get/set) — The load group object for the load.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `LoadAttachment` (Load.LoadAttachmentEnum, get/set) — The load attachment.
 - `LoadDispersionAngle` (Double, get/set) — The load dispersion angle.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `P1` (Vector, get/set) — The load magnitude vector. The values are given in the local coordinate system of the load (not in the current coordinate system).
 - `PartFilter` (String, get/set) — The part filter.
 - `PartNames` (Load.LoadPartNamesEnum, get/set) — The part names.
@@ -23375,6 +23377,14 @@ Retrieves a string property of the report for the model object.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/70f212bb-ee70-e9e9-7ab6-d6a9d46f8de6)
 
+#### `public Solid GetSolid()`
+
+Returns the solid of the part.
+
+**Returns:** `Solid` — The solid of the part.
+
+[Docs](https://developer.tekla.com/topic/en/18/47/7bd70e97-7c8b-823c-c7e1-da2ebe3dadaf)
+
 #### `public Solid GetSolid(FormingStates formingStates)`
 
 Returns the solid of the part.
@@ -23396,14 +23406,6 @@ Returns the solid of the part.
 **Returns:** `Solid` — The solid of the part.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/25f58541-37fe-c1ca-f384-065ecbe38e55)
-
-#### `public Solid GetSolid()`
-
-Returns the solid of the part.
-
-**Returns:** `Solid` — The solid of the part.
-
-[Docs](https://developer.tekla.com/topic/en/18/47/7bd70e97-7c8b-823c-c7e1-da2ebe3dadaf)
 
 #### `public bool GetStringReportProperties(ArrayList names, ref Hashtable values)`
 
@@ -23618,9 +23620,9 @@ Sets a string property for the model object.
 - `FaceType` (LoftedPlate.LoftedPlateFaceTypeEnum, get/set) — Gets or sets what type of solid faces will be used to create lofted plate solid.
 - `Finish` (String, get/set) — Gets or sets the finish of the part.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `Material` (Material, get/set) — Gets or sets the material the part is made of.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — Gets or sets the name of the part.
 - `PartNumber` (NumberingSeries, get/set) — Gets or sets the part number. Defines the numbering in the part sense.
 - `Position` (Position, get/set) — Gets or sets the part position. Defines the way the part is positioned in the model.
@@ -23985,6 +23987,14 @@ Removes a weld from the logical weld.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/f4110460-c769-2e5f-6e93-b5393091c033)
 
+#### `public override bool Select()`
+
+Selects a logical weld from the model database. The logical weld identifier must be set.
+
+**Returns:** `Boolean` — True on success.
+
+[Docs](https://developer.tekla.com/topic/en/18/47/81e09766-4092-c4ac-03db-3bcaaaa6c3cd)
+
 #### `public bool Select(BaseWeld ChildWeld)`
 
 Selects the logical weld that a child weld belongs to.
@@ -23995,14 +24005,6 @@ Selects the logical weld that a child weld belongs to.
 **Returns:** `Boolean` — True on success.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/d483a81d-0da9-3473-7c51-d56982578e6a)
-
-#### `public override bool Select()`
-
-Selects a logical weld from the model database. The logical weld identifier must be set.
-
-**Returns:** `Boolean` — True on success.
-
-[Docs](https://developer.tekla.com/topic/en/18/47/81e09766-4092-c4ac-03db-3bcaaaa6c3cd)
 
 #### `public bool SetCustomObjectType(string type)`
 
@@ -24132,11 +24134,11 @@ Sets a string property for the model object.
 - `IncrementAmountAbove` (Int32, get/set) — Gets or sets the increment amount above.
 - `IncrementAmountBelow` (Int32, get/set) — Gets or sets the increment amount below.
 - `IntermittentType` (BaseWeld.WeldIntermittentTypeEnum, get/set) — Gets or sets the weld intermittent type.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `LengthAbove` (Double, get/set) — Gets or sets the length above.
 - `LengthBelow` (Double, get/set) — Gets or sets the length below.
 - `MainObject` (ModelObject, get/set) — Gets or sets the main part of the weld.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `NDTInspection` (BaseWeld.WeldNDTInspectionEnum, get/set) — Gets or sets the NDT inspection level.
 - `PitchAbove` (Double, get/set) — Gets or sets the pitch above.
 - `PitchBelow` (Double, get/set) — Gets or sets the pitch below.
@@ -24183,6 +24185,14 @@ The Model class represents a single model open in Tekla Structures. Before inter
 - `public Model()` — Creates a "handle" to the currently open model.
 
 ### Methods
+#### `public bool CommitChanges()`
+
+Commits the changes made to the model database so far. One commit is something that a user can later on undo with the undo command. A commit also launches the drawing of the changed product model to the visible views. A dependent plug-in should never call CommitChanges, since this would make undo very difficult for the user to do. However, non-dependent plug-ins require a separate commit if new objects are created.
+
+**Returns:** `Boolean` — True on success.
+
+[Docs](https://developer.tekla.com/topic/en/18/47/06690b14-dafd-82b5-ee4c-51292a3e3055)
+
 #### `public bool CommitChanges(string Message)`
 
 Commits the changes made to the model database so far. One commit is something that a user can later on undo with the undo command. A commit also launches the drawing of the changed product model to the visible views. A plug-in should never call CommitChanges, since this would make undo very difficult for the user to do.
@@ -24193,14 +24203,6 @@ Commits the changes made to the model database so far. One commit is something t
 **Returns:** `Boolean` — True on success.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/6b589509-80c1-8a7d-4c6d-718ccf01b9d3)
-
-#### `public bool CommitChanges()`
-
-Commits the changes made to the model database so far. One commit is something that a user can later on undo with the undo command. A commit also launches the drawing of the changed product model to the visible views. A dependent plug-in should never call CommitChanges, since this would make undo very difficult for the user to do. However, non-dependent plug-ins require a separate commit if new objects are created.
-
-**Returns:** `Boolean` — True on success.
-
-[Docs](https://developer.tekla.com/topic/en/18/47/06690b14-dafd-82b5-ee4c-51292a3e3055)
 
 #### `public List<ModelObject> FetchModelObjects(List<Identifier> Ids, bool SelectInstances = true)`
 
@@ -24466,6 +24468,8 @@ The ModelInfo class provides information about the currently open Tekla Structur
 ## ModelObject (class)
 
 The ModelObject class is an abstract base class for all model objects, such as parts, bolts, welds and reinforcements.
+
+**Remarks:** One way to find out the correct names of the report properties is to open the Template Editor. With the Template Editor you can see the listing of all the properties that can be added to report templates.
 
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/a90863bf-5ccc-e808-566a-a2ef79a9224d)
 
@@ -24852,8 +24856,8 @@ Sets a string property for the model object.
 
 ### Properties
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 
 ## ModelObject.ModelObjectEnum (enum)
 
@@ -25633,6 +25637,14 @@ Retrieves a string property of the report for the model object.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/70f212bb-ee70-e9e9-7ab6-d6a9d46f8de6)
 
+#### `public Solid GetSolid()`
+
+Returns the solid of the part.
+
+**Returns:** `Solid` — The solid of the part.
+
+[Docs](https://developer.tekla.com/topic/en/18/47/7bd70e97-7c8b-823c-c7e1-da2ebe3dadaf)
+
 #### `public Solid GetSolid(FormingStates formingStates)`
 
 Returns the solid of the part.
@@ -25654,14 +25666,6 @@ Returns the solid of the part.
 **Returns:** `Solid` — The solid of the part.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/25f58541-37fe-c1ca-f384-065ecbe38e55)
-
-#### `public Solid GetSolid()`
-
-Returns the solid of the part.
-
-**Returns:** `Solid` — The solid of the part.
-
-[Docs](https://developer.tekla.com/topic/en/18/47/7bd70e97-7c8b-823c-c7e1-da2ebe3dadaf)
 
 #### `public bool GetStringReportProperties(ArrayList names, ref Hashtable values)`
 
@@ -25874,9 +25878,9 @@ Sets a string property for the model object.
 - `DeformingData` (DeformingData, get/set) — Gets or sets the deforming data of the part.
 - `Finish` (String, get/set) — Gets or sets the finish of the part.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `Material` (Material, get/set) — Gets or sets the material the part is made of.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — Gets or sets the name of the part.
 - `PartNumber` (NumberingSeries, get/set) — Gets or sets the part number. Defines the numbering in the part sense.
 - `Position` (Position, get/set) — Gets or sets the part position. Defines the way the part is positioned in the model.
@@ -26491,6 +26495,14 @@ Retrieves a string property of the report for the model object.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/70f212bb-ee70-e9e9-7ab6-d6a9d46f8de6)
 
+#### `public Solid GetSolid()`
+
+Returns the solid of the part.
+
+**Returns:** `Solid` — The solid of the part.
+
+[Docs](https://developer.tekla.com/topic/en/18/47/7bd70e97-7c8b-823c-c7e1-da2ebe3dadaf)
+
 #### `public Solid GetSolid(FormingStates formingStates)`
 
 Returns the solid of the part.
@@ -26512,14 +26524,6 @@ Returns the solid of the part.
 **Returns:** `Solid` — The solid of the part.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/25f58541-37fe-c1ca-f384-065ecbe38e55)
-
-#### `public Solid GetSolid()`
-
-Returns the solid of the part.
-
-**Returns:** `Solid` — The solid of the part.
-
-[Docs](https://developer.tekla.com/topic/en/18/47/7bd70e97-7c8b-823c-c7e1-da2ebe3dadaf)
 
 #### `public bool GetStringReportProperties(ArrayList names, ref Hashtable values)`
 
@@ -26735,9 +26739,9 @@ Sets a string property for the model object.
 - `EndLevelOffset` (Double, get/set) — Gets or sets the end level offset.
 - `Finish` (String, get/set) — Gets or sets the finish of the part.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `Material` (Material, get/set) — Gets or sets the material the part is made of.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — Gets or sets the name of the part.
 - `PartNumber` (NumberingSeries, get/set) — Gets or sets the part number. Defines the numbering in the part sense.
 - `Position` (Position, get/set) — Gets or sets the part position. Defines the way the part is positioned in the model.
@@ -27239,11 +27243,11 @@ Sets a string property for the model object.
 - `IncrementAmountAbove` (Int32, get/set) — Gets or sets the increment amount above.
 - `IncrementAmountBelow` (Int32, get/set) — Gets or sets the increment amount below.
 - `IntermittentType` (BaseWeld.WeldIntermittentTypeEnum, get/set) — Gets or sets the weld intermittent type.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `LengthAbove` (Double, get/set) — Gets or sets the length above.
 - `LengthBelow` (Double, get/set) — Gets or sets the length below.
 - `MainObject` (ModelObject, get/set) — Gets or sets the main part of the weld.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `NDTInspection` (BaseWeld.WeldNDTInspectionEnum, get/set) — Gets or sets the NDT inspection level.
 - `PitchAbove` (Double, get/set) — Gets or sets the pitch above.
 - `PitchBelow` (Double, get/set) — Gets or sets the pitch below.
@@ -27904,8 +27908,8 @@ Sets a string property for the model object.
 
 ### Properties
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Polymesh` (FacetedBrep, get/set) — Gets or sets the polymesh that forms the object geometry.
 
 ## PourObject (class)
@@ -28358,8 +28362,8 @@ Sets a string property for the model object.
 - `Class` (Int32, get/set) — Gets or sets the class of the pour object.
 - `ConcreteMixture` (String, get/set) — Gets or sets the concrete mixture of the pour.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `PourNumber` (String, get/set) — Gets or sets the pour number of the pour.
 - `PourType` (String, get/set) — Gets or sets the pour type of the pour.
 
@@ -28771,8 +28775,8 @@ Sets a string property for the model object.
 
 ### Properties
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — Gets or sets the name of the pour unit.
 
 ## Profile (class)
@@ -29438,9 +29442,9 @@ Sets a string property for the model object.
 - `FontSize` (Int32, get/set) — Gets or sets font size for the grid labels
 - `Identifier` (Identifier, get/set) — The identifier of the object.
 - `IsMagnetic` (Boolean, get/set) — Gets or sets whether the grid is magnetic or not
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `LabelZ` (String, get/set) — The labels for the Z-axis.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — Gets or sets the name of the grid.
 - `Origin` (Point, get/set) — Gets or sets the origin of the grid
 - `RadialCoordinates` (String, get/set) — The distances between the radii of the arcs
@@ -29974,8 +29978,8 @@ Sets a string property for the model object.
 - `FirstAffectedBar` (Int32, get/set) — Gets or sets the first affected bar. If set to zero, the first affected bar will be chosen automatically.
 - `FollowEdges` (Boolean, get/set) — Gets or sets a flag that indicates whether the modifier should attempt to follow the leg face edges located between its end points.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `RebarCranking` (RebarCrankingNullable, get/set) — Gets or sets the rebar cranking.
 - `RebarHook` (RebarHookDataNullable, get/set) — Gets or sets the reinforcing bar hook data.
 - `RebarLengthAdjustment` (RebarLengthAdjustmentDataNullable, get/set) — Gets or sets the reinforcing bar length adjustment data.
@@ -30537,8 +30541,8 @@ Sets a string property for the model object.
 - `Grade` (String, get/set) — Gets or sets the steel grade of the reinforcing bar. The grade indicates the strength of the steel used in reinforcing bars. It can also indicate other factors, such as the weldability or surface deformations of the bar.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
 - `InputPointDeformingState` (DeformingType, get/set) — Gets or sets the reinforcement input point deforming state.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — Gets or sets the name of the reinforcement.
 - `NumberingSeries` (NumberingSeries, get/set) — Gets or sets the numbering series of the reinforcement.
 - `OnPlaneOffsets` (ArrayList, get/set) — Gets or sets the double offset value for each leg on the same plane as the bar.
@@ -31131,9 +31135,9 @@ Sets a string property for the model object.
 - `Father` (ModelObject, get/set) — Gets or sets the father object of the surface object. The father can be set only before the Insert(), otherwise exception is thrown.
 - `Frozen` (Boolean, get) — Gets a value indicating whether the leg surface is frozen or not.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `LayerNumber` (Int32, get/set) — Gets or sets the layer number of the leg surface object.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — Gets or sets the name of the surface object.
 - `Offset` (Double, get/set) — Gets or sets the user defined offset of the rebar legs from the leg surface object.
 - `OffsetType` (RebarLegFace.OffsetTypeEnum, get/set) — Gets or sets the type of offset used to apply the offset value.
@@ -31704,7 +31708,7 @@ Sets a string property for the model object.
 - `Grade` (String, get/set) — Gets or sets the steel grade of the reinforcing bar. The grade indicates the strength of the steel used in reinforcing bars. It can also indicate other factors, such as the weldability or surface deformations of the bar.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
 - `InputPointDeformingState` (DeformingType, get/set) — Gets or sets the reinforcement input point deforming state.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `LeftOverhangCross` (Double, get/set) — The overhang of the crossing part's left side.
 - `LeftOverhangLongitudinal` (Double, get/set) — The overhang of the longitudinal bar's left side.
 - `Length` (Double, get/set) — The length of the rectangle rebar mesh.
@@ -31712,7 +31716,7 @@ Sets a string property for the model object.
 - `LongitudinalSize` (String, get/set) — The size of the longitudinal rebar.
 - `LongitudinalSpacingMethod` (RebarMesh.RebarMeshSpacingMethodEnum, get/set) — The type of spacing between rebar mesh bars. Used both for longitudinal and crossing bars. The options are (RebarMesh.RebarMeshSpacingMethodEnum.): SPACING_TYPE_SAME_DISTANCESPACING_TYPE_MULTIPLE_VARYING_DISTANCES
 - `MeshType` (RebarMesh.RebarMeshTypeEnum, get/set) — The type of the reinforcement mesh. The options are: RECTANGULAR_MESHPOLYGON_MESHBENT_MESH
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — Gets or sets the name of the reinforcement.
 - `NumberingSeries` (NumberingSeries, get/set) — Gets or sets the numbering series of the reinforcement.
 - `OnPlaneOffsets` (ArrayList, get/set) — Gets or sets the double offset value for each leg on the same plane as the bar.
@@ -32217,8 +32221,8 @@ Sets a string property for the model object.
 - `FollowEdges` (Boolean, get/set) — Gets or sets a flag that indicates whether the modifier should attempt to follow the leg face edges located between its end points.
 - `GroupingType` (Nullable<RebarPropertyModifier.GroupingTypeEnum>, get/set) — Gets or sets the grouping type.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `RebarProperties` (RebarPropertiesNullable, get/set) — Gets or sets the reinforcing bar properties.
 - `SpacingOverride` (RebarSpacing, get/set) — Gets or sets the spacing override.
 
@@ -32670,10 +32674,10 @@ Sets a string property for the model object.
 - `FrozenState` (RebarSet.FrozenStateEnum, get/set) — Gets or sets the current frozen state of the object.
 - `Guidelines` (List<RebarGuideline>, get/set) — Gets or sets the rebar set's guidelines.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `LayerOrderNumber` (Int32, get/set) — Gets or sets the layer order number. If set to 0 this means use the creation date/time of the rebar set object to determine the layering.
 - `LegFaces` (List<RebarLegFace>, get/set) — Gets or sets the rebar set's leg faces.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Offsets` (RebarOffsets, get) — Gets the offset values applied to the whole rebar set.
 - `RebarProperties` (RebarProperties, get/set) — Gets or sets the reinforcing bar properties for the rebar set.
 
@@ -33081,9 +33085,9 @@ Sets a string property for the model object.
 ### Properties
 - `Father` (RebarSet, get/set) — Gets or sets the RebarSet to which the rebar set addition applies.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `LegFaces` (List<RebarLegFace>, get/set) — Gets or sets the rebar set addition's RebarLegFace objects.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 
 ## RebarSpacing (class)
 
@@ -33685,9 +33689,9 @@ Sets a string property for the model object.
 - `BarPositions` (RebarSplice.RebarSpliceBarPositionsEnum, get/set) — Value 0: Joined bars on top of each other in the case of the lap type splice. Value 1: Joined bars parallel to each other in the case of the lap type splice.
 - `Clearance` (Double, get/set) — The clearance between joined bars in the case of the lap type splice.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `LapLength` (Double, get/set) — The lap length of the lap type splice.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Offset` (Double, get/set) — The distance from the end point of the first bar along the bar length.
 - `RebarGroup1` (Reinforcement, get/set) — The first one of the joined reinforcements (picked first).
 - `RebarGroup2` (Reinforcement, get/set) — The second one of the joined reinforcements (picked second).
@@ -34125,9 +34129,9 @@ Sets a string property for the model object.
 - `FirstAffectedBar` (Int32, get/set) — Gets or sets the first affected bar. If set to zero, the first affected bar will be chosen automatically.
 - `FollowEdges` (Boolean, get/set) — Gets or sets a flag that indicates whether the modifier should attempt to follow the leg face edges located between its end points.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `Lapping` (RebarLapping, get/set) — Gets or sets the rebar lapping.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `SplitOffset` (Double, get/set) — Gets or sets the offset of the split from the location of the rebar splitter.
 - `SplitType` (RebarSplitter.SplitTypeEnum, get/set) — Gets or sets the split type.
 - `StaggerOffset` (Double, get/set) — Gets or sets the additional offset (stagger) of the split location for every other split reinforcing bar.
@@ -34687,8 +34691,8 @@ Sets a string property for the model object.
 - `Grade` (String, get/set) — Gets or sets the steel grade of the reinforcing bar. The grade indicates the strength of the steel used in reinforcing bars. It can also indicate other factors, such as the weldability or surface deformations of the bar.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
 - `InputPointDeformingState` (DeformingType, get/set) — Gets or sets the reinforcement input point deforming state.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — Gets or sets the name of the reinforcement.
 - `NumberingSeries` (NumberingSeries, get/set) — Gets or sets the numbering series of the reinforcement.
 - `OnPlaneOffsets` (ArrayList, get) — Not supported.
@@ -35199,9 +35203,9 @@ Sets a string property for the model object.
 - `BasePointGuid` (Guid, get/set) — The GUID of the used base point. Empty if base point is not used.
 - `Filename` (String, get/set) — The path to the original location of the reference file.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `ModelGUID` (Guid, get/set) — The ModelGUID of the reference model in the Project Center.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Position` (Point, get/set) — The position of the reference model.
 - `ProjectGUID` (Guid, get/set) — The ProjectGUID of the reference model in the Project Center.
 - `Rotation` (Double, get/set) — Gets or sets value of rotation around Z axis (degrees).
@@ -35648,8 +35652,8 @@ Sets a string property for the model object.
 
 ### Properties
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 
 ## Reinforcement (class)
 
@@ -36179,8 +36183,8 @@ Sets a string property for the model object.
 - `Grade` (String, get/set) — Gets or sets the steel grade of the reinforcing bar. The grade indicates the strength of the steel used in reinforcing bars. It can also indicate other factors, such as the weldability or surface deformations of the bar.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
 - `InputPointDeformingState` (DeformingType, get/set) — Gets or sets the reinforcement input point deforming state.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — Gets or sets the name of the reinforcement.
 - `NumberingSeries` (NumberingSeries, get/set) — Gets or sets the numbering series of the reinforcement.
 - `OnPlaneOffsets` (ArrayList, get/set) — Gets or sets the double offset value for each leg on the same plane as the bar.
@@ -36786,8 +36790,8 @@ Sets a string property for the model object.
 - `Class` (Int32, get/set) — The class of the seam.
 - `Code` (String, get/set) — The code of the seam. The code can be used to classify the seam. The code can be reported and shown in drawings. The maximum length of the string is 20 characters.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — The name of the component. The name identifies custom components or plug-ins.
 - `Number` (Int32, get/set) — The number of the component. A number greater than zero identifies system components, for custom components the number is CUSTOM_OBJECT_NUMBER, and for plug-ins the number is PLUGIN_OBJECT_NUMBER.
 - `Status` (ConnectionStatusEnum, get) — The read only status of the seam. The status can be reported and shown in drawings. The color of the connection symbol in the model indicates the status of the seam.
@@ -36883,6 +36887,8 @@ Model sharing user roles.
 ## SharingUpdateType (enum)
 
 Specifies the type of sharing update used in model sharing operations.
+
+**Remarks:** When model is joined to a specific update to a new folder, the latest Baseline update is downloaded fully, and all the differences from the intermediate updates are applied to that. When model is already joined and read-in is performed, always only the diffrences from the downloaded udpates are used, even if some of them are Baseline updates.
 
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/c500ecb5-b84b-7a8c-3381-e1c241f93b9e)
 
@@ -37430,8 +37436,8 @@ Sets a string property for the model object.
 - `Grade` (String, get/set) — Gets or sets the steel grade of the reinforcing bar. The grade indicates the strength of the steel used in reinforcing bars. It can also indicate other factors, such as the weldability or surface deformations of the bar.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
 - `InputPointDeformingState` (DeformingType, get/set) — Gets or sets the reinforcement input point deforming state.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — Gets or sets the name of the reinforcement.
 - `NumberingSeries` (NumberingSeries, get/set) — Gets or sets the numbering series of the reinforcement.
 - `OnPlaneOffsets` (ArrayList, get/set) — Gets or sets the double offset value for each leg on the same plane as the bar.
@@ -37877,6 +37883,14 @@ Retrieves a string property of the report for the model object.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/70f212bb-ee70-e9e9-7ab6-d6a9d46f8de6)
 
+#### `public Solid GetSolid()`
+
+Returns the solid of the part.
+
+**Returns:** `Solid` — The solid of the part.
+
+[Docs](https://developer.tekla.com/topic/en/18/47/7bd70e97-7c8b-823c-c7e1-da2ebe3dadaf)
+
 #### `public Solid GetSolid(FormingStates formingStates)`
 
 Returns the solid of the part.
@@ -37898,14 +37912,6 @@ Returns the solid of the part.
 **Returns:** `Solid` — The solid of the part.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/25f58541-37fe-c1ca-f384-065ecbe38e55)
-
-#### `public Solid GetSolid()`
-
-Returns the solid of the part.
-
-**Returns:** `Solid` — The solid of the part.
-
-[Docs](https://developer.tekla.com/topic/en/18/47/7bd70e97-7c8b-823c-c7e1-da2ebe3dadaf)
 
 #### `public bool GetStringReportProperties(ArrayList names, ref Hashtable values)`
 
@@ -38119,9 +38125,9 @@ Sets a string property for the model object.
 - `EndPoint` (Point, get) — Gets the spiral beam end point.
 - `Finish` (String, get/set) — Gets or sets the finish of the part.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `Material` (Material, get/set) — Gets or sets the material the part is made of.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — Gets or sets the name of the part.
 - `PartNumber` (NumberingSeries, get/set) — Gets or sets the part number. Defines the numbering in the part sense.
 - `Position` (Position, get/set) — Gets or sets the part position. Defines the way the part is positioned in the model.
@@ -38571,8 +38577,8 @@ Sets a string property for the model object.
 - `CreateHoles` (Boolean, get/set) — Gets or sets a value indicating whether CreateHoles parameter of the surface object.
 - `Father` (ModelObject, get/set) — Gets or sets the father object of the surface object. The father can be set only before the Insert(), otherwise exception is thrown.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — Gets or sets the name of the surface object.
 - `Polymesh` (FacetedBrep, get/set) — Gets or sets the surface geometry brep.
 - `Type` (String, get/set) — Gets or sets the type of the surface object.
@@ -38974,9 +38980,9 @@ Sets a string property for the model object.
 - `EndPoint` (Point, get/set) — Determines the direction the surfacing is filled in. The direction is from the start point towards the end point.
 - `Father` (Part, get/set) — Defines the father part for the surface treatment: the part that the surface treatment is created on.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `Material` (Material, get/set) — Defines the material for the surface treatment.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — The name of the surface treatment.
 - `Polygon` (Contour, get/set) — Defines the area for the surface treatment.
 - `Position` (Position, get/set) — Defines the position for the surface treatment.
@@ -39457,9 +39463,9 @@ Sets a string property for the model object.
 - `Critical` (Boolean, get/set) — The criticality of the task.
 - `Description` (String, get/set) — A short textual description of the task.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `Local` (Boolean, get/set) — The locality indicates if the task was created in Tekla Structures and Task Manager or imported.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — The name of the task.
 - `PlannedEndDate` (DateTime, get/set) — The planned end date of the task.
 - `PlannedStartDate` (DateTime, get/set) — The planned start date of the task.
@@ -39861,10 +39867,10 @@ Sets a string property for the model object.
 ### Properties
 - `DependencyType` (TaskDependency.DependencyTypeEnum, get/set) — The type of the task dependency.
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `Lag` (Int32, get/set) — The lag of the task dependency represented in whole hours.
 - `Local` (Boolean, get/set) — The locality indicates if the dependency was created in Tekla Structures and Task Manager or imported.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Primary` (Task, get/set) — The primary task of the task dependency.
 - `Secondary` (Task, get/set) — The secondary task of the task dependency.
 
@@ -40272,8 +40278,8 @@ Sets a string property for the model object.
 
 ### Properties
 - `Identifier` (Identifier, get/set) — The identifier of the object.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `Name` (String, get/set) — The name of the task worktype.
 
 ## TransformationPlane (class)
@@ -40765,11 +40771,11 @@ Sets a string property for the model object.
 - `IncrementAmountAbove` (Int32, get/set) — Gets or sets the increment amount above.
 - `IncrementAmountBelow` (Int32, get/set) — Gets or sets the increment amount below.
 - `IntermittentType` (BaseWeld.WeldIntermittentTypeEnum, get/set) — Gets or sets the weld intermittent type.
-- `IsUpToDate` (object, get) — Gets if the object does not have a modification which is not shared.
+- `IsUpToDate` (Boolean, get) — Gets if the object does not have a modification which is not shared.
 - `LengthAbove` (Double, get/set) — Gets or sets the length above.
 - `LengthBelow` (Double, get/set) — Gets or sets the length below.
 - `MainObject` (ModelObject, get/set) — Gets or sets the main part of the weld.
-- `ModificationTime` (object, get) — Gets latest time of the object was modified or created.
+- `ModificationTime` (Nullable<DateTime>, get) — Gets latest time of the object was modified or created.
 - `NDTInspection` (BaseWeld.WeldNDTInspectionEnum, get/set) — Gets or sets the NDT inspection level.
 - `PitchAbove` (Double, get/set) — Gets or sets the pitch above.
 - `PitchBelow` (Double, get/set) — Gets or sets the pitch below.

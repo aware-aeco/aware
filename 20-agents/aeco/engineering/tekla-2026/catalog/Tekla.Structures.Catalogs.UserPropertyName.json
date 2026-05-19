@@ -12,6 +12,7 @@
       "signature": "public UserPropertyName()",
       "summary": "Initializes a new instance of the UserPropertyName class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c875cae1-5514-c52a-b6d7-1e61045c5197"

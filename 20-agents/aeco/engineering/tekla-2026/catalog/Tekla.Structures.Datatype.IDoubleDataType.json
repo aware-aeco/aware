@@ -3,7 +3,9 @@
   "namespace": "Tekla.Structures.Datatype",
   "kind": "interface",
   "summary": "The IDoubleDataType interface is an interface for the Tekla.Structures.Datatype.* types whose value is a double.",
-  "interfaces": [],
+  "interfaces": [
+    "IDataType"
+  ],
   "doc_url": "https://developer.tekla.com/topic/en/18/47/3efde7c8-1ded-89ec-e787-dea30c5a9dc8",
   "constructors": [],
   "methods": [],

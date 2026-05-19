@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/bb701f1a-d0bc-4b22-23ab-8484219793af",
   "constructors": [
     {
-      "name": "ConnectiveGeometryException",
+      "name": "ConnectiveGeometryException()",
       "signature": "public ConnectiveGeometryException()",
       "summary": "Initializes a new instance of the ConnectiveGeometryException class with general connective geometry error message.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ab3e0cf1-6d26-24be-a77e-c267064cee28"
     },
     {
-      "name": "ConnectiveGeometryException",
+      "name": "ConnectiveGeometryException(BentPlateGeometrySolver.OperationStatus, String)",
       "signature": "public ConnectiveGeometryException(BentPlateGeometrySolver.OperationStatus status, string errorMessage)",
       "summary": "Initializes a new instance of the ConnectiveGeometryException class with connective geometry error message based on status.",
       "params": [
@@ -34,6 +35,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/bb022e80-fb6a-1396-8247-da27beee2b5c"

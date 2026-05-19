@@ -1,9 +1,11 @@
 {
-  "name": "ISharingResult.T.",
+  "name": "ISharingResult\u003CT\u003E",
   "namespace": "Tekla.Structures.Model",
   "kind": "interface",
   "summary": "Represents the result of a sharing operation, including the result code and associated data.",
-  "interfaces": [],
+  "interfaces": [
+    "ISharingResult"
+  ],
   "doc_url": "https://developer.tekla.com/topic/en/18/47/2eb6f0b1-5d74-cc68-e420-709332889cf9",
   "constructors": [],
   "methods": [],

@@ -12,6 +12,7 @@
       "signature": "public RebarHeaderItem()",
       "summary": "Initializes a new instance of the RebarHeaderItem class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/17fcc858-617d-be0c-c0cf-9c4db7e58301"

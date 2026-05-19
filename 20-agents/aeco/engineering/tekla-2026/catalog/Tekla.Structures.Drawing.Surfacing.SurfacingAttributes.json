@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/b0b71097-ef0e-95a2-5a44-398c01b6f009",
   "constructors": [
     {
-      "name": "Surfacing.SurfacingAttributes",
+      "name": "Surfacing.SurfacingAttributes()",
       "signature": "public SurfacingAttributes()",
       "summary": "Creates a new default surfacing attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0e7286c0-f9a2-a2c3-5e2f-44383cfb1990"
     },
     {
-      "name": "Surfacing.SurfacingAttributes",
+      "name": "Surfacing.SurfacingAttributes(String)",
       "signature": "public SurfacingAttributes(string AttributeFile)",
       "summary": "Creates a new surfacing attributes instance that loads the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/26438b3a-e96d-5cfa-6ded-dc2fe3a19023"

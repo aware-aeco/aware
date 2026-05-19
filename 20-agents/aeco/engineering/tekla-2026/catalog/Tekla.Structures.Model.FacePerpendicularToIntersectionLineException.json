@@ -12,6 +12,7 @@
       "signature": "public FacePerpendicularToIntersectionLineException()",
       "summary": "Initializes a new instance of the FacePerpendicularToIntersectionLineException class with \u0022face perpendicular to intersection line\u0022 error message.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8471ef00-8586-99ca-2671-ba0546ed2170"

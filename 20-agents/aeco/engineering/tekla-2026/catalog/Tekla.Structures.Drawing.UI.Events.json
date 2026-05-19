@@ -3,6 +3,7 @@
   "namespace": "Tekla.Structures.Drawing.UI",
   "kind": "class",
   "summary": "The Events class allows the user to register event listeners for drawing user interface events.",
+  "remarks": "Asynchronous event handling Registered event handlers are called asynchronously so that many handlers may be running simultaneously. Event handlers are not guaranteed to be run in the same thread where they were registered. The asynchronous nature of the events requires the use of synchronization constructs on objects and data structures that are not defined to be thread safe.Microsoft\u0027s documentation about the lock statement: http://msdn.microsoft.com/en-us/library/c5kehkcz.aspxMicrosoft\u0027s documentation about delegates: http://msdn.microsoft.com/en-us/library/900fyy8e.aspxMicrosoft\u0027s documentation about managed threading: http://msdn.microsoft.com/en-us/library/1c9txz50.aspx",
   "base": "System.MarshalByRefObject",
   "interfaces": [],
   "doc_url": "https://developer.tekla.com/topic/en/18/47/5e9a7269-86c0-e674-6b7d-775dd6d0ffc1",
@@ -12,6 +13,7 @@
       "signature": "public Events()",
       "summary": "Constructs a new instance of Events.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c2696c0b-c71f-1680-d8c8-d6693858e0fc"
@@ -23,6 +25,7 @@
       "signature": "public void Dispose()",
       "summary": "Disposes of the Events instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ad8753f7-5a3e-b9e5-07fc-cc5bf3bdcbcc"
@@ -45,6 +48,7 @@
       "signature": "public void OnInterrupted()",
       "summary": "Called when uesr interrupts.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/993d9fd4-eff0-c073-fa67-ea0f56113a5b"
@@ -54,6 +58,7 @@
       "signature": "public void Register()",
       "summary": "Registers the instance to listen to the specified events.",
       "params": [],
+      "returns": null,
       "throws": [
         {
           "type": "InvalidOperationException",
@@ -68,6 +73,7 @@
       "signature": "public void UnRegister()",
       "summary": "Unregisters the instance from listening to events.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c5d65f46-f114-4387-fc57-4ce16baec662"

@@ -12,6 +12,7 @@
       "signature": "public Building()",
       "summary": "Initializes a new instance of the Building class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2316b61c-509d-7c0d-003b-203f9dd4cb05"

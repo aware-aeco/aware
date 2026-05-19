@@ -12,6 +12,7 @@
       "signature": "public ProfileItemCrossSection()",
       "summary": "Initializes a new instance of the ProfileItemCrossSection class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d7b10db2-d792-9472-89d5-7dd016baabe9"
@@ -60,6 +61,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1fcd2d06-503e-f7e9-9837-1756ae102de0"
@@ -106,6 +108,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0e81ef0a-d9ca-2db1-6937-c833eced17d5"
@@ -152,6 +155,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/fb403a79-d9d4-f258-5ee6-8ad260b3f729"

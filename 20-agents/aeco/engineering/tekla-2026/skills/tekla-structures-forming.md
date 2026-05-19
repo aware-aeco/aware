@@ -1,6 +1,6 @@
 ---
 name: tekla-tekla-structures-forming
-description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Forming namespace — 4 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: FormingStates, WrappingType, DeformingType, FoldingType.
+description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Forming namespace — 4 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: DeformingType, FormingStates, FoldingType, WrappingType.
 ---
 
 # Tekla.Structures.Forming

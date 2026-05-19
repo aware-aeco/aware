@@ -3,6 +3,7 @@
   "namespace": "Tekla.Structures.Model.Operations",
   "kind": "class",
   "summary": "Represents the parameters required for generating a report.",
+  "remarks": "This class encapsulates various settings and options that define how a report is generated, including template names, file names, titles, and processing flags. It provides properties to specify whether the report is generated from selected objects or all objects, and allows customization of the report\u0027s appearance and format.",
   "base": "System.Object",
   "interfaces": [],
   "doc_url": "https://developer.tekla.com/topic/en/18/47/f3230537-529d-b6e5-72dc-e718a4190599",
@@ -12,6 +13,7 @@
       "signature": "public ReportParameters()",
       "summary": "Initializes a new instance of the Operation.ReportParameters class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ba252c79-2162-5318-1cab-c3e8917c2bf8"

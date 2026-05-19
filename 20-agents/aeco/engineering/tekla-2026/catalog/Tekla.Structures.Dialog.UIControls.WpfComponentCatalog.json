@@ -4,7 +4,9 @@
   "kind": "class",
   "summary": "The WpfComponentCatalog class represents a group of controls to select components using the component catalog.",
   "base": "System.Windows.Controls.UserControl",
-  "interfaces": [],
+  "interfaces": [
+    "IComponentConnector"
+  ],
   "doc_url": "https://developer.tekla.com/topic/en/18/47/c90f5755-fb29-0d66-6674-1fac8f2cd570",
   "constructors": [
     {
@@ -12,6 +14,7 @@
       "signature": "public WpfComponentCatalog()",
       "summary": "Initializes a new instance of the WpfComponentCatalog class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/48f4af37-17f2-060c-a337-74a13238c7d7"
@@ -23,6 +26,7 @@
       "signature": "public void InitializeComponent()",
       "summary": "InitializeComponent",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e6a95146-4efe-69b4-1ff2-5871046dcc49"

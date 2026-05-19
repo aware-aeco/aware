@@ -12,6 +12,7 @@
       "signature": "public Story()",
       "summary": "Initializes a new instance of the Story class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/22b40b97-f591-8fca-60f8-574d3d5e4bc1"

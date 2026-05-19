@@ -12,6 +12,7 @@
       "signature": "public AnalysisDecomposedNodeLoad()",
       "summary": "Initializes a new instance of the AnalysisDecomposedNodeLoad class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/10a28a84-0fbb-abc0-8974-5988bb2cae1c"
@@ -23,6 +24,7 @@
       "signature": "public override void Select()",
       "summary": "Selects an analysis decomposed node load.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1163b258-2c7a-0a1b-51dd-3a610ac0f40d"

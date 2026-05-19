@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/588d418f-7707-420b-88d1-a905e0f07898",
   "constructors": [
     {
-      "name": "RectangularCloud",
+      "name": "RectangularCloud(ViewBase, Point, Point)",
       "signature": "public RectangularCloud(ViewBase view, Point startPoint, Point endPoint)",
       "summary": "Creates a new rectangle cloud instance with two points using standard attributes. Please note that creating a rectangular cloud using two points will re-calculate the start point to correspond with positive widths and heights.",
       "params": [
@@ -31,12 +31,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/dfeb5823-b11b-ae51-fe8b-8f5e6304cbd8"
     },
     {
-      "name": "RectangularCloud",
+      "name": "RectangularCloud(ViewBase, Point, Double, Double)",
       "signature": "public RectangularCloud(ViewBase view, Point startPoint, double width, double height)",
       "summary": "Creates a new RectangularCloud instance with the start point and the defined width and height using standard attributes.",
       "params": [
@@ -65,12 +66,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5c8fb437-f146-3e6d-9d09-38aa86eb66ea"
     },
     {
-      "name": "RectangularCloud",
+      "name": "RectangularCloud(ViewBase, Point, Point, RectangularCloud.RectangularCloudAttributes)",
       "signature": "public RectangularCloud(ViewBase view, Point startPoint, Point endPoint, RectangularCloud.RectangularCloudAttributes attributes)",
       "summary": "Creates a new rectangle cloud instance with two points using the given attributes. Please note that creating a rectangular cloud using two points will re-calculate the start point to correspond with positive widths and heights.",
       "params": [
@@ -99,12 +101,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/cbf554d9-2661-faf8-2f91-07ade31b946f"
     },
     {
-      "name": "RectangularCloud",
+      "name": "RectangularCloud(ViewBase, Point, Double, Double, RectangularCloud.RectangularCloudAttributes)",
       "signature": "public RectangularCloud(ViewBase view, Point startPoint, double width, double height, RectangularCloud.RectangularCloudAttributes attributes)",
       "summary": "Creates a new rectangular cloud instance with the start point and the defined width and height using the given attributes.",
       "params": [
@@ -139,6 +142,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/30374f8a-aba6-f0d4-fc2c-90858a0be5d3"
@@ -159,7 +163,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9c36efa2-c4b5-6d8f-2426-f1548eaaf58b"
     },
     {
-      "name": "GetDoubleUserProperties(Dictionary.String, Double..)",
+      "name": "GetDoubleUserProperties(Dictionary\u003CString, Double\u003E.)",
       "signature": "public bool GetDoubleUserProperties(out Dictionary\u003Cstring, double\u003E values)",
       "summary": "Retrieves all double user properties for the object with the given list of names.",
       "params": [
@@ -179,7 +183,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b25f0e6b-ab5c-154a-a45c-4f5868a20599"
     },
     {
-      "name": "GetDoubleUserProperties(List.String., Dictionary.String, Double..)",
+      "name": "GetDoubleUserProperties(List\u003CString\u003E, Dictionary\u003CString, Double\u003E.)",
       "signature": "public bool GetDoubleUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, double\u003E values)",
       "summary": "Retrieves all double user properties for the object with the given list of names.",
       "params": [
@@ -218,7 +222,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4e9beef3-2188-ab45-9f07-dbde351915bf"
     },
     {
-      "name": "GetIntegerUserProperties(Dictionary.String, Int32..)",
+      "name": "GetIntegerUserProperties(Dictionary\u003CString, Int32\u003E.)",
       "signature": "public bool GetIntegerUserProperties(out Dictionary\u003Cstring, int\u003E values)",
       "summary": "Retrieves all integer user properties for the object with the given list of names.",
       "params": [
@@ -238,7 +242,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/20a7d099-ebee-b016-ffc7-0181a1219405"
     },
     {
-      "name": "GetIntegerUserProperties(List.String., Dictionary.String, Int32..)",
+      "name": "GetIntegerUserProperties(List\u003CString\u003E, Dictionary\u003CString, Int32\u003E.)",
       "signature": "public bool GetIntegerUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, int\u003E values)",
       "summary": "Retrieves all integer user properties for the object with the given list of names.",
       "params": [
@@ -264,7 +268,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b485bd81-5ccf-68e4-0453-caea6b1d0dde"
     },
     {
-      "name": "GetRelatedObjects.",
+      "name": "GetRelatedObjects()",
       "signature": "public DrawingObjectEnumerator GetRelatedObjects()",
       "summary": "Gets the related objects of the current object.",
       "params": [],
@@ -277,7 +281,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/50820387-cee1-637a-318e-fb3e06780149"
     },
     {
-      "name": "GetRelatedObjects(.Type.)",
+      "name": "GetRelatedObjects(.Type[])",
       "signature": "public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)",
       "summary": "Gets the related objects of the current object that are of certain types.",
       "params": [
@@ -297,7 +301,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/01d5e137-fa4b-92d7-328b-69c974dc7415"
     },
     {
-      "name": "GetStringUserProperties(Dictionary.String, String..)",
+      "name": "GetStringUserProperties(Dictionary\u003CString, String\u003E.)",
       "signature": "public bool GetStringUserProperties(out Dictionary\u003Cstring, string\u003E values)",
       "summary": "Retrieves all string user properties for the object with the given list of names.",
       "params": [
@@ -317,7 +321,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a0039213-2e79-912f-5bdf-5e6dd417c092"
     },
     {
-      "name": "GetStringUserProperties(List.String., Dictionary.String, String..)",
+      "name": "GetStringUserProperties(List\u003CString\u003E, Dictionary\u003CString, String\u003E.)",
       "signature": "public bool GetStringUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, string\u003E values)",
       "summary": "Retrieves all string user properties for the object with the given list of names.",
       "params": [

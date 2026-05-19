@@ -12,6 +12,7 @@
       "signature": "public Operation()",
       "summary": "Initializes a new instance of the Operation class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/251aa8f2-3b6b-2862-9582-56e27a7e3875"
@@ -126,6 +127,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/790333a7-df91-ceaa-caf7-be3183a0f547"

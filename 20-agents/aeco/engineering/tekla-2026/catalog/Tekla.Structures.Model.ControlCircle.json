@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/9763b8ff-1f52-2d69-7549-a6d8733e945c",
   "constructors": [
     {
-      "name": "ControlCircle",
+      "name": "ControlCircle()",
       "signature": "public ControlCircle()",
       "summary": "Initializes a new instance of the ControlCircle class. The default values are as follows: Color = ControlCircleColorEnum.YELLOW; Extension = 0.0;",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a6271d65-9616-56e8-9674-d3523e2831e3"
     },
     {
-      "name": "ControlCircle",
+      "name": "ControlCircle(Point, Point, Point)",
       "signature": "public ControlCircle(Point point1, Point point2, Point point3)",
       "summary": "Initializes a new instance of the ControlCircle class. The control circle is not magnetic.",
       "params": [
@@ -40,6 +41,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/31945ec6-58a0-8adc-00bf-d0ec7df19080"
@@ -843,7 +845,7 @@
     },
     {
       "name": "IsUpToDate",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": false,
       "summary": "Gets if the object does not have a modification which is not shared.",
@@ -859,7 +861,7 @@
     },
     {
       "name": "ModificationTime",
-      "type": "object",
+      "type": "Nullable\u003CDateTime\u003E",
       "getter": true,
       "setter": false,
       "summary": "Gets latest time of the object was modified or created.",

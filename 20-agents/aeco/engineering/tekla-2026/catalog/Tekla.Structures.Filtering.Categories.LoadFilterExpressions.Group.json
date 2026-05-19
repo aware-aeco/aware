@@ -12,6 +12,7 @@
       "signature": "public Group()",
       "summary": "Initializes a new instance of the Group class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a73de887-d662-7b33-d370-b2e9a8be9585"

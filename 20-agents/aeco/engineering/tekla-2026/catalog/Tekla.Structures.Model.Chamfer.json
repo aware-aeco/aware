@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/3064a4cf-a8fc-6b76-b9e1-01173be467df",
   "constructors": [
     {
-      "name": "Chamfer",
+      "name": "Chamfer()",
       "signature": "public Chamfer()",
       "summary": "Creates a chamfer instance with the basic shape type CHAMFER_NONE.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8a0bbda9-99a0-7cbf-2b81-8f655cd1b02f"
     },
     {
-      "name": "Chamfer",
+      "name": "Chamfer(Double, Double, Chamfer.ChamferTypeEnum)",
       "signature": "public Chamfer(double X, double Y, Chamfer.ChamferTypeEnum Type)",
       "summary": "Instantiates a chamfer with the given values.",
       "params": [
@@ -40,6 +41,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/17d86049-fc29-135a-c1d3-e24df677334f"

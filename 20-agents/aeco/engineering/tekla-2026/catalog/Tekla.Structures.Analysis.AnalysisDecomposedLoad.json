@@ -12,6 +12,7 @@
       "signature": "public AnalysisDecomposedLoad()",
       "summary": "Initializes a new instance of the AnalysisDecomposedLoad class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/aca16ae1-3d7f-78b7-cbd1-57980279c347"
@@ -23,6 +24,7 @@
       "signature": "public abstract void Select()",
       "summary": "Selects an analysis object from the database.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/838ad5fe-ed14-8f58-d432-efd635e6c7ea"

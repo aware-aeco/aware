@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/a0397063-758c-2266-20c3-a70083fc302c",
   "constructors": [
     {
-      "name": "Text",
+      "name": "Text(ViewBase, Point, String)",
       "signature": "public Text(ViewBase view, Point insertionPoint, string text)",
       "summary": "Creates a new text instance with the given text string.",
       "params": [
@@ -31,12 +31,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/999fc0fb-8b80-055b-2e8c-9cc88555d8fa"
     },
     {
-      "name": "Text",
+      "name": "Text(ViewBase, Point, String, PlacingBase)",
       "signature": "public Text(ViewBase view, Point insertionPoint, string text, PlacingBase Placing)",
       "summary": "Creates a new text instance with the given text string using a specific placing type.",
       "params": [
@@ -65,12 +66,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d76f40f3-6a15-9007-4746-f30818ff0349"
     },
     {
-      "name": "Text",
+      "name": "Text(ViewBase, Point, String, Text.TextAttributes)",
       "signature": "public Text(ViewBase view, Point insertionPoint, string Text, Text.TextAttributes inAttributes)",
       "summary": "Creates a new text instance with the given text string and text attributes.",
       "params": [
@@ -99,12 +101,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a063ed43-f17f-a3c9-6719-d673a21e2af9"
     },
     {
-      "name": "Text",
+      "name": "Text(ViewBase, Point, String, PlacingBase, Text.TextAttributes)",
       "signature": "public Text(ViewBase view, Point insertionPoint, string Text, PlacingBase Placing, Text.TextAttributes inAttributes)",
       "summary": "Creates a new text instance with the given text string and text attributes using a specific placing type.",
       "params": [
@@ -139,6 +142,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/caff41b5-cbc2-9109-621e-a529ccdbbfc0"
@@ -172,7 +176,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4c9d4d1f-8fb7-255f-803c-e935b084fbde"
     },
     {
-      "name": "GetDoubleUserProperties(Dictionary.String, Double..)",
+      "name": "GetDoubleUserProperties(Dictionary\u003CString, Double\u003E.)",
       "signature": "public bool GetDoubleUserProperties(out Dictionary\u003Cstring, double\u003E values)",
       "summary": "Retrieves all double user properties for the object with the given list of names.",
       "params": [
@@ -192,7 +196,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b25f0e6b-ab5c-154a-a45c-4f5868a20599"
     },
     {
-      "name": "GetDoubleUserProperties(List.String., Dictionary.String, Double..)",
+      "name": "GetDoubleUserProperties(List\u003CString\u003E, Dictionary\u003CString, Double\u003E.)",
       "signature": "public bool GetDoubleUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, double\u003E values)",
       "summary": "Retrieves all double user properties for the object with the given list of names.",
       "params": [
@@ -231,7 +235,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4e9beef3-2188-ab45-9f07-dbde351915bf"
     },
     {
-      "name": "GetIntegerUserProperties(Dictionary.String, Int32..)",
+      "name": "GetIntegerUserProperties(Dictionary\u003CString, Int32\u003E.)",
       "signature": "public bool GetIntegerUserProperties(out Dictionary\u003Cstring, int\u003E values)",
       "summary": "Retrieves all integer user properties for the object with the given list of names.",
       "params": [
@@ -251,7 +255,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/20a7d099-ebee-b016-ffc7-0181a1219405"
     },
     {
-      "name": "GetIntegerUserProperties(List.String., Dictionary.String, Int32..)",
+      "name": "GetIntegerUserProperties(List\u003CString\u003E, Dictionary\u003CString, Int32\u003E.)",
       "signature": "public bool GetIntegerUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, int\u003E values)",
       "summary": "Retrieves all integer user properties for the object with the given list of names.",
       "params": [
@@ -290,7 +294,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/df12c0cc-3b69-b142-0716-7c196694f0db"
     },
     {
-      "name": "GetObjects.",
+      "name": "GetObjects()",
       "signature": "public DrawingObjectEnumerator GetObjects()",
       "summary": "Gets the children objects of the current object.",
       "params": [],
@@ -303,7 +307,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/59774d78-87e8-44c4-a0c8-d38d85c81bd5"
     },
     {
-      "name": "GetObjects(.Type.)",
+      "name": "GetObjects(.Type[])",
       "signature": "public DrawingObjectEnumerator GetObjects(Type[] TypeFilter)",
       "summary": "Gets the children objects of the current object that are of certain types.",
       "params": [
@@ -323,7 +327,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2e30931a-cc02-c1f4-2a59-27f44ff519b2"
     },
     {
-      "name": "GetRelatedObjects.",
+      "name": "GetRelatedObjects()",
       "signature": "public DrawingObjectEnumerator GetRelatedObjects()",
       "summary": "Gets the related objects of the current object.",
       "params": [],
@@ -336,7 +340,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/50820387-cee1-637a-318e-fb3e06780149"
     },
     {
-      "name": "GetRelatedObjects(.Type.)",
+      "name": "GetRelatedObjects(.Type[])",
       "signature": "public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)",
       "summary": "Gets the related objects of the current object that are of certain types.",
       "params": [
@@ -356,7 +360,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/01d5e137-fa4b-92d7-328b-69c974dc7415"
     },
     {
-      "name": "GetStringUserProperties(Dictionary.String, String..)",
+      "name": "GetStringUserProperties(Dictionary\u003CString, String\u003E.)",
       "signature": "public bool GetStringUserProperties(out Dictionary\u003Cstring, string\u003E values)",
       "summary": "Retrieves all string user properties for the object with the given list of names.",
       "params": [
@@ -376,7 +380,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a0039213-2e79-912f-5bdf-5e6dd417c092"
     },
     {
-      "name": "GetStringUserProperties(List.String., Dictionary.String, String..)",
+      "name": "GetStringUserProperties(List\u003CString\u003E, Dictionary\u003CString, String\u003E.)",
       "signature": "public bool GetStringUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, string\u003E values)",
       "summary": "Retrieves all string user properties for the object with the given list of names.",
       "params": [

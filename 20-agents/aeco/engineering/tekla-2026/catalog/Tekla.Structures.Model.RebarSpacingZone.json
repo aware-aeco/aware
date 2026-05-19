@@ -12,6 +12,7 @@
       "signature": "public RebarSpacingZone()",
       "summary": "Initializes a new instance of the RebarSpacingZone class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/264e583c-2371-ada9-3e8f-d008130aef6e"

@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/5b51428a-00f9-155b-333c-83bd261a0b88",
   "constructors": [
     {
-      "name": "ControlArc",
+      "name": "ControlArc()",
       "signature": "public ControlArc()",
       "summary": "Creates a new control arc instance. The default values are as follows: CenterPoint = Point(0.0, 0.0, 0.0);StartPoint = Point(0.0, 1000.0, 0.0);EndPoint = Point(1000.0, 0.0, 0.0);Color = ControlObjectColorEnum.YELLOW;",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/92c118c9-8d5f-2f29-639f-ec723c2b97b9"
     },
     {
-      "name": "ControlArc",
+      "name": "ControlArc(Point, Point, Point)",
       "signature": "public ControlArc(Point startPoint, Point endPoint, Point pointOnArc)",
       "summary": "Creates a new control arc instance taking the 3 points.",
       "params": [
@@ -40,6 +41,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentException",
@@ -848,7 +850,7 @@
     },
     {
       "name": "IsUpToDate",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": false,
       "summary": "Gets if the object does not have a modification which is not shared.",
@@ -864,7 +866,7 @@
     },
     {
       "name": "ModificationTime",
-      "type": "object",
+      "type": "Nullable\u003CDateTime\u003E",
       "getter": true,
       "setter": false,
       "summary": "Gets latest time of the object was modified or created.",

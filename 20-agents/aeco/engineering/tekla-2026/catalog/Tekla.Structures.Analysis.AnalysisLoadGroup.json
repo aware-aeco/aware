@@ -12,6 +12,7 @@
       "signature": "public AnalysisLoadGroup()",
       "summary": "Initializes a new instance of the AnalysisLoadGroup class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f98494eb-ca73-3883-a4b9-ddb91d9e0e39"
@@ -69,6 +70,7 @@
       "signature": "public override void Select()",
       "summary": "Selects an AnalysisLoadGroup. The ID has to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/79cc408a-009f-71df-c73e-0762d0e7b95c"

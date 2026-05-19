@@ -12,6 +12,7 @@
       "signature": "public ClipPlane()",
       "summary": "Initializes a new instance of the ClipPlane class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e730eab4-57bb-51ea-c214-978a40c92ede"

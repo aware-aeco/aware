@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/b01382aa-3575-dbde-21b4-23bf6c496c8b",
   "constructors": [
     {
-      "name": "ViewMarkBasicSymbolAttributes",
+      "name": "ViewMarkBasicSymbolAttributes()",
       "signature": "public ViewMarkBasicSymbolAttributes()",
       "summary": "Creates a new mark symbol attributes instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e642fbb5-466f-b523-3381-1b41903c4046"
     },
     {
-      "name": "ViewMarkBasicSymbolAttributes",
+      "name": "ViewMarkBasicSymbolAttributes(Double, MarkSymbolShape)",
       "signature": "public ViewMarkBasicSymbolAttributes(double size, MarkSymbolShape shape)",
       "summary": "Creates a new mark symbol attributes instance with the given size and shape.",
       "params": [
@@ -34,6 +35,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f9d11249-f5d5-6f17-1490-ef2e50efb0da"

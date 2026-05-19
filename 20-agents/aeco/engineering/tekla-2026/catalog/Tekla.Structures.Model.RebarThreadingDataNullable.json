@@ -12,6 +12,7 @@
       "signature": "public RebarThreadingDataNullable()",
       "summary": "Initializes a new instance of the RebarThreadingDataNullable class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ca0e34ce-f534-4054-a639-e7cf3a035ba6"

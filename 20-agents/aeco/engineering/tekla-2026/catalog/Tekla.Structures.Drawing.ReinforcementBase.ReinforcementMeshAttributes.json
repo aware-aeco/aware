@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/cf7408d5-abf8-bc64-7087-ae2389369349",
   "constructors": [
     {
-      "name": "ReinforcementBase.ReinforcementMeshAttributes",
+      "name": "ReinforcementBase.ReinforcementMeshAttributes()",
       "signature": "public ReinforcementMeshAttributes()",
       "summary": "Creates a new default reinforcement attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2dddbd84-30ac-5ac3-c49d-6c6fecd7a605"
     },
     {
-      "name": "ReinforcementBase.ReinforcementMeshAttributes",
+      "name": "ReinforcementBase.ReinforcementMeshAttributes(Boolean)",
       "signature": "public ReinforcementMeshAttributes(bool SkipLoadingAttributes)",
       "summary": "Creates a new default reinforcement attributes instance that loads standard attributes. If it set to true attributes won\u0027t be lodaded.",
       "params": [
@@ -27,12 +28,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/df286155-e431-0a77-a4d7-6c0bf182e6d3"
     },
     {
-      "name": "ReinforcementBase.ReinforcementMeshAttributes",
+      "name": "ReinforcementBase.ReinforcementMeshAttributes(String)",
       "signature": "public ReinforcementMeshAttributes(string AttributeFile)",
       "summary": "Creates a new reinforcement attributes instance that loads the specified attributes.",
       "params": [
@@ -43,6 +45,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/af0094a2-f9f7-3302-b812-33b4d2add318"

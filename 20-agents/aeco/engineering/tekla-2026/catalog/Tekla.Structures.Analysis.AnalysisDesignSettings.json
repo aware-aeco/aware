@@ -12,6 +12,7 @@
       "signature": "public AnalysisDesignSettings()",
       "summary": "Creates a new analysis design settings instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c05542b8-ffe7-4c8f-6a5b-ad70863e714f"

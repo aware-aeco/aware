@@ -87,7 +87,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4113d54a-0ab4-8b2e-7062-a3771be61c87"
     },
     {
-      "name": "ToString(IEnumerable.Angle.)",
+      "name": "ToString(IEnumerable\u003CAngle\u003E)",
       "signature": "public static string ToString(IEnumerable\u003CAngle\u003E angleList)",
       "summary": "Converts the given angles to a string in the current units",
       "params": [
@@ -107,7 +107,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8d7e5255-799a-1f85-a13f-08dd45382341"
     },
     {
-      "name": "ToString(IEnumerable.Angle., Angle.UnitType)",
+      "name": "ToString(IEnumerable\u003CAngle\u003E, Angle.UnitType)",
       "signature": "public static string ToString(IEnumerable\u003CAngle\u003E angleList, Angle.UnitType unitType)",
       "summary": "Converts the given angles to a string in the given units",
       "params": [
@@ -133,7 +133,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9b32abf0-6afc-3f7b-dab7-dd9098e60177"
     },
     {
-      "name": "ToString(IEnumerable.Angle., String, IFormatProvider)",
+      "name": "ToString(IEnumerable\u003CAngle\u003E, String, IFormatProvider)",
       "signature": "public static string ToString(IEnumerable\u003CAngle\u003E angleList, string format, IFormatProvider formatProvider)",
       "summary": "Converts the given angles to a string with the given parameters in the current unit",
       "params": [
@@ -165,7 +165,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/15ac3c4f-5d3f-0463-54ba-088f3f089f97"
     },
     {
-      "name": "ToString(IEnumerable.Angle., String, IFormatProvider, Angle.UnitType)",
+      "name": "ToString(IEnumerable\u003CAngle\u003E, String, IFormatProvider, Angle.UnitType)",
       "signature": "public static string ToString(IEnumerable\u003CAngle\u003E angleList, string format, IFormatProvider formatProvider, Angle.UnitType angleUnit)",
       "summary": "Converts the given angles to a string with the given parameters in the current unit",
       "params": [

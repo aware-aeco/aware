@@ -12,6 +12,7 @@
       "signature": "public CrossSectionPoint()",
       "summary": "Creates a new cross section point instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/cb275ac4-9a39-94d2-1463-e151552ea773"
@@ -72,7 +73,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9f84f024-170b-5181-770d-5ed2f56332cd"
     },
     {
-      "name": "ToString.",
+      "name": "ToString()",
       "signature": "public override string ToString()",
       "summary": "Formats the point into a string, using the current culture.",
       "params": [],
@@ -127,6 +128,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7ad7ecb9-acf3-7ed2-f2bc-aa52b99ceae6"
@@ -136,6 +138,7 @@
       "signature": "public void Zero()",
       "summary": "Zeros all the members of the point.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9bf63e0c-fe71-40ae-e467-306f0a41f315"

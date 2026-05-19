@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/e6365158-0bd4-42cd-8068-a8f8c605c955",
   "constructors": [
     {
-      "name": "Line.LineAttributes",
+      "name": "Line.LineAttributes()",
       "signature": "public LineAttributes()",
       "summary": "Creates a new default line attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1f5cbfaa-fec0-8521-c07d-9543b6b37d32"
     },
     {
-      "name": "Line.LineAttributes",
+      "name": "Line.LineAttributes(String)",
       "signature": "public LineAttributes(string AttributesFile)",
       "summary": "Creates a new line attributes instance that loads the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/273602b8-3fde-ce8c-b2e2-341a284226f0"

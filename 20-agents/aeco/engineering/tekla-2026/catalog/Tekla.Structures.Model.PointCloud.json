@@ -12,6 +12,7 @@
       "signature": "public PointCloud()",
       "summary": "Creates a new point cloud instance using the given parameters.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a068cb0d-10d7-1df5-1669-4c5de43fc2e0"

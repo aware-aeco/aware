@@ -12,6 +12,7 @@
       "signature": "public AnalysisPartBarAttributes()",
       "summary": "Initializes a new instance of the AnalysisPartBarAttributes class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/70ceb66f-fd56-10d2-7260-894fdf0df5e1"

@@ -3,6 +3,7 @@
   "namespace": "Tekla.Structures.Model",
   "kind": "class",
   "summary": "The Events class allows the user to register event listeners for model events.",
+  "remarks": "Asynchronous event handling Registered event handlers are called asynchronously so that many handlers may be running simultaneously. Event handlers are not guaranteed to be run in the same thread where they were registered. The asynchronous nature of the events requires the use of synchronization constructs on objects and data structures that are not defined to be thread safe.Microsoft\u0027s documentation about the lock statement: http://msdn.microsoft.com/en-us/library/c5kehkcz.aspxMicrosoft\u0027s documentation about delegates: http://msdn.microsoft.com/en-us/library/900fyy8e.aspxMicrosoft\u0027s documentation about managed threading: http://msdn.microsoft.com/en-us/library/1c9txz50.aspx",
   "base": "System.MarshalByRefObject",
   "interfaces": [],
   "doc_url": "https://developer.tekla.com/topic/en/18/47/8718989a-ebeb-cbd0-b920-08fb7a8ad3e4",
@@ -12,6 +13,7 @@
       "signature": "public Events()",
       "summary": "Creates an empty events instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/70f1ec50-b6b2-92ff-3a46-42fddfa3d40a"
@@ -23,6 +25,7 @@
       "signature": "public void Dispose()",
       "summary": "Disposes the instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/98294faa-f7c3-4f2b-fca7-1b1cc6d5e7c3"
@@ -45,6 +48,7 @@
       "signature": "public void OnInterrupted()",
       "summary": "Called when uesr interrupts.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5228be94-0f54-214b-47eb-60b574f92c9c"
@@ -67,6 +71,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/bed20299-72dc-0d5f-6325-1ba70626082f"
@@ -76,6 +81,7 @@
       "signature": "public void OnUndoClicked()",
       "summary": "Called when user clicks undo.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4f8999bd-b4af-b02b-fd08-250ae8b0a4a7"
@@ -85,6 +91,7 @@
       "signature": "public void Register()",
       "summary": "Registers the instance to listen to the specified events. More event delegates should not be added without calling UnRegister first.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e324b229-c0fc-ee66-a7f9-5277a17c0858"
@@ -94,6 +101,7 @@
       "signature": "public void UnRegister()",
       "summary": "Unregisters the instance from listening to events.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/89ad49e2-c123-7b99-5484-b4efe9a1dbde"
@@ -258,7 +266,7 @@
       "name": "ModelUnloadingSync",
       "delegate": "Tekla.Structures.Model.Events.ModelLoadDelegate",
       "signature": "public event Events.ModelLoadDelegate ModelUnloadingSync",
-      "summary": "The ModelUnloadingSync event is raised synchronously on the main thread just before the model is unloaded. Use this event only when core resources need be cleaned up before the model unloading proceeds. All UI-only related resource cleanup should be done in the async ModelUnloading event. OnModelUnloadingSync(String, .Object.)",
+      "summary": "The ModelUnloadingSync event is raised synchronously on the main thread just before the model is unloaded. Use this event only when core resources need be cleaned up before the model unloading proceeds. All UI-only related resource cleanup should be done in the async ModelUnloading event. OnModelUnloadingSync(String, .Object[])",
       "doc_url": "https://developer.tekla.com/topic/en/18/47/03f82a07-1d6c-a7df-323c-311d71808b8a",
       "handler_thread": "unknown",
       "interacts_with": []

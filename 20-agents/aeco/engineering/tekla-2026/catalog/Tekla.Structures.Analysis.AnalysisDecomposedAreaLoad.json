@@ -12,6 +12,7 @@
       "signature": "public AnalysisDecomposedAreaLoad()",
       "summary": "Initializes a new instance of the AnalysisDecomposedAreaLoad class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/154fa56d-87e3-4eda-498d-b1b422077e2c"
@@ -23,6 +24,7 @@
       "signature": "public override void Select()",
       "summary": "Selects an analysis decomposed area load.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1c9fd463-f53d-dfe4-3f32-60b68fc9de8b"

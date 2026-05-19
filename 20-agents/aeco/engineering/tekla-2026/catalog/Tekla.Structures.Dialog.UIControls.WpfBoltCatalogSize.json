@@ -12,6 +12,7 @@
       "signature": "public WpfBoltCatalogSize()",
       "summary": "Initiates a new instance of the control.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/98e5f1b7-20f7-51fa-da7e-e5f6f81f76f9"

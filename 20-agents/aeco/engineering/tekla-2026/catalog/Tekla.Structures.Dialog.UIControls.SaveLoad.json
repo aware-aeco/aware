@@ -12,6 +12,7 @@
       "signature": "public SaveLoad()",
       "summary": "Initializes a new instance of the SaveLoad class with the default language and file extensions.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/265f6a01-d29e-2da1-a5bf-a95f37b9f071"

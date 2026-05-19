@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/dbf1e225-bc2c-43a3-2487-427fa0d12224",
   "constructors": [
     {
-      "name": "RebarLegFace",
+      "name": "RebarLegFace()",
       "signature": "public RebarLegFace()",
       "summary": "Initializes a new instance of the RebarLegFace class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0509fcd1-a376-c525-794e-678476d75f54"
     },
     {
-      "name": "RebarLegFace",
+      "name": "RebarLegFace(Contour)",
       "signature": "public RebarLegFace(Contour contour)",
       "summary": "Initializes a new instance of the RebarLegFace class using the specified Contour.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/aac881d3-8ec1-8230-5b74-71a33a1ac624"

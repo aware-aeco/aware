@@ -12,6 +12,7 @@
       "signature": "public PourNumber()",
       "summary": "Initializes a new instance of the PourNumber class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7c8f2f4d-c9ab-62ed-52f4-03a0756e6897"

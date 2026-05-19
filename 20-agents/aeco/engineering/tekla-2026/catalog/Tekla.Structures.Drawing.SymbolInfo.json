@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/c9fe0d20-c02c-e062-a86e-ee0f3f1beb5a",
   "constructors": [
     {
-      "name": "SymbolInfo",
+      "name": "SymbolInfo()",
       "signature": "public SymbolInfo()",
       "summary": "Creates a new symbol info instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c2857a80-734d-bee0-664d-69a24cd75ce5"
     },
     {
-      "name": "SymbolInfo",
+      "name": "SymbolInfo(String, Int32)",
       "signature": "public SymbolInfo(string SymbolFile, int SymbolIndex)",
       "summary": "Creates a new symbol info instance.",
       "params": [
@@ -34,6 +35,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentOutOfRangeException",

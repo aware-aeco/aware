@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/ed104708-bf83-237c-9c78-d8dac70012af",
   "constructors": [
     {
-      "name": "DimensionSetBaseAttributes.DimensionExaggerationAttributes",
+      "name": "DimensionSetBaseAttributes.DimensionExaggerationAttributes()",
       "signature": "public DimensionExaggerationAttributes()",
       "summary": "Creates a new dimension exaggeration attributes instance. The default is to have exaggeration disabled.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/06208c1d-951e-e00c-3e13-f961b8f849c6"
     },
     {
-      "name": "DimensionSetBaseAttributes.DimensionExaggerationAttributes",
+      "name": "DimensionSetBaseAttributes.DimensionExaggerationAttributes(Boolean, DimensionSetBaseAttributes.ExaggerationDirections, DimensionSetBaseAttributes.ExaggerationOrigins, Double, Double, Double)",
       "signature": "public DimensionExaggerationAttributes(bool ExaggerationEnabled, DimensionSetBaseAttributes.ExaggerationDirections ExaggerationDirection, DimensionSetBaseAttributes.ExaggerationOrigins ExaggerationOrigin, double ExaggerationWidth, double ExaggerationPosition, double ExaggerationHeight)",
       "summary": "Creates a new dimension exaggeration attributes instance with the given parameters.",
       "params": [
@@ -53,6 +54,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5989ec95-66ce-4bb5-37cc-ec120efb5bf4"

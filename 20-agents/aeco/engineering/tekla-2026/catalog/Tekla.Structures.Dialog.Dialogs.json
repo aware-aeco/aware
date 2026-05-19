@@ -12,6 +12,7 @@
       "signature": "public Dialogs()",
       "summary": "Initializes a new instance of the Dialogs class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/050a0fa3-aaf7-9cdd-8b66-4faf9f89daf3"
@@ -23,6 +24,7 @@
       "signature": "public static void ClosePluginDialogs()",
       "summary": "Close all dialogs to end the threads running the corresponding message loops.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/698fc56b-5264-a788-abf8-77f44b020c14"

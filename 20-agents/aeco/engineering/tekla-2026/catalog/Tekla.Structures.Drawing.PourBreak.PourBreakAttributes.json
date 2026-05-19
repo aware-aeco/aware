@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/4fa0263e-e4ce-f9b7-70f4-2da5d9551389",
   "constructors": [
     {
-      "name": "PourBreak.PourBreakAttributes",
+      "name": "PourBreak.PourBreakAttributes()",
       "signature": "public PourBreakAttributes()",
       "summary": "Creates a new default pour break attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b73ad236-69ac-b82a-4176-3a040d42fd38"
     },
     {
-      "name": "PourBreak.PourBreakAttributes",
+      "name": "PourBreak.PourBreakAttributes(String)",
       "signature": "public PourBreakAttributes(string AttributeFile)",
       "summary": "Creates a new pour break attributes instance that loads the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/12947121-206d-8518-0239-29f122fcb5cd"

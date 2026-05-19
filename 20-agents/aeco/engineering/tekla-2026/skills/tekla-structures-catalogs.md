@@ -1,6 +1,6 @@
 ---
 name: tekla-tekla-structures-catalogs
-description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Catalogs namespace — 53 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: BoltItem, BoltItemEnumerator, BoltName, CatalogHandler, CatalogItemEnumeratorInitializationException, ComponentItemEnumerator, ComponentItem, CrossSectionPoint, and 45 more types.
+description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Catalogs namespace — 53 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: BoltItem, BoltItemEnumerator, BoltName, CatalogHandler, CatalogItemEnumeratorInitializationException, ComponentItem, ComponentItemEnumerator, CrossSection, and 45 more types.
 ---
 
 # Tekla.Structures.Catalogs
@@ -234,6 +234,14 @@ Returns the collection of all steel finish items.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/992a8408-b4c2-c50f-895a-ea876c4c7333)
 
+#### `public UserPropertyItemEnumerator GetUserPropertyItems()`
+
+Returns an enumerator of all user property items.
+
+**Returns:** `UserPropertyItemEnumerator` — A UserPropertyItemEnumerator of all user property items.
+
+[Docs](https://developer.tekla.com/topic/en/18/47/e982db4c-daf4-1161-db5e-6a4688c724db)
+
 #### `public UserPropertyItemEnumerator GetUserPropertyItems(CatalogObjectTypeEnum objectType)`
 
 Returns an enumerator of user property items of the given object type.
@@ -244,14 +252,6 @@ Returns an enumerator of user property items of the given object type.
 **Returns:** `UserPropertyItemEnumerator` — A UserPropertyItemEnumerator of user property items of the given object type.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/17a6222e-f487-de7e-aa78-37d6283209bb)
-
-#### `public UserPropertyItemEnumerator GetUserPropertyItems()`
-
-Returns an enumerator of all user property items.
-
-**Returns:** `UserPropertyItemEnumerator` — A UserPropertyItemEnumerator of all user property items.
-
-[Docs](https://developer.tekla.com/topic/en/18/47/e982db4c-daf4-1161-db5e-6a4688c724db)
 
 #### `public bool ImportBoltItems(string path)`
 
@@ -491,7 +491,7 @@ Selects the component item from the component database.
 [Docs](https://developer.tekla.com/topic/en/18/47/0c351379-98c4-2fe0-ac3e-def043ea1d3f)
 
 ### Properties
-- `AttributeFileExtension` (object, get) — Gets the attribute file extension of item from the component database.
+- `AttributeFileExtension` (String, get) — Gets the attribute file extension of item from the component database.
 - `Name` (String, get/set) — The component item's internal name which is used by Tekla Structures in component identification.
 - `Number` (Int32, get/set) — The component item's internal number which is used by Tekla Structures in component identification.
 - `Type` (ComponentItem.ComponentTypeEnum, get/set) — The component item's type.
@@ -646,6 +646,14 @@ Returns a hash code for the point. Notice, in extremely rare cases, you might no
 
 [Docs](https://developer.tekla.com/topic/en/18/47/9f84f024-170b-5181-770d-5ed2f56332cd)
 
+#### `public override string ToString()`
+
+Formats the point into a string, using the current culture.
+
+**Returns:** `String` — The string that represents the point.
+
+[Docs](https://developer.tekla.com/topic/en/18/47/63db29a6-32f7-6696-31eb-a6084dcb62cd)
+
 #### `public string ToString(CultureInfo cultureInfo)`
 
 Formats the point into a string, using the provided culture.
@@ -656,14 +664,6 @@ Formats the point into a string, using the provided culture.
 **Returns:** `String` — The string that represents the point.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/176a7423-000a-5fb0-dab9-659b87bf1505)
-
-#### `public override string ToString()`
-
-Formats the point into a string, using the current culture.
-
-**Returns:** `String` — The string that represents the point.
-
-[Docs](https://developer.tekla.com/topic/en/18/47/63db29a6-32f7-6696-31eb-a6084dcb62cd)
 
 #### `public virtual void Translate(double X, double Y, double Z)`
 
@@ -961,6 +961,14 @@ Modify user parameter of library profile item. Modify is needed for profile item
 
 [Docs](https://developer.tekla.com/topic/en/18/47/2bc63067-81ca-5ba6-cf20-efa1c134ea97)
 
+#### `public virtual bool Select()`
+
+Selects the profile item in the profile database.
+
+**Returns:** `Boolean` — True on success.
+
+[Docs](https://developer.tekla.com/topic/en/18/47/90db4650-0ec0-3f08-dcc6-595f25789b73)
+
 #### `public bool Select(string profileName)`
 
 Selects the profile item in the profile database using the given name.
@@ -971,14 +979,6 @@ Selects the profile item in the profile database using the given name.
 **Returns:** `Boolean` — True on success.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/d75dc6a6-c379-ac2f-a635-5c955166f1b8)
-
-#### `public virtual bool Select()`
-
-Selects the profile item in the profile database.
-
-**Returns:** `Boolean` — True on success.
-
-[Docs](https://developer.tekla.com/topic/en/18/47/90db4650-0ec0-3f08-dcc6-595f25789b73)
 
 #### `public bool SelectCrossSections()`
 
@@ -1007,8 +1007,8 @@ Sets the equivalent type for the specified cross section.
 - `aProfileItemUserParameters` (ArrayList, get) — An array list with the profile item user parameters.
 - `IsCLBProfile` (Boolean, get) — Whether the profile is a clb profile.
 - `IsHardcodedProfile` (Boolean, get) — Whether the profile is a parametric user-defined hard coded profile.
-- `IsMultiCrossSectionUserParametric` (object, get) — Whether the profile is a parametric user-defined multi cross section profile.
-- `IsSketchedUserParametric` (object, get) — Whether the profile is a parametric user-defined sketched profile.
+- `IsMultiCrossSectionUserParametric` (Boolean, get) — Whether the profile is a parametric user-defined multi cross section profile.
+- `IsSketchedUserParametric` (Boolean, get) — Whether the profile is a parametric user-defined sketched profile.
 - `NumberOfCrossSections` (Int32, get) — The number of cross sections in the profile item.
 - `ParameterString` (String, get) — The profile item parameter string.
 - `ProfileItemCrossSections` (IList<ProfileItemCrossSection>, get) — The list of profile item cross-sections.
@@ -1069,6 +1069,14 @@ Modifies the material in material database that has the same name as this instan
 
 [Docs](https://developer.tekla.com/topic/en/18/47/8a966994-dbf3-f876-01b4-24a2ce3a609a)
 
+#### `public bool Select()`
+
+Selects the material item from the database based on the material name and alias name in this instance.
+
+**Returns:** `Boolean` — True on success. False if the material was not found.
+
+[Docs](https://developer.tekla.com/topic/en/18/47/0068c882-b486-2d60-27e7-d9f3a15b48d5)
+
 #### `public bool Select(string materialName)`
 
 Selects the material item based on the name from the material database. The material name can also be an alias name.
@@ -1079,14 +1087,6 @@ Selects the material item based on the name from the material database. The mate
 **Returns:** `Boolean` — True on success. False if the material was not found.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/24928801-2e7f-f555-08c4-ba2f32d14410)
-
-#### `public bool Select()`
-
-Selects the material item from the database based on the material name and alias name in this instance.
-
-**Returns:** `Boolean` — True on success. False if the material was not found.
-
-[Docs](https://developer.tekla.com/topic/en/18/47/0068c882-b486-2d60-27e7-d9f3a15b48d5)
 
 ### Properties
 - `AliasName1` (String, get/set) — The material item's alias name 1.
@@ -1447,6 +1447,14 @@ Modify user parameter of library profile item. Modify is needed for profile item
 
 [Docs](https://developer.tekla.com/topic/en/18/47/2bc63067-81ca-5ba6-cf20-efa1c134ea97)
 
+#### `public virtual bool Select()`
+
+Selects the profile item in the profile database.
+
+**Returns:** `Boolean` — True on success.
+
+[Docs](https://developer.tekla.com/topic/en/18/47/90db4650-0ec0-3f08-dcc6-595f25789b73)
+
 #### `public bool Select(string ProfileName)`
 
 Selects the parametric profile item in the profile database using the given name.
@@ -1457,14 +1465,6 @@ Selects the parametric profile item in the profile database using the given name
 **Returns:** `Boolean` — True on success.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/33bea54e-b358-cf68-e3eb-0b3de35a8e1a)
-
-#### `public virtual bool Select()`
-
-Selects the profile item in the profile database.
-
-**Returns:** `Boolean` — True on success.
-
-[Docs](https://developer.tekla.com/topic/en/18/47/90db4650-0ec0-3f08-dcc6-595f25789b73)
 
 #### `public bool SelectByPrefix(string ProfilePrefix)`
 
@@ -1526,8 +1526,8 @@ Sets the equivalent type for the specified cross section.
 - `aProfileItemParameters` (ArrayList, get) — An array list with the profile item parameters.
 - `IsCLBProfile` (Boolean, get) — Whether the profile is a clb profile.
 - `IsHardcodedProfile` (Boolean, get) — Whether the profile is a parametric user-defined hard coded profile.
-- `IsMultiCrossSectionUserParametric` (object, get) — Whether the profile is a parametric user-defined multi cross section profile.
-- `IsSketchedUserParametric` (object, get) — Whether the profile is a parametric user-defined sketched profile.
+- `IsMultiCrossSectionUserParametric` (Boolean, get) — Whether the profile is a parametric user-defined multi cross section profile.
+- `IsSketchedUserParametric` (Boolean, get) — Whether the profile is a parametric user-defined sketched profile.
 - `NumberOfCrossSections` (Int32, get) — The number of cross sections in the profile item.
 - `ParameterString` (String, get) — The profile item parameter string.
 - `ProfileItemCrossSections` (IList<ProfileItemCrossSection>, get) — The list of profile item cross-sections.
@@ -1648,6 +1648,14 @@ Get cross section with high accuracy.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/285dde88-c699-5213-abc8-fa5f4c951bfe)
 
+#### `public List<ProfileItemSubType> GetProfileItemSubTypes()`
+
+Selects the profile item and updates the sub types in the profile database.
+
+**Returns:** `List<ProfileItemSubType>` — 
+
+[Docs](https://developer.tekla.com/topic/en/18/47/8470624e-f868-9cd5-c674-41da81101565)
+
 #### `public static List<ProfileItemSubType> GetProfileItemSubTypes(ProfileItem profileItem, ProfileItem.ProfileItemTypeEnum typeEnum)`
 
 
@@ -1659,14 +1667,6 @@ Get cross section with high accuracy.
 **Returns:** `List<ProfileItemSubType>` — 
 
 [Docs](https://developer.tekla.com/topic/en/18/47/1c3c5a2f-8603-df13-d55d-07ad12763469)
-
-#### `public List<ProfileItemSubType> GetProfileItemSubTypes()`
-
-Selects the profile item and updates the sub types in the profile database.
-
-**Returns:** `List<ProfileItemSubType>` — 
-
-[Docs](https://developer.tekla.com/topic/en/18/47/8470624e-f868-9cd5-c674-41da81101565)
 
 #### `public bool IsProfileUserDefined()`
 
@@ -1764,8 +1764,8 @@ Sets the equivalent type for the specified cross section.
 - `aProfileItemParameters` (ArrayList, get) — An array list with the profile item parameters.
 - `IsCLBProfile` (Boolean, get) — Whether the profile is a clb profile.
 - `IsHardcodedProfile` (Boolean, get) — Whether the profile is a parametric user-defined hard coded profile.
-- `IsMultiCrossSectionUserParametric` (object, get) — Whether the profile is a parametric user-defined multi cross section profile.
-- `IsSketchedUserParametric` (object, get) — Whether the profile is a parametric user-defined sketched profile.
+- `IsMultiCrossSectionUserParametric` (Boolean, get) — Whether the profile is a parametric user-defined multi cross section profile.
+- `IsSketchedUserParametric` (Boolean, get) — Whether the profile is a parametric user-defined sketched profile.
 - `NumberOfCrossSections` (Int32, get) — The number of cross sections in the profile item.
 - `ParameterString` (String, get) — The profile item parameter string.
 - `ProfileItemCrossSections` (IList<ProfileItemCrossSection>, get) — The list of profile item cross-sections.
@@ -2586,6 +2586,14 @@ Renames a shape in the shape catalog with the given shape name.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/e5d7d104-0f1a-2437-122c-c95d57bc1ecd)
 
+#### `public bool Select()`
+
+Selects the shape from the database based on the name given in this instance.
+
+**Returns:** `Boolean` — True on success. False if the shape was not found.
+
+[Docs](https://developer.tekla.com/topic/en/18/47/44b27784-3b82-a5a3-48bd-8b6d31e62693)
+
 #### `public bool Select(string name)`
 
 Selects the shape based on the given name from the database.
@@ -2596,14 +2604,6 @@ Selects the shape based on the given name from the database.
 **Returns:** `Boolean` — True on success. False if the shape was not found.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/78fd7218-d17a-1dd0-fd3c-bda69433da65)
-
-#### `public bool Select()`
-
-Selects the shape from the database based on the name given in this instance.
-
-**Returns:** `Boolean` — True on success. False if the shape was not found.
-
-[Docs](https://developer.tekla.com/topic/en/18/47/44b27784-3b82-a5a3-48bd-8b6d31e62693)
 
 #### `public bool SetHandlePoints(List<Point> HandlePoints)`
 
@@ -2856,6 +2856,14 @@ Gets the default value of a string property.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/9aee87ff-94be-8506-3db5-025c3ffee451)
 
+#### `public string GetLabel()`
+
+Gets the label of the user property. Labels are translated when translation is available.
+
+**Returns:** `String` — The label of the user property.
+
+[Docs](https://developer.tekla.com/topic/en/18/47/03fdb5ab-ce53-fbda-e9e7-18f22fde4481)
+
 #### `public string GetLabel(bool translated)`
 
 Gets the label of the user property.
@@ -2866,14 +2874,6 @@ Gets the label of the user property.
 **Returns:** `String` — The label of the user property.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/18841e46-86a4-0941-eb7d-1bdd69976904)
-
-#### `public string GetLabel()`
-
-Gets the label of the user property. Labels are translated when translation is available.
-
-**Returns:** `String` — The label of the user property.
-
-[Docs](https://developer.tekla.com/topic/en/18/47/03fdb5ab-ce53-fbda-e9e7-18f22fde4481)
 
 #### `public bool GetObjectTypes(ref List<CatalogObjectTypeEnum> objectTypes)`
 

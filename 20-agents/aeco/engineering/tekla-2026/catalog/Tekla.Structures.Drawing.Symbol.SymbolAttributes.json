@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/b10faf4e-f57b-f8ce-e4b7-6127b94600e7",
   "constructors": [
     {
-      "name": "Symbol.SymbolAttributes",
+      "name": "Symbol.SymbolAttributes()",
       "signature": "public SymbolAttributes()",
       "summary": "Creates a new default symbol attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/539433fb-b2cb-3a9b-7a71-0a8a703ba575"
     },
     {
-      "name": "Symbol.SymbolAttributes",
+      "name": "Symbol.SymbolAttributes(String)",
       "signature": "public SymbolAttributes(string AttributesFile)",
       "summary": "Creates a symbol attributes instance that loads the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1f069dc7-5ea9-d8f1-2337-6b80291aaedb"

@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/e5c963ca-08c8-2ebf-1042-fc8738da262e",
   "constructors": [
     {
-      "name": "AnalysisDesignParameterMulti",
+      "name": "AnalysisDesignParameterMulti(Int32)",
       "signature": "public AnalysisDesignParameterMulti(int materialType)",
       "summary": "Initializes a new instance of the AnalysisDesignParameterMulti class.",
       "params": [
@@ -19,12 +19,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/eb3f0702-86fd-5375-88c8-81aa4e02218e"
     },
     {
-      "name": "AnalysisDesignParameterMulti",
+      "name": "AnalysisDesignParameterMulti(String, Int32, Identifier)",
       "signature": "public AnalysisDesignParameterMulti(string analysisModelName, int parameterId, Identifier partId)",
       "summary": "Initializes a new instance of the AnalysisDesignParameterMulti class.",
       "params": [
@@ -47,6 +48,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7e6e2f0b-1ed3-864d-9f3a-4fe6a89e9351"
@@ -78,6 +80,7 @@
       "signature": "public override void Modify()",
       "summary": "Modifies an analysis design parameter. The ID has to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4ebae5d9-5c9e-9955-fcfb-fcce8f7cfefe"
@@ -87,6 +90,7 @@
       "signature": "public override void Select()",
       "summary": "Selects an analysis design parameter.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7de57939-b5ee-bd2b-a373-26c1832e4753"
@@ -109,6 +113,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2b53c57a-62a1-2098-6d42-915962610188"

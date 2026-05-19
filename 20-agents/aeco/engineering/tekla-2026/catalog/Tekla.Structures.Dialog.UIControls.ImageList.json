@@ -12,6 +12,7 @@
       "signature": "public ImageList()",
       "summary": "Initializes a new instance of the ImageList class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f0376fb7-a37d-bca5-635c-ad3b829b243f"

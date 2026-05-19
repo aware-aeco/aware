@@ -12,6 +12,7 @@
       "signature": "public CategoryName()",
       "summary": "Initializes a new instance of the CategoryName class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/97b5fc56-f207-91c6-5791-c343da9da178"

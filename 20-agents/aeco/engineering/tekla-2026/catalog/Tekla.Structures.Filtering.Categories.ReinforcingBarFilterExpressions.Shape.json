@@ -12,6 +12,7 @@
       "signature": "public Shape()",
       "summary": "Initializes a new instance of the Shape class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b0898bca-49cc-b83f-6c31-9fc708e67215"

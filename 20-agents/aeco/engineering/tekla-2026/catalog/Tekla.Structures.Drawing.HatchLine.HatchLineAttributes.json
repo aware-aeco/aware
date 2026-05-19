@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/d4b14e7a-0c10-2132-de30-99a72d7152b9",
   "constructors": [
     {
-      "name": "HatchLine.HatchLineAttributes",
+      "name": "HatchLine.HatchLineAttributes()",
       "signature": "public HatchLineAttributes()",
       "summary": "Creates a new default hatch line attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/49dd1dc3-1a57-381a-6bc4-ee797c501cdd"
     },
     {
-      "name": "HatchLine.HatchLineAttributes",
+      "name": "HatchLine.HatchLineAttributes(String)",
       "signature": "public HatchLineAttributes(string AttributesFile)",
       "summary": "Creates a new hatch line attributes instance that loads the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d2c0ab4b-d876-865f-d8ea-46f5358ddeae"

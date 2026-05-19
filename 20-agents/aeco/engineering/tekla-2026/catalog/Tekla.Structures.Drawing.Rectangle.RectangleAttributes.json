@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/d916e102-2fc3-f888-8399-dc94fc4cfebf",
   "constructors": [
     {
-      "name": "Rectangle.RectangleAttributes",
+      "name": "Rectangle.RectangleAttributes()",
       "signature": "public RectangleAttributes()",
       "summary": "Creates a new default rectangle attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1e37a306-39bc-4913-b1ca-30ba9997e563"
     },
     {
-      "name": "Rectangle.RectangleAttributes",
+      "name": "Rectangle.RectangleAttributes(String)",
       "signature": "public RectangleAttributes(string AttributesFile)",
       "summary": "Creates a new rectangle attributes instance that loads the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e971538a-cee6-ebfa-74a3-d0856a6ed539"

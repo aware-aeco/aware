@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/babb5ce4-8ff1-4e7a-5190-f4ea99b35406",
   "constructors": [
     {
-      "name": "SecondaryTypeAttribute",
+      "name": "SecondaryTypeAttribute(Int32)",
       "signature": "public SecondaryTypeAttribute(int Type)",
       "summary": "The custom attribute [SecondaryType()] uses this to store the secondary type to the system. This is not to be used by itself.",
       "params": [
@@ -19,12 +19,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5424aae8-6671-f1ad-e3d4-c3ac9a5aacd3"
     },
     {
-      "name": "SecondaryTypeAttribute",
+      "name": "SecondaryTypeAttribute(ConnectionBase.SecondaryType)",
       "signature": "public SecondaryTypeAttribute(ConnectionBase.SecondaryType Type)",
       "summary": "The custom attribute [SecondaryType()] uses this to store the secondary type to the system. This is not to be used by itself.",
       "params": [
@@ -35,6 +36,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/264333a9-e56b-fdb4-b9c6-2c0ac33960c7"

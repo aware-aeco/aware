@@ -3,6 +3,7 @@
   "namespace": "Tekla.Structures.Datatype",
   "kind": "struct",
   "summary": "A list of Distance instances.",
+  "remarks": "DistanceLists are used to store related Distance instances in an enumerable, formattable list.",
   "interfaces": [],
   "doc_url": "https://developer.tekla.com/topic/en/18/47/2fbe454f-df7b-4de0-73ba-5d047f97fb14",
   "constructors": [
@@ -18,6 +19,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b729095f-47d7-1f3e-e2e8-f5cd270e17c8"
@@ -36,6 +38,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/bf13e3d5-ae24-ff62-204f-175bd3cacc02"
@@ -45,6 +48,7 @@
       "signature": "public void Clear()",
       "summary": "Clears the list.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/afc5521f-d3e1-de9a-b868-bae3fda01ee3"
@@ -87,6 +91,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1e7381e6-ec7f-978e-2bf0-944d90d6f568"
@@ -142,6 +147,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4c4fde84-17b9-e6ee-8b5a-d737b8f72762"
@@ -256,6 +262,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/12c876a0-de2d-2184-26b6-8c577f8c2399"
@@ -274,7 +281,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6ef2b2bb-b79d-0ed9-503f-4ad56dc48d86"
     },
     {
-      "name": "ToString.",
+      "name": "ToString()",
       "signature": "public override string ToString()",
       "summary": "Returns the string representation of the distance list.",
       "params": [],
@@ -385,7 +392,7 @@
     },
     {
       "name": "Item",
-      "type": "object",
+      "type": "Distance",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the item at the specified index.",

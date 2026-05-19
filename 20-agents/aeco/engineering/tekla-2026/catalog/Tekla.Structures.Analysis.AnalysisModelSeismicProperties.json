@@ -12,6 +12,7 @@
       "signature": "public AnalysisModelSeismicProperties()",
       "summary": "Initializes a new instance of the AnalysisModelSeismicProperties class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8bf756f3-24ea-1e79-c042-c4cccc617ab0"

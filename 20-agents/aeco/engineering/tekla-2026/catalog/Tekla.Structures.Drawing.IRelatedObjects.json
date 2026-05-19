@@ -8,7 +8,7 @@
   "constructors": [],
   "methods": [
     {
-      "name": "GetRelatedObjects.",
+      "name": "GetRelatedObjects()",
       "signature": "DrawingObjectEnumerator GetRelatedObjects()",
       "summary": "Gets the related objects of the current object.",
       "params": [],
@@ -21,7 +21,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/003820ed-f0fb-31db-bd7b-9e29af26c9ea"
     },
     {
-      "name": "GetRelatedObjects(.Type.)",
+      "name": "GetRelatedObjects(.Type[])",
       "signature": "DrawingObjectEnumerator GetRelatedObjects(Type[] TypeFilter)",
       "summary": "Gets the related objects of the current object that are of certain types.",
       "params": [

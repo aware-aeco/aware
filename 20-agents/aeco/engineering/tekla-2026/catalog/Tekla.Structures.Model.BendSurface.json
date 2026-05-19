@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/4b8c0f69-2f54-749d-5dcc-753991f7481f",
   "constructors": [
     {
-      "name": "BendSurface",
+      "name": "BendSurface(Arc, Double, Double)",
       "signature": "public BendSurface(Arc baseArc, double height, double radiusAtHeight)",
       "summary": "Initializes a new instance of the BendSurface class from a base arc, a height and a radius at the top. This is the recommended constructor if no intermediate points are desired along the lateral boundaries of the bend surface.",
       "params": [
@@ -31,6 +31,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentException",
@@ -41,7 +42,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/31eb0c5b-d4ad-9c47-c595-34298795e80c"
     },
     {
-      "name": "BendSurface",
+      "name": "BendSurface(List\u003CPoint\u003E, List\u003CPoint\u003E, Line, Vector)",
       "signature": "public BendSurface(List\u003CPoint\u003E lateralBoundary1, List\u003CPoint\u003E lateralBoundary2, Line centerLine, Vector rotationAxis)",
       "summary": "Initializes a new instance of the BendSurface class from the cone lateral boundaries and the center line. This is the recommended constructor if fine grained control is desired over the lateral boundaries of the surface",
       "params": [
@@ -70,12 +71,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f29c1a1d-f993-d111-e797-9bde5b114f82"
     },
     {
-      "name": "BendSurface",
+      "name": "BendSurface(Vector, Vector, List\u003CPoint\u003E, List\u003CPoint\u003E)",
       "signature": "public BendSurface(Vector endFaceNormal1, Vector endFaceNormal2, List\u003CPoint\u003E lateralBoundary1, List\u003CPoint\u003E lateralBoundary2)",
       "summary": "Initializes a new instance of the BendSurface class with given parameters. The boundaries are defined by the lateral boundaries (i.e. the points on the sides of the curved part of the surface). The side boundaries are defined by the two first points and the two last points of the lateral boundaries.",
       "remarks": "This constructor may be numerically instable if the end faces are very close",
@@ -105,6 +107,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentNullException",
@@ -119,7 +122,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6e29459b-e04b-0da6-4160-5ab3809bda44"
     },
     {
-      "name": "BendSurface",
+      "name": "BendSurface(Vector, Vector, LineSegment, LineSegment)",
       "signature": "public BendSurface(Vector endFaceNormal1, Vector endFaceNormal2, LineSegment sideBoundary1, LineSegment sideBoundary2)",
       "summary": "Initializes a new instance of the BendSurface class with given parameters. The boundaries are defined by the side boundaries (i.e. generator lines of the surface).",
       "remarks": "This constructor may be numerically instable if the end faces are very close",
@@ -149,6 +152,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentNullException",

@@ -12,6 +12,7 @@
       "signature": "public BinaryFilterExpressionCollection()",
       "summary": "Initializes a new instance of the BinaryFilterExpressionCollection class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9a397fb6-0bdd-2f4f-0d72-ac65d61ee99b"
@@ -30,6 +31,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentNullException",
@@ -44,6 +46,7 @@
       "signature": "public void Clear()",
       "summary": "Removes all the elements from the collection.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d4879053-d92b-b022-d9a3-4d2381f59faa"
@@ -91,6 +94,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentNullException",
@@ -173,6 +177,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentNullException",
@@ -268,6 +273,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentException",
@@ -326,7 +332,7 @@
     },
     {
       "name": "Item",
-      "type": "object",
+      "type": "BinaryFilterExpressionItem",
       "getter": true,
       "setter": true,
       "summary": "Gets or sets the item at a specific index.",

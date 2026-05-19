@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/9eed1ebf-ebb2-6585-332d-92b29e940c47",
   "constructors": [
     {
-      "name": "Mesh",
+      "name": "Mesh()",
       "signature": "public Mesh()",
       "summary": "Creates a new empty mesh instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/91ace5da-fcd4-85a1-0dd3-66a4e855ec38"
     },
     {
-      "name": "Mesh",
+      "name": "Mesh(ArrayList, ArrayList, ArrayList)",
       "signature": "public Mesh(ArrayList Points, ArrayList Triangles, ArrayList Lines)",
       "summary": "Creates a new mesh instance with the given points, triangles and lines. Does not check the indices in the given triangles and lines array lists for correctness.",
       "params": [
@@ -40,6 +41,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f1a7c01a-71d0-e83f-236e-e6cab9855230"
@@ -64,6 +66,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/de40b8cb-02a7-71d7-1799-a6c0523599a2"
@@ -112,6 +115,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4f77e473-ca53-1251-8c4e-e0d4c52b9b37"

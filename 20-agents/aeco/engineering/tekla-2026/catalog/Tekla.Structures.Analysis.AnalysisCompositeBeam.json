@@ -12,6 +12,7 @@
       "signature": "public AnalysisCompositeBeam()",
       "summary": "Initializes a new instance of the AnalysisCompositeBeam class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/06102a2b-cca8-2f4b-ecd1-882e31151667"

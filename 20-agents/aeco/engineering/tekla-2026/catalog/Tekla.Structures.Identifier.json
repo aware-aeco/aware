@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/957a7507-7619-f1f9-acfb-6ff8de2d9e27",
   "constructors": [
     {
-      "name": "Identifier",
+      "name": "Identifier()",
       "signature": "public Identifier()",
       "summary": "Constructs an empty identifier.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4868e096-73c4-0b63-0abf-0b67b4e59313"
     },
     {
-      "name": "Identifier",
+      "name": "Identifier(Guid)",
       "signature": "public Identifier(Guid guid)",
       "summary": "Constructs an identifier with the given GUID.",
       "params": [
@@ -28,12 +29,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e773ee15-b501-c1a4-3dcd-272cfcbb2c05"
     },
     {
-      "name": "Identifier",
+      "name": "Identifier(Int32)",
       "signature": "public Identifier(int id)",
       "summary": "Constructs an identifier with the given ID.",
       "params": [
@@ -44,12 +46,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/46d5ee66-3669-67ff-4f79-5e5fd02f87d9"
     },
     {
-      "name": "Identifier",
+      "name": "Identifier(String)",
       "signature": "public Identifier(string guid)",
       "summary": "Constructs an identifier with the given GUID string.",
       "params": [
@@ -60,6 +63,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/84bc0c91-cf27-caef-4365-f341eb03225a"

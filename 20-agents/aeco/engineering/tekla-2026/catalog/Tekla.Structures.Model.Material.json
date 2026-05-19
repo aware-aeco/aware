@@ -12,6 +12,7 @@
       "signature": "public Material()",
       "summary": "Instantiates an empty material instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7222a2b0-7b58-dd87-25e4-96b3158b6c68"

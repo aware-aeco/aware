@@ -12,6 +12,7 @@
       "signature": "public WpfFilterCheckBox()",
       "summary": "Initiates a new instance of the control.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/54a5cebb-04f8-8ba8-5415-4e31dbfa73d1"

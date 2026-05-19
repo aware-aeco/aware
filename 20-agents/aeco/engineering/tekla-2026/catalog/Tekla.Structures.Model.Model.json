@@ -12,6 +12,7 @@
       "signature": "public Model()",
       "summary": "Creates a \u0022handle\u0022 to the currently open model.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f03a6b06-2c71-b20e-8fc5-bce1c15befe5"
@@ -19,7 +20,7 @@
   ],
   "methods": [
     {
-      "name": "CommitChanges.",
+      "name": "CommitChanges()",
       "signature": "public bool CommitChanges()",
       "summary": "Commits the changes made to the model database so far. One commit is something that a user can later on undo with the undo command. A commit also launches the drawing of the changed product model to the visible views. A dependent plug-in should never call CommitChanges, since this would make undo very difficult for the user to do. However, non-dependent plug-ins require a separate commit if new objects are created.",
       "params": [],
@@ -52,7 +53,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6b589509-80c1-8a7d-4c6d-718ccf01b9d3"
     },
     {
-      "name": "FetchModelObjects(List.String., Boolean)",
+      "name": "FetchModelObjects(List\u003CString\u003E, Boolean)",
       "signature": "public List\u003CModelObject\u003E FetchModelObjects(List\u003Cstring\u003E Guids, bool SelectInstances = true)",
       "summary": "Fetches a list of modelobjects based on given guid list of objects, checks if guid is native or external (for reference model object) and optionally selects objects before returning them.",
       "params": [
@@ -78,7 +79,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/fb4054d2-dfad-6bb6-c07d-0298ea5e1833"
     },
     {
-      "name": "FetchModelObjects(List.Identifier., Boolean)",
+      "name": "FetchModelObjects(List\u003CIdentifier\u003E, Boolean)",
       "signature": "public List\u003CModelObject\u003E FetchModelObjects(List\u003CIdentifier\u003E Ids, bool SelectInstances = true)",
       "summary": "Fetches a list of modelobjects based on given identifier list of objects, and optionally selects objects before returning them.",
       "params": [

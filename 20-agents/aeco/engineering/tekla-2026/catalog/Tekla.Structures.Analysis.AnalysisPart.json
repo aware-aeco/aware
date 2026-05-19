@@ -12,6 +12,7 @@
       "signature": "public AnalysisPart()",
       "summary": "Initializes a new instance of the AnalysisPart class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/57cd1b04-6c87-36a6-de04-af2c0d832778"
@@ -30,6 +31,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/593e179d-1ef5-f69c-cc04-aa77832c2a64"
@@ -46,6 +48,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8ee05e2c-7864-0c43-7b1d-c0b84e753f03"
@@ -55,6 +58,7 @@
       "signature": "public void Delete()",
       "summary": "Deletes an analysis part. The method is not implemented.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/913d5fc8-12a5-3842-401e-1fa9c3b457f9"
@@ -142,6 +146,7 @@
       "signature": "public void Insert()",
       "summary": "Inserts a new analysis part into the Tekla Structures model. The AnalysisModelName has to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/22f458e3-89e3-9026-c42e-d9056e5a4f43"
@@ -177,6 +182,7 @@
       "signature": "public void Modify()",
       "summary": "Modifies an analysis part. The ID, or the PartID and the AnalysisModelName, has to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f5f4208a-209f-80c4-7d27-95ce16fe0c83"
@@ -212,6 +218,7 @@
       "signature": "public override void Select()",
       "summary": "Selects an analysis part. The ID, or the PartID and the AnalysisModelName, has to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0f61b68a-9046-e767-7a57-a7e0b3283537"

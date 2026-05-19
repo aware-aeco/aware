@@ -12,6 +12,7 @@
       "signature": "public StartNumber()",
       "summary": "Initializes a new instance of the StartNumber class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ccce4229-3072-f623-dcef-0ae648fb0ab4"

@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/c36a21f1-71b0-e3ab-8db5-2f10414db8bb",
   "constructors": [
     {
-      "name": "Task",
+      "name": "Task()",
       "signature": "public Task()",
       "summary": "Creates a new task instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5b21df13-43dd-acbc-1109-6f4f6fdb56cb"
     },
     {
-      "name": "Task",
+      "name": "Task(Identifier)",
       "signature": "public Task(Identifier ID)",
       "summary": "Creates a task instance with a known identifier. Select the task after the creation.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a496d9f8-e925-157c-63ea-42f58d1c51c0"
@@ -942,7 +944,7 @@
     },
     {
       "name": "IsUpToDate",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": false,
       "summary": "Gets if the object does not have a modification which is not shared.",
@@ -958,7 +960,7 @@
     },
     {
       "name": "ModificationTime",
-      "type": "object",
+      "type": "Nullable\u003CDateTime\u003E",
       "getter": true,
       "setter": false,
       "summary": "Gets latest time of the object was modified or created.",

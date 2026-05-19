@@ -12,6 +12,7 @@
       "signature": "public MeshCatalog()",
       "summary": "Initiates a new instance of the control.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/295a1825-dee1-c0a8-29ca-fb62930a1b8c"

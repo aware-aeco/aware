@@ -12,6 +12,7 @@
       "signature": "public AnalysisObjectPicker()",
       "summary": "Initializes a new instance of the AnalysisObjectPicker class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3feb04f0-75ba-0848-e909-59ccc3e5496c"

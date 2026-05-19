@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/69279c2a-ae72-e8eb-62dc-ad7dbe3cc0d3",
   "constructors": [
     {
-      "name": "EmbeddedObjectFrame",
+      "name": "EmbeddedObjectFrame(LineTypes, DrawingColors)",
       "signature": "public EmbeddedObjectFrame(LineTypes LineType, DrawingColors FrameColor)",
       "summary": "Creates a new embedded object frame instance with the specified line type and color.",
       "params": [
@@ -25,12 +25,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/12ff9b88-bb43-a85b-a297-5da40b9fa83f"
     },
     {
-      "name": "EmbeddedObjectFrame",
+      "name": "EmbeddedObjectFrame(LineTypes, TeklaDrawingColor)",
       "signature": "public EmbeddedObjectFrame(LineTypes LineType, TeklaDrawingColor FrameColor)",
       "summary": "Creates a new embedded object frame instance with the specified line type and user defined RGB color.",
       "params": [
@@ -47,6 +48,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4a72d758-a3ea-b1fc-a006-e1dd0a6fcf1d"

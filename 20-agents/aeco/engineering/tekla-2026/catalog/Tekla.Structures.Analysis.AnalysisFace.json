@@ -12,6 +12,7 @@
       "signature": "public AnalysisFace()",
       "summary": "Initializes a new instance of the AnalysisFace class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/27b341c4-2b20-7189-2bff-357e31209f35"
@@ -23,6 +24,7 @@
       "signature": "public override void Select()",
       "summary": "Selects an analysis face.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f9ddd3e3-8588-869a-d472-67c50612874b"

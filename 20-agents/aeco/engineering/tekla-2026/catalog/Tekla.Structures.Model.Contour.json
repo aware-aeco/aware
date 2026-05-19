@@ -12,6 +12,7 @@
       "signature": "public Contour()",
       "summary": "Instantiates an empty contour.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/15d7597a-5f33-461c-dbfa-b1a7e28a5e56"
@@ -30,6 +31,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/758831d8-d612-1ccd-aa64-e3c0d07baa1d"

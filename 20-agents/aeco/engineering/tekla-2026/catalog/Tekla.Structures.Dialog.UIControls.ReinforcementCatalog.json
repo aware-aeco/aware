@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/ec000661-895b-f21e-e0f1-9ff859cdc495",
   "constructors": [
     {
-      "name": "ReinforcementCatalog",
+      "name": "ReinforcementCatalog()",
       "signature": "public ReinforcementCatalog()",
       "summary": "Initiates a new instance of the control.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8751e7f7-486f-55cd-725b-8fc9fc3efe04"
     },
     {
-      "name": "ReinforcementCatalog",
+      "name": "ReinforcementCatalog(String, String, Double)",
       "signature": "public ReinforcementCatalog(string Size, string Grade, double BendRadius)",
       "summary": "Creates a new instance of the ReinforcementCatalog and will select in the tree the rebar that contains the given parameters (if possible).",
       "params": [
@@ -40,6 +41,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/01896acb-d164-2f29-341a-d2a47290597d"
@@ -58,6 +60,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c1c88c0f-3b3a-4715-2c9d-626037f46805"

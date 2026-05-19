@@ -12,6 +12,7 @@
       "signature": "public ProgressBar()",
       "summary": "Initializes a new instance of the Operation.ProgressBar class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/82421948-7edb-858d-bb33-899ac171f34f"
@@ -36,6 +37,7 @@
       "signature": "public void Close()",
       "summary": "Close progress bar. Can be called even if Display was not successful.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b0de203c-dfc1-a501-a91b-29428d25567a"
@@ -102,6 +104,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4868a504-d0dd-c456-1f41-48eb4ebf8443"

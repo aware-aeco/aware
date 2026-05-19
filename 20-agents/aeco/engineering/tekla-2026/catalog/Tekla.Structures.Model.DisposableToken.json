@@ -4,7 +4,9 @@
   "kind": "class",
   "summary": "IDisposable delegate adapter.",
   "base": "System.Object",
-  "interfaces": [],
+  "interfaces": [
+    "IDisposable"
+  ],
   "doc_url": "https://developer.tekla.com/topic/en/18/47/6fceaf49-8ef1-a334-d72d-a109a1a627d9",
   "constructors": [
     {
@@ -19,6 +21,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0b9847a1-33bf-a69b-b899-19c9fc64b67d"
@@ -30,6 +33,7 @@
       "signature": "public void Dispose()",
       "summary": "Invokes the callback.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0b2e9549-6519-5ab3-d049-137eacefe337"

@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/acd27e09-3557-4ceb-9755-c78b11ec20bb",
   "constructors": [
     {
-      "name": "CurvedDimensionOrthogonal",
+      "name": "CurvedDimensionOrthogonal(ViewBase, Point, Point, Point, Point, Point, Double)",
       "signature": "public CurvedDimensionOrthogonal(ViewBase View, Point ArcPoint1, Point ArcPoint2, Point ArcPoint3, Point StartPoint, Point EndPoint, double Distance)",
       "summary": "Creates a new curved dimension with orthogonal reference lines using default attributes.",
       "params": [
@@ -55,12 +55,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d5b12223-7196-2b8d-9cb0-d11ba9573fb2"
     },
     {
-      "name": "CurvedDimensionOrthogonal",
+      "name": "CurvedDimensionOrthogonal(ViewBase, Point, Point, Point, Point, Point, Double, CurvedDimensionSetOrthogonal.CurvedDimensionSetOrthogonalAttributes)",
       "signature": "public CurvedDimensionOrthogonal(ViewBase View, Point ArcPoint1, Point ArcPoint2, Point ArcPoint3, Point StartPoint, Point EndPoint, double Distance, CurvedDimensionSetOrthogonal.CurvedDimensionSetOrthogonalAttributes Attributes)",
       "summary": "Creates a new curved dimension with orthogonal reference lines.",
       "params": [
@@ -113,6 +114,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/07a2f425-bd99-cdae-85e6-ba25528191ff"
@@ -133,7 +135,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0fe9e404-f4b0-1b76-9e4a-e4c0a5e7367c"
     },
     {
-      "name": "GetDimensionSet.",
+      "name": "GetDimensionSet()",
       "signature": "public override DimensionSetBase GetDimensionSet()",
       "summary": "Gets the dimension set the current dimension belongs to.",
       "params": [],
@@ -166,7 +168,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5b00bfdf-f6a1-c3a8-577b-518f67fcabd9"
     },
     {
-      "name": "GetDoubleUserProperties(Dictionary.String, Double..)",
+      "name": "GetDoubleUserProperties(Dictionary\u003CString, Double\u003E.)",
       "signature": "public bool GetDoubleUserProperties(out Dictionary\u003Cstring, double\u003E values)",
       "summary": "Retrieves all double user properties for the object with the given list of names.",
       "params": [
@@ -186,7 +188,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b25f0e6b-ab5c-154a-a45c-4f5868a20599"
     },
     {
-      "name": "GetDoubleUserProperties(List.String., Dictionary.String, Double..)",
+      "name": "GetDoubleUserProperties(List\u003CString\u003E, Dictionary\u003CString, Double\u003E.)",
       "signature": "public bool GetDoubleUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, double\u003E values)",
       "summary": "Retrieves all double user properties for the object with the given list of names.",
       "params": [
@@ -225,7 +227,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/4e9beef3-2188-ab45-9f07-dbde351915bf"
     },
     {
-      "name": "GetIntegerUserProperties(Dictionary.String, Int32..)",
+      "name": "GetIntegerUserProperties(Dictionary\u003CString, Int32\u003E.)",
       "signature": "public bool GetIntegerUserProperties(out Dictionary\u003Cstring, int\u003E values)",
       "summary": "Retrieves all integer user properties for the object with the given list of names.",
       "params": [
@@ -245,7 +247,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/20a7d099-ebee-b016-ffc7-0181a1219405"
     },
     {
-      "name": "GetIntegerUserProperties(List.String., Dictionary.String, Int32..)",
+      "name": "GetIntegerUserProperties(List\u003CString\u003E, Dictionary\u003CString, Int32\u003E.)",
       "signature": "public bool GetIntegerUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, int\u003E values)",
       "summary": "Retrieves all integer user properties for the object with the given list of names.",
       "params": [
@@ -271,7 +273,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b485bd81-5ccf-68e4-0453-caea6b1d0dde"
     },
     {
-      "name": "GetRelatedObjects.",
+      "name": "GetRelatedObjects()",
       "signature": "public DrawingObjectEnumerator GetRelatedObjects()",
       "summary": "Gets the related objects of the current object.",
       "params": [],
@@ -284,7 +286,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/50820387-cee1-637a-318e-fb3e06780149"
     },
     {
-      "name": "GetRelatedObjects(.Type.)",
+      "name": "GetRelatedObjects(.Type[])",
       "signature": "public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)",
       "summary": "Gets the related objects of the current object that are of certain types.",
       "params": [
@@ -304,7 +306,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/01d5e137-fa4b-92d7-328b-69c974dc7415"
     },
     {
-      "name": "GetStringUserProperties(Dictionary.String, String..)",
+      "name": "GetStringUserProperties(Dictionary\u003CString, String\u003E.)",
       "signature": "public bool GetStringUserProperties(out Dictionary\u003Cstring, string\u003E values)",
       "summary": "Retrieves all string user properties for the object with the given list of names.",
       "params": [
@@ -324,7 +326,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a0039213-2e79-912f-5bdf-5e6dd417c092"
     },
     {
-      "name": "GetStringUserProperties(List.String., Dictionary.String, String..)",
+      "name": "GetStringUserProperties(List\u003CString\u003E, Dictionary\u003CString, String\u003E.)",
       "signature": "public bool GetStringUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, string\u003E values)",
       "summary": "Retrieves all string user properties for the object with the given list of names.",
       "params": [

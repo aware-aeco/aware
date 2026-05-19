@@ -13,6 +13,7 @@
       "signature": "public abstract void Modify()",
       "summary": "Modifies an analysis design parameter at the database. Inserts if parameter does not exist.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ba96bb8e-a7b4-4531-8f46-acb145de22d0"
@@ -22,6 +23,7 @@
       "signature": "public abstract void Select()",
       "summary": "Selects an analysis object from the database.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/838ad5fe-ed14-8f58-d432-efd635e6c7ea"

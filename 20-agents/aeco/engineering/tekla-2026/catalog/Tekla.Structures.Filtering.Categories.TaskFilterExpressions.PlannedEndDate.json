@@ -12,6 +12,7 @@
       "signature": "public PlannedEndDate()",
       "summary": "Initializes a new instance of the PlannedEndDate class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2df1e7fc-e3e0-de67-0ed0-f2fee4c6da2b"

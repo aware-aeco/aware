@@ -12,6 +12,7 @@
       "signature": "public InvalidFacePointsException()",
       "summary": "Initializes a new instance of the InvalidFacePointsException class with \u0022Cannot create geometry from requested face points\u0022 error message.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/fa230784-c80a-40e0-34bd-93ba8ee26c96"

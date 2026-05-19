@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/98722d9e-764f-601c-d375-077400a3052c",
   "constructors": [
     {
-      "name": "WeldMark.WeldMarkAttributes",
+      "name": "WeldMark.WeldMarkAttributes()",
       "signature": "public WeldMarkAttributes()",
       "summary": "Creates a new default weld mark attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5a044cdf-bad0-2769-c57b-e3edb322135e"
     },
     {
-      "name": "WeldMark.WeldMarkAttributes",
+      "name": "WeldMark.WeldMarkAttributes(String)",
       "signature": "public WeldMarkAttributes(string AttributeFile)",
       "summary": "Creates a new weld mark attributes instance that loads the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/a095c260-2033-20a0-2b73-6d916c6e6515"

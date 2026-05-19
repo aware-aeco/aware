@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/b0d6ce02-e6ee-a703-e1ab-ae8dede8728b",
   "constructors": [
     {
-      "name": "Vector",
+      "name": "Vector()",
       "signature": "public Vector()",
       "summary": "Instantiates a zero length vector.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/258de215-819f-1e43-7731-daa962ea0633"
     },
     {
-      "name": "Vector",
+      "name": "Vector(Point)",
       "signature": "public Vector(Point Point)",
       "summary": "Instatiates a new vector with the given point.",
       "params": [
@@ -28,12 +29,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1827a0b9-9e45-4a4e-3d8c-0851920dd98d"
     },
     {
-      "name": "Vector",
+      "name": "Vector(Double, Double, Double)",
       "signature": "public Vector(double X, double Y, double Z)",
       "summary": "Instantiates a vector with the given coordinates.",
       "params": [
@@ -56,6 +58,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/87408a39-bf21-9e4b-6e54-657376b1026d"
@@ -254,7 +257,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/63f639b4-79da-d1b8-ec4e-8017837710d6"
     },
     {
-      "name": "Normalize.",
+      "name": "Normalize()",
       "signature": "public double Normalize()",
       "summary": "Normalizes the vector using the length 1.0 (the length of a unit vector).",
       "params": [],
@@ -287,7 +290,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/816a0090-f142-ebd4-31fd-1cf78d4ddd53"
     },
     {
-      "name": "ToString.",
+      "name": "ToString()",
       "signature": "public override string ToString()",
       "summary": "Formats the 3D vector into a string with fixed decimals, in the following way: \u0022(X, Y, Z)\u0022.",
       "params": [],
@@ -342,6 +345,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7ad7ecb9-acf3-7ed2-f2bc-aa52b99ceae6"
@@ -351,6 +355,7 @@
       "signature": "public void Zero()",
       "summary": "Zeros all the members of the point.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/9bf63e0c-fe71-40ae-e467-306f0a41f315"

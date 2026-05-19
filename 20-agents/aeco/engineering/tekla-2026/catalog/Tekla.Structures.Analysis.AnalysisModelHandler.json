@@ -12,6 +12,7 @@
       "signature": "public AnalysisModelHandler()",
       "summary": "Initializes a new instance of the AnalysisModelHandler class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0f2f5dcd-070f-ec2c-c12f-ca9a26e0e2fa"
@@ -36,6 +37,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5546fc34-2f62-dfcf-c3c1-d4a36a0d9c11"
@@ -58,6 +60,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/7ef1b329-8542-0e1c-e32e-f6da38518297"
@@ -93,6 +96,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3f0b05fa-cd06-7e36-6871-6f21ee51e7e5"
@@ -115,6 +119,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3155a7d5-d251-6247-0273-21bcd6bd7b52"
@@ -131,6 +136,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/6d4c76b2-b00d-fb79-e6e9-817f80757055"

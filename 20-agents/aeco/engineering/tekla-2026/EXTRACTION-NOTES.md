@@ -6,7 +6,7 @@ This agent is generated from a coverage IR scraped from `developer.tekla.com`. T
 
 - **Site:** `https://developer.tekla.com`
 - **Version root:** `https://developer.tekla.com/doc/tekla-structures/2026/tekla-structures-64304`
-- **Extraction date:** 2026-05-19 (type-page pass + per-member enrichment pass)
+- **Extraction date:** 2026-05-19 (re-extracted from scratch after the codex-coverage FAIL feedback identified ctor-name + generic-bracket + returns-key + Property-Value/Return-Value parser defects)
 - **Source kind:** `scrape` (HttpClient + AngleSharp; see "Why not Playwright" below)
 
 ## Reproduction
@@ -142,7 +142,7 @@ The 2026 extraction produced **0 skipped pages**.
 
 ## Hard failures
 
-None. All 1320 type URLs and all 12,417 member-page URLs were fetched and parsed successfully. The auto-restart wrapper kicked in 0 times (the 2026 extraction completed in a single uninterrupted sidecar process — likely because the warm CDN cache from the immediately-prior 2025 run had already lifted any per-IP throttling).
+None. All 1320 type URLs and all 12,417 member-page URLs were fetched and parsed successfully on the re-extraction. The auto-restart wrapper kicked in 0 times (the 2026 extraction completed in a single uninterrupted sidecar process, running in parallel with 2025 against the same CDN).
 
 ## IR / catalog counts
 
@@ -158,22 +158,23 @@ None. All 1320 type URLs and all 12,417 member-page URLs were fetched and parsed
 | field | filled / total | % |
 |-------|---------------:|--:|
 | Methods + constructors with real signature | 8079 / 8079 | 100% |
-| Properties with non-`object` type | 4004 / 4178 | 95.8% |
+| Properties with non-`object` type | 4166 / 4178 | 99.7% |
 | Events with non-`EventHandler` delegate | 160 / 160 | 100% |
-| **Total members enriched** | **12243 / 12417** | **98.6%** |
+| **Total members enriched** | **12405 / 12417** | **99.9%** |
 
-The 174 properties remaining at `type="object"` are predominantly `SyncRoot` / `ICollection.SyncRoot` properties that **legitimately** return `System.Object` per the .NET BCL contract — they are not parser failures. A spot check confirms each such property's vendor page does say `Type: Object`.
+The 12 properties remaining at `type="object"` are `SyncRoot` / `ICollection.SyncRoot` properties that **legitimately** return `System.Object` per the .NET BCL contract — they are not parser failures. A spot check confirms each such property's vendor page does say `Type: Object`. The remaining 162 properties that were `object` in the previous extraction now carry their real types thanks to the Property Value/Return Value subheading-fallback parser fix shipped alongside this re-extraction.
 
 ## Strict 50-type self-verification
 
-A deterministic sample of 50 types was drawn from the IR using a Fisher-Yates shuffle seeded by the SHA-256 hash of `tekla-2026.0.ir.json` (script: `cli-sidecar/Ingest/Output/verify-types-strict.ps1`). Each sample was checked at the **type level** (name + kind word present in HTML) AND the **member level** (3 random methods, 3 random properties, 1 random event each pass the placeholder check: signature != `name(...)`, property type != `object`, event delegate != bare `EventHandler`).
+A deterministic sample of 50 types was drawn from the IR using a Fisher-Yates shuffle seeded by the SHA-256 hash of `tekla-2026.0.ir.json` (script: `cli-sidecar/Ingest/Output/verify-types-strict.ps1`). Each sample was checked at the **type level** (name + kind word present in HTML, with generic-parameter stripping for types like `CustomObservableCollection<T>`) AND the **member level** (3 random methods, 3 random properties, 1 random event each pass the placeholder check: signature != `name(...)`, property type != `object`, event delegate != bare `EventHandler`).
 
-Result: **50 / 50 PASS** (seed = 1406040267).
+Result: **50 / 50 PASS** (seed = 925498160, IR sha256 = `b729fb3000157aa4902985c086ea786dc563c7b74ecad092835918e8f31bef57`).
 
 The full output is at `cli-sidecar/Ingest/Output/tekla-2026-strict-verify.txt`.
 
 ## Known limitations / follow-up work
 
-1. **Interfaces list is currently `[]`** for most types. Tekla's type pages don't itemize implemented interfaces in a dedicated section the way they do for base types; surfacing them would require parsing the C# syntax block (e.g. `class Foo : BaseClass, IBar, IBaz`). A follow-up parser pass over the type page's `div.codeSnippetContainerCode[id$="_code_Div1"] > pre` block could fill this — out of scope for B1.
+1. **Interfaces list is currently populated from the C# syntax-block declaration line** (e.g. `class Foo : BaseClass, IBar, IBaz` → interfaces = `["IBar", "IBaz"]`). This is the Tekla-page-template's only deterministic source for implemented interfaces — Tekla doesn't itemize them in a dedicated section.
 2. **Multi-layer inheritance**: types that inherit through multiple layers (`Foo -> AbstractFoo -> BaseFoo -> Object`) record only the most-direct ancestor in `base`. This matches the IR schema (a single string), but the chain information is lost. Acceptable per Phase A schema design.
-3. **174 properties without explicit type** (the SyncRoot caveat above) — these are correctly typed as `object` per the .NET BCL contract; no further enrichment possible from vendor docs.
+3. **12 properties without explicit type** (the SyncRoot caveat above) — these are correctly typed as `object` per the .NET BCL contract; no further enrichment possible from vendor docs.
+4. **Catalog filename sanitization**: generic type names like `Enum<E>` and `CustomObservableCollection<T>` are rewritten in the catalog FILENAME to be filesystem-safe (`Enum_of_E.json`, `CustomObservableCollection_of_T.json`). The JSON BODY inside the file carries the real type name verbatim. Downstream consumers should read `name` from the JSON, not parse it out of the filename.

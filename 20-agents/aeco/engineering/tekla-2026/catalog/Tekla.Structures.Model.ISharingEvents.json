@@ -3,7 +3,9 @@
   "namespace": "Tekla.Structures.Model",
   "kind": "interface",
   "summary": "Provides events related to the sharing service in a shared model environment.",
-  "interfaces": [],
+  "interfaces": [
+    "IDisposable"
+  ],
   "doc_url": "https://developer.tekla.com/topic/en/18/47/3e0df457-57a3-2312-035d-472d7ee71df8",
   "constructors": [],
   "methods": [],

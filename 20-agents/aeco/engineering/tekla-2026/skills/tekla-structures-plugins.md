@@ -1,6 +1,6 @@
 ---
 name: tekla-tekla-structures-plugins
-description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Plugins namespace — 34 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AutoDirectionTypeAttribute, ConnectionBase, CustomPartBase, CustomPartInputTypeAttribute, DetailTypeAttribute, CustomPartPositioningTypeAttribute, DrawingPluginBase, DrawingPluginBase.InputDefinition, and 26 more types.
+description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Plugins namespace — 34 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AutoDirectionTypeAttribute, ConnectionBase, CustomPartInputTypeAttribute, CustomPartBase, CustomPartPositioningTypeAttribute, DetailTypeAttribute, DrawingPluginBase, DrawingPluginBase.InputDefinition, and 26 more types.
 ---
 
 # Tekla.Structures.Plugins

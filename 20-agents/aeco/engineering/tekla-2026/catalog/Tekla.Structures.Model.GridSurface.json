@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/99d2617a-fb93-5d6e-c62d-bc84e0ee76c7",
   "constructors": [
     {
-      "name": "GridSurface",
+      "name": "GridSurface()",
       "signature": "public GridSurface()",
       "summary": "Creates a new grid surface instance. The default values are as follows: Label = \u0022Default\u0022;IsMagnetic = false;ExtensionLeft = 2000.0;ExtensionRight = 2000.0;ExtensionBelow = 2000.0;ExtensionAbove = 2000.0;DrawingVisibility = false;",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/20e07dee-ef7a-e71b-5b28-f09ff7daa7fd"
     },
     {
-      "name": "GridSurface",
+      "name": "GridSurface(String)",
       "signature": "public GridSurface(string label)",
       "summary": "Creates a new grid surface instance taking the label as input.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/2f709186-f302-caa3-4687-52a294712ee2"
@@ -871,7 +873,7 @@
     },
     {
       "name": "IsUpToDate",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": false,
       "summary": "Gets if the object does not have a modification which is not shared.",
@@ -887,7 +889,7 @@
     },
     {
       "name": "ModificationTime",
-      "type": "object",
+      "type": "Nullable\u003CDateTime\u003E",
       "getter": true,
       "setter": false,
       "summary": "Gets latest time of the object was modified or created.",

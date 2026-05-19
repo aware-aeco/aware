@@ -4,7 +4,9 @@
   "kind": "class",
   "summary": "The VertexEnumerator class is used to enumerate the vertexes of a loop instance.",
   "base": "System.Object",
-  "interfaces": [],
+  "interfaces": [
+    "IEnumerator"
+  ],
   "doc_url": "https://developer.tekla.com/topic/en/18/47/6cff93f0-7fe6-7e86-61f9-287418f3f72b",
   "constructors": [],
   "methods": [
@@ -26,6 +28,7 @@
       "signature": "public void Reset()",
       "summary": "Resets the enumerator to the beginning.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/17307965-cc44-9be8-dba1-c5d96f9e9039"

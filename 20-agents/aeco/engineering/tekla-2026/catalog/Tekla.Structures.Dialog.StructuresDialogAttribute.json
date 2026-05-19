@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/1795a6fd-a41a-98af-ec52-cad837ec40d7",
   "constructors": [
     {
-      "name": "StructuresDialogAttribute",
+      "name": "StructuresDialogAttribute(String)",
       "signature": "public StructuresDialogAttribute(string attributeName)",
       "summary": "Initializes a new StructuresDialogAttribute instance.",
       "params": [
@@ -19,12 +19,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/494c6575-ef5f-4548-a422-db61b3120b1c"
     },
     {
-      "name": "StructuresDialogAttribute",
+      "name": "StructuresDialogAttribute(String, String)",
       "signature": "public StructuresDialogAttribute(string attributeName, string attributeType)",
       "summary": "Initializes a new StructuresDialogAttribute instance.",
       "params": [
@@ -41,12 +42,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ecbd0160-8dce-96c9-aac3-b041a332ba80"
     },
     {
-      "name": "StructuresDialogAttribute",
+      "name": "StructuresDialogAttribute(String, Type)",
       "signature": "public StructuresDialogAttribute(string attributeName, Type attributeType)",
       "summary": "Initializes a new StructuresDialogAttribute instance.",
       "params": [
@@ -63,6 +65,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b146d771-e707-f78f-aa31-5ec7fd965023"

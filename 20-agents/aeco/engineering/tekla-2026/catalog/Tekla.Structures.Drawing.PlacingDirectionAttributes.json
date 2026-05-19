@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/d1a2b9c5-012d-c737-abc6-d5b7bac840ff",
   "constructors": [
     {
-      "name": "PlacingDirectionAttributes",
+      "name": "PlacingDirectionAttributes()",
       "signature": "public PlacingDirectionAttributes()",
       "summary": "Creates a new placing direction attributes instance. The positive and negative directions are set to false by default.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ed99e174-ab44-9625-2ad5-ee71a937d4e5"
     },
     {
-      "name": "PlacingDirectionAttributes",
+      "name": "PlacingDirectionAttributes(Boolean, Boolean)",
       "signature": "public PlacingDirectionAttributes(bool positive, bool negative)",
       "summary": "Creates a new placing direction attributes instance.",
       "params": [
@@ -34,6 +35,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/15922e50-8d3e-034d-09c3-b89f028c0073"

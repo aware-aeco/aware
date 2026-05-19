@@ -8,7 +8,7 @@
   "constructors": [],
   "methods": [
     {
-      "name": "GetObjects.",
+      "name": "GetObjects()",
       "signature": "DrawingObjectEnumerator GetObjects()",
       "summary": "Gets the children of the current object.",
       "params": [],
@@ -21,7 +21,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e548034d-415e-3fc3-844f-780bc5d2e7c2"
     },
     {
-      "name": "GetObjects(.Type.)",
+      "name": "GetObjects(.Type[])",
       "signature": "DrawingObjectEnumerator GetObjects(Type[] TypeFilter)",
       "summary": "Gets the children of the current object that are of certain types.",
       "params": [

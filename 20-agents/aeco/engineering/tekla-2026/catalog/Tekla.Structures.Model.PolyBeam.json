@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/d879e653-76ab-ce1d-7b09-7abcdd6fa22e",
   "constructors": [
     {
-      "name": "PolyBeam",
+      "name": "PolyBeam()",
       "signature": "public PolyBeam()",
       "summary": "Initializes a new instance of the PolyBeam class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ab5f51a5-8215-8834-a283-0545105b5fb5"
     },
     {
-      "name": "PolyBeam",
+      "name": "PolyBeam(PolyBeam.PolyBeamTypeEnum)",
       "signature": "public PolyBeam(PolyBeam.PolyBeamTypeEnum polyBeamType)",
       "summary": "Initializes a new instance of the PolyBeam class by using the defined type.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/333a1714-fecc-ecbe-34b0-49d1897c62d9"
@@ -638,7 +640,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/47/70f212bb-ee70-e9e9-7ab6-d6a9d46f8de6"
     },
     {
-      "name": "GetSolid.",
+      "name": "GetSolid()",
       "signature": "public Solid GetSolid()",
       "summary": "Returns the solid of the part.",
       "params": [],
@@ -1182,7 +1184,7 @@
     },
     {
       "name": "IsUpToDate",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": false,
       "summary": "Gets if the object does not have a modification which is not shared.",
@@ -1198,7 +1200,7 @@
     },
     {
       "name": "ModificationTime",
-      "type": "object",
+      "type": "Nullable\u003CDateTime\u003E",
       "getter": true,
       "setter": false,
       "summary": "Gets latest time of the object was modified or created.",

@@ -12,6 +12,7 @@
       "signature": "public AlongLineOrWithLeaderLineAndParentObjectAlongPartPlacingType()",
       "summary": "Creates a new along line or with leader line and parent object along part placing type instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/aa75d03f-8b7b-1611-af78-2dc9d413c265"

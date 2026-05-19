@@ -12,6 +12,7 @@
       "signature": "public DrawingCoordinateConverter()",
       "summary": "Initializes a new instance of the DrawingCoordinateConverter class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/d4f940d9-e248-472a-30a1-ff2740c91015"

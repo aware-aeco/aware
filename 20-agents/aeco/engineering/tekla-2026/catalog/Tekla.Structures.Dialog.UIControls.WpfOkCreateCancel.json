@@ -4,7 +4,9 @@
   "kind": "class",
   "summary": "Interaction logic for WPFOkCreateCancel.xaml",
   "base": "System.Windows.Controls.UserControl",
-  "interfaces": [],
+  "interfaces": [
+    "IComponentConnector"
+  ],
   "doc_url": "https://developer.tekla.com/topic/en/18/47/faf775c3-7dd6-4005-176c-c5835d7e04a1",
   "constructors": [
     {
@@ -12,6 +14,7 @@
       "signature": "public WpfOkCreateCancel()",
       "summary": "Constructor",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5067e577-08ba-c816-9c57-53e34e68e74d"
@@ -23,6 +26,7 @@
       "signature": "public void InitializeComponent()",
       "summary": "InitializeComponent",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b5c8a0a5-f7bf-904f-6cb3-224e6c1c703d"

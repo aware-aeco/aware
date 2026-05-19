@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/0a855c11-4d75-8d03-91e3-450ddbd154f4",
   "constructors": [
     {
-      "name": "MarkBase.MarkBaseAttributes",
+      "name": "MarkBase.MarkBaseAttributes()",
       "signature": "public MarkBaseAttributes()",
       "summary": "Creates a new default mark base attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/52214b9b-80f3-eab5-1d35-2319cf719747"
     },
     {
-      "name": "MarkBase.MarkBaseAttributes",
+      "name": "MarkBase.MarkBaseAttributes(String)",
       "signature": "public MarkBaseAttributes(string AttributesFile)",
       "summary": "Creates a new mark base attributes instance with the given attributes file\u0027s filename.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ef65f614-e81b-b7b7-0729-5b4391c97fab"

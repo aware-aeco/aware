@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/803ad6ff-2940-2bff-01b5-0241125e38b5",
   "constructors": [
     {
-      "name": "EdgeChamfer",
+      "name": "EdgeChamfer()",
       "signature": "public EdgeChamfer()",
       "summary": "Initializes a new instance of the EdgeChamfer class with empty attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/41137cd5-60c7-1b7f-16ce-5860c2054d79"
     },
     {
-      "name": "EdgeChamfer",
+      "name": "EdgeChamfer(Point, Point)",
       "signature": "public EdgeChamfer(Point FirstEnd, Point SecondEnd)",
       "summary": "Initializes a new instance of the EdgeChamfer class.",
       "params": [
@@ -34,6 +35,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/c2f83ea4-1ac9-3426-9f3d-4579176c9666"
@@ -861,7 +863,7 @@
     },
     {
       "name": "IsUpToDate",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": false,
       "summary": "Gets if the object does not have a modification which is not shared.",
@@ -869,7 +871,7 @@
     },
     {
       "name": "ModificationTime",
-      "type": "object",
+      "type": "Nullable\u003CDateTime\u003E",
       "getter": true,
       "setter": false,
       "summary": "Gets latest time of the object was modified or created.",

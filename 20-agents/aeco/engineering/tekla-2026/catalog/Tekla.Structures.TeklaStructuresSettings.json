@@ -12,6 +12,7 @@
       "signature": "public TeklaStructuresSettings()",
       "summary": "Initializes a new instance of the TeklaStructuresSettings class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ab75b5ab-ed36-3c6d-d9ec-d84e0275ce4f"

@@ -4,7 +4,9 @@
   "kind": "class",
   "summary": "Interaction logic for WPFCreateAppyCancel.xaml. Control is meant to be used with non-dependent plug-ins",
   "base": "System.Windows.Controls.UserControl",
-  "interfaces": [],
+  "interfaces": [
+    "IComponentConnector"
+  ],
   "doc_url": "https://developer.tekla.com/topic/en/18/47/49fc797a-5d42-56cd-390b-b9428a849110",
   "constructors": [
     {
@@ -12,6 +14,7 @@
       "signature": "public WpfCreateApplyCancel()",
       "summary": "Constructor",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/16e945b3-ffc9-5158-e82d-d86b939838be"
@@ -23,6 +26,7 @@
       "signature": "public void InitializeComponent()",
       "summary": "InitializeComponent",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ea550edc-83ae-a147-9d1a-87bbf1840878"

@@ -1,6 +1,6 @@
 ---
 name: tekla-tekla-structures-datatype
-description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Datatype namespace — 25 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AngleList, Angle, BooleanConverter, Constants, DistanceConverter, DistanceListConverter, DoubleConverter, EnumConverter, and 17 more types.
+description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Datatype namespace — 25 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Angle, AngleList, BooleanConverter, Constants, DistanceConverter, DistanceListConverter, DoubleConverter, IntegerConverter, and 17 more types.
 ---
 
 # Tekla.Structures.Datatype
@@ -105,6 +105,14 @@ Parses the given text as an angle in the current unit type
 
 [Docs](https://developer.tekla.com/topic/en/18/47/e50fed20-8e48-aa8a-defe-5dd610183f40)
 
+#### `public override string ToString()`
+
+Converts the represented angle to a string in the current units
+
+**Returns:** `String` — This angle as a string
+
+[Docs](https://developer.tekla.com/topic/en/18/47/4aa323d3-8ea8-8f87-565a-304f1ac29617)
+
 #### `public string ToString(Angle.UnitType unitType)`
 
 Converts the represented angle to a string in the given units
@@ -140,14 +148,6 @@ Converts the represented angle to a string with the given parameters
 **Returns:** `String` — This angle as a string
 
 [Docs](https://developer.tekla.com/topic/en/18/47/79ca5535-ce7d-7f31-3ef0-d0d87bbb19ae)
-
-#### `public override string ToString()`
-
-Converts the represented angle to a string in the current units
-
-**Returns:** `String` — This angle as a string
-
-[Docs](https://developer.tekla.com/topic/en/18/47/4aa323d3-8ea8-8f87-565a-304f1ac29617)
 
 #### `public static bool TryParse(string text, out Angle result)`
 
@@ -302,6 +302,8 @@ Converts the given angles to a string with the given parameters in the current u
 
 The Boolean datatype.
 
+**Remarks:** The purpose of this type is to enable dialog field binding with StructuresExtender. You don't need to use this type in your own programs.
+
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/0dbf9276-f795-5425-8573-6ff1d402fa38)
 
 ### Constructors
@@ -380,6 +382,8 @@ The Constants class is a repository for constants used by the Tekla.Structures.D
 ## Distance (struct)
 
 The Distance datatype.
+
+**Remarks:** Distance stores, parses and formats distances in real world units.
 
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/db01624c-588b-13b0-0d37-cae81b0408e4)
 
@@ -536,6 +540,14 @@ Parses a distance from a string representation using the given unit type and cul
 
 [Docs](https://developer.tekla.com/topic/en/18/47/7f2527a1-966d-74e5-e167-d16511fb0566)
 
+#### `public string ToDecimalString()`
+
+Converts the distance to a decimal string representation.
+
+**Returns:** `String` — The string representation of the distance.
+
+[Docs](https://developer.tekla.com/topic/en/18/47/4fdd8958-9e34-3223-bc05-807c3fbeb7ae)
+
 #### `public string ToDecimalString(IFormatProvider formatProvider)`
 
 Converts the distance to a decimal string representation.
@@ -583,13 +595,13 @@ Converts the distance to a decimal string representation.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/de76014f-1500-125f-6f0a-1f4fd3017cb5)
 
-#### `public string ToDecimalString()`
+#### `public string ToFractionalFeetAndInchesString()`
 
-Converts the distance to a decimal string representation.
+Creates a string representation of the distance in feet and inches.
 
 **Returns:** `String` — The string representation of the distance.
 
-[Docs](https://developer.tekla.com/topic/en/18/47/4fdd8958-9e34-3223-bc05-807c3fbeb7ae)
+[Docs](https://developer.tekla.com/topic/en/18/47/d611f8c3-11c1-c318-4bfa-5f933257fe4f)
 
 #### `public string ToFractionalFeetAndInchesString(IFormatProvider formatProvider)`
 
@@ -602,13 +614,13 @@ Creates a string representation of the distance in feet and inches.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/a34602fe-6adb-ce21-3b16-5b6258e88506)
 
-#### `public string ToFractionalFeetAndInchesString()`
+#### `public string ToFractionalInchesString()`
 
-Creates a string representation of the distance in feet and inches.
+Creates a string representation of the distance in inches.
 
 **Returns:** `String` — The string representation of the distance.
 
-[Docs](https://developer.tekla.com/topic/en/18/47/d611f8c3-11c1-c318-4bfa-5f933257fe4f)
+[Docs](https://developer.tekla.com/topic/en/18/47/5ce38b30-c93c-cff8-6cec-60f514689552)
 
 #### `public string ToFractionalInchesString(IFormatProvider formatProvider)`
 
@@ -621,13 +633,13 @@ Creates a string representation of the distance in inches.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/735bbd44-6bf8-d628-c205-89d237f74583)
 
-#### `public string ToFractionalInchesString()`
+#### `public override string ToString()`
 
-Creates a string representation of the distance in inches.
+Creates a string representation of the distance.
 
-**Returns:** `String` — The string representation of the distance.
+**Returns:** `String` — The string representation of the distance using CultureInfo.InvariantCulture.
 
-[Docs](https://developer.tekla.com/topic/en/18/47/5ce38b30-c93c-cff8-6cec-60f514689552)
+[Docs](https://developer.tekla.com/topic/en/18/47/7981e135-73db-fe09-efcf-6bbc0543262c)
 
 #### `public string ToString(IFormatProvider formatProvider)`
 
@@ -675,14 +687,6 @@ Creates a string representation of the distance.
 **Returns:** `String` — The string representation of the distance.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/fc6e470e-88d7-e078-1bca-ffec1fe32042)
-
-#### `public override string ToString()`
-
-Creates a string representation of the distance.
-
-**Returns:** `String` — The string representation of the distance using CultureInfo.InvariantCulture.
-
-[Docs](https://developer.tekla.com/topic/en/18/47/7981e135-73db-fe09-efcf-6bbc0543262c)
 
 #### `public static bool TryParse(string text, out Distance result)`
 
@@ -809,6 +813,8 @@ Converts an object from the distance type to the given destination type.
 ## DistanceList (struct)
 
 A list of Distance instances.
+
+**Remarks:** DistanceLists are used to store related Distance instances in an enumerable, formattable list.
 
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/2fbe454f-df7b-4de0-73ba-5d047f97fb14)
 
@@ -945,6 +951,14 @@ Copies the contents of the list into a new array.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/6ef2b2bb-b79d-0ed9-503f-4ad56dc48d86)
 
+#### `public override string ToString()`
+
+Returns the string representation of the distance list.
+
+**Returns:** `String` — The string representation of the distance list.
+
+[Docs](https://developer.tekla.com/topic/en/18/47/56e41342-c57e-ce1b-4f39-0fa1ffa9d9a8)
+
 #### `public string ToString(IFormatProvider formatProvider)`
 
 Returns the string representation of the distance list.
@@ -981,18 +995,10 @@ Returns the string representation of the distance list.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/5dc71ac4-54d5-1b7b-0d0a-f0ddc37512d3)
 
-#### `public override string ToString()`
-
-Returns the string representation of the distance list.
-
-**Returns:** `String` — The string representation of the distance list.
-
-[Docs](https://developer.tekla.com/topic/en/18/47/56e41342-c57e-ce1b-4f39-0fa1ffa9d9a8)
-
 ### Properties
 - `Count` (Int32, get) — Gets the number of items in the list.
 - `IsReadOnly` (Boolean, get) — Gets a boolean value indicating whether the collection is read-only.
-- `Item` (object, get/set) — Gets or sets the item at the specified index.
+- `Item` (Distance, get/set) — Gets or sets the item at the specified index.
 
 ## DistanceListConverter (class)
 
@@ -1204,7 +1210,7 @@ Converts an object from the double datatype to the given destination type.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/53a8a97e-d5a8-0aee-6090-39a9c125dbe7)
 
-## Enum.E. (struct)
+## Enum<E> (struct)
 
 The Enum datatype generic.
 

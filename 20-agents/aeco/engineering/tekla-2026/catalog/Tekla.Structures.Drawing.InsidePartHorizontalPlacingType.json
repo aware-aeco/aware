@@ -12,6 +12,7 @@
       "signature": "public InsidePartHorizontalPlacingType()",
       "summary": "Creates a new inside part horizontal placing type instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/0b1c6c93-884a-ed92-28d7-a9d77dd979ee"

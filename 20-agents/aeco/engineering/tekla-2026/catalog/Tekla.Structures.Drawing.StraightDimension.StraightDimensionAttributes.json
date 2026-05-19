@@ -12,6 +12,7 @@
       "signature": "public StraightDimensionAttributes()",
       "summary": "Initializes a new instance of the StraightDimension.StraightDimensionAttributes class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e965618b-69fd-5139-d5d3-9badad4752d5"

@@ -12,6 +12,7 @@
       "signature": "public Guid()",
       "summary": "Initializes a new instance of the Guid class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ed7a6579-ad6e-c699-c63e-b11a74fe4637"

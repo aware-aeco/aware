@@ -1,6 +1,6 @@
 ---
 name: tekla-tekla-structures-model-ui
-description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Model.UI namespace — 24 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: ClipBox, ClipPlane, Color, ClipPlaneCollection, GraphicPolyLine, GraphicsDrawer, ModelObjectSelector, Mesh, and 16 more types.
+description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Model.UI namespace — 24 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: ClipBox, ClipPlane, ClipPlaneCollection, Color, GraphicPolyLine, GraphicsDrawer, ModelObjectSelector, Mesh, and 16 more types.
 ---
 
 # Tekla.Structures.Model.UI
@@ -586,12 +586,22 @@ Returns an enumerator that iterates through a collection.
 
 The Picker class can be used to query the user to do manual picks of objects and points from the Tekla Structures model. The methods throw an exception if the user interrupts (cancels) the pick command.
 
+**Remarks:** Prompts Tekla Structures prefixes the given prompt with "prompt_" and looks for a translation in the prompts.ail file. If the translation (e.g. "prompt_Pick_first_position") is not found in the prompts.ail file, the prompt string is displayed as such. This feature can be used to give already translated strings to the picker.
+
 [Vendor docs](https://developer.tekla.com/topic/en/18/47/cb1e9d5a-d5bc-21c7-44c2-8d2ed7be833b)
 
 ### Constructors
 - `public Picker()` — Creates a new picker instance.
 
 ### Methods
+#### `public PickInput PickFace()`
+
+Queries the user to pick a face from the model.
+
+**Returns:** `PickInput` — A list of the vertices of the face and the object the user picked as one PickInput instance.
+
+[Docs](https://developer.tekla.com/topic/en/18/47/2ab33130-77eb-ba4d-ac7c-75bcfd28b879)
+
 #### `public PickInput PickFace(string Prompt)`
 
 Queries the user to pick a face from the model with the given prompt.
@@ -603,13 +613,13 @@ Queries the user to pick a face from the model with the given prompt.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/cff69c8b-cd58-440a-12ec-13070f79791b)
 
-#### `public PickInput PickFace()`
+#### `public ArrayList PickLine()`
 
-Queries the user to pick a face from the model.
+Queries the user to pick a line from the model.
 
-**Returns:** `PickInput` — A list of the vertices of the face and the object the user picked as one PickInput instance.
+**Returns:** `ArrayList` — A list of points the user picked.
 
-[Docs](https://developer.tekla.com/topic/en/18/47/2ab33130-77eb-ba4d-ac7c-75bcfd28b879)
+[Docs](https://developer.tekla.com/topic/en/18/47/b62ed31c-938a-9d36-8940-ca61bafaa0d0)
 
 #### `public ArrayList PickLine(string Prompt)`
 
@@ -621,14 +631,6 @@ Queries the user to pick a line from the model with the given prompt.
 **Returns:** `ArrayList` — A list of points the user picked.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/b657d3cb-2227-9b0c-774c-869a0ad84dda)
-
-#### `public ArrayList PickLine()`
-
-Queries the user to pick a line from the model.
-
-**Returns:** `ArrayList` — A list of points the user picked.
-
-[Docs](https://developer.tekla.com/topic/en/18/47/b62ed31c-938a-9d36-8940-ca61bafaa0d0)
 
 #### `public ModelObject PickObject(Picker.PickObjectEnum Enum)`
 
@@ -676,6 +678,14 @@ Queries the user to pick model objects from the model with the given prompt.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/18d61ce6-d498-ef54-9367-032b7ec75162)
 
+#### `public Point PickPoint()`
+
+Queries the user to pick a point from the model.
+
+**Returns:** `Point` — The point the user picked.
+
+[Docs](https://developer.tekla.com/topic/en/18/47/7512c677-bc34-36b9-6b2c-f21055dd3a90)
+
 #### `public Point PickPoint(Point ReferencePoint)`
 
 Queries the user to pick a point from the model with reference to the given point.
@@ -709,14 +719,6 @@ Queries the user to pick point with given prompt and reference to another point.
 **Returns:** `Point` — The point the user picked.
 
 [Docs](https://developer.tekla.com/topic/en/18/47/6ef22e29-4b51-ed37-924a-7685879cdf76)
-
-#### `public Point PickPoint()`
-
-Queries the user to pick a point from the model.
-
-**Returns:** `Point` — The point the user picked.
-
-[Docs](https://developer.tekla.com/topic/en/18/47/7512c677-bc34-36b9-6b2c-f21055dd3a90)
 
 #### `public ArrayList PickPoints(Picker.PickPointEnum Enum)`
 

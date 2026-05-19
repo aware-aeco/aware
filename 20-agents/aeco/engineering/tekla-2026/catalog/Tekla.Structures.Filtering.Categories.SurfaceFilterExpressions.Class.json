@@ -12,6 +12,7 @@
       "signature": "public Class()",
       "summary": "Initializes a new instance of the Class class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/b429aa73-793d-986c-3d74-6b25a3da438a"

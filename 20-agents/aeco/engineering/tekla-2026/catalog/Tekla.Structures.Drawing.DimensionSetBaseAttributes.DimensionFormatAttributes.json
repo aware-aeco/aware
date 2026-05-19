@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/4d479d66-b47c-fc8f-6223-3abe21e7f513",
   "constructors": [
     {
-      "name": "DimensionSetBaseAttributes.DimensionFormatAttributes",
+      "name": "DimensionSetBaseAttributes.DimensionFormatAttributes()",
       "signature": "public DimensionFormatAttributes()",
       "summary": "Creates a new dimension format attributes instance. By default the format rounds the dimension value to the nearest whole and shows it with no decimals. The unit is selected automatically.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/3be7e271-9859-992c-eea8-4a2cf3f7f604"
     },
     {
-      "name": "DimensionSetBaseAttributes.DimensionFormatAttributes",
+      "name": "DimensionSetBaseAttributes.DimensionFormatAttributes(DimensionSetBaseAttributes.DimensionValuePrecisions, DimensionSetBaseAttributes.DimensionValueFormats, DimensionSetBaseAttributes.DimensionValueUnits)",
       "signature": "public DimensionFormatAttributes(DimensionSetBaseAttributes.DimensionValuePrecisions precision, DimensionSetBaseAttributes.DimensionValueFormats format, DimensionSetBaseAttributes.DimensionValueUnits unit)",
       "summary": "Creates a new dimension format attributes instance with the given parameters.",
       "params": [
@@ -40,6 +41,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ad619fa5-d246-e9b8-d3a2-229815aaf4f9"

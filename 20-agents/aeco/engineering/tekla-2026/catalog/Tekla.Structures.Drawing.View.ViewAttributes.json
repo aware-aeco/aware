@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/37966d35-61b2-f198-c207-c709508a943a",
   "constructors": [
     {
-      "name": "View.ViewAttributes",
+      "name": "View.ViewAttributes()",
       "signature": "public ViewAttributes()",
       "summary": "Creates a new view attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/115955f7-d6b4-548e-89d8-4de9cb733381"
     },
     {
-      "name": "View.ViewAttributes",
+      "name": "View.ViewAttributes(String)",
       "signature": "public ViewAttributes(string AttributesFile)",
       "summary": "Creates a new view attributes instance that loads the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e2c5666b-3542-f4fb-d7de-d2d1ec4b473b"

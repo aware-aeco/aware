@@ -4,20 +4,23 @@
   "kind": "class",
   "summary": "The WpfMaterialCatalog class represents a group of controls to select materials using the material catalog.",
   "base": "System.Windows.Controls.UserControl",
-  "interfaces": [],
+  "interfaces": [
+    "IComponentConnector"
+  ],
   "doc_url": "https://developer.tekla.com/topic/en/18/47/c5c22ec5-ec18-07be-d0d1-3aa1c2d0abcf",
   "constructors": [
     {
-      "name": "WpfMaterialCatalog",
+      "name": "WpfMaterialCatalog()",
       "signature": "public WpfMaterialCatalog()",
       "summary": "Initiates a new instance of the control.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/ed794cf8-d789-3b6e-0569-9c9984fb2025"
     },
     {
-      "name": "WpfMaterialCatalog",
+      "name": "WpfMaterialCatalog(String)",
       "signature": "public WpfMaterialCatalog(string Material)",
       "summary": "Creates a new instance of the MaterialCatalog and will select the material (if available) in the tree.",
       "params": [
@@ -28,6 +31,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/1bbdb847-dbff-69ba-eb30-c8881146fa90"
@@ -39,6 +43,7 @@
       "signature": "public void InitializeComponent()",
       "summary": "InitializeComponent",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/67c07c6d-80a2-e507-6eee-eb9f779a7fd0"

@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/0a6690c4-2eca-a4d2-427f-e044282fc4c3",
   "constructors": [
     {
-      "name": "ReportTemplateElement",
+      "name": "ReportTemplateElement()",
       "signature": "public ReportTemplateElement()",
       "summary": "Creates a new report template element instance with the default template.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/aa0f5eeb-2bc6-9b05-445f-753a9ec9ba21"
     },
     {
-      "name": "ReportTemplateElement",
+      "name": "ReportTemplateElement(TemplateInfo)",
       "signature": "public ReportTemplateElement(TemplateInfo Template)",
       "summary": "Creates a new report template element instance with the given template.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/dc247c2b-5cd1-0290-4115-5636b902c23e"

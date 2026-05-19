@@ -1,5 +1,5 @@
 {
-  "name": "Enum.E.",
+  "name": "Enum\u003CE\u003E",
   "namespace": "Tekla.Structures.Datatype",
   "kind": "struct",
   "summary": "The Enum datatype generic.",
@@ -31,6 +31,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/8cd9e291-2d2d-6178-3366-05fde4a64bc2"
@@ -46,6 +47,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/777144d9-9d41-3453-fb21-7af2b6baf9c8"

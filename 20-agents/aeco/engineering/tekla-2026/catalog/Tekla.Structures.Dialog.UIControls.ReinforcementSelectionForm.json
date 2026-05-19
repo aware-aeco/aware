@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/cfd7cf88-b8f2-12d7-2d03-cae3147d052c",
   "constructors": [
     {
-      "name": "ReinforcementSelectionForm",
+      "name": "ReinforcementSelectionForm(List\u003CRebarItem\u003E)",
       "signature": "public ReinforcementSelectionForm(List\u003CRebarItem\u003E RebarList)",
       "summary": "Creates a new instance of the ReinforcementSelectionForm.",
       "params": [
@@ -19,12 +19,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/e8accdd0-c173-c5cb-a3f5-3599891f2ca1"
     },
     {
-      "name": "ReinforcementSelectionForm",
+      "name": "ReinforcementSelectionForm(List\u003CRebarItem\u003E, String, String, Double)",
       "signature": "public ReinforcementSelectionForm(List\u003CRebarItem\u003E RebarList, string Size, string Grade, double BendRadius)",
       "summary": "Creates a new instance of the ReinforcementSelectionForm and will select in the tree the rebar that contains the given parameters (if possible).",
       "params": [
@@ -53,12 +54,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/f1ec97d0-1f3c-4423-360d-601a53c6cb69"
     },
     {
-      "name": "ReinforcementSelectionForm",
+      "name": "ReinforcementSelectionForm(List\u003CRebarItem\u003E, String, String, Double, String)",
       "signature": "public ReinforcementSelectionForm(List\u003CRebarItem\u003E RebarList, string Size, string Grade, double BendRadius, string Usage)",
       "summary": "Creates a new instance of the ReinforcementSelectionForm and will select in the tree the rebar that contains the given parameters (if possible).",
       "params": [
@@ -93,6 +95,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/fcfa5673-780c-93fd-a74d-ee52f9338422"

@@ -12,6 +12,7 @@
       "signature": "public ViewVisibilitySettings()",
       "summary": "Initializes a new instance of the ViewVisibilitySettings class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5d32835d-f61e-7f68-c8c8-d795a209a119"

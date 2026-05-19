@@ -12,6 +12,7 @@
       "signature": "public AnalysisModelGeneralProperties()",
       "summary": "Creates a new analysis model general properties instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/5bb10cba-2243-cff6-06a7-d730c10fe46f"

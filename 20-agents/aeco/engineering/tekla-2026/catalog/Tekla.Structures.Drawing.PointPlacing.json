@@ -12,6 +12,7 @@
       "signature": "public PointPlacing()",
       "summary": "Creates a new point placing instance. The value used for the placing is the parent object\u0027s insertion point in this case.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/146eaae7-ddda-4bab-80bc-488c5bce7744"

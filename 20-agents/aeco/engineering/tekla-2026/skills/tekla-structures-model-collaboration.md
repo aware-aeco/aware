@@ -1,6 +1,6 @@
 ---
 name: tekla-tekla-structures-model-collaboration
-description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Model.Collaboration namespace — 16 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: IFC2X3_ParametricObject_CircleHollowProfile, IFC2X3_ParametricObject_CircleProfile, IFC2X3_ParametricObject_CShapeProfile, IFC2X3_ParametricObject_LShapeProfile, IFC2X3_ParametricObject_EllipseProfile, IFC2X3_ParametricObject_IShapeProfile, IFC2X3_ParametricObject_RectangleHollowProfile, IFC2X3_ParametricObject_TShapeProfile, and 8 more types.
+description: This skill encodes the tekla 2026.0 surface of the Tekla.Structures.Model.Collaboration namespace — 16 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: IFC2X3_ParametricObject_CircleHollowProfile, IFC2X3_ParametricObject_CircleProfile, IFC2X3_ParametricObject_EllipseProfile, IFC2X3_ParametricObject_CShapeProfile, IFC2X3_ParametricObject_IShapeProfile, IFC2X3_ParametricObject_LShapeProfile, IFC2X3_ParametricObject_RectangleHollowProfile, IFC2X3_ParametricObject_RectangleProfile, and 8 more types.
 ---
 
 # Tekla.Structures.Model.Collaboration

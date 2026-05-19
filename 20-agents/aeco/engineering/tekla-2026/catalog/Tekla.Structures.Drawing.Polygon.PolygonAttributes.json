@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/47/562f0e90-6ddc-aa05-5066-0a8e0e80742c",
   "constructors": [
     {
-      "name": "Polygon.PolygonAttributes",
+      "name": "Polygon.PolygonAttributes()",
       "signature": "public PolygonAttributes()",
       "summary": "Creates a new default polygon attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/11ba7e17-d49c-0a99-359d-137b578a6ea1"
     },
     {
-      "name": "Polygon.PolygonAttributes",
+      "name": "Polygon.PolygonAttributes(String)",
       "signature": "public PolygonAttributes(string AttributesFile)",
       "summary": "Creates a new polygon attributes instance that loads the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/47/24dc91ac-40ac-99dc-da44-95b08e0aebd0"
