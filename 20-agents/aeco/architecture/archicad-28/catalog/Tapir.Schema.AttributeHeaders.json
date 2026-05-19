@@ -1,0 +1,22 @@
+{
+  "name": "AttributeHeaders",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "Details of attributes.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#AttributeHeaders",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Items",
+      "type": "object[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Array element type.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#AttributeHeaders"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

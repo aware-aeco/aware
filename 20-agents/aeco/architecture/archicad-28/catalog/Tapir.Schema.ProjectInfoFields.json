@@ -1,0 +1,22 @@
+{
+  "name": "ProjectInfoFields",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "A list of project info fields.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ProjectInfoFields",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Items",
+      "type": "ProjectInfoField[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Array element type.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ProjectInfoFields"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

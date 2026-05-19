@@ -1,0 +1,13 @@
+{
+  "name": "FavoritesOrError",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "The response of the GetFavoritesByType command or an error.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#FavoritesOrError",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

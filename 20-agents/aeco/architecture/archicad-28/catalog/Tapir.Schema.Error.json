@@ -1,0 +1,32 @@
+{
+  "name": "Error",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "The details of an error.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Error",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "code",
+      "type": "integer",
+      "getter": true,
+      "setter": false,
+      "summary": "The code of the error.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Error"
+    },
+    {
+      "name": "message",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The error message.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Error"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

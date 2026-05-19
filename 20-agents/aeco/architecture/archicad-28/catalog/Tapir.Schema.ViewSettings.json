@@ -1,0 +1,86 @@
+{
+  "name": "ViewSettings",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "The settings of a navigator view",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ViewSettings",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "modelViewOptions",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The name of the model view options. If empty, the view has custom model view options.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ViewSettings"
+    },
+    {
+      "name": "layerCombination",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The name of the layer combination. If empty, the view has custom layer combination.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ViewSettings"
+    },
+    {
+      "name": "dimensionStyle",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The name of the dimension style. If empty, the view has custom dimension style.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ViewSettings"
+    },
+    {
+      "name": "penSetName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The name of the pen set. If empty, the view has custom pen set.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ViewSettings"
+    },
+    {
+      "name": "graphicOverrideCombination",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The name of the graphic override combination. If empty, the view has custom graphic override combination.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ViewSettings"
+    },
+    {
+      "name": "drawingScale",
+      "type": "integer",
+      "getter": true,
+      "setter": true,
+      "summary": "The drawing scale stored on the view, if enabled.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ViewSettings"
+    },
+    {
+      "name": "saveZoom",
+      "type": "boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Whether the zoom box is stored in the view.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ViewSettings"
+    },
+    {
+      "name": "ignoreSavedZoom",
+      "type": "boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Whether changing to the view should ignore its stored zoom.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ViewSettings"
+    },
+    {
+      "name": "zoom",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Stored zoom box in model coordinates. Used only when saveZoom is true.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ViewSettings"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

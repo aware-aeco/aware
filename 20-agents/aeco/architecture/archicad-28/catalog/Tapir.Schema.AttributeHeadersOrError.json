@@ -1,0 +1,13 @@
+{
+  "name": "AttributeHeadersOrError",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "The response of the GetAttributesByType command or an error.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#AttributeHeadersOrError",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

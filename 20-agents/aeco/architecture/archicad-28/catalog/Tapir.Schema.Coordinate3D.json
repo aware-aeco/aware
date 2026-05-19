@@ -1,0 +1,41 @@
+{
+  "name": "Coordinate3D",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "3D coordinate.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Coordinate3D",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "x",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "X value of the coordinate.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Coordinate3D"
+    },
+    {
+      "name": "y",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "Y value of the coordinate.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Coordinate3D"
+    },
+    {
+      "name": "z",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "Z value of the coordinate.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Coordinate3D"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

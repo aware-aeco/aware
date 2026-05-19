@@ -1,0 +1,116 @@
+{
+  "name": "LayoutBookCommands",
+  "namespace": "Archicad.OfficialCommands",
+  "kind": "static-class",
+  "summary": "Graphisoft official \u0027Layout Book Commands\u0027 command group \u2014 4 JSON-RPC commands (Archicad 28.0).",
+  "interfaces": [],
+  "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateLayout",
+      "signature": "CreateLayout(layoutName: string, layoutParameters: LayoutParameters, masterNavigatorItemId: NavigatorItemId, parentNavigatorItemId: NavigatorItemId): object",
+      "summary": "Creates a new layout.",
+      "params": [
+        {
+          "name": "layoutName",
+          "type": "string",
+          "doc": "The name of the layout.",
+          "optional": false
+        },
+        {
+          "name": "layoutParameters",
+          "type": "LayoutParameters",
+          "optional": false
+        },
+        {
+          "name": "masterNavigatorItemId",
+          "type": "NavigatorItemId",
+          "optional": false
+        },
+        {
+          "name": "parentNavigatorItemId",
+          "type": "NavigatorItemId",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: createdNavigatorItemId."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#CreateLayout"
+    },
+    {
+      "name": "CreateLayoutSubset",
+      "signature": "CreateLayoutSubset(subsetParameters: Subset, parentNavigatorItemId: NavigatorItemId): object",
+      "summary": "Creates a new layout subset.",
+      "params": [
+        {
+          "name": "subsetParameters",
+          "type": "Subset",
+          "optional": false
+        },
+        {
+          "name": "parentNavigatorItemId",
+          "type": "NavigatorItemId",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: createdSubsetId."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#CreateLayoutSubset"
+    },
+    {
+      "name": "GetLayoutSettings",
+      "signature": "GetLayoutSettings(layoutNavigatorItemId: NavigatorItemId): object",
+      "summary": "Returns the parameters (settings) of the given layout.",
+      "params": [
+        {
+          "name": "layoutNavigatorItemId",
+          "type": "NavigatorItemId",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: layoutParameters."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetLayoutSettings"
+    },
+    {
+      "name": "SetLayoutSettings",
+      "signature": "SetLayoutSettings(layoutParameters: LayoutParameters, layoutNavigatorItemId: NavigatorItemId): object",
+      "summary": "Sets the parameters (settings) of the given layout.",
+      "params": [
+        {
+          "name": "layoutParameters",
+          "type": "LayoutParameters",
+          "optional": false
+        },
+        {
+          "name": "layoutNavigatorItemId",
+          "type": "NavigatorItemId",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Empty result object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#SetLayoutSettings"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

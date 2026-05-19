@@ -1,0 +1,35 @@
+{
+  "name": "ElementgroupingCommands",
+  "namespace": "Tapir.AdditionalCommands",
+  "kind": "static-class",
+  "summary": "Tapir Add-On \u0027Element grouping Commands\u0027 command group \u2014 1 JSON-RPC commands.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateGroups",
+      "signature": "CreateGroups(elementGroups: ElementGroupParameters[]): object",
+      "summary": "Creates groups of the passed elements",
+      "params": [
+        {
+          "name": "elementGroups",
+          "type": "ElementGroupParameters[]",
+          "doc": "A list of element groups to create.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: groupGuids."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreateGroups",
+      "since": "1.4.0"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

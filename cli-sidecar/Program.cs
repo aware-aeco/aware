@@ -126,6 +126,26 @@ internal static class Program
                             // delegation to the Rhino PageParser/MemberPageParser.
                             "grasshopper" => Ingest.Extractors.Grasshopper.Extractor.Extract(argsObj.Version, argsObj.OutPath)
                                 .GetAwaiter().GetResult(),
+                            // ArchiCAD extractor (Phase B B7) — hybrid source: Tapir community
+                            // JSON-RPC catalog from ENZYME-APD/tapir-archicad-automation (GitHub raw)
+                            // + Graphisoft official JSON Interface docs at archicadapi.graphisoft.com.
+                            // Versions 28.0 + 29.0 share the same Tapir command set; Graphisoft
+                            // publishes only the latest reference (v29) — both IRs include it with
+                            // a documented version-stamping caveat in EXTRACTION-NOTES.md.
+                            "archicad" => Ingest.Extractors.ArchiCAD.Extractor.Extract(argsObj.Version, argsObj.OutPath)
+                                .GetAwaiter().GetResult(),
+                            // Tekla Tedds extractor (Phase B B9) — Tedds docs from
+                            // developer.tekla.com/doc/tekla-tedds/<ver>. DocFX-style markup
+                            // (different from Tekla Structures' Sandcastle). Versions 25.0 + 26.0
+                            // both stable per release; ~50-60 types per version across 3 namespaces.
+                            // The "tekla-tedds" alias is accepted alongside "tedds" because the
+                            // task spec (and Trimble's marketing) abbreviate Tekla Tedds as TSD in
+                            // some contexts. The existing tsd-25 / tsd-26 agent slugs in the repo
+                            // are for Tekla Structural Designer (a different product); we deliver
+                            // this vendor's agents at tekla-tedds-25 / tekla-tedds-26 to avoid the
+                            // slug collision. IR stamps host="tedds".
+                            "tedds" or "tekla-tedds" => Ingest.Extractors.Tedds.Extractor.Extract(argsObj.Version, argsObj.OutPath)
+                                .GetAwaiter().GetResult(),
                             _ => throw new NotSupportedException(
                                 $"coverage-extract: vendor '{argsObj.Vendor}' has no extractor yet")
                         };

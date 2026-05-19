@@ -1,0 +1,23 @@
+{
+  "name": "ClassificationItemId",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "The identifier of a classification item.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ClassificationItemId",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "guid",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060guid\u0060 of type \u0060Guid\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ClassificationItemId"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

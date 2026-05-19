@@ -1,0 +1,306 @@
+{
+  "name": "ElementType",
+  "namespace": "Tapir.Schema",
+  "kind": "enum",
+  "summary": "The type of an element.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ElementType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Wall",
+      "value": "Wall"
+    },
+    {
+      "name": "Column",
+      "value": "Column"
+    },
+    {
+      "name": "Beam",
+      "value": "Beam"
+    },
+    {
+      "name": "Window",
+      "value": "Window"
+    },
+    {
+      "name": "Door",
+      "value": "Door"
+    },
+    {
+      "name": "Object",
+      "value": "Object"
+    },
+    {
+      "name": "Lamp",
+      "value": "Lamp"
+    },
+    {
+      "name": "Slab",
+      "value": "Slab"
+    },
+    {
+      "name": "Roof",
+      "value": "Roof"
+    },
+    {
+      "name": "Mesh",
+      "value": "Mesh"
+    },
+    {
+      "name": "Dimension",
+      "value": "Dimension"
+    },
+    {
+      "name": "RadialDimension",
+      "value": "RadialDimension"
+    },
+    {
+      "name": "LevelDimension",
+      "value": "LevelDimension"
+    },
+    {
+      "name": "AngleDimension",
+      "value": "AngleDimension"
+    },
+    {
+      "name": "Text",
+      "value": "Text"
+    },
+    {
+      "name": "Label",
+      "value": "Label"
+    },
+    {
+      "name": "Zone",
+      "value": "Zone"
+    },
+    {
+      "name": "Hatch",
+      "value": "Hatch"
+    },
+    {
+      "name": "Line",
+      "value": "Line"
+    },
+    {
+      "name": "PolyLine",
+      "value": "PolyLine"
+    },
+    {
+      "name": "Arc",
+      "value": "Arc"
+    },
+    {
+      "name": "Circle",
+      "value": "Circle"
+    },
+    {
+      "name": "Spline",
+      "value": "Spline"
+    },
+    {
+      "name": "Hotspot",
+      "value": "Hotspot"
+    },
+    {
+      "name": "CutPlane",
+      "value": "CutPlane"
+    },
+    {
+      "name": "Camera",
+      "value": "Camera"
+    },
+    {
+      "name": "CamSet",
+      "value": "CamSet"
+    },
+    {
+      "name": "Group",
+      "value": "Group"
+    },
+    {
+      "name": "SectElem",
+      "value": "SectElem"
+    },
+    {
+      "name": "Drawing",
+      "value": "Drawing"
+    },
+    {
+      "name": "Picture",
+      "value": "Picture"
+    },
+    {
+      "name": "Detail",
+      "value": "Detail"
+    },
+    {
+      "name": "Elevation",
+      "value": "Elevation"
+    },
+    {
+      "name": "InteriorElevation",
+      "value": "InteriorElevation"
+    },
+    {
+      "name": "Worksheet",
+      "value": "Worksheet"
+    },
+    {
+      "name": "Hotlink",
+      "value": "Hotlink"
+    },
+    {
+      "name": "CurtainWall",
+      "value": "CurtainWall"
+    },
+    {
+      "name": "CurtainWallSegment",
+      "value": "CurtainWallSegment"
+    },
+    {
+      "name": "CurtainWallFrame",
+      "value": "CurtainWallFrame"
+    },
+    {
+      "name": "CurtainWallPanel",
+      "value": "CurtainWallPanel"
+    },
+    {
+      "name": "CurtainWallJunction",
+      "value": "CurtainWallJunction"
+    },
+    {
+      "name": "CurtainWallAccessory",
+      "value": "CurtainWallAccessory"
+    },
+    {
+      "name": "Shell",
+      "value": "Shell"
+    },
+    {
+      "name": "Skylight",
+      "value": "Skylight"
+    },
+    {
+      "name": "Morph",
+      "value": "Morph"
+    },
+    {
+      "name": "ChangeMarker",
+      "value": "ChangeMarker"
+    },
+    {
+      "name": "Stair",
+      "value": "Stair"
+    },
+    {
+      "name": "Riser",
+      "value": "Riser"
+    },
+    {
+      "name": "Tread",
+      "value": "Tread"
+    },
+    {
+      "name": "StairStructure",
+      "value": "StairStructure"
+    },
+    {
+      "name": "Railing",
+      "value": "Railing"
+    },
+    {
+      "name": "RailingToprail",
+      "value": "RailingToprail"
+    },
+    {
+      "name": "RailingHandrail",
+      "value": "RailingHandrail"
+    },
+    {
+      "name": "RailingRail",
+      "value": "RailingRail"
+    },
+    {
+      "name": "RailingPost",
+      "value": "RailingPost"
+    },
+    {
+      "name": "RailingInnerPost",
+      "value": "RailingInnerPost"
+    },
+    {
+      "name": "RailingBaluster",
+      "value": "RailingBaluster"
+    },
+    {
+      "name": "RailingPanel",
+      "value": "RailingPanel"
+    },
+    {
+      "name": "RailingSegment",
+      "value": "RailingSegment"
+    },
+    {
+      "name": "RailingNode",
+      "value": "RailingNode"
+    },
+    {
+      "name": "RailingBalusterSet",
+      "value": "RailingBalusterSet"
+    },
+    {
+      "name": "RailingPattern",
+      "value": "RailingPattern"
+    },
+    {
+      "name": "RailingToprailEnd",
+      "value": "RailingToprailEnd"
+    },
+    {
+      "name": "RailingHandrailEnd",
+      "value": "RailingHandrailEnd"
+    },
+    {
+      "name": "RailingRailEnd",
+      "value": "RailingRailEnd"
+    },
+    {
+      "name": "RailingToprailConnection",
+      "value": "RailingToprailConnection"
+    },
+    {
+      "name": "RailingHandrailConnection",
+      "value": "RailingHandrailConnection"
+    },
+    {
+      "name": "RailingRailConnection",
+      "value": "RailingRailConnection"
+    },
+    {
+      "name": "RailingEndFinish",
+      "value": "RailingEndFinish"
+    },
+    {
+      "name": "BeamSegment",
+      "value": "BeamSegment"
+    },
+    {
+      "name": "ColumnSegment",
+      "value": "ColumnSegment"
+    },
+    {
+      "name": "Opening",
+      "value": "Opening"
+    },
+    {
+      "name": "Unknown",
+      "value": "Unknown"
+    }
+  ]
+}

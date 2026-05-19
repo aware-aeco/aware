@@ -1,0 +1,23 @@
+{
+  "name": "FavoritesWrapper",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "The response of the GetFavoritesByType command.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#FavoritesWrapper",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "favorites",
+      "type": "Favorites",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060favorites\u0060 of type \u0060Favorites\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#FavoritesWrapper"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

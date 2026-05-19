@@ -1,0 +1,31 @@
+{
+  "name": "ElementGroupParameters",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "The parameters for creating a single group",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ElementGroupParameters",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "elements",
+      "type": "ElementOrGroupIds",
+      "getter": true,
+      "setter": false,
+      "summary": "The elements or child groups to be grouped.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ElementGroupParameters"
+    },
+    {
+      "name": "parentGroupId",
+      "type": "GroupId",
+      "getter": true,
+      "setter": true,
+      "summary": "Optional parent group ID to nest this group under.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ElementGroupParameters"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

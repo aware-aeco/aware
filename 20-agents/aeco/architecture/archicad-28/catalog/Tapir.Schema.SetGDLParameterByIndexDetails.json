@@ -1,0 +1,32 @@
+{
+  "name": "SetGDLParameterByIndexDetails",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "Details of a GDL parameter.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#SetGDLParameterByIndexDetails",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "index",
+      "type": "integer",
+      "getter": true,
+      "setter": false,
+      "summary": "The index of the parameter.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#SetGDLParameterByIndexDetails"
+    },
+    {
+      "name": "value",
+      "type": "object",
+      "getter": true,
+      "setter": false,
+      "summary": "The value of the parameter.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#SetGDLParameterByIndexDetails"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

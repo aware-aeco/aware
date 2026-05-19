@@ -1,0 +1,23 @@
+{
+  "name": "BasicDefaultValue",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "Default value of the property in case of a basic property value (ie. not an expression).",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#BasicDefaultValue",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "basicDefaultValue",
+      "type": "PropertyValueDetails",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060basicDefaultValue\u0060 of type \u0060PropertyValueDetails\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#BasicDefaultValue"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

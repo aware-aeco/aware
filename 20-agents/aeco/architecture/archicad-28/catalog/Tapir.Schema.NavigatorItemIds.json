@@ -1,0 +1,22 @@
+{
+  "name": "NavigatorItemIds",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "A list of navigator item identifiers.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#NavigatorItemIds",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Items",
+      "type": "NavigatorItemIdArrayItem[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Array element type.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#NavigatorItemIds"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,38 @@
+{
+  "name": "ElementRelationCommands",
+  "namespace": "Archicad.OfficialCommands",
+  "kind": "static-class",
+  "summary": "Graphisoft official \u0027Element Relation Commands\u0027 command group \u2014 1 JSON-RPC commands (Archicad 28.0).",
+  "interfaces": [],
+  "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetElementsRelatedToZones",
+      "signature": "GetElementsRelatedToZones(zones: Elements, elementTypes: ElementTypes): object",
+      "summary": "Returns related elements of the given zones. The related elements will be grouped by type. If multiple zones was given, then the order of the returned list is that of the given zones.",
+      "params": [
+        {
+          "name": "zones",
+          "type": "Elements",
+          "optional": false
+        },
+        {
+          "name": "elementTypes",
+          "type": "ElementTypes",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: elementsRelatedToZones."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetElementsRelatedToZones"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

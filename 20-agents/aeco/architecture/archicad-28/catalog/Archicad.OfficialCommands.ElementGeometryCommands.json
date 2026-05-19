@@ -1,0 +1,52 @@
+{
+  "name": "ElementGeometryCommands",
+  "namespace": "Archicad.OfficialCommands",
+  "kind": "static-class",
+  "summary": "Graphisoft official \u0027Element Geometry Commands\u0027 command group \u2014 2 JSON-RPC commands (Archicad 28.0).",
+  "interfaces": [],
+  "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Get2DBoundingBoxes",
+      "signature": "Get2DBoundingBoxes(elements: Elements): object",
+      "summary": "Get the 2D bounding box of elements identified by their GUIDs. The bounding box is calculated from the global origin on the floor plan view. The output is the array of the bounding boxes respective to the input GUIDs. Only works for elements detailed in \u003Ci\u003EElement Information\u003C/i\u003E.",
+      "params": [
+        {
+          "name": "elements",
+          "type": "Elements",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: boundingBoxes2D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#Get2DBoundingBoxes"
+    },
+    {
+      "name": "Get3DBoundingBoxes",
+      "signature": "Get3DBoundingBoxes(elements: Elements): object",
+      "summary": "Get the 3D bounding box of elements identified by their GUIDs. The bounding box is calculated from the global origin in the 3D view. The output is the array of the bounding boxes respective to the input GUIDs. Only works for elements detailed in \u003Ci\u003EElement Information\u003C/i\u003E.",
+      "params": [
+        {
+          "name": "elements",
+          "type": "Elements",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: boundingBoxes3D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#Get3DBoundingBoxes"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

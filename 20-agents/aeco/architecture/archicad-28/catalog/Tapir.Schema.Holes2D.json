@@ -1,0 +1,22 @@
+{
+  "name": "Holes2D",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "A list of 2D holes in an element defined by closed polylines",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Holes2D",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Items",
+      "type": "Hole2D[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Array element type.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Holes2D"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

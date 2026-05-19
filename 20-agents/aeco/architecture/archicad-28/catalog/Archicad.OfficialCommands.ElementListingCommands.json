@@ -1,0 +1,110 @@
+{
+  "name": "ElementListingCommands",
+  "namespace": "Archicad.OfficialCommands",
+  "kind": "static-class",
+  "summary": "Graphisoft official \u0027Element Listing Commands\u0027 command group \u2014 5 JSON-RPC commands (Archicad 28.0).",
+  "interfaces": [],
+  "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetAllElements",
+      "signature": "GetAllElements(): object",
+      "summary": "Returns the identifier of every element in the current plan.",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: elements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetAllElements"
+    },
+    {
+      "name": "GetElementsByClassification",
+      "signature": "GetElementsByClassification(classificationItemId: ClassificationItemId): object",
+      "summary": "Returns the identifier of every element with the given classification identifier.",
+      "params": [
+        {
+          "name": "classificationItemId",
+          "type": "ClassificationItemId",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: elements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetElementsByClassification"
+    },
+    {
+      "name": "GetElementsByType",
+      "signature": "GetElementsByType(elementType: ElementType): object",
+      "summary": "Returns the identifier of every element of the given type on the plan.",
+      "params": [
+        {
+          "name": "elementType",
+          "type": "ElementType",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: elements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetElementsByType"
+    },
+    {
+      "name": "GetSelectedElements",
+      "signature": "GetSelectedElements(onlyEditable?: boolean, onlySupportedTypes?: boolean): object",
+      "summary": "Returns the identifiers of selected elements in the current plan.",
+      "params": [
+        {
+          "name": "onlyEditable",
+          "type": "boolean",
+          "doc": "Optional parameter that defines whether the selection list should include only the editable elements or all of them. The default value is FALSE",
+          "optional": true
+        },
+        {
+          "name": "onlySupportedTypes",
+          "type": "boolean",
+          "doc": "Optional parameter. When it is set to true, only elements with types that are supported by any other JSON API command will be returned.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: elements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetSelectedElements"
+    },
+    {
+      "name": "GetTypesOfElements",
+      "signature": "GetTypesOfElements(elements: Elements): object",
+      "summary": "Returns the types of the given elements.",
+      "params": [
+        {
+          "name": "elements",
+          "type": "Elements",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: typesOfElements."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetTypesOfElements"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Issues",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "A list of Issues.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Issues",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Items",
+      "type": "IssueIdArrayItem[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Array element type.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Issues"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

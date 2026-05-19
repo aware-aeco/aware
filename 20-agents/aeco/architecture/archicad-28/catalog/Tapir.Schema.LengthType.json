@@ -1,0 +1,50 @@
+{
+  "name": "LengthType",
+  "namespace": "Tapir.Schema",
+  "kind": "enum",
+  "summary": "The type of the length measurement unit.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#LengthType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Meter",
+      "value": "Meter"
+    },
+    {
+      "name": "Decimeter",
+      "value": "Decimeter"
+    },
+    {
+      "name": "Centimeter",
+      "value": "Centimeter"
+    },
+    {
+      "name": "Millimeter",
+      "value": "Millimeter"
+    },
+    {
+      "name": "FootFracInch",
+      "value": "FootFracInch"
+    },
+    {
+      "name": "FootDecInch",
+      "value": "FootDecInch"
+    },
+    {
+      "name": "DecFoot",
+      "value": "DecFoot"
+    },
+    {
+      "name": "FracInch",
+      "value": "FracInch"
+    },
+    {
+      "name": "DecInch",
+      "value": "DecInch"
+    }
+  ]
+}

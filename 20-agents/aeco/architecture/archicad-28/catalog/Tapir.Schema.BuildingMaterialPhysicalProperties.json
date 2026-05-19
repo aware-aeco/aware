@@ -1,0 +1,59 @@
+{
+  "name": "BuildingMaterialPhysicalProperties",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "The physical properties of a single building material.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#BuildingMaterialPhysicalProperties",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "thermalConductivity",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "Thermal Conductivity.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#BuildingMaterialPhysicalProperties"
+    },
+    {
+      "name": "density",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "Density.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#BuildingMaterialPhysicalProperties"
+    },
+    {
+      "name": "heatCapacity",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "Heat Capacity.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#BuildingMaterialPhysicalProperties"
+    },
+    {
+      "name": "embodiedEnergy",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "Embodied Energy.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#BuildingMaterialPhysicalProperties"
+    },
+    {
+      "name": "embodiedCarbon",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "Embodied Carbon.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#BuildingMaterialPhysicalProperties"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

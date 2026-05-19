@@ -1,0 +1,86 @@
+{
+  "name": "PropertyDataType",
+  "namespace": "Tapir.Schema",
+  "kind": "enum",
+  "summary": "Shared schema type \u0060PropertyDataType\u0060 defined in the Tapir / Graphisoft JSON Interface.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PropertyDataType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "number",
+      "value": "number"
+    },
+    {
+      "name": "integer",
+      "value": "integer"
+    },
+    {
+      "name": "string",
+      "value": "string"
+    },
+    {
+      "name": "boolean",
+      "value": "boolean"
+    },
+    {
+      "name": "length",
+      "value": "length"
+    },
+    {
+      "name": "area",
+      "value": "area"
+    },
+    {
+      "name": "volume",
+      "value": "volume"
+    },
+    {
+      "name": "angle",
+      "value": "angle"
+    },
+    {
+      "name": "numberList",
+      "value": "numberList"
+    },
+    {
+      "name": "integerList",
+      "value": "integerList"
+    },
+    {
+      "name": "stringList",
+      "value": "stringList"
+    },
+    {
+      "name": "booleanList",
+      "value": "booleanList"
+    },
+    {
+      "name": "lengthList",
+      "value": "lengthList"
+    },
+    {
+      "name": "areaList",
+      "value": "areaList"
+    },
+    {
+      "name": "volumeList",
+      "value": "volumeList"
+    },
+    {
+      "name": "angleList",
+      "value": "angleList"
+    },
+    {
+      "name": "singleEnum",
+      "value": "singleEnum"
+    },
+    {
+      "name": "multiEnum",
+      "value": "multiEnum"
+    }
+  ]
+}

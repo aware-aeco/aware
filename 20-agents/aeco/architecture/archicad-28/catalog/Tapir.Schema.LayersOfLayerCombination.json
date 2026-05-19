@@ -1,0 +1,22 @@
+{
+  "name": "LayersOfLayerCombination",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "List of Layers included in the Layer Combination.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#LayersOfLayerCombination",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Items",
+      "type": "object[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Array element type.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#LayersOfLayerCombination"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

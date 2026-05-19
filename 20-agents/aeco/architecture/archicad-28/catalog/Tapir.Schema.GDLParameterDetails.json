@@ -1,0 +1,119 @@
+{
+  "name": "GDLParameterDetails",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "Details of a GDL parameter.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GDLParameterDetails",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The name of the parameter.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GDLParameterDetails"
+    },
+    {
+      "name": "displayName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The display name of the parameter.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GDLParameterDetails"
+    },
+    {
+      "name": "index",
+      "type": "integer",
+      "getter": true,
+      "setter": false,
+      "summary": "The index of the parameter.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GDLParameterDetails"
+    },
+    {
+      "name": "type",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The type of the parameter.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GDLParameterDetails"
+    },
+    {
+      "name": "dimension1",
+      "type": "integer",
+      "getter": true,
+      "setter": false,
+      "summary": "The 1st dimension of array (in case of array value).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GDLParameterDetails"
+    },
+    {
+      "name": "dimension2",
+      "type": "integer",
+      "getter": true,
+      "setter": false,
+      "summary": "The 2nd dimension of array (in case of array value).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GDLParameterDetails"
+    },
+    {
+      "name": "value",
+      "type": "object",
+      "getter": true,
+      "setter": false,
+      "summary": "The value of the parameter.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GDLParameterDetails"
+    },
+    {
+      "name": "valueDescription",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The value description for numeric parameter.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GDLParameterDetails"
+    },
+    {
+      "name": "isLocked",
+      "type": "boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "The parameter is locked; i.e. the user cannot modify it",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GDLParameterDetails"
+    },
+    {
+      "name": "flags",
+      "type": "string[]",
+      "getter": true,
+      "setter": false,
+      "summary": "The flags of the parameter.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GDLParameterDetails"
+    },
+    {
+      "name": "possibleValues",
+      "type": "oneOf",
+      "getter": true,
+      "setter": true,
+      "summary": "Property \u0060possibleValues\u0060 of type \u0060oneOf\u0060 (optional).",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GDLParameterDetails"
+    },
+    {
+      "name": "canHaveCustomValue",
+      "type": "boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "The parameter can have a custom value.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GDLParameterDetails"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

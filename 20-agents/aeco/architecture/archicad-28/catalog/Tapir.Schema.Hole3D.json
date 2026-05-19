@@ -1,0 +1,31 @@
+{
+  "name": "Hole3D",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "A 3D hole in an element defined by closed polylines",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Hole3D",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "polygonCoordinates",
+      "type": "Coordinate3D[]",
+      "getter": true,
+      "setter": false,
+      "summary": "The 3D coordinates of the polygon of the hole.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Hole3D"
+    },
+    {
+      "name": "polygonArcs",
+      "type": "PolyArc[]",
+      "getter": true,
+      "setter": true,
+      "summary": "Polygon outline arcs of the hole.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#Hole3D"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

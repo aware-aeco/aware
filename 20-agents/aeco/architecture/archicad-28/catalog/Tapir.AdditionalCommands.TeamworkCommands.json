@@ -1,0 +1,82 @@
+{
+  "name": "TeamworkCommands",
+  "namespace": "Tapir.AdditionalCommands",
+  "kind": "static-class",
+  "summary": "Tapir Add-On \u0027Teamwork Commands\u0027 command group \u2014 4 JSON-RPC commands.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "TeamworkSend",
+      "signature": "TeamworkSend(): ExecutionResult",
+      "summary": "Performs a send operation on the currently opened Teamwork project.",
+      "params": [],
+      "returns": {
+        "type": "ExecutionResult",
+        "doc": "Returns a \u0060ExecutionResult\u0060."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#TeamworkSend",
+      "since": "0.1.0"
+    },
+    {
+      "name": "TeamworkReceive",
+      "signature": "TeamworkReceive(): ExecutionResult",
+      "summary": "Performs a receive operation on the currently opened Teamwork project.",
+      "params": [],
+      "returns": {
+        "type": "ExecutionResult",
+        "doc": "Returns a \u0060ExecutionResult\u0060."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#TeamworkReceive",
+      "since": "0.1.0"
+    },
+    {
+      "name": "ReserveElements",
+      "signature": "ReserveElements(elements: Elements): object",
+      "summary": "Reserves elements in Teamwork mode.",
+      "params": [
+        {
+          "name": "elements",
+          "type": "Elements",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResult, conflicts."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ReserveElements",
+      "since": "1.1.4"
+    },
+    {
+      "name": "ReleaseElements",
+      "signature": "ReleaseElements(elements: Elements): ExecutionResult",
+      "summary": "Releases elements in Teamwork mode.",
+      "params": [
+        {
+          "name": "elements",
+          "type": "Elements",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ExecutionResult",
+        "doc": "Returns a \u0060ExecutionResult\u0060."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ReleaseElements",
+      "since": "1.1.4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,13 @@
+{
+  "name": "GroupIdOrError",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "A groupId or an error.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GroupIdOrError",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}
