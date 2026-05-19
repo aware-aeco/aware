@@ -9,10 +9,25 @@ Pawel, here's what ran while you were asleep.
 | [#66](https://github.com/aware-aeco/aware/pull/66) | feat(v0.32): rhino.exec runtime sidecar -- wraps rhinocode CLI | main | green; live drill owed |
 | [#67](https://github.com/aware-aeco/aware/pull/67) | feat(v0.32.1): rhino launch + close (tekla 5-verb parity) | v0.32-rhino-exec | green; stacked on #66 |
 | [#68](https://github.com/aware-aeco/aware/pull/68) | feat(v0.32.2): converge tekla exec receipt with cli-rhino's shape | main | green; pure backport |
-| [#69](https://github.com/aware-aeco/aware/pull/69) | feat(v0.33): rhino-8 curated workflow verbs (5 v0.10-pattern verbs) | main | green; pure content |
+| [#69](https://github.com/aware-aeco/aware/pull/69) | feat(v0.33): rhino-8 curated workflow verbs round 1 (5 verbs) | main | green; pure content |
 | [#70](https://github.com/aware-aeco/aware/pull/70) | docs(v0.33): add READMEs for cli-rhino and cli-tekla | main | docs only |
+| [#71](https://github.com/aware-aeco/aware/pull/71) | docs(v0.33): overnight session summary (this doc) | main | this doc |
+| [#72](https://github.com/aware-aeco/aware/pull/72) | feat(v0.33): sketchup-2026 curated workflow verbs round 1 (5 verbs) | main | green; pure content |
+| [#73](https://github.com/aware-aeco/aware/pull/73) | feat(v0.33b): rhino-8 curated workflow verbs round 2 (total: 10) | v0.33-rhino-curated-workflow | stacked on #69 |
+| [#74](https://github.com/aware-aeco/aware/pull/74) | feat(v0.33b): sketchup-2026 curated workflow verbs round 2 (total: 10) | v0.33-sketchup-curated-workflow | stacked on #72 |
 
-Plus possibly #71 (Revit) and #72 (SketchUp) pending — see "Background work" below.
+Plus two more PRs (Revit + SketchUp sidecars) pending from the background subagents — see "Background work" below.
+
+## Goal status (per the active /goal directive)
+
+| Vendor | Sidecar verbs | Curated workflow verbs | Live drill |
+|---|---|---|---|
+| Tekla (reference) | 5 (shipped pre-session) | yes | shipped (13/20 v0.31) |
+| Rhino | 5 (#66 + #67) | 10 (#69 + #73) | owed (recipe in handoff) |
+| Revit | in flight (subagent) | **10 already in main** (verified during session) | depends on sidecar |
+| SketchUp | in flight (subagent) | 10 (#72 + #74) | depends on sidecar |
+
+All three vendors now have curation parity with tekla on the workflow surface. The sidecar runtime is what's still in flight for Revit + SketchUp.
 
 ## The live drill is what's owed
 
@@ -34,9 +49,13 @@ If either is BLOCKED (Revit add-in load failure, SketchUp socket sandbox, etc.) 
 - v0.32 rhino.exec (3 verbs) — #66
 - v0.32.1 rhino launch + close (5-verb parity) — #67
 - v0.32.2 tekla receipt convergence (host_pid + host_version backport) — #68
-- v0.33 rhino curated workflow verbs (5 of 10 planned for the v0.10 first wave) — #69
+- v0.33 rhino curated workflow verbs round 1 (5) — #69
 - v0.33 sidecar READMEs — #70
-- Revit + SketchUp sidecars (subagent-driven, in isolated worktrees)
+- v0.33 session summary (this doc) — #71
+- v0.33 sketchup curated workflow verbs round 1 (5) — #72
+- v0.33b rhino curated round 2 (+5 → 10 total) — #73
+- v0.33b sketchup curated round 2 (+5 → 10 total) — #74
+- Revit + SketchUp sidecars (subagent-driven, in isolated worktrees; PRs pending)
 
 ### Found ALREADY shipped (the substrate is more mature than the roadmap suggested)
 - v0.1-v0.5 (foundation): cli/src/commands/*, cli/src/runtime/*, cli/src/auth/* all present
@@ -64,9 +83,11 @@ Captured in memory entry [`project_substrate_maturity_audit.md`](../../../C:/Use
 
 1. Verify rhino drill (5 min) — gates merge of #66 + #67
 2. Check Revit + SketchUp subagent PRs (if landed) — review, decide merge order
-3. Merge in order: #66 → #67 → #68 → #69 → #70 → (Revit PR) → (SketchUp PR)
-4. Pick next from the roadmap. Audit-priority candidates that aren't yet curated:
-   - More rhino workflow verbs (5 more to reach the v0.10 target of 10)
+3. Merge in this order — independent ones first, then stacked:
+   - **Independent (any order):** #66, #68, #69, #70, #71, #72
+   - **Stacked, requires base first:** #67 (after #66), #73 (after #69), #74 (after #72)
+   - **Pending background:** Revit-sidecar PR, SketchUp-sidecar PR (when subagents return)
+4. After merge, pick next from the roadmap. Remaining audit-priority candidates:
    - Archicad-29 curated workflow verbs (audit said architecture-side agents are reflection-grade)
    - Bluebeam Studio curated workflow verbs (audit's #2 most-cited tool)
    - BCF 3.0 file-format agent (audit's #4 ranked; doesn't exist yet)
