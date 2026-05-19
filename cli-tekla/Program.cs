@@ -474,6 +474,29 @@ internal static class Program
             return 2;
         }
 
+        // Find the running Tekla instance (if any) to populate host_pid and
+        // host_version in the receipt — matches the cli-rhino receipt shape so
+        // downstream orchestrators see a consistent envelope across vendors.
+        // Best-effort: if no Tekla is running (smoke-test path), pid stays null.
+        int? hostPid = null;
+        string? hostVersion = version;
+        try
+        {
+            var instances = EnumerateRunningTeklas();
+            TeklaInstance? match = null;
+            if (!string.IsNullOrEmpty(version))
+            {
+                match = instances.FirstOrDefault(i => i.Version == version);
+            }
+            match ??= instances.FirstOrDefault();
+            if (match is not null)
+            {
+                hostPid = match.Pid;
+                hostVersion = match.Version;
+            }
+        }
+        catch { /* enumeration failure is non-fatal; pid stays null */ }
+
         // Resolve Tekla install dir for the requested version (registry +
         // standard path). Missing-install is non-fatal: the script may not
         // reference Tekla types (smoke-test path returns primitives).
@@ -512,7 +535,7 @@ internal static class Program
         try
         {
             var result = RunScript(code!, probedReferences, argsNode, probedDir);
-            EmitExecOk(result);
+            EmitExecOk(result, hostVersion, hostPid);
             return 0;
         }
         catch (CompilationErrorException ce)
@@ -520,7 +543,7 @@ internal static class Program
             // Script failed to compile — surface diagnostics so the caller
             // (likely an AI) can re-draft.
             var diagnostics = string.Join("\n", ce.Diagnostics.Select(d => d.ToString()));
-            EmitExecFail($"compile error: {ce.Message}", diagnostics);
+            EmitExecFail($"compile error: {ce.Message}", diagnostics, hostVersion, hostPid);
             return 2;
         }
         catch (Exception e)
@@ -528,7 +551,8 @@ internal static class Program
             var root = e;
             while (root is TargetInvocationException && root.InnerException is not null)
                 root = root.InnerException;
-            EmitExecFail(root.GetType().Name + ": " + root.Message, root.StackTrace ?? "");
+            EmitExecFail(root.GetType().Name + ": " + root.Message, root.StackTrace ?? "",
+                         hostVersion, hostPid);
             return 2;
         }
     }
@@ -804,20 +828,22 @@ internal static class Program
         return null;
     }
 
-    static void EmitExecOk(object? result)
+    static void EmitExecOk(object? result, string? hostVersion = null, int? hostPid = null)
     {
         var receipt = new JsonObject
         {
             ["ok"] = true,
             ["result"] = SerializeResult(result),
             ["host"] = "tekla",
+            ["host_version"] = hostVersion,
+            ["host_pid"] = hostPid,
             ["verb"] = "exec",
             ["delivered_at"] = DateTime.UtcNow.ToString("o"),
         };
         Console.WriteLine(receipt.ToJsonString());
     }
 
-    static void EmitExecFail(string message, string stack)
+    static void EmitExecFail(string message, string stack, string? hostVersion = null, int? hostPid = null)
     {
         var receipt = new JsonObject
         {
@@ -825,6 +851,8 @@ internal static class Program
             ["error"] = message,
             ["stack"] = stack,
             ["host"] = "tekla",
+            ["host_version"] = hostVersion,
+            ["host_pid"] = hostPid,
             ["verb"] = "exec",
             ["delivered_at"] = DateTime.UtcNow.ToString("o"),
         };
