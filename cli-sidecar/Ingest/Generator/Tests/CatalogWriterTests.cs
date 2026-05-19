@@ -111,6 +111,59 @@ public class CatalogWriterTests
     }
 
     [Fact]
+    public void Filename_Collision_Throws_With_Both_Origin_Type_Names()
+    {
+        // Defect-4 (v0.30 A6, surfaced by dynamo codex-coverage FAIL 2026-05-19):
+        // Two IR types with the same `(namespace, name)` tuple serialise to the same
+        // catalog filename. The old indexer-assign behaviour silently dropped the
+        // first one — extractors emitting bad namespace data lost types without trace.
+        // The collision-throw makes Phase A's invariant ("one type → one catalog file")
+        // explicit; it's the foundation guarantee downstream tooling already assumes.
+        var ir = new CoverageIR(
+            host: "tekla",
+            host_version: "2026.0",
+            source: new SourceInfo("scrape", new List<string> { "https://example.com" }, DateTime.UtcNow),
+            types: new List<TypeInfo>
+            {
+                new("State", "Dynamo.Models.AnnotationModel", "enum", "Annotation state.", null, null,
+                    new(), "https://example.com/Anno", new(), new(), new(), new(), new(), null),
+                // Wrong-bug shape: same (namespace, name) — but a different real type.
+                new("State", "Dynamo.Models.AnnotationModel", "enum", "Duplicated by extractor bug.", null, null,
+                    new(), "https://example.com/Other", new(), new(), new(), new(), new(), null),
+            },
+            metadata: new MetadataInfo(2, 2, 0, 0, 0));
+        var ex = Assert.Throws<InvalidOperationException>(() => CatalogWriter.RenderAll(ir));
+        Assert.Contains("Catalog filename collision", ex.Message);
+        Assert.Contains("Dynamo.Models.AnnotationModel.State", ex.Message);
+        Assert.Contains("nested-type", ex.Message);
+    }
+
+    [Fact]
+    public void Nested_Types_Disambiguate_By_Outer_Qualified_Namespace()
+    {
+        // Companion to the collision-throw test: when the extractor follows the Allplan
+        // convention (nested type namespace = `<outer-ns>.<outer-name>`), two `State`
+        // enums on distinct outer types produce two distinct files. This is what the
+        // dynamo extractor fix delivers.
+        var ir = new CoverageIR(
+            host: "dynamo",
+            host_version: "4.1.0",
+            source: new SourceInfo("dll-reflect", new List<string> { "https://example.com" }, DateTime.UtcNow),
+            types: new List<TypeInfo>
+            {
+                new("State", "Dynamo.Models.AnnotationModel", "enum", "Annotation state.", null, null,
+                    new(), "https://example.com/Anno", new(), new(), new(), new(), new(), null),
+                new("State", "ProtoCore.DebuggerProperties", "enum", "Debugger state.", null, null,
+                    new(), "https://example.com/Dbg", new(), new(), new(), new(), new(), null),
+            },
+            metadata: new MetadataInfo(2, 2, 0, 0, 0));
+        var catalogs = CatalogWriter.RenderAll(ir);
+        Assert.Equal(2, catalogs.Count);
+        Assert.Contains("Dynamo.Models.AnnotationModel.State.json", catalogs.Keys);
+        Assert.Contains("ProtoCore.DebuggerProperties.State.json", catalogs.Keys);
+    }
+
+    [Fact]
     public void Generic_Type_Name_Is_Sanitized_In_Filename_But_Preserved_In_Json()
     {
         // Defect-1+2 follow-up: the parser fix surfaced two generic types in the Tekla

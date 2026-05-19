@@ -34,6 +34,13 @@ public static class CatalogWriter
     public static Dictionary<string, string> RenderAll(CoverageIR ir)
     {
         var result = new Dictionary<string, string>();
+        // Track origin (namespace, name) tuples per filename so collision messages name
+        // both contributors. Silent overwrite was a Phase A foundation bug — two IR
+        // types serialising to the same filename causes the second one to clobber the
+        // first, and the catalog never reflects the loss. Surfaced by the dynamo
+        // codex-coverage FAIL (2026-05-19): nested-type namespace bug produced 6 IR
+        // types whose filenames collapsed onto 3, and 3 were silently lost.
+        var origins = new Dictionary<string, string>(StringComparer.Ordinal);
         foreach (var t in ir.types)
         {
             var safeName = SanitizeForFilename(t.name);
@@ -43,6 +50,17 @@ public static class CatalogWriter
             var filename = string.IsNullOrEmpty(safeNamespace)
                 ? $"{safeName}.json"
                 : $"{safeNamespace}.{safeName}.json";
+            var thisOrigin = string.IsNullOrEmpty(t.@namespace)
+                ? t.name
+                : $"{t.@namespace}.{t.name}";
+            if (origins.TryGetValue(filename, out var existingOrigin))
+            {
+                throw new InvalidOperationException(
+                    $"Catalog filename collision: '{filename}' already exists. " +
+                    $"Source types: '{existingOrigin}' vs '{thisOrigin}'. " +
+                    $"Check that the extractor qualifies nested-type namespaces.");
+            }
+            origins[filename] = thisOrigin;
             result[filename] = JsonSerializer.Serialize(t, IrJsonContext.Default.TypeInfo);
         }
         return result;
