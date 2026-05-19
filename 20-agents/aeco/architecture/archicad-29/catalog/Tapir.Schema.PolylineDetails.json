@@ -1,0 +1,40 @@
+{
+  "name": "PolylineDetails",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "Shared schema type \u0060PolylineDetails\u0060 defined in the Tapir / Graphisoft JSON Interface.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PolylineDetails",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "coordinates",
+      "type": "Coordinate2D[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060coordinates\u0060 of type \u0060Coordinate2D[]\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PolylineDetails"
+    },
+    {
+      "name": "arcs",
+      "type": "PolyArc[]",
+      "getter": true,
+      "setter": true,
+      "summary": "The arcs of the polyline.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PolylineDetails"
+    },
+    {
+      "name": "zCoordinate",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060zCoordinate\u0060 of type \u0060number\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PolylineDetails"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,32 @@
+{
+  "name": "ElementClassification",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "The classification of an element.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ElementClassification",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "elementId",
+      "type": "ElementId",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060elementId\u0060 of type \u0060ElementId\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ElementClassification"
+    },
+    {
+      "name": "classificationId",
+      "type": "ClassificationId",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060classificationId\u0060 of type \u0060ClassificationId\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ElementClassification"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

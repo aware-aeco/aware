@@ -1,0 +1,209 @@
+{
+  "name": "AttributeCommands",
+  "namespace": "Tapir.AdditionalCommands",
+  "kind": "static-class",
+  "summary": "Tapir Add-On \u0027Attribute Commands\u0027 command group \u2014 8 JSON-RPC commands.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetAttributesByType",
+      "signature": "GetAttributesByType(attributeType: AttributeType): AttributeHeadersOrError",
+      "summary": "Returns the details of every attribute of the given type.",
+      "params": [
+        {
+          "name": "attributeType",
+          "type": "AttributeType",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "AttributeHeadersOrError",
+        "doc": "Returns a \u0060AttributeHeadersOrError\u0060."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetAttributesByType",
+      "since": "1.1.3"
+    },
+    {
+      "name": "CreateLayers",
+      "signature": "CreateLayers(layerDataArray: object[], overwriteExisting?: boolean): object",
+      "summary": "Creates or overwrites Layer attributes based on the given parameters.",
+      "params": [
+        {
+          "name": "layerDataArray",
+          "type": "object[]",
+          "doc": "Array of data to create new Layers.",
+          "optional": false
+        },
+        {
+          "name": "overwriteExisting",
+          "type": "boolean",
+          "doc": "Overwrite the Layer if exists with the same name, or if index is given with the same index. The default is false.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: attributeIds."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreateLayers",
+      "since": "1.0.3"
+    },
+    {
+      "name": "CreateLayerCombinations",
+      "signature": "CreateLayerCombinations(layerCombinationDataArray: object[], overwriteExisting?: boolean): object",
+      "summary": "Creates or overwrites Layer Combination attributes based on the given parameters.",
+      "params": [
+        {
+          "name": "layerCombinationDataArray",
+          "type": "object[]",
+          "doc": "Array of data to create new Layer Combinations.",
+          "optional": false
+        },
+        {
+          "name": "overwriteExisting",
+          "type": "boolean",
+          "doc": "Overwrite the Layer Combination if exists with the same guid/index/name. The default is false.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: attributeIds."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreateLayerCombinations",
+      "since": "1.2.4"
+    },
+    {
+      "name": "CreateBuildingMaterials",
+      "signature": "CreateBuildingMaterials(buildingMaterialDataArray: object[], overwriteExisting?: boolean): object",
+      "summary": "Creates or overwrites Building Material attributes based on the given parameters.",
+      "params": [
+        {
+          "name": "buildingMaterialDataArray",
+          "type": "object[]",
+          "doc": "Array of data to create new Building Materials.",
+          "optional": false
+        },
+        {
+          "name": "overwriteExisting",
+          "type": "boolean",
+          "doc": "Overwrite the Building Material if exists with the same name, or if index is given with the same index. The default is false.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: attributeIds."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreateBuildingMaterials",
+      "since": "1.0.1"
+    },
+    {
+      "name": "CreateComposites",
+      "signature": "CreateComposites(compositeDataArray: object[], overwriteExisting?: boolean): object",
+      "summary": "Creates or overwrites Composite attributes based on the given parameters.",
+      "params": [
+        {
+          "name": "compositeDataArray",
+          "type": "object[]",
+          "doc": "Array of data to create Composites.",
+          "optional": false
+        },
+        {
+          "name": "overwriteExisting",
+          "type": "boolean",
+          "doc": "Overwrite the Composite if exists with the same name, or if index is given with the same index. The default is false.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: attributeIds."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreateComposites",
+      "since": "1.0.2"
+    },
+    {
+      "name": "CreateSurfaces",
+      "signature": "CreateSurfaces(surfaceDataArray: object[], overwriteExisting?: boolean): object",
+      "summary": "Creates or overwrites Surface attributes based on the given parameters.",
+      "params": [
+        {
+          "name": "surfaceDataArray",
+          "type": "object[]",
+          "doc": "Array of data to create new surfaces.",
+          "optional": false
+        },
+        {
+          "name": "overwriteExisting",
+          "type": "boolean",
+          "doc": "Overwrite the Surface if exists with the same name, or if index is given with the same index. The default is false.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: attributeIds."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#CreateSurfaces",
+      "since": "1.2.2"
+    },
+    {
+      "name": "GetBuildingMaterialPhysicalProperties",
+      "signature": "GetBuildingMaterialPhysicalProperties(attributeIds: AttributeIds): object",
+      "summary": "Retrieves the physical properties of the given Building Materials.",
+      "params": [
+        {
+          "name": "attributeIds",
+          "type": "AttributeIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: properties."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetBuildingMaterialPhysicalProperties",
+      "since": "0.1.3"
+    },
+    {
+      "name": "GetLayerCombinations",
+      "signature": "GetLayerCombinations(attributes: AttributeIds): object",
+      "summary": "Returns the details of layer combination attributes.",
+      "params": [
+        {
+          "name": "attributes",
+          "type": "AttributeIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: layerCombinations."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#GetLayerCombinations",
+      "since": "1.2.4"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

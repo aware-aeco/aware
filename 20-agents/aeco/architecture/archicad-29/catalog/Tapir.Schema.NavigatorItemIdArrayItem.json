@@ -1,0 +1,23 @@
+{
+  "name": "NavigatorItemIdArrayItem",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "Shared schema type \u0060NavigatorItemIdArrayItem\u0060 defined in the Tapir / Graphisoft JSON Interface.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#NavigatorItemIdArrayItem",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "navigatorItemId",
+      "type": "NavigatorItemId",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060navigatorItemId\u0060 of type \u0060NavigatorItemId\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#NavigatorItemIdArrayItem"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

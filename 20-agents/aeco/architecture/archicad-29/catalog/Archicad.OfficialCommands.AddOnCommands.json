@@ -1,0 +1,57 @@
+{
+  "name": "AddOnCommands",
+  "namespace": "Archicad.OfficialCommands",
+  "kind": "static-class",
+  "summary": "Graphisoft official \u0027AddOn Commands\u0027 command group \u2014 2 JSON-RPC commands (Archicad 29.0).",
+  "interfaces": [],
+  "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ExecuteAddOnCommand",
+      "signature": "ExecuteAddOnCommand(addOnCommandId: AddOnCommandId, addOnCommandParameters?: AddOnCommandParameters): object",
+      "summary": "Executes a command registered in an Add-On.",
+      "params": [
+        {
+          "name": "addOnCommandId",
+          "type": "AddOnCommandId",
+          "optional": false
+        },
+        {
+          "name": "addOnCommandParameters",
+          "type": "AddOnCommandParameters",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: addOnCommandResponse."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#ExecuteAddOnCommand"
+    },
+    {
+      "name": "IsAddOnCommandAvailable",
+      "signature": "IsAddOnCommandAvailable(addOnCommandId: AddOnCommandId): object",
+      "summary": "Checks if the command is available or not.",
+      "params": [
+        {
+          "name": "addOnCommandId",
+          "type": "AddOnCommandId",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: available."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#IsAddOnCommandAvailable"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

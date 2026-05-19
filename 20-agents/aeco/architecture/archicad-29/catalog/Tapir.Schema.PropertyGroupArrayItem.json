@@ -1,0 +1,23 @@
+{
+  "name": "PropertyGroupArrayItem",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "A wrapper containing a property group",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PropertyGroupArrayItem",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "propertyGroup",
+      "type": "PropertyGroup",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060propertyGroup\u0060 of type \u0060PropertyGroup\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PropertyGroupArrayItem"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

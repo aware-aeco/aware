@@ -1,0 +1,49 @@
+{
+  "name": "LayerCombinationAttributeDetails",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "The details of the layer combination attribute.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#LayerCombinationAttributeDetails",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "attributeId",
+      "type": "AttributeId",
+      "getter": true,
+      "setter": false,
+      "summary": "The identifier of the layer combination attribute.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#LayerCombinationAttributeDetails"
+    },
+    {
+      "name": "attributeIndex",
+      "type": "integer",
+      "getter": true,
+      "setter": true,
+      "summary": "The index identifier of the layer combination attribute.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#LayerCombinationAttributeDetails"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The name of the layer combination.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#LayerCombinationAttributeDetails"
+    },
+    {
+      "name": "layers",
+      "type": "LayersOfLayerCombination",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060layers\u0060 of type \u0060LayersOfLayerCombination\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#LayerCombinationAttributeDetails"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

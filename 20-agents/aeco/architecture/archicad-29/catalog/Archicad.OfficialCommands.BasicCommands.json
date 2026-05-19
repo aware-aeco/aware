@@ -1,0 +1,40 @@
+{
+  "name": "BasicCommands",
+  "namespace": "Archicad.OfficialCommands",
+  "kind": "static-class",
+  "summary": "Graphisoft official \u0027Basic Commands\u0027 command group \u2014 2 JSON-RPC commands (Archicad 29.0).",
+  "interfaces": [],
+  "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetProductInfo",
+      "signature": "GetProductInfo(): object",
+      "summary": "Accesses the version information from the running Archicad.",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: version, buildNumber, languageCode."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetProductInfo"
+    },
+    {
+      "name": "IsAlive",
+      "signature": "IsAlive(): object",
+      "summary": "Checks if the Archicad connection is alive.",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: isAlive."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#IsAlive"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

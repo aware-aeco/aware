@@ -1,0 +1,59 @@
+{
+  "name": "StoryParameters",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "Represents all parameters of a single project story, including its unique identifiers. Used in API responses.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#StoryParameters",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "index",
+      "type": "integer",
+      "getter": true,
+      "setter": false,
+      "summary": "The story index.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#StoryParameters"
+    },
+    {
+      "name": "floorId",
+      "type": "integer",
+      "getter": true,
+      "setter": false,
+      "summary": "Unique ID of the story.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#StoryParameters"
+    },
+    {
+      "name": "dispOnSections",
+      "type": "boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Story level lines should appear on sections and elevations.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#StoryParameters"
+    },
+    {
+      "name": "level",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "The story level.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#StoryParameters"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The name of the story.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#StoryParameters"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

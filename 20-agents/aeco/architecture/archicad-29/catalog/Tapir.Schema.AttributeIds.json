@@ -1,0 +1,22 @@
+{
+  "name": "AttributeIds",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "A list of attributes.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#AttributeIds",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Items",
+      "type": "AttributeIdArrayItem[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Array element type.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#AttributeIds"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

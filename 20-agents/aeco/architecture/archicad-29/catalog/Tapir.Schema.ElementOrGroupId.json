@@ -1,0 +1,13 @@
+{
+  "name": "ElementOrGroupId",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "An identifier representing either an Element or a Group.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ElementOrGroupId",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

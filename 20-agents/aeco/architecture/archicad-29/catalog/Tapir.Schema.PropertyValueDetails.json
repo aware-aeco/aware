@@ -1,0 +1,13 @@
+{
+  "name": "PropertyValueDetails",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "A normal, userUndefined, notAvailable or notEvaluated property value.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PropertyValueDetails",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

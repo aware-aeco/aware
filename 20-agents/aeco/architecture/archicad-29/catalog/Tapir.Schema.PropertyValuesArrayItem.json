@@ -1,0 +1,23 @@
+{
+  "name": "PropertyValuesArrayItem",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "A wrapper containing the property values.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PropertyValuesArrayItem",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "propertyValues",
+      "type": "PropertyValues",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060propertyValues\u0060 of type \u0060PropertyValues\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#PropertyValuesArrayItem"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

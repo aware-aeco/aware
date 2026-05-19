@@ -1,0 +1,22 @@
+{
+  "name": "RevisionChangesArrayItem",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "A wrapper containing an array of revision changes",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#RevisionChangesArrayItem",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "revisionChanges",
+      "type": "RevisionChange[]",
+      "getter": true,
+      "setter": true,
+      "summary": "Property \u0060revisionChanges\u0060 of type \u0060RevisionChange[]\u0060 (optional).",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#RevisionChangesArrayItem"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

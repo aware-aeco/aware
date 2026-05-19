@@ -1,0 +1,23 @@
+{
+  "name": "DatabaseIdArrayItem",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "Shared schema type \u0060DatabaseIdArrayItem\u0060 defined in the Tapir / Graphisoft JSON Interface.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#DatabaseIdArrayItem",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "databaseId",
+      "type": "DatabaseId",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060databaseId\u0060 of type \u0060DatabaseId\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#DatabaseIdArrayItem"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

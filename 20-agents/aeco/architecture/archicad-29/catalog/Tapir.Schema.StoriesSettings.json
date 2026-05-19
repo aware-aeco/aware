@@ -1,0 +1,22 @@
+{
+  "name": "StoriesSettings",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "A list of story settings, used as input for creating or modifying multiple stories.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#StoriesSettings",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Items",
+      "type": "StorySettings[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Array element type.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#StoriesSettings"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

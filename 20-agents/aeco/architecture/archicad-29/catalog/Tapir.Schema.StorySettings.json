@@ -1,0 +1,41 @@
+{
+  "name": "StorySettings",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "Contains the configurable settings for creating or modifying a story. Used as input in API requests.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#StorySettings",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "dispOnSections",
+      "type": "boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Story level lines should appear on sections and elevations.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#StorySettings"
+    },
+    {
+      "name": "level",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "The story level.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#StorySettings"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The name of the story.",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#StorySettings"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

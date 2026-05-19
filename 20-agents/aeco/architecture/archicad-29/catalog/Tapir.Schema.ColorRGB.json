@@ -1,0 +1,41 @@
+{
+  "name": "ColorRGB",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "RGB color.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ColorRGB",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "red",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "Red value between 0.0 and 1.0",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ColorRGB"
+    },
+    {
+      "name": "green",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "Green value between 0.0 and 1.0",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ColorRGB"
+    },
+    {
+      "name": "blue",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "Blue value between 0.0 and 1.0",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#ColorRGB"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

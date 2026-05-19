@@ -1,0 +1,38 @@
+{
+  "name": "AccuracyType",
+  "namespace": "Tapir.Schema",
+  "kind": "enum",
+  "summary": "Methods for rounding decimal values.",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#AccuracyType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Off",
+      "value": "Off"
+    },
+    {
+      "name": "ShowSmall5",
+      "value": "ShowSmall5"
+    },
+    {
+      "name": "ShowSmall25",
+      "value": "ShowSmall25"
+    },
+    {
+      "name": "ShowSmall1",
+      "value": "ShowSmall1"
+    },
+    {
+      "name": "ShowSmall01",
+      "value": "ShowSmall01"
+    },
+    {
+      "name": "InchCaseFractions",
+      "value": "InchCaseFractions"
+    }
+  ]
+}

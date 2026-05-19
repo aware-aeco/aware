@@ -1,0 +1,278 @@
+{
+  "name": "NavigatorTreeCommands",
+  "namespace": "Archicad.OfficialCommands",
+  "kind": "static-class",
+  "summary": "Graphisoft official \u0027Navigator Tree Commands\u0027 command group \u2014 14 JSON-RPC commands (Archicad 29.0).",
+  "interfaces": [],
+  "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "DeleteNavigatorItems",
+      "signature": "DeleteNavigatorItems(navigatorItemIds: NavigatorItemIds): object",
+      "summary": "Deletes items from navigator tree.",
+      "params": [
+        {
+          "name": "navigatorItemIds",
+          "type": "NavigatorItemIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: executionResults."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#DeleteNavigatorItems"
+    },
+    {
+      "name": "GetBuiltInContainerNavigatorItems",
+      "signature": "GetBuiltInContainerNavigatorItems(navigatorItemIds: NavigatorItemIds): object",
+      "summary": "Returns the details of the built-in container navigator items identified by their Ids.",
+      "params": [
+        {
+          "name": "navigatorItemIds",
+          "type": "NavigatorItemIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: navigatorItems."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetBuiltInContainerNavigatorItems"
+    },
+    {
+      "name": "GetDetailNavigatorItems",
+      "signature": "GetDetailNavigatorItems(navigatorItemIds: NavigatorItemIds): object",
+      "summary": "Returns the details of the detail navigator items identified by their Ids.",
+      "params": [
+        {
+          "name": "navigatorItemIds",
+          "type": "NavigatorItemIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: navigatorItems."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetDetailNavigatorItems"
+    },
+    {
+      "name": "GetDocument3DNavigatorItems",
+      "signature": "GetDocument3DNavigatorItems(navigatorItemIds: NavigatorItemIds): object",
+      "summary": "Returns the details of the 3D document navigator items identified by their Ids.",
+      "params": [
+        {
+          "name": "navigatorItemIds",
+          "type": "NavigatorItemIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: navigatorItems."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetDocument3DNavigatorItems"
+    },
+    {
+      "name": "GetElevationNavigatorItems",
+      "signature": "GetElevationNavigatorItems(navigatorItemIds: NavigatorItemIds): object",
+      "summary": "Returns the detailed elevation navigator items identified by their Ids.",
+      "params": [
+        {
+          "name": "navigatorItemIds",
+          "type": "NavigatorItemIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: navigatorItems."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetElevationNavigatorItems"
+    },
+    {
+      "name": "GetInteriorElevationNavigatorItems",
+      "signature": "GetInteriorElevationNavigatorItems(navigatorItemIds: NavigatorItemIds): object",
+      "summary": "Returns the details of the interior elevation navigator items identified by their Ids.",
+      "params": [
+        {
+          "name": "navigatorItemIds",
+          "type": "NavigatorItemIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: navigatorItems."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetInteriorElevationNavigatorItems"
+    },
+    {
+      "name": "GetNavigatorItemTree",
+      "signature": "GetNavigatorItemTree(navigatorTreeId: NavigatorTreeId): object",
+      "summary": "Returns the tree of navigator items.",
+      "params": [
+        {
+          "name": "navigatorTreeId",
+          "type": "NavigatorTreeId",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: navigatorTree."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetNavigatorItemTree"
+    },
+    {
+      "name": "GetNavigatorItemsType",
+      "signature": "GetNavigatorItemsType(navigatorItemIds: NavigatorItemIds): object",
+      "summary": "Returns all navigator item types based on the navigator item identifiers given. An error is returned for each identifier that is not found.",
+      "params": [
+        {
+          "name": "navigatorItemIds",
+          "type": "NavigatorItemIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: navigatorItemIdAndTypeList."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetNavigatorItemsType"
+    },
+    {
+      "name": "GetPublisherSetNames",
+      "signature": "GetPublisherSetNames(): object",
+      "summary": "Returns the names of available publisher sets.",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: publisherSetNames."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetPublisherSetNames"
+    },
+    {
+      "name": "GetSectionNavigatorItems",
+      "signature": "GetSectionNavigatorItems(navigatorItemIds: NavigatorItemIds): object",
+      "summary": "Returns the details of the section navigator items identified by their Ids.",
+      "params": [
+        {
+          "name": "navigatorItemIds",
+          "type": "NavigatorItemIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: navigatorItems."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetSectionNavigatorItems"
+    },
+    {
+      "name": "GetStoryNavigatorItems",
+      "signature": "GetStoryNavigatorItems(navigatorItemIds: NavigatorItemIds): object",
+      "summary": "Returns the details of the story navigator items identified by their Ids.",
+      "params": [
+        {
+          "name": "navigatorItemIds",
+          "type": "NavigatorItemIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: navigatorItems."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetStoryNavigatorItems"
+    },
+    {
+      "name": "GetWorksheetNavigatorItems",
+      "signature": "GetWorksheetNavigatorItems(navigatorItemIds: NavigatorItemIds): object",
+      "summary": "Returns the details of the worksheet navigator items identified by their Ids.",
+      "params": [
+        {
+          "name": "navigatorItemIds",
+          "type": "NavigatorItemIds",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: navigatorItems."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#GetWorksheetNavigatorItems"
+    },
+    {
+      "name": "MoveNavigatorItem",
+      "signature": "MoveNavigatorItem(navigatorItemIdToMove: NavigatorItemId, parentNavigatorItemId: NavigatorItemId, previousNavigatorItemId?: NavigatorItemId): object",
+      "summary": "Moves the given navigator item under the \u003Ci\u003EparentNavigatorItemId\u003C/i\u003E in the navigator tree. If \u003Ci\u003EpreviousNavigatorItemId\u003C/i\u003E is not given then inserts it at the first place under the new parent. If it is given then inserts it after this navigator item.",
+      "params": [
+        {
+          "name": "navigatorItemIdToMove",
+          "type": "NavigatorItemId",
+          "optional": false
+        },
+        {
+          "name": "parentNavigatorItemId",
+          "type": "NavigatorItemId",
+          "optional": false
+        },
+        {
+          "name": "previousNavigatorItemId",
+          "type": "NavigatorItemId",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Empty result object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#MoveNavigatorItem"
+    },
+    {
+      "name": "RenameNavigatorItem",
+      "signature": "RenameNavigatorItem(): object",
+      "summary": "Renames an existing navigator item by specifying either the name or the ID, or both.",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "Empty result object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#RenameNavigatorItem"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

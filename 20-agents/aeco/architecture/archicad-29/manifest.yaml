@@ -1,345 +1,646 @@
-agent:        archicad-29
-version:      0.1.0
-sdk-target:   29.0.0
-display-name: Graphisoft ArchiCAD 29
+agent:        archicad-29.0
+version:      0.30.0
+sdk-target:   29.0
+display-name: archicad-29.0 (raw — 229 types, full coverage)
+
 description: |
-  Architectural authoring on the Nemetschek / Graphisoft side. Drives
-  ArchiCAD 29 via two complementary scriptable surfaces:
+  Auto-generated from vendor docs (hybrid: https://raw.githubusercontent.com/ENZYME-APD/tapir-archicad-automation/main/docs/archicad-addon/command_definitions.js, https://raw.githubusercontent.com/ENZYME-APD/tapir-archicad-automation/main/docs/archicad-addon/common_schema_definitions.js, https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/, https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/content/menutree.json)
+  on 2026-05-19.
 
-  1. **Official Graphisoft API** — server-style JSON/HTTP, built into
-     ArchiCAD 23+ (free; no NDA gate). Default endpoint
-     `http://localhost:19723`. Commands grouped under Project /
-     Element / Library / Navigator / Selection / Teamwork.
-     Docs: https://archicadapi.graphisoft.com/
+  Coverage: 229 types, 202 methods,
+  0 events, 416 properties.
 
-  2. **Tapir community extension** — MIT-licensed add-on + Python /
-     REST client extending the official API surface with 100+
-     additional commands (element-by-classification, GDL object
-     introspection, view-set bulk ops). The richer path when
-     installed. Supports ArchiCAD 25-29 on Windows + macOS.
-     Source: https://github.com/ENZYME-APD/tapir-archicad-automation
-
-  This agent prefers Tapir when present and falls back to the official
-  Graphisoft API for ops Tapir doesn't extend. The transport binary
-  detects which is available at startup.
+  Behavioral notes from vendor remarks/summary preserved per member.
+  See skills/ for narrative, catalog/ for structured per-type data.
 
 stateful: false
 
 vendor:   graphisoft
 license:  Apache-2.0
-homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/architecture/archicad-29
-keywords: [aware, archicad, graphisoft, tapir, bim, architecture, nemetschek]
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/architecture/archicad-29.0
+keywords: [aeco, architecture, archicad, graphisoft, generated, raw, v0.30, full-coverage]
 
 provenance:
-  generated-by:     hand-curated
-  generator-version: 0.18.0
+  generated-by:     aware-agent-builder
+  generator-version: 0.30.0
   source:
-    type:    docs
-    primary: https://archicadapi.graphisoft.com/
-    extension: https://github.com/ENZYME-APD/tapir-archicad-automation
-  refined-by:       [pawellisowski]
-  generated-at:     2026-05-17T19:20:00Z
-
-requires:
-  software:
-    - archicad@29.x
-  network:
-    - http://localhost:19723       # default Graphisoft JSON endpoint
-  secrets:
-    - archicad-api-key             # ArchiCAD-side API key (prefs panel)
-  filesystem:
-    - read:  '*.pln,*.pla,*.tpl,*.bpn,*.mod'
-    - write: '*.pln,*.pdf,*.dwg,*.ifc,*.xlsx,*.csv,*.bcf,*.bcfzip'
+    type: hybrid
+    urls: ["https://raw.githubusercontent.com/ENZYME-APD/tapir-archicad-automation/main/docs/archicad-addon/command_definitions.js", "https://raw.githubusercontent.com/ENZYME-APD/tapir-archicad-automation/main/docs/archicad-addon/common_schema_definitions.js", "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/", "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/content/menutree.json"]
+  generated-at: 2026-05-19T03:42:53.7400912Z
 
 transport:
   cli:
-    binary: aware-archicad-29
+    binary: aware-archicad
 
 commands:
-
-  # ---- Project context -------------------------------------------------
-
-  project.info:
+  add-on-commands-execute-add-on-command:
     lifecycle: single
-    category: curated
-    description: |
-      Returns project metadata: name, GUID, location, file format,
-      Teamwork state, current user. Required pre-flight before any
-      stateful operation. Read-only.
-    inputs: {}
-    outputs:
-      type: single
-      schema:
-        project-name:   string
-        project-guid:   string
-        file-format:    string  # solo / teamwork
-        teamwork-state: string  # null / connected / offline
-        current-user:   string
-
-  project.open:
+    description: Executes a command registered in an Add-On.
+  add-on-commands-is-add-on-command-available:
     lifecycle: single
-    category: curated
-    mode: write
-    description: |
-      Open a project file (.pln / .pla) in ArchiCAD. Write-mode against
-      the application state.
-    inputs:
-      path: string
-    outputs:
-      type: single
-      schema:
-        project-guid: string
-
-  # ---- Elements --------------------------------------------------------
-
-  elements.list:
+    description: Checks if the command is available or not.
+  attribute-commands-create-attribute-folders:
     lifecycle: single
-    category: curated
-    description: |
-      List elements in the project, filterable by type / layer / story.
-      Read-only.
-    inputs:
-      element-type:
-        type: enum
-        values: [any, wall, slab, beam, column, door, window, opening, mesh, zone, label, dim]
-        default: any
-      layer:
-        type: string
-        description: Optional layer name match.
-      story-index:
-        type: number
-        description: Optional story filter (0 = ground).
-    outputs:
-      type: single
-      schema:
-        elements:
-          type: array
-          items:
-            guid:         string
-            element-type: string
-            layer:        string
-            story-index:  number
-
-  elements.get-properties:
+    description: Creates attribute folders. To create a folder, its full path has to be provided. The command will create all folders along the path, if they do not exist.
+  attribute-commands-delete-attribute-folders:
     lifecycle: single
-    category: curated
-    description: |
-      Read all properties (built-in + user-defined) for one or more
-      elements. Read-only.
-    inputs:
-      guids:
-        type: array
-        items: string
-      property-names:
-        type: array
-        items: string
-        description: Optional. Empty = all properties.
-    outputs:
-      type: single
-      schema:
-        results:
-          type: array
-          items:
-            guid:        string
-            properties:  object
-
-  elements.set-properties:
+    description: Deletes attribute folders and all the deletable attributes and folders it contains. To delete a folder, its identifier has to be provided.
+  attribute-commands-delete-attributes:
     lifecycle: single
-    category: curated
-    mode: write
-    description: |
-      Bulk-write properties on elements. Used by the architect bulk-
-      parameter-write workflow (parallel to Revit's parameter.bulk-write).
-      Write-mode — needs `safety:` block.
-    inputs:
-      guids:
-        type: array
-        items: string
-      properties:
-        type: object
-        description: Map of property-name → value.
-    outputs:
-      type: single
-      schema:
-        updated:   number
-        warnings:  array
-
-  elements.by-classification:
+    description: Deletes attributes.
+  attribute-commands-get-active-pen-tables:
     lifecycle: single
-    category: curated
-    description: |
-      Filter elements by ArchiCAD Classification (e.g. Uniclass).
-      Requires Tapir extension. Read-only.
-    inputs:
-      classification:
-        type: string
-        description: Classification code (e.g. "EF_25_10_15").
-    outputs:
-      type: single
-      schema:
-        elements:
-          type: array
-          items:
-            guid:         string
-            element-type: string
-
-  # ---- Layers + views --------------------------------------------------
-
-  layers.list:
+    description: Returns the model view and layout book pen table identifiers.
+  attribute-commands-get-attribute-folder-structure:
     lifecycle: single
-    category: curated
-    description: List all layers + visibility / lock state. Read-only.
-    inputs: {}
-    outputs:
-      type: single
-      schema:
-        layers:
-          type: array
-          items:
-            name:     string
-            visible:  boolean
-            locked:   boolean
-
-  views.list:
+    description: Returns the detailed folder structure for the attributes of a given type. If the path is not given, the root folder will be returned
+  attribute-commands-get-attribute-folders:
     lifecycle: single
-    category: curated
-    description: |
-      List Navigator items (views, layouts, layout books). Read-only.
-    inputs:
-      kind:
-        type: enum
-        values: [view, layout, layout-book]
-        default: view
-    outputs:
-      type: single
-      schema:
-        items:
-          type: array
-          items:
-            id:    string
-            name:  string
-            path:  string
-
-  views.activate:
+    description: Returns the detailed attribute folders identified by their Ids.
+  attribute-commands-get-attributes-by-type:
     lifecycle: single
-    category: curated
-    mode: write
-    description: |
-      Activate a saved view in the Navigator — used before
-      `views.export-image` to set up consistent state.
-    inputs:
-      view-id: string
-    outputs:
-      type: single
-      schema:
-        activated: boolean
-
-  # ---- Exports ---------------------------------------------------------
-
-  publish.layout-set:
+    description: Returns the identifier of every attribute of the given type.
+  attribute-commands-get-attributes-indices:
     lifecycle: single
-    category: curated
-    mode: write
-    description: |
-      Publish a Layout Book / Publisher Set as PDF / DWG. The
-      architect-side Friday-issue verb. Write-mode (filesystem).
-    inputs:
-      publisher-set-name:
-        type: string
-        description: Name of the Publisher Set to run.
-      output-dir: string
-      format:
-        type: enum
-        values: [pdf, dwg, both]
-        default: pdf
-    outputs:
-      type: single
-      schema:
-        written:
-          type: array
-          items:
-            layout-name: string
-            format:      string
-            path:        string
-
-  export-ifc:
+    description: Returns the requested indices and guids of attributes.
+  attribute-commands-get-building-material-attributes:
     lifecycle: single
-    category: curated
-    mode: write
-    description: |
-      Export the model (or a layer-scoped subset) to IFC. Pair with
-      `ifc-inspector` to validate post-export.
-    inputs:
-      output-path: string
-      ifc-version:
-        type: enum
-        values: [IFC2X3, IFC4, IFC4X3]
-        default: IFC4
-      scope:
-        type: enum
-        values: [all, selected, story]
-        default: all
-      story-index:
-        type: number
-        description: Required if scope=story.
-    outputs:
-      type: single
-      schema:
-        path:         string
-        entity-count: number
-
-  export-bcf:
+    description: Returns the detailed building material attributes identified by their GUIDs.
+  attribute-commands-get-composite-attributes:
     lifecycle: single
-    category: curated
-    description: |
-      Export issue markups attached to the project as BCF. Read-only
-      against the model.
-    inputs:
-      output-path: string
-      bcf-version:
-        type: enum
-        values: [2.1, 3.0]
-        default: 2.1
-    outputs:
-      type: single
-      schema:
-        path:        string
-        issue-count: number
-
-  # ---- Teamwork --------------------------------------------------------
-
-  teamwork.status:
+    description: Returns the detailed composite attributes identified by their GUIDs.
+  attribute-commands-get-fill-attributes:
     lifecycle: single
-    category: curated
-    description: |
-      Report Teamwork connection state + reserved elements + pending
-      receives/sends. Read-only.
-    inputs: {}
-    outputs:
-      type: single
-      schema:
-        connected:        boolean
-        server:           string
-        reserved-count:   number
-        pending-receive:  number
-        pending-send:     number
-
-  teamwork.send-receive:
+    description: Returns the detailed fill attributes identified by their GUIDs.
+  attribute-commands-get-layer-attributes:
     lifecycle: single
-    category: curated
-    mode: write
-    description: |
-      Trigger a Teamwork Send & Receive cycle. The Teamwork-aware
-      equivalent of "Save" in solo files. Write-mode against the
-      Teamwork server.
-    inputs: {}
-    outputs:
-      type: single
-      schema:
-        sent:     number
-        received: number
+    description: Returns the detailed layer attributes identified by their GUIDs.
+  attribute-commands-get-layer-combination-attributes:
+    lifecycle: single
+    description: Returns the detailed layer combination attributes identified by their GUIDs.
+  attribute-commands-get-line-attributes:
+    lifecycle: single
+    description: Returns the detailed line attributes identified by their GUIDs.
+  attribute-commands-get-pen-table-attributes:
+    lifecycle: single
+    description: Returns the detailed pen table attributes (including their pens) identified by their GUIDs.
+  attribute-commands-get-profile-attribute-preview:
+    lifecycle: single
+    description: Returns the preview image of each requested profile attribute in a base64 string format.
+  attribute-commands-get-profile-attributes:
+    lifecycle: single
+    description: Returns the detailed profile attributes identified by their GUIDs.
+  attribute-commands-get-surface-attributes:
+    lifecycle: single
+    description: Returns the detailed surface attributes identified by their GUIDs.
+  attribute-commands-get-zone-category-attributes:
+    lifecycle: single
+    description: Returns the detailed zone category attributes identified by their GUIDs.
+  attribute-commands-move-attributes-and-folders:
+    lifecycle: single
+    description: Moves attributes and attribute folders.
+  attribute-commands-rename-attribute-folders:
+    lifecycle: single
+    description: Rename attribute folder.
+  basic-commands-get-product-info:
+    lifecycle: single
+    description: Accesses the version information from the running Archicad.
+  basic-commands-is-alive:
+    lifecycle: single
+    description: Checks if the Archicad connection is alive.
+  classification-commands-get-all-classification-systems:
+    lifecycle: single
+    description: Returns the list of available classification systems.
+  classification-commands-get-all-classifications-in-system:
+    lifecycle: single
+    description: Returns the tree of classifications in the given classification system.
+  classification-commands-get-classification-item-availability:
+    lifecycle: single
+    description: Returns the ids of property definitions available for a given classification item.
+  classification-commands-get-classification-system-ids:
+    lifecycle: single
+    description: Returns the list of available classification systems.
+  classification-commands-get-classification-systems:
+    lifecycle: single
+    description: Returns the details of classification systems identified by their GUIDs.
+  classification-commands-get-classifications-of-elements:
+    lifecycle: single
+    description: Returns the classification of the given elements in the given classification systems.
+  classification-commands-get-details-of-classification-items:
+    lifecycle: single
+    description: Returns the details of classification items.
+  classification-commands-set-classifications-of-elements:
+    lifecycle: single
+    description: Sets the classifications of elements. In order to set the classification of an element to unclassified, omit the classificationItemId field.
+  component-commands-get-components-of-elements:
+    lifecycle: single
+    description: Returns the identifier of every component for a list of elements. The order of the returned list is the same as the given elements.
+  component-commands-get-property-values-of-element-components:
+    lifecycle: single
+    description: Returns the property values of the components for the given property.
+  element-geometry-commands-get2dbounding-boxes:
+    lifecycle: single
+    description: Get the 2D bounding box of elements identified by their GUIDs. The bounding box is calculated from the global origin on the floor plan view. The output is the array of the bounding boxes respective...
+  element-geometry-commands-get3dbounding-boxes:
+    lifecycle: single
+    description: Get the 3D bounding box of elements identified by their GUIDs. The bounding box is calculated from the global origin in the 3D view. The output is the array of the bounding boxes respective to the ...
+  element-listing-commands-get-all-elements:
+    lifecycle: single
+    description: Returns the identifier of every element in the current plan.
+  element-listing-commands-get-elements-by-classification:
+    lifecycle: single
+    description: Returns the identifier of every element with the given classification identifier.
+  element-listing-commands-get-elements-by-type:
+    lifecycle: single
+    description: Returns the identifier of every element of the given type on the plan.
+  element-listing-commands-get-selected-elements:
+    lifecycle: single
+    description: Returns the identifiers of selected elements in the current plan.
+  element-listing-commands-get-types-of-elements:
+    lifecycle: single
+    description: Returns the types of the given elements.
+  element-relation-commands-get-elements-related-to-zones:
+    lifecycle: single
+    description: Returns related elements of the given zones. The related elements will be grouped by type. If multiple zones was given, then the order of the returned list is that of the given zones.
+  layout-book-commands-create-layout:
+    lifecycle: single
+    description: Creates a new layout.
+  layout-book-commands-create-layout-subset:
+    lifecycle: single
+    description: Creates a new layout subset.
+  layout-book-commands-get-layout-settings:
+    lifecycle: single
+    description: Returns the parameters (settings) of the given layout.
+  layout-book-commands-set-layout-settings:
+    lifecycle: single
+    description: Sets the parameters (settings) of the given layout.
+  navigator-tree-commands-delete-navigator-items:
+    lifecycle: single
+    description: Deletes items from navigator tree.
+  navigator-tree-commands-get-built-in-container-navigator-items:
+    lifecycle: single
+    description: Returns the details of the built-in container navigator items identified by their Ids.
+  navigator-tree-commands-get-detail-navigator-items:
+    lifecycle: single
+    description: Returns the details of the detail navigator items identified by their Ids.
+  navigator-tree-commands-get-document3dnavigator-items:
+    lifecycle: single
+    description: Returns the details of the 3D document navigator items identified by their Ids.
+  navigator-tree-commands-get-elevation-navigator-items:
+    lifecycle: single
+    description: Returns the detailed elevation navigator items identified by their Ids.
+  navigator-tree-commands-get-interior-elevation-navigator-items:
+    lifecycle: single
+    description: Returns the details of the interior elevation navigator items identified by their Ids.
+  navigator-tree-commands-get-navigator-item-tree:
+    lifecycle: single
+    description: Returns the tree of navigator items.
+  navigator-tree-commands-get-navigator-items-type:
+    lifecycle: single
+    description: Returns all navigator item types based on the navigator item identifiers given. An error is returned for each identifier that is not found.
+  navigator-tree-commands-get-publisher-set-names:
+    lifecycle: single
+    description: Returns the names of available publisher sets.
+  navigator-tree-commands-get-section-navigator-items:
+    lifecycle: single
+    description: Returns the details of the section navigator items identified by their Ids.
+  navigator-tree-commands-get-story-navigator-items:
+    lifecycle: single
+    description: Returns the details of the story navigator items identified by their Ids.
+  navigator-tree-commands-get-worksheet-navigator-items:
+    lifecycle: single
+    description: Returns the details of the worksheet navigator items identified by their Ids.
+  navigator-tree-commands-move-navigator-item:
+    lifecycle: single
+    description: Moves the given navigator item under the <i>parentNavigatorItemId</i> in the navigator tree. If <i>previousNavigatorItemId</i> is not given then inserts it at the first place under the new parent. ...
+  navigator-tree-commands-rename-navigator-item:
+    lifecycle: single
+    description: Renames an existing navigator item by specifying either the name or the ID, or both.
+  property-commands-get-all-property-group-ids:
+    lifecycle: single
+    description: Returns the identifier of every property group in the current plan. The optional propertyType parameter can be used to filter the results based on the type of the property group (Built-in or User D...
+  property-commands-get-all-property-ids:
+    lifecycle: single
+    description: Returns the identifier of every property in the current plan. The optional propertyType parameter can be used to filter the results based on the type of the property (Built-in or User Defined).
+  property-commands-get-all-property-ids-of-elements:
+    lifecycle: single
+    description: Returns all property identifiers of the given elements. The optional propertyType parameter can be used to filter the results based on the type of the property (Built-in or User Defined).
+  property-commands-get-all-property-names:
+    lifecycle: single
+    description: Returns the human-readable names of available Property definitions for debug and development purposes.
+  property-commands-get-details-of-properties:
+    lifecycle: single
+    description: Returns the details of property definitions.
+  property-commands-get-property-definition-availability:
+    lifecycle: single
+    description: Returns the ids of classification items a given property definition is available for.
+  property-commands-get-property-groups:
+    lifecycle: single
+    description: Returns the details of property groups.
+  property-commands-get-property-ids:
+    lifecycle: single
+    description: Returns the identifiers of property definitions for the requested property names.
+  property-commands-get-property-values-of-elements:
+    lifecycle: single
+    description: Returns the property values of the elements for the given property.
+  property-commands-set-property-values-of-elements:
+    lifecycle: single
+    description: Sets the property values of elements.
+  view-map-commands-clone-project-map-item-to-view-map:
+    lifecycle: single
+    description: Clones a project map item to the view map.
+  view-map-commands-create-view-map-folder:
+    lifecycle: single
+    description: Creates a view folder item at the given position in the navigator tree.
+  application-commands-change-window:
+    lifecycle: single
+    description: Changes the current (active) window to the given window.
+  application-commands-get-add-on-version:
+    lifecycle: single
+    description: Retrieves the version of the Tapir Additional JSON Commands Add-On.
+  application-commands-get-archicad-location:
+    lifecycle: single
+    description: Retrieves the location of the currently running Archicad executable.
+  application-commands-get-current-window-type:
+    lifecycle: single
+    description: Returns the type of the current (active) window.
+  application-commands-quit-archicad:
+    lifecycle: single
+    description: Performs a quit operation on the currently running Archicad instance.
+  attribute-commands-create-building-materials:
+    lifecycle: single
+    description: Creates or overwrites Building Material attributes based on the given parameters.
+  attribute-commands-create-composites:
+    lifecycle: single
+    description: Creates or overwrites Composite attributes based on the given parameters.
+  attribute-commands-create-layer-combinations:
+    lifecycle: single
+    description: Creates or overwrites Layer Combination attributes based on the given parameters.
+  attribute-commands-create-layers:
+    lifecycle: single
+    description: Creates or overwrites Layer attributes based on the given parameters.
+  attribute-commands-create-surfaces:
+    lifecycle: single
+    description: Creates or overwrites Surface attributes based on the given parameters.
+  attribute-commands-get-attributes-by-type:
+    lifecycle: single
+    description: Returns the details of every attribute of the given type.
+  attribute-commands-get-building-material-physical-properties:
+    lifecycle: single
+    description: Retrieves the physical properties of the given Building Materials.
+  attribute-commands-get-layer-combinations:
+    lifecycle: single
+    description: Returns the details of layer combination attributes.
+  design-options-commands-get-design-option-combinations:
+    lifecycle: single
+    description: Retrieves information about existing design option combinations.
+  design-options-commands-get-design-option-sets:
+    lifecycle: single
+    description: Retrieves information about existing design option sets. Available from Archicad 29.
+  design-options-commands-get-design-options:
+    lifecycle: single
+    description: Retrieves information about existing design options. Available from Archicad 29.
+  developer-commands-generate-documentation:
+    lifecycle: single
+    description: Generates files for the documentation. Used by Tapir developers only.
+  element-commands-change-selection-of-elements:
+    lifecycle: single
+    description: Adds/removes a number of elements to/from the current selection.
+  element-commands-create-associative-dimensions:
+    lifecycle: single
+    description: Creates associative linear dimensions from explicit witness point references.
+  element-commands-create-associative-dimensions-on-section:
+    lifecycle: single
+    description: Creates associative linear dimensions on section elements using common wall, slab, beam, column and opening presets.
+  element-commands-create-beams:
+    lifecycle: single
+    description: Creates Beam elements based on the given parameters.
+  element-commands-create-columns:
+    lifecycle: single
+    description: Creates Column elements based on the given parameters.
+  element-commands-create-doors:
+    lifecycle: single
+    description: Creates Door elements in host walls based on the given parameters.
+  element-commands-create-labels:
+    lifecycle: single
+    description: Creates Label elements based on the given parameters.
+  element-commands-create-meshes:
+    lifecycle: single
+    description: Creates Mesh elements based on the given parameters.
+  element-commands-create-morphs:
+    lifecycle: single
+    description: Creates Morph elements from simple box definitions.
+  element-commands-create-objects:
+    lifecycle: single
+    description: Creates Object elements based on the given parameters.
+  element-commands-create-openings:
+    lifecycle: single
+    description: Creates Opening elements in the given host elements.
+  element-commands-create-polylines:
+    lifecycle: single
+    description: Creates Polyline elements based on the given parameters.
+  element-commands-create-roofs:
+    lifecycle: single
+    description: Creates multi-plane Roof elements based on footprint, level and roof profile data.
+  element-commands-create-slabs:
+    lifecycle: single
+    description: Creates Slab elements based on the given parameters.
+  element-commands-create-wall-thickness-dimensions:
+    lifecycle: single
+    description: Creates associative wall thickness dimensions for the given walls.
+  element-commands-create-walls:
+    lifecycle: single
+    description: Creates Wall elements based on the given parameters.
+  element-commands-create-windows:
+    lifecycle: single
+    description: Creates Window elements in host walls based on the given parameters.
+  element-commands-create-zones:
+    lifecycle: single
+    description: Creates Zone elements based on the given parameters.
+  element-commands-delete-elements:
+    lifecycle: single
+    description: Deletes elements.
+  element-commands-filter-elements:
+    lifecycle: single
+    description: Tests an elements by the given criterias.
+  element-commands-get3dbounding-boxes:
+    lifecycle: single
+    description: Get the 3D bounding box of elements. The bounding box is calculated from the global origin in the 3D view. The output is the array of the bounding boxes respective to the input array of elements.
+  element-commands-get-all-elements:
+    lifecycle: single
+    description: Returns the identifier of all elements on the plan. Use the optional filter parameter for filtering.
+  element-commands-get-classifications-of-elements:
+    lifecycle: single
+    description: Returns the classification of the given elements in the given classification systems. It works for subelements of hierarchal elements also.
+  element-commands-get-collisions:
+    lifecycle: single
+    description: Detect collisions between the given two groups of elements.
+  element-commands-get-connected-elements:
+    lifecycle: single
+    description: Gets connected elements of the given elements.
+  element-commands-get-details-of-elements:
+    lifecycle: single
+    description: Gets the details of the given elements (geometry parameters etc).
+  element-commands-get-element-preview-image:
+    lifecycle: single
+    description: Returns the preview image of the given element.
+  element-commands-get-elements-by-type:
+    lifecycle: single
+    description: Returns the identifier of every element of the given type on the plan. It works for any type. Use the optional filter parameter for filtering.
+  element-commands-get-gdlparameters-of-elements:
+    lifecycle: single
+    description: Gets all the GDL parameters (name, type, value) of the given elements.
+  element-commands-get-room-image:
+    lifecycle: single
+    description: Returns the room image of the given zone.
+  element-commands-get-selected-elements:
+    lifecycle: single
+    description: Gets the list of the currently selected elements.
+  element-commands-get-subelements-of-hierarchical-elements:
+    lifecycle: single
+    description: Gets the subelements of the given hierarchical elements.
+  element-commands-get-zone-boundaries:
+    lifecycle: single
+    description: Gets the boundaries of the given Zone (connected elements, neighbour zones, etc.).
+  element-commands-highlight-elements:
+    lifecycle: single
+    description: Highlights the elements given in the elements array. In case of empty elements array removes all previously set highlights.
+  element-commands-modify-beams:
+    lifecycle: single
+    description: Modifies Beam elements based on the given parameters.
+  element-commands-modify-columns:
+    lifecycle: single
+    description: Modifies Column elements based on the given parameters.
+  element-commands-modify-doors:
+    lifecycle: single
+    description: Modifies Door elements based on the given parameters.
+  element-commands-modify-morphs:
+    lifecycle: single
+    description: Modifies Morph elements based on the given parameters.
+  element-commands-modify-roofs:
+    lifecycle: single
+    description: Modifies multi-plane Roof elements based on the given parameters.
+  element-commands-modify-slabs:
+    lifecycle: single
+    description: Modifies Slab elements based on the given parameters.
+  element-commands-modify-walls:
+    lifecycle: single
+    description: Modifies Wall elements based on the given parameters.
+  element-commands-modify-windows:
+    lifecycle: single
+    description: Modifies Window elements based on the given parameters.
+  element-commands-move-elements:
+    lifecycle: single
+    description: Moves elements with a given vector.
+  element-commands-remove-element-notification-client:
+    lifecycle: single
+    description: Removes an element notification client.
+  element-commands-set-classifications-of-elements:
+    lifecycle: single
+    description: Sets the classifications of elements. In order to set the classification of an element to unclassified, omit the classificationItemId field. It works for subelements of hierarchal elements also.
+  element-commands-set-details-of-elements:
+    lifecycle: single
+    description: Sets the details of the given elements (floor, layer, order etc).
+  element-commands-set-element-notification-client:
+    lifecycle: single
+    description: Sets up a new notification client to receive element events.
+  element-commands-set-gdlparameters-of-elements:
+    lifecycle: single
+    description: Sets the given GDL parameters of the given elements.
+  elementgrouping-commands-create-groups:
+    lifecycle: single
+    description: Creates groups of the passed elements
+  favorites-commands-apply-favorites-to-element-defaults:
+    lifecycle: single
+    description: Apply the given favorites to element defaults.
+  favorites-commands-create-favorites-from-elements:
+    lifecycle: single
+    description: Create favorites from the given elements.
+  favorites-commands-get-favorite-preview-image:
+    lifecycle: single
+    description: Returns the preview image of the given favorite.
+  favorites-commands-get-favorites-by-type:
+    lifecycle: single
+    description: Returns a list of the names of all favorites with the given element type
+  issue-management-commands-add-comment-to-issue:
+    lifecycle: single
+    description: Adds a new comment to the specified issue.
+  issue-management-commands-attach-elements-to-issue:
+    lifecycle: single
+    description: Attaches elements to the specified issue.
+  issue-management-commands-create-issue:
+    lifecycle: single
+    description: Creates a new issue.
+  issue-management-commands-delete-issue:
+    lifecycle: single
+    description: Deletes the specified issue.
+  issue-management-commands-detach-elements-from-issue:
+    lifecycle: single
+    description: Detaches elements from the specified issue.
+  issue-management-commands-export-issues-to-bcf:
+    lifecycle: single
+    description: Exports specified issues to a BCF file.
+  issue-management-commands-get-comments-from-issue:
+    lifecycle: single
+    description: Retrieves comments information from the specified issue.
+  issue-management-commands-get-elements-attached-to-issue:
+    lifecycle: single
+    description: Retrieves attached elements of the specified issue, filtered by attachment type.
+  issue-management-commands-get-issues:
+    lifecycle: single
+    description: Retrieves information about existing issues.
+  issue-management-commands-import-issues-from-bcf:
+    lifecycle: single
+    description: Imports issues from the specified BCF file.
+  library-commands-add-files-to-embedded-library:
+    lifecycle: single
+    description: Adds the given files into the embedded library.
+  library-commands-get-libraries:
+    lifecycle: single
+    description: Gets the list of loaded libraries.
+  library-commands-reload-libraries:
+    lifecycle: single
+    description: Executes the reload libraries command.
+  navigator-commands-create-details:
+    lifecycle: single
+    description: Creates independent Detail databases.
+  navigator-commands-create-drawings:
+    lifecycle: single
+    description: Creates Drawing elements on the specified or active layout from navigator items.
+  navigator-commands-create-layouts:
+    lifecycle: single
+    description: Creates Layouts and their backing master layouts.
+  navigator-commands-create-subsets:
+    lifecycle: single
+    description: Creates Layout Book subsets.
+  navigator-commands-create-worksheets:
+    lifecycle: single
+    description: Creates independent Worksheet databases.
+  navigator-commands-fit-in-window:
+    lifecycle: single
+    description: Zooms to the given elements or fits everything in the window.
+  navigator-commands-get-database-id-from-navigator-item-id:
+    lifecycle: single
+    description: Gets the ID of the database associated with the supplied navigator item id
+  navigator-commands-get-model-view-options:
+    lifecycle: single
+    description: Gets all model view options
+  navigator-commands-get-view2dtransformations:
+    lifecycle: single
+    description: Get zoom and rotation of 2D views
+  navigator-commands-get-view-settings:
+    lifecycle: single
+    description: Gets the view settings of navigator items
+  navigator-commands-publish-publisher-set:
+    lifecycle: single
+    description: Performs a publish operation on the currently opened project. Only the given publisher set will be published.
+  navigator-commands-set3dcut-planes:
+    lifecycle: single
+    description: Sets the 3D cut planes.
+  navigator-commands-set-view-settings:
+    lifecycle: single
+    description: Sets the view settings of navigator items
+  navigator-commands-update-drawings:
+    lifecycle: single
+    description: Performs a drawing update on the given elements.
+  project-commands-close-project:
+    lifecycle: single
+    description: Closes the currently opened project.
+  project-commands-get-calculation-units:
+    lifecycle: single
+    description: Gets the project calculation units.
+  project-commands-get-geo-location:
+    lifecycle: single
+    description: Gets the project location details.
+  project-commands-get-hotlinks:
+    lifecycle: single
+    description: Gets the file system locations (path) of the hotlink modules. The hotlinks can have tree hierarchy in the project.
+  project-commands-get-project-info:
+    lifecycle: single
+    description: Retrieves information about the currently loaded project.
+  project-commands-get-project-info-fields:
+    lifecycle: single
+    description: Retrieves the names and values of all project info fields.
+  project-commands-get-stories:
+    lifecycle: single
+    description: Retrieves information about the story sructure of the currently loaded project.
+  project-commands-ifcfile-operation:
+    lifecycle: single
+    description: Executes an IFC file operation.
+  project-commands-open-project:
+    lifecycle: single
+    description: Opens the given project.
+  project-commands-print-view:
+    lifecycle: single
+    description: Prints from the current view.
+  project-commands-save-project:
+    lifecycle: single
+    description: Saves the currently opened project.
+  project-commands-set-geo-location:
+    lifecycle: single
+    description: Sets the project location details.
+  project-commands-set-project-info-field:
+    lifecycle: single
+    description: Sets the value of a project info field.
+  project-commands-set-stories:
+    lifecycle: single
+    description: Sets the story sructure of the currently loaded project.
+  property-commands-create-property-definitions:
+    lifecycle: single
+    description: Creates Custom Property Definitions based on the given parameters.
+  property-commands-create-property-groups:
+    lifecycle: single
+    description: Creates Property Groups based on the given parameters.
+  property-commands-delete-property-definitions:
+    lifecycle: single
+    description: Deletes the given Custom Property Definitions.
+  property-commands-delete-property-groups:
+    lifecycle: single
+    description: Deletes the given Custom Property Groups.
+  property-commands-get-all-properties:
+    lifecycle: single
+    description: Returns all user defined and built-in properties.
+  property-commands-get-property-values-of-attributes:
+    lifecycle: single
+    description: Returns the property values of the attributes for the given property.
+  property-commands-get-property-values-of-elements:
+    lifecycle: single
+    description: Returns the property values of the elements for the given property. It works for subelements of hierarchal elements also.
+  property-commands-set-property-values-of-attributes:
+    lifecycle: single
+    description: Sets the property values of attributes.
+  property-commands-set-property-values-of-elements:
+    lifecycle: single
+    description: Sets the property values of elements. It works for subelements of hierarchal elements also.
+  revision-management-commands-get-current-revision-changes-of-layouts:
+    lifecycle: single
+    description: Retrieves all changes belong to the last revision of the given layouts.
+  revision-management-commands-get-document-revisions:
+    lifecycle: single
+    description: Retrieves all document revisions.
+  revision-management-commands-get-revision-changes:
+    lifecycle: single
+    description: Retrieves all changes.
+  revision-management-commands-get-revision-changes-of-elements:
+    lifecycle: single
+    description: Retrieves the changes belong to the given elements.
+  revision-management-commands-get-revision-issues:
+    lifecycle: single
+    description: Retrieves all issues.
+  teamwork-commands-release-elements:
+    lifecycle: single
+    description: Releases elements in Teamwork mode.
+  teamwork-commands-reserve-elements:
+    lifecycle: single
+    description: Reserves elements in Teamwork mode.
+  teamwork-commands-teamwork-receive:
+    lifecycle: single
+    description: Performs a receive operation on the currently opened Teamwork project.
+  teamwork-commands-teamwork-send:
+    lifecycle: single
+    description: Performs a send operation on the currently opened Teamwork project.
 
 skills:
-  - tapir-vs-official-api.md
-  - publisher-set-workflow.md
-  - teamwork-pitfalls.md
+  - archicad-officialcommands.md
+  - tapir-additionalcommands.md
+  - tapir-schema.md

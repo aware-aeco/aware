@@ -1,0 +1,41 @@
+{
+  "name": "NormalAnglePropertyValue",
+  "namespace": "Tapir.Schema",
+  "kind": "class",
+  "summary": "An angle property value containing a real angle. The value is measured in SI (radians).",
+  "interfaces": [],
+  "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#NormalAnglePropertyValue",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "type",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060type\u0060 of type \u0060string\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#NormalAnglePropertyValue"
+    },
+    {
+      "name": "status",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060status\u0060 of type \u0060string\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#NormalAnglePropertyValue"
+    },
+    {
+      "name": "value",
+      "type": "number",
+      "getter": true,
+      "setter": false,
+      "summary": "Property \u0060value\u0060 of type \u0060number\u0060 (required).",
+      "remarks": "Required.",
+      "doc_url": "https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/#NormalAnglePropertyValue"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

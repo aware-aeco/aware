@@ -1,0 +1,72 @@
+{
+  "name": "ViewMapCommands",
+  "namespace": "Archicad.OfficialCommands",
+  "kind": "static-class",
+  "summary": "Graphisoft official \u0027View Map Commands\u0027 command group \u2014 2 JSON-RPC commands (Archicad 29.0).",
+  "interfaces": [],
+  "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CloneProjectMapItemToViewMap",
+      "signature": "CloneProjectMapItemToViewMap(projectMapNavigatorItemId: NavigatorItemId, parentNavigatorItemId: NavigatorItemId): object",
+      "summary": "Clones a project map item to the view map.",
+      "params": [
+        {
+          "name": "projectMapNavigatorItemId",
+          "type": "NavigatorItemId",
+          "doc": "The ID of the navigator item to be cloned. Only navigator items from the project map can be cloned.",
+          "optional": false
+        },
+        {
+          "name": "parentNavigatorItemId",
+          "type": "NavigatorItemId",
+          "doc": "The ID of the navigator item below which the new view will be inserted. Only navigator items from the view map are allowed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: createdNavigatorItemId."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#CloneProjectMapItemToViewMap"
+    },
+    {
+      "name": "CreateViewMapFolder",
+      "signature": "CreateViewMapFolder(folderParameters: FolderParameters, parentNavigatorItemId?: NavigatorItemId, previousNavigatorItemId?: NavigatorItemId): object",
+      "summary": "Creates a view folder item at the given position in the navigator tree.",
+      "params": [
+        {
+          "name": "folderParameters",
+          "type": "FolderParameters",
+          "doc": "This is the name of the new folder.",
+          "optional": false
+        },
+        {
+          "name": "parentNavigatorItemId",
+          "type": "NavigatorItemId",
+          "doc": "The newly created folder will be placed under this parent item. If this parameter is not given the folder will be created as the first item in the View Map list.",
+          "optional": true
+        },
+        {
+          "name": "previousNavigatorItemId",
+          "type": "NavigatorItemId",
+          "doc": "The newly created folder will be placed after this sibling item. If this parameter is not given the folder will be created as the first item under the parent.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Returns an object with properties: createdFolderNavigatorItemId."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/#CreateViewMapFolder"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}
