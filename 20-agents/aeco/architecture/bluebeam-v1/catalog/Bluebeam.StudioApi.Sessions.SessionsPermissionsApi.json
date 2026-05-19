@@ -1,0 +1,67 @@
+{
+  "name": "SessionsPermissionsApi",
+  "namespace": "Bluebeam.StudioApi.Sessions",
+  "kind": "class",
+  "summary": "Bluebeam Studio API \u2014 Sessions / Permissions endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /publicapi/v1/. Source: https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json",
+  "interfaces": [],
+  "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ListSessionPermissions",
+      "signature": "Task ListSessionPermissions(Guid sessionId)",
+      "summary": "Get Studio Session permissions",
+      "remarks": "HTTP GET \u0060/publicapi/v1/sessions/{sessionId}/permissions\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "sessionId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060sessionId\u0060 from \u0060/publicapi/v1/sessions/{sessionId}/permissions\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "UpdateSessionPermissions",
+      "signature": "Task UpdateSessionPermissions(Guid sessionId, UpdateSessionPermissionsRequest request)",
+      "summary": "Update Studio Session permissions",
+      "remarks": "HTTP PUT \u0060/publicapi/v1/sessions/{sessionId}/permissions\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "sessionId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060sessionId\u0060 from \u0060/publicapi/v1/sessions/{sessionId}/permissions\u0060.",
+          "optional": false
+        },
+        {
+          "name": "request",
+          "type": "UpdateSessionPermissionsRequest",
+          "doc": "Request body. JSON object with fields: Allow, Type.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

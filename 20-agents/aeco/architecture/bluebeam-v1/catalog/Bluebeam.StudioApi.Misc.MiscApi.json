@@ -1,0 +1,86 @@
+{
+  "name": "MiscApi",
+  "namespace": "Bluebeam.StudioApi.Misc",
+  "kind": "class",
+  "summary": "Bluebeam Studio API \u2014 Misc endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /publicapi/v1/. Source: https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json",
+  "interfaces": [],
+  "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ListHealthcheck",
+      "signature": "Task ListHealthcheck()",
+      "summary": "Healthcheck",
+      "remarks": "HTTP GET \u0060/publicapi/v1/healthcheck\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "GetUserMe",
+      "signature": "Task GetUserMe()",
+      "summary": "Get info about currently authenticated user",
+      "remarks": "HTTP GET \u0060/publicapi/v1/users/me\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "UpdateUserMe",
+      "signature": "Task UpdateUserMe(UpdateUserMeRequest request)",
+      "summary": "Get info about currently authenticated user",
+      "remarks": "HTTP PUT \u0060/publicapi/v1/users/me\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "request",
+          "type": "UpdateUserMeRequest",
+          "doc": "Request body. JSON object with fields: DisplayName.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "ListVersion",
+      "signature": "Task ListVersion()",
+      "summary": "Get Current Version",
+      "remarks": "HTTP GET \u0060/publicapi/api/version\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

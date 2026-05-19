@@ -70,10 +70,68 @@ foreach ($i in $sampleIdx) {
     # YAML pages don't have a kind-word convention either, so they fall under the same
     # structural-signal check as markdown.
     $isMarkdownSource = $url -match '\.md(\?|$)' -or $url -match '\.ya?ml(\?|$)'
+    # JSON-source variant: .json (e.g. Postman v2.1 collections used by Bluebeam where
+    # vendor docs are auth-walled). The JSON enumerates RESTful operations grouped into
+    # folders; the IR synthesises one *Api class per folder and one Request DTO per
+    # operation body. Type names are synthesised from path + verb so they don't appear
+    # literally in the JSON — the cross-check is STRUCTURAL: for *Api classes we require
+    # the operation paths reachable from this class to be present in the JSON; for
+    # Request DTOs we require at least one property name to appear as a JSON key in
+    # the collection.
+    $isJsonSource = $url -match '\.json(\?|$)' -or $url -match '/postman/' -or $url -match 'postman\.com/'
     try {
         $r = Invoke-WebRequest -Uri $url -UseBasicParsing -UserAgent "AWARE-coverage-verify/0.30" -ErrorAction Stop
         $pageText = $r.Content
-        if ($isMarkdownSource) {
+        if ($isJsonSource) {
+            # JSON source (e.g. Postman v2.1 collection at bluebeam). Type names are
+            # synthesised from path + verb so the type name itself is NOT expected to
+            # appear in the JSON. Cross-check structurally: the catalog must trace to
+            # SOMETHING real in the collection.
+            #
+            # For *Api class types: at least one of the type's methods must reference a
+            # path (via remarks "HTTP <verb> `<path>`") that appears in the JSON.
+            # For Request DTO types: at least one property name must appear as a key in
+            # the body example of an operation in the JSON.
+            $isApiClass = ($t.namespace -notmatch '\.Models$')
+            if ($isApiClass) {
+                $methodsToCheck = if ($t.methods) { ($t.methods | Select-Object -First 3) } else { @() }
+                $anyHit = ($methodsToCheck.Count -eq 0)
+                foreach ($mm in $methodsToCheck) {
+                    # The extractor stamps remarks="HTTP <verb> `<path>`. Vendor docs page: ..."
+                    if ($mm.remarks -match 'HTTP\s+\w+\s+`([^`]+)`') {
+                        $methodPath = $matches[1]
+                        $segments = $methodPath -split '/' | Where-Object { $_ -and ($_ -notmatch '^\{') }
+                        # Use the last 2 segments as the discriminator (most-distinctive).
+                        $lastTwo = $segments | Select-Object -Last 2
+                        $matched = $true
+                        foreach ($seg in $lastTwo) {
+                            if ($pageText.IndexOf("`"$seg`"", [StringComparison]::Ordinal) -lt 0) { $matched = $false; break }
+                        }
+                        if ($matched) { $anyHit = $true; break }
+                    }
+                }
+                if (-not $anyHit) { $issues += "api-class-paths-missing-in-json" }
+            } else {
+                # Property names appear in the Postman raw-body string with quotes that are
+                # backslash-escaped (the body is itself a JSON-encoded string inside the outer
+                # collection JSON). So we search for both forms: \"<Name>\" (escaped inside the
+                # raw body string) and "<Name>" (in case the body is parsed flat anywhere).
+                $propsToCheck = if ($t.properties) { ($t.properties | Select-Object -First 5) } else { @() }
+                $hits = 0
+                foreach ($pp in $propsToCheck) {
+                    $escaped = "\`"$($pp.name)\`":"
+                    $plain   = "`"$($pp.name)`":"
+                    if ($pageText.IndexOf($escaped, [StringComparison]::Ordinal) -ge 0 `
+                        -or $pageText.IndexOf($plain, [StringComparison]::Ordinal) -ge 0) {
+                        $hits++
+                    }
+                }
+                if ($propsToCheck.Count -gt 0 -and $hits -eq 0) {
+                    $issues += "request-dto-properties-missing-in-json"
+                }
+            }
+        }
+        elseif ($isMarkdownSource) {
             # Markdown / YAML check: type name must appear in the page. For markdown the
             # H1 title is the canonical place; for YAML it's the components/schemas/<Name>:
             # line. Either way, a substring check on the bare name is sufficient — the

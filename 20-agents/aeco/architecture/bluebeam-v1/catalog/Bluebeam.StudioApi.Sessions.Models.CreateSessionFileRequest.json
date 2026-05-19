@@ -1,0 +1,46 @@
+{
+  "name": "CreateSessionFileRequest",
+  "namespace": "Bluebeam.StudioApi.Sessions.Models",
+  "kind": "class",
+  "summary": "Request body DTO for the corresponding \u0060CreateSessionFile\u0060 operation. Synthesized from the Postman example schema.",
+  "interfaces": [],
+  "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CRC",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Request-body field \u0060CRC\u0060 (type inferred from example).",
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Request-body field \u0060Name\u0060 (type inferred from example).",
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "Size",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Request-body field \u0060Size\u0060 (type inferred from example).",
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "Source",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Request-body field \u0060Source\u0060 (type inferred from example).",
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,195 @@
+{
+  "name": "SessionsUsersApi",
+  "namespace": "Bluebeam.StudioApi.Sessions",
+  "kind": "class",
+  "summary": "Bluebeam Studio API \u2014 Sessions / Users endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /publicapi/v1/. Source: https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json",
+  "interfaces": [],
+  "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ListUserPermissions",
+      "signature": "Task ListUserPermissions(Guid sessionId, Guid userId)",
+      "summary": "Get Studio Session user permissions",
+      "remarks": "HTTP GET \u0060/publicapi/v1/sessions/{sessionId}/users/{userId}/permissions\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "sessionId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060sessionId\u0060 from \u0060/publicapi/v1/sessions/{sessionId}/users/{userId}/permissions\u0060.",
+          "optional": false
+        },
+        {
+          "name": "userId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060userId\u0060 from \u0060/publicapi/v1/sessions/{sessionId}/users/{userId}/permissions\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "UpdateUserPermissions",
+      "signature": "Task UpdateUserPermissions(Guid sessionId, Guid userId, UpdateUserPermissionsRequest request)",
+      "summary": "Update Studio Session user permissions",
+      "remarks": "HTTP PUT \u0060/publicapi/v1/sessions/{sessionId}/users/{userId}/permissions\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "sessionId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060sessionId\u0060 from \u0060/publicapi/v1/sessions/{sessionId}/users/{userId}/permissions\u0060.",
+          "optional": false
+        },
+        {
+          "name": "userId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060userId\u0060 from \u0060/publicapi/v1/sessions/{sessionId}/users/{userId}/permissions\u0060.",
+          "optional": false
+        },
+        {
+          "name": "request",
+          "type": "UpdateUserPermissionsRequest",
+          "doc": "Request body. JSON object with fields: Allow, Type.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "GetUser",
+      "signature": "Task GetUser(Guid sessionId, Guid id)",
+      "summary": "Get a single user in a Studio Session",
+      "remarks": "HTTP GET \u0060/publicapi/v1/sessions/{sessionId}/users/{id}\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "sessionId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060sessionId\u0060 from \u0060/publicapi/v1/sessions/{sessionId}/users/{id}\u0060.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/sessions/{sessionId}/users/{id}\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "UpdateUser",
+      "signature": "Task UpdateUser(Guid sessionId, Guid id, UpdateUserRequest request)",
+      "summary": "Update user in a Studio Session",
+      "remarks": "HTTP PUT \u0060/publicapi/v1/sessions/{sessionId}/users/{id}\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "sessionId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060sessionId\u0060 from \u0060/publicapi/v1/sessions/{sessionId}/users/{id}\u0060.",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "Guid",
+          "doc": "Path parameter \u0060id\u0060 from \u0060/publicapi/v1/sessions/{sessionId}/users/{id}\u0060.",
+          "optional": false
+        },
+        {
+          "name": "request",
+          "type": "UpdateUserRequest",
+          "doc": "Request body. JSON object with fields: RestrictedStatus, StatusMessage.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "CreateSessionUser",
+      "signature": "Task CreateSessionUser(Guid sessionId, CreateSessionUserRequest request)",
+      "summary": "Add user to a Studio Session",
+      "remarks": "HTTP POST \u0060/publicapi/v1/sessions/{sessionId}/users\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "sessionId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060sessionId\u0060 from \u0060/publicapi/v1/sessions/{sessionId}/users\u0060.",
+          "optional": false
+        },
+        {
+          "name": "request",
+          "type": "CreateSessionUserRequest",
+          "doc": "Request body. JSON object with fields: Email, Message, SendEmail.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "ListSessionUsers",
+      "signature": "Task ListSessionUsers(Guid sessionId)",
+      "summary": "Get all users in a Studio Session",
+      "remarks": "HTTP GET \u0060/publicapi/v1/sessions/{sessionId}/users\u0060. Vendor docs page: https://support.bluebeam.com/developer/",
+      "params": [
+        {
+          "name": "sessionId",
+          "type": "Guid",
+          "doc": "Path parameter \u0060sessionId\u0060 from \u0060/publicapi/v1/sessions/{sessionId}/users\u0060.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "HttpRequestException",
+          "when": "Thrown when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

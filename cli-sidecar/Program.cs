@@ -162,6 +162,17 @@ internal static class Program
                             // slug collision. IR stamps host="tedds".
                             "tedds" or "tekla-tedds" => Ingest.Extractors.Tedds.Extractor.Extract(argsObj.Version, argsObj.OutPath)
                                 .GetAwaiter().GetResult(),
+                            // Bluebeam extractor (Phase B B14) — Bluebeam Studio API from the
+                            // public Postman v2.1 collection at
+                            // https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json.
+                            // The Bluebeam Developer Portal at developers.bluebeam.com is
+                            // auth-walled; the Postman JSON is the only public machine-readable
+                            // description. 123 REST operations grouped into 4 top-level folders
+                            // (Sessions / Projects / Jobs / Misc). Single version (v1) — Bluebeam
+                            // doesn't version the API surface beyond the /publicapi/v1/ path
+                            // prefix. Single-shot pipeline (one HTTP fetch + one parse, <5 sec).
+                            "bluebeam" => Ingest.Extractors.Bluebeam.Extractor.Extract(argsObj.Version, argsObj.OutPath)
+                                .GetAwaiter().GetResult(),
                             _ => throw new NotSupportedException(
                                 $"coverage-extract: vendor '{argsObj.Vendor}' has no extractor yet")
                         };

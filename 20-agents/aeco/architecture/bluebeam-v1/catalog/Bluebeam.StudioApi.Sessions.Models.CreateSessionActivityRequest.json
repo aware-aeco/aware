@@ -1,0 +1,22 @@
+{
+  "name": "CreateSessionActivityRequest",
+  "namespace": "Bluebeam.StudioApi.Sessions.Models",
+  "kind": "class",
+  "summary": "Request body DTO for the corresponding \u0060CreateSessionActivity\u0060 operation. Synthesized from the Postman example schema.",
+  "interfaces": [],
+  "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Message",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Request-body field \u0060Message\u0060 (type inferred from example).",
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}
