@@ -1,0 +1,22 @@
+{
+  "name": "OpenProject_request",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.OpenProject_request.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/api/openapi.yaml",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "IdeaConFile",
+      "type": "Stream",
+      "getter": true,
+      "setter": true,
+      "summary": "The IdeaCon file to open.",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/OpenProject_request.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

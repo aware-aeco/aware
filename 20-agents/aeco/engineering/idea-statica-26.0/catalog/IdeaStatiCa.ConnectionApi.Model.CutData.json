@@ -1,0 +1,46 @@
+{
+  "name": "CutData",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.CutData.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/CutData.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "PlanePoint",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for CutData.planePoint.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/CutData.md"
+    },
+    {
+      "name": "NormalVector",
+      "type": "Vector3D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for CutData.normalVector.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/CutData.md"
+    },
+    {
+      "name": "Direction",
+      "type": "CutOrientation",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for CutData.direction.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/CutData.md"
+    },
+    {
+      "name": "Offset",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for CutData.offset.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/CutData.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

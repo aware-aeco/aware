@@ -1,0 +1,110 @@
+{
+  "name": "CutBeamByBeamData",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.CutBeamByBeamData.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/CutBeamByBeamData.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for CutBeamByBeamData.name.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/CutBeamByBeamData.md"
+    },
+    {
+      "name": "ModifiedObject",
+      "type": "ReferenceElement",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for CutBeamByBeamData.modifiedObject.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/CutBeamByBeamData.md"
+    },
+    {
+      "name": "CuttingObject",
+      "type": "ReferenceElement",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for CutBeamByBeamData.cuttingObject.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/CutBeamByBeamData.md"
+    },
+    {
+      "name": "IsWeld",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for CutBeamByBeamData.isWeld.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/CutBeamByBeamData.md"
+    },
+    {
+      "name": "WeldThickness",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for CutBeamByBeamData.weldThickness.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/CutBeamByBeamData.md"
+    },
+    {
+      "name": "WeldType",
+      "type": "WeldType",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for CutBeamByBeamData.weldType.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/CutBeamByBeamData.md"
+    },
+    {
+      "name": "Offset",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for CutBeamByBeamData.offset.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/CutBeamByBeamData.md"
+    },
+    {
+      "name": "Method",
+      "type": "CutMethod",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for CutBeamByBeamData.method.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/CutBeamByBeamData.md"
+    },
+    {
+      "name": "Orientation",
+      "type": "CutOrientation",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for CutBeamByBeamData.orientation.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/CutBeamByBeamData.md"
+    },
+    {
+      "name": "PlaneOnCuttingObject",
+      "type": "DistanceComparison",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for CutBeamByBeamData.planeOnCuttingObject.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/CutBeamByBeamData.md"
+    },
+    {
+      "name": "CutPart",
+      "type": "CutPart",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for CutBeamByBeamData.cutPart.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/CutBeamByBeamData.md"
+    },
+    {
+      "name": "ExtendBeforeCut",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for CutBeamByBeamData.extendBeforeCut.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/CutBeamByBeamData.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

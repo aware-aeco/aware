@@ -1,0 +1,392 @@
+agent:        idea-statica-26.0
+version:      0.30.0
+sdk-target:   26.0
+display-name: idea-statica-26.0 (raw — 178 types, full coverage)
+
+description: |
+  Auto-generated from vendor docs (hybrid: https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/api/openapi.yaml, https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/api/openapi.yaml)
+  on 2026-05-19.
+
+  Coverage: 178 types, 117 methods,
+  0 events, 544 properties.
+
+  Behavioral notes from vendor remarks/summary preserved per member.
+  See skills/ for narrative, catalog/ for structured per-type data.
+
+stateful: false
+
+vendor:   idea-statica
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/engineering/idea-statica-26.0
+keywords: [aeco, engineering, idea-statica, idea-statica, generated, raw, v0.30, full-coverage]
+
+provenance:
+  generated-by:     aware-agent-builder
+  generator-version: 0.30.0
+  source:
+    type: hybrid
+    urls: ["https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/api/openapi.yaml", "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/api/openapi.yaml"]
+  generated-at: 2026-05-19T04:34:58.4884528Z
+
+transport:
+  cli:
+    binary: aware-idea-statica
+
+commands:
+  calculation-api-calculate-async:
+    lifecycle: single
+    description: Runs CBFEM calculation and returns the summary of the results.
+  calculation-api-get-raw-json-results-async:
+    lifecycle: single
+    description: Gets JSON string which represents raw CBFEM results (an instance of CheckResultsData).
+  calculation-api-get-results-async:
+    lifecycle: single
+    description: Gets detailed results of the CBFEM analysis.
+  client-api-connect-client-async:
+    lifecycle: single
+    description: Connects a client to the ConnectionRestApi service and returns a unique identifier for the client.
+  client-api-get-version-async:
+    lifecycle: single
+    description: Gets the IdeaStatica API assembly version.
+  connection-api-copy-connection-async:
+    lifecycle: single
+    description: Creates a copy of an existing connection in the project.
+  connection-api-create-empty-connection-async:
+    lifecycle: single
+    description: Adds a new empty connection to the project.
+  connection-api-delete-connection-async:
+    lifecycle: single
+    description: Deletes a specific connection from the project.
+  connection-api-get-connection-async:
+    lifecycle: single
+    description: Gets data about a specific connection in the project.
+  connection-api-get-connection-topology-async:
+    lifecycle: single
+    description: Gets the topology of the connection in JSON format.
+  connection-api-get-connections-async:
+    lifecycle: single
+    description: Gets data about all connections in the project.
+  connection-api-get-production-cost-async:
+    lifecycle: single
+    description: Gets the production cost of the connection.
+  connection-api-update-connection-async:
+    lifecycle: single
+    description: Updates data of a specific connection in the project.
+  connection-library-api-get-design-item-picture-async:
+    lifecycle: single
+    description: Retrieves the picture associated with the specified design item as a PNG image.
+  connection-library-api-get-design-sets-async:
+    lifecycle: single
+    description: Retrieves a list of design sets available for the user.
+  connection-library-api-get-template-async:
+    lifecycle: single
+    description: Retrieves the template associated with the specified design set and design item.
+  connection-library-api-propose-async:
+    lifecycle: single
+    description: Proposes a list of design items for a specified connection within a project.
+  connection-library-api-publish-connection-async:
+    lifecycle: single
+    description: Publish template to Private or Company set
+  conversion-api-change-code-async:
+    lifecycle: single
+    description: Changes the design code of the project.
+  conversion-api-get-conversion-mapping-async:
+    lifecycle: single
+    description: Gets default conversion mappings for converting the project to a different design code.
+  export-api-export-ifcasync:
+    lifecycle: single
+    description: Exports the connection to IFC format.
+  export-api-export-iom-async:
+    lifecycle: single
+    description: "Exports the connection to XML which includes the OpenModelContainer (https://github.com/idea-statica/ideastatica-public/blob/main/src/IdeaRS.OpenModel/OpenModelContainer.cs)."
+  export-api-export-iom-connection-data-async:
+    lifecycle: single
+    description: "Gets the ConnectionData for the specified connection (https://github.com/idea-statica/ideastatica-public/blob/main/src/IdeaRS.OpenModel/Connection/ConnectionData.cs)."
+  load-effect-api-add-load-effect-async:
+    lifecycle: single
+    description: Adds a new load effect to the connection.
+  load-effect-api-delete-load-effect-async:
+    lifecycle: single
+    description: Delete load effect loadEffectId
+  load-effect-api-get-load-effect-async:
+    lifecycle: single
+    description: Gets load impulses from the specified load effect.
+  load-effect-api-get-load-effects-async:
+    lifecycle: single
+    description: Gets all load effects defined in the specified connection.
+  load-effect-api-get-load-settings-async:
+    lifecycle: single
+    description: Get Load settings for connection in project
+  load-effect-api-set-load-settings-async:
+    lifecycle: single
+    description: Set Load settings for connection in project
+  load-effect-api-update-load-effect-async:
+    lifecycle: single
+    description: Update load impulses in conLoading
+  material-api-add-bolt-assembly-async:
+    lifecycle: single
+    description: Add bolt assembly to the project
+  material-api-add-cross-section-async:
+    lifecycle: single
+    description: Add cross section to the project
+  material-api-add-material-bolt-grade-async:
+    lifecycle: single
+    description: Adds a material to the project.
+  material-api-add-material-concrete-async:
+    lifecycle: single
+    description: Adds a material to the project.
+  material-api-add-material-steel-async:
+    lifecycle: single
+    description: Adds a material to the project.
+  material-api-add-material-weld-async:
+    lifecycle: single
+    description: Adds a material to the project.
+  material-api-get-all-materials-async:
+    lifecycle: single
+    description: Gets materials used in the specified project.
+  material-api-get-bolt-assemblies-async:
+    lifecycle: single
+    description: Gets bolt assemblies used in the specified project.
+  material-api-get-bolt-grade-materials-async:
+    lifecycle: single
+    description: Gets materials used in the specified project.
+  material-api-get-concrete-materials-async:
+    lifecycle: single
+    description: Gets materials used in the specified project.
+  material-api-get-cross-sections-async:
+    lifecycle: single
+    description: Gets cross sections used in the specified project.
+  material-api-get-steel-materials-async:
+    lifecycle: single
+    description: Gets materials used in the specified project.
+  material-api-get-welding-materials-async:
+    lifecycle: single
+    description: Gets materials used in the specified project.
+  member-api-add-member-async:
+    lifecycle: single
+    description: Adds a new member to the connection.
+  member-api-get-member-async:
+    lifecycle: single
+    description: Gets information about the specified member in the connection.
+  member-api-get-members-async:
+    lifecycle: single
+    description: Gets information about all members in the connection.
+  member-api-set-bearing-member-async:
+    lifecycle: single
+    description: Set bearing member for memberIt
+  member-api-update-member-async:
+    lifecycle: single
+    description: Updates the member in the connection with the provided data.
+  operation-api-delete-operations-async:
+    lifecycle: single
+    description: Delete all operations for the connection
+  operation-api-get-common-operation-properties-async:
+    lifecycle: single
+    description: Gets common operation properties.
+  operation-api-get-operations-async:
+    lifecycle: single
+    description: Gets the list of operations for the connection.
+  operation-api-pre-design-welds-async:
+    lifecycle: single
+    description: Pre-designs welds in the connection.
+  operation-api-update-common-operation-properties-async:
+    lifecycle: single
+    description: Updates common properties for all operations.
+  parameter-api-delete-parameters-async:
+    lifecycle: single
+    description: Delete all parameters and parameter model links for the connection connectionId in the project projectId
+  parameter-api-evaluate-expression-async:
+    lifecycle: single
+    description: "Evaluate the expression and return the result. For more detailssee documentation about parameters: https://developer.ideastatica.com/docs/api/api_parameters_getting_started.html nor https://develop..."
+  parameter-api-get-parameters-async:
+    lifecycle: single
+    description: Gets all parameters defined for the specified project and connection.
+  parameter-api-update-async:
+    lifecycle: single
+    description: Updates parameters for the specified connection in the project with the values provided.
+  presentation-api-get-data-scene3dasync:
+    lifecycle: single
+    description: Returns data for Scene3D visualization.
+  presentation-api-get-data-scene3dtext-async:
+    lifecycle: single
+    description: Returns serialized data for Scene3D in JSON format.
+  project-api-close-project-async:
+    lifecycle: single
+    description: Closes the project and releases resources in the service.
+  project-api-create-empty-project-async:
+    lifecycle: single
+    description: Creates a new empty IdeaCon project with no connections.
+  project-api-download-project-async:
+    lifecycle: single
+    description: Downloads the current IdeaCon project from the service, includingall changes made by previous API calls.
+  project-api-get-active-projects-async:
+    lifecycle: single
+    description: "Gets the list of projects in the service that were opened by the client connected via M:IdeaStatiCa.ConnectionRestApi.Controllers.ClientController.ConnectClient."
+  project-api-get-project-data-async:
+    lifecycle: single
+    description: Get data of the project.
+  project-api-import-iomasync:
+    lifecycle: single
+    description: "Create the IDEA Connection project from IOM provided in xml format. nThe parameter 'containerXmlFile' passed in HTTP body represents : [IdeaRS.OpenModel.OpenModelContainer](https://github.com/idea-..."
+  project-api-open-project-async:
+    lifecycle: single
+    description: Opens an IdeaCon project from the provided file.
+  project-api-update-from-iomasync:
+    lifecycle: single
+    description: "Update the IDEA Connection project by [IdeaRS.OpenModel.OpenModelContainer](https://github.com/idea-statica/ideastatica-public/blob/main/src/IdeaRS.OpenModel/OpenModelContainer.cs) (model and resul..."
+  project-api-update-project-data-async:
+    lifecycle: single
+    description: Updates ConProjectData of project
+  report-api-generate-html-zip-async:
+    lifecycle: single
+    description: Generates a report for the specified connection in PDF, Word, or HTMLzip format.
+  report-api-generate-pdf-async:
+    lifecycle: single
+    description: Generates a report for the specified connection in PDF, Word, or HTMLzip format.
+  report-api-generate-pdf-for-mutliple-async:
+    lifecycle: single
+    description: Generates a report for multiple connections in PDF or Word format.
+  report-api-generate-word-async:
+    lifecycle: single
+    description: Generates a report for the specified connection in PDF, Word, or HTMLzip format.
+  report-api-generate-word-for-multiple-async:
+    lifecycle: single
+    description: Generates a report for multiple connections in PDF or Word format.
+  settings-api-get-settings-async:
+    lifecycle: single
+    description: Gets setting values for the project.
+  settings-api-update-settings-async:
+    lifecycle: single
+    description: Updates one or multiple setting values in the project.
+  template-api-apply-template-async:
+    lifecycle: single
+    description: Apply the connection template applyTemplateParam on the connection connectionId in the project projectId
+  template-api-create-con-template-async:
+    lifecycle: single
+    description: Create a template for the connection connectionId in the project projectId
+  template-api-delete-all-async:
+    lifecycle: single
+    description: Delete all templates in connection
+  template-api-delete-async:
+    lifecycle: single
+    description: Delete specific template
+  template-api-explode-all-async:
+    lifecycle: single
+    description: Explode all templates (delete parameters, keep operations)
+  template-api-explode-async:
+    lifecycle: single
+    description: Explode specific template (delete parameters, keep operations)
+  template-api-get-default-template-mapping-async:
+    lifecycle: single
+    description: Get the default mappings for the application of the connection templatepassed in templateToApply on connectionId in the project projectId
+  template-api-get-template-common-operation-properties-async:
+    lifecycle: single
+    description: Get Common properties for specific template
+  template-api-get-template-in-connection-async:
+    lifecycle: single
+    description: Retrieves a specific template by its ID for a given connection within a project.
+  template-api-get-templates-in-connection-async:
+    lifecycle: single
+    description: Retrieves a list of templates associated with a specific connection within a project.
+  template-api-load-defaults-async:
+    lifecycle: single
+    description: Load parameter defaults for specific template.
+  template-api-update-template-common-operation-properties-async:
+    lifecycle: single
+    description: Set common properties for specific template
+  calculation-api-calculate-async:
+    lifecycle: single
+    description: Calculate RCS project
+  calculation-api-get-raw-results-async:
+    lifecycle: single
+    description: Get calculated results in XML format
+  calculation-api-get-results-async:
+    lifecycle: single
+    description: Get calculated results
+  client-api-get-version-async:
+    lifecycle: single
+    description: Get the IdeaStatica version
+  cross-section-api-add-reinforced-cross-section-async:
+    lifecycle: single
+    description: Add a new reinforced cross-section to the project from embedded geometry
+  cross-section-api-get-reinforced-cross-section-data-async:
+    lifecycle: single
+    description: Get reinforced cross-section with full geometry (IOM format)
+  cross-section-api-import-reinforced-cross-section-async:
+    lifecycle: single
+    description: Import reinforced cross-section from template
+  cross-section-api-reinforced-cross-sections-async:
+    lifecycle: single
+    description: Get reinforced cross sections
+  design-member-api-members-async:
+    lifecycle: single
+    description: Get members
+  internal-forces-api-get-section-loading-async:
+    lifecycle: single
+    description: Get section loading
+  internal-forces-api-set-section-loading-async:
+    lifecycle: single
+    description: Set section loading
+  material-api-add-concrete-material-async:
+    lifecycle: single
+    description: Add a new material to the project. The material type is determined by the endpoint path.
+  material-api-add-prestress-material-async:
+    lifecycle: single
+    description: Add a new material to the project. The material type is determined by the endpoint path.
+  material-api-add-reinforcement-material-async:
+    lifecycle: single
+    description: Add a new material to the project. The material type is determined by the endpoint path.
+  material-api-get-all-materials-async:
+    lifecycle: single
+    description: Get materials from the project. Use specific path to filter by material type.
+  material-api-get-concrete-materials-async:
+    lifecycle: single
+    description: Get materials from the project. Use specific path to filter by material type.
+  material-api-get-prestress-materials-async:
+    lifecycle: single
+    description: Get materials from the project. Use specific path to filter by material type.
+  material-api-get-reinforcement-materials-async:
+    lifecycle: single
+    description: Get materials from the project. Use specific path to filter by material type.
+  project-api-close-project-async:
+    lifecycle: single
+    description: PUT /api/1/projects/{projectId}/close
+  project-api-download-project-async:
+    lifecycle: single
+    description: Download the actual rcs project from the service. It includes all changes which were made by previous API calls.
+  project-api-get-active-project-async:
+    lifecycle: single
+    description: GET /api/1/projects/active-project
+  project-api-get-code-settings-async:
+    lifecycle: single
+    description: GET /api/1/projects/{projectId}/code-settings
+  project-api-get-code-settings-json-async:
+    lifecycle: single
+    description: GET /api/1/projects/{projectId}/code-settings-json
+  project-api-import-iomasync:
+    lifecycle: single
+    description: POST /api/1/projects/import-iom
+  project-api-import-iomfile-async:
+    lifecycle: single
+    description: POST /api/1/projects/import-iom-file
+  project-api-open-async:
+    lifecycle: single
+    description: POST /api/1/projects/open
+  project-api-open-project-async:
+    lifecycle: single
+    description: Open Rcs project from rcsFile
+  project-api-update-code-settings-async:
+    lifecycle: single
+    description: PUT /api/1/projects/{projectId}/code-settings
+  section-api-sections-async:
+    lifecycle: single
+    description: Get sections
+  section-api-update-section-async:
+    lifecycle: single
+    description: Update a section in the RCS project
+
+skills:
+  - ideastatica-connectionapi-api.md
+  - ideastatica-connectionapi-model.md
+  - ideastatica-rcsapi-api.md
+  - ideastatica-rcsapi-model.md

@@ -1,0 +1,54 @@
+{
+  "name": "RcsProject",
+  "namespace": "IdeaStatiCa.RcsApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.RcsApi.Model.RcsProject.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/RcsProject.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Sections",
+      "type": "List\u003CRcsSection\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsProject.sections.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/RcsProject.md"
+    },
+    {
+      "name": "CheckMembers",
+      "type": "List\u003CRcsCheckMember\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsProject.checkMembers.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/RcsProject.md"
+    },
+    {
+      "name": "ReinforcedCrossSections",
+      "type": "List\u003CRcsReinforcedCrossSection\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsProject.reinforcedCrossSections.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/RcsProject.md"
+    },
+    {
+      "name": "ProjectId",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsProject.projectId.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/RcsProject.md"
+    },
+    {
+      "name": "ProjectData",
+      "type": "RcsProjectData",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsProject.projectData.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/RcsProject.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

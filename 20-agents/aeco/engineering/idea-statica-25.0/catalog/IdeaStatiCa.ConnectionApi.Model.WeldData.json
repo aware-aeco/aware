@@ -1,0 +1,86 @@
+{
+  "name": "WeldData",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.WeldData.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/WeldData.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Id",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for WeldData.id.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/WeldData.md"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for WeldData.name.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/WeldData.md"
+    },
+    {
+      "name": "Thickness",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for WeldData.thickness.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/WeldData.md"
+    },
+    {
+      "name": "Material",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for WeldData.material.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/WeldData.md"
+    },
+    {
+      "name": "WeldMaterial",
+      "type": "ReferenceElement",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for WeldData.weldMaterial.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/WeldData.md"
+    },
+    {
+      "name": "WeldType",
+      "type": "WeldType",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for WeldData.weldType.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/WeldData.md"
+    },
+    {
+      "name": "ConnectedPartIds",
+      "type": "List\u003Cstring\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for WeldData.connectedPartIds.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/WeldData.md"
+    },
+    {
+      "name": "Start",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for WeldData.start.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/WeldData.md"
+    },
+    {
+      "name": "End",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for WeldData.end.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/WeldData.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

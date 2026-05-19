@@ -1,0 +1,78 @@
+{
+  "name": "BendData",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.BendData.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/BendData.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Plate1Id",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BendData.plate1Id.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/BendData.md"
+    },
+    {
+      "name": "Plate2Id",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BendData.plate2Id.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/BendData.md"
+    },
+    {
+      "name": "Radius",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BendData.radius.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/BendData.md"
+    },
+    {
+      "name": "Point1OfSideBoundary1",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BendData.point1OfSideBoundary1.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/BendData.md"
+    },
+    {
+      "name": "Point2OfSideBoundary1",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BendData.point2OfSideBoundary1.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/BendData.md"
+    },
+    {
+      "name": "EndFaceNormal1",
+      "type": "Vector3D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BendData.endFaceNormal1.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/BendData.md"
+    },
+    {
+      "name": "Point1OfSideBoundary2",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BendData.point1OfSideBoundary2.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/BendData.md"
+    },
+    {
+      "name": "Point2OfSideBoundary2",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for BendData.point2OfSideBoundary2.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/BendData.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

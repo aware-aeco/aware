@@ -1,0 +1,30 @@
+{
+  "name": "PolyLine2D",
+  "namespace": "IdeaStatiCa.RcsApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.RcsApi.Model.PolyLine2D.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/PolyLine2D.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "StartPoint",
+      "type": "Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for PolyLine2D.startPoint.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/PolyLine2D.md"
+    },
+    {
+      "name": "Segments",
+      "type": "List\u003CSegment2D\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for PolyLine2D.segments.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/PolyLine2D.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

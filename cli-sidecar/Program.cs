@@ -143,6 +143,13 @@ internal static class Program
                             // a documented version-stamping caveat in EXTRACTION-NOTES.md.
                             "archicad" => Ingest.Extractors.ArchiCAD.Extractor.Extract(argsObj.Version, argsObj.OutPath)
                                 .GetAwaiter().GetResult(),
+                            // IDEA Statica extractor (Phase B B8) — hybrid REST + .NET SDK docs from
+                            // idea-statica/ideastatica-public's tagged release tree. Versions 25.0
+                            // (tag 25.1.5.1491) and 26.0 (tag 26.0.1.2450) each carry openapi.yaml
+                            // + markdown SDK docs for the Connection API and the RCS API; the
+                            // extractor merges both APIs into one IR per version.
+                            "idea-statica" => Ingest.Extractors.IdeaStatica.Extractor.Extract(argsObj.Version, argsObj.OutPath)
+                                .GetAwaiter().GetResult(),
                             // Tekla Tedds extractor (Phase B B9) — Tedds docs from
                             // developer.tekla.com/doc/tekla-tedds/<ver>. DocFX-style markup
                             // (different from Tekla Structures' Sandcastle). Versions 25.0 + 26.0

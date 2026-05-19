@@ -1,0 +1,30 @@
+{
+  "name": "FoldedPlateData",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.FoldedPlateData.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/FoldedPlateData.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Plates",
+      "type": "List\u003CPlateData\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for FoldedPlateData.plates.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/FoldedPlateData.md"
+    },
+    {
+      "name": "Bends",
+      "type": "List\u003CBendData\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for FoldedPlateData.bends.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/FoldedPlateData.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

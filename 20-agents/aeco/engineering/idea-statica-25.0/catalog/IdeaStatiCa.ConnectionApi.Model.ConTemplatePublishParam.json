@@ -1,0 +1,46 @@
+{
+  "name": "ConTemplatePublishParam",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.ConTemplatePublishParam.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConTemplatePublishParam.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConTemplatePublishParam.name.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConTemplatePublishParam.md"
+    },
+    {
+      "name": "Author",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConTemplatePublishParam.author.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConTemplatePublishParam.md"
+    },
+    {
+      "name": "CompanyName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConTemplatePublishParam.companyName.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConTemplatePublishParam.md"
+    },
+    {
+      "name": "DesignSetType",
+      "type": "ConDesignSetType",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConTemplatePublishParam.designSetType.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConTemplatePublishParam.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,30 @@
+{
+  "name": "TextPosition",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.TextPosition.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/TextPosition.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Origin",
+      "type": "List\u003Cdouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for TextPosition.origin.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/TextPosition.md"
+    },
+    {
+      "name": "Angles",
+      "type": "List\u003Cdouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for TextPosition.angles.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/TextPosition.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

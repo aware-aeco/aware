@@ -1,0 +1,199 @@
+{
+  "name": "MaterialApi",
+  "namespace": "IdeaStatiCa.RcsApi.Api",
+  "kind": "class",
+  "summary": "RCS Rest API 1.0 \u2014 Material endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /api/1/. Source: https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/api/openapi.yaml",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/MaterialApi.md",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetAllMaterialsAsync",
+      "signature": "Task\u003CList\u003Cobject\u003E\u003E GetAllMaterialsAsync(Guid projectId)",
+      "summary": "Get materials from the project. Use specific path to filter by material type.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Project ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003Cobject\u003E",
+        "doc": "**List**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/MaterialApi.md"
+    },
+    {
+      "name": "GetConcreteMaterialsAsync",
+      "signature": "Task\u003CList\u003Cobject\u003E\u003E GetConcreteMaterialsAsync(Guid projectId)",
+      "summary": "Get materials from the project. Use specific path to filter by material type.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Project ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003Cobject\u003E",
+        "doc": "**List**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/MaterialApi.md"
+    },
+    {
+      "name": "AddConcreteMaterialAsync",
+      "signature": "Task AddConcreteMaterialAsync(Guid projectId, RcsMprlElement rcsMprlElement)",
+      "summary": "Add a new material to the project. The material type is determined by the endpoint path.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Project ID",
+          "optional": false
+        },
+        {
+          "name": "rcsMprlElement",
+          "type": "RcsMprlElement",
+          "doc": "Material data to add (MPRL name)",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/MaterialApi.md"
+    },
+    {
+      "name": "GetReinforcementMaterialsAsync",
+      "signature": "Task\u003CList\u003Cobject\u003E\u003E GetReinforcementMaterialsAsync(Guid projectId)",
+      "summary": "Get materials from the project. Use specific path to filter by material type.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Project ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003Cobject\u003E",
+        "doc": "**List**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/MaterialApi.md"
+    },
+    {
+      "name": "AddReinforcementMaterialAsync",
+      "signature": "Task AddReinforcementMaterialAsync(Guid projectId, RcsMprlElement rcsMprlElement)",
+      "summary": "Add a new material to the project. The material type is determined by the endpoint path.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Project ID",
+          "optional": false
+        },
+        {
+          "name": "rcsMprlElement",
+          "type": "RcsMprlElement",
+          "doc": "Material data to add (MPRL name)",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/MaterialApi.md"
+    },
+    {
+      "name": "GetPrestressMaterialsAsync",
+      "signature": "Task\u003CList\u003Cobject\u003E\u003E GetPrestressMaterialsAsync(Guid projectId)",
+      "summary": "Get materials from the project. Use specific path to filter by material type.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Project ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003Cobject\u003E",
+        "doc": "**List**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/MaterialApi.md"
+    },
+    {
+      "name": "AddPrestressMaterialAsync",
+      "signature": "Task AddPrestressMaterialAsync(Guid projectId, RcsMprlElement rcsMprlElement)",
+      "summary": "Add a new material to the project. The material type is determined by the endpoint path.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Project ID",
+          "optional": false
+        },
+        {
+          "name": "rcsMprlElement",
+          "type": "RcsMprlElement",
+          "doc": "Material data to add (MPRL name)",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/MaterialApi.md"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

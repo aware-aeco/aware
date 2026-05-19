@@ -1,0 +1,109 @@
+{
+  "name": "CalculationApi",
+  "namespace": "IdeaStatiCa.ConnectionApi.Api",
+  "kind": "class",
+  "summary": "Connection Rest API 3.0 \u2014 Calculation endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /api/3/. Source: https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/api/openapi.yaml",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/CalculationApi.md",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CalculateAsync",
+      "signature": "Task\u003CList\u003CConResultSummary\u003E\u003E CalculateAsync(Guid projectId, List\u003Cint\u003E requestBody)",
+      "summary": "Runs CBFEM calculation and returns the summary of the results.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service.",
+          "optional": false
+        },
+        {
+          "name": "requestBody",
+          "type": "List\u003Cint\u003E",
+          "doc": "List of connection IDs to calculate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CConResultSummary\u003E",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/CalculationApi.md"
+    },
+    {
+      "name": "GetResultsAsync",
+      "signature": "Task\u003CList\u003CConnectionCheckRes\u003E\u003E GetResultsAsync(Guid projectId, List\u003Cint\u003E requestBody)",
+      "summary": "Gets detailed results of the CBFEM analysis.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service.",
+          "optional": false
+        },
+        {
+          "name": "requestBody",
+          "type": "List\u003Cint\u003E",
+          "doc": "List of connection IDs to calculate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CConnectionCheckRes\u003E",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/CalculationApi.md"
+    },
+    {
+      "name": "GetRawJsonResultsAsync",
+      "signature": "Task\u003CList\u003Cstring\u003E\u003E GetRawJsonResultsAsync(Guid projectId, List\u003Cint\u003E requestBody)",
+      "summary": "Gets JSON string which represents raw CBFEM results (an instance of CheckResultsData).",
+      "remarks": "Bolt identifiers: Bolt keys in the raw results(e.g., in \u0060boltCheckResDataTimbers\u0060) are opaque internalCBFEM solver identifiers. They may start at any number, are not necessarilysequential, and may contain gaps. When a user explodes abolt group or modifies bolt positions, the identifiers may shift. Do not assume bolt keys start at 1 or can be used as array indices.To map bolts to sequential positions, sort the keys numericallyand use the resulting order. \u0060forcesAllLoadCases\u0060dictionary keys: In the per-bolt results within \u0060boltCheckResDataTimbers\u0060, the \u0060forcesAllLoadCases\u0060 dictionary is keyedby the load case\u0027s internal numeric identifier (as a string).The key is not always \u0060\u00221\u0022\u0060 \u2014 it corresponds tothe load case ID. For example, if only load case LE2 is active, the sole key will be \u0060\u00222\u0022\u0060. API consumers should iterate over availablekeys rather than assuming a specific key value.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service.",
+          "optional": false
+        },
+        {
+          "name": "requestBody",
+          "type": "List\u003Cint\u003E",
+          "doc": "List of connection IDs to calculate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003Cstring\u003E",
+        "doc": "**List**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/CalculationApi.md"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

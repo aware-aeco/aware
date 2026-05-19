@@ -1,0 +1,54 @@
+{
+  "name": "IGroup",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.IGroup.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/IGroup.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Faces",
+      "type": "List\u003Cint\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for IGroup.faces.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/IGroup.md"
+    },
+    {
+      "name": "Selected",
+      "type": "Selected",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for IGroup.selected.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/IGroup.md"
+    },
+    {
+      "name": "Lines",
+      "type": "List\u003CLine\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for IGroup.lines.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/IGroup.md"
+    },
+    {
+      "name": "Priority",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for IGroup.priority.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/IGroup.md"
+    },
+    {
+      "name": "Text",
+      "type": "List\u003CText\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for IGroup.text.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/IGroup.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

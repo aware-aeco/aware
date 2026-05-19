@@ -1,0 +1,38 @@
+{
+  "name": "ParameterUpdateResponse",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.ParameterUpdateResponse.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ParameterUpdateResponse.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "SetToModel",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ParameterUpdateResponse.setToModel.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ParameterUpdateResponse.md"
+    },
+    {
+      "name": "Parameters",
+      "type": "List\u003CIdeaParameter\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ParameterUpdateResponse.parameters.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ParameterUpdateResponse.md"
+    },
+    {
+      "name": "FailedValidations",
+      "type": "List\u003CIdeaParameterValidationResponse\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ParameterUpdateResponse.failedValidations.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ParameterUpdateResponse.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}
