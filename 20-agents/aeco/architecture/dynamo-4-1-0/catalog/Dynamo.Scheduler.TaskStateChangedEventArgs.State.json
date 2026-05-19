@@ -1,0 +1,44 @@
+{
+  "name": "State",
+  "namespace": "Dynamo.Scheduler.TaskStateChangedEventArgs",
+  "kind": "enum",
+  "summary": "Type State",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/SyncDataManager.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CompletionHandled",
+      "value": 5,
+      "summary": "Post-execute action of task is completed and registered event handlers of task completion are notified."
+    },
+    {
+      "name": "Discarded",
+      "value": 1,
+      "summary": "Task is dropped from the scheduler due to compacting process"
+    },
+    {
+      "name": "ExecutionCompleted",
+      "value": 4,
+      "summary": "Task execution is completed successfully"
+    },
+    {
+      "name": "ExecutionFailed",
+      "value": 3,
+      "summary": "Task execution is completed with errors"
+    },
+    {
+      "name": "ExecutionStarting",
+      "value": 2,
+      "summary": "Task is about to be executed"
+    },
+    {
+      "name": "Scheduled",
+      "value": 0,
+      "summary": "Task is added to the scheduler"
+    }
+  ]
+}

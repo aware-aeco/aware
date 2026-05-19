@@ -1,0 +1,29 @@
+{
+  "name": "TaskMergeInstruction",
+  "namespace": "Dynamo.Scheduler.AsyncTask",
+  "kind": "enum",
+  "summary": "Type TaskMergeInstruction",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Scheduler/AsyncTask.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "KeepBoth",
+      "value": 0,
+      "summary": "Both the AsyncTask objects in comparison should be kept."
+    },
+    {
+      "name": "KeepOther",
+      "value": 2,
+      "summary": "The current instance of AsyncTask should be discarded while keeping the other AsyncTask in comparison."
+    },
+    {
+      "name": "KeepThis",
+      "value": 1,
+      "summary": "The current instance of AsyncTask should be kept while discarding the other AsyncTask in comparison."
+    }
+  ]
+}

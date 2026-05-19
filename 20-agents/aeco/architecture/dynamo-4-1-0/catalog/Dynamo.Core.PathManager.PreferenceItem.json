@@ -1,0 +1,26 @@
+{
+  "name": "PreferenceItem",
+  "namespace": "Dynamo.Core.PathManager",
+  "kind": "enum",
+  "summary": "Type PreferenceItem",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/PathManager.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Backup",
+      "value": 0
+    },
+    {
+      "name": "Samples",
+      "value": 2
+    },
+    {
+      "name": "Templates",
+      "value": 1
+    }
+  ]
+}

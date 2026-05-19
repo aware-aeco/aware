@@ -3,8 +3,21 @@
 **Vendor:** Autodesk (DynamoBIM)
 **Version:** 4.1.0.4845 (NuGet `DynamoVisualProgramming.Core@4.1.0.4845`)
 **Source kind:** `hybrid` (NuGet XML doc + .NET DLL reflection + GitHub source tree)
-**Extracted at:** 2026-05-19
+**Extracted at:** 2026-05-19 (re-extracted 2026-05-19 with nested-type fix)
 **GitHub ref:** `v4.1.0` (tagged release)
+
+## Correction — 2026-05-19 nested-type re-extraction
+
+The original 2026-05-19 extraction emitted 707 IR types but only **701 distinct catalog files** because the extractor wrote nested types with `name = "<inner-name>"` and `namespace = "<outer-namespace>"`, so multiple outer types each holding a nested `State` (or `Operation`) enum collapsed onto the same filename. CatalogWriter's silent-overwrite behaviour then dropped the duplicates. Six distinct vendor types were lost:
+
+- 5 nested `State` enums (`Statement.State`, `PackageDownloadHandle.State`, `PackageUploadHandle.State`, `TaskStateChangedEventArgs.State`, `ProtoCore.ExecutionStateEventArgs.State`) — only the last-emitted one survived.
+- 3 nested `Operation` enums (`ViewOperationEventArgs.Operation`, `DragSelectionCommand.Operation`, `UndoRedoCommand.Operation`) — only the last-emitted one survived.
+
+The fix (commits `c0ec8ecd0`, `b39925435`):
+- `AssemblyReflector.cs` now sets the IR `@namespace` of a nested type to its declaring chain (Allplan convention: `<outer-ns>.<outer-name>`), e.g. `State` inside `AnnotationModel` becomes `namespace="Dynamo.Models.AnnotationModel", name="State"` and serialises to `Dynamo.Models.AnnotationModel.State.json`.
+- `CatalogWriter.cs` now throws `InvalidOperationException` on filename collision so silent data loss can never recur.
+
+Post-fix counts in this directory: **707 IR types, 707 distinct catalog files** (i.e. every IR type now has its own catalog entry). 121 skills, 1 manifest. Coverage stats below reflect the corrected catalog.
 
 ## Source landscape (the why)
 

@@ -1,0 +1,22 @@
+{
+  "name": "UndoAction",
+  "namespace": "Dynamo.Graph.Notes.NoteModel",
+  "kind": "enum",
+  "summary": "Type UndoAction",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Notes/NoteModel.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Pin",
+      "value": 0
+    },
+    {
+      "name": "Unpin",
+      "value": 1
+    }
+  ]
+}

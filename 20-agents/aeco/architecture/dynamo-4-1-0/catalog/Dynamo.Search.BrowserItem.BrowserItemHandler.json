@@ -1,0 +1,98 @@
+{
+  "name": "BrowserItemHandler",
+  "namespace": "Dynamo.Search.BrowserItem",
+  "kind": "delegate",
+  "summary": "Type BrowserItemHandler",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/BrowserItem.cs",
+  "constructors": [
+    {
+      "name": "BrowserItemHandler(object, IntPtr)",
+      "signature": "void BrowserItemHandler(object object, IntPtr method)",
+      "summary": "BrowserItemHandler.BrowserItemHandler",
+      "params": [
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "type": "IntPtr",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/BrowserItem.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BeginInvoke(Dynamo.Search.BrowserItem, System.AsyncCallback, object)",
+      "signature": "System.IAsyncResult BeginInvoke(Dynamo.Search.BrowserItem ele, System.AsyncCallback callback, object object)",
+      "summary": "BrowserItemHandler.BeginInvoke",
+      "params": [
+        {
+          "name": "ele",
+          "type": "Dynamo.Search.BrowserItem",
+          "optional": false
+        },
+        {
+          "name": "callback",
+          "type": "System.AsyncCallback",
+          "optional": false
+        },
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.IAsyncResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/BrowserItem.cs"
+    },
+    {
+      "name": "EndInvoke(System.IAsyncResult)",
+      "signature": "void EndInvoke(System.IAsyncResult result)",
+      "summary": "BrowserItemHandler.EndInvoke",
+      "params": [
+        {
+          "name": "result",
+          "type": "System.IAsyncResult",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/BrowserItem.cs"
+    },
+    {
+      "name": "Invoke(Dynamo.Search.BrowserItem)",
+      "signature": "void Invoke(Dynamo.Search.BrowserItem ele)",
+      "summary": "BrowserItemHandler.Invoke",
+      "params": [
+        {
+          "name": "ele",
+          "type": "Dynamo.Search.BrowserItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/BrowserItem.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "void Invoke(Dynamo.Search.BrowserItem ele)"
+}

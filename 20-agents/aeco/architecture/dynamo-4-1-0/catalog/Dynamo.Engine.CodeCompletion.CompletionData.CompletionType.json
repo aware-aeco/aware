@@ -1,0 +1,38 @@
+{
+  "name": "CompletionType",
+  "namespace": "Dynamo.Engine.CodeCompletion.CompletionData",
+  "kind": "enum",
+  "summary": "Type CompletionType",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/CodeCompletion/CodeCompletionServices.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Class",
+      "value": 3
+    },
+    {
+      "name": "Constructor",
+      "value": 2
+    },
+    {
+      "name": "Keyword",
+      "value": 5
+    },
+    {
+      "name": "Method",
+      "value": 1
+    },
+    {
+      "name": "Namespace",
+      "value": 0
+    },
+    {
+      "name": "Property",
+      "value": 4
+    }
+  ]
+}

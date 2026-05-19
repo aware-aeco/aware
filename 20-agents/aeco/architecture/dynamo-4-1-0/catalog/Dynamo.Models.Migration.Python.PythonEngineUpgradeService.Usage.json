@@ -1,0 +1,38 @@
+{
+  "name": "Usage",
+  "namespace": "Dynamo.Models.Migration.Python.PythonEngineUpgradeService",
+  "kind": "class",
+  "summary": "Type Usage",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Migration/PythonEngineUpgradeService.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CustomNodeDefIdsWithPython",
+      "type": "System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Usage.CustomNodeDefIdsWithPython",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Migration/PythonEngineUpgradeService.cs"
+    },
+    {
+      "name": "DirectPythonNodes",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Usage.DirectPythonNodes",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Migration/PythonEngineUpgradeService.cs"
+    },
+    {
+      "name": "Workspace",
+      "type": "Dynamo.Graph.Workspaces.WorkspaceModel",
+      "getter": true,
+      "setter": false,
+      "summary": "Usage.Workspace",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Migration/PythonEngineUpgradeService.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}
