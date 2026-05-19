@@ -1,7 +1,7 @@
 agent:        sketchup-2026
-version:      0.30.0
+version:      0.34.0
 sdk-target:   2026.0
-display-name: sketchup-2026 (raw — 155 types, full coverage)
+display-name: sketchup-2026 (curated exec + 155 reflected types)
 
 description: |
   Auto-generated from vendor docs (scrape: https://ruby.sketchup.com/_index.html)
@@ -33,6 +33,15 @@ transport:
     binary: aware-sketchup
 
 commands:
+  exec:
+    lifecycle: single
+    description: |
+      Evaluate an ad-hoc Ruby script against the active SketchUp model via
+      the in-process bridge (aware_sketchup_bridge.rb auto-loaded from
+      Plugins/). Script wrapper exposes `model` (= Sketchup.active_model) and
+      `args` (Hash). Returns JSON receipt matching tekla.exec and rhino.exec
+      vocabulary; only the `host` field differs ("sketchup"). See
+      commands/exec.md for the full spec.
   array-cross:
     lifecycle: single
     description: "The #cross method is used to compute the cross product between two vectors."
