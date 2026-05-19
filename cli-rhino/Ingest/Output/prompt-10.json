@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "8",
+  "code": "var doc = Rhino.RhinoDoc.ActiveDoc;\nvar rng = new Random();\nvar color = System.Drawing.Color.FromArgb(rng.Next(256), rng.Next(256), rng.Next(256));\nvar layer = new Rhino.DocObjects.Layer { Name = \"AWARE\", Color = color };\nint index = doc.Layers.Add(layer);\nreturn new { added = index >= 0, index = index, color = $\"#{color.R:X2}{color.G:X2}{color.B:X2}\" };",
+  "args": {}
+}

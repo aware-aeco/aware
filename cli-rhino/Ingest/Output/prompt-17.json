@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "8",
+  "code": "var doc = Rhino.RhinoDoc.ActiveDoc;\nvar breps = new List<Rhino.Geometry.Brep>();\nvar pickedIds = new List<Guid>();\nforeach (var obj in doc.Objects.GetSelectedObjects(false, false))\n{\n    if (obj.Geometry is Rhino.Geometry.Brep b) { breps.Add(b); pickedIds.Add(obj.Id); }\n}\nif (breps.Count < 2) return new { ok = false, error = $\"need at least 2 selected breps; got {breps.Count}\" };\nvar tol = doc.ModelAbsoluteTolerance;\nvar result = Rhino.Geometry.Brep.CreateBooleanUnion(breps, tol);\nif (result == null || result.Length == 0) return new { ok = false, error = \"boolean union returned no breps\" };\nforeach (var id in pickedIds) doc.Objects.Delete(id, true);\nvar newIds = new List<string>();\nforeach (var brep in result) newIds.Add(doc.Objects.AddBrep(brep).ToString());\ndoc.Views.Redraw();\nreturn new { ok = true, inputs = pickedIds.Count, outputs = newIds.Count, ids = newIds };",
+  "args": {}
+}

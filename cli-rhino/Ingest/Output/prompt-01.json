@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "8",
+  "code": "var doc = Rhino.RhinoDoc.ActiveDoc;\nvar buckets = new Dictionary<string, int>();\nforeach (var obj in doc.Objects)\n{\n    var layerName = doc.Layers[obj.Attributes.LayerIndex].FullPath;\n    buckets[layerName] = (buckets.TryGetValue(layerName, out var n) ? n : 0) + 1;\n}\nreturn new { total = doc.Objects.Count, by_layer = buckets };",
+  "args": {}
+}

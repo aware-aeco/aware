@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "8",
+  "code": "var doc = Rhino.RhinoDoc.ActiveDoc;\nvar center = new Rhino.Geometry.Point3d(1000, 1000, 0);\nvar sphere = new Rhino.Geometry.Sphere(center, 250);\nvar id = doc.Objects.AddSphere(sphere);\ndoc.Views.Redraw();\nreturn new { added = id != Guid.Empty, id = id.ToString() };",
+  "args": {}
+}

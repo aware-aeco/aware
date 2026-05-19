@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "8",
+  "code": "var doc = Rhino.RhinoDoc.ActiveDoc;\nvar rng = new Random();\nvar ids = new List<Guid>();\nfor (int i = 0; i < 10; i++)\n{\n    var p = new Rhino.Geometry.Point3d(rng.NextDouble() * 1000, rng.NextDouble() * 1000, 0);\n    ids.Add(doc.Objects.AddPoint(p));\n}\nint groupIndex = doc.Groups.Add(ids);\ndoc.Views.Redraw();\nreturn new { group_index = groupIndex, point_count = ids.Count, ids = ids.ConvertAll(g => g.ToString()) };",
+  "args": {}
+}

@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "8",
+  "code": "var doc = Rhino.RhinoDoc.ActiveDoc;\nvar xform = Rhino.Geometry.Transform.Translation(100, 100, 0);\nint moved = 0;\nforeach (var obj in doc.Objects.GetSelectedObjects(false, false))\n{\n    if (doc.Objects.Transform(obj.Id, xform, true) != Guid.Empty) moved++;\n}\ndoc.Views.Redraw();\nreturn new { moved = moved, dx = 100, dy = 100, dz = 0 };",
+  "args": {}
+}

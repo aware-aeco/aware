@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "8",
+  "code": "var doc = Rhino.RhinoDoc.ActiveDoc;\nvar plane = Rhino.Geometry.Plane.WorldXY;\nvar box = new Rhino.Geometry.Box(plane, new Rhino.Geometry.Interval(0, 1000), new Rhino.Geometry.Interval(0, 1000), new Rhino.Geometry.Interval(0, 500));\nvar id = doc.Objects.AddBox(box);\ndoc.Views.Redraw();\nreturn new { added = id != Guid.Empty, id = id.ToString() };",
+  "args": {}
+}

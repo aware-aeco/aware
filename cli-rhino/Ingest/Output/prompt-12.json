@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "8",
+  "code": "var doc = Rhino.RhinoDoc.ActiveDoc;\nvar awareLayerIndex = doc.Layers.FindName(\"AWARE\")?.Index ?? -1;\nif (awareLayerIndex < 0) return new { ok = false, error = \"layer 'AWARE' does not exist; create it first (prompt 10)\" };\nint moved = 0;\nforeach (var obj in doc.Objects.GetSelectedObjects(false, false))\n{\n    var attrs = obj.Attributes.Duplicate();\n    attrs.LayerIndex = awareLayerIndex;\n    if (doc.Objects.ModifyAttributes(obj, attrs, false)) moved++;\n}\ndoc.Views.Redraw();\nreturn new { ok = true, moved = moved, target_layer = \"AWARE\" };",
+  "args": {}
+}

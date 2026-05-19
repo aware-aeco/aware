@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "8",
+  "code": "var doc = Rhino.RhinoDoc.ActiveDoc;\nvar rows = new List<object>();\nforeach (var view in doc.Views)\n{\n    var vp = view.ActiveViewport;\n    rows.Add(new {\n        name = view.MainViewport.Name,\n        projection = vp.IsParallelProjection ? \"parallel\" : (vp.IsPerspectiveProjection ? \"perspective\" : \"other\"),\n        camera_location = new { x = vp.CameraLocation.X, y = vp.CameraLocation.Y, z = vp.CameraLocation.Z },\n        target = new { x = vp.CameraTarget.X, y = vp.CameraTarget.Y, z = vp.CameraTarget.Z }\n    });\n}\nreturn new { count = rows.Count, viewports = rows };",
+  "args": {}
+}

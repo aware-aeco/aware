@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "8",
+  "code": "var doc = Rhino.RhinoDoc.ActiveDoc;\nvar plane = Rhino.Geometry.Plane.WorldXY;\nvar circle = new Rhino.Geometry.Circle(plane, 500);\nvar id = doc.Objects.AddCircle(circle);\ndoc.Views.Redraw();\nreturn new { added = id != Guid.Empty, id = id.ToString(), radius = 500 };",
+  "args": {}
+}

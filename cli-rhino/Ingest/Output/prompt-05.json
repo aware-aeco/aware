@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "8",
+  "code": "var doc = Rhino.RhinoDoc.ActiveDoc;\nvar rows = new List<object>();\nforeach (var idef in doc.InstanceDefinitions)\n{\n    if (idef == null) continue;\n    var objs = idef.GetObjects();\n    rows.Add(new { name = idef.Name, id = idef.Id.ToString(), member_count = objs?.Length ?? 0 });\n}\nreturn new { definition_count = rows.Count, definitions = rows };",
+  "args": {}
+}
