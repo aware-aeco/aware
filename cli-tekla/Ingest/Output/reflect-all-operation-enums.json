@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "2026.0",
+  "code": "// Enumerate ALL nested enums + flags on Operation type so we can patch them in one pass.\nvar asm = System.Reflection.Assembly.Load(\"Tekla.Structures.Model\");\nvar opType = asm.GetType(\"Tekla.Structures.Model.Operations.Operation\");\nvar result = new System.Collections.Generic.Dictionary<string, object>();\nforeach (var nested in opType.GetNestedTypes()) {\n    if (!nested.IsEnum) continue;\n    var values = new System.Collections.Generic.List<object>();\n    foreach (var name in System.Enum.GetNames(nested)) {\n        var val = System.Convert.ToInt64(System.Enum.Parse(nested, name));\n        values.Add(new { name = name, value = val });\n    }\n    string fqn = \"Tekla.Structures.Model.Operations.Operation.\" + nested.Name;\n    result[fqn] = new {\n        is_flags = nested.IsDefined(typeof(System.FlagsAttribute), false),\n        underlying_type = System.Enum.GetUnderlyingType(nested).Name,\n        values = values\n    };\n}\nreturn result;",
+  "args": {}
+}

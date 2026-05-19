@@ -278,6 +278,65 @@ public class AllplanParserTests
         }
     }
 
+    // ── Regression: outer class containing an inner enum must NOT inherit the
+    //    inner's IntEnum/ABC base ───────────────────────────────────────────────
+    //
+    // v0.30.1 B10 bug: `ExtractBasesAndKind` used `classDiv.QuerySelector("p.doc-class-bases")`
+    // which is a descendant query. When the outer class (a plain `class`) contains a nested
+    // `<div class="doc-class">` whose own contents has a `<p class="doc-class-bases">IntEnum</p>`,
+    // the descendant query reached into the inner class's bases paragraph and returned IntEnum
+    // for the OUTER class. Result: `kind: "enum", base: "IntEnum", enum_values: []` — a
+    // misclassified empty enum. The Allplan 2025 ControlProperties page (40+ real properties +
+    // 6 methods + 1 inner enum `ControlType: IntEnum`) was the canonical repro.
+    //
+    // Both layouts have this shape: 2024 uses h3 for the inner class heading; 2025 uses h3 as
+    // well (one rank below the outer's h2). The fix scopes the bases lookup to a direct child of
+    // the outer class's own `doc-contents`, so inner-class bases are correctly ignored.
+
+    [Fact]
+    public void Class_With_Inner_Enum_Does_Not_Inherit_Inner_Bases_2025()
+    {
+        var html = LoadFixture("allplan-2025-class-controlproperties.html");
+        var r = PageParser.Parse(html,
+            "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/");
+        Assert.NotNull(r);
+        var t = r!.Type;
+        Assert.Equal("ControlProperties", t.name);
+        // Outer class has no `Bases:` line of its own — must be a plain class.
+        Assert.Equal("class", t.kind);
+        Assert.Null(t.@base);
+        // It has 40+ real properties; the misclassification used to drop them all.
+        Assert.True(t.properties.Count >= 30, $"expected ≥30 properties, got {t.properties.Count}");
+        // Empty enum_values is correct for a non-enum class.
+        Assert.Empty(t.enum_values);
+        // Inner ControlType is promoted as a separate enum (vendor docs render its members empty
+        // — that's a vendor-side gap unrelated to this regression).
+        var inner = r.InnerTypes.FirstOrDefault(it => it.name == "ControlType");
+        Assert.NotNull(inner);
+        Assert.Equal("enum", inner!.kind);
+        Assert.Equal("IntEnum", inner.@base);
+    }
+
+    [Fact]
+    public void Class_With_Inner_Enum_Does_Not_Inherit_Inner_Bases_2024()
+    {
+        var html = LoadFixture("allplan-2024-class-controlproperties.html");
+        var r = PageParser.Parse(html,
+            "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/ControlProperties/ControlProperties/");
+        Assert.NotNull(r);
+        var t = r!.Type;
+        Assert.Equal("ControlProperties", t.name);
+        // Same invariant on 2024 layout (h3-driven inner class).
+        Assert.Equal("class", t.kind);
+        Assert.Null(t.@base);
+        Assert.True(t.properties.Count >= 30, $"expected ≥30 properties, got {t.properties.Count}");
+        Assert.Empty(t.enum_values);
+        var inner = r.InnerTypes.FirstOrDefault(it => it.name == "ControlType");
+        Assert.NotNull(inner);
+        Assert.Equal("enum", inner!.kind);
+        Assert.Equal("IntEnum", inner.@base);
+    }
+
     // ── Sitemap parsing ───────────────────────────────────────────────────────
 
     [Fact]

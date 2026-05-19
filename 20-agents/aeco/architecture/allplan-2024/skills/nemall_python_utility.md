@@ -1,6 +1,6 @@
 ---
 name: allplan-nemall_python_utility
-description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_Utility namespace — 19 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: DefaultDirectories, GUID, ProgressBar, FileDialog, SizeTList, InitTkinter, SuppressLangDllErrorMessages, Timer, and 11 more types.
+description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_Utility namespace — 19 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: DefaultDirectories, FileDialog, InitTkinter, GUID, ProgressBar, SizeTList, SuppressLangDllErrorMessages, Timer, and 11 more types.
 ---
 
 # NemAll_Python_Utility

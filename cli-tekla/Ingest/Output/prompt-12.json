@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "2026.0",
+  "code": "var beam = new Tekla.Structures.Model.Beam(new Tekla.Structures.Geometry3d.Point(0, 0, 4000), new Tekla.Structures.Geometry3d.Point(5000, 0, 4000));\nbeam.Profile.ProfileString = \"IPE300\"; beam.Material.MaterialString = \"S275\"; beam.Class = \"1\"; beam.Name = \"ROOF BEAM A/1-A/2\";\nbool ok = beam.Insert();\nreturn new { inserted = ok, guid = beam.Identifier.GUID.ToString(), profile = beam.Profile.ProfileString, start = new { beam.StartPoint.X, beam.StartPoint.Y, beam.StartPoint.Z }, end = new { beam.EndPoint.X, beam.EndPoint.Y, beam.EndPoint.Z } };",
+  "args": {}
+}

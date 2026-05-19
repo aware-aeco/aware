@@ -1,6 +1,6 @@
 ---
 name: allplan-scriptobjectinteractors-archpointinteractor
-description: This skill encodes the allplan 2025.0 surface of the ScriptObjectInteractors.ArchPointInteractor namespace — 3 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, ArchPointInteractorResult, ArchPointInteractor.
+description: This skill encodes the allplan 2025.0 surface of the ScriptObjectInteractors.ArchPointInteractor namespace — 3 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, ArchPointInteractor, ArchPointInteractorResult.
 ---
 
 # ScriptObjectInteractors.ArchPointInteractor

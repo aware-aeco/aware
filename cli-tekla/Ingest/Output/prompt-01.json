@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "2026.0",
+  "code": "var selector = (Tekla.Structures.Model.ModelObjectSelector)model.GetModelObjectSelector();\nvar enumerator = selector.GetAllObjectsWithType(Tekla.Structures.Model.ModelObject.ModelObjectEnum.BEAM);\nvar result = new System.Collections.Generic.List<object>();\nwhile (enumerator.MoveNext())\n{\n    var b = (Tekla.Structures.Model.Beam)enumerator.Current;\n    double dx = b.EndPoint.X - b.StartPoint.X;\n    double dy = b.EndPoint.Y - b.StartPoint.Y;\n    double dz = b.EndPoint.Z - b.StartPoint.Z;\n    double length = System.Math.Sqrt(dx*dx + dy*dy + dz*dz);\n    result.Add(new {\n        guid = b.Identifier.GUID.ToString(),\n        profile = b.Profile.ProfileString,\n        material = b.Material.MaterialString,\n        length_mm = System.Math.Round(length, 1),\n        klass = b.Class,\n        name = b.Name\n    });\n}\nreturn new { count = result.Count, beams_sample = result.Take(5).ToList() };",
+  "args": {}
+}

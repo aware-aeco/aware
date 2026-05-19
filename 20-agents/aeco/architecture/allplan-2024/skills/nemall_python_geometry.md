@@ -1,6 +1,6 @@
 ---
 name: allplan-nemall_python_geometry
-description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_Geometry namespace — 142 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AngleList, ApproximationSettings, Angle, Arc2D, Arc3D, Arc3DList, Arc2DList, Axis2D, and 134 more types.
+description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_Geometry namespace — 142 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Angle, AngleList, ApproximationSettings, Arc2D, Arc2DList, Arc3DList, Arc3D, Axis2D, and 134 more types.
 ---
 
 # NemAll_Python_Geometry
@@ -9520,7 +9520,7 @@ Add the items from an iterable to the end of the list
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ExtrudedAreaSolid3DList/#NemAll_Python_Geometry.ExtrudedAreaSolid3DList.extend)
 
-## FaceOffset (enum)
+## FaceOffset (class)
 
 Face offset
 

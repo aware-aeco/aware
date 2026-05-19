@@ -1,6 +1,6 @@
 ---
 name: allplan-handlepropertiesservice
-description: This skill encodes the allplan 2024.0 surface of the HandlePropertiesService namespace — 13 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: HandlePropertiesService, _Angle, _BaseHandlePropUpdate, _CheckBox, _DecrementButton, _IncrementButton, _PointDistance, _Point, and 5 more types.
+description: This skill encodes the allplan 2024.0 surface of the HandlePropertiesService namespace — 13 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: HandlePropertiesService, _Angle, _BaseHandlePropUpdate, _Point, _CheckBox, _DecrementButton, _IncrementButton, _XDistance, and 5 more types.
 ---
 
 # HandlePropertiesService

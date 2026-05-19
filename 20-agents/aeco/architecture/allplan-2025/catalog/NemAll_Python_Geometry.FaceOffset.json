@@ -1,9 +1,8 @@
 {
   "name": "FaceOffset",
   "namespace": "NemAll_Python_Geometry",
-  "kind": "enum",
+  "kind": "class",
   "summary": "Service for offset of faces of the element",
-  "base": "Enum",
   "interfaces": [],
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FaceOffset/",
   "constructors": [

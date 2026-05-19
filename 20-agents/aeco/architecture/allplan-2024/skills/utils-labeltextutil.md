@@ -1,6 +1,6 @@
 ---
 name: allplan-utils-labeltextutil
-description: This skill encodes the allplan 2024.0 surface of the Utils.LabelTextUtil namespace — 4 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: LabelTextDimensionUnit, LabelTextFormat, LabelTextUtil, LabelTextFrame.
+description: This skill encodes the allplan 2024.0 surface of the Utils.LabelTextUtil namespace — 4 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: LabelTextDimensionUnit, LabelTextFormat, LabelTextFrame, LabelTextUtil.
 ---
 
 # Utils.LabelTextUtil

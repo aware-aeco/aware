@@ -1,6 +1,6 @@
 ---
 name: allplan-pythonpart
-description: This skill encodes the allplan 2024.0 surface of the PythonPart namespace — 8 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AttrBuilder, PythonPart, PythonPartGroup, View2D, View, View2D3D, View3D, ViewCode.
+description: This skill encodes the allplan 2024.0 surface of the PythonPart namespace — 8 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AttrBuilder, PythonPart, View, PythonPartGroup, View2D, View2D3D, View3D, ViewCode.
 ---
 
 # PythonPart

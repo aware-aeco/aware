@@ -1,6 +1,6 @@
 ---
 name: allplan-utils-tabulardatautil
-description: This skill encodes the allplan 2024.0 surface of the Utils.TabularDataUtil namespace — 3 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: DataFrame, Functions, Series.
+description: This skill encodes the allplan 2024.0 surface of the Utils.TabularDataUtil namespace — 3 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: DataFrame, Series, Functions.
 ---
 
 # Utils.TabularDataUtil

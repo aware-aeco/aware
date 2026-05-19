@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "2026.0",
+  "code": "Func<double, double, Tekla.Structures.Model.ContourPlate> makeBP = (cx, cy) => {\n    var cp = new Tekla.Structures.Model.ContourPlate();\n    cp.Contour.AddContourPoint(new Tekla.Structures.Model.ContourPoint(new Tekla.Structures.Geometry3d.Point(cx-250, cy-250, 0), null));\n    cp.Contour.AddContourPoint(new Tekla.Structures.Model.ContourPoint(new Tekla.Structures.Geometry3d.Point(cx+250, cy-250, 0), null));\n    cp.Contour.AddContourPoint(new Tekla.Structures.Model.ContourPoint(new Tekla.Structures.Geometry3d.Point(cx+250, cy+250, 0), null));\n    cp.Contour.AddContourPoint(new Tekla.Structures.Model.ContourPoint(new Tekla.Structures.Geometry3d.Point(cx-250, cy+250, 0), null));\n    cp.Profile.ProfileString = \"PL20\";\n    cp.Material.MaterialString = \"S275\";\n    cp.Class = \"3\";\n    cp.Name = \"BASE PLATE\";\n    return cp;\n};\nvar bp1 = makeBP(0, 0);\nbool ok1 = bp1.Insert();\nvar bp2 = makeBP(5000, 0);\nbool ok2 = bp2.Insert();\nreturn new {\n    bp_a1 = new { inserted = ok1, guid = bp1.Identifier.GUID.ToString() },\n    bp_a2 = new { inserted = ok2, guid = bp2.Identifier.GUID.ToString() }\n};",
+  "args": {}
+}

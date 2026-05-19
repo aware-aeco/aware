@@ -9,5 +9,35 @@
   "methods": [],
   "properties": [],
   "events": [],
-  "enum_values": []
+  "enum_values": [
+    {
+      "name": "UNDEFINED",
+      "value": 0
+    },
+    {
+      "name": "REFERENCE_VIEW",
+      "value": 1
+    },
+    {
+      "name": "DESIGN_TRANSFER_VIEW",
+      "value": 2
+    },
+    {
+      "name": "PRECAST_VIEW",
+      "value": 3
+    },
+    {
+      "name": "MEP_REFERENCE_VIEW",
+      "value": 4
+    },
+    {
+      "name": "MEP_DESIGN_TRANSFER_VIEW",
+      "value": 5
+    },
+    {
+      "name": "BRIDGE_VIEW",
+      "value": 6
+    }
+  ],
+  "remarks": "[v0.30.1 patch: enum_values backfilled via System.Reflection on Tekla.Structures.Model.dll because vendor docs page is a syntax-only stub.]"
 }

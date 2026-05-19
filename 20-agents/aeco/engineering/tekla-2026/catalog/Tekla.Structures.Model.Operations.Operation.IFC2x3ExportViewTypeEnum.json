@@ -9,5 +9,27 @@
   "methods": [],
   "properties": [],
   "events": [],
-  "enum_values": []
+  "enum_values": [
+    {
+      "name": "UNDEFINED",
+      "value": 0
+    },
+    {
+      "name": "COORDINATION_VIEW_10",
+      "value": 1
+    },
+    {
+      "name": "COORDINATION_VIEW_20",
+      "value": 2
+    },
+    {
+      "name": "STEEL_FABRICATION_VIEW",
+      "value": 3
+    },
+    {
+      "name": "SURFACE_GEOMETRY",
+      "value": 4
+    }
+  ],
+  "remarks": "[v0.30.1 patch: enum_values backfilled via System.Reflection on Tekla.Structures.Model.dll because vendor docs page is a syntax-only stub.]"
 }

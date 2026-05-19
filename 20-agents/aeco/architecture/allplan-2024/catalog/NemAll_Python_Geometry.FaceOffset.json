@@ -1,9 +1,8 @@
 {
   "name": "FaceOffset",
   "namespace": "NemAll_Python_Geometry",
-  "kind": "enum",
+  "kind": "class",
   "summary": "Face offset",
-  "base": "IntEnum",
   "interfaces": [],
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FaceOffset/",
   "constructors": [

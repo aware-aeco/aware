@@ -1,6 +1,6 @@
 ---
 name: allplan-utils-pythonpart-modifypythonpartparameterutil
-description: This skill encodes the allplan 2025.0 surface of the Utils.PythonPart.ModifyPythonPartParameterUtil namespace — 3 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, ModifyPythonPartParameterUtil, ModifiedParameterData.
+description: This skill encodes the allplan 2025.0 surface of the Utils.PythonPart.ModifyPythonPartParameterUtil namespace — 3 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, ModifiedParameterData, ModifyPythonPartParameterUtil.
 ---
 
 # Utils.PythonPart.ModifyPythonPartParameterUtil

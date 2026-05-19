@@ -7,7 +7,7 @@ description: This skill encodes the allplan 2025.0 surface of the ParameterPrope
 
 Auto-generated from vendor docs for allplan 2025.0. 1 types in this namespace.
 
-## ParameterProperty (enum)
+## ParameterProperty (class)
 
 Definition of class ParameterProperty
 

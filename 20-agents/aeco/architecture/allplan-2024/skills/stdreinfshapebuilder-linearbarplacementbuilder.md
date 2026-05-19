@@ -1,6 +1,6 @@
 ---
 name: allplan-stdreinfshapebuilder-linearbarplacementbuilder
-description: This skill encodes the allplan 2024.0 surface of the StdReinfShapeBuilder.LinearBarPlacementBuilder namespace — 2 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, StartEndPlacementRule.
+description: This skill encodes the allplan 2024.0 surface of the StdReinfShapeBuilder.LinearBarPlacementBuilder namespace — 2 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: StartEndPlacementRule, Functions.
 ---
 
 # StdReinfShapeBuilder.LinearBarPlacementBuilder

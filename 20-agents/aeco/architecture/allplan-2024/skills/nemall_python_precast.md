@@ -1,6 +1,6 @@
 ---
 name: allplan-nemall_python_precast
-description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_Precast namespace — 26 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AllplanElement, FixtureCombinationType, FixtureGroupElement, FixtureElement, FixtureGroupProperties, FixturePlacementProperties, FixturePlacementElement, FixtureSlideProperties, and 18 more types.
+description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_Precast namespace — 26 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AllplanElement, FixtureCombinationType, FixtureElement, FixtureGroupElement, FixturePlacementProperties, FixturePlacementElement, FixtureProperties, FixtureGroupProperties, and 18 more types.
 ---
 
 # NemAll_Python_Precast

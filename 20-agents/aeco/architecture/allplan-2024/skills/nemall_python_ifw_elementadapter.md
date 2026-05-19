@@ -1,6 +1,6 @@
 ---
 name: allplan-nemall_python_ifw_elementadapter
-description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_IFW_ElementAdapter namespace — 16 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AllplanElement, AssocViewElementAdapter, ArchElementType, BaseElementAdapter, AxisElementAdapter, BaseElementAdapterChildElementsService, BaseElementAdapterList, BaseElementAdapterParentElementService, and 8 more types.
+description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_IFW_ElementAdapter namespace — 16 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: ArchElementType, AllplanElement, AxisElementAdapter, AssocViewElementAdapter, BaseElementAdapter, BaseElementAdapterChildElementsService, BaseElementAdapterParentElementService, BaseElementAdapterVector, and 8 more types.
 ---
 
 # NemAll_Python_IFW_ElementAdapter

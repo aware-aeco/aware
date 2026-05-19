@@ -14,16 +14,21 @@
     <AssemblyName>aware-tekla</AssemblyName>
 
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Version>0.29.0</Version>
+    <Version>0.31.0</Version>
 
     <!-- Single-file publish via ILMerge / merge isn't standard for net48;
          we'll just ship aware-tekla.exe alongside its (minimal) .dll deps
          in the publish dir. -->
   </PropertyGroup>
 
-  <!-- System.Text.Json for net48 — JSON parsing without writing a parser. -->
   <ItemGroup>
+    <!-- System.Text.Json for net48 — JSON parsing without writing a parser. -->
     <PackageReference Include="System.Text.Json" Version="8.0.5" />
+
+    <!-- Roslyn C# scripting — compiles + runs ad-hoc C# against the live
+         Tekla model for the `exec` verb. The 4.x line supports netstandard2.0
+         which net48 satisfies; tested locally with 4.12.0. -->
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.12.0" />
   </ItemGroup>
 
 </Project>

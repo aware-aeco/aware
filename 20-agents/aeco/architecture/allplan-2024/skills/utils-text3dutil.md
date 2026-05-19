@@ -1,6 +1,6 @@
 ---
 name: allplan-utils-text3dutil
-description: This skill encodes the allplan 2024.0 surface of the Utils.Text3DUtil namespace — 2 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Text3DUtil, TextReferencePointPosition.
+description: This skill encodes the allplan 2024.0 surface of the Utils.Text3DUtil namespace — 2 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: TextReferencePointPosition, Text3DUtil.
 ---
 
 # Utils.Text3DUtil
