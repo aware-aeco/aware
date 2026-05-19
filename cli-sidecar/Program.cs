@@ -248,6 +248,42 @@ internal static class Program
                     }
                     catch (Exception ex) { EmitError(envelope.Op, ex.Message); return 1; }
                 }
+                case "coverage-validate":
+                {
+                    // Real Draft 2020-12 schema validation. Brings what the
+                    // codex-coverage review protocol did externally with `ajv@8`
+                    // / Python `jsonschema` into a single canonical in-tree
+                    // verb. Schemas are embedded into the sidecar binary, so the
+                    // caller only needs the IR path (and optionally the agent
+                    // directory if catalog/*.json should be validated too).
+                    var argsObj = envelope.Args.Deserialize(SidecarJsonContext.Default.CoverageValidateArgs);
+                    if (argsObj is null) { EmitError(envelope.Op, "missing args"); return 2; }
+                    if (string.IsNullOrEmpty(argsObj.IrPath))
+                    {
+                        EmitError(envelope.Op, "coverage-validate requires ir_path");
+                        return 2;
+                    }
+                    try
+                    {
+                        var result = AwareSidecar.Ingest.CoverageValidator.Validate(
+                            argsObj.IrPath,
+                            argsObj.SchemaRoot,
+                            argsObj.SchemaType,
+                            argsObj.AgentDir);
+                        EmitOk(envelope.Op, new ResponseData { CoverageValidate = result });
+                        return 0;
+                    }
+                    catch (FileNotFoundException ex)
+                    {
+                        EmitError(envelope.Op, ex.Message);
+                        return 1;
+                    }
+                    catch (Exception ex)
+                    {
+                        EmitError(envelope.Op, $"{ex.GetType().Name}: {ex.Message}");
+                        return 1;
+                    }
+                }
                 default:
                 {
                     EmitError(envelope.Op, $"unknown op: {envelope.Op}");
@@ -287,6 +323,7 @@ internal static class Program
 [JsonSerializable(typeof(FromHeadersArgs))]
 [JsonSerializable(typeof(CoverageGenerateArgs))]
 [JsonSerializable(typeof(CoverageExtractArgs))]
+[JsonSerializable(typeof(CoverageValidateArgs))]
 [JsonSerializable(typeof(OkResponse))]
 [JsonSerializable(typeof(ErrorResponse))]
 [JsonSerializable(typeof(ResponseData))]
@@ -294,4 +331,5 @@ internal static class Program
 [JsonSerializable(typeof(GeneratedCommand))]
 [JsonSerializable(typeof(GeneratedSkill))]
 [JsonSerializable(typeof(CoverageGenerateResult))]
+[JsonSerializable(typeof(CoverageValidateResult))]
 internal partial class SidecarJsonContext : JsonSerializerContext { }

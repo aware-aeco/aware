@@ -62,6 +62,32 @@
       we never serialize AngleSharp types ourselves.
     -->
     <PackageReference Include="AngleSharp" Version="1.1.2" />
+    <!--
+      JsonSchema.Net: Draft 2020-12 JSON Schema validator (Greg Dennis). Already used
+      by the Generator tests (Ingest/Generator/Tests/Tests.csproj at version 7.2.3);
+      pinned to the same version here so the sidecar `coverage-validate` verb runs
+      against the same library + the same schema files as the test suite. AOT-safe:
+      the library is pure managed code and does not perform reflection on user types;
+      it reads schemas via JsonDocument and evaluates JsonElement, both source-gen
+      compatible. The verb's request/response envelopes use SidecarJsonContext so the
+      only reflection-touching path is internal to JsonSchema.Net itself.
+    -->
+    <PackageReference Include="JsonSchema.Net" Version="7.2.3" />
+  </ItemGroup>
+
+  <!--
+    Embed the two host-coverage schemas into the sidecar assembly so the
+    `coverage-validate` verb can resolve them without the caller needing to know
+    where the schema files live on disk. Embedded resources are NativeAOT-safe
+    (no reflection on user types; the manifest lookup is a constant string).
+  -->
+  <ItemGroup>
+    <EmbeddedResource Include="Ingest/Schema/host-coverage.schema.json">
+      <LogicalName>host-coverage.schema.json</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ingest/Schema/host-coverage-type.schema.json">
+      <LogicalName>host-coverage-type.schema.json</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
 
   <!-- Exclude test project files from the main build -->
